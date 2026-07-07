@@ -1,0 +1,27 @@
+---
+name: vp-casual-video-daily
+description: Daily 7 PM ET — process casual-video-inbox: Whisper captions + lower-third + end-card, then AUTO-schedule to Brand FB/IG/TikTok/X via Publer at the next evening slot. Success DM only; failures silent (Claude self-heals via completion notification).
+model: claude-sonnet-5
+---
+
+This is an automated run of a scheduled task. The user is not present. Execute autonomously. End with <run-summary>one or two sentences</run-summary>.
+
+⚠️ FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE. If anything fails, stay completely silent on Slack; describe the failure only in your run-summary (Claude reviews it via completion notification and self-heals). Joshua gets exactly one DM, and only on success.
+
+## Job
+Process Valley Pawn's casual-video inbox and auto-schedule the results to social via Publer. This is the phone-shot casual video pipeline (Joshua's 2026-07-06 decision: AUTO-SCHEDULE, no approval gate; channels = Brand FB + IG + TikTok + X).
+
+## Steps
+1. Check the inbox via the Control-your-Mac osascript tool:
+   `do shell script "ls ~/Documents/Claude/Projects/'Valley Pawn Studios'/casual-video-inbox/*.mp4 ~/Documents/Claude/Projects/'Valley Pawn Studios'/casual-video-inbox/*.mov 2>/dev/null"`
+   If NO video files: end silently (run-summary: "inbox empty"). Do nothing else.
+2. If files exist, run the processor (note the PATH export — ffmpeg lives in /opt/homebrew/bin):
+   `do shell script "export PATH=/opt/homebrew/bin:/usr/local/bin:$PATH; cd ~/Documents/Claude/Projects/'Refine Social Media' && python3 casual_video_processor.py 2>&1 | tail -30"`
+   The script transcribes (faster-whisper/openai-whisper; if neither is importable, first run `python3 -m pip install --user faster-whisper` — it may take a few minutes), burns brand-spec captions, adds lower-third + end-card, normalizes to 9:16, then tries Publer API media upload + scheduling (Brand+BrandIG+BrandTikTok in one job at the next 6 PM ET slot, BrandTwitter in a second job with a ≤270-char caption).
+3. Parse the JSON status lines it prints:
+   - status "scheduled": success for that file.
+   - status "needs_ui_upload": Publer's API media upload failed. Fall back to the Chrome MCP Publer UI flow: open app.publer.com, use the LOCKED account-picker pattern (search-token + JS DOM query — NEVER positional icon clicks; tokens: Brand FB="Valley Pawn", IG="valley_pawn", TikTok="Valley Pawn" tiktok row, X="valleypawn"), upload the MP4 from casual-video-inbox/outbox/ via the file input inside .droparea index 5, paste the caption from the status JSON (main_caption; x_caption for the X composer), Schedule for the target_slot time. Wait for the green "Successfully posted" banner between composers. One composer for FB+IG+TikTok is fine if Publer allows; otherwise separate composers per network.
+   - status "failed": leave the file in the inbox, note in run-summary. Silent to Joshua.
+4. On ≥1 successfully scheduled video, DM Joshua Davis on Slack (find him via user search) ONE message:
+   "🎬 Casual video scheduled: {N} clip(s) → Brand FB/IG/TikTok/X, going live {day} {time} ET."
+5. HARD GUARDRAILS: Publer only — NEVER Meta Graph API, NEVER open instagram.com/facebook.com against Valley Pawn accounts, NEVER developers.facebook.com. No firearms content — if a transcript mentions firearms/guns, do NOT schedule it; leave the processed file in outbox/ and note it in run-summary only.

@@ -1,0 +1,36 @@
+---
+name: daily-intake-prestage
+description: Daily 6:30 AM — drop a Bravo intake-detail pull ("Claude Pawn Walks" report) for yesterday (5 stores) into the pipeline so data lands before the 7:34 daily-intake-margin consumer. Self-healing. Additive; modifies nothing.
+---
+
+
+You are the PRODUCER half of the Valley Pawn daily intake-margin report. Your only job: make sure YESTERDAY's intake-detail CSVs exist in the Bravo Data Extraction pipeline output BEFORE the `daily-intake-margin` consumer fires at 7:34 AM. The cell is `intake-detail` (saved Bravo report "Claude Pawn Walks" — loans + buys from public). Drop the trigger, poll, SELF-HEAL the pipeline if it stalls, and DM Joshua only if you still can't get data after recovery. You do NOT compute margins or post to #pawn-walks — the 7:34 consumer does that.
+
+CRITICAL — NEVER use Parallels GUI / computer-use and NEVER ask Joshua to sign into Bravo. The pipeline is "no Parallels grant required" by design. If Bravo is wedged/at a login screen/minimized, recover it PROGRAMMATICALLY (STEP 3b). Read `/Users/joshuadavis/Documents/Claude/Scheduled/BRAVO_KNOWN_ISSUES.md` first (it has the canonical recovery rule).
+
+WARNING: All filesystem I/O against `/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/` is OUTSIDE this task's sandbox — go through `mcp__Control_your_Mac__osascript` `do shell script`. Never use the Write tool there. Avoid literal single quotes in AppleScript — use `quoted form of`. The osascript wrapper kills any call >~25s — keep in-call sleeps <=18s, guard with `|| true`. If osascript unavailable, load via ToolSearch `select:mcp__Control_your_Mac__osascript`, wait 30s, retry up to ~10 min.
+
+STEP 0 — osascript gate: `do shell script "echo READY"`.
+
+STEP 1 — Compute via osascript `date`: YESTERDAY=`date -v-1d +%Y-%m-%d`; NOW=`date +%Y-%m-%dT%H:%M:%S%z`; TRIGGER_ID="intake-detail-"+`date +%Y-%m-%dT%H-%M-%S`.
+
+STEP 1.5 — ENSURE BRAVO HEALTHY (single-flight self-heal, added 2026-06-19): Before dropping the trigger, run the shared health guard and require PASS. Run BACKGROUNDED so it cannot hang this session: `do shell script "nohup bash '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/bravo_ensure_healthy.sh' CUL > /tmp/intake_ensure.log 2>&1 &"` then poll `logs/_health_gate_status.txt` (<=18s sleeps across separate osascript calls, ~8 min cap) until it reads `PASS`. Only proceed to STEP 2 once Bravo is PASS. The shared gate guarantees Bravo is up/responsive/on a dashboard BEFORE the pull; its lockfile guarantees ONLY ONE gate runs even if sibling morning tasks fire at the same time (no "Bravo already running" collision). STEP 3b remains the reactive backstop.
+
+STEP 2 — Drop the intake-detail trigger for all 5 stores (CUL,HAR,LEX,ROA,WAY). Single-day RANGE (start==end) so the handler writes `<YESTERDAY>_to_<YESTERDAY>_<STORE>_intake-detail.csv`, which the consumer's glob `<YESTERDAY>_*_intake-detail.csv` matches. JSON:
+{"id":"<TRIGGER_ID>","requested_at":"<NOW>","reports":[{"name":"intake-detail","stores":["CUL","HAR","LEX","ROA","WAY"],"date":"<YESTERDAY>..<YESTERDAY>"}]}
+Write: `do shell script "printf '%s' " & quoted form of json & " > " & quoted form of ("/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/triggers/" & TRIGGER_ID & ".json")`
+
+STEP 3 — Poll for completion. Done when `results/<TRIGGER_ID>.result.json` exists OR any `output/<YESTERDAY>_to_<YESTERDAY>_<STORE>_intake-detail.csv` exists. Poll in <=18s sleeps across SEPARATE osascript calls; guard with `|| true`. NOTE: a store with zero buys that day legitimately returns no rows / no CSV — that is NOT a failure, just a quiet day. As long as the run completes (result.json written) you are done even if some/all stores had 0 rows.
+
+STEP 3b — SELF-HEAL (no babysitting). If the trigger is NOT claimed within ~3 min (still in `triggers/`, not moved to `triggers/claimed/`), OR no result/CSV after ~12 min, the watcher is hung or Bravo is absent/minimized. Recover PROGRAMMATICALLY (per BRAVO_KNOWN_ISSUES.md). prlctl exec hangs from THIS interactive session, so run it BACKGROUNDED so it can't hang:
+  1. `do shell script "nohup /usr/local/bin/prlctl exec '{7dc84f03-4e68-4f43-9596-bf8a7dfb8e0a}' --current-user powershell.exe -NoProfile -ExecutionPolicy Bypass -File 'Y:\\Documents\\Claude\\Projects\\Bravo Data Extraction\\_restart_watcher.ps1' > /tmp/intake_restart.log 2>&1 &"` (restarts the watcher; Bravo itself is untouched). If Bravo is actually closed/at login, use `_relaunch_bravo_and_watcher.ps1` instead (launches Bravo + BravoAutoLogin + watcher).
+  2. Wait ~120s (across <=18s sleeps). Confirm `head -1 logs/watcher.last_started.txt` timestamp advanced, and `prlctl exec '{GUID}' --current-user tasklist /v /fi "IMAGENAME eq Bravo.exe" /fo list` shows `Status: Running`.
+  3. Re-drop a FRESH intake-detail trigger (new TRIGGER_ID) and resume STEP 3 polling, capped ~20 more min.
+
+STEP 4 — Finish:
+  - If result.json shows the run completed OR any CSV exists: done, stay silent. The 7:34 consumer reads them. Log "Prestage OK — intake-detail for <YESTERDAY> landed."
+  - If STILL no completion after STEP 3b recovery + retry: DM Joshua `U03BB52MDSA`: "⚠️ Intake prestage <YESTERDAY>: intake-detail pull failed even after a programmatic Bravo restart. Pipeline needs a look." Never post to #pawn-walks.
+
+Reference: cell `intake-detail` (handler reports/IntakeDetail.ahk, saved report "Claude Pawn Walks", output `<start>_to_<end>_<STORE>_intake-detail.csv`); triggers `…/Bravo Data Extraction/triggers/`; output `…/output/`; consumer `daily-intake-margin` 7:34 AM → run_daily_intake.py → #pawn-walks (C0B8WR95N31); Joshua DM U03BB52MDSA; VM GUID {7dc84f03-4e68-4f43-9596-bf8a7dfb8e0a}. Additive only — new intake-detail cell, modifies nothing existing.
+
+<!-- migrated to working model 2026-06-15 -->

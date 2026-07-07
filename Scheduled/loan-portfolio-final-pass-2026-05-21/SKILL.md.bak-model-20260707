@@ -1,0 +1,31 @@
+---
+name: loan-portfolio-final-pass-2026-05-21
+description: DISABLED — superseded by comprehensive analytics spec; will not run.
+---
+
+> ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
+
+FINAL analysis pass for the Optimize Loan Portfolio project after monthly-sliced pipeline trigger completes.
+
+STEPS:
+1. Read STATUS.md at /Users/joshuadavis/Documents/Claude/Projects/Optimize Loan Portfolio/STATUS.md first to confirm context.
+
+2. Check pipeline status: read /Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/results/loan-portfolio-2026-monthly-12mo-2026-05-21T09-30-00.result.json via osascript. Confirm all 62 cells finished (or at least most succeeded). If still in flight, wait/poll for up to 60 more min.
+
+3. Run the v2 analysis:
+   osascript: python3 '/Users/joshuadavis/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/local_7d4c218c-06bf-4a4e-8925-62088f81f954/outputs/v2_real_analysis.py'
+
+4. Run the decision-doc generator (uses workspace bash — node has docx installed at /sessions/jolly-wizardly-johnson/mnt/outputs/node_modules):
+   workspace bash: cd /sessions/jolly-wizardly-johnson/mnt/outputs && node build_v2_decision_docx.js
+
+5. Verify outputs exist in /Users/joshuadavis/Documents/Claude/Projects/Optimize Loan Portfolio/:
+   - Loan_Portfolio_Analysis_v2_<date>.xlsx
+   - Loan_Portfolio_DecisionDoc_<date>.docx
+   - loan_portfolio_v2_summary.json
+   - loan_portfolio_dashboard_v2.html (already exists, reads JSON dynamically)
+
+6. Update STATUS.md with the final-pass results: total tickets loaded, cells succeeded, cells failed, headline ROI findings.
+
+7. DM Joshua at U03BB52MDSA on Slack with a short summary: top 3 categories to lend confidently on, top 3 to tighten/stop, per-store ROI ranking, and a link to the Excel/Word/dashboard. Format as markdown.
+
+If the pipeline is incomplete or some cells errored, still run the analysis on partial data and note in the Slack post which stores have incomplete coverage.

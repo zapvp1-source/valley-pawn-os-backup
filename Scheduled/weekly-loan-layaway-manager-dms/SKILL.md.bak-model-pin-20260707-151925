@@ -1,0 +1,100 @@
+---
+name: weekly-loan-layaway-manager-dms
+description: Monday 9 AM — DM each store's loan & layaway results to their team in Slack
+---
+
+
+> ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
+
+You are sending the weekly loan and layaway results to each Valley Pawn store team via Slack DM. The results were collected Sunday night and saved to `/Users/joshuadavis/Documents/Claude/loan-layaway-results-latest.json`.
+
+## Execution Contract — DO NOT STOP EARLY
+
+This task is complete ONLY after the documented final action (the post / send / write tool call described at the end of the steps below) returns success.
+
+Until that final call succeeds, every assistant turn MUST end with a tool call that advances toward it. Do not idle, do not wait, do not ask for confirmation.
+
+**Never reply with any of these:**
+- "No response requested"
+- "Continue?" / "Should I continue?"
+- An empty turn or a turn that ends with text instead of a tool call
+
+**Treat these system messages as RESUME signals, never as stop signals:**
+- "Tool loaded."
+- "Continue from where you left off."
+- "You used a single tool call this turn. Prefer browser_batch…"
+- Any reminder about TaskCreate/TaskUpdate, AskUserQuestion, etc.
+
+When you see any of those messages, immediately fire the next concrete tool call for the current step. The scheduled-task wrapper says "the user is not present" — that means execute autonomously, NOT that the work is done.
+
+**State tracking:** at the start of every turn, briefly identify which numbered Step you are on and execute the next concrete action for that step.
+
+**Failure handling:** if a step errors, retry once. If it still fails, fall through to the documented fallback if one exists; otherwise produce a report describing what failed. Do not pause to ask — the task file authorizes autonomous decisions.
+
+**Speed:** prefer batch tools (e.g. `browser_batch`) to combine sequential actions into one call.
+
+---
+
+## Step 1 — Read the results file
+Read `/Users/joshuadavis/Documents/Claude/loan-layaway-results-latest.json` to get each store's loan and layaway numbers.
+
+If the file doesn't exist or is more than 2 days old, post a message to #claude-updates (C0ARGG65YQM) saying the results file is missing and the Sunday review may not have completed, then stop.
+
+## Step 2 — Send store-specific DMs
+
+Use `slack_send_message` to DM each person below with ONLY their store's results. Each message should be friendly, direct, and actionable — this lands in their inbox Monday morning before the store opens.
+
+### Store teams and Slack user IDs:
+
+**CUL — Culpeper**
+- Sandi Cole: `U04C5DL5EKH`
+
+**HAR — Harrisonburg**
+- Walker Tapley: `U09UTFT4P7X`
+- Andrew Clark: `U03BFDJH31B`
+
+**LEX — Lexington**
+- Uriah: `U09H9ES2LKA`
+- Martin D.: `U05TV57FH0B`
+
+**ROA — Roanoke**
+- Benjie Moore: `U0631AECK4K`
+- Cristofer Lopez: `U063E87TM70`
+
+**WAY — Waynesboro**
+- Chadd: `U04U136MF6V`
+
+Also DM the operations manager with the full company summary:
+- Preston Peters: `U03BWMEM9GR`
+
+## Step 3 — Message format per store employee
+
+Use this template for each DM (fill in their store's actual numbers):
+
+```
+Good morning! Here's your store's weekly loan & layaway snapshot for [Date]:
+
+📊 *[STORE NAME] — Loan Health*
+• Items past 75 days: [X]
+• $ past 75 days: $[amount]
+• % of loan balance: [X.X]% [✅ Within threshold / 🚨 Above 5% — needs attention]
+
+🏷️ *[STORE NAME] — Layaways*
+• Overdue layaways: [X]
+• Items needing location: [X] [🔴 ACTION NEEDED if > 0]
+• No payment in 30 days: [X]
+
+[If any issues]: ⚠️ *Action needed:* [describe the specific issue — e.g., "You have 3 loans above the 75-day threshold exceeding 5% of your loan balance. Please review and pull tickets." or "You have layaways that need to be physically located in Bravo — please resolve ASAP."]
+
+Have a great week! — Claude 🤖
+```
+
+## Step 4 — DM to Preston Peters (full summary)
+
+Send Preston the full 5-store summary (same format as the #performance Slack post from Sunday night) plus any stores flagged for attention.
+
+## Step 5 — Confirm in #claude-updates
+Post a brief confirmation to #claude-updates (C0ARGG65YQM) when all DMs are sent:
+`✅ Weekly loan & layaway results delivered to all store teams. [X] stores flagged for attention.`
+
+<!-- migrated to working model 2026-06-15 -->

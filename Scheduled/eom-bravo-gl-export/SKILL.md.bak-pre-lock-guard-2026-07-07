@@ -1,0 +1,123 @@
+---
+name: eom-bravo-gl-export
+description: Monthly automated GL export — on the 5th, cycle all 5 Bravo stores to verify accounting posting for the prior month, export the Consolidated General Ledger, upload to Google Drive (Accounting Exports), and import into QuickBooks Online.
+---
+
+
+---
+name: eom-bravo-gl-export
+description: Monthly automated GL export — on the 5th, cycle all 5 Bravo stores to verify accounting posting for the prior month, export the Consolidated General Ledger, upload to Google Drive (Accounting Exports), and import into QuickBooks Online.
+---
+
+> ⚠️ FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE. If this task fails, errors out, or cannot complete for any reason, DO NOT post anything to any Slack channel. On failure: DM Joshua only with what happened and what he needs to do manually. Only post to Slack once the task has genuinely completed.
+
+## Monthly Bravo GL Export & QuickBooks Import
+
+You are running a scheduled monthly task for Valley Pawn (Full Circle Finance Inc). It is the 5th of the month. Export last month's Consolidated General Ledger from all 5 Bravo stores and post it into QuickBooks Online.
+
+Note: Joshua is now managing the books directly — there is no external bookkeeper. QBO access uses the saved Chrome credentials for jdavis@fcfpawn.com.
+
+---
+
+### STEP 1: Notify Joshua and Request Computer Access
+
+Send Joshua a Slack DM (search for Joshua Davis):
+
+"Hey — starting the monthly GL export now (5th of the month). I'll cycle all 5 Bravo stores, verify accounting posting for last month, export the Consolidated GL, and upload it to QuickBooks. Approve the computer access dialog when it pops up and I'll get started."
+
+Then immediately call request_access for Parallels Desktop (with clipboardWrite: true).
+
+---
+
+### STEP 2: Cycle All 5 Stores & Verify Accounting Posting
+
+Use the bravo-store-cycle workflow to log into each store. Order: CUL, HAR, LEX, ROA, WAY.
+
+Credentials:
+- Username: FREE1@WAY (pre-filled on most screens; WAY store shows just FREE1)
+- Password: Health2035! — always paste via clipboard: write_clipboard("Health2035!") then Ctrl+V
+
+For each store, after reaching the Dashboard:
+1. Navigate to Post to Accounting (left sidebar or Accounting section)
+2. Verify every day of the previous calendar month shows as posted
+3. If any days are unposted — post them now
+4. Take a screenshot documenting the posting status
+5. Note any days that errored or could not be posted
+
+After verifying, lock session and cycle to next store:
+Dashboard → Lock Session → Global Access → Store Selector → Next store → Login → Dashboard
+
+---
+
+### STEP 3: Export the Consolidated General Ledger
+
+After all 5 stores are verified:
+1. Navigate to Reports in Bravo
+2. Find Consolidated General Ledger
+3. Set date range: first day through last day of the previous month
+4. Select All Stores (consolidated view)
+5. Run the report
+6. Export — prefer Excel/CSV. If no export button, take screenshots and extract into a structured file.
+7. Save as: YYYY-MM Consolidated GL.xlsx (where YYYY-MM = prior month)
+
+---
+
+### STEP 4: Upload to Google Drive (Accounting Exports Folder)
+
+Upload the GL file to:
+- Folder: Valley Pawn Drive → Accounting Exports
+- Direct URL: https://drive.google.com/drive/u/0/folders/1FzXIRPNZHaECOwfaKpQDMUTPRY3-d12_
+- Account: jdavis@fcfpawn.com
+
+Use Chrome MCP:
+1. Navigate to the Accounting Exports folder URL
+2. Upload the file
+3. Confirm the upload completed
+
+File naming: YYYY-MM Consolidated GL.xlsx
+
+---
+
+### STEP 5: Import into QuickBooks Online
+
+Navigate to QBO using the Chrome MCP and follow the quickbooks-online skill Login Routine:
+- URL: https://app.qbo.intuit.com
+- Use saved Chrome password for jdavis@fcfpawn.com
+- Company: Full Circle Finance Inc (Valley Pawn)
+
+Once logged in, attempt to post the Bravo GL as a journal entry:
+1. Go to + New → Journal Entry
+2. Set the journal date to the last day of the prior month
+3. Reference the GL export to build the debit/credit entries
+4. Add a memo: "Bravo POS Consolidated GL — [Month Year]"
+5. Save the journal entry
+
+IMPORTANT — If you cannot determine the correct account mapping (the exact mappings between Bravo accounts and QBO chart of accounts may not be fully documented on first runs):
+- Do NOT guess at QBO account assignments
+- Save the GL to Drive (Step 4 complete) and skip the QBO journal entry
+- Flag this clearly in the Step 6 summary so Joshua can map the accounts on his review
+
+If QBO prompts MFA — DM Joshua immediately with what's needed. Do not guess codes.
+
+---
+
+### STEP 6: Report Results to Joshua
+
+Send Joshua a Slack DM summarizing:
+- Per-store posting verification status (which stores had all days posted, any exceptions)
+- GL export — success or what format was exported
+- Drive upload — file name and confirmation link
+- QBO journal entry — posted successfully, OR "file is in Drive at [link] — account mapping needed before posting"
+- Any items requiring his manual attention
+
+---
+
+### Important Notes
+- Bravo POS runs inside Parallels Desktop (Windows 11 VM) on Joshua's Mac Studio
+- Always use clipboard paste for passwords: write_clipboard("Health2035!") then Ctrl+V
+- Take screenshots frequently to document UI state
+- This task runs monthly on the 5th for the prior calendar month
+- No external bookkeeper — Joshua reviews QBO directly; all GL reports go to him only
+- Accounting Exports Drive folder: https://drive.google.com/drive/u/0/folders/1FzXIRPNZHaECOwfaKpQDMUTPRY3-d12_
+
+<!-- migrated to working model 2026-06-15 -->

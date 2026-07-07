@@ -1,0 +1,239 @@
+---
+name: monday-bravo-combined-compile
+description: Monday morning orchestrator (PART 2 of 2) — fires ~75 min after monday-bravo-combined-run drops triggers. Reads result.json files + CSVs from the pipeline, compiles and posts to all 5 ops Slack channels (#aged-inventory-review, #store-performance, #loan-review, #layaway-review, #employee-performance), saves Word/Excel files, DMs Joshua the summary.
+---
+
+> ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
+
+You are the compile-and-post phase (PART 2 of 2) for the Monday morning combined Valley Pawn Bravo run. Trigger drop and pipeline data collection happened in `monday-bravo-combined-run` ~75 minutes ago. The pipeline should have produced all CSVs by now.
+
+Your job: read the CSVs and post to the 5 ops Slack channels, save the file outputs, DM Joshua the rollup. ~5-10 min total wall time. Stay light on context.
+
+**STANDING RULE — DATA ONLY in ops channel posts.** No source footers, no process commentary, no pipeline status notes. The team channels (#aged-inventory-review, #store-performance, #loan-review, #layaway-review, #employee-performance) get the data + action items only. Pipeline status / problems go to the DM to Joshua at the end.
+
+==========================================================================
+STEP 0 — Locate today's CSVs
+==========================================================================
+
+Compute today's date in ET as `YYYY_MM_DD` and `YYYY-MM-DD` forms. Compute first-of-month for the employee report.
+
+Find result.json files for today's runs at `/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/results/`:
+- `monday-bravo-combined-YYYY-MM-DD.result.json` — main multi-report (aged-inventory, loans-75, layaways, employee-activity, chekkit-inactives × 5 stores)
+- `monday-eom-{CUL,HAR,LEX,ROA,WAY}-YYYY-MM-DD.result.json` — 5 per-store EOM
+
+If the main result.json is missing or status != success, DM Joshua, dump the trigger ID, and stop. If one or more EOM result.jsons are missing, proceed without store-rankings (post the other 4 reports and note in DM).
+
+Read the cells in each result.json to know which (report, store) CSVs are in `output/`. Skip cells with status != "success" (note them in the DM).
+
+**COMPLETENESS GATE (do not report success on empty pulls).** A cell can report `status: success` and still have pulled nothing (`row_count: 0` / empty CSV). For the reports that MUST return data — **aged-inventory-summary, employee-activity, chekkit-invites** — treat `row_count == 0` or a missing/<50-byte CSV as **INCOMPLETE**, not success. (`loans-75-days-past-due` and `layaways` are single summary rows and 0 is legitimately valid — judge those by whether the CSV has its data row, not by a row threshold.) When any required report is incomplete:
+- Still post the reports that DID return data (don't withhold good data).
+- The end-of-run DM MUST lead with `🚨 INCOMPLETE RUN` and list every empty/failed `(report, store)`. Never send the `✅ complete` rollup when a required report returned 0 rows.
+
+==========================================================================
+STEP 1 — Post to #aged-inventory-review (C04NGH4FF35)
+==========================================================================
+
+Read `output/<TODAY>_<STORE>_aged-inventory-summary.csv` for each store. The CSV is a DevExpress export with:
+- A Jewelry row, a Mfg. Goods row, a Subtotals row
+- Columns: Category, Qty, Cost, Price, <6mo, 6mo-1yr, 1yr-18mo, 18mo-2yr, 2yr-3yr, >3yr
+
+For each store compute:
+- Aged Jewelry $ = Jewelry row's `1yr-18mo` + `18mo-2yr` + `2yr-3yr` + `>3yr`
+- Aged Merch $ = Mfg. Goods row's same four buckets
+- Inventory Balance = Subtotals row's Cost cell
+- J% = Aged Jewelry $ / Inv Bal × 100
+- GM% = Aged Merch $ / Inv Bal × 100
+- Tot% = (Aged Jewelry $ + Aged Merch $) / Inv Bal × 100
+
+Sort stores highest-to-lowest by Tot%. Format the table in a fenced code block. Post:
+
+```
+📊 _Aged Inventory Review — <DATE>_
+_Inventory Aged Over 1 Year (Cost Basis)_
+_Ranked by Total Aged % of Inventory_
+
+<table>
+
+🏆 Cleanest book: <Store> (<Tot%>).  🛠️  Needs the most attention: <Store> (<Tot%>).
+```
+
+Use full store names (Culpeper, Harrisonburg, Lexington, Roanoke, Waynesboro) in the table.
+
+==========================================================================
+STEP 2 — Post to #loan-review (C0B08RS2BMK) + #layaway-review (C04N24STDP1)
+==========================================================================
+
+**LOAN POST:**
+
+Read `output/<TODAY>_<STORE>_loans-75-days-past-due.csv` for each store. Each is a single-row CSV: `store, date, count, dollar_sum`.
+
+For loan balances (denominators), read the **freshest complete per-store End-of-Month CSV set** at `output/<EOM_DATE>_<STORE>_end-of-month.csv` and extract the `Ending Loan Base ` row dollar value (canonical loan balance — the exact source `monday-store-rankings` uses; see its SKILL Step 2). Pick the most recent `<EOM_DATE>` for which all 5 stores' EOM CSVs exist and are ≥ 500 bytes.
+
+> ⚠️ **NEVER** scrape a loan balance from an old Slack post and **NEVER** hard-code a figure (e.g. the retired `$685,567.85`). Stale denominators produce non-comparable percentages — this was the documented failure. The balance MUST come from an EOM CSV, and the post MUST state its as-of date.
+
+- **If a complete fresh EOM set exists:** compute pct = dollar_sum / loan_balance × 100 per store (✅ if ≤ 5%, 🔴 if > 5%), and add a line to the post: `_Loan balances as of <EOM_DATE>._` If `<EOM_DATE>` is more than 8 days before today, also append `⚠️ loan balance is <N> days old — EOM/store-rankings has not refreshed` to the **Joshua DM** (not the channel).
+- **If NO complete EOM set exists:** post counts + dollars only, `%` shown as `n/a`, with the single channel line `5% policy check pending a current loan balance.` Do not invent a denominator.
+
+Post to #loan-review:
+
+```
+📋 *Weekly Past-Due Loan Review — <DATE>*
+
+*PAST DUE LOANS (75-day rule — cap 5% of loan balance)*
+• *CUL* — <N> items / $<amt> / <pct>% <✅/🔴>
+• *HAR* — <N> items / $<amt> / <pct>% <✅/🔴>
+• *LEX* — <N> items / $<amt> / <pct>% <✅/🔴>
+• *ROA* — <N> items / $<amt> / <pct>% <✅/🔴>
+• *WAY* — <N> items / $<amt> / <pct>% <✅/🔴>
+*Total past 75d:* <N> items / $<amt> (<company_pct>% of $<company_loan_bal> company loan balance)
+
+[For each store with 🔴, add an action line:]
+🔴 *<STORE>* is <pct>% past 75 days — out of the 5% policy. Needs to be caught up.
+```
+
+**LAYAWAY POST:**
+
+Read `output/<TODAY>_<STORE>_layaways.csv` for each store. CSV format: `store, date, overdue, past_pmt_due, contacted_no_activity, no_pmt_30d, locate`.
+
+For EACH of the four count metrics (overdue, past_pmt_due, contacted_no_activity, no_pmt_30d), compute each store's value as a percent of the company total for that metric, rounded to a whole number: `pct = round(store_value / company_total * 100)`. Show each store cell as `<N> (<pct>%)`. The **Locate** column stays a plain count (no %). The Company row shows plain sums (no %).
+
+Post to #layaway-review:
+
+```
+📋 *Weekly Layaway Review — <DATE>*
+_(% = store's share of the company total for that metric)_
+
+​```
+Store         Overdue    Past Pmt Due Contacted/No Act 30d-No-Pmt  Locate
+────────────  ───────    ──────────   ──────────────   ────────    ──────
+Culpeper      <N (P%)>   <N (P%)>     <N (P%)>         <N (P%)>    <X>
+Harrisonburg  <N (P%)>   <N (P%)>     <N (P%)>         <N (P%)>    <X>
+Lexington     <N (P%)>   <N (P%)>     <N (P%)>         <N (P%)>    <X>
+Roanoke       <N (P%)>   <N (P%)>     <N (P%)>         <N (P%)>    <X>
+Waynesboro    <N (P%)>   <N (P%)>     <N (P%)>         <N (P%)>    <X>
+────────────  ───────    ──────────   ──────────────   ────────    ──────
+Company       <sum>      <sum>        <sum>            <sum>       <sum>​```
+
+[If any store has non-zero Locate, prefix Company-row Locate with 🔴 like `🔴<N>`. Then for each store with non-zero Locate, add:]
+🔴 *<STORE> has <N> Locate Layaway(s)* — must be physically located and resolved
+[If NO store has any Locate layaways, instead add the line:]
+_No Locate layaways this week._
+```
+
+**Write the results JSON** for the downstream `weekly-loan-layaway-manager-dms` task (fires Monday 9 AM and reads this file):
+
+```bash
+# Write to /Users/joshuadavis/Documents/Claude/loan-layaway-results-latest.json
+```
+
+Schema:
+```json
+{
+  "date": "<TODAY>",
+  "company_loan_balance": <float>,
+  "stores": {
+    "CUL": {
+      "loan_count": <int>, "loan_dollar": <float>, "loan_pct": <float>, "loan_status": "ok" | "over",
+      "layaway_overdue": <int>, "layaway_past_pmt_due": <int>,
+      "layaway_contacted_no_act": <int>, "layaway_no_pmt_30d": <int>, "layaway_locate": <int>
+    },
+    "HAR": { ... }, "LEX": { ... }, "ROA": { ... }, "WAY": { ... }
+  }
+}
+```
+
+`loan_status` = `"ok"` if loan_pct ≤ 5%, `"over"` if > 5%. The downstream DM task uses this to format the per-manager Slack message.
+
+==========================================================================
+STEP 3 — Post to #employee-performance (C0ATTLPQHR8)
+==========================================================================
+
+Read `output/<FIRST_OF_MONTH>_<STORE>_employee-activity.csv` for each store. The CSV has a DevExpress header, then an Employee header row with columns including `Retail Sales Excluding Fees` (use that exact column).
+
+For each employee row (skip `Total Store`, `SYSTEM`, `Report printed on`):
+- Parse name as everything after the first `' - '` in the Employee column
+- Capture Retail Sales Excluding Fees as a float
+
+Aggregate ACROSS stores by employee name — multi-store employees (Preston Peters, Martin Dowden, Chadd McClintic, etc.) get summed and shown as `STORE1+STORE2+...`. Filter out:
+- Any employee named PRESTON PETERS (always excluded)
+- Any employee with $0.00 total
+
+Sort highest-to-lowest. Use 🥇🥈🥉 for ranks 1-3, then "4th", "5th" etc. Post:
+
+```
+*MTD Employee Sales Rankings — Retail Sales Excluding Fees (Bravo POS)*
+📊 Period: <FIRST_OF_MONTH>–<TODAY>
+
+🥇 *<NAME>* (<STORES>) — $<amt>
+🥈 *<NAME>* (<STORES>) — $<amt>
+🥉 *<NAME>* (<STORES>) — $<amt>
+4th *<NAME>* (<STORES>) — $<amt>
+...
+Nth *<NAME>* (<STORES>) — $<amt>
+```
+
+==========================================================================
+STEP 4 — Post to #store-performance (C03CGTN3KN1) — store rankings
+==========================================================================
+
+This requires all 5 per-store `<YESTERDAY>_<STORE>_end-of-month.csv` files. If any are missing/error, SKIP this post and add a `⚠️ monday-store-rankings — N of 5 EOM CSVs available, skipping post until backfill` line to the Joshua DM.
+
+If all 5 available, run the parse + format per `/Users/joshuadavis/Documents/Claude/Scheduled/monday-store-rankings/SKILL.md`. The post format is the trophy-medal ranking + 8-metric breakdown shared in the SKILL.
+
+(Read that SKILL inline at run time to get the canonical format.)
+
+==========================================================================
+STEP 5 — Save files
+==========================================================================
+
+Save to `/Users/joshuadavis/Documents/Claude/Scheduled/`:
+- `Loan_Layaway_Review_<TODAY>.docx` — combined loan + layaway doc per weekly-loan-layaway-review SKILL
+- `Valley_Pawn_Store_Rankings_<MonthYYYY>.xlsx` — IF Step 4 ran (the 5 EOM CSVs were available)
+- `employee-sales-rankings-<TODAY>.xlsx` — the full unfiltered ranking including Preston and zeros, per weekly-employee-sales-rankings SKILL
+
+**Stash the chekkit-inactives CSVs** for the Tuesday `chekkit-weekly-review-requests` task (which checks this location in its Step 1A before doing its own pipeline pull):
+
+```bash
+mkdir -p '/Users/joshuadavis/Documents/Claude/Scheduled/_shared-bravo-data/<TODAY>/chekkit-inactives'
+cp '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/output/<TODAY>_CUL_chekkit-inactives.csv' \
+   '/Users/joshuadavis/Documents/Claude/Scheduled/_shared-bravo-data/<TODAY>/chekkit-inactives/CUL.csv'
+# repeat for HAR, LEX, ROA, WAY
+```
+
+The stash uses store-name-only filenames (`CUL.csv`, not `2026-05-29_CUL_chekkit-inactives.csv`) because that's the convention the Tuesday task's Step 1A checks for.
+
+==========================================================================
+STEP 6 — DM Joshua the rollup
+==========================================================================
+
+DM Joshua (`U03BB52MDSA`):
+
+```
+✅ Monday combined Bravo run complete — <DATE>
+
+Pipeline-driven (no Parallels grant used):
+✅ weekly-aged-inventory-report — posted to <#C04NGH4FF35|aged-inventory-review>
+[✅/⚠️] monday-store-rankings — [posted/skipped, reason]
+✅ weekly-loan-layaway-review — posted to <#C0B08RS2BMK|loan-review> + <#C04N24STDP1|layaway-review>
+✅ weekly-employee-sales-rankings — posted to <#C0ATTLPQHR8|employee-performance>
+
+[List any 🔴 action items pulled from the ops posts]
+
+Downstream tasks (fire later, fed by what this task produced):
+- `weekly-loan-layaway-manager-dms` runs Mon 9 AM, reads `/Users/joshuadavis/Documents/Claude/loan-layaway-results-latest.json`
+- `chekkit-weekly-review-requests` runs Tue 4:40 PM, reads from the chekkit stash at `/Users/joshuadavis/Documents/Claude/Scheduled/_shared-bravo-data/<TODAY>/chekkit-inactives/`
+
+Files in /Users/joshuadavis/Documents/Claude/Scheduled/.
+```
+
+Use 🚨 instead of ✅ for any chained SKILL that failed at compile/post, and add a one-line reason.
+
+==========================================================================
+ESCAPE HATCH — IF RESULTS MISSING
+==========================================================================
+
+If `monday-bravo-combined-<DATE>.result.json` doesn't exist when this task fires, the pipeline hasn't finished or hung. Check the watcher log at `logs/monday-bravo-combined-<DATE>.log` for recent activity:
+- If log shows recent SUCCESS/Running lines (within last 5 min) → DM Joshua "pipeline still running, will retry myself in 30 min", then use `update_scheduled_task` to reschedule THIS task for 30 min from now via `fireAt`. Exit.
+- If log shows last activity 10+ min ago → pipeline is hung. DM Joshua with the log tail (last 20 lines) and stop. Don't try to recover — Joshua will look.
+
+Never post stale or partial data to ops channels without DM-flagging the problem first.

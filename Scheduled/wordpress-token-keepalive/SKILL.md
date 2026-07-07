@@ -1,0 +1,33 @@
+---
+name: wordpress-token-keepalive
+description: Twice-daily WordPress.com connector token keep-alive ping (silent on success).
+model: claude-haiku-4-5
+---
+
+
+> ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
+
+Keep the WordPress.com connector OAuth token alive by issuing a lightweight read.
+
+STEPS:
+1. Call the tool `mcp__40f0bfed-dd3b-4c55-b43a-ad8386c9caa0__wpcom-mcp-content-authoring` with:
+   - operation / action: `posts.list`
+   - site: `253641920`
+   - per_page: `1`
+   (Use whatever parameter names the tool's schema requires; the intent is a `posts.list` call against site 253641920 returning 1 post.)
+
+2. Evaluate the result:
+   - SUCCESS (HTTP 200 / posts returned, even if zero): do nothing. Stay silent. Do not post to Slack. Do not send any notification. Just exit.
+   - AUTH FAILURE (401 Unauthorized, 403 Forbidden, "invalid_token", "token expired", "authorization_required", reauthorize / reconnect required, or any error indicating the WordPress.com connector OAuth credential is no longer valid): send a Slack DM (see step 3).
+   - OTHER FAILURES (network error, 500, rate limit, transient issues, tool not found, etc.): do NOT alert. Stay silent. These are not auth failures.
+
+3. On AUTH FAILURE only, send a Slack direct message to user `U03BB52MDSA` (Joshua) using `mcp__f92ce7c6-0353-4419-8491-f0843b182ff2__slack_send_message`. Message body:
+   "WordPress.com connector token appears to need reauthorization. The twice-daily keep-alive ping returned an auth error: <paste the exact error message/code>. Please reconnect the WordPress.com connector in Cowork settings."
+
+CONSTRAINTS:
+- Silent on success. No chat output, no Slack message, no summary.
+- Only alert on auth/authorization errors — not on transient network or server errors.
+- Do not retry more than once. A single call per run is sufficient — the goal is just to exercise the token.
+- Do not use computer-use, Chrome, or browser automation for this task. MCP tool calls only.
+
+<!-- migrated to working model 2026-06-15 -->

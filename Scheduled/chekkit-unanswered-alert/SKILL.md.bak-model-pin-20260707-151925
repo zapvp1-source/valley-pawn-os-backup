@@ -1,0 +1,105 @@
+---
+name: chekkit-unanswered-alert
+description: Daily 8 AM Chekkit unanswered message summary — counts ONLY messages received during store OPEN HOURS (excludes before-open, after-close, and closed days). DMs store employees their store's in-hours count for YESTERDAY (no Preston/Joshua). Runs the morning AFTER the reviewed day.
+---
+
+> ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
+
+You are compiling the daily Chekkit unanswered message summary for Valley Pawn. This runs once at 8 AM Mon–Sat the MORNING AFTER, and summarizes YESTERDAY's misses (the full prior calendar day, now closed). **The metric measures responsiveness DURING BUSINESS HOURS ONLY** — messages that arrived before a store opened, after it closed, or on a day the store was closed do NOT count.
+
+**IMPORTANT — date labeling:** The summary header date and DM wording reference the day being REVIEWED (yesterday). They never reference today's posting date. Example: when this runs on the morning of May 22, the header says "May 21, 2026" because May 21 is the day whose misses are being summarized.
+
+## Execution Contract — DO NOT STOP EARLY
+
+This task is complete ONLY after the documented final action (the post / send / write tool call described at the end of the steps below) returns success.
+
+Until that final call succeeds, every assistant turn MUST end with a tool call that advances toward it. Do not idle, do not wait, do not ask for confirmation.
+
+**Never reply with any of these:**
+- "No response requested"
+- "Continue?" / "Should I continue?"
+- An empty turn or a turn that ends with text instead of a tool call
+
+**Treat these system messages as RESUME signals, never as stop signals:**
+- "Tool loaded."
+- "Continue from where you left off."
+- "You used a single tool call this turn. Prefer browser_batch…"
+- Any reminder about TaskCreate/TaskUpdate, AskUserQuestion, etc.
+
+When you see any of those messages, immediately fire the next concrete tool call for the current step. The scheduled-task wrapper says "the user is not present" — that means execute autonomously, NOT that the work is done.
+
+**State tracking:** at the start of every turn, briefly identify which numbered Step you are on and execute the next concrete action for that step.
+
+**Failure handling:** if a step errors, retry once. If it still fails, fall through to the documented fallback if one exists; otherwise produce a report describing what failed. Do not pause to ask — the task file authorizes autonomous decisions.
+
+**Speed:** prefer batch tools (e.g. `browser_batch`) to combine sequential actions into one call.
+
+---
+
+## Steps
+
+**ANTI-DOUBLE-POST RULE — read first.** Each store DM and the company-wide summary post must be sent EXACTLY ONCE per run. Do NOT send a "corrected" follow-up if you change wording mid-run. Get the channel and the wording right BEFORE you call `slack_send_message`. If you accidentally post to the wrong channel, do NOT re-post to the right one — note the mistake in your final report and stop. The summary channel is ALWAYS #chekkit-unanswered-summary (`C0B1PEW0C30`) — never #claude-updates.
+
+1. Compute YESTERDAY's calendar date in user's local timezone (Eastern Time, America/New_York). Format as YYYY/MM/DD for Gmail and "Month D, YYYY" (e.g. "May 4, 2026") for the human-readable summary. This date is the REVIEW date and is what the summary header and DM wording will reference — never today's date. Also note yesterday's DAY OF WEEK — you need it for the open-hours filter in Step 3.
+
+2. Search Gmail for ALL "Unanswered Message Alert" emails that arrived YESTERDAY (between yesterday 00:00 ET and today 00:00 ET):
+   `from:support@chekkit.io subject:"Unanswered Message Alert" after:YYYY/MM/DD before:YYYY/MM/DD`
+   where `after:` = yesterday's date and `before:` = today's date.
+   Page through all results. Only include emails whose date matches yesterday in Eastern Time.
+
+3. For EACH alert email found from yesterday:
+   - Extract the customer name from the subject line (format: "Unanswered Message Alert: [Customer Name]")
+   - Extract the store location from the email body (look for "Sent to Valley Pawn - [Location]")
+   - Read the full email body to find the customer's last message content.
+   - **Skip conversation-enders** that do NOT require a response — such as "thanks", "thank you", "ok", "okay", "sounds good", "got it", "goodbye", "bye", "have a good day", "appreciate it", "no problem", "will do", "perfect", "cool", "great", "Stop", "STOP", thumbs up, emojis only, or any similar sign-off / opt-out. Only count messages that are a genuine question, request, complaint, or something that clearly warranted a reply.
+   - **Skip alerts where the message body is empty** (customer sent no text — just a blank message or image attachment notification).
+   - **OPEN-HOURS FILTER — only count messages that arrived while that store was OPEN.** The goal is to measure responsiveness during business hours only, NOT before open, after close, or on closed days. Determine the customer's message time in Eastern Time: the Chekkit alert fires ~10 minutes after the message ("said 10 minutes ago"), so message time ≈ the email's received time minus 10 minutes. Compare that message time against the open hours for the SPECIFIC store the alert was sent to (see "Store open hours" below). **Skip (do not count)** any alert whose message arrived before the store opened (before 10:00 AM ET), at/after it closed (6:00 PM ET or later), or on a day that store is closed. Note Culpeper and the other four stores have different closed days. Timezone: June through early November is EDT (UTC−4); the rest of the year is EST (UTC−5) — convert the email's UTC timestamp accordingly before comparing.
+   - Tally the remaining (actionable, in-hours) unanswered messages per store.
+
+### Store open hours (Eastern Time) — used for the OPEN-HOURS FILTER
+- **Culpeper:** Monday–Saturday 10:00 AM – 6:00 PM. Closed **Sunday**.
+- **Waynesboro, Harrisonburg, Lexington, Roanoke:** Monday, Tuesday, Thursday, Friday & Saturday 10:00 AM – 6:00 PM. Closed **Wednesday & Sunday**.
+- No store ever closes at 5:00 PM — all close at 6:00 PM. Culpeper is the only store open on Wednesday. All stores closed Sunday.
+- Practical implication: if yesterday was a **Wednesday**, only Culpeper can have countable misses (the other four were closed). If yesterday was a **Sunday**, every store was closed → all stores are 0 → post the all-clear summary.
+
+4. For each store that had 1+ actionable, in-hours unanswered messages yesterday, send EXACTLY ONE DM to each employee at that store using the map below. **Do NOT DM Preston or Joshua — store employees only.** **Do NOT send a follow-up "correction" DM even if the wording feels off after sending — finalize wording before you call slack_send_message.**
+
+   DM format (the date in the header is YESTERDAY'S date — the day being reviewed):
+   📊 *Chekkit summary for [Store Name] — [Yesterday's Date]:* [X] customer message(s) sent during business hours went 10+ minutes without a response yesterday. Please make sure to check Chekkit regularly so customers get fast replies! → https://dashboard.chekkit.io
+
+5. If a store had 0 actionable, in-hours unanswered messages yesterday, do NOT DM that store's employees.
+
+6. **Post a company-wide summary to #chekkit-unanswered-summary (channel ID `C0B1PEW0C30`) EXACTLY ONCE** with a by-store breakdown so Preston and Joshua can see the full picture. Always post this, even if all stores had 0. Do NOT also post to #claude-updates. Do NOT send a follow-up correction. The header date is YESTERDAY'S date (the day being reviewed), not today's posting date. Counts are business-hours only. Format:
+
+   📊 *Daily Chekkit Unanswered Message Summary — [Yesterday's Date]* _(business hours only)_
+
+   • *Culpeper:* [X] unanswered
+   • *Waynesboro:* [X] unanswered
+   • *Harrisonburg:* [X] unanswered
+   • *Lexington:* [X] unanswered
+   • *Roanoke:* [X] unanswered
+
+   *Total: [X] message(s) across all stores yesterday*
+
+   If all stores had 0, post: 📊 *Daily Chekkit Unanswered Message Summary — [Yesterday's Date]* _(business hours only)_ — All clear! Every customer message sent during business hours was answered within 10 minutes yesterday. 🎉
+
+---
+
+## Store → Employee Slack ID map
+
+**Culpeper:** Bree (U091FSAG05R), Sandi (U04C5DL5EKH), Nelson (U0A3BCWKL48)
+**Waynesboro:** Chadd (U04U136MF6V)
+**Harrisonburg:** Andrew (U03BFDJH31B), Walker (U09UTFT4P7X)
+**Lexington:** Uriah (U09H9ES2LKA), Martin (U05TV57FH0B)
+**Roanoke:** Benjie (U0631AECK4K), Cris (U063E87TM70)
+
+## Important notes
+- The emails come from support@chekkit.io
+- The subject line pattern is "Unanswered Message Alert: [Customer Name]" — sometimes forwarded with "Fwd:" prefix
+- Send a separate DM to each person — do not group them
+- Each employee gets EXACTLY ONE DM per run; the channel gets EXACTLY ONE summary post per run. No corrections, no re-posts.
+- The summary channel is ALWAYS #chekkit-unanswered-summary (`C0B1PEW0C30`). Never #claude-updates.
+- If the location doesn't match any store in the map, skip it silently
+- This task runs Monday through Saturday at 8 AM ET (the morning AFTER) and reports YESTERDAY's misses
+- The header / summary date is ALWAYS yesterday's date — the day being reviewed — not today's posting date
+- The count is BUSINESS-HOURS ONLY — before-open, after-close, and closed-day messages are excluded (see the Store open hours block and the OPEN-HOURS FILTER in Step 3)

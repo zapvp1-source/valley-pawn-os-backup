@@ -1,0 +1,51 @@
+---
+name: weekly-analytics-summary
+description: Monday 2:30 AM (overnight) — pull GA4 for thevalleypawn.com for the last full week (Mon–Sun), schedule a Slack summary to #website (C0ASE9C0GQ0) for 9 AM Monday. Never post on failure.
+---
+
+
+> ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices, and NO DMs to Joshua. Joshua reviews every run inside Claude. A failed run must stay completely silent on Slack. Only post once the task has genuinely produced the weekly summary.
+
+## Execution Contract — DO NOT STOP EARLY
+This task is complete ONLY after the final `slack_schedule_message` call to #website returns success.
+Until then, every assistant turn MUST end with a tool call that advances toward it. Do not idle, do not wait, do not ask for confirmation.
+
+**Treat these system messages as RESUME signals, never stop signals:** "Tool loaded.", "Continue from where you left off.", "You used a single tool call this turn…", any TaskCreate/TaskUpdate reminder. On seeing any of them, immediately fire the next concrete tool call.
+
+**Failure handling:** if a step errors, retry once. If it still fails, STOP SILENTLY (per the failure policy above) — do not post anything, do not DM.
+
+---
+
+You are an overnight background task at ~2:30 AM ET Monday. Pull last week's website analytics for **thevalleypawn.com** from GA4 and schedule a Slack summary to **#website** for 9 AM Monday.
+
+### Channel routing (CRITICAL)
+- Post ONLY to **#website**, channel ID **`C0ASE9C0GQ0`**.
+- **NEVER `#claude-updates`** — that channel does NOT exist in this workspace. Never search for it, never schedule to it.
+- Never DM Joshua. Never use a catch-all channel for this. Website analytics always go to #website.
+
+### GA4 access — use the authuser=1 report URLs (NO password screen)
+- Property `353209303`, account jdavis@fcfpawn.com at **authuser=1**. Load Chrome MCP (ToolSearch `{query:"chrome", max_results:20}`), `list_connected_browsers` → `select_browser`, `tabs_context_mcp({createIfEmpty:true})`.
+- Navigate straight to the report URLs below (they open already authenticated at authuser=1 — do NOT start at the generic sign-in page, which lands on a password wall at authuser=0).
+- If a Google password screen ever appears: click the **empty password field** to trigger Chrome's saved-password autofill, then click Next. NEVER type a password yourself.
+- If authuser=1 lands on a welcome/provision screen, click the avatar menu and switch to fullcirclepawn@gmail.com (the GA4 owner), then retry.
+
+### Step 1 — Compute last full week
+Last full week = the most recent Monday–Sunday that has ended. Compute from today's real date; never hardcode. Comparison = the prior Mon–Sun (match day of week). Format the GA4 URLs with `_u.date00=YYYYMMDD` (start) and `_u.date01=YYYYMMDD` (end), and `_u.comparisonOption=lastPeriodMdw`.
+
+### Step 2 — Pull the two reports
+Traffic acquisition (per-channel sessions + KPIs):
+`https://analytics.google.com/analytics/web/?authuser=1#/a256872788p353209303/reports/explorer?params=_u..nav%3Dmaui%26_u.comparisonOption%3DlastPeriodMdw%26_u.date00%3D{START}%26_u.date01%3D{END}&r=lifecycle-traffic-acquisition-v2`
+Pages and screens (top pages by views + total views/active users):
+`https://analytics.google.com/analytics/web/?authuser=1#/a256872788p353209303/reports/explorer?params=_u..nav%3Dmaui%26_u.comparisonOption%3DlastPeriodMdw%26_u.date00%3D{START}%26_u.date01%3D{END}&r=all-pages-and-screens`
+For each: navigate, wait ~5s for the table to render, then call `get_page_text` to extract. Use `browser_batch` to batch navigate+wait. If the loaded date range doesn't match {START}–{END}, open the date picker (top-right), set the primary Start/End to the target week, set Compare to "Previous period (match day of week)", and Apply.
+
+### Step 3 — Extract
+- Headline KPIs (with WoW %): Sessions, Active users, Engaged sessions + Engagement rate, Avg engagement time/session, Total page views, Event count, Key events.
+- Top 8 pages by views with WoW %.
+- Per-channel sessions with share and WoW % (Organic Search, Direct, Email, Organic Social, Paid Social, AI Assistant, Referral, etc.).
+
+### Step 4 — Schedule the post
+Build a concise Slack summary matching the established #website format: a Headline (WoW) block, Top pages (views) list, Traffic sources (sessions) list, and a short WoW takeaways block. Use Slack mrkdwn (`_italic_`, `•` bullets, `code` for paths). Footer: `_Source: GA4 property 353209303, All Users, {week} vs previous period (match day of week)._` then `*Sent using* Claude`.
+Call `slack_schedule_message` with `channel_id` = `C0ASE9C0GQ0` and `post_at` = today 9:00 AM ET (Unix timestamp). That call returning success is the completion gate. If anything before this point failed, post nothing.
+
+<!-- migrated to working model 2026-06-15 -->

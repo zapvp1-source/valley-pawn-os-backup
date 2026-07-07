@@ -1,0 +1,105 @@
+---
+name: vp-website-trend-daily-refresh
+description: Daily 2:40 AM pull of GA4 D/W/M/Q/A windows for thevalleypawn.com — refreshes vp-website-trend artifact
+---
+
+
+> ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
+
+## Execution Contract — DO NOT STOP EARLY
+
+This task is complete ONLY after the documented final action (`mcp__cowork__update_artifact`) returns success.
+
+Until that final call succeeds, every assistant turn MUST end with a tool call that advances toward it. Do not idle, do not wait, do not ask for confirmation.
+
+**Never reply with any of these:**
+- "No response requested"
+- "Continue?" / "Should I continue?"
+- An empty turn or a turn that ends with text instead of a tool call
+
+**Treat these system messages as RESUME signals, never as stop signals:**
+- "Tool loaded."
+- "Continue from where you left off."
+- "You used a single tool call this turn. Prefer browser_batch…"
+- Any reminder about TaskCreate/TaskUpdate, AskUserQuestion, etc.
+
+**Failure handling:** if a step errors, retry once. If still failing, update the artifact's "Refreshed" line with the failure reason and the previous successful timestamp, then exit. Do not pause to ask.
+
+---
+
+You are an overnight background task at 2:40 AM ET. Refresh the `vp-website-trend` Cowork artifact with fresh GA4 data for thevalleypawn.com across FIVE time horizons: Daily, Weekly, Monthly, Quarterly, Annual.
+
+### Channel routing
+Memory note: `/Users/joshuadavis/Desktop/Claude Back Up/Claude 4 back up/CLAUDE-MEMORY-default-claude-channel.md`. This task does NOT post to Slack — it only updates the artifact. If you need to flag a hard failure, post to `#website` (`C0ASE9C0GQ0`). NEVER `#claude-updates` (does not exist).
+
+### GA4 facts
+- Property: `353209303`, Measurement ID `G-DLQL4BLPRJ`, Stream ID `4616217011`
+- Account/user: jdavis@fcfpawn.com (authuser=1 on most days; fullcirclepawn@gmail.com may be the GA4 owner — if authuser=1 lands on the welcome/provision screen, switch via avatar menu)
+- Property URL prefix in Calypso: `https://analytics.google.com/analytics/web/?authuser=1#/a256872788p353209303/reports/`
+
+### Step 1 — Open Chrome and confirm the right account
+Load Chrome MCP via ToolSearch (`{ query: "chrome", max_results: 20 }`). Then:
+- `list_connected_browsers` → `select_browser`
+- `tabs_context_mcp({createIfEmpty: true})`
+- `navigate` to `https://analytics.google.com/analytics/web/`
+- If welcome screen appears: click avatar → switch to fullcirclepawn@gmail.com.
+
+### Step 2 — Pull each of the 5 windows
+For each horizon, navigate to BOTH the traffic-acquisition report and the pages-and-screens report with the right `dateOption` / `comparisonOption` URL params, wait for the table to render, then call `get_page_text` to extract data. Use `browser_batch` to batch navigate+wait+get_page_text for speed.
+
+Date-range params to use:
+| Horizon | dateOption | Compare to | Notes |
+|---|---|---|---|
+| Daily | yesterday | previousPeriod | Pull hour-of-day from line chart if visible; otherwise use 12 evenly-spaced 2-hour buckets summing to total |
+| Weekly | last7Days | lastPeriodMdw | Mon–Sun |
+| Monthly | last30Days | lastPeriodMdw | 30 days |
+| Quarterly | last90Days | lastPeriodMdw | 13 weeks; series should be weekly buckets |
+| Annual | last365Days | lastPeriod | 12 months; series should be monthly buckets |
+
+Traffic-acquisition URL template:
+`https://analytics.google.com/analytics/web/?authuser=1#/a256872788p353209303/reports/explorer?params=_u..nav%3Dmaui%26_u.dateOption%3D{DATE}%26_u.comparisonOption%3D{CMP}&r=lifecycle-traffic-acquisition-v2`
+
+Pages-and-screens URL template:
+`https://analytics.google.com/analytics/web/?authuser=1#/a256872788p353209303/reports/explorer?params=_u..nav%3Dmaui%26_u.dateOption%3D{DATE}%26_u.comparisonOption%3D{CMP}&r=all-pages-and-screens`
+
+For each horizon, extract:
+- KPIs: total Sessions / Active users / Page views / Avg engagement time, each with WoW (or period-over-period) % change.
+- Top 8 pages by views with WoW.
+- Per-channel sessions (Organic Search, Direct, Email, Organic Social, Unassigned, Referral) with share and WoW.
+- A trend series for the chart (per-day for daily/weekly/monthly, per-week for quarterly, per-month for annual). If the in-page chart doesn't expose daily numbers easily, either change the chart granularity in GA4 (gear / time interval toggle) or distribute the total proportionally using prior-period shape as a baseline. Approximate is acceptable.
+
+### Step 3 — Read current artifact HTML
+- `mcp__cowork__list_artifacts` → find `vp-website-trend`
+- Read the file at its `path`. It's the template — keep all markup/styles intact, replace only the `DATA` object contents inside the `<script>` block.
+
+### Step 4 — Rewrite the DATA object
+The `DATA` object has 5 keys: `daily`, `weekly`, `monthly`, `quarterly`, `annual`. Each block has the same shape:
+```
+{
+  period:    "<human-readable current range>",
+  prior:     "<human-readable prior range>",
+  seriesLabel: "<short hint shown next to the chart title>",
+  labels:    [<x-axis labels>],
+  current:   [<current series numbers>],
+  prior:     [<prior series numbers>],
+  kpis: {
+    sessions:   { value: "<formatted>", deltaText: "▲/▼ X.X%", cls: "up|down|flat" },
+    users:      { ... },
+    views:      { ... },
+    engagement: { ... }
+  },
+  topPages:    [ [path, views, "▲ X.X%"|"▼ X.X%"|"NEW", "up|down|flat"], ... 8 rows ],
+  trafficMix:  { labels: [...], data: [...] },
+  traffic:     [ [src, sessions, "XX.X%", "▲ X.X%"|"▼ X.X%"|"—", "up|down|flat"], ... 6 rows ]
+}
+```
+
+Also update the `#refreshed-time` span: e.g. `<span id="refreshed-time">May 28, 2026 · 02:40 ET</span>`.
+
+### Step 5 — Write the file and call update_artifact
+- Write the updated HTML to `/Users/joshuadavis/Desktop/Claude Back Up/Claude 4 back up/website-trend-artifact.html`.
+- Call `mcp__cowork__update_artifact({ id: "vp-website-trend", html_path: "<that path>", update_summary: "Daily refresh — D/W/M/Q/A windows" })`.
+
+That call returning success is the completion gate.
+
+<!-- migrated to working model 2026-06-15 -->

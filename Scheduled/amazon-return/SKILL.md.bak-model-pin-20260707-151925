@@ -1,0 +1,33 @@
+---
+name: amazon-return
+description: Process an Amazon return via Chrome browser — find the item, initiate return, select UPS Store drop-off, and send back the QR code/label link.
+---
+
+
+> ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
+
+You are processing an Amazon return for Joshua. He will tell you which item to return.
+
+## Steps
+
+1. Open Amazon orders page using Chrome browser tools (navigate to https://www.amazon.com/gp/your-account/order-history).
+2. Search for the item Joshua described in his orders. Try the exact product name first, then broader terms (e.g., "ethernet cable" instead of "cat 6 cable") if no results.
+3. Click "View order details" on the matching order, then click "Return or replace items."
+4. Select the return reason: "Bought by mistake" (unless Joshua specifies a different reason).
+5. For packaging question, select "Package not opened" (unless Joshua says otherwise).
+6. Add a brief comment if required (e.g., "Returning item — bought by mistake").
+7. Click through any troubleshooting screens by selecting "Continue to return options."
+8. Select refund to the default payment method.
+9. **Always select "The UPS Store Dropoff"** as the return method — this is Joshua's strong preference.
+10. Choose the nearest UPS Store location when prompted.
+11. Click "Confirm your return."
+12. After confirmation, copy the return confirmation page URL and send it to Joshua so he can access the QR code.
+13. Also provide the UPS Store address and hours from the confirmation page.
+
+## Important Notes
+- Always use UPS Store drop-off — never select other options like Staples, Whole Foods, Kohl's, etc.
+- The QR code link/confirmation URL is the most important deliverable — always send it back to Joshua.
+- Amazon Business account is for Full Circle Finance.
+- Use Chrome MCP tools (navigate, read_page, find, form_input, etc.) for all browser interactions.
+
+<!-- migrated to working model 2026-06-15 -->

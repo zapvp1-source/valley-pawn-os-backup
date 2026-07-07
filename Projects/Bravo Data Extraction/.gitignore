@@ -1,0 +1,12 @@
+config.json
+probe.ps1
+probe_output.txt
+triggers/*.json
+!triggers/.gitkeep
+output/*
+!output/.gitkeep
+results/*
+!results/.gitkeep
+logs/*
+!logs/.gitkeep
+*.log

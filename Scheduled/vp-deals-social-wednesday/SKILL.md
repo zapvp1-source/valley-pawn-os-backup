@@ -1,0 +1,66 @@
+---
+name: vp-deals-social-wednesday
+description: Wednesday 6 PM ET — pull that week's #deal-of-the-week Slack submissions, generate MJ heroes per store deal, stage social posts in Publer for Thursday 10 AM-4 PM (Value time window).
+model: claude-sonnet-5
+---
+
+> ⚠️ FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE. Stay silent on failure. Joshua reviews runs in Claude. Only post to Slack when the work is complete.
+
+Run the Valley Pawn Deals-of-the-Week SOCIAL layer for this week. This is the social-media companion to the existing Brevo email flow (`vp-deal-of-week-monday-prompt` + `vp-deal-of-week-monday-pick`).
+
+## Step 1 — Read the week's deal submissions
+Read the last 7 days of Slack `#deal-of-the-week` via the Slack MCP. Each valid submission has: store name, item description, price, item photo. Match each to its store (Culpeper, Harrisonburg, Lexington, Roanoke, Waynesboro). Expected: up to 5 submissions (one per store). If a store didn't submit by end-of-day Tuesday, skip that store's slot and add it to the end-of-run DM to Joshua.
+
+## Step 2 — For each valid submission, generate an MJ hero
+Invoke `vp-hero-image` with:
+- Item description from the submission
+- `--cref <manager_photo_url>` character reference so the hero resembles the actual item
+- STYLE-B Heritage Story register (per `vp-brand-studio`)
+- Save to /Users/joshuadavis/Documents/Claude/Projects/Valley Pawn Studios/asset-library/heroes/{YYYY-MM}/{YYYYMMDD}_{STORE}_deal_{item_slug}_styleB_hero_v1.png
+
+## Step 3 — Draft caption per deal
+Format:
+```
+{catchy item hook} at our {Store} location.
+
+{item description} — priced at ${price}. That's about {fair_market_comparison} below what you'd pay retail.
+
+Backed by our 30-day warranty.
+
+Stop by {store address}, or send us a message to hold before it's gone.
+
+#ValleyPawn #WhatsRightIsRight #{Store} #DealsOfTheWeek #{item_hashtag}
+```
+
+Every caption is MANDATORY. If drafting fails 2x, skip that store + DM Joshua.
+
+## Step 4 — Stage in Publer per store (multi-channel)
+For each deal, run the Publer publisher flow (see the PUBLISHING section in `vp-content-batch-weekly` — same rules) but use **Schedule mode** (not Publish now) targeting Thursday 10 AM-4 PM ET (Value time window). Each deal goes to:
+- {Store} FB page
+- @valley_pawn IG (shared brand)
+- {Store} GBP
+
+**Use the JS-query-by-tooltip account selection pattern.** Positional icon clicks are FORBIDDEN. Search tokens: Lexington GBP=`Walker`, Culpeper GBP=`James Madison`, Waynesboro GBP=`Broad`, Harrisonburg GBP=`E Market`, Roanoke GBP=`Peters Creek`; store FB pages=store name; Brand IG=`valley_pawn`.
+
+**GBP compose:** click Photo tab (166, 190) BEFORE upload. Upload to `.droparea` index 5's file input.
+
+**One channel per composer** — don't mix Meta + WordPress in a single composer.
+
+## Step 5 — Save manifest
+Save to /Users/joshuadavis/Documents/Claude/Projects/Valley Pawn Studios/output/{YYYY-MM-DD}/deals_social_manifest_{YYYY-MM-DD}.json with per-store scheduled_for + Publer post IDs + skipped stores.
+
+## Step 6 — DM Joshua with summary
+Slack DM to Joshua ONLY on success:
+- N/5 stores' deals staged for Thursday
+- Which stores skipped (no submission)
+- Publer calendar link
+- Estimated schedule window (10 AM-4 PM ET Thursday)
+
+## HARD GUARDRAILS
+- NEVER open instagram.com/* or facebook.com/* in Chrome MCP. All Meta traffic through Publer only.
+- NEVER hit developers.facebook.com/apps/*.
+- If MJ fast hours exhausted, pause + DM Joshua.
+- "Dixie Pawn" in copy = HARD STOP + skip + DM.
+
+Fires Wednesday 6 PM ET via cron `0 18 * * 3`.
+Companion to `vp-deal-of-week-monday-prompt` (Mon 8 AM) and `vp-deal-of-week-monday-pick` (Mon 12:30 PM, email).

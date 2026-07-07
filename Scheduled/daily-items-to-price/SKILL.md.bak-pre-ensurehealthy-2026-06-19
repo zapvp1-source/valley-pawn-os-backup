@@ -1,0 +1,66 @@
+---
+name: daily-items-to-price
+description: Daily 8 AM ET — per-store count + total Cost of unpriced inventory (Bravo "Price Items" worklist) via the Bravo Data Extraction pipeline; posts to Slack #items-to-price. Pipeline-driven (no Parallels grant). Handler dumps the full unpriced grid per store; this task counts rows + sums the Cost column.
+---
+
+
+Daily Items-to-Price report for Valley Pawn. Runs 8 AM ET. For each of the 5 stores it pulls the COUNT of inventory items awaiting pricing — Bravo's Dashboard "Price Items" worklist (items pulled from defaulted loans or bought from the public that are available to sell but not yet priced/on the floor; Status = UNPRICED) — and the TOTAL COST of those items. Pipeline cell `items-to-price` (NO computer-use, NO Parallels grant). It posts a per-store summary to Slack #items-to-price.
+
+HOW THE DATA WORKS: the `items-to-price` pipeline handler dumps EVERY unpriced row for a store to `output/<DATE>_<STORE>_items-to-price.csv`. That CSV has a header row `Number,Status,Category,Type,Description,Location,Cost,Date` and one row per unpriced item (Cost looks like `$714.00`; some fields may be quoted because they contain commas). This task computes, per store: COUNT = number of data rows; DOLLAR = sum of the Cost column. Do NOT expect a pre-summarized count/dollar_sum CSV — parse the full dump.
+
+FAILURE POLICY — DO NOT POST PARTIAL/ERROR NOISE TO SLACK. If the task cannot complete (pipeline down, connector warming up, Bravo unreachable / at a login screen), stay completely silent on Slack and let the next day's run cover it. Only post once you have real CSV data for at least some stores.
+
+All filesystem I/O against `/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/` is OUTSIDE this task's sandbox — it MUST go through `mcp__Control_your_Mac__osascript` `do shell script`. Never use the Write tool there. AVOID literal single quotes in AppleScript source (the osascript wrapper breaks on them) — use `quoted form of` for shell args. The osascript wrapper kills any single call running longer than ~25s, so keep every in-call sleep ≤18s and guard ls/cat/test with `|| true`.
+
+STEP 0 — osascript gate. `do shell script "echo READY"`. If unavailable, load via ToolSearch `select:mcp__Control_your_Mac__osascript`, wait 30s, retry up to ~10 min. If still unavailable, stop silently.
+
+STEP 1 — Compute date + trigger id via osascript `date` (never hardcode):
+- DATE = `date +%Y-%m-%d`
+- NOW  = `date +%Y-%m-%dT%H:%M:%S%z`
+- TRIGGER_ID = "items-to-price-" + `date +%Y-%m-%dT%H-%M-%S`
+
+STEP 2 — Drop the pipeline trigger for all 5 stores (order CUL,HAR,LEX,ROA,WAY). JSON (escaped double-quotes in AppleScript):
+{"id":"<TRIGGER_ID>","requested_at":"<NOW>","reports":[{"name":"items-to-price","stores":["CUL","HAR","LEX","ROA","WAY"],"date":"<DATE>"}]}
+Write: `do shell script "printf '%s' " & quoted form of json & " > " & quoted form of ("/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/triggers/" & TRIGGER_ID & ".json")`
+
+STEP 3 — Poll for completion. The watcher store-cycles and walks each store's full grid (PageDown + "Show More"), ~2–3.5 min per store, ~12–18 min total. Done when `results/<TRIGGER_ID>.result.json` exists OR all 5 `output/<DATE>_<STORE>_items-to-price.csv` exist. Poll in ≤18s sleeps across SEPARATE calls; cap total at ~30 minutes. Guard with `|| true`.
+
+STEP 4 — Compute per-store count + Cost-sum with a robust CSV parse. Run this via osascript (set PY to the script text, then `do shell script "/usr/bin/python3 -c " & quoted form of PY`). The script must be exactly:
+import csv,os
+base="/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/output"
+DATE=os.environ.get("ITP_DATE","")
+tot_c=0; tot_d=0.0
+for s in ["CUL","HAR","LEX","ROA","WAY"]:
+    f=os.path.join(base, DATE+"_"+s+"_items-to-price.csv")
+    if not os.path.exists(f):
+        print(s+"\tMISSING"); continue
+    cnt=0; dsum=0.0
+    with open(f,newline="",encoding="utf-8-sig") as fh:
+        for row in csv.DictReader(fh):
+            cnt+=1
+            v=(row.get("Cost") or "").replace("$","").replace(",","").strip()
+            try: dsum+=float(v)
+            except: pass
+    tot_c+=cnt; tot_d+=dsum
+    print(s+"\t"+str(cnt)+"\t"+("%0.2f"%dsum))
+print("TOTAL\t"+str(tot_c)+"\t"+("%0.2f"%tot_d))
+Pass the date by prefixing the shell command with `ITP_DATE=<DATE> ` so the script sees it (e.g. build the command as `"ITP_DATE=" & DATE & " /usr/bin/python3 -c " & quoted form of PY`). Parse the tab-separated output: each line is STORE<TAB>count<TAB>cost (or STORE<TAB>MISSING). Format cost as $X,XXX.XX. If a store is MISSING, show it as `data unavailable` but still post the others and still include the present stores in the TOTAL.
+
+STEP 5 — Post to Slack channel #items-to-price, channel_id `C0BA5U0GENL`, via `slack_send_message`. Fixed store order with city names:
+
+:label: *Items to Price — <Mon DD, YYYY>*
+Unpriced inventory awaiting pricing & floor placement, by store:
+
+• *Culpeper (CUL):* <count> items — <$cost>
+• *Harrisonburg (HAR):* <count> items — <$cost>
+• *Lexington (LEX):* <count> items — <$cost>
+• *Roanoke (ROA):* <count> items — <$cost>
+• *Waynesboro (WAY):* <count> items — <$cost>
+
+*Total:* <total count> items — <$total cost>
+
+(dollar = total Cost of each store's unpriced items.)
+
+This task is complete ONLY after `slack_send_message` returns success. Until then, end every turn with a tool call advancing toward it; treat "Tool loaded." / "Continue" as resume signals, not stop signals. Execute autonomously; do not ask for confirmation.
+
+<!-- migrated to working model 2026-06-15 -->

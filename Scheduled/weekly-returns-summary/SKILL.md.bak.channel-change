@@ -1,0 +1,135 @@
+---
+name: weekly-returns-summary
+description: Monday 1 AM (overnight) — read #returns Slack channel for the past week, compile summary, schedule Slack post to #claude-updates for 9 AM Monday.
+---
+
+You are running as an overnight background task at 1 AM Monday. Compile a weekly summary of returns by store and dollar amount, and schedule it to post in #claude-updates at 9:00 AM Monday so it's fresh when people start their day.
+
+# How this works (DO NOT skip the photo step)
+
+Posts in #returns are almost always **photo-only** — a phone snap of the signed paper RETURN FORM with no text body. The store name, item, and dollar amount are **inside the photo**, not in the message text. You MUST open and read each form image. Do not summarize from message metadata alone.
+
+## Execution Contract — JUST DO IT, DO NOT STOP EARLY
+
+> **Real failure mode (2026-05-04):** the assistant loaded the valley-pawn-context skill, saw the "Continue from where you left off" prompt, and replied **"No response requested"** — ending the turn with three forms unread and zero posts sent. The week's returns went unposted. **Never do this.** After loading any skill, after any system reminder, after any tool load message — the very next turn must be a concrete tool call moving toward the final Slack post. There is no "decide whether to continue" step. The decision was already made: continue.
+
+This task is complete ONLY after the documented final Slack post (`slack_send_message` or `slack_schedule_message` to `C0ARGG65YQM`) returns success.
+
+Until that final call succeeds, every assistant turn MUST end with a tool call that advances toward it. Do not idle, do not wait, do not ask for confirmation.
+
+**Never reply with any of these:**
+- "No response requested"
+- "Continue?" / "Should I continue?"
+- "Want me to run it now?" / "Should I keep going?"
+- An empty turn or a turn that ends with text instead of a tool call
+
+**Treat these system messages as RESUME signals, never as stop signals:**
+- "Tool loaded."
+- "Continue from where you left off."
+- "You used a single tool call this turn. Prefer browser_batch…"
+- "The task tools haven't been used recently…"
+- "The date has changed…"
+- Any reminder about TaskCreate/TaskUpdate, AskUserQuestion, etc.
+- The skill-load output for `valley-pawn-context` or any other skill
+
+When you see any of those messages, immediately fire the next concrete tool call for the current step. The scheduled-task wrapper says "the user is not present" — that means execute autonomously, NOT that the work is done.
+
+**State tracking:** at the start of every turn, briefly identify which numbered Step you are on and execute the next concrete action for that step.
+
+**Failure handling:** if a step errors, retry once. If it still fails, fall through to the documented fallback if one exists; otherwise produce a report describing what failed. Do not pause to ask — the task file authorizes autonomous decisions.
+
+**Speed:** prefer batch tools (e.g. `browser_batch`) to combine sequential actions into one call.
+
+---
+
+## Step-by-step
+
+### 1. Pull the channel + the manager→store map in parallel
+- `#returns` channel ID: `C03BNUN2SDA`
+- `#claude-updates` channel ID: `C0ARGG65YQM` (private)
+- Load the **valley-pawn-context** skill to get the manager → store mapping (Andrew/Walker → Harrisonburg, Bree/Sandi/Nelson → Culpeper, Uriah/Martin → Lexington, Chadd → Waynesboro, Benjie/Cris → Roanoke). The Slack poster's name = the store via this map UNLESS the receipt header in the photo clearly shows a different store — receipt store address wins over poster mapping.
+
+### 2. Read the channel
+Call `slack_read_channel` on `C03BNUN2SDA` with `oldest` set to 7 days ago.
+
+**If the strict last-7-day window has zero posts** (this happens), fall back to the **most recent week of activity** (e.g., the prior calendar week). Be transparent about the date range in the summary. Don't post "nothing happened" if there are recent forms one week back — the user expects actual return data.
+
+For each message, capture: poster user_id, message_ts, file ID(s).
+
+### 3. Read each form image — FAST PATH (validated 2026-05-04)
+The Slack MCP has no `download_file` tool. Use Chrome MCP — but you do NOT need a per-file permalink. Open the channel directly and the inline images on the page are zoomable.
+
+1. `tabs_context_mcp` with `createIfEmpty: true` to get a tab.
+2. `navigate` to `https://valleypawnworkspace.slack.com/archives/C03BNUN2SDA/p<TS>` where `<TS>` is the most recent message's `message_ts` with the dot removed (e.g. `1777757777.189009` → `p1777757777189009`).
+3. Page shows "Launching Valley Pawn / open this link in your browser" — `find` that link and `left_click` it.
+4. Wait ~5s. The Slack web app loads with the channel scrolled to your target message and the form image rendered inline (no right-side panel needed).
+5. For each form on screen, call `computer.zoom` on the image's bounding box (typically ~`[438, 285, 740, 660]` for an inline image; adjust per layout). Read the handwritten fields directly from the zoomed image.
+6. Scroll up/down the channel to bring other forms into view, then zoom each. Batch the scroll + wait + screenshot inside a single `browser_batch` call.
+
+This direct-channel approach is significantly faster than navigating to each file's permalink and waiting for the right-side preview panel.
+
+### 4. Form fields to extract
+Every RETURN FORM has these fields in this order:
+- GUEST NAME
+- GUEST PHONE #
+- GUEST SIGNATURE (skip — just a scribble)
+- **ITEM DESCRIPTION** (capture)
+- **ITEM VP#** (capture — store-prefixed inventory number, e.g. ROA…, VA…, VP…, VAP…)
+- PURCHASE DATE
+- **RETURN DATE** (capture)
+- **RETURN AMOUNT** (capture — note whether it's cash, store credit, or gift card. The form often has handwritten notes like "to credit" or "Gift Card" next to the dollar figure. The receipt stapled to the form usually shows the cleanest dollar figure and "Payment Type: Cash" line.)
+- **RETURN REASON** (capture)
+- RETURN LOCATION (where it goes back to — sales floor, back floor, etc.)
+- **TESTING RESULTS** (capture — often says "Works fine" or "Will test")
+- EMPLOYEE SIGNATURE (skip)
+
+If a stapled receipt is visible, also capture the receipt's store header (address line) — it's the authoritative source for which store processed the return.
+
+### 5. Compile the summary
+Group by store using receipt-store-first, falling back to poster→store map. For each store report: # of returns, total $ value, item(s), refund type (cash vs credit vs gift card), and any notable detail (e.g., "customer immediately repurchased — net $0"). Call out stores with **zero** returns explicitly. Compute totals: total returns, total $ value, cash vs credit split.
+
+Notable patterns to look for: net-zero returns (return + immediate repurchase), defect-driven returns vs preference returns, items going back on floor vs being scrapped.
+
+### 6. Schedule (or send live) the post
+
+**TIMING WARNING:** The 1 AM run can take a while because each form requires Chrome navigation + zoom. On a prior run the work finished AFTER 9 AM, which meant the API-scheduled message could not be replaced (Slack scheduled messages **cannot be edited via API**). To avoid this:
+
+- **Do all the OCR work FIRST**, then schedule the message at 9:00 AM EDT.
+- If the work runs long and the current time is already past 9:00 AM EDT when you finish compiling, send the message **immediately** with `slack_send_message` instead of scheduling. Better late than wrong.
+- Do NOT schedule a placeholder and try to update it later — Slack API does not support that.
+
+Use `slack_schedule_message` to channel `C0ARGG65YQM` with `post_at` = Unix timestamp for **9:00 AM EDT today**. Compute via Python in bash:
+```python
+from datetime import datetime, timezone, timedelta
+int(datetime(YYYY, MM, DD, 9, 0, 0, tzinfo=timezone(timedelta(hours=-4))).timestamp())
+```
+
+### 7. Format of the post
+Lead with the date range covered. Per-store breakdown with the dollar amount **prominently** — store name, # of returns, $ amount + refund type (cash / store credit / gift card), customer name, item, VP#, reason, resolution. Then totals (total returns, total $ value, cash vs credit split). Then patterns. End with attribution: `_— weekly-returns-summary task_`.
+
+# Channel + actor reference (cache, so you don't re-search)
+
+| Item | Value |
+|---|---|
+| #returns channel | C03BNUN2SDA |
+| #claude-updates channel | C0ARGG65YQM (private) |
+| Posting user (Joshua) | U03BB52MDSA |
+
+# Manager → store cheat sheet
+
+| Manager | Store |
+|---|---|
+| Andrew, Walker | Harrisonburg |
+| Bree, Sandi, Nelson | Culpeper |
+| Uriah, Martin | Lexington |
+| Chadd | Waynesboro |
+| Benjie, Cris | Roanoke |
+
+# Don't do this (lessons from prior runs)
+
+- Don't summarize from message metadata alone (filename + poster name). The dollar amount is in the photo.
+- Don't say "the channel was quiet this week" if the strict 7-day window is empty but there are forms from last week. Fall back to the most recent active week and label the date range.
+- Don't try to download the Slack file via curl/web_fetch — the URLs require auth. Use Chrome MCP and the channel-archives URL.
+- Don't schedule a placeholder and try to update it. Scheduled Slack messages cannot be edited via API. Either finish the work first, or send live with slack_send_message if you're past 9 AM.
+- Don't blindly attribute by poster if the receipt header on the form clearly shows a different store. Receipt wins.
+- **Don't end your turn with text after a Skill load or system reminder. Fire the next tool call.** This is the failure that caused the 2026-05-04 miss.

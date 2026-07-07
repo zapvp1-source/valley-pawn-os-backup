@@ -1,0 +1,28 @@
+---
+name: ffl-web-form-to-slack
+description: Every 15 min: scan jdavis Gmail for new website FFL Transfer form submissions and post each to Slack #ffl-transfer-notifications, de-duping with a Gmail label.
+---
+
+Relay new website "FFL Transfer" form submissions from the Valley Pawn site (https://thevalleypawn.com/ffl-transfer/) into Slack so the team can follow up quickly. Run quietly — only post when there is a genuinely new submission.
+
+These submissions arrive as emails to jdavis@fcfpawn.com from the website's Jetpack contact form, with the subject "Website FFL Transfer Request". Use the Gmail MCP server mcp__00007879-ef17-43e5-9d59-6325cd2f0a31 and the Slack MCP server mcp__f92ce7c6-0353-4419-8491-f0843b182ff2.
+
+STEP 1 — De-dup label. Ensure a Gmail label named "FFL-Web-Slacked" exists (list_labels; if missing, create_label). This label marks submissions already posted to Slack so they are never posted twice.
+
+STEP 2 — Find new submissions. Search Gmail (search_threads) with query: subject:"Website FFL Transfer Request" newer_than:2d -label:FFL-Web-Slacked . Open each matching thread with get_thread to read the submission body.
+
+STEP 3 — Post to Slack. For EACH new submission, post ONE message to channel #ffl-transfer-notifications (channel ID C0BA6SXL8AK) using slack_send_message. Parse the fields from the email body and format like:
+:inbox_tray: *New FFL transfer request (website form)*
+• Name: <value>
+• Phone: <value>
+• Email: <value or “—”>
+• Pickup store: <value>
+• Details: <value>
+Received: <date/time from the email>
+If a field is blank, show “—”. Keep it to that single tidy message per submission.
+
+STEP 4 — Mark done. After successfully posting a submission to Slack, apply the "FFL-Web-Slacked" label to that message (label_message) so it is not posted again on the next run.
+
+STEP 5 — Quiet when empty. If there are no new (unlabeled) submissions, do NOT post anything to Slack and do not send any other notification. Only the genuinely new ones get posted.
+
+Notes: This is purely a notification relay — never reply to the customer, never send email, never delete anything. The store contacts for follow-up, if needed: Culpeper (540) 445-5510, Waynesboro (540) 221-6346, Harrisonburg (540) 574-4500, Lexington (540) 461-8349, Roanoke (540) 562-0776.

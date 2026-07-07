@@ -1,0 +1,38 @@
+---
+name: ebay-photo-enhance-done-notify
+description: Daily check on the eBay photo 1600px-upscale backlog; Slack Joshua on progress/completion
+---
+
+Check the progress of the eBay photo 1600px-upscale backlog (driven by the quota-safe runner run_pass2.sh + ebay_photo_enhance.py, scheduled via launchd com.valleypawn.ebay-photo-upscale at 4am ET daily), then notify Joshua on Slack only when there's something worth telling him.
+
+Use the osascript tool (mcp__Control_your_Mac__osascript) for all local reads.
+
+1. Read state:
+   - ps -ax | grep '[e]bay_photo_enhance.py' | wc -l   (0 = no run in progress)
+   - tail -40 ~/enhance_run.log        (per-store results from the most recent run)
+   - Progress from state + the photos.json snapshots:
+     /usr/bin/python3 - <<'PY'
+     import json,os,glob
+     st=json.load(open(os.path.expanduser('~/ebay_photo_enhance_state.json')))
+     up={k for k,v in st.items() if v.get('upscaled')}
+     tot=done=0; per={}
+     for f in glob.glob('/Users/joshuadavis/Documents/Claude/Projects/eBay/*_photos.json'):
+         store=os.path.basename(f).split('_photos')[0]
+         d=json.load(open(f)); ids=[str(it['id']) for it in d if it.get('pics')]
+         du=sum(1 for i in ids if i in up)
+         per[store]=(du,len(ids)); tot+=len(ids); done+=du
+     print('TOTAL',done,'/',tot)
+     for s,(a,b) in sorted(per.items()): print(s,a,'/',b)
+     PY
+
+2. Interpret:
+   - COMPLETE when done == tot (every listing with photos is marked upscaled) AND no run is in progress.
+   - If not complete, note how many remain and whether the last run stopped on the eBay usage limit (grep 'STOP' ~/enhance_run.log) — that's expected; it resumes next morning.
+
+3. If COMPLETE: verify it's really live. Pick 2-3 upscaled item IDs from ~/ebay_photo_enhance_state.json, GetItem their first PictureURL, download it, and check dimensions with PIL (max side should be ~1600). Reuse the eBay Trading API auth pattern from ebay_photo_enhance.py (tokens from ~/ebay_weekly_rankings.py STORES; GetItem call). If GetItem itself 503s / hits the usage limit, note that verification was blocked and report counts only.
+
+4. Slack DM to Joshua (user_id U03BB52MDSA as channel_id) ONLY IF: the backlog just reached COMPLETE, OR a run happened since yesterday and progress changed, OR an error/anomaly appeared. Keep it short and skimmable: total upscaled X/Y, per-store, whether last run hit the limit (normal), and — if complete — confirmation that sampled live primaries measure ~1600px. If nothing changed and it's still mid-backlog with no new run, do NOT DM — just output a brief report.
+   Note in the completion DM that the whole thing is reversible via:
+   /usr/bin/python3 '/Users/joshuadavis/Documents/Claude/Projects/eBay/ebay_photo_enhance.py' --revert --apply
+
+This is an automated run with no user present — execute autonomously, make reasonable choices, and only take the Slack 'send' action described above. End with <run-summary>one or two sentences on progress and whether anything changed since last run</run-summary>.

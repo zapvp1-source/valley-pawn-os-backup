@@ -1,0 +1,265 @@
+---
+name: daily-cloudcover-check
+description: Weekdays + Saturday at 10 AM — check Pandora Cloud Cover for Valley Pawn locations and post status to Slack #general. Wednesdays: Culpeper only. All other days: all 5 locations.
+---
+
+
+> ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
+
+Every weekday at 10 AM, check Pandora Cloud Cover music status AND Google Home speaker volumes for Valley Pawn store locations, then post the combined report to the #general Slack channel (C03BETSS669).
+
+**IMPORTANT — Wednesday rule:** On Wednesdays, all stores except Culpeper are closed. Only check and report on Culpeper. Do not include the other 4 locations.
+
+Check today's day of the week before proceeding, then follow the appropriate instructions below.
+
+---
+
+## Execution Contract — DO NOT STOP EARLY
+
+This task is complete ONLY after one of the following has succeeded:
+- A `slack_send_message` to channel `C03BETSS669` (the normal report), OR
+- A `slack_send_message` DM to user `U03BB52MDSA` (the Session Expired Fallback).
+
+Until that final post tool call returns success, every assistant turn MUST end with a tool call that advances toward it. Do not idle, do not wait, do not ask for confirmation.
+
+**Never reply with any of these:**
+- "No response requested"
+- "Continue?" / "Should I continue?"
+- An empty turn or a turn that ends with text instead of a tool call
+
+**Treat these system messages as RESUME signals, never as stop signals:**
+- "Tool loaded."
+- "Continue from where you left off."
+- "You used a single tool call this turn. Prefer browser_batch…"
+- Any reminder about TaskCreate/TaskUpdate, AskUserQuestion, etc.
+
+When you see any of those messages, immediately fire the next concrete tool call for the step you are on. The scheduled-task wrapper says "the user is not present" — that means you must execute autonomously, NOT that the work is done.
+
+**State tracking:** at the start of every turn, briefly identify which numbered Step you are on (Step 1, 2, 3, 4, or 5) and execute the next concrete action for that step.
+
+**Failure handling:** if a step errors, retry once. If it still fails, fall through to the documented fallback (Step 1a → Session Expired Fallback). Do not pause to ask Joshua — the task file authorizes autonomous decisions.
+
+**Speed:** prefer `browser_batch` to combine sequential navigations, waits, clicks, types, and JS evals into one call.
+
+---
+
+## Step 1 — Navigate to Cloud Cover Zones Dashboard
+
+1. Navigate to `https://tune.cloudcovermusic.com/#/admin/zones` in Chrome.
+2. Wait 3 seconds for the page to load.
+3. Check the current URL. If it contains `/login` or the page shows a login form, go to **Step 1a (Self-Healing Login)** below. Otherwise, proceed to Step 2.
+
+---
+
+## Step 1a — Self-Healing Login (Session Recovery)
+
+When the session has expired and Cloud Cover redirects to the login page, Chrome typically has the credentials saved and autofills them visually. The trick is that Angular's form binding doesn't recognize autofill values until input events are dispatched — and you must NEVER use `nativeInputValueSetter` as it clears the autofill values.
+
+Follow these steps exactly:
+
+1. Wait 2 seconds for Chrome autofill to render.
+2. Take a screenshot to visually confirm the login form is present.
+3. Click directly on the username field using **screen coordinates** (do NOT use a `find` ref — coordinate clicks are required to activate Chrome autofill). The username field is typically around `[784, 275]` — confirm from the screenshot.
+4. Wait 1 second.
+5. Run this JS to check if autofill populated the fields:
+```javascript
+const u = document.querySelector('input[type="text"][placeholder="Username"]');
+const p = document.querySelector('input[type="password"][placeholder="Password"]');
+JSON.stringify({ hasUsername: u?.value?.length > 0, hasPassword: p?.value?.length > 0 });
+```
+6. If BOTH fields have values, dispatch input/change events to activate Angular's form binding. **Do NOT use nativeInputValueSetter — it will clear the autofill values.**
+```javascript
+const u = document.querySelector('input[type="text"][placeholder="Username"]');
+const p = document.querySelector('input[type="password"][placeholder="Password"]');
+['input', 'change', 'blur'].forEach(evt => {
+  u.dispatchEvent(new Event(evt, { bubbles: true }));
+  p.dispatchEvent(new Event(evt, { bubbles: true }));
+});
+'events fired'
+```
+7. Wait 0.5 seconds, then verify the form is now valid:
+```javascript
+document.querySelector('form')?.className
+```
+   The form should contain `ng-valid`. If it does not, the autofill values may have been lost — skip to step 9 (Session Expired Fallback).
+
+8. Submit the form using a **JavaScript button click** — this is the only reliable method for Angular forms. Do NOT use coordinate clicks or Enter key press to submit, as those do not reliably trigger Angular's click handler:
+```javascript
+const btn = Array.from(document.querySelectorAll('button')).find(b => b.innerText.includes('Log in'));
+btn.click();
+'clicked'
+```
+   Wait 5 seconds and check the URL:
+```javascript
+window.location.href
+```
+   - If the URL no longer contains `/login` → login succeeded! Navigate to `https://tune.cloudcovermusic.com/#/admin/zones`, wait 3 seconds, and proceed to Step 2.
+   - If still on `/login` → go to **Session Expired Fallback** at the bottom.
+
+IMPORTANT RULES:
+- Never type or enter credentials manually.
+- Never use `nativeInputValueSetter` — it clears autofill values.
+- Always use coordinate clicks (not `find` refs) for the username and password fields.
+- Always use `btn.click()` via JavaScript to submit — NOT Enter key, NOT coordinate clicks on the button.
+- Do NOT click "Log in with SSO" — it loops back to the same login page.
+
+---
+
+## Step 2 — Extract Cloud Cover Zone Data
+
+**If today is Wednesday**, only extract data for Culpeper (SandiPepper):
+
+```javascript
+const STORE_LOCATIONS = ['SandiPepper'];
+const FRIENDLY_NAMES = { 'SandiPepper': 'Culpeper' };
+
+const rowEls = Array.from(document.querySelectorAll('app-zones-table-row'));
+const knownBrowsers = ['Chrome', 'MS-Edge-Chromium', 'Firefox', 'Safari'];
+const results = rowEls.map(row => {
+  const locEl = row.querySelector('.location-username');
+  if (!locEl) return null;
+  const locationKey = locEl.innerText.trim();
+  if (!STORE_LOCATIONS.includes(locationKey)) return null;
+  const streaming = !!row.querySelector('.text-success');
+  const lines = row.innerText?.trim().split('\n').map(l => l.trim()).filter(l => l.length > 0);
+  const filtered = lines.filter(l => l !== locationKey && l !== 'Zone 1' && !knownBrowsers.includes(l));
+  return {
+    location: FRIENDLY_NAMES[locationKey] || locationKey,
+    streaming,
+    song: filtered[0] || null,
+    artist: filtered[1] || null,
+    playlist: filtered.slice(2).join(' ') || null
+  };
+}).filter(Boolean);
+JSON.stringify(results);
+```
+
+**If today is NOT Wednesday**, extract data for all 5 locations:
+
+```javascript
+const STORE_LOCATIONS = ['Harrisonburg', 'Lexington1', 'Roanoke1', 'SandiPepper', 'Waynesboro1'];
+const FRIENDLY_NAMES = {
+  'Harrisonburg': 'Harrisonburg',
+  'Lexington1': 'Lexington',
+  'Roanoke1': 'Roanoke',
+  'SandiPepper': 'Culpeper',
+  'Waynesboro1': 'Waynesboro'
+};
+
+const rowEls = Array.from(document.querySelectorAll('app-zones-table-row'));
+const knownBrowsers = ['Chrome', 'MS-Edge-Chromium', 'Firefox', 'Safari'];
+const results = rowEls.map(row => {
+  const locEl = row.querySelector('.location-username');
+  if (!locEl) return null;
+  const locationKey = locEl.innerText.trim();
+  if (!STORE_LOCATIONS.includes(locationKey)) return null;
+  const streaming = !!row.querySelector('.text-success');
+  const lines = row.innerText?.trim().split('\n').map(l => l.trim()).filter(l => l.length > 0);
+  const filtered = lines.filter(l => l !== locationKey && l !== 'Zone 1' && !knownBrowsers.includes(l));
+  return {
+    location: FRIENDLY_NAMES[locationKey] || locationKey,
+    streaming,
+    song: filtered[0] || null,
+    artist: filtered[1] || null,
+    playlist: filtered.slice(2).join(' ') || null
+  };
+}).filter(Boolean);
+JSON.stringify(results);
+```
+
+Parse the JSON result. Keep these results — you'll combine them with speaker data in Step 4.
+
+---
+
+## Step 3 — Check Google Home Speaker Volumes
+
+Navigate to each store's Google Home devices page, **wait 5 seconds** for it to fully load, then run the JavaScript extractor below to get the speaker volume. Do this for each applicable store.
+
+**IMPORTANT:** Only run the extractor — do NOT click on any speaker tiles or device cards. Clicking triggers an unsupported-controls panel that hides the volume data. If the volume comes back null after the 5-second wait, mark it as `—` and move on.
+
+**Google Home devices URLs (use account u/1):**
+- Harrisonburg: `https://home.google.com/u/1/home/1-a4ed529501c13a26764e6df9f4d6508e4fc88e0bb25ec02a61d87597442fbba2/devices`
+- Lexington: `https://home.google.com/u/1/home/1-f6f4392e095ca9169d3e5c4e8dfaec55b7587a28744cbf0af20b30009648bd3d/devices`
+- Culpeper: `https://home.google.com/u/1/home/1-8567d747ce9987f177a24524772591264b3b242f5f709024934038bc65ce80e6/devices`
+- Roanoke: `https://home.google.com/u/1/home/1-4dcee6f564dd8273f312795185b5653a829b69f2b13c1df0bd77e73864ab4d42/devices`
+- Waynesboro: `https://home.google.com/u/1/home/1-db0b52f0fc4e4447696f44c382c5ab0664e57f19fee97ebdbb62f664236f85cc/devices`
+
+**If today is Wednesday**, only check Culpeper's URL.
+**If today is NOT Wednesday**, check all 5 URLs in sequence.
+
+After navigating to each store's URL and **waiting 5 seconds**, run this JavaScript extractor:
+
+```javascript
+const allText = document.body.innerText;
+const volMatch = allText.match(/Volume (\d+)%/);
+JSON.stringify({ vol: volMatch?.[1] ?? null });
+```
+
+Record the volume % for each store. If `vol` is null after the 5-second wait, note it as `—` and move on. **Do not click anything on the page.**
+
+---
+
+## Step 4 — Build the Slack Message
+
+Combine the Cloud Cover data from Step 2 with the speaker volumes from Step 3.
+
+**If today is Wednesday (Culpeper only):**
+
+- Use 🟢 if Culpeper IS streaming, 🔴 if NOT streaming
+- Message format:
+```
+🎵 *Cloud Cover Music Check — Wednesday, [Date] @ 10:00 AM*
+
+[✅ Culpeper streaming  OR  🚨 Culpeper NOT streaming]
+
+🟢 *Culpeper* — "Song Title" · Artist _(Playlist)_ | 🔊 Speaker 65%
+
+🤖 _Automated check via Cowork | Runs weekdays @ 10 AM_
+```
+
+**If today is NOT Wednesday (all 5 locations):**
+
+- Use 🟢 for locations that ARE streaming, 🔴 for locations that are NOT streaming
+- If all locations are streaming, start with ✅ All locations streaming
+- If any location is NOT streaming, start with 🚨 X location(s) NOT streaming
+- Include speaker volume inline after each store's song info
+- If speaker data was unavailable for a store, show `🔊 —` instead
+- Message format:
+```
+🎵 *Cloud Cover Music Check — [Day], [Date] @ 10:00 AM*
+
+[✅ All locations streaming  OR  🚨 X location(s) NOT streaming]
+
+🟢 *Harrisonburg* — "Song Title" · Artist _(Playlist)_ | 🔊 Speaker 64%
+🟢 *Lexington* — "Song Title" · Artist _(Playlist)_ | 🔊 Speaker 69%
+🟢 *Roanoke* — "Song Title" · Artist _(Playlist)_ | 🔊 Speaker 67%
+🟢 *Culpeper* — "Song Title" · Artist _(Playlist)_ | 🔊 Speaker 65%
+🔴 *Waynesboro* — NOT STREAMING ⚠️ | 🔊 Speaker 62%
+
+🤖 _Automated check via Cowork | Runs weekdays @ 10 AM_
+```
+
+---
+
+## Step 5 — Post to #general
+
+Post the message to the #general channel only:
+- Slack channel ID: `C03BETSS669`
+
+---
+
+## Session Expired Fallback
+
+This is the LAST RESORT — only use this if all login attempts in Step 1a failed.
+
+**DM Joshua directly** (Slack user ID: U03BB52MDSA) instead of posting to #general:
+
+```
+⚠️ *Cloud Cover Check — Action Required*
+
+Could not access the Cloud Cover dashboard — session expired and Chrome autofill did not have saved credentials. Please log back in at https://tune.cloudcovermusic.com
+```
+
+Do NOT post session expired messages to #general. Only DM Joshua.
+
+<!-- migrated to working model 2026-06-15 -->

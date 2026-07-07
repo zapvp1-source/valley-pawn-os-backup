@@ -1,0 +1,22 @@
+# Whitelist approach: ignore everything by default, only track skill/task logic (.md), never business data or credentials
+*
+!*/
+!*.md
+!*.md.bak*
+!.gitignore
+
+# Extra safety: never track these even if matched above
+*.pem
+*.key
+*.env
+.env*
+credentials*
+*credential*
+brevo_api_key
+*.p12
+*.pfx
+
+# Explicit hard excludes: personal health data and financial/tax planning docs — never in git, regardless of extension
+Projects/Health Optimization/
+Projects/Quickbooks Set UP/
+tools/

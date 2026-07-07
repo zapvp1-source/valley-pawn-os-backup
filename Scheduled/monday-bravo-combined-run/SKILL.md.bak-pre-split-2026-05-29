@@ -1,0 +1,238 @@
+---
+name: monday-bravo-combined-run
+description: Monday morning orchestrator — runs the five existing weekly Valley Pawn Bravo reviews via the Bravo Data Extraction pipeline. ONE trigger drop fetches all required CSVs; the orchestrator then chains the five chained tasks for compilation + Slack posting. No Parallels grant required.
+---
+
+You are running Joshua's Monday morning combined Valley Pawn Bravo POS run.
+
+The 2026-05-12 architecture: the data collection no longer drives Bravo's UI. The Bravo Data Extraction pipeline (`/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/`) runs inside the Windows VM and produces all required CSVs from a single trigger drop. The orchestrator's job is now: pre-flight check, drop ONE multi-report trigger, wait, then chain the five chained SKILLs for compilation + Slack post + file save.
+
+==========================================================================
+STEP 0 — Pre-flight check (added 2026-05-13)
+==========================================================================
+
+Before dropping any trigger, verify the runtime is healthy. If anything is missing, attempt one auto-restart; if that fails, DM Joshua and stop. Do NOT drop a trigger if the watcher isn't actually running — the trigger will sit unprocessed and you'll waste 45 minutes polling.
+
+**Check 1 — Parallels VM running:**
+```bash
+/usr/local/bin/prlctl list --all | grep -E 'running.*Windows 11'
+```
+Expected: `running  -  Windows 11`. If absent, the VM isn't started. DM Joshua and stop — starting a VM remotely is not reliable enough to do unattended.
+
+**Check 2 — bravo_watcher.ahk process alive:**
+```bash
+/usr/local/bin/prlctl exec '{7dc84f03-4e68-4f43-9596-bf8a7dfb8e0a}' --current-user wmic process where 'name="AutoHotkey64.exe"' get ProcessId,CommandLine
+```
+Expected: one of the AHK processes has `bravo_watcher.ahk` in its command line. If not, auto-restart with:
+```bash
+/usr/local/bin/prlctl exec '{7dc84f03-4e68-4f43-9596-bf8a7dfb8e0a}' --current-user cmd /c start "" /B "C:/Program Files/AutoHotkey/v2/AutoHotkey64.exe" "Y:/Documents/Claude/Projects/Bravo Data Extraction/bravo_watcher.ahk"
+```
+Wait 5s, re-check. If still missing, DM Joshua and stop.
+
+**Check 3 — BravoAutoLogin.ahk process alive:**
+Same `wmic` check; look for `BravoAutoLogin.ahk` in command line. If missing, auto-restart with:
+```bash
+/usr/local/bin/prlctl exec '{7dc84f03-4e68-4f43-9596-bf8a7dfb8e0a}' --current-user cmd /c start "" /B "C:/Program Files/AutoHotkey/v2/AutoHotkey64.exe" "C:/Users/joshuadavis/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/BravoAutoLogin.ahk"
+```
+Wait 5s, re-check. If still missing, DM Joshua and continue anyway — the watcher's `RecoverFromAutoLock` handles most login-screen cases without BravoAutoLogin, just less robustly.
+
+**Check 4 — watcher.last_started.txt timestamp is recent:**
+```bash
+cat '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/logs/watcher.last_started.txt'
+```
+If the timestamp is more than 7 days old, the watcher may have stale code from before recent patches. Restart it anyway (kill+relaunch) to pick up any updates. This is cheap insurance.
+
+**Check 5 — Trigger queue is empty:**
+```bash
+ls '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/triggers/' | grep -v '^processed$'
+```
+Expected: empty. If a trigger is sitting unprocessed, the previous run hung or is in flight. Do not drop another one — DM Joshua, dump the offending trigger filename, and stop.
+
+Only if all five checks pass, proceed to Step 1.
+
+==========================================================================
+STEP 1 — Drop ONE multi-report trigger
+==========================================================================
+
+Generate trigger ID `monday-bravo-combined-YYYY-MM-DD`. Write to `/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/triggers/<id>.json`:
+
+```json
+{
+  "id": "monday-bravo-combined-2026-05-12",
+  "requested_at": "2026-05-12T05:30:00-04:00",
+  "reports": [
+    {"name": "aged-inventory-summary", "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "2026-05-12"},
+    {"name": "loans-75-days-past-due", "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "2026-05-12"},
+    {"name": "layaways", "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "2026-05-12"},
+    {"name": "employee-activity", "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "2026-05-01"},
+    {"name": "chekkit-inactives", "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "2026-05-12"}
+  ]
+}
+```
+
+==========================================================================
+STEP 1B — Drop FIVE sequential end-of-month triggers (one per store)
+==========================================================================
+
+After the main trigger above is dropped, also drop five SEPARATE single-store
+triggers for `end-of-month` — one per store, spaced 90 seconds apart. This
+is the per-store source for the `monday-store-rankings` 8-metric leaderboard.
+
+Rationale: chaining all 5 stores in one trigger reliably hangs Bravo's End
+of Month preview (the report's matrix layout + 5 pages of pagination puts
+the WPF preview into a "Not Responding" state mid-export when run back-to-
+back). Single-store invocations are reliable; 90s of breathing room
+between them lets Bravo's preview teardown finish before the next store.
+
+For each store in ["CUL", "HAR", "LEX", "ROA", "WAY"]:
+
+```json
+{
+  "id": "monday-eom-<STORE>-YYYY-MM-DD",
+  "requested_at": "2026-05-12T05:32:00-04:00",
+  "reports": [
+    {"name": "end-of-month", "stores": ["<STORE>"], "date": "<FIRST_OF_MONTH>..<YESTERDAY>"}
+  ]
+}
+```
+
+Drop sequence (orchestrator pseudocode):
+
+```
+for STORE in CUL, HAR, LEX, ROA, WAY:
+    write triggers/monday-eom-<STORE>-YYYY-MM-DD.json
+    poll results/monday-eom-<STORE>-YYYY-MM-DD.result.json (timeout 5 min)
+    sleep 90 seconds
+```
+
+Each store's run produces `output/<END_DATE>_<STORE>_end-of-month.csv` (~11 KB).
+The `monday-store-rankings` chained SKILL reads all 5 to build the rankings.
+
+After the result JSON arrives, **copy each chekkit-inactives CSV into the shared stash** so the Tuesday chekkit-weekly-review-requests task can find it without re-pulling:
+
+```applescript
+do shell script "mkdir -p '/Users/joshuadavis/Documents/Claude/Scheduled/_shared-bravo-data/2026-05-12/chekkit-inactives' && cp '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/output/2026-05-12_CUL_chekkit-inactives.csv' '/Users/joshuadavis/Documents/Claude/Scheduled/_shared-bravo-data/2026-05-12/chekkit-inactives/CUL.csv'"
+```
+
+Repeat for HAR/LEX/ROA/WAY. The Tuesday task's Step 1A will find this stash and skip its own pull.
+
+(Note: `company-kpis` is not yet pipeline-ready; the orchestrator skips the store-rankings post and notes it in the DM — see below.)
+
+Poll `results/<id>.result.json`. Total run takes ~20-30 minutes (4 reports × 5 stores × ~30-60s each). Time out at 45 minutes.
+
+==========================================================================
+STEP 2 — Compile + post via chained SKILLs
+==========================================================================
+
+After the result JSON arrives, run each chained SKILL's compile+post phase using the CSVs in `output/`. Read each chained SKILL once at the start of the run to load the format templates:
+
+- `/Users/joshuadavis/Documents/Claude/Scheduled/weekly-aged-inventory-report/SKILL.md`
+- `/Users/joshuadavis/Documents/Claude/Scheduled/monday-store-rankings/SKILL.md` (NOW pipeline-driven from per-store end-of-month CSVs)
+- `/Users/joshuadavis/Documents/Claude/Scheduled/weekly-loan-layaway-review/SKILL.md`
+- `/Users/joshuadavis/Documents/Claude/Scheduled/weekly-employee-sales-rankings/SKILL.md`
+- `/Users/joshuadavis/Documents/Claude/Scheduled/chekkit-weekly-review-requests/SKILL.md` (Phase 1 still computer-use)
+
+For each, execute its parse-and-post sections using the CSVs already on disk. Do NOT re-drop a per-task trigger — the data is already there.
+
+**Post order (per established convention):**
+1. `#aged-inventory-review` (`C04NGH4FF35`) — aged inventory 5-store summary
+2. `#store-performance` (`C03CGTN3KN1`) — MTD store rankings summary + thread reply. Pipeline-driven from the 5 per-store end-of-month CSVs (Step 1B).
+3. `#loan-review` (`C0B08RS2BMK`) — past-due loan post (count + dollar + %)
+4. `#layaway-review` (`C04N24STDP1`) — layaway 5-column table
+5. `#employee-performance` (`C0ATTLPQHR8`) — ranked employees
+
+**STANDING RULE — operations Slack posts contain DATA ONLY.** The five channels above are read by the operations team. They do NOT need:
+- Source/citation footers like `_Source: Bravo POS · ... report_`
+- Process commentary like `_Update: the earlier partial post is superseded..._`
+- Pipeline status notes like `⚠️ Partial data — LEX/ROA/WAY pulls did not complete this run_`
+- Recovery commentary about watcher hangs, retries, follow-up triggers
+- "Key Takeaways" narrative paragraphs unless the chained SKILL specifically calls for them
+
+The team gets the table/numbers and the action items (e.g. 🔴 Locate Layaway callouts). Anything about HOW the data was gathered, WHERE it came from, or WHAT WENT WRONG belongs in the DM to Joshua, NOT in the operations channel post. When data is incomplete, either delay the post until the data is complete OR post only the stores that did complete with a single short line like `_(LEX, ROA, WAY pending)_` — no explanation of why.
+
+Save files:
+- `Valley_Pawn_Store_Rankings_{Month}{YYYY}.xlsx` (now pipeline-driven, see Step 1B)
+- `Loan_Layaway_Review_{YYYY-MM-DD}.docx`
+- `employee-sales-rankings-{YYYY-MM-DD}.xlsx`
+- Chekkit CSVs stashed at `/Users/joshuadavis/Documents/Claude/Scheduled/_shared-bravo-data/{YYYY-MM-DD}/chekkit-inactives/{STORE}.csv` (requires running chekkit Phase 1 via computer-use until that pipeline cell is built)
+
+==========================================================================
+STEP 3 — Final DM to Joshua
+==========================================================================
+
+DM Joshua (`U03BB52MDSA`) with the roll-up:
+
+```
+✅ Monday combined Bravo run complete.
+
+Pipeline-driven (no Parallels grant used this run):
+✅ weekly-aged-inventory-report — posted to #aged-inventory-review
+✅ monday-store-rankings — posted to #store-performance, xlsx saved (5 sequential end-of-month CSVs)
+✅ weekly-loan-layaway-review — posted to #loan-review + #layaway-review, doc saved
+✅ weekly-employee-sales-rankings — posted to #employee-performance, xlsx saved
+
+Still requiring computer-use (pipeline cells not yet built):
+⚠️ chekkit-weekly-review-requests Phase 1 — chekkit-inactives row-walk needed
+
+Files in /Users/joshuadavis/Documents/Claude/Scheduled/.
+```
+
+If any chained task failed at the compile/post phase, replace ✅ with 🚨 and add a one-line reason.
+
+==========================================================================
+LEGACY DESIGN — for reference, no longer used
+==========================================================================
+
+The previous orchestrator (pre-2026-05-12) drove Bravo via computer-use with a multi-capture-per-store loop and sub-agents firewalling screenshot context. That design is preserved in git history but is not the current path. The pipeline-driven version handles store cycling internally and produces CSVs directly — no screenshots, no sub-agents needed for the data collection phase.
+
+The compile + Slack post + file save phases of each chained SKILL are unchanged — the data sources just moved from on-screen reads to CSV parsing.
+
+==========================================================================
+IF PIPELINE FAILS
+==========================================================================
+
+**Detecting a hang (do this every poll cycle, every 30s):** the result JSON appears only after EVERY cell completes. If CSVs are appearing in `output/` faster than 1 per minute, the run is healthy. If the watcher log (`logs/<trigger-id>.log`) hasn't been touched for 3+ minutes AND no result JSON has appeared, the watcher is hung mid-cell. Check log mtime with:
+```bash
+stat -f '%Sm' '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/logs/<trigger-id>.log'
+```
+If the timestamp is more than 3 minutes old, proceed to the recovery sequence below.
+
+**Cell-level error (result JSON present, some cells `status: error`):** post the chained SKILL anyway with whatever CSVs DID succeed — note missing stores in the post footer.
+
+**Watcher hang recovery (do this AUTONOMOUSLY — do NOT wait for Joshua):**
+
+The full hang-recovery procedure is at `/Users/joshuadavis/Documents/Claude/Scheduled/monday-bravo-combined-run/recovery.md` — read it when a hang is detected. The condensed version:
+
+1. **Identify the watcher PID** via Parallels CLI:
+   ```bash
+   /usr/local/bin/prlctl exec '{7dc84f03-4e68-4f43-9596-bf8a7dfb8e0a}' --current-user wmic process where 'name="AutoHotkey64.exe"' get ProcessId,CommandLine
+   ```
+   The one with `bravo_watcher.ahk` in the command line is the watcher. The other (BravoAutoLogin.ahk) is the tray helper — leave it alone.
+
+2. **Kill the watcher PID:**
+   ```bash
+   /usr/local/bin/prlctl exec '{7dc84f03-4e68-4f43-9596-bf8a7dfb8e0a}' --current-user taskkill /F /PID <pid>
+   ```
+
+3. **Move the stuck trigger out of the queue** so the restarted watcher doesn't re-hang on it immediately:
+   ```bash
+   mv '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/triggers/<id>.json'       '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/triggers/processed/<id>.json'
+   ```
+
+4. **Restart the watcher** via the `start_watcher.bat` shim at the project root:
+   ```bash
+   /usr/local/bin/prlctl exec '{7dc84f03-4e68-4f43-9596-bf8a7dfb8e0a}' --current-user 'Y:\Documents\Claude\Projects\Bravo Data Extraction\start_watcher.bat'
+   ```
+   Then verify a new AutoHotkey64.exe PID exists and check `logs/watcher.last_started.txt` shows the fresh timestamp.
+
+5. **Identify which cells completed before the hang.** Compare `output/<DATE>_<STORE>_<REPORT>.csv` mtimes against the original trigger drop time. Cells that produced a CSV are done.
+
+6. **Drop a follow-up trigger** for ONLY the missing (report, store) pairs. Use a new ID like `monday-bravo-followup-<timestamp>`.
+
+7. **Poll the follow-up to completion**, then run the chained SKILLs that depend on those reports.
+
+8. **DM Joshua with a brief recovery report** noting the hang point, what was recovered automatically, and any cells that failed twice.
+
+**If recovery itself fails** (watcher won't start, prlctl returns non-zero, follow-up also hangs): DM Joshua with the diagnostic data — watcher PID, last log line, log mtime, trigger ID — and stop. Don't loop endlessly.
+
+**Hang point patterns and root-cause notes** are appended at the bottom of `recovery.md` — review and update that file whenever a new hang pattern is observed.

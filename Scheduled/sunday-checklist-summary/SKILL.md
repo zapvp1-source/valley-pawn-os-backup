@@ -1,0 +1,51 @@
+---
+name: sunday-checklist-summary
+description: Every Sunday 8 PM: summarize Preston's #in-store-checklists notes by store for the prior Mon–Sat and log TODOs into Apple Reminders.
+model: claude-sonnet-5
+---
+
+You are running an automated weekly review for Joshua Davis (CEO of Valley Pawn / Full Circle Finance Inc). This runs every Sunday at 8:00 PM ET. Be fully autonomous — do not ask questions, just complete the work.
+
+GOAL
+Review the past week of the Valley Pawn "in-store checklists" Slack channel, summarize by store what Preston Peters (Operations Manager) talked about, identify any TO-DOs, and log those TO-DOs into Apple Reminders.
+
+STEP 1 — Determine the date window.
+The window is LAST WEEK, Monday through Saturday (the most recent Mon–Sat that just ended before this Sunday run). Use a bash `date` call to compute the exact dates. Example: if today is Sunday 2026-06-28, the window is Mon 2026-06-22 through Sat 2026-06-27. Note the window explicitly in your summary.
+
+STEP 2 — Read the Slack channel.
+Channel: #in-store-checklists, channel ID `C0B5Q65QZUJ` (private). Use the Slack MCP tool `mcp__f92ce7c6-0353-4419-8491-f0843b182ff2__slack_read_channel` to read messages in the window, and `slack_read_thread` to expand any threaded replies. Focus on messages from Preston Peters (Slack user `U03BWMEM9GR`, preston@fcfpawn.com) — what he flagged, asked for, instructed, or noted. Include relevant replies/context from store employees when they clarify a Preston item.
+
+STEP 3 — Summarize by store.
+Group Preston's notes under each of the 5 stores:
+- Culpeper
+- Waynesboro
+- Harrisonburg
+- Lexington
+- Roanoke
+For each store, write a short bullet summary of what Preston discussed that week. If a note is company-wide (not store-specific), put it under a "Company / All Stores" heading. If a store had nothing, say "No notes this week."
+
+STEP 4 — Extract TO-DOs and classify each.
+For every actionable item Preston raised, classify it as either:
+  (A) CORPORATE / COMPANY deliverable — something Joshua or the corporate office owns (e.g., order signage company-wide, fix a policy, vendor/payroll/marketing/IT items, anything not a single-store floor task).
+  (B) STORE / EMPLOYEE deliverable — a task a specific store or its employees must do (e.g., "Lexington needs to redo the jewelry case," "Roanoke clean the back room").
+Write a clear, action-oriented reminder title for each (start with a verb; include the store name in store items, e.g. "Lexington: re-merchandise jewelry case"). If a due date is implied, include it.
+
+STEP 5 — Log TO-DOs into Apple Reminders (via `mcp__Control_your_Mac__osascript`).
+First enumerate the existing Reminders lists so you use exact names:
+  `tell application "Reminders" to get name of lists`
+- CORPORATE deliverables → add to the list named exactly **"Preston Joshua"**.
+- STORE deliverables → add to that store's own sub-list (under the "Stores" group). Match the store name (Culpeper, Waynesboro, Harrisonburg, Lexington, Roanoke) to the closest existing list name. If you cannot find a matching store list, add it to "Preston Joshua" instead with the store name prefixed in the title, and note this fallback in your summary.
+
+To add a reminder, use AppleScript like:
+  tell application "Reminders"
+    set theList to list "Preston Joshua"
+    make new reminder at end of theList with properties {name:"<title>", body:"From #in-store-checklists week of <window>. <context>"}
+  end tell
+(Substitute the correct list name per item.) Add a body note referencing the source channel and week so the item has context.
+
+IMPORTANT — Reminders permission: this Mac may need automation access granted for the Reminders app the first time. If the osascript calls error with a permissions/automation failure, DO NOT silently fail. Instead: (a) still produce the full summary and the complete TODO list (clearly grouped into Corporate vs each store) in your output so nothing is lost, and (b) state clearly at the top of the output that reminders could not be written because Reminders automation access needs to be approved on the Mac, and the listed items should be added manually or the task re-run once access is granted.
+
+STEP 6 — Output.
+Produce a clean summary report with: the date window; per-store sections of what Preston discussed; a "TO-DOs Logged" section listing each reminder created and which Reminders list it went into (Corporate vs store sub-list); and any fallback/permission notes. This output is delivered to Joshua as the run notification.
+
+Do not post anything back into the Slack channel. Do not message employees. The only writes you perform are to Apple Reminders.

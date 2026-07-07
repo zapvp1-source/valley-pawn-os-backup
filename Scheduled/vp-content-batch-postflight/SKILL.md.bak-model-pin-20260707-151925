@@ -1,0 +1,56 @@
+---
+name: vp-content-batch-postflight
+description: Monday 3:30 AM ET post-flight verification for vp-content-batch-weekly (which fired at 2:02 AM). Verifies manifest saved + Slack cards + Publer drafts. If ANY layer failed, auto-triggers self-healing retry via completion notification to Claude. DMs Joshua only when items are ready to approve.
+---
+
+> **REPORTING POLICY:** Joshua sees ONE clean DM when ≥1 item is ready to approve. Silent otherwise. Claude gets the completion notification and self-heals.
+
+Post-flight verification of Monday 2:02 AM's `vp-content-batch-weekly` run.
+
+## Step 1 — Read the run_log
+Load `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn Studios/output/{YYYY-MM-DD}/run_log_{YYYY-MM-DD}.json`.
+
+If run_log missing → the batch didn't create it → treat as complete failure, jump to Step 4 (self-heal).
+
+## Step 2 — Verify manifest
+Check `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn Studios/output/{YYYY-MM-DD}/batch_manifest_{YYYY-MM-DD}.json` exists and has `routing_summary.total > 0`.
+- If missing OR total == 0 → batch produced no items → Step 4.
+
+## Step 3 — Verify Slack cards
+Query `#vp-studio-queue` via Slack MCP. Count messages from the run window (2:00 AM - 3:00 AM ET this Monday).
+- Expected: ≥15 (up to 20 with Deals-of-the-Week).
+- If count is 0 → Slack staging failed → Step 4.
+- If count > 0 → success path (Step 5).
+
+## Step 4 — Self-heal (no Joshua DM)
+
+The batch failed silently. Try to recover:
+
+1. Re-invoke `vp-content-batch` skill in-session with `--week-of {YYYY-MM-DD}` for the current week.
+2. Watch for errors. Common failure modes:
+   - Slack MCP auth-blocked in cron context → invoke skill will succeed because THIS session has Slack access → items get staged now.
+   - MJ fast-hours ran out → downgrade to reuse-only mode, produce whatever can be generated from existing library.
+   - Bravo export missing → fall back to Slack `#new-inventory` scan for the last 7 days.
+   - Publer login expired mid-run → skip Publer scheduling, complete asset generation + Slack staging only.
+3. After self-heal, re-run Steps 2 and 3 verification.
+
+If self-heal SUCCEEDS → jump to Step 5 with the recovered items.
+If self-heal FAILS → write full diagnostic to `output/{YYYY-MM-DD}/postflight_FAILED.json`. Completion notification alerts Claude. Do NOT DM Joshua — this is Claude's problem to fix before Sunday's pre-flight for next Monday.
+
+## Step 5 — DM Joshua (success path only)
+
+Format:
+```
+✅ Week of {YYYY-MM-DD} — {N} posts ready
+
+Approve from your phone: #vp-studio-queue
+Publer calendar: https://app.publer.com/#/calendar/week
+
+Everything scheduled to publish across the week once you tap approve.
+```
+
+## Cron
+Monday 3:30 AM ET via `0 30 3 * * 1`. Runs 90 min after `vp-content-batch-weekly`. Long enough for the batch to complete, short enough to catch same-day failure.
+
+## Hard rule
+Joshua is DM'd exactly once per week: either the success message above, or nothing. Any other communication is Claude→Claude via completion notifications.

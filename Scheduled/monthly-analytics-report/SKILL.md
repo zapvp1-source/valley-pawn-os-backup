@@ -1,0 +1,162 @@
+---
+name: monthly-analytics-report
+description: Build Valley Pawn's monthly YoY analytics for the prior month — 3 views × 6 metrics × 5 stores + Grand Total — and publish to #company-performance, #store-performance, and Google Sheets. Pipeline-driven via existing `end-of-month` cell. Reads CSVs the `monthly-analytics-prestage` task staged the night before. Zero computer-use. Silent on failure (watchdog at 7 AM).
+model: claude-sonnet-5
+---
+
+
+---
+name: monthly-analytics-report
+description: Build Valley Pawn's monthly YoY analytics for the PRIOR month — 3 views (Same Month / YTD / T12M) × 6 metrics × 5 stores + Grand Total — and publish to #company-performance, #store-performance, and Google Sheets. Pipeline-driven via the existing `end-of-month` cell. Runs the 1st of the month at 3 AM after `monthly-analytics-prestage` has staged the CSVs the night before. Zero computer-use. Silent on failure (watchdog at 7 AM follows up if no post lands).
+---
+
+> ⚠️ **FAILURE POLICY — silent on failure (matches `daily-funds-verification` 2026-06-08 policy).**
+> Never DM. Never post a failure notice to Slack. If pre-stage CSVs are missing or parsing fails, save the markdown working file and exit silently. The companion `monthly-analytics-watchdog` (7 AM on the 1st) checks whether the success post exists and DMs Joshua if it doesn't — that is the ONE notification path.
+
+This task reads CSVs the `monthly-analytics-prestage` scheduled task staged the night before. Pure file I/O via `osascript`. Zero computer-use.
+
+# Step 0 — Connector readiness gate
+
+Confirm `mcp__Control_your_Mac__osascript`, `mcp__f92ce7c6-0353-4419-8491-f0843b182ff2__slack_send_message`, and `mcp__2ce817f2-5038-4cde-a6ab-8dedbe8abd84__create_file` are loaded. If warming, wait 30 s × up to 12 min. (See `daily-funds-verification/SKILL.md` Step 0.) Warmup is NOT failure.
+
+# Step 1 — Compute the 6 date windows
+
+Today minus 1 month = report month. Compute:
+
+| Window key | Start | End |
+|---|---|---|
+| same-month-current | first of report month | last of report month |
+| same-month-prior | first, year − 1 | last, year − 1 |
+| ytd-current | Jan 1 of report year | last of report month |
+| ytd-prior | Jan 1 of prior year | last of report month, prior year |
+| t12m-current | last of report month − 12 months + 1 day | last of report month |
+| t12m-prior | one year earlier than t12m-current | one year earlier than t12m-current |
+
+**T12M Prior calendar clamp:** Bravo's floor ≈ 2024-06-03. The prestage task uses the earliest available date; the CSV's first line records the actual range (`Reporting Dates: M/D/YYYY - M/D/YYYY`) — note any variance in the post.
+
+# Step 2 — Inventory the staged CSVs
+
+The prestage task left CSVs in window-tagged sidecar files:
+
+```
+/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/output/monthly-analytics/{YYYY-MM}/
+  ├── same-month-current_{STORE}.xlsx  ×5
+  ├── same-month-prior_{STORE}.xlsx    ×5
+  ├── ytd-current_{STORE}.xlsx         ×5
+  ├── ytd-prior_{STORE}.xlsx           ×5
+  ├── t12m-current_{STORE}.xlsx        ×5
+  └── t12m-prior_{STORE}.xlsx          ×5
+```
+
+List via osascript:
+```bash
+ls -la "/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/output/monthly-analytics/{YYYY-MM}/"
+```
+
+Good XLSX = ≥ 2 KB. 0-byte files are failed-cell stubs. If MORE than 4 of 30 XLSX files are missing, save the working file and exit silently. If ≤ 4 missing, proceed and flag the gap in the post.
+
+# Step 3 — Parse the CSVs with `parse_eom.py`
+
+The parser lives next to this SKILL: `/Users/joshuadavis/Documents/Claude/Scheduled/monthly-analytics-report/parse_eom.py`. It was verified 2026-06-11 against `monday-store-rankings`' June 8 post — 30/30 metrics matched to the penny across all 5 stores.
+
+For each (window, store) sidecar CSV, run via osascript:
+
+```bash
+python3 "/Users/joshuadavis/Documents/Claude/Scheduled/monthly-analytics-report/parse_eom.py" \
+  "/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/output/monthly-analytics/{YYYY-MM}/{window-key}_{STORE}.xlsx"
+```
+
+Returns JSON:
+```json
+{
+  "inventory_balance": 186155.71,
+  "loan_balance": 177678.00,
+  "retail_sales": 40926.02,
+  "scrap_sales": 15190.50,
+  "psc": 5847.46,
+  "net_revenue": 32479.80,
+  "reporting_dates": "6/1/2026 - 6/7/2026"
+}
+```
+
+Or parse the whole window folder at once:
+```bash
+python3 ".../parse_eom.py" "/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/output/monthly-analytics/{YYYY-MM}/"
+```
+
+Returns `{filename: metrics}` for every CSV.
+
+Compute Grand Total per window = sum of the 5 store values per metric.
+
+If a CSV parse returns all zeros for the key metrics (loan_balance == 0 and retail_sales == 0), treat that (store, window) as `incomplete`.
+
+# Step 4 — Compute YoY
+
+For each of the 3 views (same-month / YTD / T12M), per metric:
+- `var_$` = current − prior
+- `var_%` = (current − prior) / prior × 100, rounded 1 decimal
+
+Inventory + Loan Balance are point-in-time at window end, so they're identical across the 3 Current windows (and across the 3 Prior windows) — that's expected; show in every view's table.
+
+Flags: ✅ positive, 🔥 > 30%, ⚠️ any decline.
+
+# Step 5 — Google Sheet
+
+Use `mcp__2ce817f2-5038-4cde-a6ab-8dedbe8abd84__create_file`:
+- **title:** `Monthly Analytics - {Month Name} {Year}`
+- **parentId:** `1DYScQQl_dkkf3jGSBqNzGJKKv2uroFoh` (Monthly Reports folder)
+- **contentMimeType:** `text/csv`
+
+Structure: 3 sections × 4 sub-tables (Current Actuals, Prior Actuals, Var $, Var %) × 6 metrics × 6 columns (GT + CUL + HAR + LEX + ROA + WAY).
+
+# Step 6 — Slack posts (success path only)
+
+Only post if Step 2 found ≥ 26 of 30 CSVs AND Step 3 returned non-zero values for at least 4 of 5 stores per window.
+
+### #company-performance (`C0B26GD8D2R`) — Grand Total only
+
+```
+📊 *Monthly Analytics — {Month Year} | Company-Wide*
+_Prepared {date} | Source: Bravo POS End-of-Month pipeline | Net Revenue = PSC + Misc + Conv Fees + Sales Profit_
+_Per-store breakdown → #store-performance_
+
+*VIEW 1 — Same Month: {Month Year} vs {Month Prior Year}*
+
+| Metric | Current | Prior | $ Chg | YoY |
+|---|---|---|---|---|
+| Inventory Balance | $X | $X | ±$X | ±X.X% {flag} |
+| Loan Balance | ... | ... | ... | ... |
+| Retail Sales | ... | ... | ... | ... |
+| Scrap Sales | ... | ... | ... | ... |
+| PSC | ... | ... | ... | ... |
+| Net Revenue | ... | ... | ... | ... |
+
+*VIEW 2 — YTD: Jan–{Month} {Year} vs Jan–{Month} {Prior Year}*
+[same shape]
+
+*VIEW 3 — Trailing 12 Months: {start–end} vs {prior start–end}*
+[same; if T12M Prior was clamped, add: "_T12M Prior start = X — N-day variance._"]
+
+⚠️ _Watch: {flag GT declines / big swings}_
+📋 _Full data → Google Sheets: Monthly Analytics - {Month Year}_
+```
+
+### #store-performance (`C03CGTN3KN1`) — 5 stores only, NO Grand Total
+
+3 views × 2 tables (Actuals, YoY%). Same shape as April/May 2026 posts.
+
+# Step 7 — Always save working file
+
+Save markdown at `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/monthly-analytics/{YYYY-MM} Monthly Analytics.md` capturing: 6 windows + ranges, each (store × window) parsed values, the YoY tables, whether both Slack posts went out, and any incomplete cells flagged. The watchdog reads this if it needs to construct a follow-up DM.
+
+# Hard rules
+
+- **No computer-use.** No Parallels, no Chrome in the VM, no GUI. `osascript` + Slack + Google Drive only.
+- **No DMs on failure. No partial Slack posts.** The 7 AM watchdog is the only notification path.
+- **Use `parse_eom.py`** — don't re-implement parsing. The parser is verified against monday-store-rankings to the penny.
+- **Net Revenue formula is locked (2026-07-02, verified to the penny vs Bravo Company Performance report, all 5 stores):** Net Revenue = In-Store Service Charges (Interest + Fees + Misc Charges from the In-Store Subtotal row) + Sales Revenue (Profit). Do NOT add MobilePawn interest/fees/misc or Convenience Fees — they are not in Bravo Net Revenue.
+- **PSC = In-Store Interest + Fees + Misc Charges** (matches the KPI report Pawn Service Charges row exactly).
+- **Retail/scrap revenue split does NOT exist in the EOM report.** Report Total Sales (= Sales Total row, equals KPI Retail + Scrap exactly) and Scrap Cost (= Refined Cost of Sales). Never label scrap cost as scrap sales.
+- **Additive — never modify `EndOfMonth.ahk`, `monday-store-rankings`, `monday-bravo-combined-run`, or any other production infra.**
+
+<!-- migrated to working model 2026-06-15 -->

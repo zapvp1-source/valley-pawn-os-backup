@@ -1,0 +1,157 @@
+---
+name: monthly-bonus-targets
+description: Generate next month's store revenue bonus targets for Valley Pawn using Option B yield methodology, update the VP BONUS FINAL spreadsheet, and draft a Slack message for Joshua's review.
+model: claude-sonnet-5
+---
+
+
+> ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
+
+You are generating next month's store revenue bonus targets for Full Circle Finance Inc DBA Valley Pawn using the Option B yield methodology. Run this at the end of each calendar month, or on demand when Joshua asks.
+
+## Context
+- Company: Full Circle Finance Inc DBA Valley Pawn
+- Stores: Culpeper, Harrisonburg, Roanoke, Lexington, Waynesboro
+- Tracking spreadsheet: Look for "VP BONUS FINAL Updated.xlsx" or "VP BONUS FINAL*.xlsx" in the "Claude 4 back up" mounted folder (typically at a path like /sessions/<session>/mnt/Claude 4 back up/)
+- Slack channel for bonus goals: #bonus-goals (channel ID: C04TXF0KGNL)
+- Bravo KPI data: Accessed via Chrome in Parallels on Joshua's Mac
+- Read the bravo-context skill for Bravo navigation guidance if needed
+
+## The Option B Methodology
+
+Revenue target for store S in month M+1:
+
+  Target(S, M+1) = EndingAssets(S, M) × AdjustedYield(S, M+1)
+  AdjustedYield = YTD_AvgYield(S) × FridayMultiplier
+  MonthlyYield(S, month) = Revenue(S, month) / EndingAssets(S, prior month)
+  YTD_AvgYield = average of all monthly yields for each store in 2026 with actuals
+  FridayMultiplier = 1 + 0.045 × (Fridays_in_target_month − YTD_avg_Fridays_per_month)
+
+The Friday multiplier should not fall below 1.0 — if it would, hold it at 1.0 and flag this for Joshua.
+
+Ending Assets = Loan Balance + Inventory Balance (from Bravo KPI report — NOT a separate assets field).
+
+## Steps
+
+### 1. Determine months
+- Completed month = the calendar month that just ended
+- Target month = the next calendar month (M+1)
+- Confirm if there's any ambiguity about which month is closing
+
+### 2. Pull Bravo KPI Report
+Use computer-use tools (Parallels → Chrome) to open Bravo and navigate to the KPI Report for the completed month. Read the bravo-context skill first if you need navigation help. If the report is already visible on screen, scrape it visually.
+
+Extract for EACH store:
+- Net Revenue for the completed month
+- Loan Balance (ending, last day of completed month)
+- Inventory Balance (ending, last day of completed month)
+- Ending Assets = Loan Balance + Inventory Balance
+
+### 3. Load YTD data from spreadsheet
+Open VP BONUS FINAL Updated.xlsx using openpyxl. Read the "2025 compared to Bonus" sheet.
+
+Spreadsheet layout:
+- Culpeper: header row 9, data rows 10-21, current-year April = row 13
+- Harrisonburg: header row 24, data rows 25-36, April = row 28
+- Roanoke: header row 39, data rows 40-51, April = row 43
+- Lexington: header row 54, data rows 55-66, April = row 58
+- Waynesboro: header row 69, data rows 70-81, April = row 73
+- Company total: header row 84, data rows 85-96, April = row 88
+
+Column mapping (A=1 through H=8):
+- A: Month name
+- B: 2025 Revenue (prior year)
+- C: 2026 Bonus Target
+- D: 2026 Revenue Actual
+- E: Variance (D - C)
+- F: Ending Assets Target
+- G: Actual Ending Assets
+- H: Yield (D / prior month G)
+
+Read D, G, H for all months with actuals to rebuild the YTD yield series for each store.
+If H is blank but D and G are present, compute yield = D_value / prior_month_G_value.
+
+### 4. Calculate YTD average yields
+Average the monthly yields for each store across all months with actual revenue (col D non-empty) in 2026.
+
+### 5. Count Fridays and compute multiplier
+Count exact Fridays in the target month (M+1).
+Count average Fridays per month across the YTD period (Jan through completed month).
+Apply: FridayMultiplier = 1 + 0.045 × (TargetFridays − YTD_AvgFridays)
+Round multiplier to 4 decimal places for intermediate calc; present to 2 decimal places.
+
+### 6. Calculate targets
+For each store: Target = EndingAssets(completed month) × YTD_AvgYield × FridayMultiplier
+Round to nearest whole dollar.
+Company total = sum of all five store targets.
+
+Show a summary table with: Store | Ending Assets | YTD Yield | Friday Mult | Target
+
+### 7. Update the spreadsheet
+
+Use openpyxl to update the file. IMPORTANT: be careful with merged cells — use a try/except around each cell write to skip merged non-primary cells gracefully. Never overwrite formula cells (e.g., Company row C column which contains a sum formula).
+
+For the COMPLETED month row in each store block:
+- Column D: actual revenue from Bravo
+- Column E: variance = D - C (only if E is not a formula; if it's a formula, leave it)
+- Column G: actual ending assets from Bravo
+- Column H: yield = revenue / prior month ending assets
+
+For the TARGET month row in each store block:
+- Column C: the new bonus target
+- Column F: ending assets assumption (= prior month actual G value)
+
+Write mode: load with data_only=False, preserve existing formulas, write updated values, save back.
+Save to the same path as the source file (VP BONUS FINAL Updated.xlsx in Claude 4 back up folder).
+chmod 0o644 after saving.
+
+### 8. Draft Slack message — DO NOT SEND
+
+Compose a message for #bonus-goals using EXACTLY this format and structure (this is Joshua's approved template):
+
+```
+📅 [Month] [Year] Bonus Targets
+[Month] is a [N]-Friday month — our [period] average is [X] Fridays/month, so every store's target already has a +[X]% calendar lift baked in.
+
+May Targets by Store
+🏪 Culpeper — $XX,XXX
+🏪 Harrisonburg — $XX,XXX
+🏪 Roanoke — $XX,XXX
+🏪 Lexington — $XX,XXX
+🏪 Waynesboro — $XX,XXX
+
+How We Got Here.
+-Targets are built using each store's own 2026 YTD yield — not a company average. Formula: [prior month] ending assets × store's YTD yield × Friday multiplier.
+-[Prior Month] Ending Assets (Loans + Inventory):
+Culpeper $XXX,XXX · Harrisonburg $XXX,XXX · Roanoke $XXX,XXX · Lexington $XXX,XXX · Waynesboro $XXX,XXX
+-YTD Avg Yield (Jan–[Prior Month] [Year]): Culpeper XX.X% · Harrisonburg XX.X% · Roanoke XX.X% · Lexington XX.X% · Waynesboro XX.X%
+-Friday adjustment: [Month] has [N] Fridays vs. a [X] monthly average. At +4.5% per extra Friday, that's a [X.XXX]× multiplier on every store's baseline.
+Each store's number reflects what they've actually been doing this year. Hit it and earn it. This not math anymore, it's science. Let's have a great [Month]. 💪
+```
+
+Formatting rules — follow these exactly:
+- Each store target is on its own line — never run stores together on one line
+- Ending assets: each store on its own line inside the bullet, not comma-separated inline
+- "How We Got Here." section uses dash bullets (-), not markdown bullets or bold
+- No markdown bold/italic — Slack renders plain text
+- No company total line in the targets section
+- The sign-off line is fixed every month: "Each store's number reflects what they've actually been doing this year. Hit it and earn it. This not math anymore, it's science. Let's have a great [Month]. 💪"
+
+Present the full draft to Joshua in chat. Ask him to confirm before sending. NEVER auto-send.
+Use Slack MCP tool slack_send_message (channel C04TXF0KGNL) ONLY after Joshua explicitly says "send it" or "looks good, send."
+
+### 9. Deliver summary to Joshua
+
+Present:
+1. Per-store target table (from Step 6)
+2. Confirmation that spreadsheet was updated with actuals + new targets
+3. The Slack draft for his review
+4. File link to the updated spreadsheet
+
+## Important Notes
+- Yield in the formula is a ratio (e.g., 0.186 for 18.6%) — confirm units from spreadsheet before multiplying
+- Ending Assets must come from Bravo (Loan Balance + Inventory Balance), not estimated
+- Never auto-send the Slack message — always wait for Joshua's explicit approval
+- If Bravo KPI data for the completed month is not yet available, note this and ask when to rerun
+
+<!-- migrated to working model 2026-06-15 -->
