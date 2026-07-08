@@ -1,0 +1,475 @@
+<!--
+  Valley Pawn — "We Buy Jewelry" Landing Page Master Template
+  Gold calculator + "metal-only" framing + strong photo-CTA for stones.
+
+  GLOBAL CONFIG:
+    window.VP_GOLD_SPOT     — gold spot USD/oz (default 4500)
+    window.VP_PAYOUT_LOW    — 0.70
+    window.VP_PAYOUT_HIGH   — 0.85
+-->
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://thevalleypawn.com/sell-jewelry-lexington/#business",
+      "name": "Valley Pawn — Lexington",
+      "image": "https://i0.wp.com/thevalleypawn.com/wp-content/uploads/2026/03/vp_logo_name-no-tag.png",
+      "telephone": "+15404618349",
+      "priceRange": "$",
+      "address": {"@type": "PostalAddress", "streetAddress": "125 Walker Street", "addressLocality": "Lexington", "addressRegion": "VA", "postalCode": "24450", "addressCountry": "US"},
+      "url": "https://thevalleypawn.com/sell-jewelry-lexington/"
+    },
+    {
+      "@type": "WebPage",
+      "url": "https://thevalleypawn.com/sell-jewelry-lexington/",
+      "name": "Sell Jewelry in Lexington, VA | Diamonds, Gold, Watches | Valley Pawn",
+      "description": "Sell jewelry in Lexington, VA — diamond rings, gold chains, designer pieces, watches, estate jewelry. Free in-person diamond evaluation. Family-owned since 2014."
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "What jewelry does Valley Pawn buy?", "acceptedAnswer": {"@type": "Answer", "text": "Rings (engagement, wedding, fashion), necklaces and chains, bracelets, earrings, watches, designer pieces (David Yurman, Tiffany, Cartier, etc.), estate jewelry, vintage pieces, diamond jewelry, gemstone jewelry, gold, silver, and platinum pieces, broken or damaged jewelry, single earrings — we buy it all."}},
+        {"@type": "Question", "name": "How much is my diamond worth?", "acceptedAnswer": {"@type": "Answer", "text": "Diamond value depends on the 4 Cs — carat, cut, color, and clarity — and current market demand. We do free in-person diamond evaluations using a loupe, scale, and reference to current wholesale guides. If you have a GIA or IGI report, bring it — it speeds up the appraisal."}},
+        {"@type": "Question", "name": "Do you buy broken or damaged jewelry?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Broken chains, missing stones, bent rings, single earrings — bring it as-is. We pay based on the metal content and any salvageable stones. Don't try to repair it first."}},
+        {"@type": "Question", "name": "Do you buy luxury watches?", "acceptedAnswer": {"@type": "Answer", "text": "Yes — Rolex, Omega, Tag Heuer, Cartier, Tudor, Breitling, Patek Philippe, and more. Bring the watch with any box, papers, and links if you have them. Working condition increases value, but we still buy non-working luxury pieces."}},
+        {"@type": "Question", "name": "Should I get my jewelry appraised first?", "acceptedAnswer": {"@type": "Answer", "text": "No need — appraisals at Valley Pawn are free. Insurance appraisals (the kind your jeweler does) inflate values for replacement cost, not resale value. We give you a real market offer based on actual buying demand."}}
+      ]
+    }
+  ]
+}
+</script>
+
+<style>
+  :root { --vp-blue: #0099DD; --vp-blue-light: #3DB8E8; --vp-purple: #2D1A5E; --vp-coral: #F58C8A; --vp-gold: #D4A442; --vp-gold-dark: #B8861F; --vp-cream: #FAF7F0; --vp-text: #1A1A1A; --vp-muted: #6B6B6B; --vp-border: #E5E5E5; --vp-shadow: 0 4px 24px rgba(45, 26, 94, 0.12); --vp-shadow-lg: 0 12px 48px rgba(45, 26, 94, 0.18); --vp-radius: 12px; --vp-radius-lg: 20px; }
+  .vp-sell-jewelry { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--vp-text); line-height: 1.6; background: #fff; }
+  .vp-sell-jewelry *, .vp-sell-jewelry *::before, .vp-sell-jewelry *::after { box-sizing: border-box; }
+  .vp-sell-jewelry img { max-width: 100%; height: auto; display: block; }
+  .vp-sell-jewelry a { color: var(--vp-blue); text-decoration: none; }
+  .vp-sell-jewelry a:hover { text-decoration: underline; }
+  .vp-container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+  .vp-header { background: #fff; border-bottom: 1px solid var(--vp-border); padding: 14px 0; position: sticky; top: 0; z-index: 100; }
+  .vp-header .vp-container { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .vp-header__logo img { max-height: 44px; }
+  .vp-header__cta { display: flex; gap: 8px; }
+  .vp-header__cta a { display: inline-flex; align-items: center; gap: 6px; padding: 10px 14px; font-weight: 700; font-size: 14px; border-radius: 8px; text-decoration: none; }
+  .vp-header__cta .vp-btn-call { background: var(--vp-blue); color: #fff; }
+  .vp-header__cta .vp-btn-text { background: var(--vp-coral); color: #fff; }
+  @media (max-width: 640px) { .vp-header__cta a span.label { display: none; } }
+  .vp-hero { background: linear-gradient(135deg, var(--vp-purple) 0%, #1a0f3d 100%); color: #fff; padding: 56px 0 40px; position: relative; overflow: hidden; }
+  .vp-hero::before { content: ''; position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(245, 140, 138, 0.18) 0%, transparent 70%); border-radius: 50%; }
+  .vp-hero .vp-container { position: relative; z-index: 1; }
+  .vp-hero__eyebrow { display: inline-block; background: rgba(255,255,255,0.12); color: var(--vp-coral); font-size: 13px; font-weight: 700; letter-spacing: 0.05em; padding: 6px 14px; border-radius: 20px; text-transform: uppercase; margin-bottom: 16px; }
+  .vp-hero h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.15; margin: 0 0 14px; font-weight: 800; }
+  .vp-hero h1 .vp-accent { color: var(--vp-gold); }
+  .vp-hero__sub { font-size: clamp(1rem, 2vw, 1.15rem); color: rgba(255,255,255,0.85); max-width: 640px; margin: 0 0 24px; }
+  .vp-hero__signals { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 28px; font-size: 14px; color: rgba(255,255,255,0.9); }
+  .vp-hero__signal { display: flex; align-items: center; gap: 8px; }
+  .vp-hero__signal::before { content: '✓'; color: var(--vp-gold); font-weight: 800; }
+  .vp-hero__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 32px; }
+  .vp-hero__cta a { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; font-size: 16px; font-weight: 700; border-radius: 10px; text-decoration: none; }
+  .vp-btn-call-lg { background: #fff; color: var(--vp-purple); }
+  .vp-btn-text-lg { background: var(--vp-coral); color: #fff; }
+  .vp-calc { background: #fff; border-radius: var(--vp-radius-lg); padding: 28px; box-shadow: var(--vp-shadow-lg); color: var(--vp-text); max-width: 560px; margin: 0 0 24px; }
+  .vp-calc__title { display: flex; align-items: center; gap: 10px; font-size: 1.35rem; font-weight: 800; color: var(--vp-purple); margin: 0 0 6px; }
+  .vp-calc__title::before { content: ''; display: inline-block; width: 28px; height: 28px; background: radial-gradient(circle, var(--vp-gold) 0%, var(--vp-gold-dark) 100%); border-radius: 50%; }
+  .vp-calc__sub { color: var(--vp-muted); font-size: 14px; margin: 0 0 18px; }
+  .vp-calc__field { margin-bottom: 16px; }
+  .vp-calc__label { display: block; font-size: 13px; font-weight: 700; color: var(--vp-purple); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; }
+  .vp-calc__karat { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .vp-calc__karat button { padding: 10px 4px; font-size: 14px; font-weight: 700; border: 2px solid var(--vp-border); background: #fff; color: var(--vp-text); border-radius: 8px; cursor: pointer; }
+  .vp-calc__karat button.active { background: var(--vp-purple); border-color: var(--vp-purple); color: #fff; }
+  .vp-calc__weight-row { display: grid; grid-template-columns: 1fr 120px; gap: 8px; }
+  .vp-calc__input, .vp-calc__select { width: 100%; padding: 12px 14px; font-size: 16px; border: 2px solid var(--vp-border); border-radius: 8px; background: #fff; color: var(--vp-text); font-family: inherit; }
+  .vp-calc__result { background: linear-gradient(135deg, #FFF8E7 0%, #FFEFC2 100%); border: 2px solid var(--vp-gold); border-radius: var(--vp-radius); padding: 18px 20px; margin: 18px 0; text-align: center; }
+  .vp-calc__result-label { font-size: 12px; font-weight: 700; color: var(--vp-gold-dark); letter-spacing: 0.06em; margin-bottom: 6px; text-transform: uppercase; }
+  .vp-calc__result-value { font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800; color: var(--vp-purple); line-height: 1.1; }
+  .vp-calc__result-note { font-size: 12px; color: var(--vp-muted); margin-top: 6px; }
+  .vp-calc__cta { display: block; width: 100%; padding: 16px 20px; background: var(--vp-coral); color: #fff; font-size: 16px; font-weight: 800; border-radius: 10px; text-align: center; text-decoration: none; }
+  .vp-calc__cta:hover { color: #fff; text-decoration: none; }
+  .vp-stones-callout { background: linear-gradient(135deg, #FFF8E7 0%, #FFEFC2 100%); border: 2px solid var(--vp-gold); border-radius: var(--vp-radius); padding: 16px 18px; margin: 0 0 18px; text-align: center; max-width: 560px; }
+  .vp-stones-callout strong { color: var(--vp-gold-dark); display: block; margin-bottom: 4px; font-size: 14px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .vp-stones-callout p { color: var(--vp-text); margin: 0; font-size: 14px; }
+  .vp-photo-cta { background: #fff; border: 2px dashed var(--vp-coral); border-radius: var(--vp-radius); padding: 24px; text-align: center; margin: 0 0 40px; max-width: 560px; }
+  .vp-photo-cta h3 { color: var(--vp-purple); margin: 0 0 8px; font-size: 1.2rem; }
+  .vp-photo-cta p { color: var(--vp-muted); margin: 0 0 14px; font-size: 14px; }
+  .vp-section { padding: 56px 0; }
+  .vp-section--alt { background: var(--vp-cream); }
+  .vp-section__title { text-align: center; font-size: clamp(1.6rem, 3.5vw, 2.25rem); color: var(--vp-purple); margin: 0 0 12px; font-weight: 800; }
+  .vp-section__sub { text-align: center; color: var(--vp-muted); max-width: 640px; margin: 0 auto 40px; }
+  .vp-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  @media (max-width: 768px) { .vp-steps { grid-template-columns: 1fr; } }
+  .vp-step { text-align: center; padding: 24px; }
+  .vp-step__num { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; background: var(--vp-blue); color: #fff; font-size: 1.5rem; font-weight: 800; border-radius: 50%; margin-bottom: 16px; }
+  .vp-step__title { font-size: 1.25rem; font-weight: 800; color: var(--vp-purple); margin: 0 0 8px; }
+  .vp-step__body { color: var(--vp-muted); margin: 0; }
+  .vp-why { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  @media (max-width: 900px) { .vp-why { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 500px) { .vp-why { grid-template-columns: 1fr; } }
+  .vp-why__card { background: #fff; border: 1px solid var(--vp-border); border-radius: var(--vp-radius); padding: 24px; text-align: center; }
+  .vp-why__icon { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; background: linear-gradient(135deg, var(--vp-blue) 0%, var(--vp-blue-light) 100%); color: #fff; font-size: 1.5rem; border-radius: 12px; margin-bottom: 14px; }
+  .vp-why__title { font-size: 1.05rem; font-weight: 800; color: var(--vp-purple); margin: 0 0 6px; }
+  .vp-why__body { font-size: 14px; color: var(--vp-muted); margin: 0; }
+  .vp-buy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 768px) { .vp-buy-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .vp-buy-grid { grid-template-columns: 1fr; } }
+  .vp-buy-item { background: #fff; border: 1px solid var(--vp-border); border-radius: var(--vp-radius); padding: 20px; display: flex; gap: 14px; align-items: flex-start; }
+  .vp-buy-item__emoji { font-size: 1.6rem; line-height: 1; }
+  .vp-buy-item__title { font-weight: 800; color: var(--vp-purple); margin: 0 0 4px; font-size: 1rem; }
+  .vp-buy-item__body { font-size: 14px; color: var(--vp-muted); margin: 0; }
+  .vp-reviews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 900px) { .vp-reviews { grid-template-columns: 1fr; } }
+  .vp-review { background: #fff; border-radius: var(--vp-radius); padding: 24px; box-shadow: var(--vp-shadow); border-top: 4px solid var(--vp-coral); }
+  .vp-review__stars { color: var(--vp-gold); font-size: 18px; margin-bottom: 10px; }
+  .vp-review__quote { color: var(--vp-text); margin: 0 0 14px; font-style: italic; }
+  .vp-review__author { font-weight: 700; color: var(--vp-purple); font-size: 14px; }
+  .vp-review__meta { font-size: 12px; color: var(--vp-muted); }
+  .vp-store-block { background: #fff; border-radius: var(--vp-radius-lg); padding: 32px; box-shadow: var(--vp-shadow); display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
+  @media (max-width: 768px) { .vp-store-block { grid-template-columns: 1fr; } }
+  .vp-store-block h3 { color: var(--vp-purple); margin: 0 0 8px; font-size: 1.4rem; }
+  .vp-store-block__addr { color: var(--vp-text); margin: 0 0 4px; font-weight: 600; }
+  .vp-store-block__hours { color: var(--vp-muted); font-size: 14px; margin: 0 0 16px; }
+  .vp-store-block__cta { display: flex; flex-wrap: wrap; gap: 10px; }
+  .vp-store-block__cta a { padding: 12px 18px; border-radius: 8px; font-weight: 700; font-size: 14px; text-decoration: none; }
+  .vp-btn-directions { background: var(--vp-blue); color: #fff; }
+  .vp-store-block__map iframe { width: 100%; height: 280px; border: 0; border-radius: var(--vp-radius); }
+  .vp-locations { display: grid; grid-template-columns: 1fr; gap: 14px; max-width: 800px; margin: 0 auto; }
+  .vp-location { background: #fff; border: 1px solid var(--vp-border); border-radius: var(--vp-radius); padding: 18px 22px; display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: center; }
+  @media (max-width: 640px) { .vp-location { grid-template-columns: 1fr; } }
+  .vp-location__name { font-weight: 800; color: var(--vp-purple); margin: 0 0 2px; font-size: 1.05rem; }
+  .vp-location__addr { color: var(--vp-muted); font-size: 14px; margin: 0; }
+  .vp-location__cta { display: flex; flex-wrap: wrap; gap: 6px; }
+  .vp-location__cta a { padding: 8px 12px; font-size: 13px; font-weight: 700; border-radius: 6px; text-decoration: none; }
+  .vp-loc-dir { background: var(--vp-blue); color: #fff; }
+  .vp-loc-call { background: var(--vp-purple); color: #fff; }
+  .vp-loc-text { background: var(--vp-coral); color: #fff; }
+  .vp-hours-line { text-align: center; font-size: 13px; color: var(--vp-muted); margin-top: 20px; }
+  .vp-faq { max-width: 800px; margin: 0 auto; }
+  .vp-faq__item { background: #fff; border: 1px solid var(--vp-border); border-radius: var(--vp-radius); margin-bottom: 12px; overflow: hidden; }
+  .vp-faq__q { width: 100%; padding: 18px 22px; background: none; border: none; text-align: left; font-size: 1.05rem; font-weight: 700; color: var(--vp-purple); cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px; font-family: inherit; }
+  .vp-faq__q::after { content: '+'; font-size: 1.4rem; color: var(--vp-blue); transition: transform 0.2s; }
+  .vp-faq__item.open .vp-faq__q::after { transform: rotate(45deg); }
+  .vp-faq__a { padding: 0 22px; max-height: 0; overflow: hidden; transition: max-height 0.3s, padding 0.3s; }
+  .vp-faq__item.open .vp-faq__a { max-height: 500px; padding: 0 22px 18px; }
+  .vp-final-cta { background: linear-gradient(135deg, var(--vp-purple) 0%, #1a0f3d 100%); color: #fff; padding: 64px 0; text-align: center; }
+  .vp-final-cta h2 { color: #fff; font-size: clamp(1.6rem, 3.5vw, 2.4rem); margin: 0 0 12px; font-weight: 800; }
+  .vp-final-cta p { color: rgba(255,255,255,0.85); margin: 0 0 28px; font-size: 1.1rem; }
+  .vp-final-cta__buttons { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+  .vp-final-cta__buttons a { padding: 16px 28px; font-size: 16px; font-weight: 800; border-radius: 10px; text-decoration: none; }
+  .vp-cross-promo { background: var(--vp-cream); padding: 32px; border-radius: var(--vp-radius-lg); text-align: center; }
+  .vp-cross-promo h3 { color: var(--vp-purple); margin: 0 0 8px; }
+  .vp-cross-promo__links { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 16px; }
+  .vp-cross-promo__links a { background: #fff; border: 2px solid var(--vp-border); color: var(--vp-purple); padding: 12px 20px; border-radius: 8px; font-weight: 700; }
+  .vp-mobile-cta { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid var(--vp-border); padding: 10px; z-index: 90; gap: 8px; }
+  .vp-mobile-cta a { flex: 1; padding: 14px; text-align: center; border-radius: 8px; font-weight: 800; text-decoration: none; font-size: 14px; }
+  .vp-mobile-cta .vp-btn-call { background: var(--vp-blue); color: #fff; }
+  .vp-mobile-cta .vp-btn-text { background: var(--vp-coral); color: #fff; }
+  @media (max-width: 640px) { .vp-mobile-cta { display: flex; } .vp-final-cta { padding-bottom: 100px; } }
+</style>
+
+<div class="vp-sell-jewelry" id="vp-sell-jewelry-lexington">
+
+  <header class="vp-header">
+    <div class="vp-container">
+      <a href="https://thevalleypawn.com" class="vp-header__logo"><img src="https://i0.wp.com/thevalleypawn.com/wp-content/uploads/2026/03/vp_logo_name-no-tag.png?fit=600%2C67&ssl=1" alt="Valley Pawn" width="200" /></a>
+      <div class="vp-header__cta">
+        <a href="tel:+15404618349" class="vp-btn-call" data-vp-track="cta_call_click" data-vp-location="header">📞 <span class="label">Call</span> (540) 461-8349</a>
+        <a href="sms:+15404618349" class="vp-btn-text" data-vp-track="cta_text_click" data-vp-location="header">💬 <span class="label">Text</span> (540) 461-8349</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="vp-hero">
+    <div class="vp-container">
+      <span class="vp-hero__eyebrow">💍 Valley Pawn Lexington</span>
+      <h1>We Buy Jewelry in <span class="vp-accent">Lexington, VA</span><br>— Diamonds, Gold, Designer &amp; More</h1>
+      <p class="vp-hero__sub">Family-owned since 2014. Free in-person diamond evaluations. Estimate the metal value below, then text us a photo for a complete offer including any stones.</p>
+      <div class="vp-hero__signals">
+        <span class="vp-hero__signal">Free diamond appraisals</span>
+        <span class="vp-hero__signal">Walk out with cash today</span>
+        <span class="vp-hero__signal">No appointment needed</span>
+      </div>
+      <div class="vp-hero__cta">
+        <a href="tel:+15404618349" class="vp-btn-call-lg" data-vp-track="cta_call_click" data-vp-location="hero">📞 Call (540) 461-8349</a>
+        <a href="sms:+15404618349" class="vp-btn-text-lg" data-vp-track="cta_text_click" data-vp-location="hero">💬 Text (540) 461-8349</a>
+      </div>
+
+      <div class="vp-stones-callout">
+        <strong>Has stones or diamonds?</strong>
+        <p>The calculator below estimates the <em>metal value</em> only. Stones can add 20–200% on top — text us a photo for the full offer.</p>
+      </div>
+
+      <div class="vp-calc" role="region" aria-label="Jewelry metal value calculator">
+        <h2 class="vp-calc__title">Metal Value Calculator</h2>
+        <p class="vp-calc__sub">Estimate the gold content. Stones evaluated separately at the store.</p>
+
+        <div class="vp-calc__field">
+          <label class="vp-calc__label">1. Karat (purity)</label>
+          <div class="vp-calc__karat" id="vp-karat-lexington">
+            <button type="button" data-karat="10" data-purity="0.4167">10k</button>
+            <button type="button" data-karat="14" data-purity="0.5833" class="active">14k</button>
+            <button type="button" data-karat="18" data-purity="0.7500">18k</button>
+            <button type="button" data-karat="22" data-purity="0.9167">22k</button>
+            <button type="button" data-karat="24" data-purity="1.0000">24k</button>
+          </div>
+        </div>
+
+        <div class="vp-calc__field">
+          <label class="vp-calc__label">2. Weight</label>
+          <div class="vp-calc__weight-row">
+            <input type="number" class="vp-calc__input" id="vp-weight-lexington" placeholder="e.g. 5" min="0" step="0.01" inputmode="decimal" />
+            <select class="vp-calc__select" id="vp-unit-lexington">
+              <option value="g">grams</option>
+              <option value="dwt">pennyweight</option>
+              <option value="oz">troy ounce</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="vp-calc__result">
+          <div class="vp-calc__result-label">Estimated metal value (stones add more)</div>
+          <div class="vp-calc__result-value" id="vp-offer-lexington">Enter a weight to see your offer</div>
+          <div class="vp-calc__result-note" id="vp-note-lexington">Based on live spot price · 14k · 0g</div>
+        </div>
+
+        <a href="sms:+15404618349" class="vp-calc__cta" id="vp-calc-cta-lexington" data-vp-track="calc_text_offer">💬 Text Me This Offer →</a>
+
+        <p class="vp-calc__disclaimer">This is the metal value only. Diamonds, gemstones, and designer pieces are evaluated separately and can significantly increase your offer.</p>
+      </div>
+
+      <div class="vp-photo-cta">
+        <h3>Have diamonds, designer pieces, or watches?</h3>
+        <p>Text us a clear photo (and any paperwork — GIA, IGI, watch box/papers if you have them). We'll respond with a complete offer covering metal + stones + brand value.</p>
+        <a href="sms:+15404618349?&body=Hi%20Valley%20Pawn%20Lexington%20%E2%80%94%20I%27d%20like%20a%20full%20offer%20on%20this%20jewelry%20piece%2C%20including%20any%20stones." class="vp-calc__cta" data-vp-track="photo_text" style="display:inline-block;width:auto;padding:14px 28px;">📷 Text Us a Photo →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="vp-section vp-section--alt">
+    <div class="vp-container">
+      <h2 class="vp-section__title">How It Works</h2>
+      <div class="vp-steps">
+        <div class="vp-step"><div class="vp-step__num">1</div><h3 class="vp-step__title">Estimate or text a photo</h3><p class="vp-step__body">Use the metal calculator for a baseline, or text us a photo for a complete offer that includes stones and designer value.</p></div>
+        <div class="vp-step"><div class="vp-step__num">2</div><h3 class="vp-step__title">Bring it in</h3><p class="vp-step__body">Stop by our Lexington store. We test the metal, examine any stones, check for designer marks, and confirm the offer.</p></div>
+        <div class="vp-step"><div class="vp-step__num">3</div><h3 class="vp-step__title">Walk out with cash</h3><p class="vp-step__body">Accept the offer and leave with cash. Never any pressure — your jewelry, your call.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vp-section">
+    <div class="vp-container">
+      <h2 class="vp-section__title">Why Sell Jewelry to Valley Pawn?</h2>
+      <div class="vp-why">
+        <div class="vp-why__card"><div class="vp-why__icon">💎</div><h3 class="vp-why__title">Free Diamond Evaluations</h3><p class="vp-why__body">We use loupes, scales, and current market guides — no appointment or appraisal fee.</p></div>
+        <div class="vp-why__card"><div class="vp-why__icon">🏆</div><h3 class="vp-why__title">Family-Owned Since 2014</h3><p class="vp-why__body">Local, family-run, NPA member. Five stores serving the Shenandoah Valley.</p></div>
+        <div class="vp-why__card"><div class="vp-why__icon">⌚</div><h3 class="vp-why__title">Designer + Watches Welcome</h3><p class="vp-why__body">David Yurman, Tiffany, Cartier, Rolex, Omega — we know what brand and provenance are worth.</p></div>
+        <div class="vp-why__card"><div class="vp-why__icon">🤝</div><h3 class="vp-why__title">No-Judgment Service</h3><p class="vp-why__body">Whether it's an estate piece or a lone earring — we treat every customer with respect.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vp-section vp-section--alt">
+    <div class="vp-container">
+      <h2 class="vp-section__title">What Jewelry We Buy</h2>
+      <div class="vp-buy-grid">
+        <div class="vp-buy-item"><div class="vp-buy-item__emoji">💍</div><div><h3 class="vp-buy-item__title">Diamond Rings</h3><p class="vp-buy-item__body">Engagement rings, wedding sets, anniversary bands, cocktail rings. GIA/IGI papers welcome.</p></div></div>
+        <div class="vp-buy-item"><div class="vp-buy-item__emoji">📿</div><div><h3 class="vp-buy-item__title">Chains &amp; Necklaces</h3><p class="vp-buy-item__body">Gold chains, diamond pendants, pearl strands, statement necklaces.</p></div></div>
+        <div class="vp-buy-item"><div class="vp-buy-item__emoji">⌚</div><div><h3 class="vp-buy-item__title">Luxury Watches</h3><p class="vp-buy-item__body">Rolex, Omega, Cartier, Tag Heuer, Tudor, Breitling, Patek, vintage pieces.</p></div></div>
+        <div class="vp-buy-item"><div class="vp-buy-item__emoji">✨</div><div><h3 class="vp-buy-item__title">Designer Pieces</h3><p class="vp-buy-item__body">David Yurman, Tiffany, Cartier, John Hardy, Bvlgari, Van Cleef.</p></div></div>
+        <div class="vp-buy-item"><div class="vp-buy-item__emoji">🏛️</div><div><h3 class="vp-buy-item__title">Estate &amp; Vintage</h3><p class="vp-buy-item__body">Antique jewelry, signed pieces, Art Deco, Victorian, mid-century.</p></div></div>
+        <div class="vp-buy-item"><div class="vp-buy-item__emoji">💔</div><div><h3 class="vp-buy-item__title">Broken &amp; Single Earrings</h3><p class="vp-buy-item__body">Lost a stone? Lost the match? Broken chain? We still buy it.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vp-section">
+    <div class="vp-container">
+      <h2 class="vp-section__title">What Our Lexington Customers Say</h2>
+      <div class="vp-reviews">
+        <div class="vp-review"><div class="vp-review__stars">★★★★★</div><p class="vp-review__quote">"Brought in my old engagement ring after a divorce. They were kind, professional, and gave me a fair offer for both the diamond and the gold. Much more than the chain jewelry store offered."</p><div class="vp-review__author">Jennifer P.</div><div class="vp-review__meta">Google Review · Lexington</div></div>
+        <div class="vp-review"><div class="vp-review__stars">★★★★★</div><p class="vp-review__quote">"Sold a Rolex I inherited. They knew the model, the year, checked the serial — gave me a great offer. Honest dealing all the way."</p><div class="vp-review__author">Thomas G.</div><div class="vp-review__meta">Google Review · Lexington</div></div>
+        <div class="vp-review"><div class="vp-review__stars">★★★★★</div><p class="vp-review__quote">"Had a box of mixed jewelry from cleaning out my mom's house. They sorted everything, separated the good from the scrap, and explained each item. Walked out happy."</p><div class="vp-review__author">Barbara L.</div><div class="vp-review__meta">Google Review · Lexington</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vp-section vp-section--alt">
+    <div class="vp-container">
+      <h2 class="vp-section__title">Visit Our Lexington Store</h2>
+      <p class="vp-section__sub">Convenient for customers across Lexington, Buena Vista, Glasgow, Natural Bridge, Fairfield, Raphine, Goshen, and the greater Rockbridge County area.</p>
+      <div class="vp-store-block">
+        <div>
+          <h3>Valley Pawn — Lexington</h3>
+          <p class="vp-store-block__addr">125 Walker Street<br>Lexington, VA 24450</p>
+          <p class="vp-store-block__hours">Mon, Tue, Thu, Fri & Sat 10:00 AM – 6:00 PM · Closed Wednesday & Sunday</p>
+          <div class="vp-store-block__cta">
+            <a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Lexington+VA" target="_blank" rel="noopener" class="vp-btn-directions">📍 Directions</a>
+            <a href="tel:+15404618349" style="background:var(--vp-purple);color:#fff;">📞 Call</a>
+            <a href="sms:+15404618349" style="background:var(--vp-coral);color:#fff;">💬 Text</a>
+          </div>
+          <p style="margin-top:14px;font-size:13px;color:var(--vp-muted);">Also serving ZIPs: 24450, 24416, 24555, 24578, 24435, 24472, 24439, 24483, 24579</p>
+        </div>
+        <div class="vp-store-block__map">
+          <iframe src="https://www.google.com/maps?q=Valley+Pawn+Lexington+VA&output=embed" title="Valley Pawn Lexington map" loading="lazy" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vp-section">
+    <div class="vp-container">
+      <div class="vp-cross-promo">
+        <h3>Also have gold, silver, or coins?</h3>
+        <p style="color:var(--vp-muted);margin:0;">We buy it all. Use the right calculator for what you have:</p>
+        <div class="vp-cross-promo__links">
+          <a href="/sell-gold-lexington/">⚜️ Sell Gold</a>
+          <a href="/sell-silver-lexington/">🥈 Sell Silver</a>
+          <a href="/sell-coins-lexington/">🪙 Sell Coins</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vp-section vp-section--alt">
+    <div class="vp-container">
+      <h2 class="vp-section__title">All 5 Valley Pawn Locations</h2>
+      <div class="vp-locations">
+        <div class="vp-location"><div><h3 class="vp-location__name">Culpeper</h3><p class="vp-location__addr">571 James Madison Highway, Culpeper, VA 22701</p></div><div class="vp-location__cta"><a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Culpeper+VA" target="_blank" rel="noopener" class="vp-loc-dir">📍 Directions</a><a href="tel:+15404455510" class="vp-loc-call">📞 (540) 445-5510</a><a href="sms:+15404455510" class="vp-loc-text">💬 (540) 445-5510</a></div></div>
+        <div class="vp-location"><div><h3 class="vp-location__name">Waynesboro</h3><p class="vp-location__addr">1321 West Broad Street, Waynesboro, VA 22980</p></div><div class="vp-location__cta"><a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Waynesboro+VA" target="_blank" rel="noopener" class="vp-loc-dir">📍 Directions</a><a href="tel:+15402216346" class="vp-loc-call">📞 (540) 221-6346</a><a href="sms:+15402216346" class="vp-loc-text">💬 (540) 221-6346</a></div></div>
+        <div class="vp-location"><div><h3 class="vp-location__name">Harrisonburg</h3><p class="vp-location__addr">1790 East Market Street, Harrisonburg, VA 22801</p></div><div class="vp-location__cta"><a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Harrisonburg+VA" target="_blank" rel="noopener" class="vp-loc-dir">📍 Directions</a><a href="tel:+15405744500" class="vp-loc-call">📞 (540) 574-4500</a><a href="sms:+15405744500" class="vp-loc-text">💬 (540) 574-4500</a></div></div>
+        <div class="vp-location"><div><h3 class="vp-location__name">Lexington</h3><p class="vp-location__addr">125 Walker Street, Lexington, VA 24450</p></div><div class="vp-location__cta"><a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Lexington+VA" target="_blank" rel="noopener" class="vp-loc-dir">📍 Directions</a><a href="tel:+15404618349" class="vp-loc-call">📞 (540) 461-8349</a><a href="sms:+15404618349" class="vp-loc-text">💬 (540) 461-8349</a></div></div>
+        <div class="vp-location"><div><h3 class="vp-location__name">Roanoke</h3><p class="vp-location__addr">2362 Peters Creek Road, Suite C, Roanoke, VA 24017</p></div><div class="vp-location__cta"><a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Roanoke+VA" target="_blank" rel="noopener" class="vp-loc-dir">📍 Directions</a><a href="tel:+15405620776" class="vp-loc-call">📞 (540) 562-0776</a><a href="sms:+15405620776" class="vp-loc-text">💬 (540) 562-0776</a></div></div>
+      </div>
+      <p class="vp-hours-line"><strong>Hours:</strong> Culpeper: Mon–Sat 10am–6pm. All other stores: Mon, Tue, Thu, Fri &amp; Sat 10am–6pm (closed Wed &amp; Sun).</p>
+    </div>
+  </section>
+
+  <section class="vp-section">
+    <div class="vp-container">
+      <h2 class="vp-section__title">Frequently Asked Questions</h2>
+      <div class="vp-faq">
+        <div class="vp-faq__item"><button class="vp-faq__q" type="button">What jewelry does Valley Pawn buy?</button><div class="vp-faq__a"><p>Rings (engagement, wedding, fashion), necklaces and chains, bracelets, earrings, watches (luxury and casual), designer pieces, estate and vintage jewelry, diamond and gemstone jewelry, gold, silver, and platinum pieces. Even broken pieces, single earrings, and damaged items — we buy it all.</p></div></div>
+        <div class="vp-faq__item"><button class="vp-faq__q" type="button">How much is my diamond worth?</button><div class="vp-faq__a"><p>Diamond value depends on the 4 Cs — carat, cut, color, and clarity — and current market demand. We do free in-person evaluations using a loupe, scale, and reference to current wholesale guides. If you have a GIA or IGI report, bring it — it speeds up the appraisal and often helps your offer.</p></div></div>
+        <div class="vp-faq__item"><button class="vp-faq__q" type="button">Do you buy broken or damaged jewelry?</button><div class="vp-faq__a"><p>Yes. Broken chains, missing stones, bent rings, single earrings, tangled lots — bring it as-is. We pay based on the metal content and any salvageable stones. Don't try to repair anything first; we'd rather see it in its current state.</p></div></div>
+        <div class="vp-faq__item"><button class="vp-faq__q" type="button">Do you buy luxury watches?</button><div class="vp-faq__a"><p>Yes — Rolex, Omega, Tag Heuer, Cartier, Tudor, Breitling, Patek Philippe, IWC, and more. Bring the watch with any box, papers, and extra links if you have them. Working condition increases value, but we still buy non-working luxury pieces for restoration.</p></div></div>
+        <div class="vp-faq__item"><button class="vp-faq__q" type="button">Should I get my jewelry appraised first?</button><div class="vp-faq__a"><p>No need — appraisals at Valley Pawn are free. Insurance appraisals (the kind a jeweler does) inflate values for replacement cost, not resale value. We give you a real market offer based on actual buying demand.</p></div></div>
+        <div class="vp-faq__item"><button class="vp-faq__q" type="button">What if I'm not sure what my jewelry is?</button><div class="vp-faq__a"><p>That's fine — most customers aren't. Text us a clear photo and we'll give you an initial sense of what it is and roughly what it's worth. Then bring it in for a precise offer.</p></div></div>
+        <div class="vp-faq__item"><button class="vp-faq__q" type="button">What ID do I need?</button><div class="vp-faq__a"><p>Virginia law requires a government-issued photo ID for any precious-metals sale. Must be 18+.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vp-final-cta">
+    <div class="vp-container">
+      <h2>Ready to Turn Your Jewelry Into Cash?</h2>
+      <p>Estimate online, text a photo, or stop by — same-day cash, no obligation.</p>
+      <div class="vp-final-cta__buttons">
+        <a href="tel:+15404618349" class="vp-btn-call-lg" style="background:#fff;color:var(--vp-purple);" data-vp-track="cta_call_click" data-vp-location="footer">📞 Call (540) 461-8349</a>
+        <a href="sms:+15404618349" class="vp-btn-text-lg" style="background:var(--vp-coral);color:#fff;" data-vp-track="cta_text_click" data-vp-location="footer">💬 Text (540) 461-8349</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="vp-mobile-cta">
+    <a href="tel:+15404618349" class="vp-btn-call" data-vp-track="cta_call_click" data-vp-location="mobile_sticky">📞 Call</a>
+    <a href="sms:+15404618349" class="vp-btn-text" data-vp-track="cta_text_click" data-vp-location="mobile_sticky">💬 Text</a>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+  window.VP_GOLD_SPOT = window.VP_GOLD_SPOT || 4500;
+  window.VP_PAYOUT_LOW = window.VP_PAYOUT_LOW || 0.70;
+  window.VP_PAYOUT_HIGH = window.VP_PAYOUT_HIGH || 0.85;
+  var STORE_ID = 'lexington';
+  var STORE_CITY = 'Lexington';
+  var STORE_PHONE_RAW = '15404618349';
+  var GRAMS_PER_TROY_OZ = 31.1035;
+  var GRAMS_PER_DWT = 1.5552;
+
+  var state = { purity: 0.5833, karat: 14, weight: 0, unit: 'g', offerLow: 0, offerHigh: 0, calcStarted: false, calcQuoted: false };
+
+  var karatBtns = document.querySelectorAll('#vp-karat-' + STORE_ID + ' button');
+  var weightInput = document.getElementById('vp-weight-' + STORE_ID);
+  var unitSelect = document.getElementById('vp-unit-' + STORE_ID);
+  var offerEl = document.getElementById('vp-offer-' + STORE_ID);
+  var noteEl = document.getElementById('vp-note-' + STORE_ID);
+  var calcCta = document.getElementById('vp-calc-cta-' + STORE_ID);
+
+  function track(eventName, params) {
+    params = params || {};
+    params.store_id = STORE_ID;
+    params.store_city = STORE_CITY;
+    params.category = 'jewelry';
+    if (typeof window.gtag === 'function') window.gtag('event', eventName, params);
+    if (window.dataLayer) window.dataLayer.push(Object.assign({ event: eventName }, params));
+    if (window.VP_DEBUG) console.log('[VP TRACK]', eventName, params);
+  }
+
+  function convertToGrams(w, u) {
+    if (u === 'g') return w;
+    if (u === 'dwt') return w * GRAMS_PER_DWT;
+    if (u === 'oz') return w * GRAMS_PER_TROY_OZ;
+    return w;
+  }
+
+  function calc() {
+    var w = parseFloat(weightInput.value);
+    if (isNaN(w) || w <= 0) {
+      offerEl.textContent = 'Enter a weight to see your offer';
+      noteEl.textContent = 'Based on live spot price · ' + state.karat + 'k · 0' + state.unit;
+      return;
+    }
+    state.weight = w;
+    var grams = convertToGrams(w, state.unit);
+    var pureGrams = grams * state.purity;
+    var melt = pureGrams * (window.VP_GOLD_SPOT / GRAMS_PER_TROY_OZ);
+    state.offerLow = Math.round(melt * window.VP_PAYOUT_LOW);
+    state.offerHigh = Math.round(melt * window.VP_PAYOUT_HIGH);
+    if (state.offerLow < 1 && melt > 0) offerEl.textContent = 'Less than $1 metal — bring in for full evaluation';
+    else offerEl.textContent = '$' + state.offerLow.toLocaleString() + ' – $' + state.offerHigh.toLocaleString();
+    noteEl.textContent = 'Metal value only · $' + window.VP_GOLD_SPOT.toLocaleString() + '/oz spot · ' + state.karat + 'k · ' + w + ' ' + state.unit;
+
+    var msg = "Hi Valley Pawn " + STORE_CITY + " — I have a jewelry piece I'd like to sell. " + state.karat + "k gold, about " + w + " " + state.unit + ", metal estimate $" + state.offerLow + "–$" + state.offerHigh + ". I'll send a photo for the full offer including stones.";
+    if (calcCta) calcCta.href = 'sms:+' + STORE_PHONE_RAW + '?&body=' + encodeURIComponent(msg);
+
+    if (!state.calcStarted) { state.calcStarted = true; track('calc_started', { karat: state.karat, unit: state.unit }); }
+    if (!state.calcQuoted && state.offerHigh > 0) {
+      state.calcQuoted = true;
+      track('calc_quoted', { karat: state.karat, weight_grams: Math.round(grams * 100)/100, offer_low: state.offerLow, offer_high: state.offerHigh });
+    }
+  }
+
+  karatBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      karatBtns.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      state.purity = parseFloat(btn.dataset.purity);
+      state.karat = parseInt(btn.dataset.karat, 10);
+      calc();
+    });
+  });
+  if (weightInput) weightInput.addEventListener('input', calc);
+  if (unitSelect) unitSelect.addEventListener('change', function() { state.unit = unitSelect.value; calc(); });
+
+  document.querySelectorAll('.vp-faq__q').forEach(function(q) {
+    q.addEventListener('click', function() { q.closest('.vp-faq__item').classList.toggle('open'); });
+  });
+
+  document.querySelectorAll('[data-vp-track]').forEach(function(el) {
+    el.addEventListener('click', function() { track(el.dataset.vpTrack, { location: el.dataset.vpLocation || 'unknown', href: el.href || '' }); });
+  });
+
+  var scrollMarks = { 25: false, 50: false, 75: false };
+  window.addEventListener('scroll', function() {
+    var p = Math.round((window.scrollY + window.innerHeight) / document.body.scrollHeight * 100);
+    Object.keys(scrollMarks).forEach(function(m) { if (!scrollMarks[m] && p >= m) { scrollMarks[m] = true; track('scroll_' + m); } });
+  }, { passive: true });
+
+  calc();
+})();
+</script>

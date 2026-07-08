@@ -1,0 +1,637 @@
+<!--
+  Valley Pawn — "Sell Coins in Virginia" Hub Page
+  ------------------------------------------------
+  Category hub for coins. Links to all 5 store spoke pages.
+  No calculator — just store links + brand content.
+  Drop into WordPress as a Full Width / Blank Canvas page.
+  Slug: sell-coins
+-->
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://thevalleypawn.com/sell-coins/#webpage",
+      "url": "https://thevalleypawn.com/sell-coins/",
+      "name": "Sell Coins in Virginia | Silver, Gold, Rare Coins | Valley Pawn — 5 Locations",
+      "description": "Sell coins at any of Valley Pawn's 5 Virginia locations. We buy silver coins, gold coins, rare coins, junk silver, proof sets, and collections. Fair spot-based offers. Walk out with cash today.",
+      "inLanguage": "en-US",
+      "isPartOf": {"@type": "WebSite", "name": "Valley Pawn", "url": "https://thevalleypawn.com"}
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://thevalleypawn.com/#organization",
+      "name": "Valley Pawn",
+      "url": "https://thevalleypawn.com",
+      "image": "https://i0.wp.com/thevalleypawn.com/wp-content/uploads/2026/03/vp_logo_name-no-tag.png"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What coins does Valley Pawn buy?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We buy silver coins (American Silver Eagles, junk silver, Morgan dollars, Peace dollars), gold coins (American Eagles, Krugerrands, Maple Leafs), rare and key-date coins, proof sets, commemoratives, foreign coins, and whole collections. We price bullion coins at spot and evaluate rare/collectible coins for numismatic value."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does Valley Pawn evaluate coin collections?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We evaluate coins in two ways: bullion coins (Silver Eagles, Gold Eagles, etc.) are priced based on live spot prices for their metal content. Rare and collectible coins are evaluated for numismatic value using reference guides and current dealer buy lists. We buy entire collections — no cherry-picking."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you buy whole coin collections?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We buy complete coin collections — albums, rolls, bags, estate lots. You don't need to sort or identify everything first. We go through it with you and make an offer on the full lot."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<style>
+  :root {
+    --vp-blue: #0099DD;
+    --vp-blue-light: #3DB8E8;
+    --vp-purple: #2D1A5E;
+    --vp-coral: #F58C8A;
+    --vp-gold: #D4A442;
+    --vp-gold-dark: #B8861F;
+    --vp-coin: #C8A84B;
+    --vp-coin-dark: #8B6914;
+    --vp-cream: #FAF7F0;
+    --vp-text: #1A1A1A;
+    --vp-muted: #6B6B6B;
+    --vp-border: #E5E5E5;
+    --vp-shadow: 0 4px 24px rgba(45, 26, 94, 0.12);
+    --vp-shadow-lg: 0 12px 48px rgba(45, 26, 94, 0.18);
+    --vp-radius: 12px;
+    --vp-radius-lg: 20px;
+  }
+
+  .vp-hub-coins {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, sans-serif;
+    color: var(--vp-text); line-height: 1.6;
+    -webkit-font-smoothing: antialiased; background: #fff;
+  }
+  .vp-hub-coins *, .vp-hub-coins *::before, .vp-hub-coins *::after { box-sizing: border-box; }
+  .vp-hub-coins img { max-width: 100%; height: auto; display: block; }
+  .vp-hub-coins a { color: var(--vp-blue); text-decoration: none; }
+  .vp-hub-coins a:hover { text-decoration: underline; }
+  .vp-container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+  .vp-header { background: #fff; border-bottom: 1px solid var(--vp-border); padding: 14px 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 0 rgba(0,0,0,0.04); }
+  .vp-header .vp-container { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .vp-header__logo img { max-height: 44px; width: auto; }
+  .vp-header__cta { display: flex; gap: 8px; }
+  .vp-header__cta a { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; font-weight: 700; font-size: 14px; border-radius: 8px; text-decoration: none; }
+  .vp-btn-primary { background: var(--vp-blue); color: #fff; }
+  .vp-btn-secondary { background: var(--vp-purple); color: #fff; }
+  @media (max-width: 640px) { .vp-header__cta a span.label { display: none; } .vp-header__cta a { padding: 10px 12px; } }
+
+  .vp-hero { background: linear-gradient(135deg, #1C1408 0%, #3D2A00 60%, #2D1A5E 100%); color: #fff; padding: 64px 0 56px; position: relative; overflow: hidden; }
+  .vp-hero::before { content: ''; position: absolute; top: -80px; right: -80px; width: 480px; height: 480px; background: radial-gradient(circle, rgba(200, 168, 75, 0.18) 0%, transparent 70%); border-radius: 50%; }
+  .vp-hero .vp-container { position: relative; z-index: 1; max-width: 820px; }
+  .vp-hero__eyebrow { display: inline-block; background: rgba(255,255,255,0.10); color: var(--vp-coin); font-size: 13px; font-weight: 700; letter-spacing: 0.06em; padding: 6px 14px; border-radius: 20px; text-transform: uppercase; margin-bottom: 18px; }
+  .vp-hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.12; margin: 0 0 18px; font-weight: 800; }
+  .vp-hero h1 .vp-accent { color: var(--vp-coin); }
+  .vp-hero__sub { font-size: clamp(1rem, 2vw, 1.2rem); color: rgba(255,255,255,0.85); max-width: 640px; margin: 0 0 28px; }
+  .vp-hero__signals { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 32px; font-size: 14px; color: rgba(255,255,255,0.9); }
+  .vp-hero__signal::before { content: '✓'; color: var(--vp-coin); font-weight: 800; margin-right: 6px; }
+  .vp-hero__cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+  .vp-hero__cta-row a { display: inline-flex; align-items: center; gap: 8px; padding: 16px 28px; font-size: 16px; font-weight: 700; border-radius: 10px; text-decoration: none; transition: transform 0.12s ease, box-shadow 0.12s ease; }
+  .vp-btn-white { background: #fff; color: var(--vp-purple); }
+  .vp-btn-coin { background: var(--vp-coin); color: #1C1408; }
+  .vp-hero__cta-row a:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,0.3); text-decoration: none; }
+
+  .vp-section { padding: 60px 0; }
+  .vp-section--alt { background: var(--vp-cream); }
+  .vp-section__title { text-align: center; font-size: clamp(1.6rem, 3.5vw, 2.25rem); color: var(--vp-purple); margin: 0 0 12px; font-weight: 800; }
+  .vp-section__sub { text-align: center; color: var(--vp-muted); max-width: 640px; margin: 0 auto 44px; font-size: 1.05rem; }
+
+  .vp-stores-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; max-width: 1060px; margin: 0 auto; }
+  .vp-store-card { background: #fff; border: 1px solid var(--vp-border); border-radius: var(--vp-radius-lg); padding: 28px; transition: transform 0.15s ease, box-shadow 0.15s ease; border-top: 4px solid var(--vp-coin); display: flex; flex-direction: column; gap: 14px; }
+  .vp-store-card:hover { transform: translateY(-4px); box-shadow: var(--vp-shadow-lg); }
+  .vp-store-card__city { font-size: 1.3rem; font-weight: 800; color: var(--vp-purple); margin: 0; display: flex; align-items: center; gap: 8px; }
+  .vp-store-card__city::before { content: '📍'; font-size: 1rem; }
+  .vp-store-card__addr { color: var(--vp-muted); font-size: 14px; margin: 0; }
+  .vp-store-card__phone { font-size: 14px; color: var(--vp-text); font-weight: 600; }
+  .vp-store-card__hours { font-size: 13px; color: var(--vp-muted); border-top: 1px solid var(--vp-border); padding-top: 12px; }
+  .vp-store-card__btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+  .vp-store-card__btns a { flex: 1; min-width: 120px; padding: 12px 16px; font-weight: 700; font-size: 14px; border-radius: 8px; text-decoration: none; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+  .vp-btn-page { background: var(--vp-purple); color: #fff; }
+  .vp-btn-call-sm { background: var(--vp-blue); color: #fff; }
+  .vp-store-card__btns a:hover { text-decoration: none; filter: brightness(1.1); }
+
+  .vp-buy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 768px) { .vp-buy-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .vp-buy-grid { grid-template-columns: 1fr; } }
+  .vp-buy-item { background: #fff; border: 1px solid var(--vp-border); border-radius: var(--vp-radius); padding: 20px; display: flex; gap: 14px; align-items: flex-start; }
+  .vp-buy-item__emoji { font-size: 1.6rem; line-height: 1; }
+  .vp-buy-item__title { font-weight: 800; color: var(--vp-purple); margin: 0 0 4px; font-size: 1rem; }
+  .vp-buy-item__body { font-size: 14px; color: var(--vp-muted); margin: 0; }
+
+  .vp-why { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  @media (max-width: 900px) { .vp-why { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 500px) { .vp-why { grid-template-columns: 1fr; } }
+  .vp-why__card { background: #fff; border: 1px solid var(--vp-border); border-radius: var(--vp-radius); padding: 24px; text-align: center; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+  .vp-why__card:hover { transform: translateY(-4px); box-shadow: var(--vp-shadow); }
+  .vp-why__icon { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; background: linear-gradient(135deg, var(--vp-blue) 0%, var(--vp-blue-light) 100%); color: #fff; font-size: 1.4rem; border-radius: 12px; margin-bottom: 14px; }
+  .vp-why__title { font-size: 1.05rem; font-weight: 800; color: var(--vp-purple); margin: 0 0 6px; }
+  .vp-why__body { font-size: 14px; color: var(--vp-muted); margin: 0; }
+
+  .vp-faq { max-width: 800px; margin: 0 auto; }
+  .vp-faq__item { background: #fff; border: 1px solid var(--vp-border); border-radius: var(--vp-radius); margin-bottom: 12px; overflow: hidden; }
+  .vp-faq__q { width: 100%; padding: 18px 22px; background: none; border: none; text-align: left; font-size: 1.05rem; font-weight: 700; color: var(--vp-purple); cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px; font-family: inherit; }
+  .vp-faq__q::after { content: '+'; font-size: 1.4rem; color: var(--vp-blue); transition: transform 0.2s ease; flex-shrink: 0; }
+  .vp-faq__item.open .vp-faq__q::after { transform: rotate(45deg); }
+  .vp-faq__a { padding: 0 22px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: var(--vp-text); }
+  .vp-faq__item.open .vp-faq__a { max-height: 500px; padding: 0 22px 18px; }
+
+  .vp-final-cta { background: linear-gradient(135deg, #1C1408 0%, #3D2A00 60%, #2D1A5E 100%); color: #fff; padding: 64px 0; text-align: center; }
+  .vp-final-cta h2 { color: #fff; font-size: clamp(1.6rem, 3.5vw, 2.4rem); margin: 0 0 12px; font-weight: 800; }
+  .vp-final-cta p { color: rgba(255,255,255,0.85); margin: 0 0 32px; font-size: 1.1rem; }
+  .vp-final-cta__btns { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+  .vp-final-cta__btns a { padding: 16px 28px; font-size: 16px; font-weight: 800; border-radius: 10px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: transform 0.12s ease; }
+  .vp-final-cta__btns a:hover { transform: translateY(-2px); text-decoration: none; }
+
+  .vp-cross-cat { background: var(--vp-cream); border-radius: var(--vp-radius-lg); padding: 36px; text-align: center; }
+  .vp-cross-cat h3 { color: var(--vp-purple); margin: 0 0 8px; font-size: 1.3rem; }
+  .vp-cross-cat p { color: var(--vp-muted); margin: 0 0 20px; }
+  .vp-cross-cat__links { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+  .vp-cross-cat__links a { background: #fff; border: 2px solid var(--vp-border); color: var(--vp-purple); padding: 12px 22px; border-radius: 8px; font-weight: 700; text-decoration: none; transition: border-color 0.15s ease; }
+  .vp-cross-cat__links a:hover { border-color: var(--vp-purple); text-decoration: none; }
+
+  .vp-mobile-cta { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid var(--vp-border); padding: 10px; z-index: 90; gap: 8px; box-shadow: 0 -4px 20px rgba(0,0,0,0.1); }
+  .vp-mobile-cta a { flex: 1; padding: 14px; text-align: center; border-radius: 8px; font-weight: 800; text-decoration: none; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+  @media (max-width: 640px) { .vp-mobile-cta { display: flex; } .vp-final-cta { padding-bottom: 100px; } }
+</style>
+
+<div class="vp-hub-coins" id="vp-hub-coins">
+
+  <!-- HEADER -->
+  <header class="vp-header">
+    <div class="vp-container">
+      <a href="https://thevalleypawn.com" class="vp-header__logo">
+        <img src="https://i0.wp.com/thevalleypawn.com/wp-content/uploads/2026/03/vp_logo_name-no-tag.png?fit=600%2C67&ssl=1" alt="Valley Pawn" width="200" />
+      </a>
+      <div class="vp-header__cta">
+        <a href="https://thevalleypawn.com/sell-gold/" class="vp-btn-primary">⚜️ Sell Gold</a>
+        <a href="#vp-locations" class="vp-btn-secondary">🪙 Find My Store</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="vp-hero">
+    <div class="vp-container">
+      <span class="vp-hero__eyebrow">🪙 Valley Pawn · 5 Virginia Locations</span>
+      <h1>Sell Coins in <span class="vp-accent">Virginia</span><br>— Collections, Bullion & Rarities</h1>
+      <p class="vp-hero__sub">
+        We buy silver coins, gold coins, rare coins, junk silver, proof sets, and entire collections at all 5 Valley Pawn locations.
+        Spot-based pricing, numismatic knowledge, same-day cash.
+      </p>
+      <div class="vp-hero__signals">
+        <span class="vp-hero__signal">Silver & gold bullion at spot</span>
+        <span class="vp-hero__signal">Rare coins evaluated fairly</span>
+        <span class="vp-hero__signal">We buy whole collections</span>
+        <span class="vp-hero__signal">Family-owned since 2014</span>
+      </div>
+      <div class="vp-hero__cta-row">
+        <a href="#vp-locations" class="vp-btn-white">📍 Find My Location</a>
+        <a href="sms:+15404455510" class="vp-btn-coin">💬 Text Us a Photo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATIONS -->
+  
+<!-- ─── VP Coins Estimator ────────────────────────────────────── -->
+<section class="vp-section" style="background:#FAF7F0;padding:52px 0;">
+  <div class="vp-container">
+    <div class="vp-est" id="vpCoinEstBox">
+      <div class="vp-est__head">
+        <div class="vp-est__eyebrow">Free Instant Estimate</div>
+        <h2 class="vp-est__title">What Are Your Coins Worth?</h2>
+        <p class="vp-est__sub">Pick your coin type, enter the quantity, get a real payout range. We pay 70–85% of spot on silver bullion coins.</p>
+      </div>
+      <div class="vp-est__steps">
+        <div class="vp-est__step-dot active" id="vcDot1">1</div>
+        <div class="vp-est__step-line"></div>
+        <div class="vp-est__step-dot" id="vcDot2">2</div>
+        <div class="vp-est__step-line"></div>
+        <div class="vp-est__step-dot" id="vcDot3">✓</div>
+      </div>
+
+      <!-- Step 1: Coin type -->
+      <div class="vp-est__panel active" id="vcStep1">
+        <p class="vp-est__step-label">Step 1 — What type of coins?</p>
+        <div class="vp-est__grid">
+      <div class="vp-est__card" onclick="vpCoinEst.pickCoin('dime90','Pre-1965 Dimes',{"silver_grams": 2.025, "qty_label": "How many dimes?", "qty_default": 10})" tabindex="0">
+        <img class="vp-est__card-img" src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=400&h=280&fit=crop&q=72&auto=format" alt="Pre-1965 Dimes" loading="lazy">
+        <div class="vp-est__card-label">Pre-1965 Dimes</div>
+      </div>
+      <div class="vp-est__card" onclick="vpCoinEst.pickCoin('quarter90','Pre-1965 Quarters',{"silver_grams": 5.625, "qty_label": "How many quarters?", "qty_default": 10})" tabindex="0">
+        <img class="vp-est__card-img" src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?w=400&h=280&fit=crop&q=72&auto=format" alt="Pre-1965 Quarters" loading="lazy">
+        <div class="vp-est__card-label">Pre-1965 Quarters</div>
+      </div>
+      <div class="vp-est__card" onclick="vpCoinEst.pickCoin('half64','Pre-1965 Half Dollars',{"silver_grams": 11.25, "qty_label": "How many halves?", "qty_default": 10})" tabindex="0">
+        <img class="vp-est__card-img" src="https://images.unsplash.com/photo-1563237739-b85da0547daa?w=400&h=280&fit=crop&q=72&auto=format" alt="Pre-1965 Half Dollars" loading="lazy">
+        <div class="vp-est__card-label">Pre-1965 Half Dollars</div>
+      </div>
+      <div class="vp-est__card" onclick="vpCoinEst.pickCoin('half6570','1965–70 Half Dollars (40%)',{"silver_grams": 4.6, "qty_label": "How many halves?", "qty_default": 10})" tabindex="0">
+        <img class="vp-est__card-img" src="https://images.unsplash.com/photo-1564078516393-cf04bd966897?w=400&h=280&fit=crop&q=72&auto=format" alt="1965–70 Half Dollars (40%)" loading="lazy">
+        <div class="vp-est__card-label">1965–70 Half Dollars (40%)</div>
+      </div>
+      <div class="vp-est__card" onclick="vpCoinEst.pickCoin('dollar90','Silver Dollars (Morgan / Peace)',{"silver_grams": 24.057, "qty_label": "How many dollars?", "qty_default": 5})" tabindex="0">
+        <img class="vp-est__card-img" src="https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=400&h=280&fit=crop&q=72&auto=format" alt="Silver Dollars (Morgan / Peace)" loading="lazy">
+        <div class="vp-est__card-label">Silver Dollars (Morgan / Peace)</div>
+      </div>
+      <div class="vp-est__card" onclick="vpCoinEst.pickCoin('eagle','Silver Eagles (1 oz)',{"silver_grams": 31.072, "qty_label": "How many Eagles?", "qty_default": 5})" tabindex="0">
+        <img class="vp-est__card-img" src="https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400&h=280&fit=crop&q=72&auto=format" alt="Silver Eagles (1 oz)" loading="lazy">
+        <div class="vp-est__card-label">Silver Eagles (1 oz)</div>
+      </div>
+      <div class="vp-est__card" onclick="vpCoinEst.pickCoin('silver_bar','Silver Bars / Rounds',{"silver_grams": 31.1035, "qty_label": "How many oz?", "qty_default": 1})" tabindex="0">
+        <img class="vp-est__card-img" src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?w=400&h=280&fit=crop&q=72&auto=format" alt="Silver Bars / Rounds" loading="lazy">
+        <div class="vp-est__card-label">Silver Bars / Rounds</div>
+      </div>
+      <div class="vp-est__card" onclick="vpCoinEst.pickCoin('numismatic','Rare / Key-Date Coins',{"silver_grams": 0, "qty_label": "", "qty_default": 0})" tabindex="0">
+        <img class="vp-est__card-img" src="https://images.unsplash.com/photo-1579621970795-87facc2f976d?w=400&h=280&fit=crop&q=72&auto=format" alt="Rare / Key-Date Coins" loading="lazy">
+        <div class="vp-est__card-label">Rare / Key-Date Coins</div>
+      </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Quantity -->
+      <div class="vp-est__panel" id="vcStep2">
+        <button class="vp-est__back" onclick="vpCoinEst.goTo(1)">← Back</button>
+        <p class="vp-est__step-label" id="vcQtyLabel">Step 2 — How many?</p>
+        <div class="vp-est__qty-wrap">
+          <label class="vp-est__qty-label" for="vcQtyInput">Quantity</label>
+          <input type="number" id="vcQtyInput" class="vp-est__qty" min="1" value="10">
+          <button class="vp-est__qty-btn" onclick="vpCoinEst.calculate()">Calculate My Estimate →</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Result -->
+      <div class="vp-est__panel" id="vcStep3">
+        <div class="vp-est__result">
+          <div class="vp-est__result-label">Valley Pawn Typically Pays</div>
+          <div class="vp-est__result-range" id="vcRange">—</div>
+          <div class="vp-est__result-desc" id="vcDesc"></div>
+          <div class="vp-est__result-spot" id="vcSpot"></div>
+          <div class="vp-est__result-disc">
+            Based on published silver content and live spot price.<br>
+            Key-date or numismatic coins may pay significantly more — bring them in for a free evaluation.
+          </div>
+        </div>
+        <a href="/locations/" class="vp-est__cta" id="vcCTA">📍 Find Your Nearest Valley Pawn →</a>
+        <button class="vp-est__restart" onclick="vpCoinEst.restart()">Try a different coin type</button>
+      </div>
+
+      <!-- Numismatic message -->
+      <div class="vp-est__panel" id="vcNumis">
+        <div class="vp-est__result" style="border-color:#0099DD;background:linear-gradient(135deg,#EEF8FF,#D0EEFF);">
+          <div class="vp-est__result-label" style="color:#0077AA;">Numismatic / Rare Coins</div>
+          <div style="font-size:1.1rem;font-weight:800;color:#2D1A5E;margin-bottom:10px;">Value Depends on the Coin</div>
+          <p style="color:#333;font-size:0.92rem;margin:0 0 8px;">
+            Key-date coins, error coins, and graded coins can be worth <strong>far more than melt</strong>. There's no formula — we evaluate each coin individually.
+          </p>
+          <p style="color:#555;font-size:0.85rem;margin:0;">
+            Bring in your collection for a free, no-obligation evaluation. We know rare coins.
+          </p>
+        </div>
+        <a href="/locations/" class="vp-est__cta">📍 Bring In Your Coins for a Free Look →</a>
+        <button class="vp-est__restart" onclick="vpCoinEst.restart()">Back to coin types</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var SILV_SPOT = 33;
+  var OZ = 31.1035;
+  fetch('https://api.metals.live/v1/spot/silver')
+    .then(function(r){return r.json();})
+    .then(function(d){if(d&&d.price) SILV_SPOT=d.price;})
+    .catch(function(){});
+
+  var state = {};
+
+  function dots(n,max) {
+    [1,2,3].forEach(function(i){
+      var d=document.getElementById('vcDot'+i);
+      if(!d)return;
+      d.className='vp-est__step-dot'+(i===n?' active':i<n?' done':'');
+    });
+  }
+  function show(panel) {
+    ['vcStep1','vcStep2','vcStep3','vcNumis'].forEach(function(id){
+      document.getElementById(id).className='vp-est__panel';
+    });
+    document.getElementById(panel).className='vp-est__panel active';
+  }
+
+  window.vpCoinEst = {
+    pickCoin: function(type, label, data) {
+      if(type==='numismatic'){ show('vcNumis'); return; }
+      state.type=type; state.label=label;
+      state.silverGrams=data.silver_grams;
+      state.qtyDefault=data.qty_default;
+      if(window.gtag) gtag('event','coin_est_type',{coin_type:type});
+      document.getElementById('vcQtyLabel').textContent='Step 2 — '+data.qty_label;
+      document.getElementById('vcQtyInput').value=data.qty_default;
+      dots(2,3);
+      show('vcStep2');
+    },
+    calculate: function() {
+      var qty = parseInt(document.getElementById('vcQtyInput').value)||1;
+      state.qty = qty;
+      if(window.gtag) gtag('event','coin_est_qty',{coin_type:state.type,qty:qty});
+      var totalSilverG = state.silverGrams * qty;
+      var melt = (SILV_SPOT / OZ) * totalSilverG;
+      var lo = Math.floor(melt * 0.7 / 5) * 5;
+      var hi = Math.ceil(melt * 0.85 / 5) * 5;
+      lo = Math.max(lo, 1);
+      document.getElementById('vcRange').textContent='$'+lo.toLocaleString()+' – $'+hi.toLocaleString();
+      document.getElementById('vcDesc').textContent=qty+' × '+state.label;
+      document.getElementById('vcSpot').textContent='Silver at $'+SILV_SPOT.toFixed(2)+'/oz · '+totalSilverG.toFixed(1)+'g total pure silver';
+      document.getElementById('vcCTA').onclick=function(){
+        if(window.gtag) gtag('event','coin_est_cta',{coin_type:state.type,qty:qty,lo:lo,hi:hi});
+      };
+      if(window.gtag) gtag('event','coin_est_quote',{coin_type:state.type,qty:qty,lo:lo,hi:hi});
+      dots(3,3);
+      show('vcStep3');
+    },
+    goTo: function(n){
+      if(n===1){dots(1,3);show('vcStep1');}
+      else if(n===2){dots(2,3);show('vcStep2');}
+    },
+    restart: function(){state={};dots(1,3);show('vcStep1');}
+  };
+})();
+</script>
+<!-- ─── /VP Coins Estimator ───────────────────────────────────── -->
+
+<section class="vp-section" id="vp-locations">
+    <div class="vp-container">
+      <h2 class="vp-section__title">Sell Coins at Valley Pawn — 5 Virginia Locations</h2>
+      <p class="vp-section__sub">Pick the store nearest you. Every location buys coins — from junk silver bags to key-date rarities to whole collections. Walk in anytime, same-day cash.</p>
+
+      <div class="vp-stores-grid">
+
+        <div class="vp-store-card">
+          <h3 class="vp-store-card__city">Culpeper</h3>
+          <p class="vp-store-card__addr">571 James Madison Highway, Culpeper, VA 22701</p>
+          <span class="vp-store-card__phone">📞 (540) 445-5510</span>
+          <p class="vp-store-card__hours">Mon–Sat 10am–6pm · Closed Sunday</p>
+          <div class="vp-store-card__btns">
+            <a href="https://thevalleypawn.com/sell-coins-culpeper/" class="vp-btn-page">🪙 Sell Coins Here</a>
+            <a href="tel:+15404455510" class="vp-btn-call-sm">📞 Call</a>
+          </div>
+        </div>
+
+        <div class="vp-store-card">
+          <h3 class="vp-store-card__city">Waynesboro</h3>
+          <p class="vp-store-card__addr">1321 West Broad Street, Waynesboro, VA 22980</p>
+          <span class="vp-store-card__phone">📞 (540) 221-6346</span>
+          <p class="vp-store-card__hours">Mon, Tue, Thu–Sat 10am–6pm · Closed Wed & Sun</p>
+          <div class="vp-store-card__btns">
+            <a href="https://thevalleypawn.com/sell-coins-waynesboro/" class="vp-btn-page">🪙 Sell Coins Here</a>
+            <a href="tel:+15402216346" class="vp-btn-call-sm">📞 Call</a>
+          </div>
+        </div>
+
+        <div class="vp-store-card">
+          <h3 class="vp-store-card__city">Harrisonburg</h3>
+          <p class="vp-store-card__addr">1790 East Market Street, Harrisonburg, VA 22801</p>
+          <span class="vp-store-card__phone">📞 (540) 574-4500</span>
+          <p class="vp-store-card__hours">Mon, Tue, Thu–Sat 10am–6pm · Closed Wed & Sun</p>
+          <div class="vp-store-card__btns">
+            <a href="https://thevalleypawn.com/sell-coins-harrisonburg/" class="vp-btn-page">🪙 Sell Coins Here</a>
+            <a href="tel:+15405744500" class="vp-btn-call-sm">📞 Call</a>
+          </div>
+        </div>
+
+        <div class="vp-store-card">
+          <h3 class="vp-store-card__city">Lexington</h3>
+          <p class="vp-store-card__addr">125 Walker Street, Lexington, VA 24450</p>
+          <span class="vp-store-card__phone">📞 (540) 461-8349</span>
+          <p class="vp-store-card__hours">Mon, Tue, Thu–Sat 10am–6pm · Closed Wed & Sun</p>
+          <div class="vp-store-card__btns">
+            <a href="https://thevalleypawn.com/sell-coins-lexington/" class="vp-btn-page">🪙 Sell Coins Here</a>
+            <a href="tel:+15404618349" class="vp-btn-call-sm">📞 Call</a>
+          </div>
+        </div>
+
+        <div class="vp-store-card">
+          <h3 class="vp-store-card__city">Roanoke</h3>
+          <p class="vp-store-card__addr">2362 Peters Creek Road, Suite C, Roanoke, VA 24017</p>
+          <span class="vp-store-card__phone">📞 (540) 562-0776</span>
+          <p class="vp-store-card__hours">Mon, Tue, Thu–Sat 10am–6pm · Closed Wed & Sun</p>
+          <div class="vp-store-card__btns">
+            <a href="https://thevalleypawn.com/sell-coins-roanoke/" class="vp-btn-page">🪙 Sell Coins Here</a>
+            <a href="tel:+15405620776" class="vp-btn-call-sm">📞 Call</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT WE BUY -->
+  <section class="vp-section vp-section--alt">
+    <div class="vp-container">
+      <h2 class="vp-section__title">What Coins Does Valley Pawn Buy?</h2>
+      <p class="vp-section__sub">Bullion, rare coins, junk silver, entire collections — we buy it all.</p>
+      <div class="vp-buy-grid">
+        <div class="vp-buy-item">
+          <div class="vp-buy-item__emoji">🦅</div>
+          <div>
+            <h3 class="vp-buy-item__title">American Silver Eagles</h3>
+            <p class="vp-buy-item__body">All years, raw or graded. 1 oz .999 fine. Bought at spot.</p>
+          </div>
+        </div>
+        <div class="vp-buy-item">
+          <div class="vp-buy-item__emoji">⭐</div>
+          <div>
+            <h3 class="vp-buy-item__title">American Gold Eagles</h3>
+            <p class="vp-buy-item__body">1 oz, ½ oz, ¼ oz, 1/10 oz — all sizes, all years.</p>
+          </div>
+        </div>
+        <div class="vp-buy-item">
+          <div class="vp-buy-item__emoji">🪙</div>
+          <div>
+            <h3 class="vp-buy-item__title">Junk Silver</h3>
+            <p class="vp-buy-item__body">Pre-1965 US dimes, quarters, halves, dollars. 90% silver content.</p>
+          </div>
+        </div>
+        <div class="vp-buy-item">
+          <div class="vp-buy-item__emoji">🏛️</div>
+          <div>
+            <h3 class="vp-buy-item__title">Morgan & Peace Dollars</h3>
+            <p class="vp-buy-item__body">Classic silver dollars, all grades. Key dates evaluated for numismatic premium.</p>
+          </div>
+        </div>
+        <div class="vp-buy-item">
+          <div class="vp-buy-item__emoji">🍁</div>
+          <div>
+            <h3 class="vp-buy-item__title">Foreign & World Coins</h3>
+            <p class="vp-buy-item__body">Canadian Maple Leafs, Krugerrands, Libertads, Philharmonics, and more.</p>
+          </div>
+        </div>
+        <div class="vp-buy-item">
+          <div class="vp-buy-item__emoji">📦</div>
+          <div>
+            <h3 class="vp-buy-item__title">Coin Collections & Lots</h3>
+            <p class="vp-buy-item__body">Albums, rolls, bags, estate lots. We buy the whole collection, not just the good pieces.</p>
+          </div>
+        </div>
+        <div class="vp-buy-item">
+          <div class="vp-buy-item__emoji">🎖️</div>
+          <div>
+            <h3 class="vp-buy-item__title">Proof & Commemorative Sets</h3>
+            <p class="vp-buy-item__body">US Mint proof sets, silver proof coins, commemorative issues, OGP sets.</p>
+          </div>
+        </div>
+        <div class="vp-buy-item">
+          <div class="vp-buy-item__emoji">🔍</div>
+          <div>
+            <h3 class="vp-buy-item__title">Key Date & Rare Coins</h3>
+            <p class="vp-buy-item__body">1909-S VDB, 1916-D Mercury, 1921 Morgan and more. We pay numismatic premiums.</p>
+          </div>
+        </div>
+        <div class="vp-buy-item">
+          <div class="vp-buy-item__emoji">📊</div>
+          <div>
+            <h3 class="vp-buy-item__title">Silver & Gold Rounds/Bars</h3>
+            <p class="vp-buy-item__body">Private mint rounds, APMEX bars, Sunshine Mint, all brands and sizes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY VALLEY PAWN -->
+  <section class="vp-section">
+    <div class="vp-container">
+      <h2 class="vp-section__title">Why Sell Coins to Valley Pawn?</h2>
+      <p class="vp-section__sub">Fair prices, numismatic knowledge, whole-collection buying.</p>
+      <div class="vp-why">
+        <div class="vp-why__card">
+          <div class="vp-why__icon">📈</div>
+          <h3 class="vp-why__title">Live Spot Pricing</h3>
+          <p class="vp-why__body">Bullion coins are priced off current live spot — the same number you see on Kitco right now.</p>
+        </div>
+        <div class="vp-why__card">
+          <div class="vp-why__icon">🔍</div>
+          <h3 class="vp-why__title">Numismatic Knowledge</h3>
+          <p class="vp-why__body">We recognize key dates and pay premiums above melt for rare and collectible pieces.</p>
+        </div>
+        <div class="vp-why__card">
+          <div class="vp-why__icon">📦</div>
+          <h3 class="vp-why__title">Whole Collections</h3>
+          <p class="vp-why__body">We buy entire collections — no cherry-picking. Bring the whole box, album, or estate lot.</p>
+        </div>
+        <div class="vp-why__card">
+          <div class="vp-why__icon">💵</div>
+          <h3 class="vp-why__title">Same-Day Cash</h3>
+          <p class="vp-why__body">Accept the offer and walk out with cash in hand. No consignment, no waiting, no delays.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="vp-section vp-section--alt">
+    <div class="vp-container">
+      <h2 class="vp-section__title">Frequently Asked Questions</h2>
+      <p class="vp-section__sub">Common questions about selling coins at Valley Pawn.</p>
+      <div class="vp-faq">
+        <div class="vp-faq__item">
+          <button class="vp-faq__q" type="button">How does Valley Pawn price coins?</button>
+          <div class="vp-faq__a"><p>Bullion coins (Silver Eagles, Gold Eagles, Krugerrands, generic rounds and bars) are priced based on the current live spot price for their metal content. Rare and key-date coins are evaluated for numismatic value using standard dealer references. We show you exactly how we priced your coins before you decide.</p></div>
+        </div>
+        <div class="vp-faq__item">
+          <button class="vp-faq__q" type="button">Do you buy whole coin collections?</button>
+          <div class="vp-faq__a"><p>Yes, and this is something we do well. You don't need to sort, identify, or cherry-pick your collection first. Bring the full box, album, bag, or estate lot and we'll go through it with you. We buy the whole thing — not just the pieces we want.</p></div>
+        </div>
+        <div class="vp-faq__item">
+          <button class="vp-faq__q" type="button">Do you pay above melt for rare coins?</button>
+          <div class="vp-faq__a"><p>Yes. For key dates, low-mintage issues, and other numismatically significant coins, we pay above the melt value. Examples include 1909-S VDB Lincoln cents, 1916-D Mercury dimes, Morgan dollars in higher grades, and other coins where the collector value exceeds the silver content.</p></div>
+        </div>
+        <div class="vp-faq__item">
+          <button class="vp-faq__q" type="button">Do you buy junk silver?</button>
+          <div class="vp-faq__a"><p>Yes. Pre-1965 US dimes, quarters, halves, and silver dollars are 90% silver and we buy them at spot-based pricing. Bring any amount — a handful, a bag, or a coffee can full. No need to sort by denomination first.</p></div>
+        </div>
+        <div class="vp-faq__item">
+          <button class="vp-faq__q" type="button">Do I need to clean my coins first?</button>
+          <div class="vp-faq__a"><p>Please don't clean your coins. Cleaning can actually reduce the numismatic value of collectible coins, and it doesn't affect the melt value of bullion. Bring them as-is and let us evaluate them in original condition.</p></div>
+        </div>
+        <div class="vp-faq__item">
+          <button class="vp-faq__q" type="button">Do I need an appointment?</button>
+          <div class="vp-faq__a"><p>No appointment needed at any of our 5 locations. Walk in any time during business hours. For large collections, you're welcome to call ahead so we can give you undivided attention.</p></div>
+        </div>
+        <div class="vp-faq__item">
+          <button class="vp-faq__q" type="button">What ID do I need?</button>
+          <div class="vp-faq__a"><p>Virginia law requires a government-issued photo ID (driver's license, state ID, or passport) for precious-metals purchases. You must be 18 or older.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CROSS CATEGORY -->
+  <section class="vp-section">
+    <div class="vp-container">
+      <div class="vp-cross-cat">
+        <h3>Also have gold, silver, or jewelry?</h3>
+        <p>We buy it all. Choose the right page for what you have:</p>
+        <div class="vp-cross-cat__links">
+          <a href="https://thevalleypawn.com/sell-gold/">⚜️ Sell Gold</a>
+          <a href="https://thevalleypawn.com/sell-silver/">🥈 Sell Silver</a>
+          <a href="https://thevalleypawn.com/sell-jewelry/">💍 Sell Jewelry</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="vp-final-cta">
+    <div class="vp-container">
+      <h2>Ready to Sell Your Coins?</h2>
+      <p>Pick your nearest Valley Pawn location and walk in today. Bullion priced at spot, rarities evaluated fairly, whole collections welcomed.</p>
+      <div class="vp-final-cta__btns">
+        <a href="#vp-locations" style="background:#fff;color:var(--vp-purple);">📍 Find My Location</a>
+        <a href="sms:+15404455510" style="background:var(--vp-coin);color:#1C1408;">💬 Text Us First</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="vp-mobile-cta">
+    <a href="#vp-locations" style="background:var(--vp-purple);color:#fff;">📍 Find Store</a>
+    <a href="sms:+15404455510" style="background:var(--vp-coin);color:#1C1408;">💬 Text a Photo</a>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  document.querySelectorAll('.vp-faq__q').forEach(function(q) {
+    q.addEventListener('click', function() {
+      q.closest('.vp-faq__item').classList.toggle('open');
+    });
+  });
+})();
+</script>

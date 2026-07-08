@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valley Pawn — Enterprise Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root {
+    --vp-blue: #0099DD;
+    --vp-purple: #2D1A5E;
+    --vp-coral: #F58C8A;
+    --vp-sky: #3DB8E8;
+    --bg: #F4F6FA;
+    --card: #FFFFFF;
+    --text: #1A1E2E;
+    --muted: #6B7280;
+    --green: #16A34A;
+    --amber: #D97706;
+    --red: #DC2626;
+    --border: #E5E9F0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); }
+
+  header {
+    background: var(--vp-purple);
+    color: #fff;
+    padding: 18px 32px;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  }
+  header .brand { display: flex; align-items: center; gap: 14px; }
+  header .brand .mark { width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, var(--vp-blue), var(--vp-sky)); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px; }
+  header h1 { font-size: 19px; font-weight: 700; letter-spacing: .2px; }
+  header .sub { font-size: 12px; opacity: .75; }
+  header .asof { font-size: 12px; background: rgba(255,255,255,.12); padding: 6px 12px; border-radius: 999px; }
+
+  nav { background: #fff; border-bottom: 1px solid var(--border); padding: 0 32px; display: flex; gap: 4px; overflow-x: auto; position: sticky; top: 0; z-index: 10; }
+  nav button {
+    border: none; background: none; padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--muted);
+    cursor: pointer; border-bottom: 3px solid transparent; white-space: nowrap;
+  }
+  nav button.active { color: var(--vp-purple); border-bottom-color: var(--vp-blue); }
+  nav button:hover { color: var(--vp-purple); }
+
+  main { padding: 24px 32px 48px; max-width: 1280px; margin: 0 auto; }
+  section.tab { display: none; }
+  section.tab.active { display: block; }
+
+  .grid { display: grid; gap: 16px; }
+  .kpi-row { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+  .two-col { grid-template-columns: 1fr 1fr; }
+  @media (max-width: 860px) { .two-col { grid-template-columns: 1fr; } }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+  .card h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); margin-bottom: 6px; font-weight: 700; }
+  .card .big { font-size: 28px; font-weight: 800; color: var(--vp-purple); }
+  .card .note { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .card h2 { font-size: 16px; color: var(--vp-purple); margin-bottom: 12px; }
+
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; }
+  .ok { background: #DCFCE7; color: var(--green); }
+  .warn { background: #FEF3C7; color: var(--amber); }
+  .bad { background: #FEE2E2; color: var(--red); }
+  .info { background: #E0F2FE; color: #0369A1; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); padding: 8px 10px; border-bottom: 2px solid var(--border); }
+  td { padding: 9px 10px; border-bottom: 1px solid var(--border); }
+  tr:last-child td { border-bottom: none; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tr.total td { font-weight: 700; background: #FAFBFD; }
+
+  .section-head { margin: 28px 0 14px; display: flex; align-items: baseline; gap: 10px; }
+  .section-head h2 { font-size: 18px; color: var(--vp-purple); }
+  .section-head .src { font-size: 12px; color: var(--muted); }
+
+  .watch { border-left: 4px solid var(--vp-coral); }
+  .watch li { margin: 6px 0 6px 18px; font-size: 13.5px; }
+
+  .chart-box { position: relative; height: 260px; }
+  footer { text-align: center; font-size: 12px; color: var(--muted); padding: 24px; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .slack-link { font-size: 12px; color: var(--vp-blue); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="mark">VP</div>
+    <div>
+      <h1>Valley Pawn — Enterprise Dashboard</h1>
+      <div class="sub">Full Circle Finance Inc &middot; 5 Stores &middot; What's Right Is Right</div>
+    </div>
+  </div>
+  <div class="asof" id="asof"></div>
+</header>
+
+<nav id="nav">
+  <button data-tab="overview" class="active">Overview</button>
+  <button data-tab="storeops">Store Ops</button>
+  <button data-tab="finance">Finance</button>
+  <button data-tab="marketing">Marketing</button>
+  <button data-tab="compliance">Compliance</button>
+</nav>
+
+<main>
+
+<!-- ============ OVERVIEW ============ -->
+<section class="tab active" id="overview">
+  <div class="grid kpi-row">
+    <div class="card">
+      <h3>Company Loan Balance</h3>
+      <div class="big" id="kpi-loanbal"></div>
+      <div class="note">Bravo POS &middot; as of <span class="d" data-d="loans"></span></div>
+    </div>
+    <div class="card">
+      <h3>Past-Due 75d+ (% of Balance)</h3>
+      <div class="big" id="kpi-pastdue"></div>
+      <div class="note">Policy cap 5% &middot; <span class="badge ok">All stores compliant</span></div>
+    </div>
+    <div class="card">
+      <h3>Daily Funds Verification</h3>
+      <div class="big" id="kpi-funds"></div>
+      <div class="note">Sent vs. Bravo safes &middot; <span class="d" data-d="funds"></span></div>
+    </div>
+    <div class="card">
+      <h3>Open Layaways (Company)</h3>
+      <div class="big" id="kpi-layaway"></div>
+      <div class="note">Weekly review &middot; <span class="d" data-d="layaway"></span></div>
+    </div>
+  </div>
+
+  <div class="section-head"><h2>Watch Items</h2><span class="src">from monthly analytics &amp; weekly reviews</span></div>
+  <div class="card watch"><ul id="watch-list"></ul></div>
+
+  <div class="section-head"><h2>Past-Due Exposure by Store</h2><span class="src">75-day rule, % of store loan balance (cap 5%)</span></div>
+  <div class="card"><div class="chart-box"><canvas id="chart-pastdue"></canvas></div></div>
+
+  <div class="section-head"><h2>Report Feeds</h2><span class="src">where each number comes from</span></div>
+  <div class="card">
+    <table>
+      <thead><tr><th>Report</th><th>Cadence</th><th>Slack Channel</th><th>Last Run</th></tr></thead>
+      <tbody id="feeds-body"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ STORE OPS ============ -->
+<section class="tab" id="storeops">
+  <div class="section-head"><h2>Past-Due Loan Review (75-Day Rule)</h2><span class="src">#loan-review &middot; <span class="d" data-d="loans"></span></span></div>
+  <div class="card">
+    <table>
+      <thead><tr><th>Store</th><th class="num">Items 75d+</th><th class="num">$ Past Due</th><th class="num">% of Loan Balance</th><th>Status (cap 5%)</th></tr></thead>
+      <tbody id="loans-body"></tbody>
+    </table>
+  </div>
+
+  <div class="section-head"><h2>Layaway Review</h2><span class="src">#layaway-review &middot; <span class="d" data-d="layaway"></span> &middot; (%) = share of company total</span></div>
+  <div class="card">
+    <table>
+      <thead><tr><th>Store</th><th class="num">Open</th><th class="num">Overdue</th><th class="num">Past Due</th><th class="num">Active</th><th class="num">Locate</th></tr></thead>
+      <tbody id="layaway-body"></tbody>
+    </table>
+  </div>
+
+  <div class="grid two-col" style="margin-top:16px;">
+    <div class="card">
+      <h2>Daily Funds Verification</h2>
+      <div id="funds-detail"></div>
+    </div>
+    <div class="card">
+      <h2>Other Ops Feeds</h2>
+      <table>
+        <tbody>
+          <tr><td>Aged inventory review</td><td><span class="badge info">Weekly — Mon</span></td><td><span class="slack-link">#aged-inventory-review</span></td></tr>
+          <tr><td>Intake margin (buys below 30%)</td><td><span class="badge info">Daily — 7:30 AM</span></td><td><span class="slack-link">#daily-intake-margin</span></td></tr>
+          <tr><td>New inventory sell-through &amp; aging</td><td><span class="badge info">Weekly — Mon</span></td><td><span class="slack-link">#new-inventory</span></td></tr>
+          <tr><td>Employee clock-in check</td><td><span class="badge info">Weekdays — 10 AM</span></td><td><span class="slack-link">#timekeeping-summary</span></td></tr>
+          <tr><td>First payment defaults</td><td><span class="badge info">Ongoing</span></td><td><span class="slack-link">#first-payment-default</span></td></tr>
+          <tr><td>Store rankings &amp; employee sales</td><td><span class="badge info">Weekly — Mon</span></td><td><span class="slack-link">#bonus-goals</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINANCE ============ -->
+<section class="tab" id="finance">
+  <div class="section-head"><h2>Monthly Analytics — Company-Wide</h2><span class="src">#company-performance &middot; Net Revenue = Retail GP + Scrap GP + PSC</span></div>
+  <div class="grid kpi-row">
+    <div class="card"><h3>Latest Month Reported</h3><div class="big">May 2026</div><div class="note">Prepared June 4, 2026 &middot; Bravo POS Company KPIs</div></div>
+    <div class="card"><h3>PSC — May YoY</h3><div class="big" style="color:var(--amber)">−1.3%</div><div class="note">Single month only; YTD +11.5%, T12M +12.8% healthy</div></div>
+    <div class="card"><h3>Views Tracked</h3><div class="big">3</div><div class="note">Same Month YoY &middot; YTD &middot; Trailing 12 Months</div></div>
+  </div>
+
+  <div class="section-head"><h2>Books &amp; Close Status</h2><span class="src">QBO + Silverline Tax</span></div>
+  <div class="card">
+    <table>
+      <thead><tr><th>Item</th><th>Cadence</th><th>Owner / Source</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Bravo Consolidated GL → QBO import</td><td>Monthly</td><td>Accounting Exports (Drive)</td><td>Post GL journal entry after month close</td></tr>
+        <tr><td>Management Report (PDF)</td><td>Monthly</td><td>Liana — Silverline Tax</td><td>Emailed to jdavis@fcfpawn.com</td></tr>
+        <tr><td>Uncategorized Transactions (.xlsx)</td><td>Monthly</td><td>Liana — Silverline Tax</td><td>Joshua categorizes &amp; replies</td></tr>
+        <tr><td>Bank feed categorization</td><td>Ongoing</td><td>QBO (jdavis account)</td><td>Bookkeeper account is read-only</td></tr>
+        <tr><td>Monthly business minutes</td><td>Monthly</td><td>compile-monthly-minutes</td><td>Saved as Google Doc</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-head"><h2>Cash Controls</h2><span class="src">#daily-funds-reconcilation</span></div>
+  <div class="card" id="cash-controls"></div>
+</section>
+
+<!-- ============ MARKETING ============ -->
+<section class="tab" id="marketing">
+  <div class="section-head"><h2>Channel Targets</h2><span class="src">valley-pawn-context — Key Metrics to Track</span></div>
+  <div class="grid kpi-row">
+    <div class="card"><h3>Email Open Rate</h3><div class="big">&gt;25%</div><div class="note">Target &middot; Brevo &middot; weekly report Fri 9 AM → #email-campiagns</div></div>
+    <div class="card"><h3>Email Click Rate</h3><div class="big">&gt;3%</div><div class="note">Target &middot; unsubscribe &lt;0.5%</div></div>
+    <div class="card"><h3>Instagram</h3><div class="big">@valley_pawn</div><div class="note">Follower growth, Reel views, profile visits</div></div>
+    <div class="card"><h3>Google Business</h3><div class="big">5 listings</div><div class="note">Impressions, direction requests, call clicks</div></div>
+  </div>
+
+  <div class="section-head"><h2>Facebook Pages</h2><span class="src">Meta Business Portfolio "Valley Pawn"</span></div>
+  <div class="card">
+    <table>
+      <thead><tr><th>Page</th><th class="num">Followers (approx)</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Brand — @thevalleypawn</td><td class="num">1,708</td><td><span class="badge ok">Active</span></td></tr>
+        <tr><td>Lexington</td><td class="num">1,619</td><td><span class="badge ok">Active</span></td></tr>
+        <tr><td>Waynesboro</td><td class="num">1,235</td><td><span class="badge warn">Portfolio move pending</span></td></tr>
+        <tr><td>Culpeper</td><td class="num">872</td><td><span class="badge warn">Claim pending</span></td></tr>
+        <tr><td>Roanoke</td><td class="num">33</td><td><span class="badge info">Newer page — growing</span></td></tr>
+        <tr><td>Harrisonburg</td><td class="num">21 (+762 after merge)</td><td><span class="badge warn">Legacy page merge pending</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-head"><h2>Marketing Feeds</h2></div>
+  <div class="card">
+    <table>
+      <tbody>
+        <tr><td>Weekly content batch (10 posts × 3 channels)</td><td><span class="badge info">Sun 8 PM</span></td><td><span class="slack-link">approval queue</span></td></tr>
+        <tr><td>Email analytics weekly</td><td><span class="badge info">Fri 9 AM</span></td><td><span class="slack-link">#email-campiagns</span></td></tr>
+        <tr><td>Directory listing drift audit (NAP)</td><td><span class="badge info">Weekly</span></td><td><span class="slack-link">directory monitor</span></td></tr>
+        <tr><td>Chekkit unanswered messages</td><td><span class="badge info">Recurring</span></td><td><span class="slack-link">#chekkit-unanswerd-summary</span></td></tr>
+        <tr><td>Google reviews</td><td><span class="badge info">Ongoing</span></td><td><span class="slack-link">#google-reviews</span></td></tr>
+        <tr><td>Reel comment alerts (first-hour replies)</td><td><span class="badge info">Publish +30 min</span></td><td><span class="slack-link">DM Joshua + Lainie</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ COMPLIANCE ============ -->
+<section class="tab" id="compliance">
+  <div class="section-head"><h2>Compliance Posture</h2><span class="src">policy thresholds &amp; regulatory feeds</span></div>
+  <div class="grid kpi-row">
+    <div class="card"><h3>75-Day Loan Rule</h3><div class="big"><span class="badge ok" style="font-size:16px;">5 / 5 stores OK</span></div><div class="note">Cap: past-due 75d+ ≤ 5% of loan balance &middot; <span class="d" data-d="loans"></span></div></div>
+    <div class="card"><h3>FFL / Firearms</h3><div class="big">Roanoke</div><div class="note">ATF traces &amp; transfers tracked in Slack</div></div>
+    <div class="card"><h3>Funds Controls</h3><div class="big" id="kpi-funds2"></div><div class="note">Daily safe verification, 6 PM ET</div></div>
+  </div>
+
+  <div class="section-head"><h2>Regulatory Feeds</h2></div>
+  <div class="card">
+    <table>
+      <thead><tr><th>Area</th><th>Channel / Source</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>ATF trace requests</td><td><span class="slack-link">#atf-traces</span></td><td>Respond within required window</td></tr>
+        <tr><td>Gun transfers / NICS</td><td><span class="slack-link">#gun-transfers</span> &middot; <span class="slack-link">#ffl-copy</span></td><td>Roanoke FFL</td></tr>
+        <tr><td>Business licenses</td><td><span class="slack-link">#business-license</span></td><td>All 5 VA localities</td></tr>
+        <tr><td>General compliance</td><td><span class="slack-link">#compliance</span></td><td>Policies &amp; pawn regs (VA)</td></tr>
+        <tr><td>Marketing content policy</td><td>GBP / Meta rules</td><td>No firearms content on social or GBP; no "Dixie Pawn" anywhere</td></tr>
+        <tr><td>Email compliance</td><td>Brevo</td><td>CAN-SPAM footer, DBA-only brand line, unsubscribe &lt;0.5%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-head"><h2>Brand Compliance Rules (Always-On)</h2></div>
+  <div class="card watch">
+    <ul>
+      <li>All 5 stores are <strong>Valley Pawn</strong> — never reference "Dixie Pawn" anywhere.</li>
+      <li>No firearms content in GBP posts or social media (especially Roanoke).</li>
+      <li>Customer emails: logo header, Call + Text buttons with visible numbers, full 5-store directory, DBA-only footer.</li>
+      <li>Store hours: all stores close 6 PM; Culpeper only store open Wednesday.</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Valley Pawn Enterprise Dashboard &middot; Data sourced from Bravo POS reports posted to Slack &middot; Refresh data by re-running the dashboard update task
+</footer>
+
+<script>
+/* =========================================================
+   DATA — update this block (or have a scheduled task rewrite it)
+   All figures below are from actual Slack reports on the dates shown.
+   ========================================================= */
+const DATA = {
+  asOf: "June 11, 2026",
+  dates: { loans: "Jun 8, 2026", layaway: "Jun 8, 2026", funds: "Jun 9, 2026" },
+  companyLoanBalance: 685568.00,
+  pastDue: [
+    // store, items, dollars, pct of store loan balance
+    ["Culpeper", 0, 0.00, 0.00],
+    ["Harrisonburg", 22, 5105.00, 2.91],
+    ["Lexington", 10, 825.00, 1.15],
+    ["Roanoke", 22, 6414.00, 4.34],
+    ["Waynesboro", 8, 220.00, 0.19],
+  ],
+  pastDueTotal: { items: 62, dollars: 12564.00, pct: 1.83 },
+  layaway: [
+    // store, open(share%), overdue(share%), pastdue(share%), active(share%), locate
+    ["Culpeper", "9 (16%)", "5 (9%)", "4 (13%)", "5 (9%)", 0],
+    ["Harrisonburg", "22 (39%)", "18 (34%)", "5 (16%)", "18 (33%)", 0],
+    ["Lexington", "4 (7%)", "8 (15%)", "7 (23%)", "8 (15%)", 0],
+    ["Roanoke", "20 (35%)", "20 (38%)", "14 (45%)", "20 (36%)", 0],
+    ["Waynesboro", "2 (4%)", "2 (4%)", "1 (3%)", "4 (7%)", 0],
+  ],
+  layawayTotal: ["Company", 57, 53, 31, 55, 0],
+  funds: { status: "ALL MATCHED", expected: 13000, actual: 13000,
+           note: "Harrisonburg split send — $10k midday + $1k early evening, both posted same day." },
+  watch: [
+    "PSC −1.3% YoY in May (single month; YTD +11.5% and T12M +12.8% remain healthy).",
+    "LEX loan balance −23.7% YoY across all views (flagged in April analytics).",
+    "Roanoke past-due at 4.34% — closest store to the 5% cap; worth monitoring.",
+    "Roanoke & Harrisonburg carry the bulk of overdue and past-due layaways.",
+  ],
+  feeds: [
+    ["Monthly Analytics (company KPIs)", "Monthly", "#company-performance", "Jun 4, 2026"],
+    ["Past-Due Loan Review (75-day rule)", "Weekly — Mon", "#loan-review", "Jun 8, 2026"],
+    ["Layaway Review", "Weekly — Mon", "#layaway-review", "Jun 8, 2026"],
+    ["Daily Funds Verification", "Daily — 6 PM", "#daily-funds-reconcilation", "Jun 9, 2026"],
+    ["Aged Inventory Review", "Weekly — Mon", "#aged-inventory-review", "active"],
+    ["Email Campaign Performance", "Weekly — Fri 9 AM", "#email-campiagns", "active"],
+  ],
+};
+
+/* ============ render ============ */
+const fmt$ = n => n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+const fmt$c = n => n.toLocaleString("en-US", { style: "currency", currency: "USD" });
+
+document.getElementById("asof").textContent = "Data as of " + DATA.asOf;
+document.querySelectorAll(".d").forEach(el => el.textContent = DATA.dates[el.dataset.d] || "");
+
+document.getElementById("kpi-loanbal").textContent = fmt$(DATA.companyLoanBalance);
+document.getElementById("kpi-pastdue").textContent = DATA.pastDueTotal.pct.toFixed(2) + "%";
+document.getElementById("kpi-funds").textContent = "✓ " + DATA.funds.status;
+document.getElementById("kpi-funds2").textContent = "✓ " + DATA.funds.status;
+document.getElementById("kpi-layaway").textContent = DATA.layawayTotal[1];
+
+document.getElementById("watch-list").innerHTML = DATA.watch.map(w => `<li>${w}</li>`).join("");
+
+document.getElementById("feeds-body").innerHTML = DATA.feeds.map(f =>
+  `<tr><td>${f[0]}</td><td>${f[1]}</td><td><span class="slack-link">${f[2]}</span></td><td>${f[3]}</td></tr>`).join("");
+
+document.getElementById("loans-body").innerHTML = DATA.pastDue.map(r => {
+  const cls = r[3] >= 5 ? "bad" : r[3] >= 4 ? "warn" : "ok";
+  const label = r[3] >= 5 ? "Over cap" : r[3] >= 4 ? "Near cap" : "OK";
+  return `<tr><td>${r[0]}</td><td class="num">${r[1]}</td><td class="num">${fmt$c(r[2])}</td><td class="num">${r[3].toFixed(2)}%</td><td><span class="badge ${cls}">${label}</span></td></tr>`;
+}).join("") +
+`<tr class="total"><td>Company</td><td class="num">${DATA.pastDueTotal.items}</td><td class="num">${fmt$c(DATA.pastDueTotal.dollars)}</td><td class="num">${DATA.pastDueTotal.pct.toFixed(2)}%</td><td><span class="badge ok">OK</span></td></tr>`;
+
+document.getElementById("layaway-body").innerHTML = DATA.layaway.map(r =>
+  `<tr><td>${r[0]}</td><td class="num">${r[1]}</td><td class="num">${r[2]}</td><td class="num">${r[3]}</td><td class="num">${r[4]}</td><td class="num">${r[5]}</td></tr>`).join("") +
+`<tr class="total"><td>${DATA.layawayTotal[0]}</td><td class="num">${DATA.layawayTotal[1]}</td><td class="num">${DATA.layawayTotal[2]}</td><td class="num">${DATA.layawayTotal[3]}</td><td class="num">${DATA.layawayTotal[4]}</td><td class="num">${DATA.layawayTotal[5]}</td></tr>`;
+
+const fundsHtml = `
+  <p style="font-size:15px; margin-bottom:8px;"><span class="badge ok">✓ ${DATA.funds.status}</span>
+  &nbsp;${fmt$c(DATA.funds.expected)} expected = ${fmt$c(DATA.funds.actual)} actual across all 5 stores (${DATA.dates.funds}).</p>
+  <p class="note">${DATA.funds.note}</p>`;
+document.getElementById("funds-detail").innerHTML = fundsHtml;
+document.getElementById("cash-controls").innerHTML = fundsHtml +
+  `<p class="note" style="margin-top:10px;">Verification runs daily at 6 PM ET against the Bravo Safe Register Journal — every dollar sent to a store must post to that store's safe the same day.</p>`;
+
+/* past-due chart */
+new Chart(document.getElementById("chart-pastdue"), {
+  type: "bar",
+  data: {
+    labels: DATA.pastDue.map(r => r[0]),
+    datasets: [{
+      label: "% of loan balance past due 75d+",
+      data: DATA.pastDue.map(r => r[3]),
+      backgroundColor: DATA.pastDue.map(r => r[3] >= 4 ? "#F58C8A" : "#3DB8E8"),
+      borderRadius: 6,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      annotation: undefined,
+      tooltip: { callbacks: { label: c => c.parsed.y.toFixed(2) + "% of store loan balance" } }
+    },
+    scales: {
+      y: { beginAtZero: true, max: 6, ticks: { callback: v => v + "%" },
+           grid: { color: "#EEF1F6" } },
+      x: { grid: { display: false } }
+    }
+  },
+  plugins: [{
+    id: "capLine",
+    afterDraw(chart) {
+      const y = chart.scales.y.getPixelForValue(5);
+      const ctx = chart.ctx;
+      ctx.save();
+      ctx.strokeStyle = "#DC2626"; ctx.setLineDash([6, 4]); ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(chart.chartArea.left, y); ctx.lineTo(chart.chartArea.right, y); ctx.stroke();
+      ctx.fillStyle = "#DC2626"; ctx.font = "11px sans-serif";
+      ctx.fillText("5% policy cap", chart.chartArea.left + 6, y - 6);
+      ctx.restore();
+    }
+  }]
+});
+
+/* tabs */
+document.getElementById("nav").addEventListener("click", e => {
+  if (e.target.tagName !== "BUTTON") return;
+  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("active", b === e.target));
+  document.querySelectorAll("section.tab").forEach(s => s.classList.toggle("active", s.id === e.target.dataset.tab));
+});
+</script>
+</body>
+</html>

@@ -1,9 +1,27 @@
-# Whitelist approach: ignore everything by default, only track skill/task logic (.md), never business data or credentials
+# Whitelist approach: ignore everything by default, only track skill/task logic (.md) and hand-written source code, never business data, generated output, or credentials
 *
 !*/
 !*.md
 !*.md.bak*
 !.gitignore
+
+# Source code we actually write (dashboard + automation scripts)
+!*.py
+!*.js
+!*.jsx
+!*.ts
+!*.tsx
+!*.mjs
+!*.cjs
+!*.mts
+!*.cts
+!*.html
+!*.css
+!*.ahk
+!*.sh
+!*.ps1
+!*.bat
+!*.cmd
 
 # Extra safety: never track these even if matched above
 *.pem
@@ -12,11 +30,48 @@
 .env*
 credentials*
 *credential*
+*token*
+*secret*
+*password*
 brevo_api_key
 *.p12
 *.pfx
 
-# Explicit hard excludes: personal health data and financial/tax planning docs — never in git, regardless of extension
+# Generated / dependency / build output -- regenerable, never hand-written, keep out regardless of extension
+**/node_modules/
+**/__pycache__/
+**/.wrangler/
+**/.cloudflare/
+**/dist/
+**/build/
+**/.next/
+**/.cache/
+*.pyc
+
+# Explicit hard excludes: personal health data, financial/tax planning docs, vendored tooling, and generated dashboard snapshot history -- never in git, regardless of extension
 Projects/Health Optimization/
 Projects/Quickbooks Set UP/
 tools/
+Projects/Business Dashboard Website/site/artifacts/
+Artifacts/
+
+# Hardcoded live eBay production credentials found in these scripts (2026-07-08) -- exclude until refactored to read from the shared untracked credentials file instead of a literal constant
+Projects/eBay/ebay_listing_audit.py
+Projects/eBay/ebay_caps_fixer.py
+Projects/eBay/ebay_jewelry_sold.py
+Projects/eBay/ebay_markdown_engine.py
+Projects/eBay/ebay_daily_listings.py
+Projects/eBay/ebay_short_titles_pull.py
+Projects/eBay/ebay_efficiency_weekly.py
+Projects/eBay/getitem_detail.py
+Projects/eBay/ebay_dts_analysis.py
+Projects/eBay/ebay_end_listing.py
+Projects/eBay/ebay_category_audit.py
+Projects/eBay/ebay_photo_reorder.py
+Projects/eBay/ebay_aged_report.py
+Projects/eBay/ebay_title_stripper.py
+Projects/eBay/ebay_quality_weekly.py
+Projects/eBay/ebay_title_apply.py
+Projects/eBay/ebay_photo_enhance.py
+Projects/eBay/ebay_end_bulk.py
+Projects/eBay/ebay_photos_pull.py

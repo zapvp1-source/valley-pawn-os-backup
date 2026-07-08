@@ -1,0 +1,1276 @@
+<!--
+  Valley Pawn — "We Buy Gold" Landing Page Master Template
+  ----------------------------------------------------------
+  Self-contained HTML/CSS/JS. Drop into a WordPress full-width page
+  via a Custom HTML block, OR save as a page-{slug}.php template
+  in a child theme.
+
+  TEMPLATE TOKENS — replace per-store before publishing:
+    Roanoke            — e.g. Culpeper
+    roanoke      — e.g. culpeper
+    (540) 562-0776   — e.g. (540) 445-5510
+    15405620776       — e.g. 15404455510 (for tel:/sms:)
+    2362 Peters Creek Road, Suite C  — e.g. 571 James Madison Highway
+    24017     — e.g. 22701
+    Mon, Tue, Thu, Fri & Sat 10:00 AM – 6:00 PM · Closed Wednesday & Sunday      — e.g. Mon–Sat 10am–6pm (closed Sunday)
+    https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Roanoke+VA        — canonical Maps URL from valley-pawn-context
+    https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Roanoke+VA         — Google Business Profile URL (for reviews link)
+    24017, 24012, 24013, 24014, 24015, 24016, 24018, 24019, 24153, 24179, 24083, 24175, 24070, 24090     — e.g. 22701, 22714, 22729, 22735, 22737, 22741
+    Roanoke, Salem, Vinton, Daleville, Troutville, Hollins, Cave Spring, Catawba, and Cloverdale    — e.g. Brandy Station, Madison, Reva, Stevensburg, Orange
+    roanoke              — slug for tracking, e.g. "culpeper"
+
+  GLOBAL CONFIG (update weekly):
+    window.VP_GOLD_SPOT       — gold spot price USD/oz (currently 4500, updated DAILY from kitco)
+    window.VP_GOLD_PAYOUT     — payout as % of melt (currently 0.50 = 50% — single rate, no range)
+
+  REQUIRED INTEGRATIONS (set up in WordPress):
+    1. Chekkit widget script in <head> or footer (site-wide is best)
+    2. Google Tag Manager container tag
+    3. GA4 property configured in GTM
+-->
+
+<!-- ============================================================ -->
+<!-- SECTION 1 — JSON-LD SCHEMA (LocalBusiness + WebPage + FAQ)   -->
+<!-- ============================================================ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://thevalleypawn.com/sell-gold-roanoke/#business",
+      "name": "Valley Pawn — Roanoke",
+      "image": "https://i0.wp.com/thevalleypawn.com/wp-content/uploads/2026/03/vp_logo_name-no-tag.png",
+      "telephone": "+15405620776",
+      "priceRange": "$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2362 Peters Creek Road, Suite C",
+        "addressLocality": "Roanoke",
+        "addressRegion": "VA",
+        "postalCode": "24017",
+        "addressCountry": "US"
+      },
+      "url": "https://thevalleypawn.com/sell-gold-roanoke/",
+      "areaServed": [
+        { "@type": "City", "name": "Roanoke" }
+      ],
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "["Monday","Tuesday","Thursday","Friday","Saturday"]",
+          "opens": "10:00",
+          "closes": "18:00"
+        }
+      ],
+      "sameAs": [
+        "https://www.facebook.com/ValleyPawnRoanoke",
+        "https://www.instagram.com/valley_pawn"
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://thevalleypawn.com/sell-gold-roanoke/#webpage",
+      "url": "https://thevalleypawn.com/sell-gold-roanoke/",
+      "name": "Sell Gold in Roanoke, VA | Get a Fair Offer Today | Valley Pawn",
+      "description": "Sell your gold in Roanoke, VA. Use our free calculator to see your offer instantly, then text or call Valley Pawn. Family-owned since 2014.",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Valley Pawn",
+        "url": "https://thevalleypawn.com"
+      },
+      "primaryImageOfPage": "https://i0.wp.com/thevalleypawn.com/wp-content/uploads/2026/03/vp_logo_name-no-tag.png"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much is my gold worth?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use our live gold calculator above to get an instant offer based on the current spot price and the karat and weight of your gold. We pay 50% of the spot melt value. For a firm offer, bring your items into our Roanoke store or text us — we appraise on the spot, no appointment needed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What kinds of gold does Valley Pawn buy?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We buy gold jewelry, gold coins, gold bars and bullion, scrap gold, broken jewelry, dental gold, class rings, wedding bands, chains, charms, and gold-filled or gold-plated items. Bring any gold — we'll evaluate it fairly using real market data."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need an appointment to sell gold?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No appointment needed. Walk into our Roanoke store any time during business hours and we'll appraise your gold while you wait. You leave with cash the same day."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does Valley Pawn determine the offer price for gold?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We test your gold to confirm the karat, weigh it precisely, and calculate the melt value using the current live spot price. We pay 50% of that melt value — straightforward math, no haggling. There's no obligation to accept the offer."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I sell broken or damaged gold jewelry?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Broken chains, bent rings, missing stones, tangled lots — it doesn't matter to us. We buy gold by its actual gold content, not its condition. Bring it as-is."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What ID do I need to sell gold?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Virginia law requires a government-issued photo ID (driver's license, state ID, or passport) for any precious-metals sale. You must be 18 or older. Bring your ID and your gold — that's it."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<!-- ============================================================ -->
+<!-- SECTION 2 — INLINE CSS                                       -->
+<!-- ============================================================ -->
+<style>
+  /* ===== Valley Pawn Brand Tokens ===== */
+  :root {
+    --vp-blue: #0099DD;
+    --vp-blue-light: #3DB8E8;
+    --vp-purple: #2D1A5E;
+    --vp-coral: #F58C8A;
+    --vp-gold: #D4A442;
+    --vp-gold-dark: #B8861F;
+    --vp-cream: #FAF7F0;
+    --vp-text: #1A1A1A;
+    --vp-muted: #6B6B6B;
+    --vp-border: #E5E5E5;
+    --vp-success: #2E7D32;
+    --vp-shadow: 0 4px 24px rgba(45, 26, 94, 0.12);
+    --vp-shadow-lg: 0 12px 48px rgba(45, 26, 94, 0.18);
+    --vp-radius: 12px;
+    --vp-radius-lg: 20px;
+  }
+
+  /* ===== Page Container (scoped so we don't break the WordPress theme) ===== */
+  .vp-sell-gold {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, sans-serif;
+    color: var(--vp-text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    background: #fff;
+  }
+  .vp-sell-gold *, .vp-sell-gold *::before, .vp-sell-gold *::after { box-sizing: border-box; }
+  .vp-sell-gold img { max-width: 100%; height: auto; display: block; }
+  .vp-sell-gold a { color: var(--vp-blue); text-decoration: none; }
+  .vp-sell-gold a:hover { text-decoration: underline; }
+  .vp-container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+  /* ===== Header ===== */
+  .vp-header {
+    background: #fff;
+    border-bottom: 1px solid var(--vp-border);
+    padding: 14px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+  }
+  .vp-header .vp-container { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .vp-header__logo img { max-height: 44px; width: auto; }
+  .vp-header__cta { display: flex; gap: 8px; }
+  .vp-header__cta a {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 10px 14px; font-weight: 700; font-size: 14px;
+    border-radius: 8px; text-decoration: none;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .vp-header__cta .vp-btn-call { background: var(--vp-blue); color: #fff; }
+  .vp-header__cta .vp-btn-text { background: var(--vp-coral); color: #fff; }
+  .vp-header__cta a:hover { transform: translateY(-1px); box-shadow: var(--vp-shadow); text-decoration: none; }
+  @media (max-width: 640px) {
+    .vp-header__cta a span.label { display: none; }
+    .vp-header__cta a { padding: 10px 12px; }
+  }
+
+  /* ===== Hero ===== */
+  .vp-hero {
+    background: linear-gradient(135deg, var(--vp-purple) 0%, #1a0f3d 100%);
+    color: #fff;
+    padding: 56px 0 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .vp-hero::before {
+    content: '';
+    position: absolute; top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(212, 164, 66, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .vp-hero .vp-container { position: relative; z-index: 1; }
+  .vp-hero__eyebrow {
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    color: var(--vp-gold);
+    font-size: 13px; font-weight: 700; letter-spacing: 0.05em;
+    padding: 6px 14px; border-radius: 20px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .vp-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.15;
+    margin: 0 0 14px;
+    font-weight: 800;
+  }
+  .vp-hero h1 .vp-accent { color: var(--vp-gold); }
+  .vp-hero__sub {
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    color: rgba(255,255,255,0.85);
+    max-width: 640px;
+    margin: 0 0 24px;
+  }
+  .vp-hero__signals {
+    display: flex; flex-wrap: wrap; gap: 18px;
+    margin-bottom: 28px;
+    font-size: 14px; color: rgba(255,255,255,0.9);
+  }
+  .vp-hero__signal { display: flex; align-items: center; gap: 8px; }
+  .vp-hero__signal::before { content: '✓'; color: var(--vp-gold); font-weight: 800; }
+  .vp-hero__cta {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    margin-bottom: 32px;
+  }
+  .vp-hero__cta a {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 24px; font-size: 16px; font-weight: 700;
+    border-radius: 10px; text-decoration: none;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .vp-btn-call-lg { background: #fff; color: var(--vp-purple); }
+  .vp-btn-text-lg { background: var(--vp-coral); color: #fff; }
+  .vp-hero__cta a:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,0.25); }
+
+  /* ===== Gold Calculator ===== */
+  .vp-calc {
+    background: #fff;
+    border-radius: var(--vp-radius-lg);
+    padding: 28px;
+    box-shadow: var(--vp-shadow-lg);
+    color: var(--vp-text);
+    max-width: 560px;
+    margin: 0 0 40px;
+  }
+  .vp-calc__title {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 1.35rem; font-weight: 800; color: var(--vp-purple);
+    margin: 0 0 6px;
+  }
+  .vp-calc__title::before {
+    content: ''; display: inline-block;
+    width: 28px; height: 28px;
+    background: radial-gradient(circle, var(--vp-gold) 0%, var(--vp-gold-dark) 100%);
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(212, 164, 66, 0.4);
+  }
+  .vp-calc__sub { color: var(--vp-muted); font-size: 14px; margin: 0 0 18px; }
+  .vp-calc__field { margin-bottom: 16px; }
+  .vp-calc__label {
+    display: block;
+    font-size: 13px; font-weight: 700;
+    color: var(--vp-purple);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+  }
+  .vp-calc__karat {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;
+  }
+  .vp-calc__karat button {
+    padding: 10px 4px; font-size: 14px; font-weight: 700;
+    border: 2px solid var(--vp-border); background: #fff;
+    color: var(--vp-text); border-radius: 8px; cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .vp-calc__karat button:hover { border-color: var(--vp-blue-light); }
+  .vp-calc__karat button.active {
+    background: var(--vp-purple); border-color: var(--vp-purple); color: #fff;
+  }
+  .vp-calc__weight-row {
+    display: grid; grid-template-columns: 1fr 120px; gap: 8px;
+  }
+  .vp-calc__input, .vp-calc__select {
+    width: 100%;
+    padding: 12px 14px; font-size: 16px;
+    border: 2px solid var(--vp-border); border-radius: 8px;
+    background: #fff; color: var(--vp-text);
+    transition: border-color 0.15s ease;
+    font-family: inherit;
+  }
+  .vp-calc__input:focus, .vp-calc__select:focus {
+    outline: none; border-color: var(--vp-blue);
+  }
+  .vp-calc__select { cursor: pointer; }
+  .vp-calc__result {
+    background: linear-gradient(135deg, #FFF8E7 0%, #FFEFC2 100%);
+    border: 2px solid var(--vp-gold);
+    border-radius: var(--vp-radius);
+    padding: 18px 20px;
+    margin: 18px 0;
+    text-align: center;
+  }
+  .vp-calc__result-label {
+    font-size: 12px; font-weight: 700;
+    color: var(--vp-gold-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+  .vp-calc__result-value {
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    font-weight: 800;
+    color: var(--vp-purple);
+    line-height: 1.1;
+  }
+  .vp-calc__result-note {
+    font-size: 12px; color: var(--vp-muted);
+    margin-top: 6px;
+  }
+  .vp-calc__cta {
+    display: block; width: 100%;
+    padding: 16px 20px;
+    background: var(--vp-coral);
+    color: #fff;
+    font-size: 16px; font-weight: 800;
+    border: none; border-radius: 10px;
+    cursor: pointer; text-align: center;
+    text-decoration: none;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .vp-calc__cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(245, 140, 138, 0.4);
+    text-decoration: none;
+    color: #fff;
+  }
+  .vp-calc__disclaimer {
+    font-size: 12px; color: var(--vp-muted);
+    margin-top: 12px; text-align: center;
+    line-height: 1.5;
+  }
+
+  /* ===== Section base ===== */
+  .vp-section { padding: 56px 0; }
+  .vp-section--alt { background: var(--vp-cream); }
+  .vp-section__title {
+    text-align: center;
+    font-size: clamp(1.6rem, 3.5vw, 2.25rem);
+    color: var(--vp-purple);
+    margin: 0 0 12px;
+    font-weight: 800;
+  }
+  .vp-section__sub {
+    text-align: center;
+    color: var(--vp-muted);
+    max-width: 640px;
+    margin: 0 auto 40px;
+    font-size: 1.05rem;
+  }
+
+  /* ===== How It Works ===== */
+  .vp-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  @media (max-width: 768px) { .vp-steps { grid-template-columns: 1fr; } }
+  .vp-step { text-align: center; padding: 24px; }
+  .vp-step__num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 56px; height: 56px;
+    background: var(--vp-blue);
+    color: #fff;
+    font-size: 1.5rem; font-weight: 800;
+    border-radius: 50%;
+    margin-bottom: 16px;
+  }
+  .vp-step__title { font-size: 1.25rem; font-weight: 800; color: var(--vp-purple); margin: 0 0 8px; }
+  .vp-step__body { color: var(--vp-muted); margin: 0; }
+
+  /* ===== Why Valley Pawn ===== */
+  .vp-why { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  @media (max-width: 900px) { .vp-why { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 500px) { .vp-why { grid-template-columns: 1fr; } }
+  .vp-why__card {
+    background: #fff;
+    border: 1px solid var(--vp-border);
+    border-radius: var(--vp-radius);
+    padding: 24px;
+    text-align: center;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .vp-why__card:hover { transform: translateY(-4px); box-shadow: var(--vp-shadow); }
+  .vp-why__icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 48px; height: 48px;
+    background: linear-gradient(135deg, var(--vp-blue) 0%, var(--vp-blue-light) 100%);
+    color: #fff; font-size: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 14px;
+  }
+  .vp-why__title { font-size: 1.05rem; font-weight: 800; color: var(--vp-purple); margin: 0 0 6px; }
+  .vp-why__body { font-size: 14px; color: var(--vp-muted); margin: 0; }
+
+  /* ===== What We Buy ===== */
+  .vp-buy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 768px) { .vp-buy-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .vp-buy-grid { grid-template-columns: 1fr; } }
+  .vp-buy-item {
+    background: #fff;
+    border: 1px solid var(--vp-border);
+    border-radius: var(--vp-radius);
+    padding: 20px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .vp-buy-item__emoji { font-size: 1.6rem; line-height: 1; }
+  .vp-buy-item__title { font-weight: 800; color: var(--vp-purple); margin: 0 0 4px; font-size: 1rem; }
+  .vp-buy-item__body { font-size: 14px; color: var(--vp-muted); margin: 0; }
+
+  /* ===== Reviews ===== */
+  .vp-reviews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 900px) { .vp-reviews { grid-template-columns: 1fr; } }
+  .vp-review {
+    background: #fff;
+    border-radius: var(--vp-radius);
+    padding: 24px;
+    box-shadow: var(--vp-shadow);
+    border-top: 4px solid var(--vp-gold);
+  }
+  .vp-review__stars { color: var(--vp-gold); font-size: 18px; margin-bottom: 10px; }
+  .vp-review__quote { color: var(--vp-text); margin: 0 0 14px; font-style: italic; }
+  .vp-review__author { font-weight: 700; color: var(--vp-purple); font-size: 14px; }
+  .vp-review__meta { font-size: 12px; color: var(--vp-muted); }
+
+  /* ===== This Store ===== */
+  .vp-store-block {
+    background: #fff;
+    border-radius: var(--vp-radius-lg);
+    padding: 32px;
+    box-shadow: var(--vp-shadow);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+    align-items: center;
+  }
+  @media (max-width: 768px) { .vp-store-block { grid-template-columns: 1fr; } }
+  .vp-store-block h3 {
+    color: var(--vp-purple); margin: 0 0 8px;
+    font-size: 1.4rem;
+  }
+  .vp-store-block__addr { color: var(--vp-text); margin: 0 0 4px; font-weight: 600; }
+  .vp-store-block__hours { color: var(--vp-muted); font-size: 14px; margin: 0 0 16px; }
+  .vp-store-block__cta { display: flex; flex-wrap: wrap; gap: 10px; }
+  .vp-store-block__cta a {
+    padding: 12px 18px; border-radius: 8px;
+    font-weight: 700; font-size: 14px;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .vp-btn-directions { background: var(--vp-blue); color: #fff; }
+  .vp-store-block__map iframe {
+    width: 100%; height: 280px; border: 0; border-radius: var(--vp-radius);
+  }
+
+  /* ===== All 5 Locations ===== */
+  .vp-locations { display: grid; grid-template-columns: 1fr; gap: 14px; max-width: 800px; margin: 0 auto; }
+  .vp-location {
+    background: #fff;
+    border: 1px solid var(--vp-border);
+    border-radius: var(--vp-radius);
+    padding: 18px 22px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 18px;
+    align-items: center;
+  }
+  @media (max-width: 640px) {
+    .vp-location { grid-template-columns: 1fr; }
+  }
+  .vp-location__name { font-weight: 800; color: var(--vp-purple); margin: 0 0 2px; font-size: 1.05rem; }
+  .vp-location__addr { color: var(--vp-muted); font-size: 14px; margin: 0; }
+  .vp-location__cta { display: flex; flex-wrap: wrap; gap: 6px; }
+  .vp-location__cta a {
+    padding: 8px 12px; font-size: 13px; font-weight: 700;
+    border-radius: 6px; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .vp-loc-dir { background: var(--vp-blue); color: #fff; }
+  .vp-loc-call { background: var(--vp-purple); color: #fff; }
+  .vp-loc-text { background: var(--vp-coral); color: #fff; }
+  .vp-hours-line {
+    text-align: center; font-size: 13px; color: var(--vp-muted);
+    margin-top: 20px;
+  }
+
+  /* ===== FAQ ===== */
+  .vp-faq { max-width: 800px; margin: 0 auto; }
+  .vp-faq__item {
+    background: #fff;
+    border: 1px solid var(--vp-border);
+    border-radius: var(--vp-radius);
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .vp-faq__q {
+    width: 100%;
+    padding: 18px 22px;
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--vp-purple);
+    cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    font-family: inherit;
+  }
+  .vp-faq__q::after {
+    content: '+';
+    font-size: 1.4rem;
+    color: var(--vp-blue);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+  .vp-faq__item.open .vp-faq__q::after { transform: rotate(45deg); }
+  .vp-faq__a {
+    padding: 0 22px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    color: var(--vp-text);
+  }
+  .vp-faq__item.open .vp-faq__a {
+    max-height: 500px;
+    padding: 0 22px 18px;
+  }
+
+  /* ===== Final CTA ===== */
+  .vp-final-cta {
+    background: linear-gradient(135deg, var(--vp-purple) 0%, #1a0f3d 100%);
+    color: #fff;
+    padding: 64px 0;
+    text-align: center;
+  }
+  .vp-final-cta h2 {
+    color: #fff;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    margin: 0 0 12px;
+    font-weight: 800;
+  }
+  .vp-final-cta p { color: rgba(255,255,255,0.85); margin: 0 0 28px; font-size: 1.1rem; }
+  .vp-final-cta__buttons { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+  .vp-final-cta__buttons a {
+    padding: 16px 28px;
+    font-size: 16px; font-weight: 800;
+    border-radius: 10px;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .vp-final-cta__buttons .vp-btn-call-lg { background: #fff; color: var(--vp-purple); }
+  .vp-final-cta__buttons .vp-btn-text-lg { background: var(--vp-coral); color: #fff; }
+  .vp-final-cta__buttons a:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.3); }
+
+  /* ===== Sticky Mobile CTA ===== */
+  .vp-mobile-cta {
+    display: none;
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: #fff;
+    border-top: 1px solid var(--vp-border);
+    padding: 10px;
+    z-index: 90;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+    gap: 8px;
+  }
+  .vp-mobile-cta a {
+    flex: 1;
+    padding: 14px;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: 800;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  .vp-mobile-cta .vp-btn-call { background: var(--vp-blue); color: #fff; }
+  .vp-mobile-cta .vp-btn-text { background: var(--vp-coral); color: #fff; }
+  @media (max-width: 640px) {
+    .vp-mobile-cta { display: flex; }
+    .vp-final-cta { padding-bottom: 100px; }
+  }
+</style>
+
+<!-- ============================================================ -->
+<!-- SECTION 3 — PAGE MARKUP                                      -->
+<!-- ============================================================ -->
+<div class="vp-sell-gold" id="vp-sell-gold-roanoke">
+
+  <!-- HEADER -->
+  <header class="vp-header">
+    <div class="vp-container">
+      <a href="https://thevalleypawn.com" class="vp-header__logo">
+        <img src="https://i0.wp.com/thevalleypawn.com/wp-content/uploads/2026/03/vp_logo_name-no-tag.png?fit=600%2C67&ssl=1" alt="Valley Pawn" width="200" />
+      </a>
+      <div class="vp-header__cta">
+        <a href="tel:+15405620776" class="vp-btn-call" data-vp-track="cta_call_click" data-vp-location="header">
+          📞 <span class="label">Call</span> (540) 562-0776
+        </a>
+        <a href="sms:+15405620776" class="vp-btn-text" data-vp-track="cta_text_click" data-vp-location="header">
+          💬 <span class="label">Text</span> (540) 562-0776
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO + CALCULATOR -->
+  <section class="vp-hero">
+    <div class="vp-container">
+      <span class="vp-hero__eyebrow">⚜️ Valley Pawn Roanoke</span>
+      <h1>We Buy Gold in <span class="vp-accent">Roanoke, VA</span><br>— Get Your Offer in Seconds</h1>
+      <p class="vp-hero__sub">
+        Family-owned since 2014. Fair, transparent appraisals using real market data.
+        See what your gold is worth right now, then text or call us to lock it in.
+      </p>
+      <div class="vp-hero__signals">
+        <span class="vp-hero__signal">Walk out with cash today</span>
+        <span class="vp-hero__signal">No appointment needed</span>
+        <span class="vp-hero__signal">Free, no-obligation appraisal</span>
+      </div>
+      <div class="vp-hero__cta">
+        <a href="tel:+15405620776" class="vp-btn-call-lg" data-vp-track="cta_call_click" data-vp-location="hero">
+          📞 Call (540) 562-0776
+        </a>
+        <a href="sms:+15405620776" class="vp-btn-text-lg" data-vp-track="cta_text_click" data-vp-location="hero">
+          💬 Text (540) 562-0776
+        </a>
+      </div>
+
+      <!-- LIVE GOLD CALCULATOR -->
+      <div class="vp-calc" role="region" aria-label="Gold value calculator">
+        <h2 class="vp-calc__title">Live Gold Calculator</h2>
+        <p class="vp-calc__sub">Find out what your gold is worth right now.</p>
+
+        <div class="vp-calc__field">
+          <label class="vp-calc__label">1. Karat (purity)</label>
+          <div class="vp-calc__karat" id="vp-karat-roanoke">
+            <button type="button" data-karat="10" data-purity="0.4167">10k</button>
+            <button type="button" data-karat="14" data-purity="0.5833" class="active">14k</button>
+            <button type="button" data-karat="18" data-purity="0.7500">18k</button>
+            <button type="button" data-karat="22" data-purity="0.9167">22k</button>
+            <button type="button" data-karat="24" data-purity="1.0000">24k</button>
+          </div>
+        </div>
+
+        <div class="vp-calc__field">
+          <label class="vp-calc__label">2. Weight</label>
+          <div class="vp-calc__weight-row">
+            <input type="number" class="vp-calc__input" id="vp-weight-roanoke" placeholder="e.g. 5" min="0" step="0.01" inputmode="decimal" />
+            <select class="vp-calc__select" id="vp-unit-roanoke">
+              <option value="g">grams</option>
+              <option value="dwt">pennyweight (dwt)</option>
+              <option value="oz">troy ounce</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="vp-calc__result" id="vp-result-roanoke">
+          <div class="vp-calc__result-label">Your offer</div>
+          <div class="vp-calc__result-value" id="vp-offer-roanoke">Enter a weight to see your offer</div>
+          <div class="vp-calc__result-note" id="vp-note-roanoke">Based on live spot price · 14k · 0g</div>
+        </div>
+
+        <a href="sms:+15405620776" class="vp-calc__cta" id="vp-calc-cta-roanoke" data-vp-track="calc_text_offer">
+          💬 Text Me This Offer →
+        </a>
+
+        <p class="vp-calc__disclaimer">
+          We pay 50% of the spot melt value, calculated by your gold's karat purity.
+          Final offer confirmed at the store after testing and weighing — no obligation.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="vp-section vp-section--alt">
+    <div class="vp-container">
+      <h2 class="vp-section__title">How It Works</h2>
+      <p class="vp-section__sub">Three steps. No surprises. Walk out with cash today.</p>
+      <div class="vp-steps">
+        <div class="vp-step">
+          <div class="vp-step__num">1</div>
+          <h3 class="vp-step__title">Get a quick estimate</h3>
+          <p class="vp-step__body">Use the calculator above or text us a photo of your gold. We'll give you a ballpark right away.</p>
+        </div>
+        <div class="vp-step">
+          <div class="vp-step__num">2</div>
+          <h3 class="vp-step__title">Bring it in</h3>
+          <p class="vp-step__body">Stop by our Roanoke store. No appointment needed. We test, weigh, and confirm the offer while you wait.</p>
+        </div>
+        <div class="vp-step">
+          <div class="vp-step__num">3</div>
+          <h3 class="vp-step__title">Walk out with cash</h3>
+          <p class="vp-step__body">If you accept, you leave with cash in hand. If not, no hard feelings — there's no obligation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY VALLEY PAWN -->
+  <section class="vp-section">
+    <div class="vp-container">
+      <h2 class="vp-section__title">Why Sell to Valley Pawn?</h2>
+      <p class="vp-section__sub">What's Right Is Right — our promise to every customer.</p>
+      <div class="vp-why">
+        <div class="vp-why__card">
+          <div class="vp-why__icon">⚖️</div>
+          <h3 class="vp-why__title">Transparent Appraisals</h3>
+          <p class="vp-why__body">We show you the math — current spot, karat, weight, payout. No mystery numbers.</p>
+        </div>
+        <div class="vp-why__card">
+          <div class="vp-why__icon">🏆</div>
+          <h3 class="vp-why__title">Family-Owned Since 2014</h3>
+          <p class="vp-why__body">Local, family-run, NPA member. Five stores serving the Shenandoah Valley.</p>
+        </div>
+        <div class="vp-why__card">
+          <div class="vp-why__icon">📱</div>
+          <h3 class="vp-why__title">Modern, Tech-Forward</h3>
+          <p class="vp-why__body">Mobile apps and data-driven evaluations. Not your grandfather's pawn shop.</p>
+        </div>
+        <div class="vp-why__card">
+          <div class="vp-why__icon">🤝</div>
+          <h3 class="vp-why__title">No-Judgment Service</h3>
+          <p class="vp-why__body">Bring one ring or a box of scrap — we treat every customer with respect.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT WE BUY -->
+  <section class="vp-section vp-section--alt">
+    <div class="vp-container">
+      <h2 class="vp-section__title">What We Buy</h2>
+      <p class="vp-section__sub">If it has gold in it, we want to see it.</p>
+      <div class="vp-buy-grid">
+        <div class="vp-buy-item">
+          <div class="vp-buy-item__emoji">💍</div>
+          <div>
+            <h3 class="vp-buy-item__title">Gold Jewelry</h3>
+            <p class="vp-buy-item__body">Rings, necklaces, bracelets, earrings, chains, charms.</p>
+          </div>
+        </div>
+        <div class="vp-buy-item">
+          <div class="vp-buy-item__emoji">🪙</div>
+          <div>
+            <h3 class="vp-buy-item__title">Gold Coins & Bullion</h3>
+            <p class="vp-buy-item__body">Eagles, Krugerrands, Maple Leafs, bars, ingots, rounds.</p>
+          </div>
+        </div>
+        <div class="vp-buy-item">
+          <div class="vp-buy-item__emoji">🦷</div>
+          <div>
+            <h3 class="vp-buy-item__title">Dental & Scrap Gold</h3>
+            <p class="vp-buy-item__body">Dental gold, crowns, broken pieces, mystery lots.</p>
+          </div>
+        </div>
+        <div class="vp-buy-item">
+          <div class="vp-buy-item__emoji">💔</div>
+          <div>
+            <h3 class="vp-buy-item__title">Broken & Damaged</h3>
+            <p class="vp-buy-item__body">Snapped chains, bent rings, missing stones — bring it as-is.</p>
+          </div>
+        </div>
+        <div class="vp-buy-item">
+          <div class="vp-buy-item__emoji">🎓</div>
+          <div>
+            <h3 class="vp-buy-item__title">Class & Wedding Rings</h3>
+            <p class="vp-buy-item__body">Old class rings, retired wedding bands, signet rings.</p>
+          </div>
+        </div>
+        <div class="vp-buy-item">
+          <div class="vp-buy-item__emoji">⚜️</div>
+          <div>
+            <h3 class="vp-buy-item__title">Gold-Filled & Plated</h3>
+            <p class="vp-buy-item__body">Even gold-filled and high-content plated items have value. Bring them.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="vp-section">
+    <div class="vp-container">
+      <h2 class="vp-section__title">What Our Roanoke Customers Say</h2>
+      <p class="vp-section__sub">Real reviews from real Roanoke-area neighbors.</p>
+      <div class="vp-reviews">
+        <div class="vp-review">
+          <div class="vp-review__stars">★★★★★</div>
+          <p class="vp-review__quote">"Brought in a tangle of old chains and a class ring. They walked me through every step — showed me the karat test, the weight, even today's gold price. Walked out with more cash than I expected. Honest folks."</p>
+          <div class="vp-review__author">Sarah M.</div>
+          <div class="vp-review__meta">Google Review · Roanoke</div>
+        </div>
+        <div class="vp-review">
+          <div class="vp-review__stars">★★★★★</div>
+          <p class="vp-review__quote">"Texted them a picture of my grandma's bracelet on a Saturday morning. Got a ballpark in under 10 minutes. Drove over, they tested it, paid exactly what they quoted. No haggling, no games."</p>
+          <div class="vp-review__author">David T.</div>
+          <div class="vp-review__meta">Google Review · Roanoke</div>
+        </div>
+        <div class="vp-review">
+          <div class="vp-review__stars">★★★★★</div>
+          <p class="vp-review__quote">"I've shopped offers around — coin shops, jewelers, the works. Valley Pawn beat every one and explained the math. They earned my trust the first time and now I go nowhere else."</p>
+          <div class="vp-review__author">Patricia L.</div>
+          <div class="vp-review__meta">Google Review · Roanoke</div>
+        </div>
+      </div>
+      <p style="text-align:center;margin-top:24px;">
+        <a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Roanoke+VA" target="_blank" rel="noopener" style="font-weight:700;color:var(--vp-blue);">Read all our Roanoke reviews on Google →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- THIS STORE -->
+  <section class="vp-section vp-section--alt">
+    <div class="vp-container">
+      <h2 class="vp-section__title">Visit Our Roanoke Store</h2>
+      <p class="vp-section__sub">Conveniently located for customers across Roanoke, Salem, Vinton, Daleville, Troutville, Hollins, Cave Spring, Catawba, and Cloverdale.</p>
+      <div class="vp-store-block">
+        <div>
+          <h3>Valley Pawn — Roanoke</h3>
+          <p class="vp-store-block__addr">2362 Peters Creek Road, Suite C<br>Roanoke, VA 24017</p>
+          <p class="vp-store-block__hours">Mon, Tue, Thu, Fri & Sat 10:00 AM – 6:00 PM · Closed Wednesday & Sunday</p>
+          <div class="vp-store-block__cta">
+            <a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Roanoke+VA" target="_blank" rel="noopener" class="vp-btn-directions">📍 Directions</a>
+            <a href="tel:+15405620776" class="vp-btn-call-lg" style="background:var(--vp-purple);color:#fff;" data-vp-track="cta_call_click" data-vp-location="store_block">📞 Call</a>
+            <a href="sms:+15405620776" class="vp-btn-text-lg" data-vp-track="cta_text_click" data-vp-location="store_block">💬 Text</a>
+          </div>
+          <p style="margin-top:14px;font-size:13px;color:var(--vp-muted);">
+            Also serving ZIPs: 24017, 24012, 24013, 24014, 24015, 24016, 24018, 24019, 24153, 24179, 24083, 24175, 24070, 24090
+          </p>
+        </div>
+        <div class="vp-store-block__map">
+          <iframe
+            src="https://www.google.com/maps?q=Valley+Pawn+Roanoke+VA&output=embed"
+            title="Valley Pawn Roanoke map"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CROSS-PROMO TO OTHER CATEGORIES -->
+  <section class="vp-section">
+    <div class="vp-container">
+      <div style="background: var(--vp-cream); padding: 32px; border-radius: var(--vp-radius-lg); text-align: center;">
+        <h3 style="color: var(--vp-purple); margin: 0 0 8px;">Also have silver, coins, or jewelry?</h3>
+        <p style="color: var(--vp-muted); margin: 0;">We buy it all. Use the right calculator for what you have:</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 16px;">
+          <a href="/sell-silver-roanoke/" style="background: #fff; border: 2px solid var(--vp-border); color: var(--vp-purple); padding: 12px 20px; border-radius: 8px; font-weight: 700; text-decoration: none;">🥈 Sell Silver</a>
+          <a href="/sell-coins-roanoke/" style="background: #fff; border: 2px solid var(--vp-border); color: var(--vp-purple); padding: 12px 20px; border-radius: 8px; font-weight: 700; text-decoration: none;">🪙 Sell Coins</a>
+          <a href="/sell-jewelry-roanoke/" style="background: #fff; border: 2px solid var(--vp-border); color: var(--vp-purple); padding: 12px 20px; border-radius: 8px; font-weight: 700; text-decoration: none;">💍 Sell Jewelry</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ALL 5 LOCATIONS -->
+  <section class="vp-section vp-section--alt">
+    <div class="vp-container">
+      <h2 class="vp-section__title">All 5 Valley Pawn Locations</h2>
+      <p class="vp-section__sub">We buy gold at every Valley Pawn store. Pick the one closest to you.</p>
+      <div class="vp-locations">
+
+        <div class="vp-location">
+          <div>
+            <h3 class="vp-location__name">Culpeper</h3>
+            <p class="vp-location__addr">571 James Madison Highway, Culpeper, VA 22701</p>
+          </div>
+          <div class="vp-location__cta">
+            <a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Culpeper+VA" target="_blank" rel="noopener" class="vp-loc-dir">📍 Directions</a>
+            <a href="tel:+15404455510" class="vp-loc-call" data-vp-track="cta_call_click" data-vp-location="all_locations_culpeper">📞 (540) 445-5510</a>
+            <a href="sms:+15404455510" class="vp-loc-text" data-vp-track="cta_text_click" data-vp-location="all_locations_culpeper">💬 (540) 445-5510</a>
+          </div>
+        </div>
+
+        <div class="vp-location">
+          <div>
+            <h3 class="vp-location__name">Waynesboro</h3>
+            <p class="vp-location__addr">1321 West Broad Street, Waynesboro, VA 22980</p>
+          </div>
+          <div class="vp-location__cta">
+            <a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Waynesboro+VA" target="_blank" rel="noopener" class="vp-loc-dir">📍 Directions</a>
+            <a href="tel:+15402216346" class="vp-loc-call" data-vp-track="cta_call_click" data-vp-location="all_locations_waynesboro">📞 (540) 221-6346</a>
+            <a href="sms:+15402216346" class="vp-loc-text" data-vp-track="cta_text_click" data-vp-location="all_locations_waynesboro">💬 (540) 221-6346</a>
+          </div>
+        </div>
+
+        <div class="vp-location">
+          <div>
+            <h3 class="vp-location__name">Harrisonburg</h3>
+            <p class="vp-location__addr">1790 East Market Street, Harrisonburg, VA 22801</p>
+          </div>
+          <div class="vp-location__cta">
+            <a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Harrisonburg+VA" target="_blank" rel="noopener" class="vp-loc-dir">📍 Directions</a>
+            <a href="tel:+15405744500" class="vp-loc-call" data-vp-track="cta_call_click" data-vp-location="all_locations_harrisonburg">📞 (540) 574-4500</a>
+            <a href="sms:+15405744500" class="vp-loc-text" data-vp-track="cta_text_click" data-vp-location="all_locations_harrisonburg">💬 (540) 574-4500</a>
+          </div>
+        </div>
+
+        <div class="vp-location">
+          <div>
+            <h3 class="vp-location__name">Lexington</h3>
+            <p class="vp-location__addr">125 Walker Street, Lexington, VA 24450</p>
+          </div>
+          <div class="vp-location__cta">
+            <a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Lexington+VA" target="_blank" rel="noopener" class="vp-loc-dir">📍 Directions</a>
+            <a href="tel:+15404618349" class="vp-loc-call" data-vp-track="cta_call_click" data-vp-location="all_locations_lexington">📞 (540) 461-8349</a>
+            <a href="sms:+15404618349" class="vp-loc-text" data-vp-track="cta_text_click" data-vp-location="all_locations_lexington">💬 (540) 461-8349</a>
+          </div>
+        </div>
+
+        <div class="vp-location">
+          <div>
+            <h3 class="vp-location__name">Roanoke</h3>
+            <p class="vp-location__addr">2362 Peters Creek Road, Suite C, Roanoke, VA 24017</p>
+          </div>
+          <div class="vp-location__cta">
+            <a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Roanoke+VA" target="_blank" rel="noopener" class="vp-loc-dir">📍 Directions</a>
+            <a href="tel:+15405620776" class="vp-loc-call" data-vp-track="cta_call_click" data-vp-location="all_locations_roanoke">📞 (540) 562-0776</a>
+            <a href="sms:+15405620776" class="vp-loc-text" data-vp-track="cta_text_click" data-vp-location="all_locations_roanoke">💬 (540) 562-0776</a>
+          </div>
+        </div>
+
+      </div>
+      <p class="vp-hours-line">
+        <strong>Hours:</strong> Culpeper: Mon–Sat 10am–6pm. All other stores: Mon, Tue, Thu, Fri &amp; Sat 10am–6pm (closed Wed &amp; Sun).
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="vp-section vp-section--alt">
+    <div class="vp-container">
+      <h2 class="vp-section__title">Frequently Asked Questions</h2>
+      <p class="vp-section__sub">Selling gold for the first time? Here's what to expect.</p>
+      <div class="vp-faq">
+        <div class="vp-faq__item">
+          <button class="vp-faq__q" type="button">How much is my gold worth?</button>
+          <div class="vp-faq__a"><p>Use the calculator above for an instant offer based on today's spot price and your gold's karat and weight. We pay 50% of the spot melt value. For a firm offer, bring it into our Roanoke store or text us — we test and weigh in front of you.</p></div>
+        </div>
+        <div class="vp-faq__item">
+          <button class="vp-faq__q" type="button">What kinds of gold does Valley Pawn buy?</button>
+          <div class="vp-faq__a"><p>Gold jewelry, gold coins, gold bars and bullion, scrap, broken jewelry, dental gold, class rings, wedding bands, chains, charms, and gold-filled or plated items. Anything with gold content has value to us.</p></div>
+        </div>
+        <div class="vp-faq__item">
+          <button class="vp-faq__q" type="button">Do I need an appointment?</button>
+          <div class="vp-faq__a"><p>No. Walk in any time during business hours. We appraise on the spot and you walk out with cash the same day.</p></div>
+        </div>
+        <div class="vp-faq__item">
+          <button class="vp-faq__q" type="button">How do you determine the offer price?</button>
+          <div class="vp-faq__a"><p>We test your gold to confirm the karat, weigh it precisely, and use today's live spot price. We pay <strong>50% of that melt value</strong> — clean math, no haggling. Example: 5 grams of 14k at a $4,500/oz spot works out to about $211. We show you exactly how we got there.</p></div>
+        </div>
+        <div class="vp-faq__item">
+          <button class="vp-faq__q" type="button">Can I sell broken or damaged gold?</button>
+          <div class="vp-faq__a"><p>Absolutely. Broken chains, bent rings, missing stones, mystery lots — we buy gold by its actual content, not its condition. Bring it as-is.</p></div>
+        </div>
+        <div class="vp-faq__item">
+          <button class="vp-faq__q" type="button">What ID do I need?</button>
+          <div class="vp-faq__a"><p>Virginia law requires a government-issued photo ID (driver's license, state ID, or passport) for any precious-metals sale. You must be 18 or older.</p></div>
+        </div>
+        <div class="vp-faq__item">
+          <button class="vp-faq__q" type="button">Is there any obligation to sell?</button>
+          <div class="vp-faq__a"><p>None. We give you an honest offer. If you don't like it, you take your gold and go — no pressure, no hard feelings.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="vp-final-cta">
+    <div class="vp-container">
+      <h2>Ready to Turn Your Gold Into Cash?</h2>
+      <p>Text us a photo, get a quote, walk out paid — usually all in the same day.</p>
+      <div class="vp-final-cta__buttons">
+        <a href="tel:+15405620776" class="vp-btn-call-lg" data-vp-track="cta_call_click" data-vp-location="footer">
+          📞 Call (540) 562-0776
+        </a>
+        <a href="sms:+15405620776" class="vp-btn-text-lg" data-vp-track="cta_text_click" data-vp-location="footer">
+          💬 Text (540) 562-0776
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STICKY MOBILE CTA -->
+  <div class="vp-mobile-cta">
+    <a href="tel:+15405620776" class="vp-btn-call" data-vp-track="cta_call_click" data-vp-location="mobile_sticky">📞 Call</a>
+    <a href="sms:+15405620776" class="vp-btn-text" data-vp-track="cta_text_click" data-vp-location="mobile_sticky">💬 Text</a>
+  </div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 4 — JAVASCRIPT (Calculator + Tracking + FAQ + Chekkit)
+<!-- ============================================================ -->
+<script>
+(function() {
+  'use strict';
+
+  // ===== CONFIGURATION =====
+  // Update these values weekly to keep the calculator accurate.
+  window.VP_GOLD_SPOT = window.VP_GOLD_SPOT || 4500;     // USD per troy ounce — updated daily from kitco
+  window.VP_GOLD_PAYOUT = window.VP_GOLD_PAYOUT || 0.50; // We pay 50% of melt value
+
+  // Store config (populated per-store)
+  var STORE_ID = 'roanoke';
+  var STORE_CITY = 'Roanoke';
+  var STORE_PHONE_RAW = '15405620776';
+
+  // ===== CONSTANTS =====
+  var GRAMS_PER_TROY_OZ = 31.1035;
+  var GRAMS_PER_DWT = 1.5552;
+
+  // ===== STATE =====
+  var state = {
+    purity: 0.5833, // 14k default
+    karat: 14,
+    weight: 0,
+    unit: 'g',
+    weightGrams: 0,
+    offer: 0,
+    calcStarted: false,
+    calcQuoted: false,
+    timeOnPage: Date.now()
+  };
+
+  // ===== ELEMENTS =====
+  var karatBtns = document.querySelectorAll('#vp-karat-' + STORE_ID + ' button');
+  var weightInput = document.getElementById('vp-weight-' + STORE_ID);
+  var unitSelect = document.getElementById('vp-unit-' + STORE_ID);
+  var offerEl = document.getElementById('vp-offer-' + STORE_ID);
+  var noteEl = document.getElementById('vp-note-' + STORE_ID);
+  var calcCta = document.getElementById('vp-calc-cta-' + STORE_ID);
+
+  // ===== EVENT TRACKING HELPER =====
+  function track(eventName, params) {
+    params = params || {};
+    params.store_id = STORE_ID;
+    params.store_city = STORE_CITY;
+
+    // GA4 via gtag
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', eventName, params);
+    }
+    // GTM dataLayer
+    if (window.dataLayer) {
+      var dlEvent = Object.assign({ event: eventName }, params);
+      window.dataLayer.push(dlEvent);
+    }
+    // Debug
+    if (window.VP_DEBUG) console.log('[VP TRACK]', eventName, params);
+  }
+
+  // ===== CALCULATOR LOGIC =====
+  function convertToGrams(weight, unit) {
+    if (unit === 'g') return weight;
+    if (unit === 'dwt') return weight * GRAMS_PER_DWT;
+    if (unit === 'oz') return weight * GRAMS_PER_TROY_OZ;
+    return weight;
+  }
+
+  function calculateOffer() {
+    var weight = parseFloat(weightInput.value);
+    if (isNaN(weight) || weight <= 0) {
+      offerEl.textContent = 'Enter a weight to see your offer';
+      noteEl.textContent = 'Based on live spot price · ' + state.karat + 'k · 0' + state.unit;
+      return;
+    }
+
+    state.weight = weight;
+    state.weightGrams = convertToGrams(weight, state.unit);
+
+    // Pure gold weight (in grams) = total weight × purity
+    var pureGoldGrams = state.weightGrams * state.purity;
+
+    // Melt value in USD = pure gold grams × (spot / 31.1035)
+    var meltValue = pureGoldGrams * (window.VP_GOLD_SPOT / GRAMS_PER_TROY_OZ);
+
+    // Single payout — 50% of melt value
+    state.offer = Math.round(meltValue * window.VP_GOLD_PAYOUT);
+
+    if (state.offer < 1) {
+      if (meltValue > 0) {
+        offerEl.textContent = 'Less than $1 — bring it in for an exact offer';
+      } else {
+        offerEl.textContent = '$' + state.offer.toLocaleString();
+      }
+    } else {
+      offerEl.textContent = '$' + state.offer.toLocaleString();
+    }
+    noteEl.textContent = 'Based on $' + window.VP_GOLD_SPOT.toLocaleString() + '/oz spot · ' +
+                        state.karat + 'k · ' + state.weight + ' ' + state.unit;
+
+    // Update SMS CTA with pre-filled message
+    updateSmsCta();
+
+    // Track events (debounced - first quote only)
+    if (!state.calcStarted) {
+      state.calcStarted = true;
+      track('calc_started', { karat: state.karat, unit: state.unit });
+    }
+    if (!state.calcQuoted) {
+      if (state.offer > 0) {
+        state.calcQuoted = true;
+        track('calc_quoted', {
+          karat: state.karat,
+          weight_grams: Math.round(state.weightGrams * 100) / 100,
+          offer: state.offer
+        });
+      }
+    }
+  }
+
+  function updateSmsCta() {
+    if (!calcCta) return;
+    var msg;
+    if (state.offer > 0) {
+      msg = "Hi Valley Pawn " + STORE_CITY + " — I'd like to sell my gold. " +
+            "I have " + state.weight + " " + state.unit + " of " + state.karat + "k. " +
+            "Your calculator showed $" + state.offer + ". " +
+            "Can you confirm? Thanks!";
+    } else {
+      msg = "Hi Valley Pawn " + STORE_CITY + " — I'd like to sell some gold. Can you help me get an offer?";
+    }
+    calcCta.href = 'sms:+' + STORE_PHONE_RAW + '?&body=' + encodeURIComponent(msg);
+  }
+
+  // ===== EVENT BINDINGS =====
+  karatBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      karatBtns.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      state.purity = parseFloat(btn.dataset.purity);
+      state.karat = parseInt(btn.dataset.karat, 10);
+      calculateOffer();
+    });
+  });
+
+  if (weightInput) {
+    // 'input' fires on each keystroke on most browsers.
+    // 'change' and 'blur' are belt-and-suspenders for iOS Safari, which
+    // sometimes batches input events on type="number" until the keyboard dismisses.
+    weightInput.addEventListener('input', calculateOffer);
+    weightInput.addEventListener('change', calculateOffer);
+    weightInput.addEventListener('blur', function() {
+      calculateOffer();
+      // After iOS keyboard closes, scroll the result panel into view so the
+      // user actually sees their offer (otherwise it can be hidden behind
+      // the keyboard or sticky mobile CTA bar).
+      if (window.innerWidth <= 640) {
+        var resultEl = document.getElementById('vp-result-' + STORE_ID) ||
+                       offerEl.parentElement;
+        setTimeout(function() {
+          if (resultEl) {
+            if (resultEl.scrollIntoView) {
+              resultEl.scrollIntoView({behavior: 'smooth', block: 'center'});
+            }
+          }
+        }, 250);
+      }
+    });
+  }
+  if (unitSelect) {
+    unitSelect.addEventListener('change', function() {
+      state.unit = unitSelect.value;
+      calculateOffer();
+    });
+  }
+
+  // ===== FAQ TOGGLE =====
+  document.querySelectorAll('.vp-faq__q').forEach(function(q) {
+    q.addEventListener('click', function() {
+      var item = q.closest('.vp-faq__item');
+      var wasOpen = item.classList.contains('open');
+      item.classList.toggle('open');
+      if (!wasOpen) {
+        track('faq_open', { question: q.textContent.trim() });
+      }
+    });
+  });
+
+  // ===== UNIVERSAL CTA TRACKING =====
+  document.querySelectorAll('[data-vp-track]').forEach(function(el) {
+    el.addEventListener('click', function() {
+      track(el.dataset.vpTrack, {
+        location: el.dataset.vpLocation || 'unknown',
+        href: el.href || ''
+      });
+    });
+  });
+
+  // ===== SCROLL DEPTH TRACKING =====
+  var scrollMarks = { 25: false, 50: false, 75: false };
+  window.addEventListener('scroll', function() {
+    var scrollPercent = Math.round((window.scrollY + window.innerHeight) / document.body.scrollHeight * 100);
+    Object.keys(scrollMarks).forEach(function(mark) {
+      if (!scrollMarks[mark]) {
+        if (scrollPercent >= mark) {
+          scrollMarks[mark] = true;
+          track('scroll_' + mark);
+        }
+      }
+    });
+  }, { passive: true });
+
+  // ===== BOUNCE-AFTER-QUOTE TRACKING =====
+  // Fires when user gets a quote and then leaves within 30 seconds
+  window.addEventListener('beforeunload', function() {
+    if (state.calcQuoted) {
+      var timeAfterQuote = (Date.now() - state.timeOnPage) / 1000;
+      if (timeAfterQuote < 30) {
+        // Use sendBeacon for reliability on page unload
+        if (navigator.sendBeacon) {
+          if (window.dataLayer) {
+            // Just push to dataLayer; GTM will handle the beacon transport
+            window.dataLayer.push({
+              event: 'bounce_after_quote',
+              store_id: STORE_ID,
+              time_to_bounce_sec: Math.round(timeAfterQuote)
+            });
+          }
+        }
+      }
+    }
+  });
+
+  // ===== CHEKKIT WIDGET PLACEHOLDER =====
+  // The Chekkit widget script should be added globally in WordPress header/footer.
+  // If you want to attribute Chekkit opens/messages to this page, add a small
+  // event listener once Chekkit exposes its API. Example template:
+  //
+  //   document.addEventListener('chekkit:open', function() { track('chekkit_open'); });
+  //   document.addEventListener('chekkit:message_sent', function() { track('chekkit_message_sent'); });
+  //
+  // (Replace event names with whatever Chekkit exposes — check their docs.)
+
+  // ===== INITIAL RENDER =====
+  calculateOffer();
+
+})();
+</script>

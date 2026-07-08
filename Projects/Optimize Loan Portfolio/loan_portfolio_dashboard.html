@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Loan Portfolio Dashboard — Valley Pawn</title>
+<style>
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #f7f8fa; color: #1a1f2e; margin: 0; padding: 24px;
+  line-height: 1.5;
+}
+.container { max-width: 1200px; margin: 0 auto; }
+header { margin-bottom: 24px; }
+h1 { color: #1F4E78; margin: 0 0 4px 0; font-size: 28px; }
+.subtitle { color: #6c7689; font-size: 14px; margin-bottom: 0; }
+.meta { color: #6c7689; font-size: 12px; margin-top: 8px; }
+.banner {
+  background: #fff8e1; border-left: 4px solid #f1c40f; padding: 12px 16px;
+  border-radius: 4px; margin-bottom: 24px; font-size: 14px;
+}
+.banner-title { font-weight: 600; color: #8a6d00; }
+.section { background: white; border: 1px solid #e2e7ee; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+.section h2 { margin: 0 0 16px 0; color: #1F4E78; font-size: 18px; border-bottom: 2px solid #e2e7ee; padding-bottom: 8px; }
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+.kpi-card { background: #f7f8fa; border: 1px solid #e2e7ee; border-radius: 6px; padding: 14px; }
+.kpi-card .label { color: #6c7689; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+.kpi-card .value { color: #1a1f2e; font-size: 22px; font-weight: 600; margin-top: 4px; }
+.kpi-card .sub { color: #6c7689; font-size: 11px; margin-top: 2px; }
+.kpi-card.warn { background: #fef5f5; border-color: #f4c4c4; }
+.kpi-card.warn .label { color: #a93232; }
+.kpi-card.good { background: #f0f9f4; border-color: #c4e4cf; }
+.kpi-card.good .label { color: #2e7d32; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { background: #1F4E78; color: white; text-align: left; padding: 8px 12px; font-weight: 600; }
+th:not(:first-child) { text-align: right; }
+td { padding: 8px 12px; border-bottom: 1px solid #e2e7ee; }
+td:not(:first-child) { text-align: right; }
+tr:nth-child(even) td { background: #f7f8fa; }
+tr:hover td { background: #eef3f9; }
+.bar-cell { position: relative; }
+.bar-fill { display: inline-block; height: 8px; border-radius: 4px; vertical-align: middle; margin-right: 6px; }
+.bar-fill.good { background: #4caf50; }
+.bar-fill.warn { background: #ef5350; }
+.gap-list { font-size: 14px; line-height: 1.8; }
+.gap-list li { margin-bottom: 4px; }
+.chip { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; margin-left: 6px; }
+.chip.green { background: #d4edda; color: #155724; }
+.chip.red { background: #f8d7da; color: #721c24; }
+.chip.gray { background: #e2e7ee; color: #495057; }
+canvas { max-width: 100%; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 800px) { .two-col { grid-template-columns: 1fr; } }
+.muted { color: #6c7689; font-size: 12px; font-style: italic; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js"></script>
+</head>
+<body>
+<div class="container">
+<header>
+  <h1>Loan Portfolio Dashboard</h1>
+  <p class="subtitle">Valley Pawn — Phase 1 view, refreshed from Bravo Data Extraction pipeline</p>
+  <p class="meta" id="meta"></p>
+</header>
+
+<div class="banner">
+  <span class="banner-title">Phase 1 data limitation:</span>
+  Most stores have only a 20-day loan window (5/1–5/20/2026) — full 12-month outcomes require the AHK enumerator fix (open task). Inventory category data covers 12 months for HAR/LEX/ROA. CUL & WAY inventory pulls are pending. LEX loan-portfolio extraction failed.
+</div>
+
+<div class="section">
+  <h2>Per-store performance</h2>
+  <div class="kpi-grid" id="store-kpis"></div>
+</div>
+
+<div class="section">
+  <h2>Redemption rate by store</h2>
+  <p class="muted">Computed over RESOLVED loans only. Higher is better. HAR is the clear outlier.</p>
+  <canvas id="redempt-chart" height="80"></canvas>
+</div>
+
+<div class="two-col">
+  <div class="section">
+    <h2>Disposition mix (all stores)</h2>
+    <canvas id="dispo-chart" height="220"></canvas>
+  </div>
+  <div class="section">
+    <h2>Loan size bucket × redemption %</h2>
+    <canvas id="bucket-chart" height="220"></canvas>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Detail: per-store KPI table</h2>
+  <table id="kpi-table"></table>
+</div>
+
+<div class="section">
+  <h2>Top categories by item count (12-month inventory cross-reference)</h2>
+  <p class="muted">From inventory-details. ROI = realized margin / cost on items that sold. Categories with negative ROI represent systemic loss on forfeits.</p>
+  <table id="cat-table"></table>
+</div>
+
+<div class="section">
+  <h2>Open pipeline gaps</h2>
+  <ul class="gap-list">
+    <li><b>12-month loan data per store</b> — AHK enumerator caps at ~200 rows. Need pagination fix or monthly-slice trigger generator.</li>
+    <li><b>LEX loan-portfolio pull</b> — Choose Saved Report dropdown not located on LEX consistently. Other 4 stores work.</li>
+    <li><b>CUL & WAY inventory-details</b> — not yet extracted. Quick fix: drop trigger.</li>
+    <li><b>Category column on loan-portfolio CSV</b> — saved Bravo column layout doesn't include it. Working around via inventory cross-reference (only covers forfeited).</li>
+  </ul>
+</div>
+
+</div>
+
+<script>
+fetch("loan_portfolio_summary.json").then(r => r.json()).then(SUMMARY => {
+  // Meta
+  document.getElementById("meta").textContent =
+    "Generated " + new Date(SUMMARY.generated_at).toLocaleString() +
+    " · " + SUMMARY.data_sources.total_tickets + " unique tickets · " +
+    SUMMARY.data_sources.total_inventory_items.toLocaleString() + " inventory items · " +
+    SUMMARY.data_sources.stores_with_loan_data.length + "/5 stores with loan data";
+
+  // Per-store KPI cards
+  const kpis = SUMMARY.per_store_kpis;
+  const grid = document.getElementById("store-kpis");
+  const allRedemp = kpis.map(x => x["Redemption rate %"]).filter(v => v != null);
+  const minR = Math.min(...allRedemp);
+  const maxR = Math.max(...allRedemp);
+  kpis.forEach(k => {
+    const isWorst = k["Redemption rate %"] === minR;
+    const isBest = k["Redemption rate %"] === maxR;
+    const cls = isWorst ? "warn" : (isBest ? "good" : "");
+    grid.insertAdjacentHTML("beforeend", `
+      <div class="kpi-card ${cls}">
+        <div class="label">${k.Store}</div>
+        <div class="value">${k["Redemption rate %"]}% <span class="chip ${cls === 'good' ? 'green' : cls === 'warn' ? 'red' : 'gray'}">${cls === 'good' ? 'BEST' : cls === 'warn' ? 'WORST' : ''}</span></div>
+        <div class="sub">${k["Tickets seen"]} tickets · avg $${k["Avg loan $"]} · ${k["Forfeit rate %"]}% forfeit</div>
+      </div>
+    `);
+  });
+
+  // Redemption rate chart
+  new Chart(document.getElementById("redempt-chart").getContext("2d"), {
+    type: "bar",
+    data: {
+      labels: kpis.map(k => k.Store),
+      datasets: [
+        { label: "Redemption %", data: kpis.map(k => k["Redemption rate %"]), backgroundColor: "#4caf50" },
+        { label: "Forfeit %", data: kpis.map(k => k["Forfeit rate %"]), backgroundColor: "#ef5350" }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: "bottom" } },
+      scales: { y: { beginAtZero: true, max: 100, ticks: { callback: v => v + "%" } } }
+    }
+  });
+
+  // Disposition doughnut
+  const dispoTotal = {};
+  Object.values(SUMMARY.disposition_mix_by_store).forEach(s => {
+    Object.entries(s).forEach(([k, v]) => {
+      if (k !== "TOTAL") dispoTotal[k] = (dispoTotal[k] || 0) + v;
+    });
+  });
+  const dispoLabels = Object.keys(dispoTotal).sort((a, b) => dispoTotal[b] - dispoTotal[a]);
+  new Chart(document.getElementById("dispo-chart").getContext("2d"), {
+    type: "doughnut",
+    data: {
+      labels: dispoLabels,
+      datasets: [{ data: dispoLabels.map(d => dispoTotal[d]),
+        backgroundColor: ["#5b8bd9", "#4caf50", "#ef5350", "#f1c40f", "#9b59b6", "#e67e22", "#95a5a6"] }]
+    },
+    options: { responsive: true, plugins: { legend: { position: "right" } } }
+  });
+
+  // Bucket combo
+  const buckets = SUMMARY.loan_size_buckets;
+  const bLabels = Object.keys(buckets);
+  const bRedeem = bLabels.map(b => {
+    const v = buckets[b]["Redemption %"];
+    return (v != null && !isNaN(v)) ? v : 0;
+  });
+  const bCounts = bLabels.map(b => buckets[b].TOTAL || 0);
+  new Chart(document.getElementById("bucket-chart").getContext("2d"), {
+    type: "bar",
+    data: {
+      labels: bLabels,
+      datasets: [
+        { label: "Tickets", data: bCounts, backgroundColor: "#5b8bd9", yAxisID: "y" },
+        { label: "Redemption %", data: bRedeem, type: "line", borderColor: "#2e7d32",
+          backgroundColor: "#2e7d32", yAxisID: "y1", tension: 0.3 }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: "bottom" } },
+      scales: {
+        y: { type: "linear", position: "left", beginAtZero: true, title: { display: true, text: "Tickets" } },
+        y1: { type: "linear", position: "right", min: 0, max: 100,
+              ticks: { callback: v => v + "%" }, grid: { drawOnChartArea: false },
+              title: { display: true, text: "Redemption %" } }
+      }
+    }
+  });
+
+  // KPI table
+  const kpiTable = document.getElementById("kpi-table");
+  const kpiHeaders = ["Store", "Tickets", "On loan", "Redeemed", "Forfeited/Exp", "Avg $", "Total $", "Redemption %", "Forfeit %"];
+  kpiTable.innerHTML =
+    `<thead><tr>${kpiHeaders.map(h => `<th>${h}</th>`).join("")}</tr></thead>` +
+    `<tbody>${kpis.map(k => `<tr>
+      <td>${k.Store}</td>
+      <td>${k["Tickets seen"]}</td>
+      <td>${k["On loan (active)"]}</td>
+      <td>${k["Redeemed"]}</td>
+      <td>${k["Forfeited/Expired"]}</td>
+      <td>$${k["Avg loan $"]}</td>
+      <td>$${k["Total principal $"].toLocaleString("en-US", { maximumFractionDigits: 0 })}</td>
+      <td>${k["Redemption rate %"]}%</td>
+      <td>${k["Forfeit rate %"]}%</td>
+    </tr>`).join("")}</tbody>`;
+
+  // Category table
+  const catTable = document.getElementById("cat-table");
+  const cats = SUMMARY.top_categories_by_items || [];
+  if (cats.length === 0) {
+    catTable.innerHTML = "<tr><td>No category data — inventory cross-reference pending.</td></tr>";
+  } else {
+    const catHeaders = ["Category", "Items", "Avg cost", "Avg sold", "Median ROI %"];
+    catTable.innerHTML =
+      `<thead><tr>${catHeaders.map(h => `<th>${h}</th>`).join("")}</tr></thead>` +
+      `<tbody>${cats.slice(0, 15).map(c => {
+        const roi = c.median_roi_pct;
+        const roiStr = (roi != null && !isNaN(roi)) ? `${Number(roi).toFixed(1)}%` : "—";
+        const roiClass = (roi != null && !isNaN(roi)) ? (roi >= 0 ? "good" : "warn") : "";
+        return `<tr>
+          <td>${c.Category || "Uncategorized"}</td>
+          <td>${c.items}</td>
+          <td>$${Number(c.avg_cost || 0).toFixed(2)}</td>
+          <td>$${Number(c.avg_sold_price || 0).toFixed(2)}</td>
+          <td><span class="bar-fill ${roiClass}" style="width:${Math.min(50, Math.abs(roi || 0))}px"></span>${roiStr}</td>
+        </tr>`;
+      }).join("")}</tbody>`;
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!--
+  VALLEY PAWN — schema.org structured data (JSON-LD)
+  ===================================================
+  PURPOSE: machine-readable facts that AI engines (Google AI Overviews, ChatGPT,
+  Perplexity, Gemini) and search engines read to understand and cite the business.
+
+  HOW TO USE:
+  1) ORGANIZATION + FAQ blocks below -> add to the SITE-WIDE header/footer
+     (every page) via your code-injection plugin or Yoast.
+  2) EACH PawnShop block -> add to that store's matching location page if you
+     have per-store pages, OR keep all five in the site-wide header. Both are valid.
+  3) Validate after publishing: https://validator.schema.org/ and
+     https://search.google.com/test/rich-results
+-->
+
+<!-- ============ ORGANIZATION (site-wide) ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Valley Pawn",
+  "legalName": "Full Circle Finance Inc",
+  "url": "https://thevalleypawn.com",
+  "logo": "https://thevalleypawn.com/wp-content/uploads/2026/03/vp_logo_name-no-tag.png",
+  "slogan": "What's Right Is Right",
+  "foundingDate": "2014",
+  "description": "Family-owned pawn shop with five locations across Virginia's Shenandoah Valley offering no-credit-check pawn loans, gold and silver buying, and quality pre-owned merchandise backed by a 30-day warranty. Locations have served the Valley since 1988.",
+  "memberOf": {
+    "@type": "Organization",
+    "name": "National Pawnbrokers Association"
+  },
+  "areaServed": [
+    {"@type": "City", "name": "Culpeper, VA"},
+    {"@type": "City", "name": "Waynesboro, VA"},
+    {"@type": "City", "name": "Harrisonburg, VA"},
+    {"@type": "City", "name": "Lexington, VA"},
+    {"@type": "City", "name": "Roanoke, VA"}
+  ],
+  "sameAs": [
+    "https://www.instagram.com/valley_pawn",
+    "https://www.tiktok.com/@thevalleypawn",
+    "https://www.facebook.com/thevalleypawn"
+  ]
+}
+</script>
+
+<!-- ============ STORE 1: CULPEPER ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "PawnShop",
+  "name": "Valley Pawn - Culpeper",
+  "parentOrganization": {"@type": "Organization", "name": "Valley Pawn", "legalName": "Full Circle Finance Inc"},
+  "url": "https://thevalleypawn.com/locations/",
+  "image": "https://thevalleypawn.com/wp-content/uploads/2026/03/vp_logo_name-no-tag.png",
+  "logo": "https://thevalleypawn.com/wp-content/uploads/2026/03/vp_logo_name-no-tag.png",
+  "telephone": "+1-540-445-5510",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "571 James Madison Highway",
+    "addressLocality": "Culpeper",
+    "addressRegion": "VA",
+    "postalCode": "22701",
+    "addressCountry": "US"
+  },
+  "openingHoursSpecification": [
+    {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], "opens": "10:00", "closes": "18:00"}
+  ],
+  "sameAs": ["https://www.facebook.com/p/Valley-Pawn-Culpeper-100058095342923/"]
+}
+</script>
+
+<!-- ============ STORE 2: WAYNESBORO ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "PawnShop",
+  "name": "Valley Pawn - Waynesboro",
+  "parentOrganization": {"@type": "Organization", "name": "Valley Pawn", "legalName": "Full Circle Finance Inc"},
+  "url": "https://thevalleypawn.com/locations/",
+  "image": "https://thevalleypawn.com/wp-content/uploads/2026/03/vp_logo_name-no-tag.png",
+  "logo": "https://thevalleypawn.com/wp-content/uploads/2026/03/vp_logo_name-no-tag.png",
+  "telephone": "+1-540-221-6346",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1321 West Broad Street",
+    "addressLocality": "Waynesboro",
+    "addressRegion": "VA",
+    "postalCode": "22980",
+    "addressCountry": "US"
+  },
+  "openingHoursSpecification": [
+    {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Thursday","Friday","Saturday"], "opens": "10:00", "closes": "18:00"}
+  ],
+  "sameAs": ["https://www.facebook.com/thevalleypawn/"]
+}
+</script>
+
+<!-- ============ STORE 3: HARRISONBURG ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "PawnShop",
+  "name": "Valley Pawn - Harrisonburg",
+  "parentOrganization": {"@type": "Organization", "name": "Valley Pawn", "legalName": "Full Circle Finance Inc"},
+  "url": "https://thevalleypawn.com/locations/",
+  "image": "https://thevalleypawn.com/wp-content/uploads/2026/03/vp_logo_name-no-tag.png",
+  "logo": "https://thevalleypawn.com/wp-content/uploads/2026/03/vp_logo_name-no-tag.png",
+  "telephone": "+1-540-574-4500",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1790 East Market Street",
+    "addressLocality": "Harrisonburg",
+    "addressRegion": "VA",
+    "postalCode": "22801",
+    "addressCountry": "US"
+  },
+  "openingHoursSpecification": [
+    {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Thursday","Friday","Saturday"], "opens": "10:00", "closes": "18:00"}
+  ],
+  "sameAs": ["https://www.facebook.com/people/Valley-Pawn-Harrisonburg/61584081596639/"]
+}
+</script>
+
+<!-- ============ STORE 4: LEXINGTON ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "PawnShop",
+  "name": "Valley Pawn - Lexington",
+  "parentOrganization": {"@type": "Organization", "name": "Valley Pawn", "legalName": "Full Circle Finance Inc"},
+  "url": "https://thevalleypawn.com/locations/",
+  "image": "https://thevalleypawn.com/wp-content/uploads/2026/03/vp_logo_name-no-tag.png",
+  "logo": "https://thevalleypawn.com/wp-content/uploads/2026/03/vp_logo_name-no-tag.png",
+  "telephone": "+1-540-461-8349",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "125 Walker Street",
+    "addressLocality": "Lexington",
+    "addressRegion": "VA",
+    "postalCode": "24450",
+    "addressCountry": "US"
+  },
+  "openingHoursSpecification": [
+    {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Thursday","Friday","Saturday"], "opens": "10:00", "closes": "18:00"}
+  ],
+  "sameAs": ["https://www.facebook.com/valleypawnlexington/"]
+}
+</script>
+
+<!-- ============ STORE 5: ROANOKE ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "PawnShop",
+  "name": "Valley Pawn - Roanoke",
+  "parentOrganization": {"@type": "Organization", "name": "Valley Pawn", "legalName": "Full Circle Finance Inc"},
+  "url": "https://thevalleypawn.com/locations/",
+  "image": "https://thevalleypawn.com/wp-content/uploads/2026/03/vp_logo_name-no-tag.png",
+  "logo": "https://thevalleypawn.com/wp-content/uploads/2026/03/vp_logo_name-no-tag.png",
+  "telephone": "+1-540-562-0776",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "2362 Peters Creek Road, Suite C",
+    "addressLocality": "Roanoke",
+    "addressRegion": "VA",
+    "postalCode": "24017",
+    "addressCountry": "US"
+  },
+  "openingHoursSpecification": [
+    {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Thursday","Friday","Saturday"], "opens": "10:00", "closes": "18:00"}
+  ],
+  "sameAs": ["https://www.facebook.com/p/Valley-Pawn-61553773147464/"]
+}
+</script>
+
+<!-- ============ FAQ (site-wide or on an FAQ page) ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How does a pawn loan work at Valley Pawn?",
+      "acceptedAnswer": {"@type": "Answer", "text": "You bring in an item of value (jewelry, electronics, tools, instruments, firearms, and more). We appraise it using real market data and offer a secured loan based on its value. You keep the loan for a set period (typically 30 days, with extensions available) and reclaim your item when you repay the loan plus fees. Pawn loans require no credit check and do not affect your credit score."}
+    },
+    {
+      "@type": "Question",
+      "name": "Do pawn loans affect my credit score?",
+      "acceptedAnswer": {"@type": "Answer", "text": "No. Valley Pawn pawn loans require no credit check and are not reported to credit bureaus, so they have no effect on your credit score."}
+    },
+    {
+      "@type": "Question",
+      "name": "Where can I sell gold, silver, or coins in the Shenandoah Valley?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Valley Pawn buys gold, silver, coins, bars, and scrap at all five locations: Culpeper, Waynesboro, Harrisonburg, Lexington, and Roanoke. We give fair, data-driven appraisals based on current market prices."}
+    },
+    {
+      "@type": "Question",
+      "name": "What are Valley Pawn's hours?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The Culpeper store is open Monday through Saturday, 10:00 AM to 6:00 PM. The Waynesboro, Harrisonburg, Lexington, and Roanoke stores are open Monday, Tuesday, Thursday, Friday, and Saturday, 10:00 AM to 6:00 PM, and are closed Wednesday and Sunday. Culpeper is the only store open on Wednesdays."}
+    },
+    {
+      "@type": "Question",
+      "name": "Is there a warranty on items Valley Pawn sells?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Yes. Valley Pawn backs everything it sells with a 30-day warranty. We stand behind what we sell."}
+    },
+    {
+      "@type": "Question",
+      "name": "How many Valley Pawn locations are there and where?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Valley Pawn has five locations across Virginia's Shenandoah Valley: Culpeper (571 James Madison Highway), Waynesboro (1321 West Broad Street), Harrisonburg (1790 East Market Street), Lexington (125 Walker Street), and Roanoke (2362 Peters Creek Road, Suite C)."}
+    }
+  ]
+}
+</script>

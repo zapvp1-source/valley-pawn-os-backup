@@ -1,0 +1,499 @@
+<!--
+  Valley Pawn — "We Buy Silver" Landing Page Master Template
+  Same structure as gold; silver-specific calculator and copy.
+
+  TEMPLATE TOKENS — same set as master-landing-page-template.html.
+
+  GLOBAL CONFIG:
+    window.VP_SILVER_SPOT  — silver spot price USD/oz (default 76)
+    window.VP_PAYOUT_LOW   — 0.70
+    window.VP_PAYOUT_HIGH  — 0.85
+-->
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://thevalleypawn.com/sell-silver-roanoke/#business",
+      "name": "Valley Pawn — Roanoke",
+      "image": "https://i0.wp.com/thevalleypawn.com/wp-content/uploads/2026/03/vp_logo_name-no-tag.png",
+      "telephone": "+15405620776",
+      "priceRange": "$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2362 Peters Creek Road, Suite C",
+        "addressLocality": "Roanoke",
+        "addressRegion": "VA",
+        "postalCode": "24017",
+        "addressCountry": "US"
+      },
+      "url": "https://thevalleypawn.com/sell-silver-roanoke/"
+    },
+    {
+      "@type": "WebPage",
+      "url": "https://thevalleypawn.com/sell-silver-roanoke/",
+      "name": "Sell Silver in Roanoke, VA | Get a Fair Offer Today | Valley Pawn",
+      "description": "Sell your silver in Roanoke, VA — sterling flatware, silver jewelry, coins, bullion. Use our free calculator, then text or call Valley Pawn. Family-owned since 2014."
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "How much is my silver worth?", "acceptedAnswer": {"@type": "Answer", "text": "Use our live silver calculator to get an instant offer range based on today's spot price and your silver's purity (.999 fine, .925 sterling, .900 coin silver, .800 silverware) and weight. For a firm offer, bring it in or text us a photo — no appointment needed."}},
+        {"@type": "Question", "name": "Does Valley Pawn buy sterling silverware and flatware?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. We regularly buy sterling silver flatware sets, tea services, trays, candlesticks, picture frames, and silverware. Most sterling is .925. Bring the whole set — we'll weigh it and offer fairly."}},
+        {"@type": "Question", "name": "What about silver coins?", "acceptedAnswer": {"@type": "Answer", "text": "We buy pre-1965 US silver dimes, quarters, halves, and dollars (90% silver), 1965–1970 Kennedy halves (40% silver), Silver Eagles, foreign silver coins, and silver bullion bars and rounds. For rare or collectible coins, we'll do a free numismatic evaluation — sometimes the collector value is much higher than the melt value."}},
+        {"@type": "Question", "name": "Do I need to clean my silver first?", "acceptedAnswer": {"@type": "Answer", "text": "No — please don't. Tarnish doesn't affect value, and aggressive cleaning can actually damage silver. Bring it as-is."}},
+        {"@type": "Question", "name": "What ID do I need?", "acceptedAnswer": {"@type": "Answer", "text": "Virginia law requires a government-issued photo ID for any precious-metals sale. You must be 18 or older. Bring your ID and your silver — that's it."}}
+      ]
+    }
+  ]
+}
+</script>
+
+<style>
+  :root {
+    --vp-blue: #0099DD;
+    --vp-blue-light: #3DB8E8;
+    --vp-purple: #2D1A5E;
+    --vp-coral: #F58C8A;
+    --vp-silver: #B8B8B8;
+    --vp-silver-dark: #8A8A8A;
+    --vp-cream: #FAF7F0;
+    --vp-text: #1A1A1A;
+    --vp-muted: #6B6B6B;
+    --vp-border: #E5E5E5;
+    --vp-shadow: 0 4px 24px rgba(45, 26, 94, 0.12);
+    --vp-shadow-lg: 0 12px 48px rgba(45, 26, 94, 0.18);
+    --vp-radius: 12px;
+    --vp-radius-lg: 20px;
+  }
+  .vp-sell-silver { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--vp-text); line-height: 1.6; background: #fff; }
+  .vp-sell-silver *, .vp-sell-silver *::before, .vp-sell-silver *::after { box-sizing: border-box; }
+  .vp-sell-silver img { max-width: 100%; height: auto; display: block; }
+  .vp-sell-silver a { color: var(--vp-blue); text-decoration: none; }
+  .vp-sell-silver a:hover { text-decoration: underline; }
+  .vp-container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+  .vp-header { background: #fff; border-bottom: 1px solid var(--vp-border); padding: 14px 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 0 rgba(0,0,0,0.04); }
+  .vp-header .vp-container { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .vp-header__logo img { max-height: 44px; width: auto; }
+  .vp-header__cta { display: flex; gap: 8px; }
+  .vp-header__cta a { display: inline-flex; align-items: center; gap: 6px; padding: 10px 14px; font-weight: 700; font-size: 14px; border-radius: 8px; text-decoration: none; }
+  .vp-header__cta .vp-btn-call { background: var(--vp-blue); color: #fff; }
+  .vp-header__cta .vp-btn-text { background: var(--vp-coral); color: #fff; }
+  @media (max-width: 640px) { .vp-header__cta a span.label { display: none; } .vp-header__cta a { padding: 10px 12px; } }
+  .vp-hero { background: linear-gradient(135deg, var(--vp-purple) 0%, #1a0f3d 100%); color: #fff; padding: 56px 0 40px; position: relative; overflow: hidden; }
+  .vp-hero::before { content: ''; position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(184, 184, 184, 0.20) 0%, transparent 70%); border-radius: 50%; }
+  .vp-hero .vp-container { position: relative; z-index: 1; }
+  .vp-hero__eyebrow { display: inline-block; background: rgba(255,255,255,0.12); color: #DCDCDC; font-size: 13px; font-weight: 700; letter-spacing: 0.05em; padding: 6px 14px; border-radius: 20px; text-transform: uppercase; margin-bottom: 16px; }
+  .vp-hero h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.15; margin: 0 0 14px; font-weight: 800; }
+  .vp-hero h1 .vp-accent { color: #DCDCDC; }
+  .vp-hero__sub { font-size: clamp(1rem, 2vw, 1.15rem); color: rgba(255,255,255,0.85); max-width: 640px; margin: 0 0 24px; }
+  .vp-hero__signals { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 28px; font-size: 14px; color: rgba(255,255,255,0.9); }
+  .vp-hero__signal { display: flex; align-items: center; gap: 8px; }
+  .vp-hero__signal::before { content: '✓'; color: #DCDCDC; font-weight: 800; }
+  .vp-hero__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 32px; }
+  .vp-hero__cta a { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; font-size: 16px; font-weight: 700; border-radius: 10px; text-decoration: none; }
+  .vp-btn-call-lg { background: #fff; color: var(--vp-purple); }
+  .vp-btn-text-lg { background: var(--vp-coral); color: #fff; }
+  .vp-calc { background: #fff; border-radius: var(--vp-radius-lg); padding: 28px; box-shadow: var(--vp-shadow-lg); color: var(--vp-text); max-width: 560px; margin: 0 0 40px; }
+  .vp-calc__title { display: flex; align-items: center; gap: 10px; font-size: 1.35rem; font-weight: 800; color: var(--vp-purple); margin: 0 0 6px; }
+  .vp-calc__title::before { content: ''; display: inline-block; width: 28px; height: 28px; background: radial-gradient(circle, var(--vp-silver) 0%, var(--vp-silver-dark) 100%); border-radius: 50%; box-shadow: 0 2px 8px rgba(184, 184, 184, 0.4); }
+  .vp-calc__sub { color: var(--vp-muted); font-size: 14px; margin: 0 0 18px; }
+  .vp-calc__field { margin-bottom: 16px; }
+  .vp-calc__label { display: block; font-size: 13px; font-weight: 700; color: var(--vp-purple); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; }
+  .vp-calc__purity { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .vp-calc__purity button { padding: 10px 4px; font-size: 13px; font-weight: 700; border: 2px solid var(--vp-border); background: #fff; color: var(--vp-text); border-radius: 8px; cursor: pointer; transition: all 0.15s ease; line-height: 1.2; }
+  .vp-calc__purity button:hover { border-color: var(--vp-blue-light); }
+  .vp-calc__purity button.active { background: var(--vp-purple); border-color: var(--vp-purple); color: #fff; }
+  .vp-calc__purity button small { display: block; font-size: 10px; font-weight: 500; opacity: 0.75; margin-top: 2px; }
+  .vp-calc__weight-row { display: grid; grid-template-columns: 1fr 120px; gap: 8px; }
+  .vp-calc__input, .vp-calc__select { width: 100%; padding: 12px 14px; font-size: 16px; border: 2px solid var(--vp-border); border-radius: 8px; background: #fff; color: var(--vp-text); font-family: inherit; }
+  .vp-calc__input:focus, .vp-calc__select:focus { outline: none; border-color: var(--vp-blue); }
+  .vp-calc__result { background: linear-gradient(135deg, #F4F4F4 0%, #E8E8E8 100%); border: 2px solid var(--vp-silver); border-radius: var(--vp-radius); padding: 18px 20px; margin: 18px 0; text-align: center; }
+  .vp-calc__result-label { font-size: 12px; font-weight: 700; color: var(--vp-silver-dark); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .vp-calc__result-value { font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800; color: var(--vp-purple); line-height: 1.1; }
+  .vp-calc__result-note { font-size: 12px; color: var(--vp-muted); margin-top: 6px; }
+  .vp-calc__cta { display: block; width: 100%; padding: 16px 20px; background: var(--vp-coral); color: #fff; font-size: 16px; font-weight: 800; border: none; border-radius: 10px; cursor: pointer; text-align: center; text-decoration: none; }
+  .vp-calc__cta:hover { color: #fff; text-decoration: none; }
+  .vp-calc__disclaimer { font-size: 12px; color: var(--vp-muted); margin-top: 12px; text-align: center; line-height: 1.5; }
+  .vp-section { padding: 56px 0; }
+  .vp-section--alt { background: var(--vp-cream); }
+  .vp-section__title { text-align: center; font-size: clamp(1.6rem, 3.5vw, 2.25rem); color: var(--vp-purple); margin: 0 0 12px; font-weight: 800; }
+  .vp-section__sub { text-align: center; color: var(--vp-muted); max-width: 640px; margin: 0 auto 40px; font-size: 1.05rem; }
+  .vp-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  @media (max-width: 768px) { .vp-steps { grid-template-columns: 1fr; } }
+  .vp-step { text-align: center; padding: 24px; }
+  .vp-step__num { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; background: var(--vp-blue); color: #fff; font-size: 1.5rem; font-weight: 800; border-radius: 50%; margin-bottom: 16px; }
+  .vp-step__title { font-size: 1.25rem; font-weight: 800; color: var(--vp-purple); margin: 0 0 8px; }
+  .vp-step__body { color: var(--vp-muted); margin: 0; }
+  .vp-why { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  @media (max-width: 900px) { .vp-why { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 500px) { .vp-why { grid-template-columns: 1fr; } }
+  .vp-why__card { background: #fff; border: 1px solid var(--vp-border); border-radius: var(--vp-radius); padding: 24px; text-align: center; }
+  .vp-why__icon { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; background: linear-gradient(135deg, var(--vp-blue) 0%, var(--vp-blue-light) 100%); color: #fff; font-size: 1.5rem; border-radius: 12px; margin-bottom: 14px; }
+  .vp-why__title { font-size: 1.05rem; font-weight: 800; color: var(--vp-purple); margin: 0 0 6px; }
+  .vp-why__body { font-size: 14px; color: var(--vp-muted); margin: 0; }
+  .vp-buy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 768px) { .vp-buy-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .vp-buy-grid { grid-template-columns: 1fr; } }
+  .vp-buy-item { background: #fff; border: 1px solid var(--vp-border); border-radius: var(--vp-radius); padding: 20px; display: flex; gap: 14px; align-items: flex-start; }
+  .vp-buy-item__emoji { font-size: 1.6rem; line-height: 1; }
+  .vp-buy-item__title { font-weight: 800; color: var(--vp-purple); margin: 0 0 4px; font-size: 1rem; }
+  .vp-buy-item__body { font-size: 14px; color: var(--vp-muted); margin: 0; }
+  .vp-reviews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 900px) { .vp-reviews { grid-template-columns: 1fr; } }
+  .vp-review { background: #fff; border-radius: var(--vp-radius); padding: 24px; box-shadow: var(--vp-shadow); border-top: 4px solid var(--vp-silver); }
+  .vp-review__stars { color: #D4A442; font-size: 18px; margin-bottom: 10px; }
+  .vp-review__quote { color: var(--vp-text); margin: 0 0 14px; font-style: italic; }
+  .vp-review__author { font-weight: 700; color: var(--vp-purple); font-size: 14px; }
+  .vp-review__meta { font-size: 12px; color: var(--vp-muted); }
+  .vp-store-block { background: #fff; border-radius: var(--vp-radius-lg); padding: 32px; box-shadow: var(--vp-shadow); display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
+  @media (max-width: 768px) { .vp-store-block { grid-template-columns: 1fr; } }
+  .vp-store-block h3 { color: var(--vp-purple); margin: 0 0 8px; font-size: 1.4rem; }
+  .vp-store-block__addr { color: var(--vp-text); margin: 0 0 4px; font-weight: 600; }
+  .vp-store-block__hours { color: var(--vp-muted); font-size: 14px; margin: 0 0 16px; }
+  .vp-store-block__cta { display: flex; flex-wrap: wrap; gap: 10px; }
+  .vp-store-block__cta a { padding: 12px 18px; border-radius: 8px; font-weight: 700; font-size: 14px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+  .vp-btn-directions { background: var(--vp-blue); color: #fff; }
+  .vp-store-block__map iframe { width: 100%; height: 280px; border: 0; border-radius: var(--vp-radius); }
+  .vp-locations { display: grid; grid-template-columns: 1fr; gap: 14px; max-width: 800px; margin: 0 auto; }
+  .vp-location { background: #fff; border: 1px solid var(--vp-border); border-radius: var(--vp-radius); padding: 18px 22px; display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: center; }
+  @media (max-width: 640px) { .vp-location { grid-template-columns: 1fr; } }
+  .vp-location__name { font-weight: 800; color: var(--vp-purple); margin: 0 0 2px; font-size: 1.05rem; }
+  .vp-location__addr { color: var(--vp-muted); font-size: 14px; margin: 0; }
+  .vp-location__cta { display: flex; flex-wrap: wrap; gap: 6px; }
+  .vp-location__cta a { padding: 8px 12px; font-size: 13px; font-weight: 700; border-radius: 6px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+  .vp-loc-dir { background: var(--vp-blue); color: #fff; }
+  .vp-loc-call { background: var(--vp-purple); color: #fff; }
+  .vp-loc-text { background: var(--vp-coral); color: #fff; }
+  .vp-hours-line { text-align: center; font-size: 13px; color: var(--vp-muted); margin-top: 20px; }
+  .vp-faq { max-width: 800px; margin: 0 auto; }
+  .vp-faq__item { background: #fff; border: 1px solid var(--vp-border); border-radius: var(--vp-radius); margin-bottom: 12px; overflow: hidden; }
+  .vp-faq__q { width: 100%; padding: 18px 22px; background: none; border: none; text-align: left; font-size: 1.05rem; font-weight: 700; color: var(--vp-purple); cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px; font-family: inherit; }
+  .vp-faq__q::after { content: '+'; font-size: 1.4rem; color: var(--vp-blue); transition: transform 0.2s ease; flex-shrink: 0; }
+  .vp-faq__item.open .vp-faq__q::after { transform: rotate(45deg); }
+  .vp-faq__a { padding: 0 22px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; }
+  .vp-faq__item.open .vp-faq__a { max-height: 500px; padding: 0 22px 18px; }
+  .vp-final-cta { background: linear-gradient(135deg, var(--vp-purple) 0%, #1a0f3d 100%); color: #fff; padding: 64px 0; text-align: center; }
+  .vp-final-cta h2 { color: #fff; font-size: clamp(1.6rem, 3.5vw, 2.4rem); margin: 0 0 12px; font-weight: 800; }
+  .vp-final-cta p { color: rgba(255,255,255,0.85); margin: 0 0 28px; font-size: 1.1rem; }
+  .vp-final-cta__buttons { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+  .vp-final-cta__buttons a { padding: 16px 28px; font-size: 16px; font-weight: 800; border-radius: 10px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+  .vp-final-cta__buttons .vp-btn-call-lg { background: #fff; color: var(--vp-purple); }
+  .vp-final-cta__buttons .vp-btn-text-lg { background: var(--vp-coral); color: #fff; }
+  .vp-cross-promo { background: var(--vp-cream); padding: 32px; border-radius: var(--vp-radius-lg); text-align: center; }
+  .vp-cross-promo h3 { color: var(--vp-purple); margin: 0 0 8px; }
+  .vp-cross-promo__links { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 16px; }
+  .vp-cross-promo__links a { background: #fff; border: 2px solid var(--vp-border); color: var(--vp-purple); padding: 12px 20px; border-radius: 8px; font-weight: 700; }
+  .vp-cross-promo__links a:hover { border-color: var(--vp-blue); text-decoration: none; }
+  .vp-mobile-cta { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid var(--vp-border); padding: 10px; z-index: 90; gap: 8px; }
+  .vp-mobile-cta a { flex: 1; padding: 14px; text-align: center; border-radius: 8px; font-weight: 800; text-decoration: none; font-size: 14px; }
+  .vp-mobile-cta .vp-btn-call { background: var(--vp-blue); color: #fff; }
+  .vp-mobile-cta .vp-btn-text { background: var(--vp-coral); color: #fff; }
+  @media (max-width: 640px) { .vp-mobile-cta { display: flex; } .vp-final-cta { padding-bottom: 100px; } }
+</style>
+
+<div class="vp-sell-silver" id="vp-sell-silver-roanoke">
+
+  <header class="vp-header">
+    <div class="vp-container">
+      <a href="https://thevalleypawn.com" class="vp-header__logo">
+        <img src="https://i0.wp.com/thevalleypawn.com/wp-content/uploads/2026/03/vp_logo_name-no-tag.png?fit=600%2C67&ssl=1" alt="Valley Pawn" width="200" />
+      </a>
+      <div class="vp-header__cta">
+        <a href="tel:+15405620776" class="vp-btn-call" data-vp-track="cta_call_click" data-vp-location="header">📞 <span class="label">Call</span> (540) 562-0776</a>
+        <a href="sms:+15405620776" class="vp-btn-text" data-vp-track="cta_text_click" data-vp-location="header">💬 <span class="label">Text</span> (540) 562-0776</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="vp-hero">
+    <div class="vp-container">
+      <span class="vp-hero__eyebrow">🪙 Valley Pawn Roanoke</span>
+      <h1>We Buy Silver in <span class="vp-accent">Roanoke, VA</span><br>— Sterling, Coins, Bullion &amp; More</h1>
+      <p class="vp-hero__sub">Family-owned since 2014. Real-time spot pricing. We buy sterling flatware, silver jewelry, coins, bars, rounds, and scrap silver — try the calculator and lock in your offer.</p>
+      <div class="vp-hero__signals">
+        <span class="vp-hero__signal">Walk out with cash today</span>
+        <span class="vp-hero__signal">No appointment needed</span>
+        <span class="vp-hero__signal">Free, no-obligation appraisal</span>
+      </div>
+      <div class="vp-hero__cta">
+        <a href="tel:+15405620776" class="vp-btn-call-lg" data-vp-track="cta_call_click" data-vp-location="hero">📞 Call (540) 562-0776</a>
+        <a href="sms:+15405620776" class="vp-btn-text-lg" data-vp-track="cta_text_click" data-vp-location="hero">💬 Text (540) 562-0776</a>
+      </div>
+
+      <div class="vp-calc" role="region" aria-label="Silver value calculator">
+        <h2 class="vp-calc__title">Live Silver Calculator</h2>
+        <p class="vp-calc__sub">Find out what your silver is worth right now.</p>
+
+        <div class="vp-calc__field">
+          <label class="vp-calc__label">1. Type / Purity</label>
+          <div class="vp-calc__purity" id="vp-purity-roanoke">
+            <button type="button" data-purity="0.999" data-label="Fine .999">Fine<small>.999 pure</small></button>
+            <button type="button" data-purity="0.925" data-label="Sterling .925" class="active">Sterling<small>.925 jewelry/flatware</small></button>
+            <button type="button" data-purity="0.900" data-label="Coin Silver .900">Coin Silver<small>.900 (pre-1965 US)</small></button>
+            <button type="button" data-purity="0.800" data-label="Continental .800">Continental<small>.800 European</small></button>
+            <button type="button" data-purity="0.400" data-label="40% Kennedy">40% Kennedy<small>1965–70 halves</small></button>
+            <button type="button" data-purity="0.500" data-label="Custom 50%">Other<small>~50% silverplate hybrid</small></button>
+          </div>
+        </div>
+
+        <div class="vp-calc__field">
+          <label class="vp-calc__label">2. Weight</label>
+          <div class="vp-calc__weight-row">
+            <input type="number" class="vp-calc__input" id="vp-weight-roanoke" placeholder="e.g. 100" min="0" step="0.01" inputmode="decimal" />
+            <select class="vp-calc__select" id="vp-unit-roanoke">
+              <option value="g">grams</option>
+              <option value="dwt">pennyweight</option>
+              <option value="oz">troy ounce</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="vp-calc__result">
+          <div class="vp-calc__result-label">Your estimated offer range</div>
+          <div class="vp-calc__result-value" id="vp-offer-roanoke">Enter a weight to see your offer</div>
+          <div class="vp-calc__result-note" id="vp-note-roanoke">Based on live spot price · Sterling · 0g</div>
+        </div>
+
+        <a href="sms:+15405620776" class="vp-calc__cta" id="vp-calc-cta-roanoke" data-vp-track="calc_text_offer">💬 Text Me This Offer →</a>
+
+        <p class="vp-calc__disclaimer">Estimate based on the current silver spot price and typical pawn payout. Silver-plated items have no melt value but may be bought for resale. Final offer confirmed at the store — no obligation.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="vp-section vp-section--alt">
+    <div class="vp-container">
+      <h2 class="vp-section__title">How It Works</h2>
+      <p class="vp-section__sub">Three steps. No surprises. Walk out with cash today.</p>
+      <div class="vp-steps">
+        <div class="vp-step"><div class="vp-step__num">1</div><h3 class="vp-step__title">Get a quick estimate</h3><p class="vp-step__body">Use the calculator above or text us a photo of your silver. We'll give you a ballpark right away.</p></div>
+        <div class="vp-step"><div class="vp-step__num">2</div><h3 class="vp-step__title">Bring it in</h3><p class="vp-step__body">Stop by our Roanoke store. No appointment needed. We test, weigh, and confirm the offer in front of you.</p></div>
+        <div class="vp-step"><div class="vp-step__num">3</div><h3 class="vp-step__title">Walk out with cash</h3><p class="vp-step__body">If you accept, you leave with cash in hand. If not, no hard feelings — there's no obligation.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vp-section">
+    <div class="vp-container">
+      <h2 class="vp-section__title">Why Sell Silver to Valley Pawn?</h2>
+      <p class="vp-section__sub">What's Right Is Right — our promise to every customer.</p>
+      <div class="vp-why">
+        <div class="vp-why__card"><div class="vp-why__icon">⚖️</div><h3 class="vp-why__title">Transparent Math</h3><p class="vp-why__body">We show you the spot price, weight, and payout — no mystery numbers.</p></div>
+        <div class="vp-why__card"><div class="vp-why__icon">🏆</div><h3 class="vp-why__title">Family-Owned Since 2014</h3><p class="vp-why__body">Local, family-run, NPA member. Five stores serving the Shenandoah Valley.</p></div>
+        <div class="vp-why__card"><div class="vp-why__icon">📱</div><h3 class="vp-why__title">Modern Appraisals</h3><p class="vp-why__body">Real spot-price data, accurate scales, fair offers — every time.</p></div>
+        <div class="vp-why__card"><div class="vp-why__icon">🤝</div><h3 class="vp-why__title">No-Judgment Service</h3><p class="vp-why__body">One sugar spoon or grandma's whole tea service — we treat every customer with respect.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vp-section vp-section--alt">
+    <div class="vp-container">
+      <h2 class="vp-section__title">What Silver We Buy</h2>
+      <p class="vp-section__sub">If it has silver content, we want to see it.</p>
+      <div class="vp-buy-grid">
+        <div class="vp-buy-item"><div class="vp-buy-item__emoji">🍴</div><div><h3 class="vp-buy-item__title">Sterling Flatware</h3><p class="vp-buy-item__body">Forks, spoons, knives, ladles, hostess sets — single pieces or full chests.</p></div></div>
+        <div class="vp-buy-item"><div class="vp-buy-item__emoji">🫖</div><div><h3 class="vp-buy-item__title">Tea &amp; Serving Sets</h3><p class="vp-buy-item__body">Sterling tea services, trays, candlesticks, picture frames, hollowware.</p></div></div>
+        <div class="vp-buy-item"><div class="vp-buy-item__emoji">💍</div><div><h3 class="vp-buy-item__title">Silver Jewelry</h3><p class="vp-buy-item__body">Rings, chains, bracelets, charms, marked .925 or stamped sterling.</p></div></div>
+        <div class="vp-buy-item"><div class="vp-buy-item__emoji">🪙</div><div><h3 class="vp-buy-item__title">Pre-1965 US Coins</h3><p class="vp-buy-item__body">90% silver dimes, quarters, halves, dollars. Junk silver lots welcome.</p></div></div>
+        <div class="vp-buy-item"><div class="vp-buy-item__emoji">🦅</div><div><h3 class="vp-buy-item__title">Silver Eagles &amp; Bullion</h3><p class="vp-buy-item__body">US Silver Eagles, Canadian Maples, bars, rounds, generic bullion.</p></div></div>
+        <div class="vp-buy-item"><div class="vp-buy-item__emoji">🔗</div><div><h3 class="vp-buy-item__title">Scrap &amp; Damaged</h3><p class="vp-buy-item__body">Bent flatware, broken chains, dented sterling — we buy by content, not condition.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vp-section">
+    <div class="vp-container">
+      <h2 class="vp-section__title">What Our Roanoke Customers Say</h2>
+      <p class="vp-section__sub">Real reviews from real Roanoke-area neighbors.</p>
+      <div class="vp-reviews">
+        <div class="vp-review"><div class="vp-review__stars">★★★★★</div><p class="vp-review__quote">"Inherited my grandmother's silver tea set and had no idea what it was worth. Brought it in — they weighed each piece, showed me the spot, paid me on the spot. Honest people."</p><div class="vp-review__author">Linda R.</div><div class="vp-review__meta">Google Review · Roanoke</div></div>
+        <div class="vp-review"><div class="vp-review__stars">★★★★★</div><p class="vp-review__quote">"Had a coffee can full of old silver dimes from my dad. Other places lowballed me. Valley Pawn ran the numbers in front of me and paid almost double the first offer I got."</p><div class="vp-review__author">Jeff K.</div><div class="vp-review__meta">Google Review · Roanoke</div></div>
+        <div class="vp-review"><div class="vp-review__stars">★★★★★</div><p class="vp-review__quote">"Sold a box of Silver Eagles. Process was simple, the offer was fair, and the team made me feel respected. Will be back for sure."</p><div class="vp-review__author">Marcus D.</div><div class="vp-review__meta">Google Review · Roanoke</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vp-section vp-section--alt">
+    <div class="vp-container">
+      <h2 class="vp-section__title">Visit Our Roanoke Store</h2>
+      <p class="vp-section__sub">Conveniently located for customers across Roanoke, Salem, Vinton, Daleville, Troutville, Hollins, Cave Spring, Catawba, and Cloverdale.</p>
+      <div class="vp-store-block">
+        <div>
+          <h3>Valley Pawn — Roanoke</h3>
+          <p class="vp-store-block__addr">2362 Peters Creek Road, Suite C<br>Roanoke, VA 24017</p>
+          <p class="vp-store-block__hours">Mon, Tue, Thu, Fri & Sat 10:00 AM – 6:00 PM · Closed Wednesday & Sunday</p>
+          <div class="vp-store-block__cta">
+            <a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Roanoke+VA" target="_blank" rel="noopener" class="vp-btn-directions">📍 Directions</a>
+            <a href="tel:+15405620776" style="background:var(--vp-purple);color:#fff;" data-vp-track="cta_call_click" data-vp-location="store_block">📞 Call</a>
+            <a href="sms:+15405620776" class="vp-btn-text-lg" data-vp-track="cta_text_click" data-vp-location="store_block">💬 Text</a>
+          </div>
+          <p style="margin-top:14px;font-size:13px;color:var(--vp-muted);">Also serving ZIPs: 24017, 24012, 24013, 24014, 24015, 24016, 24018, 24019, 24153, 24179, 24083, 24175, 24070, 24090</p>
+        </div>
+        <div class="vp-store-block__map">
+          <iframe src="https://www.google.com/maps?q=Valley+Pawn+Roanoke+VA&output=embed" title="Valley Pawn Roanoke map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vp-section">
+    <div class="vp-container">
+      <div class="vp-cross-promo">
+        <h3>Also have gold, coins, or jewelry?</h3>
+        <p style="color:var(--vp-muted);margin:0;">We buy it all. Use the right calculator for what you have:</p>
+        <div class="vp-cross-promo__links">
+          <a href="/sell-gold-roanoke/">⚜️ Sell Gold</a>
+          <a href="/sell-coins-roanoke/">🪙 Sell Coins</a>
+          <a href="/sell-jewelry-roanoke/">💍 Sell Jewelry</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vp-section vp-section--alt">
+    <div class="vp-container">
+      <h2 class="vp-section__title">All 5 Valley Pawn Locations</h2>
+      <p class="vp-section__sub">We buy silver at every Valley Pawn store. Pick the one closest to you.</p>
+      <div class="vp-locations">
+        <div class="vp-location"><div><h3 class="vp-location__name">Culpeper</h3><p class="vp-location__addr">571 James Madison Highway, Culpeper, VA 22701</p></div><div class="vp-location__cta"><a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Culpeper+VA" target="_blank" rel="noopener" class="vp-loc-dir">📍 Directions</a><a href="tel:+15404455510" class="vp-loc-call">📞 (540) 445-5510</a><a href="sms:+15404455510" class="vp-loc-text">💬 (540) 445-5510</a></div></div>
+        <div class="vp-location"><div><h3 class="vp-location__name">Waynesboro</h3><p class="vp-location__addr">1321 West Broad Street, Waynesboro, VA 22980</p></div><div class="vp-location__cta"><a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Waynesboro+VA" target="_blank" rel="noopener" class="vp-loc-dir">📍 Directions</a><a href="tel:+15402216346" class="vp-loc-call">📞 (540) 221-6346</a><a href="sms:+15402216346" class="vp-loc-text">💬 (540) 221-6346</a></div></div>
+        <div class="vp-location"><div><h3 class="vp-location__name">Harrisonburg</h3><p class="vp-location__addr">1790 East Market Street, Harrisonburg, VA 22801</p></div><div class="vp-location__cta"><a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Harrisonburg+VA" target="_blank" rel="noopener" class="vp-loc-dir">📍 Directions</a><a href="tel:+15405744500" class="vp-loc-call">📞 (540) 574-4500</a><a href="sms:+15405744500" class="vp-loc-text">💬 (540) 574-4500</a></div></div>
+        <div class="vp-location"><div><h3 class="vp-location__name">Lexington</h3><p class="vp-location__addr">125 Walker Street, Lexington, VA 24450</p></div><div class="vp-location__cta"><a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Lexington+VA" target="_blank" rel="noopener" class="vp-loc-dir">📍 Directions</a><a href="tel:+15404618349" class="vp-loc-call">📞 (540) 461-8349</a><a href="sms:+15404618349" class="vp-loc-text">💬 (540) 461-8349</a></div></div>
+        <div class="vp-location"><div><h3 class="vp-location__name">Roanoke</h3><p class="vp-location__addr">2362 Peters Creek Road, Suite C, Roanoke, VA 24017</p></div><div class="vp-location__cta"><a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Roanoke+VA" target="_blank" rel="noopener" class="vp-loc-dir">📍 Directions</a><a href="tel:+15405620776" class="vp-loc-call">📞 (540) 562-0776</a><a href="sms:+15405620776" class="vp-loc-text">💬 (540) 562-0776</a></div></div>
+      </div>
+      <p class="vp-hours-line"><strong>Hours:</strong> Culpeper: Mon–Sat 10am–6pm. All other stores: Mon, Tue, Thu, Fri &amp; Sat 10am–6pm (closed Wed &amp; Sun).</p>
+    </div>
+  </section>
+
+  <section class="vp-section">
+    <div class="vp-container">
+      <h2 class="vp-section__title">Frequently Asked Questions</h2>
+      <div class="vp-faq">
+        <div class="vp-faq__item"><button class="vp-faq__q" type="button">How much is my silver worth?</button><div class="vp-faq__a"><p>Use the calculator above for an instant offer range based on today's spot price and your silver's purity and weight. For a firm offer, bring it in or text us a photo.</p></div></div>
+        <div class="vp-faq__item"><button class="vp-faq__q" type="button">Do you buy sterling flatware sets?</button><div class="vp-faq__a"><p>Absolutely. Sterling flatware sets are one of the most common items we buy. Bring the whole chest — we'll weigh it and pay you for the silver content. Forks, spoons, knives, ladles, hostess pieces all count.</p></div></div>
+        <div class="vp-faq__item"><button class="vp-faq__q" type="button">What about silver-plated items?</button><div class="vp-faq__a"><p>Silver-plated has almost no melt value (just a thin silver coating over base metal). We may still buy specific plated pieces for resale value (designer brands, intact sets), but most plated items don't pay much. The calculator above is for solid silver — sterling or higher.</p></div></div>
+        <div class="vp-faq__item"><button class="vp-faq__q" type="button">How do you tell sterling from silverplate?</button><div class="vp-faq__a"><p>Sterling silver is stamped "Sterling," ".925," or "925." Silver-plate is usually marked "EPNS," "Silverplate," "A1," or has no purity stamp. We test with an acid kit if it's not clearly marked.</p></div></div>
+        <div class="vp-faq__item"><button class="vp-faq__q" type="button">Do you buy silver coins?</button><div class="vp-faq__a"><p>Yes — pre-1965 US dimes/quarters/halves/dollars (90% silver), 1965–1970 Kennedy halves (40% silver), Silver Eagles, foreign silver, and bullion. For rare or collectible coins, ask for a free numismatic evaluation — sometimes the collector value is much higher than the melt value. <a href="/sell-coins-roanoke/">See our coins page →</a></p></div></div>
+        <div class="vp-faq__item"><button class="vp-faq__q" type="button">Should I clean my silver before bringing it?</button><div class="vp-faq__a"><p>No — please don't. Tarnish doesn't reduce value, and aggressive polishing can damage the silver. Bring it as-is.</p></div></div>
+        <div class="vp-faq__item"><button class="vp-faq__q" type="button">What ID do I need?</button><div class="vp-faq__a"><p>Virginia law requires a government-issued photo ID for any precious-metals sale. Must be 18+. Bring your ID and your silver — that's it.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vp-final-cta">
+    <div class="vp-container">
+      <h2>Ready to Turn Your Silver Into Cash?</h2>
+      <p>Text us a photo, get a quote, walk out paid — usually all in the same day.</p>
+      <div class="vp-final-cta__buttons">
+        <a href="tel:+15405620776" class="vp-btn-call-lg" data-vp-track="cta_call_click" data-vp-location="footer">📞 Call (540) 562-0776</a>
+        <a href="sms:+15405620776" class="vp-btn-text-lg" data-vp-track="cta_text_click" data-vp-location="footer">💬 Text (540) 562-0776</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="vp-mobile-cta">
+    <a href="tel:+15405620776" class="vp-btn-call" data-vp-track="cta_call_click" data-vp-location="mobile_sticky">📞 Call</a>
+    <a href="sms:+15405620776" class="vp-btn-text" data-vp-track="cta_text_click" data-vp-location="mobile_sticky">💬 Text</a>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+  window.VP_SILVER_SPOT = window.VP_SILVER_SPOT || 76;
+  window.VP_PAYOUT_LOW = window.VP_PAYOUT_LOW || 0.70;
+  window.VP_PAYOUT_HIGH = window.VP_PAYOUT_HIGH || 0.85;
+  var STORE_ID = 'roanoke';
+  var STORE_CITY = 'Roanoke';
+  var STORE_PHONE_RAW = '15405620776';
+  var GRAMS_PER_TROY_OZ = 31.1035;
+  var GRAMS_PER_DWT = 1.5552;
+
+  var state = { purity: 0.925, purityLabel: 'Sterling .925', weight: 0, unit: 'g', offerLow: 0, offerHigh: 0, calcStarted: false, calcQuoted: false };
+
+  var purityBtns = document.querySelectorAll('#vp-purity-' + STORE_ID + ' button');
+  var weightInput = document.getElementById('vp-weight-' + STORE_ID);
+  var unitSelect = document.getElementById('vp-unit-' + STORE_ID);
+  var offerEl = document.getElementById('vp-offer-' + STORE_ID);
+  var noteEl = document.getElementById('vp-note-' + STORE_ID);
+  var calcCta = document.getElementById('vp-calc-cta-' + STORE_ID);
+
+  function track(eventName, params) {
+    params = params || {};
+    params.store_id = STORE_ID;
+    params.store_city = STORE_CITY;
+    params.category = 'silver';
+    if (typeof window.gtag === 'function') window.gtag('event', eventName, params);
+    if (window.dataLayer) window.dataLayer.push(Object.assign({ event: eventName }, params));
+    if (window.VP_DEBUG) console.log('[VP TRACK]', eventName, params);
+  }
+
+  function convertToGrams(w, u) {
+    if (u === 'g') return w;
+    if (u === 'dwt') return w * GRAMS_PER_DWT;
+    if (u === 'oz') return w * GRAMS_PER_TROY_OZ;
+    return w;
+  }
+
+  function calc() {
+    var w = parseFloat(weightInput.value);
+    if (isNaN(w) || w <= 0) {
+      offerEl.textContent = 'Enter a weight to see your offer';
+      noteEl.textContent = 'Based on live spot price · ' + state.purityLabel + ' · 0' + state.unit;
+      return;
+    }
+    state.weight = w;
+    var grams = convertToGrams(w, state.unit);
+    var pureGrams = grams * state.purity;
+    var melt = pureGrams * (window.VP_SILVER_SPOT / GRAMS_PER_TROY_OZ);
+    state.offerLow = Math.round(melt * window.VP_PAYOUT_LOW);
+    state.offerHigh = Math.round(melt * window.VP_PAYOUT_HIGH);
+    if (state.offerLow < 1 && melt > 0) offerEl.textContent = 'Less than $1 — bring it in for an exact offer';
+    else offerEl.textContent = '$' + state.offerLow.toLocaleString() + ' – $' + state.offerHigh.toLocaleString();
+    noteEl.textContent = 'Based on $' + window.VP_SILVER_SPOT.toLocaleString() + '/oz spot · ' + state.purityLabel + ' · ' + w + ' ' + state.unit;
+
+    var msg = "Hi Valley Pawn " + STORE_CITY + " — I'd like to sell my silver. I have " + w + " " + state.unit + " of " + state.purityLabel + ". Your calculator estimated $" + state.offerLow + "–$" + state.offerHigh + ". Can you confirm?";
+    if (calcCta) calcCta.href = 'sms:+' + STORE_PHONE_RAW + '?&body=' + encodeURIComponent(msg);
+
+    if (!state.calcStarted) { state.calcStarted = true; track('calc_started', { purity: state.purityLabel, unit: state.unit }); }
+    if (!state.calcQuoted && state.offerHigh > 0) { state.calcQuoted = true; track('calc_quoted', { purity: state.purityLabel, weight_grams: Math.round(grams * 100) / 100, offer_low: state.offerLow, offer_high: state.offerHigh }); }
+  }
+
+  purityBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      purityBtns.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      state.purity = parseFloat(btn.dataset.purity);
+      state.purityLabel = btn.dataset.label;
+      calc();
+    });
+  });
+  if (weightInput) weightInput.addEventListener('input', calc);
+  if (unitSelect) unitSelect.addEventListener('change', function() { state.unit = unitSelect.value; calc(); });
+
+  document.querySelectorAll('.vp-faq__q').forEach(function(q) {
+    q.addEventListener('click', function() {
+      var item = q.closest('.vp-faq__item');
+      item.classList.toggle('open');
+    });
+  });
+
+  document.querySelectorAll('[data-vp-track]').forEach(function(el) {
+    el.addEventListener('click', function() {
+      track(el.dataset.vpTrack, { location: el.dataset.vpLocation || 'unknown', href: el.href || '' });
+    });
+  });
+
+  var scrollMarks = { 25: false, 50: false, 75: false };
+  window.addEventListener('scroll', function() {
+    var p = Math.round((window.scrollY + window.innerHeight) / document.body.scrollHeight * 100);
+    Object.keys(scrollMarks).forEach(function(m) { if (!scrollMarks[m] && p >= m) { scrollMarks[m] = true; track('scroll_' + m); } });
+  }, { passive: true });
+
+  calc();
+})();
+</script>
