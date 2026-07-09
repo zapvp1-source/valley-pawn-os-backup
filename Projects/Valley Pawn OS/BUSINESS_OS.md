@@ -1155,3 +1155,23 @@ Section 13.C already covers these at the bundle level ("anthropic-skills include
 ---
 
 **End of BUSINESS_OS.md**
+
+
+---
+
+## 2026-07-08 ADDENDUM — One Data Source Consolidation Audit
+
+_Applied by Claude per the "One Data Source" project (Joshua: review all scheduled tasks/scripts for duplicate data pulls that could be consolidated). Full report: `One_Data_Source_Consolidation_Audit.docx`, delivered to Joshua 2026-07-08._
+
+### New Gap Analysis items (append to Section 8 — Cleanup / hygiene)
+
+16. **GL pulled two different ways** — `eom-bravo-gl-export` re-drives Bravo's UI via computer-use monthly to export the Consolidated GL; `sales-tax-monthly-update` already gets equivalent data headlessly from the `post-to-accounting-gl` pipeline cell (and checks `output/` first before re-pulling). The GL export task should be migrated onto that same cell. Additive path: build a new pipeline-driven GL handler alongside the existing computer-use flow, prove it, then propose cutover to Joshua.
+17. **Store-KPI data pulled up to 3x** — `weekly-store-kpis` and `monday-store-rankings` each independently trigger their own 5-store `end-of-month` Bravo pull on Monday mornings and compute near-identical metrics (verified to the penny against each other), both posting to `#store-performance`. `monthly-analytics-report`/`-prestage` pull a third overlapping `end-of-month` window monthly. Fix: a shared EOM-prestage producer (same shape as `monthly-analytics-prestage`) feeding both consumers, each keeping its own locked Slack format. Also noted: `monday-store-rankings`' own SKILL.md references a `monday-store-rankings-run` producer task that no longer exists as its own folder in `/Scheduled/` — doc/reality drift to reconcile on next edit of that skill.
+18. **Aged inventory pulled twice on Mondays** — `monday-bravo-combined-run` and `weekly-aged-inventory-report` both independently trigger `aged-inventory-summary` for all 5 stores and post to the same `#aged-inventory-review` channel. Fix: add the same "check `output/` for today's file before triggering" guard `sales-tax-monthly-update` already uses.
+19. **Gusto time data on two paths** — `daily-clockin-check` is MCP-first (`list_time_records`, since 2026-06-10); `weekly-timekeeping-analysis` still drives Gusto Time Tracking via Chrome. This was already noted as a migration candidate (Domain 2 table) but not yet executed.
+20. **BUSINESS_OS.md drift is itself a finding** — 77 documented tasks (2026-07-01 audit) vs 100+ live task folders in `/Scheduled/` one week later. Recommend re-firing `monthly-capability-drift-audit`'s logic ad hoc (not just on its 1st-of-month cadence) whenever a consolidation or cross-task audit is about to happen, so decisions are made against current reality.
+
+### Change Log addition (Section 11)
+
+| 2026-07-08 | One Data Source consolidation audit — grepped every SKILL.md for shared Bravo pipeline cells / GL / Gusto API usage; found 4 concrete duplicate-pull patterns (GL export, store-KPI triplication, aged-inventory double-pull, Gusto dual-path) plus confirmation the map itself is stale. Findings appended here as Gap Analysis items 16-20; full report delivered to Joshua. No production task modified (Rule #4) — additive builds queued, cutover pending Joshua's go-ahead. | Joshua: "One Data Source" project — find and consolidate duplicate data pulls across all scheduled tasks/scripts. |
+
