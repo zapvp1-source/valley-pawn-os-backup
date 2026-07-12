@@ -41,11 +41,152 @@ USAGE:
 from __future__ import annotations
 import argparse
 import json
+import re
 import sys
 from datetime import datetime
 from pathlib import Path
 
 from publer_client import PublerClient, PublerError
+
+
+# --- AUTHENTICITY / QA GATE (added 2026-07-11 content review) --------------
+#
+# Root cause of the 2026-07-11 review: a live pull of Publer's own post
+# history showed 69% of every post ever published through this workspace
+# (55 of 80, going back to 2026-05-26) went out with a COMPLETELY EMPTY
+# caption -- just an image, no words, no CTA, nothing. Store-local pages
+# (Roanoke/Waynesboro/Culpeper) were hit worst at 90% blank. This script
+# already had an empty-caption guard (below), which means those posts did
+# NOT go through this script -- they were published some other way
+# (ad-hoc/manual Publer calls that bypassed the one hardened path).
+#
+# Going forward: vp_social_publisher.py via publish_item() is the ONLY
+# sanctioned way to schedule a Valley Pawn post. Never call
+# PublerClient.schedule_post() directly from a one-off script or inline
+# snippet -- doing so is exactly how the blank-caption posts slipped
+# through undetected for 6+ weeks with no safety net.
+#
+# Ground-truth store facts, so AI-drafted captions can be checked against
+# reality before they go out (a live post claimed "seven days a week" when
+# no Valley Pawn store is open 7 days -- Culpeper is closed Sunday; all
+# other stores are closed Wednesday AND Sunday). Keep in sync with
+# valley-pawn-context if hours/addresses ever change.
+STORE_FACTS = {
+    "Culpeper": {"address": "571 James Madison Highway, Culpeper, VA 22701",
+                 "hours": "Mon-Sat 10am-6pm, closed Sunday"},
+    "Waynesboro": {"address": "1321 West Broad Street, Waynesboro, VA 22980",
+                   "hours": "Mon, Tue, Thu, Fri, Sat 10am-6pm, closed Wed & Sun"},
+    "Harrisonburg": {"address": "1790 East Market Street, Harrisonburg, VA 22801",
+                     "hours": "Mon, Tue, Thu, Fri, Sat 10am-6pm, closed Wed & Sun"},
+    "Lexington": {"address": "125 Walker Street, Lexington, VA 24450",
+                  "hours": "Mon, Tue, Thu, Fri, Sat 10am-6pm, closed Wed & Sun"},
+    "Roanoke": {"address": "2362 Peters Creek Road, Suite C, Roanoke, VA 24017",
+                "hours": "Mon, Tue, Thu, Fri, Sat 10am-6pm, closed Wed & Sun"},
+}
+
+# Phrases that have actually shipped in live posts and are factually wrong or
+# generic-tell-tale. Extend this list whenever a fact-check miss is found.
+_FORBIDDEN_CLAIMS = [
+    (re.compile(r"seven days a week|7 days a week", re.I),
+     "no Valley Pawn store is open 7 days/week (Culpeper closed Sun; others closed Wed+Sun)"),
+    (re.compile(r"open until 5\s*pm|closes? at 5\s*pm", re.I),
+     "no Valley Pawn store closes at 5pm -- all close at 6pm"),
+    (re.compile(r"dixie pawn", re.I),
+     "legacy name -- Harrisonburg is Valley Pawn, never Dixie Pawn"),
+]
+
+
+def qa_check_caption(caption: str, store_keys: list[str]) -> list[str]:
+    """Return a list of blocking problems with a caption. Empty list = OK to publish."""
+    problems = []
+    stripped = caption.strip()
+    if not stripped:
+        problems.append("empty caption")
+        return problems  # nothing else to check
+    for pattern, reason in _FORBIDDEN_CLAIMS:
+        if pattern.search(stripped):
+            problems.append(f"factual error: {reason}")
+    # GBP-style hard rules apply to any Google account key if ever routed here
+    if any(k.lower().startswith("gbp") or k.lower() == "google" for k in store_keys):
+        if "#" in stripped:
+            problems.append("GBP post contains hashtags (Google policy -- strip them)")
+        if re.search(r"\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}", stripped):
+            problems.append("GBP post contains a phone number in body (Google spam signal)")
+    return problems
+
+
+# --- IMAGE AUTHENTICITY GATE (added 2026-07-11 imagery audit) --------------
+#
+# A live pull + visual review of Publer's actual post history (not just
+# captions) found a second, separate authenticity problem: several generic
+# AI-rendered "mood" images -- an antique desk/compass scene, a Shenandoah
+# Valley landscape, a pile of gold chains on a scale -- were reused, pixel-
+# for-pixel identical, across DIFFERENT physical store locations' Google
+# Business Profiles and Brand posts (e.g. the same valley-landscape render
+# stamped onto Harrisonburg's GBP one day and Roanoke's GBP the next; the
+# same antique-desk render on Waynesboro's GBP and two Brand FB/Twitter
+# posts). Every one of those was also a blank-caption post (see Section 6
+# above / the QA gate that now blocks empty captions).
+#
+# This is a distinct failure from the caption problem: a customer in
+# Harrisonburg and a customer in Roanoke see the literal same stock photo,
+# with nothing tying it to their actual town, store, or inventory. Item-
+# specific images (a real photo of a specific guitar or amp posted for the
+# store that actually has it) looked fine and are NOT what this blocks --
+# the same real item's photo cross-posted to that ONE store's FB/IG/GBP is
+# expected and fine. Only reuse of one image across MULTIPLE DIFFERENT
+# physical stores is the problem.
+STORE_TOWNS = {"Culpeper", "Waynesboro", "Harrisonburg", "Lexington", "Roanoke"}
+
+
+def _base_stores(store_keys: list[str]) -> set[str]:
+    """Collapse GBP/FB/IG channel variants down to the physical store they represent."""
+    bases = set()
+    for k in store_keys:
+        nk = normalize_store_key(k)
+        if nk.upper().startswith("GBP_"):
+            nk = nk[4:]
+        if nk in STORE_TOWNS:
+            bases.add(nk)
+        elif nk.startswith("Brand"):
+            bases.add("Brand")
+    return bases
+
+
+def qa_check_image_diversity(items: list[dict]) -> dict[str, str]:
+    """
+    Batch-level check (run across a whole manifest, not per-item): the same
+    image asset must never be reused across posts for two or more DIFFERENT
+    physical store locations. Returns {item_id: reason} for every item that
+    must be blocked. Brand-tier reuse (same generic brand image on Brand FB
+    + BrandIG + BrandTwitter) is fine -- Brand isn't a physical location.
+    """
+    by_image: dict[str, list[dict]] = {}
+    for item in items:
+        img = item.get("image_url")
+        if not img:
+            continue
+        by_image.setdefault(img, []).append(item)
+
+    blocked: dict[str, str] = {}
+    for img, group in by_image.items():
+        if len(group) < 2:
+            continue
+        all_bases: set[str] = set()
+        for item in group:
+            all_bases |= _base_stores(expand_routing(item))
+        distinct_stores = all_bases - {"Brand"}
+        if len(distinct_stores) > 1:
+            ids = ", ".join(str(i.get("id", "?")) for i in group)
+            reason = (
+                f"image reused across {len(distinct_stores)} different store locations "
+                f"({', '.join(sorted(distinct_stores))}) -- items {ids}. Generic imagery "
+                f"must not stand in for a specific store; use that store's own real photo "
+                f"or a genuinely relevant item shot instead."
+            )
+            for item in group:
+                blocked[item.get("id", "<no-id>")] = reason
+    return blocked
 
 
 # --- store key normalization ----------------------------------------------
@@ -140,8 +281,9 @@ def publish_item(p: PublerClient, item: dict, dry_run: bool = False) -> dict:
     store_keys = expand_routing(item)
 
     caption = item.get("caption") or item.get("text") or ""
-    if not caption.strip():
-        return {"id": item_id, "error": "empty caption — refusing to publish"}
+    problems = qa_check_caption(caption, store_keys)
+    if problems:
+        return {"id": item_id, "error": "QA gate failed — refusing to publish: " + "; ".join(problems)}
 
     image_url = item.get("image_url")
     video_url = item.get("video_url")
@@ -201,9 +343,18 @@ def main():
     print(f"[info] workspace: {p.workspace_id}", file=sys.stderr)
     print(f"[info] {len(items)} items in manifest, dry_run={args.dry_run}", file=sys.stderr)
 
+    image_problems = qa_check_image_diversity(items)
+    if image_problems:
+        print(f"[warn] {len(image_problems)} item(s) blocked by image-diversity gate", file=sys.stderr)
+
     results = []
     for item in items:
-        r = publish_item(p, item, dry_run=args.dry_run)
+        item_id = item.get("id", "<no-id>")
+        img_problem = image_problems.get(item_id)
+        if img_problem:
+            r = {"id": item_id, "error": "QA gate failed — refusing to publish: " + img_problem}
+        else:
+            r = publish_item(p, item, dry_run=args.dry_run)
         results.append(r)
         status = "DRY" if r.get("dry_run") else ("ERR" if r.get("error") else ("SKIP" if r.get("skipped") else "OK "))
         print(f"  {status} {r.get('id','?'):30s} → {r.get('store_keys', r.get('reason','?'))}")

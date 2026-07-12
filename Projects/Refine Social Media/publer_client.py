@@ -287,12 +287,26 @@ class PublerClient:
         sort options (per Publer docs): scheduled_at, reach, engagement,
         engagement_rate, click_through_rate, reach_rate, postType, likes,
         video_views, comments, shares, saves, link_clicks, post_clicks.
+
+        FIXED 2026-07-11: the real Publer API requires query params named
+        `from`/`to` (date-only, YYYY-MM-DD), NOT `since`/`until`. The old
+        `since`/`until` params were silently ignored by Publer's router and
+        the endpoint 500'd on every single call as a result -- confirmed by
+        directly testing both variants against the live API. This bug meant
+        vp-publer-analytics-friday, publer_weekly_digest.py, and
+        friday_close_engagement_publer.py have NEVER returned real data
+        since they were built (2026-07-06/07). The since/until *parameter
+        names* are kept here for backwards compatibility with existing
+        callers -- only the wire param names sent to Publer changed.
+        Also NOTE: `account_id` must additionally be passed as its own query
+        param (not just in the URL path) or Publer scopes to "all accounts"
+        inconsistently -- added below.
         """
-        params: dict[str, str] = {"sort": sort, "limit": str(limit)}
+        params: dict[str, str] = {"sort": sort, "limit": str(limit), "account_id": account_id}
         if since:
-            params["since"] = since
+            params["from"] = since
         if until:
-            params["until"] = until
+            params["to"] = until
         data = self.get(f"/analytics/{account_id}/post_insights", params=params)
         if isinstance(data, dict):
             # Publer typically wraps as {posts: [...], total: N}
