@@ -65,14 +65,23 @@ def classify(text: str, post_type: str | None) -> str:
 
 
 def metric(post: dict, *keys: str) -> int:
+    # FIXED 2026-07-12: live-tested Publer's actual post_insights response --
+    # every metric (reach, likes, comments, shares, post_clicks, video_views,
+    # reach_rate, engagement_rate) is nested under post["analytics"][field]["value"],
+    # NOT top-level and NOT under "insights"/"metrics" as originally assumed. That
+    # mismatch meant every reach/engagement number in every digest since this
+    # script was built (2026-07-06) silently computed as 0 -- the HTTP call
+    # succeeded, so no error surfaced; the adjust loop just never had real signal.
     for k in keys:
         v = post.get(k)
         if isinstance(v, dict):
             v = v.get("value")
         if isinstance(v, (int, float)):
             return int(v)
-    ins = post.get("insights") or post.get("metrics") or {}
-    if isinstance(ins, dict):
+    for src_key in ("analytics", "insights", "metrics"):
+        ins = post.get(src_key)
+        if not isinstance(ins, dict):
+            continue
         for k in keys:
             v = ins.get(k)
             if isinstance(v, dict):
@@ -117,15 +126,24 @@ def collect(p: PublerClient, days: int) -> list[dict]:
             text = post.get("text") or post.get("caption") or post.get("content") or ""
             first = text.strip().split("\n")[0][:60].lower()
             ctype = manifest_types.get(first) or classify(text, post.get("type"))
+            # FIXED 2026-07-12: Publer has no single "engagement" field -- it
+            # exposes likes, comments, shares, and post_clicks as separate
+            # metrics (see metric() note above). Sum them for a real engagement
+            # total instead of the previous engagement/engagements/likes lookup,
+            # which always returned 0 since none of those keys ever existed.
+            likes_n = metric(post, "likes")
+            comments_n = metric(post, "comments")
+            shares_n = metric(post, "shares", "reposts")
+            clicks_n = metric(post, "post_clicks", "link_clicks")
             rows.append({
                 "account": key,
                 "network": cfg.get("provider", "?"),
                 "text": text.strip().split("\n")[0][:90],
                 "content_type": ctype,
                 "reach": metric(post, "reach", "impressions", "views"),
-                "engagement": metric(post, "engagement", "engagements", "likes"),
-                "comments": metric(post, "comments"),
-                "shares": metric(post, "shares", "reposts"),
+                "engagement": likes_n + comments_n + shares_n + clicks_n,
+                "comments": comments_n,
+                "shares": shares_n,
                 "eng_rate": None,
                 "posted_at": post.get("scheduled_at") or post.get("published_at") or "",
                 "url": post.get("url") or post.get("permalink") or "",

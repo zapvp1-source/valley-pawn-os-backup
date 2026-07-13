@@ -307,7 +307,27 @@ class PublerClient:
             params["from"] = since
         if until:
             params["to"] = until
-        data = self.get(f"/analytics/{account_id}/post_insights", params=params)
+
+        # FIXED 2026-07-12: Publer's /analytics endpoint intermittently 500s with
+        # no distinguishing error detail even with correct params -- confirmed by
+        # live testing: an identical call failed once, then succeeded on retry a
+        # few minutes later. Previously a single transient 500 silently wiped that
+        # account's entire week from the digest (caught by the caller's try/except
+        # and logged as a "warn", not retried). Retry is scoped to THIS read-only
+        # GET only -- never applied to schedule_post/_request generally, so a
+        # retried call can never cause a duplicate publish.
+        last_err: PublerError | None = None
+        for attempt in range(3):
+            try:
+                data = self.get(f"/analytics/{account_id}/post_insights", params=params)
+                break
+            except PublerError as e:
+                last_err = e
+                if attempt < 2:
+                    time.sleep(3 * (attempt + 1))
+        else:
+            raise last_err  # type: ignore[misc]
+
         if isinstance(data, dict):
             # Publer typically wraps as {posts: [...], total: N}
             return data.get("posts") or data.get("data") or []
