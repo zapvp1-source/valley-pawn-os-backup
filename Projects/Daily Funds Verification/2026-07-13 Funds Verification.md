@@ -1,43 +1,47 @@
 # Daily Funds Verification — 2026-07-13
 
-**Status: INCOMPLETE — see below. 4 of 5 stores verified matched; Culpeper could not be verified in Bravo.**
+**Status: COMPLETE — all 5 verified. ALL MATCHED.**
 
 ## Bottom line
-No store requested or received cash from Joshua today — $0.00 expected across all 5 stores. Harrisonburg, Lexington, Roanoke, and Waynesboro confirmed $0.00 actual in the Bravo Safe Register Journal (no qualifying transfers, matched). Culpeper's Bravo extraction failed twice ("EnsureStore failed for CUL") and a retry was still queued behind other Bravo pipeline jobs (Monday combined run, items-to-price) when the extended time budget ran out — Culpeper's $0.00 expected (from Slack) could not be cross-checked against Bravo.
+$12,500.00 expected vs $12,500.00 actual across all 5 stores; every store matched exactly.
 
 ## Step 1 — Slack ledger (today, 2026-07-13 ET)
 | Store | Channel | Request(s) | Joshua's reply | Net expected |
 |---|---|---|---|---|
-| CUL — Culpeper | #pepper-funds | none | none | $0.00 |
-| HAR — Harrisonburg | #harrisonburg-funds | none | none | $0.00 |
-| LEX — Lexington | #lex-funds | none | none | $0.00 |
-| ROA — Roanoke | #roanoke-funds | none | none | $0.00 |
-| WAY — Waynesboro | #boro-funds | none | none | $0.00 |
+| CUL — Culpeper | #pepper-funds | 9:33 AM $1,500; 4:36 PM $1,500 (gold loan $800 in front) | 9:44 AM sent $2,000 (GM); 4:39 PM sent $1,500 (Sandi: "Nothing available" / "not complete") then 4:52 PM sent $2,000, confirmed 5:01 PM "Got it" | $4,000.00 |
+| HAR — Harrisonburg | #harrisonburg-funds | 9:57 AM $2,000 | 10:02 AM sent $2,000 | $2,000.00 |
+| LEX — Lexington | #lex-funds | 4:31 PM $2,000 (or $1,000 ATM alt.) | 4:59 PM sent $1,000 | $1,000.00 |
+| ROA — Roanoke | #roanoke-funds | 9:21 AM $2,000 | 9:44 AM sent $2,000 (GM) | $2,000.00 |
+| WAY — Waynesboro | #boro-funds | 10:30 AM $2,000; 4:57 PM $2,000 | 11:00 AM sent $2,000; 4:59 PM sent $2,000, but Chadd clarified 5:24 PM "There was only 1500. Just was saying for claude purposes" | $3,500.00 |
 
-Cancellations: none. **Total expected: $0.00.**
+Cancellations: none. **Total expected: $12,500.00.**
 
 ## Step 2 — Bravo extraction
-Trigger `daily-funds-verification-2026-07-13T08-38-40` → watcher status `partial` on 4/5 cells (CUL error: "EnsureStore failed for CUL"). This run queued behind the Monday combined Bravo job (25-cell multi-report pull, claimed 08:36) and then behind `items-to-price-2026-07-13T09-12-25` (multi-store pull, claimed 09:13), both legitimate concurrent scheduled tasks — not a watcher hang, so no watcher restart was triggered. Retry trigger `daily-funds-verification-retry-2026-07-13T09-16-35` (CUL only) was dropped at 09:16:35 and remained unclaimed as of 09:22, still queued behind `items-to-price`.
+Trigger `daily-funds-verification-2026-07-13T18-05-22` → watcher status `success` on 5/5 cells (CUL 36 rows, HAR 33 rows, LEX 33 rows, ROA 33 rows, WAY 35 rows).
 
 ## Step 3 — Bravo signature rows (TENDER TRANSFER · BANK · Cash · negative leg)
 | Store | Txn Num | Time | From→To | Amount |
 |---|---|---|---|---|
-| CUL — Culpeper | — | — | (extraction failed — not verified) | — |
-| HAR — Harrisonburg | — | — | (no cash transfer) | $0.00 |
-| LEX — Lexington | — | — | (no cash transfer) | $0.00 |
-| ROA — Roanoke | — | — | (no cash transfer) | $0.00 |
-| WAY — Waynesboro | — | — | (no cash transfer) | $0.00 |
+| CUL | VP400063012 | 10:48 AM | BANK→SAFE | $2,000.00 |
+| CUL | VP400063047 | 5:51 PM | BANK→SAFE | $2,000.00 |
+| HAR | VA500053009 | 10:41 AM | BANK→SAFE | $2,000.00 |
+| LEX | VA100109182 | 5:15 PM | BANK→SAFE | $1,000.00 |
+| ROA | ROA00030749 | 10:16 AM | BANK→SAFE | $2,000.00 |
+| WAY | VAP00072950 | 12:01 PM | BANK→SAFE | $2,000.00 |
+| WAY | VAP00072985 | 5:36 PM | BANK→SAFE | $1,500.00 |
 
 ## Step 5 — Reconciliation
 | Store | Net expected (Slack) | Net actual (Bravo) | Status |
 |---|---|---|---|
-| CUL — Culpeper | $0.00 | — | ❓ Could not verify |
-| HAR — Harrisonburg | $0.00 | $0.00 | ✓ Matched |
-| LEX — Lexington | $0.00 | $0.00 | ✓ Matched |
-| ROA — Roanoke | $0.00 | $0.00 | ✓ Matched |
-| WAY — Waynesboro | $0.00 | $0.00 | ✓ Matched |
-| **Total** | **$0.00** | **$0.00 (4/5 stores)** | **4/5 verified** |
+| CUL — Culpeper | $4,000.00 | $4,000.00 | ✓ Matched |
+| HAR — Harrisonburg | $2,000.00 | $2,000.00 | ✓ Matched |
+| LEX — Lexington | $1,000.00 | $1,000.00 | ✓ Matched |
+| ROA — Roanoke | $2,000.00 | $2,000.00 | ✓ Matched |
+| WAY — Waynesboro | $3,500.00 | $3,500.00 | ✓ Matched |
+| **Total** | **$12,500.00** | **$12,500.00** | **ALL MATCHED** |
 
-**Slack post: skipped (Culpeper not verified — per policy, no post unless all 5 stores have a verified result).**
+Notes: CUL's afternoon $1,500 send attempt showed as "not complete"/"nothing available" and was corrected by a $2,000 resend — treated as one transfer, matching the single $2,000 BANK cell at 5:51 PM. WAY's afternoon $2,000 send was explicitly clarified by Chadd ("There was only 1500... for claude purposes") — the Bravo entry confirms only $1,500 was actually transferred.
 
-_Report generated 2026-07-13 ~09:22 ET._
+**Slack post: made.**
+
+_Report generated 2026-07-13 ~18:13 ET._
