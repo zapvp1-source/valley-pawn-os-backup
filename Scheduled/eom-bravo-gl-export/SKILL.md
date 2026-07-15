@@ -4,12 +4,6 @@ description: Monthly automated GL export — on the 5th, cycle all 5 Bravo store
 model: claude-sonnet-5
 ---
 
-
----
-name: eom-bravo-gl-export
-description: Monthly automated GL export — on the 5th, cycle all 5 Bravo stores to verify accounting posting for the prior month, export the Consolidated General Ledger, upload to Google Drive (Accounting Exports), and import into QuickBooks Online.
----
-
 > ⚠️ FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE. If this task fails, errors out, or cannot complete for any reason, DO NOT post anything to any Slack channel. On failure: DM Joshua only with what happened and what he needs to do manually. Only post to Slack once the task has genuinely completed.
 
 ## Monthly Bravo GL Export & QuickBooks Import
@@ -113,11 +107,22 @@ IMPORTANT — If you cannot determine the correct account mapping (the exact map
 - Flag this clearly in the Step 6 summary so Joshua can map the accounts on his review
 
 If QBO prompts MFA — DM Joshua immediately with what's needed. Do not guess codes.
-Release the concurrency flag before stopping: `do shell script "'/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/_bravo_foreground_guard.sh' release eom-bravo-gl-export"`
-
----
 
 Release the concurrency flag now that Bravo/computer-use work is done: `do shell script "'/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/_bravo_foreground_guard.sh' release eom-bravo-gl-export"`
+
+### STEP 5.5: Kick off the per-store GL pull for the Sales Tax workbook (added 2026-07-14)
+
+The `sales-tax-monthly-update` task (runs the 6th) needs this same Consolidated GL data broken out per-store as structured CSVs, not the single all-stores Excel export from Step 3. Rather than have that task independently drive Bravo again on its own day (a second monthly touch, doubling hang risk), this task hands it fresh data proactively.
+
+Now that the concurrency flag is released and Bravo is free of your live/manual session, drop ONE trigger JSON for the automated pipeline. This does NOT re-enter Bravo yourself — the watcher process (which drives Bravo independently via AHK) picks it up on its own, so there's no conflict with the flag you just released:
+
+Via `mcp__Control_your_Mac__osascript`, write a file to `/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/triggers/` containing:
+```
+{"id": "eom-gl-export-taxfeed-<yyyymm>-<timestamp>", "requested_at": "<ISO8601>", "reports": [{"name": "post-to-accounting-gl", "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "YYYY-MM-01..YYYY-MM-DD"}]}
+```
+(YYYY-MM = the prior month you just exported, matching Step 3.)
+
+This is fire-and-forget — do not poll or wait for it, and do not block Step 6 on it. The watcher will process it independently over the following ~10-15 minutes, well ahead of `sales-tax-monthly-update`'s run the next morning. If the trigger drop itself fails (e.g. folder unwritable), note it in the Step 6 summary but do not treat it as a task failure — `sales-tax-monthly-update` has its own fallback to pull this data itself if it finds nothing waiting when it runs.
 
 ### STEP 6: Report Results to Joshua
 
@@ -126,6 +131,7 @@ Send Joshua a Slack DM summarizing:
 - GL export — success or what format was exported
 - Drive upload — file name and confirmation link
 - QBO journal entry — posted successfully, OR "file is in Drive at [link] — account mapping needed before posting"
+- Per-store GL pull for the Sales Tax workbook — trigger dropped successfully (or note if it failed to drop)
 - Any items requiring his manual attention
 
 ---
@@ -137,5 +143,4 @@ Send Joshua a Slack DM summarizing:
 - This task runs monthly on the 5th for the prior calendar month
 - No external bookkeeper — Joshua reviews QBO directly; all GL reports go to him only
 - Accounting Exports Drive folder: https://drive.google.com/drive/u/0/folders/1FzXIRPNZHaECOwfaKpQDMUTPRY3-d12_
-
-<!-- migrated to working model 2026-06-15 -->
+- Step 5.5 (added 2026-07-14) feeds `sales-tax-monthly-update` so that task no longer needs to drive Bravo itself under normal conditions — see that task for the consumer side of this handoff.
