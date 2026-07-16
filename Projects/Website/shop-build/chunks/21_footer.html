@@ -1,0 +1,27 @@
+
+</div>
+<div class="vp-empty">No items match your search. Try another keyword or a different store.</div>
+<div class="vp-foot">Checkout is handled securely through Valley Pawn's verified eBay stores (Top Rated Seller). Total items: 453.</div>
+<script>
+(function(){var app=document.currentScript.closest('.vp-shop-app')||document.querySelector('.vp-shop-app');if(!app)return;
+var cards=[].slice.call(app.querySelectorAll('.vp-card'));
+var grid=app.querySelector('.vp-grid'),empty=app.querySelector('.vp-empty'),countEl=app.querySelector('.vp-count');
+var s={store:'all',q:'',sort:'feat'};
+function apply(){var q=s.q.toLowerCase().split(/\s+/).filter(Boolean);var shown=0;
+ cards.forEach(function(c){var ok=(s.store==='all'||c.dataset.store===s.store);
+  if(ok&&q.length){var h=c.dataset.title;ok=q.every(function(w){return h.indexOf(w)>-1});}
+  c.style.display=ok?'':'none';if(ok)shown++;});
+ if(s.sort!=='feat'){var vis=cards.filter(function(c){return c.style.display!=='none'});
+  vis.sort(function(a,b){var d=a.dataset.price-b.dataset.price;return s.sort==='lo'?d:-d;});
+  vis.forEach(function(c){grid.appendChild(c);});}
+ if(empty)empty.style.display=shown?'none':'block';
+ if(countEl)countEl.textContent=shown+(shown===1?' item':' items');}
+app.querySelectorAll('.vp-chip').forEach(function(ch){ch.addEventListener('click',function(){
+ app.querySelectorAll('.vp-chip').forEach(function(c){c.classList.remove('is-active')});
+ ch.classList.add('is-active');s.store=ch.dataset.store;apply();});});
+var t;var si=app.querySelector('#vpSearch');if(si)si.addEventListener('input',function(e){clearTimeout(t);t=setTimeout(function(){s.q=e.target.value.trim();apply();},120);});
+var so=app.querySelector('#vpSort');if(so)so.addEventListener('change',function(e){s.sort=e.target.value;apply();});
+apply();})();
+</script>
+</div>
+<!-- VP-SHOP-END -->

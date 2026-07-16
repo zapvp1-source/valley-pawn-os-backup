@@ -167,6 +167,45 @@ PullLayawayDeposits(store, dateOrRange, outputDir) {
             throw Error("Preview did not render within 60s (Export Document button never appeared)")
         Sleep(800)
 
+        ; --- Step 4b: turn off Continuous Scrolling (added 2026-07-15) -----
+        ; Bravo's Report Preview has an "Enable Continuous Scrolling" toggle
+        ; that, when pressed, forces the entire report to render as one giant
+        ; canvas. For wide reports this freezes Bravo for 3+ minutes; the
+        ; Export OK click then lands on a still-rendering UI and the CSV
+        ; never gets written. Confirmed live 2026-07-15: LayawayDeposits hung
+        ; exactly this way on CUL (180s WaitForFile timeout, Bravo required a
+        ; force-kill + relaunch to recover). Ported from the same fix already
+        ; applied to the 7 closing-report handlers on 2026-05-29
+        ; (DepositsAndPaidOuts.ahk etc.) — wrapped so it can't itself throw.
+        try {
+            csButton := FindByName("Enable Continuous Scrolling", 1000)
+            if (csButton) {
+                state := 0
+                try state := csButton.TogglePattern.CurrentToggleState
+                if (state = 1) {  ; UIA.ToggleState.On
+                    LogMessage("    [pre-export] Continuous Scrolling is ON — calling Toggle() to flip state")
+                    try csButton.TogglePattern.Toggle()
+                    Sleep(2500)
+                    newState := state
+                    try newState := csButton.TogglePattern.CurrentToggleState
+                    if (newState = 1) {
+                        LogMessage("    [pre-export] WARN: first Toggle() didn't flip; retrying via Click()")
+                        try csButton.Click("left")
+                        Sleep(2500)
+                        try newState := csButton.TogglePattern.CurrentToggleState
+                    }
+                    LogMessage("    [pre-export] post-toggle state = " . newState . " (0=Off)")
+                    Sleep(3000)  ; give Bravo time to re-paginate after toggle
+                } else {
+                    LogMessage("    [pre-export] Continuous Scrolling already OFF (state=" . state . ")")
+                }
+            } else {
+                LogMessage("    [pre-export] Continuous Scrolling button not found — skipping")
+            }
+        } catch as e {
+            LogMessage("    [pre-export] WARN: Continuous Scrolling toggle-off failed: " . e.Message)
+        }
+
         LogMessage("  step 5: click Export Document")
         ClickByName(LD_ELEMENTS["preview_export"], 5000)
         if !FindByName(LD_ELEMENTS["export_ok"], 8000)

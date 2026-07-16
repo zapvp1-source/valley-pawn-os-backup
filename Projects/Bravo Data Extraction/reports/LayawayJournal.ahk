@@ -167,6 +167,40 @@ PullLayawayJournal(store, dateOrRange, outputDir) {
             throw Error("Preview did not render within 60s (Export Document button never appeared)")
         Sleep(800)
 
+        ; --- Step 4b: turn off Continuous Scrolling (added 2026-07-15) -----
+        ; See LayawayDeposits.ahk for full rationale — confirmed live 2026-07-15
+        ; that this class of handler (cloned from EndOfMonth.ahk, never
+        ; previously run) hangs Bravo 3+ min without this toggle-off. Ported
+        ; from the fix applied to the 7 closing-report handlers on 2026-05-29.
+        try {
+            csButton := FindByName("Enable Continuous Scrolling", 1000)
+            if (csButton) {
+                state := 0
+                try state := csButton.TogglePattern.CurrentToggleState
+                if (state = 1) {  ; UIA.ToggleState.On
+                    LogMessage("    [pre-export] Continuous Scrolling is ON — calling Toggle() to flip state")
+                    try csButton.TogglePattern.Toggle()
+                    Sleep(2500)
+                    newState := state
+                    try newState := csButton.TogglePattern.CurrentToggleState
+                    if (newState = 1) {
+                        LogMessage("    [pre-export] WARN: first Toggle() didn't flip; retrying via Click()")
+                        try csButton.Click("left")
+                        Sleep(2500)
+                        try newState := csButton.TogglePattern.CurrentToggleState
+                    }
+                    LogMessage("    [pre-export] post-toggle state = " . newState . " (0=Off)")
+                    Sleep(3000)  ; give Bravo time to re-paginate after toggle
+                } else {
+                    LogMessage("    [pre-export] Continuous Scrolling already OFF (state=" . state . ")")
+                }
+            } else {
+                LogMessage("    [pre-export] Continuous Scrolling button not found — skipping")
+            }
+        } catch as e {
+            LogMessage("    [pre-export] WARN: Continuous Scrolling toggle-off failed: " . e.Message)
+        }
+
         LogMessage("  step 5: click Export Document")
         ClickByName(LJ_ELEMENTS["preview_export"], 5000)
         if !FindByName(LJ_ELEMENTS["export_ok"], 8000)
