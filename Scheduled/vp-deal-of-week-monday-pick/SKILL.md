@@ -11,6 +11,7 @@ You are running Valley Pawn's Deal of the Week compiler — the work that turns 
 
 CONTEXT:
 - Companion task `vp-deal-of-week-monday-prompt` ran at 8 AM today and posted the submission prompt in Slack `#deal-of-the-week`.
+- Companion task `vp-deal-of-week-monday-reminder` runs at 11 AM today and pings any store that hasn't submitted yet.
 - Up to 5 store managers (one per store) had until 12 PM to reply in that thread with: photo, item name+brand, price, store+name, one-sentence pitch.
 - This task compiles ALL qualifying submissions, fills the placeholder block in the upcoming Thursday's Brevo campaign draft with one deal block per store, and schedules the campaign to send Thursday 10:00 AM ET.
 
@@ -43,6 +44,7 @@ Build the list of submissions to feature. Include EVERY submission that has BOTH
 - Order the qualifying submissions by store in this fixed order: Culpeper, Waynesboro, Harrisonburg, Lexington, Roanoke. (Stores with no qualifying submission are simply absent.)
 - Do NOT score, rank, or pick a single winner. All qualifying deals are featured equally, using the same block design.
 - If ZERO submissions qualify: do not force anything. Post in `#deal-of-the-week`: "No qualifying submissions this week — Thursday's send will run with the theme content only." Then proceed to STEP 6 with an empty deal list.
+- Let N = the count of qualifying submissions (0 to 5). N drives the section header wording in STEP 6 — never claim more coverage than actually qualified.
 
 STEP 5 — DOWNLOAD EVERY QUALIFYING PHOTO AND UPLOAD TO BREVO MEDIA LIBRARY
 For EACH qualifying submission:
@@ -57,9 +59,12 @@ If the deal list is empty: remove this entire placeholder div from the HTML (rep
 
 If there are qualifying deals: replace the single placeholder div with a small section header followed by ONE deal block per qualifying submission, concatenated in the store order from STEP 4. Use the EXISTING deal-block design — do NOT redesign it — just repeat it once per store.
 
-Section header (insert once, above the first block):
+Section header (insert once, above the first block) — the wording MUST match how many stores actually qualified (N from STEP 4). Never claim "each store" unless every store is actually featured:
+- If N == 5 (all five stores qualified): use `THIS WEEK'S DEALS — ONE FROM EACH STORE`
+- If N < 5 (one or more stores didn't submit or didn't qualify): use `THIS WEEK'S DEALS — {N} STORES FEATURED THIS WEEK` (e.g. "THIS WEEK'S DEALS — 4 STORES FEATURED THIS WEEK")
+
 ```html
-<p style="margin: 0 0 24px 0; font-size: 12px; letter-spacing: 2px; color: #c97b3a; font-weight: bold;">THIS WEEK'S DEALS — ONE FROM EACH STORE</p>
+<p style="margin: 0 0 24px 0; font-size: 12px; letter-spacing: 2px; color: #c97b3a; font-weight: bold;">{HEADER_TEXT_PER_RULE_ABOVE}</p>
 ```
 
 Per-submission deal block (repeat for each qualifying submission, substituting the variables):
@@ -103,3 +108,4 @@ If ANY step fails irrecoverably, DM Joshua with a clear short summary: "Deal of 
 Report a brief outcome line in your final message.
 
 <!-- migrated to working model 2026-06-15 -->
+<!-- updated 2026-07-16: header wording now reflects actual store count (N) instead of always claiming "one from each store" -->

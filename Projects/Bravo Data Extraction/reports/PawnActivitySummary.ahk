@@ -166,6 +166,40 @@ PullPawnActivitySummary(store, dateOrRange, outputDir) {
         if !FindByName(PAS_ELEMENTS["preview_export"], 60000)
             throw Error("Preview did not render within 60s (Export Document button never appeared)")
         Sleep(800)
+        ; --- turn off Continuous Scrolling (added 2026-07-16, ported verbatim
+        ; from reports/SafeRegisterJournal.ahk / DepositsAndPaidOuts.ahk, the
+        ; canonical 2026-05-29 fix). PawnActivitySummary is EOM-family and
+        ; never got this patch -- first live probe (2026-07-16) hung exactly
+        ; per the known Continuous-Scrolling failure mode: UIA root became
+        ; unreachable (0x800705B4) and CSV never wrote within 180s.
+        try {
+            csButton := FindByName("Enable Continuous Scrolling", 1000)
+            if (csButton) {
+                state := 0
+                try state := csButton.TogglePattern.CurrentToggleState
+                if (state = 1) {
+                    LogMessage("    [pre-export] Continuous Scrolling is ON -- calling Toggle() to flip state")
+                    try csButton.TogglePattern.Toggle()
+                    Sleep(2500)
+                    newState := state
+                    try newState := csButton.TogglePattern.CurrentToggleState
+                    if (newState = 1) {
+                        LogMessage("    [pre-export] WARN: first Toggle() didn't flip; retrying via Click()")
+                        try csButton.Click("left")
+                        Sleep(2500)
+                        try newState := csButton.TogglePattern.CurrentToggleState
+                    }
+                    LogMessage("    [pre-export] post-toggle state = " . newState . " (0=Off)")
+                    Sleep(3000)
+                } else {
+                    LogMessage("    [pre-export] Continuous Scrolling already OFF (state=" . state . ")")
+                }
+            } else {
+                LogMessage("    [pre-export] Continuous Scrolling button not found -- skipping")
+            }
+        } catch as e {
+            LogMessage("    [pre-export] WARN: Continuous Scrolling toggle-off failed: " . e.Message)
+        }
 
         LogMessage("  step 5: click Export Document")
         ClickByName(PAS_ELEMENTS["preview_export"], 5000)

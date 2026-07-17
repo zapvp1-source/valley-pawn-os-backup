@@ -93,6 +93,13 @@ The closest existing report is **`loan-reviews`** (uses "Claude Loan Reviews" sa
 
 ## Session Log
 
+- **2026-07-16 (resume/replan session)** — Joshua re-opened this via the "Buy and Loan Analysis" project (same scope: sell-through, overpaid-for items, which categories deserve more loan $). Read-only recon this session, no VM/computer-use yet:
+  - Confirmed project is still exactly where 2026-06-10 left it. `weekly-loan-portfolio-refresh` scheduled task has been **disabled since 2026-05-25** (last run failed `EnsureStore` on all 5 stores — Bravo not foreground / modal blocking).
+  - **Key change since stall:** `bravo-health-watchdog` now runs twice daily (5am/5pm), enabled, verifying Bravo is on Dashboard before pipeline batches — this is new infra (built after this project paused) that directly targets the exact failure class that killed the 5/25 run. Strong candidate for why re-enabling might now work cleanly.
+  - Output folder has scattered monthly-slice pulls for `loan-portfolio-2026` cell (CUL/HAR/LEX/ROA/WAY, various 1-month windows between Apr 2025–Aug 2025 range-named files) but no coherent trailing-12-month set across all 5 stores. One file (`2025-07-21_to_2025-08-20_CUL`) has a `Pull Date` of 7/5/2026 — some process ran this cell more recently than the disabled refresh task; source unconfirmed.
+  - **Column gap NOT fixed** — verified via direct CSV header read: current columns are still `Ticket Number, Disposition, Disposition Date, Due Date, Pull Date, Customer, Loan Amount, Age, MobilePawn, SMS, Address`. No `Category`, no `Full Description`. This blocks the project's primary goal (ROI by collateral category) until the "Claude Loan Portfolio 2026" saved-report column layout is edited to add them (additive — this is our own new report, not hardened infra, safe to edit).
+  - **Plan for next execution session** written up and delivered to Joshua (see chat). Not yet executed: column-layout fix, re-enable refresh task, full 12mo×5-store pull, forfeit-to-resale margin join, rebuilt deliverables, decision on Slack channel for ongoing posts (`#optimize-loan-portfolio` still doesn't exist).
+
 - **2026-06-10 (framework build session)** — Bravo 12-month pull still blocked (Ok button grayed in dialog — same as 2026-05-20). Built `Valley_Pawn_Loan_Portfolio_Framework.xlsx` (28K, saved to project folder) using data already on disk. Zero formula errors (recalc.py verified 21 formulas). **No Slack post — internal analysis only.**
 
   **Framework workbook tabs:**

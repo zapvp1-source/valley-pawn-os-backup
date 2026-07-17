@@ -40,14 +40,23 @@ For each deal, run the Publer publisher flow (see the PUBLISHING section in `vp-
 - @valley_pawn IG (shared brand)
 - {Store} GBP
 
-**Use the JS-query-by-tooltip account selection pattern.** Positional icon clicks are FORBIDDEN. Search tokens: Lexington GBP=`Walker`, Culpeper GBP=`James Madison`, Waynesboro GBP=`Broad`, Harrisonburg GBP=`E Market`, Roanoke GBP=`Peters Creek`; store FB pages=store name; Brand IG=`valley_pawn`.
+**Use the JS-query-by-tooltip account selection pattern.** Positional icon clicks are FORBIDDEN. Search tokens: Lexington GBP=`Walker`, Culpeper GBP=`James Madison`, Waynesboro GBP=`Broad`, Harrisonburg GBP=`E Market`, Roanoke GBP=`Peters Creek`; store FB pages=store name.
+
+**Brand IG — DO NOT use a text search.** Fixed 2026-07-16: Publer's account picker shows the Brand Instagram account with the exact same visible name as the Brand Facebook page — both are literally "Valley Pawn" — so a text search either matches nothing (the old `valley_pawn` token, underscore, never matched) or is ambiguous (`Valley Pawn` with a space matches all 7 connected accounts, not just IG). Verified live in Publer's UI 2026-07-16. The two "Valley Pawn" entries are only distinguishable by the provider badge icon in the DOM. Each account row in the composer is a `.ACLI` element containing `.ACLI__name` (display name) and `.ACLI__provider` (an `<img>` whose `src` ends in `facebook-circle.svg`, `instagram-circle.svg`, `google-circle.svg`, `tiktok-circle.svg`, `wordpress-circle.svg`). Select the Brand IG account by running this via the JS execution tool against the open composer, NOT by typing into the account search box:
+```js
+[...document.querySelectorAll('.ACLI')].find(el =>
+  el.querySelector('.ACLI__name')?.textContent.trim() === 'Valley Pawn' &&
+  el.querySelector('.ACLI__provider')?.src.includes('instagram-circle')
+)?.click();
+```
+After clicking, verify the Post Preview panel on the right renders an Instagram-style preview (not Facebook) before continuing — this confirms the correct account was selected. If this selector ever stops matching (Publer changed its markup), fall back to querying by the Instagram account's underlying media ID visible in its avatar URL (currently `17841405894186570`) instead of matching by name.
 
 **GBP compose:** click Photo tab (166, 190) BEFORE upload. Upload to `.droparea` index 5's file input.
 
 **One channel per composer** — don't mix Meta + WordPress in a single composer.
 
 ## Step 5 — Save manifest
-Save to /Users/joshuadavis/Documents/Claude/Projects/Valley Pawn Studios/output/{YYYY-MM-DD}/deals_social_manifest_{YYYY-MM-DD}.json with per-store scheduled_for + Publer post IDs + skipped stores.
+Save to /Users/joshuadavis/Documents/Claude/Projects/Valley Pawn Studios/output/{YYYY-MM-DD}/deals_social_manifest_{YYYY-MM-DD}.json with per-store scheduled_for + Publer post IDs + skipped stores. Log explicitly whether the Brand IG post succeeded for each store's deal (not just "skipped — not connected", since the account IS connected — see Step 4 fix).
 
 ## Step 6 — DM Joshua with summary
 Slack DM to Joshua ONLY on success:
@@ -64,3 +73,5 @@ Slack DM to Joshua ONLY on success:
 
 Fires Wednesday 6 PM ET via cron `0 18 * * 3`.
 Companion to `vp-deal-of-week-monday-prompt` (Mon 8 AM) and `vp-deal-of-week-monday-pick` (Mon 12:30 PM, email).
+
+<!-- 2026-07-16: Fixed Brand IG account selection. Root cause of "Instagram not connected to Publer" (flagged in the 2026-07-15 run): the account IS connected and healthy (verified live in Publer's Social Accounts + Create Post UI), but the old search token `valley_pawn` never matched anything (Publer displays it as "Valley Pawn" with a space, no handle), and the plain-text fallback "Valley Pawn" is ambiguous with the Brand Facebook page (identical display name). Replaced with a DOM query on `.ACLI__provider` (provider icon) to disambiguate. See memory vp-2026-07-15-deals-post-verification and vp-publer-picker-pattern. -->

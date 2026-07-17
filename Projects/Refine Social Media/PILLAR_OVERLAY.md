@@ -216,7 +216,45 @@ additive afterthought.
   this is exactly the "measure → adjust → iterate" loop in Section 4, now with a
   video/static split as one of the things it measures.
 
+## 9. Category-Scale Realism Gate (added 2026-07-13 — the toy riding-mower incident)
+
+**Why this section exists:** Joshua flagged a live Waynesboro post — a Troy-Bilt Super
+Bronco XP 50 riding lawn mower (a real ~5-6 foot outdoor vehicle) rendered as a toy-scale
+model sitting on a leather desk next to a brass compass and an antique map. It looks like
+a die-cast toy, not a real machine. His words: "this does not represent the product at
+all, lends to us being inaccurate and not authentic. AI should be enhancing our posts not
+making them look like AI."
+
+**Root cause, confirmed by direct filesystem check:** `vp-brand-studio/SKILL.md`
+repeatedly instructs `vp-hero-image` to read `vp-brand-studio/references/
+prompt-templates.md` for per-category prompt guidance (the thing that's supposed to make
+a watch shoot differently than a guitar than a riding mower). **That file does not
+exist** — `vp-brand-studio`'s skill directory contains only `SKILL.md`, no `references/`
+folder at all. Every hero-image generation has therefore been running with zero
+category guidance and falling back to one generic small-object "collector's desk"
+composition (leather desk, compass, antique map — the STYLE-B "Heritage Story" look)
+regardless of what the actual item is or how big it is. This is a distinct problem from
+Section 7's image-reuse gate — that one is about the same image reused across stores;
+this one is about a render that never matched the item's real-world scale or setting in
+the first place, even on first use.
+
+**Fix:** a new file, `IMAGE_CATEGORY_TEMPLATES.md` (this folder), is now the authoritative
+category-template substitute until `vp-brand-studio`'s real `references/
+prompt-templates.md` is actually built. It defines four buckets — small valuables (desk/
+tabletop staging is correct here), mid-size items (counter/showroom staging), large
+equipment (riding mowers, generators, tillers, ATVs, appliances — must render at true
+scale in a realistic setting, NEVER on a desk with tabletop props; prefer a real photo
+over a scale-broken render), and firearms (existing never-render-for-social rule,
+unchanged). **`vp-hero-image` and `vp-content-batch` must read `IMAGE_CATEGORY_TEMPLATES.md`
+before generating any hero image, in addition to (not instead of) `vp-brand-studio`.**
+
+**Pre-publish sanity check (add wherever hero images get reviewed before scheduling):**
+ask "does this look like a photo/render of the real item at its real size, in a plausible
+real setting?" If it reads as a toy, miniature, or diorama, it fails — regenerate in the
+correct bucket's staging or use a real photo instead.
+
 ---
 *Changelog: 2026-07-06 — created (Community + Humor pillars, adjust loop, casual video).*
 *Changelog: 2026-07-11 — added Authenticity & Caption-Integrity Gate after full content/performance review found a 69% blank-caption rate, a broken analytics loop (wrong API params), zero real scheduled tasks, and a factual hours error live on Facebook.*
 *Changelog: 2026-07-11 (same-day follow-up) — added Imagery Authenticity Gate (generic stock images reused pixel-identical across different store locations, now hard-blocked in code) and Video-First Weighting (Reels quota 2→4, `vp-casual-video-daily` re-enabled at 3x/week) per Joshua's follow-up instructions.*
+*Changelog: 2026-07-13 — added Category-Scale Realism Gate after a toy-scale riding-mower render shipped live; root cause is a missing `vp-brand-studio/references/prompt-templates.md` file, worked around via new `IMAGE_CATEGORY_TEMPLATES.md`.*

@@ -4,6 +4,12 @@ description: Every Tuesday at 4:40 PM — Pull weekly Chekkit Inactives customer
 model: claude-sonnet-5
 ---
 
+---
+name: chekkit-weekly-review-requests
+description: Every Tuesday at 4:40 PM — Pull weekly Chekkit Inactives customer data from Bravo POS for all 5 Valley Pawn stores via the Bravo Data Extraction pipeline, send Chekkit review-request campaigns (with Joshua as confirmation recipient) and post per-store counts to #chekkit-updates, then import the email addresses into Brevo's master list tagged "monthly" and post per-store email counts to #email-campaigns. No Parallels grant required.
+model: claude-sonnet-5
+---
+
 
 > ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
 
@@ -29,30 +35,34 @@ Check for the latest stash via osascript:
 do shell script "ls -1 /Users/joshuadavis/Documents/Claude/Scheduled/_shared-bravo-data/ 2>/dev/null | sort -r | head -1"
 ```
 
-If the most recent dated folder is within the last 48 hours and contains CSVs for all 5 stores (CUL.csv, HAR.csv, LEX.csv, ROA.csv, WAY.csv) with First Name, Last Name, Phone, Email columns and at least 1 data row each — load these as Phase 1 output and skip Step 1B.
+If the most recent dated folder is within the last 48 hours and contains CSVs for all 5 stores (CUL.csv, HAR.csv, LEX.csv, ROA.csv, WAY.csv) with First Name, Last Name, Phone, Email columns and at least 1 data row each — load these as Phase 1 output and skip Step 1B. NOTE (2026-07-16): confirm this stash was itself produced with `chekkit-invites-range`, not the dead `chekkit-inactives` cell — if the CSVs are all near-empty (~45 bytes, header only), treat the stash as stale/broken and fall through to Step 1B regardless of its age.
 
 **Step 1B — Pipeline pull (the new default for Tuesday standalone runs)**
 
-Drop ONE trigger that fetches `chekkit-inactives` for all 5 stores via osascript. The pipeline lives at `/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/`.
+> ⚠️ **CRITICAL FIX (2026-07-16) — DO NOT use report name `chekkit-inactives`.** That cell (the old "Chekkit Inactives" saved report, past-7-days default criteria) is CONFIRMED BROKEN — it has returned `row_count: 0` for all 5 stores on every run since at least mid-May 2026 (verified via result JSONs for 2026-06-17, 06-23, 07-07, 07-14 — all `status: "success"` but `row_count: 0`, 45-byte empty CSVs). The saved report's own criteria is silently returning nothing; the pipeline mechanically "succeeds" so this failure was invisible unless someone checked row counts. **Use report name `chekkit-invites-range` instead** — a working replacement cell (built 2026-06-30, proven with real data: HAR 177 rows, LEX 93, ROA 214, WAY 240) that pulls the "Chekkit Invites 2" saved report with an EXPLICIT date range instead of relying on a saved-report default. This is additive infra already built and tested — nothing new to build, just point at the right cell name.
+
+Drop ONE trigger that fetches `chekkit-invites-range` for all 5 stores via osascript, with an explicit 7-day date range covering the prior Tue-Mon week (or whatever window this run needs). The pipeline lives at `/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/`.
 
 Generate trigger ID `chekkit-weekly-YYYY-MM-DDTHH-MM-SS`. Then:
 
 ```applescript
-set triggerId to "chekkit-weekly-2026-05-12T16-40-00"
-set triggerJson to "{\"id\":\"" & triggerId & "\",\"requested_at\":\"2026-05-12T16:40:00-04:00\",\"reports\":[{\"name\":\"chekkit-inactives\",\"stores\":[\"CUL\",\"HAR\",\"LEX\",\"ROA\",\"WAY\"],\"date\":\"2026-05-12\"}]}"
+set triggerId to "chekkit-weekly-2026-07-21T16-40-00"
+set triggerJson to "{\"id\":\"" & triggerId & "\",\"requested_at\":\"2026-07-21T16:40:00-04:00\",\"reports\":[{\"name\":\"chekkit-invites-range\",\"stores\":[\"CUL\",\"HAR\",\"LEX\",\"ROA\",\"WAY\"],\"date\":\"2026-07-15..2026-07-21\"}]}"
 set triggerPath to "/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/triggers/" & triggerId & ".json"
 do shell script "echo " & quoted form of triggerJson & " > " & quoted form of triggerPath
 ```
+
+The `"date"` field MUST be a `"YYYY-MM-DD..YYYY-MM-DD"` range (this cell has no default-week fallback like the old one did — pass the exact window explicitly). Each store takes ~90-100 seconds to complete (EnsureStore + saved-report select + grid scroll), so a 5-store run takes roughly 8-9 minutes total.
 
 Poll `results/<id>.result.json` every 30 seconds via osascript `test -f`. Timeout 15 minutes (30 polls).
 
 Read the result JSON, parse `cells[]`. For each `status="success"`, read the CSV via:
 
 ```applescript
-do shell script "cat '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/output/2026-05-12_CUL_chekkit-inactives.csv'"
+do shell script "cat '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/output/2026-07-21_CUL_chekkit-invites-range.csv'"
 ```
 
-The CSV columns are: `first_name, last_name, phone, email, last_visit` (last_visit may be blank on the pipeline cell's MVP). Load each row.
+**CSV schema differs from the old `chekkit-inactives` cell — read carefully:** columns are `first_name, last_name, phone, email, dnt, last_visit`, but the handler currently writes the customer's combined display name into the `first_name` column and leaves `last_name` and `last_visit` blank (a known MVP shortcut, not a bug to "fix" here — just don't expect a populated last_name/last_visit). `dnt` is a boolean-ish flag ("DNT" or blank) for do-not-text customers — treat non-blank `dnt` the same way `chekkit-inactives`' DNC rows were treated (exclude from phone campaign, but a valid email can still count toward Email Capture %). Load each row.
 
 If a cell's `status != "success"`, mark that store as failed and proceed without it. If ALL 5 fail OR the result JSON never arrives, post to #chekkit-updates: "⚠️ Chekkit weekly task couldn't pull Bravo data (pipeline failure) — re-run monday-bravo-combined-run or trigger manually." and stop.
 
@@ -130,4 +140,11 @@ Background — why this changed (2026-05-12)
 
 Before 2026-05-12 this task pulled Chekkit Inactives by driving Bravo via Parallels + computer-use. The Bravo Data Extraction pipeline now produces the same data as a CSV per store on demand. The pipeline cell uses a UIA grid walk (`WriteChekkitGridToCsv` in `reports/ChekkitInactives.ahk`) since the Bravo Customer list view doesn't expose Export under Layouts — the original SKILL's "manual transcription" Phase 1 path is now automated.
 
+═══════════════════════════════════════════════
+Background — why this changed AGAIN (2026-07-16)
+═══════════════════════════════════════════════
+
+The `chekkit-inactives` cell referenced above quietly broke sometime before mid-May 2026 — the underlying Bravo saved report ("Chekkit Inactives") started returning 0 rows every run while still reporting `status: success`, so nothing in the pipeline's own error handling caught it. This was discovered 2026-07-16 while investigating why the monthly bonus program's Email Capture % qualifier had no usable historical data. A working replacement cell, `chekkit-invites-range` (pulls the "Chekkit Invites 2" saved report with an explicit date range instead of a saved-report default), was already built and proven on 2026-06-30 but this task's SKILL had never been updated to use it — so every Tuesday run kept hitting the same dead report. Step 1B above now points at the correct cell. If row_count is 0 for all 5 stores again in the future, do not assume "no customers this week" — treat it as a pipeline fault and flag it loudly (this exact silent-failure pattern is what caused the multi-month gap).
+
 <!-- migrated to working model 2026-06-15 -->
+<!-- CRITICAL FIX: switched from dead chekkit-inactives cell to working chekkit-invites-range cell 2026-07-16 -->
