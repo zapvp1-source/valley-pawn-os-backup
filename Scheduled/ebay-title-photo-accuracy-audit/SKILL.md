@@ -4,6 +4,9 @@ description: Weekly: audit every eBay listing's title against its photos; auto-f
 model: claude-sonnet-4-6
 ---
 
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+
+
 Weekly eBay TITLE-vs-PHOTO accuracy audit across all 5 Valley Pawn stores. Goal: find listings whose TITLE does not match what the PHOTOS actually show, correct ONLY the narrow high-confidence cases, and flag everything else for Joshua/Preston. Use the osascript tool (mcp__Control_your_Mac__osascript) for all local/Mac work.
 
 AUTH: eBay Trading API. Store tokens from ~/ebay_weekly_rankings.py (STORES). App creds from ~/.vp_secrets/ebay_credentials.py (APP_ID, DEV_ID, CERT_ID) — never hardcode. Reuse patterns in ~/Documents/Claude/Projects/eBay/ebay_photos_pull.py, ebay_title_revise.py, ebay_toolfix_apply.py.

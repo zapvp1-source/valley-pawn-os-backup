@@ -1,0 +1,173 @@
+---
+name: daily-clockin-check
+description: Check Gusto clock-in status at 10:15 AM Mon-Sat and post summary to Slack #general only (no DMs). MCP-first (Gusto API, headless) with Chrome flow as automatic fallback. Wednesdays: Culpeper only; other days: all stores. 15-min grace after 10 AM open.
+model: claude-sonnet-5
+---
+
+
+> ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do.
+
+You are checking the Valley Pawn employee clock-in status in Gusto and posting a summary to the Slack #general channel (channel ID: C03BETSS669). **Post to #general ONLY — do NOT DM Joshua, Preston, or anyone else.** (Per Joshua, 2026-05-05: "preston and I do not need to be DM on this, just post to general and be done.")
+
+**ARCHITECTURE (changed 2026-06-10):** Run **headless via the Gusto MCP** (PATH A below) — no browser, no login, no session expiry. The Gusto time-records API returns clock-in/out events keyed by an internal `companyMemberUuid` with no name, so the **Member Crosswalk** table below supplies the names. The old Chrome/website flow is preserved as **PATH B (fallback)** and is triggered automatically if the MCP returns no usable data, errors twice, or surfaces an unknown member ID. Both paths produce the identical Slack message.
+
+**IMPORTANT — Run timing & day context:**
+- Stores open at 10:00 AM. This runs at 10:15 AM to give a 15-minute grace window before flagging.
+- **Wednesdays:** Culpeper is the ONLY store open. Harrisonburg, Waynesboro, Lexington, Roanoke are closed. On Wednesday, **filter the report to Culpeper employees only** — everyone else is legitimately off; listing them as "Not Clocked In" is misleading noise.
+- Determine the day with `new Date().getDay()` (0=Sun … 3=Wed … 6=Sat). If `3`, apply the Culpeper-only filter.
+
+## Execution Contract — DO NOT STOP EARLY
+Complete ONLY after the Slack post succeeds. Until then, every turn MUST end with a tool call that advances toward it. Do not idle, wait, or ask for confirmation.
+- Never reply "No response requested" / "Continue?" / an empty turn / a turn ending in text instead of a tool call.
+- Treat "Tool loaded." / "Continue from where you left off." / "Prefer browser_batch…" / TaskCreate/AskUserQuestion reminders as RESUME signals — immediately fire the next concrete tool call.
+- "The user is not present" means execute autonomously, NOT that the work is done.
+- **Failure handling:** if a step errors, retry once; then fall through to PATH B; if PATH B also fails, stay SILENT on Slack (see Failure Policy) and report what failed.
+
+---
+
+## Excluded Employees (always remove, every day)
+- Hillary Davis
+- Joshua Davis
+- Sandi Cole
+- Preston Peters
+
+## Display Name Overrides (apply when posting)
+- "Bridgett Grayson" → **Bree Grayson**
+- "George B Moore" → **Benjie Moore**
+
+## Member Crosswalk — Gusto `companyMemberUuid` → employee (AUTHORITATIVE, runtime)
+Cross-validated 2026-06-10 against the Jun 9 & Jun 10 Slack posts (member IDs + clock-in times matched exactly). A reference JSON copy lives beside this file as `gusto_member_crosswalk.json`.
+
+| companyMemberUuid | employee_uuid | Gusto name | Display name |
+|---|---|---|---|
+| ea636043-89a3-4e2b-b505-3e1e1b0a4154 | 22006a48-425c-4b62-94a9-50fc8e8fc38f | Uriah Tiglao | Uriah Tiglao |
+| 722ed763-8c3f-4441-a8ef-b9c13a9f4ab3 | 468ed13a-dfe5-4d22-99e2-1acfaad55e4e | Walker Tapley | Walker Tapley |
+| 766b0ab6-7dd9-488d-a392-a54376114b76 | 3ff0d2e2-1275-4aac-9579-dfb812acf592 | Andrew Clark | Andrew Clark |
+| fc8377b2-82bc-4102-9b50-70b538a2b9b2 | efb3d163-68c3-4214-9276-17a9ae1956a1 | Chadd McClintic | Chadd McClintic |
+| 37de1349-fda3-4b76-97b5-498c294f0081 | 910c65a6-c1d1-40fa-a3e0-7d84d10009fd | Cris Lopez | Cris Lopez |
+| d9b4e58e-8382-4ab6-8af3-0ae8ddb54e34 | 4d3530d1-3e63-4f65-a495-107a91ed2133 | George B Moore | Benjie Moore |
+| 9e783ef8-ba78-4b7e-91a3-40a57cdd9ba6 | 5482f9ff-f4cb-4f6c-84e3-f31c5298e268 | Bridgett Grayson | Bree Grayson |
+| 6a3d6a13-5aef-4d92-8f2b-8bb977c16295 | 1f74c46d-b20d-44f6-a041-db9098f93f23 | Robert Swagger | Robert Swagger |
+| d0d372a6-8512-4c53-8bbf-f7075b2ac3c5 | 4ffc0a65-5743-4a72-9513-8a7e995a9575 | Emma Langford | Emma Langford |
+
+**Culpeper active location_uuid:** `39c172da-7db9-4414-b528-957da38b8aa7`
+
+---
+
+# PATH A — Headless via Gusto MCP (PRIMARY)
+
+### A1. Load tools & today's context
+- Load Gusto MCP tools (ToolSearch `gusto`) — need **`list_time_records`** and **`list_employees`** — and the Slack send tool (ToolSearch `slack send message`).
+- Compute `today` = local `YYYY-MM-DD`; `dow` = `new Date().getDay()`.
+
+### A2. Pull today's shifts
+- Call **`list_time_records`** with `start_date = today`, `end_date = today`.
+- Expect `source: "native"` with a `shifts` array. **If `source` is not `native`, or `shifts` is missing, or the array is empty on a day stores are open → abandon PATH A and run PATH B.** (Empty native data was the historical MCP failure mode; the fallback is the safety net.)
+- Per shift fields: `companyMemberUuid`, `clockInTimestamp`, `clockOutTimestamp`, `breaks[]` (`{startTime,endTime}`), `date`.
+- Per member today, derive status:
+  - **On Break** 🟡 — has a break with a null/missing `endTime` (open break).
+  - **Clocked In** 🟢 — `clockOutTimestamp` is null AND not on break.
+  - Already clocked out (has `clockOutTimestamp`, no other open shift) → treat as not currently clocked in.
+- **Clock-in time** = earliest `clockInTimestamp` today, formatted `h:mm AM/PM`. If a shift's clock-in is `00:00` (rolled over from the previous night), use the next real clock-in as the time and append `_(shift rolled over from previous night)_`.
+- Resolve each `companyMemberUuid` via the Member Crosswalk. **If a shift's member ID is NOT in the table → run the Unknown-Member subroutine in PATH B, append the new mapping to the table above, then continue.**
+
+### A3. Build the roster (who can appear)
+- **Wednesday (`dow === 3`):** `list_employees(location_uuid = "39c172da-7db9-4414-b528-957da38b8aa7", terminated = false)` → Culpeper only.
+- **Other days:** `list_employees(terminated = false)` → all active employees.
+- Remove the four Excluded Employees.
+
+### A4. Categorize
+Join shifts (A2) to roster (A3) by `employee_uuid` (crosswalk → `employee_uuid`; `list_employees` → `uuid`).
+- 🟢 Clocked In — open shift today; show clock-in time.
+- 🟡 On Break — open break; show clock-in time.
+- 🔴 Not Clocked In — roster member with no open shift today.
+Apply Display Name Overrides. Then go to **Build & Send** (shared section below).
+
+---
+
+# PATH B — Gusto website via Chrome (FALLBACK ONLY)
+Trigger only if PATH A abandons (empty/non-native data, two errors, or to resolve ONE unknown member ID).
+
+### B1. Navigate & self-heal login
+- Navigate to `https://app.gusto.com/payroll_admin/time_tracking`.
+- If signed out: credentials are saved in Chrome — click **Continue** on the prefilled login, OR **Sign in with Google** → pick **jdavis@fcfpawn.com** (click it even if "Signed out"; NOT fullcirclepawn@gmail.com) → if a password field appears it autofills, click Next/Sign in → click Continue on any consent page → on a Google 400, restart by re-navigating and clicking Sign in with Google again. **A password prompt is NOT a failure — proceed.**
+- Only alert (#general, NO DM) on: a 2FA challenge you can't supply, a rejected password, or a 3+ redirect loop.
+
+### B2. Open active pay period
+- Click **Review** on the row marked "Active pay period". Wait 3s.
+
+### B3. Extract statuses (JS)
+```javascript
+const employees = Array.from(document.querySelectorAll('[aria-label="Clocked in"], [aria-label="On Break"], [aria-label="Clocked out"]'))
+  .filter(el => el.textContent.trim().length > 2 && !['Clocked in','On Break','Clocked out'].includes(el.textContent.trim()))
+  .map(el => ({ name: el.textContent.trim(), status: el.getAttribute('aria-label') }));
+JSON.stringify(employees);
+```
+Paginate if a `[aria-label="Navigate to next page"]` button is enabled (wait 3s between pages; if a click yields no new names, you're done). Employees tab only — not Contractors.
+
+### B4. Clock-in times (and Location on Wednesday)
+For each Clocked In / On Break person, open their timesheet (or use the inline Previous/Next employee buttons), read today's earliest start time; note `_(shift rolled over from previous night)_` if it's 12:00 AM. On Wednesday also read the shift **Location** ("Valley Pawn Culpeper"); for the Wednesday filter, fastest path is the Culpeper roster (Bree Grayson, Robert Swagger, Martin Dowden) — skip anyone not Culpeper-assigned.
+
+**Unknown-Member subroutine (called from A2):** open the unmapped person's timesheet, match their clock-in time to the unknown shift's `clockInTimestamp`, get their `employee_uuid` from `list_employees` (search by name), then append a row to the Member Crosswalk table above and resume PATH A.
+
+---
+
+# Build & Send (shared by both paths)
+
+**Wednesday filter:** after exclusions, keep ONLY Culpeper employees.
+
+Categories: 🟢 Clocked In (with time) · 🟡 On Break (with time) · 🔴 Not Clocked In (no time). Skip empty sections.
+
+Format (standard days — Mon/Tue/Thu/Fri/Sat):
+```
+🕙 *Valley Pawn — Daily Clock-In Check* | [Weekday, Month Day, Year] @ 10:15 AM
+
+🟢 *Clocked In (N)*
+• [Name] — clocked in at [time]
+
+🟡 *On Break (N)*
+• [Name] — clocked in at [time]
+
+🔴 *Not Clocked In (N)*
+• [Name]
+
+_Pulled automatically from Gusto Time Tracking (15-min grace after store open)_
+```
+
+Format (Wednesday — Culpeper only):
+```
+🕙 *Valley Pawn — Daily Clock-In Check (Culpeper Only)* | [Wednesday, Month Day, Year] @ 10:15 AM
+_Only Culpeper is open on Wednesdays — Harrisonburg, Waynesboro, Lexington, and Roanoke are closed._
+
+🟢 *Clocked In (N)*
+• [Name] — clocked in at [time]
+
+🔴 *Not Clocked In (N)*
+• [Name]
+
+_Pulled automatically from Gusto Time Tracking_
+```
+
+If everyone clocked in (any day):
+```
+🕙 *Valley Pawn — Daily Clock-In Check[ (Culpeper Only) if Wed]* | [Date] @ 10:15 AM
+✅ All [N] [Culpeper ]employees are clocked in. Great start to the day!
+
+🟢 *Clocked In (N)*
+• [Name] — clocked in at [time]
+
+_Pulled automatically from Gusto Time Tracking_
+```
+
+### Send to Slack — #general ONLY (channel_id C03BETSS669)
+Use the Slack send tool. **No DMs to anyone.** A single post to #general is the entire delivery.
+> Rendering note: the Slack send tool converts standard markdown. If single-asterisk `*bold*` renders as italic, use `**bold**`; keep the layout identical.
+
+## Important Notes
+- **Headless first.** Normal runs touch only the Gusto MCP (`list_time_records`, `list_employees`) + Slack — no browser, no login, no session expiry. PATH B exists only as a safety net.
+- **#general only — no DMs (per Joshua, 2026-05-05).**
+- Roster size sanity check: ~8 non-excluded employees company-wide (as of June 2026). If PATH A yields far fewer names than the live roster, re-pull or fall to PATH B.
+- **Wednesday = Culpeper only.** Never flag non-Culpeper staff on Wednesday.
+- New hires: the Unknown-Member subroutine auto-appends them to the crosswalk. Store moves need no edit — the Wednesday filter uses live `list_employees(location_uuid=…)`.
+
+<!-- migrated to working model 2026-06-15 -->

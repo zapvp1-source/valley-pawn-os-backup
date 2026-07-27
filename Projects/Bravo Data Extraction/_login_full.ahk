@@ -20,7 +20,7 @@ Send("FREE1@WAY")
 Sleep(300)
 Send("{Tab}")
 Sleep(150)
-Send("Health2035!")
+Send("Health2080!")
 Sleep(300)
 Send("{Enter}")
 ExitApp

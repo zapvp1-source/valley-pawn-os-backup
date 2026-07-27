@@ -110,6 +110,19 @@ Status legend:
 **Gaps in HR:**
 - (G) No automated 90-day review reminder
 - (G) No staff training tracker
+
+**Recruiting / Hiring stack (added 2026-07-23 — additive, expert-board decision):**
+- Careers page: `thevalleypawn.com/careers` — WordPress page with JobPosting JSON-LD (5 stores) so openings index free on Google Jobs. Applications → preston@fcfpawn.com + store email.
+- Hiring pipeline tracker: "Valley Pawn — Hiring Pipeline" Google Sheet in Valley Pawn Drive (candidates, source, stage, owner). Seeded with Preston's active 7/17 candidates + pending Waynesboro hire.
+- FB + GBP hiring posts: PUBLISHED 2026-07-23 via vp-social-publisher/Publer (11 posts: 5 store FB + brand FB + 5 GBP; manifest + results JSON in Projects/Human Resources/). Never mention firearms in hiring posts.
+- Brevo hiring email: campaign #51 "Hiring — Retail Sales Associates v2" queued 2026-07-23 3:00 PM ET to lists 3+10, preflight PASS. NOTE: current master template is **ID 48 (VP Master Template v2 — COMPACT)**, not 11 — preflight enforces this; template 11 lacks [[SUBJECT_FALLBACK]].
+- Employee referral program: LIVE 2026-07-23 — $250 bonus paid when a referred hire reaches 90 days; announced in #general. Track referrals in the Hiring Pipeline sheet.
+- ⚠️ facebook-post skill tokens are DEAD (Meta app disabled 2026-07-04 + password-change token invalidation, confirmed 2026-07-23). ALL social publishing — including one-off store posts — must route through vp-social-publisher (Publer). Do not attempt Graph API or developers.facebook.com.
+- Indeed employer side: Claude-in-Chrome on employers.indeed.com (see corrected Section 13.A row). Sponsored-spend decisions are Joshua-only (money).
+- Rejected: Indeed MCP connector as foundation (search-only), paid ATS (Workable/Ashby — unjustified at 5-store volume).
+- Close-the-loop: accepted candidates go through `onboard-employee` (Gusto invite flow).
+- `hiring-inbox-watch` — cloud scheduled task `trig_012TbuwabkcJuFj5roSMvvmc`, cron `0 14,16,18,20,22 * * 1-6` (10a/12p/2p/4p/6p ET Mon–Sat). Watches jdavis@ Gmail for subject "Valley Pawn Application" (careers-page mailto CCs jdavis@ as of 2026-07-23) + future to:hiring@fcfpawn.com → DMs Preston (U03BWMEM9GR) with parsed applicant details → labels threads HiringLogged for dedup. Platform Standard v2 failure DM to Joshua only. Applications route: preston@fcfpawn.com (cc jdavis@) → watcher → Preston DM + Hiring Pipeline sheet.
+- (G) v2 candidates: auto-append applicants to the Hiring Pipeline sheet via an Apps Script ingest endpoint (mirror the dashboard-data-collector pattern); create hiring@fcfpawn.com Google Group (2-min Admin console click — groups.google.com create flow not deep-linkable for automation).
 - (G) No employee NPS / satisfaction pulse
 
 ---
@@ -448,6 +461,7 @@ Every customer email MUST include:
 1. VP logo header (linked, with UTMs)
 2. Per-store **Call AND Text** buttons (both showing the number on the button face)
 3. Full 5-store directory at the bottom with Name + Address + Directions + Call + Text per row
+4. **Store-personalized "YOUR VALLEY PAWN STORE" header block** (standard since 2026-07-22): a `{% if contact.STORE == "..." %}` conditional block between the hero band and the body content slot that renders the recipient's own store — name, address, hours, Call/Text buttons with the store number, Directions, that store's Facebook page link, and the @valley_pawn Instagram link. Contacts with no STORE value get a 5-stores-across-Virginia fallback with the brand Facebook page. The block is baked into Brevo **VP Master Template (id 11)** with `[[CAMPAIGN_SLUG]]` UTM placeholders, and was injected via API on 2026-07-22 into staged campaigns W8–W12 (ids 26–30) + Monthly Gold & Silver 2026-08 (id 43). STORE attribute values are exact city names (Culpeper, Waynesboro, Harrisonburg, Lexington, Roanoke), kept current by the Tuesday `chekkit-weekly-review-requests` Brevo import (2026-07-22 backfill tagged ~7,034 contacts; segments "Store: <City>" ids 7–11). Store Facebook URLs: Culpeper facebook.com/100478091680300 · Waynesboro facebook.com/303444680270846 · Harrisonburg facebook.com/795439020329931 · Lexington facebook.com/valleypawnlexington · Roanoke facebook.com/188243497698836. Block UTM convention: `store_<city>_top_call` / `_top_text` / `_top_map` (counts toward the Calls+Texts-per-1,000 north star), `store_<city>_facebook`, `instagram_follow_top`. Future staged calendars duplicated from Master Template 11 inherit this automatically — never strip it.
 
 ### Rule 7 — Brand integrity (valley-pawn-context)
 - All 5 stores are "Valley Pawn" — never use "Dixie Pawn" anywhere
@@ -695,6 +709,7 @@ Current build order, subject to Joshua's redirects.
 | `Quickbooks Set UP` | QBO setup history | Reference |
 | `Short Term Rental Optimization` | Bald Rock STR project | Reference |
 | `Valley Pawn OS` | **THIS document** — created 2026-05-20 | **A** |
+| `VP Ops Engine` | **Claude-independent automation engine + consolidated KPI dashboard.** BUILD_SPEC.md v1.0 (2026-07-26, Fable design + expert board). Native launchd/Python jobs replace Claude as the runtime for Tier-1 analytics (store rankings, aged inventory, employee rankings, loan/layaway review, daily loan/inv text) + one dashboard (Command Center + vp-dashboard.pages.dev). daily-funds-verification explicitly OUT OF SCOPE (healthy, do-not-touch per Joshua). Build model: claude-sonnet-5. | **A — CURRENT PROJECT** |
 
 ---
 
@@ -707,8 +722,11 @@ Current build order, subject to Joshua's redirects.
 | 2026-06-29 | Added Section 13 (Tooling, Connectors & Capability Inventory) + Rule 0 (MCP-first) + Section 12 end-of-session update ritual. Staged `SKILL_DELTA_2026-06-29.md` for the `enterprise-map` + `valley-pawn-context` skill edits Joshua applies in Settings. | Joshua: keep the enterprise map + skills current with what tools/skills/connectors each session already has, so sessions stop re-explaining and can keep building efficiently. Board recommendation: one source of truth (BUSINESS_OS.md) + live-truth queries, not per-skill duplication. |
 | 2026-06-29 | Created `monthly-capability-drift-audit` scheduled task (1st of month, 7am → `#claude-notifications`) to keep Section 13 self-maintaining. | Make the capability inventory update itself instead of relying on each session to remember. |
 | 2026-07-01 | Monthly capability drift audit run. Registered ~30 new scheduled tasks (see 2026-07-01 addendum) that had shipped since 2026-05-20 (58 → 77 tasks live). Flagged 8 previously-active tasks now showing `enabled:false` (incl. `weekly-payroll-to-qbo`, `weekly-valley-pawn-email-campaign`) for Joshua. Plugins (16) + Section-13 connector snapshot in sync. No skill delta required. | Scheduled `monthly-capability-drift-audit`, autonomous run. |
+| 2026-07-23 | **Waynesboro to 6 days/week** (Mon–Sat 10–6, closed Sun; first open Wednesday 2026-07-29). Propagated in one session: **website** (38 pages/posts incl. homepage banner, FAQ, location/landing/spoke pages, footer template part `assembler//footer`, WPCode snippets 738 JSON-LD + 742 llms.txt); **Mac-side facts** (daily-clockin-check, chekkit-unanswered-alert, vp-ai-search-health-check, vp-website-deals-weekly SKILL.mds; vp_social_publisher STORE_FACTS; canonical_nap.json; G&S generate_store_pages + content; AI-GEO faq/city-snippets — backups `*.bak-2026-07-23`); **Brevo** (Template 11 Waynesboro block + footer line, staged campaigns 27–30 & 43 patched, announcement campaign #52 preflight-PASS scheduled Fri 7/24 10 AM to lists 3+10); **GBP** Waynesboro Wednesday 10–6 (edit pending Google review); **Facebook** page Hours field updated + FB (Waynesboro+Brand) & GBP announcement posts via Publer 7/23 4 PM; **Chekkit** one-time text campaign "Waynesboro 6 Days a Week 07/23/26" to 1,263 Waynesboro contacts (1,088 valid, sent 7/23 ~3:15 PM); also corrected 2 same-day hiring posts that said "closed Wednesdays" for Waynesboro. Staged `VALLEY_PAWN_CONTEXT_DELTA_2026-07-23.md` (Joshua applies in Settings → Capabilities). **PENDING:** Bing Places / Apple Business Connect / Nextdoor need one-time manual logins before hours can push; Yelp Waynesboro mid-claim (fold into 7/30 Yelp one-shot); Foursquare/YP/MapQuest skipped (no session/no UI). | Joshua: "we are opening waynesboro 6 days a week starting next week" — full-platform propagation. |
 
 ---
+
+| 2026-07-26 | **VP Ops Engine project opened** (`Projects/VP Ops Engine/BUILD_SPEC.md` v1.0). Goal: run all Tier-1 recurring analytics + Slack publishing with ZERO Claude in the runtime path (root cause: 7/23–25 credit outage silently stopped every Claude-engined task; Slack audit also found store rankings dead since 3/23 and the canonical aged-inventory post never shipped). Architecture: launchd + stdlib-Python jobs reusing Business Continuity common.py, Bravo pipeline CSVs, Command Center, and the Cloudflare dashboard. Additive only; existing tasks untouched; cutover per-job after shadow verification, Joshua flips each switch. daily-funds-verification excluded (healthy — do not touch). NOTE: #claude-notifications channel does not exist — failure alerts are DM-to-Joshua only (platform standard v2). | Joshua: "we need to build something standalone… completely independent of Claude, maintained and adjusted by Claude Code." |
 
 ## Section 12 — How To Update This Document
 
@@ -1035,7 +1053,7 @@ on 2026-06-10 and why `weekly-timekeeping-analysis` is a migration candidate —
 | **Brevo** | Email lists, campaigns, signup forms | Giveaway form `6a396f870ded3d8920b69c63` |
 | **WordPress.com** | thevalleypawn.com pages/blog (REST) | Landing pages 748–753, blog publisher |
 | **eBay** | Online-sales listings, orders | |
-| **Indeed** | Job posts, candidate/resume data | Hiring |
+| **Indeed** | ⚠️ CORRECTED 2026-07-23: registry connector is job-seeker search ONLY (`search_jobs`, `get_job_details`) and is NOT installed — it cannot post jobs, read applications, or access resumes. Employer side (posting, applicant review, candidate messaging) runs via Claude-in-Chrome on employers.indeed.com per Rule 0 fallback. Connector useful only for wage/posting benchmarking. | Hiring |
 | **GoDaddy** | Domain availability/registration | |
 | **Tax (Aiwyn / Column)** | Tax calc, jurisdictions, return PDFs | Quarterly/EOY prep handoff |
 | **Reviews/Reputation** | Category + overall review summaries, action plans | Reputation analytics |
@@ -1175,3 +1193,15 @@ _Applied by Claude per the "One Data Source" project (Joshua: review all schedul
 
 | 2026-07-08 | One Data Source consolidation audit — grepped every SKILL.md for shared Bravo pipeline cells / GL / Gusto API usage; found 4 concrete duplicate-pull patterns (GL export, store-KPI triplication, aged-inventory double-pull, Gusto dual-path) plus confirmation the map itself is stale. Findings appended here as Gap Analysis items 16-20; full report delivered to Joshua. No production task modified (Rule #4) — additive builds queued, cutover pending Joshua's go-ahead. | Joshua: "One Data Source" project — find and consolidate duplicate data pulls across all scheduled tasks/scripts. |
 
+
+---
+
+## Platform Standard — Failure Alerts + Field Communication (set by Joshua 2026-07-22, v2)
+
+Every scheduled task, in every runtime (local Mac tasks, cloud CCR triggers):
+
+1. FAILURE ALERTS — JOSHUA ONLY. If a run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT / user U03BB52MDSA): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM. Keep diagnostics in the run output/log/STATUS file for the next session. Joshua's DM is the ONLY destination for failure notices — never any team channel, store manager, employee, Preston, or any other person/medium (Slack, iMessage, email). This supersedes all earlier stay-silent-on-failure rules (the old silence policy hid the Chekkit Inactives outage for ~2 months).
+
+2. FIELD COMMUNICATION — NO TECH JARGON. Anything sent to the field (team channels, store managers, employees) must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths.
+
+Rolled out 2026-07-22 to all 158 SKILL.md files in Scheduled/ (backups: SKILL.md.bak-pre-failure-policy-20260722) and all 9 active cloud triggers. Any NEW scheduled task must include this block.

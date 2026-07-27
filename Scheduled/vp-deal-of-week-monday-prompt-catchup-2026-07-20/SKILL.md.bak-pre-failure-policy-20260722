@@ -1,0 +1,6 @@
+---
+name: vp-deal-of-week-monday-prompt-catchup-2026-07-20
+description: One-time catch-up: today's 8 AM vp-deal-of-week-monday-prompt run never fired (stuck since 2026-07-13). Runs it once now.
+---
+
+This is a one-time catch-up run. The regularly scheduled task `vp-deal-of-week-monday-prompt` (cron `0 8 * * 1`, meant to fire this morning at 8 AM ET) did not fire — its lastRunAt is still 2026-07-13, a full week stale, even though most other Monday tasks caught up successfully today. Read `/Users/joshuadavis/Documents/Claude/Scheduled/vp-deal-of-week-monday-prompt/SKILL.md` in full and execute its instructions exactly as written, right now, as if it were today's regular scheduled firing. Do not skip or summarize — actually perform the work (DM each store manager asking for this week's Deal of the Week submission). After completing, note in your run-summary that this was a manual catch-up for the missed 2026-07-20 08:00 ET run.

@@ -4,6 +4,9 @@ description: Weekly Valley Pawn AI-visibility scorecard — competitor-benchmark
 model: claude-sonnet-5
 ---
 
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+
+
 Produce the weekly Valley Pawn AI-visibility scorecard and post it to Slack #ai-marketing (private, channel ID C0BCEESUANM). Use the Claude in Chrome browser tools for the web/GA4 checks and the Slack MCP connector to post. Each run starts fresh — everything needed is below. This measures whether Valley Pawn is SHOWING UP in AI search, whether it BEATS its top local competitor, and whether AI tools send real traffic.
 
 === PART A — AI VISIBILITY, COMPETITOR-BENCHMARKED (prompt tests) ===

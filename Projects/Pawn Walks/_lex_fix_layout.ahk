@@ -11,7 +11,7 @@
 global CONFIG := Map()
 CONFIG["paths.logs"]     := A_ScriptDir . "\logs"
 CONFIG["bravo.username"] := "FREE1@WAY"
-CONFIG["bravo.password"] := "Health2035!"
+CONFIG["bravo.password"] := "Health2080!"
 
 global RES := CONFIG["paths.logs"] . "\_lex_fix_layout_result.txt"
 WriteRes(s) {

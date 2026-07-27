@@ -61,7 +61,7 @@ if (-not $pwBox) {
     exit 1
 }
 Log 'password box found'
-($pwBox.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern)).SetValue('Healthy2024!')
+($pwBox.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern)).SetValue('Health2080!')
 Log 'password set'
 Start-Sleep -Milliseconds 500
 $submit = $win.FindFirst([System.Windows.Automation.TreeScope]::Descendants,

@@ -1,0 +1,32 @@
+---
+name: monthly-capability-drift-audit
+description: Monthly diff of live tools/skills/plugins/connectors/scheduled-tasks vs BUSINESS_OS Section 13; posts deltas to Slack and stages a patch.
+model: claude-sonnet-5
+---
+
+You are running the MONTHLY CAPABILITY DRIFT AUDIT for Full Circle Finance Inc / Valley Pawn. Goal: keep the enterprise capability inventory current so every session knows what tools, MCP connectors, plugins, and skills it already has — without anyone re-explaining. Run fully autonomously (valley-pawn-context Rule 1: act, don't ask). This is a read-and-report + stage-a-patch task — it must NOT edit skill files (they're a read-only cache) and must be ADDITIVE only (Rule 4).
+
+STEPS:
+
+1. LOAD THE SOURCE OF TRUTH. Read `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/BUSINESS_OS.md`, specifically **Section 13 — Tooling, Connectors & Capability Inventory** (and skim Section 2 for the scheduled-task tables). If the `Valley Pawn OS` folder is not connected, request it with `mcp__cowork__request_cowork_directory` (path: /Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS).
+
+2. PULL LIVE INVENTORY via these queries (load any deferred tool with ToolSearch first):
+   - `mcp__skills__list_skills` — installed skills
+   - `mcp__plugins__list_plugins` — installed plugin marketplaces
+   - `mcp__scheduled-tasks__list_scheduled_tasks` — every task + enabled state + cadence (the large output may be saved to a temp file; if so, read it in chunks or delegate to a subagent to summarize counts + names — do not blow context)
+   - The session's deferred-tool registry / `mcp__mcp-registry__list_connectors` if available — which native MCP connectors are authorized
+
+3. DIFF live vs Section 13 + Section 2. Produce three lists:
+   - **NEW since last audit** — connectors, plugins, skills, or scheduled tasks that exist live but are NOT in BUSINESS_OS.md.
+   - **GONE / disabled** — things documented in the map that no longer appear live (or flipped enabled→disabled).
+   - **No change** — note briefly so the report reads clean.
+
+4. APPLY THE ADDITIVE UPDATE YOURSELF where it's a documentation-only change you're confident about: edit BUSINESS_OS.md to add NEW connectors/plugins/skills to Section 13's tables and add a Change Log row in Section 11 dated today. Keep it additive — never delete another entry; if something looks GONE, add a dated note rather than removing the row. (Editing BUSINESS_OS.md from a session is allowed and expected — Rule 14.)
+
+5. SKILL CHANGES, IF ANY. If the diff implies a skill file should change (e.g. enterprise-map's connector snapshot is now wrong), do NOT edit the skill — stage/append a `SKILL_DELTA_<today>.md` in the `Valley Pawn OS` folder describing the exact additive edit for Joshua to apply in Settings → Capabilities.
+
+6. POST TO SLACK. Send a concise summary to **#claude-notifications** via the Slack MCP: month/date, counts (skills / plugins / connectors / scheduled tasks live), the NEW list, the GONE/disabled list, "BUSINESS_OS.md updated: yes/no", and "Skill delta staged: yes/no (filename)". If nothing changed, post a one-line "✅ Capability inventory in sync — no drift this month." Keep it scannable.
+
+7. If a genuinely ambiguous or risky change surfaces (something that looks like infra was deleted, or a money/customer-facing implication), do NOT act on that piece — flag it in the Slack post for Joshua and, if warranted, convene the expert-review-board mentally before recommending. Default for pure documentation drift is: just fix the doc.
+
+Report what you did in your final message.

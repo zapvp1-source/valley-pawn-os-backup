@@ -4,7 +4,20 @@ description: Self-healing companion to vp-ai-visibility-metrics — repairs the 
 model: claude-sonnet-5
 ---
 
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+
+
 Runs Fridays 9:30am ET, ~30 minutes after `vp-ai-visibility-metrics` posts its scorecard to Slack #ai-marketing (private, ID C0BCEESUANM). Each run starts fresh. Device for any local/browser work: "mac-studio-2-local".
+
+> 🔁 **BRIDGE RETRY POLICY (added 2026-07-22 — fixes the re-reported-drift failure mode).**
+> The fixes this task exists for mostly REQUIRE the Mac bridge (mcp__remote-devices__* tools) for
+> browser work. At fire time, test the bridge (e.g. a Filesystem read of this file). If UNREACHABLE:
+> do NOT run a report-only pass — arm a retry via mcp__claude-code-remote__send_later 2 hours out
+> ("BRIDGE RETRY <N>/3", max 3). Only after the 3rd failed retry do a report-only pass, noting
+> plainly the Mac was offline all day. When the bridge IS reachable, do the actual fixes. For the
+> Autofix Log: if no Sheets write API is available, append rows by opening the sheet in the Mac's
+> Chrome via the remote-devices Chrome tools — hand-paste rows in Slack are a last resort only
+> when the bridge is down.
 
 CONTEXT: vp-ai-visibility-metrics tests Valley Pawn against a named local rival on 5 AI engines, pulls GA4 AI-referral traffic, and lists "Fix" items. THIS task acts on the parts that are safely, reversibly fixable by Claude alone. Everything else is named for Joshua, with why.
 
@@ -19,7 +32,9 @@ C. Copilot cell shows "n/t (blocked)" because copilot.microsoft.com requires a n
 Do NOT touch: duplicate/legacy third-party listings (e.g. a "Gold-N-Pawn" ghost listing at the wrong Roanoke address, MapQuest's separate "Dixie Pawn Inc." entry) — claiming/merging those requires a business-verification step Valley Pawn hasn't completed; review-volume gaps — these need real customer reviews, not an edit, so surface as a suggestion to route through the existing Chekkit review-request flow rather than building a new mechanism.
 
 STEP 3 — LOG EVERY ACTION.
-Append rows to the "Valley Pawn — AI Search Autofix Log" sheet (ID 1A_gJuj5siq2bEKE7-ZvVyjAs6DNK7rzEaKkBbkBY9yY) — same columns as vp-ai-search-autofix. If you changed how a metric is measured (e.g. the Copilot-via-Bing substitution), also note that in this week's row of the AI Visibility Tracker sheet (ID 17gkCl9BpB8yAQZcCs6cg8SDXQfaSGdyKceNJKfwMRMs) so the trend line stays interpretable.
+Append rows to the "Valley Pawn — AI Search Autofix Log" sheet (ID 1A_gJuj5siq2bEKE7-ZvVyjAs6DNK7rzEaKkBbkBY9yY, tab "Untitled") — same columns as vp-ai-search-autofix. If you changed how a metric is measured (e.g. the Copilot-via-Bing substitution), also note that in this week's row of the AI Visibility Tracker sheet (ID 17gkCl9BpB8yAQZcCs6cg8SDXQfaSGdyKceNJKfwMRMs) so the trend line stays interpretable.
+
+> ✅ FIXED 2026-07-22: there is no MCP tool that writes to Sheets, which is why this log sat empty since setup. Use the shared helper instead — it authenticates as Joshua via a cached OAuth token at ~/.config/valley-pawn/google-oauth-token.json and actually works (confirmed live, wrote 9 backfilled rows this date). Via osascript (do shell script), cd to ~/Documents/Claude/Scheduled/_shared and run a python3 -c snippet that imports sheets_helper.SheetsClient and calls .append(sheet_id, "Untitled!A:H", rows) for the Autofix Log, or .update()/.append() on the Tracker sheet for the Copilot-proxy note. Do NOT treat either sheet as unreachable or fall back to a Slack hand-paste — it works now.
 
 STEP 4 — NEEDS-JOSHUA QUEUE.
 Name each non-automatable item specifically with the one concrete reason (ownership/claim, needs a real review, needs his decision).

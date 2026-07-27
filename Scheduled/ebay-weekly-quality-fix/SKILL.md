@@ -4,6 +4,9 @@ description: Weekly: review new eBay listings across all 5 Valley Pawn stores, a
 model: claude-sonnet-5
 ---
 
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+
+
 Weekly eBay NEW-LISTING quality review and AUTO-FIX for all 5 Valley Pawn stores (Roanoke, Culpeper, Harrisonburg, Lexington, Waynesboro). Goal: review every listing created in the last 7 days, FIX the quality issues yourself, then DM each store's manager what was wrong, what you fixed, and why. Do NOT ask the team to fix things — you fix them.
 
 ACCESS / TOOLS:

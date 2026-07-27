@@ -73,7 +73,7 @@ CONFIG["paths.output"]       := A_ScriptDir . "\output"
 CONFIG["paths.results"]      := A_ScriptDir . "\results"
 CONFIG["paths.logs"]         := A_ScriptDir . "\logs"
 CONFIG["bravo.username"]     := "FREE1@WAY"
-CONFIG["bravo.password"]     := "Health2035!"
+CONFIG["bravo.password"]     := "Health2080!"
 
 ; ----- TUNABLES --------------------------------------------------------------
 

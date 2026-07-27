@@ -3,6 +3,9 @@ name: winback-build-and-schedule-2026-06-17
 description: One-shot: build & schedule the 3-email dormant win-back sequence via Brevo API to segment 6, and retarget upcoming weekly drafts to the Engaged segment 5.
 ---
 
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+
+
 You are executing a one-time email build for Valley Pawn (Full Circle Finance Inc). This was set up interactively by Joshua, who approved fully-autonomous execution including scheduling live customer sends. Read `valley-pawn-context` and `brevo-context` first (skim — brand voice, CTA rules, VP Master Template ID 11, API key location).
 
 FAILURE POLICY: If anything fails irrecoverably, do NOT post to Slack. DM Joshua (zapvp1@me.com) on Slack with a clear short failure summary and what state things are in. Only report success once the work genuinely completed.

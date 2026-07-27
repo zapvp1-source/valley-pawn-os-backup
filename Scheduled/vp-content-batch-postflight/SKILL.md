@@ -1,57 +1,63 @@
 ---
 name: vp-content-batch-postflight
-description: Monday 3:30 AM ET post-flight verification for vp-content-batch-weekly (which fired at 2:02 AM). Verifies manifest saved + Slack cards + Publer drafts. If ANY layer failed, auto-triggers self-healing retry via completion notification to Claude. DMs Joshua only when items are ready to approve.
+description: Monday 3:30 AM ET post-flight verification for vp-content-batch-weekly (which fired at 2:02 AM). Verifies manifest saved + Slack log cards + Publer publish confirmations. If ANY layer failed, auto-triggers self-healing retry via completion notification to Claude. DMs Joshua a one-time summary of what published (no approval step — retired 2026-07-21).
 model: claude-sonnet-5
 ---
 
-> **REPORTING POLICY:** Joshua sees ONE clean DM when ≥1 item is ready to approve. Silent otherwise. Claude gets the completion notification and self-heals.
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+
+
+> **REPORTING POLICY:** Joshua sees ONE clean DM summarizing what published this week. Silent on success only if nothing needs his attention; DM on any partial/failure too so he knows. Claude gets the completion notification and self-heals.
 
 Post-flight verification of Monday 2:02 AM's `vp-content-batch-weekly` run.
 
-## Step 1 — Read the run_log
-Load `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn Studios/output/{YYYY-MM-DD}/run_log_{YYYY-MM-DD}.json`.
+**2026-07-21 update: there is no approval step anymore.** Joshua said "I don't want to approve anything, I will give feedback after postings" — `vp-content-batch-weekly` now publishes every item immediately after staging the Slack log card in `#vp-studio-queue`, it does not wait for reactions. This task's job is to verify that actually happened (manifest saved, log card posted, AND Publer actually shows the posts scheduled/published) — not to check whether items are "ready to approve."
 
-If run_log missing → the batch didn't create it → treat as complete failure, jump to Step 4 (self-heal).
+**2026-07-21 update #2 — PER-PLATFORM VERIFICATION IS MANDATORY, not just a headline count.** Root cause found this date: the 2026-07-20 batch's noon "all 13 items published" DM was WRONG in a way that mattered — items 1-4 published fine to Facebook + GBP, but their Instagram leg was silently dropped (never scheduled, never published, never in Publer's Failed bucket — just missing entirely), because those 4 were staged/attempted before the IG-picker DOM-query fix (see the Brand-IG selection fix in `vp-content-batch-weekly`) was live. Items 5-13 correctly reached Instagram. A count like "13/13 published" is NOT sufficient evidence — it can be true for the FB/GBP legs while Instagram silently fails per-item with zero trace. Twitter/X is NOT part of this pipeline's routing at all (by design — manifests never list it), so don't flag its absence as a bug.
 
-## Step 2 — Verify manifest
-Check `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn Studios/output/{YYYY-MM-DD}/batch_manifest_{YYYY-MM-DD}.json` exists and has `routing_summary.total > 0`.
-- If missing OR total == 0 → batch produced no items → Step 4.
+From now on, Step 3 verification must be PER-PLATFORM, not just a total-item-count check:
+1. Read the manifest's routing_summary for this week — for each item, note which platforms it's supposed to hit (Facebook, Instagram, GBP — per-item, since Brand items are FB+IG only while store items are FB+IG+GBP).
+2. In Publer (`app.publer.com/#/calendar/posts`), filter the account sidebar to ONLY the shared Instagram account (`Valley Pawn`, account id `6a35979ebbd130d6e889c0bb`) and check BOTH the "Scheduled" and "Published" tabs for this week's items — confirm every item that should route to Instagram actually appears in one of those two buckets. Do the same spot-check for at least 2 store Facebook accounts and 1 GBP account.
+3. If any item is routed to Instagram in the manifest but is absent from both Publer's IG-Scheduled and IG-Published views (and not in Failed either) — that is a silent-drop, treat it as a Step 4 failure requiring self-heal, even if Facebook/GBP for that same item succeeded. Do not let a healthy FB/GBP leg mask a dead IG leg.
+4. Record the per-platform pass/fail counts in the DM (e.g. "Facebook 13/13, GBP 10/10, Instagram 9/13 — 4 items missing IG, see below") rather than a single aggregate number.
 
-## Step 3 — Verify Slack cards
-Query `#vp-studio-queue` via Slack MCP. Count messages from the run window (2:00 AM - 3:00 AM ET this Monday).
-- Expected: ≥15 (up to 20 with Deals-of-the-Week).
-- If count is 0 → Slack staging failed → Step 4.
-- If count > 0 → success path (Step 5).
+Then check Publer's calendar for this week — confirm the items from the manifest actually appear as scheduled/published posts, not just staged captions.
+- If Slack card exists but Publer shows nothing scheduled for a given platform leg → publishing failed after staging for that leg → Step 4 (retry the publish step specifically for that platform, not the whole batch, if the manifest/captions are already good).
+- If Slack card and Publer posts confirm across every routed platform for every item → success path (Step 5).
 
-## Step 4 — Self-heal (no Joshua DM)
+## Step 4 — Self-heal (no Joshua DM unless it stays broken)
 
-The batch failed silently. Try to recover:
+The batch failed silently, staged but didn't publish, or dropped one platform leg. Try to recover:
 
-1. Re-invoke `vp-content-batch` skill in-session with `--week-of {YYYY-MM-DD}` for the current week.
+1. Re-invoke `vp-content-batch-weekly`'s current instructions in-session for the current week (staging + immediate publish, no approval wait) — or for a partial per-platform drop, retry just the missing platform leg for the affected items using the current (fixed) Instagram DOM-query selection method.
 2. Watch for errors. Common failure modes:
    - Slack MCP auth-blocked in cron context → invoke skill will succeed because THIS session has Slack access → items get staged now.
    - MJ fast-hours ran out → downgrade to reuse-only mode, produce whatever can be generated from existing library.
    - Bravo export missing → fall back to Slack `#new-inventory` scan for the last 7 days.
-   - Publer login expired mid-run → skip Publer scheduling, complete asset generation + Slack staging only.
-3. After self-heal, re-run Steps 2 and 3 verification.
+   - Publer login expired mid-run → if staging succeeded but publish didn't, this is the likely cause. Retry publish only.
+   - Instagram account-picker silently selects nothing (pre-2026-07-21 bug pattern) → this is a PUBLISHING ACTION and requires Joshua's explicit one-time go-ahead in chat before creating/scheduling any new public post — do not auto-create replacement IG posts without asking. Surface the exact missing items and ask.
+3. After self-heal, re-run Steps 2 and 3 verification, per platform.
 
 If self-heal SUCCEEDS → jump to Step 5 with the recovered items.
-If self-heal FAILS → write full diagnostic to `output/{YYYY-MM-DD}/postflight_FAILED.json`. Completion notification alerts Claude. Do NOT DM Joshua — this is Claude's problem to fix before Sunday's pre-flight for next Monday.
+If self-heal FAILS, or requires publishing a new post that needs Joshua's go-ahead → write full diagnostic to `output/{YYYY-MM-DD}/postflight_FAILED.json`. DM Joshua a short note that this week's batch needs a manual look, naming exactly which items/platforms are missing and asking for a go-ahead to backfill — do not stay silent on a real failure now that there's no approval step to catch it downstream.
 
-## Step 5 — DM Joshua (success path only)
+## Step 5 — DM Joshua (summary, not an approval ask)
 
 Format:
 ```
-✅ Week of {YYYY-MM-DD} — {N} posts ready
+✅ Week of {YYYY-MM-DD} — {N} posts published (no action needed)
+Per-platform: Facebook {a}/{total}, GBP {b}/{total}, Instagram {c}/{total}
 
-Approve from your phone: #vp-studio-queue
 Publer calendar: https://app.publer.com/#/calendar/week
-
-Everything scheduled to publish across the week once you tap approve.
+{Brief note on anything skipped and why, e.g. Deals 0/5 — no fresh #deal-of-the-week submissions yet}
+{If any platform leg is short: name the specific items and platforms missing, and whether a backfill needs Joshua's go-ahead}
 ```
 
 ## Cron
 Monday 3:30 AM ET via `0 30 3 * * 1`. Runs 90 min after `vp-content-batch-weekly`. Long enough for the batch to complete, short enough to catch same-day failure.
 
 ## Hard rule
-Joshua is DM'd exactly once per week: either the success message above, or nothing. Any other communication is Claude→Claude via completion notifications.
+Joshua is DM'd exactly once per week with a "here's what published" summary — never an "approve this" ask. If something failed and couldn't self-heal, or a platform leg silently dropped, he gets a DM about that too, with per-platform counts, not just a total. Publishing a brand-new replacement post to backfill a dropped item ALWAYS requires Joshua's explicit go-ahead in that DM/thread before it happens — this is a hard platform rule, not a preference, and standing "don't ask me things" instructions do not override it.
+
+<!-- 2026-07-21: Rewrote for the no-approval-gate world. Was previously "DM only when ready to approve, silent otherwise" — now verifies actual Publer publish (not just Slack staging) and DMs a summary either way, since Joshua no longer reviews via approval clicks. -->
+<!-- 2026-07-21 #2: Added mandatory per-platform (esp. Instagram) verification after discovering a real silent-drop: this week's items 1-4 published fine to FB/GBP but never reached Instagram, and the prior postflight logic's aggregate "13 published" count was blind to it. -->

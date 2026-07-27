@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="x-apple-disable-message-reformatting">
+<title>[[SUBJECT_FALLBACK]]</title>
+<style>
+  body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+  table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+  img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+  body { margin: 0 !important; padding: 0 !important; width: 100% !important; background-color: #F7F9FC; }
+  a { color: #0099DD; text-decoration: none; }
+  @media screen and (max-width: 600px) {
+    .container { width: 100% !important; }
+    .stack { display: block !important; width: 100% !important; }
+    .px-mobile { padding-left: 20px !important; padding-right: 20px !important; }
+    .h1 { font-size: 26px !important; line-height: 1.2 !important; }
+    .h2 { font-size: 20px !important; line-height: 1.25 !important; }
+    .btn-row a { display: block !important; width: auto !important; margin: 6px 0 !important; }
+  }
+</style>
+</head>
+<body style="margin:0;padding:0;background-color:#F7F9FC;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+
+<!-- ============================================================ -->
+<!-- FIX 2026-07-23: [[PRIMARY_CTA_SEP]] token added to the Primary CTA link (see below). -->
+<!-- The old locked line hard-coded a bare "?" before utm_source, which silently produced a -->
+<!-- malformed double-"?" URL (broken query string) whenever PRIMARY_CTA_URL was itself a -->
+<!-- Google Maps search link (which already contains its own "?api=1&query=..."). -->
+<!-- This broke the Primary CTA on every store-spotlight send (Culpeper 6/18, Waynesboro 7/9, -->
+<!-- Harrisonburg 7/23 confirmed sent broken; Lexington + Roanoke spotlights caught in draft). -->
+<!-- RULE: fill [[PRIMARY_CTA_SEP]] with "&" if PRIMARY_CTA_URL ALREADY has a "?" in it -->
+<!-- (e.g. any https://www.google.com/maps/search/?api=1&query=... link). -->
+<!-- Fill [[PRIMARY_CTA_SEP]] with "?" if PRIMARY_CTA_URL has NO existing query string -->
+<!-- (e.g. bare https://thevalleypawn.com or https://thevalleypawn.com/follow links). -->
+<!-- ============================================================ -->
+<!-- CONTENT PLACEMENT RULES (2026-07-23 deep audit): -->
+<!-- 1. The NOTPAWN community box (and ALL body content) goes in the BODY CONTENT SLOT -->
+<!--    only. NEVER inside a LOCKED: STORE directory card. Every W1-W12 send shipped -->
+<!--    with the NOTPAWN box wrongly nested inside the Culpeper card - preflight v2 -->
+<!--    now hard-fails this. -->
+<!-- 2. STORE-SPOTLIGHT sends: the static Primary CTA must NOT say "Get directions to -->
+<!--    {spotlight store}" for everyone - a Culpeper customer must never get a main -->
+<!--    button pointing at Lexington. Use the store-aware jinja CTA chain (see sent -->
+<!--    campaigns #28/#30 for the working pattern) AND add the per-branch bridge line -->
+<!--    in the YOUR STORE header so the spotlight reads as a tour, not a mismatch. -->
+<!-- 3. Run Email Refinement/brevo_preflight.py <id> before scheduling - it enforces -->
+<!--    all of the above mechanically. -->
+<!-- Run a find for "[[PRIMARY_CTA_SEP]]" before sending — if the token is still literally -->
+<!-- present, it was not filled in and the link is broken. -->
+<!-- ============================================================ -->
+<!-- ============================================================ -->
+<!-- VP MASTER TEMPLATE — DUPLICATE THIS FOR EVERY SEND.            -->
+<!-- DO NOT EDIT THE LOCKED BLOCKS. Find-and-replace per send:      -->
+<!--   [[CAMPAIGN_SLUG]]      e.g. weekly_education_2026-05-21      -->
+<!--   [[HERO_EYEBROW]]       e.g. PAWN LOANS 101                   -->
+<!--   [[HERO_HEADLINE]]      e.g. How a pawn loan actually works    -->
+<!--   [[HERO_SUBLINE]]       1-sentence warm intro                  -->
+<!--   [[BODY_HTML]]          custom body content (paragraphs/steps) -->
+<!--   [[PRIMARY_CTA_LABEL]]  e.g. Get a free appraisal              -->
+<!--   [[PRIMARY_CTA_URL]]    https://thevalleypawn.com (or deeplink)-->
+<!--   [[PRIMARY_CTA_SUB]]    small text under button                -->
+<!--   [[SUBJECT_FALLBACK]]   plaintext fallback for <title>         -->
+<!-- ============================================================ -->
+
+<!-- Preheader (hidden — Brevo also has a preview-text field; this is belt+suspenders) -->
+<div style="display:none;font-size:1px;color:#F7F9FC;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;mso-hide:all;">
+  [[HERO_SUBLINE]]
+</div>
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F7F9FC;">
+  <tr>
+    <td align="center" style="padding:24px 12px;">
+
+      <table role="presentation" class="container" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;background-color:#FFFFFF;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(45,26,94,0.06);">
+
+        <!-- ============ LOCKED: LOGO HEADER ============ -->
+        <tr>
+          <td align="center" style="padding:28px 24px 16px 24px;background-color:#FFFFFF;">
+            <a href="https://thevalleypawn.com?utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=logo">
+              <img src="https://i0.wp.com/thevalleypawn.com/wp-content/uploads/2026/03/vp_logo_name-no-tag.png?fit=600%2C67&amp;ssl=1" width="280" alt="Valley Pawn" style="display:block;width:280px;max-width:280px;height:auto;">
+            </a>
+          </td>
+        </tr>
+
+        <!-- ============ HERO BAND (variable copy, locked structure) ============ -->
+        <tr>
+          <td style="background-color:#2D1A5E;padding:32px 28px 28px 28px;" class="px-mobile">
+            <p style="margin:0 0 8px 0;color:#3DB8E8;font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:700;">[[HERO_EYEBROW]]</p>
+            <h1 class="h1" style="margin:0 0 12px 0;color:#FFFFFF;font-size:30px;line-height:1.18;font-weight:800;letter-spacing:-0.5px;">
+              [[HERO_HEADLINE]]
+            </h1>
+            <p style="margin:0;color:#E6DEF7;font-size:15px;line-height:1.5;">
+              [[HERO_SUBLINE]]
+            </p>
+          </td>
+        </tr>
+
+        
+        <!-- ============ YOUR STORE — PERSONALIZED HEADER (renders per contact STORE attribute; added 2026-07-22) ============ -->
+        <tr>
+          <td style="padding:20px 32px 0 32px;" class="px-mobile">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#FAFBFE;border:1px solid #E6E9F0;border-left:4px solid #F58C8A;border-radius:8px;">
+              <tr>
+                <td style="padding:16px 18px;">
+{% if contact.STORE == "Culpeper" %}
+
+          <p style="margin:0 0 2px 0;color:#B85C5A;font-size:11px;letter-spacing:2px;font-weight:700;">YOUR VALLEY PAWN STORE</p>
+          <p style="margin:0 0 2px 0;color:#2D1A5E;font-size:17px;font-weight:700;line-height:1.3;">Culpeper</p>
+          <p style="margin:0 0 12px 0;color:#555555;font-size:13px;line-height:1.5;">571 James Madison Highway, Culpeper &middot; Mon–Sat 10am–6pm</p>
+          <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="btn-row">
+            <tr>
+              <td style="padding:0 6px 0 0;"><a href="https://thevalleypawn.com/c/culpeper?utm_content=store_culpeper_top_call" style="display:inline-block;padding:9px 12px;font-size:12px;font-weight:700;color:#FFFFFF;background-color:#0099DD;border-radius:6px;text-decoration:none;">&#x1F4DE; Call (540) 445-5510</a></td>
+              <td style="padding:0 6px;"><a href="https://thevalleypawn.com/t/culpeper?utm_content=store_culpeper_top_text" style="display:inline-block;padding:9px 12px;font-size:12px;font-weight:700;color:#FFFFFF;background-color:#3DB8E8;border-radius:6px;text-decoration:none;">&#x1F4AC; Text (540) 445-5510</a></td>
+              <td style="padding:0 0 0 6px;"><a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Culpeper+VA&utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=store_culpeper_top_map" style="display:inline-block;padding:9px 12px;font-size:12px;font-weight:700;color:#FFFFFF;background-color:#2D1A5E;border-radius:6px;text-decoration:none;">&#x1F5FA; Directions</a></td>
+            </tr>
+          </table>
+          <p style="margin:12px 0 0 0;color:#555555;font-size:13px;line-height:1.5;">
+            <a href="https://www.facebook.com/100478091680300?utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=store_culpeper_facebook" style="color:#2D1A5E;font-weight:700;text-decoration:underline;">&#x1F44D; Follow Culpeper on Facebook</a>
+            &nbsp;&middot;&nbsp;
+            <a href="https://www.instagram.com/valley_pawn?utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=instagram_follow_top" style="color:#2D1A5E;font-weight:700;text-decoration:underline;">&#x1F4F8; @valley_pawn on Instagram</a>
+          </p>
+{% elif contact.STORE == "Waynesboro" %}
+
+          <p style="margin:0 0 2px 0;color:#B85C5A;font-size:11px;letter-spacing:2px;font-weight:700;">YOUR VALLEY PAWN STORE</p>
+          <p style="margin:0 0 2px 0;color:#2D1A5E;font-size:17px;font-weight:700;line-height:1.3;">Waynesboro</p>
+          <p style="margin:0 0 12px 0;color:#555555;font-size:13px;line-height:1.5;">1321 West Broad Street, Waynesboro &middot; Mon, Tue, Thu, Fri & Sat 10am–6pm</p>
+          <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="btn-row">
+            <tr>
+              <td style="padding:0 6px 0 0;"><a href="https://thevalleypawn.com/c/waynesboro?utm_content=store_waynesboro_top_call" style="display:inline-block;padding:9px 12px;font-size:12px;font-weight:700;color:#FFFFFF;background-color:#0099DD;border-radius:6px;text-decoration:none;">&#x1F4DE; Call (540) 221-6346</a></td>
+              <td style="padding:0 6px;"><a href="https://thevalleypawn.com/t/waynesboro?utm_content=store_waynesboro_top_text" style="display:inline-block;padding:9px 12px;font-size:12px;font-weight:700;color:#FFFFFF;background-color:#3DB8E8;border-radius:6px;text-decoration:none;">&#x1F4AC; Text (540) 221-6346</a></td>
+              <td style="padding:0 0 0 6px;"><a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Waynesboro+VA&utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=store_waynesboro_top_map" style="display:inline-block;padding:9px 12px;font-size:12px;font-weight:700;color:#FFFFFF;background-color:#2D1A5E;border-radius:6px;text-decoration:none;">&#x1F5FA; Directions</a></td>
+            </tr>
+          </table>
+          <p style="margin:12px 0 0 0;color:#555555;font-size:13px;line-height:1.5;">
+            <a href="https://www.facebook.com/303444680270846?utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=store_waynesboro_facebook" style="color:#2D1A5E;font-weight:700;text-decoration:underline;">&#x1F44D; Follow Waynesboro on Facebook</a>
+            &nbsp;&middot;&nbsp;
+            <a href="https://www.instagram.com/valley_pawn?utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=instagram_follow_top" style="color:#2D1A5E;font-weight:700;text-decoration:underline;">&#x1F4F8; @valley_pawn on Instagram</a>
+          </p>
+{% elif contact.STORE == "Harrisonburg" %}
+
+          <p style="margin:0 0 2px 0;color:#B85C5A;font-size:11px;letter-spacing:2px;font-weight:700;">YOUR VALLEY PAWN STORE</p>
+          <p style="margin:0 0 2px 0;color:#2D1A5E;font-size:17px;font-weight:700;line-height:1.3;">Harrisonburg</p>
+          <p style="margin:0 0 12px 0;color:#555555;font-size:13px;line-height:1.5;">1790 East Market Street, Harrisonburg &middot; Mon, Tue, Thu, Fri & Sat 10am–6pm</p>
+          <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="btn-row">
+            <tr>
+              <td style="padding:0 6px 0 0;"><a href="https://thevalleypawn.com/c/harrisonburg?utm_content=store_harrisonburg_top_call" style="display:inline-block;padding:9px 12px;font-size:12px;font-weight:700;color:#FFFFFF;background-color:#0099DD;border-radius:6px;text-decoration:none;">&#x1F4DE; Call (540) 574-4500</a></td>
+              <td style="padding:0 6px;"><a href="https://thevalleypawn.com/t/harrisonburg?utm_content=store_harrisonburg_top_text" style="display:inline-block;padding:9px 12px;font-size:12px;font-weight:700;color:#FFFFFF;background-color:#3DB8E8;border-radius:6px;text-decoration:none;">&#x1F4AC; Text (540) 574-4500</a></td>
+              <td style="padding:0 0 0 6px;"><a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Harrisonburg+VA&utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=store_harrisonburg_top_map" style="display:inline-block;padding:9px 12px;font-size:12px;font-weight:700;color:#FFFFFF;background-color:#2D1A5E;border-radius:6px;text-decoration:none;">&#x1F5FA; Directions</a></td>
+            </tr>
+          </table>
+          <p style="margin:12px 0 0 0;color:#555555;font-size:13px;line-height:1.5;">
+            <a href="https://www.facebook.com/795439020329931?utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=store_harrisonburg_facebook" style="color:#2D1A5E;font-weight:700;text-decoration:underline;">&#x1F44D; Follow Harrisonburg on Facebook</a>
+            &nbsp;&middot;&nbsp;
+            <a href="https://www.instagram.com/valley_pawn?utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=instagram_follow_top" style="color:#2D1A5E;font-weight:700;text-decoration:underline;">&#x1F4F8; @valley_pawn on Instagram</a>
+          </p>
+{% elif contact.STORE == "Lexington" %}
+
+          <p style="margin:0 0 2px 0;color:#B85C5A;font-size:11px;letter-spacing:2px;font-weight:700;">YOUR VALLEY PAWN STORE</p>
+          <p style="margin:0 0 2px 0;color:#2D1A5E;font-size:17px;font-weight:700;line-height:1.3;">Lexington</p>
+          <p style="margin:0 0 12px 0;color:#555555;font-size:13px;line-height:1.5;">125 Walker Street, Lexington &middot; Mon, Tue, Thu, Fri & Sat 10am–6pm</p>
+          <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="btn-row">
+            <tr>
+              <td style="padding:0 6px 0 0;"><a href="https://thevalleypawn.com/c/lexington?utm_content=store_lexington_top_call" style="display:inline-block;padding:9px 12px;font-size:12px;font-weight:700;color:#FFFFFF;background-color:#0099DD;border-radius:6px;text-decoration:none;">&#x1F4DE; Call (540) 461-8349</a></td>
+              <td style="padding:0 6px;"><a href="https://thevalleypawn.com/t/lexington?utm_content=store_lexington_top_text" style="display:inline-block;padding:9px 12px;font-size:12px;font-weight:700;color:#FFFFFF;background-color:#3DB8E8;border-radius:6px;text-decoration:none;">&#x1F4AC; Text (540) 461-8349</a></td>
+              <td style="padding:0 0 0 6px;"><a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Lexington+VA&utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=store_lexington_top_map" style="display:inline-block;padding:9px 12px;font-size:12px;font-weight:700;color:#FFFFFF;background-color:#2D1A5E;border-radius:6px;text-decoration:none;">&#x1F5FA; Directions</a></td>
+            </tr>
+          </table>
+          <p style="margin:12px 0 0 0;color:#555555;font-size:13px;line-height:1.5;">
+            <a href="https://www.facebook.com/valleypawnlexington?utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=store_lexington_facebook" style="color:#2D1A5E;font-weight:700;text-decoration:underline;">&#x1F44D; Follow Lexington on Facebook</a>
+            &nbsp;&middot;&nbsp;
+            <a href="https://www.instagram.com/valley_pawn?utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=instagram_follow_top" style="color:#2D1A5E;font-weight:700;text-decoration:underline;">&#x1F4F8; @valley_pawn on Instagram</a>
+          </p>
+{% elif contact.STORE == "Roanoke" %}
+
+          <p style="margin:0 0 2px 0;color:#B85C5A;font-size:11px;letter-spacing:2px;font-weight:700;">YOUR VALLEY PAWN STORE</p>
+          <p style="margin:0 0 2px 0;color:#2D1A5E;font-size:17px;font-weight:700;line-height:1.3;">Roanoke</p>
+          <p style="margin:0 0 12px 0;color:#555555;font-size:13px;line-height:1.5;">2362 Peters Creek Road, Suite C, Roanoke &middot; Mon, Tue, Thu, Fri & Sat 10am–6pm</p>
+          <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="btn-row">
+            <tr>
+              <td style="padding:0 6px 0 0;"><a href="https://thevalleypawn.com/c/roanoke?utm_content=store_roanoke_top_call" style="display:inline-block;padding:9px 12px;font-size:12px;font-weight:700;color:#FFFFFF;background-color:#0099DD;border-radius:6px;text-decoration:none;">&#x1F4DE; Call (540) 562-0776</a></td>
+              <td style="padding:0 6px;"><a href="https://thevalleypawn.com/t/roanoke?utm_content=store_roanoke_top_text" style="display:inline-block;padding:9px 12px;font-size:12px;font-weight:700;color:#FFFFFF;background-color:#3DB8E8;border-radius:6px;text-decoration:none;">&#x1F4AC; Text (540) 562-0776</a></td>
+              <td style="padding:0 0 0 6px;"><a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Roanoke+VA&utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=store_roanoke_top_map" style="display:inline-block;padding:9px 12px;font-size:12px;font-weight:700;color:#FFFFFF;background-color:#2D1A5E;border-radius:6px;text-decoration:none;">&#x1F5FA; Directions</a></td>
+            </tr>
+          </table>
+          <p style="margin:12px 0 0 0;color:#555555;font-size:13px;line-height:1.5;">
+            <a href="https://www.facebook.com/188243497698836?utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=store_roanoke_facebook" style="color:#2D1A5E;font-weight:700;text-decoration:underline;">&#x1F44D; Follow Roanoke on Facebook</a>
+            &nbsp;&middot;&nbsp;
+            <a href="https://www.instagram.com/valley_pawn?utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=instagram_follow_top" style="color:#2D1A5E;font-weight:700;text-decoration:underline;">&#x1F4F8; @valley_pawn on Instagram</a>
+          </p>
+{% else %}
+
+          <p style="margin:0 0 2px 0;color:#B85C5A;font-size:11px;letter-spacing:2px;font-weight:700;">YOUR VALLEY PAWN</p>
+          <p style="margin:0 0 2px 0;color:#2D1A5E;font-size:17px;font-weight:700;line-height:1.3;">5 stores across Virginia</p>
+          <p style="margin:0 0 12px 0;color:#555555;font-size:13px;line-height:1.5;">Culpeper &middot; Waynesboro &middot; Harrisonburg &middot; Lexington &middot; Roanoke &mdash; full directory below.</p>
+          <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="btn-row">
+            <tr><td><a href="https://thevalleypawn.com?utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=store_finder_top" style="display:inline-block;padding:9px 12px;font-size:12px;font-weight:700;color:#FFFFFF;background-color:#2D1A5E;border-radius:6px;text-decoration:none;">&#x1F4CD; Find your nearest store</a></td></tr>
+          </table>
+          <p style="margin:12px 0 0 0;color:#555555;font-size:13px;line-height:1.5;">
+            <a href="https://www.facebook.com/thevalleypawn?utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=brand_facebook_top" style="color:#2D1A5E;font-weight:700;text-decoration:underline;">&#x1F44D; Valley Pawn on Facebook</a>
+            &nbsp;&middot;&nbsp;
+            <a href="https://www.instagram.com/valley_pawn?utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=instagram_follow_top" style="color:#2D1A5E;font-weight:700;text-decoration:underline;">&#x1F4F8; @valley_pawn on Instagram</a>
+          </p>
+{% endif %}
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- ============ BODY CONTENT SLOT ============ -->
+        <!-- Replace [[BODY_HTML]] with the send's main content.        -->
+        <!-- Use the same typography conventions: h2 in #2D1A5E,         -->
+        <!-- body paragraphs in #333 at 16px/1.6 line-height.            -->
+        <!-- Free-form: paragraphs, numbered steps, image rows, etc.    -->
+        <tr>
+          <td style="padding:32px 32px 8px 32px;" class="px-mobile">
+            [[BODY_HTML]]
+          </td>
+        </tr>
+
+        <!-- ============ LOCKED: TRUST STRIP (30-day warranty + tagline) ============ -->
+        <tr>
+          <td style="padding:8px 32px 28px 32px;" class="px-mobile">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F0F7FC;border-left:4px solid #0099DD;border-radius:6px;">
+              <tr>
+                <td style="padding:16px 18px;">
+                  <p style="margin:0;color:#2D1A5E;font-size:14px;line-height:1.55;">
+                    Everything we sell carries our standard <strong>30-day warranty</strong>. We buy outright too &mdash; gold, silver, electronics, tools, the works. That&rsquo;s our promise: what&rsquo;s right is right.
+                  </p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- ============ PRIMARY CTA (variable label/URL, locked structure) ============ -->
+        <tr>
+          <td align="center" style="padding:8px 32px 36px 32px;" class="px-mobile">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td align="center" bgcolor="#F58C8A" style="border-radius:999px;">
+                  <a href="[[PRIMARY_CTA_URL]][[PRIMARY_CTA_SEP]]utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=primary_cta" style="display:inline-block;padding:16px 32px;font-size:16px;font-weight:700;color:#2D1A5E;text-decoration:none;border-radius:999px;letter-spacing:0.2px;">
+                    [[PRIMARY_CTA_LABEL]] &rarr;
+                  </a>
+                </td>
+              </tr>
+            </table>
+            <p style="margin:14px 0 0 0;color:#777777;font-size:13px;line-height:1.5;">[[PRIMARY_CTA_SUB]]</p>
+          </td>
+        </tr>
+
+        <!-- ============ LOCKED: SECTION DIVIDER ============ -->
+        <tr>
+          <td style="padding:0 32px;" class="px-mobile">
+            <div style="height:1px;background-color:#E6E9F0;line-height:1px;font-size:1px;">&nbsp;</div>
+          </td>
+        </tr>
+
+        <!-- ============ LOCKED: 5-STORE DIRECTORY HEADER ============ -->
+        <tr>
+          <td style="padding:28px 32px 8px 32px;" class="px-mobile">
+            <p style="margin:0 0 4px 0;color:#0099DD;font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:700;">Find your store</p>
+            <h2 class="h2" style="margin:0;color:#2D1A5E;font-size:20px;line-height:1.25;font-weight:700;">Five Valley Pawn locations &mdash; all here to help</h2>
+          </td>
+        </tr>
+
+        <!-- ============ LOCKED: STORE — CULPEPER ============ -->
+        <tr>
+          <td style="padding:18px 32px 0 32px;" class="px-mobile">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#FAFBFE;border:1px solid #E6E9F0;border-radius:8px;">
+              <tr>
+                <td style="padding:16px 18px;">
+                  <p style="margin:0 0 2px 0;color:#2D1A5E;font-size:16px;font-weight:700;line-height:1.3;">Culpeper</p>
+                  <p style="margin:0 0 12px 0;color:#555555;font-size:14px;line-height:1.5;">571 James Madison Highway, Culpeper, VA 22701</p>
+                  <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="btn-row">
+                    <tr>
+                      <td style="padding:0 6px 0 0;">
+                        <a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Culpeper+VA&utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=store_culpeper_map" style="display:inline-block;padding:10px 14px;font-size:13px;font-weight:700;color:#FFFFFF;background-color:#2D1A5E;border-radius:6px;text-decoration:none;">&#x1F5FA; Directions</a>
+                      </td>
+                      <td style="padding:0 6px;">
+                        <a href="https://thevalleypawn.com/c/culpeper?utm_content=store_culpeper_call" style="display:inline-block;padding:10px 14px;font-size:13px;font-weight:700;color:#FFFFFF;background-color:#0099DD;border-radius:6px;text-decoration:none;">&#x1F4DE; Call (540) 445-5510</a>
+                      </td>
+                      <td style="padding:0 0 0 6px;">
+                        <a href="https://thevalleypawn.com/t/culpeper?utm_content=store_culpeper_text" style="display:inline-block;padding:10px 14px;font-size:13px;font-weight:700;color:#FFFFFF;background-color:#3DB8E8;border-radius:6px;text-decoration:none;">&#x1F4AC; Text (540) 445-5510</a>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- ============ LOCKED: STORE — WAYNESBORO ============ -->
+        <tr>
+          <td style="padding:12px 32px 0 32px;" class="px-mobile">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#FAFBFE;border:1px solid #E6E9F0;border-radius:8px;">
+              <tr>
+                <td style="padding:16px 18px;">
+                  <p style="margin:0 0 2px 0;color:#2D1A5E;font-size:16px;font-weight:700;line-height:1.3;">Waynesboro</p>
+                  <p style="margin:0 0 12px 0;color:#555555;font-size:14px;line-height:1.5;">1321 West Broad Street, Waynesboro, VA 22980</p>
+                  <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="btn-row">
+                    <tr>
+                      <td style="padding:0 6px 0 0;">
+                        <a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Waynesboro+VA&utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=store_waynesboro_map" style="display:inline-block;padding:10px 14px;font-size:13px;font-weight:700;color:#FFFFFF;background-color:#2D1A5E;border-radius:6px;text-decoration:none;">&#x1F5FA; Directions</a>
+                      </td>
+                      <td style="padding:0 6px;">
+                        <a href="https://thevalleypawn.com/c/waynesboro?utm_content=store_waynesboro_call" style="display:inline-block;padding:10px 14px;font-size:13px;font-weight:700;color:#FFFFFF;background-color:#0099DD;border-radius:6px;text-decoration:none;">&#x1F4DE; Call (540) 221-6346</a>
+                      </td>
+                      <td style="padding:0 0 0 6px;">
+                        <a href="https://thevalleypawn.com/t/waynesboro?utm_content=store_waynesboro_text" style="display:inline-block;padding:10px 14px;font-size:13px;font-weight:700;color:#FFFFFF;background-color:#3DB8E8;border-radius:6px;text-decoration:none;">&#x1F4AC; Text (540) 221-6346</a>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- ============ LOCKED: STORE — HARRISONBURG ============ -->
+        <tr>
+          <td style="padding:12px 32px 0 32px;" class="px-mobile">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#FAFBFE;border:1px solid #E6E9F0;border-radius:8px;">
+              <tr>
+                <td style="padding:16px 18px;">
+                  <p style="margin:0 0 2px 0;color:#2D1A5E;font-size:16px;font-weight:700;line-height:1.3;">Harrisonburg</p>
+                  <p style="margin:0 0 12px 0;color:#555555;font-size:14px;line-height:1.5;">1790 East Market Street, Harrisonburg, VA 22801</p>
+                  <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="btn-row">
+                    <tr>
+                      <td style="padding:0 6px 0 0;">
+                        <a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Harrisonburg+VA&utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=store_harrisonburg_map" style="display:inline-block;padding:10px 14px;font-size:13px;font-weight:700;color:#FFFFFF;background-color:#2D1A5E;border-radius:6px;text-decoration:none;">&#x1F5FA; Directions</a>
+                      </td>
+                      <td style="padding:0 6px;">
+                        <a href="https://thevalleypawn.com/c/harrisonburg?utm_content=store_harrisonburg_call" style="display:inline-block;padding:10px 14px;font-size:13px;font-weight:700;color:#FFFFFF;background-color:#0099DD;border-radius:6px;text-decoration:none;">&#x1F4DE; Call (540) 574-4500</a>
+                      </td>
+                      <td style="padding:0 0 0 6px;">
+                        <a href="https://thevalleypawn.com/t/harrisonburg?utm_content=store_harrisonburg_text" style="display:inline-block;padding:10px 14px;font-size:13px;font-weight:700;color:#FFFFFF;background-color:#3DB8E8;border-radius:6px;text-decoration:none;">&#x1F4AC; Text (540) 574-4500</a>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- ============ LOCKED: STORE — LEXINGTON ============ -->
+        <tr>
+          <td style="padding:12px 32px 0 32px;" class="px-mobile">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#FAFBFE;border:1px solid #E6E9F0;border-radius:8px;">
+              <tr>
+                <td style="padding:16px 18px;">
+                  <p style="margin:0 0 2px 0;color:#2D1A5E;font-size:16px;font-weight:700;line-height:1.3;">Lexington</p>
+                  <p style="margin:0 0 12px 0;color:#555555;font-size:14px;line-height:1.5;">125 Walker Street, Lexington, VA 24450</p>
+                  <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="btn-row">
+                    <tr>
+                      <td style="padding:0 6px 0 0;">
+                        <a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Lexington+VA&utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=store_lexington_map" style="display:inline-block;padding:10px 14px;font-size:13px;font-weight:700;color:#FFFFFF;background-color:#2D1A5E;border-radius:6px;text-decoration:none;">&#x1F5FA; Directions</a>
+                      </td>
+                      <td style="padding:0 6px;">
+                        <a href="https://thevalleypawn.com/c/lexington?utm_content=store_lexington_call" style="display:inline-block;padding:10px 14px;font-size:13px;font-weight:700;color:#FFFFFF;background-color:#0099DD;border-radius:6px;text-decoration:none;">&#x1F4DE; Call (540) 461-8349</a>
+                      </td>
+                      <td style="padding:0 0 0 6px;">
+                        <a href="https://thevalleypawn.com/t/lexington?utm_content=store_lexington_text" style="display:inline-block;padding:10px 14px;font-size:13px;font-weight:700;color:#FFFFFF;background-color:#3DB8E8;border-radius:6px;text-decoration:none;">&#x1F4AC; Text (540) 461-8349</a>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- ============ LOCKED: STORE — ROANOKE ============ -->
+        <tr>
+          <td style="padding:12px 32px 8px 32px;" class="px-mobile">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#FAFBFE;border:1px solid #E6E9F0;border-radius:8px;">
+              <tr>
+                <td style="padding:16px 18px;">
+                  <p style="margin:0 0 2px 0;color:#2D1A5E;font-size:16px;font-weight:700;line-height:1.3;">Roanoke</p>
+                  <p style="margin:0 0 12px 0;color:#555555;font-size:14px;line-height:1.5;">2362 Peters Creek Road, Suite C, Roanoke, VA 24017</p>
+                  <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="btn-row">
+                    <tr>
+                      <td style="padding:0 6px 0 0;">
+                        <a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Roanoke+VA&utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=store_roanoke_map" style="display:inline-block;padding:10px 14px;font-size:13px;font-weight:700;color:#FFFFFF;background-color:#2D1A5E;border-radius:6px;text-decoration:none;">&#x1F5FA; Directions</a>
+                      </td>
+                      <td style="padding:0 6px;">
+                        <a href="https://thevalleypawn.com/c/roanoke?utm_content=store_roanoke_call" style="display:inline-block;padding:10px 14px;font-size:13px;font-weight:700;color:#FFFFFF;background-color:#0099DD;border-radius:6px;text-decoration:none;">&#x1F4DE; Call (540) 562-0776</a>
+                      </td>
+                      <td style="padding:0 0 0 6px;">
+                        <a href="https://thevalleypawn.com/t/roanoke?utm_content=store_roanoke_text" style="display:inline-block;padding:10px 14px;font-size:13px;font-weight:700;color:#FFFFFF;background-color:#3DB8E8;border-radius:6px;text-decoration:none;">&#x1F4AC; Text (540) 562-0776</a>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- ============ LOCKED: HOURS LINE ============ -->
+        <tr>
+          <td style="padding:12px 32px 24px 32px;" class="px-mobile">
+            <p style="margin:0;color:#777777;font-size:13px;line-height:1.5;text-align:center;">
+              Culpeper: Mon&ndash;Sat 10am&ndash;6pm. All other stores: Mon, Tue, Thu, Fri &amp; Sat 10am&ndash;6pm (closed Wed &amp; Sun).
+            </p>
+          </td>
+        </tr>
+
+        <!-- ============ LOCKED: FOOTER BAND (DBA-only, never legal entity name) ============ -->
+        <tr>
+          <td align="center" style="background-color:#2D1A5E;padding:28px 28px 22px 28px;" class="px-mobile">
+            <p style="margin:0 0 12px 0;color:#FFFFFF;font-size:18px;font-weight:800;letter-spacing:0.5px;">What&rsquo;s Right Is Right.</p>
+            <p style="margin:0 0 16px 0;color:#E6DEF7;font-size:13px;line-height:1.55;">Family-owned in the Shenandoah Valley since 2014.</p>
+
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td style="padding:0 6px;">
+                  <a href="https://instagram.com/valley_pawn?utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=footer_instagram" style="display:inline-block;padding:10px 16px;font-size:13px;font-weight:700;color:#2D1A5E;background-color:#FFFFFF;border-radius:6px;text-decoration:none;">Follow @valley_pawn</a>
+                </td>
+                <td style="padding:0 6px;">
+                  <a href="https://thevalleypawn.com?utm_source=brevo&utm_medium=email&utm_campaign=[[CAMPAIGN_SLUG]]&utm_content=footer_website" style="display:inline-block;padding:10px 16px;font-size:13px;font-weight:700;color:#2D1A5E;background-color:#F58C8A;border-radius:6px;text-decoration:none;">thevalleypawn.com</a>
+                </td>
+              </tr>
+            </table>
+
+            <p style="margin:20px 0 0 0;color:#B9AED9;font-size:12px;line-height:1.6;">
+              Valley Pawn<br>
+              571 James Madison Highway, Culpeper, VA 22701<br>
+              You&rsquo;re receiving this because you&rsquo;re a Valley Pawn customer.<br>
+              <a href="{{ unsubscribe }}" style="color:#B9AED9;text-decoration:underline;">Unsubscribe</a> &middot;
+              <a href="{{ mirror }}" style="color:#B9AED9;text-decoration:underline;">View in browser</a>
+            </p>
+          </td>
+        </tr>
+
+      </table>
+
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

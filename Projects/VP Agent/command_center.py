@@ -26,6 +26,28 @@ RUN_LOG = os.path.join(AGENT_DIR, "logs", "command_center_runs.log")
 PROTECTED = {"com.valleypawn.commandcenter"}
 LABEL_RE = re.compile(r"^com\.valleypawn\.[a-z0-9._-]+$")
 
+# --- VP Ops Engine KPI page (additive, BUILD_SPEC.md §5.2) ---
+# Reads data/latest.json (written by vpops/store.py on every job run) --
+# this module never touches the SQLite db directly, only the JSON export,
+# so it stays decoupled from vp-ops' internals.
+VPOPS_LATEST = os.path.join(HOME, "Documents/Claude/Projects/VP Ops Engine/vp-ops/data/latest.json")
+VPOPS_STORE_METRICS = [
+    "Loan Balance", "Inventory Balance", "Total Assets", "Retail Sales Total Amt",
+    "Pawn Service Charges", "Scrap Sales", "Layaway Balance", "Net Revenue MTD",
+]
+VPOPS_AGED_METRICS = ["Aged Jewelry", "Aged Gen Merch", "Aged Total", "Serialized Subtotal Cost"]
+VPOPS_STORE_NAMES = {"CUL": "Culpeper", "HAR": "Harrisonburg", "LEX": "Lexington", "ROA": "Roanoke", "WAY": "Waynesboro"}
+
+
+def vpops_data():
+    if not os.path.exists(VPOPS_LATEST):
+        return {"generated_at": None, "kpis": {}, "runs": {}}
+    try:
+        with open(VPOPS_LATEST) as f:
+            return json.load(f)
+    except Exception:
+        return {"generated_at": None, "kpis": {}, "runs": {}}
+
 
 def sh(cmd, timeout=20):
     try:
@@ -239,7 +261,7 @@ button.dim{color:var(--dim)}button:disabled{opacity:.4}input[type=search]{backgr
 <table><thead><tr><th>Task</th><th>Schedule (cron)</th><th>State</th></tr></thead><tbody id="cjobs"></tbody></table>
 <h2>All tasks</h2>
 <div class="bar"><input type="search" id="q" placeholder="Filter tasks…">
-<a class="btn" href="{SHEET}" target="_blank">Data sheet ↗</a><button class="dim" onclick="load()">Refresh</button></div>
+<a class="btn" href="https://vp-dashboard.pages.dev/" target="_blank" style="color:var(--gold);font-weight:600">📊 Company Analytics ↗</a><a class="btn" href="/vpops" style="color:var(--gold);font-weight:600">⚙️ VP Ops KPIs</a><a class="btn" href="{SHEET}" target="_blank">Data sheet ↗</a><button class="dim" onclick="load()">Refresh</button></div>
 <table><thead><tr><th>Task</th><th>Status</th><th>Last activity</th><th style="width:250px">Actions</th></tr></thead><tbody id="rows"></tbody></table>
 <div class="foot"><b>▶ run</b> executes now on this Mac (native = plain script; agent = vp-agent with configured AI engine). <b>⏰ schedule</b> creates a local recurring schedule for that task — your Claude-independent backup schedule. Logs: Projects/VP Agent/logs/.</div>
 <script>
@@ -275,6 +297,57 @@ $('q').addEventListener('input',render);load();
 </script></body></html>"""
 
 
+VPOPS_PAGE = r"""<!DOCTYPE html><html><head><meta charset="utf-8"><title>Valley Pawn — VP Ops KPIs</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"><style>
+:root{--bg:#101418;--panel:#1a2027;--line:#2a323c;--text:#e8ecf1;--dim:#9aa7b4;--gold:#c9a227;--ok:#3fb27f;--warn:#d9a13b;--bad:#d96b6b}
+*{box-sizing:border-box;margin:0;padding:0}body{background:var(--bg);color:var(--text);font:15px/1.5 -apple-system,sans-serif;padding:28px}
+h1{font-size:22px}h1 span{color:var(--gold)}h2{font-size:15px;color:var(--dim);margin:26px 0 10px;text-transform:uppercase;letter-spacing:.6px}
+.sub{color:var(--dim);font-size:13px;margin:4px 0 20px}
+table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:8px}
+th,td{text-align:left;padding:8px 13px;border-bottom:1px solid var(--line);font-size:14px}
+th{color:var(--dim);font-size:11px;text-transform:uppercase;background:#151b21}tr:last-child td{border-bottom:none}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.pill{display:inline-block;padding:2px 9px;border-radius:99px;font-size:12px;font-weight:600}
+.pill.ok{background:#173527;color:var(--ok)}.pill.fail{background:#3a2020;color:var(--bad)}
+.pill.partial,.pill.flagged{background:#3a2f18;color:var(--warn)}.pill.unknown{background:#262c33;color:var(--dim)}
+a.btn{background:var(--panel);border:1px solid var(--line);color:var(--gold);border-radius:8px;padding:6px 11px;font-size:13px;cursor:pointer;text-decoration:none}
+.foot{color:var(--dim);font-size:12px;margin-top:16px}
+</style></head><body>
+<h1>Valley Pawn <span>VP Ops KPIs</span></h1>
+<div class="sub">Data from vpops/store.py's latest.json — zero Claude, zero Slack-parsing. <a class="btn" href="/">&larr; Command Center</a></div>
+<h2>Store Performance</h2>
+<table><thead><tr><th>Store</th><th class="num">Loan Bal</th><th class="num">Inv Bal</th><th class="num">Total Assets</th><th class="num">Retail Sales</th><th class="num">PSC</th><th class="num">Scrap</th><th class="num">Layaway Bal</th><th class="num">Net Rev MTD</th></tr></thead><tbody id="storeRows"></tbody></table>
+<h2>Aged Inventory</h2>
+<table><thead><tr><th>Store</th><th class="num">Aged Jewelry</th><th class="num">Aged Gen Merch</th><th class="num">Aged Total</th><th class="num">Subtotal Cost</th></tr></thead><tbody id="agedRows"></tbody></table>
+<h2>Job Health</h2>
+<table><thead><tr><th>Job</th><th>Status</th><th>Last run</th></tr></thead><tbody id="runRows"></tbody></table>
+<div class="foot" id="genAt"></div>
+<script>
+const $=id=>document.getElementById(id);
+const money=v=>v==null?'—':'$'+Number(v).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+async function load(){
+ const d=await (await fetch('/api/vpops-kpis')).json();
+ const stores=Object.keys(d.kpis||{}).sort();
+ const names={CUL:'Culpeper',HAR:'Harrisonburg',LEX:'Lexington',ROA:'Roanoke',WAY:'Waynesboro'};
+ const sm=['Loan Balance','Inventory Balance','Total Assets','Retail Sales Total Amt','Pawn Service Charges','Scrap Sales','Layaway Balance','Net Revenue MTD'];
+ $('storeRows').innerHTML=stores.map(s=>{const k=d.kpis[s]||{};
+  return `<tr><td>${names[s]||s}</td>`+sm.map(m=>`<td class="num">${money(k[m]&&k[m].value)}</td>`).join('')+`</tr>`;
+ }).join('')||'<tr><td colspan=9>no data yet — Job A hasn\'t run since this page was added</td></tr>';
+ const am=['Aged Jewelry','Aged Gen Merch','Aged Total','Serialized Subtotal Cost'];
+ $('agedRows').innerHTML=stores.map(s=>{const k=d.kpis[s]||{};
+  if(!am.some(m=>k[m]))return'';
+  return `<tr><td>${names[s]||s}</td>`+am.map(m=>`<td class="num">${money(k[m]&&k[m].value)}</td>`).join('')+`</tr>`;
+ }).filter(x=>x).join('')||'<tr><td colspan=5>no data yet — Job B hasn\'t run since this page was added</td></tr>';
+ const jobs=Object.keys(d.runs||{}).sort();
+ $('runRows').innerHTML=jobs.map(j=>{const r=d.runs[j];
+  return `<tr><td>${j}</td><td><span class="pill ${r.status}">${r.status}</span></td><td>${r.ts||'—'}</td></tr>`;
+ }).join('')||'<tr><td colspan=3>no job runs recorded yet</td></tr>';
+ $('genAt').textContent=d.generated_at?('Generated '+d.generated_at):'latest.json not found yet — run any vp-ops job once to create it';
+}
+load();
+</script></body></html>"""
+
+
 class H(BaseHTTPRequestHandler):
     def _s(self, code, body, ct="application/json"):
         b = body.encode()
@@ -288,10 +361,14 @@ class H(BaseHTTPRequestHandler):
         p = urlparse(self.path).path
         if p == "/":
             self._s(200, PAGE.replace("{SHEET}", SHEET_URL), "text/html; charset=utf-8")
+        elif p == "/vpops":
+            self._s(200, VPOPS_PAGE, "text/html; charset=utf-8")
         elif p == "/api/status":
             self._s(200, json.dumps({"tasks": scan_tasks(), "kpi": kpi_snapshot()}))
         elif p == "/api/schedules":
             self._s(200, json.dumps(list_schedules()))
+        elif p == "/api/vpops-kpis":
+            self._s(200, json.dumps(vpops_data()))
         else:
             self._s(404, "{}")
 

@@ -4,6 +4,9 @@ description: Every Tuesday at 4:40 PM — Pull weekly Chekkit Inactives customer
 model: claude-sonnet-5
 ---
 
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+
+
 ---
 name: chekkit-weekly-review-requests
 description: Every Tuesday at 4:40 PM — Pull weekly Chekkit Inactives customer data from Bravo POS for all 5 Valley Pawn stores via the Bravo Data Extraction pipeline, send Chekkit review-request campaigns (with Joshua as confirmation recipient) and post per-store counts to #chekkit-updates, then import the email addresses into Brevo's master list tagged "monthly" and post per-store email counts to #email-campaigns. No Parallels grant required.
@@ -84,6 +87,16 @@ For each store, in Chrome via the Claude-in-Chrome MCP:
 3. Add Joshua Davis (`804-930-4221`) as a confirmation recipient on every campaign.
 4. Send the campaign. Capture: total customers sent, send timestamp.
 
+**PROVEN UI RUNBOOK (verified working 2026-07-22, all 5 stores):**
+1. Prepare one CSV per store with header `First Name,Last Name,Phone,Email` — full customer name goes in First Name (matches prior campaigns), Last Name blank, phone as 10 digits. Append `JOSHUA DAVIS,,8049304221,jdavis@fcfpawn.com` as the last row of every store's file. The file must be in a location the Chrome extension's file_upload tool is allowed to read (the session outputs folder works; arbitrary Mac paths are rejected).
+2. dashboard.chekkit.io → location switcher (top-left store name) → pick store → Campaigns → Create New Campaign.
+3. Step 1: click "Upload CSV", then use `find` for the file input (type=file) and `file_upload` with its ref — never click Browse Files (native picker is invisible). Column mapping auto-detects (Name/Phone/Email; Last Name = Don't import is fine) → Confirm & Import.
+4. Validation screen: "JOSHUA DAVIS — has left a review" and "looks like a landline" warnings are EXPECTED — always click "Continue with All N Customers".
+5. Step 2: Campaign Name = `Review Invites MM/DD/YY` → Use Template → pick the store's "Review Invitation" template (each store profile has its own; verify the store name in the message body is spelled correctly before proceeding) → Next.
+6. Step 3: defaults are correct (Send immediately, One time) → Send Campaign → compliance dialog: check ALL THREE boxes (business identified / consent / STOP opt-out — all true for Bravo customers) → Confirm & Send. Success = green toast "Your message will send shortly" and campaign shows Queued → Sent in the list.
+
+**PHASE ORDER RULE (added 2026-07-22):** Phase 3 is the core deliverable. If Phase 3 cannot run (Chekkit unreachable, Chrome tools unavailable), still finish Phase 1 CSVs and leave them in place, but the run MUST NOT be considered complete — the CSVs + this runbook are everything the next session needs to finish the sends. (On 2026-07-21 the run pulled data and did the Brevo upload but silently skipped Phase 3; the sends were completed manually the next morning.)
+
 ═══════════════════════════════════════════════
 PHASE 4 — Brevo email import
 ═══════════════════════════════════════════════
@@ -148,3 +161,4 @@ The `chekkit-inactives` cell referenced above quietly broke sometime before mid-
 
 <!-- migrated to working model 2026-06-15 -->
 <!-- CRITICAL FIX: switched from dead chekkit-inactives cell to working chekkit-invites-range cell 2026-07-16 -->
+<!-- 2026-07-22: first successful end-to-end week on chekkit-invites-range. Pipeline pull worked (79 rows, 5 stores); Phase 3 had silently failed on the scheduled run and was completed manually — Chekkit UI runbook + phase-order rule added above. Also fixed the Harrisonburg Chekkit "Review Invitation" template typo (Harrionsburg → Harrisonburg) permanently in the template itself. -->

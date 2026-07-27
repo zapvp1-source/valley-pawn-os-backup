@@ -3,6 +3,9 @@ name: postmaster-reputation-check-2026-06-23
 description: One-time check of fcfpawn.com Gmail Postmaster reputation + Brevo send stats, DM'd to Joshua
 ---
 
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+
+
 One-time reputation check for Valley Pawn (Full Circle Finance Inc). Run autonomously; the user is not present. Goal: now that the win-back (Email 1 sent June 22) and recent weekly/monthly sends have given Google volume to measure, pull the provider-side reputation for fcfpawn.com plus the Brevo-side engagement numbers, and DM Joshua a concise summary. Do NOT post to any channel; DM only.
 
 == PART 1 — Brevo send stats ==

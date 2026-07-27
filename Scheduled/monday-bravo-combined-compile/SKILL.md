@@ -4,11 +4,16 @@ description: Monday morning orchestrator (PART 2 of 2) — fires ~75 min after m
 model: claude-sonnet-5
 ---
 
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+
+
 > ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
 
 You are the compile-and-post phase (PART 2 of 2) for the Monday morning combined Valley Pawn Bravo run. Trigger drop and pipeline data collection happened in `monday-bravo-combined-run` ~75 minutes ago. The pipeline should have produced all CSVs by now.
 
 Your job: read the CSVs and post to the 5 ops Slack channels, save the file outputs, DM Joshua the rollup. ~5-10 min total wall time. Stay light on context.
+
+**DUPLICATE-POST GUARD (added 2026-07-22 — duplicates were posted 7/6 and 7/13).** Before posting ANY report below, read the last ~20 messages of the target channel (slack_read_channel). If a post with the same report title for TODAY's date already exists in that channel, DO NOT post it again — skip that report and add a line to the Joshua DM rollup: `⏭️ <report> skipped — already posted to <channel> today`. This applies to every channel post in this task (Steps 1–4.5), including reruns of this task via the escape-hatch reschedule: a rescheduled run must only post the reports that have not already gone up today.
 
 **STANDING RULE — DATA ONLY in ops channel posts.** No source footers, no process commentary, no pipeline status notes. The team channels (#aged-inventory-review, #store-performance, #loan-review, #layaway-review, #employee-performance) get the data + action items only. Pipeline status / problems go to the DM to Joshua at the end.
 
@@ -19,14 +24,14 @@ STEP 0 — Locate today's CSVs
 Compute today's date in ET as `YYYY_MM_DD` and `YYYY-MM-DD` forms. Compute first-of-month for the employee report.
 
 Find result.json files for today's runs at `/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/results/`:
-- `monday-bravo-combined-YYYY-MM-DD.result.json` — main multi-report (aged-inventory, loans-75, layaways, employee-activity, chekkit-inactives × 5 stores)
+- `monday-bravo-combined-YYYY-MM-DD.result.json` — main multi-report (aged-inventory, loans-75, layaways, employee-activity, chekkit-inactives, fpd-cohort × 5 stores; fpd-cohort added 2026-07-22)
 - `monday-eom-{CUL,HAR,LEX,ROA,WAY}-YYYY-MM-DD.result.json` — 5 per-store EOM
 
 If the main result.json is missing or status != success, DM Joshua, dump the trigger ID, and stop. If one or more EOM result.jsons are missing, proceed without store-rankings (post the other 4 reports and note in DM).
 
 Read the cells in each result.json to know which (report, store) CSVs are in `output/`. Skip cells with status != "success" (note them in the DM).
 
-**COMPLETENESS GATE (do not report success on empty pulls).** A cell can report `status: success` and still have pulled nothing (`row_count: 0` / empty CSV). For the reports that MUST return data — **aged-inventory-summary, employee-activity, chekkit-invites** — treat `row_count == 0` or a missing/<50-byte CSV as **INCOMPLETE**, not success. (`loans-75-days-past-due` and `layaways` are single summary rows and 0 is legitimately valid — judge those by whether the CSV has its data row, not by a row threshold.) When any required report is incomplete:
+**COMPLETENESS GATE (do not report success on empty pulls).** A cell can report `status: success` and still have pulled nothing (`row_count: 0` / empty CSV). For the reports that MUST return data — **aged-inventory-summary, employee-activity, chekkit-invites** — treat `row_count == 0` or a missing/<50-byte CSV as **INCOMPLETE**, not success. (`loans-75-days-past-due` and `layaways` are single summary rows and 0 is legitimately valid — judge those by whether the CSV has its data row, not by a row threshold. `fpd-cohort` with 0 rows is also legitimately valid — a header-only CSV means zero first-payment defaults at that store, which is a GOOD result, not a failed pull.) When any required report is incomplete:
 - Still post the reports that DID return data (don't withhold good data).
 - The end-of-run DM MUST lead with `🚨 INCOMPLETE RUN` and list every empty/failed `(report, store)`. Never send the `✅ complete` rollup when a required report returned 0 rows.
 
@@ -184,6 +189,27 @@ If all 5 available, run the parse + format per `/Users/joshuadavis/Documents/Cla
 (Read that SKILL inline at run time to get the canonical format.)
 
 ==========================================================================
+STEP 4.5 — Post FPD ranking to #first-payment-default (C0B17894S2Y)
+==========================================================================
+
+*(Added 2026-07-22 — revives the stalled weekly-fpd-ranking report inside this run. Its
+`fpd-cohort` cells now ride in the combined trigger dropped by monday-bravo-combined-run.)*
+
+Read `output/<TODAY>_<STORE>_fpd-cohort.csv` for each store (row-level: `Ticket Number,
+Category, Full Description, Loan Amount`; header-only = clean store with zero FPD).
+Parse with a real CSV parser; strip `$`/`,` from Loan Amount.
+
+Follow `/Users/joshuadavis/Documents/Claude/Scheduled/weekly-fpd-ranking/SKILL.md`
+Steps 3, 3.5 and 4 exactly for: the three aggregations, the append-only 12-month archive
+(`_fpd-archive/fpd-history.csv`, dedupe by Ticket Number), and the Slack post format for
+#first-payment-default (C0B17894S2Y). DATA ONLY in the channel post, per the standing rule.
+The Word doc (that SKILL's Step 5) is NOT required in this run — skip it to stay light.
+
+If the fpd-cohort cells failed for some stores, post what succeeded with the standard
+`_Note: [STORE(S)] not included — pipeline cell failed._` line; if ALL failed, skip the
+post entirely and flag it in the Joshua DM.
+
+==========================================================================
 STEP 5 — Save files
 ==========================================================================
 
@@ -217,8 +243,10 @@ Pipeline-driven (no Parallels grant used):
 [✅/⚠️] monday-store-rankings — [posted/skipped, reason]
 ✅ weekly-loan-layaway-review — posted to <#C0B08RS2BMK|loan-review> + <#C04N24STDP1|layaway-review>
 ✅ weekly-employee-sales-rankings — posted to <#C0ATTLPQHR8|employee-performance>
+✅ weekly-fpd-ranking — posted to <#C0B17894S2Y|first-payment-default>
 
 [List any 🔴 action items pulled from the ops posts]
+[List any ⏭️ duplicate-guard skips]
 
 Downstream tasks (fire later, fed by what this task produced):
 - `weekly-loan-layaway-manager-dms` runs Mon 9 AM, reads `/Users/joshuadavis/Documents/Claude/loan-layaway-results-latest.json`

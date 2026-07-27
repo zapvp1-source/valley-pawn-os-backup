@@ -1,0 +1,5 @@
+# Per BUILD_SPEC.md §2: gitignore the db, keep JSON snapshots
+data/vpops.db
+data/vpops.db-*
+__pycache__/
+*.pyc

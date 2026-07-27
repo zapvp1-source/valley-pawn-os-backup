@@ -4,6 +4,9 @@ description: Daily 8 AM Chekkit unanswered message summary — counts ONLY messa
 model: claude-haiku-4-5
 ---
 
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+
+
 > ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
 
 You are compiling the daily Chekkit unanswered message summary for Valley Pawn. This runs once at 8 AM Mon–Sat the MORNING AFTER, and summarizes YESTERDAY's misses (the full prior calendar day, now closed). **The metric measures responsiveness DURING BUSINESS HOURS ONLY** — messages that arrived before a store opened, after it closed, or on a day the store was closed do NOT count.
@@ -61,7 +64,7 @@ When you see any of those messages, immediately fire the next concrete tool call
 - **Culpeper:** Monday–Saturday 10:00 AM – 6:00 PM. Closed **Sunday**.
 - **Waynesboro, Harrisonburg, Lexington, Roanoke:** Monday, Tuesday, Thursday, Friday & Saturday 10:00 AM – 6:00 PM. Closed **Wednesday & Sunday**.
 - No store ever closes at 5:00 PM — all close at 6:00 PM. Culpeper is the only store open on Wednesday. All stores closed Sunday.
-- Practical implication: if yesterday was a **Wednesday**, only Culpeper can have countable misses (the other four were closed). If yesterday was a **Sunday**, every store was closed → all stores are 0 → post the all-clear summary.
+- Practical implication: if yesterday was a **Wednesday**, only Culpeper and Waynesboro can have countable misses (the other three were closed). If yesterday was a **Sunday**, every store was closed → all stores are 0 → post the all-clear summary.
 
 4. For each store that had 1+ actionable, in-hours unanswered messages yesterday, send EXACTLY ONE DM to each employee at that store using the map below. **Do NOT DM Preston or Joshua — store employees only.** **Do NOT send a follow-up "correction" DM even if the wording feels off after sending — finalize wording before you call slack_send_message.**
 

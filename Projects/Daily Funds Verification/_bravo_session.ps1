@@ -57,7 +57,7 @@ $win = FindBravoWin
 $pwBox = $win.FindFirst([System.Windows.Automation.TreeScope]::Descendants,
     (New-Object System.Windows.Automation.PropertyCondition($AE::ClassNameProperty, 'PasswordBox')))
 if ($pwBox) {
-    ($pwBox.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern)).SetValue('Healthy2024!')
+    ($pwBox.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern)).SetValue('Health2080!')
     Log 'password set'
     Start-Sleep -Milliseconds 500
     $submit = $win.FindFirst([System.Windows.Automation.TreeScope]::Descendants,

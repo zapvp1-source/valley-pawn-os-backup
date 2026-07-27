@@ -4,6 +4,9 @@ description: Monday morning orchestrator (PART 1 of 2) — preflight, drop all r
 model: claude-sonnet-5
 ---
 
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+
+
 
 > ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
 
@@ -85,10 +88,19 @@ per-store EOM triggers are NO LONGER dropped here — they run in the separate
     {"name": "loans-75-days-past-due", "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "<TODAY>"},
     {"name": "layaways",               "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "<TODAY>"},
     {"name": "employee-activity",      "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "<FIRST_OF_MONTH>"},
-    {"name": "chekkit-invites",        "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "<TODAY>"}
+    {"name": "chekkit-invites",        "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "<TODAY>"},
+    {"name": "fpd-cohort",             "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "<TODAY>"}
   ]
 }
 ```
+
+> **FPD added 2026-07-22 (per Joshua + expert board).** The standalone `weekly-fpd-ranking`
+> task stalled after 2026-05-18 (repeated Bravo access failures running in its own session).
+> Its `fpd-cohort` pipeline cell now rides inside this combined trigger — same healthy
+> pipeline window, no separate session needed. The compile task posts the FPD ranking to
+> #first-payment-default (see monday-bravo-combined-compile STEP 4.5). `fpd-cohort` is a
+> proven pipeline cell (handler `reports/FpdCohort.ahk`, saved report "Claude First Payment
+> Default") — nothing else in this trigger changed.
 
 > **EOM / store-rankings is NOT dropped here anymore (2026-06-22).** The 5
 > per-store end-of-month triggers moved to the separate `monday-store-rankings`
@@ -103,14 +115,14 @@ Date conventions:
 STEP 2 — Schedule the compile task
 ==========================================================================
 
-The pipeline normally completes 30 trigger cells in ~50-65 minutes (25 main + 5 EOM, ~100s each + spacing). Schedule `monday-bravo-combined-compile` to fire 75 minutes from now.
+The pipeline now completes 30 main trigger cells (6 reports × 5 stores, ~100s each + spacing) in ~60-80 minutes. Schedule `monday-bravo-combined-compile` to fire 90 minutes from now (bumped from 75 on 2026-07-22 when fpd-cohort added 5 cells).
 
-Use the `mcp__scheduled-tasks__update_scheduled_task` tool to set `fireAt` to NOW + 75 minutes (ISO 8601 with -04:00 offset). Example:
+Use the `mcp__scheduled-tasks__update_scheduled_task` tool to set `fireAt` to NOW + 90 minutes (ISO 8601 with -04:00 offset). Example:
 
 ```
 update_scheduled_task(
   taskId: "monday-bravo-combined-compile",
-  fireAt: "2026-06-01T06:45:00-04:00"   // = drop time + 75 min
+  fireAt: "2026-06-01T07:00:00-04:00"   // = drop time + 90 min
 )
 ```
 
@@ -122,8 +134,8 @@ DM Joshua (`U03BB52MDSA`) on Slack:
 
 ```
 🚦 Monday Bravo combined run dispatched — YYYY-MM-DD
-1 multi-report trigger dropped (25 cells: aged-inv, loans, layaways, employee, chekkit × 5).
-Compile task scheduled to fire at HH:MM (about 75 min from now).
+1 multi-report trigger dropped (30 cells: aged-inv, loans, layaways, employee, chekkit, fpd × 5).
+Compile task scheduled to fire at HH:MM (about 90 min from now).
 EOM / store-rankings runs separately in monday-store-rankings (~10:30 AM).
 Pipeline running in the watcher meanwhile — no action needed.
 ```

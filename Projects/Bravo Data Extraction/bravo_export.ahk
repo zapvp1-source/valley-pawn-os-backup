@@ -18,6 +18,7 @@
 
 #Requires AutoHotkey v2.0
 #SingleInstance Off
+#Include lib\_secrets.ahk
 
 #Include lib\Json.ahk
 #Include lib\Bravo.ahk
@@ -41,14 +42,63 @@
 #Include reports\VendorReceiving.ahk
 #Include reports\LoanBase.ahk
 #Include reports\ItemsToPrice.ahk
+#Include reports\ScrapRefiningGold.ahk
+#Include lib\EnsureDashboard.ahk
+#Include reports\ChekkitGridOnly.ahk
+#Include reports\ChekkitInvitesRange.ahk
+#Include reports\FpdLookback12Mo.ahk
+#Include reports\BuysFromPublic.ahk
+#Include reports\IntakeDetail.ahk
+#Include reports\ActiveInvDetails.ahk
+#Include reports\SoldInvDetails.ahk
+#Include reports\SoldYesterday.ahk
+#Include reports\InventoryDetails.ahk
+#Include reports\LoanReviews.ahk
+#Include reports\LoanPortfolio2026.ahk
+#Include reports\EndOfMonth.ahk
+#Include reports\EndOfDayConsolidated.ahk
+#Include reports\BravoBusinessDashboard.ahk
+#Include reports\DepositsAndPaidOuts.ahk
+#Include reports\DisbursementJournal.ahk
+#Include reports\EndOfDay.ahk
+#Include reports\GeneralException.ahk
+#Include reports\InterStoreCashTransfer.ahk
+#Include reports\LargeCashTransactions.ahk
+#Include reports\Transfers.ahk
+#Include reports\CostAdjustment.ahk
+#Include reports\InventoryBase.ahk
+#Include reports\InventoryByLocation.ahk
+#Include reports\LostStolenOrDamaged.ahk
+#Include reports\VendorPurchase.ahk
+#Include reports\VendorRepairs.ahk
+#Include reports\LoanDisposition.ahk
+#Include reports\LoanHistory.ahk
+#Include reports\LoanJournal.ahk
+#Include reports\PawnActivitySummary.ahk
+#Include reports\ATFADBook.ahk
+#Include reports\ATFADCount.ahk
+#Include reports\CreditBalance.ahk
+#Include reports\CreditJournal.ahk
+#Include reports\DigitalMarketingSettlement.ahk
+#Include reports\LayawayBalance.ahk
+#Include reports\LayawayDeposits.ahk
+#Include reports\LayawayJournal.ahk
+#Include reports\SalesAccounting.ahk
+#Include reports\SoldInventory.ahk
+#Include reports\WebSettlement.ahk
+#Include reports\DropShipSettlement.ahk
+#Include reports\RetailReportsDashboard.ahk
+#Include reports\NicsTransfers.ahk
+#Include reports\Loans75GridRead.ahk
+#Include reports\PostToAccountingGL.ahk
+#Include reports\PostToAccountingPost.ahk
 ; Mirror the #Include list in bravo_watcher.ahk when new reports are added.
 
 global CONFIG := Map()
 global REPORT_HANDLERS := Map()
 
 Main() {
-    global CONFIG, REPORT_HANDLERS
-
+    global CONFIG, REPORT_HANDLERS, BRAVO_PASSWORD
     ; Slice 1: derive paths from A_ScriptDir. (JSON config parsing turned out
     ; to be flaky because of PowerShell stdout encoding; revisit in slice 2.)
     CONFIG["paths.project_root"] := A_ScriptDir
@@ -57,7 +107,7 @@ Main() {
     CONFIG["paths.results"]      := A_ScriptDir . "\results"
     CONFIG["paths.logs"]         := A_ScriptDir . "\logs"
     CONFIG["bravo.username"]     := "FREE1@WAY"
-    CONFIG["bravo.password"]     := "Health2035!"
+    CONFIG["bravo.password"] := (IsSet(BRAVO_PASSWORD) ? BRAVO_PASSWORD : "Health2080!")
 
     REPORT_HANDLERS["safe-register-journal"]    := PullSafeRegisterJournal
     REPORT_HANDLERS["uia-discover"]             := PullUiaDiscover
@@ -77,6 +127,8 @@ Main() {
     REPORT_HANDLERS["vendor-receiving"]         := PullVendorReceivingFromSidecar
     REPORT_HANDLERS["loan-base"]                := PullLoanBase
     REPORT_HANDLERS["items-to-price"]           := PullItemsToPrice
+    REPORT_HANDLERS["scrap-refining-gold"]      := PullScrapRefiningGold
+    REPORT_HANDLERS["sales-detail"]        := PullSalesDetail
     ; Add new registrations here.
 
     ; Parse args. AHK v2 exposes them in A_Args.

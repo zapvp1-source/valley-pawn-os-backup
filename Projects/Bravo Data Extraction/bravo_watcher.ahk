@@ -19,6 +19,7 @@
 #SingleInstance Force
 Persistent
 
+#Include lib\_secrets.ahk
 #Include lib\Json.ahk
 #Include lib\Bravo.ahk
 #Include lib\EnsureDashboard.ahk
@@ -44,6 +45,7 @@ Persistent
 #Include reports\IntakeDetail.ahk
 #Include reports\ActiveInvDetails.ahk
 #Include reports\SoldInvDetails.ahk
+#Include reports\SoldYesterday.ahk
 #Include reports\InventoryDetails.ahk
 #Include reports\LowDollarLoans.ahk
 #Include reports\LowDollarBuys.ahk
@@ -89,6 +91,8 @@ Persistent
 #Include reports\Loans75GridRead.ahk
 #Include reports\PostToAccountingGL.ahk
 #Include reports\PostToAccountingPost.ahk
+#Include reports\ScrapRefiningGold.ahk
+#Include reports\SalesDetail.ahk
 ; Add #Include for each new report module here.
 
 ; ----- Globals ---------------------------------------------------------------
@@ -101,8 +105,7 @@ global IS_PROCESSING := false  ; mutex so two timer ticks don't overlap
 ; ----- Boot ------------------------------------------------------------------
 
 Main() {
-    global CONFIG, REPORT_HANDLERS
-
+    global CONFIG, REPORT_HANDLERS, BRAVO_PASSWORD
     ; Slice 1: derive paths from SCRIPT_DIR. (JSON config parsing was flaky;
     ; revisit with a proper INI or fixed UTF-8 PS encoding in slice 2.)
     CONFIG["paths.project_root"]      := SCRIPT_DIR
@@ -111,7 +114,7 @@ Main() {
     CONFIG["paths.results"]           := SCRIPT_DIR . "\results"
     CONFIG["paths.logs"]              := SCRIPT_DIR . "\logs"
     CONFIG["bravo.username"]          := "FREE1@WAY"
-    CONFIG["bravo.password"]          := "Health2035!"
+    CONFIG["bravo.password"] := (IsSet(BRAVO_PASSWORD) ? BRAVO_PASSWORD : "Health2080!")
     CONFIG["watcher.poll_interval_ms"] := "30000"
     CONFIG["watcher.trigger_glob"]    := "*.json"
 
@@ -149,6 +152,7 @@ Main() {
     REPORT_HANDLERS["intake-detail"]           := PullIntakeDetail
     REPORT_HANDLERS["active-inv-details"]       := PullActiveInvDetails
     REPORT_HANDLERS["sold-inv-details"]         := PullSoldInvDetails
+    REPORT_HANDLERS["sold-yesterday"]           := PullSoldYesterday
     REPORT_HANDLERS["inventory-details"]        := PullInventoryDetails
     REPORT_HANDLERS["low-dollar-loans"]         := PullLowDollarLoans
     REPORT_HANDLERS["low-dollar-buys"]          := PullLowDollarBuys
@@ -198,6 +202,8 @@ Main() {
     REPORT_HANDLERS["items-to-price"]               := PullItemsToPrice
     REPORT_HANDLERS["post-to-accounting-gl"]        := PullPostToAccountingGL
     REPORT_HANDLERS["post-to-accounting-post"]      := PullPostToAccountingPost
+    REPORT_HANDLERS["scrap-refining-gold"]          := PullScrapRefiningGold
+    REPORT_HANDLERS["sales-detail"]               := PullSalesDetail
     ; Add additional registrations here as we build out reports.
 
     pollMs := Integer(CONFIG.Get("watcher.poll_interval_ms", "30000"))

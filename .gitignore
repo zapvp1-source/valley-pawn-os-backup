@@ -23,6 +23,15 @@
 !*.bat
 !*.cmd
 
+# VP Ops Engine (BUILD_SPEC.md Phase 1, "what already exists" row 10):
+# heartbeat/latest.json snapshots, launchd plists, and golden-test fixtures
+# need to ride this backup too. Scoped to this one project, not a global
+# *.json/*.plist whitelist, so it can't pull in data files elsewhere in
+# ~/Documents/Claude that are excluded on purpose.
+!Projects/VP Ops Engine/vp-ops/**/*.json
+!Projects/VP Ops Engine/vp-ops/**/*.plist
+!Projects/VP Ops Engine/vp-ops/**/*.txt
+
 # Extra safety: never track these even if matched above
 *.pem
 *.key

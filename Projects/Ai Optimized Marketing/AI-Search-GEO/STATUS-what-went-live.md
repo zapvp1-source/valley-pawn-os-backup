@@ -36,3 +36,23 @@ Every published change is reversible: deactivate WPCode snippet 738 (schema) or 
 
 ## Expected result
 AI citation lift typically appears 4–8 weeks after this kind of deployment.
+
+---
+
+## ⚠️ Re-verification — July 22, 2026 — item #5 above ("Dixie Pawn RESOLVED") was wrong, correcting the record
+
+A weekly AI-visibility scorecard run flagged "Dixie Pawn" surfacing again in a Google organic result. Live-checked it directly rather than trusting the prior claim:
+
+- **MapQuest — confirmed still live.** `https://www.mapquest.com/us/virginia/dixie-pawn-inc-410128854` — a listing named **"Dixie Pawn Inc."** at 1790 E Market St, Harrisonburg (the correct address, wrong name) sits **separately** from the correct "Valley Pawn" MapQuest listing at the same address. This listing is marked **"Owner-Verified"**, meaning someone (presumably under the old ownership/name, pre-2026 rebrand) already claimed it — that verification lock is why it hasn't self-corrected and won't via a public "report a problem" form.
+- **Bing Places & Apple Business Connect** — not re-verified live today (no logged-in session available in this browser — see blocker below), but the June 22 `Refine Social Media/audit_2026-06-22/FINDINGS.md` audit (more recent and more thorough than this file's June 19 claim) already documented Dixie Pawn still showing on **both**, including Apple Maps showing **Dixie Pawn only, with no Valley Pawn listing at all**. Treat the June 19 "RESOLVED" line above as **inaccurate** — it likely reflected Google/Bing search-result spot checks, not a systematic per-directory listing audit.
+- **thevalleypawn.com/sell-gold-harrisonburg** — re-checked live, page is 100% correct (Harrisonburg address/phone throughout). The Google organic snippet that showed Culpeper's info was a stale SERP cache, not a live site bug. No action needed; will self-correct as Google recrawls, can be sped up via Search Console re-index request if it hasn't cleared in a few weeks.
+- **Gemini "wrong Harrisonburg address" claim (from this week's AI-visibility scorecard)** — also **retracted**. Gemini said 1790 East Market Street, which is the correct canonical address. That was a false positive in the scorecard, not a real AI hallucination.
+
+### Blocker — needs Joshua, can't be pushed autonomously
+Claimed/verified business directory listings require account login + identity/2FA verification that I won't do on Joshua's behalf (no saved session exists for any of these three consoles in this browser):
+
+1. **MapQuest** — `https://business.mapquest.com/?sourceUrl=https%3A%2F%2Fwww.mapquest.com%2Fus%2Fvirginia%2Fdixie-pawn-inc-410128854&mqid=410128854` → "Sign in to get started," then claim/dispute the existing owner-verified "Dixie Pawn Inc." listing and rename it (or merge into the correct Valley Pawn listing at the same address).
+2. **Bing Places for Business** — `https://www.bingplaces.com/` → sign in, find Harrisonburg, verify/fix the name field. Per the `directory-listing-push` skill, Bing's syndication layer has a history of reverting this specific field even after a prior fix.
+3. **Apple Business Connect** — `https://businessconnect.apple.com/` → sign in, claim/fix the Harrisonburg listing (currently showing Dixie Pawn with no Valley Pawn alternative at all on Apple Maps — the most severe of the three).
+
+Once Joshua logs into any of these (or shares/creates dedicated business accounts), I can drive the actual field edits via `directory-listing-push`. Re-run `directory-listing-monitor` after each fix to confirm it stuck — all three directories have a documented history of silently reverting this specific correction.

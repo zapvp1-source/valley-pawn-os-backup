@@ -3,6 +3,9 @@ name: vp-website-shop-nightly
 description: Refresh thevalleypawn.com/shop/ twice daily (7am & 3pm ET) — pulls all 5 stores' full live eBay inventory, filters weapons-adjacent, rebuilds the searchable buy-now grid, writes it to the /shop/ page (WP page id 833) via the site REST API, posts summary to #website. Sold items drop off automatically. Additive; never touches /retail/.
 ---
 
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+
+
 Refresh Valley Pawn's online store at https://thevalleypawn.com/shop/ with the FULL current eBay inventory from all 5 stores. This is ADDITIVE — never touch /retail/ or any other page/task. Use the Claude in Chrome browser tools (the browser is logged into eBay and WordPress via saved passwords; never ask anyone to log in).
 
 METHOD (this exact browser-only method is proven to work — follow it):

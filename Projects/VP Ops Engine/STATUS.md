@@ -1,0 +1,34 @@
+# VP Ops Engine — STATUS
+
+**Project:** Standalone (Claude-independent) KPI dashboard + automation engine.
+**Spec:** BUILD_SPEC.md v1.0 (2026-07-26) — the authoritative build document.
+**Build model:** claude-sonnet-5. Design escalations go back to a Fable/Opus design session.
+
+## Current state
+- 2026-07-26 — Design complete. BUILD_SPEC.md v1.0 written and expert-board reviewed. Joshua approved proceeding; corrections applied (daily-funds-verification untouchable + healthy; #claude-notifications does not exist → DM-only failure alerts). Slack audit evidence captured in spec Section 4 (store rankings dead since 3/23, aged inventory canonical format never posted, 7/20 Monday run partial failure, 7/23–25 credit outage all-silent).
+- 2026-07-26 — **Phase 0 triage complete.** `TRIAGE.md` written: all 160 task folders in `Documents/Claude/Scheduled/` classified (Tier1/Tier2/NativeAlready/DeadStale/DO-NOT-TOUCH). Key findings:
+  - `daily-funds-verification` and `monday-bravo-combined-run` confirmed DO-NOT-TOUCH.
+  - Jobs A–D (store rankings, aged inventory, employee rankings, loan/layaway) each have **two overlapping legacy code paths** (a standalone weekly task + `monday-bravo-combined-compile`) both targeting the same canonical channel, neither reliably working per the Slack audit — golden-test the new renderers against the latest real Slack post per channel, not either legacy script.
+  - `monday-store-rankings` vs `weekly-store-kpis` look like true duplicates (same EOM CSVs, same output) — flagged, not resolved.
+  - Bravo pipeline itself is healthy (survived the outage — `safe-register-journal` fresh through 7/23); but Job A–D's specific data cells (EOM, aged-inventory-summary, employee-activity, loans-75-days-past-due, layaways) are stale (7/13–7/21) because Claude-side triggering stopped. Job E must refresh all before A–D golden-test.
+  - `weekly-aged-inventory-review` folder is empty (0 bytes) — likely an abandoned duplicate.
+  - Several other Dead/Stale duplicates found (`distributor-setup-monitor`, `cloud-cover-keep-alive`, `bald-rock-auto-contract`/`-signing-status`, gun-audit report/summary overlap) — listed in TRIAGE.md §4–5 for Joshua, not touched.
+- 2026-07-26 — **Phase 1 Jobs A, B, C, D, G built and shadow-verified**, same day. `vp-ops/` repo created with stdlib-only `common.py`/`xlsxmin.py`/`bravo.py`/`formats.py`, one `jobs/job_*.py` per job, golden tests in `tests/` for every job. All four report jobs live-posted for real to `#vp-ops-shadow` (a real private channel Joshua created) using a real Slack bot token (no Claude in the post path) — see `vp-ops/STATE.md` for full detail and the several BUILD_SPEC-vs-reality discrepancies found along the way (all documented there, none blocking).
+  - Biggest fix: discovered there was no Slack bot token anywhere on the Mac (Hard Rule #6 assumed one existed) — created a Slack app, token now in Keychain.
+  - Jobs E (live Bravo trigger) and F (real iMessages to Joshua+Preston) intentionally NOT run live — built but held for an explicit go-ahead, since both have real-world side effects beyond this project's own test channel.
+- 2026-07-26 (same day, continued) — Joshua gave the go-ahead to finish live. **Job F ran for real**: real Bravo pull + real iMessages confirmed delivered to Joshua and Preston. **Job E ran for real** and correctly failed safe — Bravo's VM is stuck on a ClickOnce update dialog (external infrastructure issue, not a vp-ops bug; also blocks the existing `monday-bravo-combined-run`, flagged for whoever's next). **All 7 launchd agents installed and loaded** — the system now runs unsupervised starting tonight. Jobs A-D are scheduled into `#vp-ops-shadow` for Monday's real cycle (not production yet, per the spec's cutover gate); Jobs E/F/G are live.
+- 2026-07-26 (same day, continued further) — Joshua reviewed, invited the bot to all 5 production channels, and approved cutover. **Jobs A-D are now LIVE**, posting for real to `#store-performance`, `#aged-inventory-review`, `#employee-performance`, `#loan-review`, `#layaway-review`. Along the way: cleared the stuck Bravo dialog via computer-use (turned out to be a one-click "already running" collision, not the ClickOnce issue first suspected), fixed a real timeout-handling bug in the health-check code, fixed a real file-locator bug (employee-activity's inconsistent filename convention), and caught+fixed a genuine hard-rule violation before it went live — a fresh Bravo export had names in ALL CAPS, which broke the case-sensitive "never publish Preston Peters" check. Full story in `vp-ops/STATE.md`.
+- 2026-07-26 (same day, continued further still) — **Phase 2 (dashboard) complete.** SQLite store (`vpops/store.py`) wired into all 8 jobs; Command Center got a new `/vpops` KPI page (additive, existing page verified unbroken); `publish_dashboard.py` renders vp-ops data into the existing `vp-dashboard.pages.dev` site and deployed live, verified on the real site. Confirmed the old Claude-side Monday tasks were never auto-scheduled via CCR triggers in the first place (checked live via `RemoteTrigger`) — no duplicate-posting risk turned out to exist. Along the way: corrected a git structure mistake (accidentally created a nested repo inside vp-ops/ instead of using the existing parent `~/Documents/Claude` repo; fixed by extending its `.gitignore` whitelist additively), and fixed two real bugs (a `store` variable shadowing bug in 3 job files, a Python-3.9-incompatible traceback call in the crash reporter).
+- NEXT: tomorrow's first fully-unattended scheduled cycle (all 8 jobs, 05:30-09:45 ET) is the real proof point — today was hands-on.
+
+## Not started
+- Nothing from BUILD_SPEC.md's charter remains unbuilt. Remaining acceptance-criteria items (BUILD_SPEC.md §9) are about *proving* what's built runs unattended over time, not building anything new.
+
+## Completed
+- Phase 0 triage (`TRIAGE.md`, 2026-07-26).
+- Phase 1 — all 7 report/text/watchdog jobs built and verified. **A, B, C, D, F are LIVE in production.** E proven working end-to-end (manual run). G live, failure-DM path untested (no real miss has happened yet).
+- Phase 2 — SQLite store, Command Center KPI page, and live dashboard publish all built and verified end-to-end (2026-07-26).
+- All 8 launchd agents installed — VP Ops Engine runs autonomously on schedule, zero Claude required (2026-07-26).
+
+## Decisions log
+- 2026-07-26 — Architecture: native Mac engine (launchd + stdlib Python) reusing Business Continuity common.py, Command Center, Cloudflare Pages site. Rejected: VPS (adds cost, doesn't remove Mac dependency), Claude-with-credit-alarms (fails the requirement), Apps-Script-only (can't read Bravo CSVs).

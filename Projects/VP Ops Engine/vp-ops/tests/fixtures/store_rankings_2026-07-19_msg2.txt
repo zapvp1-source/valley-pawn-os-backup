@@ -1,0 +1,56 @@
+:bar_chart: _Full Category Rankings_
+
+_Loan Balance_
+:first_place_medal: Culpeper — $194,168.51
+:second_place_medal: Harrisonburg — $176,051.62
+:third_place_medal: Roanoke — $147,467.12
+4th Waynesboro — $119,996.28
+5th Lexington — $82,717.60
+
+_Inventory Balance_
+:first_place_medal: Culpeper — $211,600.63
+:second_place_medal: Harrisonburg — $161,496.83
+:third_place_medal: Roanoke — $143,377.50
+4th Waynesboro — $116,805.27
+5th Lexington — $87,685.62
+
+_Total Assets (Inventory + Loan)_
+:first_place_medal: Culpeper — $405,769.14
+:second_place_medal: Harrisonburg — $337,548.45
+:third_place_medal: Roanoke — $290,844.62
+4th Waynesboro — $236,801.55
+5th Lexington — $170,403.22
+
+_Retail Sales Total Amt_
+:first_place_medal: Waynesboro — $25,146.78
+:second_place_medal: Culpeper — $19,639.11
+:third_place_medal: Roanoke — $17,412.10
+4th Harrisonburg — $11,291.09
+5th Lexington — $9,084.64
+
+_Pawn Service Charges_
+:first_place_medal: Harrisonburg — $13,849.79
+:second_place_medal: Roanoke — $13,127.45
+:third_place_medal: Culpeper — $11,899.80
+4th Waynesboro — $8,098.49
+5th Lexington — $5,299.68
+
+_Scrap Sales_
+All stores at $0.00 (no scrap activity for the period)
+
+_Layaway Balance_
+:first_place_medal: Culpeper — $29,029.59
+:second_place_medal: Harrisonburg — $27,348.12
+:third_place_medal: Roanoke — $15,865.82
+4th Lexington — $8,530.36
+5th Waynesboro — $8,514.96
+
+_Net Revenue MTD_
+:first_place_medal: Roanoke — $25,967.37
+:second_place_medal: Culpeper — $25,778.59
+:third_place_medal: Waynesboro — $23,622.54
+4th Harrisonburg — $21,761.36
+5th Lexington — $11,243.32
+
+_Company Totals_
+Loan Balance: $720,401.13 | Inventory Balance: $720,965.85 | Layaway Balance: $89,288.85 | Net Revenue MTD: $108,373.18

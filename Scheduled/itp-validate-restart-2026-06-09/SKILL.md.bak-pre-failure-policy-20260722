@@ -1,0 +1,25 @@
+---
+name: itp-validate-restart-2026-06-09
+description: One-shot: validate + restart Bravo watcher to load the new items-to-price cell.
+model: claude-sonnet-5
+---
+
+One-shot infrastructure task — validate the Bravo pipeline watcher and, only if it validates cleanly, restart it to load the newly-added `items-to-price` cell. Do NOT post to Slack. Do NOT modify any file. Just run the steps below and report the status-file contents back.
+
+This must run via `prlctl exec` (it hangs from interactive sessions but works from this scheduled-task session — the canonical pattern used by monday-bravo-combined-run and daily-funds-verification). When building osascript, avoid literal single quotes inside the AppleScript source (the osascript wrapper breaks on them) — use AppleScript `quoted form of` for any shell argument that needs quoting, e.g. set the VM UUID in a variable and pass `quoted form of uuid`.
+
+If `mcp__Control_your_Mac__osascript` is not available yet, load it via ToolSearch `select:mcp__Control_your_Mac__osascript`, then probe with `do shell script "echo READY"`. If still unavailable after waiting ~30s and retrying a couple times, stop silently.
+
+STEP 1 — Run the validate+restart wrapper on the Windows VM (synchronous; the wrapper validates bravo_watcher.ahk + bravo_export.ahk with AutoHotkey /validate and only restarts the watcher if BOTH pass). In AppleScript:
+  set uuid to "{7dc84f03-4e68-4f43-9596-bf8a7dfb8e0a}"
+  set ps to "powershell.exe -NoProfile -ExecutionPolicy Bypass -File " & quoted form of "Y:\\Documents\\Claude\\Projects\\Bravo Data Extraction\\_itp_validate_and_restart.ps1"
+  do shell script "/usr/local/bin/prlctl exec " & quoted form of uuid & " --current-user " & ps
+
+If that single call is killed by the ~25s osascript-wrapper timeout, that is OK — the wrapper keeps running inside the VM. Wait ~20s, then proceed to Step 2.
+
+STEP 2 — Read and report the status file (plain file I/O, always works):
+  do shell script "cat '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/_itp_restart_status.txt' 2>/dev/null || echo NO_STATUS_FILE"
+
+STEP 3 — Confirm the watcher process is running (best-effort), same prlctl pattern as Step 1 but with _check_ahk.ps1 instead of _itp_validate_and_restart.ps1.
+
+Report back the full status-file contents and the _check_ahk output. Success signals: `VALIDATE bravo_watcher.ahk exit=0`, `VALIDATE bravo_export.ahk exit=0`, `VALIDATION_OK`, `RESTART_DONE`, and a running AutoHotkey64 process whose CMD contains bravo_watcher.ahk and ideally Y:\Documents. If you see `ABORT validation_failed`, report that prominently — the watcher was deliberately left on the old build.

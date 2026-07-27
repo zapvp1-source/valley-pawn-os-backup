@@ -1,0 +1,6 @@
+---
+name: vp-content-batch-postflight-catchup-2026-07-20
+description: One-time catch-up: verifies the vp-content-batch-weekly-catchup-2026-07-20 run actually staged everything (manifest + Slack cards + Publer drafts), ~50 min after it starts.
+---
+
+This is a one-time catch-up run. The regularly scheduled task `vp-content-batch-postflight` (cron `30 3 * * 1`, meant to fire this morning at 3:32 AM ET) did not fire — its lastRunAt is still 2026-07-13, a full week stale. A separate one-time catch-up task (`vp-content-batch-weekly-catchup-2026-07-20`) ran the missed weekly batch starting around 9:58 AM ET this morning. Read `/Users/joshuadavis/Documents/Claude/Scheduled/vp-content-batch-postflight/SKILL.md` in full and execute its instructions exactly as written — verify that today's batch actually produced a saved manifest, a staged Slack approval card stack in `#vp-studio-queue`, and (if applicable) Publer drafts. If anything failed, follow the skill's self-healing retry logic. DM Joshua only when items are ready to approve, per the skill's normal behavior. After completing, note in your run-summary that this was a manual catch-up for the missed 2026-07-20 03:32 ET run, checking the results of the 09:58 AM catch-up batch run rather than the usual 2:02 AM automated run.

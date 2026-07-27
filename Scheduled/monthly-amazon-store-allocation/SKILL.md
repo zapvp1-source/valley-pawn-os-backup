@@ -4,6 +4,9 @@ description: 6th of each month 9 AM — pull prior month's Amazon Business Shipm
 model: claude-sonnet-5
 ---
 
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+
+
 Monthly Amazon "Store Supplies" per-store allocation for Valley Pawn. Runs on the 6th for the PRIOR calendar month. Goal: produce the per-store + Corporate split of Amazon Business spend (by ship-to address) so it can be classified in QuickBooks, then DM Joshua the numbers and save a workbook.
 
 CONTEXT / WHY: Amazon charges hit QBO as a single "Store Supplies" account with no store split. Store-level P&Ls need Amazon supplies allocated per store. The ONLY reliable store key is the ship-to address on each shipment (ZIP → store). Anything not shipped to a store = Corporate. This task reproduces the manual pull that built `2025-Amazon-Store-Allocation.xlsx`.

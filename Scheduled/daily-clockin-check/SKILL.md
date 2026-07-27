@@ -4,6 +4,9 @@ description: Check Gusto clock-in status at 10:15 AM Mon-Sat and post summary to
 model: claude-sonnet-5
 ---
 
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+
+
 
 > ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do.
 
@@ -114,7 +117,7 @@ For each Clocked In / On Break person, open their timesheet (or use the inline P
 
 # Build & Send (shared by both paths)
 
-**Wednesday filter:** after exclusions, keep ONLY Culpeper employees.
+**Wednesday filter:** after exclusions, keep ONLY Culpeper and Waynesboro employees.
 
 Categories: 🟢 Clocked In (with time) · 🟡 On Break (with time) · 🔴 Not Clocked In (no time). Skip empty sections.
 
@@ -137,7 +140,7 @@ _Pulled automatically from Gusto Time Tracking (15-min grace after store open)_
 Format (Wednesday — Culpeper only):
 ```
 🕙 *Valley Pawn — Daily Clock-In Check (Culpeper Only)* | [Wednesday, Month Day, Year] @ 10:15 AM
-_Only Culpeper is open on Wednesdays — Harrisonburg, Waynesboro, Lexington, and Roanoke are closed._
+_Only Culpeper and Waynesboro are open on Wednesdays — Harrisonburg, Lexington, and Roanoke are closed._
 
 🟢 *Clocked In (N)*
 • [Name] — clocked in at [time]

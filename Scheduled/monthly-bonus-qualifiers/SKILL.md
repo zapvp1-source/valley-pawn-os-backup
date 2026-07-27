@@ -1,7 +1,10 @@
 ---
 name: monthly-bonus-qualifiers
-description: Auto-pull the three Store-of-the-Month bonus qualifiers (email capture %, Google reviews, gold-scrap DWT) per Valley Pawn store for a completed calendar month, using existing Chekkit/Bravo/Brevo data rails. Saves a tracking spreadsheet and posts to #bonus-goals.
+description: Monthly (10th, 9 AM): pull all bonus qualifiers for the completed month from the live rails (email = Chekkit Invites range, reviews = weekly Monday pulls summed, gold = scrap buckets CLOSED during the bonus month, FB gains = Publer, rev = Bravo EOM), fill VP BONUS FINAL trackers' revenue actuals, append the month tab to VP_Bonus_Tracker_MASTER_2026.xlsx, post to #bonus-goals.
 ---
+
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+
 
 ---
 name: monthly-bonus-qualifiers
@@ -69,3 +72,38 @@ The commission-basis "Revenue" figure Preston actually used, verified to match B
 If Bravo/Parallels access isn't available, still complete Reviews, Email, and QR Landing Page Views target math (none need live access if a recent EOM export already exists in Drive, and WordPress Stats is browser-accessible independent of Bravo) and report Gold as not-pulled — partial completion beats silence.
 
 <!-- QR scan tracking resolved via WordPress.com Jetpack Stats / WP Admin Pages view-count 2026-07-16 -->
+
+## AUGUST 2026 REGIME CHANGE (announced by Joshua 2026-07-21 - applies to August earnings, paid September)
+Effective with the August 2026 earning month, the task-qualifier set and rate logic change:
+1. **New qualifier - Facebook follower gains (per store).** Data rail: **Publer analytics** (system of record for all social - never raw FB Graph tokens). Threshold per store TBD by Joshua/Preston before first August evaluation - flag if unset at run time. This REPLACES the QR-landing-page-views social proxy for qualifier purposes.
+2. **New qualifier - Revenue YOY.** Store must beat same-month prior-year revenue by at least $1 (this formalizes Bridge 2 as an explicit task goal alongside Reviews/Email/Gold/Facebook).
+3. **Penalty rule (symmetric).** Missing task goals is no longer just "no bump" - it is a **-0.5% penalty off the commission rate**. Manager: 2.5% (hit) / 1.5% (miss). Associate/Rep: per Joshua's 2026-07-21 statement the penalty is 0.5%; prior July-regime documentation showed the associate spread as 5%/3% - CONFIRM the associate miss-rate (3.5% vs 3.0%) with Joshua before the first August payout calc and update this line.
+4. June/July runs are unaffected - use the regime rules above this section for any month <= July 2026.
+## AUGUST 2026 REGIME - CONFIRMED DETAILS (Joshua 2026-07-21, second confirmation)
+- **Facebook follower-gain threshold: +15 net new followers per store per month** (via Publer). Not TBD anymore - use 15.
+- **Penalty structure confirmed via Manager example: Managers get 2.5% if they hit the task goals, 1.5% if they miss.** (Base 2% +/- 0.5%.) Applying the same symmetric +/-1% around base for Associates/Reps: 5% hit / 3% miss - consistent with the previously documented July+ spread; the "0.5%" figure refers to the Manager swing. The earlier CONFIRM flag in the section above is now RESOLVED: Associate miss-rate = 3.0%.
+
+- **August 2026+: Reviews threshold raises from 12 to 15 per store per month** (Joshua 2026-07-21). June/July stay at 12.
+
+## DATA-RAIL CORRECTIONS + PUBLER VERIFICATION (2026-07-21)
+**Email % and Reviews come from the Monday combined run - do NOT re-pull separately:**
+- Email %: the Monday combined Bravo run already pulls the "Chekkit Invites" custom report (chekkit-inactives/gridonly cells) weekly - it captures BOTH email and phone. Qualifiers task should read the accumulated Monday CSVs for the target month from the pipeline output / _shared-bravo-data folders (latest pull on/after month-end covers the month).
+- Reviews: Chekkit review data is also already pulled every Monday (review-obtained-last-week + weekly digests). Use those weekly pulls summed to the calendar month; only fall back to a direct Chekkit leaderboard month-window read if a week is missing or a store sits on a threshold boundary.
+**Publer Facebook follower rail - TESTED LIVE 2026-07-21, WORKS:**
+- Path: app.publer.com -> Analytics -> Overview -> pick store account in left rail -> date-range dropdown (top right) -> "Last month" (= prior calendar month). Followers card shows total + net gain/loss badge for the period. Chrome saved session logs in automatically.
+- Store account analytics URLs: Culpeper /#/analytics/overview/6a3596d3fe216c70f7e67261 · Harrisonburg /#/analytics/overview/6a3596d807e1b3bf83f1c379 · Lexington /#/analytics/overview/6a3596d4fe216c70f7e67266 · Roanoke /#/analytics/overview/6a3596d2bbd130d6e889bf58 · Waynesboro /#/analytics/overview/6a3596d789dea67771497918
+- June 2026 verification values (vs +15 August threshold): Culpeper 876 (+1), Harrisonburg 763 (+1), Lexington 1.6K (0/no badge), Roanoke 35 (+1), Waynesboro 1.2K (-1). Every store would currently MISS the +15 bar - stores need a real follower push before August.
+
+## GOLD ATTRIBUTION RULE - VERIFIED FROM BRAVO DATA 2026-07-21 (supersedes name-based matching)
+Gold for bonus month M = gold buckets with Status=CLOSED and **StatusDate falling in month M** (Preston's physical collection run closes them). Attribute by CLOSE DATE, never by bucket name (names are inconsistent per store: WAY named its 7/20-closed buckets "JULY", CUL/ROA named theirs "JUNE") and never by CreatedOn.
+Proof: June bonus gold per Preston = buckets closed 6/6 (HAR 66.35+26.10=92.45, ROA 30.61+28.70=59.31, WAY 70.49+31.44=101.93 - exact match to his tracker).
+July 2026 bonus gold = buckets closed 7/20 (FINAL): CUL 128.63+148.02=**276.65 PASS** | ROA 53.29+42.37=95.66 | LEX 41.57+23.50=65.07 | HAR 34.80+25.89=60.68 | WAY 27.04+29.50=56.54. Only Culpeper passes the 100dwt bar for July.
+Pipeline note: run scrap-refining-gold and filter output rows by StatusDate month = bonus month. The monthly qualifiers run (2nd) captures this correctly as long as Preston's collection happened during the bonus month (it did: 6/6, 7/20).
+## SCHEDULE + OUTPUT TARGETS (set 2026-07-21, supersedes the 2nd/3rd schedule)
+Both tasks now run on the **10th of every month** (qualifiers 9:00 AM, payout 11:30 AM), computing the just-completed month. The 10th gives time for month-end data to settle and precedes payday (first Friday after the 15th).
+Required outputs each run - ALL of these, every month:
+1. **VP BONUS FINAL trackers (BOTH copies)**: write the completed month's 2026 Revenue actual into column D of the "2025 compared to Bonus" sheet for all 5 stores, in BOTH files: `VP BONUS FINAL Updated.xlsx` (Drive, id 1AC-LF0gEPDLY0oUWZ7D1hCITt_xECHcx - the live file Preston uses) and the local `/Users/joshuadavis/Documents/Claude/Projects/Optimize Loan Portfolio/_input_VP_BONUS_FINAL.xlsx` reference copy. Revenue = Sales Revenue Profit + Interest & Fees Total from Bravo EOM (the verified methodology).
+2. **Master tracker**: `/Users/joshuadavis/Documents/Claude/Projects/Bonus Program/VP_Bonus_Tracker_MASTER_2026.xlsx` - append/fill the month tab (qualifiers run) and payout lines + Trend + Running Totals refresh (payout run). Keep the existing tab schema exactly.
+3. Slack: qualifiers summary to #bonus-goals (status data, direct post OK); payout numbers DRAFT-ONLY to Joshua.
+
+## FILE-ID CORRECTION (2026-07-21): the LIVE VP BONUS FINAL tracker is `VP BONUS FINAL Updated.xlsx` Drive id **1HKTWucLG8R2Yzgdm62vb2rrwYUTpntBB** (has Cumulative Variance + YoY Rev Var columns; targets refreshed monthly by monthly-bonus-targets). Id 1AC-LF0gEPDLY0oUWZ7D1hCITt_xECHcx is the 2026-07-02 BACKUP - do NOT write to it. Monthly runs must write actuals to the LIVE file (edit in Google Sheets via Chrome) + the local `_input_VP_BONUS_FINAL.xlsx` copy, keeping both in sync with live values.

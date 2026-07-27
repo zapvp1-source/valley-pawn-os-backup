@@ -4,7 +4,20 @@ description: Self-healing companion to vp-ai-search-health-check — applies whi
 model: claude-sonnet-5
 ---
 
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+
+
 Runs Mondays 8:30am ET, ~30 minutes after `vp-ai-search-health-check` posts its findings to Slack #ai-marketing (private, ID C0BCEESUANM). Each run starts fresh — everything needed is below. Device for any local/browser work: "mac-studio-2-local".
+
+> 🔁 **BRIDGE RETRY POLICY (added 2026-07-22 — fixes the 3-weeks-of-re-reported-drift failure mode).**
+> The fixes this task exists for REQUIRE the Mac bridge (mcp__remote-devices__* tools). At fire
+> time, test the bridge (e.g. a Filesystem read of this file). If UNREACHABLE: do NOT run a
+> report-only pass and do NOT post "couldn't fix" — arm a retry via mcp__claude-code-remote__send_later
+> 2 hours out ("BRIDGE RETRY <N>/3", max 3). Only after the 3rd failed retry do a report-only pass,
+> noting plainly the Mac was offline all day. When the bridge IS reachable, do the actual fixes —
+> never settle for re-reporting drift the whitelist covers. For the Autofix Log: if no Sheets write
+> API is available, append rows by opening the sheet in the Mac's Chrome via the remote-devices
+> Chrome tools — hand-paste rows in Slack are a last resort only when the bridge is down.
 
 CONTEXT: vp-ai-search-health-check checks three things weekly: (1) site-wide JSON-LD schema via WPCode snippet #738, (2) /llms.txt via WPCode snippet #742, (3) Google+Bing NAP for all 5 stores. When it finds drift, THIS task attempts the fix, verifies it landed, logs it, and reports. It never touches anything outside the whitelist below — everything else goes to Joshua by name, with the specific reason it can't be automated.
 
@@ -23,7 +36,9 @@ C. Google-side NAP drift on a listing Valley Pawn owns → same pattern via `dir
 Do NOT touch: any listing Valley Pawn doesn't demonstrably own/administer (duplicate/legacy listings, third-party directories requiring a new claim), anything requiring a new account signup, or any homepage/content copy change beyond what's already documented as canonical in `valley-pawn-context`. Those go to STEP 4.
 
 STEP 3 — LOG EVERY ACTION.
-Append one row per finding to the "Valley Pawn — AI Search Autofix Log" Google Sheet (ID 1A_gJuj5siq2bEKE7-ZvVyjAs6DNK7rzEaKkBbkBY9yY, Valley Pawn Drive > Weekly KPIS) — columns: Date, Source Task, Finding, Category (auto-fixed / submitted-pending / needs-Joshua), Action Taken, Verification Result, Status, Notes/Link. Log this whether the fix succeeded, is pending, or wasn't attempted — the point is a complete audit trail of anything touching live systems.
+Append one row per finding to the "Valley Pawn — AI Search Autofix Log" Google Sheet (ID 1A_gJuj5siq2bEKE7-ZvVyjAs6DNK7rzEaKkBbkBY9yY, tab "Untitled") — columns: Date, Source Task, Finding, Category (auto-fixed / submitted-pending / needs-Joshua), Action Taken, Verification Result, Status, Notes/Link. Log this whether the fix succeeded, is pending, or wasn't attempted — the point is a complete audit trail of anything touching live systems.
+
+> ✅ FIXED 2026-07-22: there is no MCP tool that writes to Sheets, which is why this log sat empty since setup. Use the shared helper instead — it authenticates as Joshua via a cached OAuth token at ~/.config/valley-pawn/google-oauth-token.json and actually works (confirmed live, wrote 9 backfilled rows this date). Via osascript (do shell script), cd to ~/Documents/Claude/Scheduled/_shared and run a python3 -c snippet that imports sheets_helper.SheetsClient and calls .append(sheet_id, "Untitled!A:H", rows). Do NOT treat the Sheet as unreachable or fall back to a Slack hand-paste — it works now.
 
 STEP 4 — NEEDS-JOSHUA QUEUE.
 Anything outside the whitelist, or a whitelisted fix that failed verification after one retry, gets named specifically — not "some drift remains." State what it is and the one concrete reason it needs a human call (new account, ownership/claim required, judgment call).

@@ -12,7 +12,7 @@
 global CONFIG := Map()
 CONFIG["paths.logs"]     := A_ScriptDir . "\logs"
 CONFIG["bravo.username"] := "FREE1@WAY"
-CONFIG["bravo.password"] := "Health2035!"
+CONFIG["bravo.password"] := "Health2080!"
 
 global RES := CONFIG["paths.logs"] . "\_lexpw_diag_result.txt"
 WriteRes(s) {

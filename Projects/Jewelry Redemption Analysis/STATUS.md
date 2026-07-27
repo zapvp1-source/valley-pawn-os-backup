@@ -1,21 +1,20 @@
 # Jewelry Redemption Analysis - STATUS
 
 ## Answer to Joshua's question (2026-07-16)
-Yes, Bravo can produce category-level redemption rates - via the built-in Pawn Activity Summary report (Loan Reports category), per-store, date-range configurable. No custom report needed. This bypasses the blocked Optimize Loan Portfolio / Loan Portfolio 2026 project (still broken as of 2026-07-16, unrelated column-layout defect in that saved Ad Hoc report - do not duplicate effort there for this question).
+Yes, Bravo can produce category-level redemption rates via the built-in Pawn Activity Summary report, per-store, date-range configurable. Bypasses the blocked Loan Portfolio 2026 project (still broken as of 2026-07-16).
 
 ## Deliverable
-Valley_Pawn_Jewelry_Redemption_Analysis.xlsx (this folder) - all 5 stores, trailing 12mo (7/16/2025-7/15/2026), pulled from Bravo Pawn Activity Summary.
+Valley_Pawn_Jewelry_Redemption_Analysis.xlsx (this folder). Jewelry redemption = 70.05 percent company-wide; all-departments = 70.3 percent. ROA (64.1%) and CUL (63.4%) lag LEX (79.1%), WAY (77.6%), HAR (75.3%) on jewelry. Rings (68.4%, largest volume) set the jewelry floor; Charms (84.2%) and Chains (78.3%) redeem best.
 
-Headline: Jewelry/gold redemption rate = 70.05 percent company-wide, vs 70.26 percent all-departments company-wide. Jewelry is NOT an outlier - tracks the company average almost exactly. This corrects an earlier partial finding from Loan Portfolio 2026 (based on only 10 tickets) that had flagged Gold/Jewelry as a severe underperformer.
+Industry benchmark: NPA cites 80-85 percent national average; EZCORP targets 70-80 percent, actuals 84-86 percent. Valley Pawn's 70.3 percent trails benchmark company-wide, not just jewelry. Firearms (72.6%), Video Games (72.7%), Musical Instruments (73.3%) redeem best; Tools (60.5%), Sporting Goods (58.6%) redeem worst.
 
-Store spread: ROA (64.1 percent) and CUL (63.4 percent) run well below LEX (79.1 percent), WAY (77.6 percent), HAR (75.3 percent) on jewelry redemption specifically.
+## Pipeline fix
+PawnActivitySummary.ahk never ran in production before this - hung on the Continuous Scrolling bug. Fixed by porting the toggle-off block from SafeRegisterJournal.ahk. Verified across all 5 stores. Backup: PawnActivitySummary.ahk.bak-pre-cs-toggle-fix-2026-07-16.
 
-Rings dominate jewelry volume (1,692 of 3,609 resolved jewelry tickets) and sit at 68.4 percent - near the company floor - so Rings performance effectively sets the overall jewelry rate. Charms (84.2 percent) and Chains (78.3 percent) redeem best.
+## Follow-up investigation (2026-07-17): why the gap
+Checked 75-Days-Past-Due percent of loan balance (loans-75-days-past-due pull 2026-07-13, Ending Loan Base from EOM 2026-07-16):
+CUL 0.0pct, HAR 4.7pct, LEX 2.8pct, ROA 4.4pct, WAY 0.8pct.
 
-## Pipeline infrastructure fix (durable, reusable)
-PawnActivitySummary.ahk (in Bravo Data Extraction/reports/) had never successfully run in production - it hung on the known Continuous Scrolling render bug (resets ON every Bravo restart, freezes WPF preview 3+ min on wide reports). Fixed by porting the toggle-off block from SafeRegisterJournal.ahk / DepositsAndPaidOuts.ahk. Verified working across all 5 stores on this pull. Backup of pre-fix version: PawnActivitySummary.ahk.bak-pre-cs-toggle-fix-2026-07-16.
+Finding: does not cleanly explain the gap. HAR is near the 5pct threshold AND redeems well (75.3pct). ROA is near threshold AND redeems poorly (64.1pct) - consistent. CUL is at ZERO past-due AND is the weakest redeemer (63.4pct) - contradicts a simple collections story. CUL's 0.0pct needs verification: could be genuine discipline, or an aggressive same-day-expiration policy that cuts the redemption window short.
 
-This report can now be re-pulled on demand (or scheduled) for any date range, any store, without further fixes.
-
-## Raw data
-Output CSVs (12mo, pulled 2026-07-16) live in Bravo Data Extraction/output/: 2026-07-15_CUL_pawn-activity-summary.csv, _HAR_, _LEX_, _ROA_, _WAY_
+True underwriting/LTV data is BLOCKED - fpd-cohort pipeline output is stale (2026-05-18) and inconsistent across stores. Needs either the Loan Portfolio 2026 column-layout fix or a live Bravo session to get real FPD/LTV data. Not done this session.
