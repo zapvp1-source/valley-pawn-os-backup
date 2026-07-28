@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.valleypawn.vpops.job_gold_trend</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/joshuadavis/bin/vp-runner</string>
+    <string>/Users/joshuadavis/Documents/Claude/Projects/VP Ops Engine/vp-ops/launchd/job_gold_trend.sh</string>
+  </array>
+  <key>RunAtLoad</key>
+  <false/>
+  <key>StandardOutPath</key>
+  <string>/Users/joshuadavis/Library/Logs/vp-continuity/launchd-job_gold_trend.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/joshuadavis/Library/Logs/vp-continuity/launchd-job_gold_trend.err.log</string>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Day</key><integer>1</integer><key>Hour</key><integer>8</integer><key>Minute</key><integer>30</integer>
+  </dict>
+</dict>
+</plist>

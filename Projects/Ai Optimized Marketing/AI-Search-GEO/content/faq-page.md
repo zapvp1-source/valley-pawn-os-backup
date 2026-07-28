@@ -49,9 +49,8 @@ Yes. Everything we sell is backed by a **30-day warranty**. We stand behind what
 ## Hours & Locations
 
 ### What are your hours?
-- **Culpeper & Waynesboro:** Monday–Saturday, 10:00 AM – 6:00 PM.
-- **Harrisonburg, Lexington, Roanoke:** Monday, Tuesday, Thursday, Friday, Saturday, 10:00 AM – 6:00 PM. Closed Wednesday and Sunday.
-- All stores closed Sunday.
+- **Culpeper:** Monday–Saturday, 10:00 AM – 6:00 PM (the only store open Wednesdays).
+- **Waynesboro, Harrisonburg, Lexington, Roanoke:** Monday, Tuesday, Thursday, Friday, Saturday, 10:00 AM – 6:00 PM. Closed Wednesday and Sunday.
 
 ### Where are your stores?
 - **Culpeper** — 571 James Madison Highway, Culpeper, VA 22701 — (540) 445-5510

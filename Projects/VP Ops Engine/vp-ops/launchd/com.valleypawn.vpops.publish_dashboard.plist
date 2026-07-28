@@ -17,8 +17,8 @@
   <string>/Users/joshuadavis/Library/Logs/vp-continuity/launchd-publish_dashboard.err.log</string>
   <key>StartCalendarInterval</key>
   <dict>
-    <key>Hour</key><integer>9</integer>
-    <key>Minute</key><integer>45</integer>
+    <key>Hour</key><integer>10</integer>
+    <key>Minute</key><integer>0</integer>
     <key>Weekday</key><integer>1</integer>
   </dict>
 </dict>

@@ -13,7 +13,7 @@ near me in Roanoke"). Add each as the **opening paragraph** of the matching exis
 
 ## Waynesboro
 
-**Pawn shop in Waynesboro, VA:** Valley Pawn at 1321 West Broad Street, Waynesboro, VA 22980 offers no-credit-check pawn loans, buys gold, silver, and coins, and sells pre-owned electronics, jewelry, and tools backed by a 30-day warranty. Open Mon–Sat, 10 AM–6 PM. Call or text (540) 221-6346.
+**Pawn shop in Waynesboro, VA:** Valley Pawn at 1321 West Broad Street, Waynesboro, VA 22980 offers no-credit-check pawn loans, buys gold, silver, and coins, and sells pre-owned electronics, jewelry, and tools backed by a 30-day warranty. Open Mon, Tue, Thu, Fri, Sat, 10 AM–6 PM. Call or text (540) 221-6346.
 
 ## Harrisonburg
 

@@ -9,6 +9,8 @@ these without an explicit ask.
 
 from __future__ import annotations
 
+from datetime import datetime, timedelta
+
 from . import xlsxmin
 
 # Slack shortcode form, matching the actual live posting history in
@@ -606,6 +608,329 @@ def render_layaway_review(data: dict, date_str: str) -> str:
     else:
         lines.append("_No Locate layaways this week._")
 
+    return "\n".join(lines)
+
+
+# ---------------------------------------------------------------------
+# H. Weekly FPD Ranking -> #first-payment-default (BUILD_SPEC_WAVE2.md §2)
+#
+# Verified 2026-07-27 against the real 2026-07-22 post: extraction counts
+# and $ exposure match exactly for all 5 stores (e.g. Culpeper 36 loans /
+# $2,772.00). Store ranking = count ASC (best=fewest defaults=rank 1),
+# ties broken by $ ASC (Wave2 Rule #11). Category rankings run the
+# opposite direction (count DESC = worst/most-prone first, since that's
+# what "top default-prone" means), ties broken by $ DESC.
+# ---------------------------------------------------------------------
+
+def extract_fpd_cohort(csv_path) -> list:
+    """Returns [{'ticket_number', 'category', 'full_description',
+    'loan_amount'}, ...] for one store's fpd-cohort.csv. A header-only file
+    (0 data rows) is a legitimate clean store, not a failure."""
+    import csv as csv_mod
+    with open(csv_path, newline="", encoding="latin-1") as f:
+        rows = list(csv_mod.DictReader(f))
+    out = []
+    for r in rows:
+        out.append({
+            "ticket_number": r["Ticket Number"].strip(),
+            "category": r["Category"].strip(),
+            "full_description": r["Full Description"].strip(),
+            "loan_amount": _num(r["Loan Amount"]) or 0.0,
+        })
+    return out
+
+
+def render_fpd_ranking(cohorts: dict, date_str: str, archive: list, failed_stores: list = None) -> str:
+    """cohorts: {store: [ticket dicts]} for stores that succeeded this run.
+    archive: full FPD archive (list of dicts) INCLUDING this week's newly
+    appended rows, for the chronic-risk (trailing 365d) category calc."""
+    failed_stores = failed_stores or []
+    stores = list(cohorts.keys())
+
+    per_store = {s: {"count": len(cohorts[s]), "dollars": sum(t["loan_amount"] for t in cohorts[s])} for s in stores}
+    ranked = sorted(stores, key=lambda s: (per_store[s]["count"], per_store[s]["dollars"]))
+
+    company_count = sum(per_store[s]["count"] for s in stores)
+    company_dollars = sum(per_store[s]["dollars"] for s in stores)
+
+    this_week_cats: dict = {}
+    for s in stores:
+        for t in cohorts[s]:
+            c = this_week_cats.setdefault(t["category"], {"count": 0, "dollars": 0.0})
+            c["count"] += 1
+            c["dollars"] += t["loan_amount"]
+    top_this_week = sorted(this_week_cats.items(), key=lambda kv: (-kv[1]["count"], -kv[1]["dollars"]))[:3]
+
+    cutoff = (datetime.strptime(date_str, "%Y-%m-%d") - timedelta(days=365)).strftime("%Y-%m-%d")
+    chronic_cats: dict = {}
+    for row in archive:
+        if row["first_seen_date"] >= cutoff:
+            c = chronic_cats.setdefault(row["category"], {"count": 0, "dollars": 0.0})
+            c["count"] += 1
+            c["dollars"] += _num(row["loan_amount"]) or 0.0
+    top_chronic = sorted(chronic_cats.items(), key=lambda kv: (-kv[1]["count"], -kv[1]["dollars"]))[:3]
+
+    lines = []
+    lines.append(f":dart: _Weekly First-Payment-Default Ranking — {date_str}_")
+    lines.append('_Source: Bravo saved report "Claude First Payment Default" · cohort = loans originated 60–90 days ago with no customer payment activity_')
+    lines.append("")
+    lines.append("_Store ranking — best to worst_")
+    for i, s in enumerate(ranked, start=1):
+        lines.append(f"{i}. _{STORE_FULL[s]}_ — {per_store[s]['count']} FPD loans - {_dollar(per_store[s]['dollars'])} exposure")
+    lines.append(f"_Company:_ {company_count} FPD loans - {_dollar(company_dollars)} total exposure")
+    lines.append("")
+    lines.append("_Top default-prone categories (this week)_")
+    for i, (cat, d) in enumerate(top_this_week, start=1):
+        lines.append(f"{i}. {cat} — {d['count']} loans - {_dollar(d['dollars'])}")
+    lines.append("_Chronic-risk categories (last 12 months)_")
+    for i, (cat, d) in enumerate(top_chronic, start=1):
+        lines.append(f"{i}. {cat} — {d['count']} total FPD loans - {_dollar(d['dollars'])}")
+
+    if failed_stores:
+        names = ", ".join(STORE_FULL[s] for s in failed_stores)
+        plural = "s" if len(failed_stores) > 1 else ""
+        lines.append(f"_Note: {names} not included — pipeline cell{plural} failed._")
+
+    return "\n".join(lines)
+
+
+# ---------------------------------------------------------------------
+# Job I — Monthly Analytics (BUILD_SPEC_WAVE2.md §3)
+# ---------------------------------------------------------------------
+
+MONTHLY_KPI_COLS = ("GT", "CUL", "HAR", "LEX", "ROA", "WAY")
+MONTHLY_METRICS = ["Inventory Balance", "Loan Balance", "Retail Sales", "Scrap Sales", "PSC", "Net Revenue"]
+
+
+def extract_company_kpis(xlsx_path) -> dict:
+    """Parses the Bravo 'Company KPI Report' (company-kpis cell) — a single
+    ALL-store workbook with a Grand Total column + one column per store,
+    unlike the per-store end-of-month cell. This is Job I's data source per
+    BUILD_SPEC_WAVE2.md I-0 (the Jul 3 canonical post's source line reads
+    "Bravo Company Performance (KPI) report", superseding the EOM-based
+    formula in the legacy monthly-analytics-report/SKILL.md).
+
+    Net Revenue = Retail Sales Gross Profit Amt + Scrap Sales Gross Profit Amt
+    + Pawn Service Charges — verified against Bravo's own dashboard "Net
+    Revenue MTD" card in the real 2026-06-30 company-kpis.xlsx: GT Retail GP
+    $100,243.04 + Scrap GP $52,690.45 + PSC $77,160.79 = $230,094.28, matching
+    the card's $230.09K to the penny (card is rounded to the nearest $10)."""
+    ws = xlsxmin.load_active_sheet(xlsx_path)
+    mc = ws.max_column
+
+    def row_values(r: int) -> dict:
+        return {c: ws.get(r, c) for c in range(1, mc + 1) if ws.get(r, c) is not None}
+
+    def find_row(label: str, after: int = 0, exact: bool = True) -> int:
+        for r in range(after + 1, ws.max_row + 1):
+            for c in range(1, mc + 1):
+                v = ws.get(r, c)
+                if v is None:
+                    continue
+                sv = str(v).strip()
+                if (sv == label) if exact else sv.startswith(label):
+                    return r
+        return 0
+
+    gt_row = find_row("* Grand Total")
+    if not gt_row:
+        raise ValueError(f"Could not find '* Grand Total' header row in {xlsx_path}")
+    header = row_values(gt_row)
+
+    def find_col(prefix: str) -> int:
+        for c, v in header.items():
+            if str(v).strip().startswith(prefix):
+                return c
+        raise ValueError(f"Could not find a column starting with {prefix!r} in {xlsx_path}")
+
+    cols = {
+        "GT": find_col("* Grand Total"),
+        "CUL": find_col("Cul -"),
+        "HAR": find_col("Har -"),
+        "LEX": find_col("Lex -"),
+        "ROA": find_col("Roa -"),
+        "WAY": find_col("Way -"),
+    }
+
+    def metric_row(label: str) -> dict:
+        r = find_row(label, after=gt_row, exact=True)
+        return row_values(r) if r else {}
+
+    inv_row = metric_row("Inventory Balance")
+    loan_row = metric_row("Loan Balance")
+    retail_row = metric_row("Retail Sales Total Amt")
+    retail_gp_row = metric_row("Retail Sales Gross Profit Amt")
+    scrap_row = metric_row("Scrap Sales")
+    scrap_gp_row = metric_row("Scrap Sales Gross Profit Amt")
+    psc_row = metric_row("Pawn Service Charges")
+
+    out = {}
+    for key, col in cols.items():
+        retail_gp = _num(retail_gp_row.get(col)) or 0
+        scrap_gp = _num(scrap_gp_row.get(col)) or 0
+        psc = _num(psc_row.get(col)) or 0
+        out[key] = {
+            "Inventory Balance": _num(inv_row.get(col)) or 0,
+            "Loan Balance": _num(loan_row.get(col)) or 0,
+            "Retail Sales": _num(retail_row.get(col)) or 0,
+            "Scrap Sales": _num(scrap_row.get(col)) or 0,
+            "PSC": psc,
+            "Net Revenue": retail_gp + scrap_gp + psc,
+        }
+    return out
+
+
+def compute_yoy(current: dict, prior: dict) -> dict:
+    """current/prior: {key: {metric: value}} (key = GT or store code).
+    Returns {key: {metric: {'current','prior','var_dollar','var_pct'}}}."""
+    out = {}
+    for key in current:
+        out[key] = {}
+        for metric in current[key]:
+            cur = current[key][metric]
+            pri = prior.get(key, {}).get(metric, 0)
+            var_d = cur - pri
+            var_p = (var_d / pri * 100) if pri else 0.0
+            out[key][metric] = {"current": cur, "prior": pri, "var_dollar": var_d, "var_pct": var_p}
+    return out
+
+
+def _yoy_flag(var_pct: float) -> str:
+    if var_pct > 30:
+        return ":fire:"
+    if var_pct < 0:
+        return ":warning:"
+    return ":white_check_mark:"
+
+
+def _render_yoy_table(key_yoy: dict) -> str:
+    """key_yoy: {metric: {'current','prior','var_dollar','var_pct'}} for ONE
+    key (a store code or GT). Renders a monospace ASCII table, NOT a markdown
+    pipe table — Slack's raw chat.postMessage mrkdwn does not convert `|`
+    syntax into real tables (only the Slack MCP's own send-message tool and
+    Canvases do that conversion). Matches the proven ASCII-table style
+    already used by render_aged_inventory/render_layaway_review."""
+    headers = ["Metric", "Current", "Prior", "$ Chg", "YoY"]
+    rows = []
+    for m in MONTHLY_METRICS:
+        d = key_yoy[m]
+        rows.append([
+            m, _dollar(d["current"]), _dollar(d["prior"]), _dollar(d["var_dollar"]),
+            f"{d['var_pct']:.1f}% {_yoy_flag(d['var_pct'])}",
+        ])
+    widths = [max(len(headers[i]), *(len(r[i]) for r in rows)) for i in range(len(headers))]
+
+    def fmt_row(cells):
+        return "  ".join(c.ljust(widths[i]) for i, c in enumerate(cells))
+
+    lines = [fmt_row(headers), "  ".join("-" * w for w in widths)]
+    lines += [fmt_row(r) for r in rows]
+    return "```" + "\n".join(lines) + "```"
+
+
+def render_monthly_analytics_company(windows: dict, month_label: str, prior_month_label: str,
+                                      view_ranges: dict, t12m_prior_note: str = "") -> str:
+    """windows: {'same_month': {'current': company_kpis, 'prior': company_kpis},
+    'ytd': {...}, 't12m': {...}} — each company_kpis is extract_company_kpis()'s
+    output (keyed GT/CUL/HAR/.../WAY). Grand-Total-only post, per
+    BUILD_SPEC_WAVE2.md's canonical Jul 3 framing (table bodies recovered
+    from the company-kpis data — no byte-exact historical Slack post was
+    recoverable, per I-0; shadow-test against the real channel before live)."""
+    lines = [
+        f":bar_chart: _Monthly Analytics - {month_label} | Company-Wide — Retail vs Scrap channel split_",
+        "_Source: Bravo Company Performance (KPI) report, all 6 windows | matches Bravo to the penny_",
+        "",
+    ]
+    view_titles = {
+        "same_month": f"_VIEW 1 - Same Month: {month_label} vs {prior_month_label}_",
+        "ytd": f"_VIEW 2 - YTD: {view_ranges['ytd']}_",
+        "t12m": f"_VIEW 3 - T12M: {view_ranges['t12m']}_",
+    }
+    for view_key in ("same_month", "ytd", "t12m"):
+        yoy = compute_yoy(windows[view_key]["current"], windows[view_key]["prior"])
+        lines.append(view_titles[view_key])
+        lines.append(_render_yoy_table(yoy["GT"]))
+    if t12m_prior_note:
+        lines.append(f"_{t12m_prior_note}_")
+    return "\n".join(lines)
+
+
+def render_monthly_analytics_store(windows: dict, month_label: str, prior_month_label: str,
+                                    view_ranges: dict) -> str:
+    """5-store companion post, NO Grand Total, same 3 views."""
+    lines = [
+        f":bar_chart: _Monthly Analytics - {month_label} | Store Breakdown — Retail vs Scrap channel split_",
+        "_Source: Bravo Company Performance (KPI) report, all 6 windows | matches Bravo to the penny_",
+        "",
+    ]
+    view_titles = {
+        "same_month": f"_VIEW 1 - Same Month: {month_label} vs {prior_month_label}_",
+        "ytd": f"_VIEW 2 - YTD: {view_ranges['ytd']}_",
+        "t12m": f"_VIEW 3 - T12M: {view_ranges['t12m']}_",
+    }
+    for view_key in ("same_month", "ytd", "t12m"):
+        yoy = compute_yoy(windows[view_key]["current"], windows[view_key]["prior"])
+        lines.append(view_titles[view_key])
+        for store in ("CUL", "HAR", "LEX", "ROA", "WAY"):
+            lines.append(f"_{STORE_FULL[store]}_")
+            lines.append(_render_yoy_table(yoy[store]))
+    return "\n".join(lines)
+
+
+# ---------------------------------------------------------------------
+# Job J — Monthly Gold Trend (BUILD_SPEC_WAVE2.md §4)
+# ---------------------------------------------------------------------
+
+def extract_scrap_refining_gold(csv_path) -> dict:
+    """Returns {year_month: dwt} for one store-year's scrap-refining-gold.csv,
+    summing CombinedMetalWeightDwt across all CLOSED buckets per month.
+    Bravo's Scrap Refining Process screen splits each month's gold refining
+    into separate 'with stones' / 'without stones' buckets, but not always —
+    some months only have one combined bucket. That's real month-to-month
+    variation in how the store closed the batch, not a data gap."""
+    import csv as csv_mod
+    out: dict = {}
+    with open(csv_path, newline="", encoding="latin-1") as f:
+        for r in csv_mod.DictReader(f):
+            # Some rows carry a Status column (OPEN/CLOSED) -- an OPEN bucket
+            # is still accumulating and must not be counted as a final month
+            # total (confirmed live 2026-07-27: a real OPEN CUL July-2026
+            # bucket appeared in the raw file mid-session). Older per-store
+            # CSVs have no Status column at all -- those were only ever
+            # pulled as closed-only historical snapshots, so absence of the
+            # column means "include it."
+            status = (r.get("Status") or "").strip().upper()
+            if status and status != "CLOSED":
+                continue
+            month = r["Month"].strip()
+            dwt = _num(r.get("CombinedMetalWeightDwt")) or 0.0
+            out[month] = out.get(month, 0.0) + dwt
+    return out
+
+
+def render_gold_trend(current_month: dict, prior_month: dict, ytd_current: float, ytd_prior: float,
+                       best_month_t12m: tuple, month_label: str, prior_month_label: str) -> str:
+    """current_month/prior_month: {store: dwt} for GT... actually {store: dwt}
+    for the 5 stores (no GT key — company total computed here). best_month_t12m:
+    (month_label, dwt) for the best T12M month."""
+    lines = [f":coin: _Gold Trend — {month_label} (dwt purchased)_",
+             "_Source: Bravo Scrap Refining Process · YoY by store_", ""]
+    lines.append(f"_{month_label} vs {prior_month_label}_")
+    company_cur = 0.0
+    company_pri = 0.0
+    for store in ("CUL", "HAR", "LEX", "ROA", "WAY"):
+        cur = current_month.get(store, 0.0)
+        pri = prior_month.get(store, 0.0)
+        company_cur += cur
+        company_pri += pri
+        pct = f"{((cur - pri) / pri * 100):+.0f}%" if pri else "n/a"
+        lines.append(f"• _{STORE_FULL[store]}_ — {cur:.2f} dwt (vs {pri:.2f} — {pct})")
+    company_pct = f"{((company_cur - company_pri) / company_pri * 100):+.0f}%" if company_pri else "n/a"
+    lines.append(f"_Company:_ {company_cur:.2f} dwt (vs {company_pri:.2f} — {company_pct})")
+    lines.append("")
+    ytd_pct = f"{((ytd_current - ytd_prior) / ytd_prior * 100):+.0f}%" if ytd_prior else "n/a"
+    lines.append(f"_YTD:_ {ytd_current:.2f} dwt vs {ytd_prior:.2f} prior — {ytd_pct}")
+    lines.append(f"_Best month T12M:_ {best_month_t12m[0]} ({best_month_t12m[1]:.2f} dwt)")
     return "\n".join(lines)
 
 

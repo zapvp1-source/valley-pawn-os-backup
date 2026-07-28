@@ -119,7 +119,7 @@ thevalleypawn.com/follow. New giveaway every month. Reply STOP to opt out.
     </div>
 
     <p style="font-size:12px;color:#666;margin-top:12px;">
-      Culpeper & Waynesboro: Mon–Sat 10am–6pm. All other stores: Mon, Tue, Thu, Fri & Sat 10am–6pm (closed Wed & Sun).
+      Culpeper: Mon–Sat 10am–6pm. All other stores: Mon, Tue, Thu, Fri & Sat 10am–6pm (closed Wed & Sun).
     </p>
   </div>
 

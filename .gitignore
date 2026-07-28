@@ -32,6 +32,16 @@
 !Projects/VP Ops Engine/vp-ops/**/*.plist
 !Projects/VP Ops Engine/vp-ops/**/*.txt
 
+# Job I's golden-test fixture is a real Bravo XLSX export -- scoped to just
+# tests/fixtures/, NOT a blanket vp-ops/**/*.xlsx (which would start tracking
+# live Bravo pull artifacts under data/monthly-analytics/ and output/).
+!Projects/VP Ops Engine/vp-ops/tests/fixtures/**/*.xlsx
+
+# Job J's gold_dwt_history.csv is the consolidated backfill (2025 full year +
+# 2026 partial, all 5 stores) -- durable, hand-verified data, not a scratch
+# artifact. Scoped to data/, not a blanket vp-ops/**/*.csv.
+!Projects/VP Ops Engine/vp-ops/data/*.csv
+
 # Extra safety: never track these even if matched above
 *.pem
 *.key

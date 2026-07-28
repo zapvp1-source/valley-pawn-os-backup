@@ -38,14 +38,14 @@ def write_heartbeat(status: str, detail: str) -> None:
 
 def build_loan_review():
     """Returns (rendered_message, date_str, past_due, loan_balances) or None."""
-    date_str = bravo.latest_enddate("loans-75-days-past-due.csv")
+    date_str = bravo.latest_complete_date("loans-75-days-past-due.csv")
     if not date_str:
         return None
     past_due_files = bravo.locate_store_files(date_str, "loans-75-days-past-due.csv")
     if bravo.missing_stores(past_due_files):
         return None
 
-    eom_date = bravo.latest_enddate("end-of-month.xlsx")
+    eom_date = bravo.latest_complete_date("end-of-month.xlsx")
     if not eom_date:
         return None
     eom_files = bravo.locate_store_files(eom_date, "end-of-month.xlsx")
@@ -61,7 +61,7 @@ def build_loan_review():
 
 def build_layaway_review():
     """Returns (rendered_message, date_str, data) or None."""
-    date_str = bravo.latest_enddate("layaways.csv")
+    date_str = bravo.latest_complete_date("layaways.csv")
     if not date_str:
         return None
     files = bravo.locate_store_files(date_str, "layaways.csv")

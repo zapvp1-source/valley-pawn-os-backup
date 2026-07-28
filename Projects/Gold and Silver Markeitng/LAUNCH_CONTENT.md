@@ -66,7 +66,7 @@ Lexington         125 Walker Street, Lexington, VA 24450
 Roanoke           2362 Peters Creek Road, Suite C, Roanoke, VA 24017
                   [📍 Directions] [📞 Call (540) 562-0776] [💬 Text (540) 562-0776]
 
-Hours: Culpeper & Waynesboro: Mon–Sat 10am–6pm. All other stores: Mon, Tue, Thu, Fri & Sat 10am–6pm (closed Wed & Sun).
+Hours: Culpeper: Mon–Sat 10am–6pm. All other stores: Mon, Tue, Thu, Fri & Sat 10am–6pm (closed Wed & Sun).
 
 [Footer: standard Valley Pawn footer with social links + unsubscribe]
 ```

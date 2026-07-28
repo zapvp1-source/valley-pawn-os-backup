@@ -37,7 +37,7 @@ def run(mode: str) -> int:
     log_path = common.setup_logging(JOB_NAME)
     common.log.info(f"Starting {JOB_NAME} (mode={mode}); log at {log_path}")
 
-    date_str = bravo.latest_enddate("aged-inventory-summary.csv")
+    date_str = bravo.latest_complete_date("aged-inventory-summary.csv")
     if not date_str:
         common.log.error("No aged-inventory-summary.csv files found in output/ at all.")
         write_heartbeat("fail", "no aged-inventory-summary files found")

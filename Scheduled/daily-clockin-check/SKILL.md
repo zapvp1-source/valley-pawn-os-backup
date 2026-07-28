@@ -117,7 +117,7 @@ For each Clocked In / On Break person, open their timesheet (or use the inline P
 
 # Build & Send (shared by both paths)
 
-**Wednesday filter:** after exclusions, keep ONLY Culpeper and Waynesboro employees.
+**Wednesday filter:** after exclusions, keep ONLY Culpeper employees.
 
 Categories: 🟢 Clocked In (with time) · 🟡 On Break (with time) · 🔴 Not Clocked In (no time). Skip empty sections.
 
@@ -140,7 +140,7 @@ _Pulled automatically from Gusto Time Tracking (15-min grace after store open)_
 Format (Wednesday — Culpeper only):
 ```
 🕙 *Valley Pawn — Daily Clock-In Check (Culpeper Only)* | [Wednesday, Month Day, Year] @ 10:15 AM
-_Only Culpeper and Waynesboro are open on Wednesdays — Harrisonburg, Lexington, and Roanoke are closed._
+_Only Culpeper is open on Wednesdays — Harrisonburg, Waynesboro, Lexington, and Roanoke are closed._
 
 🟢 *Clocked In (N)*
 • [Name] — clocked in at [time]

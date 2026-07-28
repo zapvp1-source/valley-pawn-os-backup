@@ -398,6 +398,6 @@ These rules are enforced in every page generated for this project:
 3. **Call AND Text buttons everywhere** — both visible, both showing the phone number on the button face (per the email standard, this applies to web too).
 4. **All 5 stores listed at the bottom of every page** (per the email cross-store discovery principle).
 5. **Canonical Google Maps URLs only** — `maps/search/?api=1&query=Valley+Pawn+[City]+VA` — never raw-address URLs.
-6. **Hours displayed correctly** — Culpeper & Waynesboro: Mon–Sat 10am–6pm; all others: Mon, Tue, Thu, Fri & Sat 10am–6pm (closed Wed & Sun). No store closes at 5pm.
+6. **Hours displayed correctly** — Culpeper: Mon–Sat 10am–6pm; all others: Mon, Tue, Thu, Fri & Sat 10am–6pm (closed Wed & Sun). No store closes at 5pm.
 7. **Tone:** warm, confident, honest — never "fast cash" / predatory framing.
 8. **Address format consistency** — use canonical addresses from `valley-pawn-context`; never the stale variants (313 W Main Waynesboro, 439 E Nelson Lexington, Roanoke without "Suite C").

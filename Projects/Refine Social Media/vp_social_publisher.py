@@ -68,14 +68,14 @@ from publer_client import PublerClient, PublerError
 #
 # Ground-truth store facts, so AI-drafted captions can be checked against
 # reality before they go out (a live post claimed "seven days a week" when
-# no Valley Pawn store is open 7 days -- Culpeper & Waynesboro are closed Sunday
-# only; the other three stores are closed Wednesday AND Sunday). Keep in sync with
+# no Valley Pawn store is open 7 days -- Culpeper is closed Sunday; all
+# other stores are closed Wednesday AND Sunday). Keep in sync with
 # valley-pawn-context if hours/addresses ever change.
 STORE_FACTS = {
     "Culpeper": {"address": "571 James Madison Highway, Culpeper, VA 22701",
                  "hours": "Mon-Sat 10am-6pm, closed Sunday"},
     "Waynesboro": {"address": "1321 West Broad Street, Waynesboro, VA 22980",
-                   "hours": "Mon-Sat 10am-6pm, closed Sunday"},
+                   "hours": "Mon, Tue, Thu, Fri, Sat 10am-6pm, closed Wed & Sun"},
     "Harrisonburg": {"address": "1790 East Market Street, Harrisonburg, VA 22801",
                      "hours": "Mon, Tue, Thu, Fri, Sat 10am-6pm, closed Wed & Sun"},
     "Lexington": {"address": "125 Walker Street, Lexington, VA 24450",
@@ -88,7 +88,7 @@ STORE_FACTS = {
 # generic-tell-tale. Extend this list whenever a fact-check miss is found.
 _FORBIDDEN_CLAIMS = [
     (re.compile(r"seven days a week|7 days a week", re.I),
-     "no Valley Pawn store is open 7 days/week (Culpeper & Waynesboro closed Sun; others closed Wed+Sun)"),
+     "no Valley Pawn store is open 7 days/week (Culpeper closed Sun; others closed Wed+Sun)"),
     (re.compile(r"open until 5\s*pm|closes? at 5\s*pm", re.I),
      "no Valley Pawn store closes at 5pm -- all close at 6pm"),
     (re.compile(r"dixie pawn", re.I),

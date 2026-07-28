@@ -1,0 +1,19 @@
+:dart: _Weekly First-Payment-Default Ranking — 2026-07-22_
+_Source: Bravo saved report "Claude First Payment Default" · cohort = loans originated 60–90 days ago with no customer payment activity_
+
+_Store ranking — best to worst_
+1. _Roanoke_ — 26 FPD loans - $2,601.50 exposure
+2. _Culpeper_ — 36 FPD loans - $2,772.00 exposure
+3. _Lexington_ — 40 FPD loans - $3,625.00 exposure
+4. _Harrisonburg_ — 58 FPD loans - $12,039.00 exposure
+5. _Waynesboro_ — 75 FPD loans - $8,379.00 exposure
+_Company:_ 235 FPD loans - $29,416.50 total exposure
+
+_Top default-prone categories (this week)_
+1. Rifle — 9 loans - $2,265.00
+2. Pistol — 8 loans - $1,845.00
+3. Air Gun/Pellet Gun/BB Gun — 7 loans - $1,635.00
+_Chronic-risk categories (last 12 months)_
+1. Rifle — 8 total FPD loans - $2,160.00
+2. Pistol — 8 total FPD loans - $1,845.00
+3. Chainsaw — 6 total FPD loans - $525.00

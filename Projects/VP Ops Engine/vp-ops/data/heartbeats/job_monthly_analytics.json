@@ -1,0 +1,1 @@
+{"ts": "2026-07-27T16:24:01.716486", "status": "fail", "detail": "missing windows: ['same_month_current', 'same_month_prior', 'ytd_current', 'ytd_prior', 't12m_current', 't12m_prior']"}

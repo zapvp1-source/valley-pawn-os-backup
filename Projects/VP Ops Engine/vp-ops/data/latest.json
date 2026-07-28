@@ -1,368 +1,568 @@
 {
-  "generated_at": "2026-07-26T21:57:47.178457",
+  "generated_at": "2026-07-27T16:24:08.323852",
   "kpis": {
     "CUL": {
       "Aged Gen Merch": {
         "value": 6721.46,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_aged_inventory"
       },
       "Aged Jewelry": {
         "value": 21887.89,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_aged_inventory"
       },
       "Aged Total": {
         "value": 28609.35,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_aged_inventory"
       },
+      "FPD Count": {
+        "value": 36.0,
+        "as_of": "2026-07-22",
+        "period": "weekly",
+        "source": "job_fpd_ranking"
+      },
+      "FPD Exposure": {
+        "value": 2772.0,
+        "as_of": "2026-07-22",
+        "period": "weekly",
+        "source": "job_fpd_ranking"
+      },
+      "Gold Dwt Purchased": {
+        "value": 276.646,
+        "as_of": "2026-06",
+        "period": "monthly",
+        "source": "job_gold_trend"
+      },
       "Inventory Balance": {
         "value": 200570.02,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Layaway Balance": {
         "value": 26881.83,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Layaway contacted_no_activity": {
         "value": 18.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Layaway locate": {
         "value": 0.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Layaway no_pmt_30d": {
         "value": 20.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Layaway overdue": {
         "value": 10.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Layaway past_pmt_due": {
-        "value": 19.0,
-        "as_of": "2026-07-26",
+        "value": 20.0,
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Loan Balance": {
         "value": 193240.38,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
+      "Monthly Inventory Balance": {
+        "value": 198668.94,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly Loan Balance": {
+        "value": 190070.93,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly Net Revenue": {
+        "value": 66649.27,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly PSC": {
+        "value": 19272.0,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly Retail Sales": {
+        "value": 52757.72,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly Scrap Sales": {
+        "value": 32665.88,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
       "Net Revenue MTD": {
         "value": 51290.99,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "PastDue75 Dollars": {
         "value": 0.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "PastDue75 Items": {
         "value": 0.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "PastDue75 Pct": {
         "value": 0.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Pawn Service Charges": {
         "value": 16704.21,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Retail Sales Total Amt": {
         "value": 55851.130000000005,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Scrap Sales": {
         "value": 14778.58,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Serialized Subtotal Cost": {
         "value": 188601.59,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_aged_inventory"
       },
       "Total Assets": {
         "value": 393810.4,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
+      }
+    },
+    "GT": {
+      "Monthly Inventory Balance": {
+        "value": 683249.66,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly Loan Balance": {
+        "value": 717753.48,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly Net Revenue": {
+        "value": 230094.27999999997,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly PSC": {
+        "value": 77160.79,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly Retail Sales": {
+        "value": 192789.27,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly Scrap Sales": {
+        "value": 95181.44,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
       }
     },
     "HAR": {
       "Aged Gen Merch": {
         "value": 4655.299999999999,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_aged_inventory"
       },
       "Aged Jewelry": {
         "value": 23356.65,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_aged_inventory"
       },
       "Aged Total": {
         "value": 28011.95,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_aged_inventory"
       },
+      "FPD Count": {
+        "value": 58.0,
+        "as_of": "2026-07-22",
+        "period": "weekly",
+        "source": "job_fpd_ranking"
+      },
+      "FPD Exposure": {
+        "value": 12039.0,
+        "as_of": "2026-07-22",
+        "period": "weekly",
+        "source": "job_fpd_ranking"
+      },
+      "Gold Dwt Purchased": {
+        "value": 153.1352,
+        "as_of": "2026-06",
+        "period": "monthly",
+        "source": "job_gold_trend"
+      },
       "Inventory Balance": {
         "value": 164522.46,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Layaway Balance": {
         "value": 26224.06,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Layaway contacted_no_activity": {
         "value": 1.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Layaway locate": {
         "value": 0.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Layaway no_pmt_30d": {
         "value": 21.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Layaway overdue": {
         "value": 22.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Layaway past_pmt_due": {
-        "value": 17.0,
-        "as_of": "2026-07-26",
+        "value": 21.0,
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Loan Balance": {
         "value": 169690.62,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
+      "Monthly Inventory Balance": {
+        "value": 151315.3,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly Loan Balance": {
+        "value": 180321.59,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly Net Revenue": {
+        "value": 61666.31,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly PSC": {
+        "value": 19870.59,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly Retail Sales": {
+        "value": 43987.72,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly Scrap Sales": {
+        "value": 36949.01,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
       "Net Revenue MTD": {
         "value": 35425.020000000004,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "PastDue75 Dollars": {
-        "value": 6538.83,
-        "as_of": "2026-07-26",
+        "value": 6598.83,
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "PastDue75 Items": {
         "value": 22.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "PastDue75 Pct": {
-        "value": 3.8533832924884126,
-        "as_of": "2026-07-26",
+        "value": 3.888741758383581,
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Pawn Service Charges": {
         "value": 17514.31,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Retail Sales Total Amt": {
         "value": 27271.35,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Scrap Sales": {
         "value": 3441.1,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Serialized Subtotal Cost": {
         "value": 158398.17,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_aged_inventory"
       },
       "Total Assets": {
         "value": 334213.07999999996,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       }
     },
     "LEX": {
       "Aged Gen Merch": {
-        "value": 3707.73,
-        "as_of": "2026-07-26",
+        "value": 3707.7300000000005,
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_aged_inventory"
       },
       "Aged Jewelry": {
         "value": 7957.74,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_aged_inventory"
       },
       "Aged Total": {
-        "value": 11665.47,
-        "as_of": "2026-07-26",
+        "value": 11665.470000000001,
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_aged_inventory"
       },
+      "FPD Count": {
+        "value": 40.0,
+        "as_of": "2026-07-22",
+        "period": "weekly",
+        "source": "job_fpd_ranking"
+      },
+      "FPD Exposure": {
+        "value": 3625.0,
+        "as_of": "2026-07-22",
+        "period": "weekly",
+        "source": "job_fpd_ranking"
+      },
+      "Gold Dwt Purchased": {
+        "value": 65.0657,
+        "as_of": "2026-06",
+        "period": "monthly",
+        "source": "job_gold_trend"
+      },
       "Inventory Balance": {
         "value": 87758.4,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Layaway Balance": {
         "value": 8701.84,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Layaway contacted_no_activity": {
         "value": 1.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Layaway locate": {
         "value": 0.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Layaway no_pmt_30d": {
         "value": 9.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Layaway overdue": {
         "value": 5.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Layaway past_pmt_due": {
         "value": 9.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Loan Balance": {
         "value": 82377.6,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
+      "Monthly Inventory Balance": {
+        "value": 87095.83,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly Loan Balance": {
+        "value": 77396.6,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly Net Revenue": {
+        "value": 21455.489999999998,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly PSC": {
+        "value": 8612.14,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly Retail Sales": {
+        "value": 18450.68,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly Scrap Sales": {
+        "value": 6664.09,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
       "Net Revenue MTD": {
         "value": 17349.65,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "PastDue75 Dollars": {
         "value": 2520.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "PastDue75 Items": {
         "value": 22.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "PastDue75 Pct": {
         "value": 3.0590840228411604,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Pawn Service Charges": {
         "value": 6651.99,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Retail Sales Total Amt": {
         "value": 17855.93,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Scrap Sales": {
         "value": 2926.9,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Serialized Subtotal Cost": {
         "value": 85455.31,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_aged_inventory"
       },
       "Total Assets": {
         "value": 170136.0,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       }
@@ -370,121 +570,175 @@
     "ROA": {
       "Aged Gen Merch": {
         "value": 4410.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_aged_inventory"
       },
       "Aged Jewelry": {
         "value": 25644.670000000002,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_aged_inventory"
       },
       "Aged Total": {
         "value": 30054.670000000002,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_aged_inventory"
       },
+      "FPD Count": {
+        "value": 26.0,
+        "as_of": "2026-07-22",
+        "period": "weekly",
+        "source": "job_fpd_ranking"
+      },
+      "FPD Exposure": {
+        "value": 2601.5,
+        "as_of": "2026-07-22",
+        "period": "weekly",
+        "source": "job_fpd_ranking"
+      },
+      "Gold Dwt Purchased": {
+        "value": 154.9694,
+        "as_of": "2026-06",
+        "period": "monthly",
+        "source": "job_gold_trend"
+      },
       "Inventory Balance": {
         "value": 140853.49,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Layaway Balance": {
         "value": 16330.45,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Layaway contacted_no_activity": {
         "value": 6.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Layaway locate": {
         "value": 0.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Layaway no_pmt_30d": {
         "value": 13.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Layaway overdue": {
         "value": 15.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Layaway past_pmt_due": {
-        "value": 11.0,
-        "as_of": "2026-07-26",
+        "value": 13.0,
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Loan Balance": {
         "value": 148492.12,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
+      "Monthly Inventory Balance": {
+        "value": 135468.83,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly Loan Balance": {
+        "value": 153607.88,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly Net Revenue": {
+        "value": 36906.770000000004,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly PSC": {
+        "value": 16586.57,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly Retail Sales": {
+        "value": 28756.29,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly Scrap Sales": {
+        "value": 8199.86,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
       "Net Revenue MTD": {
         "value": 36008.41,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "PastDue75 Dollars": {
-        "value": 7249.0,
-        "as_of": "2026-07-26",
+        "value": 7319.0,
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "PastDue75 Items": {
         "value": 22.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "PastDue75 Pct": {
-        "value": 4.88174052602926,
-        "as_of": "2026-07-26",
+        "value": 4.928881074632108,
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Pawn Service Charges": {
         "value": 15530.279999999999,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Retail Sales Total Amt": {
         "value": 31525.46,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Scrap Sales": {
         "value": 4992.0,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Serialized Subtotal Cost": {
         "value": 133761.26,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_aged_inventory"
       },
       "Total Assets": {
         "value": 289345.61,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       }
@@ -492,121 +746,175 @@
     "WAY": {
       "Aged Gen Merch": {
         "value": 4085.17,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_aged_inventory"
       },
       "Aged Jewelry": {
         "value": 7276.360000000001,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_aged_inventory"
       },
       "Aged Total": {
         "value": 11361.53,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_aged_inventory"
       },
+      "FPD Count": {
+        "value": 75.0,
+        "as_of": "2026-07-22",
+        "period": "weekly",
+        "source": "job_fpd_ranking"
+      },
+      "FPD Exposure": {
+        "value": 8379.0,
+        "as_of": "2026-07-22",
+        "period": "weekly",
+        "source": "job_fpd_ranking"
+      },
+      "Gold Dwt Purchased": {
+        "value": 158.4738,
+        "as_of": "2026-06",
+        "period": "monthly",
+        "source": "job_gold_trend"
+      },
       "Inventory Balance": {
         "value": 119127.0,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Layaway Balance": {
         "value": 9735.52,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Layaway contacted_no_activity": {
         "value": 3.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Layaway locate": {
         "value": 4.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Layaway no_pmt_30d": {
-        "value": 6.0,
-        "as_of": "2026-07-26",
+        "value": 5.0,
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Layaway overdue": {
         "value": 3.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Layaway past_pmt_due": {
-        "value": 6.0,
-        "as_of": "2026-07-26",
+        "value": 5.0,
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Loan Balance": {
         "value": 124925.78,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
+      "Monthly Inventory Balance": {
+        "value": 110700.76,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly Loan Balance": {
+        "value": 116356.48,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly Net Revenue": {
+        "value": 43416.439999999995,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly PSC": {
+        "value": 12819.49,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly Retail Sales": {
+        "value": 48836.86,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
+      "Monthly Scrap Sales": {
+        "value": 10702.6,
+        "as_of": "2026-06-30",
+        "period": "monthly",
+        "source": "job_monthly_analytics"
+      },
       "Net Revenue MTD": {
         "value": 32972.649999999994,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "PastDue75 Dollars": {
         "value": 2043.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "PastDue75 Items": {
         "value": 21.0,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "PastDue75 Pct": {
         "value": 1.6353710178955858,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_loan_layaway_review"
       },
       "Pawn Service Charges": {
         "value": 10138.89,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Retail Sales Total Amt": {
         "value": 37475.04,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Scrap Sales": {
         "value": 2734.51,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       },
       "Serialized Subtotal Cost": {
         "value": 118021.08,
-        "as_of": "2026-07-26",
+        "as_of": "2026-07-27",
         "period": "as-of",
         "source": "job_aged_inventory"
       },
       "Total Assets": {
         "value": 244052.78,
-        "as_of": "2026-07-25",
+        "as_of": "2026-07-26",
         "period": "MTD",
         "source": "job_store_rankings"
       }
@@ -614,42 +922,62 @@
   },
   "runs": {
     "job_aged_inventory": {
-      "ts": "2026-07-26T21:57:46.540628",
+      "ts": "2026-07-27T16:24:00.841565",
       "status": "ok",
-      "detail": "dry-run rendered for 2026-07-26"
+      "detail": "dry-run rendered for 2026-07-27"
     },
     "job_daily_loan_inv_text": {
-      "ts": "2026-07-26T21:57:47.012763",
+      "ts": "2026-07-27T16:24:01.313512",
       "status": "ok",
       "detail": "dry-run \u2014 did not invoke native script"
     },
     "job_employee_rankings": {
-      "ts": "2026-07-26T21:57:46.632437",
+      "ts": "2026-07-27T16:24:00.933577",
       "status": "ok",
       "detail": "dry-run rendered for current"
     },
+    "job_fpd_ranking": {
+      "ts": "2026-07-27T16:24:01.559743",
+      "status": "ok",
+      "detail": "dry-run rendered for 2026-07-22"
+    },
+    "job_gold_trend": {
+      "ts": "2026-07-27T16:24:08.322460",
+      "status": "ok",
+      "detail": "dry-run rendered for 2026-06"
+    },
     "job_loan_layaway_review": {
-      "ts": "2026-07-26T21:57:46.859215",
+      "ts": "2026-07-27T16:24:01.158668",
       "status": "ok",
       "detail": "dry-run rendered"
     },
-    "job_store_rankings": {
-      "ts": "2026-07-26T21:57:46.456740",
+    "job_monthly_analytics": {
+      "ts": "2026-07-27T16:24:01.716486",
+      "status": "fail",
+      "detail": "missing windows: ['same_month_current', 'same_month_prior', 'ytd_current', 'ytd_prior', 't12m_current', 't12m_prior']"
+    },
+    "job_monthly_prestage": {
+      "ts": "2026-07-27T16:24:01.634413",
       "status": "ok",
-      "detail": "dry-run rendered for 2026-07-25"
+      "detail": "skip, not last day of month"
+    },
+    "job_store_rankings": {
+      "ts": "2026-07-27T16:24:00.751608",
+      "status": "ok",
+      "detail": "dry-run rendered for 2026-07-26"
     },
     "job_trigger_dropper": {
-      "ts": "2026-07-26T21:57:46.933461",
+      "ts": "2026-07-27T16:24:01.238422",
       "status": "ok",
-      "detail": "dry-run \u2014 would pull ['employee-activity']"
+      "detail": "dry-run \u2014 would pull ['fpd-cohort']"
     },
     "job_watchdog": {
-      "ts": "2026-07-26T21:57:47.088872",
+      "ts": "2026-07-27T16:24:01.391074",
       "status": "ok",
       "detail": "all jobs healthy"
     },
     "publish_dashboard": {
-      "ts": "2026-07-26T21:57:47.177125",
+      "ts": "2026-07-27T16:24:01.468024",
       "status": "ok",
       "detail": "dry-run \u2014 kpis.json not written, not deployed"
     }

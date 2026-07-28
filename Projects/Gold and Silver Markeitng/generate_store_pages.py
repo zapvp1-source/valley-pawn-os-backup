@@ -48,7 +48,7 @@ STORES = [
         "STORE_PHONE_RAW_NO1": "5402216346",
         "STORE_ADDRESS_STREET": "1321 West Broad Street",
         "STORE_ADDRESS_ZIP": "22980",
-        "STORE_HOURS_LINE": "Monday–Saturday 10:00 AM – 6:00 PM · Closed Sunday",
+        "STORE_HOURS_LINE": "Mon, Tue, Thu, Fri & Sat 10:00 AM – 6:00 PM · Closed Wednesday & Sunday",
         "STORE_MAPS_URL": "https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Waynesboro+VA",
         "STORE_GBP_URL": "https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Waynesboro+VA",
         "STORE_NEARBY_ZIPS": "22980, 22939, 24477, 24431, 22952, 24401, 22920, 22922, 24440",

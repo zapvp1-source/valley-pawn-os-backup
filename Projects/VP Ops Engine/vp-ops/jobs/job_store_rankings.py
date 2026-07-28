@@ -38,7 +38,7 @@ def run(mode: str) -> int:
     log_path = common.setup_logging(JOB_NAME)
     common.log.info(f"Starting {JOB_NAME} (mode={mode}); log at {log_path}")
 
-    enddate = bravo.latest_enddate("end-of-month.xlsx")
+    enddate = bravo.latest_complete_date("end-of-month.xlsx")
     if not enddate:
         common.log.error("No end-of-month.xlsx files found in output/ at all.")
         write_heartbeat("fail", "no end-of-month files found")

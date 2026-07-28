@@ -19,6 +19,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import time
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -39,6 +40,7 @@ CELLS = [
     ("employee-activity", "csv", "mtd"),
     ("loans-75-days-past-due", "csv", "today"),
     ("layaways", "csv", "today"),
+    ("fpd-cohort", "csv", "today"),  # Job H (BUILD_SPEC_WAVE2.md §2) — our own cell to add
 ]
 
 
@@ -62,14 +64,23 @@ def run(mode: str) -> int:
     first_s = first_of_month.strftime("%Y-%m-%d")
 
     # Duplicate-pull guard: figure out which cells are already fresh for today.
+    # employee-activity is checked by mtime (file exists, modified since
+    # midnight today), not date-prefix -- its AHK handler names output by
+    # the raw requested range, which never matches a plain-date lookup
+    # (see wait_for_cell_by_mtime's docstring; this guard had the same gap).
+    midnight_today = datetime.combine(today.date(), datetime.min.time()).timestamp()
     needed = []
     already_fresh = []
     target_date_for = {}
     for cell, ext, date_kind in CELLS:
         target_date = yesterday_s if date_kind == "mtd" else today_s
         target_date_for[cell] = target_date
-        files = bravo.locate_store_files(target_date, f"{cell}.{ext}")
-        missing = bravo.missing_stores(files)
+        if cell == "employee-activity":
+            files = bravo.latest_store_files_by_mtime(f"{cell}.{ext}")
+            missing = [s for s in bravo.STORES if files.get(s) is None or files[s].stat().st_mtime < midnight_today]
+        else:
+            files = bravo.locate_store_files(target_date, f"{cell}.{ext}")
+            missing = bravo.missing_stores(files)
         if missing:
             needed.append((cell, ext, date_kind, missing))
         else:
@@ -93,11 +104,20 @@ def run(mode: str) -> int:
         return 0
 
     common.log.info("Running Bravo health check...")
-    if not bravo.ensure_healthy("CUL", timeout_s=300):
-        common.log.error("Bravo health check failed.")
-        write_heartbeat("fail", "bravo health check failed")
-        common.missed_run_dm(JOB_NAME, today_s, dry_run=False)
-        return 2
+    healthy = bravo.ensure_healthy("CUL", timeout_s=900)
+    if not healthy:
+        # Do NOT hard-block here. bravo_health_gate.sh has a confirmed,
+        # reproducible false-negative: its own log shows successful
+        # recovery ("recover result='OK CUL'", twice) immediately before
+        # it still reports overall FAIL, because it treats dfsvc.exe's
+        # mere presence as "ClickOnce update in flight" even when the
+        # update already finished (seen 2026-07-26 19:40, 2026-07-27 05:3x
+        # and 07:37 -- three times, not a fluke). job_daily_loan_inv_text's
+        # native daily_run.sh already gets this right: it doesn't hard-block
+        # on this verdict either, it just attempts the pull and lets the
+        # per-cell result speak for itself. Matching that proven pattern
+        # here instead of trusting a script known to cry wolf.
+        common.log.warning("Health gate reported unhealthy, but proceeding anyway (see comment) -- letting the actual pull attempt be the real signal.")
 
     trigger_id = f"vpops-trigger-dropper-{today.strftime('%Y-%m-%dT%H-%M-%S')}"
     reports = []
@@ -105,12 +125,21 @@ def run(mode: str) -> int:
         date_field = f"{first_s}..{yesterday_s}" if date_kind == "mtd" else today_s
         reports.append({"name": cell, "stores": missing, "date": date_field})
 
+    drop_ts = time.time()
     path = bravo.drop_trigger(trigger_id, reports)
     common.log.info(f"Dropped trigger {path} with {len(reports)} report(s).")
 
     still_missing = {}
     for cell, ext, date_kind, missing in needed:
-        remaining = bravo.wait_for_cell(target_date_for[cell], f"{cell}.{ext}", stores=missing, timeout_s=1800, poll_s=20)
+        if cell == "employee-activity":
+            # This cell's AHK handler names output by the raw date RANGE, not
+            # a single end-date -- date-prefix polling can never match it.
+            # See wait_for_cell_by_mtime()'s docstring (found 2026-07-27:
+            # this exact gap left the job stuck for the data's own 30-min
+            # timeout even after the file had already landed).
+            remaining = bravo.wait_for_cell_by_mtime(f"{cell}.{ext}", since_ts=drop_ts, stores=missing, timeout_s=1800, poll_s=20)
+        else:
+            remaining = bravo.wait_for_cell(target_date_for[cell], f"{cell}.{ext}", stores=missing, timeout_s=1800, poll_s=20)
         if remaining:
             still_missing[cell] = remaining
         else:

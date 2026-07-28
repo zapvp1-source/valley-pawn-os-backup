@@ -46,6 +46,9 @@ CHANNELS = {
     "loan-review": "C0B08RS2BMK",
     "layaway-review": "C04N24STDP1",
     "vp-ops-shadow": "C0BLQSABGGY",
+    "first-payment-default": "C0B17894S2Y",
+    "company-performance": "C0B26GD8D2R",
+    "gold-trend": "C0BJ8SYTVBN",  # private channel, "#gold-trend-" (trailing hyphen is part of the name)
 }
 
 BRAVO_ROOT = Path("/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction")

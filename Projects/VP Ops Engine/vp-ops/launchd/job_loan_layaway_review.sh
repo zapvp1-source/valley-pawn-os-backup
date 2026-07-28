@@ -3,4 +3,4 @@
 # (launchd jobs touching ~/Documents must run via ~/bin/vp-runner, which
 # execs its argument through /bin/sh rather than respecting a Python
 # shebang — so this thin .sh wrapper is the vp-runner entry point).
-exec /usr/bin/python3 "/Users/joshuadavis/Documents/Claude/Projects/VP Ops Engine/vp-ops/jobs/job_loan_layaway_review.py" --live
+exec /usr/bin/python3 "/Users/joshuadavis/Documents/Claude/Projects/VP Ops Engine/vp-ops/jobs/job_loan_layaway_review.py" --shadow

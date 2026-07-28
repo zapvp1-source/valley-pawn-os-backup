@@ -24,8 +24,8 @@ For each store, open the public listing and compare Name / Address / Phone / Hou
 - Google: https://www.google.com/maps/search/valley+pawn+<city>+va
 - Bing:   https://www.bing.com/maps?q=valley+pawn+<city>+va
 Canonical NAP:
-  • Culpeper — 571 James Madison Highway, Culpeper, VA 22701 — (540) 445-5510 — Mon–Sat 10am–6pm (open Wednesdays)
-  • Waynesboro — 1321 West Broad Street, Waynesboro, VA 22980 — (540) 221-6346 — Mon–Sat 10am–6pm (closed Sun)
+  • Culpeper — 571 James Madison Highway, Culpeper, VA 22701 — (540) 445-5510 — Mon–Sat 10am–6pm (ONLY store open Wednesdays)
+  • Waynesboro — 1321 West Broad Street, Waynesboro, VA 22980 — (540) 221-6346 — Mon,Tue,Thu,Fri,Sat 10am–6pm (closed Wed & Sun)
   • Harrisonburg — 1790 East Market Street, Ste 22, Harrisonburg, VA 22801 — (540) 574-4500 — closed Wed & Sun
   • Lexington — 125 Walker Street, Lexington, VA 24450 — (540) 461-8349 — closed Wed & Sun
   • Roanoke — 2362 Peters Creek Road, Suite C, Roanoke, VA 24017 — (540) 562-0776 — closed Wed & Sun
