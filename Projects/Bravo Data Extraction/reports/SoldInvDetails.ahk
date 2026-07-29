@@ -136,7 +136,11 @@ PullSoldInvDetails(store, dateOrRange, outputDir) {
         Sleep(1500)
 
         LogMessage("  step 3: select saved report '" . SOLD_INV_ELEMENTS["saved_report_value"] . "'")
-        SelectSavedReport(SOLD_INV_ELEMENTS["saved_report_combo"], SOLD_INV_ELEMENTS["saved_report_value"])
+        ; [inv-select fix 2026-07-28] Inventory module requires SelectInventorySavedReport
+        ; on Bravo 2026.6 — the generic SelectSavedReport fills BoxReportName without
+        ; committing criteria (same fix as AgedJewelrySales/JewelrySoldMargin).
+        if !SelectInventorySavedReport(SOLD_INV_ELEMENTS["saved_report_value"])
+            throw Error("SelectInventorySavedReport: could not select '" . SOLD_INV_ELEMENTS["saved_report_value"] . "'")
         Sleep(1000)
 
         ; Override Date Sold range (positions 1 and 2)
@@ -164,8 +168,16 @@ PullSoldInvDetails(store, dateOrRange, outputDir) {
         Sleep(2500)
         ActivateBravo()
         Sleep(500)
-        Send("{Enter}")
-        LogMessage("    sent {Enter}")
+        ; 2026.6.0.79 fix: Enter no longer reliably fires the generator's Ok.
+        okClicked := false
+        try {
+            ClickByName("Ok", 5000)
+            okClicked := true
+            LogMessage("    [ok-fix 2026.6] clicked Ok by name")
+        } catch as okErr {
+            Send("{Enter}")
+            LogMessage("    [ok-fix 2026.6] Ok not found (" . okErr.Message . ") -- sent {Enter} fallback")
+        }
         Sleep(2000)
 
         ; Wait for DataItem rows (real grid signal), not Layouts caret which can

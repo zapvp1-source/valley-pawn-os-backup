@@ -92,6 +92,8 @@
 #Include reports\Loans75GridRead.ahk
 #Include reports\PostToAccountingGL.ahk
 #Include reports\PostToAccountingPost.ahk
+#Include reports\AgedJewelrySales.ahk
+#Include reports\JewelrySoldMargin.ahk
 ; Mirror the #Include list in bravo_watcher.ahk when new reports are added.
 
 global CONFIG := Map()
@@ -129,6 +131,8 @@ Main() {
     REPORT_HANDLERS["items-to-price"]           := PullItemsToPrice
     REPORT_HANDLERS["scrap-refining-gold"]      := PullScrapRefiningGold
     REPORT_HANDLERS["sales-detail"]        := PullSalesDetail
+    REPORT_HANDLERS["aged-jewelry-sales"]  := PullAgedJewelrySales
+    REPORT_HANDLERS["jewelry-margin-sold"] := PullJewelrySoldMargin
     ; Add new registrations here.
 
     ; Parse args. AHK v2 exposes them in A_Args.

@@ -194,8 +194,16 @@ PullLoanReviews(store, dateOrRange, outputDir) {
         Sleep(2500)
         ActivateBravo()
         Sleep(500)
-        Send("{Enter}")
-        LogMessage("    sent {Enter}")
+        ; 2026.6.0.79 fix: Enter no longer reliably fires the generator's Ok.
+        okClicked := false
+        try {
+            ClickByName("Ok", 5000)
+            okClicked := true
+            LogMessage("    [ok-fix 2026.6] clicked Ok by name")
+        } catch as okErr {
+            Send("{Enter}")
+            LogMessage("    [ok-fix 2026.6] Ok not found (" . okErr.Message . ") -- sent {Enter} fallback")
+        }
         Sleep(2000)
 
         LogMessage("  step 6b: waiting for DataItem rows to render")
