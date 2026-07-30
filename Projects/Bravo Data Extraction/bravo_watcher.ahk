@@ -95,6 +95,7 @@ Persistent
 #Include reports\SalesDetail.ahk
 #Include reports\AgedJewelrySales.ahk
 #Include reports\JewelrySoldMargin.ahk
+#Include reports\JewelryCountAudit.ahk
 ; Add #Include for each new report module here.
 
 ; ----- Globals ---------------------------------------------------------------
@@ -208,6 +209,7 @@ Main() {
     REPORT_HANDLERS["sales-detail"]               := PullSalesDetail
     REPORT_HANDLERS["aged-jewelry-sales"]         := PullAgedJewelrySales
     REPORT_HANDLERS["jewelry-margin-sold"] := PullJewelrySoldMargin
+    REPORT_HANDLERS["jewelry-count-audit"] := PullJewelryCountAudit
     ; Add additional registrations here as we build out reports.
 
     pollMs := Integer(CONFIG.Get("watcher.poll_interval_ms", "30000"))

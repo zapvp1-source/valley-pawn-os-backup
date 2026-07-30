@@ -80,6 +80,7 @@ PullAgedJewelrySales(store, dateOrRange, outputDir) {
     ;                                      jewelry sold in the window.
     reportOverride := ""
     probeColumns := false
+    diagDump := false
     ageOverride := ""
     trimmed := Trim(dateOrRange)
     if (StrLower(SubStr(trimmed, 1, 4)) = "age:") {
@@ -99,6 +100,10 @@ PullAgedJewelrySales(store, dateOrRange, outputDir) {
             reportOverride := Trim(parts2[1])
             dateOrRange := Trim(parts2[2])
         }
+    } else if (StrLower(SubStr(trimmed, 1, 5)) = "diag:") {
+        reportOverride := Trim(SubStr(trimmed, 6))
+        diagDump := true
+        dateOrRange := "saved"
     } else if (StrLower(SubStr(trimmed, 1, 8)) = "columns:") {
         reportOverride := Trim(SubStr(trimmed, 9))
         probeColumns := true
@@ -328,7 +333,10 @@ PullAgedJewelrySales(store, dateOrRange, outputDir) {
             ageSet := false
             try {
                 root := GetBravoRoot()
-                spin := root.FindElement({Name: "SpinEdit"})
+                ; [target-fix 2026-07-29] the criteria age control is 'BravoSpinEdit'
+                ; (holds '365'); plain 'SpinEdit' is an unrelated empty background
+                ; control — poking it is why age overrides never took effect.
+                spin := root.FindElement({Name: "BravoSpinEdit"})
                 if spin {
                     ; [commit-fix 2026-07-28] keyboard path FIRST — ValuePattern sets the
                     ; UIA value but does NOT commit to the criteria model (proven: age:0
@@ -425,6 +433,52 @@ PullAgedJewelrySales(store, dateOrRange, outputDir) {
             result["row_count"] := 0
             result["duration_ms"] := A_TickCount - started
             LogMessage("  PROBE COMPLETE — column names dumped to log")
+            return result
+        }
+
+        ; "diag:" mode — dump every element with name/autoid/VALUE/rect so we can
+        ; locate the criteria-row value controls (e.g. where '365' actually lives),
+        ; then cancel out WITHOUT running. [added 2026-07-29]
+        if (diagDump) {
+            LogMessage("  step DIAG: dumping dialog elements incl. values")
+            try {
+                root := GetBravoRoot()
+                for typeName in ["Edit", "Spinner", "ComboBox", "Text", "Custom", "Pane", "CheckBox", "DataItem", "Button"] {
+                    elems := ""
+                    try elems := root.FindElements({Type: typeName})
+                    if (!elems || elems.Length = 0)
+                        continue
+                    cnt := 0
+                    for el in elems {
+                        n := "", aid := "", v := "", rct := ""
+                        try n := el.Name
+                        try aid := el.AutomationId
+                        try v := el.Value
+                        try {
+                            r := el.BoundingRectangle
+                            rct := Integer(r.l) . "," . Integer(r.t) . "," . Integer(r.r) . "," . Integer(r.b)
+                        }
+                        if (n = "" && v = "" && aid = "")
+                            continue
+                        LogMessage("    [dd] " . typeName . " name='" . SubStr(n, 1, 60) . "' aid='" . aid . "' value='" . SubStr(v, 1, 60) . "' rect=" . rct)
+                        if (++cnt >= 150) {
+                            LogMessage("    [dd]   ... (" . typeName . " truncated at 150)")
+                            break
+                        }
+                    }
+                }
+            } catch as e {
+                LogMessage("    [dd] error: " . e.Message)
+            }
+            Loop 4 {
+                try ClickByName(AGED_JEWELRY_SALES_ELEMENTS["panel_cancel"], 2000)
+                Sleep(800)
+            }
+            try BackToDashboard()
+            result["status"] := "success"
+            result["row_count"] := 0
+            result["duration_ms"] := A_TickCount - started
+            LogMessage("  DIAG COMPLETE — element dump in log")
             return result
         }
         if (useSavedCriteria) {
