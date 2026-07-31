@@ -84,8 +84,51 @@ PullFpdLookback12Mo(store, date, outputDir) {
         LogMessage("  step 3: select 'Claude FPD 12-month Lookback' saved report")
         SelectSavedReport(FPD12MO_ELEMENTS["saved_report_combo"], FPD12MO_ELEMENTS["saved_report_value"])
 
-        LogMessage("  step 4: click Ok")
-        ClickByName(FPD12MO_ELEMENTS["dialog_ok"], 5000)
+        ; 2026.6.0.79: Enter no longer reliably fires the generator's Ok, and
+        ; a plain click-and-sleep can't tell the difference between "dialog
+        ; closed, grid is genuinely empty" and "dialog never closed, we're
+        ; reading a stale/background grid" — exactly the false-0-rows trap.
+        ; Click Ok, then poll for BoxReportName to disappear before trusting
+        ; anything read off the screen afterward (title count included).
+        LogMessage("  step 4: click Ok to run the report")
+        try {
+            ClickByName(FPD12MO_ELEMENTS["dialog_ok"], 5000)
+            LogMessage("    clicked Ok by name")
+        } catch as e {
+            LogMessage("    WARN: Ok click failed (" . e.Message . ") — falling back to {Enter}")
+            Send("{Enter}")
+        }
+        Sleep(1500)
+
+        dialogGone := false
+        closeCheckStart := A_TickCount
+        Loop {
+            stillOpen := false
+            try {
+                root := GetBravoRoot()
+                nb := root.FindElement({AutomationId: "BoxReportName"})
+                if nb
+                    stillOpen := true
+            }
+            if (!stillOpen) {
+                dialogGone := true
+                break
+            }
+            if (A_TickCount - closeCheckStart > 20000)
+                break
+            if (Mod(A_Index, 3) = 0) {
+                LogMessage("    dialog still open — clicking Ok again")
+                try ClickByName(FPD12MO_ELEMENTS["dialog_ok"], 2000)
+                catch
+                    Send("{Enter}")
+            }
+            Sleep(1500)
+        }
+        if (!dialogGone) {
+            LogVisibleNames()
+            throw Error("Report generator dialog never closed after Ok — report did not run")
+        }
+        LogMessage("    generator dialog closed — report is running")
 
         ; List renders. Title shows "Loans/Buys - Specific: NN" OR
         ; "Loans To Expire: 0" for empty result. Expect MUCH higher counts

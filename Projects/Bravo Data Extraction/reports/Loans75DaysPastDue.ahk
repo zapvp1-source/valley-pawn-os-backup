@@ -86,8 +86,52 @@ PullLoans75DaysPastDue(store, date, outputDir) {
         LogMessage("  step 3: select '75 Days Past Due' saved report")
         SelectSavedReport(LOANS75_ELEMENTS["saved_report_combo"], LOANS75_ELEMENTS["saved_report_value"])
 
-        LogMessage("  step 4: click Ok")
-        ClickByName(LOANS75_ELEMENTS["dialog_ok"], 5000)
+        ; 2026.6.0.79: Enter no longer reliably fires the generator's Ok, and
+        ; a single bare ClickByName can silently miss too — verify the dialog
+        ; actually closed before trusting the count/grid read (a 0-row read
+        ; with the dialog still open is a lie).
+        LogMessage("  step 4: click Ok to run the report")
+        Sleep(500)
+        ActivateBravo()
+        Sleep(500)
+        try {
+            ClickByName(LOANS75_ELEMENTS["dialog_ok"], 5000)
+            LogMessage("    clicked Ok by name")
+        } catch as e {
+            LogMessage("    WARN: Ok click failed (" . e.Message . ") — falling back to {Enter}")
+            Send("{Enter}")
+        }
+        Sleep(1500)
+
+        dialogGone := false
+        closeCheckStart := A_TickCount
+        Loop {
+            stillOpen := false
+            try {
+                root := GetBravoRoot()
+                nb := root.FindElement({AutomationId: "BoxReportName"})
+                if nb
+                    stillOpen := true
+            }
+            if (!stillOpen) {
+                dialogGone := true
+                break
+            }
+            if (A_TickCount - closeCheckStart > 20000)
+                break
+            if (Mod(A_Index, 3) = 0) {
+                LogMessage("    dialog still open — clicking Ok again")
+                try ClickByName(LOANS75_ELEMENTS["dialog_ok"], 2000)
+                catch
+                    Send("{Enter}")
+            }
+            Sleep(1500)
+        }
+        if (!dialogGone) {
+            LogVisibleNames()
+            throw Error("Report generator dialog never closed after Ok — report did not run")
+        }
+        LogMessage("    generator dialog closed — report is running")
 
         ; List renders. Title shows "Loans/Buys - Specific: NN" OR
         ; "Loans To Expire: 0" for empty result.

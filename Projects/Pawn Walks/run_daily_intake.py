@@ -492,20 +492,32 @@ def build_slack_message(valued: list[dict], date: datetime.date) -> str | None:
 
     flagged = [r for r in valued if r.get('flag')]
     if flagged:
-        flagged.sort(key=lambda r: (r['margin'] if r.get('margin') is not None else 0.0))
+        # Grouped by store (per Joshua 2026-07-30): one line per item, under a
+        # header for each store, in the same post — not a separate summary.
+        flagged.sort(key=lambda r: (r.get('store', ''), r['margin'] if r.get('margin') is not None else 0.0))
         lines.append("")
         lines.append(BAR)
-        lines.append(f"*⚑ OVERPAY FLAGS ({len(flagged)})* — store · kind · paid · margin · item")
+        lines.append(f"*⚑ OVERPAY FLAGS ({len(flagged)})* — by store · kind · paid · margin · item")
         lines.append(BAR)
-        for r in flagged[:12]:
+        MAX_SHOWN = 25
+        current_store = None
+        shown = 0
+        for r in flagged:
+            if shown >= MAX_SHOWN:
+                break
+            st = r.get('store', '')
+            if st != current_store:
+                lines.append(f"*{st}:*")
+                current_store = st
             mstr = _pct(r.get('margin'))
             desc = (r.get('desc') or r.get('category') or 'item').strip()
             if len(desc) > 42:
                 desc = desc[:41] + "…"
             kind = "L" if (r.get('ticket_kind') == 'LOAN') else "B"
-            lines.append(f"• {r.get('store', '')} · {kind} · ${r.get('cost', 0):,.0f} · {mstr} · {desc}")
-        if len(flagged) > 12:
-            lines.append(f"…and {len(flagged) - 12} more — full detail in the spreadsheet")
+            lines.append(f"• {kind} · ${r.get('cost', 0):,.0f} · {mstr} · {desc}")
+            shown += 1
+        if len(flagged) > shown:
+            lines.append(f"…and {len(flagged) - shown} more — full detail in the spreadsheet")
 
     return "\n".join(lines)
 

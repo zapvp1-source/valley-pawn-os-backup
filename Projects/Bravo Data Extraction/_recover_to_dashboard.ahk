@@ -56,6 +56,30 @@ Loop 5 {
             WriteRes("OK " . code)
             ExitApp(0)
         }
+        ; [stranded-dialog fix 2026-07-30] Not on login and Reports sidebar
+        ; not visible -> most likely a stranded modal (e.g. the Custom
+        ; Reports / Ad-Hoc generator dialog left open, AutomationId
+        ; BoxReportName) blocking the sidebar, the exact wedge documented in
+        ; the 07-22/07-23/07-29/07-30 recurring "FAIL no-dashboard" outage.
+        ; DismissPopups() above only knows generic info/reminder popups; it
+        ; has no Cancel case for that dialog. BackToDashboard() (lib/Bravo.ahk)
+        ; is the already-hardened helper every report handler uses to escape
+        ; exactly this kind of stuck view (PART_CancelDialogButton, btnCancel,
+        ; Done, Cancel-by-name, then an Esc fallback) but recovery was never
+        ; calling it. Try it now before falling through to the login-repair
+        ; path below, then re-check for Reports.
+        try {
+            if BackToDashboard(4) {
+                code := GetCurrentStoreCode()
+                LogMessage("attempt " . attempt . " recovered via BackToDashboard (stranded-dialog escape) -> " . code)
+                WriteRes("OK " . code)
+                ExitApp(0)
+            } else {
+                LogMessage("attempt " . attempt . " BackToDashboard did not reach Reports; continuing to login-repair path")
+            }
+        } catch as e {
+            LogMessage("attempt " . attempt . " BackToDashboard threw: " . e.Message)
+        }
     }
 
     ; Select Store selector? double-click target store row

@@ -67,9 +67,53 @@ PullLoans75GridRead(store, date, outputDir) {
         SelectSavedReport("Choose Saved Report", "75 Days Past Due")
         Sleep(900)
 
-        LogMessage("  step 4: click Ok")
-        ClickByName("Ok", 5000)
-        Sleep(3500)
+        ; 2026.6.0.79: Enter no longer reliably fires the generator's Ok, and
+        ; a single bare ClickByName can silently miss too — verify the dialog
+        ; actually closed before trusting the on-screen grid (a 0-row read
+        ; with the dialog still open is a lie).
+        LogMessage("  step 4: click Ok to run the report")
+        Sleep(500)
+        ActivateBravo()
+        Sleep(500)
+        try {
+            ClickByName("Ok", 5000)
+            LogMessage("    clicked Ok by name")
+        } catch as e {
+            LogMessage("    WARN: Ok click failed (" . e.Message . ") — falling back to {Enter}")
+            Send("{Enter}")
+        }
+        Sleep(1500)
+
+        dialogGone := false
+        closeCheckStart := A_TickCount
+        Loop {
+            stillOpen := false
+            try {
+                root := GetBravoRoot()
+                nb := root.FindElement({AutomationId: "BoxReportName"})
+                if nb
+                    stillOpen := true
+            }
+            if (!stillOpen) {
+                dialogGone := true
+                break
+            }
+            if (A_TickCount - closeCheckStart > 20000)
+                break
+            if (Mod(A_Index, 3) = 0) {
+                LogMessage("    dialog still open — clicking Ok again")
+                try ClickByName("Ok", 2000)
+                catch
+                    Send("{Enter}")
+            }
+            Sleep(1500)
+        }
+        if (!dialogGone) {
+            LogVisibleNames()
+            throw Error("Report generator dialog never closed after Ok — report did not run")
+        }
+        LogMessage("    generator dialog closed — report is running")
+        Sleep(2000)
         DismissPopups()
 
         ; ---- READ the grid rows (no export) ----

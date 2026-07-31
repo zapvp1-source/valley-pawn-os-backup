@@ -241,52 +241,69 @@ PullJewelryCountAudit(store, dateOrRange, outputDir) {
         LogMessage("    generator dialog closed — report is running")
 
         LogMessage("  step 6b: waiting for DataItem rows to render")
+        ; ===================== FALSE-ZERO FIX (2026-07-30) =====================
+        ; The previous version, when no DataItem ever appeared, looked for the
+        ; "Layouts" caret and — finding it — declared the report a "legitimate
+        ; empty result", returning row_count 0 with status=success. That caret is
+        ; present whenever the report editor is open, so ANY render failure was
+        ; silently reported as a clean zero.
+        ;
+        ; Observed live 2026-07-29: HAR, LEX, ROA and WAY each sat exactly 180s
+        ; then "succeeded" with 0 rows, while CUL rendered in 6s with 12 rows. Four
+        ; identical timeouts, reported as four clean zeros.
+        ;
+        ; For a loss-prevention control that is the worst possible failure mode: it
+        ; reports an all-clear on a day it actually learned nothing. This report
+        ; returns ALL sold items for the day, not only jewelry, so a store with zero
+        ; rows across a full trading day is effectively impossible. Zero rows is
+        ; therefore treated as FAILURE, never as data: retry the report once, then
+        ; fail loudly so the cell is marked error and the run is visibly incomplete.
         gridReady := false
-        emptyGrid := false
-        rendCheckStart := A_TickCount
-        Loop {
-            try {
-                root := GetBravoRoot()
-                di := root.FindElements({Type: "DataItem"})
-                if (di && di.Length > 0) {
-                    LogMessage("    [grid] rendered with " . di.Length . " initial DataItems after " . ((A_TickCount - rendCheckStart) // 1000) . "s")
-                    gridReady := true
-                    break
+        Loop 2 {
+            rendCheckStart := A_TickCount
+            Loop {
+                try {
+                    root := GetBravoRoot()
+                    di := root.FindElements({Type: "DataItem"})
+                    if (di && di.Length > 0) {
+                        LogMessage("    [grid] rendered with " . di.Length . " initial DataItems after " . ((A_TickCount - rendCheckStart) // 1000) . "s (attempt " . A_Index . ")")
+                        gridReady := true
+                        break
+                    }
                 }
+                if (A_TickCount - rendCheckStart > 90000)
+                    break
+                Sleep(2000)
             }
-            if (A_TickCount - rendCheckStart > 180000)
+            if (gridReady)
                 break
-            Sleep(2000)
+            if (A_Index = 1) {
+                LogMessage("    [grid] WARN: nothing rendered in 90s — re-running the report once before failing")
+                try {
+                    ClickByName(JEWELRY_COUNT_AUDIT_ELEMENTS["dialog_ok"], 3000)
+                    LogMessage("    [grid] re-clicked Ok")
+                } catch as re {
+                    LogMessage("    [grid] re-click Ok failed: " . re.Message)
+                }
+                Sleep(3000)
+                DismissPopups()
+            }
         }
         if (!gridReady) {
-            try {
-                root := GetBravoRoot()
-                lay := root.FindElement({Name: JEWELRY_COUNT_AUDIT_ELEMENTS["layouts_caret"]})
-                if lay {
-                    emptyGrid := true
-                    LogMessage("    [grid] rendered but returned 0 rows — treating as legitimate empty result (may mean NO_EOD_COMPARISON_DATA)")
-                }
-            }
-            if (!emptyGrid) {
-                LogVisibleNames()
-                throw Error("Jewelry-count-audit grid did not render within 180s — see diag dump")
-            }
+            LogVisibleNames()
+            throw Error("Grid never rendered after 2 attempts (~3 min). Refusing to report 0 rows as a clean result — this report returns ALL sold items, so zero rows means the report did not run, not that nothing sold.")
         }
         Sleep(3000)
         DismissPopups()
 
-        if (emptyGrid) {
-            result["row_count"] := 0
-        } else {
-            LogMessage("  step 7: walk grid rows and write CSV")
-            rowsWritten := WriteBuysGridToCsv(outputPath)
-            if (rowsWritten < 0) {
-                LogVisibleNames()
-                throw Error("Failed to walk jewelry-count-audit grid (no DataItem rows found)")
-            }
-            LogMessage("    wrote " . rowsWritten . " data rows to CSV")
-            result["row_count"] := rowsWritten
+        LogMessage("  step 7: walk grid rows and write CSV")
+        rowsWritten := WriteBuysGridToCsv(outputPath)
+        if (rowsWritten < 0) {
+            LogVisibleNames()
+            throw Error("Failed to walk jewelry-count-audit grid (no DataItem rows found)")
         }
+        LogMessage("    wrote " . rowsWritten . " data rows to CSV")
+        result["row_count"] := rowsWritten
 
         LogMessage("  step 8: exit editor -> Dashboard")
         Loop 4 {
