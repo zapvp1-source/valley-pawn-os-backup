@@ -237,3 +237,20 @@ fixing on its own terms.
   `STORE_POSTER_MAP`, DM formatter. Single source of truth for the logic.
 - `history.csv` — created on first run; daily per-store trend line.
 - `~/Documents/Claude/Scheduled/jewelry-count-reconciliation/SKILL.md` — the task itself.
+
+
+## RUN RECORD - 2026-07-30 reconciliation (executed 2026-07-31)
+Bravo pull: jewelry-count-recon-2026-07-30c, all 5 stores success (after clearing the
+Scrap-Bucket Question-dialog wedge; see BRAVO_KNOWN_ISSUES.md READ-FIRST INDEX).
+Sheets: all 5 posted 7/30 evening, all dated 7/30 (no date mismatch), all AM/PM totals
+sum-verified. New posters confirmed by sheet header: Bree (Grayson) = CUL, Martin D. (Dowden) = WAY.
+
+| Store | Bravo sold (bucketed) | AM | PM | Net | Diff | Result |
+|-------|----------------------|------|------|-----|------|--------|
+| CUL | 2 (1 Ring, 1 Pendant) | 1236 | 1234 | 2 | 0 | OK |
+| HAR | 1 (1 Necklace) | 802 | 807 | -5 | -6 | FLAG (case grew; sheet tick-marks show ~6 intraday adds - consistent with buys backfilling, known v1 limitation) |
+| LEX | 0 | 432 | 432 | 0 | 0 | OK |
+| ROA | 0 (29 sold rows, none case jewelry) | 1060 | 1060 | 0 | 0 | OK |
+| WAY | 0 | 549 | 545 | 4 | +4 | OK within tolerance, but note: 4 rings left the case with zero jewelry sales recorded (manager annotated -4 in blue). Plausibly moved to the AUGUST 2026 GOLD SCRAP bucket. Worth a glance. |
+
+Tolerance +/-5 per board decision 2026-07-27.

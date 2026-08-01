@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-30T21:00:02.053901",
+  "generated_at": "2026-07-31T23:36:12.537956",
   "kpis": {
     "CUL": {
       "Aged Gen Merch": {
@@ -957,9 +957,9 @@
       "detail": "missing windows: ['same_month_current', 'same_month_prior', 'ytd_current', 'ytd_prior', 't12m_current', 't12m_prior']"
     },
     "job_monthly_prestage": {
-      "ts": "2026-07-30T21:00:02.048719",
-      "status": "ok",
-      "detail": "skip, not last day of month"
+      "ts": "2026-07-31T23:36:12.519968",
+      "status": "fail",
+      "detail": "2026-07: landed=[] failed=['same_month_current', 'same_month_prior', 'ytd_current', 'ytd_prior', 't12m_current', 't12m_prior']"
     },
     "job_store_rankings": {
       "ts": "2026-07-27T16:24:00.751608",
@@ -972,7 +972,7 @@
       "detail": "dry-run \u2014 would pull ['fpd-cohort']"
     },
     "job_watchdog": {
-      "ts": "2026-07-30T10:30:04.947166",
+      "ts": "2026-07-31T10:30:02.088787",
       "status": "ok",
       "detail": "all jobs healthy"
     },

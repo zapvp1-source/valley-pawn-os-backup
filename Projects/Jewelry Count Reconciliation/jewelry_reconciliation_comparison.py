@@ -200,7 +200,11 @@ STORE_POSTER_MAP = {
     "Walker Tapley": "HAR",  # Harrisonburg
     "Uriah": "LEX",          # Lexington
     "Chadd": "WAY",          # Waynesboro
-    "Sandi Cole": "CUL",     # Culpeper
+    "Sandi Cole": "CUL",     # Culpeper (posted through 7/29)
+    "Bree": "CUL",           # Culpeper (confirmed from sheet header 7/30/26)
+    "Bree Grayson": "CUL",   # same person, printed name on sheet
+    "Martin D.": "WAY",      # Waynesboro (confirmed from sheet header 7/30/26)
+    "Martin Dowden": "WAY",  # same person, printed name on sheet
     "Sandi": "CUL",
 }
 

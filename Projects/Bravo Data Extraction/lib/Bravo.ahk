@@ -644,6 +644,32 @@ BackToDashboard(maxHops := 6) {
             LogMessage("    [nav] BackToDashboard: on Dashboard")
             return true
         }
+        ; [confirm-dialog fix 2026-07-31 rev2] A Bravo confirmation dialog
+        ; ("Are you sure you want to cancel your changes?", txtMessage /
+        ; btnYes / btnNo -- raised e.g. when exiting Scrap Bucket Detail via
+        ; its Cancel) blocks everything below: clicking btnCancel underneath
+        ; just re-raises it and Esc answers No (stay), so the hop loop spins
+        ; until exhausted (root cause of the 07-22..07-31 wedge chain, see
+        ; BRAVO_KNOWN_ISSUES.md). Per the uia-tree-now2.txt dump the btnYes
+        ; element PERSISTS disabled+offscreen while the dialog is closed, so
+        ; gate on IsEnabled/!IsOffscreen, not mere existence. BackToDashboard
+        ; contract is abandon-the-current-view, so Yes is always correct here.
+        yesBtn := 0
+        try yesBtn := GetBravoRoot().FindElement({AutomationId: "btnYes"})
+        if yesBtn {
+            yesLive := false
+            try yesLive := (yesBtn.IsEnabled && !yesBtn.IsOffscreen)
+            if yesLive {
+                try {
+                    yesBtn.Click("left")
+                    LogMessage("    [nav] BackToDashboard: answered confirm dialog with Yes (btnYes)")
+                }
+                Sleep(1200)
+                DismissPopups()
+                continue
+            }
+        }
+
         ; CHECK FIRST for an open modal dialog (Export Document, etc.) - those
         ; block any underlying Done click. Dismiss with Cancel. Order matters:
         ; modal dialog > Done > view Cancel button > (no Esc fallback - dangerous post-login).

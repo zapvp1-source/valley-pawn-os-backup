@@ -1,3 +1,35 @@
+# READ-FIRST INDEX (maintain this block; chronological log below)
+
+Any session diagnosing Bravo MUST read this index before forming a hypothesis,
+and MUST verify+stamp any OPEN item's next-run outcome before starting new work.
+
+## OPEN / AWAITING VERIFICATION
+- 2026-07-31: Confirm-dialog fix rev2 in lib/Bravo.ahk BackToDashboard: clicks btnYes when IsEnabled and not IsOffscreen (dialog = txtMessage "Are you sure you want to cancel your changes?" + btnYes/btnNo; elements persist disabled when closed, so existence alone is NOT a valid check; there is no element named "Question"). Backup .bak-pre-question-dialog-fix-2026-07-31T1630. AWAITING live verification.
+- 2026-07-31: scrap26 / scrap-2026 bucket handler exits via Cancel, triggers the Question dialog, reports SUCCESS, and leaves Bravo wedged for the next task (proof: scrap26-2026-07-31T13-13-39-WAY log 14:39-14:40 + jewelry-count-recon-2026-07-30b total failure at 15:49). Owner session must patch its exit to answer Yes or use a clean Done path.
+- 2026-07-30: _recover_to_dashboard.ahk now calls BackToDashboard(4). PARTIALLY VERIFIED 07-31: it ran, but hit the then-unknown Question dialog (now handled, see above).
+- 4 zero-row handlers (LoanPortfolio2026, LoanReviews, LowDollarBuys, LowDollarLoans) still accept a 0-row grid as success without confirming the generator dialog closed. Awaiting decision (see 2026-07-30 audit entry).
+- Jewelry Count Reconciliation: desktop scheduled task still needs registration by an on-computer session (SKILL.md at Scheduled/jewelry-count-reconciliation/ rewritten 2026-07-31 with the proven protocol; register daily 7:45 PM ET). Cloud watchdog already live at 9:30 PM ET. 2026-07-30 recon COMPLETE and posted to #jewlery-counts 2026-07-31. The 2026-07-30 pull COMPLETED 2026-07-31 16:51 after the wedge was cleared (jewelry-count-recon-2026-07-30c: all 5 stores success, CUL 13 / HAR 17 / LEX 10 / ROA 29 / WAY 28 rows). Rev2 BackToDashboard showed no regression across the full 5-store cycle.
+
+## SOLVED - DO NOT RE-DIAGNOSE OR RE-PROPOSE
+- UTF-8 BOM in logs/_recover_result.txt: already stripped in bravo_health_gate.sh (tr -d CR+BOM, lines ~185/~214). Not a live bug.
+- Stranded Ad-Hoc generator dialog wedging recovery: fixed 2026-07-30 via BackToDashboard(4) in _recover_to_dashboard.ahk.
+- Bravo 2026.6.0.79 ClickOnce Enter-doesnt-confirm regression: all 71 reports/*.ahk audited 2026-07-30; 5 patched; 48 not applicable; 18 already fixed.
+- False-zero fallback in JewelryCountAudit.ahk: removed 2026-07-31 (backup .bak-pre-falsezero-fix). JewelrySoldMargin/AgedJewelrySales were never broken - they are the reference implementations.
+
+## TRIED AND FAILED - DO NOT RE-PROPOSE
+- Esc / Cancel / btnCancel to escape a Question confirmation dialog: re-raises it, never answers it.
+- Session-1 scheduled-task trick to relaunch Bravo after force-kill: unreliable on 2026.6; direct ClickOnce .appref-ms Start-Process launch is the working method (see 07-28 entry).
+- Cloud-scheduled (claude-code-remote) triggers for Bravo work: sandbox cannot reach the VM. RE-CONFIRMED by live self-test 2026-07-31: a scheduled cloud session has NO remote-devices bridge at all (no osascript, no Chrome, no filesystem). Bravo tasks run from the desktop scheduler only. Cloud triggers ARE useful as Slack-only watchdogs (jewelry-count-reconciliation-watchdog, 9:30 PM ET, checks #jewlery-counts for the daily post).
+- Force-kill of Bravo as a recovery rung without a proven relaunch path: left Bravo down for hours on 07-31.
+
+---
+
+## 2026-07-31 PM - ROOT CAUSE of the recurring wedge: unanswered "Question" confirmation dialog (Scrap Bucket Detail)
+- Screenshot jewelry-count-recon-2026-07-30b_backtodashboard-unknown-state.png shows the true stranded state: Scrap Bucket Detail (AUGUST 2026 GOLD SCRAP, WAY) with a modal "Question - Are you sure you want to cancel?" dialog on top.
+- Chain: scrap26 handler (14:39) exits via Cancel -> Question dialog raised -> BackToDashboard clicks btnCancel 6x (re-raising it each time), Esc fallback fails -> handler still reports SUCCESS (it already had its 19 rows) -> Bravo left wedged -> jewelry-count-recon-2026-07-30b (15:49) loses all 5 stores (4x EnsureStore failed + 1x BackToDashboard failed).
+- FIX: BackToDashboard (lib/Bravo.ahk) now answers Yes when BOTH a "Question" element and a "Yes" button are present, before the modal-Cancel checks. Backup: lib/Bravo.ahk.bak-pre-question-dialog-fix-2026-07-31T1630. Not yet live-verified against a real wedge.
+- REMAINING: the scrap handler itself should stop leaving the dialog (it reports SUCCESS while wedging Bravo - a pipeline-wide hazard); fix by its owner session using the same Yes-answer pattern.
+
 
 ---
 ## RUN -- 2026-07-27 (PAWN WALK)
