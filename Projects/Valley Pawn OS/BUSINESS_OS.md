@@ -733,6 +733,7 @@ Current build order, subject to Joshua's redirects.
 | 2026-07-27 | **VP Ops Engine Wave 2 spec** (`Projects/VP Ops Engine/BUILD_SPEC_WAVE2.md` v1.0): Jobs H (weekly FPD), I (monthly analytics), J (gold trend — blocked on new `scrap-refining-dwt` pipeline handler, J-0). Connector three-lane policy codified: API lane portable to native; browser lane (Chekkit, BrightLocal, Amazon, QBO-UI) stays on Claude — headless-browser scripting rejected; judgment lane stays on Claude permanently. Wave-3 API-lane candidates noted: daily-clockin-check, email-analytics-weekly, weekly-timekeeping-analysis. | Joshua: next spec = #first-payment-default, #gold-trend-, #company-performance + settle the Chrome/connector question. |
 
 | 2026-07-27 | **Jewelry Count Policy** created and published: counts done daily at open + close, Store Manager rotates the counting duty every-other-day with a designated alternate, closing count verified against Bravo sales/activity data same day. Drafted `Jewelry_Count_Policy.docx` (docx skill), posted to `#policy-announcements`, filed in the "Valley Pawn — Policies & Procedures" Drive folder (also re-issued the master Policies & Procedures doc to fold the new policy into the index — **note: old master-doc file (pre-update) not yet deleted from Drive, no delete/trash tool available this session, flagged for Joshua's manual cleanup**), Gusto e-signature rollout to all store staff in progress, and a reusable `policy-lifecycle` skill authored (draft -> publish -> Gusto e-sign -> update master doc/BUSINESS_OS.md) and sent to Joshua for saving in Settings -> Capabilities. | Joshua: jewelry counts must be verified against Bravo sales data daily; manager rotates counting duty every other day; publish + get all employees to sign via Gusto; keep policy manual current; turn this into a repeatable skill. |
+| 2026-08-01 | Monthly capability drift audit run. Live scheduled-task list now ~138 named tasks (incl. one-shot/catchup tasks) vs 77 documented as of 2026-07-01 — registered ~36 additional NEW tasks (see 2026-08-01 addendum) that shipped since. Flagged 2 new state flips (`daily-intake-margin`, `daily-intake-prestage` — both enabled as of 2026-07-01, now `enabled:false`) in addition to the previously-flagged 8. `mcp__skills__list_skills` / `mcp__plugins__list_plugins` / `mcp__mcp-registry__list_connectors` returned empty in this session (environment quirk, not real drift) — cross-checked against the session's skill/plugin catalog instead and found 2 likely new plugin marketplaces (`data`, `human-resources`) not yet in Section 13.C; flagged, not confirmed. No skill delta required. | Scheduled `monthly-capability-drift-audit`, autonomous run. |
 ## Section 12 — How To Update This Document
 
 When something ships or a constraint changes:
@@ -1210,3 +1211,65 @@ Every scheduled task, in every runtime (local Mac tasks, cloud CCR triggers):
 2. FIELD COMMUNICATION — NO TECH JARGON. Anything sent to the field (team channels, store managers, employees) must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths.
 
 Rolled out 2026-07-22 to all 158 SKILL.md files in Scheduled/ (backups: SKILL.md.bak-pre-failure-policy-20260722) and all 9 active cloud triggers. Any NEW scheduled task must include this block.
+
+---
+
+## 2026-08-01 ADDENDUM — Monthly Capability Drift Audit
+
+_Autonomous run of `monthly-capability-drift-audit`. Additive registration only — no existing rows modified or removed._
+
+**Live counts (2026-08-01):**
+- **Scheduled tasks:** ~138 named tasks read from the live `mcp__scheduled-tasks__list_scheduled_tasks` dump (incl. one-shot/catchup/watchdog tasks), up from 77 documented as of the 2026-07-01 audit. Roughly half are disabled (many are spent one-time build/smoke/catchup tasks, intentionally retired duplicates, or paused experiments — see list below).
+- **Plugins / skills:** `mcp__skills__list_skills`, `mcp__plugins__list_plugins`, and `mcp__mcp-registry__list_connectors` all returned empty ("no match / did not render") in this session — this looks like an environment quirk for this run rather than real drift (all 16+ previously-documented plugin bundles are still visible in the session's own skill catalog). Cross-checked against that catalog instead of the live query.
+- **Connectors:** Section 13.A stable-fact snapshot unchanged; no query available this run to confirm live state (see above). Not treated as drift.
+
+### NEW scheduled tasks (live but not yet in Section 2 / prior addenda) — registered here
+
+| Task | State (2026-08-01) | Cadence | Likely domain |
+|---|---|---|---|
+| `pawn-walk` | enabled | Daily 7:15am | Operations |
+| `weekly-store-kpis` | enabled | Mon 10:30am | Operations (cross-ref Section 8 finding #17 — dupes monday-store-rankings) |
+| `brevo-preflight-watchdog` | enabled | Daily 7am | Marketing |
+| `vp-deals-social-wednesday` | enabled | Wed 6pm | Marketing |
+| `ebay-weekly-quality-fix` | enabled | Mon 11am | Online Sales |
+| `ebay-title-enrichment-backlog` | disabled | Daily 2pm | Online Sales |
+| `ebay-photo-enhance-done-notify` | disabled | Daily 8am | Online Sales |
+| `vp-content-batch-preflight` | enabled | Sun 9pm | Marketing |
+| `vp-content-batch-postflight` | enabled | Mon 3:30am | Marketing |
+| `vp-casual-video-daily` | enabled | Daily 7pm | Marketing |
+| `vp-publer-analytics-friday` | enabled | Fri 4pm | Marketing |
+| `vp-os-github-nightly-backup` | enabled | Daily 2am | Infra hygiene |
+| `vp-hr-policy-monthly-sync` | enabled | 1st 8am | HR |
+| `vp-hr-compliance-quarterly-review` | enabled | 2nd of Jan/Apr/Jul/Oct 8am | HR/Compliance |
+| `sales-tax-monthly-update` | enabled | 6th 8am | Finance |
+| `weekly-loan-review-canvas-refresh` | enabled | Mon 9:20am | Operations (Slack Canvas) |
+| `weekly-layaway-review-canvas-refresh` | enabled | Mon 9:22am | Operations (Slack Canvas) |
+| `weekly-employee-perf-canvas-refresh` | enabled | Mon 9:24am | HR (Slack Canvas) |
+| `weekly-aged-inventory-canvas-refresh` | enabled | Mon 9:26am | Inventory (Slack Canvas) |
+| `weekly-store-perf-canvas-refresh` | enabled | Mon 9:28am | Operations (Slack Canvas) |
+| `preston-ebay-feedback-watch` | enabled | Daily 9am | Online Sales |
+| `ebay-title-photo-accuracy-audit` | enabled | Sun 8am | Online Sales |
+| `vp-website-shop-nightly` | enabled | Daily 7am & 3pm | Marketing/Web |
+| `layaway-yield-weekly` | enabled | Mon 11:15am | Loans |
+| `monthly-bonus-qualifiers` | enabled | 10th 9am | HR |
+| `monthly-bonus-payout` | enabled | 10th 11:30am | HR |
+| `vp-new-customer-report` | enabled | 3rd 7am | Marketing |
+| `vp-deal-of-week-monday-reminder` | enabled | Mon 11am | Marketing |
+| `jewelry-count-reconciliation` | enabled | Daily 7:45pm | Operations (Loss Prevention — companion to jewelry-count-policy) |
+
+Spent one-shot/catchup tasks also seen live (kept for history, no action): `vp-new-customer-report-backfill-retry`, `vp-bonus-revenue-fix-and-gold-yoy`, `vp-content-batch-postflight-catchup-2026-07-20`, `vp-deal-of-week-monday-prompt-catchup-2026-07-20`, `vp-content-batch-preflight-catchup-2026-07-20`, `vp-content-batch-weekly-catchup-2026-07-20`, `vp-publish-pending-batch-2026-07-20`, `vp-mj-reachability-diagnostic-2026-07-21`.
+
+### ⚠️ New state flips to review (documented enabled as of 2026-07-01, now `enabled:false`) — NOT changed by this audit
+
+- `daily-intake-margin` — was enabled (7:34am daily, feeds intake-margin reporting). Now disabled.
+- `daily-intake-prestage` — was enabled (6:36am daily). Now disabled.
+
+(In addition to the 8 flips already flagged in the 2026-07-01 addendum, which remain disabled and unchanged this run: `weekly-payroll-to-qbo`, `weekly-valley-pawn-email-campaign`, `weekly-new-deal-request`, `distributor-setup-monitor`, `mm-merchandisers-daily-scan`, and the Salt Run trio.)
+
+### Plugin catalog — possible additions (unconfirmed, live query unavailable)
+
+Session's own skill catalog shows two plugin bundles not yet listed in Section 13.C: **`data`** (analyze, build-dashboard, create-viz, explore-data, sql-queries, statistical-analysis, validate-data, write-query, data-context-extractor, data-visualization) and **`human-resources`** (comp-analysis, draft-offer, interview-prep, onboarding, org-planning, people-report, performance-review, policy-lookup, recruiting-pipeline). Flagging for confirmation on next run with a working `list_plugins` query — not added to Section 13.C table yet since this couldn't be independently verified via the live MCP query this run.
+
+**Skill delta staged:** No — nothing here required an `enterprise-map` / `valley-pawn-context` patch this month.
+
+---

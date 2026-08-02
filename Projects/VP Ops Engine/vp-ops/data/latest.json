@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-31T23:36:12.537956",
+  "generated_at": "2026-08-01T10:30:04.880515",
   "kpis": {
     "CUL": {
       "Aged Gen Merch": {
@@ -33,8 +33,8 @@
         "source": "job_fpd_ranking"
       },
       "Gold Dwt Purchased": {
-        "value": 276.646,
-        "as_of": "2026-06",
+        "value": 0.0,
+        "as_of": "2026-07",
         "period": "monthly",
         "source": "job_gold_trend"
       },
@@ -247,8 +247,8 @@
         "source": "job_fpd_ranking"
       },
       "Gold Dwt Purchased": {
-        "value": 153.1352,
-        "as_of": "2026-06",
+        "value": 0.0,
+        "as_of": "2026-07",
         "period": "monthly",
         "source": "job_gold_trend"
       },
@@ -424,7 +424,7 @@
       },
       "Gold Dwt Purchased": {
         "value": 65.0657,
-        "as_of": "2026-06",
+        "as_of": "2026-07",
         "period": "monthly",
         "source": "job_gold_trend"
       },
@@ -599,8 +599,8 @@
         "source": "job_fpd_ranking"
       },
       "Gold Dwt Purchased": {
-        "value": 154.9694,
-        "as_of": "2026-06",
+        "value": 0.0,
+        "as_of": "2026-07",
         "period": "monthly",
         "source": "job_gold_trend"
       },
@@ -775,8 +775,8 @@
         "source": "job_fpd_ranking"
       },
       "Gold Dwt Purchased": {
-        "value": 158.4738,
-        "as_of": "2026-06",
+        "value": 0.0,
+        "as_of": "2026-07",
         "period": "monthly",
         "source": "job_gold_trend"
       },
@@ -942,9 +942,9 @@
       "detail": "dry-run rendered for 2026-07-22"
     },
     "job_gold_trend": {
-      "ts": "2026-07-27T16:24:08.322460",
+      "ts": "2026-08-01T09:00:09.026101",
       "status": "ok",
-      "detail": "dry-run rendered for 2026-06"
+      "detail": "posted for 2026-07 to C0BLQSABGGY"
     },
     "job_loan_layaway_review": {
       "ts": "2026-07-27T16:24:01.158668",
@@ -952,7 +952,7 @@
       "detail": "dry-run rendered"
     },
     "job_monthly_analytics": {
-      "ts": "2026-07-27T16:24:01.716486",
+      "ts": "2026-08-01T08:00:01.355237",
       "status": "fail",
       "detail": "missing windows: ['same_month_current', 'same_month_prior', 'ytd_current', 'ytd_prior', 't12m_current', 't12m_prior']"
     },
@@ -972,7 +972,7 @@
       "detail": "dry-run \u2014 would pull ['fpd-cohort']"
     },
     "job_watchdog": {
-      "ts": "2026-07-31T10:30:02.088787",
+      "ts": "2026-08-01T10:30:04.876418",
       "status": "ok",
       "detail": "all jobs healthy"
     },

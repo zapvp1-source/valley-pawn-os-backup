@@ -168,3 +168,23 @@ NEXT SESSION should investigate, in priority order:
 1. The settling-90s-then-silent hang on the 09-20-00 run -- check for a screenshot/crash artifact, confirm whether Bravo.exe (was PID 13048) and bravo_watcher.ahk (was PID 9288) are still alive/responsive.
 2. The recurring "Claude Pawn Walks wrong report / Age=1 criteria" regression -- 5th occurrence now (6/16, 6/20, 7/10, 7/11, 7/27). Needs the permanent Bravo-side fix (re-save/re-verify the saved report + list-view layout per store), not another automation retry-count bump.
 3. Whether the mid-run Bravo crash (GetBravoRoot: Bravo window not found on HAR) is a new failure mode or related to resource pressure from the Monday backlog job that ran immediately before.
+
+
+---
+
+## RUN -- 2026-08-01 (PAWN WALK)
+
+intake-detail (Claude Pawn Walks) for 2026-07-31: FAILED, 0 CSVs, no result.json.
+
+Timeline:
+- Health gate (bravo_ensure_healthy.sh CUL) ran full self-heal: Rung3 found Bravo NOT running, relaunched (Session-1 trick), Rung4 recover-to-dashboard FAILED 'no-window' x2, escalated to Rung4b guarded-kill (force-killed genuinely-hung Bravo.exe, no ClickOnce activity), relaunched again, Rung4b recover-to-dashboard FAILED 'no-window' x2 more. Gate ended FAIL no-dashboard after ~11 min (07:22:34-07:33:26).
+- Per policy still proceeded to drop trigger intake-detail-2026-08-01T07-22-29 (single-day 2026-07-31, all 5 stores) at 07:34:15 in case the in-session watcher could reach a dashboard the external gate couldn't.
+- Trigger WAS claimed quickly (within seconds), but the run log shows it stuck on 'EnsureBravoDashboard: no Bravo window yet - waiting up to 120s for (re)launch' from 07:34:15 through at least 07:43:09 (9+ min, well past its own stated 120s timeout) -- the watcher's own dashboard-wait logic appears to hang rather than time out cleanly when Bravo has no attachable window.
+- Per policy (max ONE relaunch cycle beyond the health gate, no login-hammering), did NOT attempt a second Bravo/watcher relaunch. Stopped and reported failure per v2 policy: DM to Joshua only, no post to #pawn-walks.
+
+This is the SAME 'window loss' failure mode as the recurring pattern in memory (reference-pawnwalk-way-window-loss-recurring.md; reference-pawnwalk-2026-07-21-bravo-launch-failure.md): Bravo.exe alive but window unattachable, watcher/relaunch does not fix it. Occurrences now: 2026-07-21, 2026-07-23, 2026-07-28, 2026-08-01 (4th+). This is no longer an intermittent blip -- it needs a human/Parallels-level look (e.g. check display resolution/session state in the VM, whether Bravo's window is rendering off-screen or minimized to a state the AHK window-finder can't match, or whether the VM needs a reboot) rather than another automated retry.
+
+NEXT SESSION should investigate, in priority order:
+1. Whether the underlying issue is VM display/session state (e.g. Session-1 vs console session mismatch) rather than Bravo itself -- this would explain why relaunching Bravo never fixes 'no-window'.
+2. Whether EnsureBravoDashboard's wait-up-to-120s logic should be hardened to actually abort/report at 120s instead of hanging indefinitely -- current behavior wastes ~9+ min of trigger-poll time per failed run.
+3. Consider pausing PAWN WALK auto-retries until a person confirms the Parallels VM window/display state, since 4 consecutive-ish failures suggests retrying alone won't self-resolve.
