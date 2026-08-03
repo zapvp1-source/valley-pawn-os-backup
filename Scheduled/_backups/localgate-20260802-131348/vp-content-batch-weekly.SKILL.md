@@ -1,0 +1,134 @@
+---
+name: vp-content-batch-weekly
+description: Weekly Valley Pawn content batch — 3 Brand + 10 store-local + 5 Deals + 2 Reels (20 total), Community + Humor pillars, FB + IG + GBP + Twitter/X via Publer. AUTHENTICITY STANDARD: employee-voice captions with sourced facts, real-photos-first, no AI renders of real places, pre-publish QA gate. Auto-publishes; #vp-studio-queue is a log.
+model: claude-sonnet-5
+---
+
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+
+
+This is an automated run of a scheduled task. The user is not present to answer questions. Execute autonomously; make reasonable choices and note them in your output. Only take "write" actions (send/post/create/update/delete) that this task file explicitly asks for. When in doubt, produce a report. End your response with <run-summary>one or two sentences on what you found and whether anything changed since last run</run-summary>.
+
+> ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do.
+
+## STEP 0 — RUN PREREQUISITES (added 2026-07-06; the 2026-07-06 run failed because the Projects folder was not mounted)
+
+Before doing anything else, confirm access to the Valley Pawn project files. The batch depends on `/Users/joshuadavis/Documents/Claude/Projects/` (Bravo exports, Valley Pawn Studios asset library + output, the strategy doc).
+
+1. Check whether `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn Studios/vp_fb_content_strategy.md` is readable.
+2. If it is NOT readable, call `mcp__cowork__request_cowork_directory` with path `/Users/joshuadavis/Documents/Claude/Projects` to mount it, then re-check.
+3. If the folder still cannot be accessed after that, **ABORT SILENTLY** — post nothing to Slack (per the failure policy), and end with a run-summary explaining the folder was unreachable. Do not proceed with missing files.
+4. Read the authoritative strategy doc at the exact path in step 1 as your Step-1 context source. It supersedes the copy referenced as `outputs/vp_fb_content_strategy.md` in the skill. If the skill and this doc conflict, this doc wins.
+
+## STEP 0.5 — PILLAR OVERLAY + ADJUST LOOP (added 2026-07-06 strategic build)
+
+Also read, in this order:
+1. `/Users/joshuadavis/Documents/Claude/Projects/Refine Social Media/PILLAR_OVERLAY.md` — **authoritative** Community + Humor pillar rules. If it conflicts with the vp-content-batch skill cache, the OVERLAY WINS.
+2. `/Users/joshuadavis/Documents/Claude/Projects/Refine Social Media/weekly-adjustments.json` — written by last Friday's vp-publer-analytics-friday digest. Apply its `action` as a pillar nudge (±5% max, never violating any cap/floor: Community floor 15%, Humor cap 10% / 1 per week, and all vp_fb_content_strategy caps). If the file is missing or >10 days old, skip the nudge.
+
+Pillar additions this build enforces every week:
+- **Community pillar: 3–4 of the 20 items (15–20%).** Hooks from `Refine Social Media/hook-library/community.json` — rotate regions, skip hooks used <45 days ago, write `last_used_at` back after picking. NO Valley Pawn CTA, no product mention; address footer at bottom only. Region hooks → that store's GBP+FB (store-local tier); valley-wide hooks → Brand tier. STYLE-B; real local photos preferred over MJ when available.
+- **Humor pillar: MAX 1 item this week (10% rolling cap).** Hooks from `hook-library/humor.json` — 60-day cooldown, STYLE-D Polaroid Playful only, Brand tier, skip GBP. Hard boundaries in the JSON `_meta.rules.boundaries` — read and obey them. Any image text goes through `~/.vp-studio/scripts/compose_text_on_hero.py` (MJ TEXT RULE).
+
+## MAIN WORK
+
+Run the weekly Valley Pawn content batch. **Invoke the `vp-content-batch` skill** — it is the authoritative source for routing, caption, time-window, pillar rules, and Deals-of-the-Week Step 3c-bis. Do NOT duplicate the skill's logic from this prompt; trigger it. Feed it the strategy doc read in STEP 0 AND the pillar overlay from STEP 0.5. **The AUTHENTICITY STANDARD below OVERRIDES the vp-content-batch skill's caption/image style guidance wherever they conflict.**
+
+Default footprint: **3 Brand + 10 store-local statics + 5 Deals-of-the-Week + 2 Reels = 20 items** (Community items fill 3–4 of these slots per the overlay; Humor at most 1), each routed correctly, captioned (mandatory), scheduled across the 30/30/30/10 windows, with a manifest saved to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn Studios/output/{YYYY-MM-DD}/batch_manifest_{YYYY-MM-DD}.json`. Log each item's pillar (including `community` and `humor`) in the manifest so the Friday digest can close the loop.
+
+- Deals-of-the-Week source channel is Slack **`#deal-of-the-week`** (channel ID `C0AVCANK7E3`) — read the last 7 days, one deal per store, skip any store that didn't submit by Wednesday EOD and DM Joshua.
+- Bravo inventory lives in `Bravo Data Extraction/output/` as `{date}_{STORE}_items-to-price.csv` and `{date}_{STORE}_aged-inventory-summary.csv` (NOT `inventory_export_*.csv`). Use the most recent dated files; if >24h stale, log + DM Joshua.
+- **`#vp-studio-queue` channel:** created by Joshua 2026-07-16 (Slack channel ID `C0BHTEUPADB`, private). Post the item card stack here as an **informational log**, not an approval gate (see NO-APPROVAL POLICY below).
+
+## AUTHENTICITY STANDARD (added 2026-07-22 — Joshua: "content has to be more realistic, authentic and informative… it needs to read like a human wrote it and the pictures have to be accurate")
+
+This section overrides any conflicting caption/image style guidance in the `vp-content-batch` skill, the strategy doc, or the brand studio. It exists because the 2026-07-20/21 batch shipped captions that read AI-written (travel-brochure prose about real streets) and images that were inaccurate (AI watercolor "impressions" of real streets like Davis Street Culpeper; generic renders standing in for specific items).
+
+### Caption voice rules — every item, no exceptions
+1. **Write like a real employee of a small-town Virginia pawn shop**, not a copywriter. The test: if a store manager read the caption aloud behind the counter, would a customer believe they wrote it? If not, rewrite plainer.
+2. **Every caption must contain at least one concrete, verifiable fact from a real source**: Bravo inventory data (brand, model, condition, actual price if set), a real store event from Slack, real store hours, or real services (pawn loans, layaway, 30-day warranty, gold buying, FFL transfers). Zero invented details — no imagined histories of streets, no made-up counts of overlooks, no atmospheric claims that can't be sourced.
+3. **Be informative before decorative.** Lead with what the item is, condition, price (or "come ask for it by name"), which store, and why buying at a pawn shop makes sense (warranty, negotiable, tested). Practical info beats scenery prose every time. A caption that teaches the reader something (how layaway works, what we look for when we buy gold, what a loan actually costs) is worth more than one that paints a picture.
+4. **Banned AI-tells** — never use: "nestled", "hidden gem", "earns the slow walk", "steeped in history", "look no further", "elevate your", "whether you're X or Y", rhetorical-question openers, three-part poetic lists, em-dash-heavy lyric prose, and postcard sign-offs like "We're lucky to call this valley home." Vary sentence length between items; fragments are fine; contractions always; occasional plainness ("It works. It's tested. It's $85.") is a feature.
+5. **Vary structure across the batch.** If 3+ captions in the same batch open the same way, or share the same rhythm, rewrite until they don't. A human-run page has ragged edges.
+
+### Image accuracy rules — every item, no exceptions
+1. **Real photos first.** For item posts: use the actual item's photo when one exists — Bravo item photos, eBay-pipeline listing photos, or photos submitted via Slack. An MJ render is the FALLBACK when no real photo exists, never the default for a specific item.
+2. **NEVER depict a real, named place with an AI render or illustration** — no AI "impressions" of Davis Street, Walker Street, Main Street, Skyline Drive, storefronts, or any real landmark. If the caption names a real place, the image must be a real photo of that place, or a neutral image (the item itself, a brand card). An invented picture of a real street reads as fake and torches trust locally. If no real photo of the place is available, pick a different hook/angle rather than faking the image.
+3. **MJ renders must match the actual item.** When MJ is used for an item, the render must match the item's brand/category/color/scale from the Bravo description. Compare render vs. description before compositing — a wrong-scale or wrong-model render (e.g. the toy-scale riding mower incident) is a regenerate-or-skip, never a ship.
+4. **Log photo gaps.** When a real photo was wanted but unavailable, note it in the manifest (`photo_gap: true` on the item) so the gap list can drive store photo requests later.
+
+### Pre-publish QA gate — runs BEFORE Publer, per item, logged in manifest as `authenticity_check`
+- `caption_human`: passes the read-aloud test, no banned phrases, at least one concrete sourced fact.
+- `image_accurate`: image matches the caption's claims — right item, right scale, and no AI render of a real named place.
+- `facts_sourced`: every specific claim (price, model, condition, event, count) traces to Bravo/Slack/strategy-doc data.
+An item failing any check gets rewritten/regenerated (max 2 attempts), then skipped + noted in the manifest if still failing. Never ship an item that fails the gate just to hit the 20-item footprint — a 17-item honest batch beats a 20-item batch with 3 fakes.
+
+## NO-APPROVAL POLICY (added 2026-07-21 — supersedes the master `vp-content-batch` skill's approval-gate language)
+
+Joshua does not want to approve items before they go out. Per his direct instruction 2026-07-21: **"I don't want to approve anything, I will give feedback after postings."** This changes Step 9/Step 11 of the `vp-content-batch` skill as follows:
+
+- Do NOT wait for ✅/⏭/✏️ reactions or replies in `#vp-studio-queue` before publishing. There is no approval step anymore.
+- Still post the full item card stack to `#vp-studio-queue` (routing, caption, schedule, pillar check, hero preview) — this is now a **transparency log**, not a request for action. Reword the card intro from "approve below" to something like "posting automatically — reply here anytime with feedback and it'll be applied to future batches."
+- Immediately proceed to Step 11 (Publish/Schedule via Publer) for every item in the batch, in the same run, right after staging the log card. Do not pause between staging and publishing.
+- The only reasons to skip an individual item are the existing hard guardrails (empty caption after 2 retries, "Dixie Pawn", firearms language, pillar cap breach, missing Bravo/MJ inputs, failed authenticity_check after 2 retries) — never "waiting for Joshua."
+- If Joshua replies in `#vp-studio-queue` or DMs with feedback on a published item (tone, image quality, wrong store, etc.), treat that as input for the NEXT batch's picks/prompts, not something to action retroactively unless he explicitly asks for a specific post to be taken down or corrected.
+
+## MIDJOURNEY CHECK — MANDATORY RETRY PROTOCOL (added 2026-07-21, strengthened 2026-07-21 after Joshua: "if midjourney does not respond you should find a solution, letting me know does not fix the issue")
+
+The 2026-07-20 run reported "Midjourney unreachable this session" and fell back to Canva for all 13 hero images without much verification. Checked directly the next day (2026-07-21): MJ was fully reachable, logged in as valley_pawn, with 14h44m of 15h fast-hours untouched — i.e. it was NOT actually down or out of capacity. A follow-up run that same day confirmed MJ reachable and used it for a full push. So "unreachable" in the 07-20 run was very likely a transient/one-off session glitch, not a real recurring blocker — but a bare "MJ didn't respond" report is not an acceptable outcome going forward. Do the following, in order, every single run:
+
+1. **Retry before concluding unreachable.** Navigate to `https://www.midjourney.com/imagine` via Chrome MCP. If it doesn't load, or the prompt bar isn't found, or login doesn't complete: wait 30 seconds and retry. Do this up to **3 times** before concluding MJ is genuinely unreachable this session. A single failed attempt is not a verdict.
+2. **Diagnose, don't just fall back.** If all 3 attempts fail, capture and log the EXACT failure mode (a permission/access prompt blocking Chrome, a login screen instead of the imagine page, a "fast hours exhausted" banner, a blank/broken page, a timeout) — not just "unreachable." Write this to the manifest under `mj_status` with the literal observed state.
+3. **If the failure looks like a Chrome/computer-use access/permission gap** (i.e. a prompt asking for app access that nobody is present to click through in this unattended run): note this explicitly and DM Joshua that the fix is a one-time interactive "Run now" on this task to pre-approve Chrome access (approvals persist per-task once granted) — this is different from an MJ outage and has a different fix.
+4. **If the failure looks like an actual MJ-side issue** (fast hours genuinely exhausted, MJ account logged out, MJ service down): THEN fall back to Canva for this run, but say so with the specific reason, not a generic "unreachable."
+5. Only after real, retried, diagnosed unreachability should Canva be used. Prefer MJ whenever it's actually working — Canva is the fallback, not a coin-flip default. (Note: the AUTHENTICITY STANDARD's real-photos-first rule sits above both — MJ/Canva only enter for items with no real photo available.)
+6. Joshua wants a "full push" — the complete 20-item footprint (3 Brand + 10 store-local + 5 Deals + 2 Reels), not a partial batch, whenever the week's inputs support it. If Deals or Reels are structurally unavailable this run (no fresh #deal-of-the-week submissions yet, no casual-video-inbox clips), say so plainly rather than silently shipping a smaller batch. (The authenticity gate is the one exception — see QA gate above.)
+
+## PUBLISHING — PUBLER ONLY (as of 2026-07-04)
+
+All Meta Graph API paths are disabled (Meta app blocked; brand IG flagged 2026-07-04). Route ALL Meta traffic through Publer. The prior `facebook-post` Graph-API flow is retired. Per the NO-APPROVAL POLICY above, publish immediately after staging the log card — do not wait for Joshua. Drive Publer via Chrome MCP: one composer per channel per item, using the search-token account-picker pattern (JS-query-by-tooltip, never positional icon clicks). GBP posts require the Photo tab before upload. Verify the green "Successfully posted" OR "Successfully scheduled" banner AND re-check the item actually appears in Publer's Scheduled/Published list before opening the next composer (see the ONE-MINUTE-GAP rule below — a green toast alone is not sufficient proof of success). Full Publer runbook (account search tokens, droparea[5] upload, Reel tab, cross-contamination recovery) is in the `vp-content-batch` skill and the studio notes — follow it exactly. (The Publer API client at `Refine Social Media/publer_client.py` may be used instead of the UI for image posts — schedule_post with image_urls — when public image URLs are available.)
+
+**Brand IG selection fix (added 2026-07-16, verified live in Publer):** the Brand Instagram account and the Brand Facebook page both display as the exact same name "Valley Pawn" in Publer's account picker — a text search for either `valley_pawn` (never matches; Publer has no literal handle field searchable there) or `Valley Pawn` (matches all 7 connected accounts, not just IG) will fail or pick the wrong one. Do not select Brand IG by typing a name into the account search box. Instead, on the open composer, run this via the JS execution tool:
+```js
+[...document.querySelectorAll('.ACLI')].find(el =>
+  el.querySelector('.ACLI__name')?.textContent.trim() === 'Valley Pawn' &&
+  el.querySelector('.ACLI__provider')?.src.includes('instagram-circle')
+)?.click();
+```
+`.ACLI__provider` is the small provider-badge `<img>` on each account row; its `src` ends in `instagram-circle.svg` for Instagram vs `facebook-circle.svg` for Facebook — this is the only reliable disambiguator since the names are identical. Confirm the Post Preview panel shows an Instagram-style preview (not Facebook) before continuing.
+
+**ONE-MINUTE-GAP RULE (added 2026-07-21 — root cause of a real silent-drop bug).** Instagram (via Publer/Meta) rejects a post if another post to the SAME account is scheduled/published within roughly one minute of it — and Publer's UI can show a misleading "Successfully posted"/"Successfully scheduled" toast for an item that is actually rejected moments later, with the ONLY visible trace being a small red warning icon on the post card (hover it to read "There's another post at this time. A one minute gap is required between posts") — the item never appears in Published, Scheduled, Drafts, Failed, or Recycling; it just silently vanishes. This bit us directly: 2 of 4 backfilled Instagram posts silently failed this way on 2026-07-21 despite clean-looking success toasts, because they were fired back-to-back seconds apart. **Fix: never publish two items to the same Publer account (especially the shared Brand Instagram account, which receives EVERY item in the batch) less than 2 minutes apart.** When publishing multiple items to Instagram in the same run, use "Schedule" (not immediate "Publish") and stagger each item's IG leg by at least 2 minutes from the previous IG post — this is on top of, and independent from, the normal manifest-defined posting-window schedule for that item's other platforms (FB/GBP can still publish immediately since they don't share this restriction). After each IG schedule/publish action, re-open the account's Scheduled or Published list and confirm the item is actually present (not just trust the toast) before moving to the next item.
+
+**TWITTER/X ROUTING (added 2026-07-21 — Joshua: "we want x included, why do you keep excluding it").** This skill's own description has said "Brand posts hit FB + IG + Twitter" since it was written, but the actual routing/publishing steps never implemented the Twitter/X leg — it was a real gap, not an intentional exclusion. Fixed as follows, effective this run onward:
+- Every item in the batch (Brand tier AND store-local tier — not just Brand) routes to the single shared Twitter/X account (`Joshua Davis`, connected in Publer's Twitter/X section) in addition to its existing FB/IG/GBP legs, EXCEPT Deals-of-the-Week items (those stay on the existing dedicated `vp-deals-social-wednesday` pipeline/routing, unchanged) and Reels (X/Twitter video handling is out of scope until the Reels pipeline itself is unblocked).
+- Twitter/X has a much shorter effective character limit than FB/IG. Do not simply reuse the full IG/FB caption verbatim if it exceeds roughly 260 characters (leaving room for the location line) — trim to the core sentence + address/CTA, dropping flourish, while keeping the same facts (no invented details). If a caption is already short enough, reuse it as-is.
+- Twitter/X is a SINGLE account shared across all stores and Brand (same pattern as shared Instagram) — select it the same way as any other account in Publer's picker (its name is unambiguous, "Joshua Davis", no name-collision issue like Brand IG/FB has).
+- Twitter/X posts are subject to the SAME one-minute-gap rule above (it is one shared account receiving every item) — stagger/schedule accordingly, independent from the Instagram stagger sequence (each account tracks its own gap).
+- Log each item's Twitter/X post status (published/scheduled/skipped-and-why) in the manifest alongside its FB/IG/GBP status, so postflight's per-platform verification (see `vp-content-batch-postflight`) can check Twitter/X too, not just Facebook/GBP/Instagram.
+
+## HARD GUARDRAILS
+- NEVER open instagram.com/*, facebook.com/*, or x.com/*\twitter.com/* in Chrome against Valley Pawn accounts (triggered the 2026-07-04 IG flag). All Meta/Twitter interaction goes through Publer. NEVER hit developers.facebook.com/apps/*.
+- If a run needs Meta insight data only Graph API can provide, log the gap in the manifest and DM Joshua. Do NOT attempt browser fallback.
+- MJ fast hours exhausted → pause + DM Joshua (never silently fall to relax mode).
+- Bravo export missing/stale >24h → log staleness, DM Joshua.
+- Empty caption after 2 regenerate retries → skip + DM Joshua.
+- "Dixie Pawn" in generated copy → HARD STOP, skip the item + DM Joshua.
+- No firearms/guns/weapons language on any social/GMP channel (especially Roanoke).
+- Pillar cap breach at Step 2 → re-balance before generating heroes.
+- Community posts: NO CTA, ever. Humor: never exceed 1/week; obey the boundaries block in humor.json.
+- Never fire two posts to the same Publer account (Instagram OR Twitter/X) less than 2 minutes apart — see ONE-MINUTE-GAP RULE above. Always re-verify presence in Scheduled/Published after each action, not just the toast.
+- NEVER publish an AI render or illustration depicting a real, named place (street, storefront, landmark) — real photo or different angle, per the AUTHENTICITY STANDARD.
+- NEVER state a specific fact (price, model, condition, count, historical claim) that isn't sourced from Bravo/Slack/strategy-doc data.
+
+## Timing
+Fires Monday 2:02 AM ET via cron `0 2 * * 1`. Batch stages the Slack log card AND publishes to Publer in the same run — no approval wait. Joshua reviews after the fact and gives feedback for the next batch.
+
+<!-- 2026-07-22: added AUTHENTICITY STANDARD per Joshua ("content has to be more realistic, authentic and informative… read like a human wrote it and the pictures have to be accurate"): employee-voice caption rules with banned AI-tell phrases + mandatory sourced facts, real-photos-first image policy, hard ban on AI renders of real named places, MJ-render-must-match-item rule, and a pre-publish authenticity_check QA gate logged per item in the manifest. Overrides conflicting style guidance in the vp-content-batch skill. -->
+<!-- 2026-07-21 (3rd pass): added TWITTER/X ROUTING — the skill description always claimed "Brand posts hit FB + IG + Twitter" but this was never actually implemented; fixed after Joshua asked "why do you keep excluding it." Every non-Deals/non-Reel item now also posts to the shared Twitter/X account, trimmed to fit its character limit, subject to its own one-minute-gap stagger. -->
+<!-- 2026-07-21 (2nd pass, same day): added the ONE-MINUTE-GAP RULE after discovering 2 of 4 manually-backfilled Instagram posts silently failed despite clean "Successfully posted/scheduled" toasts — Instagram enforces a ~1 minute minimum gap between posts to the same account, and Publer surfaces the rejection only as a small hover-tooltip warning icon, not a blocking error. Fix: stagger/schedule with 2+ min gaps and re-verify presence after each action. -->
+<!-- 2026-07-21 (2nd pass): strengthened the MJ check into a mandatory 3-retry protocol with diagnosis, after confirming MJ was actually fine (14h44m/15h fast hours, reachable) the day after a run claimed it was "unreachable." Joshua's instruction: a status report isn't a fix — retry, diagnose the real cause, and only fall back to Canva when genuinely justified. -->
+<!-- 2026-07-21: Removed the approval gate per Joshua's direct instruction ("I don't want to approve anything, I will give feedback after postings"). Batch now auto-publishes immediately after staging the log card. Added a per-run Midjourney reachability check (don't assume unreachable from a prior run) after Joshua asked for a "full push" (complete 20-item footprint) following the 2026-07-20 run's partial 13-item Canva-only batch. -->
+<!-- 2026-07-16 (evening): fixed Brand IG account-picker ambiguity (see PUBLISHING section) — the account was always connected and healthy, but the old text-search approach could never reliably select it since Publer shows the Brand FB page and Brand IG account under the identical name "Valley Pawn". Also confirmed #vp-studio-queue now exists (Joshua created it 2026-07-16) and Canva is authenticated — the two blockers that held this batch dark since 2026-06-29 are cleared. -->
+<!-- 2026-07-06 (evening, strategic build): added STEP 0.5 — PILLAR_OVERLAY.md (Community 15-20% + Humor ≤10% pillars) + weekly-adjustments.json adjust loop fed by vp-publer-analytics-friday. Community/Humor hook libraries live in Refine Social Media/hook-library/. -->
+<!-- 2026-07-06: added STEP 0 folder-access prerequisite + persistent strategy-doc path after the 2026-07-06 run failed with no Projects mount. Pointed Deals source to #deal-of-the-week (C0AVCANK7E3). Flagged missing #vp-studio-queue. Corrected inventory filenames to items-to-price / aged-inventory-summary. -->
+<!-- migrated to Publer-only publisher 2026-07-04 after Meta app disabled + brand IG flagged. Prior facebook-post Graph API flow retired. Deals-of-the-Week Step 3c-bis added 2026-07-04. -->

@@ -1,7 +1,23 @@
 # _watchdog.ps1 — self-healing monitor for bravo_watcher.ahk
-# Registered in Windows Task Scheduler as "BravoWatcherWatchdog", runs every 15 min.
-# Restarts the watcher when it is dead, or hung (pending trigger + no activity 15+ min).
+# Registered in Windows Task Scheduler as "BravoWatcherWatchdog", runs every 2 min.
+# Restarts the watcher when it is dead, or hung (pending trigger + no activity 4+ min).
 # Created 2026-06-11 after the 2026-06-10 15:29 hang stalled the trigger queue overnight.
+#
+# TIGHTENED 2026-08-02 after a ROA store-switch double-click hung the watcher for
+# 10+ min (no log output at all — the hang was inside a blocking UIA .Click() COM
+# call) while this watchdog stayed silent. Root-caused to TWO compounding bugs,
+# both fixed here:
+#   (a) staleness was computed over EVERY file in logs\ + results\, which is
+#       shared by every other scheduled automation (funds verification, KPIs,
+#       etc.) — any unrelated task writing a log file reset the "activity" clock
+#       and masked a truly-hung watcher. Now scoped to ONLY the pending
+#       trigger's own <triggerId>.log / <triggerId>.result.json.
+#   (b) the 15-min schedule interval + 15-min staleness threshold meant up to
+#       ~30 min could pass before a hang was even detected. Tightened to a
+#       2-min poll / 4-min staleness threshold (comfortably above the ~90s max
+#       gap seen during normal grid-walk/session-switch waits), so worst-case
+#       detection+restart latency drops from ~30-45 min to ~6 min.
+# See BRAVO_KNOWN_ISSUES.md for the full incident history this addresses.
 
 $root = 'Y:\Documents\Claude\Projects\Bravo Data Extraction'
 if (-not (Test-Path $root)) { $root = '\\Mac\Home\Documents\Claude\Projects\Bravo Data Extraction' }
@@ -17,21 +33,37 @@ Get-Process AutoHotkey64 -ErrorAction SilentlyContinue | ForEach-Object {
     if ($cmd -like '*bravo_watcher.ahk*') { $alive = $true }
 }
 
-# --- 2. Hung check: pending trigger + no log/result activity 15+ min ----
-# A busy watcher writes log lines constantly (pacing, cells, results), so
-# "trigger waiting + nothing written for 15 min" reliably means hung —
-# it does NOT false-positive during long multi-cell runs.
+# --- 2. Hung check: pending trigger + no activity on THAT trigger's OWN --
+# log/result file for 4+ min. Scoped per-trigger (by id) so unrelated
+# automations writing elsewhere in logs\ can't mask a real hang.
 $pending = @(Get-ChildItem (Join-Path $root 'triggers') -Filter '*.json' -File -ErrorAction SilentlyContinue)
-$lastAct = Get-ChildItem (Join-Path $root 'logs'), (Join-Path $root 'results') -File -ErrorAction SilentlyContinue |
-    Sort-Object LastWriteTime -Descending | Select-Object -First 1
-$staleMin = if ($lastAct) { ((Get-Date) - $lastAct.LastWriteTime).TotalMinutes } else { 999 }
-$hung = ($pending.Count -gt 0 -and $staleMin -gt 15)
+$staleMin = 999
+if ($pending.Count -gt 0) {
+    $staleMins = foreach ($p in $pending) {
+        $id = [IO.Path]::GetFileNameWithoutExtension($p.Name)
+        $candidates = @(
+            (Join-Path $root ("logs\" + $id + ".log")),
+            (Join-Path $root ("results\" + $id + ".result.json"))
+        ) | Where-Object { Test-Path $_ } | ForEach-Object { Get-Item $_ }
+        if ($candidates.Count -gt 0) {
+            $newest = $candidates | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+            ((Get-Date) - $newest.LastWriteTime).TotalMinutes
+        } else {
+            # Trigger dropped but its own log hasn't been created yet — use the
+            # trigger file's own age as the clock (covers a watcher that's dead
+            # before it even claims the trigger).
+            ((Get-Date) - $p.LastWriteTime).TotalMinutes
+        }
+    }
+    $staleMin = ($staleMins | Measure-Object -Minimum).Minimum
+}
+$hung = ($pending.Count -gt 0 -and $staleMin -gt 4)
 
 if ($alive -and -not $hung) { exit 0 }   # healthy — stay quiet
 
-# --- 3. Throttle: at most one restart per 20 min ------------------------
+# --- 3. Throttle: at most one restart per 8 min --------------------------
 if (Test-Path $stamp) {
-    if (((Get-Date) - (Get-Item $stamp).LastWriteTime).TotalMinutes -lt 20) {
+    if (((Get-Date) - (Get-Item $stamp).LastWriteTime).TotalMinutes -lt 8) {
         Log ("unhealthy (alive=$alive hung=$hung staleMin=" + [math]::Round($staleMin,1) + ") but throttled")
         exit 0
     }

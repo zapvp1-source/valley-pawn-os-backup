@@ -254,3 +254,31 @@ sum-verified. New posters confirmed by sheet header: Bree (Grayson) = CUL, Marti
 | WAY | 0 | 549 | 545 | 4 | +4 | OK within tolerance, but note: 4 rings left the case with zero jewelry sales recorded (manager annotated -4 in blue). Plausibly moved to the AUGUST 2026 GOLD SCRAP bucket. Worth a glance. |
 
 Tolerance +/-5 per board decision 2026-07-27.
+
+## RUN RECORD - 2026-08-02 reconciliation (executed 2026-08-02, ~7:45 PM run)
+FAILED — no reconciliation computed. Both required inputs were unavailable:
+- Bravo pull: jewelry-count-recon-2026-08-02-auto (7:48-8:13 PM) then retry
+  jewelry-count-recon-2026-08-02-auto-b (8:13-8:42 PM) per failure protocol
+  (retry once, fresh id). ALL 5 stores (CUL, HAR, LEX, ROA, WAY) failed on
+  BOTH passes with the same symptom: JewelryCountAudit.ahk step 6b
+  "waiting for DataItem rows to render" times out at 90s, re-click Ok fails
+  with "ClickByName: element not found: Ok", handler correctly refuses to
+  report a false zero, recovers cleanly to Dashboard (BackToDashboard/Done
+  worked every time - no wedge), and throws "Grid never rendered after 2
+  attempts (~3 min)". CUL's retry additionally failed one step earlier -
+  could not select 'Claude Sold Inv Details' from the saved-report dropdown
+  after 3 strategies (type-ahead, keyboard walk, page-by-page), Esc/retry x3.
+  Identical failure across all 5 stores on both attempts = this is a live
+  Bravo-side report-rendering issue tonight (client, server, or report
+  definition), not store-specific flakiness or a fixable automation bug.
+  No CSVs produced for 2026-08-02. New finding logged to
+  BRAVO_KNOWN_ISSUES.md READ-FIRST INDEX (additive).
+- Count sheets: as of 8:43 PM ET check (after waiting through the full ~55min
+  Bravo retry cycle), no store had posted a jewelry count photo for 8/2 in
+  #end-of-day. Newest post in the channel was Martin D. (WAY), 1 day old,
+  filename timestamp 20260801_185050.jpg. No usable sheet data for any store.
+- Posted failure honestly to #jewlery-counts (C0BM9NHGTT4) per failure
+  protocol. Did not fabricate a per-store table with no data.
+- Next run (2026-08-03) should re-check whether this was a one-night Bravo
+  outage or persists; if it recurs identically, escalate as a genuine Bravo
+  regression rather than retrying again.

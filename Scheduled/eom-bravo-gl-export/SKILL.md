@@ -1,106 +1,96 @@
 ---
 name: eom-bravo-gl-export
-description: Monthly automated GL export — on the 5th, cycle all 5 Bravo stores to verify accounting posting for the prior month, export the Consolidated General Ledger, upload to Google Drive (Accounting Exports), and import into QuickBooks Online.
+description: Monthly automated GL export — on the 5th, fully scripted via the Bravo trigger-pipeline (no Parallels/computer-use): posts unposted days, pulls per-store Consolidated GL (same pull the Sales Tax workbook reuses), combines it, uploads to Google Drive, and imports into QuickBooks Online via Chrome.
 model: claude-sonnet-5
 ---
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+> **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard, added 2026-08-02).**
+> This task runs on Joshua's Mac Studio and **does** have local machine access. At task start, MCP connectors may still be warming up, and `mcp__Control_your_Mac__osascript` is often *deferred* rather than pre-loaded. A tool that has not been loaded yet is NOT a missing capability.
+> 1. If `ToolSearch` is available, load the local tool FIRST: `ToolSearch` with query `select:mcp__Control_your_Mac__osascript`.
+> 2. Probe it: run a trivial `do shell script` that echoes READY. If it returns, proceed with the task.
+> 3. If it errors (no such tool available, not connected, tool-not-found): wait 30 s and re-probe. Repeat for up to 12 minutes (24 probes).
+> 4. Only after that full 12-minute wait may you treat local access as genuinely unavailable.
+>
+> **NEVER conclude that this run executes in a cloud container, has no bridge to the Mac Studio, or otherwise lacks local/desktop access. That conclusion is false** and is the single most common cause of a false failure on this platform. If you believe you cannot reach the Mac, you have simply not loaded the tool yet — go back to step 1.
+>
+> **Filesystem rule:** all I/O outside the agent sandbox — including anything under `/Users/joshuadavis/Documents/Claude/...` — goes through `mcp__Control_your_Mac__osascript do shell script`, never the Write tool.
+> **Timeout rule:** the osascript wrapper kills any single call at ~25 s. Never sleep longer than ~18 s inside one call; poll in short increments across separate calls. Guard any command that may exit nonzero with a trailing || true.
 
 
 > ⚠️ FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE. If this task fails, errors out, or cannot complete for any reason, DO NOT post anything to any Slack channel. On failure: DM Joshua only with what happened and what he needs to do manually. Only post to Slack once the task has genuinely completed.
 
-## Monthly Bravo GL Export & QuickBooks Import
+## Monthly Bravo GL Export & QuickBooks Import — fully scripted (rebuilt 2026-08-02)
 
-You are running a scheduled monthly task for Valley Pawn (Full Circle Finance Inc). It is the 5th of the month. Export last month's Consolidated General Ledger from all 5 Bravo stores and post it into QuickBooks Online.
+You are running a scheduled monthly task for Valley Pawn (Full Circle Finance Inc). It is the 5th of the month. Post unposted days, export last month's Consolidated General Ledger from all 5 Bravo stores, and post it into QuickBooks Online.
 
 Note: Joshua is now managing the books directly — there is no external bookkeeper. QBO access uses the saved Chrome credentials for jdavis@fcfpawn.com.
 
+REBUILT 2026-08-02: this task previously drove Bravo live via Parallels Desktop computer-use for store cycling and GL export. Joshua asked for that to be eliminated wherever a scripted path already exists. It now runs through the same production trigger-file pipeline the rest of the Bravo automation uses (`post-to-accounting-post` and `post-to-accounting-gl` pipeline cells, dispatched by the headless AHK watcher) — no live computer-use in the normal path. Computer-use is now ONLY a last-resort fallback if a pipeline cell reports Bravo is genuinely wedged, exactly like `sales-tax-monthly-update`'s existing fallback. Do not reintroduce the old manual store-cycle flow for the normal path.
+
+Bonus: Step 2 below produces the exact same per-store GL CSVs that `sales-tax-monthly-update` (runs the 6th) consumes for the Sales Tax workbook. One pull now serves both consumers — no separate hand-off step needed; that task's own existing "check the output folder first" logic will simply find these files already there.
+
 ---
 
-### STEP 0: Concurrency guard (added 2026-07-07)
-This task drives Bravo live via computer-use, which will collide with the trigger-pipeline watcher or the health-gate script if either is mid-run. Check first, and hold a flag while you work so nothing else starts on top of you.
+### STEP 1: Post unposted days for the prior month, all 5 stores (scripted)
 
-Check:
+This uses the `post-to-accounting-post` pipeline cell (AUTHORIZED by Joshua 2026-07-06 to click Post — it only posts days that are still unposted, oldest first, and never posts past the trigger end date; see `reports/PostToAccountingPost.ahk` for the safety rules baked into the handler itself). This cell is newer than `post-to-accounting-gl` and hasn't run at full 5-store production scale as part of a scheduled task before, so watch its first couple of runs.
+
+Drop a trigger JSON via `mcp__Control_your_Mac__osascript` into `/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/triggers/`:
 ```
-do shell script "'/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/_bravo_foreground_guard.sh' check"
+{"id": "eom-gl-post-<yyyymm>-<timestamp>", "requested_at": "<ISO8601>", "reports": [{"name": "post-to-accounting-post", "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "YYYY-MM-01..YYYY-MM-DD"}]}
 ```
-- If it prints `CLEAR`: immediately acquire the flag, then continue to Step 1:
-  `do shell script "'/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/_bravo_foreground_guard.sh' acquire eom-bravo-gl-export"`
-- If it prints `BUSY:...`: wait 5 minutes (a fresh osascript call — do not sleep >18s in one call) and check again. If still BUSY after one retry, DM Joshua: "Monthly GL export delayed — Bravo is busy (<reason>). Rescheduling automatically." then reschedule this task's own `fireAt` to +30 minutes via `mcp__scheduled-tasks__update_scheduled_task` and exit. Never force through a busy Bravo.
+(YYYY-MM-DD range = the full prior calendar month.)
 
-Whenever this task ends — success, failure, or the MFA-stop below — always release the flag:
-`do shell script "'/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/_bravo_foreground_guard.sh' release eom-bravo-gl-export"`
+Poll `/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/results/<id>.result.json` every ~40s until all 5 stores report a result (expect ~10-15 min total; posting many backlogged days can take longer per store — be patient before concluding a store is stuck).
 
-### STEP 1: Notify Joshua and Request Computer Access
+For each store, record `days_posted` / `days_skipped` / `post_errors` from the result extras — you'll need these for the Step 6 report.
 
-Send Joshua a Slack DM (search for Joshua Davis):
-
-"Hey — starting the monthly GL export now (5th of the month). I'll cycle all 5 Bravo stores, verify accounting posting for last month, export the Consolidated GL, and upload it to QuickBooks. Approve the computer access dialog when it pops up and I'll get started."
-
-Then immediately call request_access for Parallels Desktop (with clipboardWrite: true).
+If a store's cell errors with "EnsureStore failed", "BackToDashboard could not return Bravo to Dashboard", or similar — Bravo is likely wedged. Recovery (documented in `bravo-context` → "Bravo hang recovery"): request computer-use access to Parallels Desktop, bring Bravo forward, press Alt+F4 to close it, relaunch it from the Windows taskbar Search ("Bravo" under Top apps), log in via the `bravo-store-cycle` skill (username FREE1@<STORE>, password from `bravo-context`, paste via clipboard — never type it), dismiss the "Overdue Task Reminder" with "Remind Me Later", then re-drop the trigger for the remaining stores. Retry failed stores up to 3 times total before flagging the gap in your Step 6 report rather than blocking indefinitely.
 
 ---
 
-### STEP 2: Cycle All 5 Stores & Verify Accounting Posting
+### STEP 2: Export the per-store Consolidated GL for the prior month (scripted — this is the shared pull)
 
-Use the bravo-store-cycle workflow to log into each store. Order: CUL, HAR, LEX, ROA, WAY.
-
-Credentials:
-- Username: FREE1@WAY (pre-filled on most screens; WAY store shows just FREE1)
-- Password: Health2035! — always paste via clipboard: write_clipboard("Health2035!") then Ctrl+V
-
-For each store, after reaching the Dashboard:
-1. Navigate to Post to Accounting (left sidebar or Accounting section)
-2. Verify every day of the previous calendar month shows as posted
-3. If any days are unposted — post them now
-4. Take a screenshot documenting the posting status
-5. Note any days that errored or could not be posted
-
-After verifying, lock session and cycle to next store:
-Dashboard → Lock Session → Global Access → Store Selector → Next store → Login → Dashboard
+- First check `/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/output/` for `YYYY-MM-DD_<STORE>_post-to-accounting-gl.csv` (date = prior month's last day) for all 5 stores, dated today. If present, reuse — don't re-pull.
+- Otherwise trigger the existing `post-to-accounting-gl` pipeline cell the same way as Step 1 (same trigger-drop / poll / retry / hang-recovery pattern):
+```
+{"id": "eom-gl-export-<yyyymm>-<timestamp>", "requested_at": "<ISO8601>", "reports": [{"name": "post-to-accounting-gl", "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "YYYY-MM-01..YYYY-MM-DD"}]}
+```
+- This produces one CSV per store (encoding latin-1). Leave them in the output folder — do not move or rename them, `sales-tax-monthly-update` reads them from there directly the next morning.
 
 ---
 
-### STEP 3: Export the Consolidated General Ledger
+### STEP 3: Combine the 5 per-store CSVs into one workbook (pure script, no Bravo)
 
-After all 5 stores are verified:
-1. Navigate to Reports in Bravo
-2. Find Consolidated General Ledger
-3. Set date range: first day through last day of the previous month
-4. Select All Stores (consolidated view)
-5. Run the report
-6. Export — prefer Excel/CSV. If no export button, take screenshots and extract into a structured file.
-7. Save as: YYYY-MM Consolidated GL.xlsx (where YYYY-MM = prior month)
+Using Python (pandas/openpyxl), read all 5 `YYYY-MM-DD_<STORE>_post-to-accounting-gl.csv` files (latin-1 encoding) and combine into a single workbook `YYYY-MM Consolidated GL.xlsx` (YYYY-MM = prior month) — one tab per store plus a combined/summary tab is fine, match whatever's easiest to read for a journal entry. Save it locally first (e.g. alongside the source CSVs in the output folder) before uploading.
 
 ---
 
-### STEP 4: Upload to Google Drive (Accounting Exports Folder)
+### STEP 4: Upload to Google Drive (Accounting Exports folder) — scripted, no Chrome needed
 
-Upload the GL file to:
-- Folder: Valley Pawn Drive → Accounting Exports
-- Direct URL: https://drive.google.com/drive/u/0/folders/1FzXIRPNZHaECOwfaKpQDMUTPRY3-d12_
-- Account: jdavis@fcfpawn.com
+Use the Google Drive MCP connector's `create_file` tool directly (no browser):
+- parentId: the Accounting Exports folder — `1FzXIRPNZHaECOwfaKpQDMUTPRY3-d12_` (Valley Pawn Drive → Accounting Exports)
+- title: `YYYY-MM Consolidated GL.xlsx`
+- base64Content: the workbook from Step 3, contentMimeType set appropriately, disableConversionToGoogleType: true (keep it a native .xlsx, don't let Drive convert it to Google Sheets)
+- Account context: jdavis@fcfpawn.com
 
-Use Chrome MCP:
-1. Navigate to the Accounting Exports folder URL
-2. Upload the file
-3. Confirm the upload completed
-
-File naming: YYYY-MM Consolidated GL.xlsx
+Confirm the upload succeeded (check the returned file object) before moving on.
 
 ---
 
-### STEP 5: Import into QuickBooks Online
+### STEP 5: Import into QuickBooks Online (still browser-driven — no journal-entry API is available)
+
+There is no QuickBooks MCP tool that can create a journal entry directly (checked 2026-08-02 — the connected QBO connector only covers sales/invoicing/payroll/catalog/reporting, not GL journal entries), so this step still needs the Chrome MCP, not Parallels. This is the one part of the pipeline that isn't a headless script; flag to Joshua in the Step 6 report if he'd rather this be handled differently (e.g. him entering it manually from the Drive file, or building a dedicated QBO API integration later).
 
 Navigate to QBO using the Chrome MCP and follow the quickbooks-online skill Login Routine:
 - URL: https://app.qbo.intuit.com
 - Use saved Chrome password for jdavis@fcfpawn.com
 - Company: Full Circle Finance Inc (Valley Pawn)
 
-Once logged in, attempt to post the Bravo GL as a journal entry:
+Once logged in, attempt to post the combined GL (from Step 3) as a journal entry:
 1. Go to + New → Journal Entry
 2. Set the journal date to the last day of the prior month
-3. Reference the GL export to build the debit/credit entries
+3. Reference the combined GL to build the debit/credit entries
 4. Add a memo: "Bravo POS Consolidated GL — [Month Year]"
 5. Save the journal entry
 
@@ -111,39 +101,25 @@ IMPORTANT — If you cannot determine the correct account mapping (the exact map
 
 If QBO prompts MFA — DM Joshua immediately with what's needed. Do not guess codes.
 
-Release the concurrency flag now that Bravo/computer-use work is done: `do shell script "'/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/_bravo_foreground_guard.sh' release eom-bravo-gl-export"`
-
-### STEP 5.5: Kick off the per-store GL pull for the Sales Tax workbook (added 2026-07-14)
-
-The `sales-tax-monthly-update` task (runs the 6th) needs this same Consolidated GL data broken out per-store as structured CSVs, not the single all-stores Excel export from Step 3. Rather than have that task independently drive Bravo again on its own day (a second monthly touch, doubling hang risk), this task hands it fresh data proactively.
-
-Now that the concurrency flag is released and Bravo is free of your live/manual session, drop ONE trigger JSON for the automated pipeline. This does NOT re-enter Bravo yourself — the watcher process (which drives Bravo independently via AHK) picks it up on its own, so there's no conflict with the flag you just released:
-
-Via `mcp__Control_your_Mac__osascript`, write a file to `/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/triggers/` containing:
-```
-{"id": "eom-gl-export-taxfeed-<yyyymm>-<timestamp>", "requested_at": "<ISO8601>", "reports": [{"name": "post-to-accounting-gl", "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "YYYY-MM-01..YYYY-MM-DD"}]}
-```
-(YYYY-MM = the prior month you just exported, matching Step 3.)
-
-This is fire-and-forget — do not poll or wait for it, and do not block Step 6 on it. The watcher will process it independently over the following ~10-15 minutes, well ahead of `sales-tax-monthly-update`'s run the next morning. If the trigger drop itself fails (e.g. folder unwritable), note it in the Step 6 summary but do not treat it as a task failure — `sales-tax-monthly-update` has its own fallback to pull this data itself if it finds nothing waiting when it runs.
+---
 
 ### STEP 6: Report Results to Joshua
 
 Send Joshua a Slack DM summarizing:
-- Per-store posting verification status (which stores had all days posted, any exceptions)
-- GL export — success or what format was exported
-- Drive upload — file name and confirmation link
+- Whether the run stayed fully scripted or needed the computer-use hang-recovery fallback (and for which store/step, if so)
+- Posting results per store (days posted / skipped / errors) from Step 1
+- GL export — reused existing CSVs or pulled fresh
+- Combined workbook + Drive upload — file name and confirmation link
 - QBO journal entry — posted successfully, OR "file is in Drive at [link] — account mapping needed before posting"
-- Per-store GL pull for the Sales Tax workbook — trigger dropped successfully (or note if it failed to drop)
+- Note that the Sales Tax workbook will pick up this same GL data automatically on the 6th — no separate action needed
 - Any items requiring his manual attention
 
 ---
 
 ### Important Notes
-- Bravo POS runs inside Parallels Desktop (Windows 11 VM) on Joshua's Mac Studio
-- Always use clipboard paste for passwords: write_clipboard("Health2035!") then Ctrl+V
-- Take screenshots frequently to document UI state
-- This task runs monthly on the 5th for the prior calendar month
-- No external bookkeeper — Joshua reviews QBO directly; all GL reports go to him only
+- Bravo POS runs inside Parallels Desktop (Windows 11 VM) on Joshua's Mac Studio — but as of 2026-08-02 this task should only touch it via the scripted trigger-pipeline, never a live computer-use session, except as the documented hang-recovery fallback in Steps 1-2.
+- If the hang-recovery fallback is used: always paste passwords via clipboard (write_clipboard("Health2035!") then Ctrl+V), never type them.
+- This task runs monthly on the 5th for the prior calendar month.
+- No external bookkeeper — Joshua reviews QBO directly; all GL reports go to him only.
 - Accounting Exports Drive folder: https://drive.google.com/drive/u/0/folders/1FzXIRPNZHaECOwfaKpQDMUTPRY3-d12_
-- Step 5.5 (added 2026-07-14) feeds `sales-tax-monthly-update` so that task no longer needs to drive Bravo itself under normal conditions — see that task for the consumer side of this handoff.
+- `sales-tax-monthly-update` (runs the 6th) depends on Step 2's output CSVs being present in the Bravo Data Extraction output folder — don't move, rename, or delete them after this task finishes.

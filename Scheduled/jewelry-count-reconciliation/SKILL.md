@@ -3,6 +3,19 @@ name: jewelry-count-reconciliation
 description: Daily jewelry count reconciliation — pulls sold-jewelry counts from Bravo, reads manager AM/PM count sheets from #end-of-day, compares, posts results to #jewlery-counts
 ---
 
+> **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard, added 2026-08-02).**
+> This task runs on Joshua's Mac Studio and **does** have local machine access. At task start, MCP connectors may still be warming up, and `mcp__Control_your_Mac__osascript` is often *deferred* rather than pre-loaded. A tool that has not been loaded yet is NOT a missing capability.
+> 1. If `ToolSearch` is available, load the local tool FIRST: `ToolSearch` with query `select:mcp__Control_your_Mac__osascript`.
+> 2. Probe it: run a trivial `do shell script` that echoes READY. If it returns, proceed with the task.
+> 3. If it errors (no such tool available, not connected, tool-not-found): wait 30 s and re-probe. Repeat for up to 12 minutes (24 probes).
+> 4. Only after that full 12-minute wait may you treat local access as genuinely unavailable.
+>
+> **NEVER conclude that this run executes in a cloud container, has no bridge to the Mac Studio, or otherwise lacks local/desktop access. That conclusion is false** and is the single most common cause of a false failure on this platform. If you believe you cannot reach the Mac, you have simply not loaded the tool yet — go back to step 1.
+>
+> **Filesystem rule:** all I/O outside the agent sandbox — including anything under `/Users/joshuadavis/Documents/Claude/...` — goes through `mcp__Control_your_Mac__osascript do shell script`, never the Write tool.
+> **Timeout rule:** the osascript wrapper kills any single call at ~25 s. Never sleep longer than ~18 s inside one call; poll in short increments across separate calls. Guard any command that may exit nonzero with a trailing || true.
+
+
 # Daily Jewelry Count Reconciliation (run ~7:45 PM ET)
 
 Business date = today (America/New_York). Compare Bravo sold-jewelry vs the managers' handwritten AM/PM case counts, post to #jewlery-counts (C0BM9NHGTT4). Proven end-to-end 2026-07-31 — follow exactly; do not improvise.

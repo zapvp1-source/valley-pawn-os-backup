@@ -1,0 +1,68 @@
+---
+name: overnight-closing-reports-smoke-2026-05-29
+description: Overnight 2 AM May 29: 9 closing handlers × 5 stores (41 cells). Validates the {Enter}→{Tab} export fix at scale.
+model: claude-sonnet-5
+---
+
+> **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard, added 2026-08-02).**
+> This task runs on Joshua's Mac Studio and **does** have local machine access. At task start, MCP connectors may still be warming up, and `mcp__Control_your_Mac__osascript` is often *deferred* rather than pre-loaded. A tool that has not been loaded yet is NOT a missing capability.
+> 1. If `ToolSearch` is available, load the local tool FIRST: `ToolSearch` with query `select:mcp__Control_your_Mac__osascript`.
+> 2. Probe it: run a trivial `do shell script` that echoes READY. If it returns, proceed with the task.
+> 3. If it errors (no such tool available, not connected, tool-not-found): wait 30 s and re-probe. Repeat for up to 12 minutes (24 probes).
+> 4. Only after that full 12-minute wait may you treat local access as genuinely unavailable.
+>
+> **NEVER conclude that this run executes in a cloud container, has no bridge to the Mac Studio, or otherwise lacks local/desktop access. That conclusion is false** and is the single most common cause of a false failure on this platform. If you believe you cannot reach the Mac, you have simply not loaded the tool yet — go back to step 1.
+>
+> **Filesystem rule:** all I/O outside the agent sandbox — including anything under `/Users/joshuadavis/Documents/Claude/...` — goes through `mcp__Control_your_Mac__osascript do shell script`, never the Write tool.
+> **Timeout rule:** the osascript wrapper kills any single call at ~25 s. Never sleep longer than ~18 s inside one call; poll in short increments across separate calls. Guard any command that may exit nonzero with a trailing || true.
+
+
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+
+
+> ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
+
+Overnight smoke test of Bravo closing-report handlers. The export-hang bug was fixed today (2026-05-28) — the keyboard strategy in SetExportFormatCsv now uses Send("{Tab}") instead of Send("{Enter}") so the Export Document dialog stays open while picking CSV. EOM proved out with a real 7731-byte CSV at 14:27.
+
+PRE-FLIGHT (CRITICAL):
+1. Run via prlctl exec inside VM 7dc84f03-4e68-4f43-9596-bf8a7dfb8e0a:
+   powershell -Command "Get-Process Bravo*,AutoHotkey* | Select-Object Id,ProcessName,Responding,StartTime | Format-Table -AutoSize"
+   Bravo must be running AND Responding=True. Exactly one AutoHotkey64 (watcher). If not, STOP and alert.
+2. /Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/logs/watcher.last_started.txt must list end-of-month + end-of-day-consolidated in Handlers line.
+
+DROP TRIGGER at /Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/triggers/overnight-smoke-2026-05-29.json:
+
+{
+  "id": "overnight-smoke-2026-05-29",
+  "requested_at": "2026-05-29T02:00:00-04:00",
+  "reports": [
+    { "name": "end-of-month",             "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "2026-05-28" },
+    { "name": "end-of-day-consolidated",  "stores": ["CUL"],                          "date": "2026-05-28" },
+    { "name": "deposits-paid-outs",       "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "2026-05-28" },
+    { "name": "disbursement-journal",     "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "2026-05-28" },
+    { "name": "end-of-day",               "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "2026-05-28" },
+    { "name": "general-exception",        "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "2026-05-28" },
+    { "name": "inter-store-cash-transfer","stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "2026-05-28" },
+    { "name": "large-cash-transactions",  "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "2026-05-28" },
+    { "name": "transfers",                "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "2026-05-28" }
+  ]
+}
+
+41 cells. ~75-105s each with 15s pacing = ~60-75 min total.
+
+EXCLUDED: bravo-business-dashboard (SSRS — opens in Chrome, current handler can't drive it).
+
+POLL: wait 5 min, then poll triggers/processed/overnight-smoke-2026-05-29.json every 90s. Hard timeout: 120 min.
+
+AUDIT: read results/overnight-smoke-2026-05-29.result.json and output/2026-05-28_*.csv listings. Expected CSV sizes: EOM ~7-8 KB per store; EOD-consolidated ~5-6 KB; unknowns for the 7 new reports.
+
+SUMMARY at /Users/joshuadavis/Documents/Claude/Projects/Bravo Pipeline/morning-smoke-summary-2026-05-29.md:
+- X of 41 cells succeeded
+- Per-report table of sizes per store
+- Any hangs (grep "Not Responding\|hang" in log)
+- For failed cells, paste error lines
+- Recommendation: green-light to add Inventory/Loan/Sales/Retail handlers tomorrow, or what to fix
+
+Do NOT post to Slack. Save the file only.
+
+RULES: additive only, never edit existing handlers/dispatch, never delete files, no computer-use revival if Bravo hangs.

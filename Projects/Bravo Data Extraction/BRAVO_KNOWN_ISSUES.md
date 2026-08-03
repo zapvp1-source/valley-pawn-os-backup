@@ -11,6 +11,7 @@ and MUST verify+stamp any OPEN item's next-run outcome before starting new work.
 - Jewelry Count Reconciliation: desktop scheduled task still needs registration by an on-computer session (SKILL.md at Scheduled/jewelry-count-reconciliation/ rewritten 2026-07-31 with the proven protocol; register daily 7:45 PM ET). Cloud watchdog already live at 9:30 PM ET. 2026-07-30 recon COMPLETE and posted to #jewlery-counts 2026-07-31. The 2026-07-30 pull COMPLETED 2026-07-31 16:51 after the wedge was cleared (jewelry-count-recon-2026-07-30c: all 5 stores success, CUL 13 / HAR 17 / LEX 10 / ROA 29 / WAY 28 rows). Rev2 BackToDashboard showed no regression across the full 5-store cycle.
 
 ## SOLVED - DO NOT RE-DIAGNOSE OR RE-PROPOSE
+- Watchdog too slow / could be masked by unrelated tasks: 2026-08-02, see full writeup below. _watchdog.ps1 now scopes staleness to the pending trigger's own log/result file (not the whole logs\ dir), threshold tightened 15min->4min, throttle 20min->8min, Task Scheduler cadence tightened 15min->2min. Backup: _watchdog.ps1.bak-pre-tighten-2026-08-02.
 - UTF-8 BOM in logs/_recover_result.txt: already stripped in bravo_health_gate.sh (tr -d CR+BOM, lines ~185/~214). Not a live bug.
 - Stranded Ad-Hoc generator dialog wedging recovery: fixed 2026-07-30 via BackToDashboard(4) in _recover_to_dashboard.ahk.
 - Bravo 2026.6.0.79 ClickOnce Enter-doesnt-confirm regression: all 71 reports/*.ahk audited 2026-07-30; 5 patched; 48 not applicable; 18 already fixed.
@@ -30,6 +31,57 @@ and MUST verify+stamp any OPEN item's next-run outcome before starting new work.
 - FIX: BackToDashboard (lib/Bravo.ahk) now answers Yes when BOTH a "Question" element and a "Yes" button are present, before the modal-Cancel checks. Backup: lib/Bravo.ahk.bak-pre-question-dialog-fix-2026-07-31T1630. Not yet live-verified against a real wedge.
 - REMAINING: the scrap handler itself should stop leaving the dialog (it reports SUCCESS while wedging Bravo - a pipeline-wide hazard); fix by its owner session using the same Yes-answer pattern.
 
+
+---
+## 2026-08-02 - Watchdog hardening: scoped staleness + tightened cadence (fixes the recurring stranded/wedge outages)
+
+CONTEXT: items-to-price daily run wedged mid-ROA-store-switch — log froze immediately after
+"SwitchStore: double-click store row 'Roanoke'" for 10+ minutes with ZERO further log output.
+Root cause: `DoubleClickByName` (lib/Bravo.ahk) issues `elem.Click("Left", 2)`, a synchronous
+UIA COM call with no internal timeout. If the target window/provider is unresponsive at the
+moment of the call, the whole single-threaded AHK watcher process blocks forever inside that
+one call — no AHK-level timeout wrapper can intervene because the blocking happens inside the
+call itself, not in the polling/wait logic around it. This is almost certainly the same root
+disease behind the "no-dashboard" (07-22/07-23/07-29) and "no-window" (08-01) recurring
+outages logged above — different UIA call, same failure mode: a hang with no internal timeout
+that only an EXTERNAL process can clear.
+
+The external backstop (_watchdog.ps1 + Windows Task Scheduler "BravoWatcherWatchdog") already
+existed and already does the right thing (force-kill + relaunch via _restart_watcher.ps1,
+proven clean today: I did it manually, watcher recovered in <60s). It just wasn't fast or
+reliable enough to fire automatically:
+
+1. BUG: staleness was `most-recently-modified file across the entire logs\ + results\ folders`.
+   Those folders are shared by every other scheduled automation (funds verification, KPIs,
+   directory monitor, etc.), so any unrelated task writing a log file reset the "activity"
+   clock and masked a truly-hung watcher. This is the likely reason the watchdog never fired
+   during the 07-22 through 08-01 recurrences despite matching symptoms.
+2. SLOW: 15-min Task Scheduler poll interval + 15-min staleness threshold = up to ~30 min
+   before even detecting a hang, on top of the masking bug above.
+
+FIX (additive, parameter/scope-only — no change to any click/UI logic, so zero regression risk
+to the automation itself):
+- _watchdog.ps1: staleness now computed ONLY from the pending trigger's own
+  `<triggerId>.log` / `<triggerId>.result.json` (looked up by trigger id), not the whole
+  folder. Threshold 15min -> 4min (comfortably above the ~90s max legitimate gap observed
+  during grid-walks/session-switches). Restart throttle 20min -> 8min. Backup:
+  `_watchdog.ps1.bak-pre-tighten-2026-08-02`.
+- Task Scheduler "BravoWatcherWatchdog": repeat interval 15min -> 2min (re-registered via XML
+  export/edit/re-import since the task uses InteractiveToken logon, no password needed).
+  Worst-case detection+restart latency: ~30-45+ min (or never, if masked) -> ~6 min.
+- Verified: PowerShell tokenizer syntax-check clean; dry-run on live healthy state exits 0
+  with no spurious log entry; schtasks /query confirms "Repeat: Every: 0 Hour(s), 2 Minute(s)".
+  NOT yet verified against a live real hang (none occurred since the change) — next occurrence
+  of any stranded/wedge signature should self-clear within ~6 min with a `RESTART:` line in
+  logs/watchdog.log. If it doesn't, re-open this item.
+
+REMAINING (longer-term, deferred — needs a proving ground per Rule #3, higher regression risk):
+replace `elem.Click()` UIA COM calls in lib/Bravo.ahk (ClickByName/DoubleClickByName) with
+native coordinate-based mouse clicks (derived from BoundingRectangle), which post Windows
+messages asynchronously instead of blocking synchronously inside the calling thread. This
+would eliminate the hang at its source rather than relying on external recovery, but touches
+the single most shared low-level primitive in the whole pipeline and needs to be proven in
+isolation before touching hardened handlers.
 
 ---
 ## RUN -- 2026-07-27 (PAWN WALK)
@@ -167,3 +219,38 @@ Completed the full file-by-file audit announced above. All 71 non-`.bak` files i
   `LoanPortfolio2026.ahk`, `LoanReviews.ahk`, `LowDollarBuys.ahk`, `LowDollarLoans.ahk` each already has the Ok-click+fallback and a bounded DataItem-grid-render poll from the 2026-07-28 partial-fix pass (see their `.bak-pre-okfix-2026-07-28T154508` predecessors). However, in all four, when the render poll times out with 0 DataItems found, the code currently treats that as a "legitimate empty result" and writes a zero-row sentinel CSV as **success** — with no secondary confirmation (e.g. the "Layouts caret present" check `AgedJewelrySales.ahk` uses) that the dialog actually closed and a real empty grid rendered, rather than the dialog being stuck open. If the Ok-click regression ever recurs on these four, `ParseCountFromTitle()`/the row count would likely also read 0, silently reproducing the exact false "0 rows success" this whole audit exists to prevent. This was NOT patched now because it changes existing empty-result business logic (not simply adding a missing verification step) on production financial-reporting handlers that could not be tested live in this session — **next session/human should decide whether to add a Layouts-caret (or equivalent) confirmation before accepting the zero-row sentinel in these four files**, the same way AgedJewelrySales already does.
 
 All 5 patches were spot-checked by diffing against their `.bak-clickonce-okfix-2026-07-30` backups and match the intended pattern (Ok-click-with-fallback, then bounded `BoxReportName`-gone poll, throw-on-timeout). None of this session's changes have been live-verified against Bravo (no Parallels/computer-use grant available) — the next scheduled run against each patched handler is the real-world test.
+
+## 2026-08-02 PM - NEW: jewelry-count-audit grid-never-renders, all 5 stores, both original + retry pull
+CONTEXT: jewelry-count-reconciliation scheduled task (~7:45 PM run) triggered
+jewelry-count-recon-2026-08-02-auto for CUL/HAR/LEX/ROA/WAY. All 5 cells
+failed identically: JewelryCountAudit.ahk clicks Ok, generator dialog closes
+("report is running"), then no DataItem rows ever render within 90s. The
+false-zero-fix retry (re-click Ok) also failed every time with
+"ClickByName: element not found: Ok" - the Ok button is gone/not found on
+retry, suggesting the report view is in some intermediate state, not simply
+slow. Handler correctly throws rather than reporting a false zero, and
+BackToDashboard/Done recovery worked cleanly every single time (no wedge, no
+stranded dialog) - this is NOT the Question-dialog wedge documented above.
+RETRY: a fresh trigger (jewelry-count-recon-2026-08-02-auto-b) was run per
+protocol ~30 min later. Same result on 4/5 stores (HAR, LEX, ROA, WAY -
+identical "Grid never rendered" after 90s+retry). CUL failed one step
+earlier on the retry: could not select 'Claude Sold Inv Details' from the
+saved-report dropdown at all (all 3 selection strategies + 3 attempts
+failed) - a different symptom than the first pass, where CUL's dropdown
+selection succeeded fine and only the grid render hung.
+PATTERN: identical failure across all 5 stores on both attempts, ~40-90 min
+apart, with two different symptoms (grid-render timeout vs dropdown-select
+failure) both traceable to the "Claude Sold Inv Details" custom report
+specifically. This looks like a live Bravo-side issue tonight (report
+definition, server-side data prep, or ClickOnce client state) rather than a
+UIA timing/automation bug - the existing 90s-wait + retry-once + clean
+recovery logic (correctly) behaved exactly as designed and still could not
+get real data.
+STATUS: OPEN / UNRESOLVED. Not force-killed or further retried tonight per
+jewelry-count-reconciliation's failure protocol (retry ONCE only). Full
+detail in Jewelry Count Reconciliation/STATUS.md RUN RECORD 2026-08-02.
+NEXT STEP for whoever picks this up: on 2026-08-03, check whether
+'Claude Sold Inv Details' or any other saved report at any store shows the
+same rendering hang. If yes across multiple reports, this is likely a Bravo
+server/client-side regression, not specific to jewelry-count-audit - escalate
+to Bravo support rather than continuing to patch the AHK handler.

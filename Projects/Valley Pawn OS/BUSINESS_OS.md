@@ -1,5 +1,104 @@
 # Valley Pawn Business OS
 
+<!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
+
+# LIVE STATE - auto-refreshed 2026-08-02
+
+This block is regenerated daily from the machine itself. It is the ONLY
+section of this document guaranteed current. If a hand-written section
+below disagrees with this block, THIS BLOCK WINS.
+
+## Scheduled automations
+
+| Metric | Count |
+|---|---|
+| Task folders on disk | 141 |
+| Registered with scheduler | 121 |
+| Enabled (will fire) | 81 |
+| Registered but disabled | 40 |
+| On disk but never registered | 21 |
+| Recorded skips (usage cap) | 412 |
+
+### Enabled tasks
+
+`amazon-return`, `annual-board-review`, `asset-recovery-daily-refresh`, `bald-rock-15-day-contract`, `bald-rock-guest-reviews`, `bald-rock-monday-briefing`, `blog-publisher-watchdog`, `bravo-health-watchdog`, `brevo-preflight-watchdog`, `business-os-daily-refresh`, `chekkit-new-review-alert`, `chekkit-unanswered-alert`, `chekkit-weekly-review-requests`, `daily-clockin-check`, `daily-cloudcover-check`, `daily-dress-code-check`, `daily-funds-verification`, `daily-items-to-price`, `daily-supply-order`, `dismiss-employee`, `ebay-title-photo-accuracy-audit`, `ebay-weekly-quality-fix`, `email-analytics-weekly`, `eom-bravo-gl-export`, `funds-verification-watchdog`, `jewelry-count-reconciliation`, `layaway-yield-weekly`, `monday-bravo-combined-run`, `monday-bravo-postcheck`, `monthly-amazon-store-allocation`, `monthly-analytics-prestage`, `monthly-analytics-report`, `monthly-analytics-watchdog`, `monthly-bonus-payout`, `monthly-bonus-qualifiers`, `monthly-bonus-targets`, `monthly-capability-drift-audit`, `monthly-employee-sales-rankings`, `monthly-gun-audit-report`, `monthly-we-buy-gold-silver-email`, `nightly-chekkit-review-responses`, `oura-daily-import`, `pawn-walk`, `preston-ebay-feedback-watch`, `review-obtained-last-week`, `sales-tax-monthly-update`, `sunday-checklist-summary`, `tuesday-supply-checkout`, `tuesday-supply-summary`, `valley-pawn-blog-publisher`, `vp-ai-search-health-check`, `vp-ai-visibility-metrics`, `vp-casual-video-daily`, `vp-content-batch-postflight`, `vp-content-batch-preflight`, `vp-content-batch-weekly`, `vp-dashboard-refresh`, `vp-deal-of-week-monday-pick`, `vp-deal-of-week-monday-prompt`, `vp-deal-of-week-monday-reminder`, `vp-deals-social-wednesday`, `vp-hr-compliance-quarterly-review`, `vp-hr-policy-monthly-sync`, `vp-new-customer-report`, `vp-os-github-nightly-backup`, `vp-publer-analytics-friday`, `vp-website-deals-weekly`, `vp-website-shop-nightly`, `vp-website-trend-daily-refresh`, `vp-weekly-spot-price-update`, `weekly-aged-inventory-canvas-refresh`, `weekly-analytics-summary`, `weekly-employee-perf-canvas-refresh`, `weekly-layaway-review-canvas-refresh`, `weekly-loan-layaway-manager-dms`, `weekly-loan-review-canvas-refresh`, `weekly-returns-summary`, `weekly-store-kpis`, `weekly-store-perf-canvas-refresh`, `weekly-timekeeping-analysis`, `weekly-website-kpi-artifact-refresh`
+
+### On disk but NOT registered (never fire)
+
+`chekkit-review-responder`, `cloud-cover-keep-alive`, `daily-distributor-application-monitor`, `daily-loan-inventory-text`, `daily-mail-unsubscribe`, `dashboard-data-collector`, `discount-review`, `domain-transfer-check`, `fb-token-health-check-daily`, `gusto-keep-alive`, `monday-bravo-reminder`, `monthly-cpa-report`, `monthly-sold-inventory-refresh`, `sold-review`, `vp-ai-search-autofix`, `vp-ai-visibility-autofix`, `vp-social-publisher`, `weekly-email-cleanup`, `weekly-jacksonville-property-search`, `weekly-st-augustine-property-search`, `weekly-timekeeping-analysis-mcp`
+
+## Native launchd agents (run without Claude)
+
+| Agent | File state | Currently loaded |
+|---|---|---|
+| `com.valleypawn.commandcenter.plist` | installed | YES |
+| `com.valleypawn.dashboarddatacollector.plist` | installed | YES |
+| `com.valleypawn.ebay-daily-listings.plist` | installed | YES |
+| `com.valleypawn.ebay-efficiency-weekly.plist` | installed | YES |
+| `com.valleypawn.ebay-markdown-monthly.plist` | installed | YES |
+| `com.valleypawn.ebay-weekly-rankings.plist` | installed | YES |
+| `com.valleypawn.ebay-photo-upscale.plist` | DISABLED | no |
+| `com.valleypawn.vpops.job_aged_inventory.plist` | DISABLED | no |
+| `com.valleypawn.vpops.job_daily_loan_inv_text.plist` | DISABLED | no |
+| `com.valleypawn.vpops.job_employee_rankings.plist` | DISABLED | no |
+| `com.valleypawn.vpops.job_fpd_ranking.plist` | DISABLED | no |
+| `com.valleypawn.vpops.job_gold_trend.plist` | DISABLED | no |
+| `com.valleypawn.vpops.job_loan_layaway_review.plist` | DISABLED | no |
+| `com.valleypawn.vpops.job_monthly_analytics.plist` | DISABLED | no |
+| `com.valleypawn.vpops.job_monthly_prestage.plist` | DISABLED | no |
+| `com.valleypawn.vpops.job_store_rankings.plist` | DISABLED | no |
+| `com.valleypawn.vpops.job_trigger_dropper.plist` | DISABLED | no |
+| `com.valleypawn.vpops.job_watchdog.plist` | DISABLED | no |
+| `com.valleypawn.vpops.publish_dashboard.plist` | DISABLED | no |
+
+## Project folders by last activity
+
+| Last touched | Project | Status file |
+|---|---|---|
+| 2026-08-02 | eBay | - |
+| 2026-08-02 | Valley Pawn Studios | - |
+| 2026-08-02 | Valley Pawn OS | - |
+| 2026-08-02 | VP Ops Engine | STATUS.md |
+| 2026-08-02 | Sales Tax | STATUS.md |
+| 2026-08-02 | Pawn Walks | STATUS.md |
+| 2026-08-02 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-08-02 | Health Optimization | - |
+| 2026-08-02 | Daily Funds Verification | - |
+| 2026-08-02 | Business Dashboard Website | - |
+| 2026-08-02 | Bravo Data Extraction | README.md |
+| 2026-07-31 | Short Term Rental Optimization | - |
+| 2026-07-31 | Refine Social Media | - |
+| 2026-07-31 | Human Resources | - |
+| 2026-07-30 | Compliance | - |
+| 2026-07-29 | Discount Outlier Review | STATUS.md |
+| 2026-07-29 | Admin Assitant | - |
+| 2026-07-27 | Gold and Silver Markeitng | - |
+| 2026-07-27 | Ai Optimized Marketing | - |
+| 2026-07-26 | VP Agent | README.md |
+| 2026-07-23 | Sold Margin Review | STATUS.md |
+| 2026-07-23 | Email Refinement | - |
+| 2026-07-22 | Quickbooks Set UP | - |
+| 2026-07-21 | Optimize Loan Portfolio | STATUS.md |
+| 2026-07-21 | Bonus Program | - |
+| 2026-07-17 | Jewelry Redemption Analysis | STATUS.md |
+| 2026-07-15 | Website | - |
+| 2026-07-07 | Business Continuity | - |
+| 2026-07-06 | Bravo Pipeline | - |
+| 2026-07-04 | Communcations | - |
+| 2026-07-01 | Other Store Supplies | - |
+| 2026-06-29 | Enterprise Update | - |
+| 2026-06-29 | Community Involvment | - |
+| 2026-06-25 | Landscap Plan | - |
+| 2026-06-16 | Operations | - |
+| 2026-05-22 | New Inventory Procurement | - |
+| 2026-05-20 | Additional Revenue Streams | - |
+| 2026-05-19 | Deep KPI analysis | - |
+| 2026-05-12 | Monday Morning Review | - |
+| 2026-04-17 | Landscape design | - |
+
+<!-- LIVE-STATE:END -->
+
+
 > **Master operating reference for Full Circle Finance Inc DBA Valley Pawn.** Read this FIRST before any non-trivial work. This document maps every piece of infrastructure (skill, scheduled task, pipeline cell, saved report, GDrive folder, Slack channel) and tells you how they relate. It is the single source of truth for "what already exists" when starting any new project.
 
 **Created:** 2026-05-20
@@ -734,6 +833,7 @@ Current build order, subject to Joshua's redirects.
 
 | 2026-07-27 | **Jewelry Count Policy** created and published: counts done daily at open + close, Store Manager rotates the counting duty every-other-day with a designated alternate, closing count verified against Bravo sales/activity data same day. Drafted `Jewelry_Count_Policy.docx` (docx skill), posted to `#policy-announcements`, filed in the "Valley Pawn — Policies & Procedures" Drive folder (also re-issued the master Policies & Procedures doc to fold the new policy into the index — **note: old master-doc file (pre-update) not yet deleted from Drive, no delete/trash tool available this session, flagged for Joshua's manual cleanup**), Gusto e-signature rollout to all store staff in progress, and a reusable `policy-lifecycle` skill authored (draft -> publish -> Gusto e-sign -> update master doc/BUSINESS_OS.md) and sent to Joshua for saving in Settings -> Capabilities. | Joshua: jewelry counts must be verified against Bravo sales data daily; manager rotates counting duty every other day; publish + get all employees to sign via Gusto; keep policy manual current; turn this into a repeatable skill. |
 | 2026-08-01 | Monthly capability drift audit run. Live scheduled-task list now ~138 named tasks (incl. one-shot/catchup tasks) vs 77 documented as of 2026-07-01 — registered ~36 additional NEW tasks (see 2026-08-01 addendum) that shipped since. Flagged 2 new state flips (`daily-intake-margin`, `daily-intake-prestage` — both enabled as of 2026-07-01, now `enabled:false`) in addition to the previously-flagged 8. `mcp__skills__list_skills` / `mcp__plugins__list_plugins` / `mcp__mcp-registry__list_connectors` returned empty in this session (environment quirk, not real drift) — cross-checked against the session's skill/plugin catalog instead and found 2 likely new plugin marketplaces (`data`, `human-resources`) not yet in Section 13.C; flagged, not confirmed. No skill delta required. | Scheduled `monthly-capability-drift-audit`, autonomous run. |
+| 2026-08-02 | **Bravo pull dedup audit + fix (Joshua: "make sure we aren't unnecessarily pulling from Bravo if the data exists in an existing pull").** Audited all Bravo-touching scheduled tasks (Cowork + native launchd) against actual output/trigger file timestamps. Found ONE confirmed live redundancy: `weekly-store-kpis` (Cowork, Mon 10:30 AM) was unconditionally dropping a fresh 5-store `end-of-month` trigger every Monday, even though the native `daily-loan-inventory-text` launchd job (runs every day incl. Monday, ~7:30 AM) already pulls the byte-identical cell/window/store-set (`end-of-month`, FIRST..YESTERDAY MTD, all 5 stores) ~3 hours earlier -- a duplicate live Bravo EOM cycle across all 5 stores every single Monday. Built new additive shared script `bravo_reuse_check.sh` in the Bravo Data Extraction folder (check-before-trigger: given a cell/date/ext/store-list, reports FRESH/STALE/MISSING per store by checking `output/` mtime+size, exit 0 only if all fresh) and wired it into `weekly-store-kpis/SKILL.md` as a new STEP 2.5 (backup saved as `SKILL.md.bak-pre-reuse-check-20260802`) -- if daily-loan-inventory-text's morning pull is still fresh, weekly-store-kpis now skips its own trigger drop entirely and reads the existing files. No existing AHK handler, dispatch table, or hardened task (per Rule 4's named list) was touched. Everything else audited (monday-bravo-combined-run, daily-funds-verification, asset-recovery-daily-refresh, layaway-yield-weekly, sales-tax-monthly-update, monthly-analytics-report/-prestage, jewelry-count-reconciliation, dashboard-data-collector, monthly-employee-sales-rankings, etc.) was already either non-overlapping (different cell/store/date) or already reuse-first (asset-recovery-daily-refresh, layaway-yield-weekly, sales-tax-monthly-update, monthly-analytics-report all confirmed already doing check-before-pull correctly -- no changes needed there). | Joshua: audit + fix unnecessary duplicate Bravo pulls, act don't just report. |
 ## Section 12 — How To Update This Document
 
 When something ships or a constraint changes:
