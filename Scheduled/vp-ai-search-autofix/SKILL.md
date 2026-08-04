@@ -22,15 +22,20 @@ model: claude-sonnet-5
 
 Runs Mondays 8:30am ET, ~30 minutes after `vp-ai-search-health-check` posts its findings to Slack #ai-marketing (private, ID C0BCEESUANM). Each run starts fresh — everything needed is below. Device for any local/browser work: "mac-studio-2-local".
 
-> 🔁 **BRIDGE RETRY POLICY (added 2026-07-22 — fixes the 3-weeks-of-re-reported-drift failure mode).**
-> The fixes this task exists for REQUIRE the Mac bridge (mcp__remote-devices__* tools). At fire
-> time, test the bridge (e.g. a Filesystem read of this file). If UNREACHABLE: do NOT run a
-> report-only pass and do NOT post "couldn't fix" — arm a retry via mcp__claude-code-remote__send_later
-> 2 hours out ("BRIDGE RETRY <N>/3", max 3). Only after the 3rd failed retry do a report-only pass,
-> noting plainly the Mac was offline all day. When the bridge IS reachable, do the actual fixes —
-> never settle for re-reporting drift the whitelist covers. For the Autofix Log: if no Sheets write
-> API is available, append rows by opening the sheet in the Mac's Chrome via the remote-devices
-> Chrome tools — hand-paste rows in Slack are a last resort only when the bridge is down.
+> ✅ **EXECUTION ROUTE (replaces the retired BRIDGE RETRY POLICY — corrected 2026-08-03).**
+> There is no separate "Mac bridge." This task runs ON the Mac Studio. All local work — file
+> reads/writes, python, git, Chrome — goes through `mcp__Control_your_Mac__osascript do shell script`,
+> loaded via the LOCAL ACCESS GATE above. The tools `mcp__remote-devices__*` and
+> `mcp__claude-code-remote__send_later` DO NOT EXIST. Never test for them, never wait on them, and
+> never cite them as the reason a fix could not run.
+> Browser work uses `mcp__Control_Chrome__*` — Chrome on this Mac holds the saved logins.
+> **Never** arm a "bridge retry" and **never** report "no bridge access" or "this is a cloud run."
+> Both claims are false and have produced weeks of false "needs-you" reports.
+> **Autofix Log writes DO work.** `cd ~/Documents/Claude/Scheduled/_shared` and call
+> `sheets_helper.SheetsClient().append(sheet_id, "Untitled!A:H", rows)` via osascript. Verified
+> working 2026-08-03. Never report "no Sheets write access" — that claim is false.
+> **Rule 12:** before reporting an item as blocked, verify the blocker directly. The confirmed
+> blocker on Bing NAP items is that bingplaces.com has no signed-in Chrome session — nothing else.
 
 CONTEXT: vp-ai-search-health-check checks three things weekly: (1) site-wide JSON-LD schema via WPCode snippet #738, (2) /llms.txt via WPCode snippet #742, (3) Google+Bing NAP for all 5 stores. When it finds drift, THIS task attempts the fix, verifies it landed, logs it, and reports. It never touches anything outside the whitelist below — everything else goes to Joshua by name, with the specific reason it can't be automated.
 

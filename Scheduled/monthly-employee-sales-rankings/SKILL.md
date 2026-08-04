@@ -4,7 +4,9 @@ description: 1st of each month: compile previous month's final employee sales ra
 model: claude-sonnet-5
 ---
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+> ⚠️ **FAILURE ALERT POLICY (still binding):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium.
+>
+> ⚠️ **FIELD COMMUNICATION STANDARD v3 (binding — read in full before posting anything to a team channel or employee DM):** `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/FIELD_COMMUNICATION_STANDARD.md`. Summary: run the routing test (is this something a clerk needs to know/act on today — if no, it's internal, it does not go to the field); plain everyday language only, no tool/system/pipeline names (never say Bravo, Cowork, Chekkit, Gusto, Brevo, QBO, Publer, "pipeline," "handler," "watchdog," "sync," "CSV," "export"); no file paths, doc IDs, task IDs, or spreadsheet cell/column refs in the posted text; no meta-commentary about the automation itself ("verified against," "supersedes," "this is a manual test run," "pulled automatically from"); lead with the one-line takeaway; ~100 words max for a routine post; no signature footers. If anything later in this file conflicts with this standard, this standard wins.
 
 
 
@@ -104,9 +106,8 @@ _Full data spreadsheet in thread 👇_
 • Roanoke: $X,XXX
 • Waynesboro: $X,XXX
 • Lexington: $X,XXX
-
-📎 Full monthly spreadsheet saved to the shared folder: `Employee_Sales_Rankings_[MonthName]_[Year].xlsx`
 ```
+Per the Field Communication Standard, do not include the internal spreadsheet filename in this message — the spreadsheet itself (Step 6) is the record; the thread reply only needs the store breakdown above.
 
 ### 6. Create the FINAL monthly spreadsheet with ALL data
 - Use openpyxl to create a professional spreadsheet
@@ -143,5 +144,3 @@ _Full data spreadsheet in thread 👇_
 - Employee names should be title-cased consistently
 - Dollar values formatted with commas and 2 decimal places in the spreadsheet, no decimals in Slack
 - The monthly spreadsheet is a permanent record — save with the full month name (e.g., Employee_Sales_Rankings_April_2026.xlsx)
-
-<!-- migrated to working model 2026-06-15 -->

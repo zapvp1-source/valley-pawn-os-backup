@@ -1,33 +1,22 @@
 ---
 name: eom-bravo-gl-export
-description: Monthly automated GL export — on the 5th, fully scripted via the Bravo trigger-pipeline (no Parallels/computer-use): posts unposted days, pulls per-store Consolidated GL (same pull the Sales Tax workbook reuses), combines it, uploads to Google Drive, and imports into QuickBooks Online via Chrome.
+description: Monthly automated GL export — on the 1st, fully scripted via the Bravo trigger-pipeline (no Parallels/computer-use): posts unposted days, pulls per-store Consolidated GL (same pull the Sales Tax workbook reuses), combines it, uploads to Google Drive, and imports into QuickBooks Online via Chrome.
 model: claude-sonnet-5
 ---
 
-> **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard, added 2026-08-02).**
-> This task runs on Joshua's Mac Studio and **does** have local machine access. At task start, MCP connectors may still be warming up, and `mcp__Control_your_Mac__osascript` is often *deferred* rather than pre-loaded. A tool that has not been loaded yet is NOT a missing capability.
-> 1. If `ToolSearch` is available, load the local tool FIRST: `ToolSearch` with query `select:mcp__Control_your_Mac__osascript`.
-> 2. Probe it: run a trivial `do shell script` that echoes READY. If it returns, proceed with the task.
-> 3. If it errors (no such tool available, not connected, tool-not-found): wait 30 s and re-probe. Repeat for up to 12 minutes (24 probes).
-> 4. Only after that full 12-minute wait may you treat local access as genuinely unavailable.
->
-> **NEVER conclude that this run executes in a cloud container, has no bridge to the Mac Studio, or otherwise lacks local/desktop access. That conclusion is false** and is the single most common cause of a false failure on this platform. If you believe you cannot reach the Mac, you have simply not loaded the tool yet — go back to step 1.
->
-> **Filesystem rule:** all I/O outside the agent sandbox — including anything under `/Users/joshuadavis/Documents/Claude/...` — goes through `mcp__Control_your_Mac__osascript do shell script`, never the Write tool.
-> **Timeout rule:** the osascript wrapper kills any single call at ~25 s. Never sleep longer than ~18 s inside one call; poll in short increments across separate calls. Guard any command that may exit nonzero with a trailing || true.
-
-
 > ⚠️ FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE. If this task fails, errors out, or cannot complete for any reason, DO NOT post anything to any Slack channel. On failure: DM Joshua only with what happened and what he needs to do manually. Only post to Slack once the task has genuinely completed.
 
-## Monthly Bravo GL Export & QuickBooks Import — fully scripted (rebuilt 2026-08-02)
+## Monthly Bravo GL Export & QuickBooks Import — fully scripted (rebuilt 2026-08-02, moved to the 1st 2026-08-03)
 
-You are running a scheduled monthly task for Valley Pawn (Full Circle Finance Inc). It is the 5th of the month. Post unposted days, export last month's Consolidated General Ledger from all 5 Bravo stores, and post it into QuickBooks Online.
+You are running a scheduled monthly task for Valley Pawn (Full Circle Finance Inc). It is the 1st of the month, 6:00 AM. Post unposted days, export last month's Consolidated General Ledger from all 5 Bravo stores, and post it into QuickBooks Online.
 
 Note: Joshua is now managing the books directly — there is no external bookkeeper. QBO access uses the saved Chrome credentials for jdavis@fcfpawn.com.
 
 REBUILT 2026-08-02: this task previously drove Bravo live via Parallels Desktop computer-use for store cycling and GL export. Joshua asked for that to be eliminated wherever a scripted path already exists. It now runs through the same production trigger-file pipeline the rest of the Bravo automation uses (`post-to-accounting-post` and `post-to-accounting-gl` pipeline cells, dispatched by the headless AHK watcher) — no live computer-use in the normal path. Computer-use is now ONLY a last-resort fallback if a pipeline cell reports Bravo is genuinely wedged, exactly like `sales-tax-monthly-update`'s existing fallback. Do not reintroduce the old manual store-cycle flow for the normal path.
 
-Bonus: Step 2 below produces the exact same per-store GL CSVs that `sales-tax-monthly-update` (runs the 6th) consumes for the Sales Tax workbook. One pull now serves both consumers — no separate hand-off step needed; that task's own existing "check the output folder first" logic will simply find these files already there.
+MOVED 2026-08-03: this task now runs at 6:00 AM on the 1st of the month (was the 5th) — Joshua wants both this and the sales tax refresh done on day 1. Since it targets the PRIOR calendar month, which has already fully ended, the data is complete regardless of running on day 1 vs day 5 — no need to wait. If the very first run at this earlier time ever finds days that Bravo hasn't finished closing out overnight, note that plainly in the Step 6 report rather than guessing; it likely just means posting takes a little longer that morning, not that data is missing.
+
+Bonus: Step 2 below produces the exact same per-store GL CSVs that `sales-tax-monthly-update` (runs the 1st, 8:00 AM — 2 hours after this task) consumes for the Sales Tax workbook. One pull now serves both consumers — no separate hand-off step needed; that task's own existing "check the output folder first" logic will simply find these files already there.
 
 ---
 
@@ -56,7 +45,7 @@ If a store's cell errors with "EnsureStore failed", "BackToDashboard could not r
 ```
 {"id": "eom-gl-export-<yyyymm>-<timestamp>", "requested_at": "<ISO8601>", "reports": [{"name": "post-to-accounting-gl", "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "YYYY-MM-01..YYYY-MM-DD"}]}
 ```
-- This produces one CSV per store (encoding latin-1). Leave them in the output folder — do not move or rename them, `sales-tax-monthly-update` reads them from there directly the next morning.
+- This produces one CSV per store (encoding latin-1). Leave them in the output folder — do not move or rename them, `sales-tax-monthly-update` reads them from there directly later that same morning.
 
 ---
 
@@ -111,7 +100,7 @@ Send Joshua a Slack DM summarizing:
 - GL export — reused existing CSVs or pulled fresh
 - Combined workbook + Drive upload — file name and confirmation link
 - QBO journal entry — posted successfully, OR "file is in Drive at [link] — account mapping needed before posting"
-- Note that the Sales Tax workbook will pick up this same GL data automatically on the 6th — no separate action needed
+- Note that the Sales Tax workbook will pick up this same GL data automatically later that same morning — no separate action needed
 - Any items requiring his manual attention
 
 ---
@@ -119,7 +108,7 @@ Send Joshua a Slack DM summarizing:
 ### Important Notes
 - Bravo POS runs inside Parallels Desktop (Windows 11 VM) on Joshua's Mac Studio — but as of 2026-08-02 this task should only touch it via the scripted trigger-pipeline, never a live computer-use session, except as the documented hang-recovery fallback in Steps 1-2.
 - If the hang-recovery fallback is used: always paste passwords via clipboard (write_clipboard("Health2035!") then Ctrl+V), never type them.
-- This task runs monthly on the 5th for the prior calendar month.
+- This task runs monthly on the 1st, 6:00 AM, for the prior calendar month (moved from the 5th 2026-08-03).
 - No external bookkeeper — Joshua reviews QBO directly; all GL reports go to him only.
 - Accounting Exports Drive folder: https://drive.google.com/drive/u/0/folders/1FzXIRPNZHaECOwfaKpQDMUTPRY3-d12_
-- `sales-tax-monthly-update` (runs the 6th) depends on Step 2's output CSVs being present in the Bravo Data Extraction output folder — don't move, rename, or delete them after this task finishes.
+- `sales-tax-monthly-update` (runs the 1st, 8:00 AM) depends on Step 2's output CSVs being present in the Bravo Data Extraction output folder — don't move, rename, or delete them after this task finishes.

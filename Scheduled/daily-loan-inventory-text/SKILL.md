@@ -59,7 +59,7 @@ Send each with a separate `send_imessage` call; one failing must not block the o
 
 ## I/O rules (same as every Bravo daily task)
 All FS I/O against the Bravo folder and the task dir MUST go through
-`mcp__remote-devices__Control_your_Mac__osascript` `do shell script`. The osascript
+`mcp__Control_your_Mac__osascript` `do shell script`. The osascript
 wrapper kills any single call >~25s — keep in-call `sleep` ≤18s and poll across
 SEPARATE calls. Guard `ls`/`cat`/`test` with `|| true`.
 

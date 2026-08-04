@@ -17,11 +17,12 @@ model: claude-sonnet-5
 > **Timeout rule:** the osascript wrapper kills any single call at ~25 s. Never sleep longer than ~18 s inside one call; poll in short increments across separate calls. Guard any command that may exit nonzero with a trailing || true.
 
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+> ⚠️ **FAILURE ALERT POLICY (still binding):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium.
+>
+> ⚠️ **FIELD COMMUNICATION STANDARD v3 (binding — read in full before posting anything to a team channel or employee DM):** `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/FIELD_COMMUNICATION_STANDARD.md`. Summary: run the routing test (is this something a clerk needs to know/act on today — if no, it's internal, it does not go to the field); plain everyday language only, no tool/system/pipeline names (never say Bravo, Cowork, Chekkit, Gusto, Brevo, QBO, Publer, "pipeline," "handler," "watchdog," "sync," "CSV," "export"); no file paths, doc IDs, task IDs, or spreadsheet cell/column refs in the posted text; no meta-commentary about the automation itself ("verified against," "supersedes," "this is a manual test run," "pulled automatically from"); lead with the one-line takeaway; ~100 words max for a routine post; no signature footers. **WORST-OFFENDER REWRITE (2026-08-03): the old post ran 800-900 words across 4 sections with lock-file names, "col-T VIOLATION rows," and a task/file-name footer. Step 7 below is completely rewritten to one short section — the reason-trend and compliance detail still gets computed and still lives in the trend spreadsheet (Step 5.5), it just no longer gets narrated into the channel.** If anything later in this file conflicts with this standard, this standard wins.
 
 
-
-You are running as an overnight background task at 1 AM Monday. Compile a weekly summary of returns by store and dollar amount, a cumulative reason-trend breakdown, AND a refund-policy-compliance check, and schedule it to post in #weekly-returns-summary at 9:00 AM Monday so it's fresh when people start their day.
+You are running as an overnight background task at 1 AM Monday. Compile a weekly summary of returns by store and dollar amount, a cumulative reason-trend breakdown, AND a refund-policy-compliance check — all computed and saved to the trend spreadsheet — and schedule a SHORT plain-language digest to post in #weekly-returns-summary at 9:00 AM Monday so it's fresh when people start their day.
 
 # How this works (DO NOT skip the photo step)
 
@@ -71,7 +72,7 @@ Use that `oldest_epoch` as the `oldest` arg to `slack_read_channel` on `C03BNUN2
 
 **b) SANITY-CHECK the read before trusting it (mandatory guardrail).** Also do a second `slack_read_channel` with NO `oldest` (just `limit:30`) to get the absolute newest messages. Confirm the newest message timestamp is within ~10 days of today. The trend workbook (`Valley_Pawn_Returns_Trend.xlsx`, Trends tab) shows the most recent reported `Week_Of`. **If your windowed read shows only old messages while the no-oldest read (or the workbook) shows recent weeks, your date math is wrong — recompute and re-read. Do NOT fall back to an old week to "rescue" a bad query.**
 
-**c) Genuine fallback only:** ONLY after a clean no-`oldest` read confirms the true newest activity is itself older than 7 days may you fall back to the most recent active week. Label the exact date range transparently in the post.
+**c) Genuine fallback only:** ONLY after a clean no-`oldest` read confirms the true newest activity is itself older than 7 days may you fall back to the most recent active week. Label the exact date range transparently in the internal working notes (not necessarily the channel post, which stays short per Step 7).
 
 For each in-window message, capture: poster user_id, message_ts, file ID(s). Identify which messages are RETURN FORM photos (ignore plain-text commentary).
 
@@ -88,11 +89,11 @@ The Slack MCP has no `download_file` tool. Use Chrome MCP:
 GUEST NAME · GUEST PHONE # · (skip signature) · **ITEM DESCRIPTION** · **ITEM VP#** (store-prefixed, e.g. ROA…/VA…/VP…/VAP…) · **PURCHASE DATE** · **RETURN DATE** · **RETURN AMOUNT** (note cash / store credit "SC" / gift card; a stapled receipt's "Amount Paid to Customer" line is authoritative) · **RETURN REASON** (verbatim) · RETURN LOCATION · **TESTING RESULTS** · (skip employee signature). Capture PURCHASE and RETURN dates carefully — they drive Days_Held and the refund-policy check.
 
 ### 5. Compile the weekly summary
-Group by store (receipt-store-first, else poster→store map). Per store: # returns, total $, item(s), refund type split, notable detail (e.g. net-zero immediate repurchase). Call out **zero**-return stores explicitly. Totals: returns, $ value, cash vs credit vs gift-card split.
+Group by store (receipt-store-first, else poster→store map). Per store: # returns, total $, item(s), refund type split, notable detail (e.g. net-zero immediate repurchase). Note **zero**-return stores. Totals: returns, $ value, cash vs credit vs gift-card split. This full detail feeds the spreadsheet (Step 5.5) and is available internally — only a short version goes to Slack (Step 7).
 
 ### 5.5. Append to the trend spreadsheet (do not skip; DEDUPE first)
 **File:** `/Users/joshuadavis/Desktop/Claude Back Up/Claude 4 back up/Valley_Pawn_Returns_Trend.xlsx`
-Columns: A Week_Of, B Posted_Date, C Posted_By, D Store, E Customer_Name, F Customer_Phone, G Item_Description, H Item_Category, I Item_VPNum, J Purchase_Date, K Return_Date, L Days_Held (=K-J), M Return_Amount, N Refund_Type, O Return_Reason_Raw, P Reason_Category, Q Disposition, R Testing_Results, S Notes, **T Policy_Compliant**.
+Columns: A Week_Of, B Posted_Date, C Posted_By, D Store, E Customer_Name, F Customer_Phone, G Item_Description, H Item_Category, I Item_VPNum, J Purchase_Date, K Return_Date, L Days_Held (=K-J), M Return_Amount, N Refund_Type, O Return_Reason_Raw, P Reason_Category, Q Disposition, R Testing_Results, S Notes, T Policy_Compliant.
 
 **DEDUPE:** build a set of existing (Week_Of, Item_VPNum, Customer_Name) from the Returns Log and skip any return already present — so a re-run for the same week adds nothing.
 
@@ -124,17 +125,25 @@ print(post_at, "future?", post_at > int(time.time()))
 - If 9 AM is still future → `slack_schedule_message` to `C0B1K4WK2HZ` with that `post_at`.
 - If already **past 9:00 AM EDT** → send immediately with `slack_send_message`. Scheduled Slack messages CANNOT be edited or deleted via API, so never schedule a placeholder to fix later, and verify content + date window BEFORE scheduling.
 
-### 7. Format of the post — four sections
+### 7. Format of the post — REWRITTEN 2026-08-03: one short section, ~100 words max
 
-**A. This Week** — date-range header, per-store breakdown with the dollar amount prominently (store, # returns, $ + refund-type split, customer, item, VP#, reason, resolution). Then weekly totals.
+The channel gets a plain, short digest. All the reason-trend cross-tabs, cumulative violation tracking, and column/lock-file references stay in the spreadsheet (Step 5.5) — they do not get narrated into Slack.
 
-**B. This Week — Reasons** — cross-tab by Reason_Category with $ and %. Lead with the largest category.
+```
+📦 *Returns — Week of {start_date}–{end_date}*
 
-**C. Cumulative — Reasons Trend** — all reason categories with non-zero counts: # / total $ / % of $, sorted by % of $ desc. One-line callout if a category is climbing vs last week.
+{total_count} returns this week, {total_$} total.
 
-**D. Refund-Policy Compliance** — Policy: return **≤7 days** from purchase → cash allowed; **8–30 days** → store credit (or gift card) only, NO cash; **>30 days** → review. For each return compute Days_Held = Return_Date − Purchase_Date. State this week's compliance (e.g. "6/6 compliant"); explicitly flag any return where cash was given after 7 days (a violation = col-T VIOLATION rows). Also note any cumulative violations in the log. If a violation was a net-zero immediate repurchase, say so as a mitigating note but still flag it.
+• {Store}: {n} — {$amount}
+• {Store}: {n} — {$amount}
+• {Store}: {n} — {$amount}
+• {Store}: {n} — {$amount}
+• {Store}: {n} — {$amount}
 
-End with: `_— weekly-returns-summary task · trend log: Valley_Pawn_Returns_Trend.xlsx_`
+{If any return needed a manager follow-up this week (a Policy_Compliant VIOLATION row): "⚠️ {n} return(s) need a quick manager check-in this week." Otherwise omit this line entirely.}
+```
+
+That's it — no reason breakdown, no cumulative trend section, no formula/column references, no file name in a footer. If Joshua wants the fuller weekly detail (reason mix, trend-over-time, per-return dollar figures), that lives in the spreadsheet at all times and he can be pointed there separately; it does not belong in the recurring team post.
 
 # Channel + actor reference
 | Item | Value |
@@ -160,7 +169,6 @@ Andrew / Walker / Emma (Langford) → Harrisonburg · Bree / Sandi / Nelson → 
 - Don't hardcode the recalc.py session path — find it dynamically; fall back to computing from log rows.
 - Don't blindly attribute by poster if the receipt header shows a different store. Receipt wins.
 - Don't end your turn with text after a skill load or system reminder. Fire the next tool call.
-- Don't skip Step 5.5 (trend append) or the col-T Policy_Compliant formula.
+- Don't skip Step 5.5 (trend append) or the col-T Policy_Compliant formula — that detail is still computed and stored, it's just no longer posted verbatim to the channel.
 - Don't invent a Reason_Category outside the controlled vocabulary. Use Other + Notes if nothing fits.
-
-<!-- migrated to working model 2026-06-15 -->
+- Don't reintroduce the old 4-section verbose post format. Step 7 above is the only format to use now.

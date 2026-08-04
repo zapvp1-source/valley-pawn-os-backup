@@ -388,6 +388,43 @@ WriteBuysGridToCsv(outputPath) {
         Sleep(400)
     }
 
+    ; ------------------------------------------------------------------
+    ; [truncation guard 2026-08-03] The loop above has FOUR exits, but only
+    ; one of them ("captured all N rows") means the walk actually finished.
+    ; The other three - zero DataItems on a pass, 3 consecutive PageDowns
+    ; with no new rows, and maxPages exhaustion - all fell through here and
+    ; returned whatever partial set had been collected, which the caller then
+    ; reported as SUCCESS.
+    ;
+    ; Proven live 2026-08-03: active-inv-details for WAY captured 268 of 2330
+    ; rows, hit "no DataItems on pass 16", and reported "SUCCESS: 268 data
+    ; rows". 11% of the data, silently presented as complete. This is the same
+    ; failure class as the false-zero bug (fixed 2026-07-31) but more dangerous:
+    ; 268 plausible rows get analysed as real, whereas 0 rows looks obviously
+    ; wrong.
+    ;
+    ; The grid tells us the truth: every row carries "Row X of TOTAL", parsed
+    ; into totalRows. So compare against it and refuse to hand back a short
+    ; read. Tolerance is deliberate - some DevExpress grids report a total that
+    ; includes group/summary rows we never enumerate, so a handful short is
+    ; normal and must not break working reports. A material shortfall throws.
+    ;
+    ; Throws BEFORE writing the CSV so no partial file is left behind for a
+    ; later run to mistake for good data.
+    ; Backup: BuysFromPublic.ahk.bak-pre-truncation-guard-2026-08-03
+    ; ------------------------------------------------------------------
+    if (totalRows > 0) {
+        missing := totalRows - allRows.Count
+        if (missing > 5 && allRows.Count < totalRows * 0.98) {
+            LogMessage("    [grid] TRUNCATED: captured " . allRows.Count . " of " . totalRows . " rows (" . missing . " missing) after " . pageIdx . " passes")
+            throw Error("Grid walk truncated: captured " . allRows.Count . " of " . totalRows . " rows (" . missing . " missing). Refusing to report a partial grid as a complete result.")
+        }
+        if (missing > 0)
+            LogMessage("    [grid] NOTE: captured " . allRows.Count . " of " . totalRows . " rows - " . missing . " short, within tolerance (likely group/summary rows)")
+    } else {
+        LogMessage("    [grid] WARN: no row-total available from the grid; completeness could NOT be verified for " . allRows.Count . " rows")
+    }
+
     if (allRows.Count = 0 || columnAutoIds.Length = 0) {
         LogMessage("    no rows / columns captured")
         return -1

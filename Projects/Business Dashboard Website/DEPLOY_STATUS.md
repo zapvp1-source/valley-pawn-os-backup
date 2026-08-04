@@ -1,39 +1,34 @@
 # Dashboard Refresh — Run Status
 
-**Run date:** 2026-07-31 (scheduled task `vp-dashboard-refresh`)
+**Run date:** 2026-08-03 (scheduled task `vp-dashboard-refresh`)
 
-## Result: PARTIAL FAILURE — deploy step blocked
+## Result: SUCCESS — all steps completed
 
-### Completed successfully
-1. **KPI data refresh (site/data/kpis.json)** — DONE
-   - Updated `asOf` to July 31, 2026
-   - Daily Funds Verification: refreshed to Jul 30, 2026 report (ALL MATCHED; dollar total not stated in that day's post, so `expected`/`actual` set to `null` rather than fabricated — see `funds.note`)
-   - Intake Margin (pawn-walks): refreshed to Jul 30, 2026 data (73 items, 58% avg margin, 8 flags: CUL 3, HAR 1, LEX 0, ROA 4)
-   - Chekkit Unanswered: refreshed to Jul 30, 2026 data (5 total: CUL 2, WAY 3, others 0)
-   - Loan review, layaway review, items-to-price, company-performance watch: no newer standard-format report posted since last refresh — left unchanged per runbook rule
-   - `bravoDaily` section untouched (owned by daily-bravo-kpis task)
-   - `feeds[]` Last Run column updated accordingly
-   - JSON validated via `python3 -c "import json; json.load(...)"` — parses clean
+### 1. KPI data refresh (site/data/kpis.json) — DONE
+- Updated `asOf` to August 3, 2026
+- Loan review / layaway review / company-performance watch: no newer standard-format report since Jul 27 (loans/layaway) / Jul 3 (monthly analytics) — left unchanged per runbook rule
+- Daily Funds Verification: no newer post since Aug 2 (ALL MATCHED, $0/$0) — left unchanged
+- Items to Price: new Aug 3 report posted, same counts as Aug 2 (149 items / $12,362.00 company-wide) — date bumped to Aug 3, 2026
+- Intake Margin (pawn-walks): no newer post since Aug 2 (covering Aug 1 data) — left unchanged
+- Chekkit Unanswered: new Aug 3 report (covering Aug 2) — all clear, 0 unanswered company-wide (previously 2 as of Jul 31) — updated
+- `bravoDaily` section untouched (owned by daily-bravo-kpis task)
+- `feeds[]` Last Run column updated for Items to Price and Chekkit Unanswered Messages
+- JSON validated via `python3 -c "import json; json.load(...)"` — parses clean
 
-2. **Artifact sync (site/artifacts/)** — DONE
-   - `cp -R` from `~/Documents/Claude/Artifacts/*` completed, `versions` subfolders purged
-   - No new artifact folders found (9 source folders, all already in `site/data/artifacts.json` manifest)
-   - Bumped `vp-website-trend` and top-level `updated` to Jul 31, 2026 (only folder with a newer mtime than its manifest entry)
+### 2. Artifact sync (site/artifacts/) — DONE
+- `cp -R` from `~/Documents/Claude/Artifacts/*` completed via osascript, `versions` subfolders purged
+- No new artifact folders (7 source folders, all already in manifest)
+- Bumped `updated` dates: `vp-website-trend` → Aug 3, 2026 (mtime Aug 3 02:44), `asset-recovery-2025-vs-2026` → Aug 2, 2026 (mtime Aug 2 19:25) — only two folders with mtimes newer than their manifest entries
 
-### Failed
-3. **Deploy to Cloudflare Pages** — FAILED after 4 attempts
-   - Command: `npx wrangler pages deploy site --project-name=vp-dashboard --commit-dirty=true`
-   - All 4 attempts failed at the SAME step: `GET /accounts/4c796a5009155be304511c09fec9164a/pages/projects/vp-dashboard`
-   - Errors returned (Cloudflare edge 5xx, HTML body, "malformed response from the API"): 525, 522, 520, 522 — different 5xx codes each time, classic Cloudflare edge/origin instability signature, NOT an auth or config problem
-   - Verified the Cloudflare API token itself is valid and reachable: `GET /client/v4/user/tokens/verify` → `200` in between deploy attempts
-   - wrangler version in use: 4.100.0 (update available: 4.117.0) — not believed to be the cause given the error is at the HTTP/edge layer, but worth ruling out on next attempt
-   - Full wrangler debug logs on the Mac: `/Users/joshuadavis/Library/Preferences/.wrangler/logs/wrangler-2026-07-31_12-2*.log`
-   - Raw attempt logs: `/tmp/vp_deploy.log`, `/tmp/vp_deploy2.log`, `/tmp/vp_deploy3.log`, `/tmp/vp_deploy4.log`
+### 3. Deploy to Cloudflare Pages — DONE
+- Deployed via osascript `do shell script` (backgrounded with nohup, node from `~/Documents/Claude/tools/node`) since global `npm install -g wrangler` failed in the sandbox shell with EACCES (no write access to `/usr/lib/node_modules`) — used the runbook's preferred Mac-side deploy path instead
+- `npx wrangler pages deploy site --project-name=vp-dashboard --commit-dirty=true` → **Success!** Uploaded 4 files (17 already uploaded), deployment URL `https://350e0297.vp-dashboard.pages.dev`
 
-4. **Verify (curl 401/200 check)** — NOT RUN (blocked by step 3 failure; the live site still reflects the PREVIOUS successful deploy, so it did not go down, it's just serving stale data as of last successful push)
+### 4. Verify — DONE
+- `curl https://vp-dashboard.pages.dev/` without auth → **401** ✓
+- `curl` with basic auth (`valleypawn` / `.cloudflare/site_password`) → **200** ✓
+- `data/kpis.json` fetched live from the deployed site, parses clean, `asOf` = "August 3, 2026" — confirms this run's edits are live
 
-## Next steps for next session
-- Retry `npx wrangler pages deploy site --project-name=vp-dashboard --commit-dirty=true` from the project folder — this looks transient/Cloudflare-side based on the token verify succeeding and the varying 5xx codes.
-- If it fails again with the same `pages/projects/vp-dashboard` GET 5xx pattern, consider checking Cloudflare status page (cloudflarestatus.com) for a Pages API incident, or trying `wrangler whoami` and re-auth as a sanity check.
-- Once deploy succeeds, run the Step 4 verify: `curl` root should 401 without auth, 200 with basic auth (`valleypawn` / password in `.cloudflare/site_password`), and confirm `data/kpis.json` is live and matches this run's edits.
-- site/data/kpis.json and site/data/artifacts.json are already updated and ready to ship on next successful deploy — no need to redo steps 1–2.
+## Notes for next session
+- Sandbox shell cannot `npm install -g` (EACCES on `/usr/lib/node_modules`) — always use the osascript Mac-side deploy path, not the sandbox-shell wrangler path, until/unless the sandbox gets write access to global npm.
+- No Slack post made — success, and the runbook only requires a post on failure.

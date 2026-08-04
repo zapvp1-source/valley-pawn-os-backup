@@ -607,9 +607,74 @@ PullPostToAccountingGL(store, dateOrRange, outputDir) {
         Sleep(1000)
         DismissPopups()
 
-        ; step 5: wait for the DevExpress preview's Export... ribbon item.
-        if !FindByName(PTAGL_ELEMENTS["preview_export"], 60000)
-            throw Error("Consolidated GL preview did not render within 60s (Export... never appeared)")
+        ; step 5: wait for the DevExpress preview window/ribbon to appear at
+        ; all. The ribbon (and its "Enable Continuous Scrolling" toggle)
+        ; renders BEFORE the report body finishes paginating, so this check
+        ; is fast even when the report itself is large. Kept at a short
+        ; timeout on purpose — see step 5b below for why.
+        if !FindByName("Enable Continuous Scrolling", 15000)
+            throw Error("Consolidated GL preview ribbon did not appear within 15s (report window never opened)")
+        Sleep(500)
+
+        ; --- Step 5b: turn off Continuous Scrolling BEFORE waiting on Export
+        ; (reordered 2026-08-03, corrected same-day fix) --------------------
+        ; Bravo's Report Preview has an "Enable Continuous Scrolling" toggle
+        ; that, when pressed, forces the entire report to render as one giant
+        ; canvas. For the Consolidated General Ledger (wide, multi-page,
+        ; multi-store), this freezes Bravo's Report Preview mid-render for
+        ; 3+ minutes — LONGER than the original 60s wait for the Export...
+        ; ribbon item, so the first version of this fix (which ran the
+        ; toggle-off AFTER that 60s wait) never got a chance to execute:
+        ; the wait itself timed out and threw first. CONFIRMED via live
+        ; 5-store test on 2026-08-03 (0/5 stores succeeded, all timed out
+        ; identically at "did not render within 60s"). Corrected fix: find
+        ; and flip the Continuous Scrolling toggle FIRST (it exists in the
+        ; UIA tree as soon as the ribbon renders, well before the report body
+        ; finishes), THEN wait for Export... with a longer timeout as a
+        ; safety margin. See Bravo Data Extraction/BRAVO_KNOWN_ISSUES.md.
+        ; Pattern otherwise ported from reports/DepositsAndPaidOuts.ahk (the
+        ; canonical 2026-05-29 fix). Toggle state resets to ON on every Bravo
+        ; restart, so we always check-and-flip. Wrapped so it can't itself throw.
+        try {
+            csButton := FindByName("Enable Continuous Scrolling", 1000)
+            if (csButton) {
+                state := 0
+                try state := csButton.TogglePattern.CurrentToggleState
+                if (state = 1) {  ; UIA.ToggleState.On
+                    LogMessage("    [pre-export] Continuous Scrolling is ON — calling Toggle() to flip state")
+                    ; Use TogglePattern.Toggle() directly — Click("left") was a physical mouse
+                    ; click at element center which often didn't actually toggle the CheckBox
+                    ; in Bravo's WPF preview ribbon.
+                    try csButton.TogglePattern.Toggle()
+                    Sleep(2500)
+                    ; verify the toggle actually flipped — if still on, try once more
+                    newState := state
+                    try newState := csButton.TogglePattern.CurrentToggleState
+                    if (newState = 1) {
+                        LogMessage("    [pre-export] WARN: first Toggle() didn't flip; retrying via Click()")
+                        try csButton.Click("left")
+                        Sleep(2500)
+                        try newState := csButton.TogglePattern.CurrentToggleState
+                    }
+                    LogMessage("    [pre-export] post-toggle state = " . newState . " (0=Off)")
+                    Sleep(3000)  ; give Bravo time to re-paginate after toggle
+                } else {
+                    LogMessage("    [pre-export] Continuous Scrolling already OFF (state=" . state . ")")
+                }
+            } else {
+                LogMessage("    [pre-export] Continuous Scrolling button not found — skipping")
+            }
+        } catch as e {
+            LogMessage("    [pre-export] WARN: Continuous Scrolling toggle-off failed: " . e.Message)
+        }
+
+        ; step 5c: NOW wait for the report to finish paginating and the
+        ; Export... ribbon item to be actionable. With Continuous Scrolling
+        ; off this should be fast, but the Consolidated GL can span multiple
+        ; stores/pages, so give it real headroom (240s) instead of the 60s
+        ; that caused the original failure.
+        if !FindByName(PTAGL_ELEMENTS["preview_export"], 240000)
+            throw Error("Consolidated GL preview did not render within 240s (Export... never appeared after CS toggle-off)")
         Sleep(800)
 
         LogMessage("  step 5: click Export...")

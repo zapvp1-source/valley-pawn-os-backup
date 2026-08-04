@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-08-02
+# LIVE STATE - auto-refreshed 2026-08-03
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -17,7 +17,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | Enabled (will fire) | 81 |
 | Registered but disabled | 40 |
 | On disk but never registered | 21 |
-| Recorded skips (usage cap) | 412 |
+| Recorded skips (usage cap) | 421 |
 
 ### Enabled tasks
 
@@ -55,8 +55,10 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
+| 2026-08-03 | Valley Pawn Studios | - |
+| 2026-08-03 | Refine Social Media | - |
+| 2026-08-03 | Bravo Data Extraction | README.md |
 | 2026-08-02 | eBay | - |
-| 2026-08-02 | Valley Pawn Studios | - |
 | 2026-08-02 | Valley Pawn OS | - |
 | 2026-08-02 | VP Ops Engine | STATUS.md |
 | 2026-08-02 | Sales Tax | STATUS.md |
@@ -65,9 +67,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | 2026-08-02 | Health Optimization | - |
 | 2026-08-02 | Daily Funds Verification | - |
 | 2026-08-02 | Business Dashboard Website | - |
-| 2026-08-02 | Bravo Data Extraction | README.md |
 | 2026-07-31 | Short Term Rental Optimization | - |
-| 2026-07-31 | Refine Social Media | - |
 | 2026-07-31 | Human Resources | - |
 | 2026-07-30 | Compliance | - |
 | 2026-07-29 | Discount Outlier Review | STATUS.md |
@@ -833,6 +833,7 @@ Current build order, subject to Joshua's redirects.
 
 | 2026-07-27 | **Jewelry Count Policy** created and published: counts done daily at open + close, Store Manager rotates the counting duty every-other-day with a designated alternate, closing count verified against Bravo sales/activity data same day. Drafted `Jewelry_Count_Policy.docx` (docx skill), posted to `#policy-announcements`, filed in the "Valley Pawn — Policies & Procedures" Drive folder (also re-issued the master Policies & Procedures doc to fold the new policy into the index — **note: old master-doc file (pre-update) not yet deleted from Drive, no delete/trash tool available this session, flagged for Joshua's manual cleanup**), Gusto e-signature rollout to all store staff in progress, and a reusable `policy-lifecycle` skill authored (draft -> publish -> Gusto e-sign -> update master doc/BUSINESS_OS.md) and sent to Joshua for saving in Settings -> Capabilities. | Joshua: jewelry counts must be verified against Bravo sales data daily; manager rotates counting duty every other day; publish + get all employees to sign via Gusto; keep policy manual current; turn this into a repeatable skill. |
 | 2026-08-01 | Monthly capability drift audit run. Live scheduled-task list now ~138 named tasks (incl. one-shot/catchup tasks) vs 77 documented as of 2026-07-01 — registered ~36 additional NEW tasks (see 2026-08-01 addendum) that shipped since. Flagged 2 new state flips (`daily-intake-margin`, `daily-intake-prestage` — both enabled as of 2026-07-01, now `enabled:false`) in addition to the previously-flagged 8. `mcp__skills__list_skills` / `mcp__plugins__list_plugins` / `mcp__mcp-registry__list_connectors` returned empty in this session (environment quirk, not real drift) — cross-checked against the session's skill/plugin catalog instead and found 2 likely new plugin marketplaces (`data`, `human-resources`) not yet in Section 13.C; flagged, not confirmed. No skill delta required. | Scheduled `monthly-capability-drift-audit`, autonomous run. |
+| 2026-08-03 | **Field Communication Standard v3** created (`Projects/Valley Pawn OS/FIELD_COMMUNICATION_STANDARD.md`) — governs every scheduled task posting to a team channel or employee DM: routing test (internal audit/process info never goes to the field), plain language only, no tool/system names, no file paths, ~100-word cap, no failure notices, no signature footers. Audit of 27 team-facing tasks found #jewlery-counts, #weekly-returns-summary, #company-performance, and #layaway-review as worst offenders (build-log/audit-report content reaching store staff); #google-reviews, #items-to-price, #deal-of-the-week were already clean models. All 27 task files updated to reference v3; 4 Tier-1 contradictions fixed (a file's body was posting failures to a team channel despite its own failure-routing rule saying not to); 5 worst output formats rewritten; `vp-hr-policy-monthly-sync` now DMs its audit summary to Joshua instead of posting it to #policy-announcements. New scheduled task `vp-comms-drift-monthly-check` (3rd of month) added to catch future drift. Known gap: the "Sent using Claude" post-signature is platform-injected, not prompt-controlled — could not be removed via task-file edits. | Joshua: "team getting only the data and information simple and concise without [jargon] should apply to all slack publications." |
 | 2026-08-02 | **Bravo pull dedup audit + fix (Joshua: "make sure we aren't unnecessarily pulling from Bravo if the data exists in an existing pull").** Audited all Bravo-touching scheduled tasks (Cowork + native launchd) against actual output/trigger file timestamps. Found ONE confirmed live redundancy: `weekly-store-kpis` (Cowork, Mon 10:30 AM) was unconditionally dropping a fresh 5-store `end-of-month` trigger every Monday, even though the native `daily-loan-inventory-text` launchd job (runs every day incl. Monday, ~7:30 AM) already pulls the byte-identical cell/window/store-set (`end-of-month`, FIRST..YESTERDAY MTD, all 5 stores) ~3 hours earlier -- a duplicate live Bravo EOM cycle across all 5 stores every single Monday. Built new additive shared script `bravo_reuse_check.sh` in the Bravo Data Extraction folder (check-before-trigger: given a cell/date/ext/store-list, reports FRESH/STALE/MISSING per store by checking `output/` mtime+size, exit 0 only if all fresh) and wired it into `weekly-store-kpis/SKILL.md` as a new STEP 2.5 (backup saved as `SKILL.md.bak-pre-reuse-check-20260802`) -- if daily-loan-inventory-text's morning pull is still fresh, weekly-store-kpis now skips its own trigger drop entirely and reads the existing files. No existing AHK handler, dispatch table, or hardened task (per Rule 4's named list) was touched. Everything else audited (monday-bravo-combined-run, daily-funds-verification, asset-recovery-daily-refresh, layaway-yield-weekly, sales-tax-monthly-update, monthly-analytics-report/-prestage, jewelry-count-reconciliation, dashboard-data-collector, monthly-employee-sales-rankings, etc.) was already either non-overlapping (different cell/store/date) or already reuse-first (asset-recovery-daily-refresh, layaway-yield-weekly, sales-tax-monthly-update, monthly-analytics-report all confirmed already doing check-before-pull correctly -- no changes needed there). | Joshua: audit + fix unnecessary duplicate Bravo pulls, act don't just report. |
 ## Section 12 — How To Update This Document
 

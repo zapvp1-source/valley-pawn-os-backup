@@ -4,7 +4,9 @@ description: Check Gusto clock-in status at 10:15 AM Mon-Sat and post summary to
 model: claude-sonnet-5
 ---
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+> ⚠️ **FAILURE ALERT POLICY (still binding):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium.
+>
+> ⚠️ **FIELD COMMUNICATION STANDARD v3 (binding — read in full before posting anything to a team channel or employee DM):** `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/FIELD_COMMUNICATION_STANDARD.md`. Summary: run the routing test (is this something a clerk needs to know/act on today — if no, it's internal, it does not go to the field); plain everyday language only, no tool/system/pipeline names (never say Bravo, Cowork, Chekkit, Gusto, Brevo, QBO, Publer, "pipeline," "handler," "watchdog," "sync," "CSV," "export"); no file paths, doc IDs, task IDs, or spreadsheet cell/column refs in the posted text; no meta-commentary about the automation itself ("verified against," "supersedes," "this is a manual test run," "pulled automatically from"); lead with the one-line takeaway; ~100 words max for a routine post; no signature footers. If anything later in this file conflicts with this standard, this standard wins.
 
 
 
@@ -133,8 +135,6 @@ Format (standard days — Mon/Tue/Thu/Fri/Sat):
 
 🔴 *Not Clocked In (N)*
 • [Name]
-
-_Pulled automatically from Gusto Time Tracking (15-min grace after store open)_
 ```
 
 Format (Wednesday — Culpeper only):
@@ -147,8 +147,6 @@ _Only Culpeper is open on Wednesdays — Harrisonburg, Waynesboro, Lexington, an
 
 🔴 *Not Clocked In (N)*
 • [Name]
-
-_Pulled automatically from Gusto Time Tracking_
 ```
 
 If everyone clocked in (any day):
@@ -158,9 +156,9 @@ If everyone clocked in (any day):
 
 🟢 *Clocked In (N)*
 • [Name] — clocked in at [time]
-
-_Pulled automatically from Gusto Time Tracking_
 ```
+
+Per the Field Communication Standard: do not append any "pulled automatically from Gusto" or similar source-system footer line to the posted message — the three formats above are complete as shown.
 
 ### Send to Slack — #general ONLY (channel_id C03BETSS669)
 Use the Slack send tool. **No DMs to anyone.** A single post to #general is the entire delivery.
@@ -172,5 +170,3 @@ Use the Slack send tool. **No DMs to anyone.** A single post to #general is the 
 - Roster size sanity check: ~8 non-excluded employees company-wide (as of June 2026). If PATH A yields far fewer names than the live roster, re-pull or fall to PATH B.
 - **Wednesday = Culpeper only.** Never flag non-Culpeper staff on Wednesday.
 - New hires: the Unknown-Member subroutine auto-appends them to the crosswalk. Store moves need no edit — the Wednesday filter uses live `list_employees(location_uuid=…)`.
-
-<!-- migrated to working model 2026-06-15 -->

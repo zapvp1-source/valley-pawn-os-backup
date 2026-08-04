@@ -4,10 +4,13 @@ description: Monday 3 AM (overnight) — pull prior-week (Sun–Sat, 7 days) Goo
 model: claude-sonnet-5
 ---
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+> ⚠️ **FAILURE ALERT POLICY (still binding):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium.
+>
+> ⚠️ **FIELD COMMUNICATION STANDARD v3 (binding — read in full before posting anything to a team channel or employee DM):** `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/FIELD_COMMUNICATION_STANDARD.md`. Summary: run the routing test (is this something a clerk needs to know/act on today — if no, it's internal, it does not go to the field); plain everyday language only, no tool/system/pipeline names (never say Bravo, Cowork, Chekkit, Gusto, Brevo, QBO, Publer, "pipeline," "handler," "watchdog," "sync," "CSV," "export"); no file paths, doc IDs, task IDs, or spreadsheet cell/column refs in the posted text; no meta-commentary about the automation itself ("verified against," "supersedes," "this is a manual test run," "pulled automatically from"); lead with the one-line takeaway; ~100 words max for a routine post; no signature footers. If anything later in this file conflicts with this standard, this standard wins.
 
 
-> ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
+
+> ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do.
 
 You are running as an overnight background task at 3 AM Monday. Pull last week's Google review counts for all 5 Valley Pawn locations from Chekkit, then post a ranked Slack summary to #google-reviews — scheduled for 9:00 AM ET the same Monday morning on a normal run, or sent immediately if the task fired late (see Step 7).
 
@@ -50,13 +53,13 @@ Examples:
 - Publishes Mon May 11, 2026 → prior week = May 3 (Sun) – May 9 (Sat)
 - Publishes Mon May 18, 2026 → prior week = May 10 (Sun) – May 16 (Sat)
 
-After selecting "Last week," ALWAYS read back the date label Chekkit displays (e.g. "May 10 - May 16, 2026") and use those exact dates in the post title. If the displayed range is not a Sun–Sat 7-day window ending on the most recent Saturday, ABORT and DM Joshua — something is off.
+After selecting "Last week," ALWAYS read back the date label Chekkit displays (e.g. "May 10 - May 16, 2026") and use those exact dates in the post title. If the displayed range is not a Sun–Sat 7-day window ending on the most recent Saturday, ABORT and DM Joshua — something is off (DM only, never post an abort notice to the channel).
 
 ## Steps
 
 1. Compute the upcoming Monday (next Monday, or today if today is Monday) and from that derive the expected Sun–Sat prior-week range for sanity-checking Chekkit's label.
 2. Navigate to dashboard.chekkit.io via Chrome MCP (login is saved in Chrome — do not ask Joshua to log in). The URL is **dashboard.chekkit.io**, NOT app.chekkit.com.
-3. Go to Reviews → Leaderboard. Click the date-range dropdown (top-right of "Leaderboard Overview"). Select **"Last week"**. Wait for the page to reload and confirm the displayed range matches the expected Sun–Sat window from Step 1. If it doesn't match, ABORT.
+3. Go to Reviews → Leaderboard. Click the date-range dropdown (top-right of "Leaderboard Overview"). Select **"Last week"**. Wait for the page to reload and confirm the displayed range matches the expected Sun–Sat window from Step 1. If it doesn't match, ABORT (DM Joshua only, no channel post).
 4. Scroll to the Location Leaderboard and record each Valley Pawn store's Reviews count for that window:
    - Valley Pawn – Culpeper
    - Valley Pawn – Harrisonburg
@@ -82,8 +85,6 @@ Ranked by new reviews received last week:
 2. ...
 
 Total new reviews this week: {sum}
-
-Source: Chekkit
 
 ## Notes
 

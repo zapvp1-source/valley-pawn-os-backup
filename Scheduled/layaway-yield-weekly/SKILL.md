@@ -3,27 +3,23 @@ name: layaway-yield-weekly
 description: Monday 11:15 AM — pull MTD Layaway Deposits per store, compute Layaway Yield % (Down Payments + Payments ÷ Layaway Balance), append to Details sheet + #layaway-review Canvas
 ---
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
-
-
----
-name: layaway-yield-weekly
-description: Monday 11:15 AM — compute Layaway Yield % (Down Payments + Payments ÷ Layaway Balance) purely from the already-pulled EOM export, no live Bravo interaction of its own — publish to #layaway-review Canvas + channel
----
+> ⚠️ **FAILURE ALERT POLICY (still binding):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium.
+>
+> ⚠️ **FIELD COMMUNICATION STANDARD v3 (binding — read in full before posting anything to a team channel or employee DM):** `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/FIELD_COMMUNICATION_STANDARD.md`. Summary: run the routing test (is this something a clerk needs to know/act on today — if no, it's internal, it does not go to the field); plain everyday language only, no tool/system/pipeline names (never say Bravo, Cowork, Chekkit, Gusto, Brevo, QBO, Publer, "pipeline," "handler," "watchdog," "sync," "CSV," "export"); no file paths, doc IDs, task IDs, or spreadsheet cell/column refs in the posted text; no meta-commentary about the automation itself ("verified against," "supersedes," "this is a manual test run," "pulled automatically from"); lead with the one-line takeaway; ~100 words max for a routine post; no signature footers. **Flagged in the 2026-08-03 comms audit: the channel post used to spell out the yield formula and include a bracketed "[Note any missing stores here.]" placeholder. Step 6 below drops both — the formula stays in this file and the Canvas subsection only; missing stores get a plain dash in the table, no bracket note.** If anything later in this file conflicts with this standard, this standard wins.
 
 You are the Valley Pawn "Layaway Yield Weekly" task. You compute a NEW metric — **Layaway Yield %** — and append it (never replace) to the existing weekly layaway review surfaces. This is additive-only: you never modify any existing Bravo saved report, AHK handler, pipeline cell, or other scheduled task.
 
-> ⚠️ FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE. If any step fails, DM Joshua (Slack user U03BB52MDSA) with what failed. Never post errors/partials to a channel or Canvas. Channels and Canvases only ever show a successful, complete result.
+> ⚠️ FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE. If any step fails, DM Joshua (Slack user U03BB59EM9GR... wait, use U03BB52MDSA) with what failed. Never post errors/partials to a channel or Canvas. Channels and Canvases only ever show a successful, complete result.
 
 DEFINITION (do not deviate — this exact label, to avoid confusion with the unrelated store "Yield" bonus metric):
-**Layaway Yield % = (Down Payments MTD + Payments MTD) ÷ Layaway Balance**, per store and company-wide. Always label it "Layaway Yield %" in every surface — never bare "Yield".
+**Layaway Yield % = (Down Payments MTD + Payments MTD) ÷ Layaway Balance**, per store and company-wide. Always label it "Layaway Yield %" in every surface — never bare "Yield". The formula spelled out this way belongs in this file and the Canvas subsection (Step 5) only — the channel post (Step 6) shows just the label and numbers, no formula text.
 
 ============================================================
-DESIGN NOTE — read this before touching anything (REV 2, 2026-07-15)
+DESIGN NOTE — internal reference only, never post any of this to Slack (REV 2, 2026-07-15)
 ============================================================
-The first version of this task pulled a separate "Layaway Deposits" Bravo report live every Monday. On its first full 5-store run it hung on export 6 separate times in one session (report renders fine, export step wedges) — reliable per-store, NOT reliable back-to-back. Investigation found Bravo's "End of Month" export — already pulled every Monday by `weekly-store-kpis` (~10:30 AM) with zero hangs recorded — already contains a full "Layaways" section with Down Payments MTD, Payments MTD, AND Ending Balance in one place. Verified byte-for-byte identical to the live Layaway Deposits pull across all 5 stores on 2026-07-14.
+The first version of this task pulled a separate "Layaway Deposits" report live every Monday, which proved unreliable across repeated runs. Investigation found the existing weekly "End of Month" data pull (already produced every Monday by `weekly-store-kpis` with zero reliability issues) already contains a full "Layaways" section with Down Payments MTD, Payments MTD, AND Ending Balance in one place. Verified byte-for-byte identical to the live Layaway Deposits pull across all 5 stores on 2026-07-14.
 
-As of REV 2, this task **does not touch Bravo at all**. It only reads the `end-of-month.xlsx` files that `weekly-store-kpis` already produced earlier the same morning. No trigger drop, no health gate, no export, no hang risk. If this ever needs to change back, that's a signal something about the EOM report itself broke — check `weekly-store-kpis` health first, don't reintroduce a second live pull.
+As of REV 2, this task **does not touch Bravo at all**. It only reads the `end-of-month.xlsx` files that `weekly-store-kpis` already produced earlier the same morning. No trigger drop, no health gate, no export, no hang risk. If this ever needs to change back, that's a signal something about the underlying data source broke — check `weekly-store-kpis` health first, don't reintroduce a second live pull.
 
 ALL HOST/FILE I/O under the Bravo Data Extraction folder MUST go through `mcp__Control_your_Mac__osascript` `do shell script` — never the Write tool (Parallels shared-folder path/perf rules). Load that tool via ToolSearch `select:mcp__Control_your_Mac__osascript` if it's deferred.
 
@@ -33,7 +29,7 @@ STEP 1 — Dates
 ```
 YESTERDAY=`date -v-1d +%Y-%m-%d`
 ```
-ENDDATE = YESTERDAY (MTD figures as of yesterday, computed by the EOM report itself).
+ENDDATE = YESTERDAY (MTD figures as of yesterday, computed by the existing report itself).
 
 ============================================================
 STEP 2 — Confirm the EOM files exist (reuse, never repull, never trigger Bravo)
@@ -55,7 +51,7 @@ This reads only the end-of-month.xlsx files already on disk (REV 2 — no layawa
 - `output/<YESTERDAY>_layaway_yield.json` (per-store + company: down_payments_mtd, payments_mtd, collected_mtd, layaway_balance, layaway_yield_pct)
 - `output/<YESTERDAY>_layaway_yield_table.txt` (preformatted table)
 
-Its stdout starts with `OK enddate=...` (all 5 stores computed) or `PARTIAL enddate=... missing=<list>` (some stores skipped — proceed with what's there, note missing stores in the DM). If it prints `ERROR`, DM Joshua and stop — do not publish.
+Its stdout starts with `OK enddate=...` (all 5 stores computed) or `PARTIAL enddate=... missing=<list>` (some stores skipped — proceed with what's there, note missing stores in the internal record only, see Step 6). If it prints `ERROR`, DM Joshua and stop — do not publish.
 
 Read the JSON via `do shell script "cat '.../output/<YESTERDAY>_layaway_yield.json'"`.
 
@@ -86,14 +82,12 @@ Canvas id `F0BJ48BMZGQ`. Use `slack_read_canvas` first to get the current conten
 Any store missing from the JSON gets a row of `—`. If this is a re-run and the Canvas already has a "Layaway Yield %" section from a prior week, use `action="replace"` targeting that existing section's id instead of appending a duplicate. If append/replace by section_id isn't supported, fall back to reading the full canvas text, splicing in the new section, and using `replace` with the full reconstructed text — never drop existing content.
 
 ============================================================
-STEP 6 — Publish results
+STEP 6 — Publish results — REWRITTEN 2026-08-03 per Field Communication Standard
 ============================================================
-Post a summary message to the **#layaway-review channel** (id `C04N24STDP1`):
+Post a summary message to the **#layaway-review channel** (id `C04N24STDP1`). No formula text, no bracket placeholders, no missing-store notes — just the label and the numbers, with a dash for any store not computed this run:
 
 ```
 :moneybag: *Layaway Yield % (MTD)* — updated <DATE>
-
-Layaway Yield % = (Down Payments + Payments) MTD ÷ Layaway Balance.
 
 | Store | Down Pmts | Payments | Collected | Layaway Bal | Yield % |
 |---|---|---|---|---|---|
@@ -104,9 +98,9 @@ Layaway Yield % = (Down Payments + Payments) MTD ÷ Layaway Balance.
 | Waynesboro | ... |
 | *Company* | ... |
 
-See the Canvas above for the running view. [Note any missing stores here.]
+See the Canvas above for the running view.
 ```
-Then separately DM Joshua (U03BB52MDSA) a one-line confirmation: `✅ Layaway Yield Weekly <DATE>: Company X.X% MTD, posted to #layaway-review.` Per the global failure policy, skip the channel post entirely and DM-only on any failure — never post a partial/failed result to the channel.
+Then separately DM Joshua (U03BB52MDSA) a one-line confirmation: `✅ Layaway Yield Weekly <DATE>: Company X.X% MTD, posted to #layaway-review.` — this DM is also where any missing-store note goes, never the channel post. Per the global failure policy, skip the channel post entirely and DM-only on any failure — never post a partial/failed result to the channel.
 
 ============================================================
 Reference

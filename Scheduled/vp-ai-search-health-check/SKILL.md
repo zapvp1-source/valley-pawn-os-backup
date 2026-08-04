@@ -29,6 +29,16 @@ Canonical NAP:
   • Harrisonburg — 1790 East Market Street, Ste 22, Harrisonburg, VA 22801 — (540) 574-4500 — closed Wed & Sun
   • Lexington — 125 Walker Street, Lexington, VA 24450 — (540) 461-8349 — closed Wed & Sun
   • Roanoke — 2362 Peters Creek Road, Suite C, Roanoke, VA 24017 — (540) 562-0776 — closed Wed & Sun
+SOURCE-OF-TRUTH RULE (added 2026-08-03 after 5 weeks of misattributed drift). The public map page is a RENDERED surface, not our data. Bing Maps composes its address line from TomTom/OpenStreetMap geodata, which regularly disagrees with a perfectly correct Bing Places listing. Before flagging any Bing address as drift, open the owning console and compare:
+- Bing Places console: https://www.bing.com/forbusiness/management (signed in as Joshua; per-store pages at /forbusiness/singleEntity?bizid=<id>)
+  • Waynesboro 7ddd697b-9fe1-4c2c-b509-f1f129248ffb · Harrisonburg d3db1bc6-bf38-4695-bc02-180a9bd4b3da · Roanoke 9dd5c903-6a00-4c6f-86c0-41c8178473b6 · Culpeper a73bfbe6-a8f5-4b0c-b098-4246d9242376 · Lexington 042deef9-9f27-4045-9def-387e727b3c09
+Then classify into one of three buckets, and NEVER collapse them into one "drift" count:
+  1. LISTING DEFECT — console value is wrong. Actionable, whitelisted, hand to vp-ai-search-autofix.
+  2. RENDER MISMATCH — console is correct, public map differs. NOT a listing bug and NOT fixable by editing the listing. Report it once as informational, then suppress it on subsequent weeks unless it changes. Known and accepted as of 2026-08-03: Roanoke public map drops "Suite C"; Harrisonburg public map shows "1790 Toni St".
+  3. FOREIGN LISTING — a record we do not own (legacy MapQuest "Dixie Pawn Inc.", unclaimed Apple Business Connect). Needs a claim/merge, never an edit.
+Also check the DESCRIPTION field in the Bing Places console for each store. It must name exactly five stores — Waynesboro, Culpeper, Harrisonburg, Roanoke, Lexington — and must be at or under 500 characters, or Bing silently keeps a stale version. A phantom sixth location (e.g. "Salem") is a real defect and AI engines quote this text directly.
+NOTE: Bing listings SYNC FROM Google Business Profile. GBP is the upstream source of truth; a Bing-side edit can be overwritten on the next sync.
+
 Flag as DRIFT: any legacy/wrong name (especially "Dixie Pawn"), wrong street number, missing suite (Roanoke must show "Suite C"), any wrong phone digit, wrong hours (watch the Culpeper-only-Wednesday rule), or a missing / duplicate / "permanently closed" listing. Ignore pure formatting differences (St vs Street, ZIP vs ZIP+4, phone format).
 
 POST TO SLACK — channel #ai-marketing (ID C0BCEESUANM; do NOT DM anyone):

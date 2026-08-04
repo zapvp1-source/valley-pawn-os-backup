@@ -17,7 +17,9 @@ model: claude-sonnet-5
 > **Timeout rule:** the osascript wrapper kills any single call at ~25 s. Never sleep longer than ~18 s inside one call; poll in short increments across separate calls. Guard any command that may exit nonzero with a trailing || true.
 
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+> ⚠️ **FAILURE ALERT POLICY (still binding):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium.
+>
+> ⚠️ **FIELD COMMUNICATION STANDARD v3 (binding — read in full before posting anything to a team channel or employee DM):** `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/FIELD_COMMUNICATION_STANDARD.md`. Summary: run the routing test (is this something a clerk needs to know/act on today — if no, it's internal, it does not go to the field); plain everyday language only, no tool/system/pipeline names (never say Bravo, Cowork, Chekkit, Gusto, Brevo, QBO, Publer, "pipeline," "handler," "watchdog," "sync," "CSV," "export"); no file paths, doc IDs, task IDs, or spreadsheet cell/column refs in the posted text; no meta-commentary about the automation itself ("verified against," "supersedes," "this is a manual test run," "pulled automatically from"); lead with the one-line takeaway; ~100 words max for a routine post; no signature footers. This channel's prompt is already a good plain-language model — keep it exactly as written. If anything later in this file conflicts with this standard, this standard wins.
 
 
 
@@ -32,7 +34,7 @@ CONTEXT:
 
 WHAT TO DO RIGHT NOW:
 
-Your #1 essential output is the Slack prompt post — do it FIRST, before anything else, and never let any other step (credentials, Brevo lookups) block it or run before it. Even if every other step fails, the prompt post MUST still go out.
+Your #1 essential output is the Slack prompt post — do it FIRST, before anything else, and never let any other step (credentials, email-platform lookups) block it or run before it. Even if every other step fails, the prompt post MUST still go out.
 
 1. Post the following message in the Valley Pawn Slack channel `#deal-of-the-week` using `mcp__f92ce7c6-0353-4419-8491-f0843b182ff2__slack_send_message`. Look up the channel ID first with `slack_search_channels` if you don't have it.
 
@@ -55,13 +57,11 @@ Every store's deal goes in Thursday's email to ~11K subscribers — one submissi
 
 DM to Joshua:
 ```
-Deal of the Week submission window is open. Compiler runs at 12:30 PM today and will feature every qualifying store submission. Scheduled Thursday send: [find the upcoming Thursday's campaign name from Brevo, e.g. "W2 — Gold Pulse + First Deal — June 11, 2026"].
+Deal of the Week submission window is open. Compiler runs at 12:30 PM today and will feature every qualifying store submission. Scheduled Thursday send: [find the upcoming Thursday's campaign name, e.g. "W2 — Gold Pulse + First Deal — June 11, 2026"].
 ```
 
-(Best-effort and NON-BLOCKING — this is only for the DM's campaign name; it must never delay or precede step 1.) If you need the Brevo key and `~/.config/valley-pawn/brevo_api_key` is empty (the sandbox home differs from the Mac's), self-heal it: bridge from the Mac via the Control-your-Mac osascript tool (`do shell script "base64 < ~/.config/valley-pawn/brevo_api_key"`) and base64-decode it into that path. If the key still can't be read, SKIP the lookup and use the fallback text below.
+(Best-effort and NON-BLOCKING — this is only for the DM's campaign name; it must never delay or precede step 1.) If you need the email-platform API key and `~/.config/valley-pawn/brevo_api_key` is empty (the sandbox home differs from the Mac's), self-heal it: bridge from the Mac via the Control-your-Mac osascript tool (`do shell script "base64 < ~/.config/valley-pawn/brevo_api_key"`) and base64-decode it into that path. If the key still can't be read, SKIP the lookup and use the fallback text below.
 
-To find the upcoming Thursday's campaign name: call Brevo API `GET https://api.brevo.com/v3/emailCampaigns?status=draft&limit=30` with `api-key` header read from `~/.config/valley-pawn/brevo_api_key`. Look for a draft whose name matches the upcoming Thursday's date (search names containing month/day strings). If no match found, just say "(no draft staged for this Thursday — will create from calendar at 12:30 PM)".
+To find the upcoming Thursday's campaign name: call the email platform's API `GET https://api.brevo.com/v3/emailCampaigns?status=draft&limit=30` with `api-key` header read from `~/.config/valley-pawn/brevo_api_key`. Look for a draft whose name matches the upcoming Thursday's date (search names containing month/day strings). If no match found, just say "(no draft staged for this Thursday — will create from calendar at 12:30 PM)".
 
 ONLY do these two posts. The compiler task handles the rest at 12:30. Do not block; do not wait for replies. Report success/failure as a brief one-line summary.
-
-<!-- migrated to working model 2026-06-15 -->

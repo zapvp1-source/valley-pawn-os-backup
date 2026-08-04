@@ -282,3 +282,47 @@ FAILED — no reconciliation computed. Both required inputs were unavailable:
 - Next run (2026-08-03) should re-check whether this was a one-night Bravo
   outage or persists; if it recurs identically, escalate as a genuine Bravo
   regression rather than retrying again.
+
+
+## RUN RECORD - 2026-08-01 (Saturday) reconciliation - BACKFILL, executed 2026-08-03
+Never ran on the day: the scheduled task went live 8/2. Bravo pull
+jewelry-count-recon-2026-08-01-verify, all 5 stores success (23/35/21/28/40 sold rows).
+This pull doubled as proof that the 8/2 "failure" was a closed-Sunday artifact, not a defect.
+All 5 sheets posted, dated 8/1, all AM and PM columns sum-verified.
+
+| Store | Sold | AM | PM | Net | Diff | Result |
+|-------|------|------|------|-----|------|--------|
+| CUL | 7 | 1260 | 1271 | -11 | -18 | FLAG - case GREW 11; rings 613->624 vs 6 sold, ~18 pieces in. Heavy Saturday buy day; check buy tickets. |
+| HAR | 3 | 813 | 790 | 23 | +20 | FLAG but EXPLAINED - sheet annotated "Scrap": -16 rings, -1 bracelet, -3 necklaces, -3 pendants = 23, exactly the drop. Process working as designed. |
+| LEX | 2 | 427 | 426 | 1 | -1 | OK |
+| ROA | 2 | 1055 | 1010 | 45 | +43 | FLAG - UNEXPLAINED. 46 rings + 6 bracelets left the case vs 2 sales. Same shape as HAR's scrap pull but undocumented. Ask Benjie. NOTE: AM column sums to 1056, written total says 1055. |
+| WAY | 4 | 542 | 538 | 4 | 0 | PERFECT - exact at category level (2 rings, 1 earring, 1 pendant). |
+
+Tolerance +/-5. New poster confirmed by sheet header: Preston Peters posted HAR on 8/1.
+Posted to #jewlery-counts 2026-08-03.
+
+LESSON: HAR vs ROA is the template for reading these. Both had a large undocumented-looking
+drop; HAR annotated the scrap pull on the sheet and is instantly explainable, ROA did not.
+Encouraging managers to annotate scrap/transfer pulls on the count sheet turns a flag into a
+non-event. Worth making that a documented expectation.
+
+## RUN RECORD - 2026-08-03 (Monday) - full 5-store protocol, DM-only (no channel post)
+
+Store-hours gate: Monday, all 5 stores open, full protocol run.
+
+Bravo pull jewelry-count-recon-2026-08-03-auto: all 5 stores SUCCESS (CUL 32 / HAR 6 / LEX 10 / ROA 11 / WAY 32 sold rows, ~11 min total).
+
+Bucketed jewelry-only sold (JEWELRY_CATEGORIES gate applied):
+| Store | Sold (bucket) | Sheet status |
+|-------|----|------|
+| CUL | 6 (Rings 4, Necklaces 2) | Sheet posted by Sandi 6:27 PM but dated 8/2/26, NOT 8/3 - date mismatch, could not reconcile today's sale total against it. |
+| HAR | 2 (Necklaces 2) | NO sheet posted in #end-of-day as of 8:17 PM after a full 30-min wait past the normal 6:00-7:15 PM window. |
+| LEX | 0 | NO sheet posted, same as HAR. |
+| ROA | 0 | Benjie Moore posted 6:36 PM, dated 8/3/26 correctly. AM 1010 / PM 1010, net 0, diff 0. MATCH. |
+| WAY | 2 (Rings 1, Earrings 1) | Preston Peters posted 7:27 PM (header says WAYNESBORO despite Preston normally posting HAR - used header per protocol). AM 538 / PM 536, net 2, diff 0. MATCH. |
+
+3 of 5 stores (CUL, HAR, LEX) had an incomplete count-sheet read (date mismatch or not posted) even after the one-time 30-min wait. Per the rewritten Field Communication Standard v3 Section 5 (2026-08-03), an incomplete count-sheet read for ANY store being checked means: post NOTHING to #jewlery-counts, DM Joshua one plain line only. Did that (DM sent 8:17 PM to D03BHQH5VGT, corrected a stray trailing character with an edit at 8:18 PM).
+
+ROA and WAY, the two stores that did reconcile, both matched exactly (diff 0) - no shrinkage concern on the data actually available.
+
+Follow-up for next session: check whether HAR/LEX are chronically late posters and whether Sandi's CUL sheet needs a reminder to post same-day (this is the second time CUL's photo has trailed the business date - see 8/1 backfill note above about Sandi being replaced by Bree/Bree Grayson as poster; Sandi may be posting stale/leftover photos).

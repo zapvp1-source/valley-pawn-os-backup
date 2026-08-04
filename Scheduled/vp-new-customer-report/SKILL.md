@@ -3,6 +3,11 @@ name: vp-new-customer-report
 description: Monthly new-customer count (MoM/YoY) across all 5 Valley Pawn stores via the Bravo pipeline's chekkit-invites-range cell; updates the vp-new-customer-report Cowork artifact and posts to #store-performance
 ---
 
+---
+name: vp-new-customer-report
+description: Monthly new-customer count (MoM/YoY) across all 5 Valley Pawn stores via the Bravo pipeline's chekkit-invites-range cell; updates the vp-new-customer-report Cowork artifact and posts to #store-performance
+---
+
 > **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard, added 2026-08-02).**
 > This task runs on Joshua's Mac Studio and **does** have local machine access. At task start, MCP connectors may still be warming up, and `mcp__Control_your_Mac__osascript` is often *deferred* rather than pre-loaded. A tool that has not been loaded yet is NOT a missing capability.
 > 1. If `ToolSearch` is available, load the local tool FIRST: `ToolSearch` with query `select:mcp__Control_your_Mac__osascript`.
@@ -16,7 +21,9 @@ description: Monthly new-customer count (MoM/YoY) across all 5 Valley Pawn store
 > **Timeout rule:** the osascript wrapper kills any single call at ~25 s. Never sleep longer than ~18 s inside one call; poll in short increments across separate calls. Guard any command that may exit nonzero with a trailing || true.
 
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+> ⚠️ **FAILURE ALERT POLICY (still binding):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium.
+>
+> ⚠️ **FIELD COMMUNICATION STANDARD v3 (binding — read in full before posting anything to a team channel or employee DM):** `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/FIELD_COMMUNICATION_STANDARD.md`. Summary: run the routing test (is this something a clerk needs to know/act on today — if no, it's internal, it does not go to the field); plain everyday language only, no tool/system/pipeline names (never say Bravo, Cowork, Chekkit, Gusto, Brevo, QBO, Publer, "pipeline," "handler," "watchdog," "sync," "CSV," "export"); no file paths, doc IDs, task IDs, or spreadsheet cell/column refs in the posted text; no meta-commentary about the automation itself ("verified against," "supersedes," "this is a manual test run," "pulled automatically from"); lead with the one-line takeaway; ~100 words max for a routine post; no signature footers. **A store's pull failing this run is an internal/operational fact, not something a store team needs to know — it never appears in the #store-performance or #new-customers post. It goes to Joshua's DM only, per the failure policy above.** If anything later in this file conflicts with this standard, this standard wins.
 
 
 Run the monthly Valley Pawn new-customer report. This task is additive — it does not modify any existing Bravo saved report, AHK handler, pipeline cell, or scheduled task. No Parallels grant is used; all Bravo access goes through the existing pipeline (trigger-drop + poll), which already runs in the background independent of this task.
@@ -31,7 +38,7 @@ STEP 2 — Check for existing data. Via osascript, `cat` `/Users/joshuadavis/Doc
 
 STEP 3 — Pull missing data via the pipeline. Generate a trigger ID `new-customers-monthly-<ISO timestamp>`. Write (via osascript) a trigger JSON to `/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/triggers/<id>.json`:
 `{"id":"<id>","requested_at":"<ISO>","reports":[{"name":"chekkit-invites-range","stores":["CUL","HAR","LEX","ROA","WAY"],"date":"<start>..<end>"}]}`
-(only include stores still missing data for the target month). Poll for the CSVs landing in `output/` (filename pattern `<end-date>_<STORE>_chekkit-invites-range.csv`) every 60s, timeout 45 minutes (this pull can take a while — 5 stores × store-cycle logins). If the pipeline reports "bravo-not-ready" (Bravo not logged in on the Parallels VM — this has happened before), do NOT fabricate a number for that store — mark it "pending" for this run and note it plainly in the Slack post. Do not block the rest of the report on one missing store.
+(only include stores still missing data for the target month). Poll for the CSVs landing in `output/` (filename pattern `<end-date>_<STORE>_chekkit-invites-range.csv`) every 60s, timeout 45 minutes (this pull can take a while — 5 stores × store-cycle logins). If the pipeline reports "bravo-not-ready" (Bravo not logged in on the Parallels VM — this has happened before), do NOT fabricate a number for that store — mark it "pending" for this run internally and DM Joshua which store is pending; do not mention it in the Slack post. Do not block the rest of the report on one missing store.
 
 STEP 4 — Count. For each store CSV that landed, count data rows (excludes the header row; the AHK handler already drops empty phone+email rows, so every remaining row = one new customer). Append `{"store":"<CODE>","month":"<YYYY-MM>","count":<N>}` entries to the rollup JSON (read-modify-write via osascript; never delete existing rows — additive only) for every store that succeeded this run.
 
@@ -42,16 +49,17 @@ STEP 5 — Compute MoM and YoY from the rollup JSON:
 
 STEP 6 — Update the dashboard artifact. Read the current `vp-new-customer-report` artifact via `mcp__cowork__list_artifacts`, then `Read` its `path`. Build an updated self-contained HTML (same visual style as the existing `vp-website-trend` / `asset-recovery-2025-vs-2026` artifacts — Chart.js line/bar trend by store and company total, plus a MoM/YoY summary table) with the new month's data baked in, and call `mcp__cowork__update_artifact` with `id: "vp-new-customer-report"`. Do NOT touch `vp-dashboard-refresh` or any other scheduled task — the nightly dashboard refresh already auto-syncs this artifact onto vp-dashboard.pages.dev.
 
-STEP 7 — Slack. Post a summary to **#new-customers** (channel ID **C0BHF9NM0BH** — https://valleypawnworkspace.slack.com/archives/C0BHF9NM0BH). Use normal Slack report format (plain text, bullet per store):
+STEP 7 — Slack. Post a summary to **#new-customers** (channel ID **C0BHF9NM0BH**). **Stores must be RANKED by count, highest first — #1 is the store with the most new customers, not alphabetical/geographic order (set 2026-08-03 per Joshua).** Ties share the same rank number (both get the medal/number). Use this format:
 ```
-📊 New Customers — <Month Year>
-• Culpeper: <n> (MoM <±%>, YoY <±% or "n/a">)
-• Harrisonburg: <n> (MoM <±%>, YoY <±% or "n/a">)
-• Lexington: <n> (MoM <±%>, YoY <±% or "n/a">)
-• Roanoke: <n> (MoM <±%>, YoY <±% or "n/a">)
-• Waynesboro: <n> (MoM <±%>, YoY <±% or "n/a">)
+📊 New Customers — <Month Year> (ranked)
+1. 🥇 <Store>: <n> (MoM <±%>, YoY <±% or "n/a">)
+2. <Store>: <n> (MoM <±%>, YoY <±% or "n/a">)
+3. <Store>: <n> (MoM <±%>, YoY <±% or "n/a">)
+4. <Store>: <n> (MoM <±%>, YoY <±% or "n/a">)
+5. <Store>: <n> (MoM <±%>, YoY <±% or "n/a">)
+
 Company total (deduped): <n> (MoM <±%>, YoY <±% or "n/a">)
 ```
-If any store's pull failed this run, add a line: "⚠️ <store> pull failed this run — will retry next month; historical trend for that store has a gap for <month>." Never post fabricated or estimated numbers.
+(Ties: e.g. two stores tied for most — both are numbered `1.` with 🥇, next distinct count resumes at `3.`.) If any store's pull failed this run, do NOT add a line about it to this post — that historical-gap note is internal. Instead DM Joshua (U03BB52MDSA): "⚠️ New Customer Report <Month>: <store> pull failed this run — will retry next month; historical trend for that store has a gap for <month>." Never post fabricated or estimated numbers.
 
 Never use the legacy "Dixie Pawn" name. Never ask Joshua to log in or click anything — this task is fully autonomous, pipeline-driven, no computer-use/Parallels grant needed.

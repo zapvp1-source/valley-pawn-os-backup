@@ -188,3 +188,19 @@ NEXT SESSION should investigate, in priority order:
 1. Whether the underlying issue is VM display/session state (e.g. Session-1 vs console session mismatch) rather than Bravo itself -- this would explain why relaunching Bravo never fixes 'no-window'.
 2. Whether EnsureBravoDashboard's wait-up-to-120s logic should be hardened to actually abort/report at 120s instead of hanging indefinitely -- current behavior wastes ~9+ min of trigger-poll time per failed run.
 3. Consider pausing PAWN WALK auto-retries until a person confirms the Parallels VM window/display state, since 4 consecutive-ish failures suggests retrying alone won't self-resolve.
+
+
+---
+## RUN -- 2026-08-03 (PAWN WALK) -- NEW FINDING: layout gate false-PASS on stale Age-based data
+intake-detail (Claude Pawn Walks) for 2026-08-02: Bravo healthy all run (health gate PASS <35s, no restart needed). Trigger claimed instantly, cycled all 5 stores cleanly (no window loss, no wedge -- WAY worked fine this time, breaking its 5-run losing streak).
+
+Result: CUL failed the old way (3/3 selection attempts exhausted, "wrong report / no item columns"). HAR/LEX/ROA/WAY all reported SUCCESS with the layout gate passing on attempt 1 ("correct report confirmed, item-detail columns present") and wrote 42-45 rows each (173 total).
+
+BUT: inspected the actual CSV contents -- every single row across all 4 "successful" stores shows Disposition Date 6/16 or 6/18/2026 and a UNIFORM Age of 46-48, i.e. the same stale active-loan snapshot from ~6 weeks ago, completely unrelated to yesterday's (8/2) real activity. This is the SAME recurring "Claude Pawn Walks loads with Age= criteria instead of Transaction Date range" regression documented 6/16, 6/20, 7/10, 7/11, 7/27 -- but this is the FIRST time it slipped past the automation's own layout-verify gate undetected, because that gate only checks column PRESENCE (Category/FullDescription exist) not the actual date-criteria correctness. Compile script's single-day Disposition-Date backstop filter correctly rejected all 173 rows (working as designed), so run_daily_intake.py produced a clean-looking but empty (items=0) summary -- this is NOT a real quiet day, it's 100% garbage-in getting correctly filtered to zero.
+
+Treated as a FAILURE per the 7/11 precedent (false quiet-day trap), not posted to #pawn-walks. Joshua DMed per v2 policy (plain one-liner only).
+
+NEXT SESSION priority:
+1. The core regression is still unresolved after 6 documented occurrences (6/16, 6/20, 7/10, 7/11, 7/27, now 8/3). It needs the permanent Bravo-side fix: per store, Loans/Buys -> Custom Reports -> open 'Claude Pawn Walks' -> re-save criteria as Transaction Date range (not Age=), confirm columns Ticket Number/Category/Full Description/Loan Amount, confirm list-view Saved Layout is the 4-col layout. This has been recommended 5+ times and not yet actioned.
+2. Harden IntakeDetail.ahk's layout-verify gate to ALSO check date-criteria correctness (e.g. sample a row's Disposition/Transaction-adjacent date field against the requested range, or verify the criteria control shows 'Transaction Date' not 'Age' before running), not just column presence -- today's false-PASS shows column-check alone is insufficient.
+3. Encouraging sign: WAY completed cleanly for the first time in 5 runs (7/21, 7/23, 7/27, 7/28, 7/31 all had window-loss) -- no window-loss issue today. Worth noting in case it self-resolved (VM reboot, resource pressure change) or was luck.

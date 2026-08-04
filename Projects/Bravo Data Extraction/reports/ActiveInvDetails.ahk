@@ -123,7 +123,16 @@ PullActiveInvDetails(store, asOfDate, outputDir) {
         Sleep(1500)
 
         LogMessage("  step 3: select saved report '" . ACTIVE_INV_ELEMENTS["saved_report_value"] . "'")
-        SelectSavedReport(ACTIVE_INV_ELEMENTS["saved_report_combo"], ACTIVE_INV_ELEMENTS["saved_report_value"])
+        ; [inv-select fix 2026-08-03] The Inventory module requires
+        ; SelectInventorySavedReport - the generic SelectSavedReport does not commit
+        ; the combo here. This is the SAME 2026-07-28 ClickOnce regression already
+        ; fixed in SoldInvDetails.ahk; the 2026-07-30 audit classified this file as
+        ; ALREADY-FIXED but it had only received the Ok-click half of the fix.
+        ; Proven live 2026-08-03: the old call failed with "could not select
+        ; 'Claude Active Inv Details' via click or keyboard walk".
+        ; Backup: ActiveInvDetails.ahk.bak-pre-invselect-fix-2026-08-03
+        if !SelectInventorySavedReport(ACTIVE_INV_ELEMENTS["saved_report_value"])
+            throw Error("SelectInventorySavedReport: could not select " . ACTIVE_INV_ELEMENTS["saved_report_value"])
         Sleep(1000)
 
         ; No date override — active inventory is "current state"

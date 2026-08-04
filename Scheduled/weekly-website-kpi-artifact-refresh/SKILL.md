@@ -1,6 +1,6 @@
 ---
 name: weekly-website-kpi-artifact-refresh
-description: Weekly refresh of the vp-website-kpis Cowork artifact with last week's GA4 data for thevalleypawn.com
+description: SUPERSEDED 2026-08-03 by vp-website-trend-daily-refresh (runs daily, refreshes the vp-website-trend artifact which the vp-website-kpis artifact itself now flags as its replacement). Disabled to stop duplicate GA4 pulls; vp-website-kpis is kept only as a static historical snapshot from 2026-07-27 and should not be overwritten.
 model: claude-sonnet-5
 ---
 

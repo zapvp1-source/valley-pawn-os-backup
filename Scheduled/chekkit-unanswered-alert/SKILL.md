@@ -4,10 +4,11 @@ description: Daily 8 AM Chekkit unanswered message summary — counts ONLY messa
 model: claude-haiku-4-5
 ---
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+> ⚠️ **FAILURE ALERT POLICY (still binding):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium.
+>
+> ⚠️ **FIELD COMMUNICATION STANDARD v3 (binding — read in full before posting anything to a team channel or employee DM):** `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/FIELD_COMMUNICATION_STANDARD.md`. Summary: run the routing test (is this something a clerk needs to know/act on today — if no, it's internal, it does not go to the field); plain everyday language only, no tool/system/pipeline names (never say Bravo, Cowork, Chekkit, Gusto, Brevo, QBO, Publer, "pipeline," "handler," "watchdog," "sync," "CSV," "export"); no file paths, doc IDs, task IDs, or spreadsheet cell/column refs in the posted text; no meta-commentary about the automation itself ("verified against," "supersedes," "this is a manual test run," "pulled automatically from"); lead with the one-line takeaway; ~100 words max for a routine post; no signature footers. If anything later in this file conflicts with this standard, this standard wins.
 
-
-> ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
+> ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do.
 
 You are compiling the daily Chekkit unanswered message summary for Valley Pawn. This runs once at 8 AM Mon–Sat the MORNING AFTER, and summarizes YESTERDAY's misses (the full prior calendar day, now closed). **The metric measures responsiveness DURING BUSINESS HOURS ONLY** — messages that arrived before a store opened, after it closed, or on a day the store was closed do NOT count.
 
@@ -57,7 +58,7 @@ When you see any of those messages, immediately fire the next concrete tool call
    - Read the full email body to find the customer's last message content.
    - **Skip conversation-enders** that do NOT require a response — such as "thanks", "thank you", "ok", "okay", "sounds good", "got it", "goodbye", "bye", "have a good day", "appreciate it", "no problem", "will do", "perfect", "cool", "great", "Stop", "STOP", thumbs up, emojis only, or any similar sign-off / opt-out. Only count messages that are a genuine question, request, complaint, or something that clearly warranted a reply.
    - **Skip alerts where the message body is empty** (customer sent no text — just a blank message or image attachment notification).
-   - **OPEN-HOURS FILTER — only count messages that arrived while that store was OPEN.** The goal is to measure responsiveness during business hours only, NOT before open, after close, or on closed days. Determine the customer's message time in Eastern Time: the Chekkit alert fires ~10 minutes after the message ("said 10 minutes ago"), so message time ≈ the email's received time minus 10 minutes. Compare that message time against the open hours for the SPECIFIC store the alert was sent to (see "Store open hours" below). **Skip (do not count)** any alert whose message arrived before the store opened (before 10:00 AM ET), at/after it closed (6:00 PM ET or later), or on a day that store is closed. Note Culpeper and the other four stores have different closed days. Timezone: June through early November is EDT (UTC−4); the rest of the year is EST (UTC−5) — convert the email's UTC timestamp accordingly before comparing.
+   - **OPEN-HOURS FILTER — only count messages that arrived while that store was OPEN.** The goal is to measure responsiveness during business hours only, NOT before open, after close, or on closed days. Determine the customer's message time in Eastern Time: the alert fires ~10 minutes after the message ("said 10 minutes ago"), so message time ≈ the email's received time minus 10 minutes. Compare that message time against the open hours for the SPECIFIC store the alert was sent to (see "Store open hours" below). **Skip (do not count)** any alert whose message arrived before the store opened (before 10:00 AM ET), at/after it closed (6:00 PM ET or later), or on a day that store is closed. Note Culpeper and the other four stores have different closed days. Timezone: June through early November is EDT (UTC−4); the rest of the year is EST (UTC−5) — convert the email's UTC timestamp accordingly before comparing.
    - Tally the remaining (actionable, in-hours) unanswered messages per store.
 
 ### Store open hours (Eastern Time) — used for the OPEN-HOURS FILTER
@@ -69,13 +70,13 @@ When you see any of those messages, immediately fire the next concrete tool call
 4. For each store that had 1+ actionable, in-hours unanswered messages yesterday, send EXACTLY ONE DM to each employee at that store using the map below. **Do NOT DM Preston or Joshua — store employees only.** **Do NOT send a follow-up "correction" DM even if the wording feels off after sending — finalize wording before you call slack_send_message.**
 
    DM format (the date in the header is YESTERDAY'S date — the day being reviewed):
-   📊 *Chekkit summary for [Store Name] — [Yesterday's Date]:* [X] customer message(s) sent during business hours went 10+ minutes without a response yesterday. Please make sure to check Chekkit regularly so customers get fast replies! → https://dashboard.chekkit.io
+   📊 *Response check for [Store Name] — [Yesterday's Date]:* [X] customer message(s) sent during business hours went 10+ minutes without a response yesterday. Please make sure to check for new messages regularly so customers get fast replies!
 
 5. If a store had 0 actionable, in-hours unanswered messages yesterday, do NOT DM that store's employees.
 
 6. **Post a company-wide summary to #chekkit-unanswered-summary (channel ID `C0B1PEW0C30`) EXACTLY ONCE** with a by-store breakdown so Preston and Joshua can see the full picture. Always post this, even if all stores had 0. Do NOT also post to #claude-updates. Do NOT send a follow-up correction. The header date is YESTERDAY'S date (the day being reviewed), not today's posting date. Counts are business-hours only. Format:
 
-   📊 *Daily Chekkit Unanswered Message Summary — [Yesterday's Date]* _(business hours only)_
+   📊 *Daily Response Summary — [Yesterday's Date]* _(business hours only)_
 
    • *Culpeper:* [X] unanswered
    • *Waynesboro:* [X] unanswered
@@ -85,7 +86,7 @@ When you see any of those messages, immediately fire the next concrete tool call
 
    *Total: [X] message(s) across all stores yesterday*
 
-   If all stores had 0, post: 📊 *Daily Chekkit Unanswered Message Summary — [Yesterday's Date]* _(business hours only)_ — All clear! Every customer message sent during business hours was answered within 10 minutes yesterday. 🎉
+   If all stores had 0, post: 📊 *Daily Response Summary — [Yesterday's Date]* _(business hours only)_ — All clear! Every customer message sent during business hours was answered within 10 minutes yesterday. 🎉
 
 ---
 

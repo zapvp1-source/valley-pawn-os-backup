@@ -206,6 +206,7 @@ STORE_POSTER_MAP = {
     "Martin D.": "WAY",      # Waynesboro (confirmed from sheet header 7/30/26)
     "Martin Dowden": "WAY",  # same person, printed name on sheet
     "Sandi": "CUL",
+    "Preston Peters": "HAR",  # Harrisonburg (confirmed by sheet header 8/1/26)
 }
 
 

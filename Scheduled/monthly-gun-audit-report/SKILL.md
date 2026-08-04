@@ -4,7 +4,9 @@ description: Read the 5 monthly gun audit forms from Slack, update the Valley Pa
 model: claude-sonnet-5
 ---
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+> ⚠️ **FAILURE ALERT POLICY (still binding):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium.
+>
+> ⚠️ **FIELD COMMUNICATION STANDARD v3 (binding — read in full before posting anything to a team channel or employee DM):** `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/FIELD_COMMUNICATION_STANDARD.md`. Summary: run the routing test (is this something a clerk needs to know/act on today — if no, it's internal, it does not go to the field); plain everyday language only, no tool/system/pipeline names (never say Bravo, Cowork, Chekkit, Gusto, Brevo, QBO, Publer, "pipeline," "handler," "watchdog," "sync," "CSV," "export"); no file paths, doc IDs, task IDs, or spreadsheet cell/column refs in the posted text; no meta-commentary about the automation itself ("verified against," "supersedes," "this is a manual test run," "pulled automatically from"); lead with the one-line takeaway; ~100 words max for a routine post; no signature footers. If anything later in this file conflicts with this standard, this standard wins.
 
 
 
@@ -81,11 +83,7 @@ The report uses a **rolling 12-month window**. Each month, add the new month's d
    - On the **Key Takeaways** tab: Update findings with any new observations (new trends, improvements, concerns)
    - Use JavaScript clipboard (navigator.clipboard.writeText + Ctrl+V) to paste TSV data efficiently
 
-4. **Post a summary to Slack** in #monthly-gun-audit (C07CPN020G0). Use the slack_send_message_draft tool to create a draft, then notify the user to review and send. The summary should include:
-   - Which locations submitted and which are missing
-   - Error rates for each location that submitted
-   - Any notable trends or concerns
-   - A link to the Google Sheet
+4. **Post a summary to Slack** in #monthly-gun-audit (C07CPN020G0). Use the slack_send_message_draft tool to create a draft, then notify the user to review and send. Keep the summary itself short and plain per the Field Communication Standard — which locations submitted, which are missing, each submitted location's error rate, and one line for any real concern. A link to the Google Sheet is fine (that is the "full details" reference point); do not narrate the sheet's tab structure or the update process in the message.
 
 ## IMPORTANT NOTES
 - Audit forms are usually handwritten on paper and photographed or scanned as PDFs
@@ -94,5 +92,3 @@ The report uses a **rolling 12-month window**. Each month, add the new month's d
 - Error Rate = (Errors Found / Forms Checked) × 100
 - If a location hasn't submitted by the 7th, mark them as "Late" (not missing yet — they may still submit)
 - The Google Sheet file upload is blocked; you must edit the sheet directly in Chrome using clipboard paste
-
-<!-- migrated to working model 2026-06-15 -->

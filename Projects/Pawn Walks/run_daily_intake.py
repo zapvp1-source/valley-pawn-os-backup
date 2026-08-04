@@ -864,6 +864,8 @@ def main():
 
     # ── Slack ─────────────────────────────────────────────────────────────────
     slack_msg = build_slack_message(valued, date)
+    if slack_msg is not None and xl_ok:
+        slack_msg += f"\n\n📎 _Spreadsheet: `daily/{date_str}_intake_margin.xlsx` in your Pawn Walks folder (Items/Summary/Flags tabs)_"
     summary["slack_message"] = slack_msg   # always saved — scheduled task posts via Slack MCP if needed
     if slack_msg is None:
         print(f"Slack post skipped — only {len(valued)} item(s) (min 3 required).")
