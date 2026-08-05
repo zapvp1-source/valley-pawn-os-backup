@@ -17,6 +17,10 @@ Behavior (v3, 2026-07-23):
    coverage, firearms language, unbalanced personalization conditionals,
    other unfilled [[MARKERS]].
  - SENT campaigns are report-only — never modified.
+ - PAY TRANSPARENCY (added 2026-08-03): any campaign containing hiring language must
+   state a wage/salary or range (Va. Code 40.1-28.7:12). Hard-fail, never auto-fixed —
+   where a range belongs in prose is a judgment call, and guessing a number is worse
+   than blocking the send.
 
 Key: ~/.config/valley-pawn/brevo_api_key (bridge from Mac if empty).
 """
@@ -24,6 +28,50 @@ import os, sys, json, re, time, urllib.request, urllib.error
 
 STORES = ["culpeper","waynesboro","harrisonburg","lexington","roanoke"]
 API = "https://api.brevo.com/v3"
+
+# --- VA pay-transparency (Va. Code 40.1-28.7:12, eff. 2026-07-01) -------------
+# ANY posting for a job, promotion or transfer -- including a marketing email that
+# advertises an opening -- must state a good-faith wage/salary or range. No employer
+# size threshold. Penalty: $1k first / $5k subsequent civil, plus a private action
+# for $1k-$10k statutory damages or actual damages, plus attorney fees.
+# Campaign #51 (2026-07-23 hiring blast) went out without one. This check exists so
+# that cannot recur silently.
+# STRONG: unambiguous "this email advertises a job". Any ONE triggers.
+HIRING_SIGNALS_STRONG = [
+    r"\bwe(?:'|’)?re hiring\b", r"\bwe are hiring\b", r"\bnow hiring\b",
+    r"\bhiring\s+(?:retail\s+)?(?:sales|loan|store|full[- ]time|part[- ]time)\b",
+    r"\bjoin (?:our|the) team\b", r"\bcome work (?:with|at|for)\b",
+    r"\bopen positions?\b", r"\bjob openings?\b", r"\bnow accepting applications\b",
+]
+# WEAK: consistent with a job ad but also normal in an ordinary newsletter footer.
+# A careers link ALONE is not a job posting -- requiring two weak signals stops
+# preflight failing every campaign the day someone adds /careers to the footer.
+HIRING_SIGNALS_WEAK = [
+    r"thevalleypawn\.com/careers", r"/careers\b",
+    r"\bapply (?:at|now|today|online)\b", r"\bsend (?:your )?resum(?:e|é)\b",
+]
+# Accept either an explicit range or a single stated wage; hourly or salaried.
+PAY_DISCLOSURE_RES = [
+    # $16.50-$21.50 /hour  (en dash, em dash, hyphen, or "to")
+    r"\$\s?\d{1,3}(?:[.,]\d{2})?\s*(?:\u2013|\u2014|-|to)\s*\$?\s?\d{1,3}(?:[.,]\d{2})?\s*(?:/|\s*per\s*|\s*an\s*)?\s*(?:hr|hour)\b",
+    # $45,000-$55,000 a year / per year / annually
+    r"\$\s?\d{2,3}(?:,\d{3})\s*(?:\u2013|\u2014|-|to)\s*\$?\s?\d{2,3}(?:,\d{3})\s*(?:/|\s*per\s*|\s*a\s*)?\s*(?:yr|year|annually)\b",
+    # single stated wage: $17.00 per hour / an hour / /hour
+    r"\$\s?\d{1,3}(?:[.,]\d{2})?\s*(?:/|\s*per\s*|\s*an\s*)\s*(?:hr|hour)\b",
+    # single stated salary
+    r"\$\s?\d{2,3}(?:,\d{3})\s*(?:/|\s*per\s*|\s*a\s*)\s*(?:yr|year|annually)\b",
+]
+
+def _looks_like_job_posting(text):
+    """Matched signals if this email advertises an opening, else [].
+    Trigger = any ONE strong signal, or TWO+ weak signals together."""
+    strong=[p for p in HIRING_SIGNALS_STRONG if re.search(p, text, re.I)]
+    weak=[p for p in HIRING_SIGNALS_WEAK if re.search(p, text, re.I)]
+    if strong: return strong+weak
+    return weak if len(weak)>=2 else []
+
+def _has_pay_disclosure(text):
+    return any(re.search(p, text, re.I) for p in PAY_DISCLOSURE_RES)
 
 def key():
     p=os.path.expanduser("~/.config/valley-pawn/brevo_api_key")
@@ -87,6 +135,15 @@ def run_checks(h):
 
     n_if=len(re.findall(r'\{%\s*if\b',h)); n_end=len(re.findall(r'\{%\s*endif\s*%\}',h))
     if n_if!=n_end: problems.append(("jinja",f"unbalanced personalization conditionals: {n_if} if vs {n_end} endif"))
+
+    sig=_looks_like_job_posting(no_c)
+    if sig and not _has_pay_disclosure(no_c):
+        problems.append(("paytransparency",
+            "this email advertises a job opening but states NO wage/salary range — "
+            "Va. Code 40.1-28.7:12 (eff. 2026-07-01) requires a good-faith pay range in "
+            "EVERY posting for a job, promotion or transfer, with no employer-size threshold. "
+            f"Hiring language detected: {sig[:3]}. "
+            "Add the approved range (Sales & Loan Associate/Rep: $16.50-$21.50 per hour) to the body copy."))
 
     fw=sorted(set(w.lower() for w in re.findall(r'\b(firearms?|guns?|pistols?|rifles?|shotguns?|ammo|ammunition)\b',no_c,re.I)))
     if fw: problems.append(("firearms",f"firearms language in rendered content: {fw} — VP policy is zero firearms mentions in marketing email"))

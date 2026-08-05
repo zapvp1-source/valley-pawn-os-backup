@@ -1,34 +1,35 @@
 # Dashboard Refresh — Run Status
 
-**Run date:** 2026-08-03 (scheduled task `vp-dashboard-refresh`)
+**Run date:** 2026-08-04 (scheduled task `vp-dashboard-refresh`)
 
 ## Result: SUCCESS — all steps completed
 
 ### 1. KPI data refresh (site/data/kpis.json) — DONE
-- Updated `asOf` to August 3, 2026
-- Loan review / layaway review / company-performance watch: no newer standard-format report since Jul 27 (loans/layaway) / Jul 3 (monthly analytics) — left unchanged per runbook rule
-- Daily Funds Verification: no newer post since Aug 2 (ALL MATCHED, $0/$0) — left unchanged
-- Items to Price: new Aug 3 report posted, same counts as Aug 2 (149 items / $12,362.00 company-wide) — date bumped to Aug 3, 2026
-- Intake Margin (pawn-walks): no newer post since Aug 2 (covering Aug 1 data) — left unchanged
-- Chekkit Unanswered: new Aug 3 report (covering Aug 2) — all clear, 0 unanswered company-wide (previously 2 as of Jul 31) — updated
-- `bravoDaily` section untouched (owned by daily-bravo-kpis task)
-- `feeds[]` Last Run column updated for Items to Price and Chekkit Unanswered Messages
-- JSON validated via `python3 -c "import json; json.load(...)"` — parses clean
+- Checked all 7 feed channels against latest Slack posts (loan-review, layaway-review, company-performance, daily-funds-reconcilation, items-to-price, pawn-walks, chekkit-unanswerd-summary).
+- Loan review / layaway review: no newer standard-format report since Aug 3 — left unchanged.
+- Company-performance watch: no newer report since Jul 3 — left unchanged.
+- Items to Price, Intake Margin, Chekkit: kpis.json already reflected the latest posts (Aug 4, Aug 1, Aug 3 data respectively) going into this run — no change needed.
+- Daily Funds Verification: NEW Aug 4 report ($2,000 expected = $2,000 actual, ALL MATCHED; Harrisonburg's $2k ops-cash request declined by Joshua — focus on collections, not buying). Updated `funds` block, `dates.funds`, and `feeds[]` Last Run to Aug 4, 2026.
+- `bravoDaily` section untouched (owned by daily-bravo-kpis task).
+- `asOf` already read Aug 4, 2026 at the start of this run (carried over) — left as-is, still correct.
+- JSON validated via `python3 -c "import json; json.load(...)"` — parses clean.
 
 ### 2. Artifact sync (site/artifacts/) — DONE
-- `cp -R` from `~/Documents/Claude/Artifacts/*` completed via osascript, `versions` subfolders purged
-- No new artifact folders (7 source folders, all already in manifest)
-- Bumped `updated` dates: `vp-website-trend` → Aug 3, 2026 (mtime Aug 3 02:44), `asset-recovery-2025-vs-2026` → Aug 2, 2026 (mtime Aug 2 19:25) — only two folders with mtimes newer than their manifest entries
+- `cp -R` from `~/Documents/Claude/Artifacts/*` completed via osascript, `versions` subfolders purged.
+- No new artifact folders (7 source folders, all already in manifest; 10 total entries in artifacts.json including 3 standalone-only entries with no source folder).
+- Bumped `updated` dates: `vp-website-trend` → Aug 4, 2026 (mtime Aug 4 08:38), `asset-recovery-2025-vs-2026` → Aug 4, 2026 (mtime Aug 4 19:21) — only two folders with mtimes newer than their manifest entries.
+- artifacts.json validated — 10 entries, matches 10 folders on disk under site/artifacts/.
 
 ### 3. Deploy to Cloudflare Pages — DONE
-- Deployed via osascript `do shell script` (backgrounded with nohup, node from `~/Documents/Claude/tools/node`) since global `npm install -g wrangler` failed in the sandbox shell with EACCES (no write access to `/usr/lib/node_modules`) — used the runbook's preferred Mac-side deploy path instead
-- `npx wrangler pages deploy site --project-name=vp-dashboard --commit-dirty=true` → **Success!** Uploaded 4 files (17 already uploaded), deployment URL `https://350e0297.vp-dashboard.pages.dev`
+- Deployed via osascript `do shell script` (backgrounded with nohup, node from `~/Documents/Claude/tools/node`) — sandbox-shell wrangler still fails with EACCES, used the Mac-side deploy path per runbook.
+- `npx wrangler pages deploy site --project-name=vp-dashboard --commit-dirty=true` → **Success!** Uploaded 4 files (19 already uploaded), deployment URL `https://c5ed7883.vp-dashboard.pages.dev`
 
 ### 4. Verify — DONE
 - `curl https://vp-dashboard.pages.dev/` without auth → **401** ✓
 - `curl` with basic auth (`valleypawn` / `.cloudflare/site_password`) → **200** ✓
-- `data/kpis.json` fetched live from the deployed site, parses clean, `asOf` = "August 3, 2026" — confirms this run's edits are live
+- `data/kpis.json` fetched live from the deployed site, parses clean, `asOf` = "August 4, 2026", funds block confirms today's edit is live.
 
-## Notes for next session
-- Sandbox shell cannot `npm install -g` (EACCES on `/usr/lib/node_modules`) — always use the osascript Mac-side deploy path, not the sandbox-shell wrangler path, until/unless the sandbox gets write access to global npm.
+## Context notes for next session
+- Per enterprise-map CHANGELOG (read 2026-08-02): VP Ops Engine (native launchd automation) was **stood down 2026-08-02** — all 12 job plists disabled, Joshua tabled the project. Loan/layaway/company-performance reports are currently coming from the Cowork-side weekly tasks (`monday-bravo-combined-run`, `weekly-loan-review-canvas-refresh`, etc.), not VP Ops Engine. If those channels look stale in a future run, check whether the owning Cowork task is still enabled before assuming breakage (Rule 12 — verify against output, not metadata).
+- Sandbox shell still cannot `npm install -g` (EACCES) — keep using the osascript Mac-side deploy path.
 - No Slack post made — success, and the runbook only requires a post on failure.

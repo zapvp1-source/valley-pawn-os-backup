@@ -608,12 +608,18 @@ PullPostToAccountingGL(store, dateOrRange, outputDir) {
         DismissPopups()
 
         ; step 5: wait for the DevExpress preview window/ribbon to appear at
-        ; all. The ribbon (and its "Enable Continuous Scrolling" toggle)
-        ; renders BEFORE the report body finishes paginating, so this check
-        ; is fast even when the report itself is large. Kept at a short
-        ; timeout on purpose — see step 5b below for why.
-        if !FindByName("Enable Continuous Scrolling", 15000)
-            throw Error("Consolidated GL preview ribbon did not appear within 15s (report window never opened)")
+        ; all. CORRECTED 2026-08-04: FIX ATTEMPT #2 assumed the ribbon (and
+        ; its "Enable Continuous Scrolling" toggle) renders fast, before the
+        ; report body finishes paginating, and used a 15s timeout here on
+        ; that assumption. Live-tested same day on HAR and DISPROVEN: the
+        ; ribbon did not appear within 15s at all (error: "report window
+        ; never opened"), an even faster failure than FIX ATTEMPT #1's 60s
+        ; timeout on the Export item. The assumption was wrong — do not
+        ; shorten this wait again without live evidence of actual timing.
+        ; Restored to a generous 90s, matching the budget the working
+        ; closing-report handlers use for their initial preview wait.
+        if !FindByName("Enable Continuous Scrolling", 90000)
+            throw Error("Consolidated GL preview ribbon did not appear within 90s (report window never opened)")
         Sleep(500)
 
         ; --- Step 5b: turn off Continuous Scrolling BEFORE waiting on Export

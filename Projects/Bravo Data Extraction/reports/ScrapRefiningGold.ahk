@@ -255,8 +255,9 @@ PullScrapRefiningGold(store, dateOrRange, outputDir) {
                 continue
             }
             for b in cands {
-                weight := ScrapOpenBucketAndReadWeight(b.name)
-                LogMessage("    [" . mo.label . "] bucket='" . b.name . "' weight=" . weight)
+                occ := b.HasOwnProp("nameOccurrence") ? b.nameOccurrence : 0
+                weight := ScrapOpenBucketAndReadWeight(b.name, occ)
+                LogMessage("    [" . mo.label . "] bucket='" . b.name . "' occurrence=" . occ . " weight=" . weight)
                 WriteCsvRow(outputPath, store, mo.label, b.name, b.createdOn, b.status, b.statusDate, weight)
                 rowCount++
             }
@@ -409,6 +410,10 @@ ScrapWalkBucketGrid(diagPath) {
     maxPages := 200
     pageIdx := 0
     diagWritten := false
+    ; Fresh per-call, NOT persisted across stores/runs - the watcher process
+    ; lives across many PullScrapRefiningGold calls, so a module-level map
+    ; would leak occurrence counts from one store's walk into the next.
+    global SCRAP_NAME_OCCURRENCE := Map()
 
     try {
         root := GetBravoRoot()
@@ -483,10 +488,29 @@ ScrapWalkBucketGrid(diagPath) {
                 try ownName := it.Name
                 if (ownName = "")
                     continue
-                key := "N:" . ownName
-                if (allRows.Has(key))
-                    continue
-                allRows[key] := {name: ownName, createdOn: "", status: "", statusDate: "", rowIdx: allRows.Count}
+                ; 2026-08-04: DO NOT dedup by bare name here. Several stores
+                ; (confirmed: HAR) reuse the exact same bucket name every year
+                ; ("FEBRUARY GOLD W/ STONES" with no year marker) - a
+                ; name-only key silently drops every occurrence after the
+                ; first, which (since the grid is sorted Created On
+                ; descending) means the OLDEST/prior-year bucket is the one
+                ; that gets lost while the newest/current-year one survives.
+                ; This produced real bad data: a prior pull captured a 2026
+                ; HAR bucket and mislabeled it as 2025 history because the
+                ; true 2025 bucket of the same name was scrolled past and
+                ; discarded here. Key on name + a per-name occurrence counter
+                ; instead, so every same-named row survives as its own entry
+                ; (position 0 = newest/current year, position 1 = the next
+                ; older repeat = prior year, etc - matches how Joshua reads
+                ; the on-screen scroll: top = current year, the name
+                ; reappearing further down = prior year).
+                global SCRAP_NAME_OCCURRENCE
+                occ := SCRAP_NAME_OCCURRENCE.Has(ownName) ? SCRAP_NAME_OCCURRENCE[ownName] + 1 : 0
+                SCRAP_NAME_OCCURRENCE[ownName] := occ
+                key := "N:" . ownName . ":" . occ
+                ; +100000 keeps fallback-path rows from colliding with real
+                ; grid row indices when the array is sorted by rowIdx below.
+                allRows[key] := {name: ownName, createdOn: "", status: "", statusDate: "", rowIdx: 100000 + allRows.Count, nameOccurrence: occ}
                 newRowsThisPass++
                 continue
             }
@@ -548,6 +572,47 @@ ScrapWalkBucketGrid(diagPath) {
     out := []
     for _, r in allRows
         out.Push(r)
+
+    ; ---- assign per-name occurrence in TRUE GRID ORDER ----------------------
+    ; The grid is sorted Created On DESCENDING, so when a store reuses a bucket
+    ; name across years (Harrisonburg names buckets with no year in them), the
+    ; FIRST row carrying a given name is the newest/current-year bucket, the
+    ; second is last year's, and so on -- exactly the top-of-scroll vs
+    ; further-down-the-scroll distinction Joshua described.
+    ;
+    ; ROOT CAUSE FIXED HERE (2026-08-04): only the name-FALLBACK capture path
+    ; ever set nameOccurrence. Rows captured through the normal
+    ; "Row N of TOTAL" path -- which is nearly all of them -- had no
+    ; nameOccurrence at all, so step 4 defaulted occ to 0 and
+    ; ScrapRelocateAndOpenBucket re-opened the NEWEST same-named bucket. The
+    ; row's own metadata (name/CreatedOn/StatusDate) was correct for the prior
+    ; year, but the WEIGHT read back belonged to the current year -- producing
+    ; prior-year rows carrying current-year weights, identical to 13+ figures.
+    ; That is the mechanism behind the fabricated HAR 2025 weights.
+    ;
+    ; Sort by rowIdx ascending first so occurrence follows real grid order and
+    ; not the order rows happened to surface across scroll passes.
+    n := out.Length
+    if (n > 1) {
+        Loop n - 1 {
+            i := A_Index + 1
+            cur := out[i]
+            j := i - 1
+            while (j >= 1 && out[j].rowIdx > cur.rowIdx) {
+                out[j + 1] := out[j]
+                j--
+            }
+            out[j + 1] := cur
+        }
+    }
+    occSeen := Map()
+    for _, r in out {
+        o := occSeen.Has(r.name) ? occSeen[r.name] + 1 : 0
+        occSeen[r.name] := o
+        r.nameOccurrence := o
+        if (o > 0)
+            LogMessage("    [scrap-grid] repeat name '" . r.name . "' -> occurrence " . o . " (createdOn=" . r.createdOn . ")")
+    }
     return out
 }
 
@@ -618,11 +683,19 @@ ScrapNameOrDateMatchesMonth(b, year, month) {
 ; this only ever scrolls DOWN (toward older rows) - no "scroll to top" step
 ; is needed or attempted.
 ; ----------------------------------------------------------------------------
-ScrapRelocateAndOpenBucket(targetName) {
+; occurrence: 0 = the first/topmost/newest match encountered while
+; scrolling top-to-bottom (grid is Created-On-descending sorted), 1 = the
+; next match further down (the next-older same-named repeat), etc. Needed
+; because some stores (confirmed: HAR) reuse the exact same bucket name
+; every year with no year marker in it - matching by name alone would
+; always open the newest occurrence regardless of which year's bucket the
+; caller actually needs.
+ScrapRelocateAndOpenBucket(targetName, occurrence := 0) {
     allSeen := Map()
     pagesNoNewRows := 0
     maxPages := 150
     target := Trim(targetName)
+    matchesSeen := 0
 
     Loop maxPages {
         items := 0
@@ -681,7 +754,12 @@ ScrapRelocateAndOpenBucket(targetName) {
                 rowName := it.Name
 
             if (Trim(rowName) = target) {
-                LogMessage("      [relocate] found '" . target . "' on pass " . A_Index . " - opening")
+                if (matchesSeen < occurrence) {
+                    matchesSeen++
+                    LogMessage("      [relocate] found '" . target . "' occurrence " . matchesSeen . " of " . (occurrence+1) . " needed - skipping, still scrolling for the target occurrence")
+                    continue
+                }
+                LogMessage("      [relocate] found '" . target . "' (occurrence " . occurrence . ") on pass " . A_Index . " - opening")
                 try {
                     ; Bravo's "queued navigation" quirk: a click fired right after a
                     ; scroll can register against stale internal state and open a
@@ -836,7 +914,7 @@ ScrapVerifyOpenBucketName(expectedName) {
     }
 }
 
-ScrapOpenBucketAndReadWeight(bucketName) {
+ScrapOpenBucketAndReadWeight(bucketName, occurrence := 0) {
     weight := ""
 
     Loop 3 {
@@ -847,8 +925,8 @@ ScrapOpenBucketAndReadWeight(bucketName) {
             continue
         }
 
-        if !ScrapRelocateAndOpenBucket(bucketName) {
-            LogMessage("      [bucket-open] could not locate row '" . bucketName . "' via grid walk")
+        if !ScrapRelocateAndOpenBucket(bucketName, occurrence) {
+            LogMessage("      [bucket-open] could not locate row '" . bucketName . "' (occurrence " . occurrence . ") via grid walk")
             return ""
         }
 

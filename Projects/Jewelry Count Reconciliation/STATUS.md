@@ -326,3 +326,42 @@ Bucketed jewelry-only sold (JEWELRY_CATEGORIES gate applied):
 ROA and WAY, the two stores that did reconcile, both matched exactly (diff 0) - no shrinkage concern on the data actually available.
 
 Follow-up for next session: check whether HAR/LEX are chronically late posters and whether Sandi's CUL sheet needs a reminder to post same-day (this is the second time CUL's photo has trailed the business date - see 8/1 backfill note above about Sandi being replaced by Bree/Bree Grayson as poster; Sandi may be posting stale/leftover photos).
+
+## RUN 2026-08-04 (Tue) - COMPLETE, ALL CLEAN, POSTED
+- Store-hours gate: Tuesday = all 5 stores open. Full 5-store protocol run.
+- Bravo trigger: jewelry-count-recon-2026-08-04-auto. Overall status SUCCESS, 5/5 cells success,
+  no retry needed. Row counts (ALL sold items, not jewelry): CUL 23, HAR 16, LEX 11, ROA 17, WAY 20.
+  No empty grids. Durations ~108-116s per cell; full cycle 19:50-19:58 ET.
+- Count sheets: all 5 posted to #end-of-day before the run, all dated 8/4/26 (no date mismatch).
+- POSTER MAP DRIFT (identify store by the sheet header, NOT the poster - this run proves why):
+  Preston Peters -> WAYNESBORO   (map says Martin=WAY)
+  Martin D.      -> LEXINGTON    (map says Martin=WAY, Uriah=LEX)
+  Benjie Moore   -> ROANOKE      (matches map)
+  Walker Tapley  -> HARRISONBURG (matches map)
+  Sandi Cole     -> CULPEPER     (matches historic map)
+  Uriah did not post today. All stores identified off the END OF DAY: <STORE> header.
+- Sum-verify: every AM and PM column re-added against its written total.
+  CUL AM 620/121/147/125/253=1266 OK; PM 618/121/147/125/253=1264 OK.
+  HAR AM 452/49/124/50/115=790 OK;  PM 451/49/124/50/116=790 OK.
+  LEX AM 258/32/45/43/48=426 OK;    PM same =426 OK.
+      (AM Bracelets glyph reads 38 or 32; the column sum forces 32 - recorded as 32.)
+  ROA AM 529/167/151/77/146=1070;   PM 528/167/151/77/146=1069.
+      Manager WRITTEN totals read 1010 / 1009 - third digit ambiguous, both understated by the
+      same amount. Net is identical either way (1), so the reconciliation is unaffected.
+      Recorded the computed column sums.
+  WAY AM 326/40/64/48/58=536 OK;    PM same =536 OK.
+- Results (bucketed per jewelry_reconciliation_comparison.py; flag when |diff| > 5):
+  STORE | soldJ | AM   | PM   | net | diff | status
+  CUL   |   1   | 1266 | 1264 |  2  |  +1  | ok
+  HAR   |   1   |  790 |  790 |  0  |  -1  | ok
+  LEX   |   0   |  426 |  426 |  0  |   0  | ok
+  ROA   |   0   | 1070 | 1069 |  1  |  +1  | ok
+  WAY   |   0   |  536 |  536 |  0  |   0  | ok
+- Bucket-level deltas: CUL +1 Rings, ROA +1 Rings, HAR -1 Pendants. All inside BUCKET_TOLERANCE (3).
+  HAR -1 Pendants matches the manager own +1 Pendants adjustment written on the sheet - self-consistent.
+- Excluded (real jewelry, deliberately not on the counted sheet): WAY 1x Gent Wristwatch
+  (CITIZEN ECO-DRIVE WATCH). Correctly ignored by the bucketer - lives in the watch case, not the
+  counted case. This is exactly the v2 phantom-flag case the bucketing exists to prevent.
+- FLAGS: none. No date mismatch, no missing sheet, no empty grid, no pipeline failure.
+- Posted the clean per-store summary to #jewlery-counts (C0BM9NHGTT4) at 20:00 ET in the
+  plain-language format required by FIELD COMMUNICATION STANDARD v3. No DM to Joshua (no failure).
