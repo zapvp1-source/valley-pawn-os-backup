@@ -365,3 +365,46 @@ Follow-up for next session: check whether HAR/LEX are chronically late posters a
 - FLAGS: none. No date mismatch, no missing sheet, no empty grid, no pipeline failure.
 - Posted the clean per-store summary to #jewlery-counts (C0BM9NHGTT4) at 20:00 ET in the
   plain-language format required by FIELD COMMUNICATION STANDARD v3. No DM to Joshua (no failure).
+
+## 2026-08-05 (Wednesday) - run COMPLETE, posted to #jewlery-counts
+
+FIRST LIVE WEDNESDAY TEST of the store-hours gate (added 2026-08-03). Gate worked as
+designed: weekday resolved to Wednesday in America/New_York -> stores array = CUL only.
+HAR/LEX/ROA/WAY were NOT pulled and NOT read. No false alarm. This closes the
+AWAITING-first-live-Wednesday (2026-08-05) item in the BRAVO_KNOWN_ISSUES.md OPEN section.
+(Sunday 2026-08-09 skip still awaiting its own first live verification.)
+
+Bravo pull: trigger jewelry-count-recon-2026-08-05-auto.json written 19:48 ET, claimed and
+completed on the FIRST attempt, no retry needed.
+  - result: status=success, 1 cell, 0 errors
+  - CUL jewelry-count-audit 2026-08-05 -> 33 rows, 130,985 ms
+  - CSV: output/2026-08-05_to_2026-08-05_CUL_jewelry-count-audit.csv
+  - grid walker logged captured-all-33-rows (truncation guard clean)
+
+Count sheet: Sandi Cole posted to #end-of-day at 18:13:29 ET (3 files, IMG_5808/5809/5810).
+Store identified from the EOD summary header END OF DAY: CULPEPER - matches the historic
+Sandi-Cole=CUL poster map. Sheet date read as 8/5/26 = business date, no date mismatch.
+Jewelry block read from IMG_5810.
+
+  AM COUNT: Rings 619, Bracelets 121, Necklaces 147, Earrings 125, Pendants 253
+            written total 1265 - SUM-VERIFIED (619+121+147+125+253 = 1265) OK
+  PM COUNT: Rings 626, Bracelets 122, Necklaces 149, Earrings 125, Pendants 253
+            written total 1275 - SUM-VERIFIED (626+122+149+125+253 = 1275) OK
+            (PM Bracelets figure is written over a correction; the column total
+             independently confirms 122, not 128.)
+
+Compute: none of the 33 sold rows fall in JEWELRY_CATEGORIES - the CUL sold list was
+entirely tools, firearms/ammo, coins, records, a guitar and a PSP. sold = 0 every bucket.
+
+  net  = AM_total - PM_total = 1265 - 1275 = -10
+  sold = 0
+  diff = net - sold = -10   ->  abs(diff) = 10 > 5  ->  FLAGGED
+
+Per-category movement (AM -> PM): Rings +7, Bracelets +1, Necklaces +2, Earrings 0,
+Pendants 0. Case count went UP 10 pieces on a day with zero jewelry sales, which is the
+signature of new intake being placed into the cases during the day rather than a shrink
+event. Reported to the channel as worth-a-quick-confirm-with-the-manager per the Field
+Communication Standard (plain language, no system names, no dollar figures, no breakdown).
+
+Posted to #jewlery-counts (C0BM9NHGTT4) at 19:52 ET, ts 1785973956.447489, including the
+required Wednesday footer line. No failure path taken; no DM sent to Joshua.

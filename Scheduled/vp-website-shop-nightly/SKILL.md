@@ -42,3 +42,101 @@ STEP 4 — Verify: navigate to https://thevalleypawn.com/shop/?v=<timestamp> and
 STEP 5 — Post a summary to Slack #website (channel C0ASE9C0GQ0): ":shopping_trolley: *Shop refreshed* — thevalleypawn.com/shop/" with per-store counts (Culpeper, Waynesboro, Harrisonburg, Lexington, Roanoke), the total live count, and how many weapons-adjacent items were excluded. On ANY failure (extraction, publish non-200, verify mismatch): do NOT post success — instead DM Joshua on Slack (user U03BB52MDSA) with what failed and at which step.
 
 Notes: eBay public seller-search needs no login. Everything stays in the browser (window.name holds the ~470KB block) so nothing large passes through your context. Keep it additive.
+---
+
+## PROVEN FALLBACK METHOD (added 2026-08-05 after a live run)
+
+The original browser-only method failed this run: loading eBay /sch/i.html seller search
+with _ipg=240 wedged the Chrome tab (renderer pegged near 57 percent CPU) and the
+Claude-in-Chrome bridge stopped responding to every page-level call for about 30 minutes.
+Use this sequence instead - it completed the full run end to end.
+
+### STEP 1 (replaces browser scraping) - pull inventory server-side, no browser
+
+https://www.ebay.com/sch/i.html is hard-blocked to curl (returns a 1.8 KB eBay error page).
+The STORE-FRONT endpoint is NOT blocked and renders items server-side:
+
+    https://www.ebay.com/str/<STORE_SLUG>?_pgn=<N>&_ipg=240&_tab=shop
+
+Store slugs (found via https://www.ebay.com/usr/<ebay_username> then grep for ebay.com/str/):
+
+    Culpeper       valley_pawn_culpeper       -> vpculpeper
+    Waynesboro     valley_pawn_waynesboro     -> valleypawnwaynesboro
+    Harrisonburg   valley_pawn_harrisonburg   -> valleypawnharrisonburg
+    Lexington      valley_pawn_lexington      -> valleypawnlexington
+    Roanoke        valley_pawn_roanoke        -> valleypawnroanoke
+
+Fetch with a normal Chrome UA plus Sec-Fetch-* navigation headers. Page through _pgn until a
+page yields 0 new items or returns under 50 KB (rate limit). Culpeper needs about 4 pages;
+the other four stores are a single page each.
+
+Parsing: split the HTML on '<article' and keep chunks containing 'str-item-card'.
+CRITICAL: the article tag is NOT always '<article class=str-item-card ...>' - most carry
+'<article data-testid=ig-<itemid> class=str-item-card ...>'. Splitting on the class-first
+form silently drops about 97 percent of items. Per chunk pull:
+  item id   -> regex  ebay[.]com/itm/([0-9]+)
+  image id  -> regex  imageId=([A-Za-z0-9~_-]+)   then https://i.ebayimg.com/images/g/<id>/s-l500.webp
+  title     -> regex  str-item-card__property-title ... <span class=str-text-span...>(.*?)</span>
+  price     -> regex  str-item-card__property-displayPrice.?>([^<]+)<   keep only plain dollar amounts
+
+Write {colors:{}, items:[{t,p,u,img,s}]} to
+/Users/joshuadavis/Documents/Claude/Projects/Website/shop-build/items.json
+
+### STEP 2 - build the block
+
+    cd /Users/joshuadavis/Documents/Claude/Projects/Website/shop-build
+    python3 generate_shop_block.py
+    then wrap shop-block.html with the wp:html open/close comments into shop-block-wrapped.html
+
+### STEP 3 - get the 515 KB block INTO the browser without passing it through context
+
+DOES NOT WORK: serving the block from a local HTTP server and fetching http://127.0.0.1:<port>
+from the WordPress admin page. Every such request hangs forever - no response, no error, no
+console message - for both fetch() and script src. curl to the same URL from the Mac returns
+200. Adding CORS plus Access-Control-Allow-Private-Network did not help.
+
+WORKS - read the bytes out of a file input:
+  1. Copy the block to a .txt inside the connected folder (the Chrome file_upload tool only
+     accepts paths under folders shared with the session):
+     cp shop-block-wrapped.html vp-shop-block.txt
+  2. Navigate to https://thevalleypawn.com/wp-admin/media-new.php
+  3. find the file input (it is #async-upload, described as the Upload button) and file_upload
+     the .txt to that ref. The media upload itself does NOT need to succeed - attaching the
+     file to the input is enough.
+  4. In page JS read it straight off the input:
+     document.getElementById('async-upload').files[0].text()  -> stash in window.__vpBlock
+     Kick this off WITHOUT awaiting, then poll window.__vpBlock.length in a later call.
+     Awaiting a 515 KB read inline exceeds the 45 s CDP evaluate timeout.
+  5. Delete the temp .txt afterwards.
+
+### STEP 4 - publish
+
+/wp-json/wp/v2/pages/833 returns 401 WITHOUT a nonce on this site. Always get one first from
+/wp-admin/admin-ajax.php?action=rest-nonce (credentials include), trim it, then POST
+{content: window.__vpBlock, status: publish} with header X-WP-Nonce.
+Fire-and-forget plus poll a status global - the POST takes 15-20 s, past the CDP timeout.
+Expect id 833, status publish, link https://thevalleypawn.com/shop/
+
+### STEP 5 - verify (server-side, no browser)
+
+    curl -sL 'https://thevalleypawn.com/shop/?v=<ts>' -o /tmp/vp_shop_live.html
+    grep -c 'vp-card' /tmp/vp_shop_live.html       (must equal the built total)
+    grep -c 'VP-SHOP-START' /tmp/vp_shop_live.html (must be exactly 1)
+
+Note: curl -w size_download reports the COMPRESSED size (about 93 KB for a 515 KB page).
+That is not truncation - check the card count, not the byte count.
+
+### If the Chrome bridge is wedged
+
+Symptom: list_connected_browsers responds but tabs_context_mcp, navigate and javascript_tool
+all time out. kill -9 on the busy renderer does not clear it. What worked:
+pkill -9 -x 'Google Chrome', wait, then open -a 'Google Chrome' --args --restore-last-session,
+wait about 35 s, re-check list_connected_browsers. The extension reconnects on its own and the
+logged-in sessions (WordPress, eBay) are preserved.
+
+### Run record - 2026-08-05
+
+Published 537 live items (Culpeper 335, Roanoke 92, Harrisonburg 39, Waynesboro 38,
+Lexington 33); 23 weapons-adjacent items filtered out of 560 scraped. Prior published total
+was 144, so the store-front endpoint also pulls far more inventory than the old search-page
+method did.

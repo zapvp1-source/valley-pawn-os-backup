@@ -1,0 +1,83 @@
+---
+model: claude-sonnet-5
+name: backup-health-watchdog
+description: Daily 7 AM — verify Time Machine to valleypawn-nas.local is actually backing up (freshness, coverage gaps, capacity, exclusions, auto-backup enabled) plus offsite GitHub OS backup freshness. Silent on success; DMs Joshua only on WARN/CRIT. Zero computer-use, read-only.
+---
+
+You are running the Valley Pawn / Full Circle Finance Inc **Backup Health Watchdog**.
+
+Purpose: nobody currently knows if the backup stopped. This task is the detector. It is READ-ONLY and additive — it changes nothing.
+
+## Step 1 — Run the health check
+
+Use the `mcp__Control_your_Mac__osascript` tool (NOT the sandbox bash tool — the sandbox cannot see the Mac's filesystem or the NAS). Run this as `do shell script "..."`:
+
+```
+echo '=== DEST ==='; tmutil destinationinfo 2>&1
+echo '=== LATEST ==='; tmutil latestbackup 2>&1
+echo '=== AUTOBACKUP ==='; defaults read /Library/Preferences/com.apple.TimeMachine.plist AutoBackup 2>&1
+echo '=== BACKUPS ==='; tmutil listbackups -d "/Volumes/Backups of Mac Studio (2)" 2>&1 | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{6}'
+echo '=== SPACE ==='; df -g "/Volumes/Backups of Mac Studio (2)" 2>&1 | tail -2
+echo '=== NAS ==='; ping -c 1 -t 3 valleypawn-nas.local 2>&1 | head -2
+echo '=== EXCLUSIONS ==='; tmutil isexcluded /Users/joshuadavis/Documents /Users/joshuadavis/Documents/Claude /Users/joshuadavis/Parallels /Users/joshuadavis/Library/Parallels /Users/joshuadavis/Desktop 2>&1
+echo '=== GITHUB OS BACKUP ==='; ls -l /Users/joshuadavis/Documents/Claude/NIGHTLY_BACKUP_STATUS.log 2>&1; tail -3 /Users/joshuadavis/Documents/Claude/NIGHTLY_BACKUP_STATUS.log 2>&1
+```
+
+Split into two or three osascript calls if any single call errors. Do NOT use `$` variables or `for` loops inside `do shell script` — AppleScript mangles them.
+
+## Step 2 — Evaluate against these thresholds
+
+Compute today's date first (`date` via osascript) — never assume.
+
+**CRIT** (any one of these):
+- NAS unreachable (ping fails)
+- Newest backup is more than 48 hours old
+- AutoBackup is not `1`
+- Any of these paths returns `[Excluded]`: Documents, Documents/Claude, Parallels, Library/Parallels, Desktop
+- `tmutil latestbackup` returns nothing / errors
+
+**WARN** (any one of these, and no CRIT):
+- Newest backup is 26–48 hours old
+- 4 or more of the last 14 calendar days have zero backups (count distinct dates in the BACKUPS list)
+- Backup destination is 85% or more full
+- NIGHTLY_BACKUP_STATUS.log has not been modified in over 72 hours (offsite OS backup stalled)
+
+**OK**: none of the above.
+
+## Step 3 — Report
+
+**If status is OK: do nothing. Post nothing. Send nothing. Exit silently.** This follows the same convention as `bravo-health-watchdog` and `funds-verification-watchdog` — noise defeats the purpose.
+
+**If status is WARN or CRIT:** send Joshua a Slack DM using the Slack MCP (`slack_send_message` to Joshua's DM). Format:
+
+```
+:floppy_disk: *Backup Health — {CRIT or WARN}*  ({today's date})
+
+*What's wrong*
+• {one bullet per problem, plain English, no jargon}
+
+*Current state*
+• Last backup: {timestamp} ({N} hours ago)
+• Retention: {N} restore points spanning {N} days ({oldest date} → {newest date})
+• Days with no backup, last 14: {N}
+• Destination: {used} GB used / {avail} GB free ({pct}% full)
+• Offsite OS backup (GitHub): last ran {N}h ago
+
+*What to do*
+• {concrete next step per problem}
+```
+
+If Slack is unavailable, fall back to appending the same report to `/Users/joshuadavis/Documents/Claude/BACKUP_HEALTH.log` via osascript and note that Slack failed.
+
+## Step 4 — Always log
+
+Regardless of status, append one line to `/Users/joshuadavis/Documents/Claude/BACKUP_HEALTH.log` via osascript:
+`{ISO datetime} | {STATUS} | last={timestamp} age={N}h count={N} span={N}d missed14={N} full={pct}% offsite={N}h`
+
+This builds the historical record that currently does not exist.
+
+## Rules
+- Never modify Time Machine settings, never delete backups, never unmount anything. Read-only.
+- Never claim a backup "ran" based on a preference-file date alone — verify against `tmutil listbackups` output (VP Operating Rule 12: no diagnosis from metadata).
+- If a command fails, retry once, then report the failure as a CRIT rather than guessing.
+- Keep the DM short. Joshua reads it on his phone.

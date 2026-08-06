@@ -1,0 +1,73 @@
+---
+name: vp-gusto-signature-chase
+description: Weekly Monday 8:40 AM — check Gusto for unsigned policy documents, post an employee reminder to Slack #policy-announcements, and DM Joshua any policy that was created but never actually sent.
+---
+
+Valley Pawn (Full Circle Finance Inc) — weekly Gusto policy e-signature chase.
+
+Read the `valley-pawn-context` and `vp-operating-rules` skills first for brand voice and the hard rules. Keep all Slack language plain per the Field Communication Standard: no tool names, no file paths, no technical jargon, no API talk. Employees should read it in one pass.
+
+## Step 1 — Pull the data from Gusto (no clicking, no screenshots)
+
+Gusto's MCP connector does NOT expose documents. Use Chrome instead:
+
+1. Open a tab to `https://app.gusto.com/payroll_admin/documents/shared/active`.
+2. **If the URL lands on `login.gusto.com`, you are logged out.** Do NOT try to log in, and do NOT attempt a passkey or biometric prompt. Send ONE plain-language Slack DM to Joshua (`D03BHQH5VGT`) saying you couldn't get into Gusto this morning and will try again next run, then STOP. Never post a partial or empty list to a team channel.
+3. Everything below is a same-origin `fetch` with `credentials:'include'` run from that logged-in tab via the `javascript_tool`. These are read-only endpoints. Company UUID is `15bc2823-564f-4c1a-8464-9b0e7d79d3e8`.
+
+```js
+const C='15bc2823-564f-4c1a-8464-9b0e7d79d3e8';
+const emps=await (await fetch(`/api/companies/${C}/employees`,{headers:{Accept:'application/json'},credentials:'include'})).json();
+const byUuid={}; emps.forEach(e=>byUuid[e.uuid]={n:(e.preferred_first_name||e.first_name)+' '+e.last_name, term:e.terminated_at, dept:e.department_id});
+const tmpls=await (await fetch(`/api/companies/${C}/document_templates`,{headers:{Accept:'application/json'},credentials:'include'})).json();
+// tmpls[i] = {id, document_name, processing_state, created_at, for_new_hires, statistics:{signed_request_count, unsigned_request_count}}
+// then per template:
+// const rq=await (await fetch(`/api/document_templates/${id}/requests`,...)).json();
+// rq[i] = {status:'completed'|'requested', target_id:<employee uuid>, signed_at}
+```
+
+Build two lists:
+
+**LIST A — open signatures.** For every template with `processing_state === 'approved'` and `statistics.unsigned_request_count > 0`, pull its `/requests` and collect everyone whose `status !== 'completed'`. Resolve `target_id` to a name via `byUuid`. **Drop anyone with a non-null `terminated_at`.**
+
+**LIST B — created but never sent.** Every template whose `processing_state` is NOT `approved` (i.e. `prepared` or `mapping_complete`). These have zero recipients — the policy exists in Gusto but nobody was ever asked to sign it. This is the silent failure this task exists to catch.
+
+## Step 2 — Post the employee reminder to Slack `#policy-announcements` (C03BHQ9RLR0)
+
+Only if LIST A is non-empty. **Exclude Joshua Davis from this public post** — he gets his own by DM in Step 3.
+
+Format it as a friendly nudge, not a scolding. Roughly:
+
+> *Policy signatures still open in Gusto*
+>
+> Quick reminder — a few policies are still waiting on signatures. Log into Gusto, open Documents, and sign anything showing as needing your signature. Takes about a minute.
+>
+> *{Policy name}* (sent {Month D}) — waiting on: {First Last, First Last}
+> *{Policy name}* (sent {Month D}) — waiting on: {First Last}
+>
+> Questions on any of these → your Store Manager or Preston.
+
+Sort policies oldest-sent first. Use real first + last names. If someone appears on 3 or more, that's fine — don't call it out separately, the list speaks for itself.
+
+If LIST A is empty, post nothing to the channel and instead DM Joshua that everyone is current.
+
+## Step 3 — DM Joshua (`D03BHQH5VGT`)
+
+Always send this, plain language, short:
+
+1. **Anything in LIST B** — lead with it, this is the important part. Name each policy, when it was created, and say plainly that it is sitting in Gusto unsent and nobody has received it. Offer to finish sending it.
+2. **Joshua's own unsigned list** — the policies waiting on his signature, by name.
+3. **One-line summary** — how many people and how many policies are outstanding overall, and whether that improved or worsened versus what you'd expect.
+
+Do not send LIST B to any team channel, any store manager, or Preston — it's an internal process gap, not an employee reminder.
+
+## Step 4 — Verify before claiming done
+
+Re-read what you posted. Confirm the Slack message actually landed in the channel and the DM actually sent. A tool call that returned OK is not proof — check the channel. Never report success you haven't seen.
+
+## Guardrails
+
+- Never enter a password, complete a passkey, or bypass a login prompt.
+- Never name a terminated employee.
+- Never modify anything in Gusto in this task — it is read-only. Sending documents is a separate, deliberate action.
+- If any single template's `/requests` call fails, skip that template, note it in the DM, and carry on — do not abort the whole run.

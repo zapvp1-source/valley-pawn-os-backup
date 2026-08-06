@@ -44,11 +44,121 @@ def db_connect():
         name, folder, body,
         path UNINDEXED, ext UNINDEXED, mtime UNINDEXED, size UNINDEXED, needs_ocr UNINDEXED,
         tokenize="porter unicode61")""")
+    c.execute("""CREATE VIRTUAL TABLE IF NOT EXISTS msgs USING fts5(
+        body, person, chatname,
+        handle UNINDEXED, service UNINDEXED, ts UNINDEXED, from_me UNINDEXED, rowid_src UNINDEXED,
+        tokenize="porter unicode61")""")
     c.execute("CREATE TABLE IF NOT EXISTS meta(k TEXT PRIMARY KEY, v TEXT)")
     return c
 
 
 # ---------------- MAIL ----------------
+# Attachment indexing (added 2026-08-05).
+# Before this, parse_emlx did `if p.get_filename(): continue` — every attachment
+# was skipped, so ~10,600 PDF invoices/statements living in the mail store were
+# invisible to search. Attachment text is appended to `body` behind an
+# [ATTACHMENT: name] marker rather than added as a new column, so the FTS5 schema
+# and every existing query keep working unchanged.
+ATTACH_MAX = 40000          # per-message cap on extracted attachment text
+ATTACH_MAX_BYTES = 40 * 1024 * 1024
+ATTACH_EXT = {"pdf", "docx", "xlsx", "pptx", "txt", "csv", "tsv",
+              "rtf", "htm", "html", "eml", "json", "xml", "md"}
+
+
+def _ext_of(fn):
+    return fn.rsplit(".", 1)[-1].lower() if "." in fn else ""
+
+
+def _text_from_bytes(data, ext):
+    """docx/xlsx/pptx and plain-text formats, from an in-memory buffer."""
+    if ext in ("docx", "xlsx", "pptx"):
+        import io
+        chunks = []
+        with zipfile.ZipFile(io.BytesIO(data)) as z:
+            for nm in z.namelist():
+                if nm.endswith(".xml") and any(
+                        k in nm for k in ("document", "sharedStrings", "sheet",
+                                          "slide", "comments", "notes")):
+                    try:
+                        chunks.append(z.read(nm).decode("utf-8", "ignore"))
+                    except Exception:
+                        pass
+        return detag(" ".join(chunks))
+    t = data.decode("utf-8", "ignore")
+    if ext in ("htm", "html", "xml", "rtf"):
+        t = detag(t)
+    return WS.sub(" ", t)
+
+
+def attach_text(part, fn):
+    """Text from a MIME attachment carried inline in the .emlx. '' on any failure."""
+    ext = _ext_of(fn)
+    if ext not in ATTACH_EXT:
+        return ""
+    try:
+        data = part.get_payload(decode=True)
+    except Exception:
+        return ""
+    if not data or len(data) > ATTACH_MAX_BYTES:
+        return ""
+    try:
+        if ext == "pdf":
+            import tempfile
+            tp = None
+            try:
+                with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tf:
+                    tf.write(data)
+                    tp = tf.name
+                return pdf_text_file(tp)
+            finally:
+                if tp:
+                    try:
+                        os.unlink(tp)
+                    except Exception:
+                        pass
+        return _text_from_bytes(data, ext)
+    except Exception:
+        return ""
+
+
+def disk_attach_text(path):
+    """Text from an attachment already saved to disk by Mail."""
+    ext = _ext_of(os.path.basename(path))
+    if ext not in ATTACH_EXT:
+        return ""
+    try:
+        if os.path.getsize(path) > ATTACH_MAX_BYTES:
+            return ""
+        if ext == "pdf":
+            return pdf_text_file(path)
+        with open(path, "rb") as f:
+            return _text_from_bytes(f.read(ATTACH_MAX_BYTES), ext)
+    except Exception:
+        return ""
+
+
+def disk_attachments(path):
+    """Apple Mail saves downloaded attachments to a sibling tree:
+         .../Data/a/b/c/d/Messages/<n>.emlx
+         .../Data/a/b/c/d/Attachments/<n>/<part>/<filename>
+    Returns [(filename, fullpath), ...] for message <n>."""
+    out = []
+    try:
+        msgdir = os.path.dirname(path)                       # .../Messages
+        msgnum = os.path.basename(path).split(".")[0]
+        adir = os.path.join(os.path.dirname(msgdir), "Attachments", msgnum)
+        if not os.path.isdir(adir):
+            return out
+        for r, _, fs in os.walk(adir):
+            for f in fs:
+                if f.startswith("."):
+                    continue
+                out.append((f, os.path.join(r, f)))
+    except Exception:
+        pass
+    return out
+
+
 def parse_emlx(path):
     try:
         with open(path, "rb") as f:
@@ -60,10 +170,23 @@ def parse_emlx(path):
             raw = f.read(n)
         m = email.message_from_bytes(raw, policy=policy.default)
         body = ""
+        atts = []          # [ATTACHMENT: name] + extracted text
+        att_budget = ATTACH_MAX
         if m.is_multipart():
             plains, htmls = [], []
             for p in m.walk():
-                if p.get_filename():
+                fn = p.get_filename()
+                if fn:
+                    fn = str(fn)
+                    # always record the filename so name searches work even when
+                    # the body can't be extracted (images, encrypted PDFs, stubs)
+                    atts.append("\n\n[ATTACHMENT: %s]\n" % fn[:300])
+                    if att_budget > 0:
+                        t = attach_text(p, fn)
+                        if t:
+                            t = t[:att_budget]
+                            att_budget -= len(t)
+                            atts.append(t)
                     continue
                 ct = p.get_content_type()
                 if ct == "text/plain":
@@ -87,6 +210,20 @@ def parse_emlx(path):
         if not isinstance(body, str):
             body = str(body)
         body = body[:MAXTEXT]
+        # attachments Mail already downloaded to the sibling Attachments/ tree
+        seen = set(re.findall(r"\[ATTACHMENT: ([^\]]+)\]", "".join(atts)))
+        for fn, fp in disk_attachments(path):
+            if fn in seen:
+                atts = [a for a in atts if a != "\n\n[ATTACHMENT: %s]\n" % fn[:300]]
+            atts.append("\n\n[ATTACHMENT: %s]\n" % fn[:300])
+            if att_budget > 0:
+                t = disk_attach_text(fp)
+                if t:
+                    t = t[:att_budget]
+                    att_budget -= len(t)
+                    atts.append(t)
+        if atts:
+            body = body + "".join(atts)
         subj = str(m.get("Subject", ""))[:1000]
         snd = str(m.get("From", ""))[:500]
         rcpt = " ".join(str(m.get(h, "")) for h in ("To", "Cc"))[:2000]
@@ -113,7 +250,7 @@ def index_mail():
     paths = []
     for root, dirs, fs in os.walk(MAIL):
         for f in fs:
-            if f.endswith(".emlx") and not f.endswith(".partial.emlx"):
+            if f.endswith(".emlx"):
                 paths.append(os.path.join(root, f))
     print("found %d messages" % len(paths), flush=True)
     c = db_connect()
@@ -172,6 +309,28 @@ def pdf_text(raw):
     return WS.sub(" ", " ".join(out)).strip()
 
 
+
+PDFTOTEXT = "/opt/homebrew/bin/pdftotext"
+
+def pdf_text_file(path):
+    """Real extraction via poppler; fall back to the naive stream parser."""
+    if os.path.exists(PDFTOTEXT):
+        try:
+            import subprocess
+            r = subprocess.run([PDFTOTEXT, "-q", "-enc", "UTF-8", "-l", "40", path, "-"],
+                               capture_output=True, timeout=90)
+            t = r.stdout.decode("utf-8", "ignore")
+            if len(t.strip()) >= 20:
+                return WS.sub(" ", t)[:MAXTEXT]
+        except Exception:
+            pass
+    try:
+        with open(path, "rb") as f:
+            return pdf_text(f.read())
+    except Exception:
+        return ""
+
+
 def extract_file(path):
     base = os.path.basename(path)
     ext = base.rsplit(".", 1)[-1].lower() if "." in base else ""
@@ -201,16 +360,19 @@ def extract_file(path):
                             break
             body = detag(" ".join(chunks))
         elif ext == "pdf":
-            with open(path, "rb") as f:
-                raw = f.read()
-            body = pdf_text(raw)
+            body = pdf_text_file(path)
             if len(body.strip()) < 40:
                 needs_ocr = 1
         elif ext in ("jpg", "jpeg", "png", "heic", "tiff", "tif", "gif"):
             needs_ocr = 1
         body = body[:MAXTEXT]
         folder = os.path.dirname(path)
-        folder = folder[len(ICLOUD) + 1:] if folder.startswith(ICLOUD) else folder
+        if folder.startswith(ICLOUD):
+            folder = folder[len(ICLOUD) + 1:]
+        elif folder.startswith(MAIL):
+            rel = folder[len(MAIL) + 1:]
+            mbox = "/".join(p[:-5] for p in rel.split("/") if p.endswith(".mbox"))
+            folder = "MAIL ATTACHMENT " + (mbox or "")
         return (base, folder.replace("/", " "), body, path, ext,
                 int(st.st_mtime), st.st_size, needs_ocr)
     except Exception:
@@ -226,7 +388,16 @@ def index_files():
             if f.startswith("."):
                 continue
             paths.append(os.path.join(root, f))
-    print("found %d files" % len(paths), flush=True)
+    n_icloud = len(paths)
+    for root, dirs, fs in os.walk(MAIL):
+        if "/Attachments/" not in root + "/":
+            continue
+        for f in fs:
+            if f.startswith("."):
+                continue
+            paths.append(os.path.join(root, f))
+    print("found %d files (%d iCloud + %d mail attachments)"
+          % (len(paths), n_icloud, len(paths) - n_icloud), flush=True)
     c = db_connect()
     c.execute("DELETE FROM files")
     c.commit()
@@ -261,6 +432,8 @@ def q(args):
     p.add_argument("terms", nargs="+")
     p.add_argument("--mail", action="store_true")
     p.add_argument("--files", action="store_true")
+    p.add_argument("--msgs", action="store_true")
+    p.add_argument("--texts", action="store_true", dest="msgs")
     p.add_argument("--since")
     p.add_argument("--until")
     p.add_argument("--from", dest="frm")
@@ -271,8 +444,10 @@ def q(args):
     term = " ".join(a.terms)
     c = db_connect()
     res = []
-    want_mail = a.mail or not a.files
-    want_files = a.files or not a.mail
+    any_flag = a.mail or a.files or a.msgs
+    want_mail = a.mail or not any_flag
+    want_files = a.files or not any_flag
+    want_msgs = a.msgs or not any_flag
 
     def epoch(s):
         return int(time.mktime(time.strptime(s, "%Y-%m-%d"))) if s else None
@@ -307,6 +482,23 @@ def q(args):
             res += list(c.execute(sql, prm))
         except sqlite3.OperationalError as e:
             print("files:", e)
+    if want_msgs:
+        sql = ("SELECT 'text',person,chatname,handle,ts,service,"
+               "snippet(msgs,0,'>>','<<',' ... ',18),bm25(msgs) FROM msgs WHERE msgs MATCH ?")
+        prm = [term]
+        if a.since:
+            sql += " AND ts>=?"; prm.append(epoch(a.since))
+        if a.until:
+            sql += " AND ts<=?"; prm.append(epoch(a.until))
+        if a.frm:
+            sql += " AND person LIKE ?"; prm.append("%" + a.frm + "%")
+        sql += " ORDER BY bm25(msgs) LIMIT ?"
+        prm.append(a.n)
+        try:
+            res += list(c.execute(sql, prm))
+        except sqlite3.OperationalError as e:
+            print("msgs:", e)
+
     res.sort(key=lambda r: r[7])
     if a.json:
         print(json.dumps([dict(kind=r[0], title=r[1], who=str(r[2]), path=r[3],
@@ -330,6 +522,7 @@ def stats():
         print("%-20s %s" % (k, v))
     print("mail rows :", c.execute("SELECT count(*) FROM mail").fetchone()[0])
     print("file rows :", c.execute("SELECT count(*) FROM files").fetchone()[0])
+    print("msg rows  :", c.execute("SELECT count(*) FROM msgs").fetchone()[0])
     print("need OCR  :", c.execute("SELECT count(*) FROM files WHERE needs_ocr=1").fetchone()[0])
     print("db size   : %.0f MB" % (os.path.getsize(DB) / 1e6))
 
