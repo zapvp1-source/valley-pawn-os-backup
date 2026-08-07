@@ -39,10 +39,12 @@ On the Bravo Company Performance / KPI report (or the End-of-Month xlsx export t
 Revenue target for store S in month M+1:
 
   Target(S, M+1) = EndingAssets(S, M) × AdjustedYield(S, M+1)
-  AdjustedYield = Trail12_AvgYield(S)  [Friday multiplier removed 2026-08-06 - not statistically supported; see Scheduled/bonus-targets-SEASONALITY-FINDINGS-2026-08.md. Effect measured at -1.7% to -9.2% per extra Friday across 2025+2026 data, opposite the assumed +4.5%.]
+  AdjustedYield = YTD_AvgYield(S) × FridayMultiplier
   MonthlyYield(S, month) = Revenue(S, month) / EndingAssets(S, prior month)
-  Trail12_AvgYield = average of the trailing 12 monthly yields ending at the completed month (changed 2026-08-06 from an expanding 2026-only YTD average - see Step 4 for rationale)
-"Revenue(S, month)" here means Net Revenue as defined above — the whole target methodology is self-consistent as long as every Revenue input is Net Revenue, never a gross figure.
+  YTD_AvgYield = average of all monthly yields for each store in 2026 with actuals
+  FridayMultiplier = 1 + 0.045 × (Fridays_in_target_month − YTD_avg_Fridays_per_month)
+
+The Friday multiplier should not fall below 1.0 — if it would, hold it at 1.0 and flag this for Joshua. "Revenue(S, month)" here means Net Revenue as defined above — the whole target methodology is self-consistent as long as every Revenue input is Net Revenue, never a gross figure.
 
 Ending Assets = Loan Balance + Inventory Balance (from Bravo KPI report — NOT a separate assets field).
 
@@ -79,7 +81,7 @@ do shell script "/usr/bin/python3 '/Users/joshuadavis/Documents/Claude/Projects/
 ```
 This is a NEW, additive script (added 2026-08-02) — it does NOT modify `store_kpis_compile.py`. It reuses that script's already-penny-verified Net Revenue formula (Pawn Service Charges + Sales Revenue (Profit)) and reads the same EOM xlsx files, but emits clean JSON with exactly the 3 fields this task needs per store: `net_revenue`, `loan_balance`, `inventory_balance`. On success it prints `{"enddate": "...", "data": {"CUL": {...}, ...}}`. On missing files it prints `{"error": "missing", "missing": [...]}"` and exits 2 — treat that the same as Step 2.5's missing-store case.
 
-**Step 2.7 — Ending Assets** = `loan_balance + inventory_balance` per store, from the Step 2.6 JSON. This is the same figure Step 5 uses as `EndingAssets(S, completed month)`.
+**Step 2.7 — Ending Assets** = `loan_balance + inventory_balance` per store, from the Step 2.6 JSON. This is the same figure Step 6 uses as `EndingAssets(S, completed month)`.
 
 ### 3. Load YTD data from spreadsheet
 Open the tracking spreadsheet using openpyxl. Read the "2025 compared to Bonus" sheet.
@@ -112,17 +114,21 @@ Column mapping (A=1 through J=10, both layouts):
 Read D, G, H for all months with actuals to rebuild the YTD yield series for each store.
 If H is blank but D and G are present, compute yield = D_value / prior_month_G_value.
 
-### 4. Calculate trailing-12-month average yield (changed 2026-08-06 from expanding YTD - see rationale below)
-Build a rolling 12-month yield window ending at the completed month. For the 2026 months, use D/G/H already in the spreadsheet (Step 3). For any months in the window that fall in 2025, pull Ending Assets and Net Revenue via `bonus_kpis_extract.py <ENDDATE>` (full 2025 is already cached in `Bravo Data Extraction/output/` as of 2026-08-06 - reuse those files, do not re-pull Bravo unless a specific month is missing). For each of the 12 months: MonthlyYield = NetRevenue(month) / EndingAssets(prior month). Trail12_AvgYield = average of all 12.
-Why trailing-12 instead of expanding YTD: verified 2026-08-06 (see Scheduled/bonus-targets-SEASONALITY-FINDINGS-2026-08.md) that monthly yield does not show a year-over-year-consistent seasonal pattern, so a full 12-month trailing window is the most defensible approach - it always represents exactly one occurrence of every calendar month (never overweights whatever season happens to dominate an expanding YTD window), and it ages out stale early-year readings as new months complete, unlike an expanding-YTD average which grows more anchored to early-year data as the year progresses. Confirmed impact when adopted: shifted the August 2026 targets by -$1,999 (Culpeper), -$2,102 (Harrisonburg), -$157 (Lexington), -$521 (Roanoke), +$178 (Waynesboro) versus the old expanding-YTD method.
+### 4. Calculate YTD average yields
+Average the monthly yields for each store across all months with actual revenue (col D non-empty) in 2026, including the completed month you just wrote in Step 7.
 
-### 5. Calculate targets
-For each store: Target = EndingAssets(completed month) × Trail12_AvgYield
-(No Friday multiplier - removed 2026-08-06, not statistically supported across 2025+2026 data. No seasonal yield term either - tested and also not confirmed; see the findings doc.)
+### 5. Count Fridays and compute multiplier
+Count exact Fridays in the target month (M+1).
+Count average Fridays per month across the YTD period (Jan through completed month, inclusive).
+Apply: FridayMultiplier = 1 + 0.045 × (TargetFridays − YTD_AvgFridays)
+Round multiplier to 4 decimal places for intermediate calc; present to 2 decimal places.
+
+### 6. Calculate targets
+For each store: Target = EndingAssets(completed month) × YTD_AvgYield × FridayMultiplier
 Round to nearest whole dollar.
 Company total = sum of all five store targets.
 
-Show a summary table with: Store | Ending Assets | Trail-12 Yield | Target
+Show a summary table with: Store | Ending Assets | YTD Yield | Friday Mult | Target
 
 ### 7. Update the spreadsheet
 
@@ -150,6 +156,8 @@ Compose a message for #bonus-goals using EXACTLY this format and structure (this
 
 ```
 📅 [Month] [Year] Bonus Targets
+[Month] is a [N]-Friday month — our [period] average is [X] Fridays/month, so every store's target already has a +[X]% calendar lift baked in.
+
 [Month] Targets by Store
 🏪 Culpeper — $XX,XXX
 🏪 Harrisonburg — $XX,XXX
@@ -158,10 +166,11 @@ Compose a message for #bonus-goals using EXACTLY this format and structure (this
 🏪 Waynesboro — $XX,XXX
 
 How We Got Here.
--Targets are built using each store's own 2026 YTD yield — not a company average. Formula: [prior month] ending assets × store's YTD yield.
+-Targets are built using each store's own 2026 YTD yield — not a company average. Formula: [prior month] ending assets × store's YTD yield × Friday multiplier.
 -[Prior Month] Ending Assets (Loans + Inventory):
 Culpeper $XXX,XXX · Harrisonburg $XXX,XXX · Roanoke $XXX,XXX · Lexington $XXX,XXX · Waynesboro $XXX,XXX
 -YTD Avg Yield (Jan–[Prior Month] [Year]): Culpeper XX.X% · Harrisonburg XX.X% · Roanoke XX.X% · Lexington XX.X% · Waynesboro XX.X%
+-Friday adjustment: [Month] has [N] Fridays vs. a [X] monthly average. At +4.5% per extra Friday, that's a [X.XXX]× multiplier on every store's baseline.
 Each store's number reflects what they've actually been doing this year. Hit it and earn it. This not math anymore, it's science. Let's have a great [Month]. 💪
 ```
 
@@ -180,7 +189,7 @@ Use Slack MCP tool slack_send_message (channel C04TXF0KGNL) ONLY after Joshua ex
 ### 9. Deliver summary to Joshua
 
 Present:
-1. Per-store target table (from Step 5)
+1. Per-store target table (from Step 6)
 2. Confirmation that spreadsheet was updated with actuals (Net Revenue, not gross) + new targets, and which spreadsheet layout was found (pre-rebuild vs rebuilt)
 3. The Slack draft for his review
 4. File link to the updated spreadsheet

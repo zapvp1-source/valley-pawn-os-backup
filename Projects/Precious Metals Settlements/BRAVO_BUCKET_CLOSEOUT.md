@@ -85,3 +85,63 @@ Never run Pass 3 without verified numbers and explicit approval on first runs.
    $11,249.13 (GP 53.59%). Till+store closed, $18,113.98 safe->bank transfer done.
    Remaining: CUL 17,710.11 / HAR 16,093.84 / LEX 5,550.69 / WAY 8,691.46 (2 buckets
    each, amounts per bucket in the workbook).
+
+## Live-run lessons (2026-08-06 full cycle - all 10 buckets closed)
+
+Completed the full Elemetal Aug-2026 settlement: 10 gold buckets across 5 stores,
+total posted \$66,160.08 - matches the wire EXACTLY to the penny.
+
+### Verified per-bucket amounts posted
+- ROA ROANOKE JULY GOLD SCRAP \$6,864.85 / ROA ROANOKE JULY GOLDW/STONE SCRAP \$11,249.13
+- CUL JULY 2026 GOLD SCRAP \$11,799.44 / CUL JULY 2026 GOLD W/STONES SCRAP \$5,910.68
+- HAR GOLD W/O STONES 7/31/26 \$8,174.71 / HAR GOLD W STONES \$7,919.12
+- LEX JULY 2026 GOLD SCRAP \$2,752.47 / LEX JULY 2026 GOLD-STONE SCRAP \$2,798.22
+- WAY AUGUST 2026 GOLD SCRAP \$3,449.83 / WAY AUGUST 2026 GOLD STONE SCRAP \$5,241.63
+
+### CRITICAL - pause the pipeline watcher first
+The Bravo Data Extraction watcher WILL drive the same Bravo window concurrently and
+hijack the screen mid-transaction. Killing AutoHotkey64.exe alone is NOT enough - a
+Windows scheduled task named BravoWatcherWatchdog relaunches it within ~60s.
+
+Pause:
+  prlctl exec {UUID} schtasks /change /tn BravoWatcherWatchdog /disable
+  prlctl exec {UUID} taskkill /F /IM AutoHotkey64.exe
+Restore:
+  prlctl exec {UUID} schtasks /change /tn BravoWatcherWatchdog /enable
+  prlctl exec {UUID} schtasks /run /tn BravoWatcherWatchdog
+  (verify: tasklist /FI "IMAGENAME eq AutoHotkey64.exe")
+
+### Tender Type dropdown - list length VARIES BY STORE
+Do NOT hardcode a Down-arrow count. CUL/LEX include 'Personal Check' (Cashiers Check
+is 8 down); HAR omits it (7 down). ALWAYS screenshot the open dropdown, confirm the
+highlighted row reads 'Cashiers Check', THEN press Return. Zoom-verify after.
+
+### Print Scrap Report BEFORE selecting Close status
+Printing while Close is selected-but-unsaved DISCARDS the status selection (verified
+again this run - bucket silently reverted to ASSAYED). Correct order: open bucket ->
+Print Scrap Report -> Done -> select Close - Complete Transaction -> amount -> tender.
+
+### Store / Till prerequisite
+Close - Complete Transaction requires store AND till open. If store closed, Open Store
+(Use Expected Values -> Save) then Open Till (select TILL 01, Use Expected Values ->
+Save). Selecting the till can populate a prior close amount - always click Use Expected
+Values AFTER selecting the till, not before.
+
+### Closing back down - business-hours rule matters
+CUL (processed before 10am) was fully closed down: Close Till -> Transfer Tender screen
+(till -> store safe) -> Save, then Close Store -> Use Expected Values -> Next -> Save
+(store safe -> bank account). HAR and LEX were still open past 10am with staff tills
+active - left store/till OPEN rather than force-closing mid-day. HAR's Close Store also
+warned 'All tills are not currently closed' - correct response is to back out, not force.
+
+### Data-entry method (unchanged, still mandatory)
+Clipboard-paste every numeric value (osascript 'set the clipboard to', then cmd+v),
+never type. Zoom-verify each field before Save. Keyboard Down/Return for dropdowns,
+never mouse-click the option row.
+
+### Session/bridge instability observed
+The remote-devices MCP bridge dropped ~4 times during this run, each ~60-90s,
+self-recovering. No transaction was ever corrupted - unsaved state is simply discarded
+by Bravo. On reconnect ALWAYS screenshot before acting; never assume prior state.
+This is the strongest argument for the in-VM AHK handler: it removes the bridge
+from the critical path entirely.

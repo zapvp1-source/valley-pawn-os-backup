@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-08-05
+# LIVE STATE - auto-refreshed 2026-08-06
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -12,16 +12,16 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Metric | Count |
 |---|---|
-| Task folders on disk | 148 |
-| Registered with scheduler | 127 |
-| Enabled (will fire) | 85 |
-| Registered but disabled | 42 |
+| Task folders on disk | 151 |
+| Registered with scheduler | 130 |
+| Enabled (will fire) | 87 |
+| Registered but disabled | 43 |
 | On disk but never registered | 22 |
-| Recorded skips (usage cap) | 244 |
+| Recorded skips (usage cap) | 233 |
 
 ### Enabled tasks
 
-`amazon-return`, `annual-board-review`, `asset-recovery-daily-refresh`, `bald-rock-15-day-contract`, `bald-rock-guest-reviews`, `bald-rock-monday-briefing`, `blog-publisher-watchdog`, `bravo-health-watchdog`, `brevo-preflight-watchdog`, `business-os-daily-refresh`, `chekkit-new-review-alert`, `chekkit-unanswered-alert`, `chekkit-weekly-review-requests`, `daily-clockin-check`, `daily-cloudcover-check`, `daily-dress-code-check`, `daily-funds-verification`, `daily-items-to-price`, `daily-supply-order`, `dismiss-employee`, `ebay-title-photo-accuracy-audit`, `ebay-weekly-quality-fix`, `email-analytics-weekly`, `eom-bravo-gl-export`, `eom-bravo-gl-export-watchdog`, `funds-verification-watchdog`, `jewelry-count-reconciliation`, `layaway-yield-weekly`, `monday-bravo-combined-run`, `monday-bravo-postcheck`, `monthly-amazon-store-allocation`, `monthly-analytics-prestage`, `monthly-analytics-report`, `monthly-analytics-watchdog`, `monthly-bonus-payout`, `monthly-bonus-qualifiers`, `monthly-bonus-targets`, `monthly-capability-drift-audit`, `monthly-employee-sales-rankings`, `monthly-gun-audit-report`, `monthly-we-buy-gold-silver-email`, `nightly-chekkit-review-responses`, `northwest-registered-agent-daily-check`, `oura-daily-import`, `pawn-walk`, `preston-ebay-feedback-watch`, `review-obtained-last-week`, `sales-tax-monthly-update`, `sunday-checklist-summary`, `tuesday-supply-checkout`, `tuesday-supply-summary`, `valley-pawn-blog-publisher`, `vp-ai-search-health-check`, `vp-ai-visibility-metrics`, `vp-casual-video-daily`, `vp-comms-drift-monthly-check`, `vp-content-batch-postflight`, `vp-content-batch-preflight`, `vp-content-batch-quota-watchdog`, `vp-content-batch-weekly`, `vp-dashboard-refresh`, `vp-deal-of-week-monday-pick`, `vp-deal-of-week-monday-prompt`, `vp-deal-of-week-monday-reminder`, `vp-deals-social-wednesday`, `vp-hr-compliance-quarterly-review`, `vp-hr-policy-monthly-sync`, `vp-new-customer-report`, `vp-os-github-nightly-backup`, `vp-publer-analytics-friday`, `vp-website-deals-weekly`, `vp-website-shop-nightly`, `vp-website-trend-daily-refresh`, `vp-weekly-spot-price-update`, `weekly-aged-inventory-canvas-refresh`, `weekly-analytics-summary`, `weekly-employee-perf-canvas-refresh`, `weekly-layaway-review-canvas-refresh`, `weekly-loan-layaway-manager-dms`, `weekly-loan-review-canvas-refresh`, `weekly-returns-summary`, `weekly-social-media-recap`, `weekly-store-kpis`, `weekly-store-perf-canvas-refresh`, `weekly-timekeeping-analysis`
+`amazon-return`, `annual-board-review`, `asset-recovery-daily-refresh`, `backup-health-watchdog`, `bald-rock-15-day-contract`, `bald-rock-guest-reviews`, `bald-rock-monday-briefing`, `blog-publisher-watchdog`, `bravo-health-watchdog`, `brevo-preflight-watchdog`, `business-os-daily-refresh`, `chekkit-new-review-alert`, `chekkit-unanswered-alert`, `chekkit-weekly-review-requests`, `daily-clockin-check`, `daily-cloudcover-check`, `daily-dress-code-check`, `daily-funds-verification`, `daily-items-to-price`, `daily-supply-order`, `dismiss-employee`, `ebay-title-photo-accuracy-audit`, `ebay-weekly-quality-fix`, `email-analytics-weekly`, `eom-bravo-gl-export`, `eom-bravo-gl-export-watchdog`, `funds-verification-watchdog`, `jewelry-count-reconciliation`, `layaway-yield-weekly`, `monday-bravo-combined-run`, `monday-bravo-postcheck`, `monthly-amazon-store-allocation`, `monthly-analytics-prestage`, `monthly-analytics-report`, `monthly-analytics-watchdog`, `monthly-bonus-payout`, `monthly-bonus-qualifiers`, `monthly-bonus-targets`, `monthly-capability-drift-audit`, `monthly-employee-sales-rankings`, `monthly-gun-audit-report`, `monthly-we-buy-gold-silver-email`, `nightly-chekkit-review-responses`, `northwest-registered-agent-daily-check`, `oura-daily-import`, `pawn-walk`, `preston-ebay-feedback-watch`, `review-obtained-last-week`, `sales-tax-monthly-update`, `sunday-checklist-summary`, `tuesday-supply-checkout`, `tuesday-supply-summary`, `valley-pawn-blog-publisher`, `vp-ai-search-health-check`, `vp-ai-visibility-metrics`, `vp-casual-video-daily`, `vp-comms-drift-monthly-check`, `vp-content-batch-postflight`, `vp-content-batch-preflight`, `vp-content-batch-quota-watchdog`, `vp-content-batch-weekly`, `vp-dashboard-refresh`, `vp-deal-of-week-monday-pick`, `vp-deal-of-week-monday-prompt`, `vp-deal-of-week-monday-reminder`, `vp-deals-social-wednesday`, `vp-gusto-signature-chase`, `vp-hr-compliance-quarterly-review`, `vp-hr-policy-monthly-sync`, `vp-new-customer-report`, `vp-os-github-nightly-backup`, `vp-publer-analytics-friday`, `vp-website-deals-weekly`, `vp-website-shop-nightly`, `vp-website-trend-daily-refresh`, `vp-weekly-spot-price-update`, `weekly-aged-inventory-canvas-refresh`, `weekly-analytics-summary`, `weekly-employee-perf-canvas-refresh`, `weekly-layaway-review-canvas-refresh`, `weekly-loan-layaway-manager-dms`, `weekly-loan-review-canvas-refresh`, `weekly-returns-summary`, `weekly-social-media-recap`, `weekly-store-kpis`, `weekly-store-perf-canvas-refresh`, `weekly-timekeeping-analysis`
 
 ### On disk but NOT registered (never fire)
 
@@ -37,6 +37,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.ebay-efficiency-weekly.plist` | installed | YES |
 | `com.valleypawn.ebay-markdown-monthly.plist` | installed | YES |
 | `com.valleypawn.ebay-weekly-rankings.plist` | installed | YES |
+| `com.valleypawn.unified-search-refresh.plist` | installed | YES |
 | `com.valleypawn.ebay-photo-upscale.plist` | DISABLED | no |
 | `com.valleypawn.vpops.job_aged_inventory.plist` | DISABLED | no |
 | `com.valleypawn.vpops.job_daily_loan_inv_text.plist` | DISABLED | no |
@@ -55,22 +56,24 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-08-05 | Bravo Data Extraction | README.md |
-| 2026-08-04 | Valley Pawn OS | - |
-| 2026-08-04 | Unified Search | - |
-| 2026-08-04 | Taxes 2026 | - |
-| 2026-08-04 | Sales Tax | STATUS.md |
-| 2026-08-04 | Refine Social Media | - |
+| 2026-08-06 | Unified Search | - |
+| 2026-08-06 | Bravo Data Extraction | README.md |
+| 2026-08-05 | Website | - |
+| 2026-08-05 | Valley Pawn Studios | - |
+| 2026-08-05 | Valley Pawn OS | - |
+| 2026-08-05 | Taxes 2026 | - |
+| 2026-08-05 | Sales Tax | STATUS.md |
+| 2026-08-05 | Refine Social Media | - |
+| 2026-08-05 | Precious Metals Settlements | - |
+| 2026-08-05 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-08-05 | Human Resources | - |
+| 2026-08-05 | Health Optimization | - |
+| 2026-08-05 | Daily Funds Verification | - |
+| 2026-08-05 | Business Dashboard Website | - |
 | 2026-08-04 | Quickbooks Set UP | - |
 | 2026-08-04 | Pawn Walks | STATUS.md |
-| 2026-08-04 | Jewelry Count Reconciliation | STATUS.md |
-| 2026-08-04 | Human Resources | - |
-| 2026-08-04 | Health Optimization | - |
 | 2026-08-04 | Email Refinement | - |
-| 2026-08-04 | Daily Funds Verification | - |
-| 2026-08-04 | Business Dashboard Website | - |
 | 2026-08-03 | eBay | - |
-| 2026-08-03 | Valley Pawn Studios | - |
 | 2026-08-03 | Ai Optimized Marketing | - |
 | 2026-08-02 | VP Ops Engine | STATUS.md |
 | 2026-07-31 | Short Term Rental Optimization | - |
@@ -83,7 +86,6 @@ below disagrees with this block, THIS BLOCK WINS.
 | 2026-07-21 | Optimize Loan Portfolio | STATUS.md |
 | 2026-07-21 | Bonus Program | - |
 | 2026-07-17 | Jewelry Redemption Analysis | STATUS.md |
-| 2026-07-15 | Website | - |
 | 2026-07-07 | Business Continuity | - |
 | 2026-07-06 | Bravo Pipeline | - |
 | 2026-07-04 | Communcations | - |
@@ -94,7 +96,6 @@ below disagrees with this block, THIS BLOCK WINS.
 | 2026-06-16 | Operations | - |
 | 2026-05-22 | New Inventory Procurement | - |
 | 2026-05-20 | Additional Revenue Streams | - |
-| 2026-05-19 | Deep KPI analysis | - |
 
 <!-- LIVE-STATE:END -->
 
@@ -1374,3 +1375,58 @@ Session's own skill catalog shows two plugin bundles not yet listed in Section 1
 **Skill delta staged:** No — nothing here required an `enterprise-map` / `valley-pawn-context` patch this month.
 
 ---
+
+
+---
+
+### 2026-08-06 — Scrap Bucket Close-out: new machine-native AHK automation (built, NOT yet enabled)
+
+Built a second, independent AHK automation to close out monthly Elemetal precious-metals scrap
+settlement buckets in Bravo (Open -> Shipping -> Assayed -> Close -> Approve), driven entirely by
+Joshua's Windows VM via Windows Task Scheduler — zero dependency on any cloud session's
+computer-use/screen-driving. Explicit instruction from Joshua: "build it and make it run through
+the machine, not cloud, nothing should run in cloud," given after this session's remote-devices
+bridge to his Mac dropped repeatedly during a manual 10-bucket close-out.
+
+**New files (additive only — no existing pipeline files touched):**
+- `Bravo Data Extraction/reports/ScrapBucketCloseout.ahk` — main handler. Reuses hardened
+  navigation primitives from `ScrapRefiningGold.ahk` (bucket list open/relocate/verify). Every
+  numeric field is clipboard-paste + immediate UIA read-back verified; Tender Type is selected by
+  exact name match (not arrow-count — confirmed live that CUL/LEX include "Personal Check" in the
+  list while HAR doesn't, so position-based selection is unsafe); Scrap Report is printed BEFORE
+  the Close status is selected (printing after silently discards the selection — verified twice
+  live). Post-approve, the bucket is reopened and the posted Amount Paid + Tender Type are read
+  back and compared — a mismatch after Approve can't be undone (Bravo: "CANNOT BE VOIDED") but is
+  logged CRITICAL for immediate human review.
+- `Bravo Data Extraction/ScrapBucketCloseoutWatcher.ahk` — persistent poller (separate from
+  `bravo_watcher.ahk`), watches `triggers-scrap\` for manifest JSON drops.
+- `Bravo Data Extraction/_scrap_watchdog.ps1`, `restart_scrap_watcher.bat` — mirrors the existing
+  `_watchdog.ps1` self-healing pattern but targets only `ScrapBucketCloseoutWatcher.ahk` by
+  CommandLine match (never a blanket `taskkill /IM AutoHotkey64.exe`, since that would also kill
+  the main pipeline watcher now that two AHK processes run on this machine).
+- `Bravo Data Extraction/setup_scrap_watcher.bat` — registers the `ScrapCloseoutWatcherWatchdog`
+  scheduled task, then immediately disables it (ships safely off by design).
+- `Bravo Data Extraction/triggers-scrap/`, `results-scrap/`, `logs-scrap/` — new folders.
+
+**Status as of 2026-08-06:**
+- File transfer verified byte-for-byte (31,607 bytes, all 4 `RunScrapCloseoutManifest` references
+  present).
+- Syntax/load-check passed: launched `ScrapBucketCloseoutWatcher.ahk` live on the VM via
+  `prlctl exec`, confirmed no AutoHotkey error dialog and the process stayed alive for 5s+ before
+  being cleanly stopped. This confirms the file `#Include`s and parses correctly.
+- `ScrapCloseoutWatcherWatchdog` scheduled task IS registered on the VM (`schtasks /query` confirms
+  it: Run As User `joshuadavis`, Interactive logon, every 2 min) but is **DISABLED** — no
+  end-to-end test against a real Bravo bucket has been run via this AHK path yet (all prior
+  validation was manual computer-use).
+
+**Before enabling for real unattended use (next settlement cycle):**
+1. Drop a real `{id, buckets:[...]}` manifest into `triggers-scrap\` (schema/example in
+   `triggers-scrap/sample-manifest.json.example`).
+2. Manually run `AutoHotkey64.exe ScrapBucketCloseoutWatcher.ahk` with the VM screen visible,
+   watch it process that one manifest end-to-end against a real bucket.
+3. Confirm `results-scrap\<id>.result.json` shows `verified: true` for every bucket and the
+   amounts match Bravo's own bucket status.
+4. Only then: `schtasks /change /tn ScrapCloseoutWatcherWatchdog /enable`.
+
+Full design rationale and the live-verified manual procedure this was built from:
+`Projects/Precious Metals Settlements/BRAVO_BUCKET_CLOSEOUT.md`.

@@ -408,3 +408,17 @@ Communication Standard (plain language, no system names, no dollar figures, no b
 
 Posted to #jewlery-counts (C0BM9NHGTT4) at 19:52 ET, ts 1785973956.447489, including the
 required Wednesday footer line. No failure path taken; no DM sent to Joshua.
+
+## Run: 2026-08-06 (Thursday, full 5-store day)
+
+- Store-hours gate: Thursday -> all 5 stores open (CUL, HAR, WAY, LEX, ROA). Correct branch taken.
+- Trigger 1: jewelry-count-recon-2026-08-06-auto (submitted 19:48:40 -0400) -> status "aborted", all 5 cells "skipped", error on every store: "Skipped by safety rail: bravo-not-ready (could not reach a logged-in dashboard)".
+- Retry (per protocol, ONE retry with fresh id): jewelry-count-recon-2026-08-06-auto-b (submitted 19:56:41 -0400) -> same result, all 5 cells skipped, same bravo-not-ready error. Bravo/Parallels dashboard was not in a logged-in state for either attempt.
+- Per Section 5 failure path: posted NOTHING to #jewlery-counts. Sent Joshua one plain-language DM in D03BHQH5VGT: "Jewelry count check for 2026-08-06 didn't complete - needs a look."
+- Count-sheet (vision) side was completed successfully for all 5 stores before the Bravo failure was discovered - captured here so the numbers aren't lost, but NOT posted anywhere since Bravo-side sold-jewelry data never generated (nothing to reconcile against):
+  - CUL (Bree Grayson, header confirmed CULPEPER): AM Rings619/Bracelets121/Necklaces147/Earrings125/Pendants253/Total1265; PM Rings626/Bracelets122/Necklaces149/Earrings125/Pendants253/Total1275. Net(AM-PM) = -10.
+  - HAR (Walker Tapley, header confirmed HARRISONBURG): AM Rings451/Bracelets49/Necklaces124/Earrings50/Pendants116/Total790; PM Rings451/Bracelets49/Necklaces124/Earrings49/Pendants114/Total~787. Net = +3. (Sheet was photographed sideways/rotated - read via zoom, moderate confidence.)
+  - WAY (Preston Peters, header confirmed WAYNESBORO, posted late at 19:52): AM Rings326/Bracelets40/Necklaces64/Earrings48/Pendants58/Total536; PM Rings326/Bracelets40/Necklaces64/Earrings46/Pendants57/Total532. Net = +4. High confidence, clean sheet.
+  - LEX (Martin D., header confirmed LEXINGTON - note: Martin posts for LEX, not WAY as the old poster map assumed; header rule caught this correctly): AM Rings258/Bracelets32/Necklaces45/Earrings43/Pendants48/Total426; PM same values, Total426. Net = 0.
+  - ROA (Benjie Moore, header confirmed ROANOKE): AM Rings528/Bracelets107/Necklaces157/Earrings77/Pendants146/Total~1010-1015 (sum vs written total off by ~5); PM Rings534/Bracelets115/Necklaces153/Earrings79/Pendants146/Total~1027 (written total illegible/inconsistent, ~1609 or 1009 as written - likely a writing error, sum used instead). Net = ~-12 to -17. LOW CONFIDENCE - sheet was rotated 90 degrees and handwriting on totals row was ambiguous; would need a second look if Bravo comes back and this store shows as flagged.
+- ACTION NEEDED next run/session: check why Bravo/Parallels was not logged in at ~19:50-19:59 ET. Once Bravo access is confirmed working, this date (2026-08-06) can be re-pulled and reconciled against the AM/PM counts captured above without needing to re-read the Slack photos.

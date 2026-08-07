@@ -2,6 +2,17 @@
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
 
+## 2026-08-06
+
+- Enabled scheduled tasks: 85 -> 87
+- Registered scheduled tasks: 127 -> 130
+- Task folders on disk: 148 -> 151
+- ENABLED: backup-health-watchdog
+- ENABLED: vp-gusto-signature-chase
+- Native agent appeared: com.valleypawn.unified-search-refresh.plist
+- Native agent LOADED: com.valleypawn.unified-search-refresh
+- FLAG (daily refresh): the new nightly background job com.valleypawn.unified-search-refresh (created 2026-08-05 09:14, runs 3:30 AM, rebuilds the Unified Search index) is not explained by any prior CHANGELOG entry. Benign on inspection; logged here so the map stays honest. Joshua notified.
+
 ## 2026-08-05 (HR) — two policies found announced-but-never-sent in Gusto; both distributed; weekly chase built
 - DUPLICATE DEFECT FOUND + GUARDED: a SECOND Gold Scrap Bucket Naming template (7893330, created 06:17:57 PT) appeared 17 min after 7893283 (06:00:29) and was also sent — all 14 employees were asked to sign the identical one-pager twice. Not created by this session; two actors created and sent the same policy without seeing each other. Two live templates for one policy is a defective HR record (cannot prove which version an employee agreed to) and Gusto exposes NO delete/archive via API, so retiring one is a manual UI click. Joshua must pick the record copy: 7893283 vs 7893330, and 6984272 (approved, 11 signed) vs 6984265 (prepared) for Overtime Policy. GUARDS ADDED: (1) DELTA patch now has a DUPLICATE GUARD run before create AND again immediately before send, using a normalised title match that strips parentheticals/version tags/filler so near-titles collide; (2) vp-gusto-signature-chase gained LIST C duplicate detection, collapses dupes to one line in the Slack post, and leads Joshua DM with any NEW duplicate group.
 - SCHEDULE + SCOPE (Joshua, same day): recurring chase moved to Mondays 09:05; added one-shot task vp-gusto-signature-chase-firstrun firing 2026-08-06 09:00 so the first reminder lands tomorrow rather than waiting for Monday. Joshua (2f2d61c5-f19e-4d8e-9e4c-d7d6b62f93d6) and Hillary Davis (94fa77de-beeb-4779-b669-4df93199bd05) are now excluded by UUID from BOTH the Slack post and the DM totals, per Joshua. Both tasks pinned model sonnet.
