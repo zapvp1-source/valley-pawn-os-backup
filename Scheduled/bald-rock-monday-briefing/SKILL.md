@@ -1,10 +1,10 @@
 ---
 name: bald-rock-monday-briefing
-description: Monday 8 AM weekly Bald Rock STR briefing — bookings, gap nights, pricing flags, action items → Slack #airbnb
+description: Monday 8 AM weekly Bald Rock STR briefing — bookings, gap nights, pricing flags, age/ID verification status, action items → Slack #airbnb
 model: claude-sonnet-5
 ---
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
 
 
 
@@ -19,7 +19,7 @@ FAILURE / DEGRADATION POLICY (read first)
 - SELF-HEAL: URLs drift. Always try the documented URL, then the discovery path. If you find a corrected/working URL for any source, note it at the END of the run inside Claude (not Slack) as: "🔧 URL DRIFT — <source> now lives at <url>; update the task." so the task can be healed.
 
 DATA SOURCES
-1. Guesty (reservation list + inbox) — `https://app.guesty.com/reservations?status=confirmed`. Log in with **email + password** as `fullcirclepawn@gmail.com` (NOT Google SSO, NOT jdavis@fcfpawn.com — that misdirection broke prior tasks May 9–22). Filter to Mountain Luxury, status=Confirmed, check-out in future. Use Guesty for: list of upcoming reservations, nights, ANR, payout amount, conversation thread (to verify automated messages fired), and the guest's phone field (load-bearing — see Lockbox check). To read a reservation's financials/phone: click the row → Overview shows payout + ANR; Guests tab shows phone; "Open in inbox" opens the conversation thread.
+1. Guesty (reservation list + inbox) — `https://app.guesty.com/reservations?status=confirmed`. Log in with **email + password** as `fullcirclepawn@gmail.com` (NOT Google SSO, NOT jdavis@fcfpawn.com — that misdirection broke prior tasks May 9–22). Filter to Mountain Luxury, status=Confirmed, check-out in future. Use Guesty for: list of upcoming reservations, nights, ANR, payout amount, conversation thread (to verify automated messages fired AND to check age/ID verification reply status — see below), and the guest's phone field (load-bearing — see Lockbox check). To read a reservation's financials/phone: click the row → Overview shows payout + ANR; Guests tab shows phone; "Open in inbox" opens the conversation thread.
 2. DocuSign MCP — `getEnvelopes` from last 21 days, account `320a0ff8-3001-4e1a-93b4-4fc3004b1116`. status=completed means signed; status=sent means sent-but-not-signed; status=voided means superseded (ignore, look for a later envelope to the same guest).
 3. **Payment status comes from the BOOKING CHANNEL, not Guesty.** Guesty's "Paid / Balance Due / Not Paid" field is unreliable for Airbnb and VRBO because those platforms collect the guest's money and pay the host directly, bypassing Guesty. Pull the truth from:
    - **Airbnb reservations** (codes start with `HM`): live earnings page is `https://www.airbnb.com/earnings` → **Upcoming** and **Paid** tabs (the old `/hosting/earnings/transaction-history` path 404s — don't rely on it). Match the row by amount + payout date; report status (Scheduled for <date> / Paid out on <date> / Past) and amount. Alternate path: open `https://www.airbnb.com/hosting/stay/<HMcode>` → "$X Total for N nights" card → **View earnings**.
@@ -45,6 +45,15 @@ OUTPUT FORMAT — strict. Slack mrkdwn. Post a single message to channel_id C0B1
 *Automated messages*
 <One liner. ONLY after actually reading the Guesty inbox thread for each in-house and same-week-check-in guest. Confirm whether the automated messages (Booking Confirmation, Check-in Instructions, Arrival Welcome, How is everything?, Check-out Instructions) fired on schedule. Flag exceptions — e.g. late bookings where Check-in Instructions could not fire because booking-to-check-in < 5 days.>
 
+*Age/ID verification (30+ policy)*
+<For every reservation in the "Next 14 days" list, read the Guesty conversation thread and check for the age-verification request (a prior message containing "primary guest to be 30 or older") and any guest reply since. Classify each guest as VERIFIED (guest replied confirming 30+ or sent ID), PENDING (request sent, no reply yet), or NOT YET ASKED (should not normally happen — the daily bald-rock-15-day-contract task sends this alongside every new contract — flag as a gap if found).
+Report as:
+✅ Verified: <n> — names
+⏳ Pending (asked, no reply): <n> — names + how many days since asked
+🚨 Not yet asked: <n> — names (flag as a process gap if any)
+If all guests in the next 14 days are verified, write "All upcoming guests verified ✅".
+This is a manual workaround (DocuSign's ID Verification add-on was priced out 2026-08-07 as not worth it at Bald Rock's booking volume — $75/mo minimum for 30 verifications/month). Treat this section with the same weight as the contract sent/signed columns — Joshua wants to know by name who hasn't confirmed, every week, without having to ask.>
+
 *Lockbox check (next 7 days)*
 <One liner per upcoming guest checking in within 7 days. The Arrival Welcome message sends the guest's 10-digit phone as the lockbox code (drop the +1). Verify each upcoming guest's phone field is populated and valid +1XXXXXXXXXX. If missing/malformed, flag with 🚨 and the guest name — Joshua must reset the touchpad lockbox to match. If all good: "All upcoming guests have phone on file ✅".>
 
@@ -53,10 +62,11 @@ OUTPUT FORMAT — strict. Slack mrkdwn. Post a single message to channel_id C0B1
 RULES
 - channel_id: C0B10UG937H
 - NO pricing flags, NO commentary on contracts beyond sent/signed status, NO door codes, NO Wi-Fi passwords, NO guest emails or phone numbers (first name + last initial only).
-- Under 1500 characters total.
+- Under 1800 characters total (raised slightly from 1500 to fit the new Age/ID Verification section — keep every section as tight as possible to stay close to the original budget).
 - You MUST verify automated messages fired by reading the Guesty inbox — do not assert without checking.
 - You MUST pull payment status from Airbnb/VRBO (per the resilient paths above), not Guesty.
 - For the Lockbox check, you MUST check the actual phone field on each upcoming reservation in Guesty's Guests tab.
+- For the Age/ID verification section, you MUST actually read each guest's Guesty thread — do not assume verified without seeing a reply.
 - Follow the FAILURE / DEGRADATION POLICY above: stay silent only if Guesty (core) is down; for any single non-core source, degrade gracefully, post the full briefing, and flag the one affected line. Never hard-abort the whole briefing over one source.
 
-<!-- migrated to working model 2026-06-15 -->
+<!-- migrated to working model 2026-06-15 --><!-- Age/ID verification section added 2026-08-07 per Joshua's directive: treat age verification like the contract workflow, weekly scan, report who hasn't sent ID, attached to this weekly update -->

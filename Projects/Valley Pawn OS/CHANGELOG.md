@@ -2,6 +2,89 @@
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
 
+## 2026-08-07 (latest) — Zoom Phone missed-call/voicemail alert built (same gap as Chekkit missed messages)
+
+Joshua flagged that, just like Chekkit customer messages, Zoom Phone voicemails were going unseen — Zoom
+emails a notification to whichever mailbox owns each phone line, but nobody at the stores checks that inbox.
+Investigated: no Zoom Phone MCP connector exists (only "Zoom for Claude," meetings-only). Found the fix via
+the Zoom admin console instead — Joshua's zoom.us login is Owner/Admin, so every phone user's call
+history/voicemail is visible centrally (Phone System Management → Users & Rooms → user → History tab).
+
+**Built (net-new, additive):**
+- `Valley Pawn OS/ZOOM_PHONE.md` — extension/line map (Lexington=ext 800/Joshua's own login, Harrisonburg=
+  802, Waynesboro=803; Culpeper/Roanoke not yet on Zoom Phone). Discovered Joshua's personal Zoom voicemail
+  emails are actually Lexington store calls, not calls to him personally.
+- `zoom-voicemail-alert` scheduled task — every 20 min, Mon–Sat 9am–7pm, reads the live Users & Rooms roster
+  (auto-picks up Culpeper/Roanoke once added, no edit needed), checks each line's admin History for new
+  missed-calls/voicemails, dedupes via a state file, posts one consolidated alert to Slack #general.
+- **Known limitation:** no per-store Slack channel exists and the Slack connector has no channel-creation
+  tool, so alerts go to #general (all-staff) rather than a dedicated channel. Logged in Open Items Register.
+
+## 2026-08-07 — Open Items Register: the scalable fix, not one tracker per topic
+
+Joshua asked, correctly, whether every future gap requires building a new one-off tracker
+(leases, insurance, permits...) or whether there's a way to guarantee broad checking without
+that. Building a bespoke file per category doesn't scale — built `Life OS/OPEN_ITEMS_REGISTER.md`
+instead: one running log every session must write to (Rule #14, added to `enterprise-map`) the
+moment it drafts, sends, or starts anything with a pending follow-up, across all 3 domains.
+Future sessions check this ONE file (Step 8.5) before falling back to a full Slack/Drive search.
+Seeded with 7 known open items pulled from this session's own history (Culpeper lease renewal,
+Bald Rock DocuSign contract fix pending upload, ID verification gap, Harrisonburg FB merge, Apple
+Business Connect suite numbers, MapQuest Dixie Pawn legacy listing, Meta Business Verification).
+`STORE_LEASES.md` stays as the one exception (high-volume, recurring category) — the register is
+the default going forward, not a replacement for it.
+
+## 2026-08-07 (later still) — Store Leases tracker created (gap Joshua caught live)
+
+Joshua asked for the Culpeper lease, got it correctly, but the session then told him a renewal
+was needed — even though a renewal notice had already been drafted 2026-07-21. Root cause: lease
+work lived only as unindexed Drive files; nothing in BUSINESS_OS.md or enterprise-map pointed a
+session at lease status, so "check prior work" only works when the session knows to look.
+
+**Built:** `Valley Pawn OS/STORE_LEASES.md` — per-store lease/renewal status tracker, wired into
+`enterprise-map`'s Key Paths (Domain 1). Culpeper populated with what was found (executed lease
+2024-03-28, renewal notice drafted 2026-07-21) — **send/landlord-response status is NOT yet
+confirmed**, flagged explicitly rather than assumed. Other 4 stores are TODO placeholders — not
+yet located in Drive.
+
+## 2026-08-07 (later) — Life Map: enterprise-map expanded to all 3 domains
+
+Joshua flagged that every new session starts blank and never checks known context — true not just
+for Valley Pawn (where `enterprise-map` already existed) but for his Real Estate and Personal
+domains, which had NO equivalent map at all.
+
+**Built (net-new, additive):**
+- `Life OS/LIFE_MAP.md` — top-level index across all 3 of Joshua's domains (Valley Pawn, Real
+  Estate, Personal), with explicit cross-domain overlap notes (Bald Rock = FCF Inc money but its
+  own operating file; Cypress Crossing = personal money tracked in the Real Estate file for
+  property reasons).
+- `Life OS/REAL_ESTATE_OS.md` — portfolio table (282 Bald Rock Road, 844 Cypress Crossing Trail,
+  prospective Jacksonville/St. Augustine acquisitions), acquisition history, capital-improvement
+  evidence-log pointers, cost-seg pointers.
+- `Life OS/PERSONAL_OS.md` — Joshua's health (Health Optimization folder), personal finance (QBO
+  account boundaries, CPA scope unconfirmed for personal returns), family (Hillary Davis).
+- Skills: `real-estate-context` and `personal-life-context` created (mirroring
+  `valley-pawn-context`'s pattern); `enterprise-map` updated (overwrite) to be domain-agnostic —
+  its trigger and load protocol now route to whichever of the 3 domain OS files is relevant,
+  instead of assuming Valley Pawn.
+
+**Known limitation, told to Joshua directly:** skill-triggering is probabilistic (based on
+description matching), not guaranteed. `enterprise-map`'s description is written as aggressively
+as possible, but the only deterministic fix is a line in Joshua's global Cowork instructions
+(outside this session's write access) telling every session to invoke `enterprise-map` first,
+unconditionally. Flagged for Joshua to add himself — see chat response 2026-08-07.
+
+## 2026-08-07
+
+- BALD ROCK: Found contract-vs-reality bug — DocuSign "Airbnb Rental Contract" and "VRBO Contract" templates (clause 18) told guests to bring their own pool towels ("we do not permit bath towels or linens to be taken from the property"), directly contradicting the Bald Rock Guest Guide, which already tells guests towels are in the laundry room. Confirmed via the exact live template source PDF in Drive (folder matches DocuSign's 2026-05-24 last-modified date), not the stale 2025-09-29 copy. Bundled in two other known bugs from Joshua's own 2026-06-08 Listing Consistency Review that were still unfixed: check-in time said 3:00 PM in the contract vs. 4:00 PM on every platform, and the minimum-stay clause self-contradicted ("three (2) nights").
+- FIXED (files staged, not yet live): surgical in-place PDF text edits (redaction + same-font reinsertion, page/line layout otherwise untouched so DocuSign's existing initial/signature tab coordinates stay valid) producing `Airbnb_Rental_Contract_CORRECTED_2026-08-07.pdf` and `VRBO_Rental_Contract_CORRECTED_2026-08-07.pdf` in `Short Term Rental Optimization/`. NOT yet uploaded to the live DocuSign templates (`cf0bdcb8-4476-4d69-a88c-ba6b605a6034` / `c264e23c-5ff7-47eb-b676-fc469048f331`) — DocuSign web UI has no document-replace API, and the account (zapvp1@me.com) is passkey-only with no saved Chrome password, so browser login needs Joshua's physical Touch ID once. Genuine blocker, not a judgment call.
+- FLAGGED, NOT YET BUILT: listing already advertises "Minimum age 30 (ID verified)" on Airbnb/VRBO and in the contract, but nothing currently verifies ID. DocuSign ID Verification (IDV) is the natural fit (metered add-on, ~$2.50+/verification) but needs the same DocuSign UI access to turn on per-template recipient authentication. Also blocked on the login above.
+
+- Enabled scheduled tasks: 87 -> 88
+- Registered scheduled tasks: 130 -> 131
+- Task folders on disk: 151 -> 152
+- ENABLED: vp-follower-growth-monthly-check
+
 ## 2026-08-06
 
 - Enabled scheduled tasks: 85 -> 87

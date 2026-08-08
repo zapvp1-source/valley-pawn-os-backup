@@ -422,3 +422,39 @@ required Wednesday footer line. No failure path taken; no DM sent to Joshua.
   - LEX (Martin D., header confirmed LEXINGTON - note: Martin posts for LEX, not WAY as the old poster map assumed; header rule caught this correctly): AM Rings258/Bracelets32/Necklaces45/Earrings43/Pendants48/Total426; PM same values, Total426. Net = 0.
   - ROA (Benjie Moore, header confirmed ROANOKE): AM Rings528/Bracelets107/Necklaces157/Earrings77/Pendants146/Total~1010-1015 (sum vs written total off by ~5); PM Rings534/Bracelets115/Necklaces153/Earrings79/Pendants146/Total~1027 (written total illegible/inconsistent, ~1609 or 1009 as written - likely a writing error, sum used instead). Net = ~-12 to -17. LOW CONFIDENCE - sheet was rotated 90 degrees and handwriting on totals row was ambiguous; would need a second look if Bravo comes back and this store shows as flagged.
 - ACTION NEEDED next run/session: check why Bravo/Parallels was not logged in at ~19:50-19:59 ET. Once Bravo access is confirmed working, this date (2026-08-06) can be re-pulled and reconciled against the AM/PM counts captured above without needing to re-read the Slack photos.
+
+## RUN 2026-08-07 (Friday) - COMPLETE, ALL CLEAN, POSTED
+- Store-hours gate: Friday -> all 5 stores open. Full 5-store protocol run.
+- Bravo trigger: jewelry-count-recon-2026-08-07-auto. Overall status SUCCESS, 5/5 cells success, no retry needed.
+  Row counts (ALL sold items, not jewelry): CUL 25, HAR 4, LEX 8, ROA 19, WAY 33. No empty grids.
+  Cycle ~19:48-20:01 ET, durations ~100-107s per cell.
+- Count sheets: all 5 posted to #end-of-day. Store identified from EOD summary header, not poster.
+  CUL: Sandi Cole (header CULPEPER). HAR: Walker Tapley (header HARRISONBURG). LEX: Martin D. (header LEXINGTON).
+  ROA: Benjie Moore (header ROANOKE, sheet rotated 90deg as usual - read via zoom). WAY: Preston Peters (header WAYNESBORO).
+- Sum-verify: CUL AM 626/122/149/125/253=1275 OK; PM 626/120/150/122/253=1271 OK (wrote as 127_, edge-cropped, computed 1271).
+  HAR AM+PM 451/48/124/49/114=786 OK both. ROA AM+PM 534/115/153/79/149=1030 OK both (order corrected after re-zoom: R/Bra/Nec/Ear/Pen).
+  LEX AM 257/32/45/42/47 -> computed sum 423, written total on sheet read as 426 (off by 3); PM same bucket values -> computed 423,
+  written total read as 462. LOW CONFIDENCE on LEX's written totals digits; used computed column sums (423/423, net 0) per
+  standing practice of trusting the sum over an ambiguous written total. Sold-jewelry for LEX was 0 anyway so this does not
+  change the flag outcome either way.
+  WAY: sheet contained two blocks - top block dated 8/6/26 exactly matches the already-recorded 2026-08-06 numbers (AM536/PM532,
+  confirms that was yesterday's leftover data on the same physical sheet), bottom block (today, date partly obscured but
+  positionally the current entry) AM=PM=326/40/64/46/57=532, net 0. Used the bottom block as 8/7's count.
+- Results (bucketed per jewelry_reconciliation_comparison.py; flag when |diff| > 5 or bucket diff > 3):
+  STORE | soldJ | AM   | PM   | net | diff | status
+  CUL   |   5   | 1275 | 1271 |  4  |  -1  | ok   (sold: Earrings 4, Necklaces 1)
+  HAR   |   0   |  786 |  786 |  0  |   0  | ok
+  LEX   |   0   |  423 |  423 |  0  |   0  | ok
+  ROA   |   0   | 1030 | 1030 |  0  |   0  | ok   (1x Pocket Watch sold, correctly excluded - not on counted sheet)
+  WAY   |   0   |  532 |  532 |  0  |   0  | ok
+- Bucket-level deltas (CUL only, others net 0 across the board): Bracelets AM122/PM120 (+2, sold0, diff+2); Necklaces AM149/PM150
+  (-1, sold1, diff-2); Earrings AM125/PM122 (+3, sold4, diff-1). All inside BUCKET_TOLERANCE (3).
+- Excluded (real jewelry, deliberately not on the counted sheet): ROA 1x Hamilton Pocket Watch. WAY had 1x Apple Watch (Smart Watch
+  category) sold but Smart Watch is not in the JEWELRY_CATEGORIES gate at all (only Gent's/Lady's/Unisex Wristwatch, Pocket Watch,
+  Watch Band are) so it was excluded before even reaching the ignored-list step - correct behavior, watches live in a separate case.
+- FLAGS: none. No date mismatch on the business-date field itself (all EOD summary headers dated 8/7/26), no missing sheet, no
+  empty grid, no pipeline failure.
+- Posted the clean per-store summary to #jewlery-counts (C0BM9NHGTT4) at ts 1786147319.375499 in the plain-language format
+  required by FIELD COMMUNICATION STANDARD v3. No DM to Joshua (no failure).
+- FOLLOW-UP for next session: LEX's written column totals (426/462) did not match the column sums (423/423) on this sheet -
+  worth a reminder to Martin D. to re-add before writing the total, though it did not affect today's reconciliation outcome.
