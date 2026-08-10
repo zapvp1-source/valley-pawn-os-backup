@@ -458,3 +458,58 @@ required Wednesday footer line. No failure path taken; no DM sent to Joshua.
   required by FIELD COMMUNICATION STANDARD v3. No DM to Joshua (no failure).
 - FOLLOW-UP for next session: LEX's written column totals (426/462) did not match the column sums (423/423) on this sheet -
   worth a reminder to Martin D. to re-add before writing the total, though it did not affect today's reconciliation outcome.
+
+
+## 2026-08-09 — BREAKTHROUGH: count-only pull. On-hand reconciliation is UNBLOCKED.
+
+**Root cause of the 3-day stall was a wrong approach, not a broken tool.**
+`JewelryCaseAudit.ahk` (08-06) exported every on-hand ROW and counted them. That runs
+straight into the DevExpress virtualiser paging bug (BRAVO_KNOWN_ISSUES.md, STILL OPEN):
+on grids >~270 rows the walker stops yielding non-deterministically. The 08-06 WAY probe
+hung at 22 of 327 Rings for exactly this reason.
+
+But that same probe log proved Bravo HANDED US THE ANSWER before the walk began. Every
+grid row carries an accessibility Name `"Row N of TOTAL, ..."` and TOTAL is the full
+on-hand count, readable from the FIRST rendered page. We were exporting 327 rows of ring
+detail to arrive at a number Bravo stated in 11 seconds.
+
+**NEW: `reports/JewelryCaseCount.ahk`, cell `jewelry-case-counts`** (additive; Rule #4).
+Reads TOTAL off the first page, never walks the grid, so the paging bug cannot affect it
+at any inventory size. ONE store visit runs all 5 categories (the store switch was the
+expensive step). Writes a 5-row CSV: `store,category,as_of,count,status`.
+Same technique already proven in production by ItemsToPrice.ahk (header-counter read).
+No false zeros: a category that renders nothing is retried once then recorded as ERROR,
+never as 0.
+
+### FIRST LIVE RUN — WAY, 2026-08-09 — 5/5 SUCCESS, 324s total
+| Category | Bravo on-hand (8/9) | Manager sheet AM (8/4) | Delta |
+|---|---|---|---|
+| Rings | 329 | 326 | +3 |
+| Pendants | 59 | 58 | +1 |
+| Earrings | 47 | 48 | -1 |
+| Chains 41 + Necklaces 22 | **63** | 64 | **-1** |
+| Bracelets | **NO SAVED REPORT** | 40 | — |
+| Total (ex-bracelets) | 498 | 496 | +2 |
+
+### TWO OPEN QUESTIONS — BOTH NOW ANSWERED EMPIRICALLY
+1. **Is the `Location` column needed to scope to case-only stock?** NO. The saved reports
+   are already case-scoped. Every category lands within 1-3 of a manager sheet taken 5 days
+   earlier (normal daily drift from sales/buys). If safe/layaway/repair stock were bleeding
+   in, totals would be wildly high, not within 1%. The Location question is MOOT — close it.
+2. **Do Chains + Necklaces sum to the sheet's single Necklaces line?** YES. 41+22=63 vs
+   sheet 64. Confirmed exactly as Joshua predicted 2026-08-06.
+
+### THE ONE REMAINING GAP — needs Joshua (2 minutes in Bravo)
+**There is no "Claude Jewelry Audit - Bracelets" saved report.** The manager sheet counts
+five buckets; Bravo currently gives us four of them (with neck-worn split across two
+reports). Until a Bracelets report exists, WAY's ~40 bracelets are invisible and the TOTAL
+line cannot be reconciled — only the four covered buckets can.
+Action: create it in Bravo exactly like the other five, then add "Bracelets" to
+`JEWELRY_CASE_COUNT_REPORTS` in reports/JewelryCaseCount.ahk. One-line change.
+
+### NEXT
+- Add Bracelets report -> rerun WAY -> reconcile all 5 buckets + total against a same-day sheet.
+- Roll out to all 5 stores (one trigger, stores array).
+- Point the `jewelry-count-reconciliation` scheduled task at on-hand counts instead of the
+  sold-based flow comparison. The sold-based version STAYS LIVE and untouched until the
+  on-hand version is backtested clean (Rule #4).

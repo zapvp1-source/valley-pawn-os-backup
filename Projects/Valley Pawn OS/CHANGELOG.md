@@ -2,6 +2,13 @@
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
 
+## 2026-08-08
+
+- Enabled scheduled tasks: 88 -> 89
+- Registered scheduled tasks: 131 -> 132
+- Task folders on disk: 152 -> 153
+- ENABLED: zoom-voicemail-alert
+
 ## 2026-08-07 (latest) — Zoom Phone missed-call/voicemail alert built (same gap as Chekkit missed messages)
 
 Joshua flagged that, just like Chekkit customer messages, Zoom Phone voicemails were going unseen — Zoom

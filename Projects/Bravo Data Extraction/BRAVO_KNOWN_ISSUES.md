@@ -10,6 +10,26 @@ and MUST verify+stamp any OPEN item's next-run outcome before starting new work.
 - FIX: no AHK code change was actually needed for post-to-accounting-gl itself (the CS toggle-off block from the two failed attempts is harmless dead code — verified it does not interfere with a healthy run — but should be removed or clearly re-commented next time this file is touched, since it no longer reflects reality). The real fix is procedural/sequencing: `post-to-accounting-post` (Step 1) MUST actually succeed in posting every day through the target end date before `post-to-accounting-gl` (Step 2) is attempted for that store/range. `eom-bravo-gl-export`'s own SKILL.md already runs Step 1 before Step 2 — the 2026-08 failures happened because Step 1 itself was silently failing for HAR (see the "could not click Post button" entry below) and nothing downstream checked that Step 1's per-store result was actually clean before Step 2 ran anyway.
 - REMAINING GAP: `post-to-accounting-gl`'s error message ("preview ribbon did not appear") does not distinguish "blocked by an unposted day" from "something is actually wrong". A future improvement would be to detect the `Warning`/`txtMessage` "dates that need to be posted first" text specifically and surface that as its own clear error rather than falling through to a generic timeout — would have made this a 5-minute diagnosis instead of a 2-day one.
 
+## SOLVED 2026-08-09 - large-grid COUNTS no longer need the paging fix (workaround, additive)
+- The DevExpress virtualiser paging bug (below, STILL OPEN) blocks any pull that needs full
+  ROW DETAIL from a grid larger than ~270 rows. It does NOT block getting the ROW COUNT.
+- Every Bravo grid row carries an accessibility Name of the form: Row N of TOTAL, Column ...
+  TOTAL is the complete row count and is readable from the FIRST rendered page, before any
+  scrolling. reports/BuysFromPublic.ahk already parses it (line ~329) purely to detect truncation.
+- NEW reports/JewelryCaseCount.ahk (cell jewelry-case-counts) reads TOTAL and stops. Proven live
+  2026-08-09 on WAY: Rings=329 read in 11s with zero paging, on the exact grid that hung the
+  2026-08-06 probe at 22 of 327. All 5 categories, 5/5 success, 324s including 5 report runs.
+- RULE OF THUMB going forward: if a task only needs HOW MANY, do not walk the grid - read the
+  header total. Same technique ItemsToPrice.ahk already uses for its Price Items counter. Only
+  walk the grid when the per-row DATA is actually consumed downstream.
+- This does NOT fix the paging bug and does not claim to. Full-inventory ROW exports are still
+  blocked and still fail loudly via the truncation guard.
+- ALSO CLOSED by the same run: the open question of whether the 5 Claude Jewelry Audit saved
+  reports need a Location filter to scope to case-only stock. They do NOT - every category
+  landed within 1-3 of a manager count sheet. And Chains + Necklaces = 63 vs the sheet's single
+  Necklaces line of 64, confirming those two reports must be summed. See the Jewelry Count
+  Reconciliation STATUS.md 2026-08-09 entry.
+
 ## OPEN / AWAITING VERIFICATION
 - 2026-08-04: post-to-accounting-post's `PtaPostClickPostFor` ("real-click" the per-day Post button) intermittently fails with "could not click Post button" even though the button is visibly present and a genuine manual mouse click on the same button works instantly (verified live on HAR 7/31/2026 2026-08-04). The function already uses a physical MouseMove+Click (not synthetic UIA Click) with a 30-pass scroll-into-view loop, so the bug is likely in the viewport-band math (bandTop/bandBot) or a stale grid re-render race, not a "needs real-click" issue like the GL Ok-button had. Reproduced 2x on HAR earlier in this same investigation before the manual post; the other 4 stores (CUL/LEX/ROA/WAY) posted successfully via the automation on the very next run with no code change, so this is intermittent, not a hard failure — needs a live repro with UIA element dump (log the row's BoundingRectangle vs bandTop/bandBot on failure) to pin down before attempting a fix. Do not re-attempt a blind timeout/reorder fix here — that pattern already cost 2 days on the GL issue above.
 - 2026-08-03: Truncation guard is LIVE in the shared walker (see SOLVED). Remaining follow-up: large grids still only yield ~78-268 of 2331 rows before the DevExpress virtualiser stops - the guard now makes that a loud failure instead of silent bad data, but a paging fix is still needed before any full-inventory pull can succeed. Small pulls unaffected.
