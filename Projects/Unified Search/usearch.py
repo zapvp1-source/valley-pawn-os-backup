@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
-"""Unified local search: Apple Mail (.emlx) + iCloud Drive -> SQLite FTS5.
+"""Unified local search: Apple Mail (.emlx) + iCloud Drive + Google Drive cache -> SQLite FTS5.
+(Apple Notes and Reminders are indexed by the sibling scripts notesindex.py / remindersindex.py.)
 Usage:
   usearch.py mail        # (re)index Apple Mail
   usearch.py files       # (re)index iCloud Drive
-  usearch.py query "..." [--mail|--files] [--since YYYY-MM-DD] [--from addr] [--path frag] [-n N]
+  usearch.py gdrive      # ingest gdrive_cache/latest.jsonl into the gdrive table
+  usearch.py query "..." [--mail|--files|--msgs|--notes|--reminders|--gdrive]
+                          [--since YYYY-MM-DD] [--until YYYY-MM-DD] [--from addr] [--path frag] [-n N] [--json]
   usearch.py stats
   usearch.py ocrlist     # list files needing OCR
 """
@@ -47,6 +50,18 @@ def db_connect():
     c.execute("""CREATE VIRTUAL TABLE IF NOT EXISTS msgs USING fts5(
         body, person, chatname,
         handle UNINDEXED, service UNINDEXED, ts UNINDEXED, from_me UNINDEXED, rowid_src UNINDEXED,
+        tokenize="porter unicode61")""")
+    c.execute("""CREATE VIRTUAL TABLE IF NOT EXISTS notes USING fts5(
+        title, body, folder,
+        path_or_id UNINDEXED, mtime UNINDEXED, created UNINDEXED,
+        tokenize="porter unicode61")""")
+    c.execute("""CREATE VIRTUAL TABLE IF NOT EXISTS reminders USING fts5(
+        title, body, list_name,
+        due UNINDEXED, completed UNINDEXED, mtime UNINDEXED, path_or_id UNINDEXED,
+        tokenize="porter unicode61")""")
+    c.execute("""CREATE VIRTUAL TABLE IF NOT EXISTS gdrive USING fts5(
+        name, folder, body,
+        path_or_url UNINDEXED, mtime UNINDEXED, size UNINDEXED, mime_type UNINDEXED,
         tokenize="porter unicode61")""")
     c.execute("CREATE TABLE IF NOT EXISTS meta(k TEXT PRIMARY KEY, v TEXT)")
     return c
@@ -425,6 +440,83 @@ def index_files():
     print("FILES DONE: %d files (%d need OCR) in %ds" % (n, ocr, time.time() - t0), flush=True)
 
 
+# ---------------- GDRIVE ----------------
+# Google Drive can't be crawled from a headless launchd script -- the Google
+# Drive MCP connector only exists inside a live Cowork session. Coverage is
+# populated by a separate Cowork scheduled task (daily, before this nightly
+# rebuild) that writes one JSON object per file to gdrive_cache/latest.jsonl:
+#   {"name":..., "folder":..., "body":..., "path_or_url":..., "mtime":...,
+#    "size":..., "mime_type":...}
+# This function just ingests whatever is currently in that cache file into
+# the `gdrive` FTS5 table -- that part IS safe to run locally every night.
+GDRIVE_CACHE_DIR = os.path.join(PROJ, "gdrive_cache")
+GDRIVE_CACHE = os.path.join(GDRIVE_CACHE_DIR, "latest.jsonl")
+
+
+def _gdrive_mtime(raw):
+    if not raw:
+        return 0
+    try:
+        if isinstance(raw, (int, float)):
+            return int(raw)
+        import datetime
+        s = str(raw).replace("Z", "+00:00")
+        return int(datetime.datetime.fromisoformat(s).timestamp())
+    except Exception:
+        return 0
+
+
+def index_gdrive():
+    t0 = time.time()
+    c = db_connect()
+    c.execute("DELETE FROM gdrive")
+    c.commit()
+    n = 0
+    bad = 0
+    if not os.path.exists(GDRIVE_CACHE):
+        print("no gdrive cache at %s (nothing to ingest)" % GDRIVE_CACHE, flush=True)
+        c.execute("INSERT OR REPLACE INTO meta VALUES('gdrive_indexed_at',?)", (str(int(time.time())),))
+        c.execute("INSERT OR REPLACE INTO meta VALUES('gdrive_count',?)", ("0",))
+        c.commit()
+        return
+    batch = []
+    with open(GDRIVE_CACHE, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                o = json.loads(line)
+            except Exception:
+                bad += 1
+                continue
+            name = str(o.get("name", ""))[:500]
+            folder = str(o.get("folder", o.get("path", "")))[:500]
+            body = str(o.get("body", ""))[:MAXTEXT]
+            path = str(o.get("path_or_url", o.get("webViewLink", o.get("id", ""))))[:1000]
+            mtime = _gdrive_mtime(o.get("mtime") or o.get("modifiedTime"))
+            try:
+                size = int(o.get("size") or 0)
+            except Exception:
+                size = 0
+            mime_type = str(o.get("mime_type", o.get("mimeType", "")))[:200]
+            batch.append((name, folder, body, path, mtime, size, mime_type))
+            if len(batch) >= 500:
+                c.executemany("INSERT INTO gdrive VALUES(?,?,?,?,?,?,?)", batch)
+                c.commit()
+                n += len(batch)
+                batch = []
+    if batch:
+        c.executemany("INSERT INTO gdrive VALUES(?,?,?,?,?,?,?)", batch)
+        n += len(batch)
+    c.commit()
+    c.execute("INSERT OR REPLACE INTO meta VALUES('gdrive_indexed_at',?)", (str(int(time.time())),))
+    c.execute("INSERT OR REPLACE INTO meta VALUES('gdrive_count',?)", (str(n),))
+    c.commit()
+    print("GDRIVE DONE: %d files ingested from cache (%d bad lines skipped) in %ds"
+          % (n, bad, time.time() - t0), flush=True)
+
+
 # ---------------- QUERY ----------------
 def q(args):
     import argparse
@@ -434,6 +526,10 @@ def q(args):
     p.add_argument("--files", action="store_true")
     p.add_argument("--msgs", action="store_true")
     p.add_argument("--texts", action="store_true", dest="msgs")
+    p.add_argument("--notes", action="store_true")
+    p.add_argument("--reminders", action="store_true")
+    p.add_argument("--gdrive", action="store_true")
+    p.add_argument("--drive", action="store_true", dest="gdrive")
     p.add_argument("--since")
     p.add_argument("--until")
     p.add_argument("--from", dest="frm")
@@ -444,10 +540,13 @@ def q(args):
     term = " ".join(a.terms)
     c = db_connect()
     res = []
-    any_flag = a.mail or a.files or a.msgs
+    any_flag = a.mail or a.files or a.msgs or a.notes or a.reminders or a.gdrive
     want_mail = a.mail or not any_flag
     want_files = a.files or not any_flag
     want_msgs = a.msgs or not any_flag
+    want_notes = a.notes or not any_flag
+    want_reminders = a.reminders or not any_flag
+    want_gdrive = a.gdrive or not any_flag
 
     def epoch(s):
         return int(time.mktime(time.strptime(s, "%Y-%m-%d"))) if s else None
@@ -498,6 +597,48 @@ def q(args):
             res += list(c.execute(sql, prm))
         except sqlite3.OperationalError as e:
             print("msgs:", e)
+    if want_notes:
+        sql = ("SELECT 'note',title,folder,path_or_id,mtime,folder,"
+               "snippet(notes,1,'>>','<<',' ... ',18),bm25(notes) FROM notes WHERE notes MATCH ?")
+        prm = [term]
+        if a.since:
+            sql += " AND mtime>=?"; prm.append(epoch(a.since))
+        if a.until:
+            sql += " AND mtime<=?"; prm.append(epoch(a.until))
+        sql += " ORDER BY bm25(notes) LIMIT ?"
+        prm.append(a.n)
+        try:
+            res += list(c.execute(sql, prm))
+        except sqlite3.OperationalError as e:
+            print("notes:", e)
+    if want_reminders:
+        sql = ("SELECT 'remind',title,list_name,path_or_id,mtime,list_name,"
+               "snippet(reminders,1,'>>','<<',' ... ',18),bm25(reminders) FROM reminders WHERE reminders MATCH ?")
+        prm = [term]
+        if a.since:
+            sql += " AND mtime>=?"; prm.append(epoch(a.since))
+        if a.until:
+            sql += " AND mtime<=?"; prm.append(epoch(a.until))
+        sql += " ORDER BY bm25(reminders) LIMIT ?"
+        prm.append(a.n)
+        try:
+            res += list(c.execute(sql, prm))
+        except sqlite3.OperationalError as e:
+            print("reminders:", e)
+    if want_gdrive:
+        sql = ("SELECT 'gdrive',name,folder,path_or_url,mtime,folder,"
+               "snippet(gdrive,2,'>>','<<',' ... ',18),bm25(gdrive) FROM gdrive WHERE gdrive MATCH ?")
+        prm = [term]
+        if a.path:
+            sql += " AND path_or_url LIKE ?"; prm.append("%" + a.path + "%")
+        if a.since:
+            sql += " AND mtime>=?"; prm.append(epoch(a.since))
+        sql += " ORDER BY bm25(gdrive) LIMIT ?"
+        prm.append(a.n)
+        try:
+            res += list(c.execute(sql, prm))
+        except sqlite3.OperationalError as e:
+            print("gdrive:", e)
 
     res.sort(key=lambda r: r[7])
     if a.json:
@@ -520,11 +661,14 @@ def stats():
     c = db_connect()
     for k, v in c.execute("SELECT k,v FROM meta"):
         print("%-20s %s" % (k, v))
-    print("mail rows :", c.execute("SELECT count(*) FROM mail").fetchone()[0])
-    print("file rows :", c.execute("SELECT count(*) FROM files").fetchone()[0])
-    print("msg rows  :", c.execute("SELECT count(*) FROM msgs").fetchone()[0])
-    print("need OCR  :", c.execute("SELECT count(*) FROM files WHERE needs_ocr=1").fetchone()[0])
-    print("db size   : %.0f MB" % (os.path.getsize(DB) / 1e6))
+    print("mail rows     :", c.execute("SELECT count(*) FROM mail").fetchone()[0])
+    print("file rows     :", c.execute("SELECT count(*) FROM files").fetchone()[0])
+    print("msg rows      :", c.execute("SELECT count(*) FROM msgs").fetchone()[0])
+    print("notes rows    :", c.execute("SELECT count(*) FROM notes").fetchone()[0])
+    print("reminders rows:", c.execute("SELECT count(*) FROM reminders").fetchone()[0])
+    print("gdrive rows   :", c.execute("SELECT count(*) FROM gdrive").fetchone()[0])
+    print("need OCR      :", c.execute("SELECT count(*) FROM files WHERE needs_ocr=1").fetchone()[0])
+    print("db size       : %.0f MB" % (os.path.getsize(DB) / 1e6))
 
 
 def ocrlist():
@@ -539,6 +683,8 @@ if __name__ == "__main__":
         index_mail()
     elif cmd == "files":
         index_files()
+    elif cmd == "gdrive":
+        index_gdrive()
     elif cmd == "query":
         q(sys.argv[2:])
     elif cmd == "ocrlist":

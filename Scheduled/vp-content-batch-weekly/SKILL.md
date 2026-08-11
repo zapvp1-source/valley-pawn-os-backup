@@ -1,7 +1,7 @@
 ---
 name: vp-content-batch-weekly
 description: Weekly Valley Pawn content batch — 6 Brand + 20 store-local (33 total incl. 5 Deals + 2 Reels owned by other pipelines), Community + Humor pillars, FB + IG + GBP + Twitter/X via Publer. Brand+store-local footprint DOUBLED 2026-08-04 per Joshua's direct instruction (was 3+10). AUTHENTICITY STANDARD: employee-voice captions with sourced facts, real-photos-first, no AI renders of real places, pre-publish QA gate. Auto-publishes; #vp-studio-queue is a log.
-model: claude-sonnet-5
+model: claude-opus-4-8
 ---
 
 > **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard, added 2026-08-02).**

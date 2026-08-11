@@ -1,6 +1,6 @@
 ---
 name: monday-bravo-combined-run
-description: Monday morning orchestrator (PART 1 of 2) — preflight, drop all required Bravo triggers, schedule the compile task, exit. Lightweight (~3 min total). The compile + Slack posting happens in monday-bravo-combined-compile, scheduled to fire ~75 min later when the pipeline is done.
+description: Sunday-evening Bravo pull (PART 1 of 2, moved off Monday morning 2026-08-10 to avoid contention) — drops all Monday ops triggers, schedules compile for a fixed Monday 8:00 AM ET publish.
 model: claude-sonnet-5
 ---
 
@@ -46,6 +46,28 @@ where EOM export is reliable) with a resilient settle+retry runner.
 So this task now drops ONLY the combined multi-report trigger (aged inventory,
 loans, layaways, employee, chekkit). Those four reports posted cleanly and must
 stay isolated from the flaky EOM. **Do NOT add EOM triggers back here.**
+
+## What changed 2026-08-10 — moved off Monday morning entirely
+
+This task used to fire ~5:30 AM Monday, landing it squarely in the densest Bravo-contention
+window of the week (5:30-9:00 AM Monday: items-to-price, monday-bravo-postcheck,
+vp-dashboard-refresh, and others all want Bravo at the same time). A 2026-08-10 collision with
+daily-items-to-price ("FREE1 is busy with Inventory") made the cost of that concrete.
+
+**This task now runs Sunday evening instead** (cron moved to Sunday ~6:00 PM ET — every store is
+closed Sunday, so Bravo is completely idle and there is no realistic contention). The data itself
+is unaffected: aged inventory, loans, layaways, employee activity, chekkit, and FPD are all
+point-in-time snapshots as of Sunday evening, which is identical to a Monday-morning snapshot
+since nothing happens at any store on Sunday.
+
+**Step 2 below no longer schedules the compile task as "now + 90 minutes."** That relative offset
+is what made Monday's Slack posts land anywhere from 7 AM to 9 AM depending on how fast Bravo
+cooperated that morning (see monday-bravo-postcheck backfills). Since the Sunday pull now has a
+huge overnight buffer to finish, Step 2 instead schedules compile for a FIXED Monday 8:00 AM ET
+clock time — matching the middle of the range the team already sees today, not a new time.
+
+See BRAVO_HEALTH_RUNBOOK.md section 0 for the contention rule that prompted this move, and
+MEMORY feedback_bravo_contention_check for the incident it's based on.
 
 ==========================================================================
 STEP 0 — Pre-flight check
@@ -125,19 +147,29 @@ Date conventions:
 - `<FIRST_OF_MONTH>` = YYYY-MM-01 of current month
 
 ==========================================================================
-STEP 2 — Schedule the compile task
+STEP 2 — Schedule the compile task for a FIXED Monday 8:00 AM ET publish (changed 2026-08-10)
 ==========================================================================
 
-The pipeline now completes 30 main trigger cells (6 reports × 5 stores, ~100s each + spacing) in ~60-80 minutes. Schedule `monday-bravo-combined-compile` to fire 90 minutes from now (bumped from 75 on 2026-07-22 when fpd-cohort added 5 cells).
+This task now runs Sunday evening, so the pipeline has an overnight buffer — no need to compute
+an offset from "now." Instead, schedule `monday-bravo-combined-compile` to fire at a FIXED time:
+**8:00 AM ET on the upcoming Monday** (i.e. tomorrow, since this task itself only ever runs on a
+Sunday). This is what keeps the Slack posts landing at the time the team already expects, even
+though the underlying pull moved off Monday morning entirely.
 
-Use the `mcp__scheduled-tasks__update_scheduled_task` tool to set `fireAt` to NOW + 90 minutes (ISO 8601 with -04:00 offset). Example:
+Compute tomorrow's date in ET, then use the `mcp__scheduled-tasks__update_scheduled_task` tool:
 
 ```
 update_scheduled_task(
   taskId: "monday-bravo-combined-compile",
-  fireAt: "2026-06-01T07:00:00-04:00"   // = drop time + 90 min
+  fireAt: "2026-06-02T08:00:00-04:00"   // = tomorrow (Monday), 8:00 AM ET, fixed — not an offset
 )
 ```
+
+If the pipeline is somehow not done by 8:00 AM (should not happen given the overnight buffer, but
+if Bravo needed extensive recovery Sunday night), compile's own existing incomplete-data handling
+(DM Joshua, do not post partial) still applies — `monday-bravo-postcheck` at 8:30 AM is the
+safety net, same role it always had, just re-timed to sit after this fixed 8:00 AM slot instead
+of racing a variable one.
 
 ==========================================================================
 STEP 3 — DM Joshua the start notice
@@ -146,11 +178,11 @@ STEP 3 — DM Joshua the start notice
 DM Joshua (`U03BB52MDSA`) on Slack:
 
 ```
-🚦 Monday Bravo combined run dispatched — YYYY-MM-DD
+🚦 Sunday Bravo pull dispatched — YYYY-MM-DD
 1 multi-report trigger dropped (30 cells: aged-inv, loans, layaways, employee, chekkit, fpd × 5).
-Compile task scheduled to fire at HH:MM (about 90 min from now).
-EOM / store-rankings runs separately in monday-store-rankings (~10:30 AM).
-Pipeline running in the watcher meanwhile — no action needed.
+Compile task scheduled for a fixed 8:00 AM ET Monday publish (moved off Monday morning 2026-08-10 — see BRAVO_HEALTH_RUNBOOK.md section 0).
+EOM / store-rankings runs separately in monday-store-rankings (~10:30 AM Monday, unchanged for now).
+Pipeline running overnight in the watcher meanwhile — no action needed.
 ```
 
 Then exit. This task is done.

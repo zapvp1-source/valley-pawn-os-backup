@@ -56,22 +56,26 @@
 
 #Requires AutoHotkey v2.0
 
-; Category -> saved report name. Same 5 saved reports Joshua built 2026-08-06.
+; Category -> saved report name. Same saved reports Joshua built in Bravo.
 ; NOTE the sheet has five buckets: Rings, Bracelets, Necklaces, Earrings,
 ; Pendants. Bravo splits neck-worn stock into Chains + Necklaces, so those two
 ; SUM to the sheet's single "Necklaces" line (Joshua, 2026-08-06: "Those
-; reports will need combined totals to match the count sheet"). Bracelets has
-; no saved report yet — see JEWELRY_CASE_COUNT_SHEET_MAP below.
+; reports will need combined totals to match the count sheet"). Bracelets
+; report confirmed built 2026-08-10 — added below, same naming convention as
+; the other five. If the exact saved-report name differs even slightly, this
+; category will fail cleanly (SelectInventorySavedReport throws) rather than
+; silently pull the wrong report — check the log and correct the string below.
 global JEWELRY_CASE_COUNT_REPORTS := Map(
     "Rings",     "Claude Jewelry Audit - Rings",
     "Pendants",  "Claude Jewelry Audit - Pendants",
     "Earrings",  "Claude Jewelry Audit - Earrings",
     "Chains",    "Claude Jewelry Audit - Chains",
-    "Necklaces", "Claude Jewelry Audit - Necklaces"
+    "Necklaces", "Claude Jewelry Audit - Necklaces",
+    "Bracelets", "Claude Jewelry Audit - Bracelets"
 )
 
 ; Deterministic run order — keeps the CSV stable for diffing across days.
-global JEWELRY_CASE_COUNT_ORDER := ["Rings", "Pendants", "Earrings", "Chains", "Necklaces"]
+global JEWELRY_CASE_COUNT_ORDER := ["Rings", "Bracelets", "Pendants", "Earrings", "Chains", "Necklaces"]
 
 global JEWELRY_CASE_COUNT_ELEMENTS := Map(
     "sidebar_inventory",    "Inventory",

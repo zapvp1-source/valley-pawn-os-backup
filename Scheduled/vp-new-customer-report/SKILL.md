@@ -1,6 +1,7 @@
 ---
 name: vp-new-customer-report
 description: Monthly new-customer count (MoM/YoY) across all 5 Valley Pawn stores via the Bravo pipeline's chekkit-invites-range cell; updates the vp-new-customer-report Cowork artifact and posts to #store-performance
+model: claude-sonnet-5
 ---
 
 ---

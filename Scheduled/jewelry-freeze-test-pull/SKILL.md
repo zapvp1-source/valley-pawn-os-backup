@@ -1,0 +1,44 @@
+---
+name: jewelry-freeze-test-pull
+description: ONE-TIME 8:30 PM 2026-08-10 — pull 5-store jewelry on-hand counts inside the overnight freeze window so they can be compared against tonight's Monday PM manager sheets for the SAME period.
+model: claude-sonnet-5
+---
+
+ONE-TIME TEST RUN — part 1 of 2. Companion task `jewelry-freeze-test-compare` fires at 9:45 PM tonight and does the comparison. Your only job is to get a clean 5-store jewelry on-hand pull.
+
+WHY THIS EXISTS (read this, it determines whether the run is valid):
+Valley Pawn's jewelry reconciliation compares Bravo's on-hand count against the manager's handwritten EOD case-count sheet. The Bravo report is a LIVE on-hand query — it has no as-of-date capability, it always returns "right now." So the only way to get a valid comparison is to run the pull inside a FREEZE WINDOW: a period when no store is transacting, so "right now" in Bravo equals the state the manager counted.
+
+All 5 stores close at 6:00 PM and reopen at 10:00 AM. So 6 PM tonight through 10 AM tomorrow is a freeze window — nothing moves in that period. You are firing at 8:30 PM, inside it. Tonight's manager PM sheets (posted to Slack #end-of-day between roughly 6:15 and 8:15 PM) describe the same 6 PM close state. That is what makes tonight's numbers comparable.
+
+A prior attempt on 2026-08-10 compared a Monday-MORNING pull (stores already open and transacting) against a FRIDAY sheet — three days and two business days apart. That produced meaningless deltas. Do not repeat that. If for any reason you cannot run inside the freeze window tonight, do NOT pull anyway — report that the window was missed and stop.
+
+STEP 1 — Contention check (mandatory, standing rule).
+Never touch Bravo blind. Before dropping anything:
+- `ls "/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/triggers/claimed/"` and check whether anything was claimed in the last ~30 minutes (compare file mtimes to now). Anything recent means Bravo is busy.
+- Confirm the evening Bravo tasks have finished: daily-funds-verification (6:03 PM), funds-verification-watchdog (6:47 PM), asset-recovery-daily-refresh (7:17 PM), and especially jewelry-count-reconciliation (7:47 PM, which pulls sold-jewelry from Bravo). By 8:30 PM these should all be done, but verify rather than assume.
+- Check `logs/_health_gate_status.txt` for a PASS.
+If Bravo appears busy, wait and re-check up to 3 times at ~10 minute intervals. If it is still busy after that, STOP, do not force it, and DM Joshua one plain-language line saying tonight's jewelry test could not run because the system was busy. Never retry through a "FREE1 is busy" dialog.
+
+STEP 2 — Drop the trigger.
+Write this file to /Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/triggers/jewelry-freeze-test-2026-08-10.json (use osascript shell — the Write tool cannot reach that folder):
+
+{
+  "id": "jewelry-freeze-test-2026-08-10",
+  "requested_at": "<current ISO timestamp with -04:00 offset>",
+  "reports": [
+    {"name": "jewelry-case-counts", "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "2026-08-10"}
+  ]
+}
+
+Confirm within ~60 seconds that it moved to triggers/claimed/. If it is never claimed, the watcher may be down — DM Joshua one plain line and stop.
+
+STEP 3 — Monitor hands-off. THIS IS CRITICAL.
+Tail /Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/logs/jewelry-freeze-test-2026-08-10.log periodically. The run takes roughly 45-60 minutes for 5 stores.
+
+DO NOT under any circumstances click, scroll, or otherwise interact with the Bravo window via computer-use while this is running, even if a category looks stuck or is retrying its report selection. On 2026-08-10 exactly that happened: a manual click landed at the same moment the automation's own retry succeeded, and Culpeper's Rings count was silently recorded as 25 when the true value was 644 — no error, no crash, a clean-looking but completely wrong number. Read-only log tailing only. If a category is slow, wait; the handler has its own retry logic and will recover on its own.
+
+STEP 4 — Verify completeness, then hand off.
+When the log shows "Overall status", confirm all 5 store CSVs exist in the output folder dated today (2026-08-10_<STORE>_jewelry-case-counts.csv) and that every row has status=ok. Do not fix, adjust, or interpret the numbers — the compare task does that. Just log clearly whether the pull was complete or not, so the 9:45 PM task knows what it's working with.
+
+Standard failure policy: if this run fails or cannot complete, send Joshua exactly ONE plain-language Slack DM (channel D03BHQH5VGT) saying tonight's jewelry count test did not complete. No technical detail in the DM — no error text, no file paths, no next steps. Put all technical detail in your run output for the next session.

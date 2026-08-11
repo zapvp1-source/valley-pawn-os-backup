@@ -1,7 +1,7 @@
 ---
 name: ebay-title-photo-accuracy-audit
 description: Weekly: audit every eBay listing's title against its photos; auto-fix clear tool-only/battery-charger errors, flag the rest for Joshua
-model: claude-sonnet-4-6
+model: claude-sonnet-5
 ---
 
 > **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard, added 2026-08-02).**

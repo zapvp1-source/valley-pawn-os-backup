@@ -1,7 +1,7 @@
 ---
 name: vp-gusto-signature-chase
 description: Mondays 9:05 AM — check Gusto for unsigned policy documents and duplicate/never-sent templates, post an employee reminder to Slack #policy-announcements, DM Joshua the internal gaps.
-model: sonnet
+model: claude-sonnet-5
 ---
 
 Valley Pawn (Full Circle Finance Inc) — weekly Gusto policy e-signature chase + duplicate audit.

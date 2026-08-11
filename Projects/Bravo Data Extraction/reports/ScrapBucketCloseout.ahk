@@ -87,7 +87,18 @@ global CLOSEOUT_ELEMENTS := Map(
 ; the pipeline watcher exactly as it found it (paused only for the duration
 ; of this run), even on error - see the try/finally around the store loop.
 ; ----------------------------------------------------------------------------
+; Read-only / dry-run mode. Set by a manifest carrying "readOnly": true.
+; When on, CloseoutOneBucket opens each bucket, reads and logs every field it
+; would otherwise act on, then backs out WITHOUT selecting a status, without
+; writing any value and without saving - so the whole navigate + locate + read
+; path can be proven against real production buckets with zero money at risk.
+; Added 2026-08-06 after the field-read bug; keep it, every future change to
+; this handler should be dry-run proven before it is allowed to post money.
+; ----------------------------------------------------------------------------
+global CLOSEOUT_READONLY := false
+
 RunScrapCloseoutManifest(manifestPath) {
+    global CLOSEOUT_READONLY
     result := Map(
         "trigger_id",  "",
         "started_at",  FormatTime(, "yyyy-MM-dd HH:mm:ss"),
@@ -100,6 +111,9 @@ RunScrapCloseoutManifest(manifestPath) {
 
     manifest := ParseScrapManifest(manifestPath)
     result["trigger_id"] := manifest["id"]
+    CLOSEOUT_READONLY := manifest["readOnly"]
+    if CLOSEOUT_READONLY
+        LogMessage("*** READ-ONLY DRY RUN - fields will be read and logged, nothing saved, no money posted ***")
 
     if (manifest["buckets"].Length = 0) {
         LogMessage("RunScrapCloseoutManifest: manifest has zero buckets - nothing to do")
@@ -185,6 +199,7 @@ RunScrapCloseoutManifest(manifestPath) {
 ; reports/ScrapRefiningGold.ahk - not reinvented here.
 ; ----------------------------------------------------------------------------
 CloseoutOneBucket(store, bucketName, amountPaid, tenderType) {
+    global CLOSEOUT_READONLY
     out := Map(
         "store", store, "bucketName", bucketName,
         "amountPaid", amountPaid, "tenderType", tenderType,
@@ -201,6 +216,27 @@ CloseoutOneBucket(store, bucketName, amountPaid, tenderType) {
     }
     out["priorStatus"] := status
     LogMessage("    current status: " . status)
+
+    ; --- Read-only dry run: read everything, change nothing, back out ---------
+    if CLOSEOUT_READONLY {
+        rdWeight := ReadFieldValue(CLOSEOUT_ELEMENTS["combined_metal_weight"])
+        rdAssay  := ReadCalculatedAssayValue()
+        rdAmount := ReadFieldValue(CLOSEOUT_ELEMENTS["amount_paid"])
+        rdTender := ReadFieldValue(CLOSEOUT_ELEMENTS["tender_type"])
+        LogMessage("    [dry-run] Select Status         = '" . status . "'")
+        LogMessage("    [dry-run] Combined Metal Weight = '" . rdWeight . "'")
+        LogMessage("    [dry-run] Calculated Assay      = '" . rdAssay . "'")
+        LogMessage("    [dry-run] Amount Paid           = '" . rdAmount . "'")
+        LogMessage("    [dry-run] Tender Type           = '" . rdTender . "'")
+        LogMessage("    [dry-run] manifest would post   = '" . amountPaid . "' / '" . tenderType . "'")
+        DoneOrCancelBucketDetail()
+        try BackToDashboard()
+        out["status"]   := "readonly"
+        out["verified"] := (RegExReplace(rdWeight, "[^0-9.]", "") != "")
+        if !out["verified"]
+            out["error"] := "dry run could not read Combined Metal Weight"
+        return out
+    }
 
     if InStr(status, "Close") || InStr(status, "CLOSED") {
         ; Idempotent re-run: already closed. Verify the posted amount
@@ -482,7 +518,63 @@ OpenBucketAndReadStatus(bucketName) {
 ; pattern already relied upon by SetValueByName/FindByName throughout
 ; lib/Bravo.ahk and lib/StoreCycle.ahk).
 ; ----------------------------------------------------------------------------
+; ----------------------------------------------------------------------------
+; Read the VALUE that belongs to a label on the Scrap Bucket Detail screen.
+;
+; 2026-08-06 rev2 - THE fix for this handler. Every field on this screen is a
+; label control whose UIA Name is the literal label text ("Select Status",
+; "Combined Metal Weight", "Amount Paid", ...) with NO value on it; the actual
+; value lives in a SEPARATE adjacent control that reports only its own class
+; name ("BravoComboBox" / "PopupBaseEdit") from .Name. So GetValueByName(label)
+; can never work here - it finds the label and reads the label.
+;
+; This is a solved problem: ScrapRefiningGold.ahk has been reading Combined
+; Metal Weight off this exact screen in production every month via
+; ScrapReadCombinedWeightValue() - walk the flat element list, find the label,
+; then take the first following element (within a few siblings) that has a
+; non-empty .Value. That handler is already #included here, so this is the same
+; proven technique generalized to any label rather than a second invention.
+; Sibling-order, NOT screen geometry - geometry was tried 2026-08-06 and is
+; brittle (it matched the control but only ever yielded internal codes).
+; ----------------------------------------------------------------------------
+ScrapReadValueAfterLabel(labelText) {
+    try {
+        root := GetBravoRoot()
+        allEl := ""
+        try allEl := root.FindElements({})
+        if !allEl
+            return ""
+        foundLabel := false
+        checkedSince := 0
+        for e in allEl {
+            if !foundLabel {
+                nm := ""
+                try nm := e.Name
+                if (nm = labelText)
+                    foundLabel := true
+                continue
+            }
+            checkedSince++
+            if (checkedSince > 6)
+                break
+            val := ""
+            try val := e.Value
+            if (val != "" && val != labelText)
+                return val
+        }
+        return ""
+    } catch as e {
+        LogMessage("    [read-after-label] '" . labelText . "' error: " . e.Message)
+        return ""
+    }
+}
+
 ReadFieldValue(fieldName) {
+    ; Proven sibling-walk first (see above), naive name lookup only as a
+    ; fallback for any field that genuinely does carry its value on the label.
+    val := ScrapReadValueAfterLabel(fieldName)
+    if (val != "")
+        return val
     return GetValueByName(fieldName, 3000)
 }
 
@@ -854,12 +946,24 @@ PauseMainWatcher() {
     RunWait('schtasks /change /tn BravoWatcherWatchdog /disable', , "Hide")
     ; Do not kill ourselves - this script runs as a SEPARATE AHK process
     ; (ScrapBucketCloseoutWatcher.ahk), so taskkill /IM AutoHotkey64.exe
-    ; would also kill this process. Kill by matching window title instead:
-    ; only the main watcher has no visible window (it's a background
-    ; poller), so target it by excluding our own PID.
+    ; would also kill this process.
+    ;
+    ; 2026-08-10 CRITICAL FIX. This used to kill EVERY AutoHotkey64.exe except
+    ; its own PID. That is far too broad: the interactive session also runs
+    ;   - BravoAutoLogin.ahk        (drives the Bravo login screen)
+    ;   - bravo_foreground_keeper.ahk (relaunches Bravo via ClickOnce and
+    ;                                  answers the ClickOnce trust prompt)
+    ; Those two are the ONLY things that can bring Bravo back up and log it in,
+    ; and ResumeMainWatcher never restarted them - so every scrap-closeout run
+    ; permanently disarmed Bravo's self-heal. Observed live 2026-08-10: a run
+    ; killed all four helpers, Bravo later exited, and nothing could restart it.
+    ; Match on CommandLine and touch ONLY the main pipeline watcher - the same
+    ; discipline _scrap_watchdog.ps1 already uses (never a blanket AHK kill).
     myPid := ProcessExist()
-    for proc in ComObjGet("winmgmts:").ExecQuery("Select ProcessId from Win32_Process where Name='AutoHotkey64.exe'") {
-        if (proc.ProcessId != myPid) {
+    for proc in ComObjGet("winmgmts:").ExecQuery("Select ProcessId, CommandLine from Win32_Process where Name='AutoHotkey64.exe'") {
+        cmd := ""
+        try cmd := proc.CommandLine
+        if (proc.ProcessId != myPid && InStr(cmd, "bravo_watcher.ahk")) {
             try {
                 RunWait("taskkill /F /PID " . proc.ProcessId, , "Hide")
                 LogMessage("  killed AutoHotkey64.exe PID " . proc.ProcessId)
@@ -884,7 +988,7 @@ ResumeMainWatcher() {
 ; JSON parser).
 ; ----------------------------------------------------------------------------
 ParseScrapManifest(path) {
-    m := Map("id", "", "buckets", [])
+    m := Map("id", "", "buckets", [], "readOnly", false)
     if !FileExist(path)
         return m
     text := FileRead(path, "UTF-8")
@@ -892,6 +996,11 @@ ParseScrapManifest(path) {
         m["id"] := idm[1]
     else
         m["id"] := "scrap-closeout_" . A_TickCount
+
+    ; Optional top-level "readOnly": true -> dry run, never posts (see the
+    ; CLOSEOUT_READONLY comment above RunScrapCloseoutManifest).
+    if RegExMatch(text, '"readOnly"\s*:\s*true')
+        m["readOnly"] := true
 
     pos := 1
     while RegExMatch(text, '\{[^{}]*"store"\s*:\s*"([^"]*)"[^{}]*\}', &bm, pos) {

@@ -1,7 +1,7 @@
 ---
 name: asset-recovery-daily-refresh
 description: Daily 7:15 PM refresh of the Asset Recovery 2025 vs 2026 artifact. Reuse-first: reads the latest complete 5-store Bravo End-of-Month CSV set already in the pipeline output (fresh pull only as fallback); updates the current-month Loans+Inventory point. Silent on failure.
-model: claude-sonnet-5
+model: claude-haiku-4-5
 ---
 
 > **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard, added 2026-08-02).**

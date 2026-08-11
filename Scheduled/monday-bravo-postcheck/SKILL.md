@@ -1,6 +1,6 @@
 ---
 name: monday-bravo-postcheck
-description: Mon 8:15 AM post-check/self-heal: verify the 4 combined-Bravo ops reports posted today; backfill any missing from the pipeline CSVs; silent if all good.
+description: Mon 8:30 AM post-check/self-heal: verify the 4 combined-Bravo ops reports posted (compile now fires at a fixed 8:00 AM ET after the Sunday pull); backfill any missing.
 model: claude-sonnet-5
 ---
 

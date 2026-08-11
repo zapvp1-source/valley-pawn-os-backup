@@ -1,6 +1,7 @@
 ---
 name: vp-deal-of-week-monday-reminder
 description: Every Monday 11am ET — check #deal-of-the-week for stores that haven't submitted a Deal of the Week yet and ping them directly before the noon cutoff
+model: claude-sonnet-5
 ---
 
 > ⚠️ **FAILURE ALERT POLICY (still binding):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium.

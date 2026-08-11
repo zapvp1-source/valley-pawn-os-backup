@@ -8,6 +8,51 @@ Read this alongside `KNOWN_ISSUES.md` (the confirmed root-cause log). This runbo
 
 ---
 
+## 0. RULE - never touch Bravo blind. Check for contention FIRST, every time. (set 2026-08-10)
+
+**Why this exists:** on 2026-08-10, a manual jewelry-reconciliation pull collided with the
+scheduled daily-items-to-price run during the Monday-morning task cluster. Bravo runs one
+shared login (FREE1) across every automation and hard-locks it per module - the collision
+surfaced on screen as: Cannot switch stores: FREE1 is busy with Inventory. The session had
+already misread an earlier stall that morning as a UI/inv-select bug when it was actually this
+same contention. Both the manual pull and the scheduled task ended up half-stuck. Joshua's
+instruction: never operate Bravo - manually, via a dropped trigger, or via computer-use - without
+checking first, and if there's a conflict, STOP and tell him rather than pushing through.
+
+**This is a live check, not a static timetable.** A hardcoded list of "safe hours" would go
+stale the same way the dead scheduled-task debris did (see task-hygiene-sweep). Check the actual
+state every time instead:
+
+1. **Is anything already running?** ls triggers/claimed/ - anything sitting there (not yet in
+   processed/ or results/) means Bravo is currently in use. Do not drop a second trigger or
+   open a computer-use session on top of it.
+2. **Is a scheduled Bravo task about to fire?** Check mcp__scheduled-tasks__list_scheduled_tasks
+   (or grep -rl 'Bravo Data Extraction' ~/Documents/Claude/Scheduled/*/SKILL.md for the full
+   Bravo-touching set) for anything enabled with a nextRunAt within the next ~20 minutes, or
+   that just fired in the last ~20 minutes and may still be mid-run/mid-retry. Monday mornings
+   (roughly 5:30-9:00 AM ET) are the densest cluster - treat that whole window as high-risk by
+   default, not just a specific minute.
+3. **If either check is unclear or positive: STOP. Do not retry through it.** A 'FREE1 is busy'
+   dialog, an unexplained inv-select hang, or a trigger that won't get claimed are the SIGNAL, not
+   noise to route around. Dismiss any dialog cleanly, leave Bravo on whatever screen it's on (don't
+   force it back to Dashboard mid another task's run), and send Joshua one plain-language line:
+   what collided, and that you're holding until it clears.
+4. **Only proceed once both checks are clear**, or Joshua explicitly says to go anyway.
+
+This applies to every manual/on-demand Bravo touch: ad-hoc triggers, computer-use sessions,
+backfills, probes, and diagnostic pulls. Scheduled tasks already run through the Health Gate
+(below) and single-flight trigger claiming, which handles contention BETWEEN scheduled tasks -
+this rule is specifically about a human/session-initiated action stepping on that traffic.
+
+**Retiming candidate, not yet applied:** the 8-9 AM window is genuinely overloaded (items-to-price,
+monday-bravo-postcheck, vp-dashboard-refresh, plus the tail of the 5:30 AM Monday cluster all land
+here). Sundays are viable for any Bravo pull that doesn't need same-day freshness - every store is
+closed Sunday, so Bravo sits idle all day. Candidates for a Sunday or off-peak move: weekly/monthly
+analytics and ranking tasks that summarize a period rather than 'yesterday.' This has NOT been
+executed - bring a specific move-list to Joshua before touching any cron expression.
+
+---
+
 ## 1. The two ways data leaves Bravo (and which one wins)
 
 | Path | What it is | Used by | Reliability |

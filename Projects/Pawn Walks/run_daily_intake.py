@@ -143,7 +143,7 @@ def load_intake_for_date(date: datetime.date) -> list[dict]:
     rows = []
     ds = date.isoformat()   # YYYY-MM-DD
 
-    detail_files = glob.glob(os.path.join(BRAVO_OUTPUT, f"{ds}_*_intake-detail.csv"))
+    detail_files = glob.glob(os.path.join(BRAVO_OUTPUT, f"{ds}_*_intake-detail.csv")) + glob.glob(os.path.join(BRAVO_OUTPUT, f"{ds}_to_{ds}_*_intake-detail.csv"))
     buys_files   = glob.glob(os.path.join(BRAVO_OUTPUT, f"{ds}_*_buys-from-public.csv"))
 
     use_files  = detail_files if detail_files else buys_files

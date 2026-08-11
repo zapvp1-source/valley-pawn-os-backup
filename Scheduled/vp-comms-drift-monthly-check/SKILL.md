@@ -1,6 +1,7 @@
 ---
 name: vp-comms-drift-monthly-check
 description: Monthly check of team-facing Slack channels against the Field Communication Standard v3 — DMs Joshua a one-line drift digest, does not post to any team channel.
+model: claude-sonnet-5
 ---
 
 > ⚠️ **FAILURE ALERT POLICY:** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "vp-comms-drift-monthly-check" did not complete — <date>. Nothing technical in the DM. Joshua's DM is the ONLY place a failure may ever be mentioned — never a team channel or any employee, in any medium.

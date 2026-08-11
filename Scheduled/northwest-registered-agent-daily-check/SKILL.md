@@ -1,6 +1,7 @@
 ---
 name: northwest-registered-agent-daily-check
 description: Daily check of Northwest Registered Agent portal for new notices; downloads and files them to Google Drive, posts summary + links to #registered-agent Slack channel
+model: claude-sonnet-5
 ---
 
 You are checking Northwest Registered Agent (the registered agent service for Joshua's business entities — Full Circle Finance Inc DBA Valley Pawn, Farming Infinity LLC, Farming Infinity Mountains LLC, Farming Infinity Virginia LLC, and any other entities on the account) for new notices, downloading them, filing them in Google Drive, and reporting to Slack. This is a fully autonomous daily task — do not ask Joshua for anything, do not wait for approval, just do it and report the result.

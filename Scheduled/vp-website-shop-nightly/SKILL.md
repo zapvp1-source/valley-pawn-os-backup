@@ -1,6 +1,7 @@
 ---
 name: vp-website-shop-nightly
 description: Refresh thevalleypawn.com/shop/ twice daily (7am & 3pm ET) — pulls all 5 stores' full live eBay inventory, filters weapons-adjacent, rebuilds the searchable buy-now grid, writes it to the /shop/ page (WP page id 833) via the site REST API, posts summary to #website. Sold items drop off automatically. Additive; never touches /retail/.
+model: claude-sonnet-5
 ---
 
 > **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard, added 2026-08-02).**

@@ -24,6 +24,18 @@ let Valley Pawn brand voice/rules bleed into personal content, never charge a pe
 against FCF Inc books, never assume a Real Estate task is automatically a Valley Pawn task just
 because FCF Inc owns Bald Rock.
 
+**Hard separation rule (set by Joshua 2026-08-10):** Domain 1 (Valley Pawn) and Domain 2 (Real
+Estate) must never reference, be associated with, or visibly touch each other — no shared or
+cross-linking domains, email addresses, letterhead, branding, social accounts, or customer/guest
+copy — **except from a tax/entity perspective**, where the link is real (Bald Rock is legally FCF
+Inc, same entity and tax return as Valley Pawn) and stays fine to note in bookkeeping, K-1s, basis
+work, and internal accounting. Outside that narrow lane, treat them as if they were unrelated
+businesses. Concretely: real-estate correspondence and aliases (e.g. FIMTN/FIVA/FITN) must never
+live on `fcfpawn.com` or route through `jdavis@fcfpawn.com` — use a neutral address instead
+(`zapvp1@me.com` / iCloud). This is stricter than, and takes precedence over, the general
+"different P&L, same tax return" framing below when the two conflict. Mirrored in
+`Valley Pawn OS/BUSINESS_OS.md` Rule 12 and `REAL_ESTATE_OS.md`.
+
 **Cross-domain overlap that IS real (not an error):**
 - Bald Rock (Domain 2) is legally owned by Full Circle Finance Inc — same entity as Valley Pawn
   (Domain 1). It gets its own domain file because it's operationally and financially distinct

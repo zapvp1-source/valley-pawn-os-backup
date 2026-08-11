@@ -1,6 +1,7 @@
 ---
 name: vp-follower-growth-monthly-check
 description: Weekly (Mondays) check of Valley Pawn's social follower growth for the current month via Publer, DM'd to Joshua — tracks whether the QR-sign/giveaway campaign is moving the needle
+model: claude-sonnet-5
 ---
 
 Context: Joshua asked (2026-08-06) to track how Valley Pawn's social follower count does "this month" (August 2026), after we audited the counter-card/QR-sign + $100 monthly giveaway campaign. Baseline captured 2026-08-06 via Publer's Overview dashboard: workspace-wide followers = 6.3K total, and Publer's own "This month" filter showed -2 net for Aug 1-6 (essentially flat/slightly down). Per-account snapshot taken 2026-08-06 (for reference, not to be treated as this month's start-of-month number unless it's the first run of August): Facebook Culpeper 884, Harrisonburg 757, Lexington ~1,600, Roanoke 36, Waynesboro ~1,200, Brand FB 1,700, Instagram @valley_pawn 100, TikTok @thevalleypawn 2, X @valleypawnva 0.

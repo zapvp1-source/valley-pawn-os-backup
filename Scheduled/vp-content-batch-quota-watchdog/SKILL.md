@@ -1,6 +1,7 @@
 ---
 name: vp-content-batch-quota-watchdog
 description: Tuesday 10 AM ET — reads the last 2 weeks' vp-content-batch-weekly manifests, compares actual content items shipped against the 26-item Brand+store-local target, and DMs Joshua only if fill rate has been materially short 2 weeks running. Makes the "not firing at full volume" pattern visible automatically instead of requiring manual Slack/Publer digging.
+model: claude-sonnet-5
 ---
 
 > **LOCAL ACCESS GATE — DO THIS FIRST.** This task runs on Joshua's Mac Studio and has local access via `mcp__Control_your_Mac__osascript`, which may be deferred rather than pre-loaded. If needed, `ToolSearch` with query `select:mcp__Control_your_Mac__osascript`, probe with `do shell script "echo READY"`, retry every ~20s for up to 12 minutes before concluding it's unavailable. All reads under `/Users/joshuadavis/Documents/Claude/...` go through this tool, never the Write tool.

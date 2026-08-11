@@ -1,6 +1,7 @@
 ---
 name: jewelry-count-reconciliation
 description: Daily jewelry count reconciliation — pulls sold-jewelry counts from Bravo, reads manager AM/PM count sheets from #end-of-day, compares, posts results to #jewlery-counts
+model: claude-sonnet-5
 ---
 
 > **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard, added 2026-08-02).**

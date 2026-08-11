@@ -1,6 +1,74 @@
 # Valley Pawn - Enterprise Changelog
 
+## 2026-08-10 (evening) — zoom-voicemail-alert: recovered from archived Slack channel, posted live voicemail, self-healed the task
+
+A scheduled run of `zoom-voicemail-alert` found the destination channel (`C0BND1NK65V`) returned `is_archived` —
+Joshua had archived the original `#voicemails-missed-calls` (renamed `#voicemails-missed-calls-archived`) and
+recreated it fresh the same day under a new ID, `C0BP4M3B99R`. Per the task's error-handling policy, did not
+guess or fall back to `#general`; ran `slack_search_channels` to confirm a live, non-archived channel by the
+same name existed, posted the alert there, then updated the task's own SKILL.md (via
+`mcp__scheduled-tasks__update_scheduled_task`) to point at the new channel ID so future runs don't hit the
+same failure. Also added an explicit recovery step to the task's ERROR HANDLING section for next time this
+happens (channel IDs aren't stable if Joshua recreates a channel).
+
+Substantively, the run found one new unresolved voicemail: Lexington (jdavis@fcfpawn.com / ext 800), caller
+(540) 960-1878 at 5:25:05 PM, Ring Timeout with Voicemail=Y, no later outbound callback or inbound reconnect
+from that number — posted to Slack and updated `.zoom_voicemail_alert_state.json`. Harrisonburg and Waynesboro
+had no new candidate rows this run.
+
+## 2026-08-10 (later) — Fixed zoom-voicemail-alert dedupe (was silently broken since enabled) + added callback verification
+
+Joshua asked whether the task was set up correctly, wasn't re-posting old days, and whether callbacks could be
+confirmed from the call log. Investigating turned up two real issues, fixed via `mcp__scheduled-tasks__update_scheduled_task`
+(the file-edit path was blocked — see below):
+
+1. **Dedupe state file was never persisting.** The task wrote its `state.json` to
+   `~/Documents/Claude/Scheduled/zoom-voicemail-alert/` — that whole tree is mounted READ-ONLY in Cowork
+   sessions (confirmed via a blocked `request_cowork_directory` call: "overlaps a protected host location").
+   Every run's `Write` on `state.json` (and, discovered separately, on the task's own `SKILL.md`) was failing.
+   This had been silently broken since the task was enabled 2026-08-08 — the "first run, no state file yet"
+   fallback behavior was masking it, because a failed write looks identical to "file didn't exist." Moved the
+   state file to `~/Documents/Claude/Projects/Valley Pawn OS/.zoom_voicemail_alert_state.json` (this project
+   folder is writable) and confirmed the write succeeds. **Same-day duplicate posting was never actually a risk**
+   — the task already scopes every History pull to From/To = today, so it can't surface a prior day's calls —
+   but without persistent state it could have re-posted the same TODAY items every 20 minutes indefinitely.
+2. **No callback verification — added Step 3.5.** Before today's fix, every missed/voicemail row was alerted
+   on even if the store had already called the customer back. Caught a live example: Waynesboro missed Daniel
+   Liptrap ((540) 480-0805) at 10:38:42 AM (Busy) but called him back twice within the same minute, one call
+   Connected 1:15 — the alert flagged it anyway. New Step 3.5 cross-references the Outbound rows already
+   pulled in Step 2: if there's a later Outbound call to the same number that Connected, the row is
+   "callback-confirmed" and excluded from the alert.
+
+**Note for future sessions:** `~/Documents/Claude/Scheduled/<task>/` is read-only to both `Write` and `Edit` in
+a Cowork chat session — `mcp__scheduled-tasks__update_scheduled_task` (prompt field) is the correct way to
+modify an existing task's SKILL.md; direct file edits will fail there even though `Read` and `list_scheduled_tasks`
+work fine. Any task that writes its own state/logs needs that state living under `~/Documents/Claude/Projects/`
+(or similar writable path), never under `~/Documents/Claude/Scheduled/`.
+
+## 2026-08-10 (manual entry)
+- MOVED: monday-bravo-combined-run off Monday 5:30 AM onto Sunday 6:00 PM ET. Root cause: a manual jewelry-reconciliation pull collided with daily-items-to-price during the Monday-morning Bravo cluster ("FREE1 is busy with Inventory") - the whole 5:30-9:00 AM Monday window is dense with Bravo-touching tasks and stores are closed all day Sunday, so the pull is safer there with zero contention and identical data (nothing happens at any store on Sunday).
+- CHANGED: monday-bravo-combined-compile (the Slack-posting half) no longer schedules itself as "now + 90 minutes" relative to the pull. It now fires at a FIXED Monday 8:00 AM ET regardless of when the Sunday pull finished, which is what keeps the 5 ops-channel posts landing at the time the team already expects (previously drifted 7-9 AM depending on Bravo recovery delays that morning).
+- RETIMED: monday-bravo-postcheck moved 8:15 AM -> 8:30 AM Monday so it sits safely after the new fixed 8:00 AM compile publish instead of racing it.
+- NEW STANDING RULE: BRAVO_HEALTH_RUNBOOK.md section 0 - never touch Bravo (manual trigger or computer-use) without checking triggers/claimed/ and upcoming scheduled fires first; stop and DM Joshua on any conflict. Saved as a persistent memory (feedback_bravo_contention_check) so it loads in future sessions automatically.
+- NOT YET MOVED (second wave, flagged not executed): monday-store-rankings (EOM, ~10:30 AM Monday) and the individual weekly canvas-refresh/consumer tasks are single-shot (pull+post combined, not split like combined-run/compile) and would need the same pull/publish split before they can move to Sunday without changing when people see them. Bring a specific list before touching those.
+
+
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
+
+## 2026-08-10 — Built `chekkit-unanswered-eod-followup` (closed-loop check on the 10-minute miss alert)
+
+Joshua asked whether there was a task confirming that messages flagged as 10-minute unanswered
+misses were *eventually* answered — `chekkit-unanswered-alert` (8 AM next-day) only counts misses,
+it doesn't verify resolution. Built additive: new scheduled task `chekkit-unanswered-eod-followup`
+(7 PM Mon–Sat, after all stores close) rebuilds the same day's flagged-miss list using the identical
+skip-list/open-hours rules as the AM task, then logs into the Chekkit dashboard per store to check
+each flagged thread for a staff reply. Classifies each as answered-by-staff, self-closed by the
+customer (same sign-off skip-list, per Joshua's explicit instruction), or still unanswered at close.
+Posts to #chekkit-unanswered-summary — no employee DMs, that stays owned by the AM task.
+
+**Not yet verified:** the exact Chekkit dashboard URL/path for the Messages/Conversations inbox
+(only `/reviews` and `/settings/team` are documented from other tasks). First live run will need to
+discover and confirm it — see Open Items Register.
 
 ## 2026-08-08
 

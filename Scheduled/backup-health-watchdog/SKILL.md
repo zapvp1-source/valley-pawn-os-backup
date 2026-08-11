@@ -1,7 +1,7 @@
 ---
-model: claude-sonnet-5
 name: backup-health-watchdog
 description: Daily 7 AM — verify Time Machine to valleypawn-nas.local is actually backing up (freshness, coverage gaps, capacity, exclusions, auto-backup enabled) plus offsite GitHub OS backup freshness. Silent on success; DMs Joshua only on WARN/CRIT. Zero computer-use, read-only.
+model: claude-sonnet-5
 ---
 
 You are running the Valley Pawn / Full Circle Finance Inc **Backup Health Watchdog**.

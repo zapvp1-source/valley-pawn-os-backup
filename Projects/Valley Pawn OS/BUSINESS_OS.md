@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-08-08
+# LIVE STATE - auto-refreshed 2026-08-10
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -17,7 +17,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | Enabled (will fire) | 89 |
 | Registered but disabled | 43 |
 | On disk but never registered | 22 |
-| Recorded skips (usage cap) | 287 |
+| Recorded skips (usage cap) | 144 |
 
 ### Enabled tasks
 
@@ -56,21 +56,21 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-08-08 | Unified Search | - |
-| 2026-08-08 | Bravo Data Extraction | README.md |
-| 2026-08-07 | Website | - |
-| 2026-08-07 | Valley Pawn OS | - |
+| 2026-08-10 | Valley Pawn Studios | - |
+| 2026-08-10 | Unified Search | - |
+| 2026-08-10 | Bravo Data Extraction | README.md |
+| 2026-08-09 | Website | - |
+| 2026-08-09 | Life OS | - |
+| 2026-08-09 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-08-09 | Daily Funds Verification | - |
+| 2026-08-09 | Business Dashboard Website | - |
+| 2026-08-08 | Valley Pawn OS | - |
 | 2026-08-07 | Short Term Rental Optimization | - |
 | 2026-08-07 | Sales Tax | STATUS.md |
 | 2026-08-07 | Refine Social Media | - |
-| 2026-08-07 | Life OS | - |
-| 2026-08-07 | Jewelry Count Reconciliation | STATUS.md |
 | 2026-08-07 | Health Optimization | - |
-| 2026-08-07 | Business Dashboard Website | - |
 | 2026-08-06 | Quickbooks Set UP | - |
 | 2026-08-06 | Precious Metals Settlements | - |
-| 2026-08-06 | Daily Funds Verification | - |
-| 2026-08-05 | Valley Pawn Studios | - |
 | 2026-08-05 | Taxes 2026 | - |
 | 2026-08-05 | Human Resources | - |
 | 2026-08-04 | Pawn Walks | STATUS.md |
@@ -591,6 +591,18 @@ Every customer email MUST include:
 
 ### Rule 11 — Social media publishing routes through Publer (2026-06-19+)
 For all Facebook Page + brand IG publishing operations, use Publer's API (`https://app.publer.com/api/v1` with `Authorization: Bearer-API {key}` and `Publer-Workspace-Id: 6a358d48fe216c70f7e65d4e`). Do NOT use the direct Meta Graph API publishing path. The `facebook-post` skill and `tokens.json` System User token chain are deprecated for publishing. Content production (Midjourney + Canva + vp-content-batch) stays upstream and unchanged. Account ID map at `/Users/joshuadavis/Documents/Claude/Projects/Refine Social Media/publer_accounts.json`.
+
+### Rule 12 — Pawn (Domain 1) and Real Estate (Domain 2) must never be publicly associated (set 2026-08-10)
+Valley Pawn / Full Circle Finance Inc DBA Valley Pawn and the Real Estate holdings (Bald Rock STR,
+Cypress Crossing, prospective FL acquisitions) share the same legal entity (FCF Inc) and the same
+tax return — that link is real and stays fine to reference **for tax/basis/entity purposes only**
+(see `Life OS/LIFE_MAP.md` "Hard separation rule"). Outside of that narrow tax context, never let
+the two brands/identities touch: no shared or cross-referencing domains, email addresses,
+letterhead, social accounts, signage, or customer/guest-facing copy. Concretely: real-estate
+correspondence (Bald Rock, FIMTN/FIVA/FITN or any future real-estate alias) must NOT live on
+`fcfpawn.com` or reference "Valley Pawn"/"pawn" anywhere — route it through a neutral or
+real-estate-specific address instead (e.g. `zapvp1@me.com` / iCloud aliases). Full detail and
+rationale in `Life OS/LIFE_MAP.md` and `Life OS/REAL_ESTATE_OS.md`.
 
 
 ---

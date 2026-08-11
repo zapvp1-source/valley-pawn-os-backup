@@ -35,11 +35,20 @@ reference once their extensions are assigned.
 
 ## Automation
 
-- **`zoom-voicemail-alert`** (Cowork scheduled task, `~/Documents/Claude/Scheduled/zoom-voicemail-alert/`)
+- **`zoom-voicemail-alert`** (Cowork scheduled task, SKILL.md at `~/Documents/Claude/Scheduled/zoom-voicemail-alert/`)
   — runs every 20 min, Mon–Sat 9am–7pm. Reads the live Users & Rooms roster, checks each store line's
-  admin History tab for new missed-call/voicemail events today, dedupes against a state file, and posts a
-  consolidated alert to Slack **#general** so the store team knows to call the customer back. Silent when
-  there's nothing new. Self-heals nothing on a Zoom session logout — DMs Joshua instead of attempting a
-  login, per safety policy on credential entry.
+  admin History tab (today only) for new missed-call/voicemail events, dedupes against a state file, checks
+  whether the call was already returned (Step 3.5, added 2026-08-10), and posts a consolidated alert to
+  Slack **#voicemails-missed-calls** so the store team knows to call the customer back. Silent when there's
+  nothing new or everything was already called back. Self-heals nothing on a Zoom session logout — DMs
+  Joshua instead of attempting a login, per safety policy on credential entry.
 - Posts to Slack **#voicemails-missed-calls** (`C0BND1NK65V`) — Joshua created this channel 2026-08-07,
   resolving the earlier #general fallback.
+- **Dedupe state:** `~/Documents/Claude/Projects/Valley Pawn OS/.zoom_voicemail_alert_state.json` (moved
+  here 2026-08-10 — `~/Documents/Claude/Scheduled/` is read-only in Cowork sessions, see CHANGELOG). Never
+  scope a run beyond today's date range — today-only + this state file together are what prevent
+  re-alerting on a prior day's calls.
+- **Callback verification:** since 2026-08-10 the task cross-references each candidate missed call against
+  the store's Outbound call log for that day. If the store already placed a later call to the same number
+  that Connected, the row is suppressed from the alert instead of nagging about a callback that already
+  happened.

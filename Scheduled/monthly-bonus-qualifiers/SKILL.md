@@ -1,6 +1,7 @@
 ---
 name: monthly-bonus-qualifiers
 description: Monthly (10th, 9 AM): pull all bonus qualifiers for the completed month from the live rails (email = Chekkit Invites range, reviews = weekly Monday pulls summed, gold = scrap buckets CLOSED during the bonus month, FB gains = Publer, rev = Bravo EOM), fill VP BONUS FINAL trackers' revenue actuals, append the month tab to VP_Bonus_Tracker_MASTER_2026.xlsx, post to #bonus-goals.
+model: claude-sonnet-5
 ---
 
 > **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard, added 2026-08-02).**

@@ -1,6 +1,7 @@
 ---
 name: monthly-bonus-payout
 description: Monthly (10th, 11:30 AM — after qualifiers): compute per-employee bonus payouts for the completed month (two-bridge gate, Tier 2 / Aug+ penalty regime), fill the Payouts + Trend tabs in VP_Bonus_Tracker_MASTER_2026.xlsx, draft results for Joshua — never auto-sent, never touches Gusto. Payday = first Friday after the 15th.
+model: claude-sonnet-5
 ---
 
 > **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard, added 2026-08-02).**

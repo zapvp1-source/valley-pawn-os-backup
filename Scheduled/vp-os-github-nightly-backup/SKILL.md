@@ -1,6 +1,7 @@
 ---
 name: vp-os-github-nightly-backup
 description: Nightly auto-commit/push of Valley Pawn OS .md files to the private GitHub backup repo
+model: claude-sonnet-5
 ---
 
 > **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard, added 2026-08-02).**

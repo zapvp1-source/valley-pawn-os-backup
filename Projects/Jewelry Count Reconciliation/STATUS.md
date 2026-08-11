@@ -513,3 +513,23 @@ Action: create it in Bravo exactly like the other five, then add "Bracelets" to
 - Point the `jewelry-count-reconciliation` scheduled task at on-hand counts instead of the
   sold-based flow comparison. The sold-based version STAYS LIVE and untouched until the
   on-hand version is backtested clean (Rule #4).
+
+## 2026-08-10 — Monday, full 5-store run, all stores open
+- Bravo pull: trigger jewelry-count-recon-2026-08-10-auto, all 5 cells SUCCESS (CUL 11 rows/105s, HAR 25 rows/103s, LEX 13 rows/101s, ROA 3 rows/96s, WAY 18 rows/99s). No BOM issue, no truncation-guard errors.
+- Count sheets: read via Chrome from #end-of-day. All 5 managers posted between 6:16-6:31 PM ET. Poster/store map held (Sandi=CUL, Walker=HAR, Uriah=LEX, Martin D.=WAY, Benjie=ROA), confirmed against each EOD summary sheet header. All sheets dated 8/10/26 (CUL, ROA single-block; HAR, LEX, WAY multi-block sheets, used the 8/10/26-dated block).
+- Bucketed per jewelry_reconciliation_comparison.py rules (JEWELRY_CATEGORIES gate, then bracelet/earring/ring/necklace-chain/pendant-charm mapping; scrap/bullion/wristwatch/pocket watch/watch band/brooch/misc + bare Diamond excluded).
+
+STORE | soldJ | AM   | PM   | net | diff | status
+CUL   |   1   | 1261 | 1279 | -18 |  -19 | FLAG (sold: Bracelets 1 - VP4027719 Silver Bracelet S925 1.9DWT)
+HAR   |   4   |  782 |  779 |   3 |   -1 | ok   (sold: Rings 3 - VA5019289 Diamond Cluster Ring, VA5019865 + VA5019869 Silver-Diamond Rings; Pendants 1 - VA5014379 Gold Pendant)
+LEX   |   0   |  423 |  423 |   0 |    0 | ok
+ROA   |   0   | 1026 | 1033 |  -7 |   -7 | FLAG (written PM total read as 1042; column sum computed as 1033 - used computed sum per standing practice, see note below)
+WAY   |   2   |  531 |  529 |   2 |    0 | ok   (sold: Rings 1 - VAP030380 Lady's Silver Ring; Pendants 1 - VAP031101 Silver Pendant)
+
+- Bucket-level detail:
+  CUL: Rings AM625/PM637 (+12 net increase, no rings sold - largest driver of the flag); Bracelets AM118/PM120 (-2, sold1, diff-3, borderline ok); Necklaces AM151/PM154 (-3, sold0, borderline ok); Earrings AM122/PM123 (-1, ok); Pendants AM245/PM245 (0, ok).
+  ROA: Rings AM531/PM541 (-10, sold0 - largest driver); Bracelets AM116/PM114 (+2, ok); Necklaces AM153/PM157 (-4, sold0, borderline); Earrings AM78/PM76 (+2, ok); Pendants AM148/PM145 (+3, ok). ROA sold zero jewelry-category items this run (PlayStation 4, Film Camera, Battery Charger only).
+- ROA written-total mismatch: PM column digits read as Rings 541/Bracelets 114/Necklaces 157/Earrings 76/Pendants 145, summing to 1033. The sheet's written PM TOTALS line reads 1042 (off by 9 from the column sum). Re-zoomed twice to confirm digits; used the computed column sum (1033) as per standing practice (see 2026-08-07 LEX entry). Did not affect the FLAG outcome (already flagged either way). Worth a reminder to Benjie to re-add before writing the total.
+- CUL and ROA both show a NET INCREASE in on-hand case count with a Rings-heavy pattern and no rings sold - consistent with new intake/buys added to the Rings case during the day rather than a miscount, but not confirmed. Flagged to the channel in plain language; no dollar or breakdown detail posted (Field Communication Standard v3).
+- No date mismatches, no missing sheets, no empty-grid pipeline failures.
+- Posted clean/flagged per-store summary to #jewlery-counts (C0BM9NHGTT4) at ts 1786406431.580749. No DM to Joshua (pipeline did not fail - two stores are OVER threshold on the count delta, which is a normal operational flag, not a pipeline failure, so channel post was used per Section 5).

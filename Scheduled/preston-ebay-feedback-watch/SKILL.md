@@ -1,7 +1,7 @@
 ---
 name: preston-ebay-feedback-watch
 description: Daily: capture Preston's eBay feedback in #preston-claude, devise a plan for Joshua to approve — never act on it
-model: claude-sonnet-4-6
+model: claude-sonnet-5
 ---
 
 > **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard, added 2026-08-02).**

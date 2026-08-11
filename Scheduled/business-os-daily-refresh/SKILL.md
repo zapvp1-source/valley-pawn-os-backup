@@ -1,6 +1,7 @@
 ---
 name: business-os-daily-refresh
 description: Daily 5:00 AM refresh of the BUSINESS_OS.md LIVE STATE block and the enterprise CHANGELOG, so the master map can never drift from reality again.
+model: claude-sonnet-5
 ---
 
 Keep the Valley Pawn enterprise master map honest.

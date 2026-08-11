@@ -1,7 +1,7 @@
 ---
 name: monthly-analytics-prestage
 description: Last-day-of-month 8 PM — pre-stage the 6 EOM date-window XLSX files the monthly-analytics-report task will read at 3 AM on the 1st. Drops 6 triggers to the Bravo Data Extraction pipeline (one per date window, all 5 stores) and copies each window's CSVs to a window-tagged sidecar so the same-End-date overwrites don't stomp each other. Silent on failure.
-model: claude-sonnet-5
+model: claude-haiku-4-5
 ---
 
 > ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.

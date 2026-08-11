@@ -5,5 +5,8 @@ echo "=== refresh $(date) ==="
 /usr/bin/python3 usearch.py mail
 /usr/bin/python3 usearch.py files
 /usr/bin/python3 msgindex.py
+/usr/bin/python3 notesindex.py
+/usr/bin/python3 remindersindex.py
+/usr/bin/python3 usearch.py gdrive
 /usr/bin/python3 usearch.py stats > stats.txt
 echo "=== done $(date) ==="

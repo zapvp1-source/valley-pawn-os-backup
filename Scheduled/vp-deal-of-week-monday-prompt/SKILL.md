@@ -1,7 +1,7 @@
 ---
 name: vp-deal-of-week-monday-prompt
 description: Every Monday 8am ET — post Deal of the Week submission prompt to Slack #deal-of-the-week
-model: claude-sonnet-5
+model: claude-haiku-4-5
 ---
 
 > **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard, added 2026-08-02).**

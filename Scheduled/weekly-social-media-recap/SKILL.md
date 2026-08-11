@@ -1,6 +1,7 @@
 ---
 name: weekly-social-media-recap
 description: Monday 9 AM ET — posts a team-visible recap of everything published across Valley Pawn's social channels in the last 7 days to #social-media (read-only Publer verification, not a manifest read)
+model: claude-sonnet-5
 ---
 
 > **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard).**

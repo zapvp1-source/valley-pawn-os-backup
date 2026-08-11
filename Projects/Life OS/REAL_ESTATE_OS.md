@@ -11,12 +11,70 @@ Jump to the property that's relevant; don't read end-to-end every time.
 
 ## Portfolio at a glance
 
-| Property | Type | Owner | Status | Detail |
-|---|---|---|---|---|
-| **282 Bald Rock Road, Verona, VA 24482** | Short-term rental (Airbnb + VRBO) | Full Circle Finance Inc (same entity as Valley Pawn) | Active, performing well | See "Bald Rock" below + `bald-rock-property` skill |
-| **844 Cypress Crossing Trail, St. Augustine, FL 32095** (Parcel 072085-0710) | Was long-term rental → converted to **primary personal residence ~Aug 2025** | Joshua & Hillary Davis, personally | Owner-occupied since conversion | See "Cypress Crossing" below |
-| Jacksonville, FL area | Prospective acquisition | TBD | Search-stage — `weekly-jacksonville-property-search` scheduled task exists but is on-disk/unregistered (never fires) | Future expansion |
-| St. Johns County / St. Augustine, FL area | Prospective acquisition | TBD | Search-stage — `weekly-st-augustine-property-search` scheduled task exists but is on-disk/unregistered (never fires) | Future expansion |
+**⚠️ CORRECTED 2026-08-10 (Google Drive search, prompted after a session gave a wrong answer by
+skipping Drive — see `unified-search`: "search everywhere" means Mail+Texts+iCloud AND Drive, not
+Mail+Texts+iCloud only).** Real estate is held in a family of single-member Virginia LLCs called
+**Farming Infinity**, formed/EIN'd in 2019 and July 2026. **Bald Rock has never been owned by Full
+Circle Finance Inc / Valley Pawn — confirmed directly by Joshua 2026-08-10.** This file previously
+stated otherwise (Full Circle Finance Inc as owner) and that was wrong; a same-session correction
+that framed it as "moved out of FCF Inc in July 2026" was also wrong — there is no FCF Inc
+ownership period to reference. See "Legal entity structure" section below — read it before citing
+any EIN or owner-of-record for these properties.
+
+| Property | Type | Owner (entity) | EIN | Status | Detail |
+|---|---|---|---|---|---|
+| **282 Bald Rock Road, Verona, VA 24482** | Short-term rental (Airbnb + VRBO) | **Farming Infinity Mountains LLC** (VA SCC 12045879) | **42-4031872** | Active, performing well | See "Bald Rock" below + `bald-rock-property` skill |
+| **817 Richmond Avenue, Staunton, VA** | Commercial, gross-leased to FirstCash | **Farming Infinity, LLC** (original, VA SCC S8306609, formed 2019) | **81-3269313** | Leased/performing | Not previously tracked in this file — found via Drive search 2026-08-10 |
+| **844 Cypress Crossing Trail, St. Augustine, FL 32095** (Parcel 072085-0710) | Was long-term rental → converted to **primary personal residence ~Aug 2025** | Joshua & Hillary Davis, personally — **no LLC, no EIN** | — | Owner-occupied since conversion | See "Cypress Crossing" below |
+| 14300 Woods Walk Lane, Chesterfield County, VA | Intended acquisition (deed assignment not yet confirmed) | **Farming Infinity Virginia LLC** (VA SCC 12045876) | **42-3980374** | Entity formed 7/13/2026, EIN issued 7/21/2026; property not yet confirmed/deeded to this LLC | Confirm by deed before relying on this mapping |
+| 148 Hardinberry Street, Oak Ridge, TN (Anderson County) | Intended acquisition (deed assignment not yet confirmed) | **Farming Infinity Tennessee LLC** (VA SCC 12045877 — formed in VA despite the name) | **42-3788196** | Entity formed 7/13/2026, EIN issued 7/13/2026; property not yet confirmed/deeded; may need foreign-LLC registration in TN | Confirm by deed + confirm TN foreign registration with counsel |
+| Jacksonville, FL area | Prospective acquisition | TBD | — | Search-stage — `weekly-jacksonville-property-search` scheduled task exists but is on-disk/unregistered (never fires) | Future expansion |
+| St. Johns County / St. Augustine, FL area | Prospective acquisition | TBD | — | Search-stage — `weekly-st-augustine-property-search` scheduled task exists but is on-disk/unregistered (never fires) | Future expansion |
+
+---
+
+## Legal entity structure — Farming Infinity (added 2026-08-10)
+
+Source of truth in Drive: folder **"Farming Infinity"** (`parentId 1d44OkA4GX3fqN39KCbc36BTY_IzOhpPH`),
+doc **"00 — MASTER INDEX (start here)"**
+(`https://docs.google.com/document/d/17E-sxAieBjoz4wa0faemo5OuBgVqnGMtN7FiFDnZpMk`). That index was
+last hand-updated 2026-07-21 and is itself slightly stale (see note below) — cross-check against
+the actual IRS CP-575 letters in each entity subfolder, not just the index.
+
+All entities below are single-member Virginia LLCs, sole member Joshua Christian Davis, disregarded
+entities for federal tax (IRS name control "FARM"). IRS mailing address of record for all: 844
+Cypress Crossing Trail, Saint Augustine, FL 32095. VA registered agent: Joshua Davis, 282 Bald Rock
+Rd, Verona, VA 24482 (note: one operating agreement draft flags this needs to move to a
+Virginia-resident commercial registered agent since Joshua's own residency is now FL).
+
+1. **Farming Infinity, LLC** (original) — VA SCC S8306609, formed 5/30/2019. Owns 817 Richmond
+   Avenue, Staunton VA, gross-leased to FirstCash. **EIN 81-3269313** — confirmed via a 1099-MISC
+   (recipient TIN) tied to 817 Richmond rental income; the master index only listed this as
+   "unconfirmed, needs the CP-575 letter added" as of 7/21 — treat as confirmed now but still track
+   down the actual CP-575/SS-4 letter for the file.
+2. **Farming Infinity Virginia LLC** — VA SCC 12045876, effective 7/13/2026. **EIN 42-3980374**
+   (issued 7/21/2026, CP-575 on file in Drive). Intended property: 14300 Woods Walk Lane,
+   Chesterfield County VA — **not yet confirmed by deed**.
+3. **Farming Infinity Tennessee LLC** — VA SCC 12045877, effective 7/13/2026. **EIN 42-3788196**
+   (issued 7/13/2026, CP-575 on file). Intended property: 148 Hardinberry Street, Oak Ridge TN —
+   **not yet confirmed by deed**; formed as a Virginia entity despite the name, likely needs TN
+   foreign-LLC registration if it will hold TN property — flagged for counsel, not resolved.
+4. **Farming Infinity Mountains LLC** — VA SCC 12045879, effective 7/13/2026. **EIN 42-4031872**
+   (issued 7/23/2026 — confirmed directly from the IRS CP-575 letter in Drive). Owns 282 Bald Rock
+   Road, Verona VA — the STR. **The master index doc (last touched 7/21) still says this EIN is
+   "pending" — that's stale; the CP-575 letter is dated 2 days after the index's last edit.**
+5. **Davis Management LLC** — planned, **NOT YET FORMED**. Florida (Sunbiz), members Joshua &
+   Hillary Davis, intended LLC-electing-S-corp, would contract with Full Circle Finance Inc and
+   each Farming Infinity property LLC as a management company. Setup checklist + MSA template exist
+   in Drive but nothing has been filed. No EIN.
+
+**Full Circle Finance Inc (EIN 47-1198118) is Valley Pawn only — no real estate, ever, per
+Joshua 2026-08-10.** Per the `Taxes 2026` TY2025 Filing Prep Tracker: "Full Circle Finance Inc
+(S-corp, EIN 47-1198118), DBA Valley Pawn — 5 VA pawn stores + Roanoke FFL. No real estate inside
+it." This directly supersedes this file's prior (wrong) statement that Bald Rock is/was owned by
+Full Circle Finance Inc. `valley-pawn-context` Rule 12 and `BUSINESS_OS.md` Rule 12 still carry
+that same wrong claim and need the identical fix (flagged in Open Items Register 2026-08-10) — do
+not treat those files as correct on this point until updated.
 
 **Both property-search tasks are built but not live.** Before doing new work on prospective FL
 acquisitions, decide whether to register those tasks (Rule #4 — additive, don't just flip them on
@@ -36,8 +94,14 @@ ownership, and tax/basis.
 - **Purchase price / basis:** $405,000.00 per recorded deed (`CONSIDERATION: 405,000.00`).
   Deed source: Google Drive `.../02 Real Estate/282 Bald Rock Rd - Verona VA (Rental)/282 Bald
   Rock Deed:Closing.pdf` (image-only PDF, OCR'd 2026-08-05).
-- **Owner entity:** Full Circle Finance Inc — same legal entity as Valley Pawn. Financially and
-  operationally tracked separately (own P&L, own guests, own vendors) but same tax return.
+- **Owner entity: Farming Infinity Mountains LLC** (VA SCC 12045879, EIN 42-4031872) — a
+  single-member LLC disregarded for federal tax, sole member Joshua Davis.
+  **⚠️ CORRECTED 2026-08-10 per Joshua directly: Bald Rock was NEVER owned by Full Circle Finance
+  Inc / Valley Pawn — this file's prior claim to that effect, and this session's own earlier
+  "moved out of FCF Inc in July 2026" framing, were both wrong.** Farming Infinity Mountains LLC
+  got its EIN in July 2026, but that is an entity-paperwork date, not evidence of a prior FCF Inc
+  ownership period — don't infer one. Financially and operationally tracked separately from Valley
+  Pawn (own P&L, own guests, own vendors).
 - **Capital improvements / basis substantiation:** `Taxes 2026/282 Bald Rock — Full Evidence
   Log.md` (built 2026-08-05 from the unified Apple Mail + iMessage + iCloud Drive index) is the
   **current, authoritative** evidence log — headline: $97,615.40 proof-of-payment,
@@ -64,6 +128,8 @@ skill, not this file.**
 - **Owners:** Joshua & Hillary Davis, personally — **not** Full Circle Finance Inc, not Valley
   Pawn. Treat as Domain 3 (Personal) for money/tax purposes even though it lives in this file for
   property-tracking convenience.
+- **Purchase price:** $750,000 (per Joshua, 2026-08-10 — not yet tied to a recorded deed document;
+  do the same OCR/deed-pull treatment Bald Rock got before citing this for basis purposes).
 - **History:** was a long-term rental; **converted to primary personal residence ~August 2025.**
   This conversion date matters for tax treatment (basis step, depreciation recapture exposure,
   what counts as a deductible improvement vs. personal capital improvement going forward).
@@ -82,6 +148,20 @@ skill, not this file.**
     day; needs resolution before relying on that line).
 - **Vehicle Purchase Docs** and **Bank Statements** subfolders exist under `Taxes 2026/` — likely
   relevant to Cypress Crossing conversion or general personal tax prep; not yet indexed here.
+- **My Safe Florida Home (MSFH) grant — researched 2026-08-10.** Cypress Crossing is in Palencia
+  (HOA: Palencia Property Owners' Association, managed by Vesta), built 2002–2005 per public
+  listings — passes the program's "building permit before Jan 1, 2008" eligibility gate (not yet
+  confirmed against the official County Property Appraiser record). Homestead exemption is active
+  (Joshua confirmed 2026-08-10). Program is Florida-only — does not apply to Bald Rock (VA). The
+  July 2026 whole-house window replacement (Home Depot/Service Finance, $56,621.72 financed) is
+  **NOT retroactively reimbursable** — MSFH only pays for work done after grant approval, in this
+  order: free inspection → grant application → approval → THEN hire contractor → final inspection
+  → disbursement. Roof work (roof-deck attachment, roof-to-wall connections, secondary water
+  resistance — with full contiguous roof-covering replacement bundled in if removal is required)
+  IS an eligible category for a future project, subject to two still-unverified hard gates:
+  (1) Coverage A (dwelling) on the homeowner's policy must be ≤$700,000 — figure not yet pulled;
+  (2) exact county-recorded permit date, still only corroborated by public listing data, not the
+  official record. See `Life OS/OPEN_ITEMS_REGISTER.md` for the open action item.
 
 ---
 
@@ -143,6 +223,15 @@ real estate:
    already learned this the hard way (double-counted bids, unproven quotes). Any new capital
    improvement claim should specify which evidence tier it's in (paid / invoiced-unpaid / quoted)
    before it goes near a tax filing.
+3. **Never publicly associate with Valley Pawn / Domain 1 (set 2026-08-10).** ⚠️ This rule was
+   originally written on the wrong premise that Bald Rock is/was owned by Full Circle Finance Inc.
+   It never was — Bald Rock's owner is, and has been, Farming Infinity Mountains LLC (see "Legal
+   entity structure" above), a separate entity with no FCF Inc history. The separation intent
+   below still stands; the "same tax return as Valley Pawn" reasoning does not. Everywhere (domains, email, branding, guest
+   copy, signage, social) treat Real Estate and Valley Pawn as unrelated businesses. Real-estate
+   email/aliases must never live on `fcfpawn.com` or route through `jdavis@fcfpawn.com` — use
+   `zapvp1@me.com` / iCloud instead. Full rule in `Life OS/LIFE_MAP.md` and mirrored in
+   `Valley Pawn OS/BUSINESS_OS.md` Rule 12.
 
 ---
 

@@ -83,6 +83,30 @@ PullNicsTransfers(store, dateOrRange, outputDir) {
 
     global CONFIG
     password := CONFIG.Has("bravo.password") ? CONFIG["bravo.password"] : ""
+
+    ; --- CRITICAL (Bravo rule): exit any open report/editor to a clean Dashboard
+    ; BEFORE the store switch. Bravo cannot Lock Session from inside a working
+    ; view — it hangs "FREE1 is busy with..." and the store selector renders
+    ; wrong (seen: "none of these store row Names matched"). The Custom Reports
+    ; editor must be exited via "Cancel" (NOT "Done", which loops). Cancel up to
+    ; 4x, then BackToDashboard, so EnsureStore starts from a clean Dashboard.
+    ActivateBravo()
+    Loop 4 {
+        exited := false
+        try {
+            if ClickByName("Cancel", 1500) {
+                LogMessage("    [pre-switch] Cancel to exit report/editor")
+                exited := true
+                Sleep(1000)
+            }
+        }
+        if (!exited)
+            break
+    }
+    try BackToDashboard()
+    Sleep(400)
+    DismissPopups()
+
     if !EnsureStore(store, password)
         return Fail(result, started, "EnsureStore failed for " . store)
     LogMessage("  store confirmed: " . store)
@@ -160,6 +184,7 @@ PullNicsTransfers(store, dateOrRange, outputDir) {
         return Fail(result, started, "BackToDashboard could not return Bravo to Dashboard")
     Sleep(500)
     DismissPopups()
+    try ScreenshotToFile("s0-dashboard")
 
     count := 0
     rowsWritten := 0
@@ -169,10 +194,13 @@ PullNicsTransfers(store, dateOrRange, outputDir) {
         ClickByName(NICS_TRANSFERS_ELEMENTS["sidebar_view_void"], 8000)
         Sleep(1500)
         DismissPopups()
+        try ScreenshotToFile("s1-voidview")
 
         LogMessage("  step 2: click Custom Reports")
         ClickByName(NICS_TRANSFERS_ELEMENTS["panel_custom_reports"], 5000)
-        Sleep(1500)
+        Sleep(2500)
+        try ScreenshotToFile("cr-dialog")
+        LogMessage("  [shot] captured cr-dialog PNG")
 
         ; step 3: select the saved report. Bravo's "BravoComboBox" controls are
         ; Edit-type with NO AutomationId and a shifting Y, and when opened their
@@ -180,11 +208,12 @@ PullNicsTransfers(store, dateOrRange, outputDir) {
         ; which is why the shared helper's under-combo / bottom-most approach was
         ; flaky. So: find the combo by its "Choose Saved Report" label, open it,
         ; and select the item from the root. Retry up to 3x; verify BoxReportName.
-        LogMessage("  step 3: select 'Claude NICS Transfers' (scan combos for item at root)")
+        LogMessage("  step 3: select 'Claude NICS Transfers' (keyboard type-ahead, fallback scan)")
         selOk := false
         Loop 3 {
             attempt := A_Index
-            NicsSelectByItemScan("Claude NICS Transfers")
+            if !NicsSelectReportKeyboard("Claude NICS Transfers")
+                NicsSelectByItemScan("Claude NICS Transfers")
             Sleep(1200)
             loadedName := ""
             try loadedName := IntakeGetLoadedReportName()
@@ -206,15 +235,11 @@ PullNicsTransfers(store, dateOrRange, outputDir) {
         ; the fee type (per Preston) — it blanks each run and must be set, or the
         ; report returns nothing. The fee-type control is the BravoComboBox with
         ; AutomationId "TransactionTypeSelector".
-        LogMessage("  step 3b: set fee type 'NICS Fee'")
-        fcombo := NicsFindComboByAid("TransactionTypeSelector")
-        if fcombo {
-            if NicsSelectFromCombo(fcombo, "NICS Fee")
-                LogMessage("    [fee] selected 'NICS Fee'")
-            else
-                LogMessage("    [fee] WARN could not select 'NICS Fee' (see root-item dump)")
-        } else {
-            LogMessage("    [fee] WARN TransactionTypeSelector control not found")
+        LogMessage("  step 3b: set fee type 'NICS Fee' (keyboard type-ahead)")
+        if !NicsSetFeeTypeKeyboard("NICS Fee") {
+            fcombo := NicsFindComboByAid("TransactionTypeSelector")
+            if fcombo
+                NicsSelectFromCombo(fcombo, "NICS Fee")
         }
         Sleep(700)
 
@@ -280,6 +305,66 @@ PullNicsTransfers(store, dateOrRange, outputDir) {
 ; Its dropdowns are Edit-type controls named "BravoComboBox" (no AutomationId,
 ; shifting Y). When opened, their item list is a popup at the WINDOW ROOT.
 ; ----------------------------------------------------------------------------
+
+; Select a saved report by KEYBOARD type-ahead: focus each BravoComboBox, type
+; the report name (the combo matches/highlights it), press Enter, then verify via
+; BoxReportName. Works even when the dropdown items are NOT exposed in the
+; accessibility tree — the failure mode that beat the tree-scan approach.
+NicsSelectReportKeyboard(reportName) {
+    root := 0
+    try root := GetBravoRoot()
+    if !root
+        return false
+    eds := 0
+    try eds := root.FindElements({Type: "Edit"})
+    if !eds
+        return false
+    ci := 0
+    for e in eds {
+        nm := ""
+        try nm := e.Name
+        if (nm != "BravoComboBox")
+            continue
+        ci += 1
+        try e.Click("left")
+        Sleep(500)
+        ActivateBravo()
+        Sleep(200)
+        SendText(reportName)
+        Sleep(700)
+        Send("{Enter}")
+        Sleep(900)
+        ln := ""
+        try ln := IntakeGetLoadedReportName()
+        if (ln != "" && InStr(ln, reportName)) {
+            LogMessage("    [kbd] report loaded via type-ahead on combo#" . ci . " (BoxReportName='" . ln . "')")
+            return true
+        }
+        Send("{Escape}")
+        Sleep(300)
+    }
+    LogMessage("    [kbd] type-ahead did not load report (scanned " . ci . " combos)")
+    return false
+}
+
+; Set the fee type by KEYBOARD type-ahead on the TransactionTypeSelector combo.
+NicsSetFeeTypeKeyboard(feeName) {
+    fc := NicsFindComboByAid("TransactionTypeSelector")
+    if !fc {
+        LogMessage("    [kbd-fee] TransactionTypeSelector not found")
+        return false
+    }
+    try fc.Click("left")
+    Sleep(500)
+    ActivateBravo()
+    Sleep(200)
+    SendText(feeName)
+    Sleep(700)
+    Send("{Enter}")
+    Sleep(700)
+    LogMessage("    [kbd-fee] typed fee type '" . feeName . "'")
+    return true
+}
 
 ; Find the BravoComboBox whose row aligns with a given text label (e.g.
 ; "Choose Saved Report"). Returns the combo element, or 0.
