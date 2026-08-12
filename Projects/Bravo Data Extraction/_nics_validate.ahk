@@ -238,50 +238,22 @@ PullNicsTransfers(store, dateOrRange, outputDir) {
         }
         Sleep(800)
 
-        ; step 3b: set the Retail-Items "Fee" filter to "NICS Fee". The fee
-        ; BLANKS when the report loads under automation, so without this the
-        ; report returns 0 rows at every store but WAY. Retry up to 3x and
-        ; REQUIRE a fee to be set before running — never run with a blank fee.
-        LogMessage("  step 3b: set Fee filter 'NICS Fee' (keyboard type-ahead)")
-        feeOk := false
-        Loop 3 {
-            if NicsSetFeeFilter("NICS Fee") {
-                feeOk := true
-                break
-            }
-            Sleep(800)
-        }
-        if (!feeOk) {
-            LogVisibleNames()
-            throw Error("Could not set Fee filter to 'NICS Fee' after 3 attempts")
-        }
-        Sleep(600)
+        ; step 3b: (removed) Fee type is now PRE-POPULATED on the saved report by
+        ; Joshua (Fee = "NICS Fee", Amount > $5.00), so no fee-type step is needed.
+        ; The old code set "NICS Fee" on the WRONG combo (TransactionTypeSelector =
+        ; the "Customer Transaction" type, not the fee) — dropping it avoids
+        ; corrupting the loaded criteria.
 
-        ; -- steps 4-5: set the requested date range via the CALENDAR PICKER only
-        ; (Bravo rejects typed/ValuePattern dates and disables Ok — never type).
-        ; Reuse CompanyKpis's proven, self-correcting geometric picker
-        ; (CkSetDateByCalendar); its geometry is relative to each field's rect, so
-        ; it works at the NICS fields' location. The store "Business Date" field
-        ; shifts CkFindDateWrapper's indexing, so resolve the report Start/End to
-        ; their true positions first. Set END first, then START: our ranges move
-        ; forward from the report's saved June range, so this avoids a transient
-        ; start-after-end that the control could reject.
-        LogMessage("  steps 4-5: set date range " . startDate . " .. " . endDate . " via calendar picker")
-        dpos := NicsFindReportDatePositions()
-        if !IsObject(dpos) {
-            LogVisibleNames()
-            throw Error("Could not locate the report Start/End date fields")
-        }
-        LogMessage("    [date] report Start=pos " . dpos[1] . ", End=pos " . dpos[2])
-        if !NicsSetDateByCalendar(dpos[2], endDate) {
-            LogVisibleNames()
-            throw Error("Failed to set End date " . endDate . " via calendar picker")
-        }
-        if !NicsSetDateByCalendar(dpos[1], startDate) {
-            LogVisibleNames()
-            throw Error("Failed to set Start date " . startDate . " via calendar picker")
-        }
-        Sleep(500)
+        ; -- steps 4-5: DATES.
+        ; Per Joshua (2026-06-18): the date range is a CALENDAR PICKER and must
+        ; NEVER be typed. Bravo's date control paints a typed/ValuePattern value
+        ; but rejects the commit, which leaves the bottom "Ok" DISABLED so the
+        ; report never runs — that was the root cause of every prior 0-row/"dialog
+        ; stayed open" failure. For this proof pass we run the report AS SAVED
+        ; (no date override) to confirm rows + the $25 fee column flow end-to-end.
+        ; Calendar-picker selection for variable weekly/monthly ranges is the
+        ; next step (open the date-edit dropdown, click day cells — no typing).
+        LogMessage("  steps 4-5: NOT typing dates (picker only) — running report as-saved this pass")
 
         ; -- step 6: run via the bottom "Ok" button (per Joshua: select report,
         ; hit Ok at the bottom). IntakeClickOkVerified (shared, from
@@ -301,39 +273,8 @@ PullNicsTransfers(store, dateOrRange, outputDir) {
             FileAppend("Transaction Number,Date,Customer,Category,Full Description,NICS Fee,Total`r`n", outputPath, "UTF-8-RAW")
             rowsWritten := 0
         } else {
-            ; render-wait: higher-volume stores (CUL/ROA) populate the grid
-            ; slower than WAY's ~5s, so a fixed pause walks an empty grid and
-            ; the walker finds no DataItems. Poll for actual data rows (DataItem
-            ; controls) to appear — up to ~75s — before walking. Handler-local;
-            ; the shared walker (WriteIntakeDetailGrid) is untouched.
+            Sleep(5000)
             DismissPopups()
-            rowsReady := false
-            Loop 25 {
-                di := 0
-                try {
-                    gr := GetBravoRoot()
-                    if gr {
-                        dis := gr.FindElements({Type: "DataItem"})
-                        di := (dis ? dis.Length : 0)
-                    }
-                }
-                if (di > 0) {
-                    LogMessage("    [render-wait] grid populated: " . di . " rows visible after ~" . (A_Index * 3) . "s")
-                    rowsReady := true
-                    break
-                }
-                Sleep(3000)
-            }
-            Sleep(1200)
-            DismissPopups()
-            ; If no rows rendered after the full wait, do NOT claim 0 — that is
-            ; ambiguous (genuinely-empty vs render-fail). Fail loudly so the
-            ; all-or-nothing publish gate holds and we investigate instead of
-            ; posting a false zero for a store that should have transfers.
-            if (!rowsReady) {
-                LogVisibleNames()
-                throw Error("No data rows rendered after ~75s render-wait (inconclusive — not treating as empty)")
-            }
             LogMessage("  step 7: walk grid rows and write CSV")
             rowsWritten := WriteIntakeDetailGrid(outputPath)
             if (rowsWritten < 0) {
@@ -410,401 +351,49 @@ NicsSelectSavedReport(reportGuid, verifyName) {
         LogMessage("    [rep] saved-report (Object_Layout) combo not found")
         return false
     }
-    ; already loaded? (a prior attempt may have committed it) — done.
-    pre := ""
-    try pre := IntakeGetLoadedReportName()
-    if (pre != "" && InStr(pre, verifyName)) {
-        LogMessage("    [rep] already loaded '" . pre . "'")
-        return true
-    }
     ; open the picker
     try {
         repCombo.ExpandCollapsePattern.Expand()
     } catch {
         try repCombo.Click("left")
     }
-    Sleep(900)
-    ; poll up to ~8s for the target report item to render. The list can lag, and
-    ; its popup sometimes hosts at the DESKTOP root rather than the Bravo window
-    ; root, so search both. Nudge the combo open again halfway through in case
-    ; the initial Expand was dropped (the intermittent CUL "not selected" cause).
+    Sleep(1100)
+    ; select the target report by its layout GUID
     item := 0
-    Loop 16 {
-        r2 := 0
-        try r2 := GetBravoRoot()
-        dk := 0
-        try dk := UIA.GetRootElement()
-        for scope in [r2, dk] {
-            if (item || !scope)
-                continue
-            lis := 0
-            try lis := scope.FindElements({Type: "ListItem"})
-            if lis {
-                for li in lis {
-                    ln := ""
-                    try ln := li.Name
-                    if (InStr(ln, reportGuid)) {
-                        item := li
-                        break
-                    }
-                }
+    r2 := 0
+    try r2 := GetBravoRoot()
+    if r2 {
+        lis := 0
+        try lis := r2.FindElements({Type: "ListItem"})
+        if lis {
+            for li in lis {
+                ln := ""
+                try ln := li.Name
+                if (item = 0 && InStr(ln, reportGuid))
+                    item := li
             }
         }
-        if (item)
-            break
-        if (A_Index = 8) {
-            try {
-                repCombo.ExpandCollapsePattern.Expand()
-            } catch {
-                try repCombo.Click("left")
-            }
-        }
-        Sleep(500)
     }
     if !item {
-        LogMessage("    [rep] report item (guid " . SubStr(reportGuid, 1, 8) . "...) not in open list after ~8s")
+        LogMessage("    [rep] report item (guid " . SubStr(reportGuid, 1, 8) . "...) not in open list")
         try repCombo.ExpandCollapsePattern.Collapse()
         return false
     }
-    ; COMMIT the selection. A click loads the report AND closes the dropdown;
-    ; SelectionItem.Select() alone only highlights (BoxReportName stayed blank).
-    ; Try click first, then Select+Enter as a fallback.
-    committed := false
     try {
-        item.Click("left")
-        committed := true
+        item.SelectionItemPattern.Select()
     } catch {
-        try {
-            item.SelectionItemPattern.Select()
-            Sleep(300)
-            Send("{Enter}")
-            committed := true
-        }
-    }
-    Sleep(1500)
-    ; ensure the dropdown is closed so BoxReportName is readable
-    try repCombo.ExpandCollapsePattern.Collapse()
-    Sleep(500)
-    ; verify BoxReportName populated (report load can lag a beat) — poll ~3s
-    Loop 6 {
-        ln := ""
-        try ln := IntakeGetLoadedReportName()
-        if (ln != "" && InStr(ln, verifyName)) {
-            LogMessage("    [rep] loaded '" . ln . "' via layout GUID " . SubStr(reportGuid, 1, 8))
-            return true
-        }
-        Sleep(500)
-    }
-    LogMessage("    [rep] committed=" . committed . " but BoxReportName not confirmed (want '" . verifyName . "')")
-    return false
-}
-
-; ----------------------------------------------------------------------------
-; Set the Retail-Items "Fee" filter to a named fee (e.g. "NICS Fee") via KEYBOARD
-; type-ahead. The fee BLANKS when the saved report loads under automation
-; (Preston's known "fee won't persist" issue) — without this the report returns
-; 0 rows at every store except (by luck) WAY. The fee's internal GUID differs
-; per store, so we match by display NAME; and the dropdown items are NOT exposed
-; as UIA ListItems, so keyboard type-ahead (not a list click) is the reliable
-; path. Returns true once the fee combo holds a Config_Fee value.
-NicsSetFeeFilter(feeName) {
-    root := 0
-    try root := GetBravoRoot()
-    if !root
-        return false
-    feeCombo := 0
-    eds := 0
-    try eds := root.FindElements({Type: "Edit"})
-    if eds {
-        ; primary: the fee combo carries AutomationId "editor"
-        for e in eds {
-            nm := "", aid := ""
-            try nm := e.Name
-            try aid := e.AutomationId
-            if (nm = "BravoComboBox" && aid = "editor") {
-                feeCombo := e
-                break
-            }
-        }
-        ; fallback: a BravoComboBox already holding a Config_Fee value
-        if !feeCombo {
-            for e in eds {
-                nm := "", val := ""
-                try nm := e.Name
-                try val := e.Value
-                if (nm = "BravoComboBox" && InStr(val, "Config_Fee:") = 1) {
-                    feeCombo := e
-                    break
-                }
-            }
-        }
-    }
-    if !feeCombo {
-        LogMessage("    [fee] fee combo not found (aid=editor / Config_Fee)")
-        return false
-    }
-    ; DROPDOWN selection: OPEN it, then CLICK the item whose display text matches
-    ; feeName. Each item's UIA Name is a per-store Config_Fee GUID; the readable
-    ; name ("NICS Fee") is a child Text of the list item, in a popup that lives at
-    ; the DESKTOP root. Keyboard Enter highlighted the item but did NOT commit —
-    ; clicking the text element commits reliably (confirmed by Joshua).
-    try {
-        feeCombo.ExpandCollapsePattern.Expand()
-    } catch {
-        try feeCombo.Click("left")
+        try item.Click("left")
     }
     Sleep(1100)
-    ; find the fee item's display-text element (search the popup at desktop root
-    ; first, then the Bravo window as a fallback)
-    txt := 0
-    try txt := UIA.GetRootElement().FindElement({Name: feeName, Type: "Text"})
-    if !txt {
-        try txt := GetBravoRoot().FindElement({Name: feeName, Type: "Text"})
-    }
-    if !txt {
-        LogMessage("    [fee] '" . feeName . "' item text not found in open dropdown")
-        try feeCombo.ExpandCollapsePattern.Collapse()
-        return false
-    }
-    ; click the text (or its parent list item) to commit the selection
-    clicked := false
-    try {
-        txt.Click("left")
-        clicked := true
-    } catch {
-        try {
-            txt.Parent.Click("left")
-            clicked := true
-        }
-    }
-    Sleep(1100)
-    ; verify a fee is now set (value is a Config_Fee GUID string when populated)
-    v := ""
-    try v := feeCombo.Value
-    ok := (InStr(v, "Config_Fee:") = 1)
-    LogMessage("    [fee] click '" . feeName . "' -> value='" . v . "' (" . (ok ? "SET" : "not set") . ")")
-    return ok
-}
-
-; ----------------------------------------------------------------------------
-; Set a report date field (by CkFindDateWrapper position) to yyyy-mm-dd purely
-; by the CALENDAR PICKER (never types). Reuses CompanyKpis's field finder + day-
-; cell geometry (which are correct here), but navigates months by clicking the
-; REAL ◄/► arrow BUTTONS via UIA — the CompanyKpis geometric arrow offset
-; (field.left+749) misses this dialog's ► (measured at field.left+788), whereas
-; the UIA buttons are position-independent. Returns true once the field's Value
-; equals the target date.
-NicsSetDateByCalendar(position, yyyymmdd) {
-    parts := StrSplit(yyyymmdd, "-")
-    if (parts.Length != 3)
-        return false
-    ty := Integer(parts[1]), tm := Integer(parts[2]), td := Integer(parts[3])
-    targetIdx := ty * 12 + (tm - 1)
-    wrap := CkFindDateWrapper(position)
-    if !wrap {
-        LogMessage("    [ncal] ERROR: date wrapper pos " . position . " not found")
-        return false
-    }
-    rect := wrap["rect"]
-    Loop 3 {
-        NicsOpenCalendar(wrap, rect)
-        if !NicsNavToMonth(targetIdx) {
-            LogMessage("    [ncal] pos=" . position . " round " . A_Index . ": could not reach " . tm . "/" . ty)
-            continue
-        }
-        Sleep(500)
-        CkClickDayCellGeom(rect, ty, tm, td)
-        Sleep(600)
-        val := CkReadFieldValue(wrap["elem"])
-        pm := 0, pd := 0, py := 0
-        if CkParseMdy(val, &pm, &pd, &py) {
-            if (pm = tm && pd = td && py = ty) {
-                LogMessage("    [ncal] pos=" . position . " CONFIRMED " . tm . "/" . td . "/" . ty . " (val='" . val . "')")
-                return true
-            }
-        }
-        LogMessage("    [ncal] pos=" . position . " round " . A_Index . " miss (field='" . val . "') — retrying")
-    }
-    return false
-}
-
-; Open a date field's calendar dropdown (drop button, else edge click).
-NicsOpenCalendar(wrap, rect) {
-    db := CkFindDropButton(wrap["elem"])
-    if db {
-        try db.Click("left")
-    } else {
-        gx := rect.r - 12, gy := rect.t + (rect.b - rect.t) // 2
-        CkPhysClick(gx, gy)
-    }
-    Sleep(900)
-}
-
-; Click ◄/► until the open calendar shows the target month index. Reads the
-; month from the "Month YYYY" header each step; clicks the real UIA arrow button.
-NicsNavToMonth(targetIdx) {
-    unread := 0
-    Loop 45 {
-        ci := NicsReadCalMonthIdx()
-        if (ci = 0) {
-            unread += 1
-            if (unread > 6)
-                return false
-            Sleep(400)
-            continue
-        }
-        if (ci = targetIdx)
-            return true
-        if !NicsClickCalArrow((targetIdx > ci) ? "next" : "prev")
-            return false
-        Sleep(700)
-    }
-    return false
-}
-
-; Read the open calendar's month as an index (year*12 + month-1) from the
-; "Month YYYY" header button/text. Returns 0 if not found.
-NicsReadCalMonthIdx() {
-    desk := 0
-    try desk := UIA.GetRootElement()
-    if !desk
-        return 0
-    mnames := Map("january",1,"february",2,"march",3,"april",4,"may",5,"june",6,"july",7,"august",8,"september",9,"october",10,"november",11,"december",12)
-    for t in ["Button", "Text"] {
-        els := 0
-        try els := desk.FindElements({Type: t})
-        if !els
-            continue
-        for e in els {
-            nm := ""
-            try nm := e.Name
-            if RegExMatch(nm, "i)^(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})$", &mm) {
-                mon := mnames[StrLower(mm[1])]
-                yr := Integer(mm[2])
-                return yr * 12 + (mon - 1)
-            }
-        }
-    }
-    return 0
-}
-
-; Click the calendar's ◄ (prev) or ► (next) arrow via UIA: the empty-name Button
-; on the header row immediately left/right of the "Month YYYY" header button.
-NicsClickCalArrow(dir) {
-    desk := 0
-    try desk := UIA.GetRootElement()
-    if !desk
-        return false
-    btns := 0
-    try btns := desk.FindElements({Type: "Button"})
-    if !btns
-        return false
-    ; locate the month header button
-    hdr := 0
-    for e in btns {
-        nm := ""
-        try nm := e.Name
-        if RegExMatch(nm, "i)^(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{4}$") {
-            hdr := e
-            break
-        }
-    }
-    if !hdr
-        return false
-    hr := 0
-    try hr := hdr.BoundingRectangle
-    if !hr
-        return false
-    hcy := hr.t + (hr.b - hr.t) // 2
-    best := 0, bestDist := 99999
-    for e in btns {
-        nm := ""
-        try nm := e.Name
-        if (Trim(nm) != "")
-            continue
-        r := 0
-        try r := e.BoundingRectangle
-        if !r
-            continue
-        cy := r.t + (r.b - r.t) // 2
-        cx := r.l + (r.r - r.l) // 2
-        if (Abs(cy - hcy) > 30)
-            continue
-        if (dir = "next" && cx <= hr.r)
-            continue
-        if (dir = "prev" && cx >= hr.l)
-            continue
-        d := (dir = "next") ? (cx - hr.r) : (hr.l - cx)
-        if (d < bestDist) {
-            bestDist := d
-            best := e
-        }
-    }
-    if !best
-        return false
-    try {
-        best.Click("left")
+    ; verify the report actually loaded
+    ln := ""
+    try ln := IntakeGetLoadedReportName()
+    if (ln != "" && InStr(ln, verifyName)) {
+        LogMessage("    [rep] loaded '" . ln . "' via layout GUID " . SubStr(reportGuid, 1, 8))
         return true
     }
+    LogMessage("    [rep] item selected but BoxReportName='" . ln . "' (want '" . verifyName . "')")
     return false
-}
-
-; ----------------------------------------------------------------------------
-; Resolve the visual positions (as CkFindDateWrapper indexes them: empty
-; AutomationId, on-screen, sorted by X) of the report's Start and End date
-; fields in the Void/View Custom Reports dialog. The report's two date fields
-; sit INSIDE the dialog (x > 700); the store "Business Date" field sits to the
-; LEFT (x ~ 300) and, having an empty AutomationId too, would otherwise shift
-; CkFindDateWrapper's indexing. Returns [startPos, endPos] (start = smaller X),
-; or "" if the two report date fields can't be found.
-NicsFindReportDatePositions() {
-    root := 0
-    try root := GetBravoRoot()
-    if !root
-        return ""
-    xs := []
-    try {
-        for e in root.FindElements({Type: "Edit"}) {
-            nm := ""
-            try nm := e.Name
-            if (nm != "BravoDateEdit")
-                continue
-            aid := ""
-            try aid := e.AutomationId
-            if (aid != "")            ; skip inner PART_Editor and tagged clones
-                continue
-            off := false
-            try off := e.IsOffscreen
-            if off
-                continue
-            x := -1
-            try x := e.BoundingRectangle.l
-            if (x < 0)
-                continue
-            xs.Push(x)
-        }
-    }
-    if (xs.Length < 2)
-        return ""
-    ; insertion sort ascending by X (mirror CkFindDateWrapper's ordering)
-    i := 2
-    while (i <= xs.Length) {
-        j := i
-        while (j > 1 && xs[j] < xs[j-1]) {
-            t := xs[j], xs[j] := xs[j-1], xs[j-1] := t
-            j--
-        }
-        i++
-    }
-    ; 1-based positions of the two dialog-area date fields (x > 700)
-    poss := []
-    for idx, xv in xs {
-        if (xv > 700)
-            poss.Push(idx)
-    }
-    if (poss.Length < 2)
-        return ""
-    return [poss[1], poss[2]]
 }
 
 ; Select a saved report by KEYBOARD type-ahead: focus each BravoComboBox, type

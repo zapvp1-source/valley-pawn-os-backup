@@ -533,3 +533,12 @@ WAY   |   2   |  531 |  529 |   2 |    0 | ok   (sold: Rings 1 - VAP030380 Lady'
 - CUL and ROA both show a NET INCREASE in on-hand case count with a Rings-heavy pattern and no rings sold - consistent with new intake/buys added to the Rings case during the day rather than a miscount, but not confirmed. Flagged to the channel in plain language; no dollar or breakdown detail posted (Field Communication Standard v3).
 - No date mismatches, no missing sheets, no empty-grid pipeline failures.
 - Posted clean/flagged per-store summary to #jewlery-counts (C0BM9NHGTT4) at ts 1786406431.580749. No DM to Joshua (pipeline did not fail - two stores are OVER threshold on the count delta, which is a normal operational flag, not a pipeline failure, so channel post was used per Section 5).
+
+
+## 2026-08-11 — Tuesday, on-hand comparison — DID NOT RUN (pipeline gap)
+- jewelry-onhand-nightly-pull (8:30 PM trigger) did not produce output. No 2026-08-11_*_jewelry-case-counts.csv exists for any of the 5 stores as of 9:48 PM check.
+- Other 8/11 pipeline cells DID run normally same day (items-to-price at ~8 AM, safe-register-journal at ~6:11-6:16 PM) — so this looks like an isolated failure of the jewelry-case-counts cell/trigger specifically, not a broader pipeline outage.
+- Most recent jewelry-case-counts files on disk are dated 2026-08-10 (CUL 10:32 AM, HAR 9:55 AM, LEX 10:02 AM, ROA 10:10 AM, WAY prior WAY file from 8/9 13:27) — these are stale, not from a freeze window, and were not used.
+- Per hard all-or-nothing rule: did NOT read Slack #end-of-day sheets, did NOT build any comparison table, did NOT publish any numbers.
+- Sent Joshua one plain-language Slack DM (D03BHQH5VGT) noting tonight's comparison didn't complete. No technical detail in that DM.
+- FOLLOW-UP NEEDED: someone should check why jewelry-onhand-nightly-pull didn't fire/complete tonight (trigger registration, Bravo pipeline handler, or timing conflict with the 8:30 PM window). Leaving diagnosis to a future session per additive-only rule — this run's job was analysis only, not pipeline repair.

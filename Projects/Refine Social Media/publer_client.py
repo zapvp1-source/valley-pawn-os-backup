@@ -160,6 +160,7 @@ class PublerClient:
         account_ids: list[str] | None = None,
         scheduled_at: str | None = None,
         image_urls: list[str] | None = None,
+        media_ids: list[str] | None = None,
         video_url: str | None = None,
         link: str | None = None,
         immediate: bool = False,
@@ -254,6 +255,38 @@ class PublerClient:
                 return status
             time.sleep(poll_interval)
         return {"status": "timeout", "job_id": job_id}
+
+    def upload_media(self, file_path: str, in_library: bool = True, direct_upload: bool = True) -> dict:
+        """
+        Direct file upload to Publer media library (added 2026-08-11) -- the fix for the
+        no-public-image-host gap. POST /media, multipart/form-data, per
+        https://publer.com/docs/posting/create-posts/media-handling . Returns the
+        MediaUploadResponse dict; use its ["id"] in schedule_post(media_ids=[...]) or
+        directly as {"id": ..., "type": "image"} in a networks[].media entry.
+        This means Publer itself is the public host -- no WordPress/Drive/imgur dependency,
+        no interactive-confirmation gate, works with any local file path the calling
+        process can read (Slack-downloaded photos, asset-library heroes, anything).
+        direct_upload=True uploads straight to Publer S3 so the returned media has a
+        real usable path immediately (per API docs: required if you need the final URL).
+        """
+        import mimetypes
+        import requests as _requests
+        ctype = mimetypes.guess_type(file_path)[0] or "application/octet-stream"
+        headers = {
+            "Authorization": f"Bearer-API {self.api_key}",
+        }
+        if self.workspace_id:
+            headers["Publer-Workspace-Id"] = self.workspace_id
+        with open(file_path, "rb") as fh:
+            files = {"file": (file_path.split("/")[-1], fh, ctype)}
+            data = {
+                "direct_upload": "true" if direct_upload else "false",
+                "in_library": "true" if in_library else "false",
+            }
+            r = _requests.post(f"{self.api_base}/media", headers=headers, files=files, data=data, timeout=60)
+        if not r.ok:
+            raise PublerError(f"POST /media -> {r.status_code}: {r.text[:300]}")
+        return r.json()
 
     def list_posts(self, state: str | None = None, limit: int = 100) -> list[dict]:
         """state: 'scheduled' | 'published' | 'draft' | 'failed' | None for all."""

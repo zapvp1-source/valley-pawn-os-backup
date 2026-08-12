@@ -1,6 +1,27 @@
 # Valley Pawn - Enterprise Changelog
 
-## 2026-08-10 (evening) — zoom-voicemail-alert: recovered from archived Slack channel, posted live voicemail, self-healed the task
+## 2026-08-04 (later #4 -- full routing redesign: daily store cadence + decoupled shared accounts)
+
+- Joshua reported (correctly, verified against 3 weeks of live Publer data before acting): store Facebook pages and GBP pages were not posting daily/consistently, while shared Brand Instagram (~11.7/wk) and Brand Twitter (~5.3/wk) were overshooting -- because the OLD routing sent every item, store-local included, to the shared IG and Twitter accounts, while store FB/GBP legs were thin and GBP was conditional on a real deal submission existing that week.
+- REDESIGNED `vp-content-batch-weekly` routing (supersedes this same day's earlier 26-item doubling, which only fixed volume not distribution): Brand tier now 7 items/week (1/day), EXCLUSIVELY routes to Brand FB + Brand IG + Brand X -- store-local items no longer touch IG or Twitter at all. Store-local tier now 35 items/week (7/store/day), EXCLUSIVELY routes to that store's FB + that store's GBP, both legs MANDATORY every time (GBP no longer conditional on a deal existing). Total 42 items/week, 91 platform posts/week. Content sourcing for the 6 non-deal slots/store/week now draws from daily-fresh Bravo inventory data -- Bravo freshness is now a daily-strength dependency, not a weekly nice-to-have.
+- REWRITTEN `vp-content-batch-quota-watchdog` from an aggregate item-count check to a per-account (Brand FB/IG/X + all 10 store FB/GBP pages) check against live Publer data with explicit from/to date params (avoids the 15-result silent cap). DMs Joshua only for an account with a confirmed 2-consecutive-week shortfall (<4/7). Writes `quota_watchdog_result.json` weekly for the trend comparison.
+- OPEN ITEM, not yet re-investigated this session: Culpeper's Facebook page is running ~3x every other store's post count (26 posts vs 7-8 for the others over the same 3-week window) -- previously diagnosed 2026-07-20 as Publer auto-sync pulling in direct-to-FB posts outside the pipeline, not a pipeline bug. Worth a fresh check before the new 1/day/store cadence goes fully live, so pipeline posts don't stack on top of an existing unrelated auto-sync and make Culpeper's page look spammy relative to the other four.
+- First live test of the full redesign is Monday 2026-08-10's run.
+
+
+Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
+
+## 2026-08-11
+
+- Enabled scheduled tasks: 89 -> 94
+- Registered scheduled tasks: 132 -> 100
+- Task folders on disk: 153 -> 161
+- ENABLED: chekkit-unanswered-eod-followup
+- ENABLED: gdrive-cache-refresh
+- ENABLED: jewelry-onhand-nightly-compare
+- ENABLED: jewelry-onhand-nightly-pull
+- ENABLED: task-hygiene-sweep
+- FLAGGED: registered-with-scheduler count dropped 132 to 100 (32 tasks) overnight while enabled and folder counts grew normally; no explanation found in changelog history; Joshua notified via Slack DM for review.
 
 A scheduled run of `zoom-voicemail-alert` found the destination channel (`C0BND1NK65V`) returned `is_archived` —
 Joshua had archived the original `#voicemails-missed-calls` (renamed `#voicemails-missed-calls-archived`) and
