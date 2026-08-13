@@ -174,6 +174,32 @@ def build():
         y, mo, src = r
         out.append({"store": st, "year": y, "month": mo, "period": f"{y}-{mo:02d}",
                     "bucket": bucket, "dwt": e["weight"], "date_source": src})
+
+    # Collapse the same PHYSICAL bucket appearing in two source-file years.
+    # load_raw() keys by (store, bucket, source_file_year) so that genuinely
+    # distinct buckets that reuse a name across years stay separate (the
+    # 2026-08-04 cross-year merge bug). But a single real bucket ALSO lands in
+    # two files whenever a query window straddles the year boundary -- e.g.
+    # WAY "GOLD STONE 4/26" (posted 2025-05) sits in both 2025_WAY and
+    # 2026_WAY. That produced two history rows for one bucket: one carrying the
+    # weight, one blank. The blank one was falsely reported as a missing-weight
+    # gap, and had BOTH copies carried a weight it would have DOUBLE-COUNTED
+    # that bucket into the store's total.
+    # Same store + same bucket name + same RESOLVED period = the same physical
+    # bucket, so merge those, keeping the non-blank weight. Rows that resolve to
+    # DIFFERENT periods are left alone -- those are the real same-name-different-
+    # year buckets the split key exists to protect.
+    merged = {}
+    for r in out:
+        k = (r["store"], r["bucket"], r["period"])
+        if k in merged:
+            if not merged[k]["dwt"] and r["dwt"]:
+                merged[k]["dwt"] = r["dwt"]
+                merged[k]["date_source"] = r["date_source"]
+        else:
+            merged[k] = r
+    collapsed = len(out) - len(merged)
+    out = list(merged.values())
     with open(HISTORY, "w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=["store", "period", "year", "month",
                                            "bucket", "dwt", "date_source"])
@@ -182,7 +208,7 @@ def build():
             w.writerow({k: r[k] for k in w.fieldnames})
     missing = [r for r in out if not r["dwt"]]
     print(f"wrote {HISTORY}")
-    print(f"  buckets: {len(out)} | unresolved month: {len(unresolved)} | missing weight: {len(missing)}")
+    print(f"  buckets: {len(out)} | unresolved month: {len(unresolved)} | missing weight: {len(missing)} | cross-file duplicates merged: {collapsed}")
     src = defaultdict(int)
     for r in out:
         src[r["date_source"]] += 1
@@ -224,13 +250,25 @@ def validate():
 
 
 def load_history():
+    """-> (per, missing)
+    per: period -> store -> summed dwt (blank-weight buckets excluded, as before).
+    missing: period -> set of stores with at least one bucket assigned to that
+    period whose weight was never captured (a genuine pull gap, not a zero
+    month). 2026-08-12: a Culpeper bucket sat with a blank weight and a
+    "final" company total (555 dwt) was posted to Slack anyway, ~35% off the
+    verifiable figure. This tracking is the fix so that can't happen silently
+    again -- report() surfaces it as incomplete_current_stores.
+    """
     per = defaultdict(lambda: defaultdict(float))
+    missing = defaultdict(set)
     if not os.path.exists(HISTORY):
         build()
     for r in csv.DictReader(open(HISTORY)):
         if r["dwt"]:
             per[r["period"]][r["store"]] += float(r["dwt"])
-    return per
+        else:
+            missing[r["period"]].add(r["store"])
+    return per, missing
 
 
 def genesis_period(per):
@@ -256,7 +294,7 @@ def year_covered(per, store, year, upto_month):
 
 
 def report(period):
-    per = load_history()
+    per, missing = load_history()
     y, m = int(period[:4]), int(period[5:7])
     prior = f"{y-1}-{m:02d}"
     cur, pri = per.get(period, {}), per.get(prior, {})
@@ -280,11 +318,22 @@ def report(period):
     # prior value is missing.
     incomplete = [s for s in STORES if not year_covered(per, s, y - 1, m)]
 
+    # Current-period gap: a store with a blank-weight bucket assigned to THIS
+    # period, or to any earlier period this year up through THIS period --
+    # its cur/ytd totals are a floor, not a final number. Must be surfaced,
+    # never silently included in a "final" total (2026-08-12 incident).
+    gap_month = sorted(missing.get(period, set()))
+    gap_ytd = sorted({s for p, stores in missing.items()
+                       for s in stores
+                       if p[:4] == str(y) and p <= period})
+
     return {"period": period, "prior": prior, "rank": rank, "cur": dict(cur),
             "pri": dict(pri), "ytd": dict(ytd), "ytd_prior": dict(ytd_prior),
             "total": sum(cur.values()), "total_prior": sum(pri.values()),
             "ytd_total": sum(ytd.values()), "ytd_prior_total": sum(ytd_prior.values()),
-            "incomplete_prior_stores": incomplete}
+            "incomplete_prior_stores": incomplete,
+            "incomplete_current_stores": gap_month,
+            "incomplete_ytd_stores": gap_ytd}
 
 
 def pct(now, then):
@@ -293,37 +342,74 @@ def pct(now, then):
     return (now - then) / then * 100
 
 
+def compare(now, then):
+    """-> '(vs 177 last year, +99 dwt / +56%)' or '' when there is no prior figure.
+
+    Joshua 2026-08-12: a percentage on its own hides magnitude -- Lexington's
+    +144% month was +38 dwt while Culpeper's +56% was +99 dwt, and Harrisonburg's
+    -47% was the single largest swing in the company. Every comparison in the
+    field-facing post therefore carries the prior-year WEIGHT, the change in dwt,
+    AND the percentage. Never ship one without the others.
+    """
+    if not then:
+        return ""
+    d = now - then
+    p = (d / then) * 100
+    return f"  (vs {then:,.0f} last year, {'+' if d >= 0 else '−'}{abs(d):,.0f} dwt / {'+' if p >= 0 else '−'}{abs(p):.0f}%)"
+
+
 def slack_post(r):
     """Field-facing text — Field Communication Standard v3."""
     mname = ["", "January", "February", "March", "April", "May", "June", "July",
              "August", "September", "October", "November", "December"][int(r["period"][5:7])]
     incomplete = r.get("incomplete_prior_stores") or []
+    gap = r.get("incomplete_current_stores") or []
+    gap_ytd = r.get("incomplete_ytd_stores") or []
     L = []
-    lead = f"*{mname} gold scrap — {r['total']:,.0f} dwt company-wide.*"
-    if not incomplete:
-        c = pct(r["total"], r["total_prior"])
-        if c is not None:
-            lead += f" That's {abs(c):.0f}% {'up from' if c >= 0 else 'down from'} {mname} last year."
+    if gap:
+        gnames = ", ".join(STORE_NAMES[s] for s in gap)
+        lead = f"*{mname} gold scrap — at least {r['total']:,.0f} dwt company-wide.*"
+    else:
+        lead = f"*{mname} gold scrap — {r['total']:,.0f} dwt company-wide.*"
+    if not incomplete and not gap:
+        tp = r["total_prior"]
+        if tp:
+            d = r["total"] - tp
+            c = (d / tp) * 100
+            lead += (f" Last {mname} was {tp:,.0f} dwt — "
+                     f"{'up' if d >= 0 else 'down'} {abs(d):,.0f} dwt ({'+' if c >= 0 else '−'}{abs(c):.0f}%).")
     L.append(lead)
+    if gap:
+        L.append(f"_Still missing a captured weight for at least one {gnames} bucket this period — the number above and that store's line are a floor, not final._")
     L.append("")
     for i, s in enumerate(r["rank"], 1):
         v = r["cur"].get(s, 0)
         if not v:
             continue
         medal = {1: ":first_place_medal:", 2: ":second_place_medal:", 3: ":third_place_medal:"}.get(i, "  ")
-        yo = None if s in incomplete else pct(v, r["pri"].get(s, 0))
-        yos = f"  ({'+' if yo >= 0 else ''}{yo:.0f}% vs last year)" if yo is not None else ""
-        L.append(f"{medal} *{STORE_NAMES[s]}* — {v:,.0f} dwt{yos}")
+        if s in gap:
+            medal = "  "
+        yos = "" if (s in incomplete or s in gap) else compare(v, r["pri"].get(s, 0))
+        tag = "  _(partial, pending)_" if s in gap else ""
+        line = f"{medal} *{STORE_NAMES[s]}* — {v:,.0f}+ dwt{yos}{tag}" if s in gap else f"{medal} *{STORE_NAMES[s]}* — {v:,.0f} dwt{yos}"
+        L.append(line)
+    if gap:
+        L.append("")
+        L.append("Ranking above may still change once the pending bucket is in.")
     L.append("")
 
     # Year-to-date board. Joshua asked 2026-08-04 for BOTH boards in the
     # monthly post -- the month ranking alone hides who is actually winning
     # the year, which is the number that drives the bonus conversation.
-    ytdline = f"*Year to date — {r['ytd_total']:,.0f} dwt"
-    if not incomplete:
-        yc = pct(r["ytd_total"], r["ytd_prior_total"])
-        if yc is not None:
-            ytdline += f", {'up' if yc >= 0 else 'down'} {abs(yc):.0f}% over the same stretch last year"
+    ytd_prefix = "at least " if gap_ytd else ""
+    ytdline = f"*Year to date — {ytd_prefix}{r['ytd_total']:,.0f} dwt"
+    if not incomplete and not gap_ytd:
+        yp = r["ytd_prior_total"]
+        if yp:
+            yd = r["ytd_total"] - yp
+            yc = (yd / yp) * 100
+            ytdline += (f" vs {yp:,.0f} dwt over the same stretch last year — "
+                        f"{'up' if yd >= 0 else 'down'} {abs(yd):,.0f} dwt ({'+' if yc >= 0 else '−'}{abs(yc):.0f}%)")
     ytdline += ".*"
     L.append(ytdline)
     L.append("")
@@ -333,9 +419,12 @@ def slack_post(r):
         if not v:
             continue
         medal = {1: ":first_place_medal:", 2: ":second_place_medal:", 3: ":third_place_medal:"}.get(i, "")
-        yo = None if s in incomplete else pct(v, r["ytd_prior"].get(s, 0))
-        yos = f" ({'+' if yo >= 0 else '−'}{abs(yo):.0f}% vs last year)" if yo is not None else ""
-        L.append(f"{medal} *{STORE_NAMES[s]}* — {v:,.0f} dwt{yos}".strip())
+        if s in gap_ytd:
+            medal = ""
+        yos = "" if (s in incomplete or s in gap_ytd) else compare(v, r["ytd_prior"].get(s, 0))
+        tag = " (partial, pending)" if s in gap_ytd else ""
+        vstr = f"{v:,.0f}+" if s in gap_ytd else f"{v:,.0f}"
+        L.append(f"{medal} *{STORE_NAMES[s]}* — {vstr} dwt{yos}{tag}".strip())
     if incomplete:
         names = ", ".join(STORE_NAMES[s] for s in incomplete)
         L.append("")

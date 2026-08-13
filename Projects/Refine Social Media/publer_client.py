@@ -204,14 +204,16 @@ class PublerClient:
                 # Pick content type based on media presence
                 if video_url:
                     content_type = "video"
-                elif image_urls:
+                elif media_ids or image_urls:
                     content_type = "photo"
                 elif link:
                     content_type = "link"
                 else:
                     content_type = "status"
                 networks[net] = {"type": content_type, "text": text}
-                if image_urls:
+                if media_ids:
+                    networks[net]["media"] = [{"type": "image", "id": mid} for mid in media_ids]
+                elif image_urls:
                     networks[net]["media"] = [{"type": "image", "url": u} for u in image_urls]
                 if video_url:
                     networks[net]["media"] = [{"type": "video", "url": video_url}]

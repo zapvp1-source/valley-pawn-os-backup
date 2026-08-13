@@ -36,7 +36,7 @@ def build_sheet():
     from openpyxl.styles import Font, Alignment, PatternFill
     from openpyxl.utils import get_column_letter
 
-    per = S.load_history()
+    per, _missing = S.load_history()   # load_history returns (per, missing) as of 2026-08-12
     periods = sorted(per)
     if not periods:
         print("no history; nothing written")

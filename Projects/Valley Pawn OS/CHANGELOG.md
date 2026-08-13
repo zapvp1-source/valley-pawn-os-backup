@@ -1,5 +1,10 @@
 # Valley Pawn - Enterprise Changelog
 
+## 2026-08-12
+
+- BUILT: `zoom-voicemail-eod-review` scheduled task — daily 5:45 PM close-out companion to `zoom-voicemail-alert`. Per Joshua: alerts should only fire after checking the call logs for an existing callback (already true of the intraday task since 2026-08-10's Step 3.5), and separately, end of day needs a full re-sweep publishing any missed call/voicemail from that day that still never got a callback. Additive, stateless (does not touch the intraday task's dedupe file), posts to #voicemails-missed-calls every run (list of outstanding items, or an explicit all-clear) since it's meant to be a definitive daily record rather than a silent-when-nothing alert. See `Valley Pawn OS/ZOOM_PHONE.md` for full detail. Note: actual dispatch lands ~5:52 PM due to the scheduler's built-in few-minute jitter, not exactly 5:45 — flagged to Joshua in case exact timing matters.
+- CORRECTED: `ZOOM_PHONE.md` still listed the archived Slack channel ID (`C0BND1NK65V`) for #voicemails-missed-calls; updated to the live channel `C0BP4M3B99R` (the `zoom-voicemail-alert` task file itself was already correct — only the reference doc was stale).
+
 ## 2026-08-04 (later #4 -- full routing redesign: daily store cadence + decoupled shared accounts)
 
 - Joshua reported (correctly, verified against 3 weeks of live Publer data before acting): store Facebook pages and GBP pages were not posting daily/consistently, while shared Brand Instagram (~11.7/wk) and Brand Twitter (~5.3/wk) were overshooting -- because the OLD routing sent every item, store-local included, to the shared IG and Twitter accounts, while store FB/GBP legs were thin and GBP was conditional on a real deal submission existing that week.

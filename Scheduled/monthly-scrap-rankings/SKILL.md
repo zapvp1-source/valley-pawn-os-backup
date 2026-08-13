@@ -66,7 +66,19 @@ All of this logic lives in `Bravo Data Extraction/scrap_rankings.py`. Use it; do
    > ⚠️ **BEFORE ANY PULL: if `reports/*.ahk` was edited since the watcher started, the edit is NOT live.** The watcher loads handler code into memory at launch. On 2026-08-04 a full day was lost testing handler fixes that were never loaded. Restart it first, then pull:
    > `prlctl exec 'Windows 11' --current-user powershell -ExecutionPolicy Bypass -File 'Y:\Documents\Claude\Projects\Bravo Data Extraction\_restart_watcher.ps1'`
 
-   > ⚠️ **A targeted pull WIPES out-of-window history from that store's year file** (`ResetOutputFile` truncates before writing). Always pull the FULL year span (`YYYY-01..YYYY-MM`), never a narrow window, or back the file up first. This ate 10 months of Harrisonburg history on 2026-08-04.
+   > ⚠️ **A pull WIPES that store's year file** (`ResetOutputFile` truncates before writing). This is NOT limited to narrow windows and a full-year span does NOT protect you — on 2026-08-12 every one of five pulls truncated its file, one down to a bare header row, including full-span pulls. It ate 10 months of Harrisonburg history on 2026-08-04.
+   >
+   > **BACKING UP BEFORE EVERY PULL IS MANDATORY, NOT AN ALTERNATIVE:**
+   > ```
+   > mkdir -p output/_backups_$(date +%Y%m%d) && cp output/202*_*_scrap-refining-gold.csv output/_backups_$(date +%Y%m%d)/
+   > ```
+   > After the pull, restore additively — this preserves every backed-up row and layers in only newly-captured weights, never overwriting a real value with a blank:
+   > ```
+   > sed 's/_backups_20260804/_backups_<your dated folder>/' _merge_scrap_weights.py > ./_m.py && python3 ./_m.py CUL HAR LEX ROA WAY; rm -f ./_m.py
+   > ```
+   > Then verify row counts match the backup before doing anything else. Skipping this loses history silently — the truncated file still looks like valid data.
+
+   > ⚠️ **If a bucket's weight will not read, do NOT assume the store left it blank in Bravo.** Until 2026-08-12 the handler logged `WRONG BUCKET OPEN` for these, which is misleading — Bravo was opening *nothing*, not the wrong bucket. Cause: in the virtualized bucket grid a row can exist in the UIA tree while scrolled outside the visible viewport, so `GetPos` hands back off-screen coordinates and the click lands on empty space. Deterministic per bucket, so retrying never helps. Fixed by calling `it.ScrollIntoView()` before reading the row rect in `ScrapRelocateAndOpenBucket`, plus refusing to click a zero-sized rect. Eight buckets that had been unreadable for over a week all read on the first attempt afterwards. If this class of failure reappears, check `logs/<trigger>.log` for `[verify] NO VALUE READ (foundLabel=no...)` — `foundLabel=no` means the detail panel never opened, which is a click-targeting problem, not a data problem.
 
 5. **Refresh the trend workbook in Google Drive.**
    ```

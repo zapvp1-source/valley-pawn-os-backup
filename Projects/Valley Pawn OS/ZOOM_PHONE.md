@@ -42,8 +42,8 @@ reference once their extensions are assigned.
   Slack **#voicemails-missed-calls** so the store team knows to call the customer back. Silent when there's
   nothing new or everything was already called back. Self-heals nothing on a Zoom session logout — DMs
   Joshua instead of attempting a login, per safety policy on credential entry.
-- Posts to Slack **#voicemails-missed-calls** (`C0BND1NK65V`) — Joshua created this channel 2026-08-07,
-  resolving the earlier #general fallback.
+- Posts to Slack **#voicemails-missed-calls** (`C0BP4M3B99R` — updated 2026-08-10; the original channel
+  `C0BND1NK65V` was archived same day and Joshua recreated the channel fresh under this new ID).
 - **Dedupe state:** `~/Documents/Claude/Projects/Valley Pawn OS/.zoom_voicemail_alert_state.json` (moved
   here 2026-08-10 — `~/Documents/Claude/Scheduled/` is read-only in Cowork sessions, see CHANGELOG). Never
   scope a run beyond today's date range — today-only + this state file together are what prevent
@@ -52,3 +52,15 @@ reference once their extensions are assigned.
   the store's Outbound call log for that day. If the store already placed a later call to the same number
   that Connected, the row is suppressed from the alert instead of nagging about a callback that already
   happened.
+- **`zoom-voicemail-eod-review`** (Cowork scheduled task, SKILL.md at
+  `~/Documents/Claude/Scheduled/zoom-voicemail-eod-review/`, built 2026-08-12) — daily close-out companion.
+  Runs once a day (cron `45 17 * * *`, actual dispatch ~5:52 PM local due to the platform's few-minute
+  scheduling jitter — Joshua asked for 5:45 PM specifically, flagging in case exact timing matters). Unlike
+  the intraday task, it is stateless: it re-pulls EVERY missed call/voicemail from that day (not just new
+  ones since the last state-file checkpoint) and re-runs the same staff-callback / customer-reconnected
+  resolution check against the full day's Outbound+Inbound rows. Posts to the same
+  **#voicemails-missed-calls** channel EVERY run — either the list of still-outstanding callbacks, or an
+  explicit all-clear — since it's meant to be the definitive end-of-day record, not a silent-when-nothing
+  event alert like the intraday task. Does not read or write the intraday task's dedupe state file; the two
+  are fully independent so a bug in one can't silently break the other. Same session-expired and failure
+  DM policy as `zoom-voicemail-alert`.

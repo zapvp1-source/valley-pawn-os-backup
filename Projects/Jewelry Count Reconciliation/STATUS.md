@@ -542,3 +542,31 @@ WAY   |   2   |  531 |  529 |   2 |    0 | ok   (sold: Rings 1 - VAP030380 Lady'
 - Per hard all-or-nothing rule: did NOT read Slack #end-of-day sheets, did NOT build any comparison table, did NOT publish any numbers.
 - Sent Joshua one plain-language Slack DM (D03BHQH5VGT) noting tonight's comparison didn't complete. No technical detail in that DM.
 - FOLLOW-UP NEEDED: someone should check why jewelry-onhand-nightly-pull didn't fire/complete tonight (trigger registration, Bravo pipeline handler, or timing conflict with the 8:30 PM window). Leaving diagnosis to a future session per additive-only rule — this run's job was analysis only, not pipeline repair.
+
+## 2026-08-12 — Wednesday, Culpeper-only run
+- Store-hours gate: Wed -> CUL only per section 0. No other stores checked (correct, not a failure).
+- Bravo pull: trigger jewelry-count-recon-2026-08-12-auto, cell CUL SUCCESS, 20 rows, 111.2s. No BOM issue, no truncation-guard error.
+- Count sheet: read via Chrome from #end-of-day. Sandi Cole (CUL) posted at 6:18 PM ET, dated 8/12/26 (matches business date). EOD summary header confirmed CULPEPER. Sum-verified: AM 637+120+155+122+243=1277 matches written AM total; PM 637+120+155+122+243=1277 matches written PM total.
+- Bucketed per jewelry_reconciliation_comparison.py rules: only jewelry-category sold row was VP4028904 "Unisex Silver Ring" (RING S000 3.2DWT COSTUME JEWELRY) -> Rings bucket, sold=1. All other buckets sold=0.
+STORE | soldJ | AM   | PM   | net | diff | status
+CUL   |   1   | 1277 | 1277 |   0 |   -1 | ok
+- Bucket detail: Rings AM637/PM637 (net0, sold1, diff-1); Bracelets AM120/PM120 (net0,sold0,diff0); Necklaces AM155/PM155 (net0,sold0,diff0); Earrings AM122/PM122 (net0,sold0,diff0); Pendants AM243/PM243 (net0,sold0,diff0). No date mismatch, no missing sheet, no empty-grid failure.
+- Posted clean summary to #jewlery-counts (C0BM9NHGTT4). No DM to Joshua (pipeline succeeded, no flags).
+
+## 2026-08-12 (night, 9:45 PM run) - Wednesday, Culpeper-only on-hand vs PM sheet - jewelry-onhand-nightly-compare
+- Store-hours gate: Wednesday -> CUL only per Section 0 (correct, not partial; complete for the day).
+- Bravo side: output/2026-08-12_CUL_jewelry-case-counts.csv, file mtime 8:43 PM (after the 8:30 PM freeze trigger, not stale). All 6 rows status=ok.
+- Manager side: Sandi posted the CUL Jewelry Daily Count sheet to #end-of-day at 6:18 PM, handwritten date 8/12/26 (matches business date). Used PM COUNT column. Sheet total line (1277) matches the sum of its 5 categories (637+120+155+122+243=1277) - no misread.
+- Category mapping: Chains(116) + Necklaces(100) = 216, compared against the sheet single NECKLACES line.
+CUL comparison (OVER/SHORT from the sheet point of view; variance = sheet minus Bravo; Bravo = expected, sheet = actual case count):
+  Rings      Bravo 648  Sheet 637  -> SHORT 11
+  Bracelets  Bravo 127  Sheet 120  -> SHORT 7
+  Necklaces  Bravo 216  Sheet 155  -> SHORT 61  (Chains 116 + Necklaces 100)
+  Earrings   Bravo 173  Sheet 122  -> SHORT 51
+  Pendants   Bravo 249  Sheet 243  -> SHORT 6
+  Store total: Bravo 1413, Sheet 1277, SHORT 136 overall.
+  Exact matches: 0 of 5 cells today (only CUL open on Wednesday).
+- Direction: all 5 cells SHORT (Bravo higher than the physical case) - the expected scope-noise direction per BRAVO_KNOWN_ISSUES.md 2026-08-12 (Bravo counts case+safe+back-stock+bins; the manager sheet counts the display case only). No OVER (anomalous) cells tonight.
+- Pattern check vs this morning freeze-window read (8/12 AM Bravo pull vs 8/11 PM sheet, logged in BRAVO_KNOWN_ISSUES.md): Necklaces +61 and Earrings +51 are identical to two nights ago read; Pendants +6 identical; Rings +11 vs +13 and Bracelets +7 vs +8 essentially unchanged. This is a stable, repeating pattern across two consecutive freeze-window comparisons, not a one-night miscount - it reinforces the existing scope-gap explanation rather than pointing to a new event. Per the standing caveat (no Location column on the saved jewelry reports yet, Claude Case Jewelry fix still open), none of tonight SHORT variance should be treated as loss.
+- No date mismatch, no missing or stale files, no non-ok rows. Freeze window valid on both sides (store closed 6 PM, Bravo pulled 8:43 PM, sheet taken at 6:18 PM close).
+- Reported to Joshua via Slack DM (D03BHQH5VGT) only - loss-prevention audit, never a shared channel or store manager. Message: https://valleypawnworkspace.slack.com/archives/D03BHQH5VGT/p1786585827927029

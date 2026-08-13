@@ -437,3 +437,110 @@ Recovery (BackToDashboard, click Done) worked cleanly every time -- this is a re
 
 Also affects: `sales-tax-monthly-update` (same dependency, will fail the same way until this is fixed).
 
+
+
+## 2026-08-12 - REOPENED: jewelry saved reports have NO Location filter (the 08-09 "closed" was wrong)
+
+- The 2026-08-09 entry above closed the question "do the Claude Jewelry Audit saved reports need a
+  Location filter?" with "They do NOT - every category landed within 1-3 of a manager count sheet."
+  That conclusion is INVALID on two counts and is hereby reopened:
+    1. TOLERANCE: it accepted +/-1-3 as a match. Joshua confirmed 2026-08-12 the standard is DEAD ON -
+       a single piece off is a flag. This is a loss-prevention control, not a trend metric.
+    2. TIME MISMATCH: it compared Bravo on-hand pulled 8/9 against a manager sheet from 8/4 - five days
+       apart, one store (WAY). That is exactly the uninterpretable comparison the freeze-window rule exists
+       to prevent.
+- FIRST VALID FREEZE-WINDOW COMPARISON (Bravo pulled 08-12 08:31-09:09, all stores still closed, vs the
+  same night 8/11 PM manager sheets): only 5 of 25 category cells are exact. Variances (Bravo - sheet):
+    CUL  Rings +13  Bracelets +8   Necklaces +61  Earrings +51  Pendants +6   (total +139)
+    HAR  Rings   0  Bracelets +1   Necklaces  +3  Earrings  -1  Pendants  0   (total   +3)
+    LEX  Rings  -7  Bracelets -1   Necklaces  -1  Earrings   0  Pendants  0   (total   -9)
+    ROA  Rings  +2  Bracelets +1   Necklaces   0  Earrings  +5  Pendants -61  (total  +47)
+    WAY  Rings +12  Bracelets +1   Necklaces  -1  Earrings  +1  Pendants +4   (total  +17)
+- ITEM-LEVEL PROBE (trigger jewelry-scope-probe-2026-08-12, 3/3 success, additive, no code changed):
+    - Exported header is: Number,Status,Category,Type,Description,Cost,Date -- **NO Location column**.
+      BLOCKER 1 from the 2026-08-03 design note is therefore STILL OPEN, not solved.
+    - Every row is Status=INVENTORY, so layaway/repair/active-pawn are already correctly excluded.
+      The scope problem is LOCATION (case vs safe/back-stock/bins), not status.
+    - CUL Earrings: Bravo 173 vs manager 122 PM / 123 AM. The ~51 gap is STABLE across both counts,
+      which reads as a scope difference (stock on hand but not in the case), not shrink. 82 of the 173
+      are 2024-2025 intake, consistent with aged back-stock. All 8 categories are genuine earring cats.
+    - ROA Pendants: Bravo 87 vs manager 148 -- Bravo is LOWER. A display case cannot physically hold more
+      pieces than exist on hand, so this CANNOT be a location-scope effect. Either the manager sheet is
+      wrong (that block had visible scratch-outs/corrections) or ROA pendant stock sits under categories
+      the saved report does not select. Needs its own look.
+- ACTION: the fix is still the one designed 2026-08-03 -- ONE new saved report "Claude Case Jewelry"
+  = jewelry categories + Location column exported, then find the location subset that equals the
+  manager count. Until that exists, NO jewelry variance number should be treated as loss.
+- ALSO FIXED 2026-08-12: Scheduled/jewelry-onhand-nightly-compare/SKILL.md said "deltas of 1-3 are
+  ordinary" -- corrected to zero-tolerance so the nightly task stops issuing false all-clears.
+
+- 2026-08-12 GOLD SCRAP RANKINGS -- the "final" July numbers posted 2026-08-04 22:34 (555 dwt
+  company-wide, Culpeper 277 dwt) were wrong. Root cause: Culpeper has a bucket named
+  "JUNE 2026 GOLD SCRAP" whose weight has NEVER been successfully read by the automation, in any
+  attempt from 2026-08-04 through 2026-08-12 (checked every log). ScrapRelocateAndOpenBucket
+  correctly locates the row ("found ... on pass 9") but the click that follows consistently opens
+  the sibling bucket "JUNE 2026 GOLD SCRAP W/STONES" instead -- 3 outer retries, same wrong-bucket
+  result every time, on two separate days. This is NOT a transient timing glitch (each outer retry
+  does a full fresh ScrapOpenFilteredBucketList + grid walk) -- it is a reproducible bug specific to
+  this pair of near-identical bucket names. Needs live-screen debugging in Bravo to fix properly
+  (suspect: UI Automation element recycling in the virtualized grid, or the two rows' click targets
+  overlapping on screen) -- do NOT blind-patch ScrapRelocateAndOpenBucket again without watching it
+  run, it's shared by every store/month.
+  - Where the wrong 277 dwt figure came from: most likely fabricated by the pre-fix occurrence bug
+    (fixed 2026-08-04/05) grabbing a value from an unrelated bucket. No successful pull, before or
+    after that fix, has ever produced a real weight for this bucket.
+  - ALSO CONFIRMED STILL LIVE: ResetOutputFile truncates a store's entire year CSV on every targeted
+    date-range pull, even for stores/ranges that don't need it. Hit ROA (scrapfix6, 2026-08-11) and
+    CUL (scrapgap1, 2026-08-12) again this session -- both recovered from a pre-pull backup made
+    right before the trigger was dropped. ALWAYS cp the target CSV to output/_backups_<date>/ before
+    dropping any scrap-refining-gold trigger. This is still not code-fixed at the AHK level.
+  - FIXED: scrap_rankings.py had no way to know a period contained an unresolved (blank-weight)
+    bucket -- load_history() silently dropped those rows, so report()/slack_post() could and did
+    present a partial total as final with zero caveat. Added missing-bucket tracking through
+    load_history() -> report() ("incomplete_current_stores" for the exact month,
+    "incomplete_ytd_stores" for any gap in the months feeding YTD) -> slack_post() (prints
+    "at least N dwt" / "(partial, pending)" and skips YoY% for the affected store/total instead of
+    a clean number). This is now permanent and applies to every future run of the recurring monthly
+    task, not just this one report. Backup of the pre-patch file: scrap_rankings.py.bak-20260812.
+  - Corrected numbers posted to #scrap-rankings 2026-08-12 (thread:
+    https://valleypawnworkspace.slack.com/archives/C05EHBH4G67/p1786550394604419). Roanoke,
+    Lexington, Harrisonburg, Waynesboro July figures are fully verified. Culpeper's true July/YTD
+    number is still unknown -- floor only -- until the bucket-name-collision bug above is fixed or
+    someone reads "JUNE 2026 GOLD SCRAP"'s weight directly in Bravo.
+
+- 2026-08-12 RESOLVED -- the "wrong bucket opens" bug is FIXED, and the earlier diagnosis in the
+  entry above was WRONG on two counts. Correcting the record:
+  1. Bravo was NOT opening a different bucket. It was opening NOTHING. Proven by adding a
+     foundLabel/element-count log to ScrapVerifyOpenBucketName: every failure logged
+     "[verify] NO VALUE READ (foundLabel=no, elements=298)", i.e. the bucket detail panel was never
+     on screen at all. The handler's long-standing "WRONG BUCKET OPEN" message was misleading and
+     sent us chasing name-collision theories for over a week.
+  2. ROOT CAUSE: in the virtualized bucket grid, a row can be present in the UIA tree while scrolled
+     OUTSIDE the visible viewport. it.GetPos("screen") then returns coordinates that are off-screen,
+     so the click lands on nothing. Whether a given bucket breaks depends purely on where its row
+     happens to sit when the grid walk finds it -- which is why it was perfectly deterministic per
+     bucket (CUL "JUNE 2026 GOLD SCRAP" failed 100% of attempts over 8 days) and why re-running
+     never helped.
+  3. FIX (ScrapRelocateAndOpenBucket, reports/ScrapRefiningGold.ahk): call it.ScrollIntoView() before
+     reading the rect, log the resulting click target, and refuse to click a zero-sized rect (return
+     false so the outer retry re-walks the grid) instead of silently "succeeding" with a blank weight.
+     First run after the fix read CUL "JUNE 2026 GOLD SCRAP" = 148.019476991890 immediately, then all
+     remaining stuck buckets across HAR/LEX/WAY on the first attempt each.
+  - Two earlier hypotheses were tested and DISPROVED -- do not re-try them: (a) grid shifting between
+    the two clicks (added a re-fetch+re-verify between clicks; the "grid shifted" log line never once
+    fired), (b) bucket names being prefixes of siblings (the pattern was real but coincidental).
+  - ALL 8 previously-uncapturable weights are now in: CUL JANUARY 2026 GOLD SCRAP=78.6,
+    CUL MARCH 2026 GOLD SCRAP W/STONES=93.1734200027963, CUL JUNE 2026 GOLD SCRAP=148.01947699189,
+    HAR GOLD 6/4/26 NO STONES=26.0987139700431, LEX APRIL 2026 GOLD SCRAP=13.4,
+    LEX MAY 2026 GOLD SCRAP=31.0198827440075, WAY GOLD STONES SCRAP APRIL 2026=41.3795119456143,
+    WAY MAY 2026 SCRAP GOLD=52.5.  `scrap_rankings.py build` now reports missing weight: 0.
+  - CORRECTION TO THE ENTRY ABOVE: the 2026-08-04 post (555 dwt company / CUL 277 dwt) was CORRECT
+    for July -- it was NOT fabricated by the occurrence bug as that entry claimed. The 2026-08-12
+    interim "at least 407 dwt" post was the inaccurate one; it understated Culpeper by the missing
+    148 dwt bucket. What the 2026-08-04 post genuinely DID understate was year-to-date (3,405 dwt
+    posted vs 4,130 dwt true), because of the other 7 missing weights. Final verified figures posted
+    2026-08-12: https://valleypawnworkspace.slack.com/archives/C05EHBH4G67/p1786563988995469
+  - STILL OPEN: ResetOutputFile truncation. It fired on EVERY pull again today (CUL/HAR/LEX/WAY all
+    reduced to a handful of rows). Every one was recovered via _merge_scrap_weights.py against
+    output/_backups_20260812b/ and _backups_20260812c/. Backup-before-every-pull remains mandatory
+    until this is fixed at the AHK level.

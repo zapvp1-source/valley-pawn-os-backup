@@ -16,10 +16,11 @@ osascript quirks: the wrapper dies after ~25s, so never chain sleeps longer than
 WHY THIS IS VALID (and what made earlier versions invalid):
 Bravo's jewelry report is a live on-hand query with no as-of-date capability. The manager's sheet is a physical count at 6 PM close. They only line up when Bravo is queried while nothing is moving. All stores close 6 PM / reopen 10 AM, so tonight's 8:30 PM pull and tonight's 6 PM count describe the SAME frozen state. Any comparison mixing periods — a mid-morning pull against a prior day's sheet — is uninterpretable noise. Confirm both sides come from the same freeze window before drawing any conclusion.
 
-STORE-CLOSURE NUANCE — critical for judging completeness:
-- Culpeper: open Mon-Sat.
-- Harrisonburg, Waynesboro, Lexington, Roanoke: open Mon, Tue, Thu, Fri, Sat — CLOSED WEDNESDAY.
-On a Wednesday run only Culpeper has a new sheet; that is expected, not a failure. For the four closed stores on Wednesday, compare tonight's Bravo count against their most recent (Tuesday) sheet — inside a continuous closed period nothing moved, so those should match essentially exactly. Drift there is a genuine red flag, since no legitimate transaction could explain it.
+STORE HOURS — compare OPEN stores only (Joshua, 2026-08-12).
+Closed stores are not pulled any more, so there is nothing to compare for them.
+Wednesday = CUL only. Sunday = no run at all. Mon/Tue/Thu/Fri/Sat = all 5.
+Get the weekday from `date '+%A'` first. "Complete" means every OPEN store
+compared — a Wednesday run with only Culpeper is COMPLETE, not partial.
 
 STEP 1 — Load the Bravo side (osascript).
 Read output/<YYYY-MM-DD>_<STORE>_jewelry-case-counts.csv for CUL, HAR, LEX, ROA, WAY under /Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/.
@@ -38,8 +39,32 @@ Sheet has 5 lines: RINGS, BRACELETS, NECKLACES, EARRINGS, PENDANTS. Bravo report
 - **Chains + Necklaces summed → NECKLACES** (Bravo splits what the sheet counts as one line; confirmed 2026-08-09)
 Build a per-store table: category, Bravo count, sheet count, variance, plus store totals.
 
+STEP 3b — REPORT POLARITY: always OVER / SHORT from the SHEET's point of view (Joshua, 2026-08-12).
+
+Bravo is the EXPECTED count. The manager's PM sheet is the ACTUAL physical count. Every variance is
+stated as what the SHEET is doing relative to expected:
+
+    variance = SHEET count - BRAVO count
+    positive -> "OVER n"    (more pieces physically counted than the system expects)
+    negative -> "SHORT n"   (fewer pieces physically counted than the system expects)
+    zero     -> "MATCH"
+
+Never report the raw Bravo-minus-sheet number and never use bare +/- signs. Use the words OVER, SHORT,
+MATCH. Give a per-category line and a store total, plus the count of MATCH cells out of 25.
+
+DIRECTION MATTERS — they mean different things:
+- SHORT is the structurally expected direction right now, because Bravo counts all on-hand jewelry
+  (case + safe + back stock + bins) while the manager counts the DISPLAY CASE ONLY. A SHORT variance is
+  most likely stock sitting outside the case. Do NOT call it loss.
+- OVER is the anomalous direction and gets the sharpest attention: more pieces physically in the case
+  than exist in the system for that category. That means stock not entered, or stock categorized in
+  Bravo under a category this report does not select (confirmed real: ROA had pendants entered as
+  charms, 2026-08-12).
+
 STEP 4 — Analyze, don't just tabulate.
-Inside a true freeze window a healthy process should be at or very near zero variance. Deltas of 1-3 are ordinary. Larger gaps are real exceptions — name the store, category, and size.
+ZERO TOLERANCE (Joshua, 2026-08-12). Inside a true freeze window the Bravo count and the sheet count describe the same frozen stock, so they should be DEAD ON. A variance of even ONE piece is a flag — name the store, category, and size. Do NOT describe a store with any non-zero variance as "clean", "close", or "within tolerance"; that phrasing produced a false all-clear on 2026-08-12. Report exact matches and flagged cells separately, and give the count of exact cells out of the total for the day (open stores x 5 categories).
+
+CAVEAT you must state every time until it is resolved: the saved Bravo reports have NO Location column, so they count ALL on-hand jewelry (case + safe + back-stock + bins) while the manager counts the DISPLAY CASE ONLY. Until the "Claude Case Jewelry" report with Location exists, a positive variance (Bravo higher) is EXPECTED scope noise and must NOT be called loss. A NEGATIVE variance (Bravo LOWER than the physical count) is the genuinely anomalous direction — the case cannot hold more than exists on hand — and deserves the sharpest attention. See BRAVO_KNOWN_ISSUES.md 2026-08-12.
 
 Compare against prior nights' RUN RECORDs in the STATUS file to spot patterns: a variance repeating in the same store/category night after night is a process or data problem; a one-night spike is more likely a miscount. Say which you're seeing. Watch ROANOKE PENDANTS specifically — an earlier time-mismatched comparison suggested a large gap there, but that comparison was invalid; freeze-window runs are the first trustworthy read on whether anything is actually wrong at that store.
 

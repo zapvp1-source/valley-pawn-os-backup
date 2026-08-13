@@ -768,11 +768,74 @@ ScrapRelocateAndOpenBucket(targetName, occurrence := 0) {
                     ; and re-fetch the element's position right at click time in case
                     ; the row shifted during the settle window.
                     Sleep(1200)
+                    ; 2026-08-12 PROVEN CAUSE (via [verify] foundLabel=no):
+                    ; for certain rows the click opens NOTHING -- the bucket detail
+                    ; panel never appears at all. It is NOT opening the wrong bucket;
+                    ; the caller's "WRONG BUCKET OPEN" message was misleading us for
+                    ; over a week. A virtualized grid row can sit in the UIA tree while
+                    ; scrolled outside the visible viewport, in which case GetPos returns
+                    ; off-screen or zero-sized coordinates and the click hits nothing.
+                    ; Force the row into view, then re-read its rect, and refuse to click
+                    ; a degenerate rect so the outer retry can re-walk the grid instead of
+                    ; silently "succeeding" with a blank weight.
+                    try it.ScrollIntoView()
+                    Sleep(400)
                     rpos := it.GetPos("screen")
+                    LogMessage("      [relocate] click target for '" . target . "': x=" . rpos.x . " y=" . rpos.y . " w=" . rpos.w . " h=" . rpos.h)
+                    if (rpos.w <= 0 || rpos.h <= 0) {
+                        LogMessage("      [relocate] row rect is zero-sized -- row is not actually on screen, aborting attempt")
+                        return false
+                    }
                     cx := rpos.x + Round(rpos.w / 2)
                     cy := rpos.y + Round(rpos.h / 2)
                     Click(cx . "," . cy)
                     Sleep(400)
+                    ; 2026-08-12 WRONG-BUCKET FIX.
+                    ; The first click SELECTS the row, and Bravo then auto-scrolls
+                    ; the selected row fully into view. In this virtualized grid that
+                    ; shifts every row's screen position, so firing the second click
+                    ; at the ORIGINAL coordinates opens whatever row slid underneath
+                    ; them -- a different bucket entirely. Symptom was a deterministic
+                    ; (not flaky) "WRONG BUCKET OPEN" on all 3 outer retries for
+                    ; specific buckets: CUL "JUNE 2026 GOLD SCRAP" was never once read
+                    ; successfully across 8 days of attempts, while its neighbours read
+                    ; fine -- because whether it breaks depends on where the row sits
+                    ; in the viewport when it is found.
+                    ; Re-fetch the row position and confirm the element still holds the
+                    ; target name before the second click. If anything about the
+                    ; re-check fails we fall through to the original coordinates, i.e.
+                    ; exactly the old behaviour -- this can never be worse.
+                    try {
+                        rpos2 := it.GetPos("screen")
+                        nm2 := ""
+                        try {
+                            kids2 := it.FindElements({Scope: 2})
+                            if (kids2 && kids2.Length) {
+                                for k2 in kids2 {
+                                    ka2 := "", kn2 := ""
+                                    try ka2 := k2.AutomationId
+                                    try kn2 := k2.Name
+                                    if (ka2 = "Name" || ka2 = "BucketName" || ka2 = "Description") {
+                                        v2 := kn2
+                                        cp2 := InStr(kn2, ": ", false, -1)
+                                        if (cp2 > 0)
+                                            v2 := SubStr(kn2, cp2 + 2)
+                                        nm2 := Trim(v2)
+                                        break
+                                    }
+                                }
+                            }
+                        }
+                        if (nm2 != "" && nm2 != target) {
+                            LogMessage("      [relocate] element recycled to '" . nm2 . "' after click 1 (wanted '" . target . "') - aborting attempt so the outer retry re-walks the grid")
+                            return false
+                        }
+                        if (rpos2.y != rpos.y || rpos2.x != rpos.x) {
+                            LogMessage("      [relocate] grid shifted after click 1 (x " . rpos.x . "->" . rpos2.x . ", y " . rpos.y . "->" . rpos2.y . ") - retargeting second click to the row's new position")
+                            cx := rpos2.x + Round(rpos2.w / 2)
+                            cy := rpos2.y + Round(rpos2.h / 2)
+                        }
+                    }
                     Click(cx . "," . cy)
                     return true
                 } catch as ce {
@@ -900,13 +963,33 @@ ScrapVerifyOpenBucketName(expectedName) {
                 continue
             }
             checkedSince++
-            if (checkedSince > 4)
+            if (checkedSince > 4) {
+                LogMessage("      [verify] gave up 4 elements past the 'Bucket Name' label without hitting a non-empty value")
                 break
+            }
             val := ""
             try val := e.Value
-            if (val != "")
-                return (Trim(val) = Trim(expectedName))
+            eprobe := ""
+            try eprobe := e.Name
+            LogMessage("      [verify] probe " . checkedSince . ": name='" . eprobe . "' value='" . val . "'")
+            if (val != "") {
+                ; 2026-08-12 DIAGNOSTIC: log what actually opened. "WRONG BUCKET
+                ; OPEN" was firing deterministically for certain buckets with no
+                ; record of WHICH bucket Bravo actually put on screen, which made
+                ; the real cause unguessable. Always log both sides.
+                if (Trim(val) = Trim(expectedName)) {
+                    return true
+                } else {
+                    LogMessage("      [verify] MISMATCH: Bravo opened '" . Trim(val) . "' but we asked for '" . Trim(expectedName) . "'")
+                    return false
+                }
+            }
         }
+        ; 2026-08-12: reaching here means we never found a readable bucket-name
+        ; value. foundLabel tells us whether the detail panel was even on screen
+        ; -- if it is false the click did not open ANYTHING, and the caller's
+        ; "WRONG BUCKET OPEN" message is actively misleading.
+        LogMessage("      [verify] NO VALUE READ (foundLabel=" . (foundLabel ? "yes" : "no") . ", elements=" . allEl.Length . ") for expected '" . Trim(expectedName) . "'")
         return false
     } catch as e {
         LogMessage("      [verify] error: " . e.Message)
