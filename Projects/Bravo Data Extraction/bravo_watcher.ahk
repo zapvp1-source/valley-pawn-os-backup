@@ -47,6 +47,7 @@ Persistent
 #Include reports\SoldInvDetails.ahk
 #Include reports\SoldYesterday.ahk
 #Include reports\InventoryDetails.ahk
+#Include reports\MarkdownVerification.ahk
 #Include reports\LowDollarLoans.ahk
 #Include reports\LowDollarBuys.ahk
 #Include reports\LoanReviews.ahk
@@ -98,6 +99,7 @@ Persistent
 #Include reports\JewelryCountAudit.ahk
 #Include reports\JewelryCaseAudit.ahk
 #Include reports\JewelryCaseCount.ahk
+#Include reports\SoldDiscountDetail.ahk
 ; Add #Include for each new report module here.
 
 ; ----- Globals ---------------------------------------------------------------
@@ -159,6 +161,7 @@ Main() {
     REPORT_HANDLERS["sold-inv-details"]         := PullSoldInvDetails
     REPORT_HANDLERS["sold-yesterday"]           := PullSoldYesterday
     REPORT_HANDLERS["inventory-details"]        := PullInventoryDetails
+    REPORT_HANDLERS["markdown-verification"]    := PullMarkdownVerification
     REPORT_HANDLERS["low-dollar-loans"]         := PullLowDollarLoans
     REPORT_HANDLERS["low-dollar-buys"]          := PullLowDollarBuys
     REPORT_HANDLERS["loan-reviews"]            := PullLoanReviews
@@ -218,6 +221,7 @@ Main() {
     REPORT_HANDLERS["jewelry-case-chains"]    := PullJewelryCaseChains
     REPORT_HANDLERS["jewelry-case-necklaces"] := PullJewelryCaseNecklaces
     REPORT_HANDLERS["jewelry-case-counts"]    := PullJewelryCaseCounts
+    REPORT_HANDLERS["sold-discount-detail"] := PullSoldDiscountDetail
     ; Add additional registrations here as we build out reports.
 
     pollMs := Integer(CONFIG.Get("watcher.poll_interval_ms", "30000"))

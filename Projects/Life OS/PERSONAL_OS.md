@@ -83,6 +83,19 @@ his doctors, not Claude's to resolve.
 
 ---
 
+## Home / Office Equipment
+
+- **UPS / surge protection — Mac Studio + monitors (home office):** CyberPower CP1500PFCLCD
+  (PFC Sinewave series, 1500VA/1000W, pure sine wave, 12 outlets — 6 battery+surge, 6 surge-only).
+  Chosen because Mac Studio's internal PSU uses active PFC and needs true/pure sine wave output
+  (stepped-sine UPS units can cause buzzing or unexpected shutdowns on battery). Purchased
+  2026-08-13 — retailer/order confirmation not yet on file; add if Joshua forwards the receipt.
+  Purchase links researched: [Amazon](https://www.amazon.com/CyberPower-CP1500PFCLCD-Sinewave-Outlets-Mini-Tower/dp/B00429N19W),
+  [Best Buy](https://www.bestbuy.com/product/cyberpower-pfc-sinewave-series-1500va-battery-back-up-system-black/JX8P9297PT),
+  [Newegg](https://www.newegg.com/cyberpower-cp1500pfclcd-nema-5-15r/p/N82E16842102134).
+
+---
+
 ## Family
 
 *(TODO — thin section.)* Hillary Davis is the only family member documented so far (see People

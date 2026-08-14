@@ -4,6 +4,12 @@ description: Monthly automated GL export — on the 1st, fully scripted via the 
 model: claude-sonnet-5
 ---
 
+---
+name: eom-bravo-gl-export
+description: Monthly automated GL export — on the 1st, fully scripted via the Bravo trigger-pipeline (no Parallels/computer-use): posts unposted days, pulls per-store Consolidated GL (same pull the Sales Tax workbook reuses), combines it, uploads to Google Drive, and imports into QuickBooks Online via Chrome.
+model: claude-sonnet-5
+---
+
 > ⚠️ FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE. If this task fails, errors out, or cannot complete for any reason, DO NOT post anything to any Slack channel. On failure: DM Joshua only with what happened and what he needs to do manually. Only post to Slack once the task has genuinely completed.
 
 ## Monthly Bravo GL Export & QuickBooks Import — fully scripted (rebuilt 2026-08-02, moved to the 1st 2026-08-03)
@@ -34,7 +40,7 @@ Poll `/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/results
 
 For each store, record `days_posted` / `days_skipped` / `post_errors` from the result extras — you'll need these for the Step 6 report.
 
-If a store's cell errors with "EnsureStore failed", "BackToDashboard could not return Bravo to Dashboard", or similar — Bravo is likely wedged. Recovery (documented in `bravo-context` → "Bravo hang recovery"): request computer-use access to Parallels Desktop, bring Bravo forward, press Alt+F4 to close it, relaunch it from the Windows taskbar Search ("Bravo" under Top apps), log in via the `bravo-store-cycle` skill (username FREE1@<STORE>, password from `bravo-context`, paste via clipboard — never type it), dismiss the "Overdue Task Reminder" with "Remind Me Later", then re-drop the trigger for the remaining stores. Retry failed stores up to 3 times total before flagging the gap in your Step 6 report rather than blocking indefinitely.
+If a store's cell errors with "EnsureStore failed", "BackToDashboard could not return Bravo to Dashboard", or similar — Bravo is likely wedged. Recovery (documented in `bravo-context` → "Bravo hang recovery" and "Mandatory Contention & Scheduling-Safety Check"): FIRST run `bash "/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/_bravo_foreground_guard.sh" check` — if `BUSY`, another task/session is actively using Bravo; do not push through, hold and retry the check rather than force-closing Bravo out from under it. If `CLEAR`, `acquire eom-bravo-gl-export` before touching anything (added 2026-08-13, closes the same class of gap `bravo-prestaging-7am` had). Then: request computer-use access to Parallels Desktop, bring Bravo forward, press Alt+F4 to close it, relaunch it from the Windows taskbar Search ("Bravo" under Top apps), log in via the `bravo-store-cycle` skill (username FREE1@<STORE>, password from `bravo-context`, paste via clipboard — never type it), dismiss the "Overdue Task Reminder" with "Remind Me Later", then re-drop the trigger for the remaining stores. `release eom-bravo-gl-export` when this recovery is done (success or failure) before moving on. Retry failed stores up to 3 times total before flagging the gap in your Step 6 report rather than blocking indefinitely.
 
 ---
 
@@ -106,7 +112,7 @@ Send Joshua a Slack DM summarizing:
 ---
 
 ### Important Notes
-- Bravo POS runs inside Parallels Desktop (Windows 11 VM) on Joshua's Mac Studio — but as of 2026-08-02 this task should only touch it via the scripted trigger-pipeline, never a live computer-use session, except as the documented hang-recovery fallback in Steps 1-2.
+- Bravo POS runs inside Parallels Desktop (Windows 11 VM) on Joshua's Mac Studio — but as of 2026-08-02 this task should only touch it via the scripted trigger-pipeline, never a live computer-use session, except as the documented hang-recovery fallback in Steps 1-2 (which is now foreground-guarded — see Step 1).
 - If the hang-recovery fallback is used: always paste passwords via clipboard (write_clipboard("Health2035!") then Ctrl+V), never type them.
 - This task runs monthly on the 1st, 6:00 AM, for the prior calendar month (moved from the 5th 2026-08-03).
 - No external bookkeeper — Joshua reviews QBO directly; all GL reports go to him only.

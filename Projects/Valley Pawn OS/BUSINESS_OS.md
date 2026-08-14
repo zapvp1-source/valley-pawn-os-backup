@@ -322,6 +322,8 @@ All FB Page + brand IG publishing now routes through **Publer Business tier ($50
 | Infrastructure | Type | Status | Frequency | Notes |
 |---|---|---|---|---|
 | `weekly-aged-inventory-report` | Scheduled task | T (manual) | Weekly | Pipeline-driven via `aged-inventory-summary` cell |
+| `weekly-markdown-verification-pull` | Scheduled task | A | Sun 7:00pm | NEW 2026-08-13. Drops the `markdown-verification` trigger (5 stores) — mirrors the monday-bravo-combined-run/compile split (pull, then report separately) so a 15-20 min serial pull never risks a session context timeout. |
+| `weekly-markdown-verification-review` | Scheduled task | A | Mon ~9:35am | NEW 2026-08-13. Reads Sunday's pull, computes per-store items aged 1yr+ with NO Sale Price set (= not yet marked down) vs. with one set, split Jewelry vs. General Merch (keyword classifier on the Category field, spot-checked live), posts to **#mark-downs-summary (C0BQX7CF13J)** — Joshua's chosen permanent home 2026-08-13, where store managers also post their own "Aged Markdowns Complete" confirmations — and DMs Joshua a trend line. Built per Joshua's 2026-08-10 Slack ask to Preston: "Need workflow to insure markdown are being done... look at if aged inv has sales prices." Known limitation (told to Joshua in the DM, not hidden): the report has no last-price-change date, so this shows CURRENT compliance, not whether markdowns are ongoing — would need Preston to add a date column to the saved report to close that gap. |
 | `weekly-aged-inventory-review` | Scheduled task | B | Mon 5:32am | (Older duplicate?) |
 | `new-inv-weekly-report` | Scheduled task | B | Mon 8am | Sell-through + margin + aging for new inventory |
 | `new-inv-intake` | Skill | — | — | Log new wholesale purchase → New Inventory Tracker sheet + Bravo receiving + Slack #new-inventory |
@@ -487,8 +489,9 @@ The pipeline is the load-bearing infrastructure that powers all Bravo-touching s
 | `loans-75-days-past-due` | Loans75DaysPastDue.ahk | 75-day past-due loans (uses saved report "75 Days Past Due") | ✅ Yes (weekly-loan-layaway-review uses) |
 | `layaways` | Layaways.ahk | Layaway badge counts | ✅ Yes |
 | `aged-inventory-summary` | AgedInventorySummary.ahk | Aged inventory by category × age bucket | ✅ Yes (weekly-aged-inventory-report uses) |
-| `aged-jewelry-markdown` | AgedJewelryMarkdown.ahk | Aged jewelry items for markdown | ⚠️ Built |
-| `aged-general-merch-markdown` | AgedGeneralMerchMarkdown.ahk | Aged general merch for markdown | ⚠️ Built |
+| `aged-jewelry-markdown` | AgedJewelryMarkdown.ahk | Aged jewelry items for markdown | ❌ STALE ENTRY — file does not exist on disk (verified 2026-08-13, `ls reports/` has no such file). This row predates the pipeline's current state; treat as never-built, not "built." |
+| `aged-general-merch-markdown` | AgedGeneralMerchMarkdown.ahk | Aged general merch for markdown | ❌ STALE ENTRY — same as above, file does not exist (verified 2026-08-13). |
+| `markdown-verification` | MarkdownVerification.ahk | Preston's saved Inventory report "Claude Markdown Verification" (built by Preston 2026-08-10) — one row per on-hand item: Number, Status, Category, Description, Price, Sale Price, Cost, Date. `Sale Price` populated = item has been marked down at some point; blank = has not. No date-range fields on this report (confirmed live) — it's a snapshot, not date-windowed. | ✅ Yes, live-tested all 5 stores 2026-08-13 (241-250 rows/store, ~2.5-4.5 min/store). Powers `weekly-markdown-verification-pull` + `-review`. |
 | `employee-activity` | EmployeeActivity.ahk | Per-employee sales/activity | ✅ Yes (weekly-employee-sales-rankings uses) |
 | `company-kpis` | CompanyKpis.ahk | Company-wide KPIs (SSRS report) | ⏳ Stub — needs SSRS URL captured |
 | `sales-by-vendor` | SalesByVendor.ahk | Sales by vendor | ⏳ Needs Sold Inventory date dialog fix |

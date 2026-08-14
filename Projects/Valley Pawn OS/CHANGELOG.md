@@ -1,5 +1,235 @@
 # Valley Pawn - Enterprise Changelog
 
+## 2026-08-13 (evening — zoom-voicemail-alert routine run, zero new alerts)
+
+- Routine `zoom-voicemail-alert` run. Zoom admin session confirmed live (Joshua Davis / Full
+  Circle Finance Inc), no re-login needed. Used the account-wide Phone System Management → Logs
+  → Calls source, filtered From/To both 2026-08-13, page 1 (15 per page, 103 total results today,
+  sorted newest-first).
+- Top-of-log rows per store exactly matched the stored dedupe cutoffs: Waynesboro (540) 221-6346
+  top row Aug 13, 6:31:49 PM (Abandoned) = stored cutoff; Lexington (540) 461-8349 top row Aug 13,
+  6:19:44 PM (Voicemail) = stored cutoff; Harrisonburg (540) 574-4500 top row Aug 13, 4:51:42 PM
+  (Ring Timeout) = stored cutoff. No pagination needed — log is globally sorted newest-first.
+- No new candidate rows for any of the 3 live store lines — no Culpeper/Roanoke numbers appeared.
+  Per Step 4, stayed silent — no Slack post made. State file left unchanged (all 3 cutoffs
+  already current).
+
+## 2026-08-13 (later still — zoom-voicemail-alert routine run, zero new alerts)
+
+- Routine `zoom-voicemail-alert` run. Zoom admin session confirmed live (Joshua Davis / Full
+  Circle Finance Inc), no re-login needed. Used the account-wide Phone System Management → Logs
+  → Calls source, filtered From/To both 2026-08-13, page 1 (15 per page, 103 total results today,
+  sorted newest-first).
+- Newest row overall was Waynesboro Store Queue (540) 221-6346, inbound from (540) 448-3591
+  (MIKALA HOLMES) at 6:31:49 PM, Abandoned — this exactly matches the stored dedupe cutoff for
+  Waynesboro, confirming nothing new has come in since the prior run. Same check for Lexington
+  (top row Aug 13, 2026, 6:19:44 PM, Voicemail) and Harrisonburg (top row Aug 13, 2026, 4:51:42
+  PM, Ring Timeout) — both also exactly match their stored cutoffs. No pagination needed since the
+  log is globally sorted newest-first and the top entry per store already equals its cutoff.
+- No new candidate rows for any of the 3 live store lines (Harrisonburg, Waynesboro, Lexington) —
+  no Culpeper/Roanoke numbers appeared. Per the task's Step 4, stayed silent — no Slack post made.
+  State file left unchanged (all 3 cutoffs already current).
+
+## 2026-08-13 (~19:50 ET — chekkit-unanswered-eod-followup routine run)
+
+- Rebuilt today's Gmail alert list (6 total): 3 were empty-body/attachment-only alerts (Waynesboro
+  x2, Culpeper x1 — Christopher Duncan) and skipped per the empty-body rule; 3 were genuine
+  in-hours misses (Tyler Crosby/Waynesboro, Jane Nmn Leap/Harrisonburg, Margaret Olympia/Lexington).
+  Culpeper and Roanoke had zero genuine flagged misses today.
+- Checked the Chekkit dashboard (`/inbox`, phone-number search, per-location switcher) for each:
+  Waynesboro (Tyler Crosby) and Lexington (Margaret Olympia) were both answered by staff later in
+  the day. Harrisonburg (Jane Nmn Leap, flagged 11:43 AM re: a late payment) got only an automated
+  reply plus an unrelated "👍" reaction to a promo blast — no staff ever addressed her question —
+  logged as STILL UNANSWERED at close.
+- Posted the EOD summary to #chekkit-unanswered-summary (`C0B1PEW0C30`). No employee DMs sent (not
+  this task's job — that's `chekkit-unanswered-alert`, tomorrow 8 AM). No login issues encountered.
+
+## 2026-08-13 (later still, ~19:45 ET — zoom-voicemail-alert routine run, 1 new alert)
+
+- Routine `zoom-voicemail-alert` run. Zoom admin session confirmed live (Joshua Davis / Full
+  Circle Finance Inc), no re-login needed. Used the account-wide Phone System Management → Logs
+  → Calls source (proven approach from earlier runs today), filtered From/To both 2026-08-13,
+  paginated via the "Next page" button (103 total results today) down through and past each
+  store's existing dedupe cutoff (HAR 4:51:42 PM, WAY 3:32:23 PM, LEX 6:19:44 PM).
+- Confirmed only 3 live Zoom Phone store lines today (Harrisonburg, Waynesboro, Lexington) — no
+  Culpeper/Roanoke numbers appeared anywhere in the pull, consistent with recent runs.
+- Found 1 new candidate: Waynesboro Store Queue (540) 221-6346, inbound from (540) 448-3591
+  (MIKALA HOLMES, Virginia) at 6:31:49 PM, Call Result = Abandoned, Voicemail = -- (no VM left).
+  This was the newest row in the entire day's log — no later outbound or inbound row for that
+  number exists yet, so it's unresolved. Harrisonburg and Lexington cutoffs re-confirmed exactly
+  in today's log with zero new candidate rows past them.
+- Posted to #voicemails-calls-missed (`C0BP4M3B99R`): "📞 Waynesboro — (540) 448-3591, 6:31 PM —
+  missed (no VM), call back ASAP". State file advanced: Waynesboro cutoff → Aug 13, 2026, 6:31:49
+  PM. Harrisonburg and Lexington cutoffs left unchanged (no new candidate rows past their marks).
+
+## 2026-08-13 (later still, ~18:27 ET — zoom-voicemail-alert routine run, 1 new alert)
+
+- Routine `zoom-voicemail-alert` run. Zoom admin session confirmed live (Joshua Davis / Full
+  Circle Finance Inc). Used the account-wide Phone System Management → Logs → Calls source
+  (same approach adopted earlier today), filtered today, page_size 15, paginated via "Next page"
+  through all 3 stores' existing dedupe cutoffs (HAR 4:51:42 PM, WAY 3:32:23 PM, LEX 2:35:18/20
+  PM — all three re-confirmed exactly on page 1-3, no pagination-bug shortfall this run).
+- Found 1 new candidate: Lexington Store Queue (540) 461-8349, inbound from (540) 251-6656
+  (Christiansburg VA) at 6:19:44 PM, Voicemail = Y. Checked for a staff callback or customer
+  reconnect — confirmed via a dedicated search-box lookup on the number that this is the only row
+  for that caller today (no later outbound or inbound row exists yet). Unresolved → alerted.
+- Posted to #voicemails-calls-missed (`C0BP4M3B99R`): "📞 Lexington — (540) 251-6656, 6:19 PM —
+  🔴 VM left, call back ASAP". State file advanced: Lexington cutoff → Aug 13, 2026, 6:19:44 PM.
+  Harrisonburg and Waynesboro cutoffs left unchanged (no new candidate rows past their marks).
+
+## 2026-08-13 (~19:20 ET — Missed Calls & Voicemails trend report built)
+
+- Built a new trend-reporting pipeline for the Zoom missed-call/voicemail data, at Joshua's
+  request, on top of today's `zoom-voicemail-eod-review` findings. Lives under
+  `Communcations/Trend Reports/Missed Calls & Voicemails/` (Joshua: "keep this in our trend
+  reporting folders" — no such folder existed yet anywhere in the Projects tree, so this
+  establishes the convention; `Communcations` was empty before this).
+- **`daily_log.csv`** — one row per store per day (`date,store,candidates,resolved,unresolved,
+  callback_pct`). Backfilled with 2026-08-13, the first tracked day: Harrisonburg 24 candidates/
+  22 resolved (91.7%), Waynesboro 3/2 (66.7%), Lexington 8/3 (37.5%).
+- **`generate_report.py`** — reads the CSV, writes a self-contained `report.html` (Chart.js via
+  CDN, no build step) with: summary cards per store + overall, daily missed-calls-by-store
+  (stacked bar), monthly-by-store (grouped bar), running year-to-date cumulative total (line),
+  callback % trend (line, overall + per store), and a full data table. Re-run anytime with
+  `python3 generate_report.py` (no args, paths resolve relative to its own folder).
+- Wired `zoom-voicemail-eod-review` (Step 5, additive) to append today's per-store tallies to
+  `daily_log.csv` and regenerate `report.html` automatically after every daily run, from now on —
+  so the trend report grows on its own with zero further manual work. Re-run-safe (replaces
+  today's rows instead of duplicating if the task ever fires twice in one day). If this step ever
+  fails it DMs Joshua directly rather than touching the Slack close-out post or the ops channel.
+- Also folded in a fix discovered while pulling today's backfill data: Zoom's Logs → Calls grid
+  can silently disable "Next page" a few rows short of the true total (hit this today — missed
+  6 rows, including 2 Lexington voicemails from ~9 AM, until caught by spot-checking numbers via
+  the search box). Added a note to `zoom-voicemail-eod-review` Step 2 to watch for this.
+
+## 2026-08-13 (later still, ~18:05 ET — zoom-voicemail-alert routine run, zero new alerts)
+
+- Routine `zoom-voicemail-alert` run. Zoom admin session confirmed live (Joshua Davis / Full
+  Circle Finance Inc), no re-login needed. Used the account-wide Phone System Management → Logs
+  → Calls source, filtered From/To both 2026-08-13, paginated via the "Next page" button (101
+  total results today) down through and past each store's existing dedupe cutoff in
+  `.zoom_voicemail_alert_state.json` (HAR 4:51:42 PM, WAY 3:32:23 PM, LEX 2:35:20 PM).
+- Confirmed only 3 live Zoom Phone store lines today (Harrisonburg, Waynesboro, Lexington) —
+  no Culpeper/Roanoke numbers appeared anywhere in the 101-row pull, consistent with recent runs.
+- Found each store's exact existing cutoff row again in today's log (HAR 4:51:42 PM Ring Timeout;
+  WAY 3:32:23 PM Abandoned; LEX 2:35:18 PM Abandoned — same known 2-second display-variance event
+  as the existing 2:35:20 PM cutoff, not a new call) plus several older candidate rows further
+  back (all predating their store's cutoff, already accounted for in prior runs). Zero candidate
+  rows found strictly newer than any of the three cutoffs — every inbound row after each cutoff
+  was Answered/Connected. No Slack alert posted (correct/expected silent-success behavior). State
+  file left unchanged (no new candidate rows to advance the cutoffs to).
+
+## 2026-08-13 (~19:05 ET — zoom-voicemail-eod-review first scheduled run, 7 outstanding)
+
+- First run of the new `zoom-voicemail-eod-review` end-of-day task. Confirmed Zoom admin session
+  live (Joshua Davis / Full Circle Finance Inc). Pulled the full day's Calls log via
+  Phone System Management → Logs → Calls (account-wide, same source `zoom-voicemail-alert`
+  adopted earlier today), filtered to today with the non-Answered/Connected result codes
+  (Voicemail, Hang Up, No Answer, Invalid Operation, Abandoned, Blocked, Service Unavailable).
+- ⚠️ Found a real pagination bug in Zoom's grid: the "Next page" button silently disables after
+  2 pages (30 of 36 rows) even though more rows exist — confirmed by cross-checking individual
+  phone numbers via the search box, which surfaced 6 more candidate rows (2 for an already-known
+  number, 2 new Lexington voicemails from ~9 AM) that the paginated view never reached. Re-ran
+  pagination from a clean URL afterward and it correctly returned all 36/36 on the 3rd page this
+  time — the earlier truncation looks like a one-off render glitch rather than a hard cap, but
+  **future runs should sanity-check the last page's row count against the "N result(s)" label
+  and, if short, spot-check via the search box** rather than trusting a disabled Next button.
+  Also confirmed: the per-number search box carries over an active Call Result filter from the
+  page it was opened on — must clear the `result=` filter (fresh URL, no result param) before
+  using search to check resolution, or Answered/Connected rows won't show.
+- 35 inbound missed-call/voicemail candidates across Harrisonburg, Waynesboro, Lexington (no
+  Culpeper/Roanoke lines yet). Checked each unique caller number for a same-day staff callback
+  (outbound Connected) or customer reconnect (inbound Answered) after the missed call. 28 were
+  resolved by end of day; 7 were not:
+  Harrisonburg (540) 688-9770 (12:52 PM); Waynesboro (540) 649-0865 (12:59 PM); Lexington
+  (540) 808-0737 (2:35 PM), (540) 246-0163 (2:29 PM), (540) 301-6098 (2:26 PM, VM),
+  (540) 924-3080 (9:23 AM, VM), (540) 944-5030 (9:04 AM).
+- Posted the EOD summary to #voicemails-calls-missed (`C0BP4M3B99R`), one line per outstanding
+  item with the caller's number inline, per the task's format spec.
+
+## 2026-08-13 (later still, ~17:48 ET — zoom-voicemail-alert routine run, zero new alerts)
+
+- Routine `zoom-voicemail-alert` run. Followed the account-wide Phone System Management → Logs → Calls
+  approach (adapted 2026-08-13 ~14:35 ET, confirmed still the right source given the completed DID
+  cutover — Harrisonburg/Waynesboro/Lexington Store Queues are all Active with real numbers per the
+  ~17:07 ET entry below), filtered to today, paginated via the "Next page" button through all rows back
+  to and including each store's existing dedupe cutoff (HAR 4:51:42 PM, WAY 3:32:23 PM, LEX 2:35:20 PM
+  in the state file). Zero candidate (non-Answered/Voicemail=Y) rows found strictly newer than any of the
+  three cutoffs — every inbound row in the ~2:35 PM–5:38 PM window was Answered. No Slack alert posted
+  (correct/expected silent-success behavior). State file left unchanged (no new candidate rows to advance
+  the cutoffs to, consistent with the Step 3 rule of only advancing on candidate rows).
+- No Culpeper/Roanoke lines appeared in today's log — still only 3 live Zoom Phone store lines
+  (Harrisonburg, Waynesboro, Lexington), matching the ~17:07 ET entry below.
+
+## 2026-08-13 (later still, ~17:10 ET — DID cutover confirmed complete for ALL 3 stores; zoom-voicemail-alert routine run, zero surviving alerts)
+
+- CORRECTED the ~14:35 ET entry above, which said only Lexington's live DID cutover was done and Harrisonburg/Waynesboro queues still showed Number(s) "--". A routine `zoom-voicemail-alert` run at ~17:07 ET checked Phone System Management → Call Queues directly (live admin console, not a run record — Rule 12) and found ALL THREE queues now show real numbers: Harrisonburg Store Queue (540) 574-4500, Waynesboro Store Queue (540) 221-6346, Lexington Store Queue (540) 461-8349, all Active. The account-wide Logs → Calls log for today also shows live inbound traffic landing on all three under a mix of queue labels ("Harrisonburg Store Queue Ext.805" for some rows, but still "harrisonburg@fcfpawn.com Ext.802" for most Harrisonburg rows and "Joshua Davis Ext.800" for some Lexington rows) — routing/labeling is inconsistent mid-cutover but calls ARE reaching stores. Unclear who completed the Harrisonburg/Waynesboro leg or exactly when between ~14:35 ET and ~17:07 ET; flagging so the next session doesn't rely on the ~14:35 ET "only Lexington done" claim.
+- The account-wide Logs → Calls approach (adopted ~14:35 ET run) continues to work well and was used again this run — paginated via the "Next page" button (JS `.click()` on `[aria-label="Next page"]`; mouse-wheel scroll did not advance the grid, it's true pagination not infinite scroll) rather than per-user History tabs, to correctly capture all 3 stores regardless of which label a given call landed under.
+- This run found ZERO net-new missed-call/voicemail rows across all 3 stores after dedupe + resolution check — no Slack alert posted (correct/expected behavior per the skill's "silent success" design). State file (`Valley Pawn OS/.zoom_voicemail_alert_state.json`) advanced Harrisonburg's cutoff to 4:51:42 PM (two Ring Timeouts from the same wireless caller at 4:50:59/4:51:42 PM, both resolved — the same number reached Harrisonburg successfully at 4:52:32 PM). Waynesboro and Lexington cutoffs left unchanged (no new candidate rows past their existing marks; a 2-second display variance on the Lexington 2:35 PM row between the per-user-History source used earlier today and the account-wide Logs source used now was treated as the same event and not regressed).
+
+## 2026-08-13 (later still, ~14:35 ET — Lexington DID cutover found already live; zoom-voicemail-alert adapted)
+
+- CORRECTED a stale claim from this same day's earlier "Timezone Fix + Call Queue Buildout" entry, which said the live DID cutover to the new per-store Call Queues was "NOT done... held back deliberately." A routine `zoom-voicemail-alert` run at ~14:35 ET found, via the live admin console (not a run record — Rule 12), that Lexington's number **(540) 461-8349 has in fact already been reassigned** from Joshua Davis's user extension (800) to the new **Lexington Store Queue** (ext 804): his user's Number(s) field is now empty, and his Outbound Caller ID shows "Lexington Store Queue - (540) 461-8349" instead. Harrisonburg (queue ext 805) and Waynesboro (queue ext 806) remain **not** cut over — both queues still show Number(s) "--" and both stores' calls still land directly on their user extensions (802/803), consistent with the original note. Only the Lexington leg of the cutover happened; unclear whether by Joshua or an unlogged follow-up action. Flagging so the next session doesn't rely on the stale "not done" claim for Lexington specifically.
+- ADAPTED (same run, no code/skill file changed — a live judgment call, not a build): the per-user History-tab approach in `zoom-voicemail-alert`'s Step 2 assumes each store's calls land on one user's History. With Lexington's DID now split between "Lexington Store Queue Ext.804" and "Joshua Davis Ext.800" labels for the same number, the run instead pulled the account-wide **Phone System Management → Logs → Calls** log (filtered to today, matched by the "To" phone number rather than by user identity) to correctly capture both labels as one Lexington line. This worked cleanly and is arguably a more robust source than per-user History going forward, especially once Culpeper/Roanoke and the still-inert Harrisonburg/Waynesboro queues eventually cut over too — worth considering as a deliberate rebuild of that skill's Step 2 in a future session (not done here, scope was a routine 20-min alert check, not a rebuild).
+
+## 2026-08-13 (latest, ~13:15 ET — sold-inventory data-integrity bugs fixed)
+
+- FIXED (Bravo pipeline, data integrity): two bugs in the sold-inventory pull that were silently producing WRONG data. Surfaced by Discount Review's first live run; fixed and proven live the same day.
+  1. **Zero-sale days wrote no file.** The empty-grid branch returned `status: success` with an `output_path` but never wrote a CSV, so "this store had no sales" was indistinguishable on disk from "this cell never ran." HAR/LEX/ROA all did exactly this for 2026-08-12.
+  2. **Wrong grid captured and reported as real data.** `WriteBuysGridToCsv` enumerates `DataItem`s from the *entire* Bravo UIA root, unscoped. On WAY the report grid was slow and the walk latched onto the Global Access **store picker**, writing a CSV with header `DisplayCode,Store` — 5 rows, one per store — reported as "SUCCESS: 5 data rows." Plausible-looking and completely fabricated. Same failure family as the 2026-07-31 false-zero and 2026-08-03 truncation bugs: a partial/incorrect read presented as a complete result.
+- Fix is 100% ADDITIVE (Rule #4): NEW `reports/SoldDiscountDetail.ahk` + NEW cell `sold-discount-detail`, registered by appending one `#Include` and one `REPORT_HANDLERS` line at `bravo_watcher.ahk`'s own "add new ones here" anchors. Verified additive: stripping the two new lines reproduces the backup byte-for-byte (`bravo_watcher.ahk.bak-pre-sold-discount-detail-2026-08-13`).
+- **The shared `jewelry-margin-sold` cell / `JewelrySoldMargin.ahk` were deliberately NOT modified** — that handler is co-owned by the jewelry-scrap project, so it gets a coordinated fix rather than a unilateral edit. ⚠️ **Both bugs therefore still exist in `jewelry-margin-sold`; any other consumer of that cell is still exposed.**
+- New handler classifies grid IDENTITY before accepting any row, re-checks on every scroll pass, applies a final column check before writing, and writes a header-only CSV on a genuine zero-sale day.
+- Proven live (trigger `sold-discount-detail-2026-08-13T13-13-41`, 2026-08-12 data): `status: success` 5/5 stores, vs `partial` with 0 usable stores on the broken path. CUL 20 real rows with correct schema header (valid grid detected in 4s, vs the bogus 172s latch); HAR/LEX/ROA/WAY genuine quiet days each writing a 68-byte header-only CSV; no store-picker garbage anywhere; `missing_stores` empty. Report posted to Joshua's DM: 18 rankable items, avg 13% off ticket, $308 total off, 4 flags, 0 sold into a loss.
+- `run_daily_discount_review.py`: new filename pattern added to the FRONT of the existing `_FILENAME_CANDIDATES` list, old patterns kept as fallbacks. Corrupt WAY CSV moved to `output/_quarantine/` so those fallbacks can't resurrect it.
+- Caveats for the next session: (a) the identity check has NOT yet fired against a real store-picker collision — the picker never appeared this run, so the reject path is coded but unexercised; watch for `[grid] WARN: found a grid that is NOT the sold-details grid`. (b) A quiet day burns the full 180s render timeout per store (~23 min for 5 stores) — correct but slow; an early-exit "no rows" probe is the obvious optimization. (c) `discount-review` remains UNREGISTERED with the scheduler by design.
+
+## 2026-08-13 (later — markdown verification pipeline built)
+
+- BUILT (additive): new pipeline cell `markdown-verification` — clones the proven Custom-Reports saved-report pattern (InventoryDetails.ahk) into a new `reports/MarkdownVerification.ahk`, registered via a new #Include + REPORT_HANDLERS line in both `bravo_watcher.ahk` and `bravo_export.ahk` (no existing lines touched). Pulls Preston Peters's saved Inventory report "Claude Markdown Verification" (built by Preston 2026-08-10 per Joshua's request — Slack DM D03C7RBGY56) for one store at a time: `Number, Status, Category, Description, Price, Sale Price, Cost, Date` per on-hand item. `Sale Price` populated = item has had its price reduced (marked down) at some point; blank = it has not. Confirmed live 2026-08-13 the report has NO date-range fields — it's a live on-hand snapshot, same shape as Preston's other "Claude Aged Sold" report.
+- SMOKE-TESTED live, all 5 stores, 2026-08-13: CUL 241 rows / HAR 246 / LEX 250 / ROA 241 / WAY 239, all `status:"success"`, ~2.5-4.5 min/store (serial, ~20 min total for 5 stores — a Type A trigger-drop cell, watcher-queue-protected). Cross-checked the actual CSV content (Rule 12) with a one-off local age calc (today − Date >= 365d, Sale Price blank/non-blank): CUL 42 aged-and-not-marked-down / HAR 56 / LEX 14 / ROA 73 / WAY 47 — real, plausible per-store spread, not fabricated.
+- Watcher restart required a 2-attempt one-shot scheduled task: the first attempt (`markdownver-watcher-restart-oneshot`) was built WITHOUT the LOCAL ACCESS GATE pattern and silently did nothing (matches the documented 2026-08-02 "no Mac bridge" false-conclusion failure mode — a fresh scheduled-task session's osascript tool wasn't loaded yet, and the task's own "exit silently regardless" instruction masked the miss). Retry (`-r2`) added the gate + a diagnostic status-file write (not a Slack post) and succeeded — watcher restarted 10:57:36, confirmed `markdown-verification` in its loaded handler list before any trigger was dropped. **Lesson for future one-shot watcher-restart tasks: always include the LOCAL ACCESS GATE (see monday-bravo-combined-run) even for "simple" infra tasks — the silent-on-failure instruction that's correct for Slack/DM noise also hides this specific failure mode if the gate is missing.**
+- BUILT (additive, new Cowork scheduled tasks): `weekly-markdown-verification-pull` (Sun 7:00pm ET — drops the 5-store trigger, does not wait, mirrors the monday-bravo-combined-run/compile 2-task split to avoid a long-poll session-context timeout) and `weekly-markdown-verification-review` (Mon ~9:35am ET — reads the CSVs, computes per-store aged-1yr+-and-not-marked-down items/dollars, posts a plain-language summary to #aged-inventory-review per Field Communication Standard v3, DMs Joshua a trend line and appends to a running history CSV so future DMs can show week-over-week instead of a bare snapshot).
+- Direct answer to Joshua's 2026-08-10 ask ("how and where do we look... when was it last marked down"): the "where/how" is now automated (this build). The "when was it last marked down" half is **not answerable yet** — Preston's saved report has a Sale Price field but no last-price-change date field, so the new task can only show CURRENT markdown status, not history/frequency. Flagged honestly to Joshua in the weekly DM rather than guessed at. Logged as an open item — closing it needs Preston to add a date column to the saved report, a request outside this session's Bravo access.
+- CORRECTED a stale BUSINESS_OS.md claim found while doing this build: the pipeline handlers table listed `aged-jewelry-markdown`/`AgedJewelryMarkdown.ahk` and `aged-general-merch-markdown`/`AgedGeneralMerchMarkdown.ahk` as "⚠️ Built" — verified via `ls reports/` that neither file exists on disk. Corrected in place rather than left to mislead the next session (Rule 12).
+
+## 2026-08-13
+
+- AUDITED + FIXED: full Zoom Phone admin audit across the 3 live store lines (Harrisonburg, Waynesboro,
+  Lexington), prompted by Joshua's request. FIXED live: Harrisonburg and Waynesboro were both defaulting
+  to Lexington's address for E911 (125 Walker St) — added and activated correct Personal Emergency
+  Addresses for each store (Harrisonburg: 1790 E Market St; Waynesboro: 1321 W Broad St), verified/geocoded
+  by Zoom on save. NOT fixed (needs physical action): both of Harrisonburg's Grandstream WP822 handsets
+  are Offline with "Factory reset needed for provisioning" — no remote reset option exists in the admin
+  console — this is a real, current outage (Harrisonburg has zero working phones) and matches the missed-
+  call flood seen in #voicemails-calls-missed on 8/12-8/13. Logged as an open item requiring someone
+  in-store to power-cycle/factory-reset both handsets. Also flagged (not fixed, recommendations only): zero
+  Call Queues configured account-wide (all 3 stores are plain 2-device user extensions with a 30s max
+  wait, no overflow/hold), Lexington's desk phone is flagged End-of-Life by Zoom, Harrisonburg's user
+  timezone is wrong (Pacific instead of Eastern), an unused Auto Receptionist (ext 801, no numbers
+  assigned) exists. Full detail in `ZOOM_PHONE.md` under "Admin Console Audit — 2026-08-13".
+- FIXED + BUILT (same-day follow-up to the audit above, per Joshua's approval): Harrisonburg's and
+  Waynesboro's user Time Zone bug fixed (both set to Eastern; root cause was the field being unset and
+  silently inheriting the account's Pacific default — actual field lives at User Management > Users >
+  [name] > Profile, not the Phone System Management > Users & Rooms Profile tab, which only displays it).
+  Built 3 new Call Queues (Lexington ext 804, Harrisonburg ext 805, Waynesboro ext 806), one per store,
+  existing user as sole member, Business Hours Mon/Tue/Thu/Fri/Sat 10 AM–6 PM (Wed/Sun off) matching real
+  store hours, Zoom's default ring/hold/overflow settings unchanged. This replaces the fragile
+  single-user/2-device extension model (no overflow path) that left Harrisonburg with zero fallback during
+  its hardware outage. **NOT done: the live cutover** — each store's public phone number still rings its
+  old user extension, not the new queue; queues are built and correct but inert until Joshua confirms the
+  DID reassignment per store (held back deliberately, customer-facing/live-call risk). Full detail in
+  `ZOOM_PHONE.md` under "Timezone Fix + Call Queue Buildout — 2026-08-13"; open item logged in
+  `Life OS/OPEN_ITEMS_REGISTER.md`.
+- BUILT: promoted Bravo contention/collision checking from a standalone runbook (`BRAVO_HEALTH_RUNBOOK.md` §0, added 2026-08-10) into a MANDATORY, first-read section of the `bravo-context` skill itself, plus a new Step 0 in `bravo-store-cycle` — Joshua flagged that a rule living only in a separate doc wasn't being checked by default when building or scheduling something new. New section also adds a "scheduling-spacing rule" for any future Bravo-touching scheduled task: classify Type A (trigger-drop, queue-protected)/B (reads-only)/C (drives Bravo's screen directly, highest risk), give Type A/C tasks a 45-60 min buffer from each other (worst-case, not happy-path), and prefer Sunday for anything that doesn't need same-day freshness.
+- FIXED: `bravo-prestaging-7am` (fires 6:34 AM daily) was found, via a full scheduled-task audit, to force-relaunch (kill + restart) Bravo.exe/dfsvc.exe every morning with ZERO check for an in-flight trigger or foreground-held session — a real, previously-undetected gap that could have killed a mid-transaction GL export (worst case: 1st-of-month `eom-bravo-gl-export` at 6:00 AM, only 34 min before prestaging fires). Patched to check/acquire/release `_bravo_foreground_guard.sh` around the relaunch; if BUSY, it now silently skips the relaunch (Bravo already up = goal already met) instead of pushing through.
+- AUDITED (full findings, not yet executed): the 5:30-9:00 AM ET daily/Monday cluster remains genuinely overloaded — see Open Items Register row logged today. Confirmed the trigger-drop queue itself IS safely serialized (atomic `FileMove` claim in `bravo_watcher.ahk`, 45-min hard cap) — collision risk is specifically from direct-screen-driving tasks (`prlctl exec`, computer-use) that bypass that queue, which is exactly the class of gap just closed above. Retiming recommendation delivered to Joshua same session; deliberately not auto-executed (changes when live reports land in Slack).
+- FIXED (evening): **`sold-review` was silently exposed to a known data-corruption bug while posting to a team channel.** A prior session today built `sold-discount-detail` / `SoldDiscountDetail.ahk` — an additive clone of `jewelry-margin-sold` fixing (a) zero-sale days writing no CSV at all, so quiet stores were misreported as missing, and (b) grid-capture latching onto the wrong UIA grid, which on 2026-08-13 wrote WAY's Global Access store picker (`DisplayCode,Store`) to disk as 5 rows of "sold inventory." It wired `discount-review` to the fix but left `sold-review` on the old buggy cell. Both now read `sold-discount-detail`. `run_daily_sold_review.py` got the new filename pattern at the front of `_FILENAME_CANDIDATES` (old patterns retained, backup taken, `py_compile` clean, path resolution verified against all 5 real CSVs).
+- CONSOLIDATED (evening): `sold-review` and `discount-review` were dropping **byte-identical triggers ~36 minutes apart** — same cell, same stores, same date range — burning two complete 5-store Bravo cycles for one dataset. Both now have a REUSE-FIRST step: check for today's CSVs before dropping anything; whichever runs first pulls, the other reuses. Neither *depends* on the other, so each still works standalone if the other fails.
+- SHIPPED (evening, Joshua's request): `discount-review` is now **team-visible** in the new private channel `#discount-review` (`C0BQ6JA27MX`, created by Joshua today) instead of his DM, and every daily post now carries **running calendar-year discount totals by store AND company** alongside the day's numbers, with the Top-10-by-discount-% list kept. YTD is *derived* by re-summing the per-day summary JSONs (excluding the target date, which comes from the live run) rather than kept as an accumulating ledger — so a re-run recomputes instead of double-counting and there's nothing to drift. Every store now renders every day (`no sales today | YTD $X`) so a closed-Wednesday or quiet store doesn't vanish from the board. Failure notices still go to Joshua's DM only, never the team channel.
+- CORRECTED + CLOSED (follow-up same session): the earlier audit today mischaracterized `eom-bravo-gl-export` and `monday-bravo-combined-run` as having unguarded computer-use paths. Re-reading their actual current SKILL.md showed both were already substantially hardened by prior sessions: `monday-bravo-combined-run` was moved off Monday morning to Sunday evening 2026-08-10 specifically to avoid this exact contention (no computer-use in its normal path at all), and `eom-bravo-gl-export` was rebuilt 2026-08-02 to be fully scripted via the trigger-pipeline, with computer-use only as a rare hang-recovery fallback inside Step 1. That one remaining fallback path did not check the foreground guard — patched it to check/acquire/release around the recovery sequence, same pattern as `bravo-prestaging-7am`. `ScrapBucketCloseoutWatcher.ahk` (a separate, independent AHK process, historically implicated in a 2026-08-06 collision) remains genuinely outside this guard system — it's a different process entirely, not a Cowork scheduled task, and would need its own fix; flagged as a known residual gap, not closed today.
+- OBSERVED (self-recovered, logging for pattern-tracking): today's `daily-items-to-price` run hit two distinct handler-level defects on the first pass, both resolved by a targeted re-trigger without any manual intervention: (1) CUL errored with "BackToDashboard could not return Bravo to Dashboard" (the documented Custom-Reports-editor "loops on Done" gotcha) and produced no CSV; (2) ROA's grid wait hung indefinitely (~10+ min with zero log progress) despite the health gate confirming Bravo itself was running/responsive — root cause not yet identified, first occurrence of this exact pattern; (3) HAR's FIRST attempt wrote a "successful" 5-row CSV that was actually the store-picker lookup table (`DisplayCode,Store` columns) instead of real Price-Items data — same class of defect as the `JewelrySoldMargin.ahk` bug logged for `discount-review` today, but in `ItemsToPrice.ahk`/`bravo_watcher.ahk`'s grid-walk, and it self-corrected on a clean re-trigger (21 real rows, correct headers). None of these were caught by the row-count-only integrity check — HAR's corrupted CSV had a plausible row count (5) that matched its own (wrong) grid's row count, so the seen==maxY check passed. Final report posted was verified by reading actual CSV content, not just row counts. Worth a future look: whether `ItemsToPrice.ahk`'s grid-capture has the same "verify report/view identity before trusting the grid" gap that the Custom Reports pattern already guards against (see `bravo-context`'s "THREE LOAD-BEARING GOTCHAS").
+
 ## 2026-08-12
 
 - BUILT: `zoom-voicemail-eod-review` scheduled task — daily 5:45 PM close-out companion to `zoom-voicemail-alert`. Per Joshua: alerts should only fire after checking the call logs for an existing callback (already true of the intraday task since 2026-08-10's Step 3.5), and separately, end of day needs a full re-sweep publishing any missed call/voicemail from that day that still never got a callback. Additive, stateless (does not touch the intraday task's dedupe file), posts to #voicemails-missed-calls every run (list of outstanding items, or an explicit all-clear) since it's meant to be a definitive daily record rather than a silent-when-nothing alert. See `Valley Pawn OS/ZOOM_PHONE.md` for full detail. Note: actual dispatch lands ~5:52 PM due to the scheduler's built-in few-minute jitter, not exactly 5:45 — flagged to Joshua in case exact timing matters.

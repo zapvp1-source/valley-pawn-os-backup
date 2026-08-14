@@ -188,9 +188,67 @@ PullScrapRefiningGold(store, dateOrRange, outputDir) {
         return Fail(result, started, "EnsureStore failed for " . store)
     LogMessage("  store confirmed: " . store)
 
+    ; --- 2026-08-13 HISTORY PRESERVATION -------------------------------------
+    ; ResetOutputFile truncates the target file before writing. For almost every
+    ; other report that is correct -- they write DATE-STAMPED files that are
+    ; wholly owned by one run. This report is the exception: it writes to a
+    ; YEAR-scoped accumulating file (2026_CUL_scrap-refining-gold.csv) that is
+    ; built up across many pulls. So a targeted pull for, say, 2026-07..2026-08
+    ; was silently destroying every other month already in that file. It ate 10
+    ; months of Harrisonburg history on 2026-08-04 and fired on all 9 pulls run
+    ; on 2026-08-12 (all recovered from backups, but only because someone knew
+    ; to look). The shared ResetOutputFile in lib/Bravo.ahk is used by 70+
+    ; handlers and is deliberately NOT changed -- the defect is specific to this
+    ; report's accumulating-file design, so the fix is local to it.
+    ;
+    ; Rows whose Month is OUTSIDE the pulled window are history this run does not
+    ; own. Capture them BEFORE the reset, then write them back immediately after
+    ; the header. Doing the write-back up front rather than at the end matters: a
+    ; crash mid-run can then only ever lose the window being pulled, never the
+    ; prior months. Parsing is safe with a naive comma split because field 1 is
+    ; the 3-letter store code, so field 2 is always Month regardless of any
+    ; commas later in the row.
+    preserved := ""
+    preservedCount := 0
+    try {
+        if FileExist(outputPath) {
+            targetLabels := Map()
+            for mo in months
+                targetLabels[mo.label] := true
+            existingCsv := FileRead(outputPath, "UTF-8")
+            for lineText in StrSplit(existingCsv, "`n", "`r") {
+                if (Trim(lineText) = "")
+                    continue
+                parts := StrSplit(lineText, ",")
+                if (parts.Length < 2)
+                    continue
+                if (parts[1] = "Store")
+                    continue
+                if targetLabels.Has(Trim(parts[2]))
+                    continue
+                preserved .= lineText . "`n"
+                preservedCount++
+            }
+        }
+    } catch as pe {
+        LogMessage("  [preserve] could not read existing file; continuing WITHOUT preservation: " . pe.Message)
+        preserved := ""
+        preservedCount := 0
+    }
+
     ResetOutputFile(outputPath)
     ResetOutputFile(diagPath)
     WriteCsvRow(outputPath, "Store", "Month", "BucketName", "CreatedOn", "Status", "StatusDate", "CombinedMetalWeightDwt")
+    if (preservedCount > 0) {
+        try {
+            FileAppend(preserved, outputPath, "UTF-8")
+            LogMessage("  [preserve] carried forward " . preservedCount . " out-of-window history rows")
+        } catch as ae {
+            LogMessage("  [preserve] FAILED writing history back - RESTORE FROM BACKUP: " . ae.Message)
+        }
+    } else {
+        LogMessage("  [preserve] no out-of-window history to carry forward")
+    }
 
     if !BackToDashboard()
         return Fail(result, started, "BackToDashboard could not return Bravo to Dashboard")

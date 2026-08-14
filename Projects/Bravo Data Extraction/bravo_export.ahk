@@ -53,6 +53,7 @@
 #Include reports\SoldInvDetails.ahk
 #Include reports\SoldYesterday.ahk
 #Include reports\InventoryDetails.ahk
+#Include reports\MarkdownVerification.ahk
 #Include reports\LoanReviews.ahk
 #Include reports\LoanPortfolio2026.ahk
 #Include reports\EndOfMonth.ahk
@@ -130,6 +131,7 @@ Main() {
     REPORT_HANDLERS["vendor-receiving"]         := PullVendorReceivingFromSidecar
     REPORT_HANDLERS["loan-base"]                := PullLoanBase
     REPORT_HANDLERS["items-to-price"]           := PullItemsToPrice
+    REPORT_HANDLERS["markdown-verification"]    := PullMarkdownVerification
     REPORT_HANDLERS["scrap-refining-gold"]      := PullScrapRefiningGold
     REPORT_HANDLERS["sales-detail"]        := PullSalesDetail
     REPORT_HANDLERS["aged-jewelry-sales"]  := PullAgedJewelrySales

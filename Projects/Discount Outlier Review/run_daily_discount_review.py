@@ -49,12 +49,12 @@ DAILY_DIR    = os.path.join(HERE, "daily")
 # becomes leakage" at the company's ~52% average retail margin; $50 is the
 # rough daily materiality line for a 5-store chain this size. Both tunable
 # after 2-4 weeks of live data.
-SLACK_CHANNEL     = os.environ.get("DISCOUNT_REVIEW_SLACK_CHANNEL", "D03BHQH5VGT")  # default: Joshua's own
-                    # Slack DM channel (same one used for sold-review's failure DMs). No #discount-review
-                    # team channel exists and there is no tool available to create one, so this posts
-                    # daily to Joshua directly rather than blocking the feature on a channel that doesn't
-                    # exist yet. If Joshua later creates #discount-review and wants team visibility, set
-                    # DISCOUNT_REVIEW_SLACK_CHANNEL to that channel's ID to switch the destination.
+SLACK_CHANNEL     = os.environ.get("DISCOUNT_REVIEW_SLACK_CHANNEL", "C0BQ6JA27MX")  # #discount-review,
+                    # the private team channel Joshua created 2026-08-13. This report is now TEAM-VISIBLE
+                    # (previously it defaulted to Joshua's own DM, D03BHQH5VGT, because no such channel
+                    # existed yet). Keep the daily post plain and free of system/tool names per the Field
+                    # Communication Standard — the team reads this, not just Joshua. FAILURE notices still
+                    # go to Joshua's DM only, never here. Override with DISCOUNT_REVIEW_SLACK_CHANNEL.
 FLAG_PCT          = 0.20     # flag items discounted >= 20% off ticket price
 FLAG_DOLLARS      = 50.00    # OR discounted >= $50 off ticket price
 GENERIC_SKU_RE     = re.compile(r'^\d+$')  # bare numeric "Number" = reused generic/bulk SKU (coins,
@@ -73,6 +73,15 @@ STORES = ["CUL", "HAR", "LEX", "ROA", "WAY"]
 # Candidate input filename patterns for a given date/store, tried in order.
 # {d} = ISO date (single-day range, start==end, matching the cell's contract)
 _FILENAME_CANDIDATES = [
+    # Preferred source as of 2026-08-13: the sold-discount-detail cell, an
+    # additive clone of jewelry-margin-sold that (a) writes a header-only CSV
+    # on a genuine zero-sale day so "ran, no sales" is provable on disk, and
+    # (b) validates grid identity so a stranded store-picker grid can never be
+    # captured as sold-item data. Both bugs bit the jewelry-margin-sold path
+    # live on 2026-08-13. The older patterns stay below as fallbacks so any
+    # previously-pulled data still parses.
+    "{d}_to_{d}_{store}_sold-discount-detail.csv",
+    "{d}_{store}_sold-discount-detail.csv",
     "{d}_to_{d}_{store}_jewelry-margin-sold.csv",
     "{d}_{store}_jewelry-margin-sold.csv",
     "{d}_to_{d}_{store}_sold-discounts.csv",
@@ -228,7 +237,65 @@ def compute_discount(r: dict) -> dict:
 
 
 # ── Build Slack message ─────────────────────────────────────────────────────
-def build_slack_message(valued: list[dict], date: datetime.date, missing_stores: list[str]) -> str | None:
+def compute_ytd(date: datetime.date,
+                today_store_totals: dict[str, float],
+                today_company_total: float):
+    """Running CALENDAR-YEAR total of discount dollars, by store and company.
+
+    Added 2026-08-13 at Joshua's request so the team sees a cumulative annual
+    number every day, not just the single-day figure.
+
+    Reads the per-day summary JSONs already written in daily/ for the same year
+    and sums their per-store `total_discount_dollars`. The TARGET DATE is
+    deliberately EXCLUDED from the file scan and supplied from this run's
+    in-memory numbers instead — so re-running a day recomputes rather than
+    double-counts, and the YTD is always self-healing from the files on disk
+    (no separate running-total ledger to drift out of sync).
+
+    Returns (store_ytd: dict, company_ytd: float, days_counted: int, year: int).
+    """
+    year = date.year
+    ds = date.isoformat()
+    store_ytd: dict[str, float] = {}
+    company_ytd = 0.0
+    days = 0
+
+    if os.path.isdir(DAILY_DIR):
+        for fn in sorted(os.listdir(DAILY_DIR)):
+            if not fn.endswith("_discount_review_summary.json"):
+                continue
+            fdate = fn.split("_")[0]
+            if not fdate.startswith(f"{year}-") or fdate == ds:
+                continue
+            try:
+                with open(os.path.join(DAILY_DIR, fn), "r", encoding="utf-8") as f:
+                    d = json.load(f)
+            except Exception:
+                continue  # a malformed/partial day must never break today's post
+            for st, sv in (d.get("stores") or {}).items():
+                try:
+                    store_ytd[st] = store_ytd.get(st, 0.0) + float(sv.get("total_discount_dollars") or 0.0)
+                except (TypeError, ValueError):
+                    pass
+            try:
+                company_ytd += float(d.get("total_discount_dollars") or 0.0)
+            except (TypeError, ValueError):
+                pass
+            days += 1
+
+    for st, v in (today_store_totals or {}).items():
+        store_ytd[st] = store_ytd.get(st, 0.0) + float(v or 0.0)
+    company_ytd += float(today_company_total or 0.0)
+    days += 1
+
+    return store_ytd, company_ytd, days, year
+
+
+def build_slack_message(valued: list[dict], date: datetime.date, missing_stores: list[str],
+                        store_ytd: dict[str, float] | None = None,
+                        company_ytd: float | None = None,
+                        ytd_days: int | None = None,
+                        ytd_year: int | None = None) -> str | None:
     real = [r for r in valued if not (r["generic_sku"] or r["placeholder_price"])]
     if len(real) < 3:
         return None
@@ -242,7 +309,11 @@ def build_slack_message(valued: list[dict], date: datetime.date, missing_stores:
              f"> Ticket price vs actual sale price on yesterday's sold items. Flag: ≥{int(FLAG_PCT*100)}% off OR ≥${FLAG_DOLLARS:.0f} off.",
              ""]
 
-    stores = sorted(set(r["store"] for r in real))
+    # Show EVERY store that has traded at all this year, not just the ones with sales
+    # today (Joshua 2026-08-13 — the team should see the full per-store board daily).
+    # On a closed day (Wed = CUL only) or a store's quiet day, it still shows with
+    # Today $0 and its running YTD, so nobody's cumulative number silently vanishes.
+    stores = sorted(set(r["store"] for r in real) | set(store_ytd or {}))
     total_items = 0
     total_disc_dollars = 0.0
     total_price_dollars = 0.0
@@ -257,15 +328,28 @@ def build_slack_message(valued: list[dict], date: datetime.date, missing_stores:
         total_price_dollars += price_sum
         total_flags += fl
         wavg = (disc_sum / price_sum) if price_sum else None
+        # Day AND year-to-date on the same line, per Joshua 2026-08-13 — the team should
+        # see today's number next to the cumulative annual one, not in a separate block.
+        ytd_part = f" | *YTD ${store_ytd[st]:,.0f}*" if (store_ytd and st in store_ytd) else ""
+        if not si:
+            # Traded earlier this year but nothing sold today (or closed today).
+            lines.append(f"• *{st}* — no sales today{ytd_part}")
+            continue
         stt = "✅" if (wavg is not None and wavg < FLAG_PCT) else "🚨"
         fw = "flag" if fl == 1 else "flags"
-        lines.append(f"*{st}* — {len(si)} items | Avg discount {_pct(wavg)} {stt} | ${disc_sum:,.0f} total off | {fl} {fw}")
+        lines.append(f"• *{st}* — {len(si)} items | Avg discount {_pct(wavg)} {stt} | "
+                     f"Today ${disc_sum:,.0f}{ytd_part} | {fl} {fw}")
     if missing_stores:
         lines.append(f"_No data file for: {', '.join(missing_stores)}_")
 
     cwavg = (total_disc_dollars / total_price_dollars) if total_price_dollars else None
     lines.append("")
-    lines.append(f"*Company:* {total_items} items | Avg discount {_pct(cwavg)} | ${total_disc_dollars:,.0f} total off | {total_flags} total flags")
+    co_ytd_part = f" | *YTD ${company_ytd:,.0f}*" if company_ytd is not None else ""
+    lines.append(f"*COMPANY* — {total_items} items | Avg discount {_pct(cwavg)} | "
+                 f"Today ${total_disc_dollars:,.0f}{co_ytd_part} | {total_flags} flags")
+    if company_ytd is not None and ytd_days:
+        day_word = "selling day" if ytd_days == 1 else "selling days"
+        lines.append(f"_YTD = total discounted off ticket in {ytd_year}, across {ytd_days} {day_word}._")
 
     ranked_pct = sorted([r for r in real if r["discount_pct"] is not None],
                         key=lambda r: -r["discount_pct"])[:10]
@@ -564,7 +648,20 @@ def main():
         print(f"Excel -> {xlsx_path}")
     summary["excel_path"] = xlsx_path if xl_ok else None
 
-    slack_msg = build_slack_message(valued, date, missing)
+    # Running calendar-year discount totals, by store and company (added 2026-08-13).
+    # Computed from the per-day summaries already on disk plus this run's numbers, so it
+    # self-heals and never double-counts a re-run. Stored in the summary JSON too, so the
+    # figure the team saw on any given day stays auditable after the fact.
+    _today_store_totals = {st: sv["total_discount_dollars"] for st, sv in store_summaries.items()}
+    store_ytd, company_ytd, ytd_days, ytd_year = compute_ytd(date, _today_store_totals, total_disc)
+    summary["ytd_year"] = ytd_year
+    summary["ytd_days_counted"] = ytd_days
+    summary["ytd_total_discount_dollars"] = round(company_ytd, 2)
+    summary["ytd_by_store"] = {st: round(v, 2) for st, v in store_ytd.items()}
+
+    slack_msg = build_slack_message(valued, date, missing,
+                                    store_ytd=store_ytd, company_ytd=company_ytd,
+                                    ytd_days=ytd_days, ytd_year=ytd_year)
     summary["slack_message"] = slack_msg
     if slack_msg is None:
         print(f"Slack post skipped — only {len(real)} real item(s) (min 3 required).")

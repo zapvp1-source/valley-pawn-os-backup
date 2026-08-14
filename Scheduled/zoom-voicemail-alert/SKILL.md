@@ -72,38 +72,32 @@ STEP 4 — Post ONE consolidated Slack alert (only if there's something new)
 ═══════════════════════════════════════════════
 If there are zero rows surviving Step 3.5 across all stores this run, do NOT post to Slack — stay silent. This runs every 20 minutes; a silent success is correct and expected most runs.
 
-If there ARE surviving rows, send ONE Slack message to **#voicemails-missed-calls** (channel ID `C0BP4M3B99R` — updated 2026-08-10, see NOTES) grouped by store. Distinguish an actual left voicemail (Voicemail column = Y) from a plain missed call (Busy/Ring Timeout/Abandoned with no voicemail) — don't call every row a "voicemail," that's misleading when nobody left one:
+If there ARE surviving rows, send ONE Slack message to **#voicemails-calls-missed** (channel ID `C0BP4M3B99R` — renamed from #voicemails-missed-calls to #voicemails-calls-missed 2026-08-13, same channel ID, see NOTES). Keep the ENTIRE message compact — no header line, no footer/disclaimer line, no blank lines between items, no per-store heading of its own line. Every item is exactly ONE line: `store — number, time — status, call back ASAP`. If there's only one item, the whole Slack message is that one line. If there are multiple items, stack them as consecutive one-line bullets with no other text before/after/between them. Always include the caller's full phone number (the Zoom "From" column, e.g. (540) 555-1234) on that same line — even if a caller-ID name is also shown — so whoever reads it can call back with zero extra steps, never needing to open the Zoom app to find the number. Distinguish an actual left voicemail (Voicemail column = Y) from a plain missed call (Busy/Ring Timeout/Abandoned, no voicemail) — don't call every row a "voicemail" when nobody left one.
 
+Format (each bullet is one line, nothing else in the message):
 ```
-📞 *Missed Call + Voicemail Alert*
-
-*Harrisonburg*
-• [caller name or number], [time] — 🔴 VOICEMAIL LEFT. Please call back ASAP.
-• [caller name or number], [time] — missed (no voicemail). Please call back ASAP.
-
-*Waynesboro*
-• [caller name or number], [time] — missed (no voicemail). Please call back ASAP.
-
-_Check the Zoom app (Phone → Voicemail) to listen and see the number. Pulled automatically from Zoom Phone admin history. Calls already resolved (staff callback OR customer reconnected) are auto-excluded._
+📞 Harrisonburg — (540) 578-3842, 9:34 AM — missed (no VM), call back ASAP
+📞 Lexington — (540) 924-3080, 9:23 AM — 🔴 VM left, call back ASAP
 ```
 
-Only include stores that have surviving items — skip stores with nothing new. Keep it short and actionable.
+Only include items that survived Step 3.5 — skip stores with nothing new.
 
 ═══════════════════════════════════════════════
 ERROR HANDLING (Failure Alert Policy v2)
 ═══════════════════════════════════════════════
-If Zoom's UI has changed and you can't find the History tab, the Voicemail filter, or parsing breaks entirely: do NOT guess or post a broken alert. Send ONE plain-language Slack DM to Joshua Davis (user ID `U03BB52MDSA`) — e.g. "⚠️ Zoom voicemail check couldn't read the call history page today — the Zoom admin UI may have changed, worth a look when you have a minute." Never send failure notices to #voicemails-missed-calls, #general, or any store channel. One attempt per run, then either succeed or send the single DM and stop.
+If Zoom's UI has changed and you can't find the History tab, the Voicemail filter, or parsing breaks entirely: do NOT guess or post a broken alert. Send ONE plain-language Slack DM to Joshua Davis (user ID `U03BB52MDSA`) — e.g. "⚠️ Zoom voicemail check couldn't read the call history page today — the Zoom admin UI may have changed, worth a look when you have a minute." Never send failure notices to #voicemails-calls-missed, #general, or any store channel. One attempt per run, then either succeed or send the single DM and stop.
 
-If posting to the #voicemails-missed-calls channel ID on file fails with an "is_archived" (or similar "channel no longer valid") error: before falling back to a DM, run one `slack_search_channels` lookup for "voicemail" (include_archived: true) to check whether Joshua recreated the channel under a new ID (this has happened before — see NOTES). If a non-archived channel named `#voicemails-missed-calls` is found, post there and note the new channel ID needs to be saved (see below). Only send the Joshua DM fallback if no live channel by that name exists.
+If posting to the #voicemails-calls-missed channel ID on file fails with an "is_archived" (or similar "channel no longer valid") error: before falling back to a DM, run one `slack_search_channels` lookup for "voicemail" (include_archived: true) to check whether Joshua recreated the channel under a new ID (this has happened before — see NOTES). If a non-archived channel matching "voicemail" is found, post there and note the new channel ID needs to be saved (see below). Only send the Joshua DM fallback if no live matching channel exists.
 
-**Whenever you discover the channel ID on file is stale** (archived, deleted, or renamed) and you had to look up the live one: after posting successfully, update this task's own prompt via `mcp__scheduled-tasks__update_scheduled_task` to replace the old channel ID with the new one, so the next run doesn't hit the same failure. Do this yourself — don't just work around it silently, fix the source.
+**Whenever you discover the channel ID on file is stale** (archived, deleted, or renamed to a genuinely different channel) and you had to look up the live one: after posting successfully, update this task's own prompt via `mcp__scheduled-tasks__update_scheduled_task` to replace the old channel ID/name with the new one, so the next run doesn't hit the same failure. Do this yourself — don't just work around it silently, fix the source.
 
 ═══════════════════════════════════════════════
 NOTES
 ═══════════════════════════════════════════════
-- Posts to the dedicated **#voicemails-missed-calls** channel (Joshua created this 2026-08-07 specifically for this task). Do not revert to #general.
-- 2026-08-10 (evening): the original channel (ID `C0BND1NK65V`) was archived and renamed `#voicemails-missed-calls-archived`; Joshua recreated `#voicemails-missed-calls` fresh the same day under a new ID, `C0BP4M3B99R`. A run discovered this when the old ID returned an `is_archived` error, looked up the live channel via `slack_search_channels`, posted there, and updated this task's channel ID to the new one. If this ever happens again, follow the same recovery path in ERROR HANDLING above rather than guessing or giving up silently.
+- Posts to the dedicated **#voicemails-calls-missed** channel (channel ID `C0BP4M3B99R`; Joshua created this channel 2026-08-07 specifically for this task, renamed it from #voicemails-missed-calls to #voicemails-calls-missed on 2026-08-13 — same ID, no functional change). Do not revert to #general.
+- 2026-08-10 (evening): the original channel (ID `C0BND1NK65V`) was archived and renamed `#voicemails-missed-calls-archived`; Joshua recreated `#voicemails-missed-calls` fresh the same day under a new ID, `C0BP4M3B99R` (later renamed again to `#voicemails-calls-missed` 2026-08-13, same ID). A run discovered this when the old ID returned an `is_archived` error, looked up the live channel via `slack_search_channels`, posted there, and updated this task's channel ID to the new one. If this ever happens again, follow the same recovery path in ERROR HANDLING above rather than guessing or giving up silently.
 - This is additive, net-new automation — doesn't touch any existing Bravo, Chekkit, or email infrastructure.
 - As more stores get Zoom Phone lines (Culpeper, Roanoke coming soon), Step 1's fresh-roster-every-run design means this task picks them up automatically with no edit needed.
 - 2026-08-10: dedupe state file moved from `~/Documents/Claude/Scheduled/zoom-voicemail-alert/state.json` (read-only in Cowork sessions, was silently failing every run since the task was enabled 2026-08-08) to `~/Documents/Claude/Projects/Valley Pawn OS/.zoom_voicemail_alert_state.json` (writable). Added Step 3.5 callback verification using the Outbound rows already pulled in Step 2.
 - 2026-08-10 (later): Step 3.5 extended with a "customer-reconnected" check. Joshua asked whether we could be "100% positive" a store hadn't called someone back; investigating turned up that the original Step 3.5 only checked Outbound rows, so a customer who called back in on their own and got Answered was still being flagged as needing a callback (live example: Mirand Campbell at Harrisonburg). The check now also treats a later Inbound-Answered row from the same number as resolved. Documented the honest limit of this check too: it can only see activity on the Zoom-provisioned store line pulled that run — a callback from a personal cell or a different number is invisible to it.
+- 2026-08-13: Joshua asked (1) that the callback number always be published in the alert itself so the team has zero extra steps (previously the template said "check the Zoom app... to see the number"), and (2) that the alert be concise, one line per item with no header/footer/blank-line clutter. Step 4 template rewritten to a bare one-line-per-item format with the phone number always inline. Same day, Joshua renamed the Slack channel from #voicemails-missed-calls to #voicemails-calls-missed (channel ID unchanged, C0BP4M3B99R) — updated all references in this prompt to the new name.

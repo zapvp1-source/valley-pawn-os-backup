@@ -25,7 +25,7 @@ Using the Claude in Chrome MCP (load via ToolSearch with query "select:mcp__clau
 
 ## STEP 2 — Pull EVERY row from TODAY for each store line (not just new ones)
 
-For each store line's user detail page, click "History", set both From and To date fields to TODAY, and read the full table (page through if more than one page). Capture Direction, From, To, Start Time, Event, Call Result, Voicemail, Duration for every row — Inbound AND Outbound. You need Outbound too, for the resolution check in Step 3.
+For each store line's user detail page, click "History", set both From and To date fields to TODAY, and read the full table (page through if more than one page — note: Zoom's "Next page" button has been observed to silently disable early on some days, short of the true row count; if the displayed row total doesn't match what you've paginated through, spot-check via the search box for a few known caller numbers before trusting the page is complete). Capture Direction, From, To, Start Time, Event, Call Result, Voicemail, Duration for every row — Inbound AND Outbound. You need Outbound too, for the resolution check in Step 3.
 
 ## STEP 3 — Identify today's missed-call/voicemail candidates and check resolution
 
@@ -35,41 +35,49 @@ For each store line's user detail page, click "History", set both From and To da
    - **Customer reconnected:** a later Inbound row FROM that same 10-digit number, Start Time after the missed call's Start Time, Call Result = `Answered`. If found → resolved, exclude.
 3. Anything with neither → still needs a callback as of 5:45 PM today. This is a fresh full-day sweep — do NOT consult or write the `zoom-voicemail-alert` dedupe state file (`~/Documents/Claude/Projects/Valley Pawn OS/.zoom_voicemail_alert_state.json`); that file belongs to the other task only. This task is stateless — it always re-evaluates the whole day fresh.
 4. Note the same honest limit as the intraday task if ever asked: this only sees activity on the Zoom-provisioned store line pulled — a callback from a personal cell or a different number is invisible to it.
+5. Keep a running per-store tally as you go: `candidates` (total instances), `resolved` (count), `unresolved` = candidates − resolved. You'll need these totals for Step 5.
 
 ## STEP 4 — Post ONE end-of-day summary to Slack, always (unlike the intraday task, this one posts every run — it's the daily close-out record, not a noisy per-event alert)
 
-Post to **#voicemails-missed-calls** (channel ID `C0BP4M3B99R` — if this returns an "is_archived" or invalid-channel error, run `slack_search_channels` for "voicemail" with `include_archived: true` to find the live channel, post there instead, then update THIS task's own prompt via `mcp__scheduled-tasks__update_scheduled_task` to replace the stale channel ID so the next run doesn't repeat the failure — same recovery pattern the intraday task uses).
+Post to **#voicemails-calls-missed** (channel ID `C0BP4M3B99R` — renamed from #voicemails-missed-calls to #voicemails-calls-missed 2026-08-13, same channel ID. If posting returns an "is_archived" or invalid-channel error, run `slack_search_channels` for "voicemail" with `include_archived: true` to find the live channel, post there instead, then update THIS task's own prompt via `mcp__scheduled-tasks__update_scheduled_task` to replace the stale channel ID/name so the next run doesn't repeat the failure — same recovery pattern the intraday task uses).
 
-If there ARE still-unresolved rows, post:
+Keep the message compact — one line per outstanding item, no extra header/footer clutter. Always include the caller's full phone number (the Zoom "From" column, e.g. (540) 555-1234) on the same line as the caller name, if a name is shown — never just a name alone — so nobody has to open the Zoom app to find the number.
+
+If there ARE still-unresolved rows, post (each bullet exactly one line, nothing else in the message besides the title line):
 ```
-🌙 *End-of-Day Voicemail/Missed Call Close-Out — {today's date}*
-
-The following still have NOT been called back today — please handle before close or first thing tomorrow:
-
-*Harrisonburg*
-• [caller name or number], [time] — 🔴 VOICEMAIL LEFT, no callback yet.
-• [caller name or number], [time] — missed (no voicemail), no callback yet.
-
-*Waynesboro*
-• [caller name or number], [time] — missed (no voicemail), no callback yet.
-
-_Pulled from Zoom Phone admin history, full-day sweep. Calls already resolved (staff callback or customer reconnected) are excluded._
+🌙 End-of-Day Close-Out — {today's date} — still need a callback:
+📞 Harrisonburg — (540) 578-3842, 9:34 AM — 🔴 VM left, no callback yet
+📞 Waynesboro — (540) 000-0000, 4:10 PM — missed (no VM), no callback yet
 ```
-Only list stores with outstanding items.
 
-If EVERYTHING from today was resolved (or there were no missed calls/voicemails today at all), post a short all-clear instead:
+If EVERYTHING from today was resolved (or there were no missed calls/voicemails today at all), post a short all-clear instead (one line):
 ```
-🌙 *End-of-Day Voicemail/Missed Call Close-Out — {today's date}*
+🌙 End-of-Day Close-Out — {today's date} — all clear, nothing outstanding.
+```
 
-All clear — every missed call/voicemail today was called back or the customer reconnected. Nothing outstanding heading into tomorrow.
-```
+## STEP 5 — Log today's per-store counts to the trend report, then regenerate it (added 2026-08-13)
+
+This step feeds Joshua's "Missed Calls & Voicemails" trend report. It runs after Step 4 regardless of whether today had any unresolved items — the report tracks every day, not just bad days.
+
+Data store: `~/Documents/Claude/Projects/Communcations/Trend Reports/Missed Calls & Voicemails/daily_log.csv` — columns `date,store,candidates,resolved,unresolved,callback_pct` (one row per store per day; `callback_pct` = `resolved/candidates*100` rounded to 1 decimal, or `0` if candidates is 0).
+
+1. For every store in today's live roster (from Step 1) — including ones with zero candidates today — write one row using today's date and the tallies from Step 3.5.
+2. This task is stateless and may occasionally be re-run for the same day — before writing, drop any existing rows in the CSV where `date` equals today's date, then append the fresh rows. Never duplicate a day. Do this with a short Python script (`csv` module) via bash, not by hand-editing.
+3. Regenerate the report by running (no arguments needed — it resolves both files relative to its own location):
+   ```
+   python3 "~/Documents/Claude/Projects/Communcations/Trend Reports/Missed Calls & Voicemails/generate_report.py"
+   ```
+   This rewrites `report.html` in the same folder from the CSV's full history (daily-by-store chart, monthly-by-store chart, running YTD cumulative total, callback % trend, and a data table).
+4. If this step fails (CSV write error, script error, missing file), do not let it block or retry Step 4 — that Slack post already happened. Instead send one brief Slack DM to Joshua Davis (`U03BB52MDSA`), e.g. "⚠️ Today's voicemail trend log/report update failed — worth a look when you have a minute. The Slack close-out post above is unaffected." Do not post this to #voicemails-calls-missed.
 
 ## ERROR HANDLING (same Failure Alert Policy v2 as zoom-voicemail-alert)
 
-If the Zoom UI has changed and you can't read the History tab or parsing breaks: do NOT guess or post a broken summary. Send ONE plain-language Slack DM to Joshua Davis (user ID `U03BB52MDSA`) — e.g. "⚠️ End-of-day Zoom voicemail review couldn't read the call history page today — worth a look when you have a minute." Never send failure notices to #voicemails-missed-calls, #general, or any store channel. One attempt, then either succeed or send the single DM and stop.
+If the Zoom UI has changed and you can't read the History tab or parsing breaks: do NOT guess or post a broken summary. Send ONE plain-language Slack DM to Joshua Davis (user ID `U03BB52MDSA`) — e.g. "⚠️ End-of-day Zoom voicemail review couldn't read the call history page today — worth a look when you have a minute." Never send failure notices to #voicemails-calls-missed, #general, or any store channel. One attempt, then either succeed or send the single DM and stop. (This applies to Steps 1–4; Step 5's own failure handling is separate, see above.)
 
 ## Notes
 
 - This is additive, net-new automation alongside `zoom-voicemail-alert` — does not touch that task's logic, schedule, or state file.
-- As more stores get Zoom Phone lines (Culpeper, Roanoke), Step 1's fresh-roster-every-run design picks them up automatically.
+- As more stores get Zoom Phone lines (Culpeper, Roanoke), Step 1's fresh-roster-every-run design picks them up automatically, and Step 5 will start writing rows for them too — no edit needed here.
 - Close every Chrome tab you opened before finishing.
+- 2026-08-13: matched `zoom-voicemail-alert`'s update — the callback phone number is now always published inline (never just a caller name), and the Slack post format was trimmed to one line per item with no header/footer clutter. Same day, Joshua renamed the destination Slack channel from #voicemails-missed-calls to #voicemails-calls-missed (channel ID unchanged, C0BP4M3B99R) — updated all references in this prompt to the new name.
+- 2026-08-13 (later): added Step 5 — daily trend logging to `Communcations/Trend Reports/Missed Calls & Voicemails/daily_log.csv` and regeneration of `report.html` via `generate_report.py`. Backfilled with 2026-08-13's data (Harrisonburg 24/22 resolved, Waynesboro 3/2, Lexington 8/3) as the first tracked day. Pagination note added to Step 2 after that same first run hit a Zoom grid bug where "Next page" disabled itself 6 rows short of the true total — caught only by spot-checking via search.

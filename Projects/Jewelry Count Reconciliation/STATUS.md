@@ -570,3 +570,55 @@ CUL comparison (OVER/SHORT from the sheet point of view; variance = sheet minus 
 - Pattern check vs this morning freeze-window read (8/12 AM Bravo pull vs 8/11 PM sheet, logged in BRAVO_KNOWN_ISSUES.md): Necklaces +61 and Earrings +51 are identical to two nights ago read; Pendants +6 identical; Rings +11 vs +13 and Bracelets +7 vs +8 essentially unchanged. This is a stable, repeating pattern across two consecutive freeze-window comparisons, not a one-night miscount - it reinforces the existing scope-gap explanation rather than pointing to a new event. Per the standing caveat (no Location column on the saved jewelry reports yet, Claude Case Jewelry fix still open), none of tonight SHORT variance should be treated as loss.
 - No date mismatch, no missing or stale files, no non-ok rows. Freeze window valid on both sides (store closed 6 PM, Bravo pulled 8:43 PM, sheet taken at 6:18 PM close).
 - Reported to Joshua via Slack DM (D03BHQH5VGT) only - loss-prevention audit, never a shared channel or store manager. Message: https://valleypawnworkspace.slack.com/archives/D03BHQH5VGT/p1786585827927029
+
+## 2026-08-13 (night, 9:45 PM run) - Thursday, all-5-store on-hand vs PM sheet - jewelry-onhand-nightly-compare
+- Store-hours gate: Thursday -> all 5 stores open (CUL, HAR, LEX, ROA, WAY). Correct branch taken; complete.
+- Bravo side: output/2026-08-13_{CUL,HAR,LEX,ROA,WAY}_jewelry-case-counts.csv, mtimes 20:51-21:17 (after 8:30 PM freeze trigger, not stale). All 30 rows status=ok.
+- Manager side: read via Chrome from #end-of-day, all photographed sheets dated 8/13/26. Poster/store map confirmed from each sheet's own header: Sandi=CUL (6:17 PM), Walker Tapley=HAR (6:36 PM), Uriah=LEX (6:27 PM), Martin D.=WAY (6:31 PM), Benjie Moore=ROA (6:22 PM). Used PM COUNT column throughout. Every sheet's own TOTALS line sum-verified against its 5 categories before use (CUL 638+120+155+123+243=1279 OK; HAR 462+49+124+49+118=802 OK, ring digit recovered via total-minus-other-categories since it was scribbled/corrected on the sheet; LEX 272+37+45+49+51=454 OK; ROA 552+123+161+89+153=1078 OK, sheet rotated 90deg as usual, re-zoomed; WAY 324+40+64+46+55=529 OK). Category mapping: Chains+Necklaces summed vs Bravo, compared to sheet's single NECKLACES line.
+
+Comparison (OVER/SHORT/MATCH from the sheet's point of view; variance = sheet minus Bravo; Bravo = expected/system, sheet = actual physical case count):
+
+CUL   Rings     Bravo 649  Sheet 638  -> SHORT 11
+CUL   Bracelets Bravo 127  Sheet 120  -> SHORT 7
+CUL   Necklaces Bravo 215  Sheet 155  -> SHORT 60  (Chains 116 + Necklaces 99)
+CUL   Earrings  Bravo 172  Sheet 123  -> SHORT 49
+CUL   Pendants  Bravo 253  Sheet 243  -> SHORT 10
+CUL store total: Bravo 1416, Sheet 1279, SHORT 137
+
+HAR   Rings     Bravo 457  Sheet 462  -> OVER 5
+HAR   Bracelets Bravo 50   Sheet 49   -> SHORT 1
+HAR   Necklaces Bravo 128  Sheet 124  -> SHORT 4  (Chains 77 + Necklaces 51)
+HAR   Earrings  Bravo 48   Sheet 49   -> OVER 1
+HAR   Pendants  Bravo 117  Sheet 118  -> OVER 1
+HAR store total: Bravo 800, Sheet 802, OVER 2
+
+LEX   Rings     Bravo 268  Sheet 272  -> OVER 4
+LEX   Bracelets Bravo 36   Sheet 37   -> OVER 1
+LEX   Necklaces Bravo 44   Sheet 45   -> OVER 1  (Chains 26 + Necklaces 18)
+LEX   Earrings  Bravo 51   Sheet 49   -> SHORT 2
+LEX   Pendants  Bravo 52   Sheet 51   -> SHORT 1
+LEX store total: Bravo 451, Sheet 454, OVER 3
+
+ROA   Rings     Bravo 554  Sheet 552  -> SHORT 2
+ROA   Bracelets Bravo 124  Sheet 123  -> SHORT 1
+ROA   Necklaces Bravo 161  Sheet 161  -> MATCH  (Chains 98 + Necklaces 63)
+ROA   Earrings  Bravo 94   Sheet 89   -> SHORT 5
+ROA   Pendants  Bravo 92   Sheet 153  -> OVER 61  *** FLAG - anomalous direction ***
+ROA store total: Bravo 1025, Sheet 1078, OVER 53 (driven entirely by Pendants)
+
+WAY   Rings     Bravo 336  Sheet 324  -> SHORT 12
+WAY   Bracelets Bravo 41   Sheet 40   -> SHORT 1
+WAY   Necklaces Bravo 63   Sheet 64   -> OVER 1  (Chains 41 + Necklaces 22)
+WAY   Earrings  Bravo 47   Sheet 46   -> SHORT 1
+WAY   Pendants  Bravo 59   Sheet 55   -> SHORT 4
+WAY store total: Bravo 546, Sheet 529, SHORT 17
+
+Exact matches: 1 of 25 cells (ROA Necklaces). All other 24 cells non-zero - per zero-tolerance standard, none of those 24 called clean/close/within-tolerance; each is reported exactly as OVER/SHORT above.
+
+ANALYSIS:
+- ROA Pendants OVER 61 is the headline item tonight - the anomalous (system-lower-than-case) direction, sharpest attention per standing rule. This is consistent with the known, already-confirmed 2026-08-12 issue at Roanoke: pendant-type pieces entered in Bravo under Charms rather than Pendants, so the Pendants report undercounts what's physically in the case. Not new, but this is the first clean freeze-window read that quantifies it (61 pieces) - worth pushing the Bravo recategorization fix.
+- CUL Necklaces SHORT 60 and Earrings SHORT 49 match the magnitude of the 2026-08-10 and both 2026-08-12 freeze-window reads almost exactly (prior: Necklaces SHORT 60-61, Earrings SHORT 49-51, Rings SHORT 11-13, Bracelets SHORT 7-8, Pendants SHORT 6-10). Third+ consecutive night this pattern repeats at near-identical size - stable and explained by the standing scope gap (Bravo = case+safe+back-stock+bins; sheet = display case only), NOT loss. Do not re-flag as new unless the size changes materially.
+- WAY Rings SHORT 12 and ROA Rings/Earrings/Bracelets small SHORTs: this is the first clean freeze-window on-hand comparison on record for HAR, LEX, ROA, WAY (prior nights only had CUL fully validated). No baseline yet to call WAY Rings SHORT 12 a pattern or a one-off - watch next few nights.
+- HAR and LEX small OVER cells (1-5 pieces each) are within normal miscount/timing noise, not flagged individually.
+- No date mismatches, no missing/stale files, no non-ok rows. Freeze window valid on both sides (all stores close 6 PM, sheets taken 6:17-6:36 PM, Bravo pulled 8:51-9:17 PM).
+- Reported to Joshua via Slack DM (D03BHQH5VGT) only, plain language, per Field Communication Standard - led with ROA pendants finding and the CUL known-pattern caveat.

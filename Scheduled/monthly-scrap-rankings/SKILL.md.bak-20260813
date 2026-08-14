@@ -1,6 +1,6 @@
 ---
 name: monthly-scrap-rankings
-description: 1st of each month, 4:30 AM ET — pull last month's posted gold scrap weights for all 5 stores, compute store ranking + year-over-year + year-to-date, and post the rankings to Slack #scrap-rankings.
+description: 1st of each month, 8 AM ET — pull last month's posted gold scrap weights for all 5 stores, compute store ranking + year-over-year + year-to-date, and post the rankings to Slack #scrap-rankings.
 model: claude-sonnet-5
 ---
 
@@ -38,49 +38,11 @@ All of this logic lives in `Bravo Data Extraction/scrap_rankings.py`. Use it; do
    If it fails, run the ClickOnce relaunch, then re-gate:
    `prlctl exec {7dc84f03-4e68-4f43-9596-bf8a7dfb8e0a} --current-user powershell -NoProfile -Command "Start-Process 'C:\Users\joshuadavis\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Bravo Store Systems\Bravo.appref-ms'"`
 
-2. **Back up first, then pull INCREMENTALLY — one store per trigger.**
-
-   **2a. Back up before dropping anything.** Non-negotiable. A pull truncates the store's whole year file (see the ResetOutputFile warning below).
-   ```
-   cd "/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction"
-   BK=output/_backups_$(date +%Y%m%d) && mkdir -p $BK && cp output/202*_*_scrap-refining-gold.csv $BK/
-   ```
-
-   **2b. Pull ONLY the two query windows that carry the reporting month.** Multi-store triggers reliably fail on store-switching, so five separate files.
-
-   ⚠️ **Get the window arithmetic right — this is the easiest way to publish a wrong number.** The reporting period `P` is the month a bucket was **posted**. The `Month` column in the export is the **query window**, which tracks roughly when the bucket was *created* — about a month EARLIER. Measured across all 85 buckets that carry a real posted date:
-
-   | posted-month minus query-window | buckets |
-   |---|---|
-   | exactly 1 (window = P−1) | 59 |
-   | spans 0 and 1 | 15 |
-   | 0 only (window = P) | 2 |
-   | outliers (cross-year name reuse) | 9 |
-
-   So **to capture everything posted in month P you must pull windows `P−1 .. P`.** Pulling `P .. P+1` looks intuitive and would silently miss the ~70% of buckets that only ever appear under `P−1` — the board would publish short with no error raised.
-
-   For a run on **2026-09-01**, the reporting period is **2026-08**, so the window is **`2026-07..2026-08`**:
+2. **Pull fresh scrap data, ONE STORE PER TRIGGER.** Multi-store triggers reliably fail partway through on store-switching. Drop five separate trigger files into `triggers/`, one per store, covering the current year through the current month — e.g. for a run on 2026-09-01:
    ```json
-   {"id":"scrap-monthly-<TS>-<STORE>","requested_at":"<ISO>","reports":[{"name":"scrap-refining-gold","stores":["<STORE>"],"date":"2026-07..2026-08"}]}
+   {"id":"scrap-monthly-<TS>-<STORE>","requested_at":"<ISO>","reports":[{"name":"scrap-refining-gold","stores":["<STORE>"],"date":"2026-01..2026-09"}]}
    ```
-
-   Why not the whole year (changed 2026-08-13): a posted bucket never changes after the fact, and every prior month is already in `scrap_history.csv` and the trend workbook from earlier runs — re-reading January every month is pure cost. Measured from 86 real pulls the report costs ~3.1 min per query-month per store (worst observed 6.3), so a full Jan..Sep pull is **~28 min/store and ~2.4 h for all five, up to 4.7 h worst case** against a ~3 h window. Two windows is ~3–5 min/store, ~20 min for all five. The old "roughly 15 minutes per store" note in this file was simply wrong.
-
-   Year-over-year, year-to-date AND month-over-month all come from the accumulated history, not from re-pulling — they cost nothing extra.
-
-   **2c. Restore the history the pull just truncated.** The pull leaves each file holding only the rows it captured. Merge additively — keeps every backed-up row, layers in only newly-read weights, never overwrites a real value with a blank:
-   ```
-   sed "s/_backups_20260804/$(basename $BK)/" _merge_scrap_weights.py > ./_m.py && python3 ./_m.py CUL HAR LEX ROA WAY; rm -f ./_m.py
-   ```
-   Then confirm row counts match the backup before continuing. A truncated file still parses as valid data — this check is the only thing that catches it.
-
-   **2d. Only if the completeness gate in step 4 fails**, re-pull the FULL year (`YYYY-01..YYYY-MM`) for the specific stores it flagged — not all five. Budget ~30 min per store and re-run 2a/2c around it.
-
-   Poll `logs/scrap-monthly-*.log` for `Overall status`. Re-drop any store that errors; recover Bravo first if two in a row fail. Expect roughly 1 pull in 10 to error on the first attempt and need a re-drop. **A failure here is almost never a data problem** -- measured across 86 real pulls, 90% of all failures were NAVIGATION failures that happened before a single weight was read: left-nav `Inventory` not found (37%), store switch failed (22%), could not return to Dashboard (15%), `Scrap Refining Process` not found (12%). The fix is always the same: recover Bravo to the Dashboard and re-drop that store. Do NOT go hunting for a data or parsing bug on these.
-
-   > Note on the rate: an earlier version of this file claimed ~48% of pulls fail. That figure was real but is now stale -- it is dominated by the period when the watchdog was falsely restarting the watcher every ~8 minutes and killing runs mid-flight (fixed 2026-08-04, see `_watchdog.ps1` in-flight check). Post-fix the measured rate is 1/11. If you ever see it climb back toward 50%, suspect something is killing runs rather than the report itself.
-
-   > ⏱ **Scheduling note (2026-08-13).** This task runs 4:30 AM ET on the 1st, deliberately: the Bravo nightly restart and pre-flight relaunch finish at ~4:00 AM ET, and the first daily Bravo task (`daily-loan-inventory-text`) fires at 7:30 AM ET. The watcher processes triggers **serially**, so anything still running at 7:30 pushes `sold-review`, `discount-review`, `jewelry-count-reconciliation` and the rest into a queue behind it. That ~3 h window is the budget. If this task ever needs materially longer, move it earlier rather than letting it bleed into the morning tasks.
+   Each store takes roughly 15 minutes (the report opens every bucket individually to read its weight). Poll `logs/scrap-monthly-*.log` for `Overall status`. Re-drop any store that errors; recover Bravo first if two in a row fail.
 
 3. **Rebuild history and generate the report.**
    ```

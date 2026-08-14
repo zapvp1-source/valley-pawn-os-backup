@@ -3,11 +3,31 @@
 Valley Pawn — Daily Sold Margin Review ("Sold Review")
 
 Reads yesterday's SOLD items per store from the Bravo Data Extraction pipeline
-output (the "Claude Sold Yesterday" saved report, pipeline cell
-`sold-yesterday`), computes realized margin % and margin $ per item directly
-from Bravo's own Cost vs Sale Price fields (no external valuation needed —
-Bravo already knows what we paid and what we got), flags items that sold too
-cheap, and posts a per-store + company summary to #sold-review.
+output (the "Claude Sold Inv Details" saved report, pipeline cell
+`jewelry-margin-sold` — despite the jewelry-sounding cell name, the AHK
+handler carries no category filter and returns ALL sold items), computes
+realized margin % and margin $ per item directly from Bravo's own Cost vs
+Last Sold Price fields (no external valuation needed — Bravo already knows
+what we paid and what we actually got), flags items that sold too cheap, and
+posts a per-store + company summary to #sold-review.
+
+CHANGED 2026-08-13: originally targeted a separate saved report ("Claude Sold
+Yesterday" / cell `sold-yesterday` / handler SoldYesterday.ahk) that proved
+unreliable on its first live smoke test (UIA could not reliably select it —
+0/5 stores on 2026-08-13). `discount-review` (a sibling task built the next
+day, 2026-07-29) had already proven out "Claude Sold Inv Details" /
+`jewelry-margin-sold` as a working, selectable report carrying the exact
+columns needed (Cost, Price, Last Sold Price, Category, Description, Date) —
+so sold-review was switched to reuse that same proven cell instead of
+maintaining two near-duplicate "what sold yesterday" pulls. `sold-yesterday`
+/ SoldYesterday.ahk is left in place untouched (additive-only) in case a
+future project wants it; this script just no longer depends on it.
+
+IMPORTANT — Price vs Last Sold Price: in this report, "Price" is the
+ticketed/asking price, NOT what the customer actually paid. "Last Sold
+Price" is the real realized sale price. Realized-margin math below uses
+Last Sold Price. Do not swap these — that mistake would silently overstate
+margin on anything sold at a discount.
 
 This is the SALES-side counterpart to the daily-intake-margin / pawn-walk
 pipeline (which grades what we PAY on the way IN, against an external market
@@ -67,7 +87,25 @@ AGED_DAYS_MARKDOWN = 90           # items on shelf 90+ days get an "(aged cleara
 
 # Candidate input filename patterns, tried in order, for a given date/store.
 # {d} = ISO date (also used as the single-day range start==end)
+# Primary as of 2026-08-13 (evening): the `sold-discount-detail` cell — a strictly additive
+# clone of jewelry-margin-sold (handler reports/SoldDiscountDetail.ahk) that fixes TWO real
+# bugs the old handler still has:
+#   1. Zero-sale days wrote NO csv at all, making "ran, no sales" indistinguishable on disk
+#      from "never ran" — this task then reported those stores as missing_stores.
+#   2. The grid-capture searched the whole UIA root for DataItems and could latch onto the
+#      wrong grid entirely — on 2026-08-13 that wrote WAY's Global Access store picker
+#      (DisplayCode,Store) to disk as if it were 5 rows of sold inventory.
+# Both were proven fixed live on all 5 stores 2026-08-13. jewelry-margin-sold patterns are
+# RETAINED below as fallbacks so previously-pulled data still parses; the old cell itself is
+# untouched (the jewelry-scrap project still owns it). Legacy sold-yesterday patterns kept
+# below that, in case that cell is ever fixed and used again by another task.
 _FILENAME_CANDIDATES = [
+    "{d}_to_{d}_{store}_sold-discount-detail.csv",
+    "{d}_{store}_sold-discount-detail.csv",
+    "{d}_to_{d}_{store}_jewelry-margin-sold.csv",
+    "{d}_{store}_jewelry-margin-sold.csv",
+    "{d}_to_{d}_{store}_sold-inv-details.csv",
+    "{d}_{store}_sold-inv-details.csv",
     "{d}_to_{d}_{store}_sold-yesterday.csv",
     "{d}_{store}_sold-yesterday.csv",
     "{d}_to_{d}_{store}_claude-sold-yesterday.csv",
@@ -75,6 +113,24 @@ _FILENAME_CANDIDATES = [
 ]
 
 STORES = ["CUL", "HAR", "LEX", "ROA", "WAY"]
+
+
+# ── Open-stores gate (Joshua, 2026-08-12 pattern) ──────────────────────────────
+# The scheduled task only ever REQUESTS a Bravo pull for open stores on a given
+# date (Sunday = none, Wednesday = CUL only, else all 5) — see sold-review's
+# SKILL.md STEP 0.5. This compile script mirrors that same logic purely for
+# REPORTING clarity: a store with no CSV because it was legitimately closed
+# should not be lumped into "missing_stores" next to a store that was open but
+# whose pull genuinely failed. Added 2026-08-13 after the first live CUL-only
+# rehearsal made the old wording ("No data file for: HAR, LEX, ROA, WAY") read
+# like 4 failures on a Wednesday when it was correct, expected behavior.
+def open_stores_for(date: datetime.date) -> list[str]:
+    wd = date.weekday()  # Monday=0 ... Sunday=6
+    if wd == 6:      # Sunday
+        return []
+    if wd == 2:       # Wednesday
+        return ["CUL"]
+    return list(STORES)
 
 
 # ── Date resolution ────────────────────────────────────────────────────────────
@@ -161,15 +217,18 @@ def _parse_mdy_or_iso(s):
 
 # ── Load sold items for a specific date, across all 5 stores ─────────────────
 def load_sold_for_date(date: datetime.date) -> tuple[list[dict], list[str]]:
-    """Returns (rows, stores_with_no_file). Tries each filename candidate per
-    store in order; first match wins. A store with no matching file at all is
-    reported separately (not the same as a store with a file but zero rows —
-    that's a legitimate no-sales day)."""
+    """Returns (rows, stores_with_no_file). Only checks stores that were OPEN on
+    this date per open_stores_for() — a store closed that day (Sunday, or any
+    non-CUL store on a Wednesday) is correctly excluded entirely, not reported
+    as missing. Tries each filename candidate per store in order; first match
+    wins. A store that WAS open but has no matching file is reported separately
+    (not the same as a store with a file but zero rows — that's a legitimate
+    no-sales day for an open store)."""
     ds = date.isoformat()
     rows: list[dict] = []
     missing_files: list[str] = []
 
-    for store in STORES:
+    for store in open_stores_for(date):
         path = None
         for pat in _FILENAME_CANDIDATES:
             candidate = os.path.join(BRAVO_OUTPUT, pat.format(d=ds, store=store))
@@ -185,12 +244,19 @@ def load_sold_for_date(date: datetime.date) -> tuple[list[dict], list[str]]:
                 reader = csv.DictReader(fh)
                 fns = reader.fieldnames or []
                 col_cost   = _find_col(fns, "Cost", "Item Cost", "Unit Cost")
-                col_price  = _find_col(fns, "Sale Price", "Price", "Selling Price", "Sold Price")
+                # "Last Sold Price" (actual realized price) MUST win over "Price" (ticket/
+                # asking price) — see module docstring. Sale Price/Selling Price/Sold Price
+                # kept as fallbacks for any other CSV shape that lands in this same folder.
+                col_price  = _find_col(fns, "Last Sold Price", "Sale Price", "Sold Price",
+                                        "Selling Price", "Price")
                 col_desc   = _find_col(fns, "Description", "Full Description", "Item Description")
                 col_cat    = _find_col(fns, "Category")
-                col_ticket = _find_col(fns, "Inventory #", "Inventory Number", "Item #",
+                col_ticket = _find_col(fns, "Number", "Inventory #", "Inventory Number", "Item #",
                                         "Acquired Ticket #", "Ticket Number", "Ticket #")
-                col_date   = _find_col(fns, "Date Sold", "Sold Date", "Sale Date")
+                col_date   = _find_col(fns, "Date", "Date Sold", "Sold Date", "Sale Date")
+                # jewelry-margin-sold's CSV carries no shelf-age column — this will
+                # legitimately resolve to None and the aged-clearance tag simply won't
+                # fire (graceful degradation, not an error).
                 col_days   = _find_col(fns, "Days On Shelf", "Days on Shelf", "Age", "Days Held")
 
                 for row in reader:
@@ -450,9 +516,26 @@ def main():
     summary_path = os.path.join(DAILY_DIR, f"{date_str}_sold_review_summary.json")
     xlsx_path = os.path.join(DAILY_DIR, f"{date_str}_sold_review.xlsx")
 
+    open_today = open_stores_for(date)
+    if not open_today:
+        msg = f"{date_str} — no stores open (Sunday), correct no-op"
+        print(f"INFO: {msg}")
+        summary = {
+            "date": date_str, "items": 0, "avg_margin": None, "flags": 0,
+            "critical": 0, "stores": {}, "missing_stores": [],
+            "excel_path": None, "slack_posted": False, "slack_skipped": True,
+            "info": msg,
+        }
+        with open(summary_path, "w") as f:
+            json.dump(summary, f, indent=2)
+        print(f"JSON → {summary_path}")
+        sys.exit(0)
+
     raw, missing = load_sold_for_date(date)
     if not raw:
-        msg = f"No sold-yesterday data files found for {date_str} (missing: {', '.join(missing) or 'all stores'})"
+        msg = (f"No jewelry-margin-sold data files found for {date_str} "
+               f"(open stores expected: {', '.join(open_today)}; "
+               f"missing: {', '.join(missing) or 'none — pull returned 0 rows for all open stores'})")
         print(f"INFO: {msg}")
         summary = {
             "date": date_str, "items": 0, "avg_margin": None, "flags": 0,

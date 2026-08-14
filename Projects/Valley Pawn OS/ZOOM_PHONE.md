@@ -63,4 +63,95 @@ reference once their extensions are assigned.
   explicit all-clear — since it's meant to be the definitive end-of-day record, not a silent-when-nothing
   event alert like the intraday task. Does not read or write the intraday task's dedupe state file; the two
   are fully independent so a bug in one can't silently break the other. Same session-expired and failure
-  DM policy as `zoom-voicemail-alert`.
+  DM policy as `zoom-voicemail-alert`. Note: channel was renamed `#voicemails-missed-calls` ->
+  `#voicemails-calls-missed` by Joshua on 2026-08-13; channel ID `C0BP4M3B99R` unchanged so no task update
+  was needed, but this doc's channel name references should be read as historical.
+
+## Admin Console Audit — 2026-08-13
+
+Full audit of the 3 live Zoom Phone lines (Harrisonburg, Waynesboro, Lexington) via Users & Rooms, Phones &
+Devices, Call Queues, and Auto Receptionists. Prompted by Joshua asking for a settings health check across
+the 3 store phone lines. Findings and actions:
+
+**FIXED (live, safe, non-customer-facing) — 911 emergency address was wrong for 2 of 3 stores.**
+Harrisonburg's and Waynesboro's Zoom users were both defaulting to the Zoom account's company address
+(125 Walker St, Lexington) for E911 — meaning a 911 call placed from either store's phone would have sent
+dispatch to Lexington, ~30-40 miles from the actual caller. Added and activated a Personal Emergency
+Address for each: Harrisonburg -> 1790 E Market St, Harrisonburg, VA 22801; Waynesboro -> 1321 W Broad St,
+Waynesboro, VA 22980 (both verified/geocoded by Zoom on save). Lexington's own line was already correct
+(it legitimately is the company address). No customer-facing or reversibility risk — this only corrects
+911 routing to the true location, done without waiting for confirmation per standing autonomy preference.
+
+**URGENT, NOT FIXED (requires physical in-store action) — Harrisonburg has ZERO working phones right now.**
+Both of Harrisonburg's Grandstream WP822 wireless handsets (`Harrisonburg wireless`, `Harrisonburg wireless
+2`, ext 802) show **Offline** in Phones & Devices with "Factory reset needed for provisioning" — a
+provisioning failure, not a simple network blip. No remote reboot/factory-reset action exists in the admin
+console for these devices (checked the device row's "More Actions" menu — only Bind Provision Template /
+Unassign are available). This is 100% consistent with the missed-call flood in #voicemails-calls-missed on
+2026-08-12 (an EOD sweep found dozens of unresolved Harrisonburg/Waynesboro/Lexington missed calls with
+**zero outbound calls logged all day on any of the 3 lines**) and 2026-08-13 morning (5-6 repeat missed
+calls in under an hour, several numbers calling back 2-3x). **Someone needs to physically power-cycle /
+factory-reset both Harrisonburg WP822 handsets in-store** (per Zoom's own device note, a triggered factory
+reset completes in a few minutes via zero-touch provisioning once power/network is restored) — this cannot
+be done remotely. Logged as an open item — see Life OS/OPEN_ITEMS_REGISTER.md.
+
+**Other findings, not fixed (recommendations only, business-preference / build calls, not silent fixes):**
+- No Call Queues exist on the account (0 configured) — all 3 stores run as plain "User" extensions with
+  Simultaneous ring across 2 devices and a 30-second max wait before falling to voicemail, no hold/overflow.
+  A proper Call Queue per store (multi-agent ring, hold music, configurable overflow) would handle burst
+  volume far better than a 2-device user extension, especially relevant given the Harrisonburg outage
+  showed there's no fallback path today when the store's phones are down.
+- Lexington's desk phone (`Lexington 2`, Poly VVX250) is flagged **End of Life** by Zoom — still online and
+  working today, but a similar unannounced failure to Harrisonburg's is a real risk; worth proactively
+  budgeting a replacement before it fails rather than after.
+- Harrisonburg's user Time Zone is set to `(GMT-7:00) Pacific Time` — should be Eastern. Affects how call
+  history/voicemail timestamps display in the admin console (the underlying call time itself is UTC-based
+  and unaffected). Not editable from the field shown on the Profile tab; needs a follow-up look at where
+  this is actually set.
+- A "Main Auto Receptionist" (ext 801) exists with zero numbers assigned to it — appears to be an unused
+  default, not routing any store's calls. Harmless as-is but worth confirming it's not a forgotten
+  half-finished setup.
+- 2026-08-12 EOD review's "zero outbound calls logged on any of the 3 lines all day" is unexplained beyond
+  Harrisonburg (which had no working phones to call FROM either). Waynesboro and Lexington's phones were
+  online that day — worth a follow-up with those two stores on whether callbacks are happening off-platform
+  (personal cell, invisible to this audit) or genuinely not happening.
+
+## Timezone Fix + Call Queue Buildout — 2026-08-13 (same day, follow-up to the audit above)
+
+Joshua approved two of the audit's open recommendations same-day: "fix the timezone" and, after seeing the
+proposed Call Queue design, "yes build it."
+
+**Timezone bug — FIXED (both affected users).** Root cause: Harrisonburg's and Waynesboro's Zoom user
+Time Zone field was never set ("No option selected"), silently inheriting the account default (Pacific)
+instead of the account's real Eastern location. Not editable from Phone System Management > Users & Rooms
+> Profile (display-only there) — the actual field lives at User Management > Users > [click the user's
+display name, not "Edit"] > Profile > Time Zone. Set both to "(GMT-4:00) Eastern Time (US and Canada)":
+Harrisonburg (Walker Tapley) and Waynesboro (Chadd McClintic).
+
+**Call Queues — BUILT, all 3 stores, not yet live (see cutover note below).** Design: one Call Queue per
+store, replacing the fragile single-user/2-device extension model that has no overflow path (this is what
+left Harrisonburg with zero fallback during its hardware outage). Each queue:
+- Member: the store's existing Zoom user (so no device re-provisioning needed)
+- Business Hours: Custom Hours, Mon/Tue/Thu/Fri/Sat 10:00 AM–6:00 PM, Wed/Sun off — matches real store hours
+- Call Distribution: Simultaneous (Zoom default, unchanged)
+- Music on Hold: Default (Zoom default, unchanged)
+- Max Wait Time: 1 minute (Zoom default, unchanged)
+- Overflow: Leave Voicemail to Current Extension (Zoom default, unchanged)
+
+| Queue | Ext. | Member |
+|---|---|---|
+| Lexington Store Queue | 804 | jdavis@fcfpawn.com |
+| Harrisonburg Store Queue | 805 | harrisonburg@fcfpawn.com |
+| Waynesboro Store Queue | 806 | waynesboro@fcfpawn.com |
+
+**Cutover status — Lexington LIVE, Harrisonburg + Waynesboro still pending.** Joshua approved testing
+Lexington first. Reassigned via Number Management > Phone Numbers > (540) 461-8349 > Assign: changed from
+Type=User/Joshua Davis-Ext.800 to Type=Call Queue/Lexington Store Queue-Ext.804. Verified live in the
+Phone Numbers list — the row now shows "Lexington Store Queue / Call Queue / Ext. 804" under Assigned To.
+Lexington's number now rings the queue (and thus follows the queue's Business Hours/ring/overflow rules)
+instead of Joshua's individual user extension. **Not yet cut over:** Harrisonburg (540) 574-4500 still
+assigned to harrisonburg@fcfpawn.com/User/Ext.802; Waynesboro (540) 221-6346 still assigned to
+waynesboro@fcfpawn.com/User/Ext.803. Same reassignment mechanism applies to both — Phone Numbers > row's
+"..." menu > Assign > Type=Call Queue > select the store's queue > Save. Waiting on Joshua's go-ahead
+(watch Lexington's actual call handling first) before cutting over the other two. See
+`Life OS/OPEN_ITEMS_REGISTER.md` for the open item.

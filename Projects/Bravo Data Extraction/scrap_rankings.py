@@ -42,6 +42,35 @@ def parse_created(s):
     return (int(m.group(3)), int(m.group(1))) if m else None
 
 
+STD_NAME = re.compile(r"^\s*(20\d{2})\s*-\s*(\d{1,2})\b")
+
+
+def parse_standard_name(name):
+    """'2026-08 GOLD' / '2026-08 GOLD WITH STONES' -> (2026, 8), else None.
+
+    THE HOUSE NAMING STANDARD (policy signed 2026-08, #policy-announcements).
+    Joshua 2026-08-13: going forward buckets are CREATED in the month the
+    revenue is posted and named `YYYY-MM GOLD` / `YYYY-MM GOLD WITH STONES`,
+    and **the name is what drives the period -- not CreatedOn**. For a bucket
+    that carries a standard name there is nothing to infer: the name states the
+    period outright, so it outranks every other signal.
+
+    This is the opposite of the legacy rule below, and deliberately so. Legacy
+    names were a managerial label written under three conflicting conventions,
+    so they were untrustworthy. A standard name is a declaration.
+
+    NOTE the offset difference: a legacy name means the COLLECTION month and
+    the period is name+1. A standard name means the PERIOD ITSELF -- no shift.
+    Applying the legacy +1 to a standard name would push every bucket a month
+    forward, so the two paths must stay separate.
+    """
+    m = STD_NAME.match(name or "")
+    if not m:
+        return None
+    mo = int(m.group(2))
+    return (int(m.group(1)), mo) if 1 <= mo <= 12 else None
+
+
 def parse_name(name):
     """Month/year from a bucket name. Returns (year, month) | (None, month) | None."""
     n = name.upper()
@@ -145,6 +174,16 @@ def resolve_month(bucket, e):
     """
     if (e.get("status") or "").upper() == "OPEN":
         return None  # still collecting; not yet sent out
+
+    # HOUSE STANDARD FIRST (2026-08-13). A `YYYY-MM ...` name states its own
+    # period; nothing else may override it. Before this existed the parser had
+    # no rule for the format at all, so the correctly-named buckets were the
+    # ones that came back UNRESOLVED -- CUL "2026-08 GOLD" and
+    # "2026-08 GOLD WITH STONES" were both silently dropped from the history.
+    sn = parse_standard_name(bucket)
+    if sn:
+        return sn[0], sn[1], "standard-name"
+
     p = parse_created(e.get("posted", ""))
     if p:
         return p[0], p[1], "posted"
@@ -322,6 +361,13 @@ def report(period):
     # period, or to any earlier period this year up through THIS period --
     # its cur/ytd totals are a floor, not a final number. Must be surfaced,
     # never silently included in a "final" total (2026-08-12 incident).
+    # Month-over-month. Joshua 2026-08-13: the prior months are already in
+    # scrap_history.csv from earlier runs, so MoM costs nothing extra to
+    # compute -- no additional pulling required.
+    prev = f"{y}-{m-1:02d}" if m > 1 else f"{y-1}-12"
+    mom = per.get(prev, {})
+    gap_prev = sorted(missing.get(prev, set()))
+
     gap_month = sorted(missing.get(period, set()))
     gap_ytd = sorted({s for p, stores in missing.items()
                        for s in stores
@@ -333,7 +379,10 @@ def report(period):
             "ytd_total": sum(ytd.values()), "ytd_prior_total": sum(ytd_prior.values()),
             "incomplete_prior_stores": incomplete,
             "incomplete_current_stores": gap_month,
-            "incomplete_ytd_stores": gap_ytd}
+            "incomplete_ytd_stores": gap_ytd,
+            "prev_period": prev, "mom": dict(mom),
+            "mom_total": sum(mom.values()),
+            "incomplete_prev_stores": gap_prev}
 
 
 def pct(now, then):
@@ -365,6 +414,13 @@ def slack_post(r):
     incomplete = r.get("incomplete_prior_stores") or []
     gap = r.get("incomplete_current_stores") or []
     gap_ytd = r.get("incomplete_ytd_stores") or []
+    gap_prev = r.get("incomplete_prev_stores") or []
+    mom = r.get("mom") or {}
+    pmname = ""
+    if r.get("prev_period"):
+        pmname = ["", "January", "February", "March", "April", "May", "June", "July",
+                  "August", "September", "October", "November", "December"][int(r["prev_period"][5:7])]
+    mom_ok = bool(mom) and not gap_prev and not gap
     L = []
     if gap:
         gnames = ", ".join(STORE_NAMES[s] for s in gap)
@@ -391,11 +447,24 @@ def slack_post(r):
             medal = "  "
         yos = "" if (s in incomplete or s in gap) else compare(v, r["pri"].get(s, 0))
         tag = "  _(partial, pending)_" if s in gap else ""
-        line = f"{medal} *{STORE_NAMES[s]}* — {v:,.0f}+ dwt{yos}{tag}" if s in gap else f"{medal} *{STORE_NAMES[s]}* — {v:,.0f} dwt{yos}"
+        ms = ""
+        if mom_ok and s not in gap_prev:
+            pv = mom.get(s, 0)
+            if pv:
+                md = v - pv
+                ms = f"  ·  vs last month {'+' if md >= 0 else '−'}{abs(md):,.0f} dwt"
+        line = f"{medal} *{STORE_NAMES[s]}* — {v:,.0f}+ dwt{yos}{tag}" if s in gap else f"{medal} *{STORE_NAMES[s]}* — {v:,.0f} dwt{yos}{ms}"
         L.append(line)
     if gap:
         L.append("")
         L.append("Ranking above may still change once the pending bucket is in.")
+    if mom_ok and r.get("mom_total"):
+        mt = r["mom_total"]
+        md = r["total"] - mt
+        mp = (md / mt) * 100
+        L.append("")
+        L.append(f"_Month over month: {r['total']:,.0f} dwt against {mt:,.0f} dwt in {pmname} — "
+                 f"{'up' if md >= 0 else 'down'} {abs(md):,.0f} dwt ({'+' if mp >= 0 else '−'}{abs(mp):.0f}%)._")
     L.append("")
 
     # Year-to-date board. Joshua asked 2026-08-04 for BOTH boards in the

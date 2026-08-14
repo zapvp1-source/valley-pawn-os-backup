@@ -4,6 +4,12 @@ description: Daily 8 AM Chekkit unanswered message summary — counts ONLY messa
 model: claude-haiku-4-5
 ---
 
+---
+name: chekkit-unanswered-alert
+description: Daily 8 AM Chekkit unanswered message summary — counts ONLY messages received during store OPEN HOURS (excludes before-open, after-close, and closed days). DMs store employees their store's in-hours count for YESTERDAY (no Preston/Joshua). Runs the morning AFTER the reviewed day.
+model: claude-haiku-4-5
+---
+
 > ⚠️ **FAILURE ALERT POLICY (still binding):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium.
 >
 > ⚠️ **FIELD COMMUNICATION STANDARD v3 (binding — read in full before posting anything to a team channel or employee DM):** `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/FIELD_COMMUNICATION_STANDARD.md`. Summary: run the routing test (is this something a clerk needs to know/act on today — if no, it's internal, it does not go to the field); plain everyday language only, no tool/system/pipeline names (never say Bravo, Cowork, Chekkit, Gusto, Brevo, QBO, Publer, "pipeline," "handler," "watchdog," "sync," "CSV," "export"); no file paths, doc IDs, task IDs, or spreadsheet cell/column refs in the posted text; no meta-commentary about the automation itself ("verified against," "supersedes," "this is a manual test run," "pulled automatically from"); lead with the one-line takeaway; ~100 words max for a routine post; no signature footers. If anything later in this file conflicts with this standard, this standard wins.
@@ -43,7 +49,7 @@ When you see any of those messages, immediately fire the next concrete tool call
 
 ## Steps
 
-**ANTI-DOUBLE-POST RULE — read first.** Each store DM and the company-wide summary post must be sent EXACTLY ONCE per run. Do NOT send a "corrected" follow-up if you change wording mid-run. Get the channel and the wording right BEFORE you call `slack_send_message`. If you accidentally post to the wrong channel, do NOT re-post to the right one — note the mistake in your final report and stop. The summary channel is ALWAYS #chekkit-unanswered-summary (`C0B1PEW0C30`) — never #claude-updates.
+**ANTI-DOUBLE-POST RULE — read first.** Each store DM and the company-wide summary post must be sent EXACTLY ONCE per run. Do NOT send a "corrected" follow-up if you change wording mid-run. Get the channel and the wording right BEFORE you call `slack_send_message`. If you accidentally post to the wrong channel, do NOT re-post to the right one — note the mistake in your final report and stop. The summary channel is ALWAYS #chekkit-messages-missed (`C0B1PEW0C30`) — never #claude-updates.
 
 1. Compute YESTERDAY's calendar date in user's local timezone (Eastern Time, America/New_York). Format as YYYY/MM/DD for Gmail and "Month D, YYYY" (e.g. "May 4, 2026") for the human-readable summary. This date is the REVIEW date and is what the summary header and DM wording will reference — never today's date. Also note yesterday's DAY OF WEEK — you need it for the open-hours filter in Step 3.
 
@@ -74,7 +80,7 @@ When you see any of those messages, immediately fire the next concrete tool call
 
 5. If a store had 0 actionable, in-hours unanswered messages yesterday, do NOT DM that store's employees.
 
-6. **Post a company-wide summary to #chekkit-unanswered-summary (channel ID `C0B1PEW0C30`) EXACTLY ONCE** with a by-store breakdown so Preston and Joshua can see the full picture. Always post this, even if all stores had 0. Do NOT also post to #claude-updates. Do NOT send a follow-up correction. The header date is YESTERDAY'S date (the day being reviewed), not today's posting date. Counts are business-hours only. Format:
+6. **Post a company-wide summary to #chekkit-messages-missed (channel ID `C0B1PEW0C30`) EXACTLY ONCE** with a by-store breakdown so Preston and Joshua can see the full picture. Always post this, even if all stores had 0. Do NOT also post to #claude-updates. Do NOT send a follow-up correction. The header date is YESTERDAY'S date (the day being reviewed), not today's posting date. Counts are business-hours only. Format:
 
    📊 *Daily Response Summary — [Yesterday's Date]* _(business hours only)_
 
@@ -103,7 +109,7 @@ When you see any of those messages, immediately fire the next concrete tool call
 - The subject line pattern is "Unanswered Message Alert: [Customer Name]" — sometimes forwarded with "Fwd:" prefix
 - Send a separate DM to each person — do not group them
 - Each employee gets EXACTLY ONE DM per run; the channel gets EXACTLY ONE summary post per run. No corrections, no re-posts.
-- The summary channel is ALWAYS #chekkit-unanswered-summary (`C0B1PEW0C30`). Never #claude-updates.
+- The summary channel is ALWAYS #chekkit-messages-missed (`C0B1PEW0C30`). Never #claude-updates.
 - If the location doesn't match any store in the map, skip it silently
 - This task runs Monday through Saturday at 8 AM ET (the morning AFTER) and reports YESTERDAY's misses
 - The header / summary date is ALWAYS yesterday's date — the day being reviewed — not today's posting date
