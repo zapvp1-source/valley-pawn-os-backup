@@ -1,6 +1,30 @@
 # Discount Outlier Review — STATUS
 
-Last updated: 2026-08-13 (evening)
+Last updated: 2026-08-14 (~08:22 ET — daily run)
+
+## 2026-08-14 (~08:22 ET — daily discount-review run, confirms the token_not_found note)
+
+- YESTERDAY=2026-08-13 (Thursday), OPEN_STORES=[CUL,HAR,LEX,ROA,WAY] (all 5).
+- REUSE-FIRST: HAR/LEX/ROA/WAY CSVs already present from this morning's shared `sold-review`
+  pull. CUL was missing — `sold-review`'s run at ~07:49 ET had CUL fail all 3 UIA report-select
+  attempts (see Valley Pawn OS CHANGELOG 2026-08-14). Ran the standalone path for CUL only:
+  health gate PASS, dropped trigger `discount-review-2026-08-14T08-19-49` for stores=[CUL],
+  date 2026-08-13..2026-08-13. This run's CUL report-selection **succeeded** (15 rows) —
+  confirms the known CUL UIA-select issue is intermittent, not a hard failure, exactly as the
+  task file's "Known intermittent issue" note describes.
+- Compile (`run_daily_discount_review.py 2026-08-13`) EXIT:0. 36 items, avg discount 13.4%,
+  $850 total discounted off ticket, 16 flags, 0 into_loss. missing_stores=[]. YTD (3 selling
+  days in 2026): company $2,298.94 — CUL $698.73 / HAR $390.81 / LEX $659.22 / ROA $154.21 /
+  WAY $395.97. WAY was the outlier today at 22% avg discount / 7 flags.
+- **Confirmed the open question from the 2026-08-14 History note:** this compile script's own
+  direct-HTTP Slack post DOES fail the same way as `sold-review`'s — `slack_posted=false`,
+  `slack_skipped=true`, `slack_error="token_not_found"` — even though `slack_message` was fully
+  composed and non-null. Per STEP 6's corrected wording, posted `slack_message` verbatim to
+  #discount-review manually via the Slack MCP rather than treating `slack_skipped` as a
+  do-not-post signal. **FOLLOW-UP NEEDED (same as sold-review):** `SLACK_BOT_TOKEN` is missing/
+  broken on this host for both scripts' own direct-HTTP posting path — worth a fix so neither
+  script has to be manually posted around going forward.
+- DM'd Joshua the flags alert (16 flags, 0 into_loss, all 5 stores) per policy.
 
 ## 2026-08-13 (evening) — WIRED TO #discount-review + ANNUAL RUNNING TOTALS ADDED
 

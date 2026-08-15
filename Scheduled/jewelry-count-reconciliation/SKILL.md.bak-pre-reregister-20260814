@@ -74,8 +74,7 @@ sold = bucket sum. net = AM_total - PM_total. diff = net - sold. FLAG if |diff| 
 
 This channel only ever sees ONE of two things: a clean plain-language reconciliation summary, or nothing at all that day. It NEVER sees a technical failure report, an error string, a file path, or a "watchdog" mention.
 
-FORMAT (set by Joshua 2026-08-14, replaces the one-line-per-store summary): post ONE markdown table, no commentary, no reasons, no emoji lines. Columns: Store | Category | Expected | PM Count | Variance. Expected = AM count minus sold (per category, from the Bravo bucketing). One row per category per store plus a bolded Total row per store. Variance = PM Count - Expected, signed (+/-/0). Nothing else in the message except a first line: "Jewelry Count — <Weekday> <M/D> (expected = AM count + sold adjustments)".
-Prior format for reference only — do NOT use: post a short summary, one line per store —
+If the Bravo pull and the count-sheet read both succeeded for all stores being checked today: post a short summary, one line per store —
 
 ```
 Jewelry Count Check — <date>

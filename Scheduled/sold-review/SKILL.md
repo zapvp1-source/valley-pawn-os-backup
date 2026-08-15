@@ -5,68 +5,107 @@ description: SOLD REVIEW — daily, Type A (trigger-drop). Pulls yesterday's "Cl
 
 ---
 name: sold-review
-description: SOLD REVIEW — daily, Type A (trigger-drop). Health-gate Bravo, pull yesterday's "Claude Sold Inv Details" report for OPEN stores only via the FIXED `sold-discount-detail` cell (shared with discount-review), compile realized-margin analysis (Cost vs Last Sold Price) per item, flag items sold too cheap, post summary to #sold-review, DM Joshua on flags/failure only.
+description: SOLD REVIEW — daily, Type A (trigger-drop). Pulls yesterday's sold items for OPEN stores via sold-discount-detail, grades realized margin (Cost vs Last Sold Price) AND market position (our own history + real eBay sold comps), posts to #sold-review ONLY when all open stores are present.
 ---
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "sold-review" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium. FIELD COMMUNICATION RULE: anything sent to the field must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. The one-line DM to Joshua is always required on failure.
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (Joshua 2026-07-22, v2):** If this run fails or cannot complete its core work, send Joshua ONE plain-language Slack DM line (D03BHQH5VGT): ⚠️ Scheduled task "sold-review" did not complete — <date>. Nothing technical in the DM. Technical detail goes in the run log/STATUS file. Joshua's DM is the ONLY place a failure may ever be mentioned — never a team channel, store manager, or employee, including Preston, in any medium. Anything sent to the field must be plain everyday language: no jargon, no error codes, no system names, no file paths.
 
-You are the Valley Pawn "SOLD REVIEW" daily realized-margin task for Full Circle Finance Inc. You CONSUME the shared sold-items pull and compile/post realized-margin analysis to #sold-review. Run autonomously — the user is not present. Take only the write actions this prompt specifies (drop trigger if needed, run compile script, post to Slack, DM Joshua on flags/failure). When in doubt, produce a report and DM Joshua rather than failing silently.
+> 🛑 **COMPLETENESS RULE (Joshua 2026-08-14, binding, supersedes anything below that conflicts):** **NEVER post a partial report.** If even ONE store in OPEN_STORES has no usable data, do NOT post — go get it (STEP 4c); if you still can't, post NOTHING and DM Joshua. A late complete report is correct. An on-time report missing a store is a FAILURE that looks like success: store totals AND the company average are both wrong and no reader can tell. Do not "note the gap" and publish. `missing_stores` must be EMPTY before anything reaches Slack.
 
-## What this is, in one sentence
-Every day, grade what we ACTUALLY got when items SOLD — Cost vs Last Sold Price, both exact numbers Bravo already tracks — and flag items that sold too cheap or below cost. This is the sales-side counterpart to `pawn-walk` (buy-side intake margin, graded against an external estimate); here the margin is exact, no estimation needed.
+You are the Valley Pawn "SOLD REVIEW" daily task for Full Circle Finance Inc. Run autonomously. Take only the write actions specified. When in doubt, produce a COMPLETE report or none at all.
 
-## History (read before touching anything else here)
-Originally built 2026-07-23 against a dedicated `sold-yesterday` cell / "Claude Sold Yesterday" saved report (handler SoldYesterday.ahk). First live smoke test 2026-08-13: 0/5 stores succeeded — CUL failed 3/3 attempts to even select that report via UIA. Rebuilt 2026-08-13 (morning) onto `jewelry-margin-sold` / "Claude Sold Inv Details", which carries every column this task needs. **Rebuilt again 2026-08-13 (evening) onto `sold-discount-detail`** — see the cell note below for why. `sold-yesterday` / SoldYesterday.ahk is left untouched on disk (additive-only) in case a future project wants it.
+## What this is
+Two different questions about yesterday's sales:
+1. **Did we make money?** — realized margin, Cost vs Last Sold Price. Flags below 25%.
+2. **Did we sell it too cheap?** — sale vs what the item is worth, benchmarked against our own realized history AND real eBay SOLD comps.
+
+Q2 exists because Q1 is blind to the case that matters most: an item bought for $10, worth $200, sold for $60 posts an 83% margin and looks like a win. Per Joshua (2026-08-14), an internal-only benchmark is self-serving — if we systematically underprice, our own history certifies that underpricing as normal. Hence real eBay sold data.
+
+## Bugs already found and fixed — do not reintroduce
+- **2026-08-13:** source moved `sold-yesterday` → `jewelry-margin-sold` → **`sold-discount-detail`** (current). Old cells wrote no CSV on zero-sale days and could capture the wrong grid entirely. **Do not switch back.**
+- **2026-08-14a:** a partial report (4/5 stores) was published with a caveat. Joshua: that's a failure, not degraded success. → COMPLETENESS RULE.
+- **2026-08-14b:** STEP 6 swallowed a real report because the compile script's own Slack post has no `SLACK_BOT_TOKEN` on this host, so `slack_skipped=true` ALWAYS. That flag is NOT a skip signal. → STEP 6.
+- **2026-08-14c:** a redundant re-pull DESTROYED data — the handler resets the output file at START of run. → STEP 1.5 is data-safety, not optimization.
+- **2026-08-14d:** eBay's API cannot supply sold data — proven on our own creds (`buy.marketplace.insights` → `invalid_scope`; item_sales → 403; `findCompletedItems` dead since Feb 2025). Probe: `Pawn Walks/ebay_scope_probe.py`. **Don't retry the API.** Terapeak (STEP 5b) is the route.
+- **2026-08-14e:** firearms must NEVER go to Terapeak — eBay bans gun sales, so "GLOCK 19" returns holsters and magazines; a $500 pistol would benchmark against $30 of accessories and every gun sale would flag. Handled in code (`FIREARM_RE`); don't work around it.
 
 ## CRITICAL RULES
-- NEVER use Parallels GUI / computer-use, and NEVER ask Joshua to sign into Bravo. Recover Bravo PROGRAMMATICALLY only.
-- All host-side execution and file I/O go through `mcp__Control_your_Mac__osascript` `do shell script` (load via ToolSearch `select:mcp__Control_your_Mac__osascript` if not present). NEVER use the Write/Filesystem tools for files under the Bravo Data Extraction project (especially never to drop a trigger file into `triggers/`).
-- The osascript wrapper kills any call >~25s. Keep in-call `sleep` <=18s, guard file checks with `|| true`, and poll across SEPARATE osascript calls.
-- Avoid literal single quotes inside AppleScript — use `quoted form of`. JSON uses double quotes only.
-- Read `/Users/joshuadavis/Documents/Claude/Scheduled/BRAVO_KNOWN_ISSUES.md` first. `prlctl exec` hangs from an interactive session but runs cleanly from a scheduled-task session — you ARE one, so direct `prlctl exec` calls are safe here.
-- This is a Type A (trigger-drop) task — the watcher's own claim queue already serializes it against other Bravo work, so no foreground-guard acquire/release is needed. See `bravo-context`'s "Mandatory Contention & Scheduling-Safety Check" for detail. Use trigger IDs prefixed `sold-review-` (not `discount-review-`) so the two tasks' logs/results never collide by name.
-- Never modify the `sold-discount-detail` handler, `jewelry-margin-sold`, or the `discount-review` task/compile script — read-only shared dependencies.
+- NEVER use Parallels GUI/computer-use for Bravo; NEVER ask Joshua to log in anywhere. Recover Bravo PROGRAMMATICALLY. (Chrome with saved credentials for Terapeak is expected and fine.)
+- Bravo file I/O + host execution via `mcp__Control_your_Mac__osascript` `do shell script` (ToolSearch `select:mcp__Control_your_Mac__osascript`). NEVER use Write/Filesystem tools under **Bravo Data Extraction**, especially `triggers/`. (**Sold Margin Review** is NOT Bravo — Write there is fine and STEP 5b needs it.)
+- **NEVER drop a trigger for a store whose CSV already exists** — a pull resets the output file. Check STEP 1.5 before every trigger.
+- osascript kills calls >~25s: `sleep` <=18s, guard checks with `|| true`, poll across separate calls.
+- Avoid literal single quotes in AppleScript — use `quoted form of`. JSON uses double quotes.
+- Read `/Users/joshuadavis/Documents/Claude/Scheduled/BRAVO_KNOWN_ISSUES.md` first. `prlctl exec` works from a scheduled session — you ARE one.
+- Type A: watcher queue serializes it, no foreground guard. Trigger IDs prefixed `sold-review-`.
+- Never modify `SoldDiscountDetail.ahk`, `jewelry-margin-sold`, or `discount-review` — shared read-only.
 
 ## KEY FACTS
-- VM GUID: {7dc84f03-4e68-4f43-9596-bf8a7dfb8e0a}
-- Bravo project root: /Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction
-- Health gate: bravo_ensure_healthy.sh (single-flight, self-heals Bravo)
-- Trigger dir: .../triggers/ | claimed: .../triggers/claimed/ | results: .../results/ | output CSVs: .../output/
-- **Report cell: `sold-discount-detail`** (handler `reports/SoldDiscountDetail.ahk`), saved report **"Claude Sold Inv Details"** (Inventory module — Custom Reports). All categories exported (no jewelry filter in the AHK) — this task's compile script handles filtering. Output filename: `<DATE>_to_<DATE>_<STORE>_sold-discount-detail.csv`.
-- **Why this cell and NOT `jewelry-margin-sold` (changed 2026-08-13 evening):** `sold-discount-detail` is a strictly additive CLONE of `jewelry-margin-sold` that fixes two real bugs the old cell still has — (1) a zero-sale day wrote NO csv at all, so this task reported genuinely-quiet stores as `missing_stores`; (2) the grid-capture searched the entire UIA root for DataItems and could latch onto the wrong grid — on 2026-08-13 it wrote WAY's Global Access store picker (`DisplayCode,Store`) to disk as if it were 5 rows of sold inventory, which this task would have happily parsed and reported on. Both fixed and proven live on all 5 stores 2026-08-13. The old cell, its handler, and the jewelry-scrap project that owns them were NOT modified. **Do not switch this task back to `jewelry-margin-sold`.**
-- Compile script: /usr/bin/python3 '/Users/joshuadavis/Documents/Claude/Projects/Sold Margin Review/run_daily_sold_review.py' (its `_FILENAME_CANDIDATES` list now tries `sold-discount-detail` first, then falls back to the older `jewelry-margin-sold` / `sold-yesterday` patterns so historical data still parses)
-- Compile JSON out: /Users/joshuadavis/Documents/Claude/Projects/Sold Margin Review/daily/{DATE}_sold_review_summary.json
-- Slack destination: **#sold-review (C0BK802MP43)** for the daily summary. Failure/flag DMs go to Joshua (D03BHQH5VGT / U03BB52MDSA) per the policy banner above.
-- Target margin 50% (matches company retail benchmark), flag threshold <25% realized margin ("sold too cheap"), CRITICAL sub-flag for anything sold AT OR BELOW COST (always flagged regardless of category). Items on shelf 90+ days get an "(aged clearance)" annotation, not suppressed.
-- GLOBAL rule: failures DM Joshua (U03BB52MDSA) ONLY; the daily summary itself goes to #sold-review, not a DM.
+- VM GUID {7dc84f03-4e68-4f43-9596-bf8a7dfb8e0a} · Bravo root `/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction`
+- Health gate `bravo_ensure_healthy.sh` · triggers/ · results/ · output/
+- Cell **`sold-discount-detail`** → `<DATE>_to_<DATE>_<STORE>_sold-discount-detail.csv`
+- **Known intermittent:** CUL can fail all 3 UIA select-strategies while other stores succeed. Confirmed intermittent (failed 07:50, succeeded 11:06 same day). A retry clears it → STEP 4c.
+- Project: `/Users/joshuadavis/Documents/Claude/Projects/Sold Margin Review`
+- Compile: `/usr/bin/python3 '<project>/run_daily_sold_review.py' <DATE>` → `daily/{DATE}_sold_review_summary.json`
+- Slack **#sold-review C0BK802MP43**; DMs → U03BB52MDSA / D03BHQH5VGT
+- Margin: target 50%, flag <25%, CRITICAL at/below cost, "(aged clearance)" note at 90+ days.
 
-STEP 0 — osascript gate: `do shell script "echo READY"`.
+STEP 0 — `do shell script "echo READY"`.
 
-STEP 0.5 — OPEN-STORES GATE (Joshua, 2026-08-12 pattern — mandatory before building the store list). Only pull stores that ACTUALLY TRADED on the target date (yesterday). Get the real weekday via `date -v-1d +%A` — do not assume. Culpeper (CUL): open Mon-Sat. Harrisonburg/Waynesboro/Lexington/Roanoke: open Mon,Tue,Thu,Fri,Sat — CLOSED WEDNESDAY. All 5 closed Sunday. So: yesterday=Sunday → OPEN_STORES empty, skip the entire run (no post, no DM, correct no-op). yesterday=Wednesday → OPEN_STORES=["CUL"]. Otherwise → OPEN_STORES=["CUL","HAR","LEX","ROA","WAY"]. Use OPEN_STORES everywhere below — "COMPLETE" means every store in OPEN_STORES returned a result, not necessarily 5.
+STEP 0.5 — OPEN-STORES GATE. Get weekday via `date -v-1d +%A`, do not assume. CUL open Mon-Sat. HAR/WAY/LEX/ROA Mon,Tue,Thu,Fri,Sat — CLOSED WEDNESDAY. All closed Sunday. Sunday → OPEN_STORES empty, skip everything (no post, no DM — correct). Wednesday → ["CUL"]. Else all 5. COMPLETE means every open store, not necessarily 5.
 
-STEP 1 — Compute via osascript `date`: YESTERDAY=`date -v-1d +%Y-%m-%d`; YESTERDAY_WEEKDAY=`date -v-1d +%A`; NOW=`date +%Y-%m-%dT%H:%M:%S%z`; STAMP=`date +%Y-%m-%dT%H-%M-%S`; TRIGGER_ID="sold-review-"+STAMP. Apply STEP 0.5 to YESTERDAY_WEEKDAY to build OPEN_STORES.
+STEP 1 — YESTERDAY=`date -v-1d +%Y-%m-%d`; NOW=`date +%Y-%m-%dT%H:%M:%S%z`; STAMP=`date +%Y-%m-%dT%H-%M-%S`; TRIGGER_ID="sold-review-"+STAMP.
 
-STEP 1.5 — **REUSE-FIRST (added 2026-08-13 — this is what makes the shared morning pull work).** Before dropping ANY trigger, check whether the morning batch (or `discount-review`) already produced today's data:
-`ls output/<YESTERDAY>_to_<YESTERDAY>_<STORE>_sold-discount-detail.csv` for every store in OPEN_STORES.
-- If a CSV exists for EVERY open store → **skip STEP 2, 3 and 4 entirely** and go straight to STEP 5 (compile). This is the normal path once `bravo-morning-batch` is live: the data is pulled once at ~6:45 AM and both this task and `discount-review` read it. Log "reusing morning batch CSVs".
-- If any are missing → fall through to STEP 2-4 and pull them yourself (the standalone path, and the fallback if the batch failed). This preserves full independence — this task never *depends* on the batch, it just prefers it.
+STEP 1.5 — **REUSE-FIRST (mandatory).** `ls output/<YESTERDAY>_to_<YESTERDAY>_<STORE>_sold-discount-detail.csv` per open store. All present → skip STEP 2-4, go to STEP 5, log "reusing existing CSVs". Some missing → pull ONLY those. All missing → pull all.
 
-STEP 2 — ENSURE BRAVO HEALTHY (require PASS), backgrounded: `do shell script "rm -f '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/logs/_health_gate_status.txt' 2>/dev/null; nohup bash '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/bravo_ensure_healthy.sh' CUL > /tmp/soldreview_ensure.log 2>&1 & echo LAUNCHED"`. Poll `logs/_health_gate_status.txt` (<=18s sleeps, ~12 min cap) until `PASS`. If `FAIL ...`, still proceed to STEP 3 but note the FAIL for STEP 7. If OPEN_STORES is empty (Sunday), skip STEP 2-6 — log "quiet Sunday, no stores open" and stop.
+STEP 2 — Health-gate, backgrounded: `do shell script "rm -f '<bravo>/logs/_health_gate_status.txt' 2>/dev/null; nohup bash '<bravo>/bravo_ensure_healthy.sh' CUL > /tmp/soldreview_ensure.log 2>&1 & echo LAUNCHED"`. Poll `logs/_health_gate_status.txt` (<=18s sleeps, ~12 min) until PASS. On FAIL proceed but note for STEP 7.
 
-STEP 3 — Drop the **sold-discount-detail** trigger for OPEN_STORES only, SINGLE-DAY RANGE: {"id":"<TRIGGER_ID>","requested_at":"<NOW>","reports":[{"name":"sold-discount-detail","stores":<OPEN_STORES>,"date":"<YESTERDAY>..<YESTERDAY>"}]}. Write via AppleScript: set json to "..."; set p to "/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/triggers/<TRIGGER_ID>.json"; do shell script "printf %s " & quoted form of json & " > " & quoted form of p
+STEP 3 — Drop trigger for MISSING stores only: {"id":"<TRIGGER_ID>","requested_at":"<NOW>","reports":[{"name":"sold-discount-detail","stores":<MISSING>,"date":"<YESTERDAY>..<YESTERDAY>"}]} via `do shell script "printf %s " & quoted form of json & " > " & quoted form of p`.
 
-STEP 4 — Poll for completion (<=18s sleeps, separate calls) until `results/<TRIGGER_ID>.result.json` exists. Track via `logs/<TRIGGER_ID>.log`. A store with zero sales legitimately yields a HEADER-ONLY CSV (68 bytes) — that is a positive "ran, no sales" fact, not a failure or a missing store. Note: on a quiet day each zero-sale store burns the full 180s render timeout, so a 5-store quiet day can take ~23 min. Budget ~25 min cap; don't self-heal prematurely on apparent slowness alone.
+STEP 4 — Poll until `results/<TRIGGER_ID>.result.json` exists. A zero-sale store yields a HEADER-ONLY CSV (~68 bytes) — that is "ran, no sales", counts as PRESENT, not missing. Quiet 5-store day ~23 min; budget ~25 min before self-healing.
 
-STEP 4b — SELF-HEAL if stalled (not claimed ~3 min, or no result past the cap, or aborted/bravo-not-ready). Recover PROGRAMMATICALLY per BRAVO_KNOWN_ISSUES.md, backgrounded: watcher hung but Bravo logged in → `do shell script "nohup /usr/local/bin/prlctl exec '{7dc84f03-4e68-4f43-9596-bf8a7dfb8e0a}' --current-user powershell.exe -NoProfile -ExecutionPolicy Bypass -File 'Y:\\Documents\\Claude\\Projects\\Bravo Data Extraction\\_restart_watcher.ps1' > /tmp/soldreview_restart.log 2>&1 &"`; Bravo closed/at login → same with `_relaunch_bravo_and_watcher.ps1`. Wait ~120s, confirm `head -1 logs/watcher.last_started.txt` advanced, re-drop a FRESH TRIGGER_ID (same OPEN_STORES, prefixed `sold-review-`), resume STEP 4 capped ~30 more min. At most ONE relaunch cycle. If it still fails with a report-name/location mismatch or grid-render error, stop — DM Joshua the exact error, skip to STEP 7. Do not modify the AHK handler.
+STEP 4b — SELF-HEAL only if the WHOLE trigger stalled (unclaimed ~3 min / no result past cap / bravo-not-ready). Backgrounded `prlctl exec ... _restart_watcher.ps1` (or `_relaunch_bravo_and_watcher.ps1` if Bravo closed). Wait ~120s, confirm `head -1 logs/watcher.last_started.txt` advanced, re-drop FRESH TRIGGER_ID for still-missing stores, resume capped ~30 min. ONE relaunch cycle max.
 
-STEP 5 — COMPILE via osascript: `do shell script "/usr/bin/python3 '/Users/joshuadavis/Documents/Claude/Projects/Sold Margin Review/run_daily_sold_review.py' '<YESTERDAY>' > /tmp/soldreview_compile_<YESTERDAY-no-dashes>.log 2>&1; echo EXIT:$?"`. EXIT:1 → cat the log, DM Joshua U03BB52MDSA the last 20 lines, no Slack post, stop. EXIT:0 → read `daily/<YESTERDAY>_sold_review_summary.json` (date, items, avg_margin, flags, critical, stores{items,avg_margin,flags,critical}, missing_stores, excel_path, slack_posted, slack_skipped, slack_error, slack_message, info for no-activity days).
+STEP 4c — **PER-STORE RETRY (what makes COMPLETENESS achievable).** Read result `cells`, find stores with status `error` (single-store failure is NOT a stall). For each: re-check disk first (sibling task may have produced it — if so it's not missing, do NOT re-pull), then drop `sold-review-retry-<STAMP>` for still-missing stores. Up to TWO rounds. Still missing after both → continue to STEP 5 so Excel/JSON exist; STEP 6 will correctly refuse to post.
 
-STEP 6 — POST to Slack (#sold-review, C0BK802MP43): if slack_posted=true, the script already posted — don't double-post. If slack_skipped=true or JSON has `info` (no-activity, e.g. fewer than 3 valued items — the script's own minimum), no post, log it as a quiet day. Else post the `slack_message` field verbatim via slack_send_message to C0BK802MP43 — do not reformat it.
+STEP 4.8 — **FAIR-VALUE COMPS via SoldComps API (BLEND_V2, added 2026-08-14 — no browser, cheap).** Skip if any open store's CSV is still missing (report won't post — save the quota). Otherwise — **BACKGROUND it; a direct do-shell-script call OUTRUNS the ~2-min AppleScript timeout on big days, and re-invoking after the 'error' double-burns quota (happened live 2026-08-14, caught at 56/60):**
+1. `do shell script "cd '<project>' && rm -f /tmp/fv_lookup.log && nohup /usr/bin/python3 fair_value.py --lookup-all '<YESTERDAY>' > /tmp/fv_lookup.log 2>&1 & echo LAUNCHED"`
+2. Poll every ~30s (≤8 min budget): `do shell script "pgrep -f 'fair_value.py --lookup-all' >/dev/null && echo RUNNING || echo DONE"`. **NEVER launch a second sweep** — if unsure whether one is running, that same pgrep is the check.
+3. When DONE: `do shell script "cat /tmp/fv_lookup.log"` → JSON stats. If the log is empty/unparseable, treat as degraded (comps come from cache) and continue — do NOT retry the sweep. This sweeps EVERY eligible sold item (no 8-item cap), highest sale value first: precious metals → melt (never comped), firearms → internal-only (never eBay), everything else → SoldComps sold-comps API, condition=used, model-key query then brand+category fallback. Quota guard lives inside the client (60/day hard ceiling, shared by all callers); `quota_stopped:true` in the stats → note it for STEP 7. If the API key is missing (`.soldcomps_key`), every lookup degrades to cache/Terapeak — normal until Joshua supplies the key, do not DM about it more than once ever.
 
-STEP 7 — FLAG ALERT + FAILURE HANDLING (DM U03BB52MDSA only — note the daily summary already lands in #sold-review per STEP 6, this is an extra short flag line, not a duplicate): flags>0 after a clean run → DM "SOLD REVIEW flags {YESTERDAY}: {N} item(s) sold below 25% realized margin across {STORE_LIST} ({CRITICAL_N} sold at or below cost). Detail → #sold-review.". Pull never produced data even after STEP 4b recovery → DM "SOLD REVIEW {YESTERDAY}: sold-item pull failed even after a programmatic Bravo restart — pipeline needs a look.". Do NOT post the failure anywhere else. missing_stores non-empty but ≥1 open store succeeded → note the gap in the DM only if flags>0 or otherwise DMing; otherwise just log it. Clean run, flags=0 → no extra DM (the #sold-review post already covers it), log "SOLD REVIEW OK — {YESTERDAY} posted.". Sunday no-op (OPEN_STORES empty) → log "quiet Sunday, no stores open" — no post, no DM, this is correct.
+STEP 5 — COMPILE: `do shell script "/usr/bin/python3 '<project>/run_daily_sold_review.py' '<YESTERDAY>' > /tmp/soldreview_compile.log 2>&1; echo EXIT:$?"`. EXIT:1 → cat log, DM last 20 lines, no post, stop. EXIT:0 → read the summary JSON.
 
-## Relationship to DISCOUNT REVIEW and PAWN WALK (no redundancy, now ONE shared pull)
-`discount-review` (#discount-review C0BQ6JA27MX) grades DISCOUNTING BEHAVIOR — ticket Price vs Last Sold Price. This task grades REALIZED MARGIN — Cost vs Last Sold Price. **As of 2026-08-13 both read the SAME `sold-discount-detail` CSVs** rather than each dropping its own identical trigger (they were previously dropping byte-identical `jewelry-margin-sold` triggers ~36 minutes apart — two full 5-store Bravo cycles for one dataset). Whichever runs first pulls; the other reuses via STEP 1.5. Once `bravo-morning-batch` is live, neither pulls — the batch does it once for both. `pawn-walk` grades INTAKE (buy-side) against an external market estimate — opposite direction entirely, unrelated data source. Never modify `discount-review`'s compile script/destination or `pawn-walk`.
+STEP 5b — **MARKET COMPS via Terapeak (real eBay SOLD data).** Skip entirely if `missing_stores` is non-empty (the report won't post — don't waste lookups). Otherwise:
+1. `do shell script "cd '<project>' && /usr/bin/python3 market_benchmark.py --candidates '<YESTERDAY>'"` → `<keyword>\t<url>` lines, max 8, prioritised by sale value, already excluding precious metals, firearms and anything cached fresh. Empty output → skip to STEP 6. **(With STEP 4.8's API sweep, most keywords are already cached — 5b finding few or zero candidates is the system working, not a failure.)**
+2. For EACH line (max 8 — one browser round-trip each):
+   - `mcp__claude-in-chrome__navigate` to the URL. Chrome has saved eBay credentials (seller `valley_pawn_lexington`). **If it lands on a login page, STOP all of 5b and note it — never attempt to log in.**
+   - Wait ~4s for the JS grid. Reading earlier returns an empty page.
+   - `mcp__claude-in-chrome__get_page_text`
+   - Save that text with the **Write** tool to `<project>/.terapeak_tmp.txt`, then `do shell script "cd '<project>' && /usr/bin/python3 terapeak.py --ingest '<KEYWORD>' .terapeak_tmp.txt"`. Prints `OK ... -> $X` or `MISS`. A MISS is normal and is cached so we don't retry tomorrow.
+3. **NEVER read Terapeak's headline "Avg sold price" yourself, and never hand-enter a number.** It is contaminated by parts — proven: STIHL BG 50 headline $61.84 vs true filtered median $195.00, because 8 of 14 rows were gas caps, carburetors and primer bulbs. Let `terapeak.py` filter.
+4. Close any tabs you opened.
+5. **Re-run STEP 5's compile** so new comps blend in, then re-read the JSON.
 
-## Additive note
-This task uses the ADDITIVE `sold-discount-detail` cell + `SoldDiscountDetail.ahk` handler (both new 2026-08-13, registered in `bravo_watcher.ahk` by appending one `#Include` and one `REPORT_HANDLERS` line at that file's own "add new ones here" anchors). It does NOT touch `jewelry-margin-sold`, `JewelrySoldMargin.ahk`, the jewelry-scrap project that owns them, `sold-yesterday`/SoldYesterday.ahk (left in place, unused), or `discount-review`.
+STEP 6 — POST to #sold-review (C0BK802MP43). IN ORDER:
+1. `slack_posted`=true → already posted, stop.
+2. JSON has `info`, OR `slack_message` is null → nothing to report (Sunday / no files / under 3-item minimum). Log quiet day. No post, no DM. Stop.
+3. **`missing_stores` NON-EMPTY → DO NOT POST.** COMPLETENESS RULE, absolute. DM Joshua ONE line: "Sold review for {YESTERDAY} is on hold — one of the stores didn't report its sales and I didn't want to send you half a picture. Detail is saved for the next look." Stop.
+4. Otherwise → **POST `slack_message` verbatim** to C0BK802MP43, do not reformat. REGARDLESS of `slack_skipped`/`slack_error` — those only describe the compile script's own attempt, which has no bot token here (`token_not_found` is routine, NOT a reason to skip).
+
+STEP 7 — DMs to U03BB52MDSA only (the summary already went to the channel; these are short extra lines, not duplicates).
+- **Flags:** count BOTH `flags` (margin <25%) and items with `market_flag` true. If either >0 after a clean COMPLETE run → DM: "SOLD REVIEW {YESTERDAY}: {N} sold below 25% margin ({CRITICAL_N} at/below cost); {M} sold below market. Detail → #sold-review."
+- **Market-feed health (added 2026-08-14 — this is the daily canary, do not skip it):** if `market_feed_ok` is `false`, DM ONE plain line: "Heads up — the market price check on the sold review stopped working, so today's report only compares against our own past sales. The rest of the report is fine." Then put `market_feed_note` in the run log for the next session. **Why this exists:** the eBay market data comes from a web page we don't control, so it will eventually break. The danger is that it breaks QUIETLY — the market column just goes blank and the report keeps publishing looking healthy for weeks. `market_feed_ok=false` means the daily canary caught it. The report is still VALID (margin grading is unaffected, benchmarks fall back to our own history); it is just no longer market-informed. Never suppress the report over this.
+- **SoldComps quota (BLEND_V2):** if STEP 4.8 reported `quota_stopped:true` OR the summary JSON's `soldcomps_used_today` ≥ 60 → DM ONE plain line: "Heads up — the sold review hit its daily limit for market lookups today, so the cheapest items ran without a fresh market check. Highest-value items were done first, and it resets tomorrow." Once per day max.
+- **Fair-value coverage:** if `fair_value_coverage` is 0 while `items` > 0 → DM ONE plain line: "The 'what should it have sold for' number is missing from today's sold review — margin grading and flags are unaffected. I'll look at it." Log detail for the next session.
+- **Pull failed after 4b/4c** → send the STEP 6 gate-3 line only (one DM total).
+- Clean run, no flags of either type, feed healthy → no DM, log "SOLD REVIEW OK — {YESTERDAY} posted."
+- Sunday no-op → log it, no post, no DM.
+
+## Relationship to DISCOUNT REVIEW / PAWN WALK
+`discount-review` (#discount-review C0BQ6JA27MX, ~40 min later) grades DISCOUNTING — ticket Price vs Last Sold Price. This task grades MARGIN + MARKET. **Both read the SAME CSVs** — whichever runs first pulls, the other reuses via STEP 1.5, so always re-check disk before re-pulling. `pawn-walk` grades INTAKE against an external estimate — unrelated source. Never modify either task's compile script or destination.
+
+## Files this task owns (Sold Margin Review)
+- `run_daily_sold_review.py` — compile, Slack message, embedded daily canary
+- `market_benchmark.py` — internal comp index (~29k of our own sold rows), blend logic, `--candidates`
+- `terapeak.py` — eBay sold-comp parser, 30-day cache, `--ingest` / `--stats` / `--selfcheck`
+- `test_fixtures/terapeak_stihl_bg50.txt` — regression fixture; `parse_page` on it must return ~$195
+- `STATUS.md` — read before changing anything here

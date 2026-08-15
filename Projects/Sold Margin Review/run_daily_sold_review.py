@@ -302,6 +302,171 @@ def compute_margin(r: dict) -> dict:
     return out
 
 
+# ── Market benchmark (added 2026-08-14) ────────────────────────────────────────
+# WHY: cost-margin alone cannot answer "did we sell it too cheap." An item bought for $10,
+# worth $200, sold for $60 posts an 83% margin and never flags — it looks like a win. This
+# adds the missing benchmark: what this item normally sells for, from our OWN realized
+# sales (pooled across stores, ~29k rows) plus optional eBay corroboration.
+# See market_benchmark.py for the blend rules and why it deliberately leans conservative.
+_BENCH_ENGINE = None
+
+def attach_market(valued: list[dict], date: datetime.date) -> list[dict]:
+    """
+    Adds market_* fields to each item. Fails SOFT and loudly-in-the-log: if the benchmark
+    engine can't load, the daily margin report must still go out — this is an added signal,
+    never a new single point of failure for a report that already works.
+    """
+    global _BENCH_ENGINE
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        from market_benchmark import BenchmarkEngine
+        if _BENCH_ENGINE is None:
+            # exclude_date: hold today's sales out of the comp index, or an item would
+            # help set the very benchmark it is being judged against and mask its own flag.
+            _BENCH_ENGINE = BenchmarkEngine(use_external=False, exclude_date=date.isoformat())
+    except Exception as e:
+        print(f"WARNING: market benchmark unavailable ({e}) — margin-only report.", file=sys.stderr)
+        for r in valued:
+            r["market_flag"] = False
+            r["market_value"] = None
+        return valued
+
+    n_flag = 0
+    for r in valued:
+        try:
+            res = _BENCH_ENGINE.evaluate(r.get("desc") or "", r.get("category") or "",
+                                         r.get("price"), r.get("cost"))
+            r["market_value"]      = res["value"]
+            r["market_pct"]        = res["pct_of_benchmark"]
+            r["market_gap"]        = res["gap_dollars"]
+            r["market_conf"]       = res["confidence"]
+            r["market_source"]     = res["source"]
+            r["market_ebay"]       = res.get("external")   # real Terapeak sold comp, if any
+            r["market_flag"]       = res["sold_too_cheap"]
+            if res["sold_too_cheap"]:
+                n_flag += 1
+        except Exception:
+            r["market_flag"] = False
+            r["market_value"] = None
+    print(f"    Market benchmark: {sum(1 for r in valued if r.get('market_value'))}/{len(valued)} "
+          f"items benchmarked, {n_flag} sold below market")
+
+    # DAILY CANARY — runs inside compile so it can never be skipped by a task edit.
+    # Detects the failure mode that would otherwise be invisible: the eBay market data
+    # silently disappearing while the report keeps publishing as if nothing changed.
+    try:
+        from terapeak import selfcheck
+        sc = selfcheck()
+        _MARKET_HEALTH.clear(); _MARKET_HEALTH.update(sc)
+        if sc["ok"]:
+            print(f"    Market feed health: OK (parser verified, {sc['with_value']} comps cached, "
+                  f"{sc['fresh_7d']} added in last 7d)")
+        else:
+            print(f"    ⚠️  MARKET FEED: {sc['note']}", file=sys.stderr)
+    except Exception as e:
+        print(f"    ⚠️  MARKET FEED: selfcheck unavailable ({e})", file=sys.stderr)
+    return valued
+
+
+# Populated by attach_market()'s canary; surfaced into the summary JSON so STEP 7 can DM.
+_MARKET_HEALTH: dict = {}
+
+
+# ── Fair Value v2 (added 2026-08-14, BLEND_V2_PLAN.md) ────────────────────────
+# SEPARATE from the market benchmark above, on purpose. The benchmark answers
+# "is this sale bad enough to alert on" and stays deliberately conservative —
+# flags are UNCHANGED. Fair value answers "what SHOULD this have sold for" and
+# wants accuracy: time-decayed internal comps blended with channel-normalized
+# (net-of-fees, used-condition) eBay sold comps, weighted by precision, with an
+# uncertainty band. Disagreements >30% are surfaced, not averaged away, and
+# feed the pricing-health aggregate (fair_value.py --health).
+def attach_fair_value(valued: list[dict], date: datetime.date) -> list[dict]:
+    """Adds fair_* fields per item. Fails SOFT: report still goes out without it."""
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        from fair_value import FairValueEngine
+        eng = FairValueEngine(exclude_date=date.isoformat(), ref_date=date.isoformat(),
+                              allow_live_api=True)
+    except Exception as e:
+        print(f"WARNING: fair-value engine unavailable ({e}) — report without fair values.",
+              file=sys.stderr)
+        for r in valued:
+            r["fair_value"] = None
+        return valued
+
+    n_ok = n_disp = 0
+    for r in valued:
+        try:
+            est = eng.estimate(r.get("desc") or "", r.get("category") or "",
+                               r.get("price"), store=r.get("store"),
+                               date=date.isoformat())
+            r["fair_value"]    = est["fair"]
+            r["fair_band"]     = est["band"]
+            r["fair_basis"]    = est["basis"]
+            r["fair_disputed"] = est["disputed"]
+            if est["fair"]:
+                n_ok += 1
+            if est["disputed"]:
+                n_disp += 1
+        except Exception:
+            r["fair_value"] = None
+    print(f"    Fair value v2: {n_ok}/{len(valued)} items valued, {n_disp} source disputes "
+          f"(disputes feed pricing health)")
+    _MARKET_HEALTH["fair_value_coverage"] = n_ok
+    _MARKET_HEALTH["fair_value_disputes"] = n_disp
+    return valued
+
+
+def _soldcomps_usage() -> int | None:
+    """Today's SoldComps API request count, for the summary JSON. Never raises."""
+    try:
+        from soldcomps import _usage_today
+        return _usage_today()
+    except Exception:
+        return None
+
+
+def _week_mix(sat: datetime.date) -> list[str]:
+    """Ticket-size mix for the week ending Saturday `sat` (Mon-Sat), straight
+    from the week's sold CSVs. Returns Slack lines, or [] on any trouble —
+    a missing weekly section must never block the daily post."""
+    try:
+        buckets = [(0, 25, "Under $25"), (25, 100, "$25-100"),
+                   (100, 300, "$100-300"), (300, float("inf"), "Over $300")]
+        agg = {b[2]: [0, 0.0, 0.0] for b in buckets}   # n, rev, profit
+        for i in range(6):  # Mon..Sat
+            d = (sat - datetime.timedelta(days=5 - i)).isoformat()
+            for path in glob.glob(os.path.join(BRAVO_OUTPUT, f"{d}_to_{d}_*_sold-discount-detail.csv")):
+                with open(path, newline="", encoding="utf-8-sig") as f:
+                    for r in csv.DictReader(f):
+                        if (r.get("Status") or "").strip().upper() != "SOLD":
+                            continue
+                        sale = money(r.get("Last Sold Price"))
+                        cost = money(r.get("Cost"))
+                        if not sale:
+                            continue
+                        for lo, hi, nm in buckets:
+                            if lo <= sale < hi:
+                                agg[nm][0] += 1
+                                agg[nm][1] += sale
+                                agg[nm][2] += sale - (cost or 0)
+                                break
+        tot_rev = sum(v[1] for v in agg.values())
+        if not tot_rev:
+            return []
+        lines = []
+        for _, _, nm in buckets:
+            n, rev, prof = agg[nm]
+            lines.append(f"• {nm}: {n} items · ${rev:,.0f} ({rev / tot_rev * 100:.0f}% of revenue) "
+                         f"· ${prof:,.0f} profit")
+        tot_n = sum(v[0] for v in agg.values())
+        tot_prof = sum(v[2] for v in agg.values())
+        lines.append(f"*Week total: {tot_n} items · ${tot_rev:,.0f} revenue · ${tot_prof:,.0f} profit*")
+        return lines
+    except Exception:
+        return []
+
+
 # ── Build Slack message ────────────────────────────────────────────────────────
 def build_slack_message(valued: list[dict], date: datetime.date, missing_stores: list[str]) -> str | None:
     if len(valued) < 3:
@@ -338,6 +503,15 @@ def build_slack_message(valued: list[dict], date: datetime.date, missing_stores:
     lines.append("")
     lines.append(f"*Company:* {total_items} items sold | Avg margin {_pct(cavg)} | {total_flags} total flags")
 
+    # ── Day scorecard (strategy decision 2026-08-14: 5-second read of the day) ─
+    revenue = sum(r["price"] for r in valued)
+    profit  = sum(r["price"] - r["cost"] for r in valued)
+    # "left on table": graded items that sold >= $25 under fair value
+    left = sum((r["fair_value"] - r["price"]) for r in valued
+               if r.get("fair_value") and (r["fair_value"] - r["price"]) >= 25)
+    lines.append(f"💰 Revenue ${revenue:,.0f} · Profit ${profit:,.0f} · "
+                 f"Left on table ~${left:,.0f}")
+
     flagged = sorted([r for r in valued if r["flag"]],
                       key=lambda r: (r["margin"] if r["margin"] is not None else 0.0))
     if flagged:
@@ -352,9 +526,106 @@ def build_slack_message(valued: list[dict], date: datetime.date, missing_stores:
                 desc = desc[:39] + "…"
             crit = " ⛔CRITICAL(below cost)" if r["critical"] else ""
             aged_tag = f" (aged {r['days_on_shelf']}d — likely clearance)" if r.get("aged") else ""
-            lines.append(f"• {r['store']} · ${r['price']:,.0f} sale · ${r['cost']:,.0f} cost · {mstr}{crit} · {desc}{aged_tag}")
+            # Fair value ± band (BLEND_V2): what this SHOULD have brought, with
+            # honest uncertainty — a thin estimate must LOOK thin.
+            fv = ""
+            if r.get("fair_value"):
+                band = f" ±${r['fair_band']:,.0f}" if r.get("fair_band") else ""
+                fv = f" · fair ~${r['fair_value']:,.0f}{band}"
+            lines.append(f"• {r['store']} · ${r['price']:,.0f} sale · ${r['cost']:,.0f} cost · {mstr}{crit}{fv} · {desc}{aged_tag}")
         if len(flagged) > 12:
             lines.append(f"…and {len(flagged) - 12} more — full detail in the spreadsheet")
+
+    # ── Sold below what we normally get (market benchmark, added 2026-08-14) ──────
+    # Separate section on purpose: this is a DIFFERENT question from margin. An item can
+    # post a healthy margin and still appear here, and that is exactly the case the margin
+    # flag was blind to. Shows the evidence (how many of our own past sales back it) so a
+    # thin comp reads as thin rather than as authority.
+    below_mkt = sorted([r for r in valued if r.get("market_flag")],
+                       key=lambda r: -(r.get("market_gap") or 0))
+    if below_mkt:
+        lines.append("")
+        lines.append(BAR)
+        lines.append(f"*📉 SOLD BELOW WHAT WE NORMALLY GET ({len(below_mkt)})* — sale · typical · left on table")
+        lines.append(BAR)
+        for r in below_mkt[:10]:
+            desc = (r.get("desc") or r.get("category") or "item").strip()
+            if len(desc) > 38:
+                desc = desc[:37] + "…"
+            src = (r.get("market_source") or "").replace("internal ", "")
+            # Show the eBay sold figure alongside ours when they differ materially. The
+            # flag itself uses the conservative (lower) benchmark, but hiding the market
+            # number would bury the more important finding: where eBay is well above our
+            # own typical price, we may be underpricing that whole category in-store.
+            mkt = ""
+            ev = r.get("market_ebay")
+            if ev and r.get("market_value") and abs(ev - r["market_value"]) / max(ev, r["market_value"]) > 0.20:
+                mkt = f" · eBay sold ~${ev:,.0f}"
+            lines.append(
+                f"• {r['store']} · ${r['price']:,.0f} sale · ${r['market_value']:,.0f} typical{mkt} · "
+                f"−${r.get('market_gap', 0):,.0f} · {desc} _({src})_")
+        if len(below_mkt) > 10:
+            lines.append(f"…and {len(below_mkt) - 10} more — full detail in the spreadsheet")
+
+    # ── Big-ticket review (strategy decision 2026-08-14) ──────────────────────
+    # Items >=$100 carry ~80%+ of daily revenue and margin the thinnest, so every
+    # one gets a verdict vs fair value. Small items are deliberately NOT graded
+    # per-item here (below-cost criticals still flag above) — a $8 comic doesn't
+    # earn counter attention; a $400 laptop does.
+    big = sorted([r for r in valued if r["price"] >= 100], key=lambda r: -r["price"])
+    if big:
+        lines.append("")
+        lines.append(BAR)
+        lines.append(f"*💵 BIG-TICKET REVIEW ({len(big)} items ≥$100 — "
+                     f"${sum(r['price'] for r in big):,.0f} of the day)*")
+        lines.append(BAR)
+        for r in big[:12]:
+            desc = (r.get("desc") or r.get("category") or "item").strip()
+            if len(desc) > 36:
+                desc = desc[:35] + "…"
+            fv, band = r.get("fair_value"), r.get("fair_band") or 0
+            basis = (r.get("fair_basis") or "") + (r.get("market_source") or "")
+            if not fv and "melt" in basis.lower():
+                verdict = "🪙 gold/silver — melt-priced"
+            elif not fv:
+                verdict = "no benchmark"
+            elif r["price"] >= fv - max(band, 25):
+                verdict = f"✔ got market (fair ~${fv:,.0f})"
+            else:
+                verdict = f"▼ ${fv - r['price']:,.0f} under (fair ~${fv:,.0f})"
+            lines.append(f"• {r['store']} · ${r['price']:,.0f} · {desc} · {verdict}")
+        if len(big) > 12:
+            lines.append(f"…and {len(big) - 12} more in the spreadsheet")
+
+    # ── Saturday wrap: the week's ticket-size mix (posted Sunday morning) ─────
+    # Weekly, not daily, on purpose: mix is a trend question. Answers "does the
+    # small stuff actually matter" with a week of evidence at a time.
+    if date.weekday() == 5:  # reporting a Saturday -> week just ended
+        wk = _week_mix(date)
+        if wk:
+            lines.append("")
+            lines.append(BAR)
+            lines.append("*📅 WEEK IN REVIEW — where the money was*")
+            lines.append(BAR)
+            lines.extend(wk)
+
+    # ── Pricing health (BLEND_V2 Phase 3) — the systematic-underpricing radar ─
+    # Per-category: our realized prices vs eBay NET (fees + shipping removed,
+    # used-condition). Gated at n>=30 pairs per category so this section only
+    # ever prints statistically meaningful findings — it is silent for weeks
+    # while the pairs accumulate, then starts telling the truth. Per-item flags
+    # structurally cannot see store-wide underpricing; this can.
+    try:
+        from fair_value import health_lines
+        hl = health_lines(min_n=30)
+        if hl:
+            lines.append("")
+            lines.append(BAR)
+            lines.append("*📊 PRICING HEALTH — our prices vs eBay net (categories with n≥30)*")
+            lines.append(BAR)
+            lines.extend(f"• {h}" for h in hl[:8])
+    except Exception:
+        pass
 
     return "\n".join(lines)
 
@@ -419,7 +690,7 @@ def write_excel(valued: list[dict], date: datetime.date, path: str) -> bool:
     ws1.title = "Items"
     ws1.freeze_panes = "A3"
     title = f"Valley Pawn — Sold Review  |  {ds}  |  Target {int(TARGET_MARGIN*100)}%  |  Flag<{int(FLAG_MARGIN*100)}%"
-    ws1.merge_cells("A1:K1")
+    ws1.merge_cells("A1:N1")
     t = ws1["A1"]; t.value = title
     t.fill = PatternFill("solid", fgColor="0D1B40")
     t.font = Font(name="Calibri", bold=True, color="FFFFFF", size=12)
@@ -427,7 +698,8 @@ def write_excel(valued: list[dict], date: datetime.date, path: str) -> bool:
     ws1.row_dimensions[1].height = 22
 
     hdrs1 = ["Store", "Ticket/Inv #", "Category", "Description", "Cost", "Sale Price",
-              "Margin", "Margin $", "Days On Shelf", "Meets Target?", "Flag?"]
+              "Margin", "Margin $", "Days On Shelf", "Meets Target?", "Flag?",
+              "Fair Value", "± Band", "Sale vs Fair"]
     for ci, h in enumerate(hdrs1, 1):
         _hdr(ws1, 2, ci, h)
     ws1.row_dimensions[2].height = 28
@@ -452,8 +724,18 @@ def write_excel(valued: list[dict], date: datetime.date, path: str) -> bool:
         _cell(ws1, ri, 9, r.get("days_on_shelf"))
         _cell(ws1, ri, 10, "YES" if r["meets"] else "NO")
         _cell(ws1, ri, 11, "⛔ CRITICAL" if r["critical"] else ("🚨" if r["flag"] else ""))
+        # Fair Value v2 (BLEND_V2): the accurate "should have sold for", with
+        # uncertainty. A disputed pair (internal vs eBay-net >30% apart) shows
+        # its basis text so the disagreement is visible, not averaged away.
+        fv = r.get("fair_value")
+        _cell(ws1, ri, 12, fv, fmt='"$"#,##0.00',
+              fill=(FILL_WARN if r.get("fair_disputed") else None))
+        _cell(ws1, ri, 13, r.get("fair_band"), fmt='"$"#,##0.00')
+        ratio = (r["price"] / fv) if fv else None
+        _cell(ws1, ri, 14, ratio, fmt='0%',
+              fill=(FILL_FLAG if (ratio is not None and ratio < 0.70) else None))
 
-    for ci, w in enumerate([7, 16, 20, 46, 10, 11, 9, 11, 13, 12, 12], 1):
+    for ci, w in enumerate([7, 16, 20, 46, 10, 11, 9, 11, 13, 12, 12, 11, 9, 11], 1):
         ws1.column_dimensions[get_column_letter(ci)].width = w
 
     ws2 = wb.create_sheet("Summary")
@@ -551,6 +833,8 @@ def main():
     valued = [compute_margin(r) for r in raw]
     stores_seen = sorted(set(r["store"] for r in valued))
     print(f"Loaded {len(valued)} sold items from {len(stores_seen)} store(s): {', '.join(stores_seen)}")
+    valued = attach_market(valued, date)
+    valued = attach_fair_value(valued, date)
 
     store_summaries = {}
     all_margins = []
@@ -580,6 +864,18 @@ def main():
         "slack_posted": False,
         "slack_skipped": False,
         "slack_message": None,
+        # Canary result. `market_feed_ok: false` means the eBay market benchmark is
+        # degraded — the report is still VALID (margin grading is unaffected and the
+        # benchmark falls back to internal comps), but it is no longer market-informed.
+        # STEP 7 DMs Joshua on this so it can't rot silently for weeks.
+        "market_feed_ok": _MARKET_HEALTH.get("ok", None),
+        "market_feed_note": _MARKET_HEALTH.get("note", ""),
+        "market_comps_cached": _MARKET_HEALTH.get("with_value", 0),
+        # Fair Value v2 (BLEND_V2_PLAN) — coverage + SoldComps quota state so
+        # STEP 7 can DM once if the API quota guard tripped or coverage cratered.
+        "fair_value_coverage": _MARKET_HEALTH.get("fair_value_coverage", 0),
+        "fair_value_disputes": _MARKET_HEALTH.get("fair_value_disputes", 0),
+        "soldcomps_used_today": _soldcomps_usage(),
     }
 
     xl_ok = write_excel(valued, date, xlsx_path)

@@ -1,5 +1,196 @@
 # Valley Pawn - Enterprise Changelog
 
+## 2026-08-14 (~evening ET — Zoom Phone: Lexington migrated off Joshua's personal account)
+
+- **Root cause fixed:** Lexington's 2 store phones had been riding on Joshua's personal Zoom
+  account (jdavis@fcfpawn.com, Ext.800) since before the Call Queues existed — meaning Joshua's
+  personal cell rang for every Lexington store call. Joshua approved a dedicated-account fix
+  (4th Zoom Phone license, $15/mo).
+- **Zero-downtime migration executed same day:** created `lexington@fcfpawn.com` (Ext.807, Zoom
+  Meetings Basic + Zoom Phone) → added as 2nd member of Lexington Store Queue alongside Ext.800
+  → migrated both physical devices to Ext.807 one at a time → activated the new account (blocked
+  twice along the way: Zoom's Resend-Invitation CAPTCHA, which Joshua completed himself, and a
+  Google "verify with corporate device" risk challenge on lexington@'s Workspace account, cleared
+  via Admin console's per-user Security > Login challenge > "Turn off for 10 mins") → removed
+  Ext.800 from the queue once Ext.807 was confirmed live.
+- **Verified:** queue membership now shows only lexington@ Ext.807. Poly VVX250 desk phone
+  Online and taking calls. Grandstream WP822 cordless handset needs an on-site factory reset —
+  sent Uriah the steps via Slack; desk phone is covering the store in the meantime, no outage.
+- **Side finding, unresolved:** lexington@fcfpawn.com is a real separate Google mailbox, not an
+  alias of jdavis@ — mail sent to it does not reach Joshua's inbox. Joshua asked about setting up
+  local Apple Mail visibility for all 5 store mailboxes without routing into jdavis@; blocked by
+  the same Google device-verification wall per-account. Not yet resolved.
+- Docs updated: `ZOOM_PHONE.md` (Known-gap section closed out), `Life OS/OPEN_ITEMS_REGISTER.md`.
+
+## 2026-08-14 (Sold Review: Fair Value v2 blend shipped — all 4 phases of BLEND_V2_PLAN)
+
+- **New `fair_value.py` in Sold Margin Review** answers "what SHOULD this item have sold
+  for": time-decayed internal comps (6/12-month half-life) blended with channel-normalized
+  eBay sold comps (net of fees + shipping, used-condition) by precision weight n/(1+cv),
+  with an uncertainty band. Disagreement >30% is surfaced as DISPUTED, never averaged.
+  **Flags are unchanged** — the conservative floor in `market_benchmark.py` was not touched.
+- **8-item cap removed:** `--lookup-all` sweeps every sold item daily via the SoldComps API
+  (eligibility ladder: melt / firearms-internal-only / API), quota-guarded at 60/day inside
+  the shared client. Live task got STEP 4.8 + two STEP 7 DM rules. **Blocked on Joshua
+  supplying the `sc_...` key** (`.soldcomps_key`) — degrades cleanly to Terapeak cache until then.
+- **Fee guess replaced by measurement:** `calibrate_fees.py` pulled 260 real transactions
+  from our own 5 eBay stores (GetSellerTransactions) → fee_rate **13.9%**, persisted and
+  auto-loaded. Pricing-health aggregate (`pricing_health.jsonl`, n≥30 gate per category) now
+  accumulates daily — this is the systematic-underpricing radar (STIHL early evidence:
+  we realize $104 vs ~$155 eBay-net). Validation loop (`--validate`, MAPE per estimator)
+  runs but needs ~2 weeks of API volume to be meaningful.
+- Verified against real output: 2026-08-13 recompile — 42 items, flags identical, 32/42
+  fair-valued pre-key, Excel cols L-N added, canary OK. Full record: `Sold Margin Review/STATUS.md`.
+
+## 2026-08-14 (Google Drive locked to Joshua only — NEW STANDING RULE 13)
+
+- **New hard rule: `BUSINESS_OS.md` Rule 13 — Google Drive is private to Joshua, permanently.**
+  Joshua: *"no one should ever have access to the Google Drive, there is sensitive information
+  there."* Also mirrored into `Life OS/LIFE_MAP.md` (cross-domain) and logged in the Open Items
+  Register. Rule covers: no employee access at any role, ever; no "anyone with link" or
+  domain-wide sharing; General access stays Restricted; no Drive links posted where staff can see.
+- **Preston Peters removed from Valley Pawn Drive** (`0AHw0UROQ5gMdUk9PVA`). He was the only other
+  member (Content manager / fileOrganizer). Shared drive now shows **1 person**. Removal was on
+  Joshua's explicit instruction when asked — the intent is that if even the Ops Manager doesn't
+  get access, nobody does.
+- **Full audit ran first, both layers.** Shared drive: every folder/file clean — Accounting
+  Exports, Aged Inventory (+2 sub), Bookkeeping (+Bravo Exports), Employee Productivity Reports,
+  Weekly KPIS, Chekkit Invite Lists, Trends, FFL, Vendor Onboarding, Cannabis Retail — Staunton,
+  Valley Pawn Plus, New Merch Program, Hiring Pipeline, all 3 Policies & Procedures docs. Zero
+  `type:anyone`, zero `type:domain`, zero group grants anywhere.
+- **My Drive sweep caught 2 real leaks the shared-drive audit would have missed** — both had
+  `preston@fcfpawn.com` as **writer**, both now removed and API-verified owner-only:
+  `2026-08-13_intake_margin` (`1MRhvTWuAXFM0p-DP64wXvBf25D26TKOJbeEDZpj34NQ` — per-item cost paid,
+  margins, overpay flags across all 5 stores) and `Valley Pawn - Markdown Compliance - All Stores -
+  2026-08-13.csv` (`1Q23o6eCm1lYvItmGt3WBIuyno1j8PXfT`). **Lesson: always sweep My Drive too, not
+  just the shared drive** — a ~60-file sweep of tax returns, payroll, leases, employee CSVs and
+  P&Ls found everything else clean.
+- **Google disconnected from Slack.** No Google Drive *app* was installed in the workspace
+  (`T03BL4W1DCL` / valleypawnworkspace) — the actual link was a **Connected Account** (Google
+  `jdavis@fcfpawn.com`, connected 2022-05-03). Slack itself flagged it unused by any active
+  integration; disconnected. Connected Accounts now empty. The one remaining custom integration is
+  an Incoming WebHook posting to **#ebay-performance** — unrelated to Drive, left in place.
+- **Info-sharing to staff via Drive/Sheets links is now DEPRECATED** (Joshua). Tasks that need to
+  get numbers to staff must put the content in the Slack/DM/email body, not link a document. Any
+  existing task still posting a Drive link gets corrected the next time it's touched.
+- **Shared-drive sharing restrictions CANNOT be tightened — hard Google Workspace edition limit,
+  not a Claude failure.** Opened Shared drive settings; all four toggles ("Allow people outside of
+  fcfpawn.com to access files," "Allow people who aren't shared drive members to access files,"
+  "Allow content managers to share folders," download/copy/print for contributors + commenters) are
+  **checked and greyed out / non-interactive**, with the notice: *"Your Google Workspace edition
+  only supports restoring these settings to their default value."* Confirmed by clicking one — no
+  state change. This is why "Security limitations: No limitations applied" persists. **Practical
+  exposure today is still zero** — these toggles only govern what *members* may do, and Joshua is
+  the sole member with zero extra file permissions anywhere. They'd only matter if someone were
+  added back. Tightening them would require a Workspace edition upgrade (Business Standard+).
+- **NOT done — needs Joshua once:** Workspace Admin console (`admin.google.com`) hit a password
+  step-up Claude never completes, so org-level Drive sharing defaults were not reviewed/tightened.
+  Belt-and-suspenders on top of an already-clean permission state, not active exposure.
+- **Open follow-on (not swept):** find any scheduled task/skill that still posts a Drive or Sheets
+  link into a staff-visible Slack channel and convert it to in-body content per the new Rule 13.
+  `~/Documents/Claude/Scheduled/` is not reachable from this session's mounts, so it wasn't swept.
+
+## 2026-08-14 (~11:23 ET — Zoom Phone: all 3 store DID cutovers complete + live-verified)
+
+- **All 3 Call Queue cutovers now LIVE** (built 2026-08-13, cutover completed 2026-08-14):
+  Lexington (540) 461-8349 → Lexington Store Queue Ext.804, Harrisonburg (540) 574-4500 →
+  Harrisonburg Store Queue Ext.805, Waynesboro (540) 221-6346 → Waynesboro Store Queue Ext.806.
+  Each was tested Lexington-first per Joshua's request, then the other two followed same-session
+  after Lexington proved out.
+- **Verified live with real call-log data, not just config** (per vp-operating-rules Rule 12):
+  found actual customer calls today (2026-08-14) for all 3 stores showing "Forwarded by [Store]
+  Store Queue Ext.XXX" → Event "Ring to Member" → Call Result "Answered" — Lexington (11:16:29 AM,
+  Chuckatuck VA + others), Harrisonburg (11:12:03 AM, wireless caller), Waynesboro (yesterday
+  5:10 PM). Full ring-to-answer path confirmed working on all 3 lines.
+- **Device check:** all 6 store desk/wireless phones (2 per store) confirmed Online in Phones &
+  Devices — including Harrisonburg's 2 Grandstream WP822 handsets that were Offline/needing
+  factory reset per the 2026-08-13 audit; those have since come back Online.
+- **Personal-cell forwarding investigation — inconclusive on the admin side, action paused.**
+  Joshua reported his personal cell physically rang for a Lexington store call and his number
+  appeared in a call log. Searched Zoom call logs by his cell number (8049304221) across all 3
+  store extensions: zero inbound-forward matches found (one unrelated outbound call from
+  Harrisonburg to his cell on Jul 17 was the only hit). Checked every plausible admin-side
+  forwarding location — his own extension's Call Handling/devices, the Policy tab's forwarding
+  toggle, the Call Queue's own settings, the unused Auto Receptionist, Shared Line
+  Appearance/Group — found no server-side forwarding rule anywhere. Working theory: Lexington's
+  phones are registered under Joshua's own personal Zoom user account (jdavis@fcfpawn.com,
+  Ext.800) — a leftover structural gap unique to Lexington (Harrisonburg/Waynesboro are on
+  dedicated store-only accounts with no personal tie-in) — so any device signed into that account,
+  including Joshua's personal phone's Zoom app, will ring for Lexington calls by design, not
+  because of a forwarding rule. Joshua disputed this and believes there's still an admin-side
+  setting; then said "we need to remove my extension." **Paused per Joshua's explicit instruction
+  ("dont do anything")** before touching anything, since Lexington's only 2 physical store phones
+  are also registered as devices under this same extension — removing it from the queue with no
+  other member would have gone silent for Lexington. No changes made to Joshua's extension or the
+  Lexington queue. Open item, see `Life OS/OPEN_ITEMS_REGISTER.md`.
+- **Hold music / wait time / routing — routing proven live (above); hold-music and in-queue wait
+  time NOT independently verifiable from available data.** Zoom's Call History table only exposes
+  total call Duration, not queue hold/ring time, and the Call Queue detail page has no
+  History/Analytics tab on this plan — so there's no log-based way to confirm hold music actually
+  played or how long a caller waited before pickup. All 3 queues are confirmed Active with their
+  original build settings unchanged (Simultaneous distribution, Default Music on Hold, 1-min Max
+  Wait, Voicemail overflow). Reported this limitation directly to Joshua rather than asserting
+  something that can't be evidenced.
+
+## 2026-08-14 (~15:15 ET — Jewelry Category Standard policy)
+
+- New HR policy per Joshua's request: **Jewelry Category Standard** — all jewelry write-ups in
+  Bravo (and the sales floor) must use exactly 5 grouped categories: Pendants (=Pendants+Charms+
+  Brooches), Necklaces (=Chains+Necklaces), Rings, Earrings, Bracelets. Only 8 underlying Bravo
+  categories are valid for jewelry (Pendants, Charms, Brooches, Chains, Necklaces, Rings, Earrings,
+  Bracelets). Scrap only for non-sale items. Miscellaneous Jewelry banned outright.
+- Drafted via `policy-lifecycle` skill, house format (navy call-out box, 3 lines, 8pt legal
+  footer, Gusto signature block) — `Jewelry_Category_Standard_2026-08.docx`/`.pdf`, verified 1
+  page via rendered PNG. Filed in Human Resources project folder + Drive `Policies & Handbook`.
+- Master "Valley Pawn — Policies & Procedures" Drive doc re-issued with this as Policy #4, and
+  the index corrected to include the previously-unindexed Policy #3 (Jewelry Count). Two older
+  superseded copies remain in Drive (no delete tool) — flagged for Joshua's manual cleanup.
+- Directly resolves a confirmed live data-quality gap found by `jewelry-count-reconciliation` /
+  `jewelry-onhand-nightly-compare` (2026-08-12/13 runs, see `Jewelry Count Reconciliation/
+  STATUS.md`): Roanoke's Pendants report was undercounting because pendant-type pieces were
+  entered under Charms instead of Pendants — this policy makes that the wrong way to write it up.
+- **Gusto e-signature send — BLOCKED.** Delegated to a subagent following the skill's proven
+  Gusto wizard procedure; roster verified live (17 active employees) and the PDF geometry was
+  measured, but `app.gusto.com` redirected to `login.gusto.com` ("signed out due to inactivity").
+  No document_template was created — nothing left abandoned in Gusto. Needs Joshua's one-time
+  login/passkey, then a re-run picks up immediately (roster + PDF geometry already verified).
+- **Slack announcement — held pending approval.** Per Joshua's standing rule in `policy-lifecycle`
+  (show the Slack text and get an explicit yes before posting to #policy-announcements), the
+  draft is presented for sign-off rather than posted automatically.
+- Logged to `Life OS/OPEN_ITEMS_REGISTER.md`.
+
+## 2026-08-14 (~12:30 ET — Slack channel rename)
+
+- Joshua renamed Slack channel `C0BQX7CF13J` from #mark-downs-summary to **#items-to-markdown**.
+  Same channel ID, no re-invite needed. Updated the two places that hardcode the old name:
+  `weekly-markdown-verification-review` scheduled task (posts here every Monday ~9:35am) and
+  `BUSINESS_OS.md`'s automation table. Also fixed the consolidated markdown-compliance email
+  draft to Preston, which still referenced the old name.
+
+## 2026-08-14 (~08:22 ET — discount-review daily run)
+
+- YESTERDAY=2026-08-13 (Thursday), all 5 stores open. Reused HAR/LEX/ROA/WAY sold-discount-detail
+  CSVs from this morning's shared sold-review pull; CUL was missing (sold-review's CUL UIA
+  report-select failed this morning) so pulled CUL standalone — health gate PASS, single-store
+  trigger, CUL succeeded this time (15 rows), confirming the CUL UIA-select issue is intermittent
+  per the task's known-issues note, not a hard failure.
+- Compile EXIT:0: 36 items, 16 flags, $850 discounted off ticket, 0 into_loss. WAY was today's
+  outlier (22% avg discount, 7 flags). Company YTD (3 selling days) $2,298.94.
+- Confirmed `run_daily_discount_review.py` has the identical `SLACK_BOT_TOKEN` gap already known
+  on `run_daily_sold_review.py` (slack_error="token_not_found" despite a fully composed message).
+  Posted the summary to #discount-review manually this run per the corrected STEP 6 logic. Both
+  scripts' direct-HTTP Slack posting need the token fixed on this host — logged in Discount
+  Outlier Review/STATUS.md and Sold Margin Review's own history.
+- DM'd Joshua the flags alert (16 flags across all 5 stores) per policy.
+
+## 2026-08-14 (~07:49 ET — sold-review daily run)
+
+- Health gate PASS (CUL). Dropped trigger sold-review-2026-08-14T07-49-34 for OPEN_STORES=[CUL,HAR,LEX,ROA,WAY] (yesterday=Thursday 2026-08-13, all 5 open).
+- CUL: report-selection for 'Claude Sold Inv Details' failed all 3 UIA attempts (same class of issue noted in the sold-review history for CUL) -> ERROR logged, watcher moved on per its own retry/cooldown logic, no self-heal/relaunch needed since 4/5 stores still succeeded. HAR/LEX/ROA/WAY all SUCCESS (7/5/5/12 rows respectively).
+- Compile script (run_daily_sold_review.py) EXIT:0. Summary: 29 items, avg margin 51.6%, 1 flag (WAY - CENTERPOINT PATRIOT 415, sold $62 vs $60 cost, 3% margin), 0 critical. missing_stores=[CUL].
+- Script's own Slack post failed with slack_error='token_not_found' (slack_posted=false, slack_skipped=true) - NOT a quiet-day skip, a real posting failure on the script side. Posted the slack_message verbatim to #sold-review manually this run to avoid losing the day's data. FOLLOW-UP NEEDED: run_daily_sold_review.py's Slack token is broken/missing - next session touching Sold Margin Review should check its Slack token config so it stops silently failing to post.
+- DM'd Joshua the flags alert (1 flag at WAY, CUL gap noted) per policy - #sold-review has full detail.
+
 ## 2026-08-13 (evening — zoom-voicemail-alert routine run, zero new alerts)
 
 - Routine `zoom-voicemail-alert` run. Zoom admin session confirmed live (Joshua Davis / Full

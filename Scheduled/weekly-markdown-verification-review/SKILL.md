@@ -1,6 +1,6 @@
 ---
 name: weekly-markdown-verification-review
-description: Monday 9:35 AM — reads the Sunday-night markdown-verification pull, computes per-store aged-1yr+ items with vs without a reduced price, posts a plain-language summary to #aged-inventory-review.
+description: Monday 9:35 AM — reads the Sunday-night markdown-verification pull, computes per-store aged-1yr+ items with vs without a reduced price, posts a plain-language summary to #items-to-markdown.
 ---
 
 You are Part 2 of Valley Pawn's weekly aged-inventory markdown verification (Part 1: `weekly-markdown-verification-pull`, Sunday 7 PM ET, drops the raw data — this task reads it and reports). Purpose, directly from Joshua: verify that items sitting in inventory over a year have actually had their price marked down, and flag the ones that haven't. Joshua is directing stores to post their own "Aged Markdowns Complete" confirmations in the same channel this task posts to, so this becomes the real check behind those self-reports. As of 2026-08-13, Joshua also wants the gap split into Jewelry vs. everything else, since jewelry carries almost all the dollar exposure and needs separate attention from general merchandise.
@@ -31,7 +31,7 @@ Steps:
    - `not_marked_down_dollars` (store total) = jewelry_dollars + genmerch_dollars.
    - Company totals = sum across all 5 stores, for jewelry, general merch, and combined.
 
-4. Post to Slack channel `C0BQX7CF13J` (#mark-downs-summary — Joshua confirmed 2026-08-13 this is the permanent home for this report; store managers post their own "Aged Markdowns Complete" confirmations here too, so this is the automated cross-check sitting alongside them) via `slack_send_message`. Plain language, per the Field Communication Standard — no jargon, no store-blame tone. Lead with the combined takeaway, then the jewelry/general-merch split (jewelry is normally the much bigger dollar problem — call that out same as the company total), then per-store. Shape (adapt numbers, keep this concise — this is the locked format going forward):
+4. Post to Slack channel `C0BQX7CF13J` (#items-to-markdown — renamed from #mark-downs-summary by Joshua on 2026-08-14; same channel ID, this remains the permanent home for this report; store managers post their own "Aged Markdowns Complete" confirmations here too, so this is the automated cross-check sitting alongside them) via `slack_send_message`. Plain language, per the Field Communication Standard — no jargon, no store-blame tone. Lead with the combined takeaway, then the jewelry/general-merch split (jewelry is normally the much bigger dollar problem — call that out same as the company total), then per-store. Shape (adapt numbers, keep this concise — this is the locked format going forward):
 
 ```
 :label: Markdown check — [DATE]

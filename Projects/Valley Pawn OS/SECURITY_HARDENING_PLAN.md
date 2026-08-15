@@ -48,8 +48,16 @@ vault/safe room, exterior (parking lot + back door/loading area), and — **Roan
 a dedicated angle on the firearms case/vault, since that's the FFL location. Not a strict ATF
 mandate, but standard underwriting/insurance expectation for a store carrying firearms.
 
-**Platform shortlist (get 2–3 real quotes before committing — this is Joshua's money call, not
-mine):**
+> **SUPERSEDED 2026-08-13 — read `CAMERA_SYSTEM_OPTIONS.md` instead for the camera decision.**
+> The cloud-platform shortlist below (Eagle Eye / Rhombus / Verkada) was the wrong default for a
+> 5-store operation that already stated a preference for local recording. Those platforms charge
+> $18K–42K/yr in per-camera licensing to solve centralized multi-site cloud management — a problem
+> Valley Pawn doesn't have at this size. The revised recommendation is a locally-recorded PoE
+> system (UniFi Protect preferred) at $0/month, with off-site clip backup covering the one genuine
+> advantage cloud had (footage survives if the NVR is stolen or the store burns). Table kept below
+> for reference only.
+
+**Platform shortlist — SUPERSEDED, reference only:**
 
 | Vendor | Model | Fit |
 |---|---|---|

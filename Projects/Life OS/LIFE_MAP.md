@@ -36,6 +36,16 @@ live on `fcfpawn.com` or route through `jdavis@fcfpawn.com` — use a neutral ad
 "different P&L, same tax return" framing below when the two conflict. Mirrored in
 `Valley Pawn OS/BUSINESS_OS.md` Rule 12 and `REAL_ESTATE_OS.md`.
 
+**Hard rule — Google Drive is private to Joshua, all domains (set 2026-08-14):**
+No employee ever gets access to any Google Drive content — Valley Pawn Drive or My Drive, business
+or personal. Joshua is the only member of the Valley Pawn shared drive (Preston was removed
+2026-08-14 on his explicit instruction). Never share a file/folder/spreadsheet with staff at any
+role level, never enable "anyone with the link" or domain-wide sharing, and never post a Drive or
+Sheets link into Slack/email where staff can see it. **Sharing information with staff via document
+links is deprecated — put the actual content in the message body instead.** Drive holds tax
+returns, payroll, employee records, customer PII, leases, FFL licenses and full P&Ls; there is no
+safe subset. Full rule + rationale in `Valley Pawn OS/BUSINESS_OS.md` Rule 13.
+
 **Cross-domain overlap that IS real (not an error):**
 - Bald Rock (Domain 2) is legally owned by Full Circle Finance Inc — same entity as Valley Pawn
   (Domain 1). It gets its own domain file because it's operationally and financially distinct

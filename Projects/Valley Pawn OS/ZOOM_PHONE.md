@@ -140,18 +140,69 @@ left Harrisonburg with zero fallback during its hardware outage). Each queue:
 
 | Queue | Ext. | Member |
 |---|---|---|
-| Lexington Store Queue | 804 | jdavis@fcfpawn.com |
+| Lexington Store Queue | 804 | lexington@fcfpawn.com (Ext.807) |
 | Harrisonburg Store Queue | 805 | harrisonburg@fcfpawn.com |
 | Waynesboro Store Queue | 806 | waynesboro@fcfpawn.com |
 
-**Cutover status — Lexington LIVE, Harrisonburg + Waynesboro still pending.** Joshua approved testing
-Lexington first. Reassigned via Number Management > Phone Numbers > (540) 461-8349 > Assign: changed from
-Type=User/Joshua Davis-Ext.800 to Type=Call Queue/Lexington Store Queue-Ext.804. Verified live in the
-Phone Numbers list — the row now shows "Lexington Store Queue / Call Queue / Ext. 804" under Assigned To.
-Lexington's number now rings the queue (and thus follows the queue's Business Hours/ring/overflow rules)
-instead of Joshua's individual user extension. **Not yet cut over:** Harrisonburg (540) 574-4500 still
-assigned to harrisonburg@fcfpawn.com/User/Ext.802; Waynesboro (540) 221-6346 still assigned to
-waynesboro@fcfpawn.com/User/Ext.803. Same reassignment mechanism applies to both — Phone Numbers > row's
-"..." menu > Assign > Type=Call Queue > select the store's queue > Save. Waiting on Joshua's go-ahead
-(watch Lexington's actual call handling first) before cutting over the other two. See
-`Life OS/OPEN_ITEMS_REGISTER.md` for the open item.
+**Cutover status — ALL 3 STORES LIVE (2026-08-14).** Joshua approved testing Lexington first, then
+approved cutting over Harrisonburg and Waynesboro same-session once Lexington proved out. All three
+reassigned via Number Management > Phone Numbers > row's "..." menu > Assign > Type=Call Queue > select
+the store's queue > Save:
+- Lexington (540) 461-8349: Joshua Davis-Ext.800 → Lexington Store Queue-Ext.804
+- Harrisonburg (540) 574-4500: harrisonburg@fcfpawn.com-Ext.802 → Harrisonburg Store Queue-Ext.805
+- Waynesboro (540) 221-6346: waynesboro@fcfpawn.com-Ext.803 → Waynesboro Store Queue-Ext.806
+
+**Verified live with real call-log data (not just config), 2026-08-14:** found actual answered customer
+calls on all 3 lines showing "Forwarded by [Store] Store Queue Ext.XXX" → Event "Ring to Member" → Call
+Result "Answered" — full ring-to-answer path confirmed working, not just number routing. All 6 store
+phones (2 per store) confirmed Online in Phones & Devices.
+
+**RESOLVED (2026-08-14) — Lexington migrated off Joshua's personal Zoom account.** Historical context:
+Ext.800 (jdavis@fcfpawn.com) was simultaneously Joshua's personal owner/admin account AND the account
+Lexington's 2 physical store phones were registered under — which made Joshua's personal cell ring for
+Lexington store calls. Joshua approved the dedicated-account fix (incl. a 4th Zoom Phone license,
+$15/mo, purchased via Plan Management). Zero-downtime migration executed same day:
+
+1. Created `lexington@fcfpawn.com` Zoom user (Zoom Meetings Basic + Zoom Phone, **Ext.807**).
+2. Added Ext.807 as 2nd member of Lexington Store Queue (queue rang both during transition).
+3. Unassigned both physical phones from Ext.800, reassigned to Ext.807 one at a time.
+4. Activation: the Zoom invite went to the lexington@ Gmail mailbox (NOT an alias of jdavis@ — it's a
+   separate mailbox; a Google "suspicious login" challenge also had to be cleared via the admin console's
+   per-user Security > Login challenge > "Turn off for 10 mins" before Joshua could get in). Joshua
+   activated the account 2026-08-14.
+5. Removed Ext.800 from the queue — verified members list now shows ONLY lexington@ Ext.807
+   (Receive Calls: On). Joshua's personal devices are no longer in any store call path.
+
+Post-migration device status (Phones & Devices, 2026-08-14): Poly VVX250 **Online** (provisioned
+Aug 14); Grandstream WP822 cordless **Offline — "Factory reset needed for provisioning"** — needs a
+power-cycle at the store, then factory reset + reprovision if it doesn't recover (same procedure as
+Harrisonburg's WP822s). Desk phone carries the queue in the interim. Cosmetic note: the lexington@ Zoom
+user's display name shows "Joshua Davis" (from account creation) — can be renamed to "Lexington Store"
+in User Management for clarity.
+
+**Not independently verifiable from available data:** hold music playback and in-queue wait time. Zoom's
+Call History table only exposes total call Duration, not queue hold/ring time, and Call Queues have no
+History/Analytics tab on this plan. Routing itself is proven live (above); the queues' Music-on-Hold and
+Max-Wait settings are confirmed unchanged from build (Default hold music, 1-min max wait) but can't be
+evidenced from logs — would require a live test call to hear directly.
+
+## Roster expansion spotted — Culpeper + Roanoke provisioned, NOT yet live (found 2026-08-14 ~4:30 PM ET)
+
+A `zoom-voicemail-alert` run found 2 new rows in Users & Rooms that didn't exist as of the 2026-08-13 audit:
+
+| Store | Zoom user | Ext. | Package | Number(s) | Desk Phone(s) |
+|---|---|---|---|---|---|
+| Culpeper | culpeper@fcfpawn.com | 808 | Zoom Phone Basic | -- (none assigned) | -- (none paired) |
+| Roanoke | roanoke@fcfpawn.com | 809 | Zoom Phone Basic | -- (none assigned) | -- (none paired) |
+
+Both show User Status Active / Activation Status Activated, but **no external phone number and no desk
+phone are assigned to either** — Culpeper's Profile tab still has an unset "Area Code" field, and both
+still show the stale `(GMT-7:00) Pacific Time` default (the same Time Zone bug fixed for Harrisonburg/
+Waynesboro on 2026-08-13 — see above — has not yet been applied here). History tab confirms zero call
+data for either extension over the trailing week. **Conclusion: these are stub accounts mid-setup, not
+live customer-facing lines yet** — matches Joshua's 2026-08-07 comment that Culpeper/Roanoke were coming
+"soon." `zoom-voicemail-alert` will keep checking both every run (Step 1's fresh-roster design) and will
+naturally start finding real call data once a number + Call Queue are built for them, no task edit needed.
+Worth a manual look next time Joshua is doing Zoom admin work: assign a number, fix the Time Zone field,
+and build a Call Queue for each (mirroring the Harrisonburg/Waynesboro/Lexington pattern above) before
+going live, so the same day-one gaps don't recur.

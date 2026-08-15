@@ -622,3 +622,56 @@ ANALYSIS:
 - HAR and LEX small OVER cells (1-5 pieces each) are within normal miscount/timing noise, not flagged individually.
 - No date mismatches, no missing/stale files, no non-ok rows. Freeze window valid on both sides (all stores close 6 PM, sheets taken 6:17-6:36 PM, Bravo pulled 8:51-9:17 PM).
 - Reported to Joshua via Slack DM (D03BHQH5VGT) only, plain language, per Field Communication Standard - led with ROA pendants finding and the CUL known-pattern caveat.
+
+## 2026-08-13 (sold-based reconciliation — BACKFILLED 2026-08-14 ~2:20 PM) - jewelry-count-reconciliation
+- WHY LATE: the 7:47 PM Cowork task was found UNREGISTERED on 2026-08-14 (present on disk at Scheduled/jewelry-count-reconciliation/, absent from the registered task list; last successful run 2026-08-12). The 9:30 PM cloud watchdog correctly DMd Joshua. Root cause of the unregistration not pinned down — registration lost sometime after the 8/12 evening run. FIX: re-registered 2026-08-14 via create_scheduled_task (cron 47 19 * * *, registered as 7:49 PM daily with dispatch offset), original SKILL.md restored byte-identical (backup: SKILL.md.bak-pre-reregister-20260814), model claude-sonnet-5 frontmatter intact, enabled, next run tonight.
+- Bravo pull: trigger jewelry-count-recon-2026-08-13-auto (dropped 2026-08-14 14:06, health gate PASS first). All 5 cells success: CUL 15, HAR 7, LEX 5, ROA 5, WAY 12 rows. Grids non-empty (valid), ZERO jewelry-category items among sold rows at all 5 stores -> sold buckets all 0 (verified via count_jewelry_sold + manual category listing: tools/games/firearms/handbags/coins only).
+- Sheets (read 2026-08-14 via Chrome, 8/13-dated blocks, all sum-verified):
+  CUL AM 637/120/155/122/243=1277 OK (PM 1279 per 8/13 night compare)
+  HAR AM 450/48/124/49/112 sum 783 vs written total 784 (1-piece read ambiguity on sheet, annotations +5+4+1 rings, used written 784) (PM 802)
+  LEX AM 264/33/44/42/48=431 OK (PM 454)
+  ROA AM 541/118/157/79/148=1043 OK (rotated sheet, lightbox-verified; necklaces 157 pendants 148 disambiguated by total) (PM 1078)
+  WAY AM 324/40/64/46/55=529 OK (PM 529)
+- Reconciliation (net = AM-PM; sold=0 all stores; diff=net-sold): CUL -2 ok, HAR -18 FLAG, LEX -23 FLAG, ROA -35 FLAG, WAY 0 MATCH.
+- All three flags are the case-GREW direction with matching intraday add tally-marks on the AM sheets (LEX rings 264+8 tallies -> PM 272 etc.) = new intake to case, NOT missing stock. No store shrank beyond sales.
+- Posted plain-language summary to #jewlery-counts 2026-08-14 ~2:19 PM (a day late, no meta-commentary in channel).
+
+
+## 2026-08-14 (~3 PM) - CULPEPER RECONCILIATION under new Jewelry Category Standard - manual, Joshua-directed
+- Handler JewelryCaseCount.ahk extended to 8 categories (Charms, Brooches added; backup kept), watcher restarted cleanly.
+- CUL live pull 2026-08-14 ~2:47-3:08 PM, trigger jewelry-onhand-cul-recount-2026-08-14, all 8 rows ok.
+- Bravo unchanged vs 8/13 8:51 PM freeze pull on all 6 overlapping categories (no CUL jewelry transactions in between) -> values are freeze-window-valid against the 8/14 AM count sheet (Preston counted pre-open).
+- Expected (grouped): Rings 649, Bracelets 127, Necklaces 215 (116+99), Earrings 172, Pendants 325 (253+44+28). Total 1488.
+- Counted (Preston, 8/14 AM): 639 / 122 / 212 / 168 / 323. Total 1464.
+- Variance: -10 / -5 / -3 / -4 / -2. Total -24 (all SHORT direction = scope gap: Bravo counts case+safe+back-stock+bins, count is display case only).
+- Agreement with Preston: exact on Rings/Bracelets/Earrings/Pendants expected; Necklaces expected 215 (mine, verified twice) vs 214 (his) — 1 unit.
+- The old ROA-style pendant anomaly is now explained/absorbed by the grouping standard (charms+brooches were the missing pieces).
+- Nightly task now uses the 8-category pull + grouped mapping going forward.
+
+## 2026-08-14 (~4:35 PM) - ALL 5 STORES pulled under 8-category standard; 8/13 EOD sheets reconciled
+- Pulls: CUL (cul-recount trigger), HAR/LEX/ROA (4store trigger; WAY skipped by the 2700s hard-wall guard after retry loops), WAY (way trigger, status partial = Charms empty).
+- KEY FINDING 1: the 2026-08-13 ROA Pendants OVER 61 was NOT a Bravo mis-categorization. ROA Charms=60, Brooches=2. Grouped expected 92+60+2=154 vs sheet 153 = -1. ROA counters were ALREADY counting pendants+charms+brooches together while the report pulled pendants only. Prior conclusion SUPERSEDED.
+- KEY FINDING 2: the 8/13 sheets are INCONSISTENT store-to-store on what the PENDANTS line includes. Pendants-only vs grouped variance: CUL -10/-82, HAR +1/-5, LEX -1/-2, ROA +61/-1, WAY -4/-9. ROA counted GROUPED; CUL/HAR/LEX/WAY counted PENDANTS-ONLY. From 8/14 forward all stores are on the grouped standard (CUL 8/14: 323 counted vs 325 grouped expected).
+- KEY FINDING 3: EMPTY CATEGORIES LOG AS ERRORS. HAR Charms, WAY Charms, LEX Brooches rendered zero rows, recorded error not 0 (no-false-zeros design). Verified genuine. Nightly SKILL.md updated with the empty-category rule: Charms/Brooches error counts as 0 ONLY if the prior-day CSV was also 0/error; positive prior day means real read failure. Other 6 categories: error always a failure.
+- Bravo drift check (today live vs 8/13 freeze, 6 overlapping categories): CUL identical, LEX identical, ROA identical. HAR moved (Rings 457-456, Pendants 117-116); WAY moved (Rings 336-341, Pendants 59-62, Earrings 47-52, Chains 41-43, Necklaces 22-23). Both HAR and WAY have Charms=0 so only Brooches carries proxy risk.
+- Reliability: SelectInventorySavedReport combo flaky (CUL Brooches, LEX Rings, ROA Charms each failed a full attempt then recovered on category retry). Burned the 45-min wall clock and cost WAY its slot. Consider raising the hard wall or splitting the nightly run now that it is 5 stores x 8 categories.
+
+## 2026-08-14 (~8:30-9:35 PM ET) - Nightly jewelry-onhand-nightly-pull (consolidated task), all 5 stores
+
+- Weekday gate: Friday -> all 5 stores (CUL, HAR, LEX, ROA, WAY).
+- Contention check: no claim in last 30 min (most recent prior claim 2026-08-13). Health gate PASS (target CUL, 2026-08-14 20:35:53).
+- Trigger jewelry-onhand-2026-08-14 dropped 20:35:59 EDT, claimed within 15s.
+- Bravo pull (freeze-window, stores closed 6:00 PM): completed 21:31:41. Overall status partial - all 5 stores processed, 3 known empty-category errors (HAR Charms, LEX Brooches, WAY Charms), each confirmed empty per two retry attempts (90s no-parseable-row-total each) and matches the 2026-08-14 confirmed-empty list already in the nightly SKILL.md. Treated as 0 per the empty-category rule. CUL and ROA: all 8/8 categories success, no errors.
+- PM count sheets read via Chrome vision from #end-of-day, 8/14-dated block on each sheet, all sum-verified against written TOTALS line (ROA required total-minus-categories disambiguation on Earrings AM/PM digits - illegible digit, math-derived 85/87, both totals then matched exactly).
+- Store-to-sheet mapping confirmed via each sheet's own printed header (not poster identity): Sandi=CUL, Walker Tapley=HAR, Uriah=LEX, Benjie Moore=ROA (rotated 90 deg sheet), Chadd=WAY.
+
+Expected (Bravo, grouped) vs Counted (PM sheet), Rings/Bracelets/Earrings/Pendants/Necklaces:
+- CUL: 639/123/168/323/212 vs 639/122/168/323/212. Variance 0/-1/0/0/0. Total 1465 vs 1464 (-1).
+- HAR: 451/49/48/121/122 vs 461/49/49/118/124. Variance +10/0/+1/-3/+2. Total 791 vs 801 (+10).
+- LEX: 268/36/51/54/44 vs 272/37/49/52/46. Variance +4/+1/-2/-2/+2. Total 453 vs 456 (+3).
+- ROA: 553/124/92/154/161 vs 552/123/87/153/161. Variance -1/-1/-5/-1/0. Total 1084 vs 1076 (-8).
+- WAY: 338/41/52/66/66 vs 321/40/46/60/64. Variance -17/-1/-6/-6/-2. Total 563 vs 531 (-32).
+
+- Table posted to #jewlery-counts 2026-08-14 ~9:41 PM, no commentary per format.
+- DM sent to Joshua: HAR Rings +10 OVER (counted 461 > expected 451) - this is the only anomalous OVER variance tonight and does not match any previously logged standing case. No prior-night HAR Rings variance of this size found in this file on a quick pass - flag as a one-night event pending next comparison, not yet a confirmed repeating pattern. All other variances are in the expected SHORT direction (Bravo scope: case+safe+back-stock+bins vs sheet display-case-only) or small enough (LEX +3, CUL -1) to be counting noise.
+- No repeat-pattern conclusion possible yet for WAY -32 / ROA -8 vs prior nights without a systematic night-over-night diff; flagging for a future session to build one if this file keeps growing ad hoc.

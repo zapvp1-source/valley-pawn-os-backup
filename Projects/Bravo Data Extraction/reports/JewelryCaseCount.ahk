@@ -71,11 +71,13 @@ global JEWELRY_CASE_COUNT_REPORTS := Map(
     "Earrings",  "Claude Jewelry Audit - Earrings",
     "Chains",    "Claude Jewelry Audit - Chains",
     "Necklaces", "Claude Jewelry Audit - Necklaces",
-    "Bracelets", "Claude Jewelry Audit - Bracelets"
+    "Bracelets", "Claude Jewelry Audit - Bracelets",
+    "Charms",    "Claude Jewelry Audit - Charms",
+    "Brooches",  "Claude Jewelry Audit - Brooches"
 )
 
 ; Deterministic run order — keeps the CSV stable for diffing across days.
-global JEWELRY_CASE_COUNT_ORDER := ["Rings", "Bracelets", "Pendants", "Earrings", "Chains", "Necklaces"]
+global JEWELRY_CASE_COUNT_ORDER := ["Rings", "Bracelets", "Pendants", "Charms", "Brooches", "Earrings", "Chains", "Necklaces"]
 
 global JEWELRY_CASE_COUNT_ELEMENTS := Map(
     "sidebar_inventory",    "Inventory",

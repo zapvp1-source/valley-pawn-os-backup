@@ -11,7 +11,8 @@ from ebay_credentials import APP_ID as APP, DEV_ID as DEV, CERT_ID as CERT  # ne
 PATHS=["/sessions/fervent-admiring-noether/mnt/Desktop/Claude/Claude Back Up/Claude 4 back up/ebay_weekly_rankings.py", os.path.expanduser("~/ebay_weekly_rankings.py")]
 NS="urn:ebay:apis:eBLBaseComponents";URL="https://api.ebay.com/ws/api.dll"
 STATE=os.path.expanduser("~/ebay_caps_state.json")
-KEEP={"14K","18K","10K","925","1TB","2TB","500GB","256GB","128GB","USB","LED","LCD","HD","4K","OBD2","V1","V2"}
+KEEP={"14K","18K","10K","925","1TB","2TB","500GB","256GB","128GB","USB","LED","LCD","HD","4K","OBD2","V1","V2","SSD","HDD"}
+ABBR=re.compile(r"^[A-Za-z]\.([A-Za-z]\.)+$")  # all-caps period-abbreviations like W.R., U.S.A. -- keep as-is, not title-cased
 def stores():
     for p in PATHS:
         if os.path.exists(p):
@@ -41,7 +42,9 @@ def is_caps(t):
 def tc(t):
     out=[]
     for w in t.split():
-        if w.upper() in KEEP or any(ch.isdigit() for ch in w) or "/" in w:
+        if ABBR.match(w):
+            out.append(w.upper())
+        elif w.upper() in KEEP or any(ch.isdigit() for ch in w) or "/" in w:
             out.append(w)
         else:
             out.append(w[:1].upper()+w[1:].lower())

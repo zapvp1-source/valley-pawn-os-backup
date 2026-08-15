@@ -63,6 +63,10 @@ def db_connect():
         name, folder, body,
         path_or_url UNINDEXED, mtime UNINDEXED, size UNINDEXED, mime_type UNINDEXED,
         tokenize="porter unicode61")""")
+    c.execute("""CREATE VIRTUAL TABLE IF NOT EXISTS photos USING fts5(
+        name, ocr_text,
+        uuid UNINDEXED, date UNINDEXED, album UNINDEXED, kind UNINDEXED,
+        tokenize="porter unicode61")""")
     c.execute("CREATE TABLE IF NOT EXISTS meta(k TEXT PRIMARY KEY, v TEXT)")
     return c
 
@@ -530,6 +534,8 @@ def q(args):
     p.add_argument("--reminders", action="store_true")
     p.add_argument("--gdrive", action="store_true")
     p.add_argument("--drive", action="store_true", dest="gdrive")
+    p.add_argument("--photos", action="store_true")
+    p.add_argument("--pics", action="store_true", dest="photos")
     p.add_argument("--since")
     p.add_argument("--until")
     p.add_argument("--from", dest="frm")
@@ -540,13 +546,14 @@ def q(args):
     term = " ".join(a.terms)
     c = db_connect()
     res = []
-    any_flag = a.mail or a.files or a.msgs or a.notes or a.reminders or a.gdrive
+    any_flag = a.mail or a.files or a.msgs or a.notes or a.reminders or a.gdrive or a.photos
     want_mail = a.mail or not any_flag
     want_files = a.files or not any_flag
     want_msgs = a.msgs or not any_flag
     want_notes = a.notes or not any_flag
     want_reminders = a.reminders or not any_flag
     want_gdrive = a.gdrive or not any_flag
+    want_photos = a.photos or not any_flag
 
     def epoch(s):
         return int(time.mktime(time.strptime(s, "%Y-%m-%d"))) if s else None
@@ -640,6 +647,20 @@ def q(args):
         except sqlite3.OperationalError as e:
             print("gdrive:", e)
 
+    if want_photos:
+        sql = ("SELECT 'photo',name,album,uuid,date,kind,"
+               "snippet(photos,1,'>>','<<',' ... ',18),bm25(photos) FROM photos WHERE photos MATCH ?")
+        prm = [term]
+        if a.since:
+            sql += " AND date>=?"; prm.append(epoch(a.since))
+        if a.until:
+            sql += " AND date<=?"; prm.append(epoch(a.until))
+        sql += " ORDER BY bm25(photos) LIMIT ?"
+        prm.append(a.n)
+        try:
+            res += list(c.execute(sql, prm))
+        except sqlite3.OperationalError as e:
+            print("photos:", e)
     res.sort(key=lambda r: r[7])
     if a.json:
         print(json.dumps([dict(kind=r[0], title=r[1], who=str(r[2]), path=r[3],
@@ -667,6 +688,7 @@ def stats():
     print("notes rows    :", c.execute("SELECT count(*) FROM notes").fetchone()[0])
     print("reminders rows:", c.execute("SELECT count(*) FROM reminders").fetchone()[0])
     print("gdrive rows   :", c.execute("SELECT count(*) FROM gdrive").fetchone()[0])
+    print("photos rows   :", c.execute("SELECT count(*) FROM photos").fetchone()[0])
     print("need OCR      :", c.execute("SELECT count(*) FROM files WHERE needs_ocr=1").fetchone()[0])
     print("db size       : %.0f MB" % (os.path.getsize(DB) / 1e6))
 

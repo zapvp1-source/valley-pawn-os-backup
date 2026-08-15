@@ -33,8 +33,46 @@ if USE_TIER3:
 
 BASE = "/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/output/"
 OUT  = "/Users/joshuadavis/Documents/Claude/Projects/Pawn Walks/"
-GOLD_SPOT = 4350.0   # $/troy oz
-SILVER_SPOT = 68.0   # $/troy oz
+# ── Metals spot: LIVE FEED, with the old hardcoded values as last-resort fallback ─────
+# Changed 2026-08-14. These were hardcoded literals dated 2026-06-09 that nobody updated.
+# By 2026-08-14 silver had drifted to 68.00 hardcoded vs ~65.15 actual (~4.4% HIGH) —
+# high is the dangerous direction, since it inflates estimated value and makes a bad buy
+# look acceptable. Melt is the single biggest valuation source in the daily intake report,
+# so this fed straight into the numbers Joshua acts on.
+#
+# Canonical source of truth is now:  Valley Pawn OS/spot_prices.json
+# written daily by:                  Valley Pawn OS/fetch_spot_prices.py
+# DO NOT reintroduce a hardcoded spot price here or anywhere else — read the file.
+#
+# Fallback behaviour is deliberately loud-but-safe: if the feed is missing or stale we
+# still run (a stale melt number beats no intake report at all), but STALE_SPOT is set
+# so run_daily_intake.py can surface it rather than silently reporting on old prices.
+_FALLBACK_GOLD, _FALLBACK_SILVER = 4350.0, 68.0   # frozen 2026-06-09 — last resort only
+STALE_SPOT = ""
+
+def _load_live_spot():
+    """Return (gold, silver, note). Never raises — valuation must not die on a feed hiccup."""
+    try:
+        sys.path.insert(0, "/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS")
+        from fetch_spot_prices import load_spot
+        s = load_spot()
+        if s.get("ok") and s.get("gold") and s.get("silver"):
+            if s.get("stale"):
+                return s["gold"], s["silver"], (
+                    f"spot feed is STALE ({s['age_hours']}h old, updated {s['updated_at']}) "
+                    "— using last known good; check fetch_spot_prices.py")
+            return s["gold"], s["silver"], ""
+        return (_FALLBACK_GOLD, _FALLBACK_SILVER,
+                "spot feed unavailable (%s) — using FROZEN 2026-06-09 fallback prices; "
+                "melt values may be materially wrong" % s.get("note", "no file"))
+    except Exception as e:
+        return (_FALLBACK_GOLD, _FALLBACK_SILVER,
+                f"spot feed could not be loaded ({e}) — using FROZEN 2026-06-09 fallback "
+                "prices; melt values may be materially wrong")
+
+GOLD_SPOT, SILVER_SPOT, STALE_SPOT = _load_live_spot()
+if STALE_SPOT:
+    print(f"WARNING: {STALE_SPOT}")
 TARGET = 0.50
 DWT_PER_OZT = 20.0
 KARAT = {'24':1.0,'22':0.9167,'18':0.75,'14':0.585,'10':0.417,'9':0.375}
