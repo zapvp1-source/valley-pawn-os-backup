@@ -121,15 +121,20 @@ NEW_OK_RE = re.compile(r'\b(SEALED|NIB|NEW IN BOX|UNOPENED)\b', re.I)
 GENERIC_LEADS = frozenset(
     "MISC ASSORTED VARIOUS LOT COMIC BOOK BOOKS TOOLS TOOL JEWELRY GAME GAMES "
     "MOVIE MOVIES DVD CD VHS TOY TOYS BUNDLE ELECTRONICS ACCESSORY".split())
-# Brand+product pairs whose used-market listings are dominated by accessories/
+# Product families whose used-market listings are dominated by accessories/
 # games rather than the item itself — external comp structurally unreliable.
+# Proven live 2026-08-15: a $450 PS5 drew "fair ~$37" because used
+# 'PLAYSTATION 5' sold listings are overwhelmingly $20-40 games and
+# controllers. Consoles stay INTERNAL-ONLY — we sell plenty, the internal
+# index is deep (n=hundreds), and it can't be games-contaminated.
 AMBIGUOUS_RE = re.compile(
-    r'^(NINTENDO\s+(NINTENDO\s+)?SWITCH(\s+SWITCH)?|XBOX|PLAYSTATION|PS[345])\s*$', re.I)
+    r'\b(NINTENDO\s+SWITCH|XBOX|PLAY\s*STATION|PS[2345]\b|WII\b|GAME\s*CUBE|'
+    r'GAMING\s+CONSOLE)\b', re.I)
 
 
 def keyword_ok(desc: str) -> bool:
     d = re.sub(r'\s+', ' ', (desc or '').upper()).strip()
-    if not d or AMBIGUOUS_RE.match(d):
+    if not d or AMBIGUOUS_RE.search(d):
         return False
     if model_keys(d):
         return True
@@ -275,7 +280,13 @@ class FairValueEngine:
     def internal(self, desc: str, category: str) -> dict | None:
         hl = half_life_for(desc, category)
         best = None
-        for k in model_keys(desc):
+        # Consoles: "PS5" as a model key matches every GAME with PS5 in the
+        # title ($20-40), polluting the comp from the inside (live 2026-08-15:
+        # a $450 PS5 drew fair ~$37 from our own games history). For AMBIGUOUS
+        # items skip the model tier — brand+category separates 'Video Game
+        # System' from 'Video Games' and gives the honest console comp.
+        mk = [] if AMBIGUOUS_RE.search(desc or "") else model_keys(desc)
+        for k in mk:
             raw = self.model.get(k)
             if not raw or len(raw) < MIN_INTERNAL_N_USE:
                 continue

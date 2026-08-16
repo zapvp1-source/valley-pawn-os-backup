@@ -7,7 +7,31 @@ in the back office. **Nothing purchased — Joshua's instruction 2026-08-13: "do
 
 ---
 
-## The five
+## UPDATE 2026-08-13 — actual UniFi dealers (sells AND installs the brand)
+
+Joshua asked specifically who sells *and* installs UniFi Protect. Two distinctions matter:
+
+**You never need a dealer to BUY.** Ubiquiti sells direct at `store.ui.com` at list price — there's
+no dealer-only pricing tier to unlock. A "UniFi dealer" adds install expertise and support, not a
+better hardware price. So "who sells it" is only relevant if we choose turnkey.
+
+| Company | Location | Contact | Note |
+|---|---|---|---|
+| **M3 Technology Consultants** ⭐ | 12700 Fair Lakes Cir Ste 105, Fairfax VA 22033 | (703) 738-4489 · info@m3tc.com | **The direct hit.** Self-described UniFi Partner / UniFi Dealer / UniFi Consultant, and their site explicitly names **UniFi Protect camera installation** plus UniFi Access. Only found vendor that both sells and installs exactly our stack. ~50 min from Culpeper — distance is the open question, asked directly in the draft. |
+| **The Network Installers** | National | thenetworkinstallers.com | Certified Ubiquiti installer + authorized UniFi reseller, BICSI-certified crews, deploys the full UniFi stack incl. Protect. National coverage — confirm they actually service Culpeper. |
+| **Windstar Technologies** | 451 James Madison Hwy Ste 108, Culpeper VA 22701 | (540) 317-1200 | **1 mile from the store**, same road. Woman-owned, 20+ yrs, Chamber gold sponsor, Microsoft/Intel partner. ⚠️ No cameras or UniFi listed anywhere on their site — managed IT/cyber/M365/VoIP only. Unconfirmed for this work but geographically ideal; phone call, not email (no address published). |
+
+**Official directories** (search by zip 22701):
+- `installers.ui.com` — Ubiquiti's certified installer directory
+- `ui.com/partner-hub` — UniFi enterprise partner program
+- `ui.com/distributors` — authorized distributors (hardware only, no install)
+- `ubiquiti.directory` — independent list of UniFi installers/contractors
+
+**Draft added:** M3 Technology Consultants — `r3119230320630674780`.
+
+---
+
+## The five (general low-voltage/camera contractors)
 
 | # | Company | Location / distance | Contact | DCJS | Why they're on the list |
 |---|---|---|---|---|---|

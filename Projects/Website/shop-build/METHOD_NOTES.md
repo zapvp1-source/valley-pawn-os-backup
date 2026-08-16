@@ -46,3 +46,15 @@ Claude's context AND avoids the browser entirely for the publish step:
 Published 524 live items (Culpeper 325, Waynesboro 36, Harrisonburg 40, Lexington 27, Roanoke 96);
 24 weapons-adjacent items filtered out of 548 scraped. Verified live card count = 524. Posted
 summary to #website.
+
+## Run record — 2026-08-15 (Cowork sandbox bash, no Mac/osascript needed)
+Ran entirely via mcp__workspace__bash (Cowork's own sandboxed Linux shell) — the sandbox has
+direct outbound network access to both www.ebay.com and thevalleypawn.com, so the whole
+fetch -> generate -> publish -> verify pipeline ran there without ever touching the Mac shell,
+Chrome, or the 25s osascript timeout constraints. Files written directly to the mounted
+Website/shop-build folder are the same files the Mac sees (Cowork mounts it both places).
+Published 506 live items (Culpeper 317, Waynesboro 27, Harrisonburg 36, Lexington 29, Roanoke 97);
+24 weapons-adjacent items filtered out of 530 scraped. Verified live card count = 506 exactly,
+single VP-SHOP-START marker. This is a faster path than the prior osascript-curl method when
+Cowork's own sandbox is available — keep the osascript method documented above as the fallback
+for session types where sandbox bash lacks outbound access to eBay/WordPress.

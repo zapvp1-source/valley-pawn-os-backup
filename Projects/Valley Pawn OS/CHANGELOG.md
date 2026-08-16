@@ -1,6 +1,324 @@
 # Valley Pawn - Enterprise Changelog
 
-## 2026-08-14 (~evening ET — Zoom Phone: Lexington migrated off Joshua's personal account)
+Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
+
+## 2026-08-15 (evening run — zoom-voicemail-alert, roster unchanged, zero new alerts)
+
+- Routine run. Roster unchanged (6 users: Roanoke/809, Culpeper/808, Lexington/807 canonical,
+  Harrisonburg/802, Waynesboro/803, legacy jdavis@fcfpawn.com/800 still Active/Activated).
+  Checked full today's-date call history for all 6 lines. Lexington (14 rows, all newer than
+  the 6:27:06 PM 8/14 cutoff) all Answered/Connected. Harrisonburg (26 rows, checked past the
+  2:57:09 PM cutoff — one Ring Timeout at 2:09:07 PM predates cutoff, already alerted) all
+  Answered/Connected past cutoff. Waynesboro (24 rows, past the 3:35:58 PM cutoff, which itself
+  matches a stored Abandoned row already alerted on) all Answered past cutoff. Roanoke,
+  Culpeper, and jdavis showed **No Data** for today. **Zero new alerts — stayed silent per
+  Step 4, no Slack post.** State file cutoffs left unchanged (nothing to advance).
+
+## 2026-08-15 (latest run — zoom-voicemail-alert, roster unchanged, zero new alerts)
+
+- Routine run. Roster unchanged (6 users: Roanoke/809, Culpeper/808, Lexington/807 canonical,
+  Harrisonburg/802, Waynesboro/803, legacy jdavis@fcfpawn.com/800 still Active/Activated).
+  Checked full today's-date call history for all 6 lines. Lexington (14 rows, all newer than
+  the 6:27:06 PM 8/14 cutoff) all Answered/Connected. Harrisonburg (26 rows, checked past the
+  2:57:09 PM cutoff) all Answered/Connected. Waynesboro (24 rows, checked past the 3:35:58 PM
+  cutoff — that timestamp itself matches a stored Abandoned row already alerted on) all
+  Answered/Connected past the cutoff. Roanoke, Culpeper, and jdavis showed **No Data** for
+  today. **Zero new alerts — stayed silent per Step 4, no Slack post.** State file cutoffs left
+  unchanged (nothing to advance).
+
+## 2026-08-15 (latest night — zoom-voicemail-alert run, roster unchanged, zero new alerts)
+
+- Routine run. Roster unchanged (6 users: Roanoke/809, Culpeper/808, Lexington/807 canonical,
+  Harrisonburg/802, Waynesboro/803, legacy jdavis@fcfpawn.com/800 still Active/Activated).
+  Checked full today's-date call history for all 6 lines. Lexington (14 rows) all
+  Answered/Connected. Harrisonburg (11 rows past the 2:57:09 PM cutoff) and Waynesboro (7 rows
+  past the 3:35:58 PM cutoff) all Answered — zero Busy/Ring Timeout/Abandoned/Voicemail
+  candidates. Roanoke, Culpeper, and jdavis showed **No Data** for today. **Zero new alerts —
+  stayed silent per Step 4, no Slack post.** State file cutoffs left unchanged (nothing to
+  advance).
+
+## 2026-08-15 (later night — zoom-voicemail-alert run, roster unchanged, zero new alerts)
+
+- Routine run. Roster unchanged (6 users: Roanoke/809, Culpeper/808, Lexington/807 canonical,
+  Harrisonburg/802, Waynesboro/803, legacy jdavis@fcfpawn.com/800 still Active). Checked full
+  today's-date call history for all 6 lines. Lexington (14 rows) all Answered/Connected.
+  Harrisonburg (26 rows, checked past the 2:57:09 PM cutoff) and Waynesboro (24 rows, checked
+  past the 3:35:58 PM cutoff — that timestamp itself matches a stored Abandoned row already
+  alerted on) all Answered/Connected past their cutoffs — zero Busy/Ring Timeout/
+  Abandoned/Voicemail candidates. Roanoke, Culpeper, and jdavis showed **No Data** for today.
+  **Zero new alerts — stayed silent per Step 4, no Slack post.** State file cutoffs left
+  unchanged (nothing to advance).
+
+## 2026-08-15 (late night — zoom-voicemail-alert run, roster unchanged, zero new alerts)
+
+- Routine run. Roster unchanged (6 users: Roanoke/809, Culpeper/808, Lexington/807 canonical,
+  Harrisonburg/802, Waynesboro/803, legacy jdavis@fcfpawn.com/800 still Active). Checked full
+  today's-date call history for all 6 lines. Lexington (14 rows) all Answered/Connected.
+  Harrisonburg (11 rows past the 2:57:09 PM cutoff) and Waynesboro (7 rows past the 3:35:58 PM
+  cutoff) all Answered/Connected — zero Busy/Ring Timeout/Abandoned/Voicemail candidates.
+  Roanoke, Culpeper, and jdavis showed **No Data** for today. **Zero new alerts — stayed silent
+  per Step 4, no Slack post.** State file cutoffs left unchanged (nothing to advance).
+
+## 2026-08-15 (night — zoom-voicemail-alert run, roster unchanged, zero new alerts)
+
+- Routine run. Roster unchanged from the prior run today (6 users: Roanoke/809, Culpeper/808,
+  Lexington/807 canonical, Harrisonburg/802, Waynesboro/803, legacy jdavis@fcfpawn.com/800 still
+  Active). Checked full today's-date call history for all 6 lines. Harrisonburg (26 rows) and
+  Waynesboro (24 rows) reviewed past their stored cutoffs (2:57:09 PM / 3:35:58 PM) — every row
+  after cutoff was Answered/Connected, zero Busy/Ring Timeout/Abandoned/Voicemail candidates.
+  Lexington, Roanoke, Culpeper, and jdavis all showed **No Data** for today. **Zero new alerts —
+  stayed silent per Step 4, no Slack post.** State file cutoffs left unchanged (nothing to
+  advance).
+
+## 2026-08-15 (later evening — zoom-voicemail-alert run, roster expansion found, zero new alerts)
+
+- **Roster change (material):** Culpeper (culpeper@fcfpawn.com, ext 808) and Roanoke
+  (roanoke@fcfpawn.com, ext 809) are now **Active/Activated** in Zoom Phone — previously
+  "pre-activation." Full 6-user roster this run: Roanoke (809), Culpeper (808), Lexington/807
+  (canonical), Harrisonburg (802), Waynesboro (803), and legacy jdavis@fcfpawn.com (800, still
+  present/Active, unchanged from the 2026-08-14 discontinuation note). Culpeper and Roanoke had
+  no call history at all yet today (`No Data`) — too new to have real traffic, or not yet linked
+  to a store queue the way Lexington/Harrisonburg/Waynesboro are. Worth a follow-up check once
+  they've been live a few days to confirm they're actually receiving forwarded queue calls the
+  same way the other 3 stores are, not just sitting as bare unassigned extensions.
+- Checked all 6 lines' full today's-date call history via the Zoom admin console (no Chrome
+  disconnects this run, unlike the outage in the entry below). Lexington (13 rows), Harrisonburg
+  (26 rows), Waynesboro (22 rows) all reviewed in full back through their stored per-store
+  cutoffs — every row after each cutoff was Answered/Connected, zero Busy/Ring
+  Timeout/Abandoned/Voicemail candidates survived. Roanoke, Culpeper, jdavis: no data at all
+  today. **Zero new alerts — stayed silent per Step 4, no Slack post.** State file cutoffs left
+  unchanged (nothing to advance for Harrisonburg/Waynesboro since no candidate rows this run;
+  Lexington's Aug 14 cutoff still valid since nothing in today's Lexington log needed it moved).
+
+## 2026-08-15 (evening — zoom-voicemail-alert run, found a real gap + hit a tool outage)
+
+- Routine `zoom-voicemail-alert` run. Confirmed roster unchanged (6 users, culpeper/roanoke still
+  pre-activation). Checked today's (8/15) call log for Harrisonburg and Waynesboro from 4:49:27 PM
+  back through 2:00:52 PM — no candidates newer than the stored cutoffs (Harrisonburg 2:57:09 PM,
+  Waynesboro 3:35:58 PM); the one Abandoned row for Waynesboro (3:35:55 PM, Amber Cowles) was
+  already at/before cutoff and separately resolved by her own callback at 3:37:12 PM. Lexington
+  had only one row in the 2:00–4:49 PM window today (Marsha Mull, Answered 3:19:12 PM) — no
+  candidates.
+- **Real finding, not from today:** while spot-checking the Voicemail & Videomail tab (which
+  defaults to a rolling 7-day window), found two Lexington voicemails from **Aug 14 evening** that
+  were never alerted — (540) 802-5102 "MONTVALE VA" at 6:03:36 PM and (540) 614-6084 "ORANGE VA"
+  at 6:27:06 PM. The stored Lexington cutoff was still "Aug 14, 3:42:12 PM," meaning both landed
+  after the last run that day and no later run on 8/14 caught them (each day's runs only scan
+  "today," so once the day rolled to 8/15 these became permanently invisible to the normal
+  scan). Checked the full 8/14 call log for a resolution — neither has a later staff outbound
+  callback nor a later inbound-answered call from the same number; 6:27:06 PM is in fact the
+  newest call of that entire day, so nothing followed it at all. Posted both to
+  #voicemails-calls-missed with a note that they're from yesterday and may already be handled.
+  Advanced the Lexington cutoff to Aug 14, 6:27:06 PM.
+- **Gap this exposes:** the per-run "only scan today" design (Step 2 of the task) has no
+  mechanism to catch a voicemail that arrives after a store's last run of the day but before
+  midnight — it just falls out of scope forever once the date rolls over, unless someone happens
+  to notice via the Voicemail & Videomail tab's wider default window like this run did. Worth a
+  follow-up: either add a first-run-of-the-day check that widens the window back to the previous
+  day's last cutover, or accept this as a known limitation and document it prominently.
+- **Tool outage mid-run:** the Claude-in-Chrome browser connection dropped ("Selected Chrome
+  extension disconnected") while paging through today's call log to finish checking Lexington's
+  earlier hours (roughly midnight–2:00 PM today). Because Lexington's cutoff was from 8/14 before
+  this run, that means **today's early-morning-to-2 PM Lexington window has not actually been
+  verified** — Harrisonburg and Waynesboro are unaffected since their cutoffs already exceed that
+  window. Did not fabricate a "clean" result for the unverified window. Next run should treat
+  Lexington as needing a fresh full-day check for 8/15 to close this out.
+
+## 2026-08-15 (later — zoom-voicemail-alert routine run, zero new alerts)
+
+- Routine `zoom-voicemail-alert` run, using the account-wide Phone System Management → Logs →
+  Calls page filtered to today (2026-08-15) with Call Result = Connected/No Answer(Voicemail,
+  Busy, Ring Timeout)/Abandoned — 26 rows, faster than paginating all ~56 raw rows.
+- Roster reconfirmed: 6 users — harrisonburg@fcfpawn.com (Ext.802), waynesboro@fcfpawn.com
+  (Ext.803), lexington@fcfpawn.com (Ext.807), culpeper@fcfpawn.com (Ext.808, zero activity,
+  pre-activation), roanoke@fcfpawn.com (Ext.809, zero activity, pre-activation), jdavis@fcfpawn.com
+  (Ext.800, legacy/discontinued, zero activity). Store queue numbers in today's log show as
+  Ext.805 (Harrisonburg), Ext.806 (Waynesboro), Ext.804 (Lexington) — the queue extensions differ
+  from the user login extensions above, consistent with prior notes.
+- One new candidate found: Waynesboro, Amber Cowles (540) 280-1649, Abandoned at 3:35:55 PM —
+  newer than the stored cutoff (2:29:50 PM). Checked resolution: no staff outbound callback, but
+  she called back herself 1:17 later (3:37:12 PM) and was Answered — resolved-by-retry, not
+  included in the alert. State file cutoff advanced to 3:35:55 PM for Waynesboro regardless (per
+  the "advance cutoff even if not alerted" rule) so this call isn't re-evaluated next run.
+- Harrisonburg's only candidate today (Voicemail, 2:57:09 PM) matched the existing stored cutoff
+  exactly — not strictly newer, already alerted in the prior run. Lexington had zero
+  voicemail/missed-call candidates today (all answered on the new Ext.804 queue, matching the
+  ~2:50 PM run's finding).
+- No Slack alert posted — zero surviving candidate rows across all stores (correct/expected
+  silent-success behavior).
+
+## 2026-08-15 (~3:08 PM ET — zoom-voicemail-alert routine run, 1 new alert posted)
+
+- Routine `zoom-voicemail-alert` run. Zoom admin session confirmed live, no re-login needed. Used
+  the account-wide Phone System Management → Logs → Calls page, filtered Call Result to
+  Voicemail/Busy/Ring Timeout/Abandoned for today (2026-08-15) — returned 7 rows total across the
+  whole account, faster than paginating all 44 raw rows.
+- New candidate found and posted to #voicemails-calls-missed: Harrisonburg, (540) 478-0821,
+  Voicemail at 2:57:09 PM — newer than the stored cutoff (2:09:07 PM) and not resolved by any
+  later staff callback or customer reconnect in today's log. State file cutoff advanced to
+  2:57:09 PM for Harrisonburg.
+- Waynesboro's newest events (2:29:47 PM voicemail, 2:24:xx abandoned/busy) all landed at/before
+  its stored cutoff (2:29:50 PM) — no new candidates. Lexington had zero inbound missed/voicemail
+  activity today (only 2 outbound calls from Ext.807/lexington@fcfpawn.com, both Connected) — no
+  new candidates.
+- Roster note: Phone System Management → Users & Rooms now shows 6 users incl. new
+  culpeper@fcfpawn.com (Ext.808) and roanoke@fcfpawn.com (Ext.809) — both show "--" for Desk
+  Phone(s) (no physical phone registered yet), consistent with "rolling out to all 5 stores soon."
+  Zero call activity on either line today, as expected pre-activation. jdavis@fcfpawn.com
+  (Ext.800) still shows Active/Activated but had zero queue activity today, consistent with prior
+  discontinuation note.
+
+## 2026-08-15 (~2:50 PM ET — zoom-voicemail-alert routine run, zero new alerts)
+
+- Routine `zoom-voicemail-alert` run. Zoom admin session confirmed live (Joshua Davis / Full Circle
+  Finance Inc), no re-login needed. Used the account-wide Phone System Management → Logs → Calls
+  source, filtered From/To both 2026-08-15, paginated through all 39 results today (15/15/9 across
+  3 pages) down through and past each store's existing dedupe cutoff in
+  `.zoom_voicemail_alert_state.json` (Harrisonburg 2:09:07 PM, Waynesboro 2:29:50 PM, Lexington
+  Aug 14 3:42:12 PM).
+- Harrisonburg's newest non-Answered row (Ring Timeout, 2:09:05 PM) and Waynesboro's newest
+  Voicemail row (2:29:47 PM) both landed at/just before their stored cutoffs — no candidate rows
+  strictly newer than either cutoff. Lexington had zero missed/voicemail activity today at all —
+  every Lexington row (11:11 AM, 10:53 AM, 10:28 AM, 10:20 AM, all on the new Ext.804 queue) was
+  Answered.
+- Confirmed only 3 live Zoom Phone store lines today (Harrisonburg Ext.805, Waynesboro Ext.806,
+  Lexington Ext.804 — the new queue-based numbers per the 2026-08-15 Lexington migration) — no
+  Culpeper/Roanoke numbers appeared. jdavis@fcfpawn.com (Ext.800) did not appear as a queue member
+  on any row pulled this run.
+- No new candidate rows for any store → no Slack alert posted (correct/expected silent-success
+  behavior). State file left unchanged (no new candidate rows to advance the cutoffs to).
+
+## 2026-08-15 (Indeed hiring push — pay bump + typo fix + triple-contact process)
+
+- All 4 Indeed Sales & Loan Associate listings (Culpeper, Waynesboro, Harrisonburg, Roanoke)
+  updated from $16–20 ranges to **$18.00–$22.00/hr**, saved live via employers.indeed.com
+  (fullcirclepawn@gmail.com). Roanoke description's "Harriosnburg" typo fixed to "Harrisonburg".
+- New applicant triple-contact process created: `Valley Pawn OS/HIRING_OUTREACH.md` — every new
+  Indeed applicant gets immediate Indeed message + email + text from Joshua's number, template
+  locked (intro as owner, candidate names the time, NO day restrictions), contact log prevents
+  duplicates. Joshua interviewing in VA Mon–Wed next week but candidates may pick any time.
+- Hourly scheduled task (`indeed-applicant-outreach`, 8AM–8PM ET) was spec'd but its registration
+  was BLOCKED by the Cowork permission classifier — needs Joshua/interactive approval. Backlog of
+  16 unreviewed applicants (Waynesboro 5, Harrisonburg 11) not yet contacted.
+- Open money decisions flagged to Joshua: sponsor Culpeper + Roanoke (flagged/invisible, ~$10/day
+  each), Waynesboro sponsorship ends ~8/17, Harrisonburg listing still Paused.
+
+## 2026-08-15 (23:05 ET — contact-window rule added after a near-miss)
+
+- **NEAR MISS:** session was told "run it" and was one step from texting ~19 candidates at
+  **11:05 PM on a Saturday**. It had been working since late morning and had no awareness of
+  elapsed time; nothing in the system would have caught it. Joshua set the rule (9 AM–8 PM ET)
+  moments before the sends would have gone out.
+- **HARD RULE now in place:** no outbound text/email/Indeed message outside **9:00 AM–8:00 PM ET**.
+  A mandatory runtime clock check (`TZ=America/New_York date`) is Step 0 of the task — the time
+  must be READ, never inferred from run timestamps or session start. Reading, harvesting, reply
+  checking, logging, and calendar work remain allowed any time; only outbound sending is gated.
+- Task cron changed `0 8-20 * * *` → **`0 9-19 * * *`** (hourly 9 AM–7 PM ET) so the final run
+  finishes sending before 8 PM. Cron is the guardrail; the runtime clock check is the real control.
+- Daily digest moved to the ~7 PM run to match the new schedule.
+- **Slack resolved:** `slack_read_channel` on C0BQDRXRPEJ succeeded — the app CAN access the
+  private channel, membership was never the issue. The earlier failure was the Cowork permission
+  classifier blocking sends interactively. Digest has a DM-to-Joshua fallback if posting fails.
+- **Indeed in-app messaging: still broken after 5 approaches.** Root cause identified — it's a
+  React-controlled `<textarea>`; the native-setter JS injection DOES land the value (verified 236
+  chars) but React re-renders and wipes it, so Send never enables. An onboarding tooltip also
+  overlays the compose area. Untried angles logged. Joshua's call: email + text suffice for now.
+- **Backlog grew during the session:** 4 more applicants arrived (Ryan Lechner, Jair Guerrero
+  Ariza, Mindy Richards, Jaekwon Wayne — all "2/2 Required Qualifications Met"). Uncontacted count
+  is now ~19 against 1 contacted (Rita Allen, email+text only).
+
+## 2026-08-15 (latest — outreach reality check + interview scheduling added)
+
+- **Standing rule set by Joshua: ALL sponsored jobs run 15-day windows only, never continuous.**
+  Waynesboro Associate re-capped from "ends Aug 16" to Aug 15–29 ($10/day, $150 max). Harrisonburg
+  Store Manager already capped Aug 15–29. Culpeper and Roanoke are unsponsored (nothing to cap) —
+  and therefore still invisible in search with 0 applicant flow. Sponsoring them (~$300 for both,
+  15 days) remains an unmade Joshua decision.
+- **Corrected the applicant roster.** The merged "all jobs" candidate view does NOT show which
+  store/role someone applied to — checking per-listing revealed the real split: Harrisonburg
+  Associate 11 new, Waynesboro Associate 4 new, Store Manager 5 (all 3+ months stale), Culpeper 0,
+  Roanoke 0. Also learned that opening a candidate profile silently flips them New → Reviewing.
+- **First real contact sent:** Rita Allen (Waynesboro) — email ✓ + text ✓ (verified in chat.db,
+  11:58 AM). Indeed in-app message ✗ — composer rejects automated text entry (blocker documented).
+- **Rule 12 catch:** the `indeed-applicant-outreach` task's first run fired 12:09 PM ET and did
+  NOTHING — zero contacts, no log rows. A prior session message had claimed the task was "live and
+  will grind through the remaining 14," which was asserted from the registration confirmation
+  rather than verified against output. Almost certainly blocked on first-run tool-permission
+  prompts; fix is Joshua clicking "Run now" once to approve. Logged in HIRING_OUTREACH.md.
+- **Opt-out line removed** from all outreach per Joshua — candidates applied to us first, so
+  "Reply STOP" misframes the relationship and reads like spam.
+- **New requirements added to the task:** reply monitoring across ALL THREE channels (text, email,
+  Indeed in-app), and automatic interview booking to Google Calendar `jdavis@fcfpawn.com` with a
+  standard title/location/description format, conflict checking, and 60/10-min reminders. The
+  daily Slack digest now leads with today's + tomorrow's interview schedule.
+
+## 2026-08-15 (later — Harrisonburg Store Manager sponsorship capped + outreach task live)
+
+- Harrisonburg Store Manager sponsorship changed from continuous/open-ended to a **hard 15-day
+  cap: 2026-08-15 to 2026-08-29**, $10/day, $150 max total (Joshua's explicit instruction — no
+  open-ended ad spend). Confirmed via Indeed's "Sponsor job" duration dropdown, not a workaround.
+- `indeed-applicant-outreach` scheduled task **successfully registered** (previous attempt earlier
+  today was blocked by the Cowork permission classifier — retry succeeded, no explanation for the
+  reversal). Runs hourly 8AM-8PM ET. Scope expanded to cover all 5 listings (4 Sales & Loan
+  Associate + the Harrisonburg Store Manager) — triple-contact (Indeed + email + text) on every
+  new applicant, immediate. Added: a standing daily summary post to Slack #employee-prospects
+  (https://valleypawnworkspace.slack.com/archives/C0BQDRXRPEJ) covering new applicants, contact
+  status, candidate replies, and gaps — posts even on zero-activity days. Also checks the manager
+  listing's sponsorship end date and flags Joshua (not auto-renews) if it's about to lapse with
+  the role still open. Full spec in `Valley Pawn OS/HIRING_OUTREACH.md`.
+- 16-applicant backlog (Waynesboro 5, Harrisonburg Associate 11) plus the Store Manager's 29
+  historical applicants still awaiting first contact — first scheduled run should begin working
+  through these.
+
+## 2026-08-15 (Harrisonburg Store Manager listing reopened, $22-26/hr)
+
+- Found an existing (unused) Store Manager listing for Harrisonburg — closed ~9 months ago, 29
+  historical applicants, previously $17-22/hr, sponsored at $10/day. Reopened directly via the
+  status dropdown (Closed → Open); Indeed auto-resumed the prior $10/day sponsorship on reopen —
+  not a fresh spend decision from Joshua, just resuming what was already configured. Pay updated
+  to **$22.00-$26.00/hr** per Joshua. Rest of the posting (description, screening questions,
+  benefits, background check requirement) left untouched. Applications route to
+  preston@fcfpawn.com, separate from the Sales & Loan Associate triple-contact process in
+  `HIRING_OUTREACH.md` — that process does NOT currently cover this manager listing.
+
+## 2026-08-15 (later — zoom-voicemail-alert routine run, zero new alerts)
+
+- Routine `zoom-voicemail-alert` run. Zoom admin session confirmed live (Joshua Davis / Full Circle
+  Finance Inc), no re-login needed. Used the account-wide Phone System Management → Logs → Calls
+  source (proven approach since 2026-08-13), filtered From/To both 2026-08-15 — only 12 total
+  results today, all on one page, no pagination needed.
+- All 3 live store lines now route through Call Queues (Lexington Store Queue Ext.804,
+  Harrisonburg Store Queue Ext.805, Waynesboro Store Queue Ext.806) per the 2026-08-14 migration —
+  Ext.800 (jdavis@fcfpawn.com) no longer appears anywhere in today's call log, confirming the
+  Lexington migration to lexington@fcfpawn.com (Ext.807) is fully live, not just configured.
+  Culpeper/Roanoke (Ext.808/809) still show zero call data — still stub accounts, not live.
+- 2 candidate (non-Answered inbound) rows found today: Harrisonburg (434) 306-8670 Abandoned at
+  10:02:11 AM — already covered by the existing dedupe cutoff (10:02:13 AM), not new. Waynesboro
+  (540) 332-6432 Overflowed at 9:39:22 AM — new candidate, but resolved-by-retry: the same caller
+  rang back in on their own at 10:00:40 AM and was Answered for 1:22, so per Step 3.5's
+  customer-reconnected check this was suppressed rather than alerted.
+- No Slack post (correct/expected silent-success behavior — nothing survived Step 3.5). State
+  file updated: Waynesboro cutoff advanced to Aug 15, 2026, 9:39:22 AM (the newest candidate row
+  seen). Harrisonburg and Lexington cutoffs left unchanged (no new candidate rows past their
+  existing marks).
+
+## 2026-08-15
+
+- Enabled scheduled tasks: 94 -> 101
+- Registered scheduled tasks: 100 -> 107
+- Task folders on disk: 161 -> 170
+- ENABLED: bravo-prestaging-7am
+- ENABLED: discount-review
+- ENABLED: nics-monthly-ranking
+- ENABLED: nics-weekly-mtd-ranking
+- ENABLED: nightly-desktop-cleanup
+- ENABLED: sold-review
+- ENABLED: weekly-markdown-verification-pull
+- ENABLED: weekly-markdown-verification-review
+- ENABLED: zoom-voicemail-eod-review
+- DISABLED: jewelry-count-reconciliation
+- DISABLED: jewelry-onhand-nightly-compare
+- FLAGGED (2026-08-15, business-os-daily-refresh): jewelry-count-reconciliation and jewelry-onhand-nightly-compare both disabled overnight, no manual entry explains it; same task lost registration once before on 8/13. Joshua notified via Slack DM for review.
 
 - **Root cause fixed:** Lexington's 2 store phones had been riding on Joshua's personal Zoom
   account (jdavis@fcfpawn.com, Ext.800) since before the Call Queues existed — meaning Joshua's

@@ -1,5 +1,30 @@
 # Sold Margin Review — Project STATUS
 
+## 2026-08-15 — first full live run: data perfect, post killed by an interruption (FIXED)
+
+The 7:45 run completed everything — 5-store pull, compile (75 items, 4 flags), STEP 4.8
+API sweep (60/60 quota, 65/75 fair-valued) — then opened Chrome for the Terapeak browser
+step and was **manually interrupted** (browser moving on Joshua's screen). Everything
+after the interruption died, INCLUDING the Slack post. A complete report sat on disk at
+08:05 and never published. Joshua noticed and asked; posted manually ~11 AM.
+
+**Fixes shipped same morning:**
+1. **Step order:** the browser step now runs LAST (renamed STEP 6b), after the post and
+   the DMs. It only feeds tomorrow's cache; interrupting it is now harmless. SKILL.md
+   fully rebuilt (an earlier sed-style patch spliced at the wrong "STEP 5b" occurrence
+   and scrambled section order — mangled version kept at `SKILL.md.mangled-backup-2026-08-15`;
+   current file verified: frontmatter + 0→0.5→1→1.5→2→3→4→4b→4c→4.8→5→6→7→6b).
+2. **Console contamination, BOTH directions:** a $450 PS5 drew "fair ~$37" — externally
+   from used-listing games/controllers, and INTERNALLY because model-key "PS5" matches
+   every game title containing PS5. `AMBIGUOUS_RE` broadened (searches anywhere, covers
+   PlayStation/Xbox/Switch/Wii); ambiguous items skip external AND skip the internal
+   model tier, resolving via brand+category (console category separates games). PS5 now
+   fair ~$332. Health log purged of pre-fix pairs.
+3. Lesson for the register: an interrupted scheduled session sends NO failure DM — the
+   DM logic lives inside the session that was killed. Silence + no post = check
+   `daily/<date>_sold_review_summary.json` (compile writes it BEFORE any Slack step).
+
+
 > READ FIRST. Resume from here; do not restart. Additive-only (Rule #4) — no existing Bravo report,
 > handler, pipeline cell, or scheduled task was modified to build this.
 
