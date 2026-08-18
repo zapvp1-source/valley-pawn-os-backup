@@ -1,5 +1,11 @@
 # Sold Margin Review — Project STATUS
 
+## 2026-08-16 — morning run failed 5/5 stores; recovered + posted same day; queue hardening shipped
+
+The 7:50 run and the 8:34 retry both failed every store on the Bravo saved-report dropdown, and the retry hung the AHK mid-HAR. ROOT CAUSE (confirmed in logs): Bravo was stranded several dialogs deep (stacked report screens) — in that state the dropdown never populates, so retries without a recovery could never work. Once the health-gate recovery cleared the stack (~09:16), the identical selection code worked first try on all 5 stores; the retry2 trigger that looked unclaimed was actually just queued behind a concurrent discount-review retry (the watcher is serial). All 5 sold-discount-detail CSVs for 2026-08-15 landed by 09:49 and were content-verified (CUL 27 / HAR 33 / LEX 13 / ROA 19 / WAY 47 rows, all dated 8/15). Fair-value sweep (quota already at 60/60, 1 eligible item skipped), compile (138 items, avg margin 54%, 8 flags, 0 critical, no missing stores), the verbatim #sold-review post, the flags DM, and the quota DM all completed ~12:15. Terapeak/browser enrichment intentionally skipped for the recovery run.
+
+**Hardening shipped (additive, in Bravo Data Extraction):** `_cleanup_stale_claims.ps1` (moves claimed triggers >90 min old with no matching result into `triggers/failed/` — first sweep quarantined 95 orphans, nothing deleted) and `_restart_watcher_v2.ps1` (sweep + unmodified original restart + 60-second watcher liveness verification + queue-depth log to `logs/_restart_watcher_v2.log`). Escalation ladder appended to `Scheduled/BRAVO_KNOWN_ISSUES.md`: an all-stores dropdown failure means recover/relaunch Bravo FIRST via the health gate — never raw retries — and check whether another trigger's log is advancing before declaring the watcher dead. Still open (logged in Life OS OPEN_ITEMS_REGISTER): root cause of the two mid-HAR AHK hangs, and WAY grid-walk truncation flakiness (40/47 twice, complete on 3rd try).
+
 ## 2026-08-15 — first full live run: data perfect, post killed by an interruption (FIXED)
 
 The 7:45 run completed everything — 5-store pull, compile (75 items, 4 flags), STEP 4.8

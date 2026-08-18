@@ -1,7 +1,7 @@
 ---
 name: pawn-walk
 description: PAWN WALK — daily 6:30 AM. One consolidated task: health-gate Bravo, pull yesterday's intake-detail ("Claude Pawn Walks") for all 5 stores, self-heal if stalled, compile T1/T2/T3 margin analysis, post per-store summary to #pawn-walks, DM Joshua on flags/failure. Replaces daily-intake-prestage + daily-intake-margin.
-model: sonnet
+model: claude-sonnet-5
 ---
 
 > ⚠️ **FAILURE ALERT POLICY (still binding):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium.
@@ -31,8 +31,6 @@ KEY FACTS
 STEP 0 — osascript gate: `do shell script "echo READY"`.
 
 STEP 1 — Compute via osascript `date`: YESTERDAY=`date -v-1d +%Y-%m-%d`; NOW=`date +%Y-%m-%dT%H:%M:%S%z`; STAMP=`date +%Y-%m-%dT%H-%M-%S`; TRIGGER_ID="intake-detail-"+STAMP.
-
-STEP 1.5 - FAST PATH (added 2026-08-16, bravo-morning-pull consolidation). The 6:50 AM `bravo-morning-pull` task normally has yesterday’s intake-detail CSVs already pulled and verified. Poll up to ~25 min (<=18s sleeps, separate calls) for `logs/_morning_pull_status_<DATE>.txt` (DATE = today) containing `intake-detail CLEAN`, stopping early if it appears as FAILED. If CLEAN AND all 5 `output/<YESTERDAY>_to_<YESTERDAY>_<STORE>_intake-detail.csv` exist: SKIP STEPS 2-4 and go straight to the compile step. If the wait times out, the line says FAILED, or any CSV is missing: run STEPS 2-4 exactly as written - the unchanged, proven fallback.
 
 STEP 2 — ENSURE BRAVO HEALTHY (require PASS). Run backgrounded so it cannot hang this session:
 `do shell script "rm -f '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/logs/_health_gate_status.txt' 2>/dev/null; nohup bash '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/bravo_ensure_healthy.sh' CUL > /tmp/pawnwalk_ensure.log 2>&1 & echo LAUNCHED"`

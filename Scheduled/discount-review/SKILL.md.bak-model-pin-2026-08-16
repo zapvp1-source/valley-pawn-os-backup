@@ -1,6 +1,5 @@
 ---
 name: discount-review
-model: claude-sonnet-5
 description: DISCOUNT REVIEW — daily, Type A (trigger-drop). Pulls yesterday's "Claude Sold Inv Details" for OPEN stores via the FIXED sold-discount-detail cell, compiles point-of-sale discount analysis (ticket Price vs Last Sold Price), flags heavily-discounted items, posts to #discount-review. Shares its pull with sold-review.
 ---
 

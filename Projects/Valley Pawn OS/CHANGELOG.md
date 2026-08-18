@@ -2,6 +2,76 @@
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
 
+## 2026-08-17
+
+- Enabled scheduled tasks: 102 -> 103
+- Registered scheduled tasks: 108 -> 109
+- Task folders on disk: 171 -> 172
+- ENABLED: bravo-morning-pull
+
+## 2026-08-16 (jewelry nightly pull HARDENED: per-store triggers + JewelryCaseCountV2 wrong-report guard)
+- Root cause of 8/15 failed nightly (ROA/WAY skipped) + three clean-looking WRONG counts (CUL Rings 43,
+  HAR Pendants 173, HAR Necklaces 25): (1) one 5-store trigger cannot finish 5x8 categories inside the
+  watcher's 45-min per-trigger hard wall (config.json is NOT parsed - the wall is hardcoded), and
+  (2) the Inventory saved-report combo can silently commit the WRONG report (same regression class as
+  Claude Pawn Walks x5); v1 handler never verified BoxReportName, so wrong-report counts flowed through.
+  Joshua confirmed the wrong-report mechanism. Additionally, Bravo.exe itself degraded into a genuine
+  hang mid-day 8/16 (health gate Rung4b force-kill; ultimately required hard VM restart) which mimicked
+  handler bugs for ~2 hours; and post-relaunch Bravo comes back restored-size which breaks handler
+  geometry (fix: _maximize_bravo.ahk / _run_maximize_session1.ps1, new).
+- ADDITIVE fixes shipped: reports/JewelryCaseCountV2.ahk (NEW cell jewelry-case-counts-v2; v1
+  untouched): selection = cached-GUID -> by-name -> GUID probe, ALWAYS verified against BoxReportName
+  (Value->Name fallback) before Ok - refuses to run the wrong report; positive counts accepted only
+  when STABLE across two reads 6s apart; per-store GUID cache jewelry_v2_guid_cache.txt self-learns
+  and self-heals. Watcher: backup + 2 registration lines only. Nightly task SKILL.md switched to
+  ONE TRIGGER PER OPEN STORE (each gets its own 45-min wall; one flaky store can no longer starve the
+  rest) and to the v2 cell.
+- 8/15 count completed Sunday 8/16 inside the extended freeze window (stores closed Sun; Bravo frozen
+  since Sat 6 PM): all 5 stores re-pulled via v2, table posted to #jewlery-counts. Details in
+  Jewelry Count Reconciliation/STATUS.md.
+
+## 2026-08-16 (indeed-applicant-outreach HARDENED after policy-violation incident)
+- Incident: 11:44 AM session booked 6 same-day + 3 in-person interviews, violating the phone-only
+  and no-same-day policies Joshua set at ~11:40 AM (policy landed in HIRING_OUTREACH.md mid-session
+  via a concurrent run; task SKILL.md still carried stale contradicting text). All 9 bookings
+  corrected + candidates notified by 12:25 PM; 17 interviews now stand (14 Mon 8/17, 3 Tue 8/18),
+  all phone, all confirmed — schedule table in HIRING_OUTREACH.md.
+- Task prompt rewritten via update_scheduled_task with 5 gates: (A) RUN_LOCK file mutex vs
+  concurrent runs (3-way collision happened today), (B) pre-booking validator (re-read policy,
+  phone-only, not-today, 7AM-9PM, no conflict/duplicate, number in hand), (C) zero-count
+  double-check for stale Indeed SPA renders, (D) classifier-blocked sends get one retry then
+  log+DM instead of silent drop, (E) Step 0.5 reads whole thread incl. Joshua's own texts
+  (Brandon Bird duplicate). Full incident writeup in HIRING_OUTREACH.md "HARDENING" section.
+
+## 2026-08-16 (bravo-morning-pull — consolidated 6:50 AM pipeline pull, expert-board approved)
+- Root cause of the 85-min items-to-price run (this morning): 4 morning tasks each driving Bravo separately in the 7–8:15 AM window (pawn-walk, sold-review, daily-items-to-price, discount-review) + retry loops restarting the watcher mid-sibling-run. Fix shipped additively: NEW scheduled task `bravo-morning-pull` (daily 6:50 AM, sonnet-pinned, silent) runs _restart_watcher_v2.ps1 singleton hygiene + health gate, drops ONE combined trigger (intake-detail Y..Y, sold-discount-detail Y..Y, items-to-price today × 5 stores), integrity-gates each report with one retry round, writes certificate `logs/_morning_pull_status_<DATE>.txt` (per-report CLEAN/FAILED).
+- FAST PATH added (backups: SKILL.md.bak-pre-morning-pull-2026-08-16) to `daily-items-to-price` (STEP 1.5) and `pawn-walk` (STEP 1.5): if certificate says CLEAN and CSVs exist → skip own pull, compile+post from disk; otherwise fall back to unchanged original flow. sold-review/discount-review needed NO edit — they already skip the pull when CSVs are on disk.
+- Enabled scheduled tasks: 102 -> 103. PROVE-OUT: watch 2–3 mornings (certificate present by ~7:35, posts on time, no fallback pulls) before considering any retiming of downstream tasks. Next efficiency phase (open item): investigate Bravo scheduled/emailed report exports to eliminate UI pulls entirely.
+
+## 2026-08-16 (sold-review 2026-08-15 recovered + Bravo watcher-queue hardening)
+- Morning 5/5-store sold-review failure diagnosed (Bravo stranded stacked-dialog state killed the saved-report dropdown on every store; watcher was queued-serial, not dead). Data recovered, compiled and posted to #sold-review same day. Shipped additive: _cleanup_stale_claims.ps1 (orphaned claimed-trigger sweep to triggers/failed, 95 quarantined) + _restart_watcher_v2.ps1 (sweep + original restart + 60s liveness verify) + escalation ladder in BRAVO_KNOWN_ISSUES.md (all-stores dropdown failure = recover/relaunch Bravo FIRST, never raw retries).
+
+## 2026-08-16 (full scheduled-task fleet audit — findings logged, fixes staged)
+
+- Audited all 108 registered Cowork tasks + 7 loaded launchd agents against output (Rule 12).
+  Healthy: zero enabled recurring tasks overdue; Bravo pipeline output fresh through today;
+  watchdog layer verified working. BROKEN/AT-RISK: (1) ~1,100 usage-cap skips, ongoing daily —
+  zoom-voicemail-alert alone 506; (2) `com.valleypawn.unified-search-refresh` failing nightly
+  since ~Aug 14, exit 126, "Operation not permitted" — macOS TCC blocks launchd-bash from
+  ~/Documents; (3) 7 enabled tasks UNPINNED (can fire on Fable): bravo-prestaging-7am,
+  indeed-applicant-outreach, nics-monthly-ranking, nics-weekly-mtd-ranking,
+  weekly-markdown-verification-pull/-review, zoom-voicemail-eod-review; (4) task-hygiene-sweep,
+  eom-bravo-gl-export-watchdog, vp-comms-drift-monthly-check silently missed their August
+  first-runs. REDUNDANT: 63 unregistered task folders, 4 disabled-residue registrations, live
+  overlaps (eBay audit pair, GA4 double-pull, deal-of-week trio, canvas five-pack). Fix commands
+  staged in session report `Scheduled_Task_Audit_2026-08-16.md` §6 — session classifier blocked
+  Scheduled-folder writes, needs one approval. Full row in Open Items Register.
+
+- Enabled scheduled tasks: 101 -> 102
+- Registered scheduled tasks: 107 -> 108
+- Task folders on disk: 170 -> 171
+- ENABLED: indeed-applicant-outreach
+
 ## 2026-08-15 (evening run — zoom-voicemail-alert, roster unchanged, zero new alerts)
 
 - Routine run. Roster unchanged (6 users: Roanoke/809, Culpeper/808, Lexington/807 canonical,

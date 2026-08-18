@@ -99,6 +99,7 @@ Persistent
 #Include reports\JewelryCountAudit.ahk
 #Include reports\JewelryCaseAudit.ahk
 #Include reports\JewelryCaseCount.ahk
+#Include reports\JewelryCaseCountV2.ahk
 #Include reports\SoldDiscountDetail.ahk
 ; Add #Include for each new report module here.
 
@@ -221,6 +222,7 @@ Main() {
     REPORT_HANDLERS["jewelry-case-chains"]    := PullJewelryCaseChains
     REPORT_HANDLERS["jewelry-case-necklaces"] := PullJewelryCaseNecklaces
     REPORT_HANDLERS["jewelry-case-counts"]    := PullJewelryCaseCounts
+    REPORT_HANDLERS["jewelry-case-counts-v2"] := PullJewelryCaseCountsV2
     REPORT_HANDLERS["sold-discount-detail"] := PullSoldDiscountDetail
     ; Add additional registrations here as we build out reports.
 

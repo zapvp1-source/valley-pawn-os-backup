@@ -1,6 +1,5 @@
 ---
 name: weekly-loan-layaway-review
-model: claude-sonnet-5
 description: On-demand — run Bravo loan & layaway review across all 5 Valley Pawn stores via the Bravo Data Extraction pipeline. Post LOAN summary to #loan-review and LAYAWAY summary to #layaway-review (TWO separate posts, separate channels). No Parallels grant required.
 ---
 

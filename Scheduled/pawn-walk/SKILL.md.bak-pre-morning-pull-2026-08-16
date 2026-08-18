@@ -32,8 +32,6 @@ STEP 0 — osascript gate: `do shell script "echo READY"`.
 
 STEP 1 — Compute via osascript `date`: YESTERDAY=`date -v-1d +%Y-%m-%d`; NOW=`date +%Y-%m-%dT%H:%M:%S%z`; STAMP=`date +%Y-%m-%dT%H-%M-%S`; TRIGGER_ID="intake-detail-"+STAMP.
 
-STEP 1.5 - FAST PATH (added 2026-08-16, bravo-morning-pull consolidation). The 6:50 AM `bravo-morning-pull` task normally has yesterday’s intake-detail CSVs already pulled and verified. Poll up to ~25 min (<=18s sleeps, separate calls) for `logs/_morning_pull_status_<DATE>.txt` (DATE = today) containing `intake-detail CLEAN`, stopping early if it appears as FAILED. If CLEAN AND all 5 `output/<YESTERDAY>_to_<YESTERDAY>_<STORE>_intake-detail.csv` exist: SKIP STEPS 2-4 and go straight to the compile step. If the wait times out, the line says FAILED, or any CSV is missing: run STEPS 2-4 exactly as written - the unchanged, proven fallback.
-
 STEP 2 — ENSURE BRAVO HEALTHY (require PASS). Run backgrounded so it cannot hang this session:
 `do shell script "rm -f '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/logs/_health_gate_status.txt' 2>/dev/null; nohup bash '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/bravo_ensure_healthy.sh' CUL > /tmp/pawnwalk_ensure.log 2>&1 & echo LAUNCHED"`
 Then poll `logs/_health_gate_status.txt` (<=18s sleeps across separate calls, ~12 min cap) until it reads `PASS`. If it ends `FAIL ...`, the gate already ran its full self-heal (force-kill → relaunch Bravo+watcher → restart watcher → recover-to-dashboard). Still proceed to STEP 3 and drop the trigger — the in-session watcher sometimes reaches a dashboard where the external gate cannot — but note the FAIL for STEP 6 (internal log only).

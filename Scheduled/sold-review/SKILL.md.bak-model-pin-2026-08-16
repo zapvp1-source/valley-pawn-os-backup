@@ -1,6 +1,5 @@
 ---
 name: sold-review
-model: claude-sonnet-5
 description: SOLD REVIEW — daily, Type A (trigger-drop). Pulls yesterday's "Claude Sold Inv Details" for OPEN stores via the FIXED sold-discount-detail cell, compiles realized-margin analysis (Cost vs Last Sold Price), flags items sold too cheap, posts to #sold-review. Shares its pull with discount-review.
 ---
 
