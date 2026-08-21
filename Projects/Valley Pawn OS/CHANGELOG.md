@@ -2,6 +2,67 @@
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
 
+## 2026-08-21 (Apple Mail: store mailboxes decluttered from Joshua's Inbox view)
+- Joshua added the 5 store IMAP mailboxes (culpeper/waynesboro/harrisonburg/lexington/roanoke
+  @fcfpawn.com) to Apple Mail on the Mac Studio and wanted to be able to check them on demand
+  without their volume (mostly eBay notifications) flowing into his everyday Inbox/unified view.
+- Added 5 Mail rules (Mail > Settings > Rules), one per store account: "Archive store mail -
+  <account>" -> condition To-header contains that store's address -> action move message to that
+  account's own "All Mail" mailbox (the Gmail-IMAP archive folder), stop-evaluating-rules on,
+  placed at the end of the rule list so existing rules (FFL Transfers, GunBroker, Chekkit, etc.)
+  still get first crack at anything they handle. Nothing is deleted — All Mail retains every
+  message, fully searchable/browsable per account any time Joshua wants to check.
+- Also one-time archived the existing backlog sitting in each store's Inbox (same move, applied
+  directly): CUL 1,493 -> 0, WAY 3,144 -> 0, HAR 6,769 -> 0, LEX 4,210 -> 0, ROA 9,409 -> 0. All
+  landed safely in that account's All Mail (verified counts match).
+- Note for future sessions: Mail's AppleScript "rule type: account" enumerator collides at
+  runtime with Mail's "account" class/command ("Can't make account into type constant") -- use
+  rule type "to header" + qualifier "does contain value" + the account's own address instead,
+  which is unambiguous and achieves the same per-account routing.
+
+## 2026-08-21 (Mac-outage recovery audit + FULL cloud->local scheduled-task migration + folder cleanup)
+
+- AUDIT: local Cowork fleet ran NOTHING 8/18 ~10:30 AM -> 8/21 ~8:39 AM ET. Root cause: the Mac
+  Studio itself was down (booted 8:36 AM 8/21); zero skips recorded 8/19-8/20; the 8/21 skip burst
+  (global_limit, ~1,264) is relaunch catch-up throttling, NOT a standing usage-cap crisis. 3 days of
+  daily reports missed; fleet self-recovered morning of 8/21. Cloud triggers + launchd agents were
+  clean throughout (unified-search-refresh TCC failure from 8/16 audit now FIXED, exit 0).
+  Full report: Scheduled_Task_Audit_2026-08-21.md.
+- MIGRATION (Joshua: "all cloud tasks should be moved to local"): all 13 cloud scheduled tasks
+  retired. 8 unique jobs now run as LOCAL tasks (all sonnet-pinned): precious-metals-settlement-handler
+  (9:00a daily), quarterly-capex-sweep (9:00a 1st of qtr), bravo-preflight-relaunch (4:00a daily —
+  MERGES the redundant identical pair nightly-bravo-restart + Bravo Pre-Flight Relaunch),
+  monthly-ebay-ratings-sweep (10:00a 1st), hiring-inbox-watch (10a-6p even hrs Mon-Sat),
+  monthly-scrap-rankings (4:30a 1st), vp-ai-visibility-autofix (Fri 9:30a — local run restores
+  GA4/Facebook/Sheets access cloud never had), vp-ai-search-autofix (Mon 8:30a). Registered tasks
+  109 -> 117 (registry 118 rows incl. disabled). 4 cloud twins of already-enabled local tasks DELETED
+  (content-batch-weekly, website-trend-daily, casual-video-daily, publer-analytics-friday — these had
+  been double-running), 3 disabled cloud residue DELETED (sold-review, in-store-inventory-sync,
+  dashboard-preopen), Salt Run weekly DELETED (retired per Joshua). 9 migrated cloud triggers left
+  DISABLED as rollback holds — delete after clean proving week (~8/28). Registry edit required full
+  Claude.app process-tree quiesce (helper daemon clobbers file edits from memory — 2 attempts reverted
+  before the working procedure); backups scheduled-tasks.json.bak-cloudmigration-20260821-* + scripts
+  in Projects/.migration-staging/.
+- FOLDER CLEANUP (Joshua: "clean up folders"): 51 dead never-registered task folders moved to
+  Scheduled/_archive-20260821/ (reversible). 9 kept — still referenced by live tasks/launchd
+  (incl. dashboard-data-collector: loaded launchd agent executes its collect.sh).
+
+## 2026-08-21 (Precious Metals Settlement Handler switched to local-device execution)
+- Trigger "Precious Metals Settlement Handler" (daily 9am ET / 13:00 UTC) was firing without a
+  guaranteed binding to Joshua's Mac Studio, even though every step of its job (Chrome-based Gmail
+  attachment download, osascript file I/O, reading Bravo scrap-refining-gold CSVs, writing the
+  REVIEW workbook, archiving to the Google Drive-synced folder) requires local Mac access. Same
+  cloud-vs-local gap documented for vp-ai-visibility-autofix (GA4/Facebook/Sheets writes unreachable
+  from cloud fires).
+- Deleted trig_01Mdn2evBT3F4e25JMSdDKJ8 and recreated as trig_01K8pTE3CfdC7jkiK5LD6sBV with
+  requires_local_device: true (same name, cron 0 13 * * *, same prompt body plus an explicit
+  device-unreachable -> one plain Slack DM, no cloud fallback). Prompt unchanged otherwise, still
+  reads /Precious Metals Settlements/OPERATING_GUIDE.md fresh every run.
+- Verified this run (2026-08-21): searched Gmail for new Elemetal settlement emails (none since the
+  8/4 blended settlement already sitting in reviews/2026-08_allocations_REVIEW.csv, still awaiting
+  Joshua's approval/rename to CLOSED) and confirmed no CLOSED file pending archive. Initialized
+  logs/state.json (previously missing) with that message ID marked processed.
+
 ## 2026-08-17
 
 - Enabled scheduled tasks: 102 -> 103

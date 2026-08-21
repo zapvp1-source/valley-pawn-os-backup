@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 import re, json, os, subprocess, sys, html as H, time
 
-BASE = "/sessions/brave-serene-archimedes/mnt/Website/shop-build"
+BASE = "/sessions/zen-nice-gauss/mnt/Website/shop-build"
 RAW  = os.path.join(BASE, "raw")
-CJ   = os.path.join(BASE, "vp_ebay_cookiejar.txt")
+CJ   = os.path.join(BASE, "vp_ebay_cookiejar_run.txt")
 os.makedirs(RAW, exist_ok=True)
 if os.path.exists(CJ):
-    os.remove(CJ)
+    try:
+        os.remove(CJ)
+    except Exception:
+        open(CJ, "w").close()
 
 STORES = [
     ("Culpeper",      "vpculpeper"),

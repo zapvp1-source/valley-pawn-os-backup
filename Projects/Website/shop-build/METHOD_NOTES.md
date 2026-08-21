@@ -58,3 +58,13 @@ Published 506 live items (Culpeper 317, Waynesboro 27, Harrisonburg 36, Lexingto
 single VP-SHOP-START marker. This is a faster path than the prior osascript-curl method when
 Cowork's own sandbox is available — keep the osascript method documented above as the fallback
 for session types where sandbox bash lacks outbound access to eBay/WordPress.
+
+## Run record — 2026-08-18 (scheduled autonomous run, sandbox bash)
+Ran fully via mcp__workspace__bash (Cowork sandbox has direct outbound access to eBay + WP).
+Fixed fetch_run_sandbox.py BASE path (session mount dir changes each session) and worked around
+a PermissionError on os.remove() of the pre-existing cookie jar (mount FS blocked delete of a
+file created by a prior session/user context) by renaming the cookie jar to
+vp_ebay_cookiejar_run.txt and falling back to truncate-via-open() if remove() fails.
+Published 507 live items (Culpeper 314, Waynesboro 37, Harrisonburg 35, Lexington 26, Roanoke 95);
+24 weapons-adjacent items filtered out of 531 scraped. Verified live card count = 507 exactly,
+single VP-SHOP-START marker. Posted summary to #website successfully.

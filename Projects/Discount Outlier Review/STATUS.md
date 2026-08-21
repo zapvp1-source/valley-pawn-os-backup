@@ -1,6 +1,19 @@
 # Discount Outlier Review — STATUS
 
-Last updated: 2026-08-14 (~08:22 ET — daily run)
+Last updated: 2026-08-18 (~08:26 ET — daily run)
+
+## 2026-08-18 (~08:26 ET — daily discount-review run)
+
+- YESTERDAY=2026-08-17 (Monday), OPEN_STORES=[CUL,HAR,LEX,ROA,WAY] (all 5).
+- REUSE-FIRST: all 5 CSVs already present on disk (shared pull, likely from `sold-review`) —
+  skipped health-gate/trigger/poll entirely, went straight to compile.
+- Compile EXIT:0. 66 items, avg discount 10.4%, $1,010.12 total discounted off ticket, 27
+  flags, 1 into_loss (CUL). missing_stores=[]. YTD (6 selling days in 2026): company
+  $6,407.97 — CUL $1,444.72 / HAR $1,188.02 / LEX $1,396.03 / ROA $582.38 / WAY $1,796.82.
+  WAY was today's outlier: 18.7% avg discount / 17 flags.
+- Posted `slack_message` verbatim to #discount-review manually (script's own direct-HTTP
+  post again failed with `slack_error=token_not_found`, same known gap — not fixed yet).
+- DM'd Joshua the flags alert (27 flags, 1 into_loss, all 5 stores) per policy.
 
 ## 2026-08-14 (~08:22 ET — daily discount-review run, confirms the token_not_found note)
 
