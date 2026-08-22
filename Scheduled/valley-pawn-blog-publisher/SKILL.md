@@ -4,8 +4,7 @@ description: Write and publish a new blog post to thevalleypawn.com twice per we
 model: claude-sonnet-5
 ---
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
-
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
 
 > ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
 
@@ -104,6 +103,7 @@ Every blog post MUST use this WordPress block structure for a polished, professi
 ```
 
 ### 5. One in-content image (wide alignment, using existing media)
+
 Pick one image from the media library that fits the topic. Use this block format:
 ```
 <!-- wp:image {"id":MEDIA_ID,"sizeSlug":"large","linkDestination":"none","align":"wide"} -->
@@ -112,7 +112,7 @@ Pick one image from the media library that fits the topic. Use this block format
 ```
 
 Available images in the media library (use the media REST endpoint to find more):
-- ID 51: loans-money-house.jpg (loan application) 
+- ID 51: loans-money-house.jpg (loan application)
 - ID 50: hero-jewelry-cash-godaddy.jpg (jewelry and cash)
 - ID 52: retail-hardware-tools.jpg (power tools)
 - ID 37: musical-instruments.jpg (guitars, instruments)
@@ -140,15 +140,13 @@ Available images in the media library (use the media REST endpoint to find more)
 ### 7. CTA box at bottom (gray background, rounded corners)
 ```
 <!-- wp:group {"backgroundColor":"theme-2","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"}},"border":{"radius":"8px"}},"layout":{"type":"constrained"}} -->
-<div class="wp-block-group has-theme-2-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)">
-<!-- wp:heading {"level":3,"style":{"typography":{"fontWeight":"700"}}} -->
+<div class="wp-block-group has-theme-2-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:heading {"level":3,"style":{"typography":{"fontWeight":"700"}}} -->
 <h3 class="wp-block-heading" style="font-weight:700">CTA Heading</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
 <p>CTA text mentioning Valley Pawn's five locations, hours (Monday-Saturday 10 AM to 6 PM), and linking to <a href="https://thevalleypawn.com">thevalleypawn.com</a>. End with <em>What's Right Is Right.</em></p>
-<!-- /wp:paragraph -->
-</div>
+<!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 ```
 
@@ -156,9 +154,35 @@ Available images in the media library (use the media REST endpoint to find more)
 
 Every post MUST have a featured_media set. Choose an image ID from the media library above that best matches the post topic.
 
-## Publishing Instructions — Chrome + wp.apiFetch (PRIMARY PATH)
+## Publishing Instructions — PRIMARY PATH (wpcom Content Authoring MCP)
 
-The dedicated WordPress wpcom Content Authoring MCP is NOT reliably available. Publish via Chrome instead. Joshua's WP.com session at thevalleypawn.com is logged in.
+> **Updated 2026-08-21:** the dedicated WordPress wpcom Content Authoring MCP tool has been confirmed AVAILABLE and reliable — it is now the PRIMARY path, replacing the old Chrome/nonce-based approach as primary. The Chrome path (below, now SECONDARY) remains as the fallback if this MCP tool is missing from ToolSearch or hard-errors after one retry. Root cause of the 2026-08-21 watchdog false-alarm incident was unrelated to this MCP's availability (it was a WP.com public REST cache lag on the watchdog's read side, now fixed in blog-publisher-watchdog) — but the Chrome+nonce path is inherently more fragile (session expiry, nonce staleness, multi-step JS chunking) than a single API call, so it is demoted to fallback on general reliability grounds.
+
+**Step 1 — Load the tool.** `ToolSearch` with query `select:mcp__40f0bfed-dd3b-4c55-b43a-ad8386c9caa0__wpcom-mcp-content-authoring,mcp__40f0bfed-dd3b-4c55-b43a-ad8386c9caa0__wpcom-user-sites` if deferred.
+
+**Step 2 — Check recent posts (avoid topic overlap).** Call `wpcom-mcp-content-authoring`: `action: "execute"`, `operation: "posts.list"`, `wpcom_site: "thevalleypawn.com"`, `params: {"status": "publish", "per_page": 10, "orderby": "date", "order": "desc"}`. Choose a content-pillar topic that does NOT overlap with the titles returned.
+
+**Step 3 — Choose featured image** (from the Featured Image list above).
+
+**Step 4 — Write the full post** using the Professional Formatting Template above. Aim for 600–1,000 words. Build the complete WordPress block markup as a single string (title, content, excerpt).
+
+**Step 5 — Publish.** Call `wpcom-mcp-content-authoring`: `action: "execute"`, `operation: "posts.create"`, `wpcom_site: "thevalleypawn.com"`, `params: {"title": "...", "content": "<full block markup>", "status": "publish", "featured_media": IMAGE_ID, "excerpt": "Brief 1-2 sentence summary.", "user_confirmed": true}`. Pass `user_confirmed: true` — this is a scheduled autonomous task; Joshua's standing instructions in this file are the required advance authorization, so do not stop to ask for confirmation. If the tool's own safety protocol still returns an intermediate "describe what you plan to do and confirm" response instead of executing, immediately re-call the same operation with `user_confirmed: true` already set rather than pausing — never end the turn on a confirmation request for this task.
+
+**Step 6 — Read the result.** Confirm the response includes a post `id` and `link` with `status: "publish"`. If it errors or returns a non-publish status after one retry, fall through to the SECONDARY PATH below.
+
+**Step 7 — Verify the post is live.** Use `mcp__workspace__bash`:
+```
+curl -sIL -o /dev/null -w 'http=%{http_code} url=%{url_effective}\n' '<link from the create result>'
+```
+Confirm HTTP 200. Note: the public REST listing endpoint can lag behind an actual publish by up to an hour or more due to WP.com edge caching — a direct HEAD request to the post's own permalink (as above) is the reliable live-check, not a fresh `/wp-json/wp/v2/posts` listing query.
+
+**Step 8 — Archive a local copy and notify #blog-posts.** Save the block markup to `/Users/joshuadavis/Desktop/Claude Back Up/Claude 4 back up/blog-post-YYYY-MM-DD-slug.html`. Then post a short Slack notification with the published link to the **#blog-posts** channel (channel ID `C0APY6TE604`). Do NOT DM Joshua — the notification goes to the #blog-posts channel ONLY. Keep the message concise: post title, content pillar, and the published URL.
+
+The task is complete only when Step 6's post id/link is confirmed AND Step 7 returns HTTP 200.
+
+## Publishing Instructions — SECONDARY PATH (Chrome + wp.apiFetch, use only if PRIMARY PATH is unavailable)
+
+Only use this path if the wpcom Content Authoring MCP tool does not appear in ToolSearch at all, or hard-errors on `posts.create` after one retry. Joshua's WP.com session at thevalleypawn.com is logged in in Chrome.
 
 **Step 1 — Open the editor.** Load the Chrome MCP tools (`mcp__Claude_in_Chrome__*`). Create a tab group if needed:
 ```
@@ -196,8 +220,8 @@ window.__blocks.length                          // last line returns count
 ```
 Important escaping rules for inlined strings:
 - Use double-quoted JS strings (or properly-escaped single-quoted ones).
-- For apostrophes inside string content, use the typographic curly apostrophe ’ (U+2019) — that's what publishes anyway and it sidesteps single-quote escaping.
-- Use curly quotes “ ” and em dash — as literal characters.
+- For apostrophes inside string content, use the typographic curly apostrophe ' (U+2019) — that's what publishes anyway and it sidesteps single-quote escaping.
+- Use curly quotes " " and em dash — as literal characters.
 - Avoid backticks and ${} in JS strings.
 - Keep each chunk reasonable in size (a handful of blocks at a time).
 
@@ -250,13 +274,8 @@ Before publishing, verify:
 - Content is unique and not repeating a recently published topic
 - Seasonal relevance where applicable
 
-## Fallback / legacy reference
+## If both paths are unavailable
 
-If the wpcom MCP tool `mcp__40f0bfed-dd3b-4c55-b43a-ad8386c9caa0__wpcom-mcp-content-authoring` ever appears in ToolSearch (try `select:mcp__40f0bfed-dd3b-4c55-b43a-ad8386c9caa0__wpcom-mcp-content-authoring`), prefer it over the Chrome path — it is one API call instead of many. Operations:
-- `posts.list` — params `{"status": "publish", "per_page": 10, "orderby": "date", "order": "desc"}`
-- `media.list` — params `{"per_page": 20, "media_type": "image"}`
-- `posts.create` — params `{"title": "...", "content": "...", "status": "publish", "featured_media": IMAGE_ID, "excerpt": "..."}`
+If neither the wpcom MCP nor Chrome is available at all, save the draft block markup to the workspace folder and produce a run report — do not stall waiting for the user.
 
-If neither path is available (no Chrome AND no wpcom MCP), save the draft block markup to the workspace folder and produce a run report — do not stall waiting for the user.
-
-Act autonomously. Do not ask questions. Just write a great, professionally formatted blog post and publish it.
+Act autonomously. Do not ask questions. Just write a great, professionally formatted blog post and publish it — via the PRIMARY (wpcom MCP) path first.

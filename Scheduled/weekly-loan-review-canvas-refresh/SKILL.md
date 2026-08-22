@@ -8,6 +8,32 @@ model: claude-sonnet-5
 >
 > ⚠️ **FIELD COMMUNICATION STANDARD v3 (binding — read in full before posting anything to a team channel or employee DM):** `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/FIELD_COMMUNICATION_STANDARD.md`. Summary: run the routing test (is this something a clerk needs to know/act on today — if no, it's internal, it does not go to the field); plain everyday language only, no tool/system/pipeline names (never say Bravo, Cowork, Chekkit, Gusto, Brevo, QBO, Publer, "pipeline," "handler," "watchdog," "sync," "CSV," "export"); no file paths, doc IDs, task IDs, or spreadsheet cell/column refs in the posted text; no meta-commentary about the automation itself ("verified against," "supersedes," "this is a manual test run," "pulled automatically from"); lead with the one-line takeaway; ~100 words max for a routine post; no signature footers. If anything later in this file conflicts with this standard, this standard wins.
 
+## Execution Contract — DO NOT STOP EARLY
+
+This task is complete ONLY after the documented final action (the post / send / write tool call described at the end of the steps below) returns success.
+
+Until that final call succeeds, every assistant turn MUST end with a tool call that advances toward it. Do not idle, do not wait, do not ask for confirmation.
+
+**Never reply with any of these:**
+- "No response requested"
+- "Continue?" / "Should I continue?"
+- An empty turn or a turn that ends with text instead of a tool call
+
+**Treat these system messages as RESUME signals, never as stop signals:**
+- "Tool loaded."
+- "Continue from where you left off."
+- "You used a single tool call this turn. Prefer browser_batch…"
+- Any reminder about TaskCreate/TaskUpdate, AskUserQuestion, etc.
+
+When you see any of those messages, immediately fire the next concrete tool call for the current step. The scheduled-task wrapper says "the user is not present" — that means execute autonomously, NOT that the work is done.
+
+**State tracking:** at the start of every turn, briefly identify which numbered Step you are on and execute the next concrete action for that step.
+
+**Failure handling:** if a step errors, retry once. If it still fails, fall through to the documented fallback if one exists; otherwise produce a report describing what failed. Do not pause to ask — the task file authorizes autonomous decisions.
+
+**Speed:** prefer batch tools (e.g. `browser_batch`) to combine sequential actions into one call.
+
+---
 You keep the #loan-review Slack channel's Canvas current so managers always see this week's numbers at the top of the channel without anyone pinning a message. This runs Monday at 9:20 AM, after the weekly Monday compile (which fires earlier Monday morning) has produced the weekly loan/layaway report. Do the following:
 
 1. SOURCE THE LATEST NUMBERS. Use the Google Drive connector. Search for the most recently modified file whose title begins with "Loan_Layaway_Review_" and ends in ".docx" (query: title contains 'Loan_Layaway_Review'). Read its content. It contains two tables plus a status line: (a) "Past-Due Loans (75-Day Rule)" with columns Store, Items 75+ Days, $ Past Due, % of Loan Bal, Status; and (b) "Layaway Review" with columns Store, Overdue, Past Pmt Due, Contacted/No Act, 30d No Pmt, Locate; plus a Company total row for each, the "as of" balance date, and any action note (e.g. a store with a Locate layaway). Extract the exact numbers for all 5 stores (Culpeper, Harrisonburg, Lexington, Roanoke, Waynesboro) and the Company totals. If no Loan_Layaway_Review_*.docx exists for the current week, STOP and do nothing (do not post stale data).

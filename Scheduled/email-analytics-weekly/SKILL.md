@@ -154,3 +154,8 @@ PHASE 2 (future)
 Both belong in a separate scheduled task that runs Sunday night (after the post-send transaction window closes), reading from the email-analytics-weekly sheet to identify the cohort.
 
 <!-- migrated to working model 2026-06-15 -->
+## CORRECTION -- 2026-08-21 run (append-only, does not edit sections above)
+
+The North-star metric section above (Directions clicks per 1,000) and the PHASE 1.6 section are STALE. Verified 2026-08-21 via curl against thevalleypawn.com/c/culpeper: the /c/store and /t/store redirects are LIVE (302 to tel:), matching brevo-context which already documented this shipped 2026-05-28. Effective immediately: use calls_texts_per_1k (already a populated column in the master sheet) as the north-star metric in STEP 5 and the Slack post, not directions_per_1k. Directions is now secondary only.
+
+Also flagged in this runs Slack post: no campaign has sent since 2026-08-01 as of this run. The W-series weekly cadence (W6 through W9, 2026-07-09 through 2026-07-30) stopped after W9 -- three dark weeks. Recommendation given to Joshua: resume weekly cadence with a Store Spotlight theme (W8 Harrisonburg drove 250 calls+texts per 1000, the best result in the dataset) rather than Education (W7 drove 0).

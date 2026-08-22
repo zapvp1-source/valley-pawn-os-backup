@@ -4,9 +4,40 @@ description: Weekly Valley Pawn AI-search (GEO) health check — schema, llms.tx
 model: claude-sonnet-5
 ---
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
 
+> 🛡️ **HARDENING RULES (added 2026-08-21, after a run stalled at step 0):** A prior run never reached Check 1 because it tried to mount `~/Documents/Claude/Projects` (an enterprise-map / global-instruction reflex) and that interactive folder-approval call aborted with no user present to click it, then a second tool call was flagged as user-interrupted. Neither was a real problem with the website checks — the run just never got there. To prevent repeats:
+> 1. **This task is fully self-contained — skip ALL interactive/approval-gated steps.** Do NOT call `request_cowork_directory`, do not attempt to mount `~/Documents/Claude/Projects` or any other folder, and do not wait on any tool that requires a live user click (OAuth, folder pickers, confirmation dialogs). Scheduled runs are non-interactive — nothing under Documents/Claude is needed for this check. Go straight to CHECK 1 below using Claude-in-Chrome and the Slack MCP connector only.
+> 2. **Retry transient tool errors before treating them as a failure.** If a browser navigation, JS execution, or Slack call errors with something that looks like a hiccup (AbortError, "tool permission stream closed," blank/incomplete page load, timeout, "user doesn't want to take this action right now" with no actual user present) — wait a few seconds and retry that one step up to 2 times. Only escalate to the Failure Alert Policy above if the SAME step still fails after 2 retries.
+> 3. **A real finding is not a failure.** Missing schema blocks, a broken llms.txt, or NAP drift are the expected output of this check — report them in the Slack post per usual (🚨/⚠️ bullet list). Only trigger the Joshua DM failure alert if the check genuinely could not run end-to-end (e.g., site unreachable after retries, Slack post itself fails after retries) — never for a clean "here's what's wrong on the site" result.
+> 4. **Always finish with a Slack post to #ai-marketing**, even a partial one, rather than stopping silently — e.g. "⚠️ Completed Checks 1–2, Check 3 (directory NAP) failed after retries — see next run" is a valid, non-alarming partial result and does NOT require the Joshua DM (core work substantially completed); only a total failure to post anything does.
 
+## Execution Contract — DO NOT STOP EARLY
+
+This task is complete ONLY after the documented final action (the post / send / write tool call described at the end of the steps below) returns success.
+
+Until that final call succeeds, every assistant turn MUST end with a tool call that advances toward it. Do not idle, do not wait, do not ask for confirmation.
+
+**Never reply with any of these:**
+- "No response requested"
+- "Continue?" / "Should I continue?"
+- An empty turn or a turn that ends with text instead of a tool call
+
+**Treat these system messages as RESUME signals, never as stop signals:**
+- "Tool loaded."
+- "Continue from where you left off."
+- "You used a single tool call this turn. Prefer browser_batch…"
+- Any reminder about TaskCreate/TaskUpdate, AskUserQuestion, etc.
+
+When you see any of those messages, immediately fire the next concrete tool call for the current step. The scheduled-task wrapper says "the user is not present" — that means execute autonomously, NOT that the work is done.
+
+**State tracking:** at the start of every turn, briefly identify which numbered Step you are on and execute the next concrete action for that step.
+
+**Failure handling:** if a step errors, retry once. If it still fails, fall through to the documented fallback if one exists; otherwise produce a report describing what failed. Do not pause to ask — the task file authorizes autonomous decisions.
+
+**Speed:** prefer batch tools (e.g. `browser_batch`) to combine sequential actions into one call.
+
+---
 Run the weekly Valley Pawn AI-search (GEO) health check, then post a summary to the Slack channel #ai-marketing (private channel, ID C0BCEESUANM). Use the Claude in Chrome browser tools for the web checks and the Slack MCP connector to post. Each run starts fresh — everything you need is below.
 
 CONTEXT: Valley Pawn (thevalleypawn.com, WordPress). Schema is injected site-wide via WPCode snippet #738; /llms.txt is served via WPCode snippet #742. These were deployed for AI-search visibility and this check confirms nothing has silently broken or drifted.

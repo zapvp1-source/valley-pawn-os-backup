@@ -147,8 +147,11 @@ def main():
         for u in uuids:
             fpath = os.path.join(EXPORT_DIR, u + ".PNG")
             if not os.path.exists(fpath):
-                # osxphotos may use different case/ext; scan for it
-                cands = [f for f in os.listdir(EXPORT_DIR) if f.startswith(u + ".")]
+                # osxphotos may use different case/ext; edited photos export as
+                # "<uuid>_edited.<ext>" (fix 2026-08-21: the old "<uuid>." prefix
+                # match missed every edited screenshot -> ok=3 fail=190). Match on
+                # bare uuid prefix so both "<uuid>.PNG" and "<uuid>_edited.jpeg" hit.
+                cands = [f for f in os.listdir(EXPORT_DIR) if f.startswith(u)]
                 fpath = os.path.join(EXPORT_DIR, cands[0]) if cands else None
             if not fpath or not os.path.exists(fpath):
                 fail += 1

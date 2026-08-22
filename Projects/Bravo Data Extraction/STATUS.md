@@ -33,3 +33,13 @@ Store totals (Expected/Counted/Variance):
 3. HAR Charms / LEX Brooches empty-category-treated-as-zero noted per standing rule.
 
 **Guardrails followed:** no manual Bravo UI interaction (let CUL's retry/fallback logic run on its own even though one category took ~35-50 min), no folder-access request needed (bash/file tools sufficed), no false zeros reported (empty categories cross-checked against prior day before being treated as 0), no partial/guessed post for LEX.
+
+## 2026-08-21 (Friday) — 8/20 CATCH-UP eval + hardening
+
+- Nightly task did NOT run 8/18, 8/19, 8/20: app was closed at 8:30 PM those nights (scheduler only fires while app is open). Task config itself verified healthy (enabled, cron, model pin).
+- 8/20 catch-up executed manually Fri AM inside freeze window: all 5 stores pulled (CUL clean 10 min/store — no combo flakiness this time). HAR Charms + LEX Brooches empty (0, consistent w/ 8/15+8/17). WAY Charms errored (was 1 on 8/17) — WAY Pendants expected carried as 66-67 (±1).
+- All 5 PM sheets read + sum-verified. Table posted to #jewlery-counts (CATCH-UP labeled).
+- RESOLVED: WAY Monday +39 Rings anomaly = manager digit error (wrote 378, Bravo+Thursday sheet both say ~338/339).
+- 8/18 + 8/19 nights unrecoverable (on-hand is live-state).
+- LESSON: Chrome freezes while Parallels VM is pulling — never run Chrome + VM pulls concurrently. Sequencing rule codified in new catch-up task.
+- HARDENING SHIPPED: (1) jewelry-pull-watchdog 9:15 AM Tue-Sun (haiku) — DMs Joshua if last night missing; (2) jewelry-onhand-catchup 7:45 AM Tue-Sun (sonnet) — auto-reruns a missed night inside the freeze window and posts the table. Count is now self-healing: miss at 8:30 PM -> auto-rerun 7:45 AM -> alert 9:15 AM only if both failed.

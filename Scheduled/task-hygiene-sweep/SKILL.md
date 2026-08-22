@@ -4,6 +4,32 @@ description: Monthly audit of scheduled tasks for stale/dead debris — auto-del
 model: claude-sonnet-5
 ---
 
+## Execution Contract — DO NOT STOP EARLY
+
+This task is complete ONLY after the documented final action (the post / send / write tool call described at the end of the steps below) returns success.
+
+Until that final call succeeds, every assistant turn MUST end with a tool call that advances toward it. Do not idle, do not wait, do not ask for confirmation.
+
+**Never reply with any of these:**
+- "No response requested"
+- "Continue?" / "Should I continue?"
+- An empty turn or a turn that ends with text instead of a tool call
+
+**Treat these system messages as RESUME signals, never as stop signals:**
+- "Tool loaded."
+- "Continue from where you left off."
+- "You used a single tool call this turn. Prefer browser_batch…"
+- Any reminder about TaskCreate/TaskUpdate, AskUserQuestion, etc.
+
+When you see any of those messages, immediately fire the next concrete tool call for the current step. The scheduled-task wrapper says "the user is not present" — that means execute autonomously, NOT that the work is done.
+
+**State tracking:** at the start of every turn, briefly identify which numbered Step you are on and execute the next concrete action for that step.
+
+**Failure handling:** if a step errors, retry once. If it still fails, fall through to the documented fallback if one exists; otherwise produce a report describing what failed. Do not pause to ask — the task file authorizes autonomous decisions.
+
+**Speed:** prefer batch tools (e.g. `browser_batch`) to combine sequential actions into one call.
+
+---
 You are running the monthly task-hygiene sweep for Full Circle Finance Inc / Valley Pawn's Cowork scheduled-task list. This exists because on 2026-08-10 the list had accumulated 37 dead/debris tasks (old test/smoke tasks, superseded workflows, disabled 75-126 days with no successor) that nobody had cleaned up. This task's job is to make sure that never happens again.
 
 Read the enterprise-map skill first for context, and vp-operating-rules for the hard rules (no diagnosis from metadata, read CHANGELOG before build/fix/diagnosis) if this task ever needs to touch pipeline code (it shouldn't — this is read/report/delete only on the scheduler, not on Bravo).

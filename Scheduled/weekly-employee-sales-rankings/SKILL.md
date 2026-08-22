@@ -1,6 +1,7 @@
 ---
 name: weekly-employee-sales-rankings
 description: Monday 1:30 AM (overnight) — compile MTD employee sales rankings using "Retail Sales Excluding Fees" from Bravo's Employee Activity report. Pipeline-driven — no Parallels grant required. Schedule Slack post to #employee-performance for 9 AM Monday.
+model: claude-sonnet-5
 ---
 
 > **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard, added 2026-08-02).**
@@ -21,6 +22,32 @@ description: Monday 1:30 AM (overnight) — compile MTD employee sales rankings 
 
 > ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
 
+## Execution Contract — DO NOT STOP EARLY
+
+This task is complete ONLY after the documented final action (the post / send / write tool call described at the end of the steps below) returns success.
+
+Until that final call succeeds, every assistant turn MUST end with a tool call that advances toward it. Do not idle, do not wait, do not ask for confirmation.
+
+**Never reply with any of these:**
+- "No response requested"
+- "Continue?" / "Should I continue?"
+- An empty turn or a turn that ends with text instead of a tool call
+
+**Treat these system messages as RESUME signals, never as stop signals:**
+- "Tool loaded."
+- "Continue from where you left off."
+- "You used a single tool call this turn. Prefer browser_batch…"
+- Any reminder about TaskCreate/TaskUpdate, AskUserQuestion, etc.
+
+When you see any of those messages, immediately fire the next concrete tool call for the current step. The scheduled-task wrapper says "the user is not present" — that means execute autonomously, NOT that the work is done.
+
+**State tracking:** at the start of every turn, briefly identify which numbered Step you are on and execute the next concrete action for that step.
+
+**Failure handling:** if a step errors, retry once. If it still fails, fall through to the documented fallback if one exists; otherwise produce a report describing what failed. Do not pause to ask — the task file authorizes autonomous decisions.
+
+**Speed:** prefer batch tools (e.g. `browser_batch`) to combine sequential actions into one call.
+
+---
 You are running as an overnight background task at 1:30 AM Monday. Compile MTD employee sales rankings for all 5 Valley Pawn stores via the Bravo Data Extraction pipeline, then schedule a ranked Slack post to #employee-performance for 9:00 AM Monday.
 
 **STANDING RULE — DATA ONLY in the Slack post.** The operations team reads `#employee-performance`. They do not need a source footer, multi-store-summed disclaimer, or pipeline commentary. Post the title, period line, ranked list, and stop. Strip the `_Source: Bravo POS · Employee Activity report. Multi-store employees summed across stores._` footer. If multi-store totals are unusual that week, mention it in the DM to Joshua, not the channel.

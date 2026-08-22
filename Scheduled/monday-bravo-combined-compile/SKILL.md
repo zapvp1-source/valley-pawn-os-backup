@@ -22,6 +22,32 @@ model: claude-sonnet-5
 
 > ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
 
+## Execution Contract — DO NOT STOP EARLY
+
+This task is complete ONLY after the documented final action (the post / send / write tool call described at the end of the steps below) returns success.
+
+Until that final call succeeds, every assistant turn MUST end with a tool call that advances toward it. Do not idle, do not wait, do not ask for confirmation.
+
+**Never reply with any of these:**
+- "No response requested"
+- "Continue?" / "Should I continue?"
+- An empty turn or a turn that ends with text instead of a tool call
+
+**Treat these system messages as RESUME signals, never as stop signals:**
+- "Tool loaded."
+- "Continue from where you left off."
+- "You used a single tool call this turn. Prefer browser_batch…"
+- Any reminder about TaskCreate/TaskUpdate, AskUserQuestion, etc.
+
+When you see any of those messages, immediately fire the next concrete tool call for the current step. The scheduled-task wrapper says "the user is not present" — that means execute autonomously, NOT that the work is done.
+
+**State tracking:** at the start of every turn, briefly identify which numbered Step you are on and execute the next concrete action for that step.
+
+**Failure handling:** if a step errors, retry once. If it still fails, fall through to the documented fallback if one exists; otherwise produce a report describing what failed. Do not pause to ask — the task file authorizes autonomous decisions.
+
+**Speed:** prefer batch tools (e.g. `browser_batch`) to combine sequential actions into one call.
+
+---
 You are the compile-and-post phase (PART 2 of 2) for the Monday morning combined Valley Pawn Bravo run. Trigger drop and pipeline data collection happened in `monday-bravo-combined-run` ~75 minutes ago. The pipeline should have produced all CSVs by now.
 
 Your job: read the CSVs and post to the 5 ops Slack channels, save the file outputs, DM Joshua the rollup. ~5-10 min total wall time. Stay light on context.
@@ -34,9 +60,12 @@ Your job: read the CSVs and post to the 5 ops Slack channels, save the file outp
 STEP 0 — Locate today's CSVs
 ==========================================================================
 
-Compute today's date in ET as `YYYY_MM_DD` and `YYYY-MM-DD` forms. Compute first-of-month for the employee report.
+**FIXED 2026-08-21 — date-mismatch bug.** PART1 (`monday-bravo-combined-run`) now runs Sunday evening and stamps its trigger ID / result.json / every CSV with **its own run date**, i.e. YESTERDAY relative to this task (which fires Monday 8 AM). Compute TWO dates in ET:
+- `PIPELINE_DATE` = yesterday's date (the date PART1 actually ran and stamped its files with) — use this for EVERY file lookup below (result.json name, all `<TODAY>_<STORE>_*.csv` filenames in Steps 1-4.5). Anywhere below that says `<TODAY>` in a file path, read it as `PIPELINE_DATE`.
+- `POST_DATE` = today's actual date — use this only for the human-readable date shown in Slack post headers (e.g. "Weekly Layaway Review — <DATE>").
+Also compute first-of-month for the employee report (unaffected — employee-activity CSVs are keyed by first-of-month regardless).
 
-Find result.json files for today's runs at `/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/results/`:
+Find result.json files for PIPELINE_DATE's run at `/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/results/`:
 - `monday-bravo-combined-YYYY-MM-DD.result.json` — main multi-report (aged-inventory, loans-75, layaways, employee-activity, chekkit-inactives, fpd-cohort × 5 stores; fpd-cohort added 2026-07-22)
 - `monday-eom-{CUL,HAR,LEX,ROA,WAY}-YYYY-MM-DD.result.json` — 5 per-store EOM
 
@@ -274,8 +303,6 @@ Use 🚨 instead of ✅ for any chained SKILL that failed at compile/post, and a
 ESCAPE HATCH — IF RESULTS MISSING
 ==========================================================================
 
-If `monday-bravo-combined-<DATE>.result.json` doesn't exist when this task fires, the pipeline hasn't finished or hung. Check the watcher log at `logs/monday-bravo-combined-<DATE>.log` for recent activity:
-- If log shows recent SUCCESS/Running lines (within last 5 min) → DM Joshua "pipeline still running, will retry myself in 30 min", then use `update_scheduled_task` to reschedule THIS task for 30 min from now via `fireAt`. Exit.
-- If log shows last activity 10+ min ago → pipeline is hung. DM Joshua with the log tail (last 20 lines) and stop. Don't try to recover — Joshua will look.
+**FIXED 2026-08-21 — do not self-reschedule via fireAt.** This task now runs on its own recurring cron (`0 8 * * 1`), NOT a self-rescheduling one-time `fireAt`. NEVER call `update_scheduled_task` on this task's own taskId to change its schedule — doing so converts it back to a one-time task and silently kills next week's run (this exact bug caused a 2+ week outage across all 5 ops channels, fixed 2026-08-21). If `monday-bravo-combined-<PIPELINE_DATE>.result.json` doesn't exist when this task fires, the pipeline hasn't finished or hung. Check the watcher log at `logs/monday-bravo-combined-<PIPELINE_DATE>.log` for recent activity, then DM Joshua one line stating what you found (pipeline still running / pipeline hung / file missing entirely) and STOP — do not retry yourself. `monday-bravo-postcheck` fires 30 minutes later (8:30 AM Monday) specifically to re-check and backfill; let it do that job.
 
 Never post stale or partial data to ops channels without DM-flagging the problem first.

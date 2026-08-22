@@ -544,3 +544,27 @@ Also affects: `sales-tax-monthly-update` (same dependency, will fail the same wa
     reduced to a handful of rows). Every one was recovered via _merge_scrap_weights.py against
     output/_backups_20260812b/ and _backups_20260812c/. Backup-before-every-pull remains mandatory
     until this is fixed at the AHK level.
+
+## 2026-08-21 -- Foreground guard misapplied to a pure trigger-drop task (fixed)
+- SYMPTOM: weekly-markdown-verification-pull (Part 1 of the aged-inventory markdown check) silently
+  skipped its run -- twice in the same session, 60s apart -- because _bravo_foreground_guard.sh check
+  came back BUSY:pipeline-recent-result on transient, unrelated pipeline activity. The task's own
+  design had it exit silently (no Slack, no DM, no error) after one retry, so this could recur every
+  Sunday indefinitely with zero visibility.
+- ROOT CAUSE: this task ONLY writes one JSON file into triggers/ -- it never touches Bravo's screen.
+  Per bravo-context's own "Mandatory Contention & Scheduling-Safety Check" section, trigger-drop tasks
+  are ALREADY safely serialized by bravo_watcher.ahk's atomic claim (first caller wins, losers queue,
+  45-min hard cap) and explicitly do NOT need the foreground guard. Someone had copied the guard
+  pattern from a Type C (screen-driving) task onto a Type A (trigger-drop-only) task, so it was gating
+  on a busy signal that could never actually cause a collision for this task's own action.
+- FIX (2026-08-21): removed the contention-check gate entirely from weekly-markdown-verification-pull;
+  it now unconditionally writes the trigger every Sunday. Manually re-dropped this week's missed
+  trigger (markdown-verification-2026-08-21T18-07-39) so Monday's review isn't working off stale data.
+- LESSON FOR FUTURE AUDITS: before adding or keeping a _bravo_foreground_guard.sh check in any task,
+  confirm the task actually drives Bravo's screen directly (computer-use / prlctl exec). If the task's
+  only Bravo-touching action is writing a trigger JSON file, the guard is decorative at best and a
+  silent-failure risk at worst -- remove it, don't harden it. Audited 2026-08-21: sales-tax-monthly-update
+  and weekly-employee-perf-canvas-refresh also reference the guard on trigger-drop fallback paths, but
+  both already have generous retry/wait windows and do NOT hard-fail-silent on a single BUSY hit, so they
+  were left as-is; eom-bravo-gl-export's guard usage is correctly scoped to its real computer-use
+  hang-recovery fallback.

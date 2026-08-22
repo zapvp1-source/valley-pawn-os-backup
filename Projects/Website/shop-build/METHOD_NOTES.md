@@ -68,3 +68,54 @@ vp_ebay_cookiejar_run.txt and falling back to truncate-via-open() if remove() fa
 Published 507 live items (Culpeper 314, Waynesboro 37, Harrisonburg 35, Lexington 26, Roanoke 95);
 24 weapons-adjacent items filtered out of 531 scraped. Verified live card count = 507 exactly,
 single VP-SHOP-START marker. Posted summary to #website successfully.
+
+## Run record — 2026-08-21 (scheduled nightly, post-WooCommerce-fix)
+Ran via mcp__workspace__bash (sandbox has direct outbound access to eBay + WordPress). Fixed
+fetch_run_sandbox.py BASE path again (session mount dir changes each session — this needs a
+one-line edit every run until it's parameterized, see TODO below).
+Scraped 537 items across 5 stores; 26 weapons-adjacent excluded; published 511
+(Culpeper 315, Waynesboro 36, Harrisonburg 33, Lexington 28, Roanoke 99).
+POST to /wp-json/wp/v2/pages/833 returned HTTP 200, id 833, status publish.
+Verified live: 511 vp-card elements (exact match), single VP-SHOP-START marker, zero
+woocommerce-shop body-class occurrences — confirms the same-day WooCommerce shop-page hijack
+fix (see RUN_LOG_2026-08-21_FAILURE.md RESOLVED section) is holding. Posted summary to #website.
+
+TODO (not urgent, flagging for a future session): fetch_run_sandbox.py hardcodes BASE with a
+session-specific mount path that changes every session — every run so far has required a manual
+sed/Edit before executing. Consider deriving BASE from a relative path or an env var so this stops
+being a manual step.
+
+## UTM tracking added — 2026-08-21 (same day, follow-up to the nightly run)
+Joshua asked "is anyone buying anything from the site" — investigation found: WooCommerce is
+installed on thevalleypawn.com but has ZERO orders all-time (confirmed via wc/v3/reports/orders/
+totals) — it's not used for real checkout, /shop/ only links OUT to eBay. No GA4/Search Console
+MCP connector exists to pull click/conversion data programmatically, and connecting one requires
+an OAuth grant only Joshua can complete interactively — that's a hard blocker, not a judgment call,
+so it was left alone rather than routed around via browser automation of a Google login.
+
+What WAS done, fully within existing access (no new auth needed):
+1. generate_shop_block.py now appends UTM parameters to every outbound eBay link (img, title, and
+   buy-button separately) via a new `tag()` helper: utm_source=thevalleypawn_site,
+   utm_medium=referral, utm_campaign=shop_page, utm_content=<img|title|buy>_<store>. This lets
+   eBay Seller Hub's Traffic Report (Performance > Traffic) attribute clicks back to the site
+   instead of lumping them into generic eBay traffic. That report has no public API — Joshua would
+   need to check it manually in eBay Seller Hub if he wants click-level detail.
+2. Discovered thevalleypawn.com already has Jetpack Stats active (confirmed via GA4 gtag ID
+   G-DLQL4BLPRJ also present sitewide) AND the already-connected WordPress.com MCP
+   (mcp__40f0bfed...__wpcom-mcp-site, operation "statistics.get") can pull site-wide views/
+   visitors for any date range with zero new auth — this became the backbone of the new weekly
+   report since it needs no OAuth grant. Note: statistics.get is site-wide only — no per-page,
+   referrer, or top-posts breakdown (confirmed via its own tool description).
+3. Republished /shop/ (page 833) with the UTM-tagged block — reused the same
+   fetch→generate→wrap→curl-publish→verify pipeline documented above (no re-scrape needed, reused
+   the same items.json from the 11:05am nightly run). Verified live: 511 cards, 1,533 UTM-tagged
+   links (511 items x 3 link positions).
+4. Created scheduled task `vp-website-shop-weekly-report` (Mondays 8:08 AM) — DMs Joshua
+   (D03BHQH5VGT) a plain-language weekly summary: site views/visitors + WoW trend (via
+   wpcom-mcp-site statistics.get), WooCommerce order count (flagging if it's ever nonzero), and
+   /shop/ page live item count as a freshness/health check. Reminds him once per report that
+   eBay Seller Hub Traffic has the click-level detail this can't reach via API.
+
+If GA4 or Search Console API access becomes available later (i.e. Joshua grants OAuth via a
+connector), the weekly report should be upgraded to pull actual outbound-click and referrer data
+instead of just site-wide views/visitors.

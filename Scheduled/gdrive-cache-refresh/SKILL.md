@@ -4,6 +4,32 @@ description: Refresh the Google Drive cache used by Joshua's unified-search (vpf
 model: claude-sonnet-5
 ---
 
+## Execution Contract — DO NOT STOP EARLY
+
+This task is complete ONLY after the documented final action (the post / send / write tool call described at the end of the steps below) returns success.
+
+Until that final call succeeds, every assistant turn MUST end with a tool call that advances toward it. Do not idle, do not wait, do not ask for confirmation.
+
+**Never reply with any of these:**
+- "No response requested"
+- "Continue?" / "Should I continue?"
+- An empty turn or a turn that ends with text instead of a tool call
+
+**Treat these system messages as RESUME signals, never as stop signals:**
+- "Tool loaded."
+- "Continue from where you left off."
+- "You used a single tool call this turn. Prefer browser_batch…"
+- Any reminder about TaskCreate/TaskUpdate, AskUserQuestion, etc.
+
+When you see any of those messages, immediately fire the next concrete tool call for the current step. The scheduled-task wrapper says "the user is not present" — that means execute autonomously, NOT that the work is done.
+
+**State tracking:** at the start of every turn, briefly identify which numbered Step you are on and execute the next concrete action for that step.
+
+**Failure handling:** if a step errors, retry once. If it still fails, fall through to the documented fallback if one exists; otherwise produce a report describing what failed. Do not pause to ask — the task file authorizes autonomous decisions.
+
+**Speed:** prefer batch tools (e.g. `browser_batch`) to combine sequential actions into one call.
+
+---
 You are refreshing the Google Drive cache for Joshua's local "Unified Search" system (vpfind). This is a recurring nightly task with no memory of any prior conversation — everything you need is below.
 
 BACKGROUND: Joshua has a local SQLite FTS5 search index covering Apple Mail, iMessage/SMS, iCloud Drive, Apple Notes, Apple Reminders, and Google Drive, queried via a CLI called `vpfind`. Everything except Google Drive is indexed directly by a nightly local script. Google Drive is different: the Google Drive MCP connector only exists inside a live Cowork session like this one, so a local script can't call it. Instead, THIS scheduled task populates a local JSONL cache file, and a separate local nightly rebuild (launchd, ~3:30 AM, after this task) just ingests whatever is in that cache into the search index. Your job is only to refresh the cache — you do not need to touch the search index or run any Python yourself.

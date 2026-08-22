@@ -4,44 +4,45 @@ description: Tuesday 10 AM ET — verifies the daily-cadence targets directly ag
 model: claude-sonnet-5
 ---
 
-> **LOCAL ACCESS GATE.** Runs on Joshua's Mac Studio, has local access via `mcp__Control_your_Mac__osascript` (may be deferred — `ToolSearch` query `select:mcp__Control_your_Mac__osascript` if needed, probe with `do shell script "echo READY"`, retry ~20s up to 12 min before concluding unavailable). All reads under `/Users/joshuadavis/Documents/Claude/...` go through this tool.
+# vp-content-batch-quota-watchdog
+
+> **LOCAL ACCESS GATE.** Runs on Joshua's Mac Studio via `mcp__Control_your_Mac__osascript` (may be deferred — `ToolSearch` query `select:mcp__Control_your_Mac__osascript` if needed, probe with `do shell script "echo READY"`, retry ~20s up to 12 min before concluding unavailable).
+>
+> **HARDENED 2026-08-21 — DO NOT use folder mounts.** A run stalled waiting on `request_cowork_directory` approval that never came (Joshua isn't present during scheduled runs). ALL file access in this task goes through osascript shell. Never call `request_cowork_directory`. Never rebuild the job logic inline — it lives in the script below.
 
 ⚠️ **FAILURE ALERT POLICY:** On failure, DM Joshua once (channel D03BHQH5VGT): `⚠️ Scheduled task "vp-content-batch-quota-watchdog" did not complete — <date>.` Nothing technical. Never post to any team channel.
 
 Automated, unattended run. End with `<run-summary>...</run-summary>`.
 
-## Why this exists / what changed 2026-08-04
+## Why this exists / what changed
 
-Originally built to track an aggregate weekly item-count target. Redesigned same day, alongside `vp-content-batch-weekly`'s full routing overhaul, after Joshua gave exact per-platform targets: *"we want at least one post a day on store pages... GBP pages consistently... X needs to be 7, instagram brand needs to be 7, facebook needs to be 7 for branded page but 1 a day for store pages."* An aggregate item count can hit its target while still being wildly uneven per-account (this is exactly what was happening — Brand IG/Twitter were overshooting while individual store FB/GBP pages were under-served). This task now checks live Publer counts **per account**, not a single aggregate number, because that's the only way to actually verify the thing Joshua is asking for.
+Originally an aggregate weekly item-count check; redesigned 2026-08-04 to per-account checks against live Publer data after Joshua gave exact per-platform targets (one post/day per store page, GBP consistently, Brand FB/IG/X 7/week each) — an aggregate count can look fine while individual accounts starve. **2026-08-21:** all job logic (window, pagination, from/to params, dedupe, per-account grouping, flagging, history comparison, result-file write) was moved into a hardened, committed script so every run executes one tested path instead of re-improvising it.
 
 ## Job
 
-1. Load `PublerClient` from `Refine Social Media/publer_client.py`.
-2. Compute the trailing-7-days date window (today minus 7 to today), format `YYYY-MM-DD`.
-3. For BOTH `state=scheduled` and `state=published`, call `GET /posts` with explicit `from`/`to` params set to that window and `limit=100` (per-call — **never omit from/to, the endpoint silently caps at ~15 results without it and that WILL produce false "missing" conclusions at this volume**, confirmed 2026-08-04). Combine results, dedupe by post id.
-4. Group counts by account using `publer_accounts.json`'s store-key mapping. Build a table against these targets:
-   - Brand (Facebook): target 7/week
-   - BrandIG: target 7/week
-   - BrandTwitter: target 7/week
-   - Culpeper, Waynesboro, Harrisonburg, Lexington, Roanoke (Facebook): target 7/week each
-   - GBP_Culpeper, GBP_Waynesboro, GBP_Harrisonburg, GBP_Lexington, GBP_Roanoke: target 7/week each
-5. Flag any account at **under 4/week this week** (roughly half of target — a real gap, not rounding noise from schedule-vs-published timing).
-6. Compare against last week's same check (read `output/{date}/quota_watchdog_result.json` if a prior run wrote one — see step 8). **Only DM Joshua for an account that was ALSO flagged last week** — i.e. two consecutive weeks under 4/week for that specific account. A single off week is normal (mid-week check timing, a manager missed a submission) and is noise, not signal — stay silent on those.
-7. If 2+ consecutive weeks confirmed for one or more accounts, DM Joshua (channel D03BHQH5VGT), short and plain:
+1. Probe local access (`do shell script "echo READY"`).
+2. Run the watchdog script:
    ```
-   📊 A few social accounts have been running light 2 weeks running: {account name} {this week}/7, {last week}/7. Worth a look when you have a minute.
+   do shell script "cd /Users/joshuadavis/Documents/Claude/Projects/'Refine Social Media' && /usr/bin/python3 quota_watchdog.py 2>/dev/null"
    ```
-   List every account that qualifies in one DM, not one DM per account.
-8. Write this week's full per-account counts to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn Studios/output/{YYYY-MM-DD}/quota_watchdog_result.json` (today's date) so next week's run can do the 2-week comparison in step 6. Include every account's count, not just flagged ones.
-9. If fewer than 2 weeks of history exist yet, stay silent this run — note in run-summary only.
-10. Read-only. Do not touch, re-run, or attempt to fix `vp-content-batch-weekly`. Naming a likely cause in the DM (e.g. "Bravo data looked stale for X that week" if you happen to know it) is fine as one short clause, but don't self-heal or retry here — that's `vp-content-batch-postflight`'s job.
-
-## Cron
-
-Tuesday 10 AM ET (`0 10 * * 2`) — after Monday's batch (2:02 AM) and postflight (3:30 AM), and after `weekly-social-media-recap` (Monday 9 AM, gives Joshua the raw #social-media numbers). This task is the trend/per-account view on top, DM-only, low-noise.
+   The script does everything: trailing-7-day window, GET /posts for scheduled+published with explicit from/to (never omitted — endpoint silently caps ~15 without it) and pagination, dedupe by (post id, account id), per-account counts vs targets (13 accounts: Brand/BrandIG/BrandTwitter + 5 store FB + 5 GBP, all 7/week), flags accounts under 4/week, compares to the most recent prior `quota_watchdog_result.json`, and writes this week's full result to `Valley Pawn Studios/output/{today}/quota_watchdog_result.json`. It prints the result JSON to stdout.
+3. Parse the printed JSON. Decision rule, unchanged:
+   - `two_week_shortfalls` empty → stay silent. Note in run-summary only.
+   - `two_week_shortfalls` non-empty → DM Joshua (D03BHQH5VGT), one message listing every qualifying account, short and plain:
+     ```
+     📊 A few social accounts have been running light 2 weeks running: {account} {this_week}/7, {last_week}/7. Worth a look when you have a minute.
+     ```
+   - `prior_run_date` null (first run / no history) → silent, run-summary only.
+4. If the script exits non-zero (stderr has `WATCHDOG-FAIL:`), retry ONCE after 60s. If it fails again, follow the failure alert policy. Do NOT attempt to debug or rewrite the script mid-run — log the stderr in the run-summary; fixing the script is an interactive-session job.
+5. Read-only toward the batch: never touch, re-run, or fix `vp-content-batch-weekly`. One short clause naming a likely cause in the DM is fine; self-healing is `vp-content-batch-postflight`'s job.
 
 ## Hard rule
 
-Silent unless a specific account has a genuine 2-week-running shortfall. Never posts to any team channel — DM only, and rarely at that.
+Silent unless a specific account has a genuine 2-week-running shortfall. DM only, never a team channel.
 
-<!-- 2026-08-04: rewritten from an aggregate-item-count check to a per-account (per-platform, per-store) check against live Publer data, matching the same-day routing redesign of vp-content-batch-weekly. The old aggregate version could not have caught the actual problem Joshua reported (uneven distribution across accounts while the total looked fine). -->
+## Script location (fix here, not inline)
+
+`/Users/joshuadavis/Documents/Claude/Projects/Refine Social Media/quota_watchdog.py` — self-contained, uses `publer_client.py` + `publer_accounts.json` beside it. If the script needs a change, change the script (it's the single source of truth), not this prompt.
+
+<!-- 2026-08-04: rewritten from aggregate item-count to per-account check. -->
+<!-- 2026-08-21: hardened — logic moved to committed quota_watchdog.py; osascript-only file access; no folder mounts; retry-once-then-alert on script failure. First history file written 2026-08-21 (backfill run after the 8/18 run stalled on a mount request). -->

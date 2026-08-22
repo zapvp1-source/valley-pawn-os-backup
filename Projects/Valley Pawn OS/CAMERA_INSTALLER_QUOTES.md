@@ -1,5 +1,53 @@
 # Culpeper Camera Pilot — Installer Quote Sourcing
 
+> ⚠️ **Date correction:** earlier revisions of this file and `CAMERA_SYSTEM_OPTIONS.md` were dated
+> 2026-08-13. That was wrong — the date was taken from the CHANGELOG's newest entry instead of the
+> actual current date. Sourcing work happened **2026-08-15**; quote outreach was sent 2026-08-15;
+> this update is **2026-08-21**.
+
+## ✅ RESPONSES RECEIVED (as of 2026-08-21)
+
+Joshua sent 3 of the 4 drafts on 2026-08-15 (fxbgtech, Cabling Systems, M3). Two replies in:
+
+### 1. Fredericksburg Technology — **STRONG YES, quoting now** ⭐
+**George Barnick, President** · george@fxbgtech.com · (540) 403-TECH ·
+1011A Princess Anne St, Fredericksburg, VA 22401 (note: differs from the 306 Frederick St address
+on their site — this is the current one from his signature). CC'd david.lee@ and kenny.gilbert@.
+
+Replied 2026-08-17. Key line: **"we're happy to hear you're familiar with UniFi Protect as that's
+the primary ecosystem we install."** They're a genuine UniFi Protect shop — this was the vendor
+flagged as philosophically aligned (on-prem only, no cloud subscription), and it's confirmed.
+
+**Their four questions, and the answers sent back 2026-08-21 (draft `r6476239541350659290`):**
+
+| Their question | Answer given | Reasoning |
+|---|---|---|
+| G6 (latest) or G5 Turret Ultra to save cost? | **Quote both** — all-G6, and a mix using G5TU where image quality doesn't matter | The 3 counter cameras + front door must resolve a face; showroom/floor/safe-room are coverage only. Want the delta before choosing. |
+| Minimum retention — 14 days? 30? (notes HDD prices inflated by scarcity, suggests starting modest + expanding) | **30 days floor, price 60** | Pawn-specific: stolen-property claims and transaction disputes surface 30–60 days out. Footage that aged off is worthless for exactly the cases we need it for. Took his headroom advice — UNVR's 4 bays let us start with 2 drives and add later. |
+| Dedicated surveillance monitor, or browser/mobile only? | **Yes — one at the counter, customer-facing** | Visible-screen deterrence. Cheap, and it's half the loss-prevention value. |
+| Photos of interior (layout, ceiling type) → can quote without a site survey | **Joshua/store to send interior shots this week** | ⬅️ **ACTION ON JOSHUA** — needs Bree/Sandi/Nelson at Culpeper to take them. Told him if photos fall short we'd rather he walk it than guess. |
+
+Also re-confirmed the architecture requirement in the reply: everything recorded local on the NVR,
+event clips backed up off-site to Google Drive.
+
+### 2. Cabling Systems, Inc. — **DECLINED**
+Glenn Duckworth replied 2026-08-17: *"We do not however install ubiquity cameras perhaps your alarm
+company could help you out."* Office (540) 439-0101.
+
+Worth noting: this is the closest vendor geographically and a traditional alarm/security shop —
+and they don't touch UniFi. Confirms the earlier call that **UniFi is a network product and wants
+an IT/network integrator, not an alarm company.** Close this vendor out.
+
+### 3. M3 Technology Consultants — no response yet (sent 2026-08-15, 6 days)
+Worth one follow-up, but fxbgtech is ahead on merit and M3 is 50 min away vs fxbgtech's ~40.
+
+### Not yet contacted
+Double Eagle (draft `r7142110221514032537` still unsent), Windstar Technologies (phone only,
+1 mi from store — still worth a call purely for proximity/response time), The Network Installers.
+
+---
+
+
 **Created:** 2026-08-13. Companion to `CAMERA_SYSTEM_OPTIONS.md`.
 **Scope:** labor-only quotes for the Culpeper pilot (571 James Madison Hwy, Culpeper, VA 22701).
 Valley Pawn supplies the hardware; installer runs Cat6, mounts/terminates 7 cameras, sets the NVR

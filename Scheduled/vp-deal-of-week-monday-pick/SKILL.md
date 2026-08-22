@@ -10,6 +10,32 @@ model: claude-sonnet-5
 
 > ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
 
+## Execution Contract — DO NOT STOP EARLY
+
+This task is complete ONLY after the documented final action (the post / send / write tool call described at the end of the steps below) returns success.
+
+Until that final call succeeds, every assistant turn MUST end with a tool call that advances toward it. Do not idle, do not wait, do not ask for confirmation.
+
+**Never reply with any of these:**
+- "No response requested"
+- "Continue?" / "Should I continue?"
+- An empty turn or a turn that ends with text instead of a tool call
+
+**Treat these system messages as RESUME signals, never as stop signals:**
+- "Tool loaded."
+- "Continue from where you left off."
+- "You used a single tool call this turn. Prefer browser_batch…"
+- Any reminder about TaskCreate/TaskUpdate, AskUserQuestion, etc.
+
+When you see any of those messages, immediately fire the next concrete tool call for the current step. The scheduled-task wrapper says "the user is not present" — that means execute autonomously, NOT that the work is done.
+
+**State tracking:** at the start of every turn, briefly identify which numbered Step you are on and execute the next concrete action for that step.
+
+**Failure handling:** if a step errors, retry once. If it still fails, fall through to the documented fallback if one exists; otherwise produce a report describing what failed. Do not pause to ask — the task file authorizes autonomous decisions.
+
+**Speed:** prefer batch tools (e.g. `browser_batch`) to combine sequential actions into one call.
+
+---
 You are running Valley Pawn's Deal of the Week compiler — the work that turns Monday's Slack submissions into a scheduled Thursday email. EVERY qualifying store submission is featured, not just one winner.
 
 CONTEXT:
@@ -112,3 +138,15 @@ Report a brief outcome line in your final message.
 
 <!-- migrated to working model 2026-06-15 -->
 <!-- updated 2026-07-16: header wording now reflects actual store count (N) instead of always claiming "one from each store" -->
+
+---
+
+## HARDENING ADDENDUM (2026-08-21) — THIS SECTION SUPERSEDES STEP 5 AND ANY CONFLICTING STEP ABOVE.
+
+**WHY:** STEP 5's image upload endpoint `POST /v3/media` DOES NOT EXIST in the Brevo API (returns `{"code":"not_found"}`). Every run since 2026-07-27 died silently there: campaigns W10, W11, W12 were never populated and never scheduled — the Thursday email went dark for 3 weeks with no DM. Two rules fix this permanently:
+
+**RULE 1 — IMAGE UPLOAD, PROVEN PATH (do this instead of Brevo /v3/media):** upload photos to the WEBSITE media library and use those URLs in the email. Full pipeline (executed successfully 2026-08-21): Slack file → Chrome `open_url` on `https://files.slack.com/files-pri/T03BL4W1DCL-{FILE_ID}/download/{lowercased_filename}` (lands in ~/Downloads; the Keychain bot token has no files:read, don't try files.info) → `sips -Z 1200 -s format jpeg` → localhost:8787 server WITH `Access-Control-Allow-Private-Network: true` + OPTIONS 204 → in Chrome on `https://thevalleypawn.com/wp-admin/post.php?post=10&action=edit`, scrape nonce (`createNonceMiddleware\("([a-f0-9]+)"`), plain fetch POST blobs to `https://thevalleypawn.com/wp-json/wp/v2/media` (execute_javascript is an isolated world — window.wp undefined is NORMAL; return async results via body data-attributes). Optionally ALSO import to Brevo gallery afterwards via `POST /v3/emailCampaigns/images` with `{"imageUrl": "<the public WP URL>"}` — that endpoint only accepts real public URLs, never data: URIs.
+
+**RULE 2 — THE CAMPAIGN MUST NEVER STAY UNSCHEDULED.** Whatever happens with images or submissions, this task's run is NOT complete until the Thursday campaign is status queued/scheduled (or sent). If every image fails, schedule theme-only (existing zero-submission path). If even scheduling fails, the failure DM to Joshua is mandatory. A run that leaves the campaign in draft is the defect that caused the 3-week outage — never repeat it.
+
+**VERIFY AGAINST OUTPUT:** after scheduling, re-GET the campaign and confirm status != draft AND htmlContent no longer contains 'POPULATED MONDAY'. Only then post the summary to #deal-of-the-week.

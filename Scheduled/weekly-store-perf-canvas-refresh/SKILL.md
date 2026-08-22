@@ -8,6 +8,32 @@ model: claude-sonnet-5
 >
 > ⚠️ **FIELD COMMUNICATION STANDARD v3 (binding — read in full before posting anything to a team channel or employee DM):** `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/FIELD_COMMUNICATION_STANDARD.md`. Summary: run the routing test (is this something a clerk needs to know/act on today — if no, it's internal, it does not go to the field); plain everyday language only, no tool/system/pipeline names (never say Bravo, Cowork, Chekkit, Gusto, Brevo, QBO, Publer, "pipeline," "handler," "watchdog," "sync," "CSV," "export"); no file paths, doc IDs, task IDs, or spreadsheet cell/column refs in the posted text; no meta-commentary about the automation itself ("verified against," "supersedes," "this is a manual test run," "pulled automatically from"); lead with the one-line takeaway; ~100 words max for a routine post; no signature footers. If anything later in this file conflicts with this standard, this standard wins.
 
+## Execution Contract — DO NOT STOP EARLY
+
+This task is complete ONLY after the documented final action (the post / send / write tool call described at the end of the steps below) returns success.
+
+Until that final call succeeds, every assistant turn MUST end with a tool call that advances toward it. Do not idle, do not wait, do not ask for confirmation.
+
+**Never reply with any of these:**
+- "No response requested"
+- "Continue?" / "Should I continue?"
+- An empty turn or a turn that ends with text instead of a tool call
+
+**Treat these system messages as RESUME signals, never as stop signals:**
+- "Tool loaded."
+- "Continue from where you left off."
+- "You used a single tool call this turn. Prefer browser_batch…"
+- Any reminder about TaskCreate/TaskUpdate, AskUserQuestion, etc.
+
+When you see any of those messages, immediately fire the next concrete tool call for the current step. The scheduled-task wrapper says "the user is not present" — that means execute autonomously, NOT that the work is done.
+
+**State tracking:** at the start of every turn, briefly identify which numbered Step you are on and execute the next concrete action for that step.
+
+**Failure handling:** if a step errors, retry once. If it still fails, fall through to the documented fallback if one exists; otherwise produce a report describing what failed. Do not pause to ask — the task file authorizes autonomous decisions.
+
+**Speed:** prefer batch tools (e.g. `browser_batch`) to combine sequential actions into one call.
+
+---
 You keep the #store-performance Slack channel's Canvas current so managers always see this week's store rankings at the top without anyone pinning. Runs Monday 9:28 AM, after the weekly store-KPI compile runs. Steps:
 
 1. SOURCE NUMBERS. Use the Google Drive connector. Find the newest pair of files titled "YYYY-MM-DD_store_kpis_msg1.txt" and "YYYY-MM-DD_store_kpis_msg2.txt" for the latest date (query: title contains 'store_kpis'). Read both. msg1 has the overall rankings (each store's Avg Rank and category wins, plus a quick summary and the report period date). msg2 has "Full Category Rankings" — per-store dollar figures for: Loan Balance, Inventory Balance, Total Assets, Retail Sales, Pawn Service Charges, Scrap Sales, Layaway Balance, Net Revenue MTD, and Company Totals. Extract for all 5 stores (Culpeper, Harrisonburg, Roanoke, Waynesboro, Lexington). If no current-week store_kpis files exist, STOP and do nothing.

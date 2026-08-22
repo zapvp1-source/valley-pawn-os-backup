@@ -23,18 +23,37 @@ total = len(ITEMS)
 
 def esc(s): return html.escape(s, quote=True)
 
+# --- UTM tagging (added 2026-08-21) ---
+# Lets eBay Seller Hub Traffic reports and any future GA4/analytics pull attribute
+# clicks/sales back to thevalleypawn.com/shop/ instead of lumping them in as generic
+# eBay traffic. Distinct utm_content per click position (image/title/buy button) so
+# it's possible to see which element on the card actually drives the click-through.
+import urllib.parse as _up
+def tag(url, store, content):
+    sep = "&" if "?" in url else "?"
+    params = _up.urlencode({
+        "utm_source": "thevalleypawn_site",
+        "utm_medium": "referral",
+        "utm_campaign": "shop_page",
+        "utm_content": f"{content}_{store.lower()}",
+    })
+    return f"{url}{sep}{params}"
+
 cards = []
 for i in ITEMS:
+    u_img   = tag(i['u'], i['s'], "img")
+    u_title = tag(i['u'], i['s'], "title")
+    u_buy   = tag(i['u'], i['s'], "buy")
     cards.append(
 f'''<article class="vp-card" data-store="{esc(i['s'])}" data-title="{esc((i['t']+' '+i['s']).lower())}" data-price="{num(i['p'])}">
-  <a class="vp-card__img" href="{esc(i['u'])}" target="_blank" rel="noopener nofollow">
+  <a class="vp-card__img" href="{esc(u_img)}" target="_blank" rel="noopener nofollow">
     <img loading="lazy" src="{esc(i['img'])}" alt="{esc(i['t'])}">
     <span class="vp-badge" style="background:{COLORS.get(i['s'],'#2D1A5E')}">{esc(i['s'])}</span>
   </a>
   <div class="vp-card__b">
-    <h3 class="vp-card__t"><a href="{esc(i['u'])}" target="_blank" rel="noopener nofollow">{esc(i['t'])}</a></h3>
+    <h3 class="vp-card__t"><a href="{esc(u_title)}" target="_blank" rel="noopener nofollow">{esc(i['t'])}</a></h3>
     <div class="vp-card__r"><span class="vp-price">{esc(i['p'])}</span>
-      <a class="vp-buy" href="{esc(i['u'])}" target="_blank" rel="noopener nofollow">Buy Now &rsaquo;</a></div>
+      <a class="vp-buy" href="{esc(u_buy)}" target="_blank" rel="noopener nofollow">Buy Now &rsaquo;</a></div>
   </div>
 </article>''')
 grid = "\n".join(cards)

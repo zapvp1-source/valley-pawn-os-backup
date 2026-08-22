@@ -12,15 +12,19 @@ Built 2026-08-07. Reference for anything touching Zoom Phone (missed calls, voic
 - **No Zoom Phone MCP connector exists** (checked connector registry 2026-08-07 — "Zoom for Claude" is
   meetings-only). Automation drives the admin web UI via Claude in Chrome instead.
 
-## Extension / Line Map (live as of 2026-08-07 — 3 of 5 stores on Zoom Phone so far)
+## Extension / Line Map (updated 2026-08-21 — 3 of 5 stores LIVE on Zoom Phone; Culpeper/Roanoke staged)
 
-| Store | Zoom user (login) | Ext. | Number |
-|---|---|---|---|
-| Lexington | jdavis@fcfpawn.com (Joshua Davis, Owner) | 800 | (540) 461-8349 |
-| Harrisonburg | harrisonburg@fcfpawn.com | 802 | (540) 574-4500 |
-| Waynesboro | waynesboro@fcfpawn.com | 803 | (540) 221-6346 |
-| Culpeper | — not yet on Zoom Phone — | — | (540) 445-5510 |
-| Roanoke | — not yet on Zoom Phone — | — | (540) 562-0776 |
+| Store | Zoom user (login) | User Ext. | Queue / Ext. | Number | Live? |
+|---|---|---|---|---|---|
+| (admin only) | jdavis@fcfpawn.com (Joshua, Owner) | 800 | — | — (no calling plan since 2026-08-21) | n/a |
+| Lexington | lexington@fcfpawn.com | 807 | Lexington Store Queue / 804 | (540) 461-8349 | LIVE |
+| Harrisonburg | harrisonburg@fcfpawn.com | 802 | Harrisonburg Store Queue / 805 | (540) 574-4500 | LIVE |
+| Waynesboro | waynesboro@fcfpawn.com | 803 | Waynesboro Store Queue / 806 | (540) 221-6346 | LIVE |
+| Culpeper | culpeper@fcfpawn.com | 808 | Culpeper Store Queue / 810 | still on Verizon (540) 445-5510 | staged only |
+| Roanoke | roanoke@fcfpawn.com | 809 | Roanoke Store Queue / 812 | still on Verizon (540) 562-0776 | staged only |
+
+**Licenses (2026-08-21):** exactly 5 × US/CA Unlimited Calling Plan seats ($75/mo) on exts 802/803/807/808/809.
+Joshua's ext 800 has NO calling plan (removed 2026-08-21 — admin-only account, not in any call path).
 
 **Note:** Joshua's own Zoom user (ext 800) carries the Lexington store's public number — that's why every
 Zoom voicemail notification email Joshua gets personally is actually a Lexington store call, not a call to
@@ -206,3 +210,40 @@ naturally start finding real call data once a number + Call Queue are built for 
 Worth a manual look next time Joshua is doing Zoom admin work: assign a number, fix the Time Zone field,
 and build a Call Queue for each (mirroring the Harrisonburg/Waynesboro/Lexington pattern above) before
 going live, so the same day-one gaps don't recur.
+
+## 2026-08-21 — Licenses right-sized, Culpeper/Roanoke staged, call recording ON, caller-ID incident
+
+**Licenses right-sized to 5 seats.** Joshua: "we only need 5 numbers, we only have 5 stores." Plan
+Management edited to 5 × US/CA Unlimited Calling Plan ($75/mo). Calling plan REMOVED from Joshua's ext 800
+(More Actions → Remove All Packages) — his account is admin-only now, no calling plan, no store call path.
+The 5 plans sit on 802 (Harrisonburg), 803 (Waynesboro), 807 (Lexington), 808 (Culpeper), 809 (Roanoke).
+Culpeper/Roanoke users were created the Lexington way (Unassigned/free Meetings Basic + Zoom Phone), NOT
+Workplace Pro — a near-miss $50.97/mo Workplace Pro checkout was caught and closed unordered.
+
+**Culpeper + Roanoke fully staged, NOT live — Verizon untouched (HARD RULE).** Queues built: Culpeper
+Store Queue ext 810, Roanoke Store Queue ext 812, both with "NOT LIVE" descriptions and NO numbers
+assigned. Business hours set correctly per store: Culpeper Mon–Sat 10–6 (only store open Wednesday); all
+other stores Mon/Tue/Thu/Fri/Sat 10–6, Wed+Sun off. Grandstream WP822 cordless phones ordered on Amazon
+2026-08-15 (~$96 ea, AMEX 2003) shipped to each store; managers notified. Cutover = a future explicit
+step (port/point the Verizon number at the queue) ONLY on Joshua's word — do not touch the Verizon lines.
+
+**Automatic call recording ON company-wide (inbound + outbound).** Enabled at account level and verified
+per-line via each extension's Policy tab (aria-checked on all 6 lines). Legal recording disclaimer
+accepted by Joshua himself. Retention: "Auto delete data after retention duration" is OFF — recordings
+keep indefinitely until manually deleted. Plan: listen to Monday's recordings of Lexington's sub-15-second
+calls before deciding on Call Screening for spam.
+
+**Spam controls.** "Block calls without caller ID" enabled account-wide (see incident below). Call-log
+analysis confirmed neighbor-spoofing robocalls at Lexington (7 of 11 answered calls ≤15s, scattered
+spoofed VA-local numbers) — blocklists are useless against spoofing; Call Screening is the candidate fix,
+decision pending after recording review.
+
+**INCIDENT (2026-08-15→21, resolved): Lexington couldn't dial out.** Error: "We cannot complete your
+call, your service does not support calling to this destination." Inbound fine. Root cause: enabling
+"Block calls without caller ID" account-wide while ext 807 was the ONLY live extension with no Outbound
+Caller ID configured (802/803 had their queue numbers set; 807 was created during the account migration
+and the field was never set). Fix: 807 Profile → Outbound Caller ID → Lexington Store Queue
+(540) 461-8349 — verified persisted after reload; block setting left ON.
+**STANDING RULE: every live user extension MUST have Outbound Caller ID set to its store queue number.
+808/809 currently have none (their queues have no numbers yet) — setting it is a MANDATORY step in the
+Culpeper/Roanoke cutover checklist, before go-live.**

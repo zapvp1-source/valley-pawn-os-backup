@@ -695,3 +695,42 @@ Expected (Bravo, grouped) vs Counted (PM sheet), Rings/Bracelets/Earrings/Pendan
 - Sunday freeze window (stores closed Sun; Bravo frozen since Sat 6 PM close) made the 8/15 pull valid a day late. All 4 re-pulled stores (CUL/HAR/ROA/WAY) SUCCESS with all-8 stable; LEX kept from the 8/15 v1 run (validated day-over-day). Empty-category rule applied: HAR Charms err->0 (also 0 on 8/14), LEX Brooches err->0 (same). NOTE: WAY Charms=1 (real Saturday intake) - v2 read it cleanly where v1 would have errored and the rule would have WRONGLY zeroed it; the confirmed-empty list is now HAR Charms + LEX Brooches only.
 - Results vs PM sheets (grouped): CUL -1, HAR +1, LEX -4, ROA +1, WAY -2 - tightest reconciliation on record; every category within +/-3. Retroactively confirms Friday-night big variances (WAY -32, ROA -8) were data-quality artifacts of v1 selection, not loss. ROA sheet 8/15: managers PM TOTAL 1083 is an arithmetic slip (columns sum 1086); category values verified by zoom.
 - Table posted to #jewlery-counts ~3:45 PM (one-cell correction threaded: WAY Earrings 52/51/-1). Closure DM sent to Joshua.
+
+## RUN RECORD — 2026-08-21 (Friday) — FAILED, no post
+
+Fired ~20:35 ET (inside 6PM-10AM freeze window, close to target 8:30PM). Open stores: CUL, HAR, LEX, ROA, WAY (all 5, Friday).
+
+Health gate PASS twice (20:35:52 and 20:54:41).
+
+ATTEMPT 1 (jewelry-onhand-2026-08-21-*, dropped 20:36):
+- CUL: EnsureStore failed (cause=session) — never reached report screen
+- HAR: EnsureStore failed (cause=nav) — never reached report screen
+- LEX: EnsureStore failed (cause=session) — never reached report screen
+- ROA: 7/8 categories read (Rings=559, Bracelets=5, Pendants=61, Brooches=5, Earrings=52, Chains=43, Necklaces=23). Charms failed twice — no STABLE row total after 120s x2. Cell refused to report as success (7/8 rule). CSV written with Charms=error.
+- WAY: BackToDashboard could not return to Dashboard — never reached report screen
+
+Applied empty-category rule: ROA Charms is NOT on the confirmed-empty list (HAR Charms, LEX Brooches only) and prior-day CSV had a positive ROA Charms reading historically (known ROA-pendants-entered-as-charms case) — treated as a REAL failure, not 0.
+
+Re-ran health gate (PASS again) and dropped ATTEMPT 2 (jewelry-onhand-retry-2026-08-21-*, 20:54) for all 5 stores as one retry per Execution Contract.
+- HAR: EnsureStore failed again (cause=session)
+- LEX: EnsureStore failed again (cause=store-row)
+- CUL: got much further this time (Rings=559, Bracelets=129, Pendants=1336, Charms=90 all read as 'STABLE') but then got stuck badly on Brooches — combo box would not commit selection, spent 5+ min cycling probes
+- ROA: Rings=559 (matches attempt 1), Bracelets=2 (attempt 1 said 5 — mismatch), then Charms failed again, then Pendants=90 (attempt 1 said 61 — mismatch)
+- WAY: retry never got a turn — still queued behind CUL/ROA when run was called off
+
+CRITICAL FINDING — DATA INTEGRITY, not just slowness: CUL Charms read '90' at 21:16:49, and ~4 min later ROA Pendants also read '90' at 21:20:56, in the middle of a stretch where BOTH stores' report-selector comboboxes were stuck loading 'Claude Jewelry Audit - Necklaces' regardless of which GUID/report was being selected (both logs show identical probe-storm behavior at the same time, ~21:17-21:20). This looks like a stale/frozen report-picker rendering old grid contents rather than the newly-selected report — i.e. the UI can silently serve a clean-looking WRONG number, the exact failure mode flagged in the task's own history (2026-08-10, 2026-08-15). Combined with mismatched repeat-reads on ROA (Bracelets 5 vs 2, Pendants 61 vs 90) between attempt 1 and attempt 2, NONE of tonight's numbers — including the ones that passed the stable-read guard — should be trusted.
+
+DECISION: Stopped after one retry (per Execution Contract). No table posted to #jewlery-counts. No PM count sheet read attempted (Step 5 skipped — failure path). One plain-language DM sent to Joshua at 21:2x via D03BHQH5VGT. This run record is the technical detail backing that DM.
+
+REPEAT-PATTERN CHECK: EnsureStore/nav failures at HAR and LEX in both attempts is the first time in the CHANGELOG history these two specific stores have failed store-switch twice in one night — worth a look if it recurs. The stale-report-picker behavior seen tonight has not been documented before; recommend a dedicated investigation (not a same-night fix) into the report-selector combobox rendering, since it silently returns wrong-but-plausible counts rather than erroring.
+
+
+## FIX APPLIED — 2026-08-21 ~11:30 PM — GUARD 3 added to JewelryCaseCountV2.ahk
+
+Root-caused the stale-grid duplicate-count bug described in the run record above (BoxReportName verification + stable-read guard can both pass while the WPF grid pane is still showing a cached render from a different category — the name label updates before the grid repaints). Added GUARD 3: after all 8 categories read 'ok', check for any count value shared by 2+ different categories in the same store run; if found, downgrade the whole store result to error with the specific categories/value named, instead of silently reporting status=success. This is a symptom-level circuit breaker (purely additive, only makes the handler MORE conservative, cannot cause a new false-success) — not a fix for the underlying WPF render race itself, which would need live Bravo access + real UI-timing investigation to root-cause properly (candidate: verify BoxReportName a second time immediately at grid-read time, not just before clicking Ok; or force a hard Dashboard round-trip between every category instead of only on retry).
+
+VALIDATED (no live Bravo touch): built a scratch copy of bravo_watcher.ahk with the final Main() call swapped for ExitApp, ran it through the full production #Include chain (~100 report modules) via AutoHotkey.exe /ErrorStdOut in the VM — exit code 0, no syntax errors. Confirms the edit doesn't break the watcher's load, without risking collision with the live watcher or touching Bravo's screen. Scratch files deleted after.
+
+DEPLOYMENT: watcher process has the OLD version loaded in memory (AHK doesn't hot-reload); the fix takes effect at the next watcher restart, which happens automatically via bravo-prestaging-7am's relaunch script tomorrow ~7 AM ET — hours before tomorrow's ~8:30 PM jewelry-onhand-nightly-pull. No manual restart forced tonight given Bravo's general instability this evening and no urgent need.
+
+FOLLOW-UP: watch tomorrow night's run (2026-08-22) for (a) whether GUARD 3 fires on a false positive (legitimately equal counts across 2 categories is possible, if rare, and would now cause a full-store skip — acceptable tradeoff per this system's existing no-false-data philosophy, but worth knowing if it happens), and (b) whether the underlying stale-grid issue recurs at all now that Bravo/the VM will have had a clean restart.

@@ -17,6 +17,32 @@ model: claude-opus-4-8
 > **Timeout rule:** the osascript wrapper kills any single call at ~25 s. Never sleep longer than ~18 s inside one call; poll in short increments across separate calls. Guard any command that may exit nonzero with a trailing || true.
 > ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (v2, Joshua 2026-07-22).** If this run fails or can't complete, send Joshua ONE plain-language Slack DM (channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in it. Never send failure notices to any team channel, store manager, or employee, ever, in any medium. Technical detail goes in the manifest/run log only.
 
+## Execution Contract — DO NOT STOP EARLY
+
+This task is complete ONLY after the documented final action (the post / send / write tool call described at the end of the steps below) returns success.
+
+Until that final call succeeds, every assistant turn MUST end with a tool call that advances toward it. Do not idle, do not wait, do not ask for confirmation.
+
+**Never reply with any of these:**
+- "No response requested"
+- "Continue?" / "Should I continue?"
+- An empty turn or a turn that ends with text instead of a tool call
+
+**Treat these system messages as RESUME signals, never as stop signals:**
+- "Tool loaded."
+- "Continue from where you left off."
+- "You used a single tool call this turn. Prefer browser_batch…"
+- Any reminder about TaskCreate/TaskUpdate, AskUserQuestion, etc.
+
+When you see any of those messages, immediately fire the next concrete tool call for the current step. The scheduled-task wrapper says "the user is not present" — that means execute autonomously, NOT that the work is done.
+
+**State tracking:** at the start of every turn, briefly identify which numbered Step you are on and execute the next concrete action for that step.
+
+**Failure handling:** if a step errors, retry once. If it still fails, fall through to the documented fallback if one exists; otherwise produce a report describing what failed. Do not pause to ask — the task file authorizes autonomous decisions.
+
+**Speed:** prefer batch tools (e.g. `browser_batch`) to combine sequential actions into one call.
+
+---
 This is an automated, unattended run. Execute autonomously; make reasonable choices and note them. End with `<run-summary>...</run-summary>`.
 
 > ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails or can't complete its work, post nothing to Slack. Only post once the work is genuinely done.
@@ -157,3 +183,36 @@ Fires Monday 2:02 AM ET via cron `0 2 * * 1`. Generates and SCHEDULES all 42 ite
 <!-- 2026-07-16 (evening): fixed Brand IG account-picker ambiguity. -->
 <!-- 2026-07-06: STEP 0/0.5 additions. -->
 <!-- migrated to Publer-only publisher 2026-07-04. -->
+
+
+---
+
+## PROVEN STORE-PHOTO RETRIEVAL PATH (added 2026-08-21 — ends the "Slack photos unreachable" shortfall)
+
+The 2026-08-17 run shipped 0 of 35 store-local items because it believed manager deal photos
+were unreachable (wrong-workspace Chrome session claim + no headless Slack file access). That
+claim was outdated, and two working paths now exist. **Never again ship 0 store items over
+photo access — walk this list in order:**
+
+1. **PRIMARY — website deal image mirror (no browser, no Slack, one curl):**
+   `~/Documents/Claude/Scheduled/vp-website-deals-weekly/deal_store.json` holds the current
+   10 deals (5 stores × 2 weeks) with images already re-hosted at
+   `https://thevalleypawn.com/wp-content/uploads/...`. Download with curl via osascript.
+   These are the SAME manager-submitted real photos, mirrored by the deal-of-week pipeline.
+   At batch time (Mon 2:02 AM) the freshest set is last week's — that's fine; they're real,
+   photo-backed, in-stock-recently items. Proven live 2026-08-21 (CUL chainsaw + LEX
+   generator posts shipped from this mirror).
+2. **SECONDARY — Chrome Slack web session:** Chrome IS signed into the Valley Pawn Slack
+   (team T03BL4W1DCL — the 2026-08-17 manifest's "wrong workspace" claim is obsolete; verify,
+   don't assume). Open `https://valleypawnworkspace.slack.com/app_redirect?channel=deal-of-the-week`,
+   hover each image, click the download icon, collect from `~/Downloads`. Proven 2026-08-21
+   (toolbox + iMac photos). CAUTION: Slack web client freezes under high machine load —
+   check `uptime` first; if load average > ~30, use path 1 or wait.
+3. **Publisher for catch-ups:** `publish_store_deals_2026-08-21.py` is the proven template —
+   PublerClient.upload_media + schedule_post(store_keys=[Store, GBP_Store]), a live-Publer
+   duplicate guard (GET /posts scheduled, from/to explicit) so reruns never double-post, and
+   ≥20s pacing between items with slow job polling (Publer 429s on fast polling).
+
+Rule: a store-local item needs a real photo (authenticity gate stands) — but with path 1
+available, "no reachable photo" is no longer a valid shortfall reason for a store that
+submitted a deal within 14 days.

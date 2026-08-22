@@ -54,3 +54,24 @@ STEP 4 — PUBLISH TO THE RETAIL PAGE VIA CHROME (wp.apiFetch). Site is WordPres
 STEP 5 — CONFIRM (Slack). Only after verified success, post to #website (channel C0ASE9C0GQ0) one line: "Retail page deals refreshed: {N} live now ({comma list of ITEM (STORE)}). https://thevalleypawn.com/retail/". Do not DM. Post nothing if the run failed.
 
 NOTES: Auto-publish is intended (Joshua approved). The scarcity line + 21-day expiry are the safeguards against showing a sold item. If Chrome is unavailable, save the rendered block to /Users/joshuadavis/Documents/Claude/Scheduled/vp-website-deals-weekly/last_block.html and report — do not stall.
+---
+
+## HARDENING ADDENDUM v2 (2026-08-21) — PROVEN RECOVERY PLAYBOOK. THIS SECTION SUPERSEDES ANY CONFLICTING STEP ABOVE.
+
+Root causes found 2026-08-21 (runs of 8/10 and 8/17 produced nothing): (1) the upstream pick task's Brevo image upload used POST /v3/media, WHICH DOES NOT EXIST in the Brevo API — so campaigns had no deal blocks to parse; (2) this task treated 'Brevo has no deal blocks' as a dead end. Both are fixed by the playbook below, executed end-to-end successfully on 2026-08-21 (10 deals published + verified live).
+
+**SOURCE OF TRUTH — SLACK FIRST.** Deal submissions in #deal-of-the-week (C0AVCANK7E3) are usually TOP-LEVEL CHANNEL MESSAGES, not thread replies. Read the channel (mcp__*__slack_read_channel), collect every submission after the most recent Monday prompt(s) with a photo + price. Parse store/item/price/pitch from the message text. Use Brevo campaign HTML only as a bonus source of already-public image URLs — never block on it.
+
+**IMAGES — PROVEN PUBLIC-URL PIPELINE (no files:read scope needed).**
+1. The Keychain Slack bot token (service `vp-ops-slack-bot-token`) has NO files:read — files.info WILL fail with missing_scope. Do not retry it.
+2. Instead, construct each file's download URL directly: `https://files.slack.com/files-pri/T03BL4W1DCL-{FILE_ID}/download/{lowercased_filename}` (file ID + filename both appear in the channel read). Open it with the Control_Chrome MCP `open_url` — it rides Joshua's Slack session and the file lands in `~/Downloads` (original-case filename) within seconds.
+3. Downscale on the Mac: `sips -Z 1200 -s format jpeg -s formatOptions 80 in --out out.jpg`.
+4. Serve the folder locally for the browser: python3 ThreadingHTTPServer on 127.0.0.1:8787 that answers OPTIONS with 204 AND sends headers `Access-Control-Allow-Origin: *` and `Access-Control-Allow-Private-Network: true` on EVERY response — without the PNA header Chrome silently hangs the fetch (observed).
+5. Upload to the site's own media library (NOT Brevo): open `https://thevalleypawn.com/wp-admin/post.php?post=10&action=edit` in Chrome. NOTE: Control_Chrome execute_javascript runs in an ISOLATED WORLD — `window.wp` is ALWAYS undefined there; that is normal, not a failure. Scrape the REST nonce from page HTML with regex `createNonceMiddleware\(\s*"([a-f0-9]+)"` , then use plain `fetch` (same-origin cookies work): POST each blob to `https://thevalleypawn.com/wp-json/wp/v2/media` with headers X-WP-Nonce, Content-Disposition: attachment; filename=..., Content-Type image/jpeg. 201 → use `source_url`.
+6. execute_javascript DOES NOT await promises. Pattern: kick off the async work, write results to `document.body.setAttribute('data-…', JSON)`, poll the attribute in later calls.
+
+**PAGE UPDATE — same isolated-world fetch.** GET `/wp-json/wp/v2/pages/10?context=edit&_fields=id,content` with the nonce, splice the rendered block between the VP-DEALS markers (prepend if absent), POST back with status publish. Verify exactly ONE marker pair on the live page afterward.
+
+**CADENCE GUARD.** After finishing the page, check this week's Thursday Brevo campaign: if it is still status=draft with the dashed `DEAL OF THE WEEK — POPULATED MONDAY` placeholder intact, the upstream pick task failed again. Fill the placeholder with this week's deal blocks (email-safe markup, WP-hosted image URLs are fine in email) and PUT the htmlContent, then POST `/v3/emailCampaigns/{id}/sendNow` if it is Thursday ≥10 AM (or schedule for Thursday 10 AM ET if earlier in the week). The weekly email must never silently stay in draft — that is exactly what went dark for 3 weeks (W10–W12).
+
+**NEVER DEAD-END.** Every failure in this task has a documented fallback above. A run that ends with 'could not complete' without having attempted this playbook is a defective run.

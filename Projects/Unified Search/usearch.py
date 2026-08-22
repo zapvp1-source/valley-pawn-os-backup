@@ -21,6 +21,16 @@ MAIL = os.path.join(HOME, "Library/Mail")
 ICLOUD = os.path.join(HOME, "Library/Mobile Documents/com~apple~CloudDocs")
 MAXTEXT = 60000
 
+
+def _workers():
+    """Worker cap (added 2026-08-21): full-machine pools (cpu_count-1 = 9 on the
+    M1 Max) plus pdftotext children repeatedly drove load past 170 and froze the
+    UI. Default 4; override with USEARCH_WORKERS env var."""
+    try:
+        return max(2, min(int(os.environ.get("USEARCH_WORKERS", "4")), cpu_count() - 1))
+    except ValueError:
+        return 4
+
 TAG = re.compile(r"<(script|style)[^>]*>.*?</\1>", re.S | re.I)
 TAG2 = re.compile(r"<[^>]+>")
 WS = re.compile(r"[ \t\r\f\v]+")
@@ -277,7 +287,7 @@ def index_mail():
     c.commit()
     n = 0
     batch = []
-    with Pool(max(2, cpu_count() - 1)) as pool:
+    with Pool(_workers()) as pool:
         for r in pool.imap_unordered(parse_emlx, paths, chunksize=200):
             if r:
                 batch.append(r)
@@ -423,7 +433,7 @@ def index_files():
     n = 0
     ocr = 0
     batch = []
-    with Pool(max(2, cpu_count() - 1)) as pool:
+    with Pool(_workers()) as pool:
         for r in pool.imap_unordered(extract_file, paths, chunksize=25):
             if r:
                 batch.append(r)
@@ -699,8 +709,31 @@ def ocrlist():
         print(p)
 
 
+def _acquire_index_lock(cmd):
+    """One index run at a time, machine-wide (added 2026-08-21 after 5 stacked
+    runs drove load avg to 171+). Non-blocking: a second invocation exits 0
+    immediately — the running index will pick up the same data anyway."""
+    import fcntl
+    lockpath = os.path.join(PROJ, ".usearch_index.lock")
+    fh = open(lockpath, "w")
+    try:
+        fcntl.flock(fh, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError:
+        print("index already running (lock held) — skipping %s run" % cmd, flush=True)
+        sys.exit(0)
+    fh.write("pid=%d cmd=%s started=%s\n" % (os.getpid(), cmd, time.ctime()))
+    fh.flush()
+    return fh  # keep reference so the lock lives for the process lifetime
+
+
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "stats"
+    if cmd in ("mail", "files", "gdrive"):
+        _lock = _acquire_index_lock(cmd)
+        try:
+            os.nice(10)  # never compete with interactive apps
+        except OSError:
+            pass
     if cmd == "mail":
         index_mail()
     elif cmd == "files":

@@ -4,6 +4,12 @@ description: Sunday-evening Bravo pull (PART 1 of 2, moved off Monday morning 20
 model: claude-sonnet-5
 ---
 
+---
+name: monday-bravo-combined-run
+description: Sunday-evening Bravo pull (PART 1 of 2, moved off Monday morning 2026-08-10 to avoid contention) — drops all Monday ops triggers, writes a completion heartbeat (added 2026-08-21 so Fleet Guardian's output-verification pass can detect a silent failure), schedules compile for a fixed Monday 8:00 AM ET publish.
+model: claude-sonnet-5
+---
+
 > **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard, added 2026-08-02).**
 > This task runs on Joshua's Mac Studio and **does** have local machine access. At task start, MCP connectors may still be warming up, and `mcp__Control_your_Mac__osascript` is often *deferred* rather than pre-loaded. A tool that has not been loaded yet is NOT a missing capability.
 > 1. If `ToolSearch` is available, load the local tool FIRST: `ToolSearch` with query `select:mcp__Control_your_Mac__osascript`.
@@ -17,7 +23,7 @@ model: claude-sonnet-5
 > **Timeout rule:** the osascript wrapper kills any single call at ~25 s. Never sleep longer than ~18 s inside one call; poll in short increments across separate calls. Guard any command that may exit nonzero with a trailing || true.
 
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
 
 
 
@@ -29,7 +35,7 @@ You are running Joshua's Monday morning combined Valley Pawn Bravo POS run — *
 
 This task used to do everything: preflight → drop triggers → wait 30+ min → compile → Slack post → DM. That long inline wait made the Cowork session run out of context mid-run (confirmed 2026-05-29 — pipeline produced all 25 CSVs but compile/post never ran). The fix: split into TWO scheduled tasks.
 
-- **This task (`monday-bravo-combined-run`)** = preflight + drop all triggers + schedule the compile task + exit. ~3 min wall time.
+- **This task (`monday-bravo-combined-run`)** = preflight + drop all triggers + write heartbeat + schedule the compile task + exit. ~3 min wall time.
 - **`monday-bravo-combined-compile`** = fires ~75 min later. Reads the result JSON files and CSVs, posts to all 5 ops Slack channels, saves files, DMs Joshua the rollup. ~5-10 min wall time.
 
 Both tasks are short and context-safe.
@@ -68,6 +74,42 @@ clock time — matching the middle of the range the team already sees today, not
 
 See BRAVO_HEALTH_RUNBOOK.md section 0 for the contention rule that prompted this move, and
 MEMORY feedback_bravo_contention_check for the incident it's based on.
+
+## What changed 2026-08-21 — completion heartbeat + Fleet Guardian coverage added (this task had been silently failing)
+
+**Confirmed incident:** this task's `lastRunAt` kept advancing every Sunday on schedule, but for
+at least the weeks of 2026-08-16 and 2026-08-17 it produced **no trigger file, no log, no result.json,
+and no start-notice DM** — meaning the run was invoked but silently failed before or during Step 0/1,
+with no record of why. That silent failure cascaded: `monday-bravo-combined-compile` had nothing to
+read, `monday-bravo-postcheck`'s backfill also had nothing to read (a separate date-mismatch bug in
+both of those tasks compounded it further — fixed the same day, see their own SKILL.md headers), and
+all 5 ops channels — including #employee-performance — went dark for **3 consecutive weeks** with
+no alert to Joshua, discovered only when a downstream Canvas-refresh task noticed stale data on
+2026-08-21.
+
+**Fix (per `Valley Pawn OS/HARDENING_STANDARD.md` — no new per-task watchdogs; coverage comes from
+self-verification inside the task plus the fleet-wide Fleet Guardian):**
+1. This task now writes a completion heartbeat immediately after Step 1 succeeds (see STEP 1.5
+   below) — a fast, local self-check.
+2. Registered in `Valley Pawn OS/fleet/rerun_manifest.json` as **rerun-safe** (this task only
+   preflights + drops an internal trigger + DMs Joshua — no external contact, no money, no
+   Bravo-screen-driving, and Step 0 Check 5 already duplicate-guards against a stuck/duplicate
+   trigger).
+3. Registered in `Valley Pawn OS/fleet/expected_outputs.json` (marker: the Step 3 DM text "Sunday
+   Bravo pull dispatched", channel D03BHQH5VGT, cadence weekly-sunday-1800et, grace_hours 2) so
+   **Fleet Guardian's Step 1b output-verification pass** — which exists specifically to catch a
+   task that fired but died silently mid-run, the exact class `lastRunAt`-only detection cannot see
+   — will notice this task's DM never went out and re-run Steps 0-1 itself at its next pass
+   (12:45 PM or 9:45 PM ET; the Sunday 9:45 PM pass is ~3h45m after this task's 6 PM cron, well
+   inside the 2-hour grace window).
+
+This closes the gap without adding a bespoke `monday-bravo-part1-watchdog` task (one was built and
+then deleted the same day once `HARDENING_STANDARD.md`'s "no new per-task watchdogs" policy and the
+existing Guardian/manifest mechanism were found — the manifest entries above are the correct,
+consistent fix). This is a detection/self-heal layer on top of this task — it does not explain the
+original silent-failure cause, which remains unconfirmed; if it recurs, check whether this task is
+being skipped for a platform reason (e.g. a usage-cap "global_limit" skip — see the
+`scheduled-task-models` skill) rather than assuming it is this file's logic at fault.
 
 ==========================================================================
 STEP 0 — Pre-flight check
@@ -139,43 +181,62 @@ per-store EOM triggers are NO LONGER dropped here — they run in the separate
 
 > **EOM / store-rankings is NOT dropped here anymore (2026-06-22).** The 5
 > per-store end-of-month triggers moved to the separate `monday-store-rankings`
-> task (runs ~10:30 AM Monday on a settled Bravo with a settle+retry runner).
-> Keep this task to the single combined trigger above. Do NOT re-add EOM here.
+> task. Keep this task to the single combined trigger above. Do NOT re-add EOM here.
 
 Date conventions:
 - `<TODAY>` = current date YYYY-MM-DD in ET
 - `<FIRST_OF_MONTH>` = YYYY-MM-01 of current month
 
 ==========================================================================
-STEP 2 — Schedule the compile task for a FIXED Monday 8:00 AM ET publish (changed 2026-08-10)
+STEP 1.5 — Write completion heartbeat (added 2026-08-21)
 ==========================================================================
 
-This task now runs Sunday evening, so the pipeline has an overnight buffer — no need to compute
-an offset from "now." Instead, schedule `monday-bravo-combined-compile` to fire at a FIXED time:
-**8:00 AM ET on the upcoming Monday** (i.e. tomorrow, since this task itself only ever runs on a
-Sunday). This is what keeps the Slack posts landing at the time the team already expects, even
-though the underlying pull moved off Monday morning entirely.
+Immediately after the trigger file in Step 1 is successfully written to disk (drop confirmed —
+you do not need to wait for the watcher to claim/process it), write a heartbeat file as a fast
+local self-check (Fleet Guardian's own detection is the authoritative safety net — see the
+2026-08-21 changelog note above — but this costs one line and helps any session diagnosing this
+task quickly):
 
-Compute tomorrow's date in ET, then use the `mcp__scheduled-tasks__update_scheduled_task` tool:
-
-```
-update_scheduled_task(
-  taskId: "monday-bravo-combined-compile",
-  fireAt: "2026-06-02T08:00:00-04:00"   // = tomorrow (Monday), 8:00 AM ET, fixed — not an offset
-)
+```bash
+echo "<TODAY>T<HH:MM:SS>-04:00 trigger=monday-bravo-combined-<TODAY>" > '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/logs/monday-bravo-combined-run.last_success'
 ```
 
-If the pipeline is somehow not done by 8:00 AM (should not happen given the overnight buffer, but
-if Bravo needed extensive recovery Sunday night), compile's own existing incomplete-data handling
-(DM Joshua, do not post partial) still applies — `monday-bravo-postcheck` at 8:30 AM is the
-safety net, same role it always had, just re-timed to sit after this fixed 8:00 AM slot instead
-of racing a variable one.
+If the trigger write in Step 1 failed (see ESCAPE HATCH below), do NOT write this heartbeat —
+its absence/staleness is a useful diagnostic signal even though Guardian's own check is via the
+Step 3 DM marker, not this file.
+
+==========================================================================
+STEP 2 — (REMOVED 2026-08-21 — compile now runs on its own cron, not scheduled by this task)
+==========================================================================
+
+**Prior to 2026-08-21, this step called `update_scheduled_task` to re-arm `monday-bravo-combined-compile`
+as a one-time `fireAt` for the next Monday 8 AM.** That made PART2 (the actual Slack-posting task,
+covering all 5 ops channels including #employee-performance, #layaway-review, #first-payment-default)
+entirely dependent on THIS task successfully reaching this step every single week. It last succeeded
+2026-08-03; PART1 kept firing on its Sunday cron afterward but for at least the week of 8/16 produced
+no result.json, no trigger file, and no DM — a silent failure whose cause was never confirmed — which
+left PART2 disabled with no future fire time. All 5 ops channels went dark for 2+ weeks as a result.
+
+**Fix: `monday-bravo-combined-compile` now has its own independent recurring cron (`0 8 * * 1`).**
+It no longer needs anything from this task to know when to run. This task's ONLY job is now Steps
+0-1.5 (preflight + drop the trigger + write the heartbeat) and Step 3 (DM Joshua). **Do not add a
+Step 2 back that calls `update_scheduled_task` on `monday-bravo-combined-compile`** — that would
+silently convert it back to a one-time task and reintroduce this exact bug (see that task's own
+SKILL.md header for the full incident note).
+
+**Also note (fixed 2026-08-21 in the compile task):** because this task computes `<TODAY>` as ITS
+OWN run date (Sunday) when naming the trigger/result.json/CSVs, and `monday-bravo-combined-compile`
+fires the next day (Monday), the compile task now treats "yesterday" as the pipeline date for all
+file lookups rather than assuming same-day. No change needed here — just don't rename this task's
+own trigger-id/date convention without checking that downstream assumption.
 
 ==========================================================================
 STEP 3 — DM Joshua the start notice
 ==========================================================================
 
-DM Joshua (`U03BB52MDSA`) on Slack:
+DM Joshua (`U03BB52MDSA`) on Slack. **This exact DM (marker: "Sunday Bravo pull dispatched") is
+what Fleet Guardian's expected_outputs.json entry checks for — do not reword it below the marker
+line without also updating that manifest entry.**
 
 ```
 🚦 Sunday Bravo pull dispatched — YYYY-MM-DD
@@ -191,7 +252,7 @@ Then exit. This task is done.
 ESCAPE HATCH — IF DROPS FAIL
 ==========================================================================
 
-If a trigger drop fails (write permission, disk full, etc.), DM Joshua immediately with what failed and stop. Don't try to recover — Joshua can re-trigger manually.
+If a trigger drop fails (write permission, disk full, etc.), DM Joshua immediately with what failed and stop. Don't try to recover — Joshua can re-trigger manually. Do NOT write the Step 1.5 heartbeat in this case.
 
 ==========================================================================
 LEGACY DESIGN — preserved for reference
@@ -204,3 +265,4 @@ The split (this task = drop-and-exit, `monday-bravo-combined-compile` = post-and
 Pre-split version backed up at `SKILL.md.bak-pre-split-2026-05-29`.
 
 <!-- migrated to working model 2026-06-15 -->
+<!-- heartbeat + Fleet Guardian coverage added 2026-08-21 -->

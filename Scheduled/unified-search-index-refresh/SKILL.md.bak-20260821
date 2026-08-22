@@ -1,0 +1,26 @@
+---
+name: unified-search-index-refresh
+description: Nightly 3:30 AM — rebuild Joshua's unified-search index (Mail, Drive, Notes, Reminders, Photos OCR, stats). Replaces the broken native launchd agent (TCC-blocked, failed silently every night since ~8/14).
+---
+
+This is an automated run of a scheduled task. The user is not present to answer questions. Execute autonomously — no clarifying questions. Only take "write" actions this file specifically asks for. When in doubt, report what you found.
+
+## Background
+This task replaces `com.valleypawn.unified-search-refresh`, a native launchd agent that ran `/bin/bash "$HOME/Documents/Claude/Projects/Unified Search/refresh.sh"` nightly at 3:30 AM. That agent failed EVERY run with `Operation not permitted` (confirmed 2026-08-21 by reading `refresh.log` directly — macOS TCC blocks a bare launchd-invoked `/bin/bash` from executing anything under the protected `~/Documents` folder without Full Disk Access, which can only be granted via a manual System Settings → Privacy & Security → Full Disk Access click — not something a scheduled task or agent can grant itself). The unified-search index (Apple Mail, iCloud Drive, Notes, Reminders, Photos OCR) has been stale since ~2026-08-14 as a result. The broken plist was unloaded and renamed to `com.valleypawn.unified-search-refresh.plist.disabled-20260821-brokenTCC` on 2026-08-21 — do not re-enable it; this Cowork task is the permanent replacement, since Cowork's own shell/osascript path already has the filesystem access the native agent lacked.
+
+## What to do
+1. Use `mcp__Control_your_Mac__osascript` with a `do shell script` call to run:
+   ```
+   cd "$HOME/Documents/Claude/Projects/Unified Search" && bash refresh.sh 2>&1
+   ```
+   (This mirrors the original script's steps exactly: usearch.py mail, usearch.py files, msgindex.py, notesindex.py, remindersindex.py, usearch.py gdrive, photosindex.py, then usearch.py stats > stats.txt — the script itself is unchanged, only the invocation path changed.)
+2. Give it up to 8 minutes (the OCR/Photos step is the slowest part historically ~2-5 min).
+3. Read back the tail of `refresh.log` (or the shell output directly) to confirm it actually produced `=== done <timestamp> ===` at the end — do not just trust a zero exit code (Rule 12, verify against output).
+4. If it completed cleanly: no Slack post needed, this is a silent-success background job. Just note the outcome in your final turn.
+5. If ANY step errored or the "=== done" marker is missing: send ONE plain-language Slack DM to Joshua (channel `D03BHQH5VGT`): "⚠️ Scheduled task \"unified-search-index-refresh\" did not complete — <date>." Nothing technical in that DM — put full error detail only in your own final report/output. Never post failure detail to any team channel.
+6. Optional light self-check: if `stats.txt` under the same folder has a modified time older than 36 hours after this run claims success, flag that discrepancy in your report (index may be silently no-op'ing even though the script ran) — do not treat this as fatal, just note it for the next session.
+
+## Constraints
+- Do not modify `refresh.sh`, `usearch.py`, or any of the index scripts themselves — this task only changes HOW the existing script gets invoked (osascript instead of bare launchd bash), not what it does.
+- Do not re-enable or delete the disabled `.plist.disabled-20260821-brokenTCC` file — leave it as an inert backup/reference.
+- This task's only job is running the refresh reliably. It is not responsible for interpreting search results or answering search queries — that's the `unified-search` skill's job at query time.

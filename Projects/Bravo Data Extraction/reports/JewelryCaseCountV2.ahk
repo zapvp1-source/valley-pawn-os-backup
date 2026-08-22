@@ -699,6 +699,51 @@ PullJewelryCaseCountsV2(store, asOfDate, outputDir) {
                   . ". Refusing to report a partial jewelry count as success.")
     }
 
+    ; ---- GUARD 3 (added 2026-08-21 after a confirmed stale-grid duplicate-
+    ; count incident): a frozen/stale WPF grid can pass BOTH BoxReportName
+    ; verification (step 3b) AND the stable-read guard (step 5) while still
+    ; serving a PREVIOUS category's cached total — the name label updates
+    ; but the grid pane underneath doesn't repaint before the read. Two
+    ; reads 6s apart agreeing only proves the grid isn't CURRENTLY changing,
+    ; not that it was ever refreshed for the newly-selected report.
+    ; Empirically (2026-08-21 nightly, two separate attempts): CUL Charms=90
+    ; and ROA Pendants=90 landed within ~4 min of each other while both
+    ; stores' report pickers were independently observed stuck rendering
+    ; 'Necklaces' regardless of GUID selected; in a later run ROA Bracelets=2
+    ; and Brooches=2 matched exactly. A single coincidental match across 8
+    ; categories is possible in real inventory, but this handler already
+    ; treats "possibly wrong" as worse than "didn't run" (no-false-zero rule,
+    ; 7/8 rule above) — so ANY duplicate count shared by 2+ different
+    ; categories in the same run downgrades the whole store to error rather
+    ; than silently posting a count that may be contaminated. This is a
+    ; symptom-level circuit breaker, not a fix for the underlying WPF render
+    ; race — see Jewelry Count Reconciliation/STATUS.md 2026-08-21 run
+    ; record for the root-cause writeup and recommended follow-up (root-cause
+    ; fix needs live Bravo access to prove, not a blind edit).
+    dupGroups := Map()
+    for category in JEWELRY_CC_V2_ORDER {
+        if (statuses[category] != "ok")
+            continue
+        v := counts[category]
+        if !dupGroups.Has(v)
+            dupGroups[v] := []
+        dupGroups[v].Push(category)
+    }
+    dupMsg := ""
+    for v, cats in dupGroups {
+        if (cats.Length > 1) {
+            catList := ""
+            for c in cats
+                catList .= (catList = "" ? "" : ",") . c
+            dupMsg .= (dupMsg = "" ? "" : "; ") . v . "=[" . catList . "]"
+        }
+    }
+    if (dupMsg != "") {
+        return Fail(result, started
+                  , "Duplicate counts across different categories (possible stale-grid contamination): "
+                  . dupMsg . ". Refusing to report a jewelry count that may be corrupted.")
+    }
+
     result["status"]      := "success"
     result["duration_ms"] := A_TickCount - started
     LogMessage("  SUCCESS: all 8 category counts read (stable), " . result["duration_ms"] . "ms")

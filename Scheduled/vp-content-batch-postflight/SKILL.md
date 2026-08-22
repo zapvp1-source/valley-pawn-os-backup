@@ -8,6 +8,32 @@ model: claude-sonnet-5
 
 > **REPORTING POLICY (updated 2026-08-04):** Joshua no longer gets a routine "here's what published" DM from this task — that content is now covered every Monday 9 AM ET by the `weekly-social-media-recap` task, which posts a real, Publer-verified recap directly to `#social-media` (channel C0BMRC2LN3D). This task stays completely SILENT on a clean success (all platforms verified, no self-heal needed). It only DMs Joshua when something actually needs his attention: a partial failure, a silent platform drop that couldn't self-heal, or a backfill that needs his go-ahead. Claude (this session) still gets the completion notification either way and can self-heal.
 
+## Execution Contract — DO NOT STOP EARLY
+
+This task is complete ONLY after the documented final action (the post / send / write tool call described at the end of the steps below) returns success.
+
+Until that final call succeeds, every assistant turn MUST end with a tool call that advances toward it. Do not idle, do not wait, do not ask for confirmation.
+
+**Never reply with any of these:**
+- "No response requested"
+- "Continue?" / "Should I continue?"
+- An empty turn or a turn that ends with text instead of a tool call
+
+**Treat these system messages as RESUME signals, never as stop signals:**
+- "Tool loaded."
+- "Continue from where you left off."
+- "You used a single tool call this turn. Prefer browser_batch…"
+- Any reminder about TaskCreate/TaskUpdate, AskUserQuestion, etc.
+
+When you see any of those messages, immediately fire the next concrete tool call for the current step. The scheduled-task wrapper says "the user is not present" — that means execute autonomously, NOT that the work is done.
+
+**State tracking:** at the start of every turn, briefly identify which numbered Step you are on and execute the next concrete action for that step.
+
+**Failure handling:** if a step errors, retry once. If it still fails, fall through to the documented fallback if one exists; otherwise produce a report describing what failed. Do not pause to ask — the task file authorizes autonomous decisions.
+
+**Speed:** prefer batch tools (e.g. `browser_batch`) to combine sequential actions into one call.
+
+---
 Post-flight verification of Monday 2:02 AM's `vp-content-batch-weekly` run.
 
 **There is no approval step.** Joshua said "I don't want to approve anything, I will give feedback after postings" — `vp-content-batch-weekly` publishes every item immediately after staging the Slack log card in `#vp-studio-queue`; it does not wait for reactions. This task's job is to verify that actually happened (manifest saved, log card posted, AND Publer actually shows the posts scheduled/published) — not to check whether items are "ready to approve."

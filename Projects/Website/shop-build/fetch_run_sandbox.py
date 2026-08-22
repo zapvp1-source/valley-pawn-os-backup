@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import re, json, os, subprocess, sys, html as H, time
 
-BASE = "/sessions/zen-nice-gauss/mnt/Website/shop-build"
+BASE = "/sessions/gallant-nifty-volta/mnt/Website/shop-build"
 RAW  = os.path.join(BASE, "raw")
 CJ   = os.path.join(BASE, "vp_ebay_cookiejar_run.txt")
 os.makedirs(RAW, exist_ok=True)
