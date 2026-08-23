@@ -1,6 +1,6 @@
 ---
 name: vp-content-batch-weekly
-description: Daily-cadence Valley Pawn content batch, generated/scheduled once a week (Mon 2 AM) across all 7 days: 7 Brand items/week (1/day → Brand FB + Brand IG + Brand X, ONLY brand tier touches these 3 shared accounts) + 35 store-local items/week (5 stores × 1/day → that store's FB + that store's GBP, mandatory both legs every time, no longer conditional on a deal submission). 42 items/week total. Redesigned 2026-08-04 per Joshua: "at least one post a day on store pages... GBP consistently... X needs to be 7, IG brand 7, FB brand 7, FB store pages 1/day." Community+Humor pillars, AUTHENTICITY STANDARD (real photos/facts only) unchanged. Auto-publishes; #vp-studio-queue is a log.
+description: Weekly Valley Pawn content batch. MOVED 2026-08-22 from Mon 2:02 AM to Mon 1:40 PM: the batch fired 7+ hours BEFORE manager deal submissions land (9:30-11 AM), so it ran a full week stale and its "no submission" exclusions were systematically wrong (8/10 run said "Uriah didn't submit" — he submitted 11:17 AM that same day). Now runs after vp-deal-of-week-monday-pick (12:33 PM). Brand tier 7/wk + store-local 35/wk via Publer.
 model: claude-opus-4-8
 ---
 

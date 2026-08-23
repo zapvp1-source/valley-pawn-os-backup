@@ -1,9 +1,15 @@
 # ASK-HANDBOOK SOURCES — Full Circle Finance Inc DBA Valley Pawn
-Generated 2026-08-21 from the two governing documents. This file is the ONLY source the #ask-handbook responder may answer from.
+
+AUTO-GENERATED 2026-08-22 15:18 by build_sources.py. Do not hand-edit — edits are overwritten.
+
+This file is the ONLY thing the #ask-handbook responder may answer employees from.
+If a policy is not in here, the correct answer is 'not covered — ask your Store Manager',
+never a guess and never an answer from general knowledge.
 
 ================================================================================
-SOURCE 1: VALLEY PAWN POLICIES & PROCEDURES MANUAL — Version 2026.3 FINAL (updated August 21, 2026)
-Cite as: P&P Manual v2026.3, <section number and name>
+SOURCE: VALLEY PAWN POLICIES & PROCEDURES MANUAL — v2026.3 (document last modified 2026-08-21)
+Operational policy — how the stores run.
+CITE ANSWERS FROM THIS DOCUMENT AS: P&P Manual v2026.3, <section number and name>
 ================================================================================
 FULL CIRCLE FINANCE INC
 d/b/a VALLEY PAWN
@@ -28,6 +34,101 @@ No existing policy text was altered or removed in this version; all changes are 
 
 ### What’s New in Version 2026.1 / 2026.2
 This version folds the legacy Valley Pawn Policies & Procedures manual together with approximately 18 policies that, until now, existed only as Slack posts in #policy-announcements and/or Gusto e-signed PDFs. Every new or updated item is marked in its section with a green “[Added MM/YYYY — previously Slack-only]” tag so Joshua Davis and Preston Peters can see at a glance what changed. Items marked “Partial” or “Summary only” below could not be fully verified against original source text (the underlying PDF/Gusto document was not retrievable through available tools) and are flagged in-line for follow-up.
+Policy
+Placed In
+Effective / Issued
+Source
+Detail Level
+eBay — Precious-Metal Jewelry Listings (designer/diamond/gemstone only)
+Sec. 5A
+7/7/2026
+Google Drive doc
+Full
+eBay 30/60/90 Listing-Age Standard
+Sec. 5A
+7/4/2026
+Slack #policy-announcements
+Full
+PTO Overhaul (accrual, blackout, use-it-or-lose-it)
+Sec. 1.11
+10/20/2025
+Drive doc (Gusto-distributed)
+Full
+Cash Drawer Policy (locked/unattended, auto-open feature)
+Sec. 2.04
+2/24/2026
+Slack #policy-announcements
+Full
+Mandatory Firearms Safety Training (Basic Gun Safety 101)
+Sec. 10.06
+Feb-Mar 2026
+Slack #policy-announcements
+Full course terms; referenced PDFs not recovered
+Employee Purchase Policy (replaces legacy clause)
+Sec. 5.10
+current
+Drive doc
+Full
+Large Loan / Buy Worksheet ($1,000+ threshold)
+Sec. 1.10 & Sec. 5
+recurring 2024-2026
+Slack #policy-announcements
+Full timeline; reloan scope flagged
+Layaway Protocol update
+Sec. 5.05
+circulated 2/10/2025
+Slack + Board Policy Register
+Partial / paraphrased
+Return Policy update
+Sec. 5.08
+circulated 2/10/2025
+Slack + Board Policy Register
+Partial / paraphrased
+Broken / Non-Functioning Firearm Storage Protocol
+Sec. 4.02 & 10.06
+3/19/2025
+Slack + Board Policy Register
+Partial / paraphrased
+Multiple Handgun Sales Protocol + MHG Acknowledgement Form
+Sec. 4.02 & 10.06
+3/19/2025
+Slack + Board Policy Register
+Partial / paraphrased
+Monthly Gun Audit requirement
+Sec. 10.06
+6/28/2024 (deadline corrected 2026)
+Slack
+Partial - deadline only
+Aged Inventory Management markdown schedule
+Sec. 6.03
+circulated 7/20/2024
+Slack (title only) + task brief
+Summary only
+Precious Metals Melt Calculation Policy
+Sec. 4.03
+2/26/2026
+Slack (Gusto e-signature, not recovered)
+Summary only
+NCO (Neat, Clean, Organized) Expectations
+Sec. 3.16
+circulated 7/20/2024
+Slack (multiple channels)
+Partial - enforcement context
+Gold Scrap Process
+Sec. 4.03
+circulated 7/20/2024
+Slack (title only)
+Summary only
+Timekeeping Correction Policy (next-cycle correction)
+Sec. 1.04
+1/22/2026 & 2/5/2026
+Slack #policy-announcements
+Full - verbatim
+Employee / Family-Member Transaction Approval (Joshua Davis)
+Sec. 1.10
+1/13/2026
+Slack #policy-announcements
+Full - verbatim
 
 ## Table of Contents
 
@@ -756,18 +857,30 @@ A recurring monthly, per-store gun audit is required. The current enforced submi
 [NOTE: The legacy manual's glossary text was cut off mid-definition at "Refinance: Taking out a new pawn lo[an]..." during extraction from the source document — the completed definition above is reconstructed from context (consistent with the Refinance procedure described in Section 05.04) rather than quoted verbatim from a fully-intact source sentence. Recommend Joshua/Preston verify the exact original wording. New terms (PFI, NCO/NCOM, MHG, 4473/3310.4, FFL, FDCPA) were added by this consolidation for cross-reference convenience and were not part of the original legacy glossary.]
 
 ================================================================================
-SOURCE 2: VALLEY PAWN EMPLOYEE HANDBOOK — Version 2026.2 FINAL (finalized August 3, 2026)
-Cite as: Employee Handbook v2026.2, <section name>
+SOURCE: VALLEY PAWN EMPLOYEE HANDBOOK — v2026.2 (document last modified 2026-08-03)
+HR / employment policy — pay, leave, conduct, benefits.
+CITE ANSWERS FROM THIS DOCUMENT AS: Employee Handbook v2026.2, <section number and name>
 ================================================================================
 EMPLOYEE HANDBOOK
-Welcome to Valley Pawn (“VP”). We hope you agree that you can make a great contribution to the company and that you will find your employment with the company a mutually beneficial and rewarding experience. We look forward to the opportunity of working together to create a more successful company. You have joined an organization that has established an outstanding reputation for quality. Credit for this reputation of quality goes to the employees who from the beginning, have set their own high standards of work ethics and have brought forth their best over and over again. We hope you will find satisfaction
-and take pride in your work here	as other employees before you have done. As a member of the company's team
+The Story of VALLEY PAWNThe Story of VALLEY PAWN
+The Story of VALLEY PAWN
+The Story of VALLEY PAWN
+WelcomeWelcomeWelcome to Valley Pawn (“VP”). We hope you agree that you can make a great contribution to the company and that you will find your employment with the company a mutually beneficial and rewarding experience. We look forward to the opportunity of working together to create a more successful company. You have joined an organization that has established an outstanding reputation for quality. Credit for this reputation of quality goes to the employees who from the beginning, have set their own high standards of work ethics and have brought forth their best over and over again. We hope you will find satisfaction
+Welcome
+Welcome
+and take pride in your work hereas other employees before you have done. As a member of the company's team
 you will be expected to contribute your talents and energies to further improve the working environment and the quality of the company.
 This employee manual provides answers to commonly asked questions, including employee benefits and the company's policies and procedures. Each employee is responsible for reading and understanding this handbook and the company Policy and Procedure Manual. If you have any questions about any material in this handbook or the Policy and Procedure Manual do not hesitate to ask your immediate supervisor.
 We extend to you our personal best wishes for your success and happiness in your employment with the company.
 Founded in 2000, the original partners had stores in Staunton, Elkton and Culpeper. Those business partners eventually split up and ran their own businesses. In 2015 the Staunton location came up for sale and the current owners bought that location with the intent of opening stores across the Valley. Since 2015, the company has grown from that original Staunton location to five stores across the Shenandoah Valley — Culpeper, Waynesboro, Harrisonburg, Lexington, and Roanoke.
-The employee handbook was created to provide all of our employees with an overview of the company’s philosophy, employment practices, policies, procedures and benefits provided. The company, at its option, m ay at any time without prior notice (as business, employment legislation, and economic conditions dictate), change, delete, suspend, or discontinue any part or parts of the policies in this employee handbook and the company Policy and Procedure Manual. Any such action shall apply to existing as well as future employees. No one other than the president of the company may alter or modify any of the policies and procedures	in this employee handbook or the company’s Policy and Procedure Manual. Any alterations or modifications to the policies and procedures in this employee handbook, or the Policy and Procedure Manual, must be in writing from an authorized corporate officer(s). No statement by a supervisor, manager, or department head, past or present, may be interpreted as a change
+The Employee HandbookThe Employee Handbook
+The Employee Handbook
+The Employee Handbook
+The employee handbook was created to provide all of our employees with an overview of the company’s philosophy, employment practices, policies, procedures and benefits provided. The company, at its option, m ay at any time without prior notice (as business, employment legislation, and economic conditions dictate), change, delete, suspend, or discontinue any part or parts of the policies in this employee handbook and the company Policy and Procedure Manual. Any such action shall apply to existing as well as future employees. No one other than the president of the company may alter or modify any of the policies and proceduresin this employee handbook or the company’s Policy and Procedure Manual. Any alterations or modifications to the policies and procedures in this employee handbook, or the Policy and Procedure Manual, must be in writing from an authorized corporate officer(s). No statement by a supervisor, manager, or department head, past or present, may be interpreted as a change
 in company policy or procedure, nor will it constitute an agreement with an employee.
+Company and Employee ExpectationsCompany and Employee Expectations
+Company and Employee Expectations
+Company and Employee Expectations
 
 ### What the Employee Can Expect From the Company
 The company believes in creating a harmonious working relationship between all employees. In pursuit of this goal the company has set the following employee relations objectives:
@@ -790,7 +903,7 @@ The company believes in creating a harmonious working relationship between all e
 ### What the Company
 Expects From the Employee
 The company expects each employee’s help and cooperation to make each working day enjoyable and rewarding. How an employee accepts instruction and
-direction from a supervisor and how a	n employee interacts with their other co-workers will affect the success of that employee’s department. In turn, the performance of one
+direction from a supervisor and how an employee interacts with their other co-workers will affect the success of that employee’s department. In turn, the performance of one
 department can impact the entire performance of the company. Consequently, whatever the employee’s position is with the company, each employee has a very important assignment; to perform every task to the best of their ability.
 
 ### Company Expectations
@@ -810,7 +923,12 @@ to all inquiries and requests.
 - Employees must take great pride in their work with our customers and enjoy doing their very best.
 - Employees must perform all job duties competently, in an orderly, professional manner.
 - Employees must communicate effectively and respectfully with customers and co- workers. Your co-workers are also your customers.
-The company is an equal opportunity employer. All employment decisions are based on merit, qualifications, and business requirements. Employment is not based on race, color, religion, national origin, sex, pregnancy, childbirth or related medical conditions (including lactation), age, marital status, sexual orientation, gender identity, disability, and veteran or military status, or any other factor protected by law. These protections are consistent with the Virginia Human Rights Act, as amended by the Virginia Values Act.
+Employment PoliciesEmployment Policies
+Employment Policies
+Employment Policies
+Equal Employment OpportunityEqual Employment OpportunityThe company is an equal opportunity employer. All employment decisions are based on merit, qualifications, and business requirements. Employment is not based on race, color, religion, national origin, sex, pregnancy, childbirth or related medical conditions (including lactation), age, marital status, sexual orientation, gender identity, disability, and veteran or military status, or any other factor protected by law. These protections are consistent with the Virginia Human Rights Act, as amended by the Virginia Values Act.
+Equal Employment Opportunity
+Equal Employment Opportunity
 The company com plies with all the relevant and applicable provisions of the Americans with Disabilities Act (ADA). The company will not discriminate against any qualified employee or job applicant with
 respect to any term s, privileges, or condition of employment because of a person’s physical or mental disability. The company will also make reasonable accommodations wherever necessary for the
 disabled employee or job applicant
@@ -824,7 +942,7 @@ All employment with the company is at-will. This means that neither the employee
 No employee of the company is authorized to enter into any employment contract for a specified period of time or make any agreement contrary to this policy without the written approval of the President of the company.
 
 ### Employment Applications
-The company will accept applications for employment at all times, even when no openings exist. When no openings exist, applicants will be so	informed, but also told that their application will be kept on file.
+The company will accept applications for employment at all times, even when no openings exist. When no openings exist, applicants will be soinformed, but also told that their application will be kept on file.
 
 ### Work Authorization
 All new employees must complete Form I-9 to verify identity and employment authorization, consistent with federal law. The Company does not discriminate based on citizenship or immigration status beyond what federal law requires.
@@ -836,7 +954,7 @@ Everyone has certain legal rights to discover and to dispute or explain any info
 ### Employee Background Checks
 Prior to becoming an employee of the company, a job-related background check might be conducted. A background check may consist of prior employment verification, personal, and/or professional reference checks, and education confirmation and legal background checks.
 
-### Driver’s	License,	Driving	Record,	and Automobile Insurance
+### Driver’sLicense,DrivingRecord,and Automobile Insurance
 Any employee whose work requires the operation of a motor vehicle must present and maintain a valid driver’s license and a driving record that is acceptable to the company and the company’s insurer. The company may check the employee’s driving record at any time. Any changes in the employee’s driving record must be reported to your immediate supervisor and/or the human resources department immediately. Failure to do so m ay result in disciplinary action, up to and including termination. The employee must also present proof of automobile insurance and agrees to maintain coverage a s long as he or she is employed with the company and his or her job requires operating a motor vehicle.
 
 ### Vehicle Safety Policy
@@ -883,6 +1001,9 @@ Employees have the right to request a reasonable accommodation for a disability.
 
 ### Pregnancy, Childbirth & Related Medical Conditions
 The Company provides reasonable accommodations for known limitations related to pregnancy, childbirth, lactation, or related medical conditions, absent undue hardship, consistent with the Virginia Human Rights Act (Va. Code § 2.2-3909) and the federal Pregnant Workers Fairness Act. Examples of accommodations may include schedule adjustments, additional or longer breaks, temporary light duty, or seating modifications. Employees may request an accommodation from Human Resources; the Company will engage in a timely, good-faith interactive process. This notice is provided to new hires at the start of employment and to any employee within 10 days of notifying the Company of a pregnancy. Retaliation against an employee for requesting an accommodation is prohibited.
+Employment ClassificationsEmployment Classifications
+Employment Classifications
+Employment Classifications
 At the time of hire, an employee is classified as a full-time, part-time or temporary employee. In addition, an employee is classified as either exempt or non-exempt. All other policies described in this handbook, the Policy and Procedure Manual, and other communications from the company apply to all employees, with the exception of certain wage, salary, and time off limitations applying only to “non-exempt” employees. If an employee is unsure of their employment classification, he or she should
 contact their immediate supervisor. All store employees will be hourly, and any overtime has to be approved by their supervisor.
 
@@ -900,7 +1021,7 @@ An employee who works less than thirty-two
 (32) hours per week is considered a part-time employee. Part time employees are not eligible for employee benefits described in this handbook, except to the extent required by local, state, and federal laws.
 
 ### Exempt Employees
-An employee is   classified as an exempt employee at his or her time of hire, transfer, and/or promotion. Exempt employees generally are, but are not limited to being, salaried employees. Exempt employees are not entitled to overtime time pay. If an employee is rehired less than thirty (30) days from	their termination, the employee’s original hire date will be restored. Any elected employee benefits such as medical, dental and disability will be restored; however, vacation and / or sick time will not be reinstated. Any unused vacation and
+An employee is   classified as an exempt employee at his or her time of hire, transfer, and/or promotion. Exempt employees generally are, but are not limited to being, salaried employees. Exempt employees are not entitled to overtime time pay. If an employee is rehired less than thirty (30) days fromtheir termination, the employee’s original hire date will be restored. Any elected employee benefits such as medical, dental and disability will be restored; however, vacation and / or sick time will not be reinstated. Any unused vacation and
 / or sick time would have been previously paid upon the final check. If the employee is rehired beyond thirty (30) days, the hire date will be date of hire not original hire date.
 
 ### Non-Exempt Employees
@@ -925,6 +1046,9 @@ Depending on the circumstances, the company may consider a former employee for r
 Although the company may hire an employee’s relative, the situation is closely reviewed in advance, and closely monitored during employment. An employee must not immediately supervise their relative, nor can relatives work in the same department. The goal of the company is to provide a professional service and/or product to its customers. It is also the goal of the company to provide its employees with a comfortable work environment; therefore, it is imperative that a situation that may cause conflict to be avoided.
 If the company determines, at its sole discretion, that a relationship between any employees causes (or has the potential to cause) a conflict of interest, the appearance of
 such a conflict or have an adverse effect on an employee’s efficiency or performance, the company may elect to terminate any or all employees involved.
+Work Schedules/AttendanceWork Schedules/Attendance
+Work Schedules/Attendance
+Work Schedules/Attendance
 All employees are expected to report to work as scheduled and on time. Employees are expected to work until the workday ends. Any deviations from scheduled hours must be approved through the employees' immediate Supervisor.
 
 ### Hours of Business
@@ -945,6 +1069,9 @@ According to law, an employee who works longer than six (6) hours must take an u
 ### Absenteeism/Tardiness
 The company expects all employees to maintain a good consistent attendance record. The Company does not maintain a separate paid sick-leave bank; time off for illness or injury is covered under the Paid Time Off (PTO) policy described in the Benefits section of this handbook. In the case of a necessary absence, the immediate supervisor must be contacted before the beginning of the normal workday on each day of the absence. In the case of three consecutive days of absence, or the possible need for a medical leave, additional notification procedures may apply. Failure to properly notify the company will result in the absence being recorded as unexcused and may result in disciplinary action. The Company will pay an employee for all time actually worked; wages for time worked are never forfeited.
 Absenteeism or tardiness that is unexcused or excessive in the opinion of the company is grounds for appropriate disciplinary action.
+CommunicationCommunication
+Communication
+Communication
 Successful working conditions and relationships depend upon successful effective communication.
 All employees must be aware of changes in
 procedure, policies, and general
@@ -977,6 +1104,9 @@ The Company complies with Virginia's pay transparency law (Va. Code § 40.1-28.7
 
 ### Employee Checks
 Employees may not at any time or for any reason cash or hold employee payroll or personal checks. Any violations of this policy may result in termination.
+Employee Conduct And AppearanceEmployee Conduct And Appearance
+Employee Conduct And Appearance
+Employee Conduct And Appearance
 
 ### Standards of Conduct
 By accepting employment with the company each employee has also accepted the responsibility to adhere to certain rules of behavior and conduct. The company expects all employees to conduct themselves in a professional manner at all times and refrain from conduct which might be harmful to you, your co-workers, customers, or the reputation of the company. If an employee has any questions concerning any policy, procedure, task, safety rule, or any of the unacceptable activities listed below, the employee must contact their immediate supervisor.
@@ -1032,7 +1162,7 @@ worker, supplier, or customer. Any disorderly or antagonistic conduct on company
 - Selling merchandise or collecting funds for any reason during business hours at a time and/or place that interferes with the work of another employee on company premises, without prior supervisor approval.
 - The lending or borrowing of money between employees other than for occasional lunches, etc.
 - Assisting other employees in the borrowing of money from outside
-commercial	sources.
+commercialsources.
 - Cashing of personal checks with company funds. An exception is made for
 traveling personnel such as supervisors, company auditors, etc.
 - Romantic relationships between employees and customers are prohibited.
@@ -1083,6 +1213,9 @@ The majority of the company's employees work directly with our customers daily. 
 ### Footwear
 Loafers, flats, dress sandals, boots and leather deck shoes are acceptable. Athletic shoes, hiking boots, work boots, canvas footwear. As long as they are clean and presentable.
 Please consider each day's activities when determining what to wear. Extreme weather conditions may also allow for a modification in dress wear. If in doubt, check with your supervisor. Please use good judgment in your choice of work clothes and remember to conduct yourself at all times in a way that best represents you and the company. Employees failing to adhere to the company's standards with respect to appearance and demeanor are subject to disciplinary actions.
+Administrative PoliciesAdministrative Policies
+Administrative Policies
+Administrative Policies
 
 ### Smoking
 Branch offices are usually confined to small spaces of 1000 -1500 square feet. Medical findings have confirmed that smoking is hazardous to the health and well-being of smokers as well as non-smokers. The company is concerned with the health of all employees and is committed to maintaining a comfortable working environment, which is pleasant to everyone. In order to be successful in this endeavor and to ensure compliance with applicable laws, company offices including all locations will maintain a smoke-free environment.
@@ -1131,6 +1264,9 @@ No employee is permitted to distribute any non-company literature in the workpla
 
 ## Employees must only distribute official company documents, and solicitation materials. Under no circumstances are employees allowed to create their own documents and solicitation materials.
 Persons not employed by the company are prohibited from soliciting or distributing literature or merchandise on company property without prior upper management approval.
+Payroll AdministrationPayroll Administration
+Payroll Administration
+Payroll Administration
 
 ### Overview
 The goal of the company’s program is to attract potential employees, meet the needs of current employees, and encourage solid performing employees to stay with the company. With this in mind our compensation program is built to balance the needs of the employees as well as the company. It is the company’s desire to pay all regular employees’ wages and salaries that are competitive with other employers in the marketplace and that will be motivational, fair, and equitable. Compensation may vary with individual and company performance, including compliance with all applicable statutory requirements. The company applies the same standards and principles to all employees, regardless of organizational level, race, color, religion, national origin, sex, pregnancy, childbirth or related medical conditions (including lactation), age, marital status, sexual orientation, gender identity, disability, and veteran or military status, or any other factor protected by law. These protections are consistent with the Virginia Human Rights Act, as amended by the Virginia Values Act.
@@ -1187,6 +1323,9 @@ When practical, the company attempts to provide existing employees the opportuni
 any other factor protected by law. All requests for consideration for a position must be directed to the employee's immediate supervisor.
 The company retains the right to exercise customary managerial functions including the right to transfer employees within departments or into other departments and other classifications.
 The company, at its sole discretion, may elect to assist a newly hired or an existing employee with relocation expenses to their respective work site. Assistance, if granted, will be based on circumstances that lead to the relocation.
+BenefitsBenefits
+Benefits
+Benefits
 In addition to receiving an equitable salary and having an equal opportunity for professional development and advancement, the employee may be eligible to enjoy other benefits. The company is committed to offering a comprehensive benefits program for all eligible employees. The benefits program represents a very large investment by the company on behalf of its employees. The company will periodically review the benefits program and will make modifications as necessary. The company reserves the right to modify, add to, or delete any benefit it currently offers.
 
 ### Benefits Eligibility
@@ -1237,6 +1376,9 @@ immediate and protects the employee in case of on the job injury and/or illness.
 related to the performance of the employee's assigned job duties. If an employee cannot work due to a job-related injury or illness, workers' compensation insurance pays his or her eligible medical bills and may provide a portion of the employee's income until he or she can return to work. The amount and the qualifications vary from state to state.
 All job-related injuries or illnesses must be reported immediately to the owner. Prompt reporting is essential and the key to prompt benefits. To insure the employee's right to benefits the employee must report each and every injury, no matter how minor, to the Human Resource Department.
 The company will pay wages or salary for the time lost because of a work-related accident for the remainder of the normal workday in which the accident occurs. An employee returning to work after being absent due to a work-related injury must provide their supervisor with a doctor's release prior to beginning the workday.
+SafetySafety
+Safety
+Safety
 The company is committed to the safety and health of all employees, acknowledging the need to comply with the
 regulations governing injury, accident prevention, and employee safety. Maintaining a safe working environment requires the continuous efforts
 and cooperation of all employees.
@@ -1272,7 +1414,7 @@ It is the employee's responsibility to understand how to operate and care for al
 ### Handling Tools
 An employee must exercise caution when handling tools. Avoid broken tools and only use a tool for its intended purpose. Safety glasses or
 goggles must be worn when operating a power
-tool. Never stand on a wet floor while using an electrical apparatus and never overload outlets. Extension cords must be kept in good repair and must not be in any pathway. Never make unauthorized electrical connections or repairs. If using a ladder, be sure of the stability and place of the ladder on a surface that is clean and dry.	.
+tool. Never stand on a wet floor while using an electrical apparatus and never overload outlets. Extension cords must be kept in good repair and must not be in any pathway. Never make unauthorized electrical connections or repairs. If using a ladder, be sure of the stability and place of the ladder on a surface that is clean and dry..
 
 ### Housekeeping
 Each employee is required to keep his or her work area neat and orderly at all times. Spills must be cleaned up and debris disposed of in the appropriate receptacles immediately.

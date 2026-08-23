@@ -734,3 +734,29 @@ VALIDATED (no live Bravo touch): built a scratch copy of bravo_watcher.ahk with 
 DEPLOYMENT: watcher process has the OLD version loaded in memory (AHK doesn't hot-reload); the fix takes effect at the next watcher restart, which happens automatically via bravo-prestaging-7am's relaunch script tomorrow ~7 AM ET — hours before tomorrow's ~8:30 PM jewelry-onhand-nightly-pull. No manual restart forced tonight given Bravo's general instability this evening and no urgent need.
 
 FOLLOW-UP: watch tomorrow night's run (2026-08-22) for (a) whether GUARD 3 fires on a false positive (legitimately equal counts across 2 categories is possible, if rare, and would now cause a full-store skip — acceptable tradeoff per this system's existing no-false-data philosophy, but worth knowing if it happens), and (b) whether the underlying stale-grid issue recurs at all now that Bravo/the VM will have had a clean restart.
+
+## RUN RECORD — 2026-08-22 (Saturday) — COMPLETED, posted to #jewlery-counts
+Fired ~20:35 ET (inside 6PM-10AM freeze window, target ~8:30PM). Open stores: CUL, HAR, LEX, ROA, WAY (all 5, Saturday).
+Contention check: no claim in last 30 min. Health gate PASS (20:35:47, target CUL, recover result OK WAY).
+Dropped one trigger per store (jewelry-onhand-2026-08-22-{CUL,HAR,LEX,ROA,WAY}), 2s apart, jewelry-case-counts-v2 cell. All 5 claimed and ran sequentially without a single EnsureStore/nav failure (contrast with 8/21 repeat HAR/LEX store-switch failures) — first fully clean store-switch night in the recent history reviewed.
+
+FOLLOW-UP on 8/21 GUARD 3 fix (duplicate-value-across-categories circuit breaker): did NOT fire tonight for any store. No stale-grid / repeated-count-across-categories pattern observed in any log — the 8/21 stale-grid bug did not recur after last nights clean VM/Bravo restart. Treating this as a positive signal but one clean night is not proof; keep watching.
+
+Per-store Bravo results (all read via v2 cell, BoxReportName-verified, stable-read guard):
+- CUL: SUCCESS, 8/8 categories ok, 646609ms. Rings 631, Bracelets 123, Pendants 248, Charms 27, Brooches 21, Earrings 166, Chains 113, Necklaces 98.
+- HAR: partial, 7/8. Charms failed twice (no STABLE row total after 120s x2) — HAR Charms IS on the confirmed-empty list and prior-day (8/21) CSV also showed Charms=error — treated as 0 per empty-category rule. Rings 452, Bracelets 49, Pendants 115, Charms 0(rule), Brooches 6, Earrings 48, Chains 74, Necklaces 46.
+- LEX: partial, 7/8. Brooches failed twice — LEX Brooches IS on the confirmed-empty list, prior-day (8/21) CSV also error — treated as 0. Rings 278, Bracelets 37, Pendants 53, Charms 1, Brooches 0(rule), Earrings 51, Chains 28, Necklaces 18.
+- ROA: SUCCESS, 8/8 categories ok, 671578ms. Rings 561, Bracelets 128, Pendants 94, Charms 60 (matches known ROA-pendants-entered-as-charms standing case, stable night over night), Brooches 2, Earrings 90, Chains 96, Necklaces 67.
+- WAY: partial, 7/8. Charms failed twice — WAY Charms is NOT normally on the confirmed-empty list (had a real intake of 1 on 8/15), but prior-day (8/21) CSV also showed Charms=error (the 8/15 intake had since sold/moved) — verified against 8/21 before treating as 0, per the rules explicit caveat. Rings 350, Bracelets 44, Pendants 62, Charms 0(rule, verified), Brooches 5, Earrings 54, Chains 45, Necklaces 23.
+
+PM count sheets: read via Chrome vision from #end-of-day for all 5 stores. CUL=Sandi, HAR=Walker Tapley, LEX=Uriah, ROA=Benjie Moore (sheet rotated 90°, used lightbox rotate control), WAY=Chadd. All sum-verified against each sheets own written TOTALS line before use; ROA and HAR both had a crossed-out/corrected total that the sum-check resolved. Category mapping applied: Necklaces(mapped)=Chains+Necklaces(raw), Pendants(mapped)=Pendants+Charms+Brooches(raw).
+
+Reconciliation posted to #jewlery-counts (expected=Bravo, counted=PM sheet):
+- CUL: Expected 1427 / Counted 1426 / Variance -1
+- HAR: Expected 790 / Counted 793 / Variance +3
+- LEX: Expected 466 / Counted 463 / Variance -3
+- ROA: Expected 1098 / Counted 1099 / Variance +1
+- WAY: Expected 583 / Counted 582 / Variance -1
+All per-category variances were single-digit (-3 to +4). No anomalous OVER variance (no line showed Counted meaningfully exceeding Expected) — no DM sent to Joshua, this was a clean night.
+
+REPEAT-PATTERN CHECK: comparing to the 8/16 reconciliation (CUL -1, HAR +1, LEX -4, ROA +1, WAY -2) tonights spread (-3 to +4) is in the same tight, normal-noise range — no store/category is repeatedly drifting in one direction night over night. HARs +3 total and LEXs -3 total are both within the range already seen on 8/16 (LEX -4) and not yet a pattern.

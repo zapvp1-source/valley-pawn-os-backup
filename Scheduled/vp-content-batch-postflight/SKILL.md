@@ -1,6 +1,6 @@
 ---
 name: vp-content-batch-postflight
-description: Monday 3:30 AM ET post-flight verification for vp-content-batch-weekly (which fired at 2:02 AM). Verifies manifest saved + Slack log cards + Publer publish confirmations, self-heals silent drops. Silent on clean success (the weekly "what published" recap now lives in #social-media via weekly-social-media-recap, not a Joshua DM) — still DMs Joshua on any partial/failure.
+description: Monday 4:40 PM post-flight verification for vp-content-batch-weekly. MOVED 2026-08-22 from Mon 3:02 AM to follow the batch's move to 1:40 PM — at 3 AM it was verifying a batch that had not yet run under the new schedule. Verifies manifest + Slack log cards + Publer publish confirmations, self-heals silent drops, silent on clean success.
 model: claude-sonnet-5
 ---
 

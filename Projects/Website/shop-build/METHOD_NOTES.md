@@ -119,3 +119,18 @@ What WAS done, fully within existing access (no new auth needed):
 If GA4 or Search Console API access becomes available later (i.e. Joshua grants OAuth via a
 connector), the weekly report should be upgraded to pull actual outbound-click and referrer data
 instead of just site-wide views/visitors.
+
+## Run record — 2026-08-22 (scheduled nightly, sandbox bash)
+Ran via mcp__workspace__bash. Fixed fetch_run_sandbox.py BASE path again (still a manual edit
+each run — see TODO above, still not parameterized). Background/detached (`nohup ... &`) does NOT
+survive between separate bash tool calls in this session type — the process was gone on the next
+poll with no log output. Ran the fetch synchronously instead (`timeout 480 python3 ...`), which
+comfortably fit in one call (~2 min for all 5 stores).
+Scraped 532 items across 5 stores; 26 weapons-adjacent excluded; published 506
+(Culpeper 312, Waynesboro 34, Harrisonburg 33, Lexington 29, Roanoke 98).
+shop-block-wrapped.html on disk was stale (from 8/21) — re-wrapped fresh from today's
+shop-block.html before publishing; worth doing every run rather than trusting the file on disk.
+POST to /wp-json/wp/v2/pages/833 (WP Application Password `vp-shop-nightly`) returned HTTP 200,
+id 833, status publish. Verified live: 506 vp-card elements (exact match), single VP-SHOP-START
+marker, zero woocommerce-shop occurrences (WooCommerce shop-page fix from 8/21 still holding).
+Posted summary to #website successfully.

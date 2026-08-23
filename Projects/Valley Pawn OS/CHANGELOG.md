@@ -1,6 +1,551 @@
+# Valley Pawn - Enterprise Changelog
+
+Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
+
+## 2026-08-22 (eBay secrets migrated + INCIDENT: accidental live title changes, contained)
+
+- **DONE — eBay secrets moved out of plaintext.** `~/ebay_weekly_rankings.py` (mode 701,
+  world-executable) hardcoded the Slack webhook, `APP_ID`/`DEV_ID`/`CERT_ID` and all 5 store OAuth
+  tokens, and ~30 other scripts `exec()` it to get `STORES`. Values moved to
+  `~/.vp_secrets/ebay_store_tokens.py` (mode 600); the source now imports them and still defines
+  `SLACK_WEBHOOK / APP_ID / DEV_ID / CERT_ID / STORES` at module level, so **every consumer and all
+  4 launchd agents keep working unchanged**. Verified: interface intact, 5 stores resolve, 0
+  residual secret literals, source re-permed to 700. Backup at
+  `~/ebay_weekly_rankings.py.bak-2026-08-22`. Done by `audit_2026-08-22/secure_creds.py`.
+- **INCIDENT (my fault, contained — full writeup in `eBay/audit_2026-08-22/INCIDENT_2026-08-22.md`).**
+  A follow-on sweep to clear the same literals from the other ~18 `~/ebay_*.py` scripts verified
+  each rewrite by `exec()`ing the file. Those scripts are operational, not importable — they do
+  their work at module level with no `__main__` guard. The verification therefore ran a live
+  quality-fix pass: **17 eBay titles were changed for real** (11 on already-Completed listings, 6
+  on Active), 2 category changes and 2 photo/title fixes failed harmlessly ("Auction ended").
+  - Killed on detection. All 18 rewritten scripts restored from `.bak-2026-08-22` and
+    **compile-checked, not exec'd** (`incident_restore.py`). The 4 launchd-critical scripts verified
+    compiling with credentials resolving.
+  - All 17 changed titles re-read live via `GetItem` and checked for factual accuracy. **One real
+    defect found and corrected:** Waynesboro `800321499390` ($649.94) had been retitled "Camera
+    **Body**" while its own specifics carry MPN `ILCZV-E10L/W` — Sony's **lens-kit** SKU. Retitled to
+    `Sony ZV-E10 Mirrorless Vlogging Camera ILCZV-E10L/W White w/ Extras - Used`, applied and
+    verified live, reversible via `~/ebay_incident_fix_state.json`.
+  - The other 16 were left in place: same class of enrichment `ebay-weekly-quality-fix` applies
+    every Monday, no further factual conflicts found on spot-check, and all remain revertible from
+    `~/ebay_weekly_qualityfix_state.json` (`title_before` preserved).
+- **NEW HARD RULE:** never `exec()` or import a `~/ebay_*.py` (or any operational) script to verify
+  a syntax-only edit — use `py_compile`/AST. Running one of those files *is* a production change.
+- **Also observed:** a detached process `/tmp/vp_ebay_fix.py --apply` (PPID 1, started 23:48:54)
+  was already applying this audit's A/B/C remediation — Roanoke 14→30-day returns, no-returns→30-day,
+  Best Offer ON for Culpeper (auto-accept 90% / auto-decline 75%) — state at
+  `~/vp_ebay_fix_state.json`, 248 entries and climbing (A=13 B=42 C=193). Not started by this
+  session. This session's duplicate (`eBay/ebay_policy_fix.py`) was killed rather than run
+  concurrently against the same listings. **That process's output still needs verifying.**
+
+## 2026-08-22 (store-mail-archive-sweep — PRIOR ROOT-CAUSE ENTRY BELOW IS REFUTED; sweep works)
+
+- The entry immediately below (no-op / Gmail rebound / awaiting Joshua decision) is **wrong**. Verified against live output this run, not narrative: pre- and post-sweep INBOX counts were read in the same run and **every one of the 5 store accounts went DOWN**.
+- Measured: culpeper 88 -> 18, waynesboro 3134 -> 2982, harrisonburg 6712 -> 6673, lexington 2685 -> 2353, roanoke 9433 -> 9331. Total 22,052 -> 21,357 (net -695) while moving only 180 messages. Three accounts fell by MORE than the number moved.
+- **Culpeper reached 0** mid-run (807 -> 659 -> 88 -> 0 across runs) and only 18 new messages landed afterward. A no-op cannot drive one account monotonically to zero and all five down in one pass.
+- What the prior session actually saw: Apple Mail was still progressively downloading a large server-side backlog into its local INBOX view, so local counts could rise while real archiving succeeded. Sync lag, not a Gmail server-side rebound. The single-message probe was the same lag.
+- Confirmed: moving INBOX -> [Gmail]/All Mail over Gmail IMAP IS a real archive (Gmail drops the INBOX label on an IMAP MOVE out of INBOX). **No Gmail filter change, no move-to-delete switch, and no decision from Joshua is required.** The delete-based option is destructive and unnecessary — do not implement it.
+- **Corrected operating params (supersede all earlier cap tables):** the osascript MCP tool hard-times-out near 60s, so a cap of 150 fails on every account. Use the reference-based loop (move message 1, repeat) for ALL five accounts, caps culpeper/waynesboro/lexington 50, harrisonburg/roanoke 40. Mailbox ref must be `[Gmail]/All Mail` — plain `All Mail` raises -1728.
+- Steady state ~180 msgs/run at 6 runs/hour; ~21.3k backlog remaining, draining. Task left enabled and unmodified otherwise (additive only). Detail in `Scheduled/store-mail-archive-sweep/SKILL.md`.
+
+## 2026-08-22 (store-mail-archive-sweep — root cause found, task is a no-op, awaiting decision)
+
+- **Both the 5 native 'Archive store mail' Mail Rules and the AppleScript sweep that replaced them have never worked.** Root cause proven: moving a Gmail-IMAP message to `[Gmail]/All Mail` is NOT an archive. All Mail is a superset virtual folder that already contains every message, so the move never removes the INBOX label and Gmail restores the message on the next sync. The move succeeds locally with no error and silently reverts seconds-to-minutes later.
+- Evidence: moved 900 messages in one run and net INBOX counts ROSE; rebounds matched the moves almost exactly (waynesboro +150 after moving 150, roanoke +145 after 120, harrisonburg +41 after 80); culpeper returns to exactly 807 across days and runs; direct single-message probe by message-id came back to INBOX (back-in-INBOX=YES).
+- The documented 150/40/60 per-account caps and the 'AppleScript coercion bug' were real observations of LOCAL behavior with zero server-side effect. Prior backlog numbers were a stable server count being re-read, not a draining queue.
+- **Real fix is server-side** (in Gmail, archive = remove the INBOX label = delete-from-INBOX over IMAP, not a move). Recommended: per-store Gmail filter 'Skip the Inbox (Archive it)' scoped to eBay-notification senders only. NOT executed — it changes what store staff see in their own inboxes, so it is Joshua's call. Plain DM sent.
+- Task left enabled and unmodified per no-delete-without-replacement. Full detail in `Scheduled/store-mail-archive-sweep/SKILL.md` and the Open Items Register.
+- **Do not attempt to fix this by raising caps, changing the loop, or adding retries — the move is the bug.**
+
+## 2026-08-22 (eBay channel in-depth audit — read-only, nothing changed on eBay)
+
+- Full live audit of the eBay channel across all 5 store seller accounts via the Trading API.
+  Read-only; no listing, price, policy, or setting was modified. Additive scripts + raw data in
+  `Projects/eBay/audit_2026-08-22/`. Report: `Projects/eBay/eBay_Channel_Audit_2026-08-22.md`.
+- **Baseline, trailing 90d (5/24–8/22):** 514 active listings / $83,441 listed value; 555 orders /
+  $82,064 revenue; $13,617 eBay fees = 16.6% of item revenue (FVF $12,972 · Promoted Listings $314 ·
+  international $123 · insertion $92 · return shipping $53). Per store rev/listing: Lexington $433,
+  Waynesboro $361, Harrisonburg $359, Roanoke $173, **Culpeper $82**.
+- **Two June-29 scorecard items are now CLOSED and should stop being re-raised:** all 5 stores carry an
+  eBay Store subscription (insertion fees effectively $0 — $92 across 2,192 listings), and small-store
+  listing depth is no longer the binding constraint.
+- **Biggest finding — zero of 514 listings qualify for Top Rated Plus.** Handling time is 2 days (404
+  listings) or 3 days (106); the requirement is same-day or 1 business day. Separately, all 469
+  return-accepting listings are buyer-pays-return-shipping; the requirement is free returns. Both
+  verified independently via `GetItem`. Worth $1,297/qtr ($5,189/yr) channel-wide; ~$3,587/yr net if
+  applied selectively to listings >=$100. Culpeper and Waynesboro already hold Top Rated Seller status,
+  so their share ($400 + $222/qtr) is immediately claimable.
+- **Promoted Listings is effectively off:** $314.46 of ad fees in 90 days, all of it Culpeper. Roanoke,
+  Waynesboro, Harrisonburg, Lexington are at $0.00 on $56,737 of sales. Flagged in the 2026-06-29
+  scorecard, unchanged 8 weeks later. An unread 7/12 eBay message in the Roanoke inbox offers 50% off
+  Promoted Listings.
+- **Markdown engine has no terminal action.** `ebay_markdown_engine.py` works (283 items tracked, 182
+  cut on Aug 1, 0 failures) but caps at 30% off after 3 cuts with nothing scheduled afterward. 154 items
+  take their third cut on **2026-09-01** and then sit permanently. The `eBay Listing-Age Standard
+  (Reprice & Pull)` policy's "pull" half is unenforced. Fix before Sep 1.
+- **Other verified defects:** Best Offer switched OFF on 193 Culpeper listings ($15,372, no
+  `BestOfferDetails` node at all); Roanoke 100% at 3-day handling + 14-day returns (only store not at 30
+  days); 45 listings accept no returns ($10,932, 40 Culpeper); Lexington Below Standard as of 8/20 on a
+  4.23% late-ship rate (re-eval Sep 20); avg 5.8 photos vs the 8-photo standard (71% below, Roanoke avg
+  4.3); median 4 item specifics (34% at <=3); zero seller replies to the 3 open negative/neutral
+  feedbacks, 2 of which cite description inaccuracy; 714 of 1,093 eBay messages unread over 60 days
+  including 22 unread return/refund notices; 220 of 555 orders were sub-$50 for only $6,963 of revenue.
+- **API scope gap from 2026-06-29 confirmed STILL OPEN.** `sell/marketing`, `sell/analytics`, and
+  `sell/finances` all return HTTP 403 "Insufficient permissions" on all 5 accounts. Combined with
+  `HitCount`/`WatchCount` returning 0 from Trading (deprecated), there is currently **no traffic,
+  impression, or conversion data of any kind** for any listing. One OAuth re-authorization with those
+  scopes unblocks Promoted Listings automation, all listing measurement, and automated fee reporting.
+- **Security finding:** `~/ebay_weekly_rankings.py` hardcodes the Slack webhook, `APP_ID`, `DEV_ID`,
+  `CERT_ID` and all 5 store OAuth tokens in plaintext (mode 701), and every other eBay script imports it
+  to get credentials. The rest of the stack already moved to `~/.vp_secrets/`. Not yet remediated.
+- **Rule 12 note — three candidate findings were discarded, not reported.** `GetSellerList` under-reports
+  item specifics and descriptions; the first pass appeared to show zero item specifics, empty
+  descriptions, and universal single-photo listings on all 514 listings. `GetItem` verification proved
+  all three wrong. `quality_pull.json` (the first pull) is unreliable for those fields — use
+  `quality_pull2.json` for handling/returns/photos and `fees_specs.json` for the verified 100-listing
+  specifics sample.
+
+## 2026-08-22 (FFL registry + listings made durable; two data-integrity defects found)
+
+- **NEW (additive):** `Compliance/FFL_REGISTRY.md` — canonical FFL numbers, license types,
+  expirations, renewal calendar, and ATF mailing address of record for all 5 stores.
+  `Compliance/FFL_LISTINGS_STATUS.md` — channel-by-channel directory/vendor listing state and a
+  prioritized action list. Neither existed before; the April 2026 vendor campaign and the August
+  2026 directory audit both produced deliverables into session output folders that are gone, so
+  three separate sessions have now re-audited the same ground from scratch.
+- **Defect 1 — wrong FFL data sent to wholesale vendors.** The 2026-05-04 "New Dealer Account
+  Application" email carried `1-54-820-02-5B-24709` for Waynesboro (actual: `8B`) and
+  `1-54-678-02-5F-26584` for Lexington (actual: `1-54-163-02-8F-26584`), and labelled all five
+  stores "01 Dealer" when **every Valley Pawn license is 02 Pawnbroker**. A vendor running those
+  two numbers through eZ Check gets no match, which presents as a possible fraudulent license —
+  the application dies silently rather than being rejected with a reason.
+- **Defect 2 — ATF mails to Florida.** eZ Check shows the mailing address of record as
+  844 Cypress Crossing Trail, St. Augustine FL (Joshua's residence), not 282 Bald Rock Rd. This
+  is the root cause of the July 2026 "missing renewal" escalation to FFLC: ATF mailed Culpeper's
+  renewal form 6/3 and Preston was watching Virginia mail. **Roanoke's renewal form mails
+  ≈2026-10-03 to the same Florida address** (license expires 2027-01-01).
+- **Verified live (Rule 12), not from memory:** Culpeper `1-54-047-02-6J-25407` now expires
+  **2029-09-01** — the renewal did go through, contrary to the stale license copy still sitting in
+  `ffl-files/`. Waynesboro confirmed 2028-02-01. eZ Check began rate-limiting after two lookups;
+  Harrisonburg (2027-12-01), Lexington (2028-06-01) and Roanoke (2027-01-01) were read off the
+  license images instead and should be eZ-Check-confirmed on the next pass.
+- Also found: GrabAGun's 7/31 and 8/16 "your FFL expires soon" warnings are explained by them
+  holding the pre-renewal Culpeper copy; MidwayUSA's 2026-08-01 "Please Update Your FFL
+  Information" request is unanswered; GunNook's 7/31 Harrisonburg submission produced two dealer
+  card URLs (likely duplicate) and all GunNook mail is landing in Spam; a customer
+  (2026-04-29) reported being unable to select Valley Pawn as his dealer at GrabAGun — the
+  clearest evidence that directory absence costs transfer revenue.
+- **Deliberately NOT built:** a new scheduled task for FFL monitoring. The fleet is at ~128 tasks
+  against a cap that was skipping 150–250 runs/day as of 8/21; a list that changes a few times a
+  year does not justify a 129th. Recommendation recorded in `FFL_LISTINGS_STATUS.md`: extend the
+  existing weekly `directory-listing-monitor` with an FFL block (eZ Check all 5, diff against
+  `FFL_REGISTRY.md`, grep the public directory pages for "Dixie"). Zero new cap pressure.
+
+## 2026-08-22 (FFL transfer inquiries — daily email/Chekkit responder built)
+
+- Joshua: "anyone requesting a FFL transfer needs to be directed to our FFL transfer portion of
+  our website, a link should be provided." Confirmed the FFL Transfer page is live at
+  https://thevalleypawn.com/ffl-transfer/ (per-store FFL#, downloadable signed license, $25
+  transfer fee, "Notify us" web form). The two "existing" tasks named in BUSINESS_OS.md's
+  scheduled-task table (`daily-ffl-transfer-check`, `ffl-web-form-to-slack`) do NOT actually exist
+  on disk (verified — table entry was stale, Rule 12).
+- Investigated real FFL-transfer customer traffic via Chekkit (the messaging platform that
+  aggregates Google/Facebook/website-chat/text-the-store-number into jdavis@fcfpawn.com email
+  alerts). Spot-checked 2 "Unanswered Message Alert" emails that looked like open gaps (Jaysen S
+  7/31 Culpeper PSA transfer question; Dwayne 7/30 Waynesboro rifle-arriving-today) — both were
+  ALREADY answered live by staff (Preston Peters, Chadd Mcclintic) within Chekkit; the Gmail
+  "unread" alert was just stale notification hygiene, not an actual gap. Labeled both
+  `FFL-Transfer-Checked` in Gmail.
+- Built new Chekkit canned template **"FFL Transfer Info"** (Message Templates, account-wide) with
+  the page link, $25 fee, and pickup requirements, so staff have one-click consistent replies.
+- **BUILT (new, additive):** Cowork scheduled task `ffl-transfer-email-responder` (9 AM & 5 PM
+  daily, sonnet-pinned). Checks Gmail for Chekkit "Unanswered Message Alert" + organic emails that
+  read as a genuine FFL-transfer inquiry, cross-checks live in the Chekkit dashboard whether a
+  human already replied (avoids false positives like the 2 above), and only replies with the FFL
+  page link when a request is genuinely still unanswered. New Gmail label `FFL-Transfer-Checked`
+  prevents reprocessing. Silent unless it actually sends a reply or hits a login blocker.
+
+## 2026-08-22 (store-mail Mail Rules found non-functional; new archive-sweep task built)
+
+- Joshua flagged eBay emails still landing in store inboxes despite the 8/21 "Archive store mail"
+  Mail Rules (5 rules, one per store account, "to header contains <store>" -> move to that
+  account's "[Gmail]/All Mail"). Confirmed live (Rule 12): all 5 rules show `enabled: true` with
+  correct per-account target mailboxes, but NONE were actually archiving new mail — inboxes had
+  re-accumulated to 242-9,430 unarchived messages in ~1 day (culpeper 242, waynesboro 2,731->2,937
+  during testing, harrisonburg 6,782, lexington 2,687, roanoke 9,430), essentially back to the
+  pre-8/21 backlog sizes.
+- Root cause of the native rule not firing is UNCONFIRMED (likely an Apple Mail + Gmail-IMAP
+  quirk). What WAS confirmed by direct testing: AppleScript `move` of a multi-item message list
+  (even just 5 items) against these accounts silently fails with a reproducible
+  "Can't make {message id ...} into type specifier" coercion error and moves nothing, while moving
+  ONE message at a time in a loop works reliably (~10/sec on a fresh mailbox, slower on very large
+  ones). This is almost certainly the same underlying failure mode breaking the native Mail Rule's
+  "move message" action.
+- Manually cleared Culpeper's backlog to 0 and knocked Waynesboro down (787->0 then re-tested down
+  to ~2,731 after further new mail; full clear not completed manually — too slow to grind through
+  interactively for the 3 largest inboxes).
+- **BUILT (additive, Rule #4 — the 5 existing Mail Rules were NOT touched/disabled):** new Cowork
+  scheduled task `store-mail-archive-sweep` (every 10 min, sonnet-pinned) that runs the proven
+  one-message-at-a-time AppleScript sweep per account (capped 150/account/run to avoid timeouts),
+  self-healing the backlog over many runs and keeping pace with new mail going forward. Silent by
+  default; DMs Joshua only when all 5 stores first reach 0 (once) or if a count regresses upward
+  for 5+ consecutive runs.
+- Follow-up not done this session: the real root cause of why the native Mail Rules stopped firing
+  is still unknown — worth investigating if it recurs after being "fixed" by the workaround, or if
+  Joshua wants the native rules cleaned up/removed once the scheduled sweep is proven reliable.
+
+## 2026-08-22 (~7:50 PM — zoom-voicemail-alert routine run, silent/no new alerts)
+
+- Routine run. Roster unchanged (6 users, all Active/Activated): Roanoke/809 No Data, Culpeper/808
+  No Data, jdavis@fcfpawn.com/800 (legacy) No Data — still Active/Activated, not yet deactivated in
+  Zoom. Lexington/807 (canonical) — 10 rows today, all Answered/Connected, zero candidates; state
+  file cutoff left at its existing Aug 21 4:01:06 PM value (no candidate rows today to advance it).
+  Waynesboro/803 — 15 rows today; only candidate (1:38:22 PM Busy) already resolved via the
+  4:03:12 PM outbound callback logged in the ~5:11 PM run — every row after cutoff today is
+  Answered/Connected, zero new candidates. Harrisonburg/802 — 148-row 7-day pull (page defaulted to
+  a 7-day range instead of today-only after a date-field edit didn't commit; newest row still
+  reliably identifies today's cutoff since results are sorted newest-first) — newest row is
+  5:43:39 PM Ring Timeout from (713) 791-8977, which exactly matches the state file's existing
+  cutoff, so zero new candidates since the ~7:32 PM run. **Note:** hit a real SPA bug this run —
+  navigating directly between two users' History URLs via `extensionId` query param sometimes
+  leaves the app's internal "selected extension" state pointing at the *previous* user, so the
+  page silently fetches the wrong user's data (looked like false "No Data" for Harrisonburg after
+  visiting Culpeper). Confirmed by inspecting the browser's actual resulting URL — the path segment
+  and the `extensionId` query param had diverged. Fix: after any misleading "No Data" on a
+  known-active line, re-verify via the Profile page (`#/users/detail/<id>`) → click the History tab
+  in the UI, rather than trusting a direct history URL with a hand-set `extensionId`. **No Slack
+  post** — correct/expected silent outcome, nothing new to flag. State file left unchanged
+  (Harrisonburg 5:43:39 PM, Waynesboro 1:38:22 PM, Lexington Aug 21 4:01:06 PM).
+
+## 2026-08-22 (~7:32 PM — zoom-voicemail-alert routine run, silent/no new alerts)
+
+- Routine run. Roster unchanged (6 users, all Active/Activated): Roanoke/809 No Data, Culpeper/808
+  No Data, Lexington/807 (canonical) — 10 rows today all Answered/Connected, jdavis@fcfpawn.com/800
+  (legacy, still not deactivated) No Data. Harrisonburg/802 — 45 rows today; newest row (5:43:39 PM,
+  Ring Timeout from (713) 791-8977) exactly matches the state file's prior cutoff, so zero new
+  candidates since the ~5:43 PM run. Waynesboro/803 — 15 rows today; newest row 5:17:45 PM
+  (Answered) — cutoff still 1:38:22 PM Busy (already resolved via 4:03:12 PM outbound callback per
+  the ~5:11 PM run); every row after cutoff today is Answered/Connected, zero new candidates.
+  **No Slack post** — correct/expected silent outcome, nothing new to flag. State file left
+  unchanged (Harrisonburg 5:43:39 PM, Waynesboro 1:38:22 PM, Lexington Aug 21 4:01:06 PM).
+
+## 2026-08-22 (~7:00 PM — chekkit-unanswered-eod-followup routine run)
+
+- Rebuilt today's Gmail alert list (9 total from `support@chekkit.io`, after:2026/08/22). Skipped 2
+  empty-body/attachment-only alerts (Waynesboro (434) 567-5541, (540) 908-9758), 1 sign-off
+  ("Sweet!" — Brandon Murray, Waynesboro), and 2 outside-open-hours alerts (Christopher Lee Eakin
+  1:12 AM ET and Brandon Angell 8:53 PM ET, both Waynesboro). Left 4 genuine in-hours misses:
+  Culpeper (David Ellis, payment-date question, 1:11 PM), Waynesboro (Kristen, Nintendo Switch
+  pawn question, 3:56 PM), Harrisonburg (Arieanna, engagement ring sell question, 12:36 PM),
+  Roanoke ("Sandra Johnson" via (540) 519-6057, drop-in notice, 12:52 PM). Lexington had zero
+  flagged misses today.
+- Checked the Chekkit dashboard (direct conversation links from each alert email, per-location
+  switcher) for each: David Ellis (Sandi Cole replied and closed), Kristen (Chadd Mcclintic
+  replied at length and closed), Arieanna (Walker Tapley replied "Absolutely! Come on in!" and
+  closed) all had genuine staff replies. Roanoke's Sandra Johnson thread got only the automated
+  "we have received your message" auto-ack, no human reply, but the customer's own final message
+  was "Ok" (skip-list sign-off) — classified customer self-closed, not outstanding.
+- Zero still-unanswered at close. Posted the flagged-clean/all-resolved short-form summary to
+  #chekkit-unanswered-summary (`C0B1PEW0C30`). No employee DMs sent (not this task's job). No
+  login issues encountered — Chekkit session was already authenticated as Joshua Davis.
+
+## 2026-08-22 (~5:11 PM run — zoom-voicemail-alert, 2 new alerts posted)
+
+- Routine run. Roster unchanged (6 users: Roanoke/809 No Data, Culpeper/808 No Data, Lexington/807
+  canonical — 9 rows today, all Answered/Connected, zero candidates, legacy jdavis@fcfpawn.com/800
+  No Data — still Active/Activated, not yet deactivated in Zoom). Waynesboro/803 — 13 rows, only
+  candidate (1:38:22 PM Busy from (540) 849-9236) already resolved by a later Outbound Connected
+  call to the same number at 4:03:12 PM — no new candidate since prior cutoff (1:38:22 PM).
+  Harrisonburg/802 — 43 rows — 2 new candidates since prior cutoff (3:53:35 PM): 5:03:43 PM and
+  5:04:57 PM, both Ring Timeout from (540) 421-9325 (Wireless Caller, forwarded via Harrisonburg
+  Store Queue ext.805), no voicemail left, no later outbound or inbound row from that number as of
+  run time (the two rows after it, 5:07:16 PM and 5:09:00 PM, are both different callers). **Posted
+  2 alerts to #voicemails-calls-missed**: Harrisonburg (540) 421-9325 missed at 5:03 PM and 5:04 PM.
+  State file updated: Harrisonburg last_alerted_start_time -> Aug 22, 2026, 5:04:57 PM.
+
+## 2026-08-22 (~4:15 PM — vp-creative-refresh-quarterly, FIRST quarterly creative refresh)
+
+- First run of `vp-creative-refresh-quarterly`, one day after the drift engine shipped. **Nothing
+  retired or rested at the registry level, and that is correct** — the registry was created
+  2026-08-22, so no format has the two consecutive weak quarters retirement requires. Annual
+  transformation pass N/A (no same-season predecessor); first real one is Q3 2027.
+- **HEADLINE FINDING — the Friday adjust loop has been optimising toward a category that does not
+  exist.** `publer_weekly_digest.py` line 47 classifies a post as `warranty` on
+  `warranty|what'?s right is right`. "What's Right Is Right" is the **brand tagline** and sits in
+  the footer of nearly every post. Of 98 posts it flagged, only **8** are actually about the
+  warranty; the rest are a blowout-sale post (21x), June birthstones (15x), Memorial Day cash
+  (10x) and other tagline carriers. The eight `+5% warranty next batch` entries in
+  `adjustments_log.jsonl` (7/12 -> 8/21) were an artefact, not a content decision. The category is
+  also inert on its face: 0.541 eng/post vs a 0.513 corpus average across 485 posts.
+  **`MIN_POSTS_FOR_SIGNAL=30` does not protect against a mislabelled category** — it cleared 30
+  easily. Every future quarterly run must re-read the classifier regexes before trusting output.
+  `heritage`, `team` and `how-it-works` have NOT yet been audited for the same collision.
+- Evidence base (Rule 12 — output, not run records): all **554 published posts / 485 with
+  insights, 2026-05-24 -> 2026-08-22**, from the live Publer pull in
+  `Refine Social Media/audit_2026-08-22/publer_90day_raw.json` (100% insight completeness on all 9
+  measurable accounts, 0 API errors, correct from/to + zero-indexed pagination). Plus Bravo
+  sold-detail across 37 store-days of August, `weekly-adjustments.json`, `adjustments_log.jsonl`,
+  `#social-media`.
+- Other findings: reach comes from **local news value, not craft** — the 7/23 hiring posts drew
+  942/469/435/295/162 reach against a 13 median (30-70x), on the plainest copy of the quarter.
+  **Video's problem is the route, not the medium** — 45 of 47 videos were staff-posted straight to
+  Facebook at 0-1 reach; the 2 that went through Publer drew 29 and 136 reach and 194 of the
+  quarter's 216 total views. **The true content-attributable comment count is 3, not 18** — 15 of
+  the 18 are one comment apiece on consecutive empty-caption Waynesboro syncs, a per-page constant.
+  **Harrisonburg posts least (13) and has the highest median reach (46)** of any store page.
+- Recorded as dead (behaviours, not registry formats): blog syndication as a social slot
+  (BrandBlog, 24 posts, **max reach 3, total engagement 0.0**); X/Twitter as an equal-weight
+  destination (25 posts, median reach 1.0, total engagement 9); staff-posted-direct video;
+  empty-caption posts (239 of 485).
+- **Invented 13 candidates** (12 in Step 4 + 1 in Step 9 lane repair), all seeded from measured
+  evidence and all logged with their reasoning in the new `Refine Social Media/CREATIVE_LEDGER.md`.
+  Built the **product lane from zero** (`pro_appraisal_explainer`, `pro_retro_shelf`,
+  `pro_storm_kit`, `pro_price_ladder`, `pro_longest_tag`); video 3->6
+  (`vid_sixty_second_repair`, `vid_case_walk`, `vid_closing_time`); humor 2->4
+  (`hum_wrong_guess`, `hum_seasonal_arrival` — 2 formats could not survive a 60-day cooldown at
+  1/week); engagement 7->9 (`eng_two_week_answer`, `eng_hometown_bracket` — both aimed at the
+  +6-followers-on-7K-reach gap Joshua flagged 8/6); community 10->11 (`com_local_news_desk`).
+  `pro_retro_shelf` is grounded in ~49 console/game units Bravo moved in three August weeks, a
+  category that has **never once been content**.
+- **Registry 22 -> 35 active-or-candidate** (Step 9 floor is 20). Step 9 verification caught the
+  product lane holding only 3 late-summer-eligible formats against a 4-slot ask — would have
+  under-filled every week Aug 22-Sep 15. Fixed in-run with `pro_longest_tag` rather than deferred.
+  All five lanes now fill a 4-slot week in all four seasons of the quarter; live `select`
+  smoke-tested on every lane with no under-fill warnings.
+- **DEFECT FOUND AND FIXED (additive, Rule #4) — the novelty gate had a hole.** All 12 Step 4
+  candidates passed the base gate first try, which is a suspicious result, so the gate was
+  stress-tested rather than trusted. `DriftEngine.is_novel()` compares the **first five words** of
+  two titles and rejects at overlap >=3, so formats with **short titles can never be matched**:
+  "Caption this photo please" passes cleanly against the live format "Caption this"; so do "Who
+  made this thing" vs "Who made this?" and "Guess the price of this" vs "Guess the price". About a
+  third of the seed registry has titles under four words and was therefore unprotected against
+  exactly the re-skinning the gate exists to stop. `creative_drift.py` was **not** touched; new
+  `Refine Social Media/novelty_gate_v2.py` is a strictly-tightening supplementary check
+  (word-subset, 55% Jaccard on content words, same-pillar-same-opening-verb) that can only reject
+  more, never less. All 13 candidates clear the stricter bar. Recommendation for the expert review
+  board (logged in OPEN_ITEMS): fold v2 into the base gate at the next hardening pass.
+- Backup written: `creative_state.json.bak-pre-refresh-2026-08-22`. Reported: DM to Joshua + a
+  short direction post to #social-media (asking staff to actually reply to comments — the number
+  to beat is zero).
+
+## 2026-08-22 (~4:14 PM run — zoom-voicemail-alert, roster unchanged, zero new alerts)
+
+- Routine run. Roster unchanged (6 users: Roanoke/809 No Data, Culpeper/808 No Data, Lexington/807
+  canonical — 8 rows today, all Answered/Connected, zero candidates, legacy jdavis@fcfpawn.com/800
+  No Data — still Active/Activated, not yet deactivated in Zoom). Waynesboro/803 — newest row still
+  2:53:38 PM Answered (New Salem PA), no new candidate since prior cutoff (1:38:22 PM). Harrisonburg/802
+  — 1 new candidate since prior cutoff (3:35:14 PM): 3:53:35 PM Ring Timeout from (540) 677-0521
+  (Wireless Caller, forwarded via Harrisonburg Store Queue ext.805), no voicemail left — but resolved
+  via staff callback: Outbound to same number at 3:55:05 PM, Connected 00:01:35. Not included in
+  alert. **Zero new alerts — stayed silent per Step 4, no Slack post.** State file updated:
+  Harrisonburg last_alerted_start_time -> Aug 22, 2026, 3:53:35 PM (Waynesboro/Lexington unchanged,
+  no new candidate rows today).
+
+## 2026-08-22 (~3:27 PM run — zoom-voicemail-alert, 1 new alert posted)
+
+- Routine run. Roster unchanged (6 users: Roanoke/809 No Data, Culpeper/808 No Data,
+  Lexington/807 canonical No Data today, Waynesboro/803 newest row 2:53:38 PM Answered (New Salem
+  PA, already the state-file cutoff row) — no new candidates, legacy jdavis@fcfpawn.com/800 No
+  Data — still Active/Activated, not yet deactivated in Zoom). Harrisonburg/802 — 1 new candidate
+  since prior cutoff (2:26:58 PM): 3:25:53 PM Ring Timeout from (540) 669-8893 (Wireless Caller,
+  forwarded via Harrisonburg Store Queue ext.805), no voicemail left, no later row (outbound or
+  inbound) to resolve it as of run time. **Posted 1 alert to #voicemails-calls-missed**:
+  Harrisonburg (540) 669-8893 missed at 3:25 PM. State file updated: Harrisonburg
+  last_alerted_start_time -> Aug 22, 2026, 3:25:53 PM. Note: hit the known Zoom SPA rendering-lag
+  bug again (table shows "No Data" until a UI interaction — e.g. clicking the date field — forces
+  a re-render); worked around the same way as prior runs.
+
+## 2026-08-22 (~3:13 PM run — zoom-voicemail-alert, roster unchanged, zero new alerts)
+
+- Routine run. Roster unchanged (6 users: Roanoke/809 No Data, Culpeper/808 No Data,
+  Lexington/807 canonical No Data today, Harrisonburg/802 25 rows — 2 new since prior cutoff
+  (2:26:58 PM): 2:28:29 PM Answered (Sherrine Swan, already accounted for) and 2:53:08 PM Answered
+  (Robert Breeden) — neither a candidate, Waynesboro/803 10 rows — 1 new since prior cutoff
+  (1:38:22 PM): 2:53:38 PM Answered (New Salem PA) — not a candidate, legacy jdavis@fcfpawn.com/800
+  No Data — still Active/Activated, not yet deactivated in Zoom). **Zero new alerts — stayed
+  silent per Step 4, no Slack post.** State file unchanged (no store had a new candidate row
+  today).
+
+## 2026-08-22 (~2:51 PM run — zoom-voicemail-alert, roster unchanged, zero new alerts)
+
+- Routine run. Roster unchanged (6 users: Roanoke/809 No Data, Culpeper/808 No Data,
+  Lexington/807 canonical No Data today, Harrisonburg/802 22 rows — 1 new row since prior cutoff
+  (2:26:58 PM): 2:28:29 PM Answered from (713) 791-8977 (Sherrine Swan) — not a candidate (she
+  called back herself and got through, resolving the 2:26:58 PM Ring Timeout already alerted last
+  run), Waynesboro/803 9 rows newest 1:38:22 PM Busy = already the state-file cutoff, no new
+  candidates, legacy jdavis@fcfpawn.com/800 No Data — still Active/Activated, not yet deactivated
+  in Zoom). **Zero new alerts — stayed silent per Step 4, no Slack post.** State file unchanged
+  (no store had a new candidate row today).
+
+## 2026-08-22 (~2:31 PM run — zoom-voicemail-alert, 1 new alert posted)
+
+- Routine run. Roster unchanged (6 users: Roanoke/809 No Data, Culpeper/808 No Data,
+  Lexington/807 canonical No Data today, Waynesboro/803 9 rows newest 1:38:22 PM Busy = already
+  the state-file cutoff, no new candidates, legacy jdavis@fcfpawn.com/800 No Data — still
+  Active/Activated, not yet deactivated in Zoom). Harrisonburg/802 21 rows — 1 new candidate since
+  prior cutoff (1:50:30 PM): 2:26:58 PM Ring Timeout from (713) 791-8977 (Sherrine Swan, Houston
+  TX), no voicemail left, no later row (outbound or inbound) to resolve it as of run time.
+  **Posted 1 alert to #voicemails-calls-missed**: Harrisonburg (713) 791-8977 missed at 2:26 PM.
+  State file updated: Harrisonburg last_alerted_start_time -> Aug 22, 2026, 2:26:58 PM. Note: Zoom
+  UI hit the same stale-SPA-state bug seen before when switching users purely via URL hash change
+  (page renders the previous user's "No Data"/cached state) — worked around by forcing a full
+  page reload (F5) after each cross-user navigation before reading the table.
+
+## 2026-08-22 (~1:53 PM run — zoom-voicemail-alert, 1 new alert posted)
+
+- Routine run. Roster unchanged (6 users: Roanoke/809 No Data, Culpeper/808 No Data, Lexington/807
+  canonical 7 rows all Answered/Connected, Harrisonburg/802 20 rows (2 new since prior cutoff
+  12:35:16 PM: 12:48:58 PM Answered — not a candidate; 1:50:30 PM Ring Timeout from (540) 964-9666
+  — new candidate, no later row to resolve it), Waynesboro/803 9 rows newest 1:38:22 PM Busy =
+  already the state-file cutoff, no new candidates, legacy jdavis@fcfpawn.com/800 No Data — still
+  Active/Activated, not yet deactivated in Zoom). **Posted 1 alert to #voicemails-calls-missed**:
+  Harrisonburg (540) 964-9666 missed at 1:50 PM (Ring Timeout, no VM left), unresolved as of run
+  time. State file updated: Harrisonburg last_alerted_start_time -> Aug 22, 2026, 1:50:30 PM.
+
+## 2026-08-22 (~1:31 PM run — zoom-voicemail-alert, roster unchanged, zero new alerts)
+
+- Routine run. Roster unchanged (6 users: Roanoke/809 No Data, Culpeper/808 No Data,
+  Lexington/807 canonical 6 rows all Answered/Connected, Harrisonburg/802 19 rows (1 new Answered
+  row at 12:48:58 PM since prior cutoff, no new candidates — newest candidate still 12:35:16 PM,
+  cutoff unchanged), Waynesboro/803 7 rows all Answered, legacy jdavis@fcfpawn.com/800 No Data —
+  still Active/Activated, not yet deactivated in Zoom). **Zero new alerts — stayed silent per
+  Step 4, no Slack post.** State file unchanged (no store had a new candidate row today).
+
+## 2026-08-21 (~9:25 PM — gusto-keep-alive schedule widened to close the overnight gap)
+
+- **Root cause found for the recurring "Gusto logged itself out" DMs.** `gusto-keep-alive` was on
+  cron `0 8-20/2 * * 1-6` — every 2 hours, 8 AM-8 PM, **Mon-Sat only**. That leaves a 12-hour
+  overnight gap (8 PM -> 8 AM) plus all of Sunday. Gusto sessions expire in hours, not days
+  (see `gusto-access`), so the session reliably died overnight and every morning task hit the
+  login wall. The keep-alive was working exactly as scheduled; the schedule was the bug.
+- **Fix (additive, schedule-only — no prompt/logic change):** cron changed to `0 */2 * * *` —
+  every 2 hours, around the clock, 7 days a week. Description updated to record why.
+- Session was dead at the time of this run. Navigated to `app.gusto.com/payroll_admin`, confirmed
+  the login.gusto.com account picker, clicked the `jdavis@fcfpawn.com` tile (selection only — not
+  a credential entry, allowed under `gusto-access` Rule 0), which advanced to the passkey screen.
+  **Touch ID prompt left up on Joshua's Mac — one touch from him restores the session; nothing
+  else is blocking.** Claude cannot complete a passkey, and no schedule change can substitute for
+  that first touch; the widened cadence only prevents it from being needed again every morning.
+- Watch item: if the session still dies overnight on the every-2-hour cadence, Gusto is enforcing
+  an **absolute** session lifetime rather than an idle timeout, in which case no keep-alive
+  frequency helps and the periodic Touch ID is unavoidable. Re-check after ~3 nights (by 8/25).
+
+## 2026-08-22 (~1:05 PM run — zoom-voicemail-alert, roster unchanged, zero new alerts)
+
+- Routine run. Roster unchanged (6 users: Roanoke/809, Culpeper/808, Lexington/807 canonical,
+  Harrisonburg/802, Waynesboro/803, legacy jdavis@fcfpawn.com/800 still Active/Activated — not
+  yet deactivated in Zoom). Checked full today's-date (2026-08-22) call history for all 6 lines.
+  Harrisonburg: 19 rows total; 2 new candidates since prior cutoff (10:59:13 AM) — Rebecca Whetzel
+  (540) 578-6660 Ring Timeout at 12:32:33 PM and Abandoned at 12:35:16 PM — both resolved by a
+  later Answered inbound from the same number at 12:39:50 PM (customer-reconnected per Step 3.5).
+  No alert. State cutoff advanced to 12:35:16 PM (newest candidate row) per Step 3. Waynesboro:
+  6 rows, all Answered — no candidates, cutoff unchanged. Lexington: 3 rows, all Answered — no
+  candidates, cutoff unchanged. Culpeper/Roanoke/jdavis@fcfpawn.com (legacy): No Data, as
+  expected (staged-only / no calling plan). **Zero new alerts — stayed silent per Step 4, no
+  Slack post.**
+
+## 2026-08-22 (~12:11 PM run — zoom-voicemail-alert, roster unchanged, zero new alerts)
+
+- Routine run. Roster unchanged (6 users: Roanoke/809, Culpeper/808, Lexington/807 canonical,
+  Harrisonburg/802, Waynesboro/803, legacy jdavis@fcfpawn.com/800 still Active/Activated — not
+  yet deactivated in Zoom). Checked full today's-date (2026-08-22) call history for all 6 lines.
+  Harrisonburg: 15 rows total; 4 rows newer than the prior cutoff (10:59:13 AM) — Radford VA
+  11:01:18 AM (resolves earlier 10:59:13 AM Ring Timeout, already alerted), plus 11:08:08 AM,
+  11:08:34 AM, 11:33:50 AM — all Answered, no new candidates. No outbound calls logged on the
+  Harrisonburg line today. Waynesboro: 4 rows, all Answered — no candidates. Lexington: 3 rows,
+  all Answered — no candidates. Culpeper/Roanoke/jdavis@fcfpawn.com (legacy): No Data, as
+  expected (staged-only / no calling plan). **Zero new alerts — stayed silent per Step 4, no
+  Slack post.** State file unchanged (no candidate rows newer than existing cutoffs today).
+
+## 2026-08-22 (~11:09 AM run — zoom-voicemail-alert, roster unchanged, zero new alerts)
+
+- Routine run. Roster unchanged (6 users: Roanoke/809, Culpeper/808, Lexington/807 canonical,
+  Harrisonburg/802, Waynesboro/803, legacy jdavis@fcfpawn.com/800 still Active/Activated — not
+  yet deactivated in Zoom). Checked full today's-date (2026-08-22) call history for all 6 lines.
+  Harrisonburg: 13 rows total; only one candidate newer than the prior cutoff (10:08:18 AM) — a
+  Ring Timeout from Azia Bonds (540) 742-5878 at 10:59:13 AM — but she called back herself at
+  11:01:18 AM and was Answered (2:09), so it's resolved-by-retry per Step 3.5, suppressed. No
+  outbound calls logged on the Harrisonburg line at all today. Waynesboro: 3 rows, all Answered —
+  no candidates. Lexington: 2 rows, both Answered — no candidates. Culpeper/Roanoke/
+  jdavis@fcfpawn.com (legacy): No Data, as expected (staged-only / no calling plan). **Zero new
+  alerts — stayed silent per Step 4, no Slack post.** State file updated: Harrisonburg →
+  "Aug 22, 2026, 10:59:13 AM" (candidate cutoff advanced even though resolved, per Step 3).
+
+## 2026-08-22 (~10:45 AM run — zoom-voicemail-alert, roster unchanged, zero new alerts)
+
+- Routine run. Roster unchanged (6 users: Roanoke/809, Culpeper/808, Lexington/807 canonical,
+  Harrisonburg/802, Waynesboro/803, legacy jdavis@fcfpawn.com/800 still Active/Activated — not
+  yet deactivated in Zoom). Checked full today's-date (2026-08-22) call history for all 6 lines.
+  Harrisonburg: 7 rows total; all 3 rows newer than the prior alert cutoff (10:08:18 AM — Alison
+  Robles' unresolved Ring Timeout, already alerted last run) were Answered (Radford VA 10:16:43 AM,
+  Stedman Jones 10:12:32 AM — resolves his earlier 10:07:17 AM Ring Timeout, Castellon Melvi
+  10:08:45 AM) — no new candidates. Waynesboro: 3 rows, all Answered — no candidates. Lexington:
+  2 rows, both Answered — no candidates. Culpeper/Roanoke/jdavis@fcfpawn.com (legacy): No Data,
+  as expected (staged-only / no calling plan). **Zero new alerts — stayed silent per Step 4, no
+  Slack post.** State file unchanged (nothing to advance — no missed/voicemail candidate rows
+  newer than existing cutoffs today).
+
+## 2026-08-22 (~10:24 AM run — zoom-voicemail-alert, roster unchanged, 2 new alerts posted)
+
+- Routine run. Roster unchanged (6 users). Checked full today's-date (2026-08-22) call history for
+  all 6 lines. Lexington: 2 rows, both Answered — no candidates. Waynesboro: 2 rows, both Answered
+  — no candidates. Harrisonburg: 7 rows — 2 numbers (Stedman Jones (540) 560-1327, Radford VA
+  (540) 505-0783) each had an earlier missed attempt (Ring Timeout / Busy) but the customer called
+  back themselves and got through later the same run — resolved-by-retry, suppressed per Step 3.5.
+  One number, Alison Robles (540) 819-9765, called twice (10:00:43 AM Busy, 10:08:18 AM Ring
+  Timeout) with no later answered attempt from her and zero outbound calls logged all day on the
+  line — both attempts unresolved, no voicemail left on either. Posted 2-line alert to
+  #voicemails-calls-missed (https://valleypawnworkspace.slack.com/archives/C0BP4M3B99R/p1787409092557179).
+  State file updated: Harrisonburg → "Aug 22, 2026, 10:08:18 AM". Culpeper/Roanoke/jdavis@fcfpawn.com:
+  No Data, as expected (staged-only / no calling plan).
+
+## 2026-08-22 (10:09 AM run — zoom-voicemail-alert, roster unchanged, zero new alerts)
+
+- Routine run. Roster unchanged (6 users: Roanoke/809, Culpeper/808, Lexington/807 canonical,
+  Harrisonburg/802, Waynesboro/803, legacy jdavis@fcfpawn.com/800 still Active/Activated — not
+  yet deactivated in Zoom). Checked full today's-date (2026-08-22) call history for all 6 lines.
+  Waynesboro: 1 row (Inbound, (540) 451-0266 Danny Fultz, forwarded by Waynesboro Store Queue
+  Ext.806 → Ext.803, 10:00:26 AM, Answered, 00:00:46) — not a candidate. Roanoke, Culpeper,
+  Lexington, Harrisonburg, and jdavis (legacy) all showed **No Data** for today so far.
+  **Zero new alerts — stayed silent per Step 4, no Slack post.** State file cutoffs left
+  unchanged (nothing to advance — no missed/voicemail candidate rows today).
+
+## 2026-08-22
+
+- Enabled scheduled tasks: 112 -> 123
+- Registered scheduled tasks: 118 -> 128
+- Task folders on disk: 127 -> 138
+- ENABLED: bald-rock-payout-verification-sep1
+- ENABLED: fleet-guardian
+- ENABLED: google-reviews-post-watchdog
+- ENABLED: gusto-keep-alive
+- ENABLED: interview-schedule-monday-dm
+- ENABLED: jewelry-onhand-catchup
+- ENABLED: monday-bravo-combined-compile
+- ENABLED: shop-in-store-sync
+- ENABLED: unified-search-index-refresh
+- ENABLED: vp-thursday-email-watchdog
+- ENABLED: vp-website-shop-weekly-report
+- Native agent appeared: com.valleypawn.chrome-tab-hygiene.plist
+- Native agent appeared: com.valleypawn.claude-keepalive.plist
+- Native agent appeared: com.valleypawn.fleet-health.plist
+- Native agent appeared: com.valleypawn.mac-maintenance.plist
+- Native agent appeared: com.valleypawn.perf-guard.plist
+- Native agent removed: com.valleypawn.unified-search-refresh.plist
+- Native agent LOADED: com.valleypawn.chrome-tab-hygiene
+- Native agent LOADED: com.valleypawn.claude-keepalive
+- Native agent LOADED: com.valleypawn.fleet-health
+- Native agent LOADED: com.valleypawn.mac-maintenance
+- Native agent LOADED: com.valleypawn.perf-guard
+- Native agent STOOD DOWN: com.valleypawn.unified-search-refresh
+
 - 2026-08-21 (~15:30) — **Jewelry Category Standard SENT via Gusto e-signature (closes the 8/14 blocked step) + Gusto login problem attacked at the root.** (1) E-sign send completed per the new `gusto-access` skill: session was live (no Touch ID needed), PDF injected via clipboard→page base64 (the file_upload tool remains broken in Cowork; first attempt at hand-transcribing chunks produced a corrupt length and was abandoned — clipboard read via `navigator.clipboard.readText()` after focusing the page is the zero-transcription-risk path, now proven), fields placed (Signature/Full name/Signing date, zero-grab-offset drop, ~12pt drift, all above the 446pt line), Step-3 preview crossed via AX-press — **gotcha learned: the AX walk presses the FRONTMOST tab's Continue, and a stray pre-existing `templates/new` tab was in front; must activate the working tab via Chrome AppleScript first**. Sent as Team document, All future hires + All 20 individuals (Gusto's live count of 20 used over the API's 17 per standing rule). Template id `7987371`, verified: `approved`, 20/20 `requested`, redirect to Team artifacts. (2) Registered NEW `gusto-keep-alive` scheduled task (every 2h, 8am–8pm Mon–Sat): touches app.gusto.com, refreshes the session by visiting; if logged out it DMs Joshua once/day max for the one Touch ID — per Joshua: "I spend more time logging you into Gusto than anything else." Note: the on-disk-but-unregistered `gusto-keep-alive` folder listed in BUSINESS_OS live-state (2026-08-11) no longer existed on disk — created fresh, no clobber.
 
 - 2026-08-21 (eve) — **unified-search-index-refresh HARDENED end-to-end after its first Cowork run (fix-forward, per Joshua's directive: overcome failures, don't explain them).** The first run surfaced three real defects; all three were fixed in-run or same-session, index is fully current (stale since ~8/14 → refreshed 15:11 today, 304k mail / 49k files / 61k texts / 1.2k+ photos). (1) TRANSIENT DEATH: attempt 1 died silently mid-files-step (parent killed — consistent with the day's memory-pressure episode — workers threw BrokenPipe, no error, no done marker); an identical retry succeeded. Fix: NEW `Unified Search/refresh_hardened.sh` (additive wrapper, refresh.sh untouched) — 3 attempts, success = the literal `=== done` marker (Rule 12), PLUS stale-lock reclaim: a SIGKILL'd refresh.sh never fires its EXIT trap, leaving `.refresh.lockdir` to no-op the next 6h of runs; the wrapper reclaims it whenever the lock exists with zero live index processes. (2) PHOTOS OCR 97% SILENT FAILURE: run reported ok=3 fail=190 — root-caused live (manual export of the "failed" uuids worked): edited screenshots export as `<uuid>_edited.jpeg` but photosindex.py only matched `<uuid>.*`. One-line fix in photosindex.py (match bare uuid prefix); reclaim run immediately after: ok=100 fail=0 on the first batch, all ~190 recovered. (3) TASK SPEC WRONG: SKILL.md rewritten (backup SKILL.md.bak-20260821) — entry point is now the wrapper launched as a fully-redirected background subshell + log polling (a foreground osascript call times out ~30s and falsely reports failure — the 8/21 load-melt lesson, now encoded in the task itself), realistic 75-min budget (was 8 min; mail scan alone walks 300k messages, and remindersindex legitimately sits 10+ min at 0% CPU on `fetching list` — documented as NOT a hang), retry→self-fix→only-then-DM escalation ladder, model pinned sonnet. Registered rerun-safe in fleet/rerun_manifest.json (lock + incremental indexing make reruns idempotent); NOT in expected_outputs.json (silent-success task, no Slack marker — never-guess). Proof point: tonight's 3:30 AM fire → fresh stats.txt + `hardened success` line in refresh_hardened.log.
+
+- 2026-08-22 (later) — **CLOSED the stale-sources failure mode in #ask-handbook — a policy change now reaches employees automatically within 30 minutes.** The gap flagged at build time: the responder answers only from `SOURCES_CURRENT.md`, so if a policy changed in the master .docx and nobody regenerated that file, employees would keep getting the SUPERSEDED answer *with a confident citation* — the worst possible output of this system, and one that depended entirely on a human remembering. Fixed structurally rather than documented as a caveat. NEW `Human Resources/Ask_Handbook/build_sources.py`: regenerates the sources file from the masters, **pure stdlib** (a .docx is a zip of XML — parsed with `zipfile`+`ElementTree`, so it runs on the Mac's stock `/usr/bin/python3` with no pip dependency, deliberately avoiding that failure surface), **version-agnostic** (globs for the highest `v NNNN.N_FINAL.docx` of each doc, so v2026.4 is adopted with zero edits to the script OR the task), **atomic write** (temp+rename, responder can never read a half-written file), and **fails loudly** (missing/unreadable master ⇒ non-zero exit, previous good file untouched). Responder STEP 2 rewritten (backup `.bak-pre-selfheal-20260822`) to run the rebuild BEFORE reading, every run, with an explicit hard-stop rule: if the rebuild fails, do not answer from the old file and do not answer from memory — send the failure DM and stop. **Proven end-to-end, not asserted:** built a synthetic v2026.4 containing a distinctive test policy → `--check` correctly reported STALE → rebuild absorbed the new policy AND auto-updated the citation header to "P&P Manual v2026.4" → synthetic file removed and v2026.3 state verified restored (test policy gone, real §05.11 intact, citation back to v2026.3). Net effect: publishing a new policy version is now the ONLY step — no one has to remember this pipeline exists. Guardrail regression-checked after patching (VERBATIM RULE / NOT-FOUND / SCOPE GUARD / Execution Contract / failure DM channel all still present).
+
+- 2026-08-22 — **NEW: #ask-handbook Slack channel + `ask-handbook-responder` task — employees can now ask policy questions and get a cited answer.** Executes the 8/16 "Ask-Handbook Slack Assistant" build spec (Drive doc 1BWHI5mSyn...), which had been staged but never built. Channel `#ask-handbook` C0BS11KTYKU (public, all-store so answers compound); VP OPS ENGINE invited (bot has read+post; NOT create-channel or pins scopes — channel was created via Chrome, pin still outstanding). Sources: `Human Resources/Ask_Handbook/SOURCES_CURRENT.md`, a flat-text extract of BOTH governing docs (P&P v2026.3 + Handbook v2026.2, ~47k tokens, one-shot readable) — the responder may answer ONLY from this file, never from general knowledge. Task `ask-handbook-responder` (cron `0,30 10-18 * * 1-6`, sonnet-pinned): reads channel → dedup-checks each thread → answers in-thread with a mandatory source citation → logs to `Ask_Handbook/QUESTION_LOG.md`. Hard rules baked in: VERBATIM quoting for compliance topics (firearms/ATF, cash handling, police holds, FDCPA), explicit NOT-FOUND behavior routing to Store Manager instead of guessing, SCOPE GUARD refusing pay/discipline/dispute/exception questions, Field Communication Standard (no tool names, no paths), Execution Contract, silent on no-op runs. **Dry-run verified live against real channel output (Rule 12), not API returns:** 7 test questions — 5 answerable (incl. verbatim multi-handgun ATF quote), 1 deliberately unanswerable (wifi password → correct not-found), 1 out-of-scope (pay dispute → correct refusal). All 7 correct; test messages deleted after verification. NOT-FOUND rows in the question log are the intended feed into `policy-lifecycle` — they are the list of policies still unwritten. **Not yet done: staff not added to the channel** (deliberate — Joshua approves the announcement first) and the welcome message is posted but not pinned (bot lacks `pins:write`).
 
 - 2026-08-21 (eve) — **P&P Manual consolidated to v2026.3 FINAL — closes the "policies announced but never folded into the master manual" gap through today.** Audited both v2026.2 FINALs (Handbook + P&P Manual, finalized 8/3) against #policy-announcements, the HR folder, and the Drive Policies & Handbook folder. Five formally-announced + Gusto-distributed policies were missing from the P&P Manual: Daily Jewelry Count (7/27), Jewelry Display One-In-One-Out (8/3), Gold Scrap Bucket Naming (8/1), Jewelry Category Standard (8/14), Store Email Password Policy (8/14). All five folded in additively (new §02.14, §03.17, §05.11 + two additions under §04.03), changelog section added, stale "Version 2026.1 — DRAFT" title-page label corrected to 2026.3 FINAL. Saved to `Human Resources/Valley_Pawn_PP_Manual_v2026.3_FINAL.docx` + Drive `.../03 Human Resources/Policies & Handbook/` (the consolidated manual had never been uploaded to Drive before — now it is). Handbook deliberately NOT version-bumped: no new HR/employment policy has issued since its 8/3 FINAL (Pay Transparency + VA-law fixes are already in it). Note: `vp-hr-policy-monthly-sync` (1st of month) maintains the Drive running list but does not consolidate the master manual — periodic re-consolidation like this remains a manual/on-request step. Still open (pre-existing register rows): pay-transparency scrub of employment application + interview scripts; non-compete poster check at all 5 stores; Bravo item-description policy waiting on Preston.
 
@@ -1428,3 +1973,10 @@ Newest first. Material changes to the business operating system. Read this BEFOR
 ## 2026-08-02
 
 - Live-state tracking initialised.
+- 2026-08-22 — **SOCIAL MEDIA / CONTENT AUDIT (full, verified against live Publer output) — plan through December written, nothing built pending Joshua's go.** Joshua: "they seem like we are not doing any community, any videos, anything interesting." He is right on all three, and the data is worse than the impression. Pulled ALL 554 published posts 5/24–8/22 from the live Publer API (raw JSON + summary in "Refine Social Media/audit_2026-08-22/"). HEADLINES: real output 42.6 platform-posts/wk vs the 91 the design claims — and only 17.1/wk actually published BY the pipeline (332 of 554 Publer records are source:sync, i.e. hand-posted on Facebook and merely imported). Store-local shipped 0 of its 35-item target three weeks running (8/3, 8/10, 8/17). PIPELINE VIDEO OVER 90 DAYS = 2 POSTS, and zero in the last 49 days — the 47 "videos" in Publer are 45 Reels hand-uploaded in a single 19-minute window on 5/25 plus 2 captionless 7/4 posts. The casual-video-inbox folder has been EMPTY since 2026-07-06: vp-casual-video-daily fires nightly against nothing, because unlike #deal-of-the-week (prompt → named reminder → pick = 10/10 submissions two weeks running) video has no prompt, no deadline and no owner. Also: 45% of all posts published with NO caption (PILLAR_OVERLAY §6 rule 1 says "Ever. No exceptions."); 76% of captioned posts reuse a caption verbatim, several 3–4x on the SAME page; median engagement 0.0 on 8 of 9 measurable accounts; best post in 90 days scored 9 interactions; 18 total comments in 90 days with ZERO replies from us ever; TikTok connected and never used; Harrisonburg 13 posts/90d vs Culpeper 111. NEW STRUCTURAL FINDINGS: (a) vp-content-batch-weekly fires Mon 2:02 AM but manager deal submissions land 9:30–11:00 AM Monday — the batch runs a full week stale and its "no submission" exclusions are systematically wrong (the 8/10 batch said "Uriah didn't submit"; Uriah submitted 11:17 AM that same day, 9 hrs after the batch ran); (b) vp-content-batch-preflight v3 runs 7 fix-first checks and NOT ONE covers the image pipeline — the exact dependency that zeroed store-local content 3 weeks in a row; (c) the Friday→Monday auto-adjust loop is optimizing on noise (8/21 output: "top: warranty 36 reach, bottom: warranty 0 reach, +5% warranty" at n=8). EXPERT BOARD DECISION (panel: martech engineer, short-form video producer, brand-risk/community manager, SRE): reject patching the monolith (patched weekly since July, same pillars die every week) and reject a rebuild (violates additive-only); instead DECOMPOSE into 5 independent lanes so a photo failure can no longer zero out video and community — A Product (keep vp-content-batch-weekly; move store leg to Mon 2 PM, add the image check to preflight, enforce per-platform caption variants) · B VIDEO ENGINE (B1 machine-made Deal Reels: ffmpeg 8.1.2 + Inter/Playfair + the existing 1080x1920 end card + the 5 real manager deal photos that arrive reliably every Monday → 5 store Reels + 1 brand compilation weekly with ZERO human input, publishing to FB Reels/IG Reels/TikTok; B2 staff phone video using the proven deal-of-week prompt→named-reminder→pick trio, target 2–3/wk) · C COMMUNITY (fully decoupled from product photos — it needs none, and it is the top organic performer) · D ENGAGEMENT (Guess the Price / What Is This Thing / polls, plus a first-hour comment-reply watcher — baseline to beat is 18 comments and 0 replies in 90 days) · E locked Aug→Dec seasonal calendar (back-to-school → Labor Day → fall tools/storm prep → Christmas Layaway opens Sep 15 with a 90-day drumbeat → Veterans Day → Black Friday/Small Business Saturday → December gift + layaway-pickup countdown → New Year gold-buy setup). Every lane ships with the fix-first ladder, Fleet Guardian registration in expected_outputs.json + rerun_manifest.json (no new bespoke watchdogs per HARDENING_STANDARD), a prompt+chase for any human dependency, degraded-mode-ships-less-never-zero, and a pinned model. Full document: "Refine Social Media/audit_2026-08-22/SOCIAL_AUDIT_AND_PLAN_THROUGH_DEC_2026.md". NOTHING BUILT — Joshua asked for context and a report before anything is touched. Three decisions are genuinely his: Christmas Layaway launch date, resuming the weekly Brevo cadence (Store Spotlight drove 250 calls+texts/1k; Education drove 0 twice), and whether managers go on camera. Note also: Facebook Page tokens all died 8/21 with the password change, so every path in this plan routes through Publer, never the Graph API.
+
+- 2026-08-22 (PM) — **BUILT: the social/content rebuild — 6 new lanes shipped, video engine proven live, creative drift engine live.** Joshua approved all three decisions (Christmas Layaway opens Sep 15 · weekly Brevo resumes on Store Spotlight · managers go on camera) and directed continuous execution. **NEW CODE (all in "Refine Social Media/", all additive):** (1) `vp_deal_reel.py` — machine Deal Reel engine, 1080x1920/15s, ffmpeg 8.1.2 + Playfair/Inter + brand palette. PROVEN LIVE: 5/5 rendered from the real 8/21 manager photos. Two real defects were found by LOOKING at the output rather than trusting exit codes and fixed in-run: (a) two of five manager submissions turned out to be finished vendor FLYERS (Culpeper Husqvarna, Lexington Pulsar) that already carry product/price/retail/logo — our overlays collided with their type; added `classify_source()` (edge-density + saturation-variance; flyers 14.8-17.9% edge / 95.6-96.3 satvar vs photos 2.2-8.9% / 20.8-79.9) with a separate flyer treatment (slow read-pan, chip + end card only, no overlay cards). A first attempt using "share of top quantized colors" was tried and REJECTED — it scored the CUL flyer lowest of all five because that flyer is photo-rich; do not reintroduce it. Because n=5 is thin, classification is deliberately NOT load-bearing: `build_plate()` now enforces a hard geometric SAFE_BOTTOM guarantee (zoom-adjusted) so a misread produces a plainer reel, never a broken one, in either direction. (b) Harrisonburg then Waynesboro died on `-movflags +faststart` ("Unable to re-open output file for shifting data") — faststart rewrites in place and racing the Google Drive File Provider in ~/Documents left a truncated 2 MB .mp4 that LOOKED like a real deliverable; fixed by encoding to scratch + atomic move + one retry, and by deleting any partial on failure. The retry caught and recovered a live WAY failure on the verification run. (2) `vp_comedy_reel.py` — beat-timed card video (deadpan card format, designed to land MUTED since Reels/TikTok autoplay silent); optional macOS `say` VO; **humor guardrails enforced in code** via `check_script()` which hard-blocks broke/rent/hardship/firearms/mock-the-customer language — verified live: 2 bad bits blocked with reasons, 1 good bit passed, selftest rendered 14.8s/5 beats. Honest scoping note: no text-to-video model is reachable headlessly on this Mac, so pretending otherwise would have shipped a task that fails weekly. (3) `creative_drift.py` + `CREATIVE_DRIFT.md` — the self-iterating layer Joshua asked for ("shift and move with creative genius over time, season and year"). Four clocks: weekly bandit selection, seasonal skin, quarterly invention, annual anniversary re-skin. Two mechanisms carry it: a **forced exploration budget** (40% at cold start, hard floor 15% forever) that prevents the freeze the audit found (one caption run 21x across 5 accounts, another 4x on the SAME page), and **MIN_POSTS_FOR_SIGNAL=30** which makes measured performance simply not count below 30 posts — the direct fix for the Friday loop moving the whole content mix on n=8 with single-digit engagement. 22 seed formats + 8 untried territories; live-verified that cooldowns fire and under-fill is surfaced rather than silently shipped. The Friday analytics loop is NOT disabled — it keeps writing weekly-adjustments.json but is now evidence, not authority. (4) `CITY_COMMUNITY_KB.md` — per-town local truth for all 5 towns (landmarks, local vocabulary, schools/mascots, seasonal rhythms, dated Aug-Dec events with [C26]/[PATTERN]/[VERIFY] confidence tags), researched fresh. Includes hard landmines: Lexington Confederate-memorial terrain excluded entirely; the circulating Waynesboro "Nov 21 lighting / Nov 22 parade" is 2025 data and must not be published; Court Square Theater closed permanently 12/31/2025; Rocktown Beer Fest and Big Lick Blues Fest are defunct; Roanoke Valley Horse Show relocated to Lexington; regional accuracy (Culpeper is Piedmont NOT Valley, Roanoke is Virginia's Blue Ridge NOT Valley, the Parkway line belongs to Waynesboro/Roanoke not Lexington); and two same-name-different-state hazards (Waynesboro PA, Lexington NE). (5) `CALENDAR_AUG_DEC_2026.md` — the locked seasonal spine, replacing a calendar that expired 7/20 and was never renewed. **NEW SCHEDULED TASKS (6):** vp-deal-reels-weekly (Mon 2:38 PM) · vp-community-weekly (Mon 3:14 PM) · vp-engagement-weekly (Mon 3:53 PM, includes the comment-reply sweep) · vp-comedy-reel-weekly (Wed 6:39 PM) · vp-staff-video-prompt (Tue 9 AM) + vp-staff-video-chase (Wed 11:23 AM) — the last two clone the PROVEN deal-of-week prompt→named-reminder→pick mechanic onto video, which is the entire reason #deal-of-the-week gets 10/10 while the casual-video inbox sat empty for 47 days · plus vp-creative-refresh-quarterly (1st of Jan/Apr/Jul/Oct, opus-pinned — the one genuinely creative job in the fleet). **LANE A FIXES (schedule-only, no logic edits, fully reversible):** vp-content-batch-weekly moved Mon 2:02 AM → **1:42 PM** because it fired 7+ hours BEFORE manager deal submissions land (9:30–11 AM) — it was running a full week stale and its "no submission" exclusions were systematically wrong (the 8/10 run declared "Uriah didn't submit" at 2:12 AM; Uriah submitted at 11:17 AM the same day). Preflight moved Sun 9 PM → **Mon 11:05 AM** (a Sunday-night preflight cannot see whether that week's photos arrived); postflight moved Mon 3:02 AM → **4:42 PM**. **PREFLIGHT BLIND SPOT CLOSED:** added CHECK 8 (store-photo pipeline reachable) to vp-content-batch-preflight — it ran 7 clean checks every Sunday while never testing the one dependency that actually mattered, which is why store-local shipped 0 of 35 for three straight weeks; check 8 verifies all three retrieval paths AND the Publer `upload_media` last mile, degrades to a named path, and ends with "no reachable photo is never a valid reason to ship zero store items." Backup at SKILL.md.bak-pre-imagecheck-20260822. **FLEET HARDENING:** all 6 new tasks registered in fleet/expected_outputs.json with real observable markers (Rule 12 — never a run record) and in rerun_manifest.json rerun_safe (89 total); no new bespoke watchdogs, per HARDENING_STANDARD. Backups .bak-20260822. Every new task carries: the non-interactive osascript fallback (never request_cowork_directory unattended), the Publer browser-User-Agent + explicit from/to gotchas, "no Meta Graph API — all Page tokens died 8/21", and degraded-mode-ships-less-never-zero. **Expected effect: video 0/wk → 10-12/wk, of which 6 need no human at all; community 0/wk → 3-4/wk store-local; TikTok activated after 0 posts in its entire history; Harrisonburg weighted first until it reaches parity (13 posts/90d vs Culpeper's 111).** FIRST PROOF POINTS: Mon 8/24 — 11:05 AM preflight check 8, 1:42 PM batch on the new timing, 2:38 PM first machine Deal Reels; Tue 8/25 9 AM first video ask; Wed 8/26 first chase + first comedy reels.
+
+- 2026-08-22 (eve) — **Lane B1 vp-deal-reels-weekly: FIRST LIVE PUBLISH. 6 reels, 13 posts scheduled, TikTok activated after zero posts in its history.** The 5 machine Deal Reels rendered earlier today from the 8/17 manager submissions were still sitting on disk unpublished; this run shipped them. NEW CODE (both additive, in "Refine Social Media/"): `vp_deal_compilation.py` (brand compilation reel — cuts a 3.6s window out of each already-rendered store reel rather than re-deriving cards, so PHOTO and FLYER treatments both carry through unchanged; 23.0s, 1080x1920, brand intro + end card; also writes publish-ready copies of the store reels with a **silent AAC track** attached, because a container with no audio stream at all is a known IG/TikTok ingest rejection — originals in reels/ untouched) and `vp_deal_reel_publish.py` (reusable publish leg — one schedule call per account so every caption is unique per PILLAR_OVERLAY s6, incremental manifest writes, live-Publer duplicate guard). Routing: each store reel -> that store's FB page + Brand IG; compilation -> Brand FB + Brand IG + Brand TikTok. Staggered Sat 8/22 6:45 PM through Wed 8/26 5:45 PM, deliberately clearing Thu-Sat for next Monday's batch. Verified 13/13 live on Publer's own scheduled list, exactly once each — not against the manifest (Rule 12). **THREE PUBLER SILENT-FAILURE MODES FOUND AND FIXED IN-RUN — all three produce a job that reports success and creates nothing:** (a) `wait_for_job` never matched because Publer returns status **"complete"**, not "completed" — this is also the real explanation for the two "JOB_timeout" rows in the 8/21 catch-up manifest, which had in fact succeeded; (b) passing video media by **url** (which is exactly what `PublerClient.schedule_post(video_url=...)` does) is silently discarded — media must go by library **id**; (c) `type: "reel"` is silently discarded — use `type: "video"`, Meta renders 1080x1920 as a Reel anyway. Twelve posts were lost to (b)+(c) before anyone diffed against the live list. Also fixed: the duplicate guard was reading `content.text` when Publer returns the caption at top level as `text`, so it had been seeing every post as empty, i.e. it was not a guard at all. **INCIDENT (contained, but read this): `DELETE /posts` with {"ids": [single_id]} DELETED EVERY SCHEDULED POST IN THE WORKSPACE.** Used while trying to remove one diagnostic test post; Publer ignored the ids array, returned a cheerful `deleted_ids` list of unrelated ids, and wiped ~63 queued posts — this task's 13 plus the concurrently-running community lane (~40 store/GBP posts for 8/23, 8/25, 8/27, 8/29) and comedy/brand lane (~10 video posts). Published history was NOT touched. This task's 13 were re-published and re-verified within the same run; the other two lanes' queues were not recoverable from here and need a re-run. A hard guard now refuses any `DELETE /posts` in `vp_deal_reel_publish.py`. **There is no known safe single-post delete on this API version — remove bad posts in the Publer UI by hand.** Drift engine: 13 vid_deal_reel records written (engagement backfills Friday).
+
+- 2026-08-22 (night) — **FULL INTERNET PRESENCE AUDIT completed (website + 40 directories + social + marketplaces + reviews + competitive).** Report: `Ai Optimized Marketing/AI-Search-GEO/INTERNET_PRESENCE_AUDIT_2026-08-22.md`. Everything verified against live surfaces (Rule 12), nothing from run records. **HEADLINE: the only two markets where a competitor outranks us (Harrisonburg, Roanoke) are exactly the two where the legacy brand is still live off-site.** Culpeper/Waynesboro/Lexington — no legacy listing, all #1. Root cause of most legacy exposure is ONE syndicated description string ("Waynesboro, Culpeper, **Salem** & Lexington, Harrisonburg(**Dixie Pawn**), Roanoke(**GNP Pawn**)") live verbatim on MapQuest, Nextdoor, Superpages, chamberofcommerce.com and Loc8NearMe, pushed by a Yext PowerListings feed — kill the feed, kill most instances at once. **NEW FINDINGS not previously documented:** (a) a **phantom Staunton store** (817 Richmond Ave / 540-885-0018) has NINE live listings — Yelp (3.0★, three 1★ reviews), YellowPages (unclaimed), Nextdoor, Manta, CitySquares, Localmint, MBVT (4.4/61 reviews), 2× FFLs.com — several linking to thevalleypawn.com, i.e. actively routing customers to an address we don't occupy; (b) **thevalleypawn.com's own Harrisonburg schema `sameAs` points at the DEAD duplicate FB page** (`/people/Valley-Pawn-Harrisonburg/61584081596639/`, never received a post) while the real 756-like page `valleypawnharrisonburg` is not in the footer at all, and **Waynesboro's page is missing from the footer entirely** — verified live by curl; (c) **"Dixie Pawn" is live ON OUR OWN SITE** in the `harrisonburg-storefront.jpg` Media Library attachment record (alt text + ImageObject JSON-LD caption) so it re-propagates to every future post using that photo — verified live; (d) `/contact` is **indexed by Google and returns HTTP 404** (verified: curl → 404); (e) homepage has **ZERO `href="tel:"` links** (verified: count 0) and no conversion CTA above the fold; (f) `/loans/` states "up to $100K" in title/H1 (5×) and "up to $10,000" in its own body, while llms.txt says $25,000; (g) 1988 vs 2014 vs "Thirty-plus years" contradiction on all 109 pages; (h) 86 of 109 pages have no meta description; (i) 545 duplicate LocalBusiness schema entities all declaring the same `/locations/` URL; (j) BBB is **three fragmented profiles** — Dixie Pawn Harrisonburg at **B− solely for "Failed to respond to 1 complaint"** (04/05/2024), Gold-N-Pawn Roanoke still naming the **prior owners** (Russell/Jonella Harris), and the Waynesboro profile showing **Lexington's phone number**; (k) **no GunBroker presence for 5 FFLs** — eBay bans firearms so this is entirely unserved revenue at ~6-7.5% fees vs our 16.6% eBay rate (absence unproven — GunBroker 403s all automated fetching, verify by login first); (l) `/shop` sends all **494 items outbound to eBay** with zero product pages and zero Product schema, forfeiting Google Shopping + Local Inventory Ads; (m) YouTube channel exists with 13 subs and **0 videos**, unlinked from the site, while Lane B1 now makes 6 vertical videos/wk that already fit Shorts. **CORRECTION to an in-session sub-finding:** a search snippet suggested an active `ebay.com/usr/dixie-pawn` seller with 1.4K items sold — **verified directly, that URL returns "not found."** There is no legacy Dixie Pawn eBay account; all 5 stores are correctly rebranded (`valley_pawn_{city}`, 9,367 combined feedback, 514 active, $82K/90d). **REVIEW POSITION (live Google):** 1,559 reviews chain-wide at 4.88 avg — CUL 4.9/409, WAY 4.9/357, HAR 4.9/328, LEX 4.8/191, ROA 4.9/274. Four of five markets have **no competitor with a live Google listing**. Roanoke is the only real fight: The PawnShop 4.9/727 (+166 at a 2nd location) = **453 behind single-site, 619 combined** — a volume problem, not a rating problem. **UNRESOLVED / NEEDS A LOGIN:** Apple Business Connect (whether Harrisonburg still shows Dixie Pawn on Apple Maps/Siri is genuinely unknown), Bing Places (Harrisonburg lead photo reported as the old Dixie storefront sign), the GBP console (different Google account), and the **Roanoke suite conflict — canonical says "Suite C" but the ATF FFL record and two directories say "2362-D"; resolve internally BEFORE any mass address push or we propagate an error into the FFL record.** NOTHING WAS CHANGED THIS SESSION — audit and plan only.

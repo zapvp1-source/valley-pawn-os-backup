@@ -1,6 +1,6 @@
 ---
 name: vp-content-batch-preflight
-description: Sunday 9 PM ET pre-flight for Monday's vp-content-batch-weekly. v3 HARDENED: fix-first ladder on every check (detect → remediate → re-verify → degrade → escalate), durable hash-verified patch storage in ~/.vp-studio/patches (no /tmp dependency), degraded-mode flags so Monday runs instead of dying, heal ledger that escalates repeat symptoms to permanent fixes. DMs Joshua only for blockers only he can fix.
+description: Monday 11 AM pre-flight for the 1:40 PM content batch. MOVED 2026-08-22 from Sun 9 PM: the batch moved to Monday afternoon, and a Sunday-night preflight cannot see whether that week's manager deal photos arrived. Now runs after submissions land. v3 HARDENED fix-first ladder, 8 checks — check 8 (store-photo pipeline, added 2026-08-22) closes the blind spot that zeroed store-local content for 3 straight weeks.
 model: claude-sonnet-5
 ---
 
@@ -93,6 +93,19 @@ Confirm `#vp-studio-queue` and `#deal-of-the-week` via Slack MCP. If not: write 
 Check `~/.vp-studio/scripts/compose_text_on_hero.py` exists + executable + `python3 -c "import PIL"` passes.
 - **REMEDIATE:** re-run `python3 ~/.vp-studio/vp_helper_setup.py`; if Pillow missing, `pip3 install --user Pillow || pip3 install --break-system-packages Pillow || true`; re-verify. Silent on success.
 - If still broken: write `"text_composite": "unavailable"` — Monday runner uses plain heroes (no text overlay) rather than failing. Log PERMANENT-FIX-NEEDED.
+
+### 8. Store-photo pipeline reachable  <- ADDED 2026-08-22
+**This is the check whose absence zeroed out store-local content for three consecutive weeks (8/3, 8/10, 8/17).** Preflight ran seven clean checks each of those Sundays and passed, while the one dependency that actually mattered -- can a product photo reach Publer -- was never tested. The Monday batch then shipped 0 of its 35 store-local items and logged "no reachable photo."
+
+Verify **all three** retrieval paths, in order, and record which ones work:
+1. **Website mirror (primary, no browser):** `curl -sI` an image URL from the `deal_store.json` feed on thevalleypawn.com. Expect HTTP 200 and a non-trivial `content-length`.
+2. **Slack session (secondary):** confirm the Chrome Slack web session is live for team **T03BL4W1DCL** (that IS Valley Pawn -- the 8/17 manifest's "wrong workspace" claim is obsolete).
+3. **Local fallback (tertiary):** `deal_of_week_uploads/` contains at least one usable photo per store from the last 21 days.
+
+Then verify the **last mile**, which is the part that actually broke: upload one small test image via `PublerClient.upload_media(path, direct_upload=True)` and confirm a usable media URL comes back. A reachable photo that cannot reach Publer is not a working pipeline.
+- **REMEDIATE:** if path 1 fails, re-check the feed URL and try the WordPress REST media endpoint; if path 2 fails, re-authenticate the Chrome Slack session; if `upload_media` fails, retry once with a fresh client -- Publer 429s are common and transient, and a 403 means a **missing browser User-Agent header**, not a dead key (Cloudflare `error code: 1010`).
+- **DEGRADE:** write `"store_photos": "mirror_only" | "slack_only" | "local_only"` so Monday knows which path to use rather than discovering the failure mid-run.
+- **ESCALATE only if all three paths AND the Publer upload fail:** write `"store_photos": "unavailable"` and DM Joshua in plain language. Monday still runs -- it ships **text-only store posts** rather than nothing. **"No reachable photo" is never a valid reason to ship zero store items.**
 
 ## Heal Ledger — turn repeat symptoms into permanent fixes
 Append one JSON line per remediation to `~/.vp-studio/preflight_heal_ledger.jsonl`: `{date, check, action, success}`. After the checks, scan the ledger: any check that needed healing in ≥2 consecutive weekly runs gets a **PERMANENT-FIX-NEEDED** entry in `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn Studios/STATUS.md` describing the recurring symptom, so the next interactive session eliminates the root cause instead of re-healing forever. This is how maintenance burden goes DOWN over time instead of accumulating.

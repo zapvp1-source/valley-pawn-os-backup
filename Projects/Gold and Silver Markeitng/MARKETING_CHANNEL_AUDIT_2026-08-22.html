@@ -1,0 +1,458 @@
+<title>Valley Pawn Marketing Audit</title>
+<style>
+  :root {
+    --bg: #f7f6f3;
+    --surface: #ffffff;
+    --surface-2: #f0eee9;
+    --ink: #1a1815;
+    --ink-2: #4a453d;
+    --ink-3: #7a736a;
+    --rule: #ddd8cf;
+    --accent: #8a6d2f;
+    --accent-soft: #f3ead6;
+    --red: #a3342a;
+    --red-soft: #fbe9e7;
+    --green: #2f6b4f;
+    --green-soft: #e6f1ea;
+    --amber: #8a6520;
+    --amber-soft: #fbf0dc;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14130f;
+      --surface: #1c1a16;
+      --surface-2: #24211c;
+      --ink: #f0ece4;
+      --ink-2: #c2bbaf;
+      --ink-3: #8d867a;
+      --rule: #35312a;
+      --accent: #d4ab5e;
+      --accent-soft: #2e2718;
+      --red: #e08a7e;
+      --red-soft: #33201d;
+      --green: #7fc0a0;
+      --green-soft: #1a2c23;
+      --amber: #d9ae63;
+      --amber-soft: #2e2617;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #14130f;
+    --surface: #1c1a16;
+    --surface-2: #24211c;
+    --ink: #f0ece4;
+    --ink-2: #c2bbaf;
+    --ink-3: #8d867a;
+    --rule: #35312a;
+    --accent: #d4ab5e;
+    --accent-soft: #2e2718;
+    --red: #e08a7e;
+    --red-soft: #33201d;
+    --green: #7fc0a0;
+    --green-soft: #1a2c23;
+    --amber: #d9ae63;
+    --amber-soft: #2e2617;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0 20px 100px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; }
+
+  /* ---- masthead ---- */
+  header.mast {
+    padding: 64px 0 32px;
+    border-bottom: 3px double var(--rule);
+    margin-bottom: 44px;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 18px;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.1rem, 5.5vw, 3.3rem);
+    line-height: 1.08;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0 0 20px;
+  }
+  .standfirst {
+    font-size: 1.13rem;
+    color: var(--ink-2);
+    max-width: 66ch;
+    margin: 0 0 26px;
+  }
+  .meta {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--ink-3);
+    line-height: 1.9;
+  }
+
+  /* ---- section headings ---- */
+  h2 {
+    font-family: var(--serif);
+    font-size: 1.75rem;
+    letter-spacing: -0.01em;
+    margin: 64px 0 8px;
+    padding-top: 22px;
+    border-top: 1px solid var(--rule);
+  }
+  h2 .num {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    display: block;
+    letter-spacing: .16em;
+    margin-bottom: 8px;
+    font-weight: 400;
+  }
+  h3 {
+    font-size: 1.06rem;
+    margin: 34px 0 10px;
+    letter-spacing: -0.005em;
+  }
+  p { margin: 0 0 15px; max-width: 72ch; }
+  .lede { color: var(--ink-2); max-width: 72ch; margin-bottom: 24px; }
+
+  /* ---- KPI strip ---- */
+  .kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin: 28px 0 12px;
+  }
+  .kpi { background: var(--surface); padding: 18px 16px; }
+  .kpi .v {
+    font-family: var(--serif);
+    font-size: 1.7rem;
+    line-height: 1.1;
+    display: block;
+    margin-bottom: 5px;
+  }
+  .kpi .l {
+    font-size: 11.5px;
+    color: var(--ink-3);
+    line-height: 1.45;
+    display: block;
+  }
+  .kpi.bad .v { color: var(--red); }
+  .kpi.good .v { color: var(--green); }
+
+  /* ---- finding cards ---- */
+  .finding {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--accent);
+    padding: 22px 24px;
+    margin: 0 0 16px;
+  }
+  .finding.sev1 { border-left-color: var(--red); }
+  .finding.sev2 { border-left-color: var(--amber); }
+  .finding h3 { margin: 0 0 10px; font-size: 1.08rem; }
+  .finding p { margin-bottom: 10px; font-size: 15px; color: var(--ink-2); }
+  .finding p:last-child { margin-bottom: 0; }
+  .finding .rank {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 7px;
+  }
+  .ev {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    background: var(--surface-2);
+    border-left: 2px solid var(--rule);
+    padding: 10px 14px;
+    margin: 12px 0;
+    color: var(--ink-2);
+    overflow-x: auto;
+  }
+
+  /* ---- tables ---- */
+  .tw { overflow-x: auto; margin: 20px 0 26px; border: 1px solid var(--rule); background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; min-width: 560px; }
+  th, td { padding: 9px 13px; text-align: left; border-bottom: 1px solid var(--rule); }
+  thead th {
+    background: var(--surface-2);
+    font-size: 11px;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  td.n, th.n { text-align: right; font-family: var(--mono); font-size: 13px; white-space: nowrap; }
+  tr.tot td { font-weight: 700; background: var(--surface-2); }
+  .pos { color: var(--green); font-weight: 600; }
+  .neg { color: var(--red); font-weight: 600; }
+
+  /* ---- pills ---- */
+  .pill {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+    vertical-align: middle;
+  }
+  .p-s { background: var(--green-soft); color: var(--green); }
+  .p-m { background: var(--amber-soft); color: var(--amber); }
+  .p-l { background: var(--red-soft); color: var(--red); }
+
+  /* ---- action table ---- */
+  .actions td:first-child { font-family: var(--mono); font-size: 12px; color: var(--ink-3); width: 34px; }
+  .actions td strong { display: block; margin-bottom: 3px; }
+  .actions td .why { font-size: 13px; color: var(--ink-3); }
+
+  /* ---- callout ---- */
+  .callout {
+    background: var(--accent-soft);
+    border: 1px solid var(--rule);
+    padding: 22px 24px;
+    margin: 28px 0;
+  }
+  .callout h3 { margin-top: 0; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  ul.tight { margin: 0 0 18px; padding-left: 20px; max-width: 72ch; }
+  ul.tight li { margin-bottom: 8px; color: var(--ink-2); }
+
+  footer.end {
+    margin-top: 70px;
+    padding-top: 22px;
+    border-top: 3px double var(--rule);
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--ink-3);
+    line-height: 1.9;
+  }
+  code { font-family: var(--mono); font-size: .88em; background: var(--surface-2); padding: 1px 5px; border-radius: 3px; }
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow">Full Circle Finance Inc · DBA Valley Pawn</p>
+  <h1>The marketing engine is running hot and pointed at the wrong targets.</h1>
+  <p class="standfirst">A six-channel audit built on live data — 554 social posts, 41 email campaigns, 555 eBay transactions, the live website, and the P&amp;L. The problem is not effort. Output is high across every channel. The problem is that a large share of it lands somewhere that cannot convert, and almost none of it can be traced to a dollar.</p>
+  <p class="meta">
+    AUDIT DATE — 22 August 2026<br>
+    SCOPE — Social · Email · Website/SEO · Local &amp; Reviews · eBay · Paid &amp; Measurement<br>
+    EVIDENCE — Publer API (90d), Brevo API (live), eBay API (90d), live site crawl, QBO P&amp;L YTD
+  </p>
+</header>
+
+<section>
+  <h2><span class="num">01 — The Number That Frames Everything</span>Marketing spend is 0.5% of revenue, and none of it is attributable.</h2>
+
+  <div class="kpis">
+    <div class="kpi"><span class="v">$2.41M</span><span class="l">Revenue YTD (Jan–Aug 22)</span></div>
+    <div class="kpi bad"><span class="v">0.50%</span><span class="l">Of revenue spent on marketing ($12,099)</span></div>
+    <div class="kpi bad"><span class="v">$251</span><span class="l">Total measurable ad spend, 3 months — all of it eBay, one store</span></div>
+    <div class="kpi bad"><span class="v">$0</span><span class="l">Revenue attributable to any marketing touch</span></div>
+  </div>
+
+  <p class="lede">There is no Meta Ads account, no Google Ads account, no Meta Pixel, no GTM container, and no call tracking. Two of eleven planned GA4 events fire. Nothing joins a marketing touch to a Bravo transaction. Meanwhile 75% of the FY2025 Advertising line is two undifferentiated journal lumps, and $2,032 of it across 58 transactions is gas stations, barbershops and Uber rides. Even the money you do spend can't be evaluated.</p>
+
+  <div class="callout">
+    <h3>The one-sentence version</h3>
+    <p>Valley Pawn produces roughly 42 social posts, one email blast, and 514 live eBay listings per week-equivalent — and the three highest-intent surfaces in the business (Google Business Profile, the phone number on the website, and the forfeited-loan list) are respectively unmeasured, missing, and idle.</p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">02 — Channel Scorecard</span>Where the output goes, and what comes back.</h2>
+
+  <div class="tw">
+  <table>
+    <thead><tr><th>Channel</th><th class="n">Output (90d)</th><th class="n">Return</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr><td><strong>eBay</strong></td><td class="n">514 active listings</td><td class="n">$82,064 · <span class="pos">$328K/yr</span></td><td>The only channel producing real, countable revenue. Under-fed at 3 of 5 stores.</td></tr>
+      <tr><td><strong>Google reviews</strong></td><td class="n">~21 new/week</td><td class="n">Not published anywhere</td><td>Best-in-market asset. Zero review schema on the site. Thrown away.</td></tr>
+      <tr><td><strong>Google Business Profile</strong></td><td class="n">66 posts</td><td class="n">No data exists</td><td>Highest-intent surface. Publer returns zero analytics. Admin access unresolved.</td></tr>
+      <tr><td><strong>Website</strong></td><td class="n">108 URLs live</td><td class="n">2 of 11 events tracked</td><td>Homepage and <code>/loans/</code> have no phone number at all.</td></tr>
+      <tr><td><strong>Email (Brevo)</strong></td><td class="n">41 campaigns · 13,226 list</td><td class="n"><span class="neg">1.42 calls/1k</span></td><td>21 days dark. 1.5% of the list is engaged. SPF is broken.</td></tr>
+      <tr><td><strong>Social (9 accounts)</strong></td><td class="n">554 posts</td><td class="n"><span class="neg">249 interactions · 82 clicks</span></td><td>Median reach 9. Two of five store pages point at dead targets.</td></tr>
+      <tr><td><strong>Paid</strong></td><td class="n">0 campaigns</td><td class="n">n/a</td><td>Nothing running. Nothing measurable if it were.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">03 — Cross-Channel Patterns</span>Five failures that repeat in every channel.</h2>
+  <p class="lede">These are not six separate marketing problems. They are five problems appearing six times.</p>
+
+  <div class="finding sev1">
+    <span class="rank">Pattern 01 · Highest impact</span>
+    <h3>Volume is being optimised. Targeting is not.</h3>
+    <p>Every channel is tuned to produce more, and every channel's own data says precision beats volume by one to two orders of magnitude.</p>
+    <div class="ev">EMAIL   11,245-person blast → 16 call/text clicks  (1.4 per 1,000)
+        144-person store segment → 36 call/text clicks  (250 per 1,000)  ← 176× better
+
+SOCIAL  106 gold-buying posts → median reach 4
+        6 hiring posts       → 16.7% of ALL reach, 39% of ALL clicks
+
+EBAY    Culpeper: 307 listings → $82 revenue per listing
+        Lexington: 27 listings → $433 revenue per listing  ← 5.3× better</div>
+    <p>The standing social plan targets 55 posts/week by December, up from 17. The bottom 300 posts of the last quarter produced 10.6% of total reach. Tripling output at the current median adds roughly 340 reach per week. Fixing targeting is worth an order of magnitude more and costs less.</p>
+  </div>
+
+  <div class="finding sev1">
+    <span class="rank">Pattern 02</span>
+    <h3>A large share of output lands on broken plumbing.</h3>
+    <p>Not weak content — content delivered to an address that cannot receive it.</p>
+    <ul class="tight">
+      <li><strong>Harrisonburg</strong> posted all quarter to Facebook page <code>474248069342834</code> — the page your own build spec labels <em>"legacy… do not post to it."</em> It also has the highest median reach of any store page (46). Best page, wrong target.</li>
+      <li><strong>Roanoke</strong> published 81 posts into a profile with <strong>~35 followers</strong> — 15% of network output for 3.8% of reach. The setup doc to fix it exists and was never run.</li>
+      <li><strong>SPF is a hard PermError</strong> on <code>fcfpawn.com</code> — two <code>v=spf1</code> records at the apex, neither including Brevo. SPF does not pass at all. <code>thevalleypawn.com</code> was never authenticated.</li>
+      <li><strong>JSON-LD does not parse</strong> on all five <code>sell-gold-{city}</code> pages — <code>"dayOfWeek": "["Monday",…]"</code>. Google discards the entire LocalBusiness + FAQ block on your five highest-intent commercial pages.</li>
+      <li><strong>Meta Page tokens are dead</strong> (since 4 Jul, re-killed 21 Aug). <strong>eBay API returns 403</strong> on Marketing/Analytics/Seller Standards for all 5 stores, unchanged since June.</li>
+    </ul>
+  </div>
+
+  <div class="finding sev1">
+    <span class="rank">Pattern 03</span>
+    <h3>Everything high-intent is unmeasured; everything measured is low-intent.</h3>
+    <p>Google Business Profile is where "pawn shop near me" lands — the surface closest to a walk-in. Publer returns <code>api_total: 0</code> for all five GBP accounts, and GBP admin sits on a Google account nobody can reach programmatically. Facebook — 82 link clicks in 90 days — is the fully instrumented one.</p>
+    <p>On the website, <code>phone_click</code> and <code>directions_click</code> fire. <code>sms_click</code> does not, despite text being a stated primary goal. There is no form to submit anywhere on the site, so <code>form_submit</code> has nothing to track.</p>
+  </div>
+
+  <div class="finding sev2">
+    <span class="rank">Pattern 04</span>
+    <h3>The finished-but-never-shipped pile is the cheapest money in the business.</h3>
+    <p>Work that is fully built, fully specified, and idle:</p>
+    <div class="ev">Forfeited-loan win-back .... strategy + copy done 15 Jun · list + 4 attributes built 10 Jul · 0 contacts, 10 weeks
+vp-ad-engine ............... 470-line pipeline, 11 batch runs, 0 ad packs ever produced
+Sunset/dormant sweep ....... sequence ran to completion 6 Jul · the cull itself never executed
+directory-listing-monitor .. snapshot path points at a dead session dir; never produced an artifact
+Review schema .............. specced in STRATEGY.md §6 · 0 aggregateRating occurrences sitewide
+eBay 90-day pull gate ...... policy written 4 Jul · sent to Gusto with ZERO recipients
+Tracking plan .............. 11 events, 8 dimensions, GTM container — 2 events shipped</div>
+    <p>The forfeited-loan list is the warmest audience in pawn: people who already borrowed against goods at your counter and lost them. It is one Bravo report away from live, and has been for ten weeks.</p>
+  </div>
+
+  <div class="finding sev2">
+    <span class="rank">Pattern 05</span>
+    <h3>Your single best asset is being generated and then discarded.</h3>
+    <p>Four stores generated <strong>21 new Google reviews in one week</strong>. That is excellent for a 5-store chain and it is the strongest local-search signal you own. It appears nowhere: zero <code>aggregateRating</code> markup sitewide, zero embedded reviews on any location or money page — while the homepage claims <em>"Average 4.9 Stars Across All Locations"</em> with no count, no source, and no markup. To Google and to AI answer engines that reads as an unsubstantiated claim.</p>
+    <p>Worse, the auto-responder is filtered to 4–5★ only. That is the mechanical reason <strong>two 1-star Culpeper reviews alleging gold lowballing sat unanswered for two weeks</strong> — in the market where you otherwise dominate, while the brand ran gold-buy content. Culpeper also produced 0 review requests the week the other four produced 21.</p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">04 — The Biggest Single Number</span>eBay: three stores are starved of the thing that sells.</h2>
+
+  <div class="tw">
+  <table>
+    <thead><tr><th>Store</th><th class="n">Active</th><th class="n">Sold 90d</th><th class="n">Revenue 90d</th><th class="n">Rev / listing</th><th class="n">Median days to sell</th></tr></thead>
+    <tbody>
+      <tr><td>Lexington</td><td class="n">27</td><td class="n">60</td><td class="n">$11,703</td><td class="n pos">$433</td><td class="n">8</td></tr>
+      <tr><td>Waynesboro</td><td class="n">39</td><td class="n">68</td><td class="n">$14,071</td><td class="n pos">$361</td><td class="n">6</td></tr>
+      <tr><td>Harrisonburg</td><td class="n">35</td><td class="n">63</td><td class="n">$12,579</td><td class="n pos">$359</td><td class="n">2</td></tr>
+      <tr><td>Roanoke</td><td class="n">106</td><td class="n">138</td><td class="n">$18,384</td><td class="n">$173</td><td class="n">8</td></tr>
+      <tr><td>Culpeper</td><td class="n">307</td><td class="n">226</td><td class="n">$25,328</td><td class="n neg">$82</td><td class="n">14</td></tr>
+      <tr class="tot"><td>Channel</td><td class="n">514</td><td class="n">555</td><td class="n">$82,064</td><td class="n">$160</td><td class="n">8</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>Lexington converts 27 listings into $433 each. Culpeper converts 307 into $82 each. The demand at the small stores is proven and unfed — and total listings have moved the wrong way since June, 616 → 514.</p>
+
+  <p>Bringing Harrisonburg, Lexington and Waynesboro up to Roanoke's depth (~100 active each, +217 listings) at <em>Roanoke's</em> per-listing yield — the most conservative comparable, already discounted for depth — is <strong>+$150K/yr gross, ~$129K net of the measured 13.9% fee rate</strong>. Halve it again for caution and it is still the largest number in this audit.</p>
+
+  <p>Two free levers are also completely unpulled: <strong>514 of 514 active listings have zero item specifics and zero description</strong> — the primary Cassini ranking input, which your own operating manual calls "the #1 silent reason good items don't get seen." And <strong>207 listings (40%, $27,255 of list value) are past the hard 90-day pull gate</strong>, 99 of them past 180 days, against a channel median days-to-sell of 8.</p>
+</section>
+
+<section>
+  <h2><span class="num">05 — Do This</span>Ranked by revenue impact, not by effort.</h2>
+
+  <h3>Next 30 days — the fixes that pay for themselves</h3>
+  <div class="tw">
+  <table class="actions">
+    <thead><tr><th>#</th><th>Action</th><th class="n">Effort</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>Set a 100-listing floor per store on eBay for Harrisonburg, Lexington, Waynesboro.</strong><span class="why">Publish listings-added-per-store weekly next to sales. Worth $75K–150K/yr gross on proven per-store yield. Largest number on the board.</span></td><td class="n"><span class="pill p-m">M</span></td></tr>
+      <tr><td>2</td><td><strong>Repoint Harrisonburg to the canonical Facebook page; stand up the real Roanoke page.</strong><span class="why">Redirects ~94 posts/quarter from dead targets to real audiences. Harrisonburg already has the network's best median reach on the wrong page.</span></td><td class="n"><span class="pill p-s">S</span></td></tr>
+      <tr><td>3</td><td><strong>Put Call / Text / Directions on every page — sticky mobile bar plus a real footer NAP block.</strong><span class="why">Homepage and <code>/loans/</code> currently have zero phone links; the footer's only contact is Joshua's personal email as unlinked plain text. <code>/retail/</code> already proves the pattern works.</span></td><td class="n"><span class="pill p-s">S</span></td></tr>
+      <tr><td>4</td><td><strong>Switch email from list-wide blasts to per-store Store Spotlight sends.</strong><span class="why">The five store segments were built 22 Jul and have never been used once. Measured 250 vs 1.42 calls per 1,000. Also stage 12 weeks of drafts — the calendar runs dry 3 Sep, right before Christmas Layaway.</span></td><td class="n"><span class="pill p-s">S</span></td></tr>
+      <tr><td>5</td><td><strong>Fix the <code>dayOfWeek</code> JSON-LD bug on the five gold pages.</strong><span class="why">A quoting error is hiding LocalBusiness and FAQ markup on the highest-margin intake pages. <code>sell-gold-roanoke</code> currently ranks 8th of 8, behind six gold specialists. Twenty-minute fix.</span></td><td class="n"><span class="pill p-s">S</span></td></tr>
+      <tr><td>6</td><td><strong>Delete one of the two SPF records; finish authenticating <code>thevalleypawn.com</code>.</strong><span class="why">SPF is a hard PermError today — it does not pass for anyone. Then point DMARC <code>rua=</code> at a mailbox someone here reads instead of Brevo's.</span></td><td class="n"><span class="pill p-s">S</span></td></tr>
+      <tr><td>7</td><td><strong>Fix Lexington's 4.23% late-shipment rate before the 20 Sep re-evaluation.</strong><span class="why">Below Standard status has cost $494.69 in penalty fees in three months (~$1,979/yr). Buy every label through eBay, enforce next-day handling. Pure margin, hard deadline.</span></td><td class="n"><span class="pill p-s">S</span></td></tr>
+      <tr><td>8</td><td><strong>Turn on Promoted Listings at the four stores running $0.</strong><span class="why">The only channel where attribution is native — eBay charges only on an ad-attributed sale, so it cannot be spent unprofitably. Culpeper is the control at $251/3mo.</span></td><td class="n"><span class="pill p-s">S</span></td></tr>
+      <tr><td>9</td><td><strong>Alert a human on any review ≤3★ within 24 hours.</strong><span class="why">The auto-responder's 4–5★ filter is why two 1-star gold-lowballing reviews sat unanswered. Also diagnose Culpeper's zero review requests that week.</span></td><td class="n"><span class="pill p-s">S</span></td></tr>
+      <tr><td>10</td><td><strong>Delete the 2021 boosted "Need Money? We Can Help!" ad on the Brand page.</strong><span class="why">Still live. 35 comments, visible ones read "Gross", "Major rip off", "Yuk.!" It is the only paid Meta asset the company owns. Five minutes.</span></td><td class="n"><span class="pill p-s">S</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Days 30–90 — build the compounding assets</h3>
+  <div class="tw">
+  <table class="actions">
+    <thead><tr><th>#</th><th>Action</th><th class="n">Effort</th></tr></thead>
+    <tbody>
+      <tr><td>11</td><td><strong>Publish the review asset.</strong><span class="why">Add <code>aggregateRating</code> to every store entity, embed 5–8 real Google reviews on each location and money page, restate the homepage claim as "4.9 across N reviews." 21 reviews/week is a best-in-market signal producing zero SERP stars today.</span></td><td class="n"><span class="pill p-m">M</span></td></tr>
+      <tr><td>12</td><td><strong>Rebuild the five location pages from ~210 words to 700+.</strong><span class="why">Map embed, reviews, store FAQ, FFL, staff, Call/Text above the fold. Harrisonburg and Roanoke first — those are the two markets you are losing. Then noindex the five duplicate link-in-bio pages competing with them.</span></td><td class="n"><span class="pill p-m">M</span></td></tr>
+      <tr><td>13</td><td><strong>Backfill eBay item specifics on the 200 highest-value listings.</strong><span class="why">Currently 0 of 514. Free ranking input. Start with the six categories holding 39% of catalog value.</span></td><td class="n"><span class="pill p-m">M</span></td></tr>
+      <tr><td>14</td><td><strong>Execute the 90-day aged-listing gate on the existing 207 items.</strong><span class="why">$27,255 of dead list value, Culpeper 147 of it. Send the Gusto policy that has sat unsent since 4 Jul with zero recipients, then fix the markdown engine's missing "pull" step.</span></td><td class="n"><span class="pill p-m">M</span></td></tr>
+      <tr><td>15</td><td><strong>Instrument Google Business Profile outside Publer.</strong><span class="why">Pull the GBP Performance API weekly for all 5 locations — call clicks, direction requests, website clicks. First walk-in-correlated metric you will ever have. Resolve the GBP admin account access as part of this.</span></td><td class="n"><span class="pill p-m">M</span></td></tr>
+      <tr><td>16</td><td><strong>Activate the forfeited-loan win-back.</strong><span class="why">Finish the one Bravo report, import to list 11, ship the copy that has been finished since 15 Jun. Warmest audience in the business, zero new creative cost.</span></td><td class="n"><span class="pill p-m">M</span></td></tr>
+      <tr><td>17</td><td><strong>Lay the measurement floor before spending a paid dollar.</strong><span class="why">Meta Pixel + CAPI, Google Ads <code>AW-</code> tag, <code>sms_click</code> and <code>form_submit</code> events, store-tagged UTMs on every Publer / Brevo / GBP link, and a "how did you hear about us" capture as the join key to Bravo. Without this, every future ad dollar is unevaluable.</span></td><td class="n"><span class="pill p-m">M</span></td></tr>
+      <tr><td>18</td><td><strong>Ship one "What's my item worth" lead form.</strong><span class="why">The site has zero forms. Competitors outranking you in Roanoke and Harrisonburg both capture leads. Route by store, fire a conversion event.</span></td><td class="n"><span class="pill p-l">L</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Stop doing</h3>
+  <ul class="tight">
+    <li><strong>The blog as a social slot</strong> — 24 posts, 19 total reach, max 3, zero engagement.</li>
+    <li><strong>X/Twitter</strong> — 25 posts, 40 total reach, 9 engagements, all quarter.</li>
+    <li><strong>Publishing without a caption</strong> — 252 of 554 posts have none; 220 of those came from staff posting natively instead of through Publer.</li>
+    <li><strong>Trusting the Friday optimisation loop</strong> — its "warranty" classifier matches the brand tagline in every post footer. Eight consecutive weeks of <code>+5% warranty</code> steers were an artifact of a regex, computed on n=8. Fix the classifier and audit <code>heritage</code>, <code>value</code>, <code>team</code> for the same collision before feeding it anything new.</li>
+    <li><strong>Reporting email clicks from <code>uniqueClicks</code></strong> — one campaign reports 118 clicks on 174 delivered while its own link stats sum to 10. Report from <code>linksStats</code> only.</li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="num">06 — What Nobody Can Currently Answer</span>Three unknowns worth closing.</h2>
+  <ul class="tight">
+    <li><strong>Is eBay profitable?</strong> Unanswerable. No cost basis exists in any eBay dataset; <code>fvf</code> is null on all 555 sold records. Nothing joins an eBay item to its Bravo cost. Blocked on the SoldComps API key.</li>
+    <li><strong>Where did ~2,000 email contacts come from?</strong> The list grew from 11,237 to 13,226 in 21 days with no recorded consent source. The only structured opt-in in the account is the $100 giveaway — 82 contacts. A double-opt-in template exists and no signup flow uses it. Resolve before the next full-list send.</li>
+    <li><strong>What is the true suppression volume?</strong> Brevo's list-level bounce and blacklist counters return 0 across every list and are known-stale. A 9.57% hard-bounce send happened in March and complaint rates have touched 0.356% — above Gmail's enforcement line.</li>
+  </ul>
+</section>
+
+<footer class="end">
+  VALLEY PAWN MARKETING CHANNEL AUDIT · 22 AUGUST 2026<br>
+  Evidence: Publer API 554 posts / 485 with insights (24 May – 22 Aug) · Brevo API 41 campaigns, 10 lists, 7 templates ·
+  eBay API 555 sold + 514 active · live crawl of thevalleypawn.com (108 URLs) · QBO P&amp;L YTD + FY2025 detail ·
+  Valley Pawn OS CHANGELOG · project folders: Refine Social Media, Email Refinement, Website, eBay, Gold and Silver Marketing.<br>
+  All figures computed from source data. Where a number does not exist, that absence is recorded as a finding.
+</footer>
+
+</div>

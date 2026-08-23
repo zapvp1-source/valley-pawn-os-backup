@@ -286,6 +286,11 @@ def publish_item(p: PublerClient, item: dict, dry_run: bool = False) -> dict:
         return {"id": item_id, "error": "QA gate failed — refusing to publish: " + "; ".join(problems)}
 
     image_url = item.get("image_url")
+    # ADDITIVE 2026-08-22 (vp-engagement-weekly): allow manifests to carry Publer
+    # media library ids from PublerClient.upload_media(), so image posts no longer
+    # need a public image host AND no longer need to bypass this hardened path with
+    # a one-off schedule_post() call. Absent key = exactly the previous behaviour.
+    media_ids = item.get("media_ids")
     video_url = item.get("video_url")
     scheduled_at = item.get("scheduled_at")
     # Publer wants ISO 8601 with timezone. If naive, treat as UTC.
@@ -302,6 +307,7 @@ def publish_item(p: PublerClient, item: dict, dry_run: bool = False) -> dict:
             "scheduled_at": scheduled_at,
             "immediate": immediate,
             "caption_preview": caption[:80],
+            "media_ids": media_ids,
         }
 
     try:
@@ -310,6 +316,7 @@ def publish_item(p: PublerClient, item: dict, dry_run: bool = False) -> dict:
             store_keys=store_keys,
             scheduled_at=scheduled_at,
             image_urls=[image_url] if image_url else None,
+            media_ids=media_ids or None,
             video_url=video_url,
             immediate=immediate,
         )

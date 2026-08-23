@@ -1,0 +1,223 @@
+<title>Online Store Audit</title>
+<style>
+:root{
+  --bg:#faf8f5; --panel:#ffffff; --ink:#1b1815; --ink-2:#4a443d; --ink-3:#7d746a;
+  --line:#e3ddd3; --line-2:#cfc6b8;
+  --gold:#a8791f; --gold-soft:#f4ead6;
+  --red:#a12f26; --red-soft:#fbeae8;
+  --amber:#8a6410; --amber-soft:#fdf3dd;
+  --green:#2c6446; --green-soft:#e6f1ea;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141210; --panel:#1d1a17; --ink:#f2ece3; --ink-2:#c5bcaf; --ink-3:#8d8478;
+  --line:#2e2a25; --line-2:#403a33;
+  --gold:#d9a94a; --gold-soft:#2a2115;
+  --red:#e07a6d; --red-soft:#2e1a17;
+  --amber:#d9a94a; --amber-soft:#2a2115;
+  --green:#6fb98c; --green-soft:#16261d;
+}}
+:root[data-theme="dark"]{
+  --bg:#141210; --panel:#1d1a17; --ink:#f2ece3; --ink-2:#c5bcaf; --ink-3:#8d8478;
+  --line:#2e2a25; --line-2:#403a33;
+  --gold:#d9a94a; --gold-soft:#2a2115;
+  --red:#e07a6d; --red-soft:#2e1a17;
+  --amber:#d9a94a; --amber-soft:#2a2115;
+  --green:#6fb98c; --green-soft:#16261d;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:900px;margin:0 auto;padding:56px 24px 96px}
+header{border-bottom:3px solid var(--ink);padding-bottom:22px;margin-bottom:40px}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin:0 0 10px}
+h1{font-size:clamp(30px,5vw,44px);line-height:1.1;margin:0 0 12px;letter-spacing:-.02em}
+.sub{color:var(--ink-2);margin:0;font-size:18px}
+h2{font-size:26px;margin:56px 0 6px;letter-spacing:-.01em;padding-top:20px;border-top:1px solid var(--line)}
+h2:first-of-type{border-top:none;padding-top:0}
+h3{font-size:19px;margin:32px 0 6px}
+p{margin:0 0 14px;color:var(--ink-2)}
+strong{color:var(--ink);font-weight:600}
+.lede{font-size:19px;color:var(--ink)}
+.scoreboard{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:28px 0 8px}
+.cell{background:var(--panel);padding:16px 14px}
+.cell .n{font-family:var(--mono);font-size:24px;font-weight:600;color:var(--ink);display:block;line-height:1.2}
+.cell .l{font-size:12px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em;margin-top:5px;display:block}
+.finding{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--line-2);padding:20px 22px;margin:22px 0}
+.finding.sev1{border-left-color:var(--red)}
+.finding.sev2{border-left-color:var(--amber)}
+.finding.sev3{border-left-color:var(--gold)}
+.finding h3{margin-top:0;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.rank{font-family:var(--mono);font-size:12px;color:var(--ink-3);border:1px solid var(--line-2);padding:2px 7px;border-radius:3px;flex:none}
+.tag{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:3px;white-space:nowrap}
+.t-red{background:var(--red-soft);color:var(--red)}
+.t-amber{background:var(--amber-soft);color:var(--amber)}
+.t-green{background:var(--green-soft);color:var(--green)}
+.t-gold{background:var(--gold-soft);color:var(--gold)}
+.finding p:last-child{margin-bottom:0}
+.fix{margin-top:14px;padding-top:13px;border-top:1px dashed var(--line-2);font-size:16px}
+.fix b{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:4px}
+.scroll{overflow-x:auto;margin:20px 0;border:1px solid var(--line);background:var(--panel)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:15px}
+th,td{padding:10px 13px;text-align:left;border-bottom:1px solid var(--line)}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:500;background:var(--bg)}
+td{color:var(--ink-2)}
+td:first-child{color:var(--ink);font-weight:600}
+tbody tr:last-child td{border-bottom:none}
+.num{font-family:var(--mono);text-align:right}
+.win{color:var(--green);font-weight:600}
+.bad{color:var(--red);font-weight:600}
+ul{margin:0 0 14px;padding-left:22px;color:var(--ink-2)}
+li{margin-bottom:7px}
+.plan{border:1px solid var(--line);background:var(--panel);margin:20px 0}
+.plan-row{display:grid;grid-template-columns:100px 1fr;gap:0;border-bottom:1px solid var(--line)}
+.plan-row:last-child{border-bottom:none}
+.plan-when{background:var(--bg);padding:16px 14px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);border-right:1px solid var(--line)}
+.plan-what{padding:16px 18px}
+.plan-what ul{margin:0;padding-left:20px}
+.plan-what li:last-child{margin-bottom:0}
+.note{background:var(--gold-soft);border:1px solid var(--line-2);padding:16px 18px;margin:24px 0;font-size:15px;color:var(--ink-2)}
+.note b{color:var(--ink)}
+footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-3)}
+@media(max-width:560px){
+  body{font-size:16px}
+  .wrap{padding:36px 16px 70px}
+  .plan-row{grid-template-columns:1fr}
+  .plan-when{border-right:none;border-bottom:1px solid var(--line);padding:11px 14px}
+}
+</style>
+
+<div class="wrap">
+<header>
+  <p class="kicker">Full Circle Finance Inc · Valley Pawn · 22 Aug 2026</p>
+  <h1>Online Store Audit</h1>
+  <p class="sub">All 514 live eBay listings across 5 stores, 555 sales from the last 90 days, and thevalleypawn.com — pulled live from the eBay Trading API and the site itself.</p>
+</header>
+
+<p class="lede">The online channel is doing <strong>$82,064 every 90 days</strong> — about <strong>$328K/year</strong>. It is also badly misallocated, running with the brakes on at its best-performing store, and leaking its highest-margin path entirely.</p>
+
+<p>Three things are true at once: the machine works, the inventory is in the wrong place, and the settings are costing money on every single order. Nothing here needs new software. Almost all of it is configuration and where product gets pointed.</p>
+
+<div class="scoreboard">
+  <div class="cell"><span class="n">$82,064</span><span class="l">90-day revenue</span></div>
+  <div class="cell"><span class="n">514</span><span class="l">Active listings</span></div>
+  <div class="cell"><span class="n">555</span><span class="l">Orders / 90d</span></div>
+  <div class="cell"><span class="n">$83,441</span><span class="l">Listed retail value</span></div>
+  <div class="cell"><span class="n">0</span><span class="l">Website orders, ever</span></div>
+</div>
+
+<h2>The five findings that matter</h2>
+
+<div class="finding sev1">
+<h3><span class="rank">01</span> Culpeper holds 60% of the inventory and produces 31% of the revenue <span class="tag t-red">Biggest single lever</span></h3>
+<p>Revenue per active listing over 90 days: <strong>Lexington $433</strong>, Waynesboro $361, Harrisonburg $359, Roanoke $173, <strong>Culpeper $82</strong>. Lexington earns <strong>5.2× per listing</strong> what Culpeper does — and has 27 listings live against Culpeper's 307.</p>
+<p>Waynesboro, Harrisonburg and Lexington together hold <strong>20% of the listings and generate 47% of the revenue</strong>. Their sell-through is 64–69% per quarter; Culpeper's is 42%. These three stores are not demand-constrained, they are supply-constrained — they are selling nearly everything they put up and then running out.</p>
+<div class="fix"><b>Fix</b>Stop treating listing volume as a Culpeper activity. Set a floor of 100 active listings per store and route aged Bravo stock from every location to the store account that actually turns it. At even half their current revenue-per-listing, filling WAY/HAR/LEX to 100 each is on the order of <strong>+$38K per quarter</strong>.</div>
+</div>
+
+<div class="finding sev1">
+<h3><span class="rank">02</span> Lexington is still Below Standard — and eBay has paused its ads <span class="tag t-red">Verified live today</span></h3>
+<p>The Aug 20 evaluation did <strong>not</strong> clear it. Seller Hub right now reads <em>Current seller level: Below Standard</em>, next evaluation <strong>Sep 20</strong>. Late shipment rate <strong>4.23%</strong> against a 3% ceiling; 2 transaction defects; 2 cases closed without resolution. Tracking upload is a clean 100% — this is purely a ship-speed problem.</p>
+<p>The consequence is worse than the fee penalty. The Advertising dashboard carries an explicit banner: <em>"your advertising campaigns have been paused."</em> Promoted Listings for the last 31 days: <strong>0 clicks, $0 sales, $0 ad spend.</strong> Listing views are down 22.1% period over period. The store with the best sell-through in the company has its visibility engine switched off.</p>
+<p>Also sitting there: <strong>528 unread Seller Hub messages</strong> and <strong>26 items ended and never relisted</strong> — against 27 active. Half of Lexington's potential inventory is dead on the floor.</p>
+<div class="fix"><b>Fix</b>Between now and Sep 20, Lexington ships same-day with the label bought through eBay, every time — that is the only metric standing between it and Above Standard. Then relist the 26 unsold items and turn Promoted Listings back on. This one store is the highest-ROI fix in the audit.</div>
+</div>
+
+<div class="finding sev2">
+<h3><span class="rank">03</span> Not one of the 514 listings qualifies for Top Rated Plus <span class="tag t-amber">~$4K/yr in fees</span></h3>
+<p>Top Rated Plus requires same-day or 1-business-day handling <em>and</em> 30-day free returns. Live settings across the whole estate:</p>
+<ul>
+<li><strong>Handling time is 2 days</strong> at four stores and <strong>3 days</strong> at Roanoke. Never 1.</li>
+<li><strong>Return shipping is buyer-paid on every single listing</strong> that accepts returns.</li>
+<li><strong>Roanoke runs 14-day returns</strong> on 103 of its 106 listings — the only store not on 30-day, and out of step with the 30-day warranty the brand promises everywhere else.</li>
+<li><strong>45 listings accept no returns at all</strong> (40 Culpeper, 3 Roanoke, 1 each Harrisonburg/Lexington). Those are actively downranked by eBay.</li>
+</ul>
+<p>The Top Rated Plus badge carries a ~10% cut on the final value fee plus a search boost. On $328K a year that discount alone is roughly <strong>$4,300</strong> — before counting the ranking lift, which is worth more.</p>
+<div class="fix"><b>Fix</b>Three bulk revisions, one afternoon: handling time to 1 day everywhere, Roanoke's 14-day returns to 30-day, and free 30-day returns on everything under ~3 lbs where the return-shipping risk is small. Fix the 45 no-return listings in the same pass.</div>
+</div>
+
+<div class="finding sev2">
+<h3><span class="rank">04</span> Listing quality is below the standard we already wrote down <span class="tag t-amber">Free to fix</span></h3>
+<p>Measured against Valley Pawn's own eBay listing standard (8–12 photos, all item specifics, full 80-character titles), across all 514 active listings and a 125-listing deep sample:</p>
+<div class="scroll"><table>
+<thead><tr><th>Check</th><th class="num">Result</th><th>Standard</th></tr></thead>
+<tbody>
+<tr><td>Photos</td><td class="num bad">71% under 8 photos<br>19% under 4</td><td>8–12 min. eBay allows 24 free</td></tr>
+<tr><td>Item specifics</td><td class="num bad">median 4<br>54% under 5</td><td>Every specific the category offers</td></tr>
+<tr><td>Title length</td><td class="num">median 68 / 80<br>58% under 70</td><td>Use all 80 characters</td></tr>
+<tr><td>Best Offer</td><td class="num bad">OFF on 193 of 307<br>Culpeper listings</td><td>On for most fixed-price</td></tr>
+<tr><td>Trust block in description</td><td class="num">missing on ~18%<br>(HAR & ROA worst)</td><td>Every listing</td></tr>
+<tr><td>eBay store categories</td><td class="num">unset on 40%+ at<br>HAR, LEX, ROA</td><td>All listings</td></tr>
+</tbody></table></div>
+<p>Item specifics are the quiet one. Cassini matches on them, and the median listing has four. Brand is filled on 78% of the sample; Colour, Type and Features are mostly blank. Good items are invisible in filtered search.</p>
+<div class="fix"><b>Fix</b>The weekly quality task already catches titles and categories on <em>new</em> listings. Extend it to sweep the existing 514 for photo count and item specifics, and add a hard gate at listing time: no listing publishes under 8 photos with the category's required specifics filled. Turn Best Offer on across Culpeper.</div>
+</div>
+
+<div class="finding sev3">
+<h3><span class="rank">05</span> The highest-margin sales channel has one item in it <span class="tag t-gold">Structural</span></h3>
+<p>thevalleypawn.com pulled <strong>10,051 views from 4,759 visitors</strong> in the last 90 days. The site has WooCommerce and WooPayments live, a working cart and checkout, and a Shop-in-Store page for buy-online/pickup-in-store. That page currently holds <strong>one product</strong> — a $2,099 Warwick bass at Harrisonburg, posted 23 July. It is the only product on the site. There have been <strong>zero website orders, ever</strong>.</p>
+<p>The sync automation is not broken — I checked its logs, it ran cleanly at 10:11 and 16:44 today. It has nothing to sync because the stores aren't posting items to <span style="font-family:var(--mono);font-size:14px">#in-store-inventory</span>. One item in a month.</p>
+<p>Meanwhile the main Shop page routes all 504 items straight to eBay, where roughly 13% comes off the top in fees. Every sale we could have taken on our own checkout at full margin, we hand to eBay instead.</p>
+<div class="fix"><b>Fix</b>This is a people problem with a working pipeline behind it. Give each store a weekly quota — 5 items into <span style="font-family:var(--mono);font-size:14px">#in-store-inventory</span>, highest-ticket first — and the site becomes a real 25-item/week store with no fee drag. The plumbing is already paid for and running.</div>
+</div>
+
+<h2>Store by store</h2>
+<div class="scroll"><table>
+<thead><tr><th>Store</th><th class="num">Active</th><th class="num">Sold 90d</th><th class="num">Rev 90d</th><th class="num">Rev / listing</th><th class="num">Sell-through</th><th class="num">Avg sale</th><th class="num">&gt;180d old</th></tr></thead>
+<tbody>
+<tr><td>Lexington</td><td class="num">27</td><td class="num">60</td><td class="num">$11,703</td><td class="num win">$433</td><td class="num win">69.0%</td><td class="num">$195</td><td class="num">7</td></tr>
+<tr><td>Waynesboro</td><td class="num">39</td><td class="num">68</td><td class="num">$14,071</td><td class="num win">$361</td><td class="num">63.6%</td><td class="num">$207</td><td class="num win">0</td></tr>
+<tr><td>Harrisonburg</td><td class="num">35</td><td class="num">63</td><td class="num">$12,579</td><td class="num win">$359</td><td class="num">64.3%</td><td class="num">$200</td><td class="num">8</td></tr>
+<tr><td>Roanoke</td><td class="num">106</td><td class="num">138</td><td class="num">$18,384</td><td class="num">$173</td><td class="num">56.6%</td><td class="num">$133</td><td class="num">21</td></tr>
+<tr><td>Culpeper</td><td class="num">307</td><td class="num">226</td><td class="num">$25,328</td><td class="num bad">$82</td><td class="num bad">42.4%</td><td class="num">$112</td><td class="num bad">63</td></tr>
+</tbody></table></div>
+<p style="font-size:15px;color:var(--ink-3)">Waynesboro is the cleanest operation in the company: zero listings over 90 days old, everything on 30-day returns, Best Offer on everything. It just has 39 items.</p>
+
+<h2>Aged inventory</h2>
+<p><strong>207 listings (40%) have been live more than 90 days. 99 (19%) more than 180. 27 more than a year</strong> — carrying $10,959 of listed value that isn't moving. Culpeper owns 63 of the over-180s.</p>
+<p>There is already an eBay Listing-Age Standard on the books as a signed company policy. It is not being enforced against the live estate — an item sitting 400 days at an unchanged price is not a pricing decision, it's an absence of one.</p>
+
+<h2>Website: what's actually wrong</h2>
+<ul>
+<li><strong>The /shop/ page has no H1 and no meta description.</strong> 504 products, one URL, no <span style="font-family:var(--mono);font-size:14px">Product</span> or <span style="font-family:var(--mono);font-size:14px">ItemList</span> structured data — so it is ineligible for Google product rich results and free Shopping listings. The Organization, PawnShop and FAQ schema are all in place; product schema is the one that's missing.</li>
+<li><strong>Page weight and speed.</strong> 504 cards and 511 images on a single page; full load measured at 5.6 seconds. Pagination or lazy-rendering below the first 60 cards would cut that hard.</li>
+<li><strong>Blog cannibalisation.</strong> 46 posts, and at least a dozen are near-duplicate pairs competing for the same query — "build an emergency fund" three times, "pawn loans vs payday loans" twice, "pawn shop myths" twice, "buying pre-owned power tools" twice, "selling silver" twice. The default <span style="font-family:var(--mono);font-size:14px">hello-world</span> post is still published.</li>
+<li><strong>Duplicate location pages.</strong> Two full sets exist — pages 419–423 and 749–753 — for the same five towns. Local SEO splits between them.</li>
+<li><strong>Good news:</strong> the nightly eBay feed is healthy (page refreshed today), and every outbound eBay link now carries campaign parameters, so click attribution is wired — that gap from the July review is closed.</li>
+</ul>
+
+<h2>What I'd do, in order</h2>
+<div class="plan">
+<div class="plan-row"><div class="plan-when">This week</div><div class="plan-what"><ul>
+<li><strong>Lexington ships same-day, every day, until Sep 20.</strong> Nothing else on this list matters as much.</li>
+<li>Bulk-revise handling time to 1 day across all 5 stores.</li>
+<li>Roanoke: 14-day returns → 30-day, on all 103 listings.</li>
+<li>Fix the 45 listings that accept no returns.</li>
+<li>Turn Best Offer on for Culpeper's 193 listings that lack it.</li>
+<li>Confirm whether the other four stores' Promoted Listings campaigns are running — I could only verify Lexington's (paused), and that check needs each account's Seller Hub.</li>
+</ul></div></div>
+<div class="plan-row"><div class="plan-when">Next 30 days</div><div class="plan-what"><ul>
+<li>Photo + item-specifics sweep on the 367 listings under 8 photos; gate new listings at 8 photos and full specifics.</li>
+<li>Relist Lexington's 26 unsold items; audit the same number at every other store.</li>
+<li>Enforce the Listing-Age Standard: markdown or pull the 99 listings over 180 days.</li>
+<li>Weekly quota of 5 items per store into <span style="font-family:var(--mono);font-size:14px">#in-store-inventory</span> — the website store is built and idle.</li>
+<li>Clear the Seller Hub message backlogs. Response time is a ranked metric.</li>
+</ul></div></div>
+<div class="plan-row"><div class="plan-when">60–90 days</div><div class="plan-what"><ul>
+<li><strong>Rebalance inventory to 100+ active listings each at Waynesboro, Harrisonburg and Lexington.</strong> This is the money.</li>
+<li>Add Product/ItemList structured data to /shop/ and give it an H1 and meta description.</li>
+<li>Consolidate the duplicate blog posts and duplicate location pages; 301 the losers.</li>
+<li>Put SKUs on listings. All 514 are missing them, which is why nothing reconciles back to Bravo automatically and why double-sell risk is manual.</li>
+<li>Expand the eBay app's OAuth scopes — Marketing, Analytics and Seller Standards all return 403 today, so Promoted Listings and traffic data can't be automated.</li>
+</ul></div></div>
+</div>
+
+<div class="note">
+<b>What I verified, and what I didn't.</b> Every number above came from a live pull today: the eBay Trading API against all five store accounts (514 active listings, 555 sold transactions, plus a 125-listing deep detail sample), Lexington's Seller Hub read directly in the browser, and thevalleypawn.com inspected in-page. <b>Not verified:</b> seller level and Promoted Listings status for Culpeper, Waynesboro, Harrisonburg and Roanoke — those require signing into each account's Seller Hub separately, and eBay's REST endpoints for seller standards return 403 on our current OAuth scopes. Treat the Lexington ad-pause as confirmed and the other four as unknown until checked.
+</div>
+
+<footer>Prepared for Joshua Davis · Full Circle Finance Inc DBA Valley Pawn · data pulled 22 August 2026</footer>
+</div>

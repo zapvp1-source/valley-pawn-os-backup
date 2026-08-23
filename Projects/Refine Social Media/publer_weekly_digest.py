@@ -38,24 +38,122 @@ ADJ_LOG = ROOT / "adjustments_log.jsonl"
 STUDIO_OUT = Path.home() / "Documents/Claude/Projects/Valley Pawn Studios/output"
 LESSONS = Path.home() / ".vp-studio/lessons.md"
 
+# ---------------------------------------------------------------------------
+# FIXED 2026-08-22 -- signal threshold is now PER ACCOUNT, not corpus-wide.
+# The 8/21 digest emitted "+5% warranty next batch" off n=8 posts total. An
+# account contributes to the top/bottom ranking that drives the mix adjustment
+# only if it published at least MIN_POSTS_FOR_SIGNAL posts in the window; and
+# the winning theme must itself have MIN_THEME_POSTS posts behind it. Posts from
+# thin accounts are still REPORTED, they just don't get to steer the batch.
+# Override with env VP_MIN_POSTS_FOR_SIGNAL / VP_MIN_THEME_POSTS.
+# ---------------------------------------------------------------------------
+import os  # noqa: E402
+MIN_POSTS_FOR_SIGNAL = int(os.environ.get("VP_MIN_POSTS_FOR_SIGNAL", "10"))
+MIN_THEME_POSTS = int(os.environ.get("VP_MIN_THEME_POSTS", "3"))
+
+# ---------------------------------------------------------------------------
+# FIXED 2026-08-22 -- BOILERPLATE COLLISION IN THE THEME CLASSIFIER.
+#
+# The old patterns matched sitewide boilerplate that rides in the footer of
+# nearly every post and carries ZERO thematic signal. Measured against the real
+# 90-day corpus (audit_2026-08-22/publer_90day_raw.json, 246 posts with text):
+#
+#   warranty   103 -> 13 posts (8 unique content pieces). The old regex was
+#              `warranty|what'?s right is right`. "What's Right Is Right" is the
+#              BRAND TAGLINE and "30-day warranty" is the stock product-post
+#              adjunct, so 103 posts were labelled `warranty` when only ~8 are
+#              actually ABOUT the warranty. This single artifact produced eight
+#              consecutive weeks of "+5% warranty next batch" in
+#              adjustments_log.jsonl (7/12 -> 8/21). Those entries are VOID --
+#              see adjustments_log_README.md.
+#   heritage     5 -> 1. `since 20` matched the footer "since 2014"; `five
+#              stores` matched "five stores across the Valley"; `shenandoah`
+#              matched "five Shenandoah Valley stores". All three are footer
+#              boilerplate. Every single old `heritage` hit was an artifact.
+#   community   24 -> 10. NEWLY FOUND collision (not in the original bug
+#              report): `walker street` and `davis street` are Valley Pawn's OWN
+#              store addresses ("125 Walker Street, Lexington"), so every
+#              Lexington post carrying its address was labelled `community`.
+#              Also dropped bare `trail` and `harvest` (match product copy).
+#   value       12 -> 19. `\$\d{2,}` matched ANY price, i.e. every product post.
+#              Replaced with explicit price-COMPARISON phrasing.
+#   team         0 -> 4.  `meet ` and `our team` matched product copy such as
+#              "Our Harrisonburg team has a Godin LGXT ... on the floor".
+#   mobile-app  `\bapp\b|download` -> requires an actual app-store reference.
+#
+# Themes with no pattern at all (hiring, layaway, giveaway, birthstone,
+# holiday) were added -- `birthstone` was already referenced by
+# build_adjustment()'s cap table, proving it was always meant to exist.
+# ---------------------------------------------------------------------------
+
+# Sitewide boilerplate. Stripped BEFORE classification so it can never vote.
+BOILERPLATE_RE = [re.compile(p, re.I) for p in (
+    r"what'?s right is right",
+    r"\b(?:backed by|covered by|comes with|and it'?s covered by|includes?|protected by)\s+(?:our|its|the|a)?\s*(?:standard\s+)?30[-\s]?day warrant(?:y|ies)\b",
+    r"\b30[-\s]?day warrant(?:y|ies)\b(?:\s*(?:on |like )?(?:everything|every item)(?: we sell)?|\s*(?:included|incl\.?))?",
+    r"\bfree layaway\b",
+    r"\bfamily[-\s]?owned\b",
+    r"\bsince 20\d{2}\b",
+    r"\b(?:five|5)\s+(?:shenandoah valley\s+)?(?:stores|locations)\b",
+    r"\ball\s+(?:five|5)\s+(?:valley pawn\s+)?locations\b",
+    r"\bshenandoah valley\b",
+    r"\bin the (?:shenandoah )?valley\b",
+    r"[\U0001F4CD]\s*[^\n]*",                      # trailing map-pin address lines
+    r"\b\d{2,5}\s+[A-Z][\w.'-]*(?:\s+[A-Z][\w.'-]*)*\s+(?:St|Street|Rd|Road|Hwy|Highway|Blvd|Ave|Avenue)\b[^\n]*",
+    r"\b(?:valley pawn[-\s]*)?(?:culpeper|harrisonburg|lexington|roanoke|waynesboro)\b",
+    r"\bvalley pawn\b",
+)]
+
+
+def strip_boilerplate(t: str) -> str:
+    for rx in BOILERPLATE_RE:
+        t = rx.sub(" ", t)
+    return re.sub(r"\s+", " ", t)
+
+
+# "warranty" counts only when it is the SUBJECT of the post, never the adjunct.
+WARRANTY_WORD_RE = re.compile(r"\bwarrant(?:y|ies)\b", re.I)
+WARRANTY_SUBJECT_RE = re.compile(
+    r"(if it doesn'?t work|bring it back|we stand behind what we sell|"
+    r"money[-\s]?back guarantee|not a slogan|no fine print|store policy|"
+    r"breaks in the first 30 days|buy with a warrant|warrant(?:y|ies) covers|"
+    r"no exceptions)", re.I)
+# A warranty promise stated without ever using the word "warranty".
+WARRANTY_PROMISE_RE = re.compile(r"bring it back", re.I)
+WARRANTY_PROMISE2_RE = re.compile(r"(make it right|no exceptions|30 days)", re.I)
+
 TYPE_PATTERNS = [
-    ("humor", r"guess the year|bingo|still runs|ask your parents|well[, ]+that's a first|it just needs a battery|generations"),
-    ("community", r"parade|farmers market|greenway|trail|skyline drive|blue ridge|mill mountain|jmu|vmi|dukes|friendly city|davis street|walker street|national park|first friday|harvest|apple season"),
-    ("deal", r"deal of the week|this week's deal|new:? \$|ours:? \$"),
-    ("gold", r"gold|silver|scrap|spot price|karat|14k|10k|18k"),
-    ("loan", r"\bloan|collateral|borrow"),
-    ("warranty", r"warranty|what'?s right is right"),
-    ("how-it-works", r"how (pawn|it) works|apprais|our process|transparen"),
-    ("team", r"years with us|our team|meet |shoutout to our"),
-    ("heritage", r"since 20|serving the valley|five stores|shenandoah(?! national)"),
-    ("mobile-app", r"\bapp\b|download"),
-    ("value", r"retail:? \$|new:? \$|ours:? \$|\$\d{2,}"),
-    ("find", r"just walked in|walked in|new arrival|on the wall"),
+    ("humor", r"guess the year|bingo|still runs|ask your parents|well[, ]+that's a first|it just needs a battery|drop your guess"),
+    ("community", r"parade|farmers market|greenway|skyline drive|blue ridge|mill mountain|\bjmu\b|\bvmi\b|dukes|friendly city|national park|first friday|apple season"),
+    ("holiday", r"memorial day|4th of july|fourth of july|independence day|labor day|black friday|christmas|new year|thanksgiving|veterans day"),
+    ("hiring", r"we'?re hiring|now hiring|retail sales associate|join our team|apply (?:today|now)|we'?re growing"),
+    ("giveaway", r"giveaway|giving away|enter free|drop your email|one customer wins|\$100 (?:each|every) month"),
+    ("birthstone", r"birthstone"),
+    ("layaway", r"\blayaway\b"),
+    ("deal", r"deal of the week|this week'?s deal|blowout|storewide|today only|save up to"),
+    ("gold", r"\bgold\b|\bsilver\b|scrap|spot price|karat|\b(?:10|14|18|22|24)k\b"),
+    ("loan", r"\bloan\b|collateral|\bborrow|pawn loan"),
+    ("how-it-works", r"how (?:pawn|it) works|apprais|our process|transparen|we weigh, we test"),
+    ("team", r"years with us|meet (?:our|the) team\b|shoutout to our|team member|employee of the|(?:he|she) (?:manages|runs) the store|ask for (?:him|her)|good person to ask for"),
+    ("heritage", r"serving the valley|our (?:story|history)|generation(?:s|al) (?:of )?family|how pawn shops used to work"),
+    ("mobile-app", r"\bapp store\b|\bgoogle play\b|download (?:the|our) app|\bour app\b"),
+    ("value", r"retail:? \$|new:? \$|ours:? \$|marked down (?:to|from)|\bmsrp\b|\$[\d,]+(?:\.\d+)? (?:off|under)|you save|our price|below what|under the \$|runs \$[\d,]+(?:\.\d+)? new|retail runs"),
+    ("find", r"just walked in|walked in|new arrival|on the wall|on the floor(?: right)? now|just landed|just hit the|new in at|brand new to the shelf|crossed our counter|don'?t come up for sale often|doesn'?t come around every day|fresh inventory"),
 ]
 
 
 def classify(text: str, post_type: str | None) -> str:
-    t = (text or "").lower()
+    raw = text or ""
+    t = strip_boilerplate(raw).lower()
+    rawl = raw.lower()
+
+    has_w = bool(WARRANTY_WORD_RE.search(rawl))
+    n_w = len(WARRANTY_WORD_RE.findall(rawl))
+    if has_w and (WARRANTY_WORD_RE.search(t) or WARRANTY_SUBJECT_RE.search(rawl) or n_w >= 2):
+        return "warranty"
+    if not has_w and WARRANTY_PROMISE_RE.search(rawl) and WARRANTY_PROMISE2_RE.search(rawl):
+        return "warranty"
+
     for label, pat in TYPE_PATTERNS:
         if re.search(pat, t):
             return label
@@ -154,11 +252,26 @@ def collect(p: PublerClient, days: int) -> list[dict]:
     return rows
 
 
-def dominant_type(rows: list[dict]) -> str:
+def dominant_type(rows: list[dict], min_theme_posts: int = 1) -> str:
+    """Most common content_type in `rows`, ignoring the meaningless `other`
+    bucket and any theme with fewer than `min_theme_posts` posts behind it."""
     counts: dict[str, int] = {}
     for r in rows:
+        if r["content_type"] in ("other", "n/a"):
+            continue
         counts[r["content_type"]] = counts.get(r["content_type"], 0) + 1
+    counts = {k: v for k, v in counts.items() if v >= min_theme_posts}
     return max(counts, key=counts.get) if counts else "n/a"
+
+
+def signal_accounts(rows: list[dict]) -> tuple[list[dict], dict[str, int], list[str]]:
+    """Split rows into the ones allowed to steer the batch and the ones that
+    aren't. An account needs >= MIN_POSTS_FOR_SIGNAL posts in the window."""
+    per_account: dict[str, int] = {}
+    for r in rows:
+        per_account[r["account"]] = per_account.get(r["account"], 0) + 1
+    eligible = [a for a, n in per_account.items() if n >= MIN_POSTS_FOR_SIGNAL]
+    return [r for r in rows if r["account"] in eligible], per_account, sorted(eligible)
 
 
 def build_adjustment(top_type: str, bottom_type: str) -> str:
@@ -194,14 +307,33 @@ def main() -> None:
         print("DIGEST: No post insights available this week — Publer analytics may be lagging; no mix change.")
         return
 
-    ranked = sorted(rows, key=lambda r: r["score"], reverse=True)
-    n = max(1, round(len(ranked) * 0.2))
-    top, bottom = ranked[:n], ranked[-n:]
-    top_type, bottom_type = dominant_type(top), dominant_type(bottom)
-    action = build_adjustment(top_type, bottom_type)
+    # FIXED 2026-08-22: only accounts with enough volume may steer the mix.
+    steer_rows, per_account, eligible = signal_accounts(rows)
+    thin = sorted(a for a in per_account if a not in eligible)
+
+    if not steer_rows:
+        ranked = sorted(rows, key=lambda r: r["score"], reverse=True)
+        n = max(1, round(len(ranked) * 0.2))
+        top, bottom = ranked[:n], ranked[-n:]
+        top_type = bottom_type = "n/a"
+        action = (f"hold current mix — insufficient signal "
+                  f"(no account reached {MIN_POSTS_FOR_SIGNAL} posts in {args.days}d)")
+    else:
+        ranked = sorted(steer_rows, key=lambda r: r["score"], reverse=True)
+        n = max(1, round(len(ranked) * 0.2))
+        top, bottom = ranked[:n], ranked[-n:]
+        top_type = dominant_type(top, MIN_THEME_POSTS)
+        bottom_type = dominant_type(bottom, MIN_THEME_POSTS)
+        action = build_adjustment(top_type, bottom_type)
+
+    signal_note = (f"**Signal basis:** {len(steer_rows)} posts from "
+                   f"{len(eligible)} account(s) at/above the {MIN_POSTS_FOR_SIGNAL}-post "
+                   f"threshold ({', '.join(eligible) or 'none'}). "
+                   f"Excluded from steering (too thin): {', '.join(thin) or 'none'}.")
 
     lines = [f"# Valley Pawn — Friday Performance Digest — {today}",
              f"\n{len(rows)} posts across {len(set(r['account'] for r in rows))} accounts, last {args.days} days.\n",
+             signal_note + "\n",
              f"**Top 20% dominant type:** {top_type}  |  **Bottom 20% dominant type:** {bottom_type}",
              f"**Adjustment for Monday's batch:** {action}\n", "## Top performers\n",
              "| Account | Type | Post | Reach | Eng | Rate |", "|---|---|---|---|---|---|"]
@@ -224,12 +356,19 @@ def main() -> None:
 
     adj = {"week_ending": today, "generated_at": datetime.now().isoformat(),
            "top_type": top_type, "bottom_type": bottom_type, "action": action,
+           "signal_posts": len(steer_rows), "signal_accounts": eligible,
+           "excluded_thin_accounts": thin,
+           "min_posts_for_signal": MIN_POSTS_FOR_SIGNAL,
+           "min_theme_posts": MIN_THEME_POSTS,
            "top_posts": [{k: r[k] for k in ("account", "content_type", "text", "reach", "engagement")} for r in top],
            "bottom_posts": [{k: r[k] for k in ("account", "content_type", "text", "reach", "engagement")} for r in bottom]}
     ADJUSTMENTS.write_text(json.dumps(adj, indent=2))
     with open(ADJ_LOG, "a") as fh:
         fh.write(json.dumps({"week_ending": today, "top": top_type,
-                             "bottom": bottom_type, "action": action}) + "\n")
+                             "bottom": bottom_type, "action": action,
+                             "signal_posts": len(steer_rows),
+                             "signal_accounts": eligible,
+                             "classifier_version": "2026-08-22-boilerplate-fix"}) + "\n")
     try:
         LESSONS.parent.mkdir(parents=True, exist_ok=True)
         with open(LESSONS, "a") as fh:

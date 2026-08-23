@@ -43,3 +43,17 @@ Store totals (Expected/Counted/Variance):
 - 8/18 + 8/19 nights unrecoverable (on-hand is live-state).
 - LESSON: Chrome freezes while Parallels VM is pulling — never run Chrome + VM pulls concurrently. Sequencing rule codified in new catch-up task.
 - HARDENING SHIPPED: (1) jewelry-pull-watchdog 9:15 AM Tue-Sun (haiku) — DMs Joshua if last night missing; (2) jewelry-onhand-catchup 7:45 AM Tue-Sun (sonnet) — auto-reruns a missed night inside the freeze window and posts the table. Count is now self-healing: miss at 8:30 PM -> auto-rerun 7:45 AM -> alert 9:15 AM only if both failed.
+
+## 2026-08-22 07:30 — jewelry-onhand-catchup (Friday 8/21 CATCH-UP)
+Nightly run partially completed (CUL, ROA only, both with a store-switch/read failure). Catch-up self-healed: pulled HAR, LEX, WAY fresh this morning inside freeze window (before 10 AM), then discovered CUL and ROA's overnight 2026-08-21 CSVs had corrupted category reads despite passing BoxReportName verification (CUL: Pendants 1336 vs 10-day trend ~250, Earrings 60 vs ~165, Necklaces 2 vs ~98; ROA: Bracelets 2 vs ~125-130) — re-pulled both fresh this morning, all 8/8 categories succeeded and matched historical trend + PM sheets closely.
+
+Per-store final (Expected from Bravo / Counted from PM sheet, remapped PENDANTS=Pendants+Charms+Brooches, NECKLACES=Chains+Necklaces):
+- CUL: Rings 631/631, Bracelets 123/122, Earrings 166/166, Pendants 296/296, Necklaces 211/211 — Total 1427/1426 (-1)
+- HAR: Rings 453/455, Bracelets 49/49, Earrings 48/48, Pendants 121/118, Necklaces 121/134 — Total 792/804 (+12). Necklaces +13 over-variance flagged to Joshua via DM.
+- LEX: Rings 277/278, Bracelets 37/38, Earrings 51/49, Pendants 54/52, Necklaces 46/46 — Total 465/463 (-2)
+- ROA: Rings 559/559, Bracelets 129/129, Earrings 90/90, Pendants 156/155, Necklaces 163/165 — Total 1097/1098 (+1)
+- WAY: Rings 339/338, Bracelets 42/42, Earrings 52/51, Pendants 66/66, Necklaces 66/67 — Total 565/564 (-1)
+
+Empty-category treated as 0 (confirmed against prior-day CSV per rule): HAR Charms, LEX Brooches, WAY Charms.
+Both sides confirmed inside the 6 PM-10 AM freeze window. No repeating variance pattern flagged beyond the HAR Necklaces note above; all other variances are small and in the expected scope-noise direction.
+Posted to #jewlery-counts. DM sent to Joshua re: HAR Necklaces over-variance and the CUL/ROA bad-read self-heal.

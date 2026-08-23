@@ -1,0 +1,293 @@
+<title>Email Channel Audit</title>
+<style>
+:root{
+  --bg:#f7f6f3; --panel:#ffffff; --ink:#16181d; --muted:#5c6270; --line:#e2e0da;
+  --accent:#8a6a1f; --accent-soft:#f5edd8;
+  --bad:#a3301f; --bad-soft:#fbe9e6;
+  --ok:#1f6b46; --ok-soft:#e6f2ea;
+  --warn:#8a5a12; --warn-soft:#fbf0dc;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121316; --panel:#191b1f; --ink:#e9e7e2; --muted:#9aa0ac; --line:#2c2f36;
+    --accent:#d9ae54; --accent-soft:#2a2419;
+    --bad:#e8806e; --bad-soft:#2e1c19;
+    --ok:#6cc79a; --ok-soft:#152620;
+    --warn:#dfa955; --warn-soft:#2b2318;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121316; --panel:#191b1f; --ink:#e9e7e2; --muted:#9aa0ac; --line:#2c2f36;
+  --accent:#d9ae54; --accent-soft:#2a2419;
+  --bad:#e8806e; --bad-soft:#2e1c19;
+  --ok:#6cc79a; --ok-soft:#152620;
+  --warn:#dfa955; --warn-soft:#2b2318;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;
+  -webkit-font-smoothing:antialiased;font-size:16px}
+.wrap{max-width:860px;margin:0 auto;padding:56px 22px 96px}
+h1{font-family:var(--serif);font-size:clamp(30px,5.4vw,46px);line-height:1.12;margin:0 0 10px;letter-spacing:-.02em}
+h2{font-family:var(--serif);font-size:clamp(21px,3.4vw,28px);margin:56px 0 6px;letter-spacing:-.01em;line-height:1.2}
+h3{font-size:16px;margin:30px 0 6px;letter-spacing:.01em}
+p{margin:0 0 14px}
+.lede{font-size:19px;color:var(--muted);margin-bottom:6px}
+.meta{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;margin-bottom:34px}
+.rule{height:1px;background:var(--line);border:0;margin:0 0 34px}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 4px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin:18px 0}
+.verdict{border-left:3px solid var(--accent)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:18px 0}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;white-space:nowrap}
+td.num,th.num{text-align:right;font-family:var(--mono);font-size:13.5px;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.pill{display:inline-block;font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:20px;letter-spacing:.03em;white-space:nowrap}
+.p-bad{background:var(--bad-soft);color:var(--bad)}
+.p-ok{background:var(--ok-soft);color:var(--ok)}
+.p-warn{background:var(--warn-soft);color:var(--warn)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:22px 0}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px}
+.stat .n{font-family:var(--mono);font-size:26px;line-height:1.1;letter-spacing:-.02em}
+.stat .n.bad{color:var(--bad)} .stat .n.ok{color:var(--ok)}
+.stat .l{font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.35}
+.finding{border-top:1px solid var(--line);padding-top:22px;margin-top:30px}
+.finding h3{font-family:var(--serif);font-size:20px;margin:0 0 8px;letter-spacing:-.01em}
+.tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+code{font-family:var(--mono);font-size:.88em;background:var(--accent-soft);color:var(--ink);padding:1px 5px;border-radius:4px}
+ul,ol{margin:0 0 14px;padding-left:20px}
+li{margin-bottom:7px}
+.quiet{color:var(--muted);font-size:14px}
+.bignum{font-family:var(--mono);color:var(--accent)}
+footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+</style>
+
+<div class="wrap">
+
+<p class="kicker">Valley Pawn · Full Circle Finance Inc</p>
+<h1>Email Channel Audit</h1>
+<p class="lede">Where the email program actually stands after the 12-week engine, and the ten things holding it back.</p>
+<p class="meta">August 22, 2026 · Verified against live Brevo API, DNS, and per-link click data</p>
+<hr class="rule">
+
+<div class="card verdict">
+<p><strong>The verdict.</strong> The plumbing is genuinely good — better than most businesses this size will ever build. Call and text clicks are tracked through real redirects, every send carries UTMs, a preflight watchdog blocks uninstrumented campaigns, seed addresses ride every send, and the Deal of the Week has a full prompt&nbsp;→&nbsp;chase&nbsp;→&nbsp;pick&nbsp;→&nbsp;send chain that managers actually feed. None of that is the problem.</p>
+<p style="margin-bottom:0">The problem is that all of it is pointed at the wrong audience, on a cadence that broke three weeks ago, over a sending domain that is quietly failing authentication. Since June 1 the channel has delivered <span class="bignum">110,983</span> emails and produced <span class="bignum">70</span> measurable calls or texts. That is <strong>0.63 per 1,000</strong> against a target of 8, and against a 12-week goal of 10.</p>
+</div>
+
+<h2>Scoreboard — the 12-week program, closed out</h2>
+<p class="quiet">The engine ran June 4 through August 20 with targets set in <code>13_fully_automated.md</code>. Here is how it finished.</p>
+
+<div class="scroll">
+<table>
+<thead><tr><th>KPI</th><th class="num">Target by W12</th><th class="num">Actual</th><th>Result</th></tr></thead>
+<tbody>
+<tr><td>Calls + texts per 1,000</td><td class="num">10+</td><td class="num">0.63</td><td><span class="pill p-bad">16× short</span></td></tr>
+<tr><td>Engaged subscribers (90d)</td><td class="num">1,500</td><td class="num">194</td><td><span class="pill p-bad">8× short</span></td></tr>
+<tr><td>Real click rate, main list</td><td class="num">6–8%</td><td class="num">0.44%</td><td><span class="pill p-bad">14× short</span></td></tr>
+<tr><td>Unsubscribe rate per send</td><td class="num">&lt;0.30%</td><td class="num">0.106%</td><td><span class="pill p-ok">hit</span></td></tr>
+<tr><td>Complaint rate per send</td><td class="num">&lt;0.05%</td><td class="num">0.031%</td><td><span class="pill p-ok">hit</span></td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Two of five hit — and both are <em>harm-avoidance</em> metrics. We are not annoying anyone. We are also not reaching anyone. Every growth metric missed by roughly an order of magnitude, and the shortfall is not a content problem in the way it looks. It is four structural problems, described below.</p>
+
+<div class="grid">
+  <div class="stat"><div class="n">13,886</div><div class="l">contacts on file</div></div>
+  <div class="stat"><div class="n bad">194</div><div class="l">who receive the weekly email</div></div>
+  <div class="stat"><div class="n bad">1.1%</div><div class="l">real (non-Apple-proxy) open rate, August blast</div></div>
+  <div class="stat"><div class="n bad">15.9%</div><div class="l">of the file already suppressed / unsubscribed</div></div>
+</div>
+
+<h2>Root cause 1 — The audience split</h2>
+
+<div class="finding">
+<p class="tag">Finding 01 · highest impact</p>
+<h3>The best content we make reaches 1.4% of the list</h3>
+<p>Deal of the Week is the strongest asset in the whole marketing stack. Managers submit 10 of 10 weeks. It has a Monday prompt, an 11 AM chase, a 12:30 picker, and a Thursday self-heal watchdog. It is the one piece of content with real merchandise, real prices, and a real reason to walk in.</p>
+<p>It sends to <strong>list 7 — 194 people.</strong> The other 13,032 contacts receive exactly one email a month: the Gold &amp; Silver blast, which is close to the same email every month.</p>
+<p>This happened for a defensible reason. In June, segment-targeted sends returned all-zero stats from the Brevo API, so the fix was to send to a maintained "Engaged" list instead. That fixed measurement. It also shrank the weekly audience by 98%. We traded reach for a readable number, and then optimized the number.</p>
+</div>
+
+<div class="finding">
+<p class="tag">Finding 02</p>
+<h3>The "engaged" list is partly machines, and one headline number is an artifact</h3>
+<p>W8 Harrisonburg (July 23) reported <strong>250 calls + texts per 1,000</strong> — a figure quoted this morning in the social audit as the reason to resume weekly sends on Store Spotlight. It does not survive inspection:</p>
+<ul>
+<li>Brevo reports <strong>193 clickers on 142 delivered</strong>. More clickers than recipients is not possible for humans.</li>
+<li>In a <em>Harrisonburg</em> spotlight, the Harrisonburg call button got 2 clicks. Roanoke's got 6. Waynesboro's got 5. Lexington's text got 5. That is a scanner walking the footer directory, not a Harrisonburg customer picking up the phone.</li>
+<li>The other three store spotlights — Culpeper, Waynesboro, Roanoke — produced <strong>0 calls and 0 texts each.</strong> Store Spotlight is 1-for-4, and the 1 is noise.</li>
+</ul>
+<p>Worse, the automation that maintains the engaged list is <em>"any link click → add to list 7."</em> That rule recruits security scanners into the core audience. It is why list 7 grew from 128 to 194 while real engagement stayed flat, and why list-7 sends report click rates of 58–136% of delivered.</p>
+<p><strong>Consequence:</strong> resuming weekly on Store Spotlight is still a reasonable call, but not because of that number. Decide it on merit, and rebuild the engaged list on a definition machines can't satisfy.</p>
+</div>
+
+<h2>Root cause 2 — The deliverability floor</h2>
+
+<div class="finding">
+<p class="tag">Finding 03 · fixable this week</p>
+<h3>The sending domain has two SPF records, which means it has none</h3>
+<p><code>fcfpawn.com</code> publishes two separate <code>v=spf1</code> TXT records:</p>
+<ul>
+<li><code>v=spf1 include:_spf.google.com ~all</code></li>
+<li><code>v=spf1 include:dc-aa8e722993._spfm.fcfpawn.com ~all</code></li>
+</ul>
+<p>Per RFC 7208 §4.5, a domain publishing more than one SPF record produces a <strong>PermError</strong> — receiving servers must treat SPF as unevaluable rather than picking one. Every message we send is being judged with one of its three authentication legs broken. DKIM is correctly configured (<code>brevo1</code>/<code>brevo2</code> selectors resolve), so mail still authenticates on DKIM alignment — but we are shipping a permanent red flag to Gmail and Yahoo on every send, and Gmail is 64% of the file.</p>
+<p>Fix: merge into one record — <code>v=spf1 include:_spf.google.com include:dc-aa8e722993._spfm.fcfpawn.com ~all</code> — and delete the other. Ten minutes in GoDaddy DNS.</p>
+</div>
+
+<div class="finding">
+<p class="tag">Finding 04</p>
+<h3>Real opens on the main list have fallen by 60% since March</h3>
+<p>Apple Mail Privacy Protection inflates raw open rates, so the honest number is Brevo's <em>trackable</em> open rate — opens from clients that aren't proxying. On the main list:</p>
+<div class="scroll">
+<table>
+<thead><tr><th>Send</th><th class="num">Delivered</th><th class="num">Real open rate</th></tr></thead>
+<tbody>
+<tr><td>Mar 30 — April Fools' promo</td><td class="num">9,551</td><td class="num">2.69%</td></tr>
+<tr><td>May 7 — Weekly Community</td><td class="num">9,654</td><td class="num">2.12%</td></tr>
+<tr><td>Jun 11 — W2 Gold Pulse</td><td class="num">9,500</td><td class="num">0.78%</td></tr>
+<tr><td>Jun 29 — Win-back 02</td><td class="num">9,331</td><td class="num">0.47%</td></tr>
+<tr><td>Aug 1 — Gold &amp; Silver</td><td class="num">10,985</td><td class="num">1.10%</td></tr>
+</tbody>
+</table>
+</div>
+<p>The same template, from the same sender, sent to list 7 gets <strong>17–23%</strong>. The content isn't the variable. The recipients are. Mailing 11,000 people who have never engaged is actively teaching Gmail to filter Valley Pawn — including the mail to the 194 people who do care.</p>
+</div>
+
+<div class="finding">
+<p class="tag">Finding 05</p>
+<h3>We send from a domain customers have never seen</h3>
+<p>Every campaign goes out from <code>jdavis@fcfpawn.com</code>. Customers know <strong>thevalleypawn.com</strong>. They have never heard of Full Circle Finance. A personal-looking address at an unrecognized domain is one of the strongest "this is spam" signals a human can act on, and it is showing up in the sender line of every one of the 110,983 emails we sent this summer.</p>
+<p><code>thevalleypawn.com</code> is registered in Brevo but shows <strong>authenticated: false, verified: false</strong> — the DKIM records were never added. DMARC on both domains is <code>p=none</code> with reports going only to Brevo's aggregator, so nobody here has ever seen a DMARC report.</p>
+<p>Fix: authenticate <code>thevalleypawn.com</code> in Brevo, move the sender to something like <code>hello@thevalleypawn.com</code> with the friendly name <em>Valley Pawn</em>, and set reply-to per-store so a reply reaches the store instead of Joshua's inbox.</p>
+</div>
+
+<h2>Root cause 3 — The cadence broke and nobody caught it</h2>
+
+<div class="finding">
+<p class="tag">Finding 06</p>
+<h3>Three of the last four weeks were dark, and the calendar has run out</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>Planned</th><th>What happened</th></tr></thead>
+<tbody>
+<tr><td>W5 — Independence Day, Jul 2</td><td>Never sent. Still sitting as a draft (campaign 23).</td></tr>
+<tr><td>Weekly — Aug 6</td><td>Nothing sent.</td></tr>
+<tr><td>Weekly — Aug 13</td><td>Nothing sent.</td></tr>
+<tr><td>Weekly — Aug 20 (Thu)</td><td>Sent Friday Aug 21, under the name <em>"W15 — Roanoke Spotlight — September 10, 2026."</em></td></tr>
+<tr><td>Remaining drafts</td><td>W13 dated <strong>Aug 27 — five days away, still a draft</strong>; W14 Sep 3. Nothing after Sep 10.</td></tr>
+</tbody>
+</table>
+</div>
+<p>The campaigns originally built as W10/W11/W12 were quietly re-dated three weeks forward rather than sent, which is why the numbering now reads W13–W15 with no W10–W12 in the account. The Thursday self-heal watchdog did not fire on three consecutive misses — worth checking whether it only looks for a Deal-of-the-Week draft and finds nothing to heal when the whole week is absent.</p>
+</div>
+
+<h2>Root cause 4 — The channel does one thing, and it's the least valuable thing</h2>
+
+<div class="finding">
+<p class="tag">Finding 07 · biggest untapped revenue</p>
+<h3>There is no triggered email at all — including the one email a pawn shop should never be without</h3>
+<p>Every send in the account's history is a broadcast. Nothing fires off a customer's actual behavior. Missing entirely:</p>
+<ul>
+<li><strong>Loan due in 5 days → pay online.</strong> This is the highest-ROI email in the pawn industry. It directly lifts interest collection, cuts forfeitures, and it is welcome mail, not marketing — people <em>want</em> the reminder. Bravo holds every due date.</li>
+<li><strong>Grace period ending / last chance before forfeiture.</strong> Same mechanic, higher urgency.</li>
+<li><strong>Layaway payment due</strong> — and layaway season starts in three weeks.</li>
+<li><strong>Forfeited-loan win-back.</strong> Brevo list 11 exists, the attributes exist (<code>FORFEITED_LOAN</code>, <code>LAST_FORFEIT_DATE</code>, <code>FORFEIT_STORE</code>) — and the list holds <strong>zero contacts</strong>. Built, never populated. Someone who just lost an item to forfeiture is a proven, high-intent customer.</li>
+<li><strong>Welcome series.</strong> No welcome campaign and no welcome template exist in the account. New contacts wait up to 30 days for their first email — the monthly gold blast — by which point they've forgotten us.</li>
+<li><strong>Birthday.</strong> Documented in <code>valley-pawn-context</code> as a live template with a 20% offer. It does not exist, and no birthday field exists on any contact.</li>
+<li><strong>Giveaway entrants</strong> — 82 people who raised their hand in July and got no follow-up.</li>
+</ul>
+<p>Broadcast email at 1% open rate is a hard way to make money. Triggered email routinely runs 40–60% open and 10× the revenue per send, because it arrives when the customer already has the subject on their mind.</p>
+</div>
+
+<div class="finding">
+<p class="tag">Finding 08</p>
+<h3>The data to personalize — or to use SMS at all — is sitting in Bravo, not Brevo</h3>
+<p>Sampled 2,000 contacts across the file:</p>
+<div class="scroll">
+<table>
+<thead><tr><th>Field</th><th class="num">Populated</th><th>Consequence</th></tr></thead>
+<tbody>
+<tr><td>First name</td><td class="num">~0.1%</td><td>No personalization possible on the bulk list. Only recent Chekkit imports carry names.</td></tr>
+<tr><td>Home store</td><td class="num">~54%</td><td>Half the list can't be routed to their own store.</td></tr>
+<tr><td>Phone / SMS</td><td class="num">0%</td><td>Brevo SMS is impossible. This is the channel this audience actually reads.</td></tr>
+<tr><td>Birthday</td><td class="num">no such field</td><td>Birthday program can't exist.</td></tr>
+<tr><td>Loan / layaway dates</td><td class="num">no such field</td><td>No triggered lifecycle email possible.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Bravo has all of it. The Bravo extraction pipeline already runs daily. A one-way sync of name, store, phone, birthday and loan due date into Brevo custom attributes is the single change that unlocks findings 07, 08, and 09 at once.</p>
+</div>
+
+<div class="finding">
+<p class="tag">Finding 09</p>
+<h3>Store segments were built a month ago and have never been used</h3>
+<p>Segments 7–11 (Culpeper, Harrisonburg, Lexington, Roanoke, Waynesboro) were created July 22. Every send since has gone to list 3 or list 7. A Culpeper customer receives a Harrisonburg spotlight with a Harrisonburg address and five stores' worth of phone buttons. The relevance cost is obvious and the segments to fix it already exist.</p>
+</div>
+
+<div class="finding">
+<p class="tag">Finding 10</p>
+<h3>Nothing has ever been tested, and the creative asks for nothing</h3>
+<ul>
+<li><strong>Zero A/B tests.</strong> <code>abTesting: false</code> on every campaign in the account's history. <code>sendAtBestTime: false</code>. Every send is Thursday 10 AM. Not one hypothesis has ever been tested.</li>
+<li><strong>The subject lines don't say anything.</strong> "What's new at Valley Pawn Roanoke." "Heading back to school? Start here." No number, no price, no deadline, no reason to open now. The two most recent gold subject lines are near-duplicates of each other.</li>
+<li><strong>The logo is the most-clicked element in almost every send</strong> — 15 clicks on the August blast, 8 on W8, more than any offer or CTA. When the header beats the offer, the offer isn't an offer.</li>
+<li><strong>Twenty CTA buttons per email.</strong> Five stores × call/text × two placements. The duplicate <code>_top_call</code> and <code>_top_text</code> variants have received <strong>3 clicks total across every campaign ever sent</strong> — they cannibalize the footer set and add choice overload. Twenty equally weighted options reliably produce fewer actions than one.</li>
+<li><strong>No urgency mechanic outside the holiday 15%.</strong> Nothing expires. Nothing is scarce. Nothing is priced. "Gold is at $X/gram this week — bring it in before Saturday" is a different email than "we buy gold."</li>
+</ul>
+</div>
+
+<div class="finding">
+<p class="tag">Finding 11 · housekeeping</p>
+<h3>Bad addresses are entering continuously</h3>
+<p>121 hard bounces in July, 64 in August. Hard bounces are auto-suppressed after the first occurrence, so these are <em>new</em> invalid addresses each month — almost certainly typed at the counter and imported through the Chekkit/Bravo path with no validation. 15.9% of the file is already suppressed. A syntax check plus an MX check at import would stop most of it, and a tablet-facing "type your email, we'll text you the receipt" flow would stop the rest.</p>
+</div>
+
+<h2>What to do, in order</h2>
+
+<div class="scroll">
+<table>
+<thead><tr><th>#</th><th>Action</th><th class="num">Effort</th><th>Expected effect</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td><strong>Merge the duplicate SPF record on fcfpawn.com.</strong></td><td class="num">10 min</td><td>Removes a permanent authentication failure on every send. Prerequisite to everything else.</td></tr>
+<tr><td class="num">2</td><td><strong>Authenticate thevalleypawn.com and move the sender</strong> to <code>hello@thevalleypawn.com</code> / "Valley Pawn," with per-store reply-to.</td><td class="num">1 hr</td><td>Recognizable sender. Expect the largest single lift in open rate.</td></tr>
+<tr><td class="num">3</td><td><strong>Send W13 this Thursday and rebuild the calendar through December</strong>, aligned to the Aug–Dec seasonal spine already written for social.</td><td class="num">2 hrs</td><td>Stops the drift. One owner, one calendar across email and social.</td></tr>
+<tr><td class="num">4</td><td><strong>Sync Bravo → Brevo:</strong> first name, home store, phone, birthday, loan due date, layaway due date, forfeiture date.</td><td class="num">1 day</td><td>Unlocks triggered email, personalization, SMS, store routing, birthday. Highest leverage item on the list.</td></tr>
+<tr><td class="num">5</td><td><strong>Build the loan-due reminder</strong> (T-5 days, T-1 day, grace-ending) as the first triggered flow.</td><td class="num">1 day</td><td>The revenue item. Lifts interest collection and cuts forfeitures. Expect 40%+ open.</td></tr>
+<tr><td class="num">6</td><td><strong>Redefine "engaged" so machines can't qualify:</strong> two or more clicks on distinct sends, or one click plus one non-proxy open. Purge scanners from list 7 and rebuild.</td><td class="num">2 hrs</td><td>Makes every number downstream honest.</td></tr>
+<tr><td class="num">7</td><td><strong>Reunite the audience.</strong> Deal of the Week goes to the full engaged tier plus a rotating slice of the dormant file, not 194 people. Measure with per-link stats, which work fine on list sends.</td><td class="num">3 hrs</td><td>Puts the best content in front of 20–50× more people.</td></tr>
+<tr><td class="num">8</td><td><strong>Cut the CTA set from 20 buttons to one primary plus the reader's own store.</strong> Delete the dead <code>_top_call</code> / <code>_top_text</code> duplicates.</td><td class="num">1 hr</td><td>Removes choice overload. The store field from step 4 makes this personal.</td></tr>
+<tr><td class="num">9</td><td><strong>Start A/B testing subject lines on every send.</strong> First three tests: number vs. no number, deadline vs. no deadline, store name vs. brand name.</td><td class="num">ongoing</td><td>Compounding. We currently have zero evidence about what works.</td></tr>
+<tr><td class="num">10</td><td><strong>Welcome series, forfeited-loan win-back, birthday, giveaway follow-up.</strong> Four flows, built once.</td><td class="num">2 days</td><td>Turns the list from a broadcast target into a lifecycle.</td></tr>
+<tr><td class="num">11</td><td><strong>Validate email at intake</strong> (syntax + MX) and add DMARC reporting to an address we actually read; move to <code>p=quarantine</code> once clean.</td><td class="num">3 hrs</td><td>Stops the bleed. Sets up BIMI (logo in the inbox) later.</td></tr>
+<tr><td class="num">12</td><td><strong>Add SMS as a second channel</strong> once phone numbers land in step 4 — starting with loan reminders, which are the least intrusive use.</td><td class="num">TBD</td><td>This audience answers texts. They do not open email.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Three decisions that are genuinely yours</h2>
+<ol>
+<li><strong>Sender identity.</strong> Moving from <code>jdavis@fcfpawn.com</code> to <code>hello@thevalleypawn.com</code> is right for the brand but resets some sender reputation. Recommendation: do it, warm over two weeks, starting with the engaged tier only.</li>
+<li><strong>Loan reminders.</strong> These are transactional messages about someone's active loan. They need a short legal read on notice language and opt-out handling before the first send. Recommendation: build it, hold the launch until that read is done.</li>
+<li><strong>How wide to go on the dormant 11,000.</strong> Options are (a) keep mailing everyone monthly and accept a 1% open rate, (b) rotate a fifth of them into each weekly send to re-warm gradually, or (c) sunset properly. Recommendation: (b) — it re-warms without the optics of a smaller list, and it is reversible.</li>
+</ol>
+
+<h2>What's working — don't touch it</h2>
+<ul>
+<li>Call/text redirect instrumentation on <code>thevalleypawn.com</code>. Genuinely clever, and the reason this audit could measure anything.</li>
+<li>The <code>brevo-preflight-watchdog</code> and the internal-seeds standing rule. Both are doing real work.</li>
+<li>The Deal of the Week submission mechanic — 10/10 manager participation is the hardest thing in this whole stack and it already works.</li>
+<li>Unsubscribe and complaint rates. Well inside every threshold, with room to send more, not less.</li>
+</ul>
+
+<footer>
+<p><strong>Method.</strong> All figures pulled live from the Brevo API on 2026-08-22: 41 campaigns, per-campaign <code>linksStats</code> and <code>campaignStats</code>, contact attributes sampled at n=2,000 across the file, plus live DNS lookups for SPF, DKIM, DMARC and BIMI on both domains. Where Brevo's <code>globalStats</code> conflicted with per-list and per-link data — it reports more clickers than recipients on small sends — the per-link counts were treated as truth. Raw JSON preserved in <code>Email Refinement/_audit/</code>.</p>
+</footer>
+
+</div>

@@ -167,3 +167,32 @@ Published 537 live items (Culpeper 335, Roanoke 92, Harrisonburg 39, Waynesboro 
 Lexington 33); 23 weapons-adjacent items filtered out of 560 scraped. Prior published total
 was 144, so the store-front endpoint also pulls far more inventory than the old search-page
 method did.
+
+---
+
+## VP-SEO-REQUIREMENT (added 2026-08-22, from the online-store audit) — MANDATORY IN EVERY BUILD
+
+The audit found the live /shop/ page had **no `<h1>` at all** and **no product structured data**,
+so 504 products sat on one URL with nothing for Google to index as merchandise. Both are now
+required output of this task. Whichever build path you use (in-browser builder or the Python
+fallback `generate_shop_block.py`), the published block MUST contain, in this order, immediately
+after the `<style>` block and before `<p class="vp-lead">`:
+
+1. **A JSON-LD ItemList** — `<script type="application/ld+json">` containing
+   `{"@context":"https://schema.org","@type":"ItemList","name":"Valley Pawn live inventory",
+   "numberOfItems":N,"itemListElement":[...]}`. Include the **top 120 items by price** (keeps
+   page weight sane), each as a `ListItem` with `position` and an `item` of `@type` `Product`
+   carrying `name`, `image`, `brand` (Valley Pawn), and an `offers` object with `price`,
+   `priceCurrency` USD, `availability` InStock, `itemCondition` UsedCondition, `url` (the tagged
+   eBay item URL) and `seller` (Valley Pawn + store name).
+
+2. **A real H1** — `<h1 class="vp-h1">Shop Valley Pawn — Live Inventory from All 5 Virginia Stores</h1>`
+
+The Python fallback already does both (patched 2026-08-22; original at
+`generate_shop_block.py.bak-preseo-20260822`). If you build in the browser instead, port the same
+two elements into the builder before publishing — do not publish a block without them.
+
+**STEP 4 verification is extended:** after publishing, also confirm on the live page that
+`document.querySelectorAll('.vp-shop-app h1').length === 1` and that at least one
+`script[type="application/ld+json"]` on the page parses to an `ItemList`. If either check fails,
+treat it as a failed run (DM Joshua per the failure policy) — do not post a success summary.
