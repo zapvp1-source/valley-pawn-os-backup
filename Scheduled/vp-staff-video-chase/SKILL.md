@@ -15,6 +15,26 @@ needed at all — the habit had formed. Video gets the same treatment.
 
 **Read first:** `valley-pawn-context`, `my-writing-style` (this posts as Joshua).
 
+## Step 0 — DEADLINE-WINDOW GUARD (added 2026-08-23 — run this before anything else)
+A chase only works when it lands a few hours before the cutoff. Fired early it is just noise, and
+noise is what killed this channel for 47 days.
+
+Read the channel and find the open ask and **its stated deadline** (the ask text, not this file's
+assumptions — a manual or off-cycle prompt fire may set a different one, and a correction message
+may follow the original post). Then:
+- If the deadline is **more than ~6 hours away**: post NOTHING. No chase, no reminder, no thanks.
+  Log the situation to `#vp-studio-queue` and stop. The next scheduled run at the real chase hour
+  handles it.
+- If the deadline has **already passed**: skip the chase, go straight to Step 2 (collect).
+- Only inside that ~6-hour pre-deadline window do you run Step 1.
+
+Also: if **no ask has been posted at all**, never chase. There is nothing to chase and naming
+managers who were never asked is a real trust cost. Log and stop.
+
+*Why:* on 2026-08-23 (Sun) this task fired off-cycle 19 hours after the ask went out, with the
+deadline still 3 days away (Wed 2 PM). Chasing then would have burned the mechanic on its first
+week.
+
 ## Step 1 — Chase (11:15 AM)
 Read `#casual-video` (or the fallback channel `vp-staff-video-prompt` used) since Tuesday 9 AM.
 Identify which of the five stores — Culpeper, Harrisonburg, Lexington, Roanoke, Waynesboro — have

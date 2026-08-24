@@ -66,6 +66,136 @@ For every reply found:
 
 > **Why this rule exists:** on 2026-08-15 a session was told "run it" and was one step from texting ~19 candidates at **11:05 PM on a Saturday**. It had been working since late morning and had no idea how much time had passed. Nothing in the system would have stopped it. The clock check is now mandatory and explicit.
 
+### Run log — 2026-08-23 19:10–19:12 PM ET (window OPEN, nearest-7PM digest run)
+- Clock verified from the Mac: Sunday 2026-08-23 19:10:16 EDT. Inside window.
+- RUN_LOCK: none found — written 19:10:26, proceeded normally, deleted as final action.
+- **Reply sweep (Indeed first) done per mandatory ordering.** Full inbox scan vs. the 18:08 run: top-of-list threads unchanged (Sierra Wilhelm, Jasmine Lipes, Jaekwon Wayne, Tyler Powell, Tyler Alvarez, Orlando Hairston, Troy Patterson). No new Indeed replies, no collisions. (Note: Gmail shows 4 more interviews — Lorelei Rose Brown, Camden Ahern, Tyler Alvarez Wed 8/26 1:00 PM, Carl Burch — sent 18:27 ET by an earlier run today, prior to this run's window; not duplicated.)
+- **Text sweep** (`get_unread_imessages`, 20) surfaced two new candidate-relevant items:
+  - **Isabella Campbell** (+15404488269, Sales and Loan Associate, Lexington) replied "Would you be able to do Monday" (6:45 PM) — day given, no time. Per Step 4 replied "Monday works — what time's best for you? I'll call this number." via text, verified sent. **Awaiting a specific time — not yet bookable.**
+  - **Camden Ahern** (+15404145885) sent an ack ("Sounds great talk to you the!" + Liked reaction) to the Wed 8/26 1:30 PM correction sent by the 18:27 ET run — already fully handled, no reply needed, logged only.
+  - All other unreads are pre-8/23 non-candidate noise (spam links, OTP codes, personal texts) already filtered by prior runs.
+- **Gmail sweep** (indeedemail.com, newer_than:1d; outreach-subject, newer_than:2d): confirms the 4 Wed 8/26 interview bookings (Lorelei, Camden, Tyler Alvarez, Carl Burch) sent 18:27 ET plus the standing first-contact threads. No new inbound replies beyond what's captured in the text sweep above.
+- **New-applicant sweep, Candidates "All applications" view, zero-count double-checked via two independent fresh loads:** New • 0, stable both times. 185 total applications (unchanged), 69 Reviewing, 70 Contacting, 46 Interviewing, 164 Rejected — identical to the 18:08 run.
+- **Day 2/Day 5 follow-ups:** none newly due — only ~1 hour elapsed since the last run; no one crossed a threshold.
+- **Sponsorship watch:** not re-attempted this run (no new signal since 18:08; Lexington still ~"ends in 2 days" ~Mon 8/24, already flagged repeatedly).
+- **Digest:** nearest-7PM slot with activity in the last 24h → posted full digest to **#employee-prospects** covering today's (none) + tomorrow's (Tyler Powell 12:00 PM, Jaekwon Wayne 2:00 PM) interviews, the 4 Wed 8/26 bookings, Isabella Campbell's reply awaiting a time, no new applicants, today's 7 follow-ups, and open gaps (Troy Patterson, Orlando Hairston, Lexington sponsorship, unmatched +15408364200 number) (message_ts `1787526727.682809`).
+- 1 text send this run (Isabella Campbell) — well under the ~10/run pacing cap. 0 calendar events created/updated this run.
+- RUN_LOCK deleted as the final action of this run.
+
+### Run log — 2026-08-23 18:08–18:09 PM ET (window OPEN)
+- Clock verified from the Mac: Sunday 2026-08-23 18:08:10 EDT (re-checked 18:09:46, still fresh). Inside window.
+- RUN_LOCK: none found — written 18:08:13, proceeded normally, deleted as final action.
+- **Reply sweep (Indeed first) done per mandatory ordering.** Full inbox scan, zero-count/state double-checked via two independent fresh loads (scroll-to-render workaround for the known blank-canvas SPA issue) vs. the 17:16 run: top-of-list threads (Sierra Wilhelm 5:12 PM, Jasmine Lipes 4:12 PM, Jaekwon Wayne 4:12 PM, Tyler Powell 2:14 PM, Tyler Alvarez 2:13 PM, Orlando Hairston 2:12 PM, Troy Patterson 1:12 PM) unchanged, identical on both loads. No new items, no collisions detected.
+- **Text sweep** (`get_unread_imessages`, 20): the only candidate-relevant unread was Tyler Powell's "As soon as possible so tomorrow around noon work!" (18:18:14Z = 2:18 PM ET) — already actioned/booked by the 15:10 PM run (Mon 8/24 noon, CONFIRMED). No new action. All other unreads are pre-8/23 non-candidate noise (spam links, OTP codes, personal texts, real-estate solicitation) already filtered by prior runs.
+- **Gmail sweep** (indeedemail.com, newer_than:1d; outreach-subject, newer_than:2d): 10 threads total, all our own SENT first-contacts (Tyler Powell, Bryan Nault, Orlando Hairston, Nathaniel Hayslett, Isabella Campbell, Sabrina Clark, Cameron Pearson, Jesse Saunders, Joey Morton, Carl Burch). No new inbound replies.
+- **New-applicant sweep, Candidates "All applications" view, zero-count double-checked via two independent fresh loads:** New • 0, stable both times. 185 total applications (unchanged), 69 Reviewing, 70 Contacting, 46 Interviewing, 164 Rejected — identical to the 17:16 run.
+- **Day 2/Day 5 follow-ups:** none newly due — only ~1 hour elapsed since the last run; no one crossed a 2-day/5-day threshold in that window.
+- **Sponsorship watch:** not re-attempted this run (no new signal since 17:16; Lexington still ~"ends in 2 days" ~Mon 8/24, already flagged repeatedly).
+- **Digest:** zero new activity this run — not sent (nothing to add beyond what the 17:16 run's DMs already covered, and not yet at the nearest-7PM slot).
+- 0 sends of any kind this run — no new candidate activity found on any channel.
+- RUN_LOCK deleted as the final action of this run.
+
+### Run log — 2026-08-23 17:10–17:16 PM ET (window OPEN)
+- Clock verified from the Mac: Sunday 2026-08-23 17:10:36 EDT. Inside window.
+- RUN_LOCK: none found — written 17:10:41, proceeded normally, deleted as final action.
+- **Reply sweep (Indeed first) done per mandatory ordering.** Full inbox scan vs. the 16:10 run surfaced two new items:
+  - **Sierra Wilhelm** (Sales and Loan Associate, Waynesboro) replied on Indeed 5:04 PM "Yes. Sorry just seeing this" — confirming the Tue 8/25 12:30 PM offer (TENTATIVE, nudged 12:49 PM this run-day). Pre-booking validator re-checked: (1) phone on hand (540-471-4674) ✓, (2) not today — Tue 8/25 ✓, (3) 12:30 PM within window ✓, (4) `list_events` for 8/25 showed only her own existing event, no new conflict ✓, (5) dialable number on hand ✓. Replied "You're all set, Sierra — Tuesday 8/25 at 12:30 PM. I'll call you at that number. Talk then!" via Indeed 5:12 PM, verified Sent in-thread. Calendar event `u2qasavjbcfl1j0iuach44dufs` updated to **CONFIRMED**.
+  - **Jaekwon Wayne** (Sales and Loan Associate, Harrisonburg) replied on Indeed 4:12 PM "Okay sounds good man your fine also!" confirming the Mon 8/24 2:00 PM offer (TENTATIVE from the 16:10 run). Ack-only convention — no reply sent (offer already fully specified with time + number). Calendar event `ouilcc72h8n4uvg215oivoqc7k` updated to **CONFIRMED**.
+  - Checked the unrecognized number +15408364200 again (new unread: "Ok. I need to be in culpeper tomorrow morning or send someone I'm guessing?") — still not matched to any candidate in the contact log or any Culpeper thread; consistent with the 16:10 run's determination that this number is not candidate-related. Not actioned.
+  - All other visible Indeed threads unchanged from the 16:10 run. No collisions detected.
+- **Text sweep** (`get_unread_imessages`, 20): no new candidate-relevant unreads beyond the +15408364200 item above (not actioned, see above) and Tyler Powell (already booked/handled). Other noise (spam links, OTP codes, personal texts) filtered out.
+- **Gmail sweep** (indeedemail.com + outreach subject, newer_than:1d/2d): no new inbound replies — all SENT first-contacts already logged.
+- **New-applicant sweep, Candidates "All applications" view:** New • 0, 185 total applications (unchanged from 16:10 run), 69 Reviewing, 70 Contacting, 46 Interviewing, 164 Rejected.
+- **Day 2/Day 5 follow-ups:** none newly due — only ~1 hour elapsed since the last run; no one crossed a 2-day/5-day threshold in that window.
+- **Sponsorship watch:** not re-attempted this run (no new signal since 16:10; Lexington still ~"ends in 2 days" ~Mon 8/24, already flagged repeatedly).
+- **Digest:** not near the 7 PM slot; both confirmations (Jaekwon, Sierra) sent to Joshua immediately via Slack DM (message_ts `1787519577.485789`).
+- 0 text sends this run (both outbound actions were Indeed replies/no-reply acks) — well under the ~10/run pacing cap. 2 calendar events updated to CONFIRMED (Jaekwon Wayne, Sierra Wilhelm).
+- RUN_LOCK deleted as the final action of this run.
+
+### Run log — 2026-08-23 16:10–16:13 PM ET (window OPEN)
+- Clock verified from the Mac: Sunday 2026-08-23 16:10:17 EDT. Inside window.
+- RUN_LOCK: none found — written 16:10:23, proceeded normally, deleted as final action.
+- **Reply sweep (Indeed first) done per mandatory ordering.** Full inbox scan (scroll-to-render workaround) vs. the 15:10–15:13 PM run surfaced two new items:
+  - **Jaekwon Wayne** (Sales and Loan Associate, Harrisonburg) — long-running thread with two prior calls missed on our side (8/16, 8/17). Texted on Indeed 3:37 PM "Hey I was still waiting to hear from you I had got a new phone my new phone number is 5404166909." Pre-booking validator passed: (1) phone ✓, (2) not today — Mon 8/24 ✓, (3) 2:00 PM within window ✓, (4) `list_events` Mon 8/24 showed only Tyler Powell 12:00–12:30 PM, no conflict ✓, (5) new dialable number on hand ✓ (540-416-6909). **Offered Mon 8/24, 2:00 PM phone** via Indeed 4:11 PM, verified Sent. Calendar event created (`ouilcc72h8n4uvg215oivoqc7k`) — **TENTATIVE, awaiting his confirmation.**
+  - **Jasmine Lipes** (Sales and Loan Associate, Waynesboro) replied on Indeed 3:31 PM "Yes that works for me am I coming in for interview or is it a phone interview" — confirming the Wed 8/26 11:30 AM offer (TENTATIVE from the 8/22 double-booking fix). Replied "It's a phone interview, Jasmine — you're set for Wednesday 8/26 at 11:30 AM. I'll call this number then!" via Indeed 4:1x PM, verified Sent. She acked "Okay sounds good" 46 seconds after. Calendar event `v144fip1ui4ojb5sr5j9olvst4` updated to **CONFIRMED**.
+  - All other visible threads (Tyler Powell, Tyler Alvarez, Orlando Hairston, Troy Patterson, Alex Pohrebniak, Sierra Wilhelm, Rebecca Toms, Joey Morton, Bryan Nault, Nathaniel Hayslett, Isabella Campbell, Tanya Strickler, Cameron Pearson, Brittany Smith, Sabrina Clark, Jesse Saunders) unchanged from the 15:10 PM run. No collisions detected.
+- **Text sweep** (`get_unread_imessages`, 20): no new candidate-relevant unreads beyond Tyler Powell (already booked/handled by the 15:10 run) and one unrecognized number (+15408364200, "Have you heard from Bree at all?") — not in the contact log, not candidate-related, not actioned. Other noise (jbbr.io spam, personal "It's almost 1:30 babe" text, older already-actioned Cameron Pearson/Sabrina Clark items) filtered out.
+- **Gmail sweep** (indeedemail.com + outreach subject, newer_than:1d): 5 threads, all our own SENT first-contacts (Tyler Powell, Bryan Nault, Orlando Hairston, Nathaniel Hayslett, Isabella Campbell). No new inbound replies.
+- **New-applicant sweep, Candidates "All applications" merged view, zero-count double-checked via two independent fresh loads (scroll-to-render workaround):** New • 0, stable both times. 185 total applications (unchanged), 69 Reviewing, 70 Contacting, 46 Interviewing, 164 Rejected.
+- **Sponsorship watch:** `/jobs` rendered blank-canvas across repeated navigation + scroll-forcing — known SPA issue, falling through per convention. Last confirmed status (15:10 PM run): Lexington sponsorship "ends in 2 days" (~Mon 8/24, already flagged repeatedly) — not re-flagged absent a confirmable change.
+- **Day 2/Day 5 follow-ups:** none newly due — only ~1 hour elapsed since the last run; no one crossed a 2-day/5-day threshold in that window.
+- **Digest:** not near the 7 PM slot; both actionable items (Jaekwon booking, Jasmine confirmation) sent to Joshua immediately via Slack DM (message_ts `1787515964.107459`).
+- 0 text sends this run (both outbound actions were Indeed replies) — well under the ~10/run pacing cap. 1 calendar event created (Jaekwon Wayne, TENTATIVE), 1 calendar event updated (Jasmine Lipes, CONFIRMED).
+- RUN_LOCK deleted as the final action of this run.
+
+### Run log — 2026-08-23 15:10–15:13 PM ET (window OPEN)
+- Clock verified from the Mac: Sunday 2026-08-23 15:10:11 EDT. Inside window.
+- RUN_LOCK: none found — written 15:10:14, proceeded normally, deleted as final action.
+- **Reply sweep (Indeed first) done per mandatory ordering.** Full inbox scan (two fresh navigations + scroll-to-render workaround) vs. the 14:10–14:16 PM run: top-of-list threads (Tyler Powell, Tyler Alvarez, Orlando Hairston) unchanged — all show our own last-sent message as most recent. No new Indeed replies, no collisions.
+- **Text sweep** (`get_unread_imessages`, 20) surfaced one new candidate reply:
+  - **Tyler Powell** (+15407848469, Sales and Loan Associate, Lexington) texted "As soon as possible so tomorrow around noon work!" at 2:18 PM, 3 minutes after his first-contact text. Pre-booking validator passed: (1) phone ✓ (no in-person/Zoom ask), (2) not today — Mon 8/24 ✓, (3) noon within 7AM–9PM ✓, (4) `list_events` for Mon 8/24 returned no events — no conflict ✓, (5) dialable number on hand ✓ (+15407848469). **Booked and confirmed: Mon 8/24, 12:00 PM phone** (calendar event `3klg7skh27jp0ag5i6plntk98o`). Confirmation text sent and verified. Slack DM sent to Joshua (message_ts `1787512292.163659`).
+  - All other unreads non-candidate noise (jbbr.io spam link, personal "It's almost 1:30 babe" text) — filtered out, not actioned.
+- **Gmail sweep** (indeedemail.com + outreach subject, newer_than:1d): 5 threads, all our own SENT first-contacts (Tyler Powell, Bryan Nault, Orlando Hairston, Nathaniel Hayslett, Isabella Campbell). No new inbound replies.
+- **New-applicant sweep, Candidates "All applications" / "New" tab, zero-count double-checked via two independent fresh loads (scroll-to-render workaround):** New • 0, stable both times. 185 total applications (unchanged from 14:16 PM run), 69 Reviewing, 70 Contacting, 46 Interviewing, 164 Rejected.
+- **Sponsorship watch:** `/jobs` rendered blank rows across repeated navigation + scroll-forcing — known SPA issue, falling through per convention rather than burning further turns. Last confirmed status (14:16 PM run): Lexington sponsorship "ends in 2 days" (~Mon 8/24, already flagged repeatedly) — not re-flagged absent a confirmable change.
+- **Day 2/Day 5 follow-ups:** none newly due — only ~1 hour elapsed since the last run; no one crossed a 2-day/5-day threshold in that window.
+- **Digest:** not near the 7 PM slot; the one actionable item (Tyler Powell booking) was sent to Joshua immediately via DM rather than held for a digest.
+- 1 text send this run (Tyler Powell confirmation) — well under the ~10/run pacing cap. 1 calendar event created (Tyler Powell, CONFIRMED).
+- RUN_LOCK deleted as the final action of this run.
+
+### Run log — 2026-08-23 14:10–14:16 PM ET (window OPEN)
+- Clock verified from the Mac: Sunday 2026-08-23 14:10:19 EDT. Inside window.
+- RUN_LOCK: none found — written 14:10:19, proceeded normally, deleted as final action.
+- **Reply sweep (Indeed first) done per mandatory ordering.** Full inbox scan (scroll-to-render workaround, two fresh navigations) vs. the 13:10–13:15 PM run surfaced two new items:
+  - **Orlando Hairston** (Sales and Loan Associate, Lexington — note: candidate location Roanoke, VA, listing is Lexington) replied on Indeed 1:20 PM with just his name/number "Orlando Hairston 5408159532" confirming receipt of the first-contact template — no day/time given yet. Replied per Step 4 (vague interest → ask for day/time): "Got it, thanks Orlando. What day and time works for you starting tomorrow? I'll call this number." Sent via Indeed 2:12 PM, verified Sent in-thread. **No time given yet — awaiting his reply, not yet bookable.**
+  - **Tyler Alvarez** (Store Manager, Harrisonburg) replied on Indeed 1:13 PM to the Day-2 follow-up: "Hey Joshua, thanks for reaching out. I would love to sit down and meet with you. I would be available this Friday if you're free to meet, I could be there around 3 PM if that works for you?" — in-person request, which conflicts with the phone-only policy. Per pre-booking validator check #1 (format must be phone — if candidate asked for in-person, tell them interviews are phone-only and keep their time): calendar checked first (list_events Fri 8/28 — fully open, no conflict), then booked **Interview — Tyler Alvarez — Store Manager, Harrisonburg (Phone), Fri 8/28, 3:00–3:30 PM ET** (event `r1t8q2oetibepoav8fnu3lbbp8`). **Caveat / process note:** the event was created before confirming a dialable phone number was in hand, which is a validator-#5 miss — caught immediately after; fixed by asking Tyler for his number in the same confirmation reply ("We're doing these as phone interviews for now rather than in person, but Friday at 3 PM works great — what's the best number to call you at?", sent via Indeed 2:13 PM, verified Sent). Event description flags the missing number so no session calls without one. Slack DM sent to Joshua flagging this explicitly. **TENTATIVE pending his phone number.**
+  - Troy Patterson (1:12 PM, already logged, no time given) and all other visible threads unchanged from the 13:15 PM run. No collisions detected.
+- **Text sweep** (`get_unread_imessages`, 20): all candidate-relevant unreads already actioned/logged by prior runs. Non-candidate noise filtered out (jbbr.io spam link, personal "It's almost 1:30 babe" text, teco.link/hmwy.io/op-n.co/RXO.com spam links, Invest529/Gusto/Amex OTP codes, election spam, Marigold reservation reminder, personal ETA text).
+- **Gmail sweep** (indeedemail.com + outreach subject, newer_than:1d): 4 threads, all our own SENT first-contacts (Bryan Nault, Orlando Hairston, Nathaniel Hayslett, Isabella Campbell). No new inbound replies.
+- **New-applicant sweep, Candidates "All applications" merged view, zero-count double-checked via two independent fresh loads (scroll-to-render workaround for the known blank-canvas SPA issue):** **New • 1** — **Tyler Powell** (Buena Vista, VA), applied to Sales and Loan Associate, Lexington. Full triple contact: Indeed ✓ (Message panel, verified Sent 2:14 PM), email ✓ (tylerpowellacnsq_qdr@indeedemail.com, msg id `1a02fd54b2a54924`), text ✓ (+15407848469, chat.db verified is_from_me=true 2:15 PM). Told "starting tomorrow" per no-same-day policy; phone-only wording used throughout. 185 total applications (up from 184), 69 Reviewing, 69 Contacting (was 65), 46 Interviewing, 164 Rejected.
+- **Sponsorship watch:** not re-attempted this run (no new signal since the 13:15 PM run's fall-through); Lexington sponsorship still understood to be ~"ends in 2 days" (~Mon 8/24) per last confirmed status, already flagged repeatedly — not re-flagged again absent a change.
+- **Day 2/Day 5 follow-ups:** none newly due — only ~1 hour elapsed since the last run; no one crossed a 2-day/5-day threshold in that window.
+- **Digest:** sent a Slack DM to Joshua (D03BHQH5VGT) at 2:15 PM covering the Tyler Powell new contact, the Tyler Alvarez phone-only booking + missing-number caveat, and the Orlando Hairston ask-for-time (message_ts `1787508919.740189`).
+- 2 text sends this run (Orlando Indeed reply doesn't count as text; Tyler Powell first-contact text is the only SMS/iMessage send) — well under the ~10/run pacing cap. 1 calendar event created (Tyler Alvarez, TENTATIVE pending phone number).
+- RUN_LOCK deleted as the final action of this run.
+
+### Run log — 2026-08-23 13:10–13:15 PM ET (window OPEN)
+- Clock verified from the Mac: Sunday 2026-08-23 13:10:14 EDT. Inside window.
+- RUN_LOCK: none found — written 13:10:18, proceeded normally, deleted as final action.
+- **Reply sweep (Indeed first) done per mandatory ordering.** Full inbox scan (scroll-to-render workaround) vs. the 12:35–12:51 PM run surfaced one new item:
+  - **Troy Patterson** (Sales and Loan Associate, Lexington) replied on Indeed 12:49 PM "Yes, I'm very interested in the job. What is the starting pay?" — answered per Step 4 (question → answer + ask for a time in the same message): "Starting pay is $18/hour, could be more depending on experience. What day and time works for you starting tomorrow? I'll call this number." ($18/hr figure sourced from this manual's own precedent — Joshua's personal reply to James Beverly's identical question on the same Lexington Associate listing, logged 8/21.) Sent via Indeed 1:12 PM, verified Sent in-thread. **No time given yet — awaiting his reply, not yet bookable.**
+  - All other visible threads (Jasmine Lipes, Alex Pohrebniak, Tyler Alvarez, Sierra Wilhelm, Rebecca Toms, Joey Morton, Bryan Nault, Orlando Hairston, Nathaniel Hayslett, Isabella Campbell, Tanya Strickler, Cameron Pearson) unchanged from the 12:51 PM run — no new action. No collisions detected.
+- **Text sweep** (`get_unread_imessages`): all candidate-relevant unreads already actioned/logged by prior runs. Non-candidate noise filtered out (roof-contractor, real-estate solicitation re: 14300 Woods Walk Ln, election spam, spam links, OTP codes).
+- **Gmail sweep** (indeedemail.com, newer_than:2d): 19 threads, all our own SENT first-contacts/follow-ups from 8/21–8/23. No new inbound replies.
+- **New-applicant sweep, Candidates "New" tab, zero-count double-checked via two independent fresh loads:** New • 0, stable both times (184 total applications — up from 180 at the last check, accounted for by this morning's 4 new Lexington contacts already logged; 69 Reviewing, 69 Contacting, 46 Interviewing, 164 Rejected).
+- **Sponsorship watch:** `/jobs` page rendered blank-canvas (known SPA issue) across repeated navigation + scroll-forcing attempts — falling through per convention, not re-attempted further. Last confirmed status (12:35 PM run): Lexington sponsorship "ends in 2 days" (~Mon 8/24, already flagged to Joshua repeatedly) — not re-flagged given no confirmable change this run.
+- **Day 2/Day 5 follow-ups:** none newly due — only ~20 minutes elapsed since the last run's 7-candidate Day-2 batch; nothing new crossed a threshold.
+- **Digest:** not sent — single non-urgent item (Troy Patterson's pay question, no time proposed yet, so no Slack DM trigger per Step 5's "proposes a time" rule); logged here for the next digest to pick up.
+- 0 text sends this run (only outbound was the Indeed reply to Troy Patterson) — well under the ~10/run pacing cap. 0 calendar events.
+- RUN_LOCK deleted as the final action of this run.
+
+### Run log — 2026-08-23 12:35–12:51 PM ET (window OPEN)
+- Clock verified from the Mac: Sunday 2026-08-23 12:35:13 EDT. Inside window.
+- RUN_LOCK: none found — written 12:35:13, proceeded normally, deleted as final action.
+- **Reply sweep (Indeed first) done per mandatory ordering.** Full inbox scan (scroll-to-render workaround for the known blank-canvas SPA issue): top-of-list thread unchanged from the 8/22 7:08 PM run (Tanya Strickler 12:53 PM 8/22 ack still newest). No new replies. No collisions detected.
+- **Text sweep** (`get_unread_imessages`): all candidate-relevant unreads already actioned/logged by prior runs (Cameron Pearson, Sabrina Clark, etc.) — no new action. Non-candidate noise filtered out (roof-contractor, real-estate solicitation re: 14300 Woods Walk Ln, election spam, OTP codes, spam links).
+- **Gmail sweep** (`indeedemail.com` + outreach subject, 2–3 days): all SENT first-contacts/corrections from 8/21–8/22, no new inbound replies. Note: `from:indeedemail.com` alone returned empty — bare `indeedemail.com` and the subject-line query are what work; logged here in case a future run hits the same false-empty.
+- **New-applicant sweep, all listings via Candidates "All applications" merged view, zero-count double-checked via two independent fresh loads (scroll-to-render workaround):** **New • 4** (all applied to Sales and Loan Associate, Lexington):
+  - **Nathaniel Hayslett** (Clifton Forge, VA) — full triple contact: Indeed ✓, email ✓ (nathanielhayslett87@gmail.com, msg id `1a02f80753f105e8`), text ✓ (+18262403005, chat.db verified is_from_me=true). **Replied within a minute** — "I can do tomorrow as early as you want!" Pre-booking validator passed (phone ✓, not today — Mon 8/24 ✓, 9:00 AM within 7AM–9PM ✓, list_events showed Mon 8/24 fully open — no conflict ✓, dialable number on hand ✓). **Booked and confirmed: Mon 8/24, 9:00 AM phone** (calendar event `1lp9vgs2occ9ndcg5ana82lpsg`). Confirmation text sent and verified. Slack DM sent to Joshua.
+  - **Orlando Hairston** (Roanoke, VA) — full triple contact: Indeed ✓, email ✓ (orlandohairston4_ic8@indeedemail.com, msg id `1a02f822577f1d59`), text ✓ (+15408159532, verified sent).
+  - **Bryan Nault** (Buena Vista, VA) — full triple contact: Indeed ✓, email ✓ (bryannault6_szb@indeedemail.com, msg id `1a02f82de645d4f8`), text ✓ (+15405419075, verified sent).
+  - **Isabella Campbell** (Millboro, VA) — full triple contact: Indeed ✓, email ✓ (izzcampbell29@gmail.com, msg id `1a02f7f9800e5a8d`), text ✓ (+15404488269, verified sent).
+  - All four told "starting tomorrow" per the no-same-day policy; phone-only wording throughout.
+- **Day 2/Day 5 follow-ups — 7 candidates crossed the Day-2 threshold (first contact 8/21, silent on all channels since):**
+  - **Joey Morton, Troy Patterson, Rebecca Toms** (Lexington, Sales and Loan Associate) — generic "still interested?" follow-up sent via Indeed.
+  - **Sierra Wilhelm** (Waynesboro) — had a pending Tue 8/25 12:30 PM offer (Read, no reply) — sent a targeted "does that time still work?" nudge via Indeed instead of the generic template.
+  - **Tyler Alvarez, Alex Pohrebniak** (Harrisonburg Store Manager) — generic "still interested?" follow-up sent via Indeed.
+  - **Jasmine Lipes** (Waynesboro) — had a pending Wed 8/26 11:30 AM offer (rescheduled by an earlier session, never confirmed) — sent a targeted "does that time still work?" nudge via Indeed instead of the generic template.
+  - All 7 sent via Indeed only (channel already open, no phone/email re-lookup needed); none of these contradicted a more-recent outbound per Step 0.5.
+- **Digest:** not near the 7 PM slot, but given the volume (4 new triple-contacts, 1 booking, 7 follow-ups), sent a Slack DM to Joshua (D03BHQH5VGT) at 12:50 PM covering all of the above (message_ts `1787503847.593979`).
+- 4 first-contact texts + 1 confirmation text + 0 additional (follow-ups were Indeed-only) = 5 text sends this run — well under the ~10/run pacing cap. 1 calendar event created (Nathaniel Hayslett).
+- RUN_LOCK deleted as the final action of this run.
+
 ### Run log — 2026-08-22 7:08–7:13 PM ET (window OPEN, nearest-7PM digest run)
 - Clock verified from the Mac: Saturday 2026-08-22 19:08:16 EDT. Inside window.
 - RUN_LOCK: none found — written 19:08:16, proceeded normally, deleted as final action.

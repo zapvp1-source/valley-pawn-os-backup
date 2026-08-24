@@ -134,3 +134,21 @@ POST to /wp-json/wp/v2/pages/833 (WP Application Password `vp-shop-nightly`) ret
 id 833, status publish. Verified live: 506 vp-card elements (exact match), single VP-SHOP-START
 marker, zero woocommerce-shop occurrences (WooCommerce shop-page fix from 8/21 still holding).
 Posted summary to #website successfully.
+
+## Run record — 2026-08-23 (scheduled nightly, sandbox bash)
+
+Ran via mcp__workspace__bash. Fixed fetch_run_sandbox.py BASE path again (session mount dir
+changes every session — still not parameterized, see longstanding TODO above).
+
+Scraped 520 items across 5 stores (Culpeper 307, Waynesboro 39, Harrisonburg 35, Lexington 33,
+Roanoke 106); 24 weapons-adjacent excluded; published 496
+(Culpeper 304, Waynesboro 36, Harrisonburg 33, Lexington 29, Roanoke 94).
+
+generate_shop_block.py already had the VP-SEO-PATCH (H1 + ItemList JSON-LD) baked in from
+2026-08-22 — no code changes needed this run, just re-ran it against fresh items.json.
+
+POST to /wp-json/wp/v2/pages/833 returned HTTP 200, id 833, status publish.
+Verified live: 496 vp-card elements (exact match), single VP-SHOP-START marker, zero
+woocommerce-shop occurrences (fix still holding), exactly one h1.vp-h1, and a valid ItemList
+JSON-LD block (8th ld+json script on the page — WP/Yoast injects Organization/PawnShop/FAQPage
+schema before it — numberOfItems=120, parses cleanly). Posted summary to #website successfully.

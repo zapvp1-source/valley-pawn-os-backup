@@ -38,3 +38,22 @@
   - Roanoke `298226614316` -> "Eagle Vision Portable Rear-View Mirror". Verified live via `getitem_detail.py`.
 - DM'd store managers directly for the photo problems (plain language, item number + what's wrong): Walker (Harrisonburg, both items), Uriah (Lexington, both jackets). Not yet confirmed fixed — no automated recheck; next weekly audit run will show if photos were swapped.
 - Process fix (additive, via `mcp__scheduled-tasks__update_scheduled_task`, ran through expert-review-board first): `ebay-title-photo-accuracy-audit`'s SKILL.md now auto-applies category (b) title fixes when full-res is unambiguous (same reversible mechanism as category (a)), and auto-DMs the responsible store manager for category (c) photo problems instead of only logging it for Joshua to read. A new category (d) (genuinely ambiguous) stays flag-only. Nothing about price/quantity/photos/listing-ending changed — those remain fully manual.
+
+## 2026-08-23 run (ebay-title-photo-accuracy-audit)
+- Scope: ALL active listings, all 5 stores (Culpeper 304, Waynesboro 39, Harrisonburg 35, Lexington 27, Roanoke 106 = 511 total).
+- Thumbnail screen: 87 contact sheets built, 36 candidate mismatches flagged by per-store subagents.
+- Full-res verification: 18 of 36 were REJECTED as thumbnail misreads (lighting/angle/packaging artifacts, not real issues) after full-res + getitem_detail.py check.
+- CONFIRMED and auto-fixed via ebay_title_revise.py --apply (reversible, state in ~/ebay_toolfix_state.json): 13 title changes attempted, 12 succeeded, 1 failed (Roanoke 307000372642 Apple Watch — eBay returned "item cannot be listed or modified", retried once, same result; needs manual look, not fixed).
+  - Culpeper: 397528400544 (heater, +remote), 397531548727 (PS4 Pro, +2 controllers), 398106381642 (Assassin's Creed Unity, +Limited Edition), 398140133321 (Oddworld Soulstorm, +steelbook/collectible), 398204785291 (currency lot, Coin->Notes).
+  - Waynesboro: 800321499390 (Sony ZV-E10 — re-corrected White->Black; all 10 full-res photos unambiguously show a black body, contradicting the White/L-kit MPN-based fix applied during last night's 8/22 incident. Flagging this one for Joshua's awareness given it's the second live change to the same item in 24 hours.)
+  - Harrisonburg: 800232060996 (Switch OLED, +dock/grip/case), 800406845611 (identified as Boulder Creek AB4-TR acoustic preamp, was untitled), 800384051061 (Wii console, +remotes/sensor bar/cables/Wii Sports).
+  - Roanoke: 298565157505 (Lenovo laptop, +charger), 307077675069 (Craftsman saw — completed a truncated live title, +battery/charger), 306926372024 (DeWalt drill — corrected model DCD793->DCD708 per the tool's own engraved label, confirmed on full-res photo).
+  - Roanoke 307000372642 (Apple Watch, +charger): FAILED, eBay rejected the revision twice. Left as-is, needs manual check next run or by Joshua.
+- CONFIRMED category (c) photo-content problems — DM'd store manager directly (plain language, item + what's wrong), no title/price/photo touched by this run:
+  - Culpeper -> Sandi: 395523114047 (Trifari bracelet — unrelated gold rope bracelet photo mixed in).
+  - Harrisonburg -> Walker (RE-NOTIFY, both first flagged 8/21, still wrong on this 8/23 recheck — going on 2 weeks unresolved): 800112196687 (PowerStation listing still has Playground pen-kit photos), 385626892405 (milling bit listing still has fan-blade/bearing photos).
+  - Lexington -> Uriah (RE-NOTIFY): 157840648182 (Jeff Gordon jacket — still has Haas/GMAC/Bosch jacket photo mixed in). GOOD NEWS: 157921257295 (Earnhardt jacket), also flagged 8/21, checked out fine this run on full-res (orange photo was the jacket's own satin lining, not a wrong garment) — resolved, no further action.
+  - Roanoke -> Benjie: 306926372024 (DeWalt drill — separate from the title fix above, one photo shows an unrelated "Atomic"-branded tool).
+- CONFIRMED category (d) genuinely ambiguous, flag-only, no action: Harrisonburg 800055373631 (PS3 CECH-4001B/80GB — body style matches Super Slim family but no full-res photo shows a legible capacity sticker; Super Slim historically shipped 12GB/500GB not 80GB, so the capacity claim is plausible-but-unconfirmed either way).
+- Two items previously flagged 8/02 and 8/16 and fixed 8/21 (Harrisonburg Kindle 800406852492, Roanoke mirror 298226614316) were rechecked this run and confirmed still holding correctly — no regression.
+- Report DM'd to Joshua only (U03BB52MDSA), not posted to any team channel.

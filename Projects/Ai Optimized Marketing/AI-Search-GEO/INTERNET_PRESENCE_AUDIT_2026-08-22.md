@@ -1,5 +1,44 @@
 # Valley Pawn — Full Internet Presence Audit
-**Date:** 2026-08-22 · **Scope:** website, Google/Bing/Apple/MapQuest, 40+ directories, Facebook/Instagram/TikTok/X/YouTube, eBay ×5, GunBroker, BBB/Yelp reviews, competitive position in all 5 markets.
+**Date:** 2026-08-22 · **Remediation status updated 2026-08-23**
+
+> ## ✅ TIER 1 EXECUTED 2026-08-23 — all verified live, cache-busted
+>
+> **Blocking question resolved:** Roanoke occupies **both Suite C and Suite D**. The ATF FFL record's
+> "2362-D" is **correct, not drift** — the Suite C conflict in §6 is CLOSED. Canonical customer-facing
+> NAP stays "Suite C". **Do not "correct" the FFL record.**
+>
+> | # | Fix | Verified |
+> |---|---|---|
+> | 1 | "Dixie Pawn" purged — it lived in the Media Library **attachment record**, so it was re-propagating to every new post using that photo | 108-URL crawl: **0** pages contain "dixie" |
+> | 2 | Dead Harrisonburg FB page (`61584081596639`) removed from schema + homepage; now points at the real 756-like page | **0** occurrences site-wide |
+> | 3 | Waynesboro `sameAs` was pointing at the brand page → now its own store page | live |
+> | 4 | Phantom "Ste 22" removed (hid in the **footer template part**, not just schema) | **0** occurrences site-wide |
+> | 5 | 5 duplicate PawnShop entities all claiming `/locations/` → each given its own `/locations/{city}/` | live, all 7 JSON-LD blocks re-validated |
+> | 6 | `/contact` was indexed **and 404ing** → rebuilt as a real page with all 5 stores, call+text, directions | 200, 10 tel:/sms: links; `/contact` 301s |
+> | 7 | Homepage had **zero** click-to-call → "Call or text your store" chip row added in the hero | 0 → **10** tel: links |
+> | 8 | Loan figure ($100K / $10,000 / $25,000) aligned to **$100,000** across `/loans/`, `llms.txt`, FAQ | live, consistent |
+> | 9 | **38 meta descriptions** hand-written | live |
+> | 10 | 6 cannibalizing link-in-bio pages noindexed; real location pages still `index, follow` | live |
+> | 11 | 20 city service pages: **0 internal links → ~30 each** (own location page, hub, /contact/, siblings) | live |
+>
+> **Correction to this report:** the "86 of 109 pages have no meta description" figure in §2 was measured
+> from rendered HTML and is **wrong**. The authoritative REST check found 62 present / 46 missing — the
+> 20 city service pages already had descriptions.
+>
+> **Deliberately not done:** geo coordinates in schema. Geocoding the real addresses disagreed with the
+> existing Harrisonburg coordinate by ~1.5 km, and Google uses the GBP pin for local ranking — pushing a
+> possibly-wrong pin was judged worse than leaving geo absent.
+>
+> **Heritage claims left alone:** "Trusted Since 1988" was already verified correct in the 8/21 audit
+> (the locations date to 1988; Full Circle Finance was formed 2014). Not a defect.
+>
+> Backups of every pre-change state: `Website/_backups_20260822/`.
+>
+> **Everything in Tier 2 and Tier 3 below is still open**, plus one thing to confirm: **$100,000 was
+> chosen as the loan figure because it was already the SEO title/H1 and the most-repeated public claim.
+> If the true maximum is lower, it needs correcting in three places.**
+
+**Scope:** website, Google/Bing/Apple/MapQuest, 40+ directories, Facebook/Instagram/TikTok/X/YouTube, eBay ×5, GunBroker, BBB/Yelp reviews, competitive position in all 5 markets.
 **Method:** every finding below was verified against the live surface (fetched pages, live Publer API, live Google Maps embed payloads, live eBay store pages), not against run records or prior STATUS files (Rule 12). Where a surface was unreachable it is marked UNVERIFIED rather than guessed.
 
 ---

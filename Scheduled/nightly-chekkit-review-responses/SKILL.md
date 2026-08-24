@@ -59,7 +59,29 @@ Navigate to https://dashboard.chekkit.io/reviews and respond to all 4-star and 5
 1. Confirmation that all 4 and 5-star reviews were responded to successfully, with a count of how many were responded to across all locations (combined Google + Facebook).
 2. A breakdown of any 1-3 star reviews that need attention, including: reviewer name, platform (Google/Facebook), store location, star rating, and a brief excerpt of the review. If there are no 1-3 star reviews needing attention, explicitly say "No 1-3 star reviews require attention tonight."
 
-Do NOT DM Preston Peters or Joshua Davis. Post only to the #chekkit-updates channel.
+Do NOT DM Preston Peters. Post the routine nightly summary only to the #chekkit-updates channel.
+
+**ADDED 2026-08-23 - LOW-STAR ESCALATION (additive; nothing about the 4/5-star response flow changes).**
+A 1-3 star review mentioned only in #chekkit-updates does not reliably get seen. In August 2026 two 1-star
+Culpeper reviews alleging gold lowballing sat unanswered for two weeks while this task ran nightly and
+correctly reported them to the channel every single night. Reporting is not escalation.
+
+So IN ADDITION to the channel summary above: if this run finds any review of 3 stars or fewer that has no
+response yet, send Joshua ONE Slack DM (channel D03BHQH5VGT), plain everyday language, e.g.:
+
+    Heads up - Culpeper got a 1-star review from [Name] on Google: [short snippet]. Nobody has replied yet.
+
+Rules for this DM:
+- Only for reviews at 3 stars or below with NO response yet.
+- ONE DM per run listing all of them - never one DM per review.
+- If there are no new low-star reviews, send nothing. Silence is the correct outcome.
+- Do NOT auto-reply to a low-star review. A human writes those. Keep skipping them in the response flow
+  exactly as the step above says.
+- Do not re-alert a review that was alerted on a previous run. Track alerted reviews in state.json in this
+  task folder (create it if absent), keyed by reviewer name + store + review date.
+- This is a customer-service escalation, NOT a failure alert, so it does not conflict with the Failure
+  Alert Policy at the top of this file.
+
 
 Example message format:
 ---

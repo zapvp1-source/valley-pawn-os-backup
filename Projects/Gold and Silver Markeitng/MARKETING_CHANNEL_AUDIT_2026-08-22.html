@@ -279,6 +279,16 @@
 
   <p class="lede">There is no Meta Ads account, no Google Ads account, no Meta Pixel, no GTM container, and no call tracking. Two of eleven planned GA4 events fire. Nothing joins a marketing touch to a Bravo transaction. Meanwhile 75% of the FY2025 Advertising line is two undifferentiated journal lumps, and $2,032 of it across 58 transactions is gas stations, barbershops and Uber rides. Even the money you do spend can't be evaluated.</p>
 
+  <div class="callout" style="background:var(--green-soft)">
+    <h3>Shipped since this audit was written — 23 Aug</h3>
+    <ul class="tight" style="margin-bottom:0">
+      <li><strong>The phantom "warranty" classifier is fixed.</strong> Boilerplate is now stripped before classification, so the brand tagline can't vote. It also surfaced collisions nobody had found: <code>heritage</code> was <em>100% artifact</em> (every hit was the footer's "since 2014"), and <code>community</code> was matching Valley Pawn's own store addresses on Walker and Davis Street. Signal thresholds are now per-account — the loop can no longer steer on n=8.</li>
+      <li><strong>Low-star reviews now escalate.</strong> The nightly task detected 1–3★ reviews all along but was explicitly told "Do NOT DM Joshua — post only to the channel." That line is why two 1-star Culpeper reviews sat two weeks. It now sends one plain DM per run, de-duplicated, and still never auto-replies to a low-star review.</li>
+      <li><strong>The September blackout is closed.</strong> 17 drafts now run Sep 10 → Dec 31 including the Christmas Layaway launch — and all 17 have had recipients attached, which they were missing entirely and could not have sent without. Store spotlights go to their own store segment; the rest to the engaged list. Nothing is scheduled or sent.</li>
+      <li><strong>Three findings in this report were wrong or already fixed</strong> and have been retracted in place rather than quietly deleted. See the correction note in section 03.</li>
+    </ul>
+  </div>
+
   <div class="callout">
     <h3>The one-sentence version</h3>
     <p>Valley Pawn produces roughly 42 social posts, one email blast, and 514 live eBay listings per week-equivalent — and the three highest-intent surfaces in the business (Google Business Profile, the phone number on the website, and the forfeited-loan list) are respectively unmeasured, missing, and idle.</p>
@@ -328,12 +338,27 @@ EBAY    Culpeper: 307 listings → $82 revenue per listing
     <h3>A large share of output lands on broken plumbing.</h3>
     <p>Not weak content — content delivered to an address that cannot receive it.</p>
     <ul class="tight">
-      <li><strong>Harrisonburg</strong> posted all quarter to Facebook page <code>474248069342834</code> — the page your own build spec labels <em>"legacy… do not post to it."</em> It also has the highest median reach of any store page (46). Best page, wrong target.</li>
+      <li><strong>Harrisonburg</strong> posts to Facebook page <code>474248069342834</code>, which the build spec labels <em>"legacy… do not post to it."</em> <strong>But do not simply repoint it</strong> — see the correction note below. The legacy page holds ~762 followers; the brand-correct page <code>795439020329931</code> holds ~21. The Page Merge has to happen first.</li>
       <li><strong>Roanoke</strong> published 81 posts into a profile with <strong>~35 followers</strong> — 15% of network output for 3.8% of reach. The setup doc to fix it exists and was never run.</li>
       <li><strong>SPF is a hard PermError</strong> on <code>fcfpawn.com</code> — two <code>v=spf1</code> records at the apex, neither including Brevo. SPF does not pass at all. <code>thevalleypawn.com</code> was never authenticated.</li>
-      <li><strong>JSON-LD does not parse</strong> on all five <code>sell-gold-{city}</code> pages — <code>"dayOfWeek": "["Monday",…]"</code>. Google discards the entire LocalBusiness + FAQ block on your five highest-intent commercial pages.</li>
       <li><strong>Meta Page tokens are dead</strong> (since 4 Jul, re-killed 21 Aug). <strong>eBay API returns 403</strong> on Marketing/Analytics/Seller Standards for all 5 stores, unchanged since June.</li>
     </ul>
+
+    <div class="ev" style="border-left-color:var(--red)">CORRECTION — 23 Aug, after re-verifying against the live site and the page records.
+
+RETRACTED: "JSON-LD does not parse on the five sell-gold pages."  NOT TRUE. Re-fetched all
+  five pages: 9 of 9 blocks parse cleanly on every one, zero quoted dayOfWeek. The original
+  finding was wrong and should not be actioned.
+
+RETRACTED: "Homepage and /loans/ cannot be called."  NO LONGER TRUE. The homepage now carries
+  10 tel: and 5 sms: links, /loans/ has 5 tel + 5 sms + a form, the dead Facebook page id is
+  gone from the Harrisonburg schema, and the personal email is out of the footer. Another
+  session shipped these after the crawl this audit was built on.
+
+REVISED: "Repoint Harrisonburg to the canonical page."  Acting on this as written would have
+  moved posting from a 762-follower page to a ~21-follower one — repeating the Roanoke mistake
+  rather than fixing it. The Page Merge (legacy -> canonical, absorbing the 762) must land
+  first. Left unchanged deliberately.</div>
   </div>
 
   <div class="finding sev1">
@@ -398,10 +423,10 @@ Tracking plan .............. 11 events, 8 dimensions, GTM container — 2 events
     <thead><tr><th>#</th><th>Action</th><th class="n">Effort</th></tr></thead>
     <tbody>
       <tr><td>1</td><td><strong>Set a 100-listing floor per store on eBay for Harrisonburg, Lexington, Waynesboro.</strong><span class="why">Publish listings-added-per-store weekly next to sales. Worth $75K–150K/yr gross on proven per-store yield. Largest number on the board.</span></td><td class="n"><span class="pill p-m">M</span></td></tr>
-      <tr><td>2</td><td><strong>Repoint Harrisonburg to the canonical Facebook page; stand up the real Roanoke page.</strong><span class="why">Redirects ~94 posts/quarter from dead targets to real audiences. Harrisonburg already has the network's best median reach on the wrong page.</span></td><td class="n"><span class="pill p-s">S</span></td></tr>
-      <tr><td>3</td><td><strong>Put Call / Text / Directions on every page — sticky mobile bar plus a real footer NAP block.</strong><span class="why">Homepage and <code>/loans/</code> currently have zero phone links; the footer's only contact is Joshua's personal email as unlinked plain text. <code>/retail/</code> already proves the pattern works.</span></td><td class="n"><span class="pill p-s">S</span></td></tr>
+      <tr><td>2</td><td><strong>Run the Harrisonburg Page Merge, then stand up the real Roanoke page.</strong><span class="why">Merge the 762-follower legacy page into the brand-correct one so the audience survives the rename — then Publer can be repointed safely. Needs the Meta Page Merge UI, so it needs you. Do not repoint before the merge.</span></td><td class="n"><span class="pill p-m">M</span></td></tr>
+      <tr><td>3</td><td><strong>Publish the review asset — <code>aggregateRating</code> is still missing.</strong><span class="why">Re-verified 23 Aug: zero <code>aggregateRating</code> on homepage, <code>/loans/</code> and the location pages, while 1,559 real Google reviews at 4.88 sit unused. The click-to-call half of this item is now done.</span></td><td class="n"><span class="pill p-m">M</span></td></tr>
       <tr><td>4</td><td><strong>Switch email from list-wide blasts to per-store Store Spotlight sends.</strong><span class="why">The five store segments were built 22 Jul and have never been used once. Measured 250 vs 1.42 calls per 1,000. Also stage 12 weeks of drafts — the calendar runs dry 3 Sep, right before Christmas Layaway.</span></td><td class="n"><span class="pill p-s">S</span></td></tr>
-      <tr><td>5</td><td><strong>Fix the <code>dayOfWeek</code> JSON-LD bug on the five gold pages.</strong><span class="why">A quoting error is hiding LocalBusiness and FAQ markup on the highest-margin intake pages. <code>sell-gold-roanoke</code> currently ranks 8th of 8, behind six gold specialists. Twenty-minute fix.</span></td><td class="n"><span class="pill p-s">S</span></td></tr>
+      <tr><td>5</td><td><strong>Merge the two <code>v=spf1</code> records on <code>fcfpawn.com</code> into one.</strong><span class="why">Two apex SPF records is a PermError — SPF passes for nobody today. Needs the DNS provider for fcfpawn.com, which is not the WordPress.com zone. Google Workspace mail for 5 stores rides on this domain, so it gets done carefully, not fast.</span></td><td class="n"><span class="pill p-m">M</span></td></tr>
       <tr><td>6</td><td><strong>Delete one of the two SPF records; finish authenticating <code>thevalleypawn.com</code>.</strong><span class="why">SPF is a hard PermError today — it does not pass for anyone. Then point DMARC <code>rua=</code> at a mailbox someone here reads instead of Brevo's.</span></td><td class="n"><span class="pill p-s">S</span></td></tr>
       <tr><td>7</td><td><strong>Fix Lexington's 4.23% late-shipment rate before the 20 Sep re-evaluation.</strong><span class="why">Below Standard status has cost $494.69 in penalty fees in three months (~$1,979/yr). Buy every label through eBay, enforce next-day handling. Pure margin, hard deadline.</span></td><td class="n"><span class="pill p-s">S</span></td></tr>
       <tr><td>8</td><td><strong>Turn on Promoted Listings at the four stores running $0.</strong><span class="why">The only channel where attribution is native — eBay charges only on an ad-attributed sale, so it cannot be spent unprofitably. Culpeper is the control at $251/3mo.</span></td><td class="n"><span class="pill p-s">S</span></td></tr>
