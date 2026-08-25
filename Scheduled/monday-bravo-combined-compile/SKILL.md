@@ -224,9 +224,21 @@ Nth *<NAME>* (<STORES>) — $<amt>
 STEP 4 — Post to #store-performance (C03CGTN3KN1) — store rankings
 ==========================================================================
 
-This requires all 5 per-store `<YESTERDAY>_<STORE>_end-of-month.csv` files. If any are missing/error, SKIP this post and add a `⚠️ monday-store-rankings — N of 5 EOM CSVs available, skipping post until backfill` line to the Joshua DM.
+This requires a complete 5-store End-of-Month set. Look in this order:
 
-If all 5 available, run the parse + format per `/Users/joshuadavis/Documents/Claude/Scheduled/monday-store-rankings/SKILL.md`. The post format is the trophy-medal ranking + 8-metric breakdown shared in the SKILL.
+1. `output/<YESTERDAY>_<STORE>_end-of-month.csv` (legacy — the Sunday run stopped producing these after 2026-06-22).
+2. **FALLBACK (added 2026-08-24):** the freshest complete 5-store `output/<DATE>_<STORE>_end-of-month.xlsx` set no more than 8 days old. These are produced nightly by the `asset-recovery-eom` trigger since the 2026-08-21 migration, so a set from Saturday or Sunday will normally exist. Parse with openpyxl (data_only=True). Extraction notes for the xlsx layout (validated 2026-08-24 against the 2026-08-17 post):
+   - Loan Balance = last numeric in the `Ending Loan Base` row; Inventory Balance = last numeric in `Ending Inventory Base`.
+   - Retail Sales = Sales Activity section: `Taxable Sales` Total (rightmost) + `Nontaxable Sales` Total.
+   - **Pawn Service Charges = the daily-summary `Total:` row, "Interest and Fees" column (2nd numeric).** In the xlsx this row IS populated and it is what all historical posts track. Do NOT use in-store I+F + MobilePawn I+F — that overstates PSC vs. the posted series.
+   - Scrap Sales = abs of `Refined (Cost of Sales)` Month value.
+   - Layaway Balance = the `Ending Balance` row in the Layaways block (the one whose row also carries Layaway Deposits — the larger paired value, NOT the Layaway Credits block).
+   - Net Revenue MTD = PSC + MobilePawn Interest+Fees+Misc + MobilePawn Convenience Fees + `Sales Revenue (Profit)` Total.
+   - State the as-of date in the post header (e.g. `Report Period: <DATE> (month-to-date)`).
+
+Only if NEITHER source yields a complete 5-store set: SKIP this post and add a `⚠️ monday-store-rankings — N of 5 EOM files available, skipping post until backfill` line to the Joshua DM.
+
+If all 5 available, run the parse + format per `/Users/joshuadavis/Documents/Claude/Scheduled/_archive-20260821/monday-store-rankings/SKILL.md` (archived 2026-08-21 — still the canonical post format). The post format is the trophy-medal ranking + 8-metric breakdown shared in the SKILL.
 
 (Read that SKILL inline at run time to get the canonical format.)
 

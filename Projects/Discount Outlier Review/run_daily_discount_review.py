@@ -314,31 +314,53 @@ def build_slack_message(valued: list[dict], date: datetime.date, missing_stores:
     # On a closed day (Wed = CUL only) or a store's quiet day, it still shows with
     # Today $0 and its running YTD, so nobody's cumulative number silently vanishes.
     stores = sorted(set(r["store"] for r in real) | set(store_ytd or {}))
-    total_items = 0
-    total_disc_dollars = 0.0
-    total_price_dollars = 0.0
-    total_flags = 0
+
+    # Rank the stores by TODAY's weighted-avg discount % (Joshua 2026-08-23):
+    # lowest discount % = 1st place (best discipline), highest = last place.
+    # Only stores with actual sales today can be ranked — a store with no sales
+    # today has no discount % to rank on, so it's shown below the ranked list,
+    # unranked, exactly as before.
+    RANK_BADGE = {1: "🥇 1st", 2: "🥈 2nd", 3: "🥉 3rd"}
+
+    def _ordinal(n):
+        return RANK_BADGE.get(n, f"{n}th")
+
+    ranked_stores = []
+    no_sale_stores = []
     for st in stores:
         si = [r for r in real if r["store"] == st]
         disc_sum = sum(r["discount_dollars"] for r in si)
         price_sum = sum(r["price"] for r in si)
         fl = sum(1 for r in si if r["flag"])
-        total_items += len(si)
+        wavg = (disc_sum / price_sum) if price_sum else None
+        if not si:
+            no_sale_stores.append(st)
+            continue
+        ranked_stores.append({"store": st, "n": len(si), "disc_sum": disc_sum,
+                              "price_sum": price_sum, "fl": fl, "wavg": wavg})
+    ranked_stores.sort(key=lambda s: s["wavg"] if s["wavg"] is not None else 0.0)
+
+    total_items = 0
+    total_disc_dollars = 0.0
+    total_price_dollars = 0.0
+    total_flags = 0
+    for rank, s in enumerate(ranked_stores, 1):
+        st, disc_sum, price_sum, fl, wavg = s["store"], s["disc_sum"], s["price_sum"], s["fl"], s["wavg"]
+        total_items += s["n"]
         total_disc_dollars += disc_sum
         total_price_dollars += price_sum
         total_flags += fl
-        wavg = (disc_sum / price_sum) if price_sum else None
         # Day AND year-to-date on the same line, per Joshua 2026-08-13 — the team should
         # see today's number next to the cumulative annual one, not in a separate block.
         ytd_part = f" | *YTD ${store_ytd[st]:,.0f}*" if (store_ytd and st in store_ytd) else ""
-        if not si:
-            # Traded earlier this year but nothing sold today (or closed today).
-            lines.append(f"• *{st}* — no sales today{ytd_part}")
-            continue
         stt = "✅" if (wavg is not None and wavg < FLAG_PCT) else "🚨"
         fw = "flag" if fl == 1 else "flags"
-        lines.append(f"• *{st}* — {len(si)} items | Avg discount {_pct(wavg)} {stt} | "
+        lines.append(f"• {_ordinal(rank)} · *{st}* — {s['n']} items | Avg discount {_pct(wavg)} {stt} | "
                      f"Today ${disc_sum:,.0f}{ytd_part} | {fl} {fw}")
+    for st in no_sale_stores:
+        # Traded earlier this year but nothing sold today (or closed today) — unranked.
+        ytd_part = f" | *YTD ${store_ytd[st]:,.0f}*" if (store_ytd and st in store_ytd) else ""
+        lines.append(f"• *{st}* — no sales today{ytd_part}")
     if missing_stores:
         lines.append(f"_No data file for: {', '.join(missing_stores)}_")
 
@@ -494,9 +516,9 @@ def write_excel(valued: list[dict], date: datetime.date, path: str) -> bool:
 
     real = [r for r in valued if not (r["generic_sku"] or r["placeholder_price"])]
 
-    ws2["A3"] = "Store Leaderboard (real SKUs only)"
+    ws2["A3"] = "Store Leaderboard (real SKUs only) — Rank 1 = lowest discount %, Rank 5 = highest"
     ws2["A3"].font = FONT_BOLD
-    hdrs2 = ["Store", "Items Sold", "Wtd Avg Discount %", "Total Discount $", "Flags", "Into-a-Loss"]
+    hdrs2 = ["Rank", "Store", "Items Sold", "Wtd Avg Discount %", "Total Discount $", "Flags", "Into-a-Loss"]
     for ci, h in enumerate(hdrs2, 1):
         _hdr(ws2, 4, ci, h)
     stores = sorted(set(r["store"] for r in real))
@@ -509,15 +531,19 @@ def write_excel(valued: list[dict], date: datetime.date, path: str) -> bool:
         leaderboard_rows.append((store, len(si), wavg, disc_sum,
                                   sum(1 for r in si if r["flag"]),
                                   sum(1 for r in si if r["into_loss"])))
-    leaderboard_rows.sort(key=lambda x: -(x[2] or 0))
-    for ri, (store, n, wavg, disc_sum, flags, loss) in enumerate(leaderboard_rows, 5):
-        _cell(ws2, ri, 1, store, bold=True)
-        _cell(ws2, ri, 2, n)
-        _cell(ws2, ri, 3, wavg, fmt='0.0%', fill=(FILL_FLAG if wavg is not None and wavg >= FLAG_PCT else None))
-        _cell(ws2, ri, 4, disc_sum, fmt='"$"#,##0.00')
-        _cell(ws2, ri, 5, flags, fill=(FILL_FLAG if flags else None))
-        _cell(ws2, ri, 6, loss, fill=(FILL_CRIT if loss else None))
-    for ci, w in enumerate([10, 12, 18, 16, 9, 12], 1):
+    # Rank ascending by discount % (Joshua 2026-08-23): lowest discount = 1st place,
+    # highest discount = last place — same convention as the Slack post.
+    leaderboard_rows.sort(key=lambda x: x[2] if x[2] is not None else 0.0)
+    for rank, (store, n, wavg, disc_sum, flags, loss) in enumerate(leaderboard_rows, 1):
+        ri = rank + 4
+        _cell(ws2, ri, 1, rank, bold=True)
+        _cell(ws2, ri, 2, store, bold=True)
+        _cell(ws2, ri, 3, n)
+        _cell(ws2, ri, 4, wavg, fmt='0.0%', fill=(FILL_FLAG if wavg is not None and wavg >= FLAG_PCT else None))
+        _cell(ws2, ri, 5, disc_sum, fmt='"$"#,##0.00')
+        _cell(ws2, ri, 6, flags, fill=(FILL_FLAG if flags else None))
+        _cell(ws2, ri, 7, loss, fill=(FILL_CRIT if loss else None))
+    for ci, w in enumerate([6, 10, 12, 18, 16, 9, 12], 1):
         ws2.column_dimensions[get_column_letter(ci)].width = w
 
     next_row = 5 + len(leaderboard_rows) + 2

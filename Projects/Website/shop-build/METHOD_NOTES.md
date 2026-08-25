@@ -152,3 +152,32 @@ Verified live: 496 vp-card elements (exact match), single VP-SHOP-START marker, 
 woocommerce-shop occurrences (fix still holding), exactly one h1.vp-h1, and a valid ItemList
 JSON-LD block (8th ld+json script on the page — WP/Yoast injects Organization/PawnShop/FAQPage
 schema before it — numberOfItems=120, parses cleanly). Posted summary to #website successfully.
+
+## Run record - 2026-08-24 (scheduled nightly, sandbox bash)
+
+Ran via mcp__workspace__bash (direct outbound access to eBay + WordPress confirmed working).
+Copied fetch_now.py to fetch_today.py with BASE repointed at this session's mount path (still a
+manual step each run - the longstanding BASE-parameterization TODO is still open).
+
+Scraped 518 items across 5 stores (Culpeper 308, Waynesboro 39, Harrisonburg 35, Lexington 33,
+Roanoke 103); 26 weapons-adjacent excluded; published 492
+(Culpeper 303, Waynesboro 36, Harrisonburg 33, Lexington 29, Roanoke 91).
+
+Published via WP Application Password Basic Auth (vp-shop-nightly cred in .wp_app_credentials)
+directly to /wp-json/wp/v2/pages/833 instead of the admin-ajax nonce dance - simpler, no browser
+needed at all this run. Returned HTTP 200, id 833, status publish.
+
+Gotcha this run: first verification fetch (~immediately after publish) showed 496 live cards vs
+492 built, with 17 titles not in the built set at all - looked like a real mismatch. Root cause:
+WordPress.com's edge cache (a8c-cdn) served a stale cached HTML page even though the CDN
+server-timing header said "cache;desc=MISS" and a fresh cache-busting query string was used - the
+MISS apparently referred to a different cache tier than the one serving stale content. A ~20s
+wait and re-fetch showed "cache;desc=HIT" and the correct 492-card page. Lesson: don't trust a
+single immediate post-publish fetch as the verification - wait ~20s and re-verify before
+concluding failure. Confirmed via WP REST context=edit that the stored raw content was correct
+(492 cards, right modified timestamp) the whole time, which is what proved this was a cache
+propagation delay and not a bad publish.
+
+Verified live (after the 20s wait): 492 vp-card elements (exact match), single VP-SHOP-START
+marker, zero woocommerce-shop occurrences, exactly one h1.vp-h1, valid ItemList JSON-LD
+(numberOfItems=120, itemListElement length 120). Posted summary to #website successfully.

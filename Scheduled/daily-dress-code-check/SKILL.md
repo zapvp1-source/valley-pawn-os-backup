@@ -66,7 +66,7 @@ Employees may wear jackets, hoodies, or outerwear OVER their Valley Pawn shirt, 
 If no employees are visible at a location (empty counter, no one at workstations), mark that location as :white_check_mark: All in dress code. Do NOT use :white_circle: or write "No employees visible." That status DOES NOT EXIST. Every location gets either :white_check_mark: or :red_circle:, nothing else.
 
 ## Excluded Employees
-Exclude these from analysis: Hillary Davis, Joshua Davis, Sandi Cole, Preston Peters
+Exclude these from analysis: Hillary Davis, Joshua Davis, Sandi Cole, Preston Peters, Audrey Davis, Kennedy Davis, Madison Davis, Savannah Davis
 
 ## Locations to Check
 - **All days except Wednesday:** Check all 5 locations (Harrisonburg, Lexington, Culpeper, Roanoke, Waynesboro)

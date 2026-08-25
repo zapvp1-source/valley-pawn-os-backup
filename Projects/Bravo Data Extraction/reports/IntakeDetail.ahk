@@ -184,7 +184,26 @@ PullIntakeDetail(store, dateOrRange, outputDir) {
         ; report exposes DataItem children with AutoId FullDescription/Category;
         ; the default loan layout does not. So: select -> Ok -> check columns;
         ; if wrong, dismiss + reopen Custom Reports + re-select, up to 3 tries.
+        ; ------------------------------------------------------------------
+        ; [EMPTY-DAY FIX 2026-08-24] A zero-intake day (Sundays: stores are
+        ; closed) renders the correct report with ZERO DataItem rows. The
+        ; column probe below can only prove the layout by finding a row that
+        ; HAS FullDescription/Category children -- with no rows there is
+        ; nothing to find, so an empty day was indistinguishable from "wrong
+        ; report" and burned 3 selection retries x 5 stores (~20 min), which
+        ; wedged the watcher and starved items-to-price. Confirmed: every
+        ; Monday run (8/17 pulling Sun 8/16, 8/24 pulling Sun 8/23) failed
+        ; all 5 stores identically; every non-Monday run was CLEAN.
+        ; Fix mirrors the proven pattern already shipped in
+        ; SoldDiscountDetail.ahk: if the report SURFACE is present (Layouts
+        ; caret) but there are NO DataItems at all, that is a legitimate
+        ; empty result -- stop retrying and write a header-only CSV so a
+        ; quiet day leaves positive evidence on disk. A grid that HAS rows
+        ; but lacks the item columns is still a genuine wrong-report and
+        ; still retries exactly as before.
+        ; ------------------------------------------------------------------
         gridReady := false
+        emptyGrid := false
         Loop 3 {
             selAttempt := A_Index
             LogMessage("  step 3: select saved report '" . INTAKE_ELEMENTS["saved_report_value"] . "' (attempt " . selAttempt . ")")
@@ -203,6 +222,7 @@ PullIntakeDetail(store, dateOrRange, outputDir) {
             Sleep(5000)
 
             ; Verify the CORRECT report by its item-detail columns.
+            sawAnyRows := false
             Loop 20 {
                 items := 0
                 try {
@@ -210,6 +230,7 @@ PullIntakeDetail(store, dateOrRange, outputDir) {
                     items := root.FindElements({Type: "DataItem"})
                 }
                 if (items && items.Length) {
+                    sawAnyRows := true
                     for di in items {
                         kids := 0
                         try kids := di.FindElements({Scope: 2})
@@ -236,6 +257,52 @@ PullIntakeDetail(store, dateOrRange, outputDir) {
                 break
             }
 
+            ; [EMPTY-DAY FIX] No rows AT ALL, but the report surface is up ->
+            ; legitimate zero-intake day. Do not burn the remaining retries.
+            if (!sawAnyRows) {
+                if FindByName(INTAKE_ELEMENTS["layouts_caret"], 3000) {
+                    emptyGrid := true
+                    LogMessage("    [grid] report surface present with no data rows — treating as legitimate empty result (zero intake)")
+                    break
+                }
+            }
+
+            ; [DIAG 2026-08-24] Ground truth: log what the grid ACTUALLY
+            ; contains when the item-column probe fails. Without this we
+            ; cannot tell "right report, zero rows" from "wrong layout with
+            ; rows" from "stranded picker grid" -- all three look identical
+            ; in the old log line. Logs row count + the distinct child
+            ; AutomationIds of the first few rows.
+            try {
+                dRoot := GetBravoRoot()
+                dItems := dRoot.FindElements({Type: "DataItem"})
+                dCount := (dItems && dItems.Length) ? dItems.Length : 0
+                LogMessage("    [diag-grid] DataItem count=" . dCount)
+                seenIds := Map()
+                idx := 0
+                if (dCount) {
+                    for di in dItems {
+                        idx++
+                        if (idx > 5)
+                            break
+                        dk := 0
+                        try dk := di.FindElements({Scope: 2})
+                        if (!dk || !dk.Length)
+                            continue
+                        for k in dk {
+                            ka := ""
+                            try ka := k.AutomationId
+                            if (ka != "")
+                                seenIds[ka] := 1
+                        }
+                    }
+                }
+                idList := ""
+                for ka, _ in seenIds
+                    idList .= (idList = "" ? "" : ", ") . ka
+                LogMessage("    [diag-grid] child AutomationIds (first 5 rows): " . (idList = "" ? "(none)" : idList))
+            }
+
             ; Wrong report loaded -> dismiss and re-select (unless out of tries).
             LogMessage("    WARN: wrong report loaded (no item cols) - re-selecting, attempt " . selAttempt)
             try ClickByName(INTAKE_ELEMENTS["panel_cancel"], 3000)
@@ -255,26 +322,39 @@ PullIntakeDetail(store, dateOrRange, outputDir) {
                 Sleep(1500)
             }
         }
-        if (!gridReady)
+        if (!gridReady && !emptyGrid)
             throw Error("Claude Pawn Walks did not load after 3 selection attempts (wrong report / no item columns)")
-        LogMessage("    [layout] item-detail columns present in grid (FullDescription/Category)")
-        DismissPopups()
 
-        ; --- Walk the grid and write CSV ourselves ---------------------------
-        ; Bravo's Loans/Buys Custom Reports list view does NOT expose an export-
-        ; to-CSV button (only Layouts -> Show summary panel / Saved Layouts /
-        ; Delete Layout). Same constraint as the Customers Custom Reports view.
-        ; The proven workaround (see ChekkitInactives.ahk) is to walk the
-        ; DevExpress grid cells (Text elements with AutoId=PART_Content), group
-        ; them by Y into rows, and write the CSV ourselves.
-        LogMessage("  step 7: walk grid rows and write CSV")
-        rowsWritten := WriteIntakeDetailGrid(outputPath)
-        if (rowsWritten < 0) {
-            LogVisibleNames()
-            throw Error("Failed to walk buys grid (no PART_Content cells found)")
+        ; [EMPTY-DAY FIX 2026-08-24] Quiet day -> header-only CSV, then done.
+        ; Downstream must be able to tell "ran, zero intake" apart from
+        ; "never ran". Header matches the live report exactly.
+        if (emptyGrid) {
+            try FileDelete(outputPath)
+            FileAppend("Ticket Kind,Category,Full Description,Loan Amount,Associate`r`n", outputPath, "UTF-8-RAW")
+            LogMessage("    wrote header-only CSV (0 intake rows) -> quiet day is now provable on disk")
+            result["row_count"] := 0
+            DismissPopups()
+        } else {
+            LogMessage("    [layout] item-detail columns present in grid (FullDescription/Category)")
+            DismissPopups()
+
+            ; --- Walk the grid and write CSV ourselves -----------------------
+            ; Bravo's Loans/Buys Custom Reports list view does NOT expose an
+            ; export-to-CSV button (only Layouts -> Show summary panel / Saved
+            ; Layouts / Delete Layout). Same constraint as the Customers Custom
+            ; Reports view. The proven workaround (see ChekkitInactives.ahk) is
+            ; to walk the DevExpress grid cells (Text elements with
+            ; AutoId=PART_Content), group them by Y into rows, and write the
+            ; CSV ourselves.
+            LogMessage("  step 7: walk grid rows and write CSV")
+            rowsWritten := WriteIntakeDetailGrid(outputPath)
+            if (rowsWritten < 0) {
+                LogVisibleNames()
+                throw Error("Failed to walk buys grid (no PART_Content cells found)")
+            }
+            LogMessage("    wrote " . rowsWritten . " data rows to CSV")
+            result["row_count"] := rowsWritten
         }
-        LogMessage("    wrote " . rowsWritten . " data rows to CSV")
-        result["row_count"] := rowsWritten
 
         ; Back to Dashboard
         try ClickByName(INTAKE_ELEMENTS["panel_cancel"], 3000)

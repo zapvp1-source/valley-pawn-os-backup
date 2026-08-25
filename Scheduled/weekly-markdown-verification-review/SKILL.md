@@ -32,7 +32,7 @@ When you see any of those messages, immediately fire the next concrete tool call
 ---
 You are Part 2 of Valley Pawn's weekly aged-inventory markdown verification (Part 1: `weekly-markdown-verification-pull`, Sunday 7 PM ET, drops the raw data — this task reads it and reports). Purpose, directly from Joshua: verify that items sitting in inventory over a year have actually had their price marked down, and flag the ones that haven't. Joshua is directing stores to post their own "Aged Markdowns Complete" confirmations in the same channel this task posts to, so this becomes the real check behind those self-reports. As of 2026-08-13, Joshua also wants the gap split into Jewelry vs. everything else, since jewelry carries almost all the dollar exposure and needs separate attention from general merchandise.
 
-> ⚠️ **FAILURE ALERT POLICY (platform standard, v2):** If this run cannot complete its core work, send Joshua ONE plain-language Slack DM (channel D03BHQH5VGT): "Scheduled task weekly-markdown-verification-review did not complete — <date>." Nothing technical in that DM. Never post a failure/partial notice to any team channel or DM any store manager/employee.
+> ⚠️ **FAILURE HANDLING — Rule 16 (supersedes the old v2 Failure Alert Policy, updated 2026-08-24):** **Do NOT send a failure DM. Not to Joshua, not to any channel.** The previous version of this line told the run to DM Joshua "Scheduled task weekly-markdown-verification-review did not complete — <date>." That is now a rule violation: it is a technical failure notification naming an internal task, and Joshua has said explicitly that failure notices and tech jargon must never go to Slack. On 2026-08-24 that exact DM also fired *wrongly* — a full week of good data was on disk. If this run genuinely cannot produce numbers after exhausting the Step 1b retry, write what happened to `/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/BRAVO_KNOWN_ISSUES.md` and stop silently. Joshua reads status files when he wants them. Never post a failure or partial notice to any team channel, and never DM a store manager or employee.
 >
 > ⚠️ **FIELD COMMUNICATION STANDARD v3 (binding):** `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/FIELD_COMMUNICATION_STANDARD.md`. The post below goes to a channel store staff read — plain everyday language only, no tool/system/pipeline names (never say Bravo, Cowork, pipeline, CSV, trigger, handler, "pulled from," "verified against"), no file paths, lead with the takeaway, no signature footer.
 >
@@ -41,7 +41,31 @@ You are Part 2 of Valley Pawn's weekly aged-inventory markdown verification (Par
 
 Steps:
 
-1. Find the data. Via osascript, `cat` the marker file `/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/logs/_last_markdown_verification_trigger.txt` if present (informational only). Then directly list the 5 newest `*_markdown-verification.csv` files: `do shell script "ls -t '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/output/' | grep markdown-verification | head -5"`. Confirm you have one file per store (CUL, HAR, LEX, ROA, WAY) from the SAME date — filenames are `<date>_to_<date>_<STORE>_markdown-verification.csv`. If fewer than 5 current-dated store files exist, use whatever most-recent file exists per missing store and note in the post which store's number is from an earlier week — do not fabricate a number for a truly missing store; say "no fresh check this week" for that store's line instead of guessing.
+1. Find the data — resolve the newest file **per store**, never a global `head -5`. Run this exact one-liner:
+
+```
+do shell script "cd '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/output' && for s in CUL HAR LEX ROA WAY; do f=$(ls -t *_${s}_markdown-verification.csv 2>/dev/null | head -1); echo \"$s ${f:-NONE}\"; done"
+```
+
+   Filenames are `<date>_to_<date>_<STORE>_markdown-verification.csv`. Then read the marker file `logs/_last_markdown_verification_trigger.txt` and the matching `results/<trigger-id>.result.json` — **the result JSON is the authoritative record of which stores actually succeeded**, listing per-store `status`, `row_count`, `output_path` and `error`. Read it before concluding anything about a store.
+
+   > ⚠️ **HARDENING (2026-08-24) — never revert to `ls -t '<output>/' | grep markdown-verification | head -5`.** On 2026-08-24 that command returned a stale, partial directory listing: it showed only the 2026-08-13 files and completely hid the newer 2026-08-21 (5/5 stores) and 2026-08-23 (3/5 stores) sets that were sitting right there on disk. The run concluded "no fresh data this week," skipped the report, and sent Joshua a false failure DM — a full week of real data was on disk the whole time. Root cause: `output/` holds ~2,200 files and is written by the Windows VM through a Parallels shared folder, so directory enumeration can lag or truncate. **A "no files found" result is NOT sufficient evidence that the pull failed.** If any store resolves to NONE, you MUST confirm with an independent command before acting on it — `find '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction' -name '*markdown-verification*.csv'` walks the tree directly and did not exhibit the stale listing. Only after `find` also comes back empty may you treat data as genuinely missing.
+
+1b. **If any store is missing, stale, or errored in the result JSON — re-pull it. Do not just report it (Rule 15, fix-forward).** The pipeline handler is `markdown-verification` and the trigger queue is safely serialized, so a retry drop is low-risk and needs no contention check. Write a trigger naming ONLY the failed stores:
+
+```
+do shell script "cd '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/triggers' && cat > 'markdown-verification-retry-<UTC-id>.json' <<'EOF'
+{
+  \"id\": \"markdown-verification-retry-<UTC-id>\",
+  \"requested_at\": \"<ISO8601 -04:00>\",
+  \"reports\": [
+    {\"name\": \"markdown-verification\", \"stores\": [\"LEX\",\"ROA\"], \"date\": \"<today YYYY-MM-DD>\"}
+  ]
+}
+EOF"
+```
+
+   Then poll for completion — the trigger moves `triggers/` → `claimed/` → `processed/`, and `logs/<id>.log` plus `results/<id>.result.json` appear. Budget ~150–260s **per store**, and note the watcher processes one trigger at a time, so if another job is already claimed you will wait for it to finish first. Poll in ≤18s sleeps (the osascript wrapper kills calls over ~25s) for up to ~20 minutes. If the retry lands, use the fresh numbers. If it does not land in time, fall back to the most recent file per store and note in the post which store's number is from an earlier week — do not fabricate a number. Only if a store has NO file at all, ever, does its bullet become "no fresh check this week."
 
 2. Read each CSV via osascript `cat` (or a short inline `python3 -c '...'` one-liner if that parses more reliably — quoted commas appear in some Description fields). Columns are exactly: `Number,Status,Category,Description,Price,Sale Price,Cost,Date` (confirmed live 2026-08-13).
 
@@ -80,4 +104,4 @@ If a store had no fresh check this week (from step 1), replace its bullet with "
 
 5. Also DM Joshua (not the channel) one extra line the channel post does not carry, since he specifically asked to see trend/frequency, not just a snapshot: "Markdown check [DATE]: company-wide [X] items / $[Y] still not marked down (jewelry $[Yj] / general merch $[Ym]) — was [prior week's totals] if available, otherwise 'first run with the jewelry split, no prior week to compare yet'. Note: the report doesn't currently record WHEN an item was last marked down, only whether it currently has a reduced price — so this can't yet show whether markdowns are actively continuing vs. static. Ask Preston whether a last-price-change date can be added to the report if you want that." Save this run's totals to the running history file `/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/logs/_markdown_verification_history.csv` (append one row per store: `date,store,not_marked_count,not_marked_dollars,jewelry_count,jewelry_dollars,genmerch_count,genmerch_dollars` — via osascript; this file already has a 2026-08-13 baseline row per store in this exact format) so next week's DM can actually compare instead of asking Joshua to remember.
 
-6. If Step 1-3 cannot produce usable numbers for ANY store (e.g., the whole pull failed), do not post a partial/broken table to the channel — send the ONE Joshua DM per the failure policy instead and stop.
+6. If Step 1b's retry still cannot produce usable numbers for ANY store, do not post a partial or broken table to the channel and **do not send any Slack failure message** (Rule 16). Log what happened to `BRAVO_KNOWN_ISSUES.md` and stop. If SOME stores have numbers and others don't, that is not a failure — post the report with the stores you have and mark the rest "no fresh check this week," per Rule 15's skip-and-continue.

@@ -760,3 +760,28 @@ Reconciliation posted to #jewlery-counts (expected=Bravo, counted=PM sheet):
 All per-category variances were single-digit (-3 to +4). No anomalous OVER variance (no line showed Counted meaningfully exceeding Expected) — no DM sent to Joshua, this was a clean night.
 
 REPEAT-PATTERN CHECK: comparing to the 8/16 reconciliation (CUL -1, HAR +1, LEX -4, ROA +1, WAY -2) tonights spread (-3 to +4) is in the same tight, normal-noise range — no store/category is repeatedly drifting in one direction night over night. HARs +3 total and LEXs -3 total are both within the range already seen on 8/16 (LEX -4) and not yet a pattern.
+
+
+=== RUN 2026-08-24 (Monday) — jewelry-onhand-nightly-pull ===
+Open stores: CUL, HAR, LEX, ROA, WAY (Monday = all 5). Contention check clear (no claim in prior 30 min). Health gate PASS. Freeze window confirmed both sides (stores closed 6:00 PM; triggers dropped 8:36 PM; Bravo pull ran 8:36-9:44 PM; PM sheets posted by managers 6:10-7:07 PM — both sides inside the 6PM-10AM freeze window).
+
+Per-store Bravo results (all read via v2 cell, BoxReportName-verified, stable-read guard):
+- CUL: SUCCESS, 8/8 categories ok, 629282ms. Rings 631, Bracelets 123, Pendants 248, Charms 27, Brooches 21, Earrings 166, Chains 113, Necklaces 98.
+- HAR: partial, 7/8. Charms failed (no STABLE row total after retries) — HAR Charms IS on the confirmed-empty list, prior-day (8/22) CSV also Charms=error — treated as 0 per empty-category rule. Rings 460, Bracelets 50, Pendants 118, Charms 0(rule), Brooches 6, Earrings 48, Chains 74, Necklaces 49.
+- LEX: partial, 7/8. Brooches failed twice (no STABLE row total after 120s x2) — LEX Brooches IS on the confirmed-empty list, prior-day (8/22) CSV also error — treated as 0. Rings 277, Bracelets 37, Pendants 53, Charms 1, Brooches 0(rule), Earrings 51, Chains 28, Necklaces 18.
+- ROA: SUCCESS, 8/8 categories ok, 614391ms. Rings 568, Bracelets 129, Pendants 94, Charms 60 (matches known ROA-pendants-entered-as-charms standing case, stable night over night), Brooches 2, Earrings 90, Chains 97, Necklaces 68.
+- WAY: partial, 7/8. Charms failed — WAY Charms is NOT normally on the confirmed-empty list (had a real intake of 1 on prior dates), but prior-day (8/22) CSV also showed Charms=error — verified against prior day before treating as 0, per the rules explicit caveat. Rings 350, Bracelets 44, Pendants 62, Charms 0(rule, verified), Brooches 5, Earrings 54, Chains 45, Necklaces 23.
+
+PM count sheets: read via Chrome vision from #end-of-day for all 5 stores. CUL=Martin D., HAR=Walker Tapley, LEX=Uriah (sheet), ROA=Benjie Moore (sheet rotated 90°, used lightbox+zoom), WAY=Chadd. All sum-verified against each sheet's own written TOTALS line before use (CUL 1426 matched exactly, LEX 462 matched exactly, WAY 582 matched exactly, HAR 802 matched exactly after resolving a crossed-out/corrected Rings value; ROA total digit was illegible/cut off in the photo but the 5 individual category values were clearly legible and used directly). Category mapping applied: Necklaces(mapped)=Chains+Necklaces(raw), Pendants(mapped)=Pendants+Charms+Brooches(raw).
+
+Reconciliation posted to #jewlery-counts (expected=Bravo, counted=PM sheet):
+- CUL: Expected 1427 / Counted 1426 / Variance -1
+- HAR: Expected 805 / Counted 802 / Variance -3
+- LEX: Expected 465 / Counted 462 / Variance -3
+- ROA: Expected 1108 / Counted 1115 / Variance +7
+- WAY: Expected 583 / Counted 582 / Variance -1
+
+All per-category variances were single-digit (-5 to +6). No anomalous OVER variance (largest single-category over was ROA Earrings +6 and ROA Necklaces +2, well below the standing-case ROA-pendants scale of ~+61) — no DM sent to Joshua, this was a clean night.
+
+REPEAT-PATTERN CHECK: comparing to the prior logged run (CUL -1, HAR +3, LEX -3, ROA +1, WAY -1), tonight's spread (-3 to +7) is in the same tight, normal-noise range — no store/category is repeatedly drifting in one direction night over night. ROA's +7 total is the largest seen recently but is driven by small per-category noise (+6/+2/-1), not a single runaway category, so not flagged as anomalous.
+

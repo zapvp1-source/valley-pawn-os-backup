@@ -277,3 +277,12 @@ content, foliage anticipation, Friday night football, and "first cool morning" p
 Lane C appends verified local detail here as it finds it, with a confidence tag and a date. Anything
 that turns out wrong gets **struck and annotated, never silently deleted** — a wrong local fact that
 gets quietly removed will be rediscovered and re-posted by a future run.
+
+## Known gap — `com_local_news_desk` format (added 2026-08-24)
+The drift engine's `com_local_news_desk` format asks for "something verifiable that happened here
+this week" — genuine local news, sourced and dated. As of 2026-08-24 there is no live news-verification
+step in the vp-community-weekly pipeline (no news search run before drafting). Runs so far have
+substituted verified ongoing/seasonal facts already in this KB (market season dates, trail/park
+status, drive-in season, etc.) framed as "worth knowing this week" rather than actual breaking news —
+safe under Hard Rule 3, but not what the format was designed for. If a future session adds a real
+local-news search step, note it here and remove this gap notice.

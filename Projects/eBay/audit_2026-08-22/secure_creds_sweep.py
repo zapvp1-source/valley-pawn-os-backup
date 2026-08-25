@@ -75,17 +75,15 @@ for path in targets:
         shutil.copy2(path, bak)
         os.chmod(bak, stat.S_IRUSR | stat.S_IWUSR)
     open(path, 'w').write(new)
-    # verify
+    # verify by COMPILING ONLY -- never exec() an operational ~/ebay_*.py script (2026-08-22 incident)
     ok, err = True, ''
     try:
         compile(new, path, 'exec')
-        ns = {'__name__': 'notmain'}
-        try:
-            exec(compile(new, path, 'exec'), ns)
-        except SystemExit:
-            pass
-        if not (ns.get('APP_ID') or ns.get('APP') or ns.get('_VP_APP')):
-            ok, err = False, 'creds did not resolve'
+        # static check: loader line present and every literal actually replaced
+        if LOADER.strip().splitlines()[-1] not in new:
+            ok, err = False, 'loader not inserted'
+        elif any(('"%s"' % l in new) or ("'%s'" % l in new) for l in LITERALS):
+            ok, err = False, 'a literal secret is still present after rewrite'
     except Exception as e:
         ok, err = False, '%s: %s' % (type(e).__name__, str(e)[:90])
     if ok:

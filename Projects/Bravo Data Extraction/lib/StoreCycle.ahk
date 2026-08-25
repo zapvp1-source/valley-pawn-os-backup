@@ -244,7 +244,31 @@ SwitchStore(targetStore, password) {
     storeCandidates := [storeName, StrUpper(storeName), targetStore, StrUpper(targetStore)]
     seen := WaitForAnyByName(storeCandidates, 10000)
     if (seen = "") {
-        LogMessage("  SwitchStore: none of these store row Names matched: " . StrJoin(storeCandidates, ", "))
+        ; --- Retry once (added 2026-08-24) ---------------------------------
+        ; Root cause of the 2026-08-03 and 2026-08-24 FPD/CUL failures: the
+        ; Global Access store list can still be rendering when we scan for
+        ; row Names, especially late in a long multi-cell run (30+ store
+        ; switches deep). Confirmed in the 2026-08-23/24 combined-run log:
+        ; HAR and ROA hit this exact "none of these store row Names matched"
+        ; condition in the SAME run and self-healed on the very next store
+        ; switch attempt a few seconds later — CUL hit it too but had no
+        ; next attempt queued, so the cell just failed and the store was
+        ; dropped from that day's report. One re-click of Global Access plus
+        ; a fresh rescan reproduces that same incidental recovery on purpose
+        ; instead of leaving it to chance.
+        LogMessage("  SwitchStore: store row not found on first scan — re-clicking Global Access and retrying once")
+        try ScreenshotToFile(targetStore . "_switchstore-store-row-attempt1")
+        Sleep(1500)
+        try {
+            ClickByName("Global Access", 8000)
+            Sleep(1500)
+        } catch as eRetryGA {
+            LogMessage("  SwitchStore: retry Global Access click failed: " . eRetryGA.Message)
+        }
+        seen := WaitForAnyByName(storeCandidates, 10000)
+    }
+    if (seen = "") {
+        LogMessage("  SwitchStore: none of these store row Names matched after retry: " . StrJoin(storeCandidates, ", "))
         ENSURESTORE_LAST_CAUSE := "store-row"
         try ScreenshotToFile(targetStore . "_switchstore-store-row")
         return false

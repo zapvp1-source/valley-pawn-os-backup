@@ -185,19 +185,34 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--line);font-si
 <li><strong>The /shop/ page has no H1 and no meta description.</strong> 504 products, one URL, no <span style="font-family:var(--mono);font-size:14px">Product</span> or <span style="font-family:var(--mono);font-size:14px">ItemList</span> structured data — so it is ineligible for Google product rich results and free Shopping listings. The Organization, PawnShop and FAQ schema are all in place; product schema is the one that's missing.</li>
 <li><strong>Page weight and speed.</strong> 504 cards and 511 images on a single page; full load measured at 5.6 seconds. Pagination or lazy-rendering below the first 60 cards would cut that hard.</li>
 <li><strong>Blog cannibalisation.</strong> 46 posts, and at least a dozen are near-duplicate pairs competing for the same query — "build an emergency fund" three times, "pawn loans vs payday loans" twice, "pawn shop myths" twice, "buying pre-owned power tools" twice, "selling silver" twice. The default <span style="font-family:var(--mono);font-size:14px">hello-world</span> post is still published.</li>
-<li><strong>Duplicate location pages.</strong> Two full sets exist — pages 419–423 and 749–753 — for the same five towns. Local SEO splits between them.</li>
+<li><strong>Two competing sets of location pages.</strong> <span style="font-family:var(--mono);font-size:14px">/locations/culpeper/</span> (131 words, hero layout) and <span style="font-family:var(--mono);font-size:14px">/culpeper/</span> (320 words, narrow ad-landing layout) both exist and are both indexable, for all five towns. On inspection the top-level set looks like deliberate paid-ad landing pages rather than an accident — but they're competing with the real location pages for the same local queries. They should be <span style="font-family:var(--mono);font-size:14px">noindex</span>, not deleted. Neither set is linked from the homepage navigation.</li>
 <li><strong>Good news:</strong> the nightly eBay feed is healthy (page refreshed today), and every outbound eBay link now carries campaign parameters, so click attribution is wired — that gap from the July review is closed.</li>
 </ul>
 
-<h2>What I'd do, in order</h2>
+<h2>Already fixed</h2>
+<p>Applied in this session, live now — <strong>332 of 341 eBay listing revisions succeeded</strong>, and a random sample of each fix type was re-read from eBay afterwards to confirm it actually landed (8/8 verified on all three). Everything eBay-side is reversible from a state file.</p>
+<div class="scroll"><table>
+<thead><tr><th>Fix</th><th class="num">Scope</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Roanoke 14-day → 30-day returns</td><td class="num">95 of 103</td><td class="win">applied &amp; verified</td></tr>
+<tr><td>No-returns → 30-day returns</td><td class="num">44 of 45</td><td class="win">applied &amp; verified</td></tr>
+<tr><td>Culpeper Best Offer ON<br><span style="font-size:14px;color:var(--ink-3)">auto-accept at 90% of list, auto-decline below 75%</span></td><td class="num">193 of 193</td><td class="win">applied &amp; verified</td></tr>
+<tr><td>Retry for the 9 blocked by open Best Offers<br><span style="font-size:14px;color:var(--ink-3)">eBay won't change a return policy while an offer is pending</span></td><td class="num">9 listings</td><td>scheduled Aug 26</td></tr>
+<tr><td>/shop/ H1 added</td><td class="num">live page</td><td class="win">applied</td></tr>
+<tr><td>/shop/ Product/ItemList structured data</td><td class="num">top 120 items</td><td class="win">applied</td></tr>
+<tr><td>Nightly generator + task spec updated<br><span style="font-size:14px;color:var(--ink-3)">so the twice-daily rebuild keeps H1 + schema, and fails loudly if it doesn't</span></td><td class="num">permanent</td><td class="win">applied</td></tr>
+<tr><td>Default <span style="font-family:var(--mono);font-size:14px">hello-world</span> post unpublished</td><td class="num">1 post</td><td class="win">applied</td></tr>
+</tbody></table></div>
+<p><strong>Deliberately not applied: handling time 2–3 days → 1 day.</strong> That change only pays if the stores can actually ship in one business day, and Lexington is already Below Standard on late shipments at 4.23%. Pushing it blind across five stores risks putting more of them under. It needs each store's real ship-speed data first — which is the same Seller Hub check listed below.</p>
+<p style="font-size:15px;color:var(--ink-3)">Revert for the eBay changes: <span style="font-family:var(--mono);font-size:14px">vp_ebay_fix.py --revert --apply</span>, state at <span style="font-family:var(--mono);font-size:14px">~/vp_ebay_fix_state.json</span>. Generator backups end in <span style="font-family:var(--mono);font-size:14px">.bak-preseo-20260822</span>.</p>
+
+<h2>What's left, in order</h2>
 <div class="plan">
 <div class="plan-row"><div class="plan-when">This week</div><div class="plan-what"><ul>
-<li><strong>Lexington ships same-day, every day, until Sep 20.</strong> Nothing else on this list matters as much.</li>
-<li>Bulk-revise handling time to 1 day across all 5 stores.</li>
-<li>Roanoke: 14-day returns → 30-day, on all 103 listings.</li>
-<li>Fix the 45 listings that accept no returns.</li>
-<li>Turn Best Offer on for Culpeper's 193 listings that lack it.</li>
-<li>Confirm whether the other four stores' Promoted Listings campaigns are running — I could only verify Lexington's (paused), and that check needs each account's Seller Hub.</li>
+<li><strong>Lexington ships same-day, every day, until Sep 20.</strong> Nothing else on this list matters as much — it's the only lever that clears Below Standard and un-pauses the ads.</li>
+<li>Pull each store's late-shipment rate from its own Seller Hub, then drop handling time to 1 day at every store that can hold it.</li>
+<li>Confirm whether the other four stores' Promoted Listings campaigns are running — I could only verify Lexington's (paused), and that check needs each account's Seller Hub login.</li>
+<li>Set the <span style="font-family:var(--mono);font-size:14px">/shop/</span> meta description in Yoast (the field isn't writable over the REST API, so it needs one pass in wp-admin).</li>
 </ul></div></div>
 <div class="plan-row"><div class="plan-when">Next 30 days</div><div class="plan-what"><ul>
 <li>Photo + item-specifics sweep on the 367 listings under 8 photos; gate new listings at 8 photos and full specifics.</li>
@@ -208,8 +223,8 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--line);font-si
 </ul></div></div>
 <div class="plan-row"><div class="plan-when">60–90 days</div><div class="plan-what"><ul>
 <li><strong>Rebalance inventory to 100+ active listings each at Waynesboro, Harrisonburg and Lexington.</strong> This is the money.</li>
-<li>Add Product/ItemList structured data to /shop/ and give it an H1 and meta description.</li>
-<li>Consolidate the duplicate blog posts and duplicate location pages; 301 the losers.</li>
+<li>Paginate or lazy-render /shop/ below the first 60 cards — 504 cards on one URL is the 5.6s load.</li>
+<li>Consolidate ~12 duplicate blog topics down to one strong post each; <span style="font-family:var(--mono);font-size:14px">noindex</span> the top-level ad landing pages so they stop competing with <span style="font-family:var(--mono);font-size:14px">/locations/</span>.</li>
 <li>Put SKUs on listings. All 514 are missing them, which is why nothing reconciles back to Bravo automatically and why double-sell risk is manual.</li>
 <li>Expand the eBay app's OAuth scopes — Marketing, Analytics and Seller Standards all return 403 today, so Promoted Listings and traffic data can't be automated.</li>
 </ul></div></div>

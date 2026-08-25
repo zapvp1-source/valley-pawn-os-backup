@@ -57,9 +57,18 @@ For each store, open the public listing and compare Name / Address / Phone / Hou
 Canonical NAP:
   • Culpeper — 571 James Madison Highway, Culpeper, VA 22701 — (540) 445-5510 — Mon–Sat 10am–6pm (ONLY store open Wednesdays)
   • Waynesboro — 1321 West Broad Street, Waynesboro, VA 22980 — (540) 221-6346 — Mon,Tue,Thu,Fri,Sat 10am–6pm (closed Wed & Sun)
-  • Harrisonburg — 1790 East Market Street, Ste 22, Harrisonburg, VA 22801 — (540) 574-4500 — closed Wed & Sun
+  • Harrisonburg — 1790 East Market Street, Harrisonburg, VA 22801 — (540) 574-4500 — closed Wed & Sun
   • Lexington — 125 Walker Street, Lexington, VA 24450 — (540) 461-8349 — closed Wed & Sun
   • Roanoke — 2362 Peters Creek Road, Suite C, Roanoke, VA 24017 — (540) 562-0776 — closed Wed & Sun
+
+> 📌 **CANONICAL NAP CORRECTIONS (2026-08-23, confirmed by Joshua — do not revert):**
+> 1. **Harrisonburg has NO suite number.** It is "1790 East Market Street" — full stop. The old
+>    "Ste 22" that used to be in this file was WRONG, and was removed from our own website schema
+>    and footer template on 2026-08-23. If "Ste 22" appears on ANY listing, that is a DEFECT to
+>    correct — never treat it as canonical.
+> 2. **Roanoke occupies BOTH Suite C and Suite D.** Customer-facing canonical stays "Suite C".
+>    The ATF FFL record reads "2362-D" — that is **CORRECT, not drift.** Never "fix" 2362-D and
+>    never flag it as an error. Where the full footprint is stated, "Suite C & D" is correct.
 SOURCE-OF-TRUTH RULE (added 2026-08-03 after 5 weeks of misattributed drift). The public map page is a RENDERED surface, not our data. Bing Maps composes its address line from TomTom/OpenStreetMap geodata, which regularly disagrees with a perfectly correct Bing Places listing. Before flagging any Bing address as drift, open the owning console and compare:
 - Bing Places console: https://www.bing.com/forbusiness/management (signed in as Joshua; per-store pages at /forbusiness/singleEntity?bizid=<id>)
   • Waynesboro 7ddd697b-9fe1-4c2c-b509-f1f129248ffb · Harrisonburg d3db1bc6-bf38-4695-bc02-180a9bd4b3da · Roanoke 9dd5c903-6a00-4c6f-86c0-41c8178473b6 · Culpeper a73bfbe6-a8f5-4b0c-b098-4246d9242376 · Lexington 042deef9-9f27-4045-9def-387e727b3c09

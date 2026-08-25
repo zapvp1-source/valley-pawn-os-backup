@@ -31,6 +31,19 @@ and MUST verify+stamp any OPEN item's next-run outcome before starting new work.
   Reconciliation STATUS.md 2026-08-09 entry.
 
 ## OPEN / AWAITING VERIFICATION
+
+- 2026-08-24 OPEN: **markdown-verification LEX hangs mid grid-walk when focus is stolen from Bravo.** Failed two runs in a row on the same store. 2026-08-23 19:xx: "Grid did not render within 300s" (LEX), plus "EnsureStore failed for ROA" — trigger `markdown-verification-2026-08-23T23-01-10`, overall status `partial`, 3/5 stores good (CUL 250 / HAR 241 / WAY 210 rows). A clean 2-store retry (`markdown-verification-retry-2026-08-24T12-36-22`) reproduced it: LEX selected the saved report fine, ran it fine, `grid rendered with 22 initial DataItems after 13s` at 08:52:44 — then produced ZERO further log lines for 9+ minutes and never released the claim.
+  - **Correlation worth chasing:** `foreground_keeper.log` logged `Bravo not foreground -> activate` at **08:52:45** — one second after the grid rendered, i.e. exactly when the PageDown/Show-More walk begins. Something took foreground from Bravo at the moment the walk started; the keeper re-activated Bravo, but the walk appears to have already lost its scroll target and then blocked forever instead of erroring out.
+  - **Two separate defects here, don't conflate them:** (1) whatever steals focus at that moment, and (2) the grid-walk having no watchdog — it hung indefinitely rather than failing after a bounded wait, so the trigger sat in `claimed/` and only the stale-claim sweeper will release it. Defect (2) is the more valuable fix: a bounded walk timeout would have turned an 9-minute silent hang into a normal per-cell error, letting the remaining store (ROA) still run.
+  - **NOT yet fixed — deliberately.** Both fixes land in hardened shared grid-walk code that ~70 report handlers depend on. Per the additive-only rule that is a reviewed change, not a mid-run patch. Flagging here rather than touching it unilaterally.
+  - **No reporting impact this week:** the Aug 24 markdown report posted on time using CUL/HAR/WAY from the 08-23 pull and LEX/ROA from the complete 08-21 pull, with the older two labelled in the post.
+- 2026-08-24: weekly-fpd-ranking dropped Culpeper 2 Mondays running (2026-08-03, 2026-08-24) via
+  a "store-row" name-scan miss in SwitchStore Step 4 -- confirmed a render-timing race (same miss
+  self-healed for HAR/ROA in the same 2026-08-24 run, just not for CUL). FIX applied to
+  lib/StoreCycle.ahk (one in-place retry: re-click Global Access + rescan before failing). Backup:
+  lib/StoreCycle.ahk.bak-pre-storerow-retry-fix-2026-08-24. NOT YET LIVE-VERIFIED -- needs a watcher
+  restart (AHK doesn't hot-reload #includes) and next Monday's run as the real test. Full writeup
+  at the bottom of this file, 2026-08-24 entry. Two backfill-owed posts in #first-payment-default.
 - 2026-08-04: post-to-accounting-post's `PtaPostClickPostFor` ("real-click" the per-day Post button) intermittently fails with "could not click Post button" even though the button is visibly present and a genuine manual mouse click on the same button works instantly (verified live on HAR 7/31/2026 2026-08-04). The function already uses a physical MouseMove+Click (not synthetic UIA Click) with a 30-pass scroll-into-view loop, so the bug is likely in the viewport-band math (bandTop/bandBot) or a stale grid re-render race, not a "needs real-click" issue like the GL Ok-button had. Reproduced 2x on HAR earlier in this same investigation before the manual post; the other 4 stores (CUL/LEX/ROA/WAY) posted successfully via the automation on the very next run with no code change, so this is intermittent, not a hard failure — needs a live repro with UIA element dump (log the row's BoundingRectangle vs bandTop/bandBot on failure) to pin down before attempting a fix. Do not re-attempt a blind timeout/reorder fix here — that pattern already cost 2 days on the GL issue above.
 - 2026-08-03: Truncation guard is LIVE in the shared walker (see SOLVED). Remaining follow-up: large grids still only yield ~78-268 of 2331 rows before the DevExpress virtualiser stops - the guard now makes that a loud failure instead of silent bad data, but a paging fix is still needed before any full-inventory pull can succeed. Small pulls unaffected.
 - 2026-08-03: ActiveInvDetails.ahk inv-select fix applied and verified live. Other Inventory-module handlers in the 07-30 ALREADY-FIXED bucket need the same re-check.
@@ -568,3 +581,36 @@ Also affects: `sales-tax-monthly-update` (same dependency, will fail the same wa
   both already have generous retry/wait windows and do NOT hard-fail-silent on a single BUSY hit, so they
   were left as-is; eom-bravo-gl-export's guard usage is correctly scoped to its real computer-use
   hang-recovery fallback.
+
+---
+## 2026-08-24 - ROOT CAUSE + FIX: weekly-fpd-ranking published incomplete (Culpeper missing) two Mondays running
+- Both 2026-08-03 and 2026-08-24 weekly-fpd-ranking posts to #first-payment-default shipped without
+  Culpeper ("pipeline cell failed" / EnsureStore error) -- an incomplete report went out to Slack both
+  times instead of the pipeline recovering or the run being held. Same failure twice = design problem
+  per vp-operating-rules Rule 15, not another retry-and-report.
+- ROOT CAUSE (read directly from logs/monday-bravo-combined-2026-08-23.log, not inferred): at
+  18:42:41, SwitchStore's store-row scan logged "none of these store row Names matched: Culpeper,
+  CULPEPER, CUL, CUL" and the fpd-cohort/CUL cell failed permanently on that single miss. This is a
+  RENDER-TIMING race, not a CUL-specific or auth problem -- the SAME "store-row" miss hit HAR (18:37:26)
+  and ROA (18:40:06) earlier in this exact run, ~30+ store-switches deep into the combined run, and both
+  of THOSE self-healed because the watcher happened to retry the whole cell for the next store a few
+  seconds later. FPD/CUL was the one case with no incidental next attempt queued up, so it just failed
+  and Culpeper silently dropped out of that day's ranking -- exactly matching what also happened
+  2026-08-03 (also a Monday combined run, also CUL, also "pipeline cell failed").
+- FIX (2026-08-24): lib/StoreCycle.ahk SwitchStore Step 4 (store-row match) now retries once in place --
+  re-clicks Global Access, waits 1.5s, and rescans the same Name candidates -- before declaring
+  ENSURESTORE_LAST_CAUSE="store-row" and failing the cell. This makes the incidental recovery that
+  already saved HAR/ROA in the same run happen on purpose for every store, including the last one in
+  the cycle with no follow-on attempt to piggyback on. Backup:
+  lib/StoreCycle.ahk.bak-pre-storerow-retry-fix-2026-08-24.
+- STATUS: code fix applied but NOT yet live-verified -- the AHK watcher must be restarted to pick up the
+  #include change (AHK does not hot-reload), and no live Bravo/Parallels access was available this
+  session to do that or to force-retry today's missing CUL row. Needs: (1) restart
+  bravo_watcher.ahk (`_restart_watcher.ps1`) next time someone has Parallels access, (2) once restarted,
+  next Monday's weekly-fpd-ranking is the live test -- if CUL still drops, this was not the whole story
+  and the 10s WaitForAnyByName timeout itself (not just the lack of a retry) should be the next thing
+  raised.
+- CORRECTION OWED: #first-payment-default has TWO incomplete posts on record (2026-08-03, 2026-08-24)
+  that undercount company-wide FPD exposure by omitting Culpeper. Flagged to Joshua directly rather than
+  posting a same-day backfill, since actually pulling Culpeper's numbers requires live Bravo access this
+  session did not have.

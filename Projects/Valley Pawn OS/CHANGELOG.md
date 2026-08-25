@@ -1,53 +1,257 @@
 # Valley Pawn - Enterprise Changelog
 
-## 2026-08-23 (website full audit + P0 fixes shipped)
-- Full crawl-based audit of thevalleypawn.com (all 108 sitemap URLs). Report + fix log in
-  `Projects/Website/AUDIT_2026-08-22/` (WEBSITE_AUDIT_2026-08-22.md, FIXES_APPLIED_2026-08-23.md).
-- **SHIPPED (every item verified against LIVE pages; site 200 / zero PHP fatals after each write):**
-  (1) **Global Call/Text/Directions bar** added to the `assembler//footer` template part — the
-  homepage previously had ZERO tel:/sms:/mailto: links anywhere, and 54 of 108 pages had zero tel:.
-  Now 0 pages without a phone link. Page-context aware (binds to the store named in the URL), with a
-  5-store chooser sheet everywhere else; no geolocation, no third-party service. Mobile bar reserves
-  76px on the right so it never covers the Chekkit bubble; desktop pill sits bottom-LEFT for the
-  same reason. Fires GA4 phone_click / **sms_click (previously untracked)** / directions_click with
-  store + source. Remove via the `VP-CONTACT-BAR-START`..`VP-CONTACT-BAR-END` markers.
-  (2) **Footer rebuilt as a real NAP block** — all 5 stores with address, hours, Call, Text,
-  Directions and `{city}@fcfpawn.com`. Removed `jdavis@fcfpawn.com` as the sitewide public contact
-  (customer leads were routing to Joshua instead of the stores). Chekkit webchat + mobile hamburger
-  fallback scripts preserved byte-for-byte.
-  (3) **Broken JSON-LD fixed on all 5 sell-gold-{city} pages** (509-513) — the `dayOfWeek` array was
-  wrapped in quotes, which invalidated the ENTIRE LocalBusiness + FAQ block on the highest-intent
-  gold pages, so Google was discarding all of it. Now 9/9 blocks parse on every page. Bug confirmed
-  ABSENT from the jewelry/silver/coins city pages, so the fix is correctly scoped.
-  (4) **40 meta descriptions written** — indexable pages missing one went 84 -> 34, and the 34
-  remaining are all blog posts (mostly duplicates pending consolidation). Non-destructive: 11 pages
-  that already had a human-written description were left untouched.
-  (5) **9 utility / link-in-bio pages noindexed** (748-753, 569, 832, 1110) — they were competing
-  with the real `/locations/{city}/` pages for brand+city queries. Still live for QR codes and
-  social bios. `/hello-world/` now 404s. Sitemap indexable count 108 -> 96. Verified the money and
-  location pages remain index,follow.
-  (6) **All 46 double-branded titles fixed at the root** (`... | Valley Pawn - Valley Pawn`) via a
-  `wpseo_title` filter that strips the trailing site name only when the brand already appears
-  earlier, so nothing loses its branding. Titles over 62 chars: 43 -> 36.
-  (7) Homepage badge `Trusted Since 1988` -> `Serving the Valley Since 1988`, matching the canonical
-  llms.txt / FAQ phrasing and removing the apparent conflict with the 44 pages that say "since 2014".
-- **NEW CAPABILITY — WPCode snippet 1135 "Valley Pawn — Yoast SEO fields in REST API"** (PHP, Run
-  Everywhere, ACTIVE). Registers `_yoast_wpseo_metadesc` / `_yoast_wpseo_title` / noindex + nofollow
-  for the REST API with permissions unchanged. This is what made (4)(5)(6) possible in bulk instead
-  of by hand, and it permanently unlocks meta management for `valley-pawn-blog-publisher` and
-  `vp-ai-search-autofix`.
-- **NEEDS JOSHUA — the max loan amount is stated three different ways:** `/loans/` title and body say
-  100K, the `/loans/` body also says 10,000, and llms.txt says 25,000. Not guessed. One answer makes
-  it consistent everywhere in a single pass.
-- **Top remaining gaps (NOT done):** 26 duplicate pages still need consolidation with 301s (the
-  likeliest cause of losing Harrisonburg and Roanoke); ~780KB and 38-41 render-blocking resources per
-  page (the Gutenberg DEVELOPMENT plugin is active on production and ships React to the front end);
-  `/in-store-inventory/` is still empty while sitting in primary nav as "Shop in Store"; no Meta
-  Pixel and no Google Ads conversion tag despite an active Meta ad program; Microsoft Clarity is
-  installed but emitting nothing; location pages are ~198 words vs competitors' 800-1500; FAQPage
-  schema is injected on all 108 pages including /cart/ and /privacy-policy/.
-- Rollback: all 6 changed pages + the footer template part carry WordPress revisions (5 each,
-  verified). Snapshots in `Projects/Website/AUDIT_2026-08-22/backups/`.
+## 2026-08-24 (Richard Silver gold chain loss — Release and Settlement Agreement executed, $7,000 payment pending)
+
+- Gold chain loss (Harrisonburg, Pawn Ticket #82397, HPD Case #2026-038229, insurance Claim
+  #PBIH26050007) resolved with the customer. Insurance claim **approved** by the carrier
+  (HDI Global Specialty SE via NARS, adjuster David Roper). Release and Settlement Agreement
+  drafted and **fully executed 8/24/26** by Joshua Davis (Owner/CEO) and Richard Jamal Silver —
+  $7,000 in full and final settlement, payable by certified check within 3 business days of
+  execution (i.e., by ~8/27/26). No admission of liability; carve-out preserves the ongoing HPD
+  criminal investigation and the insurance claim.
+- Filed to `Human Resources/`: `Richard_Silver_Gold_Chain_Release_EXECUTED_2026-08-24.pdf`
+  (signed original, both signatures + dates 8/24/26) and
+  `Richard_Silver_Gold_Chain_Release_DRAFT_TEMPLATE_2026-08-24.docx` (unsigned template, for
+  reference/reuse on future loss claims).
+- **Open follow-up:** issue/confirm the $7,000 certified check by 8/27/26. Reconcile against the
+  approved insurance payout so the business isn't carrying this loss twice (insurance proceeds
+  should offset the settlement cost, not stack on top of it) — check with the adjuster/QBO on how
+  the claim payout should book. Full case detail in `Life OS/OPEN_ITEMS_REGISTER.md`.
+
+## 2026-08-24 (eBay OAuth root cause fixed — Lexington live-verified, 4 stores + refresh-token infra remain)
+
+- Root cause of the audit's "sell.marketing/analytics/finances 403 insufficient permissions" found:
+  the app already had every REST scope granted — no missing application/ticket. All 5 stores had
+  only ever done the legacy **Auth'n'Auth** login (what the existing `~/.vp_secrets` tokens are),
+  which structurally cannot carry REST scopes. Nobody had ever completed the real **OAuth (new
+  security)** consent flow.
+- Fixed app config: enabled OAuth on the existing redirect (RuName), set display title/privacy URL,
+  selected all 33 scopes. Ran Lexington through the actual eBay consent screen (confirmed live
+  session was `valley_pawn_lexington`, not a wrong/generic account). Got a working access token,
+  saved to `~/.vp_secrets/ebay_oauth_tokens.py`, **verified live**: `sell.marketing` returned real
+  ad campaign JSON (200), `sell.analytics` passed auth (400 = bad param, not a permission error).
+- **1 of 5 stores done.** Token is a 2-hour access token only — developer.ebay.com's UI doesn't
+  expose a refresh token, so this isn't yet wired for unattended scripts. Full detail, and the plan
+  for the other 4 stores + a proper OAuth redirect handler for durable refresh tokens, logged in
+  `Life OS/OPEN_ITEMS_REGISTER.md` (2026-08-24, eBay REST OAuth row).
+- Separately submitted the unrelated eBay Application Growth Check (rate-limit increase, ref
+  260824-000045) — see prior entry below, do not conflate the two.
+
+## 2026-08-24 (eBay Application Growth Check submitted — rate-limit increase request)
+
+- Submitted the eBay Developer "Application Growth Check" request that had sat as an unsent draft
+  since 7/8 (`Projects/eBay/eBay_Application_Growth_Check_Request.md`). Asks eBay to raise the
+  per-call daily caps on `UploadSiteHostedPictures` and `ReviseFixedPriceItem`, plus the overall
+  5,000/day application limit, referencing closed ticket 260611-000029. **Reference: 260824-000045**,
+  1-2 business day response.
+- **Distinct from two other open eBay API items — do not conflate:** (1) the Marketplace Insights
+  API application (ticket 260611-000029, auto-closed 6/27, unrelated product) and (2) the OAuth
+  scope gap for `sell.marketing`/`sell.analytics`/`sell.finances` — this is what actually blocks
+  Promoted Listings automation and all traffic/impression/conversion data, flagged in the
+  2026-08-22 audit. No application has ever been submitted for #2; investigating next.
+- Logged into developer.ebay.com via Chrome saved credentials (jdavis@fcfpawn.com), no 2FA prompt.
+
+## 2026-08-24 (store-mail-archive-sweep: real fix shipped for 2/5 stores, blocked on passwords for the other 3)
+
+- Joshua reported directly that the store-inbox ruleset was failing. Live check confirmed it:
+  despite `store-mail-archive-sweep` firing every 10 minutes continuously since 8/22, total backlog
+  across the 5 store inboxes GREW ~2,000 messages over the following 48 hours (Culpeper alone
+  18 → 1,487). This contradicts the 8/22 "corrected" conclusion that the AppleScript IMAP-move sweep
+  was slowly draining the backlog — that conclusion did not survive a longer observation window.
+- **Root cause (confirmed, matches the original 8/22 "no-op" finding that a later same-day session
+  had wrongly refuted):** moving a Gmail-IMAP message to `[Gmail]/All Mail` does not durably remove
+  the INBOX label — it is not a real archive action on this account type.
+- **Real fix:** a native Gmail filter per store account — `from:(ebay.com OR members.ebay.com OR
+  buya.com OR business.amazon.com)` → Skip the Inbox (Archive it), applied to existing matching mail
+  too. This is the correct, durable, Gmail-native mechanism; scoped to vendor-notification senders
+  only so real customer mail to a store address is unaffected in staff's own inbox view.
+- **Shipped live for Culpeper and Harrisonburg** (both verified — INBOX counts dropping in real
+  time as retroactive apply processes: Culpeper 1,487→415, Harrisonburg 6,735→6,237 within the hour).
+- **Waynesboro, Lexington, Roanoke are BLOCKED** — their store-email passwords were rotated under
+  the 2026-08-14 Store Email Password Policy and the `store-credentials` skill's saved values are
+  stale (all three live-rejected with "password changed 11 days ago"). Culpeper/Harrisonburg's new
+  passwords were recoverable from Joshua's own 8/14 Slack DMs; the other 3 were not sent through a
+  searchable channel. Did not brute-force guess further to avoid tripping account security/lockout.
+  Full detail and exact next steps: `Scheduled/store-mail-archive-sweep/SKILL.md` (2026-08-24 entry).
+- `store-mail-archive-sweep` scheduled task left running unmodified (Rule #4) — still useful for the
+  3 unblocked stores until their filters are built; fully retire once all 5 have the Gmail filter.
+
+## 2026-08-24 (later same day) — ALL 5 stores fixed; task DISABLED (superseded, not deleted)
+
+- Joshua supplied the 3 missing passwords directly (Waynesboro/Lexington: `HonestyRules1`,
+  Roanoke: `HonestyRules12`). Also reported still getting emails after the first pass — investigation
+  found two gaps: (1) the eBay pattern only matched `.com` domains, missing `.de`/`.co.uk` etc.,
+  widened to bare `ebay`; (2) scope was too narrow — live sender audit found Classic Firearms,
+  GunBroker.com enews, and CDNN Sports marketing newsletters as the dominant remaining volume.
+- **Final filter, live on all 5 stores:** `from:(ebay OR buya.com OR business.amazon.com OR
+  classicfirearms.com OR enews@gunbroker.com OR safeopt.com OR cdnnsports.com)` → Skip the Inbox,
+  applied to existing mail too.
+- `store-credentials` skill updated with the 5 confirmed-working current passwords.
+- `store-mail-archive-sweep` scheduled task **disabled** (`enabled: false`) — every store now has
+  a permanent Gmail-native fix, so the AppleScript workaround has no remaining job. Left on disk
+  per the no-delete-without-replacement rule.
+
+## 2026-08-23 (weekly-website-health-audit REGISTERED)
+- Joshua: "make this a weekly scheduled task so our weekly and monthly summaries can include this
+## 2026-08-23 (eBay remediation batch — Best Offer, returns, feedback replies, markdown terminal action, credentials finished)
+
+- **Verified the overnight remediation.** A detached process (`/tmp/vp_ebay_fix.py`, started
+  2026-08-22 11:48 PM, not started by this session) applied the audit's Best Offer / returns fixes.
+  Confirmed against `Projects/eBay/eBay_Channel_Audit_2026-08-22.md`'s targets: **331 of 340 items
+  fixed and live-verified** — Culpeper Best Offer 193/193 ON (auto-accept 90% / auto-decline 75%),
+  Roanoke 14→30-day returns 95/103, no-returns→30-day 44/45. Live-sampled 24 items via `GetItem`,
+  24/24 correct. Ran the remaining 9 (8 Roanoke returns + 1 no-returns) manually — all 9 blocked by
+  eBay with "return policy cannot be changed while a Best Offer is pending." The existing
+  `ebay-return-policy-retry` one-shot task (8/26, 9 AM) will pick these up once those offers resolve.
+- **Replied to the 3 open negative/neutral feedbacks** from the audit (Harrisonburg, Lexington,
+  Roanoke) via `RespondToFeedback`. Verified live — `FeedbackResponse` field now carries the reply
+  text on all 3. Zero unanswered negatives/neutrals remaining from the audit window.
+- **Built the markdown terminal action** the audit flagged as missing (`ebay_markdown_engine.py`
+  caps at 30% off after 3 cuts with nothing scheduled next). New additive companion script
+  `Projects/eBay/ebay_markdown_terminal.py` — Stage 1 flags an item hitting the 30% floor unsold
+  (Slack post, 14-day clock, no eBay write); Stage 2 ends the listing if the grace period expires
+  with no intervention, and flags it for a Bravo-side decision. Registered as a new weekly scheduled
+  task `ebay-markdown-terminal-weekly` (Mondays 12:15 PM ET) so it's live before the first real
+  target hits (2026-09-01 monthly markdown run — dry-run today confirmed 0 items currently at cap,
+  as expected).
+- **Finished the credentials sweep correctly this time.** The remaining 18 `~/ebay_*.py` scripts
+  still held plaintext `APP_ID`/`DEV_ID`/`CERT_ID`/webhook literals after last night's incident
+  rollback. Redid the sweep with **compile-only verification** (`py_compile`, never `exec()`) —
+  all 18 migrated to load from `~/.vp_secrets/ebay_store_tokens.py`, zero residual literals, 3
+  launchd-critical scripts (`ebay_daily_listings`, `ebay_efficiency_weekly`, `ebay_markdown_engine`)
+  confirmed compiling with credentials resolving. No live eBay calls made during this pass.
+- **Built (not auto-applied) an item-specifics fill queue.** 155 active listings ≥$100 with fewer
+  than 5 item specifics ($66,957 total value), ranked by price, saved to
+  `Projects/eBay/audit_2026-08-22/SPECIFICS_FILL_QUEUE.md`. Deliberately NOT auto-filled — writing
+  item specifics from title text alone risks repeating the exact failure mode from last night's
+  incident (fabricating an unverified fact). Handed to the existing `ebay-weekly-quality-fix` /
+  `ebay-title-photo-accuracy-audit` process, which already verifies against photos before writing.
+- **Remaining from the audit:** the eBay OAuth re-authorization (Joshua only), Promoted Listings ad
+  budget, 1-day-handling/free-returns ops policy, and the Culpeper sub-$50 intake floor.
+
+  and we can keep making it more efficient weekly." New Cowork task **`weekly-website-health-audit`**
+  created — Mondays 5:15 AM ET, model pinned to sonnet. Self-contained SKILL.md at
+  `~/Documents/Claude/Scheduled/weekly-website-health-audit/SKILL.md`.
+- Re-crawls all sitemap URLs every week and re-measures the same metrics as the 2026-08-22 baseline
+  audit (tel:/sms: coverage, broken JSON-LD, missing meta descriptions, indexation, title issues,
+  duplicate-content cluster count, sample page weight). History appended to a new
+  `Projects/Website/AUDIT_2026-08-22/weekly-history.json` so week-over-week deltas are computable —
+  this is the "keep making it more efficient weekly" mechanism Joshua asked for.
+- **Auto-fixes (fix-forward, Rule 15)** only the same narrow, reversible categories already proven
+  safe on 2026-08-22: mechanically-broken JSON-LD matching a known pattern, and missing meta
+  descriptions on commercial pages (never overwrites an existing one). Every claimed fix is
+  re-verified against the LIVE page before being logged, per Rule 12. Does NOT auto-touch page copy,
+  pricing/loan claims, the duplicate-content clusters, or the contact bar/footer — those still need
+  a human editorial pass or an explicit follow-up task.
+- Posts a digest to **#website** (`C0ASE9C0GQ0`) every run, including clean/no-change weeks — this
+  task deliberately does NOT use the "silent on success" pattern other tasks use, since the whole
+  point is a running trail for `compile-monthly-minutes` and future weekly summaries to draw on.
+  Logs itself to this CHANGELOG and to `Life OS/OPEN_ITEMS_REGISTER.md` when it changes anything or
+  surfaces a new business-level decision for Joshua.
+- Registered task list in BUSINESS_OS.md's LIVE STATE block is machine-regenerated by
+  `business-os-daily-refresh` — will pick up `weekly-website-health-audit` on its next run, no manual
+  edit made here.
+
+
+Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
+
+## 2026-08-24 (Bravo intake-detail EMPTY-DAY fix — the Monday failures, root-caused)
+- **FIX (monday-bravo-combined-compile / #store-performance):** Weekly store rankings were silently skipped on 8/10 and 8/24 — Step 4 hard-required per-store End-of-Month **CSVs** that stopped being produced 2026-06-22 (EOM pulls moved to the nightly `asset-recovery-eom` trigger, which writes **.xlsx**). Posted the 8/24 rankings manually from the 2026-08-22 xlsx set, then patched the compile SKILL Step 4 with an xlsx fallback (backup: SKILL.md.bak-pre-eom-xlsx-fallback-20260824) incl. validated parse rules (PSC = daily-summary "Interest and Fees" Total column — matches the historical posted series). Also re-pointed the Step 4 format reference to the archived monday-store-rankings SKILL (_archive-20260821).
+
+
+- **ROOT CAUSE: every Monday `bravo-morning-pull` failed all three reports.** `IntakeDetail.ahk`
+  proved it had loaded the right saved report ("Claude Pawn Walks") by scanning grid rows for
+  children with AutomationId `FullDescription`/`Category`. On a **zero-intake day the report
+  renders with no rows**, so there was nothing to find — an empty Sunday was indistinguishable
+  from "wrong report loaded". It burned 3 selection retries x 5 stores (~20 min), wedged the AHK
+  watcher, and starved `items-to-price`, which never ran at all.
+- **Evidence (not inference):** 8/17 (pulling Sun 8/16) F/F/F and 8/24 (pulling Sun 8/23) F/F/F;
+  every non-Monday run CLEAN. Stores are closed Sunday. Sold-discount already handled this case
+  and correctly returned 0 rows for CUL/HAR on the same run — that asymmetry was the tell.
+- **FIX (additive, mirrors the proven `SoldDiscountDetail.ahk` pattern):** if the report SURFACE is
+  present (Layouts caret) but there are ZERO DataItems, treat it as a legitimate empty result —
+  stop retrying and write a **header-only CSV** so a quiet day leaves positive evidence on disk.
+  A grid that HAS rows but lacks item columns is still a genuine wrong-report and still retries
+  exactly as before. Also added `[diag-grid]` logging (row count + child AutomationIds) so this
+  class of failure can never again be diagnosed by guessing.
+- Backup: `reports/IntakeDetail.ahk.bak-pre-emptyday-2026-08-24`.
+- **Verified live, not assumed:** first theory was falsified within minutes by the instrumented
+  log, then re-tested. CUL empty-day path completed in 69s vs ~4 min of failed retries; all 5
+  stores intake-detail + LEX/ROA/WAY sold-discount + all 5 items-to-price re-ran to
+  `Overall status: success` (12/12 cells). All 15 CSVs confirmed on disk.
+- Certificate `_morning_pull_status_2026-08-24.txt` upgraded FAILED -> CLEAN only AFTER disk
+  verification, so downstream (pawn-walk, sold-review, daily-items-to-price, discount-review) can
+  take the fast path instead of each re-driving Bravo.
+- **Expected impact: Mondays stop failing.** Next real test is Mon 2026-08-31.
+
+## 2026-08-24 (markdown-verification review — false-failure root-caused and fixed)
+
+- **INCIDENT (contained, no field impact): `weekly-markdown-verification-review` wrongly reported
+  "no fresh data this week" and sent Joshua a failure DM while a full week of real data sat on
+  disk.** Nothing was posted to `#items-to-markdown`, so no store saw a wrong number — the only
+  damage was a false alert and a skipped week of the report.
+  - **Root cause: a stale directory listing, not a pipeline failure.** The task's Step 1 discovery
+    command was `ls -t '<output>/' | grep markdown-verification | head -5`. It returned only the
+    five 2026-08-13 files and completely hid the newer 2026-08-21 (5/5 stores) and 2026-08-23
+    (3/5 stores) sets. `find` on the same directory, seconds later, listed all thirteen files.
+    `output/` holds ~2,200 files and is written by the Windows VM through a Parallels shared
+    folder, so directory enumeration can lag or truncate under active pipeline writes.
+  - **Compounding cause: the task treated "no files found" as proof of failure** and aborted to
+    the failure DM instead of cross-checking with a second command or reading the authoritative
+    `results/<trigger-id>.result.json`.
+  - **FIXED — Step 1 of `weekly-markdown-verification-review/SKILL.md` rewritten** (backup:
+    `SKILL.md.bak-pre-discovery-hardening-20260824`, inode + hardlink preserved):
+    1. Discovery is now a deterministic **per-store** newest-file resolver, never a global
+       `head -5`.
+    2. The run must read `results/<trigger-id>.result.json` — the authoritative per-store
+       `status` / `row_count` / `error` record — before concluding anything about a store.
+    3. **A "no files found" result is explicitly declared insufficient evidence of failure.** Any
+       store resolving to NONE must be confirmed with an independent `find` before being acted on.
+    4. **New Step 1b — fix-forward retry (Rule 15):** any store missing or errored in the result
+       JSON gets a retry trigger naming only the failed stores, with documented polling budget
+       (~150–260s/store, watcher is single-threaded). Partial pulls now self-heal instead of
+       degrading the report or aborting it.
+- **Also found: Part 1 was never broken.** `weekly-markdown-verification-pull` fired correctly
+  Sunday 2026-08-23 19:01, wrote its trigger and marker file, and the pipeline processed it. The
+  pull was **partial, not failed** — CUL/HAR/WAY succeeded (250/241/210 rows); LEX failed on
+  "Grid did not render within 300s" and ROA on "EnsureStore failed for ROA". Both are known
+  transient Bravo UI faults, both recovered on a plain retry. No change made to Part 1.
+- **Standing lesson (generalizes beyond this task):** several Bravo-reading tasks discover their
+  input with `ls | grep | head -N` against `output/`. That pattern is unsafe on this volume. Any
+  task doing per-store discovery should resolve newest-per-store and confirm an empty result with
+  `find` before declaring a failure.
+- **Rule 16 compliance applied to this task while it was open.** Rule 16 (added 2026-08-24) bans
+  failure notifications and technical jargon on every Slack surface, including Joshua's DM, and
+  explicitly says any task whose SKILL.md still routes failure notices to Slack gets corrected the
+  next time it is touched. `weekly-markdown-verification-review/SKILL.md` did exactly that, so both
+  places were rewritten: the old "FAILURE ALERT POLICY v2" header block (which instructed the run to
+  DM Joshua "Scheduled task ... did not complete") and Step 6's fallback to that same DM. Both now
+  say: log to `BRAVO_KNOWN_ISSUES.md` and stop silently, never send a Slack failure message, and
+  treat a partial store set as skip-and-continue rather than a failure. `D03BHQH5VGT` no longer
+  appears anywhere in that file.
+- **Deliberately NOT changed: `weekly-markdown-verification-pull`'s Step 2 dispatch DM.** It reads as
+  technical status noise under Rule 16, but it is load-bearing — it is the marker
+  `fleet/expected_outputs.json` uses to detect a missed Sunday run and auto-re-run the pull. Removing
+  it to satisfy Rule 16 would silently blind the Fleet Guardian, i.e. a regression dressed as
+  compliance (Rule 15 clause 4). **Recommended follow-up:** move that marker off Slack to a dated
+  file the Guardian reads instead, then drop the DM. That is a reviewed change, not a mid-run one.
+- **Aug 24 report delivered:** 175 items / $27,483.40 aged 1yr+ with no reduced price, company-wide —
+  jewelry $23,363.69 (85% of the dollars), general merch $4,119.71. Down from 232 items / $45,847.14
+  on Aug 13, almost entirely Roanoke ($27,974 → $4,735). Culpeper moved the wrong way ($5,318 →
+  $9,100). Per-store history appended to `logs/_markdown_verification_history.csv`.
+- **New OPEN item logged in `BRAVO_KNOWN_ISSUES.md`:** markdown-verification LEX hangs indefinitely
+  mid grid-walk, twice in a row, correlating with a foreground-steal one second after the grid
+  renders. The higher-value half of that fix is a bounded grid-walk timeout so a hang degrades to a
+  normal per-cell error instead of stranding the claim. Not patched here — it lives in shared
+  grid-walk code ~70 handlers depend on, so it needs review, not a mid-run edit.
+
+
+## 2026-08-24
+
+- Enabled scheduled tasks: 133 -> 134
+- Registered scheduled tasks: 138 -> 139
+- Task folders on disk: 148 -> 149
+- ENABLED: ebay-return-policy-retry
 
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
@@ -2048,3 +2252,52 @@ Newest first. Material changes to the business operating system. Read this BEFOR
 - 2026-08-22 (night) — **FULL INTERNET PRESENCE AUDIT completed (website + 40 directories + social + marketplaces + reviews + competitive).** Report: `Ai Optimized Marketing/AI-Search-GEO/INTERNET_PRESENCE_AUDIT_2026-08-22.md`. Everything verified against live surfaces (Rule 12), nothing from run records. **HEADLINE: the only two markets where a competitor outranks us (Harrisonburg, Roanoke) are exactly the two where the legacy brand is still live off-site.** Culpeper/Waynesboro/Lexington — no legacy listing, all #1. Root cause of most legacy exposure is ONE syndicated description string ("Waynesboro, Culpeper, **Salem** & Lexington, Harrisonburg(**Dixie Pawn**), Roanoke(**GNP Pawn**)") live verbatim on MapQuest, Nextdoor, Superpages, chamberofcommerce.com and Loc8NearMe, pushed by a Yext PowerListings feed — kill the feed, kill most instances at once. **NEW FINDINGS not previously documented:** (a) a **phantom Staunton store** (817 Richmond Ave / 540-885-0018) has NINE live listings — Yelp (3.0★, three 1★ reviews), YellowPages (unclaimed), Nextdoor, Manta, CitySquares, Localmint, MBVT (4.4/61 reviews), 2× FFLs.com — several linking to thevalleypawn.com, i.e. actively routing customers to an address we don't occupy; (b) **thevalleypawn.com's own Harrisonburg schema `sameAs` points at the DEAD duplicate FB page** (`/people/Valley-Pawn-Harrisonburg/61584081596639/`, never received a post) while the real 756-like page `valleypawnharrisonburg` is not in the footer at all, and **Waynesboro's page is missing from the footer entirely** — verified live by curl; (c) **"Dixie Pawn" is live ON OUR OWN SITE** in the `harrisonburg-storefront.jpg` Media Library attachment record (alt text + ImageObject JSON-LD caption) so it re-propagates to every future post using that photo — verified live; (d) `/contact` is **indexed by Google and returns HTTP 404** (verified: curl → 404); (e) homepage has **ZERO `href="tel:"` links** (verified: count 0) and no conversion CTA above the fold; (f) `/loans/` states "up to $100K" in title/H1 (5×) and "up to $10,000" in its own body, while llms.txt says $25,000; (g) 1988 vs 2014 vs "Thirty-plus years" contradiction on all 109 pages; (h) 86 of 109 pages have no meta description; (i) 545 duplicate LocalBusiness schema entities all declaring the same `/locations/` URL; (j) BBB is **three fragmented profiles** — Dixie Pawn Harrisonburg at **B− solely for "Failed to respond to 1 complaint"** (04/05/2024), Gold-N-Pawn Roanoke still naming the **prior owners** (Russell/Jonella Harris), and the Waynesboro profile showing **Lexington's phone number**; (k) **no GunBroker presence for 5 FFLs** — eBay bans firearms so this is entirely unserved revenue at ~6-7.5% fees vs our 16.6% eBay rate (absence unproven — GunBroker 403s all automated fetching, verify by login first); (l) `/shop` sends all **494 items outbound to eBay** with zero product pages and zero Product schema, forfeiting Google Shopping + Local Inventory Ads; (m) YouTube channel exists with 13 subs and **0 videos**, unlinked from the site, while Lane B1 now makes 6 vertical videos/wk that already fit Shorts. **CORRECTION to an in-session sub-finding:** a search snippet suggested an active `ebay.com/usr/dixie-pawn` seller with 1.4K items sold — **verified directly, that URL returns "not found."** There is no legacy Dixie Pawn eBay account; all 5 stores are correctly rebranded (`valley_pawn_{city}`, 9,367 combined feedback, 514 active, $82K/90d). **REVIEW POSITION (live Google):** 1,559 reviews chain-wide at 4.88 avg — CUL 4.9/409, WAY 4.9/357, HAR 4.9/328, LEX 4.8/191, ROA 4.9/274. Four of five markets have **no competitor with a live Google listing**. Roanoke is the only real fight: The PawnShop 4.9/727 (+166 at a 2nd location) = **453 behind single-site, 619 combined** — a volume problem, not a rating problem. **UNRESOLVED / NEEDS A LOGIN:** Apple Business Connect (whether Harrisonburg still shows Dixie Pawn on Apple Maps/Siri is genuinely unknown), Bing Places (Harrisonburg lead photo reported as the old Dixie storefront sign), the GBP console (different Google account), and the **Roanoke suite conflict — canonical says "Suite C" but the ATF FFL record and two directories say "2362-D"; resolve internally BEFORE any mass address push or we propagate an error into the FFL record.** NOTHING WAS CHANGED THIS SESSION — audit and plan only.
 
 - 2026-08-23 — **INTERNET PRESENCE AUDIT: TIER-1 WEBSITE REMEDIATION EXECUTED AND VERIFIED LIVE.** Follow-on to the 8/22 audit. Joshua resolved the blocking question: **Roanoke occupies BOTH Suite C and Suite D** — so the ATF FFL record's "2362-D" is CORRECT, not drift, and the "Suite C vs 2362-D" conflict flagged in the audit is CLOSED. Canonical customer-facing NAP stays "Suite C"; "Suite C & D" is now used where the full footprint is stated (new /contact/ page). **No FFL address correction is needed — do not "fix" 2362-D.** WHAT SHIPPED (all verified live, cache-busted, against output not API responses — Rule 12): (1) **"Dixie Pawn" purged from the site.** Media Library attachment 29 (`harrisonburg-storefront.jpg`) had alt text, title, slug and ImageObject JSON-LD caption all reading "Dixie Pawn Harrisonburg…" — the attachment record, so it re-propagated to every future post using that photo. Renamed to "Valley Pawn Harrisonburg Store" / slug `valley-pawn-harrisonburg-store`. **Full 108-URL sitemap crawl now returns 0 pages containing "dixie".** (2) **Dead Facebook page eliminated site-wide.** `facebook.com/people/Valley-Pawn-Harrisonburg/61584081596639/` (a page that has never received a post) was the Harrisonburg `sameAs` in WPCode schema snippet 738 AND the Facebook dropdown on page 7 — now points at the real 756-like `facebook.com/valleypawnharrisonburg/`. Waynesboro's `sameAs` pointed at the BRAND page; now points at its own store page (100026420539296). 108-URL crawl: 0 occurrences of the dead id. (3) **Phantom "Ste 22" removed site-wide** — lived in schema snippet 738 AND the `assembler//footer` template part (13,737 chars; an earlier partial read of only the first 4.3 KB missed it — read template parts in full). 0 occurrences site-wide. (4) **5 duplicate PawnShop entities de-duplicated** — all five declared `"url": "https://thevalleypawn.com/locations/"`, so Google received 5 businesses claiming one URL on all 109 pages. Each now carries its own `/locations/{city}/`. All 7 JSON-LD blocks re-validated as parseable before saving. (5) **`/contact` fixed** — was indexed by Google and returning HTTP 404. Built a real page (id 1128) rather than a bare redirect, so it captures traffic it already ranks for: all 5 stores with address, hours, call + text links, email, directions. Live 200 with 10 tel:/sms: links; `/contact` 301s to `/contact/`. (6) **Homepage click-to-call** — had ZERO `href="tel:"` links; only CTA above the fold was "View Map ↓". Added a "Call or text your store" chip row in the hero with all 5 store numbers. Now 10 tel: links. (7) **Loan figure reconciled** — `/loans/` said "up to $100K" in title/H1 (5×) and "up to $10,000" in its own body; llms.txt said $25,000; the FAQ page said $25,000. **All aligned to $100,000.** NOTE FOR JOSHUA: $100K was chosen because it was already the deliberate SEO title/H1 and the most-repeated public claim — **if the true max is lower, this needs correcting on /loans/, /llms.txt (WPCode 742) and /frequently-asked-questions/.** (8) **38 meta descriptions written.** The audit's "86 of 109 missing" was measured from rendered HTML and was WRONG — authoritative REST check of `_yoast_wpseo_metadesc` found 62 present / 46 missing, and the 20 city service pages already had them. Hand-authored 38 (70–165 chars); skipped cart/checkout/my-account (already noindexed). (9) **6 cannibalizing pages noindexed** — `/culpeper/ /waynesboro/ /harrisonburg/ /lexington/ /roanoke/` are social link-in-bio pages ("WIN $100 EVERY MONTH", no address or phone) that carried full LocalBusiness schema and competed with the real `/locations/{city}/` pages; plus `/follow/`. Verified: the six now emit `noindex, follow` while `/locations/{city}/` still emits `index, follow`. (10) **20 city service pages went from ZERO internal links to a real mesh** — each now links to its own location page, its topic hub, /contact/, the 3 sibling metals in that city, and the same metal in the other 4 cities (~30 internal links/page). (11) `/in-store-inventory/` (empty page sitting in the main nav) and `/directions-and-contact/` (soft-404) noindexed; the latter rewritten to point at the new /contact/. **DELIBERATELY NOT DONE:** geo coordinates in schema — Nominatim geocoding of the real addresses disagreed with the existing Harrisonburg coordinate by ~1.5 km, and Google uses the GBP pin for local ranking anyway, so pushing a possibly-wrong pin was judged higher risk than leaving geo absent. **GOTCHAS LEARNED:** WPCode has NO REST endpoint and no exposed post type — snippets 738/742 required the wp-admin UI via Chrome; the Update button needs a SECOND click (the first reliably does not submit, and the editor retains the edits, so verify against the live surface not the editor); WordPress.com caches hard, so every verification must be cache-busted; the WP REST API 429s under sustained writes — sleep 3-4s between calls. Backups of every pre-change state in `Website/_backups_20260822/` (media_29, page_7, page_9, footer, faq, and all 20 city pages). **STILL OPEN AND NEEDING JOSHUA** (unchanged from the audit): the Yext feed pushing the "Salem / Dixie Pawn / GNP Pawn" description to MapQuest/Nextdoor/Superpages/chamberofcommerce/Loc8NearMe; Apple Business Connect + Bing Places + GBP console logins; the 9-listing phantom Staunton cluster; the BBB complaint holding Harrisonburg at B−; the YellowPages Harrisonburg rename (we own the claim); merging the 3 legacy Facebook pages; GunBroker; converting /shop to real product pages.
+
+## 2026-08-23 (online-store audit + remediation — eBay estate-wide returns/Best-Offer fix, /shop/ SEO)
+- Full read-only audit of the online channel first: eBay Trading API across all 5 store accounts
+  (514 active listings, 555 sold in 90 days, $82,064 revenue ≈ $328K/yr), a 125-listing GetItem
+  deep sample, Lexington's Seller Hub read live in Chrome, and thevalleypawn.com inspected in-page.
+  Artifact: https://claude.ai/code/artifact/903e0082-1ccc-4f9f-b3c7-a2f84b372df9
+  Data + scripts: `Projects/eBay/audit_2026-08-22/`.
+- **Headline findings.** (a) Inventory is in the wrong stores: Culpeper holds 60% of listings and
+  makes 31% of revenue; revenue per active listing is Lexington $433 / Waynesboro $361 /
+  Harrisonburg $359 / Roanoke $173 / Culpeper $82. WAY+HAR+LEX = 20% of listings, 47% of revenue,
+  64–69% sell-through, and only 27–39 listings each — supply-constrained, not demand-constrained.
+  (b) **Lexington is STILL Below Standard** — the Aug 20 evaluation did NOT clear it (late-ship
+  4.23% vs 3% ceiling, next eval Sep 20) and **eBay has PAUSED its Promoted Listings campaigns**
+  (0 clicks / $0 sales / 31 days, listing views −22.1%). Also 528 unread Seller Hub messages and
+  26 unsold-not-relisted against 27 active. (c) Zero of 514 listings qualified for Top Rated Plus.
+  (d) 71% of listings under 8 photos, median 4 item specifics, 0/514 carry a SKU (no Bravo linkage).
+  (e) Website store idle: 10,051 views / 4,759 visitors in 90d, WooCommerce+WooPayments live and
+  working, **1 product, 0 orders ever** — `shop-in-store-sync` is HEALTHY (ran 10:11 and 16:44 on
+  8/22), the stores just post ~1 item/month to #in-store-inventory. Input problem, not a bug.
+- **APPLIED (reversible).** `~/vp_ebay_fix.py` ran 341 ReviseFixedPriceItem calls, 332 succeeded:
+  Roanoke 14-day → 30-day returns (95/103), no-returns → 30-day returns (44/45), Culpeper Best
+  Offer ON (193/193, auto-accept 90% / auto-decline 75%). Verified live per Rule 12 — re-read a
+  random 8 of each class via GetItem, 8/8 correct on all three. State `~/vp_ebay_fix_state.json`,
+  revert `--revert --apply`. 9 blocked by eBay's transient "pending Best Offer / ends within 12
+  hours" error → one-shot task `ebay-return-policy-retry` fires 8/26 09:00 (sonnet-pinned),
+  runs `~/vp_ebay_retry_returns.py`.
+- **APPLIED (website).** `/shop/` had NO `<h1>` and NO product structured data at all. Both added
+  and published live to page 833. Made durable rather than one-off: patched
+  `Website/shop-build/generate_shop_block.py` to emit an `<h1>` + a JSON-LD ItemList of the top 120
+  items by price, and added a mandatory `VP-SEO-REQUIREMENT` section to
+  `Scheduled/vp-website-shop-nightly/SKILL.md` requiring both in every build with an extended
+  STEP 4 verification that fails the run if either is missing. Backups: `.bak-preseo-20260822` on
+  both files. Default `hello-world` post unpublished.
+- **DELIBERATELY NOT APPLIED:** handling time 2–3 days → 1 day. It only pays if the stores can
+  actually ship in one business day, and Lexington is already Below Standard on late shipments.
+  Needs per-store late-ship data from each Seller Hub first. Do not apply this blind.
+- **Correction:** the "duplicate location pages" are not an error — `/locations/<city>/` (hero
+  layout) and `/<city>/` (`vp-landing` ad-landing layout) are two distinct page types, both live,
+  neither in the homepage nav. Correct fix is `noindex` on the ad landing set, not deletion.
+- **Open:** `/shop/` meta description still missing — Yoast owns the head and `_yoast_wpseo_metadesc`
+  is not REST-writable (WP REST `meta` and WordPress.com `advanced_seo_description` both silently
+  dropped). Needs one pass in wp-admin. Also open: per-store late-ship data, Promoted-Listings
+  status for the other 4 stores, and the store-level inventory rebalance (the biggest lever).
+- 2026-08-24 — **EMAIL CHANNEL: audit + 6 fixes shipped.** Audit at "Email Refinement/18_email_channel_audit_2026-08-22.html"; scripts + raw JSON in "Email Refinement/_audit/". Since Jun 1: 110,983 delivered -> 70 measurable calls+texts = 0.63/1,000 vs target 8. SHIPPED: thevalleypawn.com authenticated+verified in Brevo (DKIM via WordPress.com DNS API — that domain is on ns1-3.wordpress.com, NOT GoDaddy); branded sender hello@thevalleypawn.com live (sender id 2, no dkim/spf errors), replyTo jdavis@fcfpawn.com; 17 drafts staged Sep 10–Dec 31 (ids 54-70) on the Aug-Dec seasonal spine, all verified for instrumentation; W13/W14 re-sendered + re-subjected + 59 stale utm values fixed, left as DRAFTS so the hardened Monday picker fills them; 5 rotating Wave lists (ids 14-18, 10,979 dormant, stable-hash assigned) so weekly reach goes 194 -> ~2,400 from Sep 10; 22 blacklisted purged from Engaged list 7. NEW TASK `brevo-weekly-draft-guard` (Mon 11:55 AM, sonnet). ROOT CAUSE of the Aug 6/13/20 dark weeks: vp-deal-of-week-monday-pick matches the week's campaign by the literal string `Month DD, YYYY` in a DRAFT name — the drafts had been re-dated forward, so the lookup matched nothing and the task exited silently three weeks running. RETRACTION: the `_top_call`/`_top_text` buttons are NOT dead duplicates, they are a `{% if contact.STORE %}` personalised store block with a correct else-fallback; they render blank because STORE is empty on 99 of 194 engaged contacts. Do not delete them — populate STORE. BLOCKED ON JOSHUA: fcfpawn.com has TWO v=spf1 TXT records (RFC 7208 PermError); both expand to identical content so deleting the `dc-aa8e722993._spfm` one at GoDaddy is zero-risk, but Chrome has no saved GoDaddy password. NEXT: Bravo->Brevo attribute sync (first name 0.1%, STORE 54%, phone 0%), then loan-due reminders.
+
+- 2026-08-23 — **NEW WEEKLY TASK: `vp-presence-audit-weekly` (Sunday 4:20 PM ET, sonnet-pinned).** Joshua: "make this a weekly scheduled task so our weekly and monthly summaries can include this and we can keep making more efficient weekly." Built additively — it does NOT duplicate anything. **Gap analysis first (Rule 3):** `vp-ai-search-health-check` (Mon) already owns schema/llms.txt/Google+Bing NAP; `vp-ai-visibility-metrics` (Fri) owns the AI-engine Visibility Index; `ebay-weekly-quality-fix` (Mon) and `weekly-online-store-audit` (Sun, #ebay-performance) own eBay listing quality and the eBay estate; #google-reviews owns weekly review counts. **`directory-listing-monitor` exists as a SKILL but was NEVER scheduled** — off-site directory monitoring had zero automation. The new task owns exactly the five uncovered things: (1) website health sweep — crawls all ~108 sitemap URLs cache-busted for legacy names, phantom "Ste 22", the dead FB page id, stale loan figures, non-200s, plus noindex integrity on the 6 link-in-bio pages and presence of the `vp-related-links` block on all 20 city service pages; (2) off-site legacy/ghost listing sweep — Yelp/BBB/MapQuest/YellowPages/Facebook legacy records, the 9-listing phantom Staunton cluster, and the syndicated "Salem / Dixie Pawn / GNP Pawn" description; (3) social PROFILE integrity (not cadence, which the social lanes own); (4) review position vs named competitors per market with the Roanoke gap as the headline number; (5) an open-items ledger that carries `needs_joshua` forward and ages anything past 30 days. **AUTO-FIX whitelist** (this is the "more efficient weekly" part — it corrects drift without anyone's time): missing meta descriptions on new content, any legacy-name/Ste-22 string reappearing anywhere including Media Library attachment records, and a missing internal-link block on a city page. Report-only for anything it can't safely fix (404s — never invent a redirect target; loan-figure disagreements — $100,000 is not yet confirmed by Joshua). **OUTPUTS designed for the summaries to consume:** `Ai Optimized Marketing/AI-Search-GEO/presence/presence_scorecard_latest.json` + a dated copy each week (machine-readable, stable key structure), `PRESENCE_HISTORY.csv` (append-only trend line, 15 tracked numbers), and a short phone-readable Slack post to #ai-marketing beginning with the marker `WEEKLY PRESENCE AUDIT`. **Baseline seeded from today's audit** so week 1 has a real comparison point. **HARDENED to all 6 fleet requirements:** non-interactive (osascript, never request_cowork_directory), self-verifies its own Slack post and scorecard before exiting, retry-once-differently, catch-up detection via PRESENCE_HISTORY.csv, duplicate guard on the Slack marker, Failure Alert Policy v2. Registered in `fleet/expected_outputs.json` (marker `WEEKLY PRESENCE AUDIT`, channel C0BCEESUANM, 6h grace) and classified **verify-only** in `fleet/rerun_manifest.json` (it makes live website content changes = publishing action). Manifest backups `.bak-20260823`. **WIRED INTO THE MONTHLY SUMMARY:** added section 2E to the `compile-monthly-minutes` skill via save_skill (the on-disk skill cache is read-only — save_skill is the only path that persists) telling it to read the dated scorecards + PRESENCE_HISTORY.csv for the month, and where each finding belongs in the minutes structure. **ALSO FIXED (a real latent bug):** `vp-ai-search-health-check`'s canonical NAP block listed Harrisonburg as "1790 East Market Street, **Ste 22**" — which we removed from the live site this same session — so that task would have reported false drift every Monday forever. Corrected, and a pinned CANONICAL NAP CORRECTIONS note added recording both settled facts (Harrisonburg has no suite; Roanoke is Suite C **and** D and the FFL's "2362-D" is correct and must never be "fixed"). Backup `.bak-20260823-nap`. **NOTE:** the task has not run yet — first fire is Sunday. It uses Chrome + Slack + the WP REST API; a "Run now" would pre-approve those tools and avoid a first-run permission pause.
+- 2026-08-24 (later) — **ebay-weekly-quality-fix run.** Reviewed 32 new eBay listings created in the last 7 days across all 5 stores. Mechanical fixes: stripped 1 leftover intake code (Roanoke) and fixed 4 ALL-CAPS titles (Roanoke x2, Waynesboro x2) via the existing title-stripper/caps-fixer scripts. Manual fixes: rewrote 12 weak/truncated titles that were cut off mid-word or cryptic model numbers only (11 Roanoke, 1 Waynesboro) with full product-identifying titles, researched via web search where the model wasn't immediately known (Fluke RLD2, Extech AN100, Milwaukee 49-66-6730, Spectrum 56153, Vortex Pro Torque Wrench, Lexar SL500, NorthStar NYR51K55BP, Audien Atom X) — verified live via GetItem re-read after each revision (Rule 12). Categories checked against Taxonomy expectations for all 32 items — all correct, no changes needed. Flagged (not auto-fixable): Culpeper has an apparent duplicate Bose F1 812 listing; Roanoke has several items with only 3-4 photos (below the 8-12 standard); Waynesboro's Sony a7 III listing's primary photo may be a box/stock shot rather than the item. DM'd each store manager + Preston in plain language (Field Communication Standard v3) — no Slack failure notices per Rule 16, this was a normal completed-work report. Note: XML-escaping bug hit on 3 title revisions containing "&" (SAXParseException) — retried with proper entity escaping, all succeeded.
+
+- 2026-08-24 (recovery) — **weekly-online-store-audit missed-run recovery.** Scheduled Sun 8/23 8am ET fire never ran (no lastRunAt); executed as recovery 8/24. Pulled all 5 eBay stores: 504 active, 102 sold/7d, $16,014.91 rev/7d, 99 listings >180d ($10,959.30). Auto-fix found 0 new drift (returns/Best Offer) but logged 9 fix_failures (1 Culpeper, 8 Roanoke) — spot-checked live via GetItem/ReviseFixedPriceItem (Rule 12): all 9 blocked by eBay because the listing has a pending Best Offer, which prevents a return-policy revise until the offer resolves. Self-resolving, no action needed, will retry next run. Posted to #ebay-performance (no duplicate found for this week).
