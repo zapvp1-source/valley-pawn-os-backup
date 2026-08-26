@@ -785,3 +785,41 @@ All per-category variances were single-digit (-5 to +6). No anomalous OVER varia
 
 REPEAT-PATTERN CHECK: comparing to the prior logged run (CUL -1, HAR +3, LEX -3, ROA +1, WAY -1), tonight's spread (-3 to +7) is in the same tight, normal-noise range — no store/category is repeatedly drifting in one direction night over night. ROA's +7 total is the largest seen recently but is driven by small per-category noise (+6/+2/-1), not a single runaway category, so not flagged as anomalous.
 
+
+## RUN RECORD — 2026-08-25 (Tuesday, all 5 stores open)
+
+Freeze window: 6:00 PM close -> 10:00 AM reopen. Run fired ~8:36 PM, well inside window.
+
+### STEP 1-4: Bravo pull (jewelry-onhand-nightly-pull, v2 cell, per-store triggers)
+- CUL: SUCCESS, 8/8 categories ok. Rings 631, Bracelets 123, Pendants 247, Charms 27, Brooches 21, Earrings 166, Chains 112, Necklaces 98.
+- HAR: 7/8 ok, Charms error both attempts (confirmed empty vs 8/24 CSV, treated as 0 per Empty-Category Rule). Rings 464, Bracelets 49, Pendants 118, Charms 0(error,confirmed), Brooches 6, Earrings 48, Chains 74, Necklaces 49.
+- LEX: 7/8 ok, Brooches error both attempts (confirmed empty vs 8/24 CSV, treated as 0). Charms took 2 combo-select rounds but recovered a real value (=1), not zeroed. Rings 280, Bracelets 37, Pendants 55, Charms 1, Brooches 0(error,confirmed), Earrings 51, Chains 29, Necklaces 19.
+- ROA: SUCCESS, 8/8 ok. Rings 564, Bracelets 129, Pendants 94, Charms 59, Brooches 2, Earrings 89, Chains 97, Necklaces 67.
+- WAY: 7/8 ok, Charms error both attempts (confirmed empty vs 8/24 CSV, treated as 0). Rings took an extra combo-select recovery round (~13 min) but succeeded, no false zero. Rings 349, Bracelets 44, Pendants 62, Charms 0(error,confirmed), Brooches 5, Earrings 54, Chains 46, Necklaces 23.
+
+All 5 stores' Bravo pulls verified against CSV (status=ok per row, empty-category errors cross-checked against prior day).
+
+### STEP 5: PM count sheets (#end-of-day)
+Checked #end-of-day repeatedly from ~8:36 PM through 10:40 PM (30-min wait applied per protocol).
+- LEX (Uriah, 6:14 PM): PM count read. Rings 271, Bracelets 38, Necklaces 46, Earrings 49, Pendants 51, Totals 455 (verified against written total).
+- ROA (Benjie Moore, 6:30 PM): PM count read. Rings 564, Bracelets 129, Necklaces 166, Earrings 89, Pendants 154, Totals 1102 (verified).
+- WAY (Chadd, 6:46 PM): PM count read. Rings 349, Bracelets 44, Necklaces 69, Earrings 53, Pendants 67, Totals 582 (verified).
+- CUL: NOT POSTED as of 10:40 PM (typical window 6:15-8:15 PM).
+- HAR: NOT POSTED as of 10:40 PM.
+
+### Variance (Expected=Bravo mapped, Counted=PM sheet) — LEX/ROA/WAY only
+Mapping: Pendants=Pendants+Charms+Brooches, Necklaces=Chains+Necklaces.
+
+LEX: Rings 280->271 (-9), Bracelets 37->38 (+1), Earrings 51->49 (-2), Pendants 56->51 (-5), Necklaces 48->46 (-2). All negative/small - consistent with normal case-vs-system scope noise, no loss signal.
+
+ROA: Rings 564->564 (0), Bracelets 129->129 (0), Earrings 89->89 (0), Pendants 155->154 (-1), Necklaces 164->166 (+2). Small over on Necklaces, not anomalous scale (compare to the known +61 ROA pendants-as-charms case) - no DM warranted.
+
+WAY: Rings 349->349 (0), Bracelets 44->44 (0), Earrings 54->53 (-1), Pendants 67->67 (0), Necklaces 69->69 (0). Essentially exact match.
+
+No repeating same-store/category variance pattern outside the known scope-noise categories.
+
+### STEP 6-7: Slack posting
+Per protocol ("wait 30 min once, then if still missing follow the failure path — no partial posts"), did NOT post a partial table to #jewlery-counts since 2 of 5 open stores (CUL, HAR) never posted their sheets. Sent one plain-language DM to Joshua instead: tonight's jewelry count didn't complete, CUL and HAR sheets missing.
+
+### Follow-up for tomorrow
+Check whether CUL/HAR posted late overnight or whether there's a process gap (new EOD person, sheet not filled out, etc.) — worth a quick look before next night's run if this repeats.

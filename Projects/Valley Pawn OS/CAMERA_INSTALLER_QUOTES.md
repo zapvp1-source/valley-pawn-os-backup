@@ -5,6 +5,89 @@
 > actual current date. Sourcing work happened **2026-08-15**; quote outreach was sent 2026-08-15;
 > this update is **2026-08-21**.
 
+## ✅ CULPEPER INTERIOR PHOTOS — FOUND (2026-08-25)
+
+**Location:** `#pepper-funds` (C03BLHFJ3KN) — NOT the group DM. Joshua requested them 2026-08-21
+15:07 ("4 pictures per room, each corner"); Sandi delivered 16:28–16:30 same day, labeled by room.
+**18 photos, IMG_6092–6109.** All downloaded, visually verified, resized to 1600px and staged at:
+
+`~/Downloads/Culpeper-Interior-Photos/` (18 files, 6.2 MB, named by room)
+
+### Site facts confirmed from the photos (previously assumptions)
+- **Ceiling: 2×4 lay-in acoustic drop tile** throughout showroom, safe/firearm room and back areas.
+  No hard-lid. Cable runs should be cheap — this was George's open question.
+- **Showroom:** open retail floor, glass display counter running down one side, fluorescent troffers.
+- **Back/loans:** heavy storage racking.
+- **Separate Safe/Firearm Room:** wall-mounted long-gun racks (substantial rifle/shotgun inventory)
+  **plus a large floor safe.** ⚠️ This CONFIRMS the earlier FFL flag — Culpeper handles firearms.
+  The original 7-camera spec gave this room a single camera; it warrants two.
+- **Back exit door** off the rear hallway (EXIT signage) — not in the original 7-camera spec.
+  Recommended as an add; back doors are the primary shrink vector.
+
+### Draft status
+Draft `r6476239541350659290` updated with all of the above and now asks George to price the
+7-camera base plus two separate line items (2nd firearm-room angle, back-exit-door camera).
+
+⚠️ **Attachments could not be added programmatically** — `file_upload` is unavailable in this
+session and the Gmail connector cannot create drafts with attachments. Photos must be dragged in
+manually from `~/Downloads/Culpeper-Interior-Photos/`. Body text already says "18 interior photos
+attached," so **do not send until they are attached.**
+
+---
+
+## ❌ SUPERSEDED — the 8 images from the group DM (2026-08-22) were NOT store photos
+
+**CORRECTION.** The 8 images described below were retrieved and visually reviewed. They are **NOT
+interior photos of the Culpeper store.** All 8 are scanned pages of a **CubeSmart Self Storage**
+"Stored Property Plan Addendum" / SureSmart Protection Plan participation form —
+Unit 1519, 791 Germanna Hwy, Culpeper VA 22701, customer of record **Preston Peters**,
+billing address 571 James Madison Hwy (the store).
+
+→ **Nothing usable for George. Do not attach these to the FXBG Tech thread.** Sending them would
+have leaked an unrelated internal insurance document to an outside vendor.
+
+→ **Still outstanding:** actual interior photos of the Culpeper showroom, counter, ceiling and
+safe room. Ask Sandi again, explicitly: wide shots of each wall, a shot straight up at the
+ceiling (George needs to know drop-tile vs. hard-lid for the cable runs), and the front entrance
+from inside and out.
+
+→ **Separate action item surfaced by this document** (unrelated to cameras, logged here only so it
+isn't lost): the CubeSmart coverage change takes effect **September 1, 2026** and the form is
+marked *ACTION IS REQUIRED* — either show proof of existing insurance or sign onto the SureSmart
+plan ($20/mo, $5,000 limit). Notice dated 7/28/2026. Unsigned as of the scan. Belongs with
+Preston.
+
+---
+
+## 📸 ORIGINAL (INCORRECT) NOTE — retained for audit trail
+
+**Found:** Sandi Cole (Culpeper manager) posted **8 photos** on **2026-08-22 5:25 PM EDT** in the
+group DM with Joshua + Preston (`C04DB6HMXDE`), no accompanying text.
+
+`IMG_6147.jpg` (F0BRXKF3ZAR) · `IMG_6148.jpg` (F0BRXKFHJE9) · `IMG_6149.jpg` (F0BRXKFM85T) ·
+`IMG_6150.jpg` (F0BRL4D02DV) · `IMG_6151.jpg` (F0BS1EVRWAE) · `IMG_6152.jpg` (F0BSVV4MH7S) ·
+`IMG_6153.jpg` (F0BRZL2B7HC) · `IMG_6154.jpg` (F0BRVBE4EQK)
+
+Permalink to the message:
+`https://valleypawnworkspace.slack.com/archives/C04DB6HMXDE/p1787433930467189`
+
+**Why they aren't attached yet:** Slack file bytes require an authenticated download. The Slack MCP
+is read-only (no file-download tool), and in this session **both the Claude-in-Chrome extension and
+screen control are disconnected** — so there is no authenticated path to pull the images. Not a
+permissions problem, a tooling-availability one. Photos were also NOT visually reviewed for the
+same reason — contents assumed to be interior shots based on timing and Joshua's description.
+
+**Joshua's one action:** open that Slack message, download the 8 images, drag them onto draft
+`r6476239541350659290`, send. Everything else in the email is written and ready.
+
+⚠️ **Flag raised while researching:** a Chekkit review for **Valley Pawn – Culpeper** (Sam Emara,
+2026-08-17) praises the store's **FFL transfers**. Earlier planning in `CAMERA_SYSTEM_OPTIONS.md`
+assumed Roanoke was the only firearms location and gave only Roanoke a dedicated gun-case camera.
+If Culpeper handles firearms too, it likely wants an 8th camera on the firearms case/counter —
+which changes this quote. Confirm before the quote is finalized.
+
+---
+
 ## ✅ RESPONSES RECEIVED (as of 2026-08-21)
 
 Joshua sent 3 of the 4 drafts on 2026-08-15 (fxbgtech, Cabling Systems, M3). Two replies in:

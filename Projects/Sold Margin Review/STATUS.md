@@ -452,3 +452,4 @@ opinion," never as a zero.
   `discount-review` (point-of-sale discounting behavior, `#discount-review`) shares this task's data
   pull as of 2026-08-13 but is a distinct signal (Price vs Last Sold Price, not Cost vs Last Sold
   Price) posted to a different channel — not redundant, by design (see both SKILL.md files).
+2026-08-25 07:5x — sold-review: STEP 6b (Terapeak enrichment) skipped — Claude in Chrome extension not connected this run. Report already posted successfully in STEP 6 (missing_stores empty, 70 items, 1 flag, 8 below-market). 8 candidate keywords from market_benchmark.py --candidates were not ingested to Terapeak cache this cycle; no data loss, just fewer cached comps for tomorrow. Not a failure per SKILL.md (6b is optional/last, interruption is harmless).

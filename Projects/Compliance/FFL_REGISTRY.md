@@ -23,6 +23,12 @@ sent 2026-05-04 (see "Known bad data in circulation" below).**
 **All five are Type 02 — Pawnbroker in Firearms Other Than Destructive Devices. None is a
 Type 01 Dealer.** Vendor forms that ask "01 or 02" get **02** for every store.
 
+**2026-08-25: freshly SIGNED copies of all five licenses (signed by Joshua Davis, CEO,
+2026-08-21) are on file as `ffl-files/{store}-ffl.pdf`.** These satisfy the ATF original-
+signature requirement for vendor transfer copies — send THESE to vendors, not the older
+unsigned scans (kept as `*.SUPERSEDED-*`). All five numbers on the signed copies were verified
+against the canonical table above at filing time — exact match, including Culpeper 9J.
+
 Licensee name on every license: `FULL CIRCLE FINANCE INC` · Trade name: `VALLEY PAWN`.
 
 ### ⚠️ Culpeper's number CHANGED at renewal — `6J` → `9J`
@@ -36,10 +42,12 @@ Anything still publishing `6J` is publishing a superseded number. Known location
 renewed license, pulled from Drive; the old scan is kept as
 `culpeper-ffl.SUPERSEDED-6J-exp2026.jpg`).
 
-**Still carrying `6J` and NOT yet corrected — needs a human or an approved publish:**
-- The **live FFL transfer page on thevalleypawn.com** and the license image it links
-  (`/wp-content/uploads/2026/06/culpeper-ffl.jpg`) — this is the page vendors use for the daily
-  transfer process, so this is the highest-impact stale copy.
+**Still carrying `6J` and NOT yet corrected:**
+- ~~The live FFL transfer page on thevalleypawn.com~~ **FIXED 2026-08-25** — page 648
+  (`/ffl-transfer/`) now shows `9J` and all five Download FFL buttons link the fresh SIGNED
+  8/21/26 copies at `/wp-content/uploads/2026/08/{store}-ffl-signed-2026-08.pdf` (web-optimized
+  ~250KB versions; local masters in `ffl-files/`, web versions kept as `{store}-ffl-web.pdf`).
+  Verified live: 5 links serving 200/application/pdf, no `2026/06` links, no `6J` remaining.
 - The Google Drive doc **"READ ME - signed FFL copies"**
   (`docs.google.com/document/d/1bB6vm77FKorzrbQhcbm5TJvs3TaAoawyivM79jJYaU4`), last updated
   2026-06-18, still says Culpeper exp 2026-09-01.
@@ -86,11 +94,12 @@ fraudulent or invalid license. That is a silent-kill failure mode: the applicati
 rejected with a reason, it just never progresses. Assume every dealer application sent with
 that table needs to be resent with corrected data.
 
-Also stale: **the license copies in `Compliance/ffl-files/` are the pre-renewal Culpeper
-license showing a 2026-09-01 expiration.** Any vendor holding that copy believes Valley Pawn's
-Culpeper FFL expires in days — GrabAGun sent expiration warnings on 2026-07-31 and 2026-08-16
-for exactly this reason. Re-scan the current Culpeper license and re-send to every vendor of
-record.
+~~Also stale: the license copies in `Compliance/ffl-files/` are the pre-renewal Culpeper
+license.~~ **RESOLVED 2026-08-25** — current signed copies of all five licenses are now on
+file (see note under the canonical table). Still open: vendors of record (incl. GrabAGun, who
+sent Culpeper expiration warnings 2026-07-31 and 2026-08-16) hold the OLD copies — the new
+signed set still needs to be pushed to them, to the live transfer page on thevalleypawn.com,
+and to the Drive doc "READ ME - signed FFL copies."
 
 ---
 

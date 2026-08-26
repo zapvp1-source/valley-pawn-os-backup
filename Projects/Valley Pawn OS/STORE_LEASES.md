@@ -23,7 +23,7 @@ go dig for "is there a pending renewal." A tracked list removes the guesswork.
 | **Waynesboro** | *(TODO — locate in Drive)* | *(TODO)* | |
 | **Harrisonburg** | *(TODO — locate in Drive)* | *(TODO)* | |
 | **Lexington** | *(TODO — locate in Drive)* | *(TODO)* | |
-| **Roanoke** | *(TODO — locate in Drive)* | *(TODO)* | |
+| **Roanoke** | `Roanoke_Executed_Lease_2023-11-06.pdf` (in `Store Leases/`, found via unified search 2026-08-25, mail attachment) | **⚠️ Fixed term ends 10/31/2026 — ~2 months away, NOT "through next year" as understood.** Landlord: Roanoke Rental Homes LLC (agent for Centerfield Ventures LLC), P.O. Box 2192, Salem VA 24153. Tenant: The Valley Pawn. Premises: 2362 Peters Creek Rd Ste C&D, Roanoke VA 24017. Commenced 11/6/2023. Current rent $3,000/mo (11/1/2025–10/31/2026 step), 3%/yr escalator. **Auto-renews month-to-month if Tenant does NOT give 60 days' written notice of intent not to renew before 10/31/2026** — i.e. by ~9/1/2026. No separate renewal notice found in mail; unclear if Joshua intends to let it roll to month-to-month or negotiate a new fixed term. | Confirmed via unified search 2026-08-25 in response to Joshua's note that the lease is "intact through next year" — the signed document itself shows a harder date than that; flagging so it doesn't get missed. |
 
 ---
 

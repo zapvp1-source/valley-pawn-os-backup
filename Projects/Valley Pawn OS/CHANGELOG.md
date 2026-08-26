@@ -1,6 +1,56 @@
 # Valley Pawn - Enterprise Changelog
 
-## 2026-08-24 (Richard Silver gold chain loss — Release and Settlement Agreement executed, $7,000 payment pending)
+Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
+
+## 2026-08-25
+- **`weekly-website-health-audit` first recurring run (Mon 8/25).** Crawled all 109 sitemap pages: 100%% return 200, 0 broken JSON-LD, 0 tel-less pages, 0 double-brand titles, 1 indexable page missing a meta description (a duplicate-cluster blog post, intentionally left). **REGRESSION FOUND + FIXED:** an unattributed write on 2026-08-24 09:55 set Yoast noindex on all 5 real `/locations/{city}/` pages (WP 419-423) — the opposite of the hand-reviewed 8/23 decision. Cleared and live-verified `index, follow` on all 5 (revisions preserved). Watch next week; if it recurs, trace the writer. Flagged, not changed: `/directions-and-contact/` noindexed 8/23 but never logged — needs Joshua keep-hidden/show call. Baseline loan-amount question still open. History: `Projects/Website/AUDIT_2026-08-22/weekly-history.json` · Digest posted to #website.
+
+
+- **Fresh SIGNED FFL copies (all 5 stores, signed 8/21/26) filed** to `Compliance/ffl-files/`
+  as `{store}-ffl.pdf` from Joshua's scan; old copies kept as `*.SUPERSEDED-*`. Numbers verified
+  against `FFL_REGISTRY.md` — exact match incl. Culpeper 9J. Registry updated (stale-copy issue
+  RESOLVED locally). Still open: push new signed set to vendors of record, the live transfer page
+  on thevalleypawn.com, and the Drive "READ ME - signed FFL copies" doc — logged in Open Items
+  Register.
+- **Website FFL downloads REPLACED with fresh signed copies.** All 5 Download FFL buttons on
+  thevalleypawn.com/ffl-transfer (page 648) now serve the 8/21/26-signed licenses as
+  web-optimized PDFs (`/wp-content/uploads/2026/08/{store}-ffl-signed-2026-08.pdf`, media IDs
+  1202–1206); the page's stale Culpeper `6J` FFL number corrected to `9J`. Verified live.
+  Reference copy `Compliance/FFL-Transfer-page.html` updated to match. Method note: WordPress.com
+  MCP connector auth is invalidated (needs reconnect); publish was done via wp-admin in Chrome +
+  REST with in-page nonce.
+- **NEW HARD RULE 17 — "Verify before refusing; never re-litigate established work."** Added to
+  `vp-operating-rules` (full rule + the not-evidence list + the narrow carve-out) and referenced
+  from `enterprise-map` (new load-protocol Step 6b, plus Rule 17 in the hard-rules list and the
+  skill description so it fires fleet-wide across all 3 domains). Origin: a session refused to run
+  the registered `bald-rock-15-day-contract` task, calling it a probable prompt injection on the
+  strength of its `uploads/` file path and its execute-continuously language. Joshua pushed back
+  ("you have been doing this for months"); the scheduled-tasks registry and the `bald-rock-property`
+  skill then corroborated every detail in under a minute and the run completed normally. The rule
+  is the three-source check (registry / companion skill / run history) BEFORE any objection —
+  corroborated means just run it, conflict means name the specific mismatch. Also documents what is
+  NOT evidence: the uploads path, execute-continuously wording, Rule 16 failure-routing, documented
+  odd-looking workarounds (e.g. the Bald Rock `charCodeAt` URL reconstruction), and tasks doing
+  consequential things. Same root cause as the 2026-08-02 Rule 12 incident — opinion formed before
+  the load protocol ran — but aimed at a refusal instead of a diagnosis.
+- `enterprise-map` Step 3 now explicitly lists `vp-operating-rules` as a required read for ALL
+  domains, noting that despite the `vp-` prefix Rules 16 and 17 are fleet-wide, not Valley Pawn only.
+- Enabled scheduled tasks: 134 -> 143
+- Registered scheduled tasks: 139 -> 151
+- Task folders on disk: 149 -> 161
+- ENABLED: bravo-brevo-attribute-sync
+- ENABLED: brevo-weekly-draft-guard
+- ENABLED: brevo-weekly-efficiency-audit
+- ENABLED: brevo-welcome-new-contacts
+- ENABLED: daily-unopened-email-eval
+- ENABLED: ebay-markdown-terminal-weekly
+- ENABLED: ebay-weekly-channel-audit
+- ENABLED: marketing-ceo-briefing-weekly
+- ENABLED: vp-presence-audit-weekly
+- ENABLED: weekly-online-store-audit
+- ENABLED: weekly-website-health-audit
+- DISABLED: interview-schedule-monday-dm
+- DISABLED: store-mail-archive-sweep
 
 - Gold chain loss (Harrisonburg, Pawn Ticket #82397, HPD Case #2026-038229, insurance Claim
   #PBIH26050007) resolved with the customer. Insurance claim **approved** by the carrier

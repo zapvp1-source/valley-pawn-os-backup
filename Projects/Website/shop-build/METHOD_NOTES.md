@@ -181,3 +181,32 @@ propagation delay and not a bad publish.
 Verified live (after the 20s wait): 492 vp-card elements (exact match), single VP-SHOP-START
 marker, zero woocommerce-shop occurrences, exactly one h1.vp-h1, valid ItemList JSON-LD
 (numberOfItems=120, itemListElement length 120). Posted summary to #website successfully.
+
+## Run record - 2026-08-25 (scheduled nightly, sandbox bash)
+Ran via mcp__workspace__bash (direct outbound access to eBay + WordPress confirmed working).
+Fixed fetch_today.py BASE path again (session mount dir changes every session - still a manual
+step each run, longstanding TODO still open). Also had to manually cp items_now.json -> items.json
+since fetch_today.py writes to items_now.json but generate_shop_block.py reads items.json - worth
+having fetch_today.py write both, or generate_shop_block.py read items_now.json, to remove this step.
+Scraped 509 items across 5 stores (Culpeper 303, Waynesboro 39, Harrisonburg 34, Lexington 33,
+Roanoke 100); 26 weapons-adjacent excluded; published 483
+(Culpeper 298, Waynesboro 36, Harrisonburg 32, Lexington 29, Roanoke 88).
+Published via WP Application Password Basic Auth (vp-shop-nightly cred) directly to
+/wp-json/wp/v2/pages/833. Returned HTTP 200, id 833, status publish.
+Verified live (after ~22s wait for CDN cache, per the 8/24 lesson): 483 vp-card elements (exact
+match), single VP-SHOP-START marker, exactly one h1.vp-h1, valid ItemList JSON-LD
+(numberOfItems=120, itemListElement length 120). Posted summary to #website successfully.
+
+## Run record - 2026-08-26 (scheduled nightly, sandbox bash) [logged 2026-08-25 session]
+Ran via mcp__workspace__bash (direct outbound access to eBay + WordPress confirmed working).
+Copied fetch_today.py to fetch_run_today.py with BASE repointed at this session's mount path
+(still a manual step each run - longstanding BASE-parameterization TODO still open).
+Scraped 507 items across 5 stores (Culpeper 301, Waynesboro 39, Harrisonburg 34, Lexington 33,
+Roanoke 100); 26 weapons-adjacent excluded; published 481
+(Culpeper 296, Waynesboro 36, Harrisonburg 32, Lexington 29, Roanoke 88).
+Published via WP Application Password Basic Auth (vp-shop-nightly cred) directly to
+/wp-json/wp/v2/pages/833. Returned HTTP 200, id 833, status publish.
+Verified live (after ~22s wait for CDN cache): 481 vp-card elements (exact match), single
+VP-SHOP-START marker, exactly one h1.vp-h1, valid ItemList JSON-LD (numberOfItems=120,
+itemListElement length 120), zero woocommerce-shop occurrences. Posted summary to #website
+successfully.

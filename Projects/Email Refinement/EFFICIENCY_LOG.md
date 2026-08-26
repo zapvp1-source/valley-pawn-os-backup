@@ -148,3 +148,50 @@ NEXT RUN SHOULD CHECK: whether the giveaway 10% send (campaign 71) went out clea
 on 8/25 9am; whether brevo-welcome-new-contacts found anyone to welcome; whether
 the Bravo sync got fresh data or hit the stale-stash path; and start filling the
 running tally in SUBJECT_LINE_EXPERIMENT.md from the 8/27 send onward.
+
+## 2026-08-25 (brevo-welcome-new-contacts)
+Welcomed: 1 new contacts | Skipped (already welcomed/blacklisted/failed): 1
+
+## 2026-08-25 (bravo-brevo-attribute-sync — first real run)
+Source: Bravo Data Extraction archive (117 chekkit-invites-range CSVs,
+2025-01-31 -> 2026-08-10 — same newest file as the 2026-08-24 manual pass, so
+no fresh Bravo pull was needed; _shared-bravo-data stash checked too and is
+still older/thinner, archive preferred per the task's own instructions).
+Rows processed: 4,996 unique archive emails | Upserted: 37 | Skipped (no
+email/no change/already in Brevo/not yet in Brevo): rest of the 4,996.
+Attribute fill before -> after (sampled n=3,500, whole list): FIRSTNAME 43.6%
+-> 43.9% | LASTNAME n/a -> 43.7% | STORE 56.2% -> 56.3% | SMS 54.3% -> 54.6%.
+Engaged list (7, 172 contacts, the actual weekly audience): FIRSTNAME 35.5%
+| STORE 52.9% | SMS 51.2% (all roughly flat vs. what the 2026-08-24 bulk pass
+already achieved — this run was a small top-up on the long tail, not a repeat
+of the big fix).
+DEVIATION FROM v1 SCRIPT (judgment call, noted per run instructions): built
+`_audit/enrich_contacts_v2.py` rather than reusing `enrich_contacts.py`
+unmodified, after the dry run surfaced two problems the v1 script has no
+guard against:
+  1. Two toll-free numbers (+18665403229 tied to 52 distinct emails,
+     +19173877468 tied to 13) are clearly shared/placeholder numbers in the
+     archive, not real personal cells. v2 skips SMS writes for any phone
+     number attached to >=4 distinct emails archive-wide.
+  2. ~59 of the 95 raw FIRSTNAME/LASTNAME candidates were email
+     usernames/handles, not real names (e.g. "Wigs2002", "Debtheconqueror",
+     "2013197540jb") - would have rendered as "Hi Wigs2002," in customer
+     email. v2 skips a name if it contains a digit or is just the email's
+     local-part.
+  Net effect: 47 candidates after filtering (down from 95 raw), 37 upserted,
+  10 failed (8 "invalid phone number" from Brevo's own validation, 2
+  "duplicate_parameter" - phone already attached to a different Brevo
+  contact, e.g. a shared household line below the >=4 threshold; both left
+  blank rather than guessed, per the task's own no-guessing rule).
+LEGACY CLEANUP: checked whether the 2026-08-24 bulk run (no shared-number
+filter) had already written either generic number into SMS - found and
+cleared 2 contacts (mahtab80amini@gmail.com, ssexymichael@gmail.com) that had
+one of the two placeholder numbers. Small blast radius, already fixed this
+run, no further action needed.
+Issues: none blocking. Worth a look next Friday audit — the v1/v2 script fork
+means future manual re-runs of this enrichment should use v2, not v1 (v1
+left on disk for reference/history only, not deleted per additive-only rule).
+NEXT RUN SHOULD CHECK: whether the archive gets a newer file than 2026-08-10
+(would mean the Bravo pipeline extraction resumed and there's new customer
+data to sync); the 10 contacts with rejected phone numbers are probably
+permanently unfixable from this source and don't need re-checking weekly.

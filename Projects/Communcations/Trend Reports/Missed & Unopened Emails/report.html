@@ -28,38 +28,38 @@
 </head>
 <body>
   <h1>Missed &amp; Unopened Emails — Trend Report</h1>
-  <div class="meta">Full Circle Finance Inc DBA Valley Pawn &middot; generated Aug 24, 2026 06:15 PM &middot; source: store INBOX sweep (Apple Mail, 5 store accounts) via the daily EOD review &middot; companion to the Missed Calls &amp; Voicemails report</div>
+  <div class="meta">Full Circle Finance Inc DBA Valley Pawn &middot; generated Aug 25, 2026 06:15 PM &middot; source: store INBOX sweep (Apple Mail, 5 store accounts) via the daily EOD review &middot; companion to the Missed Calls &amp; Voicemails report</div>
 
   <div class="cards">
     <div class="card total">
       <div class="card-label">All stores, all time</div>
-      <div class="card-value">14.3%</div>
-      <div class="card-sub">2/14 opened same-day &middot; 12 left unopened</div>
+      <div class="card-value">10.0%</div>
+      <div class="card-sub">3/30 opened same-day &middot; 27 left unopened</div>
     </div>
       <div class="card">
         <div class="card-label">Culpeper</div>
-        <div class="card-value">40.0%</div>
-        <div class="card-sub">2/5 opened same-day &middot; 3 left unopened</div>
+        <div class="card-value">25.0%</div>
+        <div class="card-sub">2/8 opened same-day &middot; 6 left unopened</div>
       </div>
       <div class="card">
         <div class="card-label">Harrisonburg</div>
         <div class="card-value">0.0%</div>
-        <div class="card-sub">0/1 opened same-day &middot; 1 left unopened</div>
+        <div class="card-sub">0/2 opened same-day &middot; 2 left unopened</div>
       </div>
       <div class="card">
         <div class="card-label">Lexington</div>
-        <div class="card-value">0%</div>
-        <div class="card-sub">0/0 opened same-day &middot; 0 left unopened</div>
+        <div class="card-value">0.0%</div>
+        <div class="card-sub">0/2 opened same-day &middot; 2 left unopened</div>
       </div>
       <div class="card">
         <div class="card-label">Roanoke</div>
-        <div class="card-value">0%</div>
-        <div class="card-sub">0/0 opened same-day &middot; 0 left unopened</div>
+        <div class="card-value">50.0%</div>
+        <div class="card-sub">1/2 opened same-day &middot; 1 left unopened</div>
       </div>
       <div class="card">
         <div class="card-label">Waynesboro</div>
         <div class="card-value">0.0%</div>
-        <div class="card-sub">0/8 opened same-day &middot; 8 left unopened</div>
+        <div class="card-sub">0/16 opened same-day &middot; 16 left unopened</div>
       </div>
   </div>
 
@@ -88,6 +88,46 @@
     <table>
       <thead><tr><th>Date</th><th>Store</th><th class="num">Received</th><th class="num">Opened same-day</th><th class="num">Left unopened</th><th class="num">Opened %</th></tr></thead>
       <tbody>
+        <tr>
+          <td>2026-08-25</td>
+          <td>Waynesboro</td>
+          <td class="num">8</td>
+          <td class="num">0</td>
+          <td class="num">8</td>
+          <td class="num">0.0%</td>
+        </tr>
+        <tr>
+          <td>2026-08-25</td>
+          <td>Roanoke</td>
+          <td class="num">2</td>
+          <td class="num">1</td>
+          <td class="num">1</td>
+          <td class="num">50.0%</td>
+        </tr>
+        <tr>
+          <td>2026-08-25</td>
+          <td>Lexington</td>
+          <td class="num">2</td>
+          <td class="num">0</td>
+          <td class="num">2</td>
+          <td class="num">0.0%</td>
+        </tr>
+        <tr>
+          <td>2026-08-25</td>
+          <td>Harrisonburg</td>
+          <td class="num">1</td>
+          <td class="num">0</td>
+          <td class="num">1</td>
+          <td class="num">0.0%</td>
+        </tr>
+        <tr>
+          <td>2026-08-25</td>
+          <td>Culpeper</td>
+          <td class="num">3</td>
+          <td class="num">0</td>
+          <td class="num">3</td>
+          <td class="num">0.0%</td>
+        </tr>
         <tr>
           <td>2026-08-24</td>
           <td>Waynesboro</td>
@@ -132,31 +172,31 @@
   </div>
 
 <script>
-const dates = ["2026-08-24"];
+const dates = ["2026-08-24", "2026-08-25"];
 const months = ["2026-08"];
 
 new Chart(document.getElementById('dailyChart'), {
   type: 'bar',
-  data: { labels: dates, datasets: [{"label": "Culpeper", "backgroundColor": "#d97706", "data": [5]}, {"label": "Harrisonburg", "backgroundColor": "#2563eb", "data": [1]}, {"label": "Lexington", "backgroundColor": "#059669", "data": [0]}, {"label": "Roanoke", "backgroundColor": "#7c3aed", "data": [0]}, {"label": "Waynesboro", "backgroundColor": "#dc2626", "data": [8]}] },
+  data: { labels: dates, datasets: [{"label": "Culpeper", "backgroundColor": "#d97706", "data": [5, 3]}, {"label": "Harrisonburg", "backgroundColor": "#2563eb", "data": [1, 1]}, {"label": "Lexington", "backgroundColor": "#059669", "data": [0, 2]}, {"label": "Roanoke", "backgroundColor": "#7c3aed", "data": [0, 2]}, {"label": "Waynesboro", "backgroundColor": "#dc2626", "data": [8, 8]}] },
   options: { responsive:true, scales: { x: { stacked:true }, y: { stacked:true, beginAtZero:true, title:{display:true,text:'emails received'} } } }
 });
 
 new Chart(document.getElementById('monthlyChart'), {
   type: 'bar',
-  data: { labels: months, datasets: [{"label": "Culpeper", "backgroundColor": "#d97706", "data": [5]}, {"label": "Harrisonburg", "backgroundColor": "#2563eb", "data": [1]}, {"label": "Lexington", "backgroundColor": "#059669", "data": [0]}, {"label": "Roanoke", "backgroundColor": "#7c3aed", "data": [0]}, {"label": "Waynesboro", "backgroundColor": "#dc2626", "data": [8]}] },
+  data: { labels: months, datasets: [{"label": "Culpeper", "backgroundColor": "#d97706", "data": [8]}, {"label": "Harrisonburg", "backgroundColor": "#2563eb", "data": [2]}, {"label": "Lexington", "backgroundColor": "#059669", "data": [2]}, {"label": "Roanoke", "backgroundColor": "#7c3aed", "data": [2]}, {"label": "Waynesboro", "backgroundColor": "#dc2626", "data": [16]}] },
   options: { responsive:true, scales: { x: { stacked:false }, y: { beginAtZero:true, title:{display:true,text:'emails received'} } } }
 });
 
 new Chart(document.getElementById('ytdChart'), {
   type: 'line',
-  data: { datasets: [{"label": "2026 running total", "borderColor": "#111827", "backgroundColor": "transparent", "data": [{"x": "2026-08-24", "y": 14}], "tension": 0.15}] },
+  data: { datasets: [{"label": "2026 running total", "borderColor": "#111827", "backgroundColor": "transparent", "data": [{"x": "2026-08-24", "y": 14}, {"x": "2026-08-25", "y": 30}], "tension": 0.15}] },
   options: { responsive:true, parsing:false,
     scales: { x: { type:'category', labels: dates }, y: { beginAtZero:true, title:{display:true,text:'cumulative emails (YTD)'} } } }
 });
 
 new Chart(document.getElementById('openedChart'), {
   type: 'line',
-  data: { labels: dates, datasets: [{"label": "Overall", "borderColor": "#111827", "backgroundColor": "transparent", "borderWidth": 2.5, "data": [14.3], "spanGaps": true}, {"label": "Culpeper", "borderColor": "#d97706", "backgroundColor": "transparent", "borderDash": [4, 3], "data": [40.0], "spanGaps": true}, {"label": "Harrisonburg", "borderColor": "#2563eb", "backgroundColor": "transparent", "borderDash": [4, 3], "data": [0.0], "spanGaps": true}, {"label": "Lexington", "borderColor": "#059669", "backgroundColor": "transparent", "borderDash": [4, 3], "data": [null], "spanGaps": true}, {"label": "Roanoke", "borderColor": "#7c3aed", "backgroundColor": "transparent", "borderDash": [4, 3], "data": [null], "spanGaps": true}, {"label": "Waynesboro", "borderColor": "#dc2626", "backgroundColor": "transparent", "borderDash": [4, 3], "data": [0.0], "spanGaps": true}] },
+  data: { labels: dates, datasets: [{"label": "Overall", "borderColor": "#111827", "backgroundColor": "transparent", "borderWidth": 2.5, "data": [14.3, 6.2], "spanGaps": true}, {"label": "Culpeper", "borderColor": "#d97706", "backgroundColor": "transparent", "borderDash": [4, 3], "data": [40.0, 0.0], "spanGaps": true}, {"label": "Harrisonburg", "borderColor": "#2563eb", "backgroundColor": "transparent", "borderDash": [4, 3], "data": [0.0, 0.0], "spanGaps": true}, {"label": "Lexington", "borderColor": "#059669", "backgroundColor": "transparent", "borderDash": [4, 3], "data": [null, 0.0], "spanGaps": true}, {"label": "Roanoke", "borderColor": "#7c3aed", "backgroundColor": "transparent", "borderDash": [4, 3], "data": [null, 50.0], "spanGaps": true}, {"label": "Waynesboro", "borderColor": "#dc2626", "backgroundColor": "transparent", "borderDash": [4, 3], "data": [0.0, 0.0], "spanGaps": true}] },
   options: { responsive:true, scales: { y: { min:0, max:100, title:{display:true,text:'opened same-day %'} } } }
 });
 </script>

@@ -66,6 +66,66 @@ For every reply found:
 
 > **Why this rule exists:** on 2026-08-15 a session was told "run it" and was one step from texting ~19 candidates at **11:05 PM on a Saturday**. It had been working since late morning and had no idea how much time had passed. Nothing in the system would have stopped it. The clock check is now mandatory and explicit.
 
+### Run log — 2026-08-25 18:09–18:19 PM ET (window OPEN)
+- Clock verified: Tuesday 2026-08-25 18:09:49 EDT at start. Inside window.
+- RUN_LOCK: none found, written 18:10:08, deleted as final action.
+- Chrome extension connected (Browser 1, isLocal true).
+- **Reply sweep (all 3 channels) done first:**
+  - Text: Jaishawn Johnson (+15402229216) replied "I can call tomorrow at 12pm" — booked Wed 8/26 12:00 PM, calendar event dn37uvks73rfd6fu8nq0gr5o3g, confirmed by text.
+  - Text: Annabella Funkhouser (+15408105419, already-hired Harrisonburg Mgr candidate, interviewed 8/17) texted "I went and completed my drug test today!" — outside outreach script (post-interview/onboarding), not auto-answered, flagged to Joshua via Slack DM.
+  - Gmail: no new inbound beyond already-logged Marinda Smalberger (still AWAITING JOSHUA, not auto-answered).
+  - Indeed inbox: Megan Hartley confirmed her 2:30 PM Wed 8/26 slot ("Yes that's perfect" 5:32 PM) then asked "U train?" — answered (full training provided), calendar event 5598miosru4o1qmkjhvr2hhv28 updated to CONFIRMED. She then asked about weekend availability 6:15 PM — answered (some weekend needed, flexible, details on call).
+  - Indeed inbox: Ariana Gutierrez (Culpeper Assoc) replied "a little after 3:30" tomorrow — phone +15402197776 (identified via chat.db outbound match), booked Wed 8/26 3:30 PM, event a36pf5khaumri7sip8vnr9d4ds, confirmed via Indeed reply.
+  - Indeed inbox: destiny turner (Culpeper Assoc) replied "Does tomorrow at 4:00pm work? My phone number is 813-545-5891" — booked Wed 8/26 4:00 PM, event 64698ica3mhr6to2904boru5h8, confirmed via Indeed reply.
+  - Jesse Saunders, Jaekwon Wayne, Tyler Powell, Denise Mason, Jazlyn Fink: last message already ours/an ack — no action needed, awaiting their reply.
+  - Older Aug 23–24 threads checked against contact log — all already actioned by earlier runs, no new action (known-noise/already-handled per established precedent).
+- **Pre-booking validator applied to all 3 new bookings this run** (phone, not-today, 7AM–9PM ET, list_events conflict check, dialable number in hand) — all passed, no conflicts (verified via full-day list_events pull before each booking).
+- **New-applicant sweep, all 5 listings:** aggregate `/candidates?statusName=New` view, New • 0, confirmed via two independent fresh navigations (Gate C). No new applicants this run.
+- **Day 2/Day 5 follow-ups:** interval since prior run (17:08–17:46) too short (~24 min) for new non-responders to mature; no follow-ups due beyond what the 17:46 run already concluded (none).
+- **Ad hoc request from Joshua (mid-run, via chat):** consolidated Wed 8/26 interview list (name/store/phone/time, 18 total) sent to Preston Peters via Slack DM.
+- **Digest:** not near 7 PM slot — skipped per policy (activity-only, nearest-7PM run posts it).
+- 3 Indeed replies sent, 1 text sent (Jaishawn confirmation), 3 calendar events created (Jaishawn, Ariana, destiny turner), 1 calendar event updated (Megan Hartley → CONFIRMED). 2 Slack DMs to Joshua (bookings + Annabella flag), 1 Slack DM to Preston (interview list).
+- RUN_LOCK deleted as the final action of this run.
+
+### Run log — 2026-08-25 17:08–17:46 PM ET (window OPEN)
+- Clock verified: Tuesday 2026-08-25 17:08:27 EDT at start, 17:46:17 EDT at close. Inside window throughout.
+- RUN_LOCK: found stale (written 16:07:39, ~61 min old, past the 55-min threshold) — overwritten 17:08:27, proceeded normally, deleted as final action.
+- Chrome extension connected this run (`list_connected_browsers` showed "Browser 1" isLocal true) — prior 2 runs' outage resolved, no blocker.
+- **Reply sweep (Indeed first):** actioned unread threads including Jesse Saunders, Ryan Lechner, Jaekwon Wayne, Jazlyn Fink, Tyler Powell, Denise Mason (handled/confirmed per thread content). Older bold/unread Aug 23–24 threads (Lindsey Clatterbuck, Orlando Hairston, Haley Reed, Samantha Thurston, Tyler Alvarez) checked against the contact log — all already confirmed/booked by earlier runs today; no new action needed, unread-badge lag only.
+  - **Ryan Lechner** (Sales & Loan Associate, Harrisonburg) replied "Sounds good!" — booked **Wed 8/26 2:00–2:30 PM phone**, calendar event `0fqaodkihallj2riah9m05k84s` created CONFIRMED, location set to his number 785-580-3418.
+  - **Megan Hartley** (Sales & Loan Associate, Culpeper) — offered **Wed 8/26 2:30–3:00 PM phone**, calendar event `5598miosru4o1qmkjhvr2hhv28` created TENTATIVE (location 540-841-2204), awaiting her confirmation of the exact slot.
+  - Checked `list_events` for Wed 8/26 full day before both bookings — 9:00 AM–1:30 PM fully booked across listings; 2:00/2:30 PM were the next open slots. No conflicts.
+- **New-applicant sweep, all 5 listings:** `/jobs` per-listing view rendered blank (recurring SPA bug); fell back to the aggregate `/candidates?statusName=New&tab=manage&id=0` view per the accepted 2026-08-17 precedent, then opened each of the 5 "New" candidates individually to confirm listing before contacting (all 5 turned out to be Culpeper). Triple-contacted: **Megan Hartley, destiny turner, Ariana Gutierrez, Melissa Olinger, Jaishawn Johnson** — Indeed ✓, email ✓, text ✓ for all five (channel details logged in Contact log section). All told "starting tomorrow" per no-same-day policy, phone-only wording, introduced once. New count confirmed **0** via two independent fresh navigations after the sweep.
+- **Day 2 / Day 5 follow-ups:** reviewed all Aug 23–24 first-contact threads with no visible Indeed-side reply. **Nathaniel Hayslett** — no Indeed reply, but cross-checked calendar: CONFIRMED event already exists ("Interview — Nathaniel Hayslett — Sales and Loan Associate, Lexington (Phone)," Wed 8/26 10:00–10:10 AM, booked 8/23 via text/email) — already past Stage 1, no follow-up needed. **Isabella Campbell** — contact log confirms her "anything earlier?" text was already answered and her slot CONFIRMED by an earlier run today — no follow-up needed. Checked remaining ambiguous names (Haley Reed, Orlando Hairston, Samantha Thurston, Lindsey Clatterbuck, Troy Patterson) against the contact log — all already CONFIRMED/contacted by earlier runs today. **Tyler Alvarez** has a pre-existing flagged duplicate-booking issue (two calendar events, `iduc225k4ocs5hm1torm46hqp4` and `r1t8q2oetibepoav8fnu3lbbp8`) awaiting Joshua's call per the 2026-08-24 log entry — not re-litigated, not a follow-up case. **Conclusion: no genuine Day-2/Day-5 non-responders identified this run — nothing sent.**
+- **Sponsorship watch:** Waynesboro/Harrisonburg Store Manager sponsorships end 2026-08-29; the 3-day flag window opens 2026-08-26 (tomorrow) — not yet due, monitoring, will flag Joshua as soon as the window opens.
+- **Digest:** not near the 7 PM slot (run closed 17:46 ET) — no digest sent this run; the 2 new bookings (Ryan Lechner, Megan Hartley) and the 5-candidate Culpeper sweep are logged here for the next digest to pick up.
+- 5 texts sent this run (Megan Hartley, destiny turner, Ariana Gutierrez, Melissa Olinger, Jaishawn Johnson first-contacts) — well under the ~10/run pacing cap. 2 calendar events created (Ryan Lechner CONFIRMED, Megan Hartley TENTATIVE).
+- RUN_LOCK deleted as the final action of this run.
+
+### Run log — 2026-08-25 13:11–13:20 PM ET (window OPEN)
+- Clock verified from the Mac: Tuesday 2026-08-25 13:11:21 EDT. Inside window.
+- RUN_LOCK: none found — written 13:11:21, proceeded normally, deleted as final action.
+- **BLOCKER — Claude in Chrome extension still not connected** (same outage as the 11:10 AM run, now 2 consecutive runs). Retried once per failure-handling policy, still unreachable. Indeed inbox reply sweep and new-applicant sweep both blocked again — no fallback (computer-use browser tier is read-only for clicks/typing).
+- **Text sweep** (`get_unread_imessages`, 20): no new actionable candidate items. All unreads were either already-actioned acks per the contact log (Sierra Wilhelm, Isabella Campbell, Camden Ahern, Jason Seemiller, etc.), the already-logged Jennifer Parrish OPT-OUT, or non-candidate noise (a USPS smishing/phishing text from laumannjolii@icloud.com — not actioned, not a candidate channel; a vinyl-wrap quote thread; Affirm link; Blue Summit courtesy text; SMS OTP).
+- **Gmail sweep:** `indeedemail.com newer_than:1d` returned nothing new. Broadened to the outreach subject line (`"Valley Pawn — let's talk about your application" newer_than:2d`) and found one genuinely new, unaddressed item the narrower query would have missed:
+  - **Marinda Smalberger** (Harrisonburg Assoc, booked/contacted since 8/17) emailed 2026-08-25 00:58 AM — outside the send window, arrived overnight — asking Joshua to clarify an August 19 conversation about contacting the State Police regarding her background/eligibility. This is outside the scripted Stage 3 pay/hours/duties question-answering scope and references a personal conversation only Joshua had — **not auto-answered**. Flagged to Joshua via Slack DM at 1:12 PM (message_ts `1787677972.655279`). Logged here as **AWAITING JOSHUA — do not auto-respond.**
+- **New-applicant sweep:** NOT DONE — blocked by Chrome outage.
+- **Day 2/Day 5 follow-ups:** deferred — sending without Indeed-side thread visibility risks a duplicate/contradictory send (Step 0.5 requires checking all 3 channels before any send).
+- 0 sends this run. Slack DM sent to Joshua (D03BHQH5VGT) at 1:12 PM covering the repeat Chrome outage and the Marinda Smalberger item (message_ts `1787677972.655279`).
+- RUN_LOCK deleted as the final action of this run.
+
+### Run log — 2026-08-25 11:10–11:15 AM ET (window OPEN)
+- Clock verified from the Mac: Tuesday 2026-08-25 11:10:26 EDT. Inside window.
+- RUN_LOCK: found stale (written 09:33:41, ~97 min old, past the 55-min threshold) — overwritten 11:10:39, proceeded normally, deleted as final action.
+- **BLOCKER — Claude in Chrome extension not connected.** Retried once per failure-handling policy, still unreachable. This blocks the mandatory Indeed-inbox-first reply sweep AND the new-applicant sweep (both live on employers.indeed.com), so no Indeed-side work could be done this run. No fallback exists for Indeed access without Chrome (computer-use browser tier is read-only for clicks/typing).
+- **Text sweep** (`get_unread_imessages`, 20) done: no new candidate items requiring action. "Stop iI" from +15404145693 is Jennifer Parrish — cross-checked against the contact log (line ~1075), already logged as OPT-OUT by the 2026-08-24 10:34–11:00 AM run; not re-actioned. All other unreads were already-actioned acks (Sierra Wilhelm "Okay," James Beverly, Jasmine Lipes, Sabrina Clark, Tabatha Warren, Camden Ahern confirmations) or non-candidate noise (family text, Affirm link, Blue Summit courtesy text, SMS OTP).
+- **Gmail sweep** (`indeedemail.com`, newer_than:1d): only the already-logged Cynthia Steelman "Perfect!" ack — no new inbound.
+- **New-applicant sweep:** NOT DONE — blocked by Chrome outage (see above).
+- **Day 2/Day 5 follow-ups:** not evaluated this run — deferred, since acting without the Indeed-side state risks a duplicate/contradictory send.
+- 0 sends this run (nothing new to action; Indeed side blocked).
+- Slack DM sent to Joshua (D03BHQH5VGT) at 11:11 AM flagging the Chrome outage plainly, no technical detail (message_ts `1787670674.919259`).
+- RUN_LOCK deleted as the final action of this run.
+
 ### Run log — 2026-08-24 17:05–17:10 PM ET (window OPEN)
 - Clock verified from the Mac: Monday 2026-08-24 17:05:13 EDT (re-checked 17:10:03, still fresh). Inside window.
 - RUN_LOCK: none found — written 17:05:39, proceeded normally, deleted as final action.
@@ -1284,3 +1344,6 @@ The candidate-page message composer (`Send new message` → textbox) did not acc
 - **Digest:** not the nearest-7PM slot (that's the next hourly run, ~19:xx) — no Slack DM sent this run, nothing new to report anyway.
 - 0 sends this run (no new applicants, no unactioned replies requiring a response).
 - RUN_LOCK deleted as the final action of this run.
+
+### Run stand-down — 2026-08-25 10:06 EDT
+RUN_LOCK found at ~/Documents/Claude/Scheduled/indeed-applicant-outreach/RUN_LOCK, timestamp 2026-08-25 09:33:41 (32 min old, under the 55-min staleness threshold) — another session is actively working this pipeline. Per Step 0.2, this run did READ-ONLY work only: verified Mac clock (10:06:09 EDT, within the 9AM-8PM send window) and checked the lock. No sends, no bookings, no calendar writes, no logging changes beyond this note. Ending run without modifying RUN_LOCK (not this run's to clear).
