@@ -247,3 +247,41 @@ and the field was never set). Fix: 807 Profile → Outbound Caller ID → Lexing
 **STANDING RULE: every live user extension MUST have Outbound Caller ID set to its store queue number.
 808/809 currently have none (their queues have no numbers yet) — setting it is a MANDATORY step in the
 Culpeper/Roanoke cutover checklist, before go-live.**
+
+## 2026-08-26 — Recording announcement softened to "training purposes" script
+
+Joshua reported the legally-mandated recording announcement ("this call is being recorded") was scaring
+callers off, and asked either to silence it entirely or soften the wording. Recommended softening rather
+than full silence — Virginia is one-party consent, so Valley Pawn's own knowledge suffices for VA-based
+calls, but callers phoning in from two-party-consent states (e.g. MD, PA) make a fully silent recording
+a real legal exposure. Joshua confirmed: "ok, letrs get it done and see how it goes."
+
+**Change made (Account Settings → Phone → Automatic Call Recording → Inbound/Outbound audio
+notifications → "recording has started" prompt → Edit → Add Audio → Text to Speech):** replaced Zoom's
+default recording announcement with a custom TTS asset —
+
+> "This call may be recorded for quality assurance and training purposes."
+
+Asset name: **Inbound Recording Notice - Training Purposes** (English US, Matthew-Male voice, saved under
+Personal Audios). "Press 1 to provide consent to be recorded" left OFF (Zoom's UI has a habit of toggling
+this checkbox on stray clicks near the Edit dropdown — always screenshot-verify it's unchecked before Save
+unless an IVR consent gate is actually wanted).
+
+**Update (same day, follow-up):** Joshua then said outbound calls don't need the announcement at all —
+"we are calling from virginia and the employees already know we are recording for training purposes."
+Turned OFF both "when the recording has started" and "when the recording is stopped" prompts for
+**Outbound** only. Zoom required accepting a liability disclaimer to disable the prompt ("you are solely
+responsible for complying with applicable consent laws... required to indemnify Zoom against any
+violation caused by you") — accepted per Joshua's explicit instruction and stated legal reasoning (VA
+one-party consent + staff already informed = no notice legally required on calls Valley Pawn initiates).
+Saved and confirmed.
+
+**Final state:** Inbound = softened "training purposes" TTS prompt plays to callers. Outbound = no
+recording announcement at all.
+
+**Not done / no action needed:** the "before attempting to connect" prompt was left off on Inbound
+(unchanged from prior state — was never enabled).
+
+**Next:** per Joshua, "see how it goes" on the inbound wording — no further action queued unless he
+reports it's still deterring callers, in which case the fallback is disabling the inbound "started" prompt
+entirely too.

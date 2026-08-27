@@ -28,10 +28,12 @@
 Draft `r6476239541350659290` updated with all of the above and now asks George to price the
 7-camera base plus two separate line items (2nd firearm-room angle, back-exit-door camera).
 
-⚠️ **Attachments could not be added programmatically** — `file_upload` is unavailable in this
-session and the Gmail connector cannot create drafts with attachments. Photos must be dragged in
-manually from `~/Downloads/Culpeper-Interior-Photos/`. Body text already says "18 interior photos
-attached," so **do not send until they are attached.**
+✅ **SOLVED (2026-08-26): draft with all 18 photos attached is in APPLE MAIL** — built via
+osascript (Mail.app compose + per-file attachment pass, verified count = 18). Photos re-processed
+with EXIF orientation baked in, 1600px, ~6.1MB total. **Send from Apple Mail.** The old Gmail web
+draft was overwritten with a DO-NOT-SEND notice and should be deleted after sending.
+The full pipeline is now the `slack-files-to-email` skill (enterprise-wide): Slack file IDs →
+authenticated Chrome download URL → ~/Downloads → visual verify → PIL resize → Mail.app attach.
 
 ---
 

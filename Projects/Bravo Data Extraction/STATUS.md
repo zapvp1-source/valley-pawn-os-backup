@@ -57,3 +57,6 @@ Per-store final (Expected from Bravo / Counted from PM sheet, remapped PENDANTS=
 Empty-category treated as 0 (confirmed against prior-day CSV per rule): HAR Charms, LEX Brooches, WAY Charms.
 Both sides confirmed inside the 6 PM-10 AM freeze window. No repeating variance pattern flagged beyond the HAR Necklaces note above; all other variances are small and in the expected scope-noise direction.
 Posted to #jewlery-counts. DM sent to Joshua re: HAR Necklaces over-variance and the CUL/ROA bad-read self-heal.
+
+## 2026-08-26 07:47 — jewelry-onhand-catchup (Tuesday 8/25 check)
+Nightly 8:30 PM pull for 2026-08-25 confirmed successful — all 5 store jewelry-case-counts CSVs present (CUL, HAR, LEX, ROA, WAY) at pull time 07:47. Per catch-up Step 0.3, ended silently: no re-pull needed, no Slack post, no PM sheet cross-check performed.

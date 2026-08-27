@@ -823,3 +823,18 @@ Per protocol ("wait 30 min once, then if still missing follow the failure path �
 
 ### Follow-up for tomorrow
 Check whether CUL/HAR posted late overnight or whether there's a process gap (new EOD person, sheet not filled out, etc.) — worth a quick look before next night's run if this repeats.
+
+## 2026-08-26 (Wednesday) — jewelry-onhand-nightly-pull
+Open stores: CUL only (Wednesday gate). Freeze window confirmed both sides: Bravo pull ran 20:37-21:02 EDT (inside 6PM-10AM freeze); CUL PM count sheet posted by Martin D. to #end-of-day at 20:31 EDT, date 8/26/26 matches. Health gate PASS on first try. Trigger jewelry-onhand-2026-08-26-CUL claimed and ran clean (one flaky combo-select recovery on Rings, one full 3x-retry-then-recover on Earrings — both self-healed per v2 handler logic, no manual intervention). All 8 categories status=ok.
+
+Bravo (Expected) vs PM sheet (Counted), CUL:
+| Category | Expected | Counted | Variance |
+|---|---|---|---|
+| Rings | 631 | 631 | 0 |
+| Bracelets | 123 | 122 | -1 |
+| Earrings | 166 | 166 | 0 |
+| Pendants (Pendants+Charms+Brooches: 247+27+21) | 295 | 296 | +1 |
+| Necklaces (Chains+Necklaces: 112+98) | 210 | 210 | 0 |
+| TOTAL | 1425 | 1425 | 0 |
+
+Posted to #jewlery-counts. No DM to Joshua — variances are +/-1 noise (not the ROA-pendants-style anomaly), net variance zero. Repeat check: CUL Bracelets -1 / Pendants +1 not seen as a repeating pattern in recent CSVs reviewed this session (2026-08-24, 2026-08-25 CUL CSVs also on hand for comparison if a next session wants to check for repetition). One-night, low-magnitude, no action needed.

@@ -1,6 +1,6 @@
 ---
 name: preston-ebay-feedback-watch
-description: Daily: capture Preston's eBay feedback in #preston-claude, devise a plan for Joshua to approve — never act on it
+description: SUPERSEDED 2026-08-26 by preston-interactive-assistant (which now handles Preston's eBay feedback AND every other request in #preston-claude, executing directly instead of planning for approval). Disabled, not deleted.
 model: claude-sonnet-5
 ---
 

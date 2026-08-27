@@ -210,3 +210,43 @@ Verified live (after ~22s wait for CDN cache): 481 vp-card elements (exact match
 VP-SHOP-START marker, exactly one h1.vp-h1, valid ItemList JSON-LD (numberOfItems=120,
 itemListElement length 120), zero woocommerce-shop occurrences. Posted summary to #website
 successfully.
+
+## Run record - 2026-08-26 (scheduled nightly, sandbox bash) [second run this calendar day]
+Note: the entry directly above this one is also dated 2026-08-26 but was logged by the prior
+(2026-08-25) session ahead of time — file mtimes on items.json/publish_response.json etc. from
+that run were actually 2026-08-25 ~15:07-15:09. This entry is the run that actually executed
+during the 2026-08-26 scheduled trigger. Flagging in case a future session sees two same-date
+entries and wonders whether the task double-ran — it didn't; the prior entry's date label was
+just off by a session boundary.
+
+Ran via mcp__workspace__bash (direct outbound access to eBay + WordPress confirmed working).
+Copied fetch_run_today.py to fetch_run_now2.py with BASE repointed at this session's mount path
+(still a manual step each run - longstanding BASE-parameterization TODO still open).
+Scraped 514 items across 5 stores (Culpeper 301, Waynesboro 39, Harrisonburg 34, Lexington 33,
+Roanoke 107); 26 weapons-adjacent excluded; published 488
+(Culpeper 296, Waynesboro 36, Harrisonburg 32, Lexington 29, Roanoke 95).
+Published via WP Application Password Basic Auth (vp-shop-nightly cred) directly to
+/wp-json/wp/v2/pages/833. Returned HTTP 200, id 833, status publish.
+Verified live (after ~22s wait for CDN cache): 488 vp-card elements (exact match), single
+VP-SHOP-START marker, exactly one h1.vp-h1, valid ItemList JSON-LD (numberOfItems=120,
+itemListElement length 120), zero woocommerce-shop occurrences. Posted summary to #website
+successfully (https://valleypawnworkspace.slack.com/archives/C0ASE9C0GQ0/p1787742628163349).
+
+## Run record - 2026-08-26 (scheduled nightly, second trigger — duplicate, skipped)
+
+Task fired again the same calendar day (~19:07 UTC / 3:07pm EDT). Before re-scraping, verified
+current live state instead of blindly re-running: fresh curl of /shop/ showed 488 vp-card
+elements (via data-price= count), single VP-SHOP-START marker, single h1.vp-h1, valid ItemList
+JSON-LD (numberOfItems=120, itemListElement len=120), and WP REST context=edit modified_gmt
+2026-08-26T11:09:47 — matching the 07:10 EDT run logged above. Confirmed the #website Slack
+message for that run exists (ts 1787742628.163349, counts match exactly: Culpeper 296,
+Waynesboro 36, Harrisonburg 32, Lexington 29, Roanoke 95, total 488, 26 excluded).
+
+Concluded this was a duplicate trigger of the same nightly task on the same day, not a genuine
+need for a fresh refresh (inventory doesn't meaningfully change within the same day, and the CDN
+verification/Slack-post already succeeded). Skipped the scrape/publish pipeline and did NOT post
+a second Slack summary to avoid noise/redundancy. No changes made to the live page.
+
+TODO still open: the task can double-fire within the same day (see the 2026-08-25/08-26 boundary
+note above too) — worth checking the scheduled-tasks trigger config for a dedup/idempotency guard
+so future sessions don't need to manually re-verify before skipping.

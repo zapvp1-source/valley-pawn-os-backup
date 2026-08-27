@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-08-25
+# LIVE STATE - auto-refreshed 2026-08-26
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -12,12 +12,12 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Metric | Count |
 |---|---|
-| Task folders on disk | 161 |
+| Task folders on disk | 162 |
 | Registered with scheduler | 151 |
 | Enabled (will fire) | 143 |
 | Registered but disabled | 8 |
-| On disk but never registered | 10 |
-| Recorded skips (usage cap) | 6074 |
+| On disk but never registered | 11 |
+| Recorded skips (usage cap) | 6688 |
 
 ### Enabled tasks
 
@@ -25,7 +25,7 @@ below disagrees with this block, THIS BLOCK WINS.
 
 ### On disk but NOT registered (never fire)
 
-`daily-intake-margin`, `daily-intake-prestage`, `daily-loan-inventory-text`, `dashboard-data-collector`, `mm-merchandisers-daily-scan`, `monday-bravo-part1-watchdog`, `new-inv-weekly-report`, `weekly-aged-inventory-report`, `weekly-employee-sales-rankings`, `weekly-loan-layaway-review`
+`cybertruck-wrap-tint-quote-followup`, `daily-intake-margin`, `daily-intake-prestage`, `daily-loan-inventory-text`, `dashboard-data-collector`, `mm-merchandisers-daily-scan`, `monday-bravo-part1-watchdog`, `new-inv-weekly-report`, `weekly-aged-inventory-report`, `weekly-employee-sales-rankings`, `weekly-loan-layaway-review`
 
 ## Native launchd agents (run without Claude)
 
@@ -60,32 +60,32 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-08-25 | Valley Pawn OS | - |
-| 2026-08-25 | Unified Search | - |
-| 2026-08-25 | Bravo Data Extraction | STATUS.md |
+| 2026-08-26 | Valley Pawn OS | - |
+| 2026-08-26 | Unified Search | - |
+| 2026-08-26 | Bravo Data Extraction | STATUS.md |
+| 2026-08-26 | Ai Optimized Marketing | - |
+| 2026-08-25 | Website | - |
+| 2026-08-25 | Valley Pawn Studios | STATUS.md |
+| 2026-08-25 | Taxes 2026 | - |
+| 2026-08-25 | Sold Margin Review | STATUS.md |
+| 2026-08-25 | Sales Tax | STATUS.md |
+| 2026-08-25 | Quickbooks Set UP | - |
+| 2026-08-25 | Pawn Walks | STATUS.md |
+| 2026-08-25 | Life OS | - |
+| 2026-08-25 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-08-25 | Health Optimization | - |
+| 2026-08-25 | Gold and Silver Markeitng | - |
+| 2026-08-25 | Email Refinement | - |
+| 2026-08-25 | Discount Outlier Review | STATUS.md |
+| 2026-08-25 | Daily Funds Verification | - |
+| 2026-08-25 | Compliance | - |
+| 2026-08-25 | Communcations | - |
+| 2026-08-25 | Business Dashboard Website | - |
 | 2026-08-24 | eBay | - |
-| 2026-08-24 | Website | - |
-| 2026-08-24 | Valley Pawn Studios | STATUS.md |
-| 2026-08-24 | Sales Tax | STATUS.md |
 | 2026-08-24 | Refine Social Media | - |
-| 2026-08-24 | Pawn Walks | STATUS.md |
-| 2026-08-24 | Life OS | - |
-| 2026-08-24 | Jewelry Count Reconciliation | STATUS.md |
 | 2026-08-24 | Human Resources | - |
-| 2026-08-24 | Health Optimization | - |
-| 2026-08-24 | Gold and Silver Markeitng | - |
-| 2026-08-24 | Email Refinement | - |
-| 2026-08-24 | Discount Outlier Review | STATUS.md |
-| 2026-08-24 | Daily Funds Verification | - |
-| 2026-08-24 | Communcations | - |
-| 2026-08-24 | Business Dashboard Website | - |
-| 2026-08-24 | Ai Optimized Marketing | - |
-| 2026-08-23 | Sold Margin Review | STATUS.md |
 | 2026-08-23 | Precious Metals Settlements | - |
-| 2026-08-22 | Compliance | - |
 | 2026-08-21 | Short Term Rental Optimization | - |
-| 2026-08-11 | Taxes 2026 | - |
-| 2026-08-06 | Quickbooks Set UP | - |
 | 2026-08-02 | VP Ops Engine | STATUS.md |
 | 2026-07-29 | Admin Assitant | - |
 | 2026-07-26 | VP Agent | README.md |
