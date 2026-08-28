@@ -1,7 +1,7 @@
 ---
 name: bravo-morning-pull
-model: sonnet
 description: Daily 6:50 AM — ONE combined Bravo pipeline pull (intake-detail, sold-discount-detail, items-to-price × 5 stores) so the 7-8 AM report tasks compile from disk instead of each driving Bravo separately. Starts with watcher singleton hygiene (_restart_watcher_v2.ps1) + health gate. Writes a per-report CLEAN/FAILED certificate; downstream tasks fall back to their own pulls if it's absent. Silent — never posts to Slack, never DMs.
+model: claude-sonnet-5
 ---
 
 ## Execution Contract — DO NOT STOP EARLY

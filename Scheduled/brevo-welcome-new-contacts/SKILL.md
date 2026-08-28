@@ -1,6 +1,7 @@
 ---
 name: brevo-welcome-new-contacts
 description: Daily 10 AM — send the transactional Welcome email (Brevo template 72) to any Brevo contact created in the last 48h that hasn't been welcomed yet, then flag them WELCOMED=true so they're never sent twice.
+model: claude-sonnet-5
 ---
 
 You are running Valley Pawn's new-contact welcome sender. Run silently and autonomously.

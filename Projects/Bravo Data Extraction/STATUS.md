@@ -60,3 +60,6 @@ Posted to #jewlery-counts. DM sent to Joshua re: HAR Necklaces over-variance and
 
 ## 2026-08-26 07:47 — jewelry-onhand-catchup (Tuesday 8/25 check)
 Nightly 8:30 PM pull for 2026-08-25 confirmed successful — all 5 store jewelry-case-counts CSVs present (CUL, HAR, LEX, ROA, WAY) at pull time 07:47. Per catch-up Step 0.3, ended silently: no re-pull needed, no Slack post, no PM sheet cross-check performed.
+
+## 2026-08-27 07:47 CATCH-UP CHECK
+Yesterday: Wednesday 2026-08-26 (CUL-only per open-stores gate). CUL CSV present, all 8 rows status=ok. Nightly run complete — no catch-up action needed, nothing posted.

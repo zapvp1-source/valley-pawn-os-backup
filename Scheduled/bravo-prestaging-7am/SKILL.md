@@ -1,7 +1,7 @@
 ---
 name: bravo-prestaging-7am
-model: sonnet
 description: Bravo pre-staging relaunch + verification before the 7 AM pipeline exports (Type C — direct process control, foreground-guarded as of 2026-08-13)
+model: claude-sonnet-5
 ---
 
 ## Execution Contract — DO NOT STOP EARLY

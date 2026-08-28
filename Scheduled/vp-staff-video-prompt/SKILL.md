@@ -1,6 +1,7 @@
 ---
 name: vp-staff-video-prompt
 description: Tuesday 9 AM — post the weekly staff phone-video prompt to Slack with a concrete one-line ask and a Wednesday deadline. Clones the deal-of-the-week mechanic that gets 10/10 submissions.
+model: claude-haiku-4-5
 ---
 
 ---

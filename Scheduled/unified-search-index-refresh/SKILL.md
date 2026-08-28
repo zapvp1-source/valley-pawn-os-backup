@@ -1,7 +1,7 @@
 ---
 name: unified-search-index-refresh
 description: Nightly 3:30 AM — rebuild Joshua's unified-search index (Mail, Drive, iMessage, Notes, Reminders, Photos OCR, stats) via the self-healing refresh_hardened.sh wrapper. Replaces the broken native launchd agent (TCC-blocked). Hardened 2026-08-21 — retries and stale-lock reclaim are built into the wrapper; a failure DM is only sent after ALL self-healing is exhausted.
-model: sonnet
+model: claude-sonnet-5
 ---
 
 This is an automated run of a scheduled task. The user is not present to answer questions. Execute autonomously — no clarifying questions. Only take "write" actions this file specifically asks for. FIX-FORWARD (Rule 15): if something breaks mid-run, the job is to overcome it in-run, not to report it.

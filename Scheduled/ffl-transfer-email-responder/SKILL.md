@@ -1,6 +1,7 @@
 ---
 name: ffl-transfer-email-responder
 description: Daily check of Joshua's email/Chekkit inbox for FFL/firearm transfer requests that haven't been answered yet; replies with a link to thevalleypawn.com/ffl-transfer/
+model: claude-sonnet-5
 ---
 
 Domain: 1 — Valley Pawn. Load `enterprise-map` skill context first (light touch is fine).

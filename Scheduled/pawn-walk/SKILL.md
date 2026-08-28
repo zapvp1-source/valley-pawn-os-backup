@@ -1,7 +1,7 @@
 ---
 name: pawn-walk
 description: PAWN WALK — daily 6:30 AM. One consolidated task: health-gate Bravo, pull yesterday's intake-detail ("Claude Pawn Walks") for all 5 stores, self-heal if stalled, compile T1/T2/T3 margin analysis, post per-store summary to #pawn-walks, DM Joshua on flags/failure. Replaces daily-intake-prestage + daily-intake-margin.
-model: sonnet
+model: claude-sonnet-5
 ---
 
 > ⚠️ **FAILURE ALERT POLICY (still binding):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium.

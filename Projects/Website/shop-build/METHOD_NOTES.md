@@ -250,3 +250,34 @@ a second Slack summary to avoid noise/redundancy. No changes made to the live pa
 TODO still open: the task can double-fire within the same day (see the 2026-08-25/08-26 boundary
 note above too) — worth checking the scheduled-tasks trigger config for a dedup/idempotency guard
 so future sessions don't need to manually re-verify before skipping.
+
+## Run record - 2026-08-27 (scheduled nightly, sandbox bash)
+
+Ran via mcp__workspace__bash (direct outbound access to eBay + WordPress confirmed working).
+Copied fetch_run_now2.py to fetch_run_0827.py with BASE repointed at this session's mount path
+(still a manual step each run — longstanding BASE-parameterization TODO still open).
+
+Scraped 508 items across 5 stores (Culpeper 298, Waynesboro 39, Harrisonburg 34, Lexington 33,
+Roanoke 104); 26 weapons-adjacent excluded; published 482
+(Culpeper 293, Waynesboro 36, Harrisonburg 32, Lexington 29, Roanoke 92).
+
+GOTCHA CAUGHT THIS RUN (new — worth updating the scheduled-task SKILL.md's STEP 2 instructions):
+generate_shop_block.py already emits its own VP-SHOP-START / VP-SHOP-END marker comments inside
+shop-block.html (see ~line 162/181 of the script). The task file's original STEP 2 instructions
+were written for the old in-browser builder and say to wrap the block as
+wp:html + VP-SHOP-START + ... + VP-SHOP-END + /wp:html — doing that literally on top of the
+Python generator's output double-wraps the markers (2x START, 2x END). The first publish attempt
+this run did exactly that and was caught in verification (grep count showed 2 of each instead of
+1) before being reported as success — not reported as success to Slack. Fix: when using
+generate_shop_block.py, wrap ONLY with the Gutenberg comments — "<!-- wp:html -->" +
+shop-block.html contents as-is (already has its own VP-SHOP markers) + "<!-- /wp:html -->". Do
+NOT add a second set of VP-SHOP-START/END. Re-wrapped correctly and republished.
+
+Published via WP Application Password Basic Auth (vp-shop-nightly cred) directly to
+/wp-json/wp/v2/pages/833. Corrected publish returned HTTP 200, id 833, status publish.
+
+Verified live (after ~25s wait for CDN cache): 482 vp-card elements via data-price= count (exact
+match), single VP-SHOP-START marker, single VP-SHOP-END marker, exactly one h1.vp-h1, valid
+ItemList JSON-LD (numberOfItems=120, itemListElement length 120), zero woocommerce-shop
+occurrences. Posted summary to #website successfully
+(https://valleypawnworkspace.slack.com/archives/C0ASE9C0GQ0/p1787829028813699).

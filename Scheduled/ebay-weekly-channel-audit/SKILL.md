@@ -1,6 +1,7 @@
 ---
 name: ebay-weekly-channel-audit
 description: Weekly read-only eBay channel audit (sales, fees, listing quality, reputation) across all 5 Valley Pawn stores — feeds Slack #ebay-performance and the weekly/monthly summary rollups.
+model: claude-sonnet-5
 ---
 
 Run Valley Pawn's weekly eBay channel audit. This is READ-ONLY — never revise, end, or otherwise

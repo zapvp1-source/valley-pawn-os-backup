@@ -1,6 +1,7 @@
 ---
 name: vp-comedy-reel-weekly
 description: Wednesday 6:30 PM — write and render 2-3 deadpan comedy/story short-form videos (beat-timed card format, works muted) and publish to Brand FB/IG Reels + TikTok. Humor guardrails enforced in code.
+model: claude-opus-4-8
 ---
 
 ---

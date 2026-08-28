@@ -1,7 +1,7 @@
 ---
 name: google-reviews-post-watchdog
 description: Monday 10:30 AM watchdog — verify the weekly Google-reviews ranked summary landed in #google-reviews; if missing, pull Chekkit "Last week" data and post it immediately; DM Joshua only if that also fails.
-model: sonnet
+model: claude-sonnet-5
 ---
 
 ## Execution Contract — DO NOT STOP EARLY

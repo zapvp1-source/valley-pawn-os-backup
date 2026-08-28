@@ -1,6 +1,6 @@
 # Inbox Control Plan — Joshua / CEO Mail
 
-**Drafted:** 2026-08-26 · **Status:** ✅ ALL FOUR PHASES EXECUTED 2026-08-26 — see §7 · next lever in §8 (personal iCloud inbox)
+**Drafted:** 2026-08-26 · **Status:** ✅ ALL FOUR PHASES + PERSONAL/CORPORATE CATEGORY BUILD EXECUTED 2026-08-27 — see §7, §8, §9
 **Domain:** 1 (Valley Pawn) + 3 (Personal) · **Project:** Communcations
 **Method:** measured against the live Unified Search index (341,912 messages, all 9 Apple Mail accounts) + live Gmail on jdavis@fcfpawn.com. No estimates below — every number is counted.
 
@@ -192,20 +192,36 @@ Built in Apple Mail, all nine accounts left connected so Unified Search keeps in
 
 ---
 
-## 8. What's left — the personal inbox is now the whole remaining problem
+## 8. Correction — Apple Mail Categories already did this, no iCloud rules needed
 
-With the store boxes gone and jdavis filtered, the source of the remaining backlog is no longer ambiguous. Counted from Apple Mail's own index:
+§7's "next lever" (custom iCloud Mail rules) turned out to be solving a problem Apple Mail had already solved. **Mail Categories** — Primary / Transactions / Updates / Promotions, classified on-device, active on every account including iCloud — was already on and already running. Smart Mailboxes just can't see it: "Show Mail Categories" is disabled inside a Smart Mailbox, which is why My Mail's badge never reflected it.
 
-| Mailbox | Unread | Total |
-|---|---:|---:|
-| **zapvp1@me.com INBOX** | **12,796** | 58,961 |
-| jdavis@fcfpawn.com (All Mail) | 694 | 6,783 |
+Verified 2026-08-27 by opening the Personal account outside My Mail and clicking each category tab:
 
-**12,796 of the 13,094 remaining unread — 98% — are in the personal iCloud inbox.** It has never had any filtering, because it's iCloud: no Gmail-style filters, no MCP, so nothing built so far touched it.
+| View | Unread |
+|---|---:|
+| Personal, raw inbox | 12,798 |
+| Personal → **Primary** | 686 (then 2,840 once Mail finished re-indexing after the bulk actions below) |
+| Personal → Promotions | 3,369 of 22,079 |
+| Personal → Updates | 5,186 of 13,311 — **mixed**: real content (law firm, school, insurance) sitting next to junk |
+| Personal → Transactions | 2,723 of 10,182 — receipts and confirmations, no reply ever needed |
 
-Same fix, different mechanism:
+**Primary is the number that matters — everything else is either noise or reference.**
 
-1. **iCloud Mail rules** at icloud.com/mail — route the known newsletter and marketing senders (Airbnb notifications, PayPal, Wells Fargo alerts, beehiiv, pray.com, OpenTable, Vivino, Redfin, ParentSquare, and the ~40 others the audit already identified) into folders instead of the inbox.
-2. **A one-time backlog pass** — iCloud rules are not retroactive, so the 58,961 existing messages need a separate bulk archive, same "archive never delete" rule as the Gmail side.
+## 9. Built 2026-08-27 — cleared it for real, not just filtered the view
 
-Worth noting the constraint honestly: iCloud rules are weaker than Gmail filters — they move messages to folders rather than labelling and archiving, and there's no "apply to existing" checkbox. So this is a genuinely separate build, not a repeat of what was done today.
+**Personal (zapvp1@me.com):**
+- Promotions and Transactions selected in full and marked read — nothing archived, nothing deleted, every message stays exactly where it is and stays searchable. Safe to batch because both categories are cleanly non-actionable.
+- Updates was **not** bulk-cleared — it mixes signal with junk (Palencia Elementary, Johnson Gasink & Baxter LLP, Steadily insurance quotes for Bald Rock, sitting next to Vrbo and Microsoft policy spam). Blanket-clearing it would have buried real mail.
+- Instead, the specific commercial senders you named — **Drift House, FUM, The Chosen People** — plus five more found in the same sweep (And Just Like... Health, ConsumerAffairs, Tesla, PRAY.COM, The Glucose Effect) were individually pinned via **right-click → Categorize Sender → Always Categorize as → Promotions**. This is a permanent, per-sender rule: every future email from these senders lands in Promotions automatically, no ongoing maintenance. FUM was already being caught correctly — verified, not just assumed.
+- Deliberately left alone: **Hims** (subject read like a personal health reminder, not pure marketing — didn't want to risk burying something health-related), **Vrbo** and **Microsoft** (mixed real-notification senders, not safe to blanket-categorize).
+
+**Result: Personal → Primary down to 2,840 unread** (from 12,798 raw). My Mail (the Dock-badge mailbox) down to **8,581** from 13,094.
+
+**Corporate (fullcirclepawn@gmail.com):**
+- Two Gmail filters built (Amazon Business receipts, subscription newsletters) with apply-to-existing.
+- **Important finding, not fixed by design:** Corporate's Promotions tab mixes genuine Indeed candidate reply notifications in with real marketing — Apple's classifier misfires on templated recruiter emails. Bulk-clearing Promotions here would hide real hiring leads, so it was **not** touched. Corporate's Primary tab is accurate and safe to use as-is; its Promotions tab is not safe to batch-clear the way Personal's was.
+
+**jdavis@fcfpawn.com:** unaffected by this pass — already at 444 unread from yesterday's Gmail filters, no further action needed.
+
+**Known cosmetic bug:** the Personal account's sidebar unread badge showed 28,846 during and after the bulk mark-as-read — this is stale/incorrect (exceeds what the account actually contains); the category headers and My Mail count were the reliable readings throughout. Likely clears on Mail's next relaunch; not worth chasing further.

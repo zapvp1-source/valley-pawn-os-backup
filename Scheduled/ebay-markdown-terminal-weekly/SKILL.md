@@ -1,6 +1,7 @@
 ---
 name: ebay-markdown-terminal-weekly
 description: Weekly — closes the "pull" half of eBay's Listing-Age Standard: flags/pulls listings that hit the 30%-off markdown floor with no sale, so they don't sit there forever.
+model: claude-sonnet-5
 ---
 
 Run the eBay markdown terminal-action check for Valley Pawn. This closes a gap found in the

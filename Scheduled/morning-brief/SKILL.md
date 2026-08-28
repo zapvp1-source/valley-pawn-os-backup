@@ -1,6 +1,7 @@
 ---
 name: morning-brief
 description: Morning brief — weekday 8:00 AM Operations-focused daily brief rendered as a styled HTML artifact.
+model: claude-sonnet-5
 ---
 
 /morning

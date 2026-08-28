@@ -1,7 +1,7 @@
 ---
 name: jewelry-pull-watchdog
-model: claude-haiku-4-5-20251001
 description: Morning watchdog 9:15 AM (Tue-Sun): verify last night's jewelry-onhand CSVs exist; if missing, DM Joshua one plain-language alert.
+model: claude-haiku-4-5
 ---
 
 ## Execution Contract — DO NOT STOP EARLY

@@ -1,6 +1,7 @@
 ---
 name: vp-creative-refresh-quarterly
 description: Quarterly (1st of Jan/Apr/Jul/Oct, 7:40 AM) — retire proven-weak formats, rest fatigued ones, INVENT 8-12 genuinely new content formats seeded by season + local calendar + performance, gate them for novelty, and write the creative ledger.
+model: claude-opus-4-8
 ---
 
 ---

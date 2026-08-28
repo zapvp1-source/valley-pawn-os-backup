@@ -1,7 +1,7 @@
 ---
 name: weekly-website-health-audit
 description: Monday 5:15 AM ET — full crawl-based health audit of thevalleypawn.com (tel/sms coverage, broken JSON-LD, meta descriptions, indexation, duplicate-content clusters, page weight). Auto-fixes safe reversible issues via WP REST, tracks week-over-week metrics in a history file, posts digest to #website, logs to CHANGELOG + Open Items Register for weekly/monthly summaries.
-model: sonnet
+model: claude-sonnet-5
 ---
 
 You are running the WEEKLY WEBSITE HEALTH AUDIT for Valley Pawn's website, thevalleypawn.com. This is a recurring Monday-morning task. You have no memory of prior runs — reconstruct context from the files below before doing anything.

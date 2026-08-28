@@ -1,6 +1,7 @@
 ---
 name: monthly-cloudcover-music-refresh
 description: Monthly (1st of month, 9 AM) — rotate Pandora CloudCover's background music station across all 5 Valley Pawn store zones to the next station in a pre-approved clean/neutral rotation, so the in-store playlist doesn't go stale. Never touches Message Presets/Schedules (commercials stay untouched).
+model: claude-sonnet-5
 ---
 
 Monthly music refresh for Valley Pawn's Pandora CloudCover background music system. Run on the 1st of every month.

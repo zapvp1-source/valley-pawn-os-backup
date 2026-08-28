@@ -66,6 +66,72 @@ For every reply found:
 
 > **Why this rule exists:** on 2026-08-15 a session was told "run it" and was one step from texting ~19 candidates at **11:05 PM on a Saturday**. It had been working since late morning and had no idea how much time had passed. Nothing in the system would have stopped it. The clock check is now mandatory and explicit.
 
+### Run log — 2026-08-27 19:04–19:11 PM ET (window OPEN, near-7PM digest run)
+- Clock verified from the Mac: Thursday 2026-08-27 19:04:48 EDT at start. Inside window.
+- RUN_LOCK: none found — written 19:04:56, deleted as final action.
+- **Reply sweep (Indeed first, then text, then Gmail), vs. the 18:08 run:** Indeed inbox full scan — top-of-list threads identical to the 18:08 run (Amelia Barnett no reply, Carl Burch no reply, Megan Hartley no reply, Melissa Olinger's "Sounds good" ack unchanged, William Jenkins/Mariah Grove/Kiera Brown-Ruffin Day-5 follow-ups unchanged). No new candidate replies. `get_unread_imessages` (25) showed only known noise (Blue Summit delivery reminders, Walmart/Affirm/crypto links, old acks already logged in prior runs) — nothing new. Gmail sweep (indeedemail.com + outreach subject, newer_than:1d) returned only the same 2 threads already covered by the 18:08 run (Marinda Smalberger — fully worked, rescheduled to Fri 8/28 3:30 PM; Amelia Barnett — first-contact sent, no reply). No new inbound on any channel.
+- **New-applicant sweep, all listings (`/candidates?statusName=New&tab=manage&id=0`):** first load rendered blank-canvas (known SPA issue), second independent fresh navigation confirmed **New • 0**, 199 total applications (67/86/46/164 Reviewing/Contacting/Interviewing/Rejected) — unchanged from the 18:08 run. No new applicants to contact.
+- **Day 2/Day 5 follow-up audit:** interval since the 18:08 run (~1 hr) too short for any candidate to newly cross a Day-2/Day-5 threshold; nothing newly due.
+- **Sponsorship watch:** Waynesboro/Harrisonburg Store Manager sponsorships end 2026-08-29 (2 days out) — already flagged multiple times; not re-flagged standalone, included in this run's digest.
+- **Digest:** near-7PM run (started 7:04 PM) with activity in the last 24h (Amelia contacted, Carl/Megan offered times, Marinda rescheduled) — posted to #employee-prospects (C0BQDRXRPEJ), succeeded (message_ts `1787872049.767929`). Covered today's/tomorrow's interviews, replied-but-unscheduled (Carl, Megan), new contact (Amelia), and watch items (Melissa possible no-show, sponsorship end date).
+- 0 new-outreach texts/emails/Indeed messages sent this run (read-only sweep — no new activity to action). 0 calendar events created/updated.
+- No classifier blocks this run.
+- RUN_LOCK deleted as the final action of this run.
+
+### Run log — 2026-08-27 18:08–18:2x PM ET (window OPEN)
+- Clock verified from the Mac: Thursday 2026-08-27 18:08:16 EDT at start. Inside window.
+- RUN_LOCK: none found — written 18:08, deleted as final action.
+- **~7 hour gap since the last logged run (11:07 AM):** substantial activity happened in that gap outside this task's own log — most likely Joshua working candidates directly, since the wording is close to but not identical to the template and none of it was written by this run. Read full threads (Step 0.5) rather than assuming staleness:
+  - **Amelia Barnett** (new applicant, Culpeper Assoc) — first-contact template sent 12:17 PM (verified via Gmail msg `1a04402dc0dc8d87` to her indeedemail relay + Indeed). No reply yet. Nothing to do, awaiting her response.
+  - **Carl Burch** (Lexington Assoc) — replied 8/21 with background (10 yrs Lowe's sales manager, clean record); outreach today 12:14 PM offered Fri 8/28 10:00 AM and asked for a callback number. No reply since, **no phone number in hand — not bookable** per the pre-booking validator. Awaiting his number.
+  - **Megan Hartley** (Culpeper Assoc) — outreach today 12:12 PM offered Fri 8/28 10:00 AM or 2:00 PM. No reply since — not bookable yet, awaiting her pick.
+  - **Melissa Olinger** (Culpeper Assoc) — her TENTATIVE Thu 8/27 9:30 AM slot passed with a missed-call exchange this morning (already flagged to Joshua via Slack DM `1787839849.130559` in the 10:09 run); she acked "Sounds good" 10:14 AM to our "running behind, I'll call shortly" — pure acknowledgment, no new action. Her slot is now hours past with no completion note — carrying forward as a possible no-show for the next digest, not re-flagged standalone since already surfaced once today.
+  - **Marinda Smalberger** (Waynesboro Assoc, Store Manager listing context) — asked a substantive question about a State Police background-check follow-up; replied by email 17:15 today rescheduling to Fri 8/28 3:30 PM and confirming Joshua is still following up on the State Police question. Fully worked, no further action needed.
+  - Text sweep (`get_unread_imessages`, 25) and Indeed inbox full scan: no new actionable candidate items beyond the above — remainder of the list (William Jenkins, Mariah Grove, Kiera Brown-Ruffin, Ariana Gutierrez, Jesse Saunders, Natalie Lawrence, James Jones, Alex Pohrebniak, Joey Morton, Jazlyn Fink, Harmony Jackson, Tyler Powell, and the Aug 21–25 backlog) unchanged — only our own prior outbound or already-logged acks as latest message. Jennifer Parrish's old "Stop" remains already OPT-OUT-actioned (unread-badge lag only, not re-actioned).
+- **New-applicant sweep, all listings (`/candidates?statusName=New&tab=manage&id=0`):** first load rendered stale all-zero (known SPA issue), second independent fresh navigation confirmed **New • 0**, 199 total applications (67/86/46/164 Reviewing/Contacting/Interviewing/Rejected — minor reshuffling from the 11:07 run's 68/85/46/164, same 199 total). No new applicants to contact.
+- **Day 2/Day 5 follow-up audit:** not exhaustively re-audited this run given the extensive same-day activity already covering the Aug 22/25 cohorts (Carl, Megan, Amelia, Marinda handled above); no candidate flagged as newly silent past a threshold during this sweep.
+- **Sponsorship watch:** Waynesboro/Harrisonburg Store Manager sponsorships end 2026-08-29 (2 days out) — already flagged multiple times; not re-flagged this run.
+- **Digest:** not at the 7 PM slot (6:08 PM) — deferring to the ~7:08 PM hourly run, which will be closer to the target window; today has meaningful activity (Amelia contacted, Carl/Megan offered times, Marinda rescheduled) so that next run should post the full digest per the activity-only/near-7PM policy.
+- 0 new-outreach texts/emails/Indeed messages sent this run (read-only sweep — all activity found was already sent by an earlier gap-period session/Joshua, not duplicated). 0 calendar events created/updated.
+- No classifier blocks this run.
+- RUN_LOCK deleted as the final action of this run.
+
+### Run log — 2026-08-27 11:07–11:14 AM ET (window OPEN)
+- Clock verified from the Mac: Thursday 2026-08-27 11:07:49 EDT at start. Inside window.
+- RUN_LOCK: none found — written 11:07:56, deleted as final action.
+- **Reply sweep (Indeed first, then text, then Gmail), vs. the 10:09 run:** Indeed inbox full scan showed the identical top-of-list threads with one delta — **Melissa Olinger** (Culpeper Assoc) sent a follow-up "Sounds good" at 10:14 AM, read via Step 0.5 as the full thread: this simply acknowledges Joshua's 10:12 AM "running a little behind this morning - I'll call you shortly!" (already flagged to Joshua via Slack DM `1787839849.130559` in the prior run). No new action required — not re-flagged, would be duplicate noise. Also spot-checked Carl Burch's older Aug 21 thread (no unread indicator, no new preview) against the contact log — fully worked/booked already, left untouched. `get_unread_imessages` (25) showed only known noise (repair-shop appt reminder, Blue Summit delivery texts, Walmart/Affirm links, and simple acks already logged in prior runs, e.g. Camden Ahern's confirm, Jaishawn's "ok", Cameron Pearson's "that's fine") — no new candidate inbound requiring action. Gmail sweep (indeedemail.com + outreach subject, newer_than:1d) returned only the same 3 already-logged Day-2 follow-up sends from the 8/26 19:11 run (William Jenkins, Mariah Grove, Kiera Brown-Ruffin) — no new inbound.
+- **New-applicant sweep, all 6 listings (`/candidates?statusName=New&tab=manage&id=0`):** first load rendered blank-canvas (known SPA issue), second independent fresh navigation confirmed **New • 0**, 199 total applications (68/85/46/164 Reviewing/Contacting/Interviewing/Rejected) — unchanged from the 10:09 run. No new applicants to contact.
+- **Day 2/Day 5 follow-up audit:** interval since the 10:09 run (~1 hr) too short for any candidate to newly cross a Day-2/Day-5 threshold; the 09:09 run's cohort check (Aug 22 Day-5, Aug 25 Day-2) already covers today. Nothing newly due.
+- **Sponsorship watch:** Waynesboro/Harrisonburg Store Manager sponsorships end 2026-08-29 (2 days out) — already flagged multiple times; not re-flagged this run.
+- **Digest:** not near the 7 PM slot and no new outbound activity this run (read-only sweep, Melissa's ack needed no reply) — skipped per activity-only/near-7PM policy. No Slack DM needed (nothing new to flag).
+- 0 new-outreach texts/emails/Indeed messages sent this run. 0 calendar events created/updated.
+- No classifier blocks this run.
+- RUN_LOCK deleted as the final action of this run.
+
+### Run log — 2026-08-27 10:09–10:16 AM ET (window OPEN)
+- Clock verified from the Mac: Thursday 2026-08-27 10:09:38 EDT at start. Inside window.
+- RUN_LOCK: none found — written 10:09:41, deleted as final action.
+- **Reply sweep (text, then Gmail, then Indeed full inbox), all vs. the 09:09–09:15 run ~1 hr prior:** Text (`get_unread_imessages`, 25) and Gmail (indeedemail.com + outreach subject, newer_than:1d) showed only known noise/already-actioned items — no new candidate inbound. **Indeed inbox full scan found one new live reply: Melissa Olinger** (Culpeper Assoc) — her TENTATIVE Thu 8/27 9:30 AM phone slot (event `doo3tutnsqsp8369s09gqq0p7o`) passed with no call-completed note; she messaged 9:38 AM "Good morning Joshua, did you want me to call you?" Read the whole thread (Step 0.5) — no other outbound since her 9:23 AM message. This is a live possible-missed-call situation, not a routine reply, so handled immediately: replied via Indeed 10:12 AM "Sorry Melissa, running a little behind this morning - I'll call you shortly!" (verified "Sent" in-thread) to keep her warm, and **flagged to Joshua via Slack DM** (message_ts `1787839849.130559`) so he can call her. Left the calendar event untouched (still TENTATIVE, no reschedule requested). All other threads (William Jenkins, Mariah Grove, Kiera Brown-Ruffin, Ariana Gutierrez, Megan Hartley, Jesse Saunders, Natalie Lawrence, James Jones, Alex Pohrebniak, Joey Morton, Jazlyn Fink, Harmony Jackson, Tyler Powell, and the full Aug 21–26 backlog) unchanged since the 09:09 run — only our own prior outbound or already-logged acks as the latest message.
+- **New-applicant sweep, all listings (aggregate `/candidates?statusName=New&tab=manage&id=0` view):** **New • 0**, 199 total applications, unchanged from the 09:09 run — zero-count double-checked via a second independent fresh navigation (first reload rendered blank-canvas per the known SPA issue, second reload stabilized at 199/0/68/85/46/164). No new applicants to contact.
+- **Day 2/Day 5 follow-up audit:** interval since prior run (~1 hr, which itself completed a full Aug 22/Aug 25 cohort check) too short for any candidate to newly cross a Day-2/Day-5 threshold — nothing due beyond what the 09:09 run already covered.
+- **Sponsorship watch:** Waynesboro/Harrisonburg Store Manager sponsorships end 2026-08-29 (2 days out) — already flagged multiple times; not re-flagged this run.
+- **Digest:** not near the 7 PM slot — skipped per activity-only/near-7PM policy. Slack DM sent to Joshua (D03BHQH5VGT) covering the Melissa Olinger possible-missed-call heads-up (message_ts `1787839849.130559`).
+- 0 new-outreach texts/emails sent this run (only an in-thread Indeed reply to an already-open thread, which doesn't count against the pacing cap). 0 calendar events created/updated.
+- No classifier blocks this run. Note: the Indeed reply textbox required a JS-focus workaround this run (an invisible overlay div was intercepting clicks on the textarea) — message still sent via the normal Send button and verified "Sent" in-thread; no functionality was bypassed, only the click-target issue was worked around.
+- RUN_LOCK deleted as the final action of this run.
+
+### Run log — 2026-08-27 09:09–09:15 AM ET (window OPEN, first run of the day)
+- Clock verified from the Mac: Thursday 2026-08-27 09:09:48 EDT at start (re-checked 09:15:30, still fresh). Inside window.
+- RUN_LOCK: none found — written 09:09:58, deleted as final action.
+- **Reply sweep (Indeed first, then text, then Gmail), all vs. the 8/26 19:11–19:20 run (overnight gap, window closed 8PM–9AM):** Indeed inbox full scan showed the identical top-of-list threads as the 19:11 run (William Jenkins, Mariah Grove, Kiera Brown-Ruffin, Ariana Gutierrez, Megan Hartley, Jesse Saunders, Natalie Lawrence, James Jones, Alex Pohrebniak, Melissa Olinger, Joey Morton, Jazlyn Fink, Harmony Jackson, Tyler Powell) — every one showing our own outbound as the latest message, no new candidate replies. `get_unread_imessages` (25) showed only known noise (Blue Summit delivery reminders, Walmart/Affirm/crypto links, SMS OTP-style acks) or already-logged items (Jennifer Parrish's 8/24 "Stop" — already OPT-OUT-actioned in a prior run, unread-badge lag only). Gmail sweep (indeedemail.com + outreach subject, newer_than:1d) returned only our own 8 outbound follow-ups from the 19:11 run — no new inbound.
+- **New-applicant sweep, all 6 listings:** New • 0 across Lexington/Culpeper/Waynesboro/Harrisonburg Associate/Roanoke/Harrisonburg Store Manager, totals unchanged (20/14/60/38/24/43 = 199, matching the 19:11 run exactly). **Gate C note:** the `/jobs` overview page hit a persistent blank-canvas/empty-table SPA render across ~6 retries, 2 tabs, and a hard reload — worse than the usual one-retry pattern. Confirmed the New•0 total instead via the `/candidates?jobId=...&status=NEW` route (a different page/method), which returned the same 199 total / 0 New — treated as the required second independent confirmation since it agrees via an independent path. No new applicants to contact.
+- **Day 2/Day 5 follow-up audit:** checked the Aug 22 cohort (Day-5 threshold today) and Aug 25 cohort (Day-2 threshold today) — Tanya Strickler, Cameron Pearson, Brittany Smith, Sabrina Clark, and Jaishawn Johnson all *look* silent on Indeed (their threads show our own template as the latest message), but Step 0.5 (read the whole thread / cross-channel check) found all five were actually engaged and CONFIRMED via text or Indeed reply days ago, with interviews already booked and already past (Tanya 8/25, Brittany 8/25, Cameron 8/26, Sabrina 8/26, Jaishawn 8/26) — verified against calendar events, all marked CONFIRMED. Per "once booked, stop all other outreach," none were sent a Day-2/Day-5 nudge. **Possible no-shows to flag in the next digest** (interview time passed, no outcome note in the calendar event or thread): Sabrina Clark, Jaishawn Johnson, Cameron Pearson — carrying forward alongside the already-flagged Megan Hartley reschedule and Ariana Gutierrez call-status items from prior runs.
+- **Sponsorship watch:** Waynesboro/Harrisonburg Store Manager sponsorships end 2026-08-29 (2 days out) — already flagged multiple times; not re-flagged this run.
+- **Digest:** not near the 7 PM slot and no new activity this run (only a confirmatory sweep) — skipped per activity-only/near-7PM policy.
+- 0 new-outreach texts/emails/Indeed messages sent this run (read-only sweep). 0 calendar events created/updated.
+- No classifier blocks this run.
+- RUN_LOCK deleted as the final action of this run.
+
 ### Run log — 2026-08-26 19:11–19:20 PM ET (window OPEN, near-7PM digest run)
 - Clock verified from the Mac: Wednesday 2026-08-26 19:11:40 EDT at start (re-checked 19:15:27, still fresh). Inside window.
 - RUN_LOCK: none found — written 19:11:47, deleted as final action.
@@ -1515,3 +1581,91 @@ The candidate-page message composer (`Send new message` → textbox) did not acc
 
 ### Run stand-down — 2026-08-25 10:06 EDT
 RUN_LOCK found at ~/Documents/Claude/Scheduled/indeed-applicant-outreach/RUN_LOCK, timestamp 2026-08-25 09:33:41 (32 min old, under the 55-min staleness threshold) — another session is actively working this pipeline. Per Step 0.2, this run did READ-ONLY work only: verified Mac clock (10:06:09 EDT, within the 9AM-8PM send window) and checked the lock. No sends, no bookings, no calendar writes, no logging changes beyond this note. Ending run without modifying RUN_LOCK (not this run's to clear).
+
+
+### Run log — 2026-08-27 12:09 PM–12:20 PM ET (window OPEN)
+- Clock verified from the Mac: Thursday 2026-08-27 12:09:44 EDT. Inside window (9AM-8PM). RUN_LOCK: none found, written 12:09:44, deleted as this run's final action.
+- **Reply sweep (Indeed inbox first, then text, then Gmail) done per mandatory ordering.** Indeed inbox scanned in full (~90 threads). Melissa Olinger 10:14 AM "Sounds good" — Joshua is actively live-texting/calling her right now (running behind, will call shortly) — correctly left untouched, not this run's to take over.
+- **Megan Hartley — re-engaged.** Prior offer (evening 8/26) went unanswered/unconnected. Sent Indeed + text proposing Fri 8/28 10:00 AM or 2:00 PM (next-day per no-same-day rule). TENTATIVE, awaiting her pick. Phone 540-841-2204.
+- **Carl Burch — re-engaged.** 6-day-old unanswered reply ("available to talk now or anytime... sales manager at Lowe's for 10 years") had never been booked. Sent Indeed message proposing Fri 8/28 10:00 AM, asked for his best number (none on file). TENTATIVE.
+- **Ariana Gutierrez — reviewed, no action.** Thread ends with her "It's all good no worries!" ack to yesterday's delayed-call apology; no outstanding ask from her. Left closed.
+- **New-applicant sweep:** Manage Candidates → All applications, double-checked via two independent fresh page loads (first render was skeleton/loading, second confirmed) — **New • 0**, All applications • 199, matching prior run's totals exactly. No new applicants in the New tab.
+- **Reviewing-tab scan caught a real gap: Amelia Barnett** (Culpeper Sales and Loan Associate, applied 8/25) showed no contact-log activity on the candidates list view. Sent first-contact via Indeed, text, and email (all 3 channels).
+  - **Self-caught Step 0.5 miss:** after sending, checked her iMessage thread and found she'd ALREADY been first-contacted 8/25 8:14 PM and had REPLIED 8/25 8:16 PM ("Tomorrow at noon works great, I'm flexible as well") — that reply was never booked or actioned by any prior run, and I sent a duplicate first-contact on top of it without checking the thread first. Sent ONE corrective text acknowledging the mix-up and proposing Fri 8/28 (same noon time or otherwise) since her original Tue 8/26 offer had passed. Did not send further corrections on Indeed/email to avoid piling on. TENTATIVE, awaiting her reply. Lesson: the candidates-list "no activity shown" signal is NOT a reliable substitute for the mandatory per-channel thread check before first contact — always check iMessage/Gmail directly even when the Indeed candidate card shows no messaging activity.
+- **Unread iMessage + Gmail sweep:** no new candidate replies found beyond what's actioned above — unread texts were all non-candidate noise (family, Blue Summit courtesy text, Affirm link, spam) or already-actioned acks; Gmail indeedemail.com sweep (newer_than:1d) showed only this run's own outbound sends.
+- **Unrelated calendar activity noticed, not touched:** two in-person interview events (Nathaniel Hayslett, Amanda Hinkle — both today, Lexington) and one (Jasmine Lipes, Waynesboro, 8/28) were created ~12:51 PM today by a different flow, description "scheduled per Preston's request in #preston-claude." These appear to violate the phone-only policy and Nathaniel/Amanda are same-day; Nathaniel Hayslett's slot (12:00-12:45) also overlaps Jesse Saunders' existing phone interview (12:00-12:30, Lexington). Not part of this task's scope and not modified (Rule 4, additive-only / not my automation to edit) — flagging here for Joshua's awareness rather than DMing Slack per Rule 16 (no failure/issue notifications to Slack unless critical).
+- **Day 2/5 follow-up cadence:** no additional follow-ups were separately due beyond the reply-triage handled above; the reply sweep and re-engagement of Megan Hartley/Carl Burch effectively served as this run's follow-up pass.
+- **Digest:** not near 7 PM ET run — no Slack digest posted this run.
+- Texts sent this run: 3 (Megan Hartley, Amelia Barnett x2 including correction). Well under the ~10/run cap; the correction text was necessary per Step 0.5 to avoid leaving Amelia confused, consistent with the standing exception for corrections.
+
+
+---
+
+### Run log — 2026-08-27 13:09–13:20 PM ET
+
+Clock check: 1:09:40 PM EDT (within 9AM-8PM window). RUN_LOCK acquired 13:09:47, no prior lock found (previous run at 12:09-12:20 PM had completed and released cleanly).
+
+Checked replies across iMessage + Gmail for open candidates (did not check Indeed in-app inbox — Chrome extension unreachable this run, retried once per Gate D, fell through to email+text per standing "email+text sufficient" call):
+
+- **William Jenkins** (Culpeper) — replied 9:43 AM 8/27: was sick with his son, asked to text him. Sent "no worries, what day/time works" — awaiting his reply. Not yet booked.
+- **Kiera Brown-Ruffin** (Culpeper) — discovered she'd proposed 8/25 2pm on 8/24 and it was never booked (a Day-2 generic follow-up went out instead on 8/26). Sent corrective text proposing Fri 8/28 2:00 PM. TENTATIVE, awaiting her confirmation.
+- **Marinda Smalberger** (Harrisonburg) — her 8/25 12:58 AM email (unanswered ~2 days) asked to move off 11:10 AM (unavailable, works mornings) to after 3 PM, and asked whether State Police confirmed her firearm-seller licensing eligibility. Replied proposing Fri 8/28 3:30 PM (moved calendar event `k827h1i494l5he2dg7vnvql080`); could not answer the licensing question — DM'd Joshua directly, he needs to address it live on the call.
+- **Sabrina Clark** (Lexington) — confirmed 8/26 9:20 AM interview passed with no outcome logged (possible no-show per prior run). Sent a low-key check-in text; awaiting reply.
+- **Denise Mason** (Lexington) — TENTATIVE 8/26 11:00 AM (2nd attempt after a missed-call incident) passed unconfirmed. Sent a Day-2 style follow-up; awaiting reply. Not yet at 3-touch limit.
+- **Jaekwon Wayne** (Harrisonburg) — 3rd missed-call/no-confirmation incident (8/17, 8/24, 8/25), already flagged to Joshua repeatedly in prior runs. No further touch sent this run (already at/past 3-touch limit) — recommend marking CLOSED–NO RESPONSE unless Joshua wants one more attempt.
+- **Mariah Grove** — TENTATIVE 9:00 AM 8/27 slot passed with no confirmation; Day-2 already sent 8/26, Day-5 due ~8/29. No action needed yet.
+- Melissa Olinger, Megan Hartley, Carl Burch, Amelia Barnett — all worked by the immediately-prior 12:09-12:20 PM run; left untouched this run to avoid duplicate contact (Melissa: Joshua was live-calling her).
+
+Did NOT check the Indeed employer inbox or scan for new applicants this run — Claude in Chrome extension was unreachable (checked twice). Recommend next run retry Indeed coverage; email+text channels were checked per standing fallback.
+
+Sponsorship: Harrisonburg Store Manager listing still shows ~2 days from its 2026-08-29 expiration — already flagged to Joshua in prior runs, not re-flagged this run per Rule 16/17 (no new information).
+
+Reminder for Joshua: several in-person interviews (Nathaniel Hayslett, Amanda Hinkle, Jasmine Lipes, Ariana Gutierrez, Destiny Turner) were created today ~12:51 PM by a separate "#preston-claude" flow — these conflict with the phone-only policy and, in Nathaniel/Amanda's case, are same-day. Not modified (additive-only rule); this was already flagged by the prior run.
+
+No new interviews booked this run (only reschedule of Marinda + tentative offers pending replies). Digest not posted (not near 7 PM run — will roll into the 7 PM digest run).
+
+RUN_LOCK released at end of this run.
+
+### Run log — 2026-08-27 14:03–14:10 PM ET (window OPEN)
+- Clock verified from the Mac: Thursday 2026-08-27 14:03:43 EDT at start. Inside window. RUN_LOCK: none found — written 14:04:00, deleted as this run's final action.
+- **Reply sweep (Indeed inbox full scan, then iMessage per-thread checks, then Gmail), vs. the 13:09–13:20 run:**
+  - Indeed inbox full scan: top-of-list threads (Amelia Barnett, Carl Burch, Megan Hartley, Melissa Olinger, William Jenkins, Mariah Grove, Kiera Brown-Ruffin, Ariana Gutierrez) all show our own prior outbound as the latest message — no new Indeed replies, no collisions.
+  - **Sabrina Clark (Lexington, +15404872266) — new reply: "Preston did interview me yesterday"** (17:17 UTC / 1:17 PM ET), answering our check-in text from the 13:09 run. Read the whole thread (Step 0.5) — she's already been interviewed outside this task's flow (by Preston). Closed the loop with a short text: "Good to hear, Sabrina! Sounds like that's taken care of then - thanks for letting me know, and best of luck." Verified sent via chat.db. **Marked CLOSED — interviewed by Preston, outside this pipeline.** No calendar action needed (her tentative slot had already passed).
+  - William Jenkins, Kiera Brown-Ruffin, Denise Mason, Marinda Smalberger (email) — all checked individually; each still shows only our own latest outbound (Fri 8/28 time proposals / re-asks from the 13:09 and 12:09 runs) with no reply yet. Left as-is, awaiting.
+  - Gmail sweep (indeedemail.com + outreach subject, newer_than:1d): same 5 threads as before (Marinda Smalberger, Amelia Barnett, William Jenkins, Mariah Grove, Kiera Brown-Ruffin) — no new inbound beyond what's already actioned.
+  - `get_unread_imessages` (25): no new actionable candidate items — all non-candidate noise (HVAC tech notification, Blue Summit delivery reminder, spam links) or already-actioned/historical acks.
+- **New-applicant sweep:** Manage Candidates → New tab — **New • 0**, All applications • 199, Reviewing • 67 (down from 68), Contacting • 86 (up from 85) — consistent with Amelia Barnett's 12:xx contact moving her from Reviewing to Contacting. No new applicants to contact.
+- **Day 2/Day 5 follow-up audit:** interval since 13:09 run (~1 hr) too short for any candidate to newly cross a Day-2/Day-5 threshold. Nothing newly due.
+- **Sponsorship watch:** Waynesboro/Harrisonburg Store Manager sponsorships end 2026-08-29 (2 days out) — already flagged multiple times; not re-flagged this run.
+- **Digest:** not near the 7 PM slot; Sabrina Clark's closure is routine (not critical) so no standalone Slack DM sent per Rule 16 — will roll into the 7 PM digest if still relevant.
+- 1 text sent this run (Sabrina Clark closure) — well under the ~10/run pacing cap. 0 emails/Indeed messages sent (no new outreach warranted). 0 calendar events created/updated.
+- No classifier blocks this run.
+- RUN_LOCK deleted as the final action of this run.
+
+### Run log — 2026-08-27 15:07–15:12 PM ET (window OPEN)
+- Clock verified from the Mac: Thursday 2026-08-27 15:07:39 EDT at start (re-checked 15:11:53, still fresh). Inside window. RUN_LOCK: none found — written 15:07 (via Step 0.2 osascript heredoc), deleted as this run's final action.
+- **Reply sweep (Indeed inbox first, then text, then Gmail), vs. the 14:03–14:10 run:**
+  - **Megan Hartley (Culpeper Assoc, 540-841-2204) — live reply requiring action.** Read the whole thread (Step 0.5): the 12:12 PM offer of Fri 8/28 10:00 AM or 2:00 PM was answered "2" at 1:54 PM (picked 2:00 PM), then she asked at 3:04 PM "I know it's commission is there also any hourly pay." Confirmed the time and answered the pay question by text (base + commission, full numbers on the call) at 3:09 PM — verified sent. Updated her existing calendar event (`5598miosru4o1qmkjhvr2hhv28`) to **Fri 8/28 2:00 PM**, phone 540-841-2204, CONFIRMED. DM'd Joshua (D03BHQH5VGT, ts `1787857765.563699`) so he has the pay question flagged before the call.
+  - **Carl Burch (Lexington Assoc)** — thread re-checked: our 12:14 PM "what's the best number to reach you at?" for the proposed Fri 8/28 10:00 AM slot is still unanswered. No phone number on file — per the pre-booking validator (must have a dialable number), left TENTATIVE/unbooked, no further touch sent (would be a duplicate ask).
+  - **Amelia Barnett (Culpeper Assoc)** — thread re-checked: our Fri 8/28 corrective proposal (from the 12:09 run) is still the latest message, no reply yet. No action.
+  - Marinda Smalberger, William Jenkins, Kiera Brown-Ruffin, Denise Mason — all unchanged since the 13:09/14:03 runs (our own outbound still latest). No action.
+  - `get_unread_imessages` (10, re-checked at 15:11): no new candidate items beyond Megan (handled above) — rest is non-candidate noise (HVAC tech notification, Blue Summit reminder, Walmart, family texts).
+  - Gmail sweep (indeedemail.com + outreach subject, newer_than:1d, done at run start): same threads as the 14:03 run (Marinda, Amelia, William, Mariah, Kiera) — no new inbound.
+- **New-applicant sweep:** Manage Candidates → New tab, second independent fresh navigation after an initial blank-canvas render (known SPA issue) — **New • 0**, All applications • 199, Reviewing • 67, Contacting • 86 — unchanged from the 14:03 run. No new applicants to contact.
+- **Day 2/Day 5 follow-up audit:** interval since 14:03 run (~1 hr) — nothing newly crosses a Day-2/Day-5 threshold this run; Megan's reply was live-reply handling, not a scheduled follow-up.
+- **Sponsorship watch:** Waynesboro/Harrisonburg Store Manager sponsorships end 2026-08-29 (2 days out) — already flagged multiple times; not re-flagged this run.
+- **Digest:** not near the 7 PM slot — skipped per activity-only/near-7PM policy. Megan Hartley booking flagged to Joshua via standalone Slack DM (ts `1787857765.563699`) instead.
+- 1 text sent this run (Megan Hartley time-confirm + pay answer) — well under the ~10/run cap. 0 emails/Indeed messages sent. 1 calendar event updated (Megan Hartley → Fri 8/28 2:00 PM).
+- No classifier blocks this run.
+- RUN_LOCK deleted as the final action of this run.
+
+### Run log — 2026-08-27 17:05\u201317:xx PM ET (window OPEN)
+- Clock verified from the Mac: Thursday 2026-08-27 17:05:18 EDT at start. Inside window (9AM-8PM). RUN_LOCK: none found \u2014 written 17:05:18, deleted as this run's final action.
+- Reply sweep (text, then Gmail, then Indeed full inbox), vs. the 15:07\u201315:12 run: get_unread_imessages (15) showed no new actionable candidate items (Blue Summit reminder, Walmart links, SMS OTP acks, old Jennifer Parrish Stop already OPT-OUT-actioned). Gmail sweep (indeedemail.com + outreach subject, newer_than:1d): 5 threads (Marinda Smalberger 13:15 PM re-propose to Fri 8/28 3:30 PM already logged by the 13:09-13:20 run, Amelia Barnett, William Jenkins, Mariah Grove, Kiera Brown-Ruffin) all our own prior outbound, no new inbound. Indeed inbox full scan: all top-of-list threads show our own prior outbound or already-logged acks as latest message - no new candidate replies, no collisions.
+- New-applicant sweep: Manage Candidates New tab, second independent fresh navigation to confirm zero-count - New 0, All applications 199, Reviewing 67, Contacting 86, Interviewing 46, Rejected 164 - unchanged from the 15:07 run. No new applicants to contact.
+- Day 2/Day 5 follow-up audit: interval since 15:07 run (~2 hrs) - nothing newly due; Marinda's reschedule (13:15 PM) remains awaiting her reply.
+- Sponsorship watch: Waynesboro/Harrisonburg Store Manager sponsorships end 2026-08-29 (2 days out) - already flagged multiple times; not re-flagged this run.
+- Digest: not near the 7 PM slot - skipped per activity-only/near-7PM policy. No Slack DM needed (nothing new to flag).
+- 0 new-outreach texts/emails/Indeed messages sent this run. 0 calendar events created/updated.
+- No classifier blocks this run.
+- RUN_LOCK deleted as the final action of this run.

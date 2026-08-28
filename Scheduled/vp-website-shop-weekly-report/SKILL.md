@@ -1,6 +1,7 @@
 ---
 name: vp-website-shop-weekly-report
 description: Weekly DM to Joshua on thevalleypawn.com traffic + shop-page health (site views/visitors, WooCommerce order count, live item count)
+model: claude-sonnet-5
 ---
 
 Weekly website performance check for Full Circle Finance Inc DBA Valley Pawn's website, thevalleypawn.com. Run fully autonomously — no clarifying questions. This is a report-and-DM task; the only "write" action is the final Slack DM.

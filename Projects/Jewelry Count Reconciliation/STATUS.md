@@ -838,3 +838,35 @@ Bravo (Expected) vs PM sheet (Counted), CUL:
 | TOTAL | 1425 | 1425 | 0 |
 
 Posted to #jewlery-counts. No DM to Joshua — variances are +/-1 noise (not the ROA-pendants-style anomaly), net variance zero. Repeat check: CUL Bracelets -1 / Pendants +1 not seen as a repeating pattern in recent CSVs reviewed this session (2026-08-24, 2026-08-25 CUL CSVs also on hand for comparison if a next session wants to check for repetition). One-night, low-magnitude, no action needed.
+
+---
+## RUN RECORD — 2026-08-27 (Thursday) — jewelry-onhand-nightly-pull
+
+Open stores: CUL, HAR, LEX, ROA, WAY (all 5, Thursday).
+Freeze window: 6:00 PM close -> 10:00 AM reopen. Bravo triggers dropped ~8:36 PM, PM sheets read starting ~9:20 PM — inside freeze window on the Bravo side.
+
+### Bravo on-hand pull (jewelry-case-counts-v2) — all 5 stores COMPLETE
+- CUL: SUCCESS, 8/8 ok. Rings 631, Bracelets 123, Pendants 247, Charms 27, Brooches 21, Earrings 166, Chains 112, Necklaces 98.
+- HAR: partial (7/8), Charms error. Prior-day (8/25) HAR Charms also error -> treated as 0 per empty-category rule. Rings 462, Bracelets 48, Pendants 119, Charms 0(err), Brooches 6, Earrings 48, Chains 75, Necklaces 49.
+- LEX: partial (7/8), Brooches error. Prior-day (8/25) LEX Brooches also error -> treated as 0 per empty-category rule. Rings 288, Bracelets 37, Pendants 55, Charms 1, Brooches 0(err), Earrings 52, Chains 31, Necklaces 19.
+- ROA: SUCCESS, 8/8 ok. Rings 564, Bracelets 129, Pendants 95, Charms 59, Brooches 2, Earrings 89, Chains 98, Necklaces 67.
+- WAY: partial (7/8), Charms error. Prior-day (8/25) WAY Charms also error -> treated as 0 per empty-category rule. Rings 349, Bracelets 44, Pendants 62, Charms 0(err), Brooches 5, Earrings 54, Chains 46, Necklaces 23.
+
+Bravo-side scope-computed Expected (Pendants=Pendants+Charms+Brooches, Necklaces=Chains+Necklaces):
+- CUL: Rings 631, Bracelets 123, Necklaces 210, Earrings 166, Pendants 295
+- HAR: Rings 462, Bracelets 48, Necklaces 124, Earrings 48, Pendants 125
+- LEX: Rings 288, Bracelets 37, Necklaces 50, Earrings 52, Pendants 56
+- ROA: Rings 564, Bracelets 129, Necklaces 165, Earrings 89, Pendants 156
+- WAY: Rings 349, Bracelets 44, Necklaces 69, Earrings 54, Pendants 67
+
+### PM count sheets (#end-of-day) — INCOMPLETE
+Read via claude-in-chrome, zoomed lightbox, sum-verified against each sheet's own TOTALS line.
+- HAR (Walker Tapley, 6:12 PM): sheet block dated 8/26/26 (evident date-typo — last filled column, immediately followed by a totally blank template column, sum verified 461+48+125+49+118=801 exact match) treated as today's PM count. PM: Rings 461, Bracelets 48, Necklaces 125, Earrings 49, Pendants 118. Sum OK.
+- ROA (Benjie Moore, 6:27 PM): sheet dated 8/27/26 (rotated photo). PM: Rings 564, Bracelets 129, Necklaces 167, Earrings 89, Pendants 155. NOTE: written TOTALS line on the sheet itself reads 1,164 which does NOT match the sum of the 5 individual PM figures (1,104) — re-zoomed and triple-verified every individual digit, they are legible and consistent; this appears to be the manager's own arithmetic error on the sheet, not a misread. Used the individual category digits.
+- WAY (Chadd, 6:25 PM): sheet dated 8/27/26. PM: Rings 349, Bracelets 44, Necklaces 69, Earrings 53, Pendants 67. Sum OK (582=582).
+- CUL: NOT POSTED as of this run. Waited ~19 minutes (multiple re-checks) past the standard window — still missing.
+- LEX: NOT POSTED as of this run. Same wait applied — still missing.
+
+### Outcome
+Per protocol (no partial posts): NOTHING posted to #jewlery-counts. Bravo pull is fully captured for all 5 stores and safe to reuse for a follow-up run tonight if CUL/LEX sheets land later — do not re-pull Bravo, just re-read #end-of-day for CUL/LEX PM sheets and build the table.
+One plain-language DM sent to Joshua (D03BHQH5VGT): tonight's jewelry count didn't complete (CUL/LEX PM sheets missing).
