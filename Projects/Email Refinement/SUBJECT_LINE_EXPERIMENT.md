@@ -83,6 +83,7 @@ against. If CONCRETE wins clearly by December, retire GENERIC entirely.
 | Date | Campaign | Style | Delivered | Link clicks | Calls+texts | per 1,000 |
 |---|---|---|---|---|---|---|
 | — | — | — | — | — | — | — |
+| 2026-08-27 | 28 | CONCRETE | 169 | 2 | 2 | 11.83 |
 
 ## Confounders to keep in mind
 

@@ -1,6 +1,6 @@
 ---
 name: preston-interactive-assistant
-description: Interactive assistant for Preston in #preston-claude — completes any request end-to-end and delivers directly to him, no Joshua approval gate. Supersedes preston-ebay-feedback-watch. Sonnet only.
+description: Interactive assistant for Preston in #preston-claude — checks every 2 hours during the day (7am-6pm). Completes any request end-to-end, no Joshua approval gate except 3 narrow exceptions. Pairs with preston-claude-evening-check for the 6pm-10pm hourly window.
 model: claude-sonnet-5
 ---
 

@@ -2,6 +2,21 @@
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
 
+## 2026-08-29
+
+- Enabled scheduled tasks: 147 -> 148
+- Registered scheduled tasks: 158 -> 159
+- Task folders on disk: 169 -> 170
+- ENABLED: preston-claude-evening-check
+
+## 2026-08-28
+
+- Enabled scheduled tasks: 145 -> 147
+- Registered scheduled tasks: 155 -> 158
+- Task folders on disk: 166 -> 169
+- ENABLED: mail-brief-reply-executor
+- ENABLED: scheduled-task-model-audit-weekly
+
 ## 2026-08-27
 
 - Enabled scheduled tasks: 143 -> 145
@@ -2382,3 +2397,5 @@ Newest first. Material changes to the business operating system. Read this BEFOR
 - 2026-08-24 (later) — **ebay-weekly-quality-fix run.** Reviewed 32 new eBay listings created in the last 7 days across all 5 stores. Mechanical fixes: stripped 1 leftover intake code (Roanoke) and fixed 4 ALL-CAPS titles (Roanoke x2, Waynesboro x2) via the existing title-stripper/caps-fixer scripts. Manual fixes: rewrote 12 weak/truncated titles that were cut off mid-word or cryptic model numbers only (11 Roanoke, 1 Waynesboro) with full product-identifying titles, researched via web search where the model wasn't immediately known (Fluke RLD2, Extech AN100, Milwaukee 49-66-6730, Spectrum 56153, Vortex Pro Torque Wrench, Lexar SL500, NorthStar NYR51K55BP, Audien Atom X) — verified live via GetItem re-read after each revision (Rule 12). Categories checked against Taxonomy expectations for all 32 items — all correct, no changes needed. Flagged (not auto-fixable): Culpeper has an apparent duplicate Bose F1 812 listing; Roanoke has several items with only 3-4 photos (below the 8-12 standard); Waynesboro's Sony a7 III listing's primary photo may be a box/stock shot rather than the item. DM'd each store manager + Preston in plain language (Field Communication Standard v3) — no Slack failure notices per Rule 16, this was a normal completed-work report. Note: XML-escaping bug hit on 3 title revisions containing "&" (SAXParseException) — retried with proper entity escaping, all succeeded.
 
 - 2026-08-24 (recovery) — **weekly-online-store-audit missed-run recovery.** Scheduled Sun 8/23 8am ET fire never ran (no lastRunAt); executed as recovery 8/24. Pulled all 5 eBay stores: 504 active, 102 sold/7d, $16,014.91 rev/7d, 99 listings >180d ($10,959.30). Auto-fix found 0 new drift (returns/Best Offer) but logged 9 fix_failures (1 Culpeper, 8 Roanoke) — spot-checked live via GetItem/ReviseFixedPriceItem (Rule 12): all 9 blocked by eBay because the listing has a pending Best Offer, which prevents a return-policy revise until the offer resolves. Self-resolving, no action needed, will retry next run. Posted to #ebay-performance (no duplicate found for this week).
+
+- 2026-08-28 -- brevo-weekly-efficiency-audit: channel healthy, no incidents. This weeks Thursday send (campaign 28, W13 Lexington Spotlight) hit 11.83 calls+texts/1,000 delivered, first send to clear the 8/1,000 target (0 hard bounces/complaints/unsubs, 169/179 delivered). Google Workspace DKIM cooldown for thevalleypawn.com cleared on its own -- domain now shows authenticated=true, both DKIM CNAMEs live -- last needs-Joshua item from last week is resolved, no action needed. fcfpawn.com single-SPF fix confirmed still holding. Draft-guard + Monday picker worked correctly; 18 weeks of draft runway staged; wave lists balanced (4.6% spread); filled in the previously-empty SUBJECT_LINE_EXPERIMENT.md tally with real data from the 8/27 send. Full detail in Email Refinement/EFFICIENCY_LOG.md 2026-08-28.

@@ -15,19 +15,30 @@ Texts must read like Joshua actually typing, not a mail merge.
 - No signature block on texts. No "Reply STOP to opt out." No corporate throat-clearing.
 - Email is the exception: keeps the subject line and the "Joshua Davis, Owner, Valley Pawn" sign-off.
 
-## Message template (FIRST CONTACT ONLY — all channels, keep it this simple)
-> Hi {first name}, this is Joshua Davis, owner of Valley Pawn. We saw your resume for the {role} position at our {store} store and would like to talk — phone, Zoom, or in person. You name the day and time, and we'll be there.
+## POLICY CHANGE — 2026-08-29 (Joshua, mid-run via chat): PRESTON IS NOW IN CHARGE OF THIS PIPELINE
+Ad volume is up, so ownership of the day-to-day loop moves from Joshua to **Preston Peters (Operations Manager)** — same process, new interviewer/sender.
+- **Preston Peters** — cell **(540) 836-4200** / `+15408364200` (verified via Joshua's Contacts, "Preston Peters"), email `preston@fcfpawn.com`, Slack `U03BWMEM9GR` (`thevalleypawn@gmail.com`, no Slack DM phone field set).
+- **All candidate messages (email/text/Indeed) now go out AS Preston**, not Joshua — see updated template below. Preston will be the one calling candidates for interviews, so **every message that includes a callback expectation must give the candidate Preston's number, (540) 836-4200**, so they recognize the call / can reach him.
+- **Loop Preston in on new applicants as they come in** — do not wait for the daily digest. When a new applicant is triple-contacted, send Preston a short Slack DM (name, role/store, channel status). Batch multiple new applicants from the same run into one DM rather than one-per-candidate spam.
+- **Periodic updates throughout the day** to Preston's Slack DM (`U03BWMEM9GR`) whenever something happens (new contact, reply, booking, opt-out) — same trigger logic as the old Joshua-DM habit, just redirected/duplicated to Preston.
+- **Daily morning summary** — first run of the day posts a summary (yesterday's activity + today's/tomorrow's interview schedule) to Preston's DM, **cc Joshua** (`D03BHQH5VGT`) — i.e. send the same summary to both DMs.
+- Joshua remains cc'd on all of the above (send the same DM content to `D03BHQH5VGT` as well) — "copy me as well," per Joshua 2026-08-29. Critical/failure items still follow Rule 16 (one plain DM, no team channels).
+- **Interview grid, this coming week:** Monday 2026-08-31 starting **8:00 AM ET**, and Tuesday 2026-09-01, **15-minute slots** (8:00, 8:15, 8:30, …), phone only, no same-day. Assign candidates who are ready to book into this grid in order (Monday fills first, then Tuesday) rather than ad hoc times — still subject to the pre-booking validator (phone-only, not today, 7AM–9PM ET window, no conflict, dialable number in hand). Location field on the calendar event stays the candidate's number (so Preston can tap to dial); event should note **Preston Peters** as interviewer in the description.
+
+## Message template (FIRST CONTACT ONLY — all channels, keep it this simple) — UPDATED 2026-08-29, sent as Preston
+> Hi {first name}, this is Preston Peters, Operations Manager at Valley Pawn. We saw your resume for the {role} position at our {store} store and would like to talk by phone. You name the day and time, and I'll call you — my number is (540) 836-4200 if you'd rather reach out directly.
 
 - `{role}` = "Sales and Loan Associate" or "Store Manager" depending on the listing.
-- No Mon–Wed limitation — candidates can pick ANY time (per Joshua 2026-08-15).
+- No Mon–Wed limitation — candidates can pick ANY time (per Joshua 2026-08-15), but see the Mon 8/31 + Tue 9/1 15-min grid above for actually assigning slots this week.
 - Email subject: `Valley Pawn — let's talk about your application`
-- Sign emails: `Joshua Davis, Owner, Valley Pawn`
+- Sign emails: `Preston Peters, Operations Manager, Valley Pawn` (changed from Joshua Davis 2026-08-29)
+- Confirmation text once booked: *"You're set — {day}, {date} at {time}. Preston will call you at this number from (540) 836-4200. Talk then!"* — always include Preston's number in the confirmation so the candidate isn't surprised by an unrecognized caller.
 - **No "Reply STOP to opt out" language** — removed by Joshua 2026-08-15: candidates contacted us first by applying, so the opt-out line reads like spam and misframes the relationship. The message is identical across all three channels. (Opt-out handling below still applies if someone asks to stop — we just don't advertise it.)
 
 ## Rules
 - Check the contact log below BEFORE contacting anyone. One triple-contact per applicant, ever. No duplicates.
 - If a channel is unavailable (no phone on resume, etc.), send the other two and log the gap.
-- When a candidate replies with a time, DM Joshua on Slack (D03BHQH5VGT) immediately with name, store, and proposed time.
+- When a candidate replies with a time, DM Preston on Slack (U03BWMEM9GR) immediately with name, store, and proposed time — cc Joshua (D03BHQH5VGT) per the 2026-08-29 handoff policy above.
 - Failures: one plain-language Slack DM to Joshua. Never message staff/team channels.
 - **Opt-out (TCPA):** if a candidate replies STOP / "stop texting" / "unsubscribe" or similar, immediately stop all texting to that number, log it in the contact log as OPT-OUT, and never text them again. Email and Indeed messaging may continue unless they ask otherwise.
 - **Pacing:** send no more than ~10 texts per run, spaced a few seconds apart. Bursting 40+ texts at once risks carrier spam filtering and Apple rate limits, which would silently kill deliverability. Backlog gets worked down across runs, not all at once.
@@ -65,6 +76,18 @@ For every reply found:
 - Reading, harvesting contact details, logging, and scheduling are fine any time. **Only outbound sending is restricted.**
 
 > **Why this rule exists:** on 2026-08-15 a session was told "run it" and was one step from texting ~19 candidates at **11:05 PM on a Saturday**. It had been working since late morning and had no idea how much time had passed. Nothing in the system would have stopped it. The clock check is now mandatory and explicit.
+
+### Run log — 2026-08-28 09:11–09:XX AM ET (window OPEN, first run of the day)
+- Clock verified from the Mac: Friday 2026-08-28 09:11:18 EDT at start. Inside window (9AM–8PM).
+- RUN_LOCK: none found — written 09:11, deleted as final action.
+- **Reply sweep (text, then Gmail, then Indeed full inbox), vs. the 8/27 19:04 run (overnight gap, window closed 8PM–9AM):** `get_unread_imessages` (25) showed only known noise (SMS OTP, delivery links, Walmart, already-actioned acks, Jennifer Parrish's logged OPT-OUT) — no new candidate inbound. Gmail sweep (indeedemail.com + outreach subject, newer_than:1d) returned only the same 2 threads already covered by the 19:04 run (Marinda Smalberger — rescheduled to Fri 8/28 3:30 PM, fully worked; Amelia Barnett — first-contact sent, no reply). Indeed inbox full scan: all top-of-list threads (Carl Burch, Megan Hartley, Melissa Olinger, William Jenkins, Mariah Grove, Kiera Brown-Ruffin, and the rest) show only our own prior outbound or already-logged acks as the latest message — no new replies, no collisions.
+- **New-applicant sweep, all listings (`/candidates?statusName=New&tab=manage&id=0`):** first load rendered blank-canvas (known SPA issue), second independent fresh navigation confirmed **New • 0**, 199 total applications (67/86/46/164 Reviewing/Contacting/Interviewing/Rejected) — unchanged from the 19:04 run. No new applicants to contact.
+- **Day 2/Day 5 follow-up audit:** cross-checked candidates whose latest Indeed message was still our own first-contact template. **Harmony Jackson** (Culpeper Assoc, first-contacted 8/26 9:19 AM, no calendar event found via `search_events`) — genuinely silent 2 days, Day-2 threshold due today. Sent Day-2 follow-up via Indeed 9:16 AM (verified "Sent" in-thread): "Hi Harmony, Joshua Davis with Valley Pawn following up on the Sales and Loan Associate position in Culpeper. Still interested? Happy to do a quick call whenever works for you." **Email/text legs skipped** — could not surface her phone/email through the Indeed candidate-profile UI this run (profile panel didn't render contact fields); flagging as a gap for a future run to fill in from her resume/application page. **Nathaniel Hayslett** initially looked like a similar Day-5 candidate (first-contacted 8/23, template still showing as latest Indeed message) but `search_threads` on Gmail found he's actually **booked**: Interview — Nathaniel Hayslett — Sales and Loan Associate, Lexington (Phone), Wed 8/26 12:00–12:30 PM, accepted by Preston — no action needed, Indeed preview was stale. **James Jones, Alex Pohrebniak, Joey Morton** — final Day-5 touches were sent 8/26, still no reply as of today (2 days later) — marking **CLOSED–NO RESPONSE** for all three per the three-touches-then-stop rule; no further contact. Isabella Campbell, Sabrina Clark checked against prior run notes — both already engaged/booked previously, not silent Day-5 candidates, left alone.
+- **Sponsorship watch:** Waynesboro/Harrisonburg Store Manager sponsorships end 2026-08-29 — **now 1 day out.** Sent a fresh Slack DM to Joshua (D03BHQH5VGT, ts `1787922985.079709`) since the lapse is imminent; not auto-renewing per standing rule.
+- **Digest:** not near the 7 PM slot — skipped per activity-only/near-7PM policy. No separate DM needed beyond the sponsorship flag above (Harmony Jackson follow-up and the 3 closures are routine, not urgent).
+- 1 new-outreach Indeed message sent this run (Harmony Jackson Day-2 follow-up) — well under the ~10/run pacing cap. 0 texts, 0 emails (contact info not found). 0 calendar events created/updated.
+- No classifier blocks this run.
+- RUN_LOCK deleted as the final action of this run.
 
 ### Run log — 2026-08-27 19:04–19:11 PM ET (window OPEN, near-7PM digest run)
 - Clock verified from the Mac: Thursday 2026-08-27 19:04:48 EDT at start. Inside window.
@@ -1075,7 +1098,7 @@ The goal is a booked interview, not a sent message. **PHONE ONLY, effective 2026
 - Asked a question (pay, hours, duties) → answer it plainly from the job post, then ask for a time in the same message. Never answer without asking for the time.
 - Not interested / asked to stop → mark CLOSED or OPT-OUT, cease contact.
 
-**Stage 4 — Book it and confirm.** Create the calendar event (format below), then confirm back to the candidate on their channel: *"You're set — {day}, {date} at {time}. Joshua will call you at {their number}. Talk then."* Phone only — no in-person, no Zoom link needed. A booking is not complete until the candidate has been told.
+**Stage 4 — Book it and confirm.** Create the calendar event (format below), then confirm back to the candidate on their channel: *"You're set — {day}, {date} at {time}. Preston will call you at this number from (540) 836-4200. Talk then."* (Updated 2026-08-29 — Preston is now the interviewer; always include his number.) Phone only — no in-person, no Zoom link needed. A booking is not complete until the candidate has been told.
 
 **Stage 5 — Keep it alive.** If a candidate asks to move a booked interview, reschedule the calendar event and re-confirm. If a booked time passes with no calendar change and no note, flag it to Joshua in the next digest as "possible no-show — follow up?"
 
@@ -1667,5 +1690,43 @@ RUN_LOCK released at end of this run.
 - Sponsorship watch: Waynesboro/Harrisonburg Store Manager sponsorships end 2026-08-29 (2 days out) - already flagged multiple times; not re-flagged this run.
 - Digest: not near the 7 PM slot - skipped per activity-only/near-7PM policy. No Slack DM needed (nothing new to flag).
 - 0 new-outreach texts/emails/Indeed messages sent this run. 0 calendar events created/updated.
+- No classifier blocks this run.
+- RUN_LOCK deleted as the final action of this run.
+
+### Run log — 2026-08-28 11:06 AM ET (STAND-DOWN — active RUN_LOCK)
+- Clock verified from the Mac: Friday 2026-08-28 11:06:20 EDT. Inside window (9AM-8PM).
+- RUN_LOCK found, timestamp 2026-08-28 10:33:22 — 33 minutes old, under the 55-minute staleness threshold. Another session is actively working this pipeline.
+- Per Step 0.2, stood down: performed no sends, no bookings, no calendar writes this run. Did not overwrite the lock.
+- No read-only reconnaissance performed beyond confirming the lock state, to avoid racing the active session's own reads/writes.
+- Ending run cleanly. Did not touch RUN_LOCK (leaving it for the owning session to delete).
+
+### Run log — 2026-08-28 16:04 PM ET (STAND-DOWN — active RUN_LOCK)
+- Clock verified from the Mac: Friday 2026-08-28 16:04:15 EDT. Inside window (9AM-8PM).
+- RUN_LOCK found, timestamp 2026-08-28 15:11:17 — ~53 minutes old, under the 55-minute staleness threshold. Another session is actively working this pipeline.
+- Per Step 0.2, stood down: performed no sends, no bookings, no calendar writes this run. Did not overwrite or delete the lock.
+- No read-only reconnaissance performed beyond confirming the lock state, to avoid racing the active session's own reads/writes.
+- Ending run cleanly. Did not touch RUN_LOCK (leaving it for the owning session to delete).
+
+### Run log — 2026-08-29 11:28 AM–~11:40 AM ET (window OPEN) — MAJOR POLICY CHANGE: Preston handoff
+- Clock verified from the Mac: Saturday 2026-08-29 11:28:04 EDT at start (re-checked 11:32:41). Inside window.
+- RUN_LOCK found at 2026-08-28 19:08:33 — ~16 hours old, far past the 55-min staleness threshold. Overwrote with current timestamp, proceeded normally.
+- **Ad-hoc policy change from Joshua, mid-run via chat (2026-08-29):** Preston Peters (Operations Manager) is now in charge of this entire pipeline — same process, but (1) all candidate messages now sent AS Preston, not Joshua, and must include his cell **(540) 836-4200** so candidates know who's calling; (2) Preston gets looped in immediately on every new applicant, reply, and booking via Slack DM (`U03BWMEM9GR`), not just the daily digest; (3) a daily morning summary goes to Preston's DM, cc Joshua (`D03BHQH5VGT`); (4) this week's interview grid is Monday 8/31 starting 8:00 AM ET and Tuesday 9/1, 15-minute slots, phone only, no same-day. Full policy + updated message templates written into this manual (see POLICY CHANGE section near the top and the updated Stage 4 confirmation text). Preston's cell verified via Joshua's macOS Contacts (exact match "Preston Peters" → (540) 836-4200 / +15408364200).
+- Sent Preston a Slack DM (ts `1788017620.631709`) explaining the handoff, what's changing, and the new interview grid. Sent Joshua a confirmation DM (ts `1788017622.379469`, D03BHQH5VGT) that the policy is live.
+- **Reply sweep:** `get_unread_imessages` (25) — all known noise (HVAC quote, OneTime/Affirm/teco links, Blue Summit delivery reminders, old acks already logged in prior runs) — no new candidate inbound. Gmail sweep (`from:indeedemail.com OR subject:"Valley Pawn — let's talk about your application"`, `newer_than:1d`) returned zero threads — no new inbound.
+- **Indeed inbox / new-applicant sweep — BLOCKED:** Claude in Chrome extension is not connected/reachable this run (retried twice, both failed with "not connected"). Could not open `employers.indeed.com/messages` or the candidates view, so no Indeed reply sweep, no new-applicant contact, and no bookings were possible this run. This is a tooling connectivity issue, not a policy or account problem — no diagnosis beyond that attempted.
+- Flagged the Chrome-connectivity gap to Joshua via one plain Slack DM (D03BHQH5VGT) per Rule 16 — no technical detail, no team-channel post.
+- 0 new-outreach texts/emails/Indeed messages sent this run (blocked on Indeed access; text/email legs came back clean anyway). 0 calendar events created/updated — the Mon 8/31 8AM / Tue 9/1 15-min grid is defined in the policy above but not yet populated since no candidate was reachable to book this run.
+- No classifier blocks this run (Slack DMs sent fine).
+- RUN_LOCK deleted as the final action of this run.
+
+### Run log — 2026-08-29 11:35 AM–~11:50 AM ET (window OPEN) — Chrome reconnected, resumed
+- Clock verified from the Mac: Saturday 2026-08-29 11:35:19 EDT. Inside window. RUN_LOCK: previous run's lock had already been released; wrote a fresh timestamp, deleted as this run's final action.
+- Chrome extension reconnected (Joshua said "try now"). Signed into Indeed via the known-good sequence in `indeed-access` (personalized "Continue as Joshua" tile) — landed on Jobs dashboard cleanly, no stall.
+- **Indeed inbox full scan — important discovery:** Preston is personally on-site at the Culpeper store today and has been messaging applicants directly on Indeed all morning as "Preston General Manager for Valley Pawn," offering **in-person, same-day** interviews ("I am at the Culpeper location today (8/29/26) until 6pm"). Confirmed live threads: Laurie Apel (asked about health insurance, unanswered as of this run — left for Preston, he's clearly active in the inbox), Dawud Smith ("Yes I am"), Tyler Hogeland (availability info), Emily Lindsey, Stacey Truman (both contacted 11:20–11:21 AM, no reply yet), **Harmony Jackson — booked and confirmed for 2:00 PM today, in person** ("That works great. I will see you then at 2pm!" / "Ok see you then"). This is outside the documented phone-only / no-same-day policy, but it's Preston running his own on-site day, not a pipeline bug — per the 2026-08-29 handoff, this is now his call. **Did not touch, reply to, or duplicate any of these threads** — flagged to Joshua via Slack DM (ts `1788017895.052059`) as an FYI/possible-policy-question, not an error. Also DMed Preston (ts `1788017897.578189`) acknowledging it and confirming I'm staying out of his live threads.
+- Brittany Smith (Waynesboro, Aug 28 "thank you for taking the time to interview me") — post-interview thank-you, no time-sensitive action, left as-is (routine, not worth a standalone touch).
+- Rest of the inbox (Carl Burch, Megan Hartley, Melissa Olinger, William Jenkins, Mariah Grove, Kiera Brown-Ruffin, Ariana Gutierrez, Jesse Saunders, Natalie Lawrence, and the full backlog) unchanged from the 8/28 09:11 run — only our own prior outbound or already-logged acks as latest message. No collisions in the automation's own template wording.
+- **New-applicant sweep, all listings:** `New • 0`, 204 total applications (67 Reviewing / 91 Contacting — up from 86, consistent with Preston's own live contacting / 46 Interviewing / 164 Rejected), double-checked via two independent fresh navigations per Gate C. No new applicants to triple-contact this run.
+- **Digest:** not a full digest run — sent two targeted Slack DMs instead (Joshua + Preston) covering the Chrome reconnect, the Preston on-site discovery, and the zero-new-applicants state.
+- 0 new-outreach texts/emails/Indeed messages sent this run (nothing to action beyond what Preston is already personally handling). 0 calendar events created/updated by this task — Harmony Jackson's 2pm booking was created directly by Preston in his own conversation, not via this task's calendar flow; not duplicated here.
 - No classifier blocks this run.
 - RUN_LOCK deleted as the final action of this run.

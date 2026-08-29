@@ -1,38 +1,38 @@
 # Dashboard Refresh — Run Status
 
-**Run date:** 2026-08-27 (scheduled task `vp-dashboard-refresh`)
+**Run date:** 2026-08-29 (scheduled task `vp-dashboard-refresh`)
 
 ## Result: SUCCESS — all steps completed
 
 ### 1. KPI data refresh (site/data/kpis.json) — DONE
 - Checked all 7 feed channels against latest Slack posts.
-- Loan review / layaway review: latest post already Aug 24 (Mon) — matches existing data, unchanged.
+- Loan review / layaway review: latest post still Aug 24 (Mon) — matches existing data, unchanged.
 - Company-performance watch: no newer report since Jul 3 — unchanged.
-- Daily Funds Verification: NEW Aug 27 18:15 post — DISCREPANCY FOUND ($7,000 expected vs $5,000 actual). Harrisonburg $2k transfer at 1:49 PM has no matching Bravo cash transfer. Updated `funds` block and `dates.funds` -> Aug 27, 2026.
-- Items to Price: Aug 27 post already matched existing data — unchanged.
-- Intake Margin (pawn-walks): still no newer legacy combined-format post since Aug 13 (current #pawn-walks format is a same-day Buy/Loan split with partial store coverage, doesn't fit schema) — held over per never-fabricate rule, unchanged.
-- Chekkit Unanswered: Aug 27 post (covering Aug 26) already matched existing data — unchanged.
+- Daily Funds Verification: latest post already Aug 28 18:14 — matches existing data (Culpeper $1k/$2k discrepancy), unchanged.
+- Items to Price: latest post already Aug 28 — matches existing data, unchanged.
+- Intake Margin (pawn-walks): still no newer legacy combined-format post since Aug 13 — held over per never-fabricate rule, unchanged.
+- Chekkit Unanswered: NEW Aug 29 11:18 AM post covering Aug 28 — 5 unanswered across all stores (Waynesboro 3, Lexington 1, Roanoke 1; Culpeper/Harrisonburg clear). End-of-day follow-up closed all but 1 (Waynesboro — Ashanti, camera pawn quote). Updated `daily.chekkit` and `feeds[]` Last Run -> Aug 29, 2026.
 - `bravoDaily` section untouched (owned by daily-bravo-kpis task).
-- `asOf` confirmed August 27, 2026.
-- `feeds[]` Last Run bumped for Daily Funds Verification -> Aug 27, 2026.
-- JSON validated via python3 json.load — parses clean.
+- `asOf` updated to August 29, 2026.
+- JSON validated via live fetch + python3 json.load after deploy — parses clean.
 
 ### 2. Artifact sync (site/artifacts/) — DONE
-- `cp -R` from `~/Documents/Claude/Artifacts/*` completed via osascript; stray `versions` subfolders purged (initial rm in the chained command didn't run due to a glob/exit-code quirk, cleaned up in a follow-up call).
-- No new artifact folders — all 7 source folders already in manifest (10 total entries incl. 3 standalone-only).
-- All source folder mtimes matched existing manifest `updated` dates — no manifest changes needed.
+- `cp -R` from `~/Documents/Claude/Artifacts/*` completed via osascript (had to run cp and the `versions`-purge rm as two separate osascript calls — chaining them in one command intermittently no-ops the second command; same quirk noted in the 8/27 run).
+- 7 source folders synced (asset-recovery-2025-vs-2026, email-analytics-dashboard, valley-pawn-returns-tracker, vp-fb-content-audit-90d, vp-new-customer-report, vp-website-kpis, vp-website-trend) — all already present in the manifest, no new artifacts, no manifest changes needed.
 
-### 3. Deploy to Cloudflare Pages — DONE (after retries)
-- First few `wrangler` invocations (including a bare `--version`) hung indefinitely with zero output — not a network issue (confirmed Cloudflare API reachable via curl, token valid). Killed stray hung processes.
-- A retry of the same nohup-backgrounded osascript deploy succeeded normally — command completed in ~47s per wrangler's own log (`wrangler-2026-08-27_23-23-55_718.log`). Root cause of the hangs is unconfirmed (possibly a transient stall in wrangler's metrics/telemetry dispatch); no config or code change was needed, plain retry resolved it.
-- Deployment URL: `https://ea5282b1.vp-dashboard.pages.dev`
-- Note for next session: if `wrangler pages deploy` hangs with no log output at all, kill it (pkill -9 -f wrangler) and retry once or twice before escalating — this has now happened on at least two separate run dates without needing a lasting fix.
+### 3. Deploy to Cloudflare Pages — DONE (after real troubleshooting, not just a blind retry)
+- **`npx wrangler ...` and `npm install -g wrangler` both hang indefinitely with zero output on this Mac right now** — confirmed via `sample` on the hung PID: stuck in `node::fs::AfterMkdirp` / loads Carbon `HIToolbox` + `Localized.rsrc` (points to some macOS-level UI/keychain prompt npm's install path triggers, never resolves headlessly). This reproduced on `npx wrangler --version`, `npm install -g wrangler`, and even `npm ls -g` — i.e. it's an **npm/npx-wide hang on this machine**, not wrangler- or deploy-specific.
+- **Fix: skip npm/npx entirely.** A real `wrangler` binary is already installed directly at `~/Documents/Claude/tools/node/bin/wrangler` (v4.100.0, separate from the `cf-wrangler` shim which only supports a `dev` subcommand — do not use `cf-wrangler` for deploys, it exits/hangs on any other verb). Calling `wrangler` directly (no `npx`/`npm` prefix at all) works normally.
+- First direct-`wrangler` deploy attempt uploaded assets fine but the Cloudflare-side Worker publish step returned `Unknown internal error occurred` (transient Cloudflare API hiccup, confirmed via the wrangler debug log — clean 200 from the CF API on the logs-fetch call right before the error). A second identical `wrangler pages deploy` retry succeeded immediately (~10s, all files already-uploaded).
+- Deployment URL: `https://f0e3700f.vp-dashboard.pages.dev`
+- **For next session:** if a `wrangler`/`npx`/`npm` invocation hangs with truly zero stdout output, do NOT keep retrying the same `npx wrangler ...` form — switch straight to the direct `wrangler` binary at `~/Documents/Claude/tools/node/bin/wrangler` (PATH already includes this dir per the runbook's `export PATH=...` line). That fully sidesteps the npm-hang. If `wrangler pages deploy` itself then fails with a Cloudflare-side "Unknown internal error" (not an auth/config error), just retry once — that part is a normal transient CF blip.
 
 ### 4. Verify — DONE
 - `curl https://vp-dashboard.pages.dev/` without auth -> **401** (pass)
 - `curl` with basic auth -> **200** (pass)
-- `data/kpis.json` fetched live (cache-busted) -> 200, parses clean, `asOf`/`funds`/`dates.funds` all reflect the Aug 27 update.
+- `data/kpis.json` fetched live (through the deployed site, with auth) -> 200, parses clean, `asOf` = August 29, 2026.
 
 ## Context notes for next session
 - Same VP Ops Engine stand-down note as prior runs still applies — Cowork-side weekly tasks are the source for loan/layaway/company-performance.
 - No Slack post made — success, and the runbook only requires a post on failure.
+- Recommend someone (or a future session) look into *why* npm/npx hang on this Mac — it's now happened across at least two run dates (8/27, 8/29) and once again today it cost significant time before the direct-binary workaround was found. The direct `wrangler` binary is a reliable workaround, not a root-cause fix.

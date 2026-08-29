@@ -281,3 +281,30 @@ match), single VP-SHOP-START marker, single VP-SHOP-END marker, exactly one h1.v
 ItemList JSON-LD (numberOfItems=120, itemListElement length 120), zero woocommerce-shop
 occurrences. Posted summary to #website successfully
 (https://valleypawnworkspace.slack.com/archives/C0ASE9C0GQ0/p1787829028813699).
+
+## Run record - 2026-08-28 (scheduled nightly, sandbox bash)
+
+Ran via mcp__workspace__bash. NEW ISSUE this run: the connected Website/shop-build/ folder
+rejected file writes to vp_ebay_cookiejar_now.txt (PermissionError -> then OSError "Resource
+deadlock avoided" on retry) - looked like a stale lock on that specific file in the mounted
+folder. Worked around by copying fetch script + generate_shop_block.py into the scratch
+outputs/shop-build/ dir (not the connected folder) and running entirely there instead - no
+permission issues in the sandbox scratch dir. Only .wp_app_credentials and the scripts were
+copied in; nothing new written back to the connected Website folder this run (all scratch
+artifacts stayed in outputs/). Worth a future session checking whether that cookiejar file in
+the connected folder is still locked/stale and needs manual removal on the Mac side.
+
+Scraped 502 items across 5 stores (Culpeper 295, Waynesboro 39, Harrisonburg 34, Lexington 34,
+Roanoke 100); 24 weapons-adjacent excluded; published 478
+(Culpeper 290, Waynesboro 36, Harrisonburg 32, Lexington 31, Roanoke 89).
+
+Published via WP Application Password Basic Auth (vp-shop-nightly cred) directly to
+/wp-json/wp/v2/pages/833. Returned HTTP 200, id 833, status publish.
+
+Verified live (after 25s wait for CDN cache): 478 vp-card elements via data-price= count (exact
+match), single VP-SHOP-START marker, single VP-SHOP-END marker, exactly one h1.vp-h1, valid
+ItemList JSON-LD (numberOfItems=120, itemListElement length 120 - it's the LAST json-ld script
+on the page, not the first; a naive "grab first script[type=ld+json]" check will find the
+Organization schema instead and falsely report no ItemList - iterate all script tags), zero
+woocommerce-shop occurrences. Posted summary to #website successfully
+(https://valleypawnworkspace.slack.com/archives/C0ASE9C0GQ0/p1787944242541009).

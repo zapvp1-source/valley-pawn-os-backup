@@ -195,3 +195,65 @@ NEXT RUN SHOULD CHECK: whether the archive gets a newer file than 2026-08-10
 (would mean the Bravo pipeline extraction resumed and there's new customer
 data to sync); the 10 contacts with rejected phone numbers are probably
 permanently unfixable from this source and don't need re-checking weekly.
+
+
+## 2026-08-28 (brevo-weekly-efficiency-audit — scheduled run)
+STATE: Channel is healthy and stable, no incidents. Headline number: this week's
+Thursday send (W13 -- Lexington Spotlight, campaign 28, sent 8/27 to lists
+[7 Engaged, 10 Seeds]) delivered 169/179, 0 hard bounces, 0 complaints, 0
+unsubscribes, and produced 2 call clicks -> 11.83 calls+texts per 1,000
+delivered. That is the first send on record to clear the 8/1,000 target
+(prior baseline was 0.63/1,000 per the 2026-08-22 audit). Small sample (one
+send) so treat as an early positive signal, not a trend yet -- next 2-3 sends
+will tell us if this holds.
+
+Domain auth is now fully resolved on both fronts. fcfpawn.com's duplicate SPF
+fix has held (dig still shows exactly one v=spf1 record). thevalleypawn.com's
+Google Workspace DKIM cooldown has cleared: `GET /senders/domains/thevalleypawn.com`
+now shows authenticated=true and both DKIM CNAME records (brevo1/brevo2._domainkey)
+report status=true. This was the last "needs Joshua" item carried from last
+week -- it resolved itself once Google's cooldown window passed, no action was
+needed from him. Both senders (jdavis@fcfpawn.com, hello@thevalleypawn.com)
+show active=true with no dkim/spf error fields.
+
+Draft-guard (Mon 11:55 AM) and the Monday picker both worked correctly this
+week -- campaign 28 sent on schedule to the correct lists. Draft calendar
+runway is healthy: 18 weeks staged (campaigns 29, 54-70, Sep 3 - Dec 31),
+well above the 4-week floor. Wave lists 14-18 are balanced (2,145-2,247
+subscribers each, ~4.6% spread, well under the 20% rebalance threshold). No
+blacklisted contacts found on the engaged list (list 7, sampled in full at
+n=173). List 3 (master, 13,226) shows no unexpected shrinkage.
+
+Attribute coverage on the engaged list is flat vs last week as expected
+(FIRSTNAME 35.3%, STORE 52.6%, SMS 50.9% -- within noise of last week's
+35.5/52.9/51.2). The bravo-brevo-attribute-sync task is a slow weekly top-up
+against a mostly-static data source; a bigger jump would need a fresh Bravo
+extraction with more customer phone/name coverage than the archive currently
+has.
+
+FIXED THIS RUN:
+- Filled in the previously-empty running tally in SUBJECT_LINE_EXPERIMENT.md
+  with real data from the 8/27 send (was a placeholder row since the file was
+  created 8/24).
+
+STILL OPEN (needs Joshua): none new this week.
+
+STILL OPEN (queued, no input needed):
+- Bravo -> Brevo attribute sync continues weekly (Tue 5:30 PM) -- gains will
+  stay small until a fresher/richer Bravo extraction is available.
+- Forfeited-loan win-back list (11) still holds 0 contacts.
+- Loan-due reminder flow still blocked on the attribute sync reaching
+  meaningful phone/name coverage, plus a legal read on notice language.
+- True in-send A/B test still blocked by Brevo's API not persisting
+  winnerCriteria/winnerDelay (UI-only fields on this plan) -- sequential
+  experiment in SUBJECT_LINE_EXPERIMENT.md is the working substitute.
+- First A/B-style comparison data point now exists (row 1 of the tally); need
+  5+ more sends before drawing any conclusion per the file's own rule (no
+  winner before 6 sends per style).
+
+NEXT RUN SHOULD CHECK: whether campaign 29 (Sep 3, W14) sends cleanly to
+lists [7,10]; whether the Sep 10 send (campaign 54) correctly adds wave list
+14 for the first real test of the wave-rotation plan (reach should jump from
+~180 to ~2,400 delivered that week -- verify the jump actually happens, not
+just that the list was attached); keep filling the subject-line tally row by
+row.
