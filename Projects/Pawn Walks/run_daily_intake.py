@@ -178,6 +178,7 @@ def load_intake_for_date(date: datetime.date) -> list[dict]:
                         cat    = (row.get('Category') or '').strip()
                         desc   = (row.get('FullDescription') or row.get('Full Description') or '').strip()
                         tkind  = (row.get('Ticket Kind') or '').strip().upper()
+                        assoc  = (row.get('Associate') or '').strip()
                         disp = (row.get('Disposition') or '').strip().upper()
                         has_disp_date = bool((row.get('Disposition Date') or '').strip())
 
@@ -209,6 +210,7 @@ def load_intake_for_date(date: datetime.date) -> list[dict]:
                         cat    = (row.get('Category') or '').strip()
                         desc   = (row.get('Full Description') or '').strip()
                         tkind  = 'BUY'
+                        assoc  = ''
 
                     if amt is None or amt <= 0:
                         continue
@@ -222,6 +224,7 @@ def load_intake_for_date(date: datetime.date) -> list[dict]:
 
                     rows.append({
                         'store':       store,
+                        'associate':   assoc,
                         'ticket':      ticket,
                         'category':    cat,
                         'desc':        desc,
@@ -604,7 +607,7 @@ def write_excel(valued: list[dict], date: datetime.date, path: str) -> bool:
     ws1.freeze_panes = "A3"
 
     title = f"Valley Pawn — Daily Intake Margin  |  {ds}  |  T3={USE_TIER3}  |  Flag<{int(FLAG_MARGIN*100)}% (bullion<{int(BULLION_FLAG*100)}%)"
-    ws1.merge_cells(f"A1:O1")
+    ws1.merge_cells(f"A1:P1")
     t = ws1["A1"]
     t.value = title
     t.fill  = PatternFill("solid", fgColor="0D1B40")
@@ -612,7 +615,7 @@ def write_excel(valued: list[dict], date: datetime.date, path: str) -> bool:
     t.alignment = Alignment(horizontal="center", vertical="center")
     ws1.row_dimensions[1].height = 22
 
-    hdrs1 = ["Store", "Ticket", "Category", "Description",
+    hdrs1 = ["Store", "Ticket", "Category", "Description", "Associate",
              "Cost Paid", "Est Value", "Value Source", "Confidence",
              "Margin", "Meets Target?", "Flag?", "Overpay",
              "T3 Range Lo", "T3 Range Hi", "Group"]
@@ -622,6 +625,7 @@ def write_excel(valued: list[dict], date: datetime.date, path: str) -> bool:
 
     _grp_order = {'Gold': 0, 'Silver': 1, 'Guns': 2, 'Everything Else': 3}
     for ri, r in enumerate(sorted(valued, key=lambda x: (
+            0 if (x.get('flag') or x.get('overpay')) else 1,
             _grp_order.get(x.get('group', 'Everything Else'), 9),
             x.get('store', ''), -(x.get('cost') or 0))), 3):
         margin  = r.get('margin')
@@ -642,19 +646,20 @@ def write_excel(valued: list[dict], date: datetime.date, path: str) -> bool:
         _cell(ws1, ri, 2,  r.get('ticket', ''))
         _cell(ws1, ri, 3,  r.get('category', ''))
         _cell(ws1, ri, 4,  r.get('desc', ''))
-        _cell(ws1, ri, 5,  r.get('cost'),        fmt='"$"#,##0.00', fill=rfill)
-        _cell(ws1, ri, 6,  r.get('value'),       fmt='"$"#,##0.00', fill=rfill)
-        _cell(ws1, ri, 7,  r.get('source', ''))
-        _cell(ws1, ri, 8,  r.get('conf', ''))
-        _cell(ws1, ri, 9,  margin,               fmt='0.0%',        fill=rfill)
-        _cell(ws1, ri, 10, "YES" if r.get('meets') else ("NO" if trusted else "—"))
-        _cell(ws1, ri, 11, "⚑" if is_flag else "")
-        _cell(ws1, ri, 12, "⚑ OVERPAY" if is_over else "")
-        _cell(ws1, ri, 13, r.get('t3_range_lo'), fmt='"$"#,##0.00')
-        _cell(ws1, ri, 14, r.get('t3_range_hi'), fmt='"$"#,##0.00')
-        _cell(ws1, ri, 15, r.get('group', ''))
+        _cell(ws1, ri, 5,  r.get('associate', ''))
+        _cell(ws1, ri, 6,  r.get('cost'),        fmt='"$"#,##0.00', fill=rfill)
+        _cell(ws1, ri, 7,  r.get('value'),       fmt='"$"#,##0.00', fill=rfill)
+        _cell(ws1, ri, 8,  r.get('source', ''))
+        _cell(ws1, ri, 9,  r.get('conf', ''))
+        _cell(ws1, ri, 10, margin,               fmt='0.0%',        fill=rfill)
+        _cell(ws1, ri, 11, "YES" if r.get('meets') else ("NO" if trusted else "—"))
+        _cell(ws1, ri, 12, "⚑" if is_flag else "")
+        _cell(ws1, ri, 13, "⚑ OVERPAY" if is_over else "")
+        _cell(ws1, ri, 14, r.get('t3_range_lo'), fmt='"$"#,##0.00')
+        _cell(ws1, ri, 15, r.get('t3_range_hi'), fmt='"$"#,##0.00')
+        _cell(ws1, ri, 16, r.get('group', ''))
 
-    for ci, w in enumerate([7, 16, 22, 46, 10, 10, 26, 10, 9, 12, 8, 12, 10, 10, 16], 1):
+    for ci, w in enumerate([7, 16, 22, 46, 16, 10, 10, 26, 10, 9, 12, 8, 12, 10, 10, 16], 1):
         ws1.column_dimensions[get_column_letter(ci)].width = w
 
     # ── Tab 2: Summary ────────────────────────────────────────────────────────
@@ -722,7 +727,7 @@ def write_excel(valued: list[dict], date: datetime.date, path: str) -> bool:
     )
     if flags_list:
         ws3 = wb.create_sheet("Flags")
-        hdrs3 = ["Store", "Ticket", "Category", "Description",
+        hdrs3 = ["Store", "Ticket", "Category", "Description", "Associate",
                  "Cost Paid", "Est Value", "Margin",
                  "Overpaid By", "Value Source", "Confidence"]
         for ci, h in enumerate(hdrs3, 1):
@@ -735,14 +740,15 @@ def write_excel(valued: list[dict], date: datetime.date, path: str) -> bool:
             _cell(ws3, ri, 2,  r.get('ticket', ''))
             _cell(ws3, ri, 3,  r.get('category', ''))
             _cell(ws3, ri, 4,  r.get('desc', ''),  fill=FILL_FLAG)
-            _cell(ws3, ri, 5,  r.get('cost'),       fmt='"$"#,##0.00', fill=FILL_FLAG)
-            _cell(ws3, ri, 6,  v,                   fmt='"$"#,##0.00')
-            _cell(ws3, ri, 7,  r.get('margin'),     fmt='0.0%',        fill=FILL_FLAG)
-            _cell(ws3, ri, 8,  overpaid_by if overpaid_by > 0 else None, fmt='"$"#,##0.00')
-            _cell(ws3, ri, 9,  r.get('source', ''))
-            _cell(ws3, ri, 10, r.get('conf', ''))
+            _cell(ws3, ri, 5,  r.get('associate', ''))
+            _cell(ws3, ri, 6,  r.get('cost'),       fmt='"$"#,##0.00', fill=FILL_FLAG)
+            _cell(ws3, ri, 7,  v,                   fmt='"$"#,##0.00')
+            _cell(ws3, ri, 8,  r.get('margin'),     fmt='0.0%',        fill=FILL_FLAG)
+            _cell(ws3, ri, 9,  overpaid_by if overpaid_by > 0 else None, fmt='"$"#,##0.00')
+            _cell(ws3, ri, 10, r.get('source', ''))
+            _cell(ws3, ri, 11, r.get('conf', ''))
 
-        for ci, w in enumerate([7, 16, 22, 46, 11, 11, 9, 11, 26, 10], 1):
+        for ci, w in enumerate([7, 16, 22, 46, 16, 11, 11, 9, 11, 26, 10], 1):
             ws3.column_dimensions[get_column_letter(ci)].width = w
 
     wb.save(path)

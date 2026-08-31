@@ -308,3 +308,52 @@ on the page, not the first; a naive "grab first script[type=ld+json]" check will
 Organization schema instead and falsely report no ItemList - iterate all script tags), zero
 woocommerce-shop occurrences. Posted summary to #website successfully
 (https://valleypawnworkspace.slack.com/archives/C0ASE9C0GQ0/p1787944242541009).
+
+## Run record - 2026-08-29 (scheduled nightly, sandbox bash)
+
+Ran via mcp__workspace__bash. Connected Website/shop-build/ folder again rejected a file write
+(Resource deadlock avoided on generate_shop_block.py copy) — same class of stale-lock issue as
+2026-08-28. Worked around identically: wrote fresh copies of fetch_run_0828.py (repointed BASE at
+this session's mount path, /sessions/funny-blissful-pasteur/mnt/outputs/shop-build) and
+generate_shop_block.py into outputs/shop-build/ scratch dir and ran entirely there. Only
+.wp_app_credentials was copied in from the connected folder; nothing written back to it this run.
+
+Scraped 497 items across 5 stores (Culpeper 293, Waynesboro 39, Harrisonburg 32, Lexington 34,
+Roanoke 99); 24 weapons-adjacent excluded; published 473
+(Culpeper 288, Waynesboro 36, Harrisonburg 30, Lexington 31, Roanoke 88).
+
+Published via WP Application Password Basic Auth (vp-shop-nightly cred) directly to
+/wp-json/wp/v2/pages/833. Returned HTTP 200, id 833, status publish.
+
+Verified live (after 25s wait for CDN cache): 473 vp-card elements via data-price= count (exact
+match), single VP-SHOP-START marker, single VP-SHOP-END marker, exactly one h1.vp-h1, valid
+ItemList JSON-LD (numberOfItems=120, itemListElement length 120), zero woocommerce-shop
+occurrences. Posted summary to #website successfully
+(https://valleypawnworkspace.slack.com/archives/C0ASE9C0GQ0/p1788018639834079).
+
+TODO still open: the connected Website/shop-build/ folder keeps rejecting writes to files a
+prior session touched (cookiejar 8/28, generate_shop_block.py 8/29) with "Resource deadlock
+avoided" — worth a future session checking for a stale lock/lockfile on the Mac side in that
+directory rather than continuing to route around it every run.
+
+## Run record - 2026-08-30 (scheduled nightly, direct Mac osascript)
+Ran entirely via mcp__Control_your_Mac__osascript do shell script (no Chrome/browser needed at
+all) - this avoided the file_upload trick and the sandbox-bash connected-folder lock issues seen
+on 8/28 and 8/29. Wrote the fetch + publish python scripts to the Mac filesystem using the Write
+tool (structured file write, zero AppleScript quoting risk) into shop-build/, then launched each
+with nohup ... & via osascript and polled the log file (avoids the ~25s per-call osascript
+timeout). Key gotcha avoided: embedding a large multi-line python script with regex
+backslashes/quotes directly inside an osascript do-shell-script string literal breaks AppleScript
+parsing - write the file via the Write tool instead and just `python3 <path>` it from osascript.
+Published via WP Application Password Basic Auth (vp-shop-nightly cred) directly to
+/wp-json/wp/v2/pages/833 using urllib (no requests dependency needed). HTTP 200, id 833, status
+publish.
+Scraped 490 items across 5 stores (Culpeper 288, Waynesboro 39, Harrisonburg 31, Lexington 35,
+Roanoke 97); 24 weapons-adjacent excluded; published 466
+(Culpeper 283, Waynesboro 36, Harrisonburg 29, Lexington 32, Roanoke 86).
+Verified live (after 25s wait for CDN cache): 466 vp-card elements via data-price= count (exact
+match), single VP-SHOP-START marker, single VP-SHOP-END marker, exactly one h1.vp-h1, valid
+ItemList JSON-LD (numberOfItems=120, itemListElement length 120 - it's the 8th of 8 ld+json
+blocks on the page, not the first). Posted summary to #website successfully. Cleaned up /tmp
+scratch dir after run; left fetch_nightly_20260830.py and publish_nightly_20260830.py in
+shop-build/ for reference (no cookiejar/temp junk written to the connected folder this run).

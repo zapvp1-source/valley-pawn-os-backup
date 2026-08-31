@@ -63,3 +63,4 @@ Nightly 8:30 PM pull for 2026-08-25 confirmed successful — all 5 store jewelry
 
 ## 2026-08-27 07:47 CATCH-UP CHECK
 Yesterday: Wednesday 2026-08-26 (CUL-only per open-stores gate). CUL CSV present, all 8 rows status=ok. Nightly run complete — no catch-up action needed, nothing posted.
+[2026-08-29 09:xx] jewelry-onhand-catchup: SKIPPED — 2026-08-28 nightly pull CSVs present for all 5 stores (CUL/HAR/LEX/ROA/WAY). No action needed.

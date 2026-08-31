@@ -8,6 +8,7 @@ Newest first. Material changes to the business operating system. Read this BEFOR
 - Registered scheduled tasks: 158 -> 159
 - Task folders on disk: 169 -> 170
 - ENABLED: preston-claude-evening-check
+- Zoom Phone roster expanded: Culpeper (culpeper@fcfpawn.com, ext 808) and Roanoke (roanoke@fcfpawn.com, ext 809) now appear in the Zoom admin Users & Rooms list alongside the existing Harrisonburg (802), Waynesboro (803), and Lexington (807) lines. All 5 stores now have Zoom Phone lines provisioned (Culpeper/Roanoke had no call history yet as of this run). Discovered by zoom-voicemail-alert's fresh-roster-every-run design — no task edit needed, it picked them up automatically.
 
 ## 2026-08-28
 
