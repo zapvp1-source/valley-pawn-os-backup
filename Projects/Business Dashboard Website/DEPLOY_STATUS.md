@@ -1,38 +1,41 @@
 # Dashboard Refresh — Run Status
 
-**Run date:** 2026-08-29 (scheduled task `vp-dashboard-refresh`)
+**Run date:** 2026-08-31 (scheduled task `vp-dashboard-refresh`)
 
 ## Result: SUCCESS — all steps completed
 
 ### 1. KPI data refresh (site/data/kpis.json) — DONE
 - Checked all 7 feed channels against latest Slack posts.
-- Loan review / layaway review: latest post still Aug 24 (Mon) — matches existing data, unchanged.
+- Loan review / layaway review: latest post already Aug 31 (Mon) — matched existing data, unchanged.
 - Company-performance watch: no newer report since Jul 3 — unchanged.
-- Daily Funds Verification: latest post already Aug 28 18:14 — matches existing data (Culpeper $1k/$2k discrepancy), unchanged.
-- Items to Price: latest post already Aug 28 — matches existing data, unchanged.
-- Intake Margin (pawn-walks): still no newer legacy combined-format post since Aug 13 — held over per never-fabricate rule, unchanged.
-- Chekkit Unanswered: NEW Aug 29 11:18 AM post covering Aug 28 — 5 unanswered across all stores (Waynesboro 3, Lexington 1, Roanoke 1; Culpeper/Harrisonburg clear). End-of-day follow-up closed all but 1 (Waynesboro — Ashanti, camera pawn quote). Updated `daily.chekkit` and `feeds[]` Last Run -> Aug 29, 2026.
+- Daily Funds Verification: NEW Aug 31 18:15 post — $6,000 expected = $6,000 actual, all matched (Culpeper had two separate $2k sends). Updated `funds`, `dates.funds`, and `feeds[]` Last Run -> Aug 31, 2026.
+- Items to Price: latest post already Aug 31 — matches existing data, unchanged.
+- Intake Margin (pawn-walks): still no newer legacy combined-format post since Aug 13 (channel now only posts the same-day Buy-vs-Loan split format) — held over per never-fabricate rule, unchanged.
+- Chekkit Unanswered: latest "Daily Response Summary" post already Aug 31 (covering Aug 30) — matches existing data, unchanged. (Note: the channel also posts a separate "End-of-Day Follow-up" format that is NOT the schema's source — don't confuse the two.)
 - `bravoDaily` section untouched (owned by daily-bravo-kpis task).
-- `asOf` updated to August 29, 2026.
+- `asOf` already August 31, 2026 — confirmed correct.
 - JSON validated via live fetch + python3 json.load after deploy — parses clean.
 
 ### 2. Artifact sync (site/artifacts/) — DONE
-- `cp -R` from `~/Documents/Claude/Artifacts/*` completed via osascript (had to run cp and the `versions`-purge rm as two separate osascript calls — chaining them in one command intermittently no-ops the second command; same quirk noted in the 8/27 run).
-- 7 source folders synced (asset-recovery-2025-vs-2026, email-analytics-dashboard, valley-pawn-returns-tracker, vp-fb-content-audit-90d, vp-new-customer-report, vp-website-kpis, vp-website-trend) — all already present in the manifest, no new artifacts, no manifest changes needed.
+- `cp -R` from `~/Documents/Claude/Artifacts/*` completed via osascript.
+- 8 source folders synced (asset-recovery-2025-vs-2026, email-analytics-dashboard, marketing-ceo-briefing, valley-pawn-returns-tracker, vp-fb-content-audit-90d, vp-new-customer-report, vp-website-kpis, vp-website-trend).
+- **NEW artifact found:** `marketing-ceo-briefing` (not previously in manifest) — added to `site/data/artifacts.json` (category Marketing, standalone=true since `grep -c window.cowork` = 0). Also bumped `updated` dates for `asset-recovery-2025-vs-2026` and `vp-website-trend` (source folders had newer mtimes than the manifest reflected) and the top-level `artifacts.json` `updated` field.
 
-### 3. Deploy to Cloudflare Pages — DONE (after real troubleshooting, not just a blind retry)
-- **`npx wrangler ...` and `npm install -g wrangler` both hang indefinitely with zero output on this Mac right now** — confirmed via `sample` on the hung PID: stuck in `node::fs::AfterMkdirp` / loads Carbon `HIToolbox` + `Localized.rsrc` (points to some macOS-level UI/keychain prompt npm's install path triggers, never resolves headlessly). This reproduced on `npx wrangler --version`, `npm install -g wrangler`, and even `npm ls -g` — i.e. it's an **npm/npx-wide hang on this machine**, not wrangler- or deploy-specific.
-- **Fix: skip npm/npx entirely.** A real `wrangler` binary is already installed directly at `~/Documents/Claude/tools/node/bin/wrangler` (v4.100.0, separate from the `cf-wrangler` shim which only supports a `dev` subcommand — do not use `cf-wrangler` for deploys, it exits/hangs on any other verb). Calling `wrangler` directly (no `npx`/`npm` prefix at all) works normally.
-- First direct-`wrangler` deploy attempt uploaded assets fine but the Cloudflare-side Worker publish step returned `Unknown internal error occurred` (transient Cloudflare API hiccup, confirmed via the wrangler debug log — clean 200 from the CF API on the logs-fetch call right before the error). A second identical `wrangler pages deploy` retry succeeded immediately (~10s, all files already-uploaded).
-- Deployment URL: `https://f0e3700f.vp-dashboard.pages.dev`
-- **For next session:** if a `wrangler`/`npx`/`npm` invocation hangs with truly zero stdout output, do NOT keep retrying the same `npx wrangler ...` form — switch straight to the direct `wrangler` binary at `~/Documents/Claude/tools/node/bin/wrangler` (PATH already includes this dir per the runbook's `export PATH=...` line). That fully sidesteps the npm-hang. If `wrangler pages deploy` itself then fails with a Cloudflare-side "Unknown internal error" (not an auth/config error), just retry once — that part is a normal transient CF blip.
+### 3. Deploy to Cloudflare Pages — DONE (new failure mode found + fixed)
+- **`npx wrangler ...` (and running the `wrangler`/`wrangler2` shim scripts through npm) still hangs indefinitely on this Mac** — reconfirmed today, consistent with 8/27 and 8/29 runs. Root cause still not found; direct-binary invocation remains the workaround, not a fix.
+- **NEW issue found today, not present in prior run notes:** even the *direct* `wrangler` binary (`~/Documents/Claude/tools/node/bin/wrangler`, no npm/npx) hung for 90+ seconds at the "Detecting git repository information..." step. Root cause: `git rev-parse --show-toplevel` from inside this project resolves to `~/Documents/Claude` (the ENTIRE Claude folder is one git repo, auto-committed by some backup process — saw commit message "Auto-backup: 2026-08-31 — 17 files" in deployment metadata). Wrangler's git auto-detection runs `git status --porcelain` against that whole tree to determine the dirty flag, and on this large/slow-to-stat repo that can take minutes.
+- **Fix: pass git metadata explicitly to skip auto-detection.** Get `git rev-parse --abbrev-ref HEAD` and `git rev-parse HEAD` first (both instant — they don't walk the tree), then deploy with `--branch=<branch> --commit-hash=<hash> --commit-message="..."` in addition to `--commit-dirty=true`. This skipped the slow git status entirely — deploy completed in ~2 seconds once invoked this way (6 files uploaded, 22 already cached).
+- Deployment URL: `https://36102d45.vp-dashboard.pages.dev`
+- **For next session:** always deploy with explicit `--branch`/`--commit-hash`/`--commit-message` flags (grab branch+hash via quick `git rev-parse` calls first) rather than letting wrangler auto-detect git info — auto-detection is unreliably slow on this machine because the repo root is the whole `~/Documents/Claude` tree. Combine this with the existing direct-binary-not-npx workaround from the 8/29 run.
+- Caution: while troubleshooting, an earlier background deploy attempt was killed mid-`git status` via `pkill -9 -f 'cli.js pages deploy'` — that's safe (no partial/corrupt deployment resulted), but a narrower `kill -9 <pid>` is preferable next time to avoid killing an attempt that might be about to succeed.
 
 ### 4. Verify — DONE
 - `curl https://vp-dashboard.pages.dev/` without auth -> **401** (pass)
 - `curl` with basic auth -> **200** (pass)
-- `data/kpis.json` fetched live (through the deployed site, with auth) -> 200, parses clean, `asOf` = August 29, 2026.
+- `data/kpis.json` fetched live (through the deployed site, with auth) -> 200, parses clean, `asOf` = August 31, 2026, `funds` reflects the new $6,000/$6,000 figures.
+- `site/_worker.js` (password gate) confirmed present in the deploy folder, untouched.
 
 ## Context notes for next session
 - Same VP Ops Engine stand-down note as prior runs still applies — Cowork-side weekly tasks are the source for loan/layaway/company-performance.
 - No Slack post made — success, and the runbook only requires a post on failure.
-- Recommend someone (or a future session) look into *why* npm/npx hang on this Mac — it's now happened across at least two run dates (8/27, 8/29) and once again today it cost significant time before the direct-binary workaround was found. The direct `wrangler` binary is a reliable workaround, not a root-cause fix.
+- The npm/npx hang on this Mac is now confirmed across three run dates (8/27, 8/29, 8/31). Direct-binary invocation continues to be a reliable workaround. The new git-status slowness is a related but distinct issue with its own workaround (explicit commit flags) — worth folding both into REFRESH_RUNBOOK.md's Step 3 permanently so future sessions don't have to rediscover this.

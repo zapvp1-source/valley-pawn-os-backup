@@ -1,14 +1,9 @@
 ---
 name: weekly-markdown-verification-pull
-description: Sunday 7PM — drops the markdown-verification trigger for all 5 stores (PART 1 of 2, mirrors the monday-bravo-combined-run/compile split). No Slack post, no waiting for results.
-model: claude-sonnet-5
----
-
----
-name: weekly-markdown-verification-pull
 description: Sunday 7PM — drops the markdown-verification trigger for all 5 stores (PART 1 of 2, mirrors the monday-bravo-combined-run/compile split). Unconditional trigger-drop, no contention gate (hardened 2026-08-21). Sends one quiet dispatch DM to Joshua (no channel post) so Fleet Guardian can verify it actually ran.
 model: claude-sonnet-5
 ---
+
 
 ## Execution Contract — DO NOT STOP EARLY
 

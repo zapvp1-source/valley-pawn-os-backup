@@ -2,6 +2,130 @@
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
 
+## 2026-08-31 (~7:24 PM — zoom-voicemail-alert routine run, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 No Data, Culpeper/808 No
+  Data, jdavis@fcfpawn.com/800 (legacy) No Data — still Active/Activated, not yet deactivated in
+  Zoom. Harrisonburg/802 — newest row 5:27:02 PM Outbound; zero new Inbound candidates since the
+  5:02:39 PM cutoff. Waynesboro/803 — newest row 5:50:29 PM Answered; zero new candidates since
+  the 3:11:59 PM cutoff. Lexington/807 (canonical) — newest row 4:22:27 PM Answered; zero new
+  candidates since the 3:53:12 PM cutoff. No Slack post — nothing survived dedupe. State file
+  unchanged (all three cutoffs already current).
+
+## 2026-08-31 (~6:51 PM — zoom-voicemail-alert routine run, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 No Data, Culpeper/808 No
+  Data, jdavis@fcfpawn.com/800 (legacy) No Data — still Active/Activated, not yet deactivated in
+  Zoom. Harrisonburg/802 — newest row 5:27:02 PM Outbound; zero new Inbound candidates since the
+  5:02:39 PM cutoff (store called Christian Warble back at 5:26:32 PM, Connected 12s — confirms
+  the 5:16 PM alert was resolved). Waynesboro/803 — newest row 5:50:29 PM Answered; zero new
+  candidates since the 3:11:59 PM cutoff. Lexington/807 (canonical) — newest row 4:22:27 PM
+  Answered; zero new candidates since the 3:53:12 PM cutoff. No Slack post — nothing survived
+  dedupe. State file unchanged (all three cutoffs already current).
+
+## 2026-08-31 (~5:16 PM — zoom-voicemail-alert routine run, 1 new alert posted)
+- Fresh roster pull: same 6 users as 4:32 PM run, all Active/Activated — Roanoke/809 No Data,
+  Culpeper/808 No Data, jdavis@fcfpawn.com/800 (legacy) No Data — still Active/Activated, not yet
+  deactivated in Zoom. Harrisonburg/802 — newest row 5:02:39 PM (540) 282-7169 Christian Warble,
+  Abandoned, no VM — newer than the 11:14:55 AM cutoff and not resolved by any later
+  outbound/inbound activity (it's the newest event on the line) — posted to
+  #voicemails-calls-missed. State cutoff updated to 5:02:39 PM. Waynesboro/803 — newest activity
+  since 3:11:59 PM cutoff was all Answered (4:37:56 PM, 4:22:57 PM, 3:49:21 PM, 3:13:11 PM), zero
+  new candidates, cutoff unchanged. Lexington/807 (canonical) — newest activity since 3:53:12 PM
+  cutoff was Answered/Outbound only (4:22:27 PM Answered, 4:14:58 PM & 4:09:20 PM Outbound
+  Connected — the latter two are the store calling back Garre Gualtieri from the 3:42–3:53 PM
+  missed-call cluster already alerted last run), zero new candidates, cutoff unchanged.
+  **Caution for future runs:** the `result=` URL filter shortcut documented in the 4:32 PM entry
+  did NOT reproduce reliably this run — direct hash-URL navigation to a user's History tab
+  (with or without the result/date query params) repeatedly rendered "No Data" until the History
+  tab link was actually clicked in the UI after landing on the user's Profile page. The working
+  sequence this run: click the user row from the Users & Rooms list → History tab click → wait
+  ~4s for the XHR → then read. Direct deep-linking via URL edit was unreliable and once caused a
+  frozen/unresponsive tab requiring a close+reopen. Recommend future runs default to the
+  click-through path rather than the URL-param shortcut unless the shortcut is re-verified.
+
+## 2026-08-31 (~4:45 PM — vp-content-batch-postflight, clean success, no DM)
+
+- Verified the 2:02 PM `vp-content-batch-weekly` run (Lane A) per-platform against live Publer data, not the manifest's own status field. FINDING: the publish script (`publish_batch_2026-08-31.py`) logs `JOB_timeout` / `JOB_fbig_timeout_x_timeout` for 5 of 7 items because its job-status poll is only `max_seconds=60` at `poll_interval=12.0` (5 polls) — too short for Publer to finish processing, especially the combined FB+IG job. This is a **polling timeout, not a publish failure**: re-checked all 7 job_ids directly against `GET /job_status/{id}` and all 7 returned `complete`; then confirmed all 16 expected platform legs (5 stores × FB+GBP = 10, 2 Brand items × FB+IG+X = 6) individually via `GET /posts/{id}` — every leg present, correct account, correct scheduled_at, matching both the manifest's routing[] and the #vp-studio-queue log card (msg 1788199471, "7 items staged... 16 placements"). The 2 items marked `SCHEDULED/live-duplicate-guard` (Culpeper mantis tiller, Waynesboro Gibson BR-9) were also confirmed genuinely already-live, not a false-positive skip. No Instagram silent drop — store-local items don't route to IG this week by design (current routing is Brand-only IG/X, store-FB+GBP-only, per the 2026-08-2x routing redesign below), confirmed against each item's own `routing[]` field rather than assumed. Result written to `Refine Social Media/output/2026-08-31/postflight_result.json`. No DM to Joshua (clean success; `weekly-social-media-recap` covers the routine "what published" note per the 2026-08-04 consolidation). **Not fixed:** the short poll timeout itself — that lives in a per-week generated script, not a shared library, so it will likely reproduce the same false `JOB_timeout` alarm next Monday; worth bumping `max_seconds`/`poll_interval` in whatever generates that script if a future session is doing Lane A maintenance, but out of scope for a postflight-only run.
+
+## 2026-08-31 (~4:32 PM — zoom-voicemail-alert routine run, silent/no new alerts)
+- Routine run. Fresh roster pull: 6 users, all Active/Activated — Roanoke/809 No Data, Culpeper/808
+  No Data, jdavis@fcfpawn.com/800 (legacy) No Data — still Active/Activated, not yet deactivated in
+  Zoom. Harrisonburg/802 — 26 rows today, 4 candidates (11:14:55 AM No Answer, 11:01:11 AM & 10:59:35 AM
+  Ring Timeout, 10:56:58 AM Abandoned), newest = state cutoff (11:14:55 AM), zero new. Waynesboro/803 —
+  3 candidates (3:11:59 PM Abandoned, 12:13:55 PM Ring Timeout, 10:52:32 AM Busy), newest = state cutoff
+  (3:11:59 PM), zero new. Lexington/807 (canonical) — 21 rows, 3 candidates (3:53:12 PM & 3:47:59 PM Ring
+  Timeout, 3:42:17 PM Abandoned), newest = state cutoff (3:53:12 PM), zero new. State file unchanged
+  (all three cutoffs already current). No Slack post — nothing survived dedupe.
+  **Efficiency find:** discovered the Zoom History `result=` URL filter codes — `3100` = Voicemail,
+  `4200` = the full "No Answer" group (Rejected/Busy/Ring Timeout/Offline/Overflowed/Park Timeout/
+  Callback timeout/Callback), `4400` = Abandoned. Combining `result=3100,4200,4400` on the History URL
+  narrows a store's full-day rows straight down to just the missed/voicemail candidates in one fetch —
+  much faster than paging through 20-40 answered rows per store. **Caution for future runs:** `4200`
+  alone does NOT include Abandoned — an earlier pass in this same run used `3100,4200` only and would
+  have missed a same-day Abandoned row at Harrisonburg (10:56:58 AM) had it not been caught by a
+  follow-up full-data cross-check. Always include `4400` explicitly. Also note the History page ignores
+  `page_size`/`page_number` values passed directly in the URL on load (always renders 15/page) — the
+  page-size dropdown and pagination arrows must be clicked in the UI itself if more than 15 rows are
+  needed unfiltered; the result-code filter approach above avoids needing that entirely for this task's
+  purposes.
+
+## 2026-08-31 (7)
+- **`vp-deal-reels-weekly` — two new failure modes found and worked around; TikTok finally activated.**
+  Full clean week: 5/5 store reels rendered from all 5 manager submissions, brand compilation built,
+  13/13 Publer targets scheduled and LIVE-verified. **(1) Publer rejects `type: "reel"` on EVERY
+  provider** — Facebook, Instagram AND TikTok all returned a `completed` job with
+  `"Post type is not valid"` in the failure payload and created no post. All 13 targets only landed
+  because `vp_deal_reel_publish.py`'s reel→video retry caught it. This is the same silent
+  "job completed, no post created" class documented 2026-08-22; the fix is that plan JSONs should
+  carry `"kind": "video"` directly instead of `"reel"`, which removes 13 wasted round-trips per run.
+  **(2) `vp_deal_reel.py` and `vp_deal_compilation.py` SIGBUS (bus error, exit 135) inside the Cowork
+  Linux sandbox** during PIL plate-building, silently producing zero files on an exit-0 pipeline —
+  another case where checking for output rather than exit status was the only thing that caught it.
+  Both must run on host `/usr/bin/python3` via osascript, launched detached with a polled log file
+  (osascript itself times out ~30s). Also note the sandbox mount intermittently returns
+  "Resource deadlock avoided" reading files the host has open — read those on the host instead.
+  **BrandTikTok published its first-ever post** (compilation reel, scheduled 9/5 7:00 PM ET);
+  the account had zero posts in its entire history before this run.
+- **`ebay-weekly-channel-audit` — first complete run.** The 8/24 run only produced a partial data pull
+  (active/sold/fee counts, no write-up, no Slack post, no dashboard refresh) — this is the first run that
+  finished the full cycle and establishes the real trend line against the 8/22 baseline audit. Live
+  Trading API pull, read-only, all 5 stores, zero pull errors. **Found and worked around a data-quality
+  gap:** `GetMyeBaySelling`'s bulk response came back with photos/item-specifics/Best-Offer/return-policy/
+  dispatch-time fields all empty for every listing at every store — a wider version of the item-specifics
+  under-reporting the 8/22 audit hit. Fixed the same way 8/22 did: verified via a `GetItem` sample (216 of
+  468 active listings, 100% sampled at the 4 small stores, 60-item samples at Culpeper/Roanoke). **Two
+  items from 8/22's punch list are confirmed fixed:** Best Offer is now on for 100% of the sample
+  (was off on 193 Culpeper listings) and no-returns listings are down to 0% (was 45, mostly Culpeper).
+  Roanoke's return window is 30 days on 57 of 60 sampled (was 14 days channel-wide on 8/22). **Confirmed
+  live:** the markdown terminal-action gap 8/22 flagged as unfixed is now closed — `ebay-markdown-terminal-weekly`
+  is registered and enabled, ready before tomorrow's (9/1) first real 30%-cap hits (154 listings are at
+  their 2nd of 3 cuts today). **Still open, unchanged, both Joshua's calls per 8/22:** Top Rated Plus
+  eligibility still 0% channel-wide (dispatch time 2-3 days everywhere, returns still 100% buyer-pays);
+  Promoted Listings still $0 at 4 of 5 stores (Culpeper's spend grew to $400.74/90d). **New flag:** 4 open
+  Best Offers, all expiring within 48 hours (3 at Roanoke today, 1 at Culpeper tomorrow), none answered —
+  logged to the Open Items Register, not actioned here (task is read-only by design). Active listings
+  continue to shrink (514 -> 468 since 8/22), corroborating this week's `marketing-ceo-briefing-weekly`
+  finding of the same trend. Posted a short pulse-check summary to #ebay-performance (Rule 16/18
+  compliant — no partial data, no technical language) and refreshed the published "eBay Channel Pulse"
+  dashboard in place. Full data + write-up: `eBay/audit_weekly/2026-08-31/`.
+
+## 2026-08-31 (5)
+- **`marketing-ceo-briefing-weekly` — first on-schedule run (week ending 2026-08-31).** Rolled up all 8 lane audits (website-health, web-analytics, social-recap, presence/SEO, email-analytics, brevo-efficiency, eBay, store-KPIs) from their Slack channels — did not re-run any of their analysis, per design. Headline finding: the W-series email newsletter, dark since W9 (Jul 30), **resumed this week and posted its two best sends ever** (11.6 and 11.8 calls+texts/1,000, first sends ever above the 8/1,000 target). Counter-finding: eBay active listings kept shrinking (525→504→490 over 3 weeks) even as sell-through improved, Facebook Page tokens have now been dead 10 days blocking 3 open items, and Lexington finished dead last in all 8 store-performance categories (worse than the prior week). **Closed one action-register item:** NOINDEX-LANE-CONFLICT — both the website-health (8/31) and presence-audit (8/30) lanes now independently confirm the 5 `/locations/` pages stayed indexed; the two-lane disagreement from 8/25 did not recur. **Opened one new item:** GBP-HAR-SUITE — Harrisonburg's Google Business Profile still shows "Ste 22," which was removed from the site/schema on 8/23. All 16 other action-register rows re-verified against this week's live lane output (not carried on faith) and re-dated. `history.json` gained its first real week-over-week delta row (baseline 8/22 → recovery-run 8/24 → this run 8/31). Published fresh Cowork artifact "Marketing CEO Briefing" (id `marketing-ceo-briefing`, no prior URL existed) and wrote the id to `artifact_url.txt` so next week's run updates it in place rather than republishing. Sent Joshua one Slack DM (D03BHQH5VGT) — headline, biggest number, and the 3 needs-you items; a stray placeholder link in that DM was caught and corrected same-message-thread. No auto-fixes were needed at this task's own layer this run (the lane audits had already fixed what was fixable upstream). Full detail: `Gold and Silver Markeitng/ceo-briefing/briefing-2026-08-31.md`.
+
+## 2026-08-31 (5)
+- **Rule 18 sweep completed** — checked all ~53 Slack-posting scheduled tasks for the same "post partial data" defect. Fixed a third real violation beyond the two from earlier today: `monthly-analytics-report` was posting company/store financial figures to #company-performance and #store-performance on a lenient 26-of-30-CSV / 4-of-5-store threshold — now requires all 30 CSVs and all 5 stores before either post goes out. Everything else checked was already clean (or, in `discount-review`/`sold-review`'s case, already fixed by a prior session after a 2026-08-14 incident). Backup saved alongside. No remaining known Rule 18 gaps in the scheduled-task fleet.
+
+## 2026-08-31 (4)
+- **NEW HARD RULE 18 — "Never post incomplete or inaccurate data. Withhold, don't caveat."** Added to `vp-operating-rules` after Joshua corrected the Monday combined run's Slack posts ("we are never supposed to post incomplete or inaccurate data, we keep telling you this... and zero technical garbage anywhere on Slack"): #aged-inventory-review got a 1-of-5-store table, #loan-review 4-of-5, #first-payment-default 2-of-5, each with an in-channel technical caveat note — a double violation (incomplete data AND jargon, the latter also a Rule 16 repeat). Fixed the root policy in `monday-bravo-combined-compile/SKILL.md` (the old "still post the reports that DID return data" line, and the FPD "Note: [STORE] not included — pipeline cell failed" line) and `monday-bravo-postcheck/SKILL.md` (the "🚨 INCOMPLETE RUN" DM header) — both now withhold any report missing even one store's valid data and hold it for the next complete pull, with only a plain-language note allowed in Joshua's own DM. Backups saved alongside both files. Other Slack-posting scheduled tasks were not audited in this pass; check the next time any is touched.
+
+## 2026-08-31 (3)
+- **Bravo pipeline hardened — shipped the mid-run recovery + fail-fast fix that's been documented as "pending" since 2026-06-07.** Joshua flagged the recurring EnsureStore/UIA failures on the 2026-08-30 Monday combined run ("why are we still having issues. months......"). Expert board (UI-automation engineer, data-pipeline/SRE, release-management lead) reviewed: confirmed via `FINDINGS_AND_PLAN.md` that Bravo Store Systems has no public API/DB access for a franchisee (WCF/SOAP private service, local SQL Server Express engine stopped, vendor support confirmed no API) — UI automation remains the only viable data path, so the fix is hardening that path, not replacing it. Root cause (already diagnosed in `KNOWN_ISSUES.md`, never fixed): when one store's report handler wedges, nothing recovered Bravo before the next store's cell ran, so every later store cascaded to "EnsureStore failed" — explaining CUL/HAR/LEX/ROA all failing aged-inventory-summary while only WAY (last) succeeded. **Fix (additive, backed up before editing):** `bravo_watcher.ahk` now attempts a recovery-to-Dashboard immediately after any non-login EnsureStore failure, and stops the run after 2 in a row instead of burning the rest of the run against a wedged app. Also fixed `ChekkitInvites.ahk` reporting false "success" on 0 captured rows (the Tuesday chekkit review was at risk of silently working from an empty stash). Watcher restarted clean, smoke-tested (re-pulled CUL aged-inventory, the store that failed the day before — success). The recovery/fail-fast branch itself will get its first live proof on the next genuine cascade; watch and confirm over the next few Monday runs. Full detail: `Bravo Data Extraction/KNOWN_ISSUES.md` and `BRAVO_HEALTH_RUNBOOK.md` 2026-08-31 entries.
+
+## 2026-08-31 (2)
+- **Posted a free Indeed "Store Manager" job for a new Valley Pawn location Joshua says is being developed in the St. Augustine / Jacksonville, FL area.** No prior record of an FL Valley Pawn location existed anywhere in this OS or `Life OS/REAL_ESTATE_OS.md` (only unrelated FL real-estate search tasks did) — flagged as an open item, not blocked on. Cloned the existing Store Manager posting template (Waynesboro/Harrisonburg), added a new-location opening line, set pay $22.00–$26.00/hr, location "Saint Augustine, FL," posted Free (no sponsorship/spend), and removed the firearms-background-check line since FFL status for a FL store is unconfirmed. One-time task `close-fl-manager-posting` was originally scheduled for 2026-09-02 to close it after "a couple days" — **Joshua corrected this same day ("do not close it, bad assumption")**, so the task was deleted before it fired; posting stays live/open indefinitely, no auto-close. Full detail + open questions (entity/license gap) in `Life OS/OPEN_ITEMS_REGISTER.md` 2026-08-31.
+
+## 2026-08-31
+- **weekly-website-health-audit — week 2 of recurring run.** Crawled all 111 sitemap pages (109->111, +2 new blog posts): 100% return 200, 0 broken JSON-LD, 0 tel-less pages, 0 indexable pages missing a meta description (was 1). AUTO-FIXED: wrote the missing Yoast meta description on new post "Building an Emergency Fund..." (WP 1221), live-verified. CONFIRMED the prior week's location-page noindex regression has not recurred. FLAGGED (not fixed, needs a business call): the new Emergency Fund post grows the already-known duplicate-content cluster on that topic from 4 pages to 5 -- new content is landing on cannibalized topics faster than consolidation is happening. Logged to Open Items Register. Digest posted to #website. History: Projects/Website/AUDIT_2026-08-22/weekly-history.json.
+
 ## 2026-08-29
 
 - Enabled scheduled tasks: 147 -> 148

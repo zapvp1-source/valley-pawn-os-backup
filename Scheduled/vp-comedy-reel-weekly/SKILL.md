@@ -4,9 +4,6 @@ description: Wednesday 6:30 PM — write and render 2-3 deadpan comedy/story sho
 model: claude-opus-4-8
 ---
 
----
-model: claude-sonnet-5
----
 
 # vp-comedy-reel-weekly — Lane B3, the engagement-driver videos
 

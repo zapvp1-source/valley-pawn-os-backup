@@ -31,10 +31,40 @@ Once Bravo is wedged on a Report Preview, `EnsureStore` → `SwitchStore` → `B
 ## 🔧 PERMANENT FIX PLAN (status tracked here)
 1. **[CORE] Remove the Continuous Scrolling toggle manipulation** from all 9 closing/journal handlers. Export straight from the default paginated preview (mirror Joshua's manual path). — STATUS: pending Joshua go-ahead
 2. **Don't fire UIA at a rendering/hung window.** Gate ribbon interactions on a responsiveness check (SendMessageTimeout SMTO_ABORTIFHUNG / IsHungAppWindow); wait for render to finish like a human. — STATUS: pending
-3. **Always close Report Preview on exit AND on error; verify Dashboard before returning** so a failure can't cascade. — STATUS: partial (recovery block exists, still cascades)
-4. **Preflight responsiveness gate** in monday-bravo-combined-run: check `tasklist /v` Status != "Not Responding" AND on Dashboard before dropping triggers; recover first if not. — STATUS: pending
+3. **Always close Report Preview on exit AND on error; verify Dashboard before returning** so a failure can't cascade. — STATUS: **SHIPPED 2026-08-31** (see below — recovery is now actively attempted mid-run, not just at run-start)
+4. **Preflight responsiveness gate** in monday-bravo-combined-run: check `tasklist /v` Status != "Not Responding" AND on Dashboard before dropping triggers; recover first if not. — STATUS: pending (run-start gate via `EnsureBravoDashboard` already existed; per-cell mid-run gate shipped 2026-08-31, see below)
 5. **Fail loud:** compile task DMs Joshua if >25% cells error instead of posting nothing. — STATUS: pending
-6. **Fail fast:** abort run after first store's EnsureStore fails twice (don't burn 19 min). — STATUS: pending
+6. **Fail fast:** abort run after first store's EnsureStore fails twice (don't burn 19 min). — STATUS: **SHIPPED 2026-08-31** (see below)
+
+### ✅ SHIPPED 2026-08-31 — mid-run nav-cascade recovery + fail-fast (items 3 & 6)
+Root cause confirmed again on the 2026-08-30 Monday combined run: `aged-inventory-summary` wedged
+on CUL (first store), and every later store (HAR/LEX/ROA) cascaded to `EnsureStore failed` because
+nothing tried to recover Bravo mid-run — the watcher just logged the cause and moved to the next
+cell against a still-wedged app. This is the exact gap items 3/6 above have flagged as "pending"
+since 2026-06-07.
+
+**Fix (additive, `bravo_watcher.ahk`, backup `bravo_watcher.ahk.bak-pre-navrecovery-2026-08-31`):**
+on any non-login `EnsureStore failed` (cause = nav/ready/session/store-row), the watcher now calls
+`EnsureBravoDashboard()` (the same run-start readiness gate, already proven) immediately, before
+the next cell runs. A successful recovery resets the failure streak so the next cell gets a real
+shot. If recovery fails AND this is the 2nd consecutive non-login `EnsureStore` failure, the run
+trips the breaker and skips the remaining cells (`nav-failure cascade`) instead of burning ~45s per
+cell against a run that cannot succeed. Config knob: `watcher.max_consecutive_nav_failures`
+(default 2). Auth-failure (`cause=login`) breaker logic is untouched.
+
+Also shipped same day: `reports/ChekkitInvites.ahk` (backup
+`ChekkitInvites.ahk.bak-pre-0row-fix-2026-08-31`) no longer reports `status:"success"` on a 0-row
+grid walk (failure-mode #4b in `BRAVO_HEALTH_RUNBOOK.md` — a false-success 0-row CSV recurred on
+CUL/LEX/WAY on 2026-08-30, and the CSVs never even landed in `output/`). 0 rows now returns
+`status:"error"` so downstream consumers (the Tuesday chekkit review) never silently work from an
+empty stash.
+
+**Validation:** watcher restarted clean (`_restart_watcher_v2.ps1` → PASS, no syntax errors), smoke
+test re-pulled `aged-inventory-summary`/CUL for 2026-08-30 (the store that failed the day before) →
+`status: success, row_count: 16`. This proves the code loads and the happy path is unbroken. The
+recovery/fail-fast BRANCH itself was not force-triggered (would require deliberately wedging Bravo,
+which risks a real hang) — it will get its first live proof on the next genuine EnsureStore
+cascade. Watch the next few Monday runs and update this entry with the result.
 
 Roll-out rule: back up each file, edit ONE handler (EndOfMonth), smoke-test ONE cell, confirm CSV written + Bravo stays responsive + returns to Dashboard, THEN propagate to the other 8.
 

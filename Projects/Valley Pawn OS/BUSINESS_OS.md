@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-08-29
+# LIVE STATE - auto-refreshed 2026-08-31
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -17,7 +17,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | Enabled (will fire) | 148 |
 | Registered but disabled | 11 |
 | On disk but never registered | 11 |
-| Recorded skips (usage cap) | 4942 |
+| Recorded skips (usage cap) | 7041 |
 
 ### Enabled tasks
 
@@ -60,28 +60,28 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-08-29 | Valley Pawn OS | - |
-| 2026-08-29 | Unified Search | - |
+| 2026-08-31 | Valley Pawn OS | - |
+| 2026-08-31 | Unified Search | - |
+| 2026-08-31 | Short Term Rental Optimization | - |
+| 2026-08-31 | Business Dashboard Website | - |
+| 2026-08-31 | Bravo Data Extraction | STATUS.md |
+| 2026-08-30 | Website | - |
+| 2026-08-30 | Sold Margin Review | STATUS.md |
+| 2026-08-30 | Solaterra Site | - |
+| 2026-08-30 | Daily Funds Verification | - |
+| 2026-08-30 | Communcations | - |
+| 2026-08-30 | Ai Optimized Marketing | - |
 | 2026-08-29 | Sales Tax | STATUS.md |
-| 2026-08-29 | Communcations | - |
-| 2026-08-29 | Business Dashboard Website | - |
-| 2026-08-29 | Bravo Data Extraction | STATUS.md |
-| 2026-08-28 | Website | - |
-| 2026-08-28 | Sold Margin Review | STATUS.md |
+| 2026-08-29 | Precious Metals Settlements | - |
+| 2026-08-29 | Pawn Walks | STATUS.md |
+| 2026-08-29 | Health Optimization | - |
 | 2026-08-28 | Refine Social Media | - |
-| 2026-08-28 | Pawn Walks | STATUS.md |
-| 2026-08-28 | Health Optimization | - |
 | 2026-08-28 | Email Refinement | - |
 | 2026-08-28 | Discount Outlier Review | STATUS.md |
-| 2026-08-28 | Daily Funds Verification | - |
-| 2026-08-28 | Ai Optimized Marketing | - |
-| 2026-08-27 | Solaterra Site | - |
-| 2026-08-27 | Precious Metals Settlements | - |
 | 2026-08-27 | Life OS | - |
 | 2026-08-27 | Jewelry Count Reconciliation | STATUS.md |
 | 2026-08-27 | Human Resources | - |
 | 2026-08-26 | eBay | - |
-| 2026-08-26 | Short Term Rental Optimization | - |
 | 2026-08-25 | Valley Pawn Studios | STATUS.md |
 | 2026-08-25 | Taxes 2026 | - |
 | 2026-08-25 | Quickbooks Set UP | - |

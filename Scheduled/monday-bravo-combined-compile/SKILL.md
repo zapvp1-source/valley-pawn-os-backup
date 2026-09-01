@@ -73,9 +73,15 @@ If the main result.json is missing or status != success, DM Joshua, dump the tri
 
 Read the cells in each result.json to know which (report, store) CSVs are in `output/`. Skip cells with status != "success" (note them in the DM).
 
-**COMPLETENESS GATE (do not report success on empty pulls).** A cell can report `status: success` and still have pulled nothing (`row_count: 0` / empty CSV). For the reports that MUST return data — **aged-inventory-summary, employee-activity, chekkit-invites** — treat `row_count == 0` or a missing/<50-byte CSV as **INCOMPLETE**, not success. (`loans-75-days-past-due` and `layaways` are single summary rows and 0 is legitimately valid — judge those by whether the CSV has its data row, not by a row threshold. `fpd-cohort` with 0 rows is also legitimately valid — a header-only CSV means zero first-payment defaults at that store, which is a GOOD result, not a failed pull.) When any required report is incomplete:
-- Still post the reports that DID return data (don't withhold good data).
-- The end-of-run DM MUST lead with `🚨 INCOMPLETE RUN` and list every empty/failed `(report, store)`. Never send the `✅ complete` rollup when a required report returned 0 rows.
+**COMPLETENESS GATE v2 (2026-08-31 — HARD RULE, supersedes the old "post partial data" policy).** Joshua's standing instruction: "we are never supposed to post incomplete or inaccurate data." This is absolute — not a judgment call, not something to weigh against timeliness.
+
+For EVERY report/channel in this task (Steps 1–4.5), before posting: confirm all 5 stores have valid data for that specific report (status success AND, where relevant, a real data row — see the per-store validity notes already in each Step). loans-75-days-past-due, layaways, and fpd-cohort legitimately return 0/empty as a real result (zero past-due, zero locates, zero defaults) — that counts as valid data, not missing data. A cell that errored, or that should have data but returned 0 rows (aged-inventory-summary, employee-activity, chekkit-invites), counts as missing.
+
+- **If all 5 stores are valid for a report: post it normally.**
+- **If ANY store is missing/invalid for a report: DO NOT post that report to its ops channel this run.** Not a partial table, not a partial table with a caveat note, not "4 of 5 stores" — nothing goes to the channel until all 5 stores are present. A partial table read by the team as the complete picture is inaccurate data, full stop.
+- Log every withheld report (which report, which store(s) missing, why) to this run's own record only — never to the channel.
+- The channel gets that report the next time this task (or its retry/postcheck) runs with a complete 5-store set — do not backfill by posting a corrected table later in the SAME run; let the normal cadence catch it.
+- The end-of-run DM to Joshua may say a report was held pending complete data, in plain business language only (see Rule 16 — no report/cell/pipeline/error terminology). Never send the old "🚨 INCOMPLETE RUN" technical-style rollup — see Step 6 for the new DM format.
 
 ==========================================================================
 STEP 1 — Post to #aged-inventory-review (C04NGH4FF35)
@@ -259,9 +265,10 @@ Steps 3, 3.5 and 4 exactly for: the three aggregations, the append-only 12-month
 #first-payment-default (C0B17894S2Y). DATA ONLY in the channel post, per the standing rule.
 The Word doc (that SKILL's Step 5) is NOT required in this run — skip it to stay light.
 
-If the fpd-cohort cells failed for some stores, post what succeeded with the standard
-`_Note: [STORE(S)] not included — pipeline cell failed._` line; if ALL failed, skip the
-post entirely and flag it in the Joshua DM.
+Per COMPLETENESS GATE v2 above: if any store's fpd-cohort is missing/errored, DO NOT post
+to #first-payment-default this run — not even the stores that succeeded, and never with an
+in-channel note about why. Log which store(s) are missing internally; the post goes out once
+all 5 are valid. The Joshua DM may note in plain language that this report is being held.
 
 ==========================================================================
 STEP 5 — Save files
@@ -309,7 +316,10 @@ Downstream tasks (fire later, fed by what this task produced):
 Files in /Users/joshuadavis/Documents/Claude/Scheduled/.
 ```
 
-Use 🚨 instead of ✅ for any chained SKILL that failed at compile/post, and add a one-line reason.
+If any report was withheld under COMPLETENESS GATE v2, replace its ✅ line above with a plain
+one-line note that it's being held pending complete data — no jargon, no store-level error
+detail, no report/cell/pipeline language (Rule 16). Never use incident-style language like
+"🚨 INCOMPLETE RUN" — this is a routine hold, not a failure alert.
 
 ==========================================================================
 ESCAPE HATCH — IF RESULTS MISSING
@@ -317,4 +327,7 @@ ESCAPE HATCH — IF RESULTS MISSING
 
 **FIXED 2026-08-21 — do not self-reschedule via fireAt.** This task now runs on its own recurring cron (`0 8 * * 1`), NOT a self-rescheduling one-time `fireAt`. NEVER call `update_scheduled_task` on this task's own taskId to change its schedule — doing so converts it back to a one-time task and silently kills next week's run (this exact bug caused a 2+ week outage across all 5 ops channels, fixed 2026-08-21). If `monday-bravo-combined-<PIPELINE_DATE>.result.json` doesn't exist when this task fires, the pipeline hasn't finished or hung. Check the watcher log at `logs/monday-bravo-combined-<PIPELINE_DATE>.log` for recent activity, then DM Joshua one line stating what you found (pipeline still running / pipeline hung / file missing entirely) and STOP — do not retry yourself. `monday-bravo-postcheck` fires 30 minutes later (8:30 AM Monday) specifically to re-check and backfill; let it do that job.
 
-Never post stale or partial data to ops channels without DM-flagging the problem first.
+Never post stale or partial data to ops channels, period — not even with a DM-flag or an
+in-channel caveat note. See COMPLETENESS GATE v2 above: incomplete data does not go to a
+channel under any circumstance. Only Joshua's own DM may ever carry a plain-language note that
+something is being held, and even that must contain zero technical detail per Rule 16.

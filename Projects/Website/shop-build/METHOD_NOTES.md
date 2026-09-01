@@ -357,3 +357,17 @@ ItemList JSON-LD (numberOfItems=120, itemListElement length 120 - it's the 8th o
 blocks on the page, not the first). Posted summary to #website successfully. Cleaned up /tmp
 scratch dir after run; left fetch_nightly_20260830.py and publish_nightly_20260830.py in
 shop-build/ for reference (no cookiejar/temp junk written to the connected folder this run).
+
+## Run record - 2026-08-31 (scheduled nightly, direct Mac osascript)
+Ran via mcp__Control_your_Mac__osascript, following the 08-30 pattern (fetch + publish python
+scripts copied to dated filenames in shop-build/, launched via nohup+background, polled log).
+No connected-folder lock issues this run.
+Scraped 486 items across 5 stores (Culpeper 286, Waynesboro 39, Harrisonburg 31, Lexington 35,
+Roanoke 95); 24 weapons-adjacent excluded; published 462
+(Culpeper 281, Waynesboro 36, Harrisonburg 29, Lexington 32, Roanoke 84).
+Published via WP Application Password Basic Auth (vp-shop-nightly cred) directly to
+/wp-json/wp/v2/pages/833. HTTP 200, id 833, status publish.
+Verified live (after 25s wait): 462 vp-card elements (data-price= count, exact match), single
+VP-SHOP-START/END markers, exactly one h1.vp-h1, valid ItemList JSON-LD (numberOfItems=120,
+itemListElement length 120), zero woocommerce-shop occurrences. Posted summary to #website
+successfully (https://valleypawnworkspace.slack.com/archives/C0ASE9C0GQ0/p1788174584205149).

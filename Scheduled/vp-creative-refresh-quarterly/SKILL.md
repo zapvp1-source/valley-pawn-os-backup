@@ -4,9 +4,6 @@ description: Quarterly (1st of Jan/Apr/Jul/Oct, 7:40 AM) — retire proven-weak 
 model: claude-opus-4-8
 ---
 
----
-model: claude-opus-5
----
 
 # vp-creative-refresh-quarterly — where genuinely new ideas come from
 

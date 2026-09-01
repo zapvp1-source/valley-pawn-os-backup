@@ -1,14 +1,9 @@
 ---
 name: monday-bravo-combined-run
-description: Sunday-evening Bravo pull (PART 1 of 2, moved off Monday morning 2026-08-10 to avoid contention) — drops all Monday ops triggers, schedules compile for a fixed Monday 8:00 AM ET publish.
-model: claude-sonnet-5
----
-
----
-name: monday-bravo-combined-run
 description: Sunday-evening Bravo pull (PART 1 of 2, moved off Monday morning 2026-08-10 to avoid contention) — drops all Monday ops triggers, writes a completion heartbeat (added 2026-08-21 so Fleet Guardian's output-verification pass can detect a silent failure), schedules compile for a fixed Monday 8:00 AM ET publish.
 model: claude-sonnet-5
 ---
+
 
 > **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard, added 2026-08-02).**
 > This task runs on Joshua's Mac Studio and **does** have local machine access. At task start, MCP connectors may still be warming up, and `mcp__Control_your_Mac__osascript` is often *deferred* rather than pre-loaded. A tool that has not been loaded yet is NOT a missing capability.

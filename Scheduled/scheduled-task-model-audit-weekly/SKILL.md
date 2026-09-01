@@ -1,6 +1,7 @@
 ---
 name: scheduled-task-model-audit-weekly
 description: Weekly audit of every Cowork scheduled task's AI-model pin against the Haiku/Sonnet/Opus tier framework; fixes mis-tiered/unpinned/Fable pins and logs the results.
+model: claude-sonnet-5
 ---
 
 You are running the WEEKLY SCHEDULED-TASK MODEL AUDIT for Full Circle Finance Inc DBA Valley Pawn (Joshua's 5-VA-pawn-store business). This is a recurring Monday 5:00 AM task with no memory of any prior run — reconstruct everything from scratch below. Run fully autonomously, no clarifying questions, no check-ins. This is routine maintenance — do NOT post anything to Slack (per Rule 16 — no routine notifications) and do NOT DM Joshua about it.

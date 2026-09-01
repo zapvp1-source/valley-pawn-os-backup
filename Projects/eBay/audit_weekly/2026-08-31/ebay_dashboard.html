@@ -1,0 +1,162 @@
+<script type="application/json" id="cowork-artifact-meta">
+{
+  "name": "eBay Channel Pulse",
+  "schemaVersion": 1,
+  "description": "Weekly eBay channel pulse for Valley Pawn — active listings, sales, fees, aged inventory, listing-quality/TRS status, and an action tracker. Rebuilt each Monday from the ebay-weekly-channel-audit run and updated in place."
+}
+</script>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: #f7f6f3; color: #201f1a; margin: 0; padding: 32px 24px 64px; line-height: 1.5;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; }
+  h1 { font-size: 26px; margin: 0 0 4px; color: #2b2416; }
+  .sub { color: #6b6355; font-size: 14px; margin-bottom: 24px; }
+  h2 {
+    font-size: 15px; text-transform: uppercase; letter-spacing: 0.06em;
+    color: #8a8171; margin: 40px 0 12px; border-bottom: 1px solid #e5e0d3; padding-bottom: 6px;
+  }
+  h2:first-of-type { margin-top: 0; }
+  .cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 8px; }
+  .card-stat {
+    background: #2b2416; color: #f5f1e6; border-radius: 12px; padding: 14px 12px; text-align: left;
+  }
+  .card-stat .num { font-size: 20px; font-weight: 700; color: #f0c869; display: block; margin-bottom: 2px; }
+  .card-stat .lbl { font-size: 11px; color: #cbc2ab; text-transform: uppercase; letter-spacing: 0.03em; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-bottom: 8px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #ece7d9; vertical-align: top; }
+  th { color: #7a7261; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; }
+  tr:last-child td { border-bottom: none; }
+  tr.total td { font-weight: 700; background: #f1ede1; }
+  .up { color: #1a7a3d; font-weight: 600; }
+  .down { color: #b3452c; font-weight: 600; }
+  .flag { color: #a3781c; font-weight: 600; }
+  .note { font-size: 12.5px; color: #8a8171; margin-top: -2px; margin-bottom: 18px; }
+  ul { padding-left: 20px; margin: 8px 0; }
+  li { margin-bottom: 8px; }
+  .card {
+    background: #fff; border: 1px solid #ece7d9; border-radius: 12px; padding: 16px 18px; margin-bottom: 12px;
+  }
+  .card b { color: #2b2416; }
+  .rank { display: inline-block; font-weight: 700; color: #a3781c; margin-right: 6px; }
+  .tag {
+    display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.04em; padding: 2px 8px; border-radius: 999px; margin-right: 6px;
+  }
+  .tag.closed { background: #dcf3e3; color: #1a7a3d; }
+  .tag.progress { background: #fdf1d8; color: #9a6b0f; }
+  .tag.needsyou { background: #fbe4de; color: #a3402a; }
+  .tag.watch { background: #e2ecfb; color: #2a5a9a; }
+  .needsyou-box {
+    background: #fff8ec; border: 1px solid #f0e0bb; border-radius: 12px; padding: 16px 18px; margin-bottom: 12px;
+  }
+  .needsyou-box b { color: #8a5a10; }
+  footer { margin-top: 40px; font-size: 12px; color: #a39a89; text-align: center; }
+  @media (max-width: 700px) { .cards { grid-template-columns: repeat(2, 1fr); } }
+</style>
+
+<div class="wrap">
+  <h1>📦 eBay Channel Pulse</h1>
+  <div class="sub">Week of 2026-08-31 · trailing 90 days · all 5 stores, live Trading API pull, zero pull errors</div>
+
+  <div class="cards">
+    <div class="card-stat"><span class="num">468</span><span class="lbl">Active listings</span></div>
+    <div class="card-stat"><span class="num">$77,974</span><span class="lbl">Listed value</span></div>
+    <div class="card-stat"><span class="num">$86,354</span><span class="lbl">Sold, 90d (573 units)</span></div>
+    <div class="card-stat"><span class="num">16.6%</span><span class="lbl">Fees / revenue</span></div>
+    <div class="card-stat"><span class="num">$25,077</span><span class="lbl">Aged &gt;90d (203)</span></div>
+  </div>
+  <div class="note">vs. 2026-08-22 baseline: active listings -46 (-9.0%) · listed value -$5,467 · 90d revenue +$4,290 · fees +$689 (fee % flat) · aged &gt;90d -4 listings / -$2,178</div>
+
+  <h2>What matters most, ranked by money</h2>
+
+  <div class="card">
+    <span class="rank">1</span><b>Top Rated Plus eligibility is still $0 — 0% of listings qualify.</b>
+    <span class="tag needsyou">Needs Joshua</span><br>
+    Dispatch time is 2 days everywhere except Roanoke (3 days, worst in channel) — nowhere is 1-day/same-day.
+    Return shipping is 100% buyer-pays at every store — free returns is the other requirement. Unchanged since
+    the 8/22 audit. Estimated opportunity: ~$3,600–5,200/yr in fee discounts once both are fixed. This is an
+    ops-policy call, not something to execute unilaterally.
+  </div>
+
+  <div class="card">
+    <span class="rank">2</span><b>Promoted Listings still dark at 4 of 5 stores.</b>
+    <span class="tag needsyou">Needs Joshua</span><br>
+    Culpeper spent $400.74 on ads in 90 days (up from $314). Waynesboro, Harrisonburg, Lexington, and Roanoke
+    spent <b>$0.00</b>. Those four stores did $59,988 in 90-day sales with zero paid visibility. Confirmed
+    independently by this week's marketing rollup report.
+  </div>
+
+  <div class="card">
+    <span class="rank">3</span><b>Best Offer is now on for every listing, including Culpeper.</b>
+    <span class="tag closed">Fixed</span><br>
+    The 8/22 audit found 193 Culpeper listings with Best Offer switched off ($15,372 of inventory with no
+    negotiation path). Verified against a fresh sample this week — 100% enabled, every store.
+  </div>
+
+  <div class="card">
+    <span class="rank">4</span><b>No-returns listings are gone.</b>
+    <span class="tag closed">Fixed</span><br>
+    45 listings (mostly Culpeper) accepted no returns at all as of 8/22 ($10,932 of inventory). This week's
+    sample found 0%. Roanoke's return window is also mostly moved to 30 days (57 of 60 sampled), up from
+    14 days channel-worst.
+  </div>
+
+  <div class="card">
+    <span class="rank">5</span><b>154 listings hit their final markdown cut tomorrow (9/1) — the automatic follow-up is live.</b>
+    <span class="tag progress">In progress</span><br>
+    Culpeper 101, Roanoke 30, Harrisonburg 11, Lexington 7, Waynesboro 5. The 8/22 audit flagged that nothing
+    was scheduled to act once items hit the 30%-off cap. That gap is now closed — a new weekly task picks up
+    unsold capped items and flags/ends them on a grace clock. Tomorrow is its first real test.
+  </div>
+
+  <div class="card">
+    <span class="rank">6</span><b>4 open Best Offers, all expiring within 48 hours, none answered.</b>
+    <span class="tag needsyou">Needs Joshua — time-sensitive</span><br>
+    3 at Roanoke expiring today/tonight, 1 at Culpeper expiring tomorrow afternoon. Logged to the open-items
+    list for a same-day look — accepting or countering needs a pricing call against cost basis.
+  </div>
+
+  <div class="card">
+    <span class="rank">7</span><b>Active listing count keeps shrinking.</b>
+    <span class="tag watch">Watching</span><br>
+    514 (8/22) → ~490 (marketing rollup, mid-week) → 468 (this pull). Sales and aged-inventory value are
+    stable to improving, so this reads as net delisting rather than a demand problem — but it's worth
+    understanding why the catalog keeps getting smaller.
+  </div>
+
+  <h2>Per-store snapshot</h2>
+  <table>
+    <tr><th>Store</th><th>Active</th><th>Listed value</th><th>Sold 90d</th><th>Fees 90d</th><th>Fee %</th><th>Aged &gt;90d</th></tr>
+    <tr><td>Culpeper</td><td>280</td><td>$42,918</td><td>233 / $28,074</td><td>$4,582</td><td>16.3%</td><td>$19,813</td></tr>
+    <tr><td>Waynesboro</td><td>37</td><td>$13,180</td><td>67 / $13,986</td><td>$1,831</td><td>13.1%</td><td>$0</td></tr>
+    <tr><td>Harrisonburg</td><td>31</td><td>$6,765</td><td>61 / $12,010</td><td>$2,073</td><td>17.3%</td><td>$596</td></tr>
+    <tr><td>Lexington</td><td>28</td><td>$5,379</td><td>59 / $12,303</td><td>$2,600</td><td>21.1%</td><td>$1,098</td></tr>
+    <tr><td>Roanoke</td><td>92</td><td>$9,732</td><td>153 / $19,981</td><td>$3,220</td><td>16.1%</td><td>$3,571</td></tr>
+    <tr class="total"><td>Channel</td><td>468</td><td>$77,974</td><td>573 / $86,354</td><td>$14,306</td><td>16.6%</td><td>$25,077</td></tr>
+  </table>
+
+  <h2>Action tracker</h2>
+  <table>
+    <tr><th>Item</th><th>Status</th><th>Owner</th></tr>
+    <tr><td>Turn Best Offer on for all Culpeper listings</td><td><span class="tag closed">Done</span> — verified 100% on in sample</td><td>Claude</td></tr>
+    <tr><td>Fix no-returns listings channel-wide</td><td><span class="tag closed">Done</span> — verified 0% in sample</td><td>Claude</td></tr>
+    <tr><td>Roanoke → 30-day returns</td><td><span class="tag progress">Mostly done</span> — 57 of 60 sampled at 30 days</td><td>Claude</td></tr>
+    <tr><td>Terminal action for max-markdown items</td><td><span class="tag progress">Live</span> — new weekly task built, first real test 9/1</td><td>Claude</td></tr>
+    <tr><td>eBay OAuth re-auth (marketing/analytics/finances scopes)</td><td><span class="tag progress">1 of 5 stores done (Lexington)</span></td><td>Joshua / Claude</td></tr>
+    <tr><td>1-day handling + free returns ≥$100 (Top Rated Plus)</td><td><span class="tag needsyou">Not started</span></td><td>Joshua</td></tr>
+    <tr><td>Promoted Listings on the 4 dark stores</td><td><span class="tag needsyou">Not started</span></td><td>Joshua</td></tr>
+    <tr><td>Answer 4 expiring Best Offers</td><td><span class="tag needsyou">Time-sensitive — today/tomorrow</span></td><td>Joshua / team</td></tr>
+    <tr><td>Reply to 9 unresponded negative/neutral feedback (12mo)</td><td><span class="tag needsyou">Not started</span></td><td>Joshua / team</td></tr>
+  </table>
+
+  <div class="needsyou-box">
+    <b>Needs you today:</b> 4 open Best Offers expire within 48 hours (3 Roanoke, 1 Culpeper) — check Seller
+    Hub → Offers before they lapse. Everything else on this page can wait for a normal check-in.
+  </div>
+
+  <footer>Valley Pawn eBay Channel Pulse · rebuilt weekly by the ebay-weekly-channel-audit task · read-only, no listings were changed to produce this report</footer>
+</div>

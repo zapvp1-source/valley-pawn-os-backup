@@ -4,9 +4,6 @@ description: Tuesday 9 AM — post the weekly staff phone-video prompt to Slack 
 model: claude-haiku-4-5
 ---
 
----
-model: claude-haiku-4-5-20251001
----
 
 # vp-staff-video-prompt — Lane B2a, the ask
 

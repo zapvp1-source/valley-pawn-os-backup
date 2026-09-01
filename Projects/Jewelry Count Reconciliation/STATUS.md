@@ -870,3 +870,43 @@ Read via claude-in-chrome, zoomed lightbox, sum-verified against each sheet's ow
 ### Outcome
 Per protocol (no partial posts): NOTHING posted to #jewlery-counts. Bravo pull is fully captured for all 5 stores and safe to reuse for a follow-up run tonight if CUL/LEX sheets land later — do not re-pull Bravo, just re-read #end-of-day for CUL/LEX PM sheets and build the table.
 One plain-language DM sent to Joshua (D03BHQH5VGT): tonight's jewelry count didn't complete (CUL/LEX PM sheets missing).
+
+---
+## RUN RECORD - 2026-08-31 (Monday) - jewelry-onhand-nightly-pull
+Open stores: CUL, HAR, LEX, ROA, WAY (all 5, Monday).
+
+### Contention / health gate
+Claimed-triggers check found Bravo mid-run on a pre-existing queue of 3 monthly-analytics-prestage triggers (automated queue, not a live session). The 5 jewelry-onhand-2026-08-31-STORE triggers were dropped at 20:39 and queued behind those jobs per the watchers mtime ordering. Health gate PASS on first try at 20:38 (target CUL). First jewelry trigger (CUL) claimed at 21:17 once the monthly-analytics queue cleared (~38 min queue wait), still well inside the freeze window.
+
+### Freeze window confirmation, both sides
+Bravo pulls ran 21:17 (CUL) through 22:30 (WAY), inside the 6PM close -> 10AM reopen freeze window. PM count sheets were posted to #end-of-day between 6:05 PM (HAR) and 6:43 PM (CUL), also inside the freeze window and well before the Bravo pulls.
+
+### Bravo on-hand pull (jewelry-case-counts-v2) - all 5 stores complete, empty-category rule applied
+- CUL: SUCCESS 8/8 ok. Rings 631, Bracelets 122, Pendants 246, Charms 27, Brooches 21, Earrings 166, Chains 112, Necklaces 98.
+- HAR: partial 7/8, Charms error. Prior-day (8/28) HAR Charms also error, treated as 0 (confirmed-empty category). Rings 461, Bracelets 47, Pendants 119, Earrings 47, Chains 73, Necklaces 49.
+- LEX: partial 7/8, Brooches error (two full attempts, genuinely empty). Prior-day (8/28) LEX Brooches also error, treated as 0 (confirmed-empty category). Rings 276, Bracelets 37, Pendants 53, Charms 1, Earrings 50, Chains 29, Necklaces 18.
+- ROA: SUCCESS 8/8 ok. Rings 553, Bracelets 128, Pendants 96, Charms 58, Brooches 2, Earrings 88, Chains 97, Necklaces 67. Charms=58 continues to run high, consistent with the known standing ROA pendants-recorded-as-charms pattern.
+- WAY: partial 7/8, Charms error (two full attempts). Prior-day (8/28) WAY Charms also error, treated as 0 (supersedes the older 8/15 WAY Charms=1 real-intake note; 8/28 is the more recent baseline). Rings 341, Bracelets 43, Pendants 61, Brooches 5, Earrings 54, Chains 45, Necklaces 23.
+
+Bravo-side scope-computed Expected (Pendants=Pendants+Charms+Brooches, Necklaces=Chains+Necklaces):
+CUL 631/122/210/166/294 | HAR 461/47/122/47/125 | LEX 276/37/47/50/54 | ROA 553/128/164/88/156 | WAY 341/43/68/54/66  (order: Rings/Bracelets/Necklaces/Earrings/Pendants)
+
+### PM count sheets (#end-of-day) - complete, all 5 read via claude-in-chrome lightbox, sum-verified against the TOTALS line printed on each sheet
+Today posts confirmed against the Today divider (not just time-of-day, after an early mixup with same-time-of-day posts from Saturday 8/29 further up the same multi-day paper ledgers): Walker Tapley HAR 6:05 PM, Martin D. WAY 6:17 PM, Benjie Moore ROA 6:29 PM (rotated photo), Uriah LEX 6:29 PM, Sandi CUL 6:43 PM.
+- HAR: PM Necklaces written as 124 then corrected to 123 on the sheet, used the corrected value, sum verifies exactly to the sheets TOTALS of 798. Rings 461, Bracelets 47, Necklaces 123, Earrings 48, Pendants 119.
+- WAY: AM and PM columns identical, 341/43/68/53/66, totals 571=571.
+- ROA: rotated sheet, zoomed AM and PM blocks separately. Rings 553, Bracelets 128, Necklaces 166, Earrings 88, Pendants 155, sum verifies to TOTALS 1090.
+- LEX: Rings 278, Bracelets 38, Necklaces 47, Earrings 50, Pendants 53, sum verifies to 466.
+- CUL: Rings 631, Bracelets 121, Necklaces 210, Earrings 166, Pendants 294, sum verifies to 1422.
+
+### Variance (Counted minus Expected), order Rings/Bracelets/Necklaces/Earrings/Pendants/Total
+CUL: 0/-1/0/0/0/-1
+HAR: 0/0/+1/+1/-6/-4
+LEX: +2/+1/0/0/-1/+2
+ROA: 0/0/+2/0/-1/+1
+WAY: 0/0/0/-1/0/-1
+
+Posted to #jewlery-counts. No DM to Joshua - no anomalous OVER variance, all variances small and mixed sign, run completed for all 5 stores.
+
+### Repeat check vs prior logged run (2026-08-27, the last RUN RECORD in this file before tonight)
+HAR Pendants ran -7 on 8/27 and -6 tonight, same direction and similar magnitude across the two most recent recorded HAR nights (8/28-8/30 were not logged in this file) - worth watching if it repeats again, may be a scope difference specific to HAR Pendants rather than one-night noise, not large enough to call loss. No other repeating pattern versus 8/27 for CUL, LEX, ROA, WAY.

@@ -135,7 +135,7 @@ Structure: 3 sections × 4 sub-tables (Current Actuals, Prior Actuals, Var $, Va
 
 # Step 6 — Slack posts (success path only) — REWRITTEN 2026-08-03 per Field Communication Standard
 
-Only post if Step 2 found ≥ 26 of 30 CSVs AND Step 3 returned non-zero values for at least 4 of 5 stores per window.
+**COMPLETENESS GATE (Rule 18, 2026-08-31 — supersedes the old 26-of-30/4-of-5 threshold).** A Grand Total or per-store table with even one store missing or zero-by-error is inaccurate data, not a degraded-but-useful result — the totals and comparisons would simply be wrong. Only post if Step 2 found ALL 30 of 30 CSVs AND Step 3 returned real (non-error-zero) values for all 5 of 5 stores, for every window being posted (the Same-Month-vs-Year-Ago view). If anything is missing, do not post to either channel this run — no partial table, no caveat note. Log the gap in the Step 7 working file only; the post goes out on the next run once the data is complete. A store's genuinely-zero month (e.g., truly $0 scrap sales) is not "incomplete" — only a missing CSV or an all-zero parse-failure signature counts as missing.
 
 Both posts below use ONLY the Same-Month-vs-Year-Ago view. Do not include YTD or T12M in the Slack post — that detail lives in the Google Sheet only. Do not include the Net Revenue formula, "Prepared by," "Source," or any "supersedes"/"verified" language. Keep each post under 100 words plus the table.
 
@@ -174,7 +174,7 @@ Full breakdown → [Monthly Analytics - {Month Year} spreadsheet](Google Sheet l
 Full breakdown → [Monthly Analytics - {Month Year} spreadsheet](Google Sheet link)
 ```
 
-If ≤4 CSVs were missing (Step 2 gap tolerance), do not mention it in either post — this is internal and belongs in the Step 7 working file only.
+Any missing CSV or store blocks BOTH posts entirely this run (see COMPLETENESS GATE above) — there is no gap-tolerance threshold anymore. Missing data is never mentioned in either post; it stays internal to the Step 7 working file.
 
 # Step 7 — Always save working file
 

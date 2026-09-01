@@ -36,15 +36,33 @@ Update `updated` dates for changed artifacts.
 
 ## Step 3 — Deploy to Cloudflare Pages
 PREFERRED (works in any session, incl. scheduled tasks) — deploy from the Mac via osascript
-`do shell script` (node lives at ~/Documents/Claude/tools/node):
+`do shell script` (node lives at ~/Documents/Claude/tools/node).
+
+**Two confirmed gotchas on this Mac, both with workarounds baked in below:**
+1. `npx wrangler ...` / `npm install -g wrangler` / any npm-wrapped invocation **hangs
+   indefinitely with zero output**. Always call the direct binary
+   `$HOME/Documents/Claude/tools/node/bin/wrangler` — never prefix with `npx`/`npm exec`.
+2. `~/Documents/Claude` is itself one giant git repo (auto-backed-up). Wrangler's git
+   auto-detection runs `git status --porcelain` against that whole tree to compute the dirty
+   flag, which can hang for minutes. Always pass `--branch`/`--commit-hash`/`--commit-message`
+   explicitly (grabbed via fast `git rev-parse` calls, which don't walk the tree) so wrangler
+   skips auto-detection entirely.
+
 ```
 export PATH=$HOME/Documents/Claude/tools/node/bin:$PATH
 cd '/Users/joshuadavis/Documents/Claude/Projects/Business Dashboard Website'
 export CLOUDFLARE_API_TOKEN=$(cat .cloudflare/api_token) CLOUDFLARE_ACCOUNT_ID=$(cat .cloudflare/account_id)
-npx wrangler pages deploy site --project-name=vp-dashboard --commit-dirty=true 2>&1 | tail -1
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+HASH=$(git rev-parse HEAD)
+$HOME/Documents/Claude/tools/node/bin/wrangler pages deploy site --project-name=vp-dashboard \
+  --branch="$BRANCH" --commit-hash="$HASH" --commit-message="Auto-refresh: $(date +%F)" \
+  --commit-dirty=true 2>&1 | tail -1
 ```
-(osascript calls are killed after ~25s; the deploy takes ~10s. If it times out, run it
-nohup-backgrounded with output to /tmp/vp_deploy.log and poll the log.)
+(osascript calls are killed after ~25s; the deploy itself takes ~2-10s once the git-detection
+step is skipped via the flags above. If a call still needs backgrounding, nohup it with output
+to /tmp/vp_deploy.log and poll the log — but check the log for progress before killing a running
+attempt; use a narrow `kill -9 <pid>`, not a broad `pkill -f`, so you don't kill an attempt that's
+about to succeed.)
 NOTE: in scheduled-task sessions the project folder is NOT mounted in the sandbox —
 do ALL file edits there via osascript `do shell script` (printf/python3 heredoc), never the Write tool.
 Live URL: https://vp-dashboard.pages.dev (HTTP Basic Auth: user `valleypawn`,

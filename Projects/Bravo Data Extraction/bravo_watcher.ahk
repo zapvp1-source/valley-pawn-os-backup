@@ -382,6 +382,21 @@ ProcessTrigger(triggerPath) {
         MAX_CONSECUTIVE_AUTH_FAILURES := Integer(CONFIG.Get("watcher.max_consecutive_auth_failures", "3"))
         MAX_TRIGGER_DURATION_MS := Integer(CONFIG.Get("watcher.max_trigger_duration_ms", "2700000"))  ; 45 min
         consecutiveAuthFailures := 0
+        ; --- Nav-cascade recovery + fail-fast (2026-08-31) ---------------------
+        ; KNOWN_ISSUES.md / BRAVO_HEALTH_RUNBOOK.md have documented this as a
+        ; "pending" fix since 2026-06-07: a non-login EnsureStore failure (cause
+        ; = nav/ready/session/store-row) used to be logged and the loop just
+        ; moved on to the next cell against a Bravo that was still wedged off
+        ; Dashboard - guaranteeing every remaining cell in the trigger also
+        ; failed (the 2026-08-30 combined run: CUL wedge on aged-inventory-summary
+        ; cascaded through LEX/ROA). Two changes, additive, no existing behavior
+        ; removed: (1) attempt one EnsureBravoDashboard recovery immediately after
+        ; a non-login EnsureStore failure, before the next cell runs; (2) if two
+        ; non-login EnsureStore failures happen IN A ROW even after recovery was
+        ; attempted, trip the breaker and skip the rest of the run instead of
+        ; burning ~45s/cell on a guaranteed-fail cascade (the "fail fast" item).
+        MAX_CONSECUTIVE_NAV_FAILURES := Integer(CONFIG.Get("watcher.max_consecutive_nav_failures", "2"))
+        consecutiveNavFailures := 0
         tripped := false
         trippedReason := ""
         runStartTick := A_TickCount
@@ -480,11 +495,34 @@ ProcessTrigger(triggerPath) {
                             LogMessage("  TRIPPED: " . trippedReason)
                         }
                     } else if (cellStatus = "error" && InStr(cellError, "EnsureStore failed")) {
-                        ; Non-login EnsureStore failure: log + continue, do NOT trip the breaker.
+                        ; Non-login EnsureStore failure: NOT a lockout risk, so the
+                        ; auth breaker doesn't trip - but Bravo is very likely stuck
+                        ; off-Dashboard, and every subsequent cell will fail against
+                        ; that same wedge unless something drives it back first.
                         LogMessage("    EnsureStore failure cause=" . ENSURESTORE_LAST_CAUSE . " — NOT a lockout risk; breaker not incremented")
+                        consecutiveNavFailures += 1
+                        LogMessage("    consecutiveNavFailures = " . consecutiveNavFailures . "/" . MAX_CONSECUTIVE_NAV_FAILURES . " (cause=" . ENSURESTORE_LAST_CAUSE . ")")
+                        LogMessage("    Attempting recovery-to-dashboard before next cell ...")
+                        recovered := false
+                        try {
+                            recovered := EnsureBravoDashboard(CONFIG.Get("bravo.password", ""), store)
+                        } catch as eRecover {
+                            LogMessage("    Recovery attempt threw: " . eRecover.Message)
+                        }
+                        LogMessage("    Recovery-to-dashboard result: " . (recovered ? "OK" : "FAILED"))
+                        if (recovered) {
+                            ; A successful recovery means the NEXT cell has a real
+                            ; shot - don't let it count toward the fail-fast trip.
+                            consecutiveNavFailures := 0
+                        } else if (consecutiveNavFailures >= MAX_CONSECUTIVE_NAV_FAILURES) {
+                            tripped := true
+                            trippedReason := "nav-failure cascade (" . consecutiveNavFailures . " consecutive non-login EnsureStore failures, recovery could not reach Dashboard - stopping instead of burning the rest of the run against a wedged Bravo)"
+                            LogMessage("  TRIPPED: " . trippedReason)
+                        }
                     } else if (cellStatus = "success") {
-                        ; Any clean success resets the auth-failure streak.
+                        ; Any clean success resets both failure streaks.
                         consecutiveAuthFailures := 0
+                        consecutiveNavFailures := 0
                     }
                 } catch as e {
                     msg := "Handler crashed for " . reportName . "/" . store . ": " . e.Message

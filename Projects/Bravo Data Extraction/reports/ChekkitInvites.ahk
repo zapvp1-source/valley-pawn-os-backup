@@ -110,6 +110,21 @@ PullChekkitInvites(store, date, outputDir) {
         Sleep(800)
         try ClickByName(CHEKKIT_INVITES_ELEMENTS["panel_cancel"], 3000)
         Sleep(800)
+
+        ; --- 0-row false-success guard (2026-08-31) -------------------------
+        ; BRAVO_HEALTH_RUNBOOK.md failure-mode #4b: a saved-report/grid-walk
+        ; hiccup can silently produce a header-only CSV that this handler used
+        ; to report as "success" (confirmed on chekkit-inactives 2026-06-17;
+        ; recurred here on chekkit-invites 2026-08-30 across CUL/LEX/WAY - the
+        ; CSVs never even landed in output/, meaning the "success, 0 rows"
+        ; claim was flatly wrong). A genuinely empty invite window is possible
+        ; but rare (new-customer intake across 5 stores); treat 0 rows as a
+        ; capture failure so the run retries/flags it instead of the Tuesday
+        ; review silently working from an empty stash.
+        if (rowsWritten = 0) {
+            ScreenshotToFile("invites_zero_rows")
+            return Fail(result, started, "0 rows captured — treating as grid-walk failure, not confirmed empty (see BRAVO_HEALTH_RUNBOOK #4b)")
+        }
     } catch as e {
         ScreenshotToFile("invites_fail")
         LogVisibleNames()

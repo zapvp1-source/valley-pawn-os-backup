@@ -278,6 +278,41 @@ Lane C appends verified local detail here as it finds it, with a confidence tag 
 that turns out wrong gets **struck and annotated, never silently deleted** — a wrong local fact that
 gets quietly removed will be rediscovered and re-posted by a future run.
 
+## Verified additions — 2026-08-31 (Lane C run, week of Sept 6–12)
+
+**HARRISONBURG — the Chesapeake Western Railway `[C26 verified 2026-08-31]`.** Opened out of
+Harrisonburg **March 23, 1896**, running both east and west; the 26-mile segment linked
+**Bridgewater to Elkton** (meeting the N&W there). Denied access to Union Station, the line built
+its own passenger depot at **141 West Bruce Street in 1913**. It hauled mostly Valley agricultural
+freight and was known colloquially as **"the Crooked and Weedy."** Acquired by the Norfolk &
+Western in the 1950s. *(Sources: en.wikipedia.org/wiki/Chesapeake_Western_Railway, american-rails.com,
+JMU Special Collections, thegainesgroup.com. Fills a real gap — the KB previously had no
+Harrisonburg railroad material at all, which is why `com_the_tracks` had nothing safe to draw on.)*
+
+**CULPEPER — Mountain Run `[C26 verified 2026-08-31]`.** Mountain Run is the stream that flows
+**through downtown Culpeper**, from agricultural fields west of town, **through Yowell Meadow
+Park**, and on to its confluence with the **Rappahannock River**. *(Sources: riverfriends.org,
+starexponent.com, USGS gage 01665000.)*
+> ⚠️ Reinforcing the existing warning: **Lake Culpeper (formerly Lake Pelham, completed 1972)** and
+> **Mountain Run Lake Park (a Culpeper County park)** are two different water bodies, and both are
+> different from **Mountain Run the stream**. Name only one per post; never blend them.
+
+## Registry note — why Lane C nearly shipped nothing on 2026-08-31
+
+`creative_drift.py select --lane community` returned **zero eligible formats for all five stores**.
+Cause (verified against the engine source and `creative_state.json`, not inferred): the community
+lane held only 10 formats, **7 of them season-agnostic and all 7 used on all 5 stores on
+2026-08-24**. `COOLDOWN_FORMAT_DAYS = 21`, so none were eligible again until ~Sept 14, and the other
+3 (`com_friday_lights`, `com_first_cold`, `com_foliage_timing`) are gated to early_fall/peak_fall.
+
+**A weekly 4-slot lane against a 21-day cooldown needs ≥12 in-season formats to never run dry.**
+Fixed additively by `_lane_c/topup_candidates_2026-08-31.py`, which appended 9 new community
+candidates (`com_under_your_feet`, `com_the_water`, `com_the_tracks`, `com_trailhead`,
+`com_early_shift`, `com_school_colors`, `com_mural_corner`, `com_park_hour`, and the late_summer-only
+`com_last_warm_evening`). Nothing existing was edited and `creative_drift.py` was not touched.
+**Watch for this again in mid-November** — `com_last_warm_evening` drops out after Sept 15 and the
+fall-gated formats will themselves cycle into cooldown.
+
 ## Known gap — `com_local_news_desk` format (added 2026-08-24)
 The drift engine's `com_local_news_desk` format asks for "something verifiable that happened here
 this week" — genuine local news, sourced and dated. As of 2026-08-24 there is no live news-verification

@@ -1,14 +1,9 @@
 ---
 name: monday-bravo-postcheck
-description: Mon 8:30 AM post-check/self-heal: verify the 4 combined-Bravo ops reports posted (compile now fires at a fixed 8:00 AM ET after the Sunday pull); backfill any missing.
-model: claude-sonnet-5
----
-
----
-name: monday-bravo-postcheck
 description: Mon 8:30 AM post-check/self-heal: verify the 4 combined-Bravo ops reports posted (compile now fires at a fixed 8:00 AM ET after the Sunday pull); backfill any missing. If the pipeline data itself is entirely missing (Part 1 + its watchdog both failed), drop a fresh trigger directly as a last-resort self-heal instead of just alerting (added 2026-08-21).
 model: claude-sonnet-5
 ---
+
 
 > ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
 
@@ -39,6 +34,6 @@ STEP 4 — Guard rails:
   4. If it completes within the window, treat its result.json/CSVs as this run's data source and go back to STEP 3's backfill logic against them — post whatever is now available, following the same completeness gate and duplicate-post guard.
   5. If it does NOT complete within ~20 minutes, DM Joshua (`U03BB52MDSA`): "🚦 postcheck <TODAY>: combined pipeline data was missing for both Part 1 and its Sunday watchdog; started a fresh pull directly but it did not finish in time this run — will need a manual check or next week's cycle" and stop. Do not post partial/stale data to any channel.
   6. Never attempt this self-heal drop if Step 1's contention check came back BUSY — respect that gate exactly as `bravo-context` specifies.
-- After a successful backfill (whether from the original pipeline or this task's own recovery trigger), DM Joshua one line listing which reports were backfilled and to which channels, and note if the recovery-trigger path was used. If a required report (aged-inventory, employee-activity, chekkit-invites) had 0 rows, lead the DM with "🚨 INCOMPLETE RUN" and name the empty report(s).
+- After a successful backfill (whether from the original pipeline or this task's own recovery trigger), DM Joshua one line listing which reports were backfilled and to which channels, and note if the recovery-trigger path was used. If a required report (aged-inventory, employee-activity, chekkit-invites) had 0 rows, note in the DM in plain business language that it's still being held for a complete pull and name it by its everyday name — no "INCOMPLETE RUN" incident-style header, no report/cell/pipeline/error terminology (Rule 16). This is a routine hold, not a failure alert.
 
 Stores: CUL, HAR, LEX, ROA, WAY.
