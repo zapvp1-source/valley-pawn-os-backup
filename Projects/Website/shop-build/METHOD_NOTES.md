@@ -371,3 +371,70 @@ Verified live (after 25s wait): 462 vp-card elements (data-price= count, exact m
 VP-SHOP-START/END markers, exactly one h1.vp-h1, valid ItemList JSON-LD (numberOfItems=120,
 itemListElement length 120), zero woocommerce-shop occurrences. Posted summary to #website
 successfully (https://valleypawnworkspace.slack.com/archives/C0ASE9C0GQ0/p1788174584205149).
+
+## Run record - 2026-09-01 (scheduled nightly, sandbox bash)
+
+Ran via mcp__workspace__bash (sandbox has direct outbound access to both www.ebay.com and
+thevalleypawn.com — no Mac/osascript or Chrome needed at all this run). Confirmed the
+Chrome file_upload-into-input trick is still unavailable in this session type (documented
+above as a hard gap) — did not attempt it; went straight to the curl+App-Password method.
+
+Fetched via the storefront endpoint (https://www.ebay.com/str/<slug>?_pgn=N&_ipg=240&_tab=shop),
+paging until a page added 0 new items. Wrote a fresh parser this run (title regex needed to
+match unquoted `class=str-item-card__property-title` / `class=str-text-span` attributes — a
+quoted-only regex silently mis-captured price into the title field on the first pass, caught by
+eyeballing the parsed sample before publishing).
+
+Scraped 473 items across 5 stores (Culpeper 274, Waynesboro 37, Harrisonburg 31, Lexington 28,
+Roanoke 103); 23 weapons-adjacent excluded; published 450
+(Culpeper 270, Waynesboro 34, Harrisonburg 29, Lexington 25, Roanoke 92).
+
+Used the existing generate_shop_block.py unchanged (already has the VP-SEO-PATCH baked in) —
+wrapped its output with ONLY the Gutenberg `<!-- wp:html -->` / `<!-- /wp:html -->` comments
+(per the 8/27 gotcha note — the generator already emits its own VP-SHOP-START/END markers, do
+not add a second set).
+
+Published via WP Application Password Basic Auth (vp-shop-nightly cred) directly to
+/wp-json/wp/v2/pages/833. HTTP 200, id 833, status publish.
+
+CDN cache gotcha recurred (per 8/24 note): two verification fetches ~25s and ~50s after publish
+showed 454 then 462 cards — 462 matches exactly the *prior* (8/31) run's published count, so the
+edge node was serving yesterday's cached page despite reporting `cache;desc=MISS`. Confirmed via
+WP REST `context=edit` that the stored raw content was correct (450 cards) the entire time. A
+third fetch ~60s after publish with a fresh cache-busting query param finally showed the correct
+450. Lesson reconfirmed: don't trust a fetch inside the first ~30-40s post-publish; use the REST
+raw-content check as the ground truth if the live count doesn't match immediately.
+
+Verified live (after ~85s total wait): 450 vp-card elements (data-price= count, exact match),
+single VP-SHOP-START/END markers, exactly one h1.vp-h1, valid ItemList JSON-LD (numberOfItems=120,
+itemListElement length 120, 8th of 8 ld+json blocks on the page), zero woocommerce-shop
+occurrences. Posted summary to #website successfully
+(https://valleypawnworkspace.slack.com/archives/C0ASE9C0GQ0/p1788289949802549).
+
+## Run record - 2026-09-02 (scheduled nightly, sandbox bash)
+
+Ran via mcp__workspace__bash (sandbox has direct outbound access to both www.ebay.com and
+thevalleypawn.com — no Mac/osascript or Chrome needed). Wrote a fresh fetch_run.py with BASE
+repointed at this session's scratch dir (outputs/shop-build, not the connected Website folder —
+avoids the recurring connected-folder file-lock issue seen 8/28-8/29). Only .wp_app_credentials
+and generate_shop_block.py (unchanged, already has the VP-SEO-PATCH) were copied in from the
+connected folder; nothing written back to it this run.
+
+Scraped 475 items across 5 stores (Culpeper 278, Waynesboro 37, Harrisonburg 31, Lexington 33,
+Roanoke 96); 21 weapons-adjacent excluded; published 454
+(Culpeper 273, Waynesboro 34, Harrisonburg 29, Lexington 30, Roanoke 88).
+
+Wrapped generator output with ONLY the Gutenberg `<!-- wp:html -->`/`<!-- /wp:html -->` comments
+(generator already emits its own VP-SHOP-START/END markers — do not double-wrap, per the 8/27
+gotcha). Published via WP Application Password Basic Auth (vp-shop-nightly cred) directly to
+/wp-json/wp/v2/pages/833. Note: `source .wp_app_credentials` throws a bash syntax error on the
+multi-word NOTE= line (unquoted parentheses/commas) — cosmetic only, WP_USER/WP_APP_PASSWORD/
+WP_SITE are set before that line and the curl still succeeds; worth quoting NOTE='...' in the
+credentials file to silence it. HTTP 200, id 833, status publish.
+
+Verified live (after 60s wait for CDN cache, per the 8/24 lesson): 454 vp-card elements (both
+data-price= count and exact `class="vp-card"` count agree), single VP-SHOP-START/END markers,
+exactly one `<h1 class="vp-h1"`, valid ItemList JSON-LD (numberOfItems=120, itemListElement
+length 120, 8th of 8 ld+json blocks on the page), zero woocommerce-shop occurrences. Posted
+summary to #website successfully
+(https://valleypawnworkspace.slack.com/archives/C0ASE9C0GQ0/p1788376211959339).

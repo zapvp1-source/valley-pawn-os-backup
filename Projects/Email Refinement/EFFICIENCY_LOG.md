@@ -257,3 +257,63 @@ lists [7,10]; whether the Sep 10 send (campaign 54) correctly adds wave list
 ~180 to ~2,400 delivered that week -- verify the jump actually happens, not
 just that the list was attached); keep filling the subject-line tally row by
 row.
+
+## 2026-09-01 (brevo-welcome-new-contacts)
+Welcomed: 80 new contacts | Skipped (already welcomed/blacklisted/failed): 0
+
+## 2026-09-01 (bravo-brevo-attribute-sync — scheduled weekly run)
+Source: Bravo Data Extraction archive (122 chekkit-invites-range CSVs,
+2025-01-31 -> 2026-08-31 — 5 fresh store-days landed since the 2026-08-25
+run's newest file (2026-08-10), confirming the Bravo pipeline extraction has
+resumed; _shared-bravo-data stash checked too, newest dated folder is
+2026-08-30 and still thinner than the archive, archive preferred per the
+task's own instructions). Ran via the established `_audit/enrich_contacts_v2.py`
+(PUT /contacts/{email}, attributes only, no list changes, enrichment-only —
+never overwrites non-empty data) — no deviation needed this run.
+
+Rows processed: 5,076 unique archive emails | Brevo contacts on file: 13,966.
+In archive but not yet in Brevo (skipped, no new-contact creation per rule):
+85 | Name looked like a username/handle (skipped): 75 | Phone was a
+shared/generic number, >=4 distinct emails archive-wide (skipped): 64 | No
+gap to fill (already complete): 4,878 | Contacts with at least one real gap:
+113 (all 113 had an SMS gap; 64 of those also had a LASTNAME gap).
+
+Upserted: 79 | Failed: 34. Breakdown: of the 64 records with both SMS+LASTNAME
+queued, all 64 succeeded (v2's fallback wrote LASTNAME alone whenever the SMS
+write was rejected). Of the 49 SMS-only records, 15 succeeded (valid unique
+phone) and 34 failed outright — no attribute left to fall back to. All 34
+failures were Brevo's own phone validation: duplicate_parameter (number
+already attached to a different contact — a shared/household line below the
+4-email sharing threshold) or invalid_parameter (malformed number). Left
+blank rather than guessed, per the task's no-guessing rule.
+
+Attribute fill before -> after: whole file (sampled n=3,500 at fixed offsets,
+same method as 2026-08-25): FIRSTNAME 43.9% -> 42.1% | LASTNAME 43.7% ->
+41.6% | STORE 56.3% -> 55.8% | SMS 54.6% -> 53.6%. Engaged list (7, the
+weekly audience, n=177 vs last week's n=173): FIRSTNAME 35.3% -> 35.0% |
+STORE 52.6% -> 52.5% | SMS 50.9% -> 50.3%.
+
+All four whole-file metrics ticked down 1-2 points instead of up, despite
+79 real upserts landing. Most likely cause: brevo-welcome-new-contacts added
+80 new contacts to list 3 today (own log entry above), and this script's
+verification samples fixed numeric offsets (0/2000/4000/.../12000) rather
+than a true random sample — new contacts with mostly-empty attributes
+shifted into the sampled offsets and diluted the percentages. Engaged-list
+numbers (which aren't affected by list-3 growth) stayed flat within noise,
+consistent with that read. Not treating this as a regression; flagging for
+the Friday efficiency audit to keep an eye on, and noting for future runs
+that a true random sample (not fixed offsets) would be more robust once
+list 3 keeps growing weekly.
+
+Issues: none blocking. Worth a look next Friday audit per the note above.
+The 2026-08-25 run's 10 permanently-rejected phone numbers were not
+re-attempted (correctly — they're from the same archive rows and still
+carry the same bad data).
+
+NEXT RUN SHOULD CHECK: whether the archive gets files newer than 2026-08-31
+(would mean the resumed extraction is holding steady, not a one-time
+catch-up); whether STORE is still stuck around 55-56% (the archive alone
+can't fix older list-3 contacts with no Chekkit history — list 12
+"Valley Pawn - Lexington (Store List)" remains an untried candidate source
+for backfilling STORE=Lexington on its ~2,647 members, per the 2026-08-24
+audit's still-unsolved note).

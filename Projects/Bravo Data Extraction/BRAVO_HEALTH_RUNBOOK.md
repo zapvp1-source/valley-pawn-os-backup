@@ -132,3 +132,27 @@ nohup bash "/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/b
 - **Phase 2 — backlog (Joshua-approved 2026-06-15):** convert the 8 CS-toggle handlers (DepositsAndPaidOuts, DisbursementJournal, EndOfDay, EndOfDayConsolidated, GeneralException, InterStoreCashTransfer, LargeCashTransactions, Transfers, SafeRegisterJournal) to the EndOfMonth gold standard — one at a time, backup + single-cell smoke each.
 - **Phase 3:** wire the gate as an inline preflight into each pipeline scheduled task; add watcher fail-fast (abort store after 2 EnsureStore failures) + auto-recover between cells + fail-loud DM on >25% cell errors.
 - **Phase 4:** ROA End-of-Month residual timeout; per-handler nav hardening (e.g. chekkit-inactives "Custom Reports").
+
+---
+
+## 6. Scheduled-task hygiene sweep log (fleet-wide, not Bravo-specific — logged here per the sweep task's own instruction)
+
+Monthly automated sweep of the full Cowork scheduled-task list (all 159 tasks fleet-wide, not
+just Bravo-touching ones). See the `task-hygiene-sweep` scheduled task for the classification
+rules (LIVE / AUTO-DELETE CANDIDATE / REVIEW CANDIDATE). This exists because on 2026-08-10 the
+list had accumulated 37 dead/debris tasks nobody had cleaned up.
+
+- **2026-09-01 — first run under the new monthly sweep.** 159 tasks total: 148 enabled/live
+  (untouched), 1 future one-time (untouched), 0 auto-deleted this cycle (nothing met the
+  conservative bar: disabled 60+ days AND stale AND an obvious throwaway-name marker), 8
+  disabled-too-recently-to-judge (<30 days, left alone), 3 flagged as REVIEW CANDIDATEs pending
+  Joshua's confirmation before next month's sweep:
+  1. `weekly-social-media-content` — disabled ~145 days; looks superseded by the current
+     vp-content-batch / Publer content stack, but not deleted without confirmation.
+  2. `wordpress-token-keepalive` — disabled 33 days; unclear if any live WordPress-publishing
+     task still depends on it.
+  3. `jewelry-count-reconciliation` — never ran; looks superseded by the live 4-layer jewelry
+     count stack (`jewelry-onhand-nightly-pull` + compare/catchup/watchdog), but flagged rather
+     than removed since it never got a chance to prove itself dead.
+  Joshua notified via one plain-language Slack DM (D03BHQH5VGT); no jargon, no task IDs in that
+  message per Rule 16 — this file is the technical record.

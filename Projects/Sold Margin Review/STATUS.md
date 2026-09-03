@@ -454,3 +454,6 @@ opinion," never as a zero.
   Price) posted to a different channel — not redundant, by design (see both SKILL.md files).
 2026-08-25 07:5x — sold-review: STEP 6b (Terapeak enrichment) skipped — Claude in Chrome extension not connected this run. Report already posted successfully in STEP 6 (missing_stores empty, 70 items, 1 flag, 8 below-market). 8 candidate keywords from market_benchmark.py --candidates were not ingested to Terapeak cache this cycle; no data loss, just fewer cached comps for tomorrow. Not a failure per SKILL.md (6b is optional/last, interruption is harmless).
 SOLD-REVIEW  2026-08-31T07:49:49  - Sunday 2026-08-30, all stores closed. OPEN_STORES empty per policy. No pull, no compile, no post, no DM. Correct no-op.
+
+## 2026-09-01 note
+- STEP 5 compile (`run_daily_sold_review.py`) MUST be backgrounded via osascript (nohup ... & ; echo $? > exitfile), same pattern as STEP 4.8. Running it inline (foreground, waiting on osascript to return) got killed by osascript's ~25s cap and left a 0-byte log with no visible error. Poll for completion like the fair_value.py sweep, then read the .exit file and log.

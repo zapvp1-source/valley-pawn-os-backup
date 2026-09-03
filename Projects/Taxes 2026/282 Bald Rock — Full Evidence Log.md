@@ -13,7 +13,7 @@
 
 > ## 🔴 LIVE ITEMS — 8/31/2026
 >
-> **1. Valley Building Supply — request RE-SENT 8/31/2026 12:42 PM from zapvp1@me.com.** The earlier attempt from jdavis@fcfpawn.com **bounced in 3 seconds** (`550 blocked` from their server, both recipients). Re-sent from the me.com address, which has 325 messages of two-way history with this vendor. Addressed to **vlaffler@** (151 messages, 14 inbound, active through Aug 2024), cc **gstrawderman@** and **ccash@** (both active through Aug 2024). **Dropped agriffin@ — that mailbox has been silent since June 2020** and was a bad target regardless of the domain block. No bounce after re-send. VBS is the largest unproven line at $28,947.87.
+> **1. Valley Building Supply — RESOLVED 9/1/2026.** Request was re-sent 8/31/2026 from zapvp1@me.com (the jdavis@fcfpawn.com attempt bounced, `550 blocked`), but no reply arrived and the vendor's own listed contacts (vlaffler@, gstrawderman@, ccash@) predate its closure. **Joshua confirmed 9/1/2026 that Valley Building Supply / Allied Concrete has gone out of business and further invoice documentation cannot be obtained.** Rather than leave $28,947.87 permanently stuck in "invoiced, not proven," it has been reclassified to Proof of Payment (§1) on the strength of: (a) the itemized line-by-line invoice detail already in hand — every window and door purchase now broken out by date, invoice #, description and price in `282 Bald Rock - Windows and Doors (VBS Invoices).xlsx`; (b) the "Balance Due $0.00" / "CREDIT CRD" marking already accepted as proof for the other $29,722.06 of this same vendor; and (c) 10 photos (IMG_1381, IMG_1394–1420, dated 2022-03-23/24, in `.../Valley Building Supply - PlyGEM - Emails & Media/`) timestamped days after the final Feb 2022 invoice batch (#00306738 — the triple DH windows and gliding patio door), consistent with delivery/installation of that order. **This is a taxpayer representation given the vendor's closure, not third-party proof — flag it as such to Silverline.** See §13 for the full reclassification writeup.
 >
 > **VBS contact list, ranked by usefulness (from 325 archived messages):**
 >
@@ -40,12 +40,13 @@
 
 | Evidence class | Amount |
 |---|---|
-| **Proof of payment on the face of a document** | **$147,385.34** |
-| Invoiced, payment not proven | $77,240.30 |
-| Paid, but property attribution unconfirmed (see §10) | $17,275.53 |
+| **Proof of payment on the face of a document** | **$475,119.42** |
+| Invoiced, payment not proven | $41,899.90 |
+| Paid, but property attribution unconfirmed (see §10) | $17,276.03 |
+| Paid, but capital-vs-service purpose unconfirmed (see §22) | $7,470.00 |
 | Quoted only — **includes losing bids, see warning below** | ~$176,000 |
 
-Against a claimed **$305,086.51**. Documented-and-paid went from $21,172 → $97,615.40 (8/5/2026 pass) → $114,073.76 → $124,777.87 → **$147,385.34** on 8/31/2026. Three passes that day: the first completed Fundamental Siteworks, proved the Royal Swimming Pools Affirm payoff and found the Shreckhise bank withdrawal (§9); the second recovered **32 Lodestar Tax bookkeeping workbooks** out of 564 Lodestar emails and read the actual general ledger (§10); the third worked the **lender and QuickBooks trails** and closed out Burns Builders and Weaver Irrigation (§11).
+Against a claimed **$305,086.51** (that figure predates today's Prestige Plumbing find — see below). Documented-and-paid went from $21,172 → $97,615.40 (8/5/2026 pass) → $114,073.76 → $124,777.87 → $147,385.34 (8/31/2026) → $188,541.68 (9/1/2026, earlier passes) → **$250,885.21** on 9/1/2026 (Burns Builders closed out plus $55,293.53 of newly confirmed spending — see §18) → **$253,895.21** on 9/2/2026 (Gonzales Virginia Painting $3,010.00 confirmed as 282 Bald Rock — see §19) → **$465,619.41** on 9/2/2026 (the full $211,724.20 Pottery Barn card total confirmed as 282 Bald Rock — see §20) → **$475,119.42** on 9/2/2026 (Shreckhise's 2023-2024 bill-pay history fully swept — see §21; corrected 9/2/2026, see §24 — the earlier $475,226.82 figure accidentally included the $107.41 Shreckhise Shrubbery Sales line, which is explicitly tracked separately and never meant to be summed in). Three passes on 8/31: the first completed Fundamental Siteworks, proved the Royal Swimming Pools Affirm payoff and found the Shreckhise bank withdrawal (§9); the second recovered **32 Lodestar Tax bookkeeping workbooks** out of 564 Lodestar emails and read the actual general ledger (§10); the third worked the **lender and QuickBooks trails** and closed out Burns Builders and Weaver Irrigation (§11). On 9/1/2026: Valley Building Supply's remaining $28,947.87 was reclassified to proven (vendor now defunct, see §13), and a wholly new vendor — **Prestige Plumbing LLC, $12,208.47** — was found and proven, none of which was in any prior bucket of this file. See §13.
 
 > **The "quoted" column is not a shopping list.** It contains at least two competing bids for work another contractor actually performed (Turf Specialties $46,000 and Crown Decorative Concrete $18,400 both bid the retaining wall Red Rock built for $28,622). Carrying those alongside Red Rock double-counts the wall. Quotes belong in basis only where a matching invoice or payment exists.
 
@@ -60,13 +61,13 @@ On conversion of a personal residence to a rental, depreciable basis = **the LES
 | Scenario | Adjusted basis |
 |---|---|
 | Purchase price alone | $405,000 |
-| + improvements **proven paid** ($147,385.34) | **$552,385.34** |
-| + improvements proven **and** currently invoiced ($224,625.64) | **$629,625.64** |
-| + the full claimed $305,086.51, if it could all be documented | $710,086.51 |
+| + improvements **proven paid** ($475,119.42, corrected 9/2/2026 — see §24) | **$880,119.42** |
+| + improvements proven **and** currently invoiced ($517,019.32) | **$922,019.32** |
+| + the full claimed $305,086.51 (pre-9/1/2026 figure) plus the new $12,208.47 Prestige Plumbing find, if all documented | $722,295.98 |
 
 **Implication: adjusted basis is very likely the binding constraint, not FMV.** For the appraisal to cap this, the property would have to be worth *less* than roughly $503K–$710K in August 2025 — i.e. under ~24%–75% appreciation over nine years, on a house that was gut-renovated in the interim, in a market that ran hard 2016→2025. Possible, but not the way to bet.
 
-**So every documented improvement dollar is very likely a real dollar of depreciable basis.** The $77,240.30 sitting in the "invoiced but unproven" column is the single largest recoverable prize in this file — and bank and card statements are what convert it. As of 8/31/2026 the highest-value single pull is **Wells Fargo Checking 2797**, an account this file had never seen until the Lodestar workbooks surfaced it (§10).
+**So every documented improvement dollar is very likely a real dollar of depreciable basis.** The $41,899.90 still sitting in the "invoiced but unproven" column (down from $77,240.30 after the 9/1/2026 VBS reclassification, §13, and down again after closing out Burns Builders — see §18) is the largest remaining recoverable prize in this file — and bank and card statements are what convert it. As of 8/31/2026 the highest-value single pull is **Wells Fargo Checking 2797**, an account this file had never seen until the Lodestar workbooks surfaced it (§10).
 
 Two caveats that don't change the direction:
 - **Only the building depreciates, not the land.** Whatever basis figure lands, it gets split. Instruct the appraiser to provide a land-vs-improvements allocation as of the conversion date, or the cost-seg firm will send it back.
@@ -125,15 +126,17 @@ These are **Full Circle Finance business accounts**. To the extent they paid for
 
 ---
 
-# 1. PROOF OF PAYMENT — $147,385.34
+# 1. PROOF OF PAYMENT — $475,119.42
 
 | Vendor | Doc / Date | Amount | Covers | Proof |
 |---|---|---|---|---|
 | **R.E. Boggs, Inc.** (Charlottesville) | Inv I-5192-1 + I-5192-2, 2025-09-03 | **$29,187.00** | Two Rheem HVAC systems | Service Finance loan 5977065, borrower addr 282 Bald Rock Rd, signed 2025-09-05; Certificate of Completion 2025-09-08. *(See 8/31/2026 addendum — Payzer/R.E. Boggs's own invoice portal still shows both I-5192-1 and I-5192-2 as "Overdue" as of 2025-12-16, three months after loan signing. Standard for dealer POS financing — Service Finance pays the dealer at closing and Payzer's own status often never syncs — but worth a direct confirmation call to R.E. Boggs if this is ever challenged.)* |
-| **Valley Building Supply** | 2020-04 → 2022 (multiple) | **$29,722.06** | PlyGem/Mira windows, patio + bi-parting doors, trim, AZEK porch/decking | Balance Due $0.00 / "CREDIT CRD" on invoice faces ($27,561.06), net of a $1,255.54 credit-noted return, **plus $2,161.00 of 2022 debit-card charges ($1,908.44 on 2022-02-03 and $252.56 on 2022-04-28) read off Full Circle's own 2022 general ledger, both coded Repairs & Maintenance** — added 8/31/2026 |
+| **Valley Building Supply** | 2020-04 → 2022 (multiple) | **$58,669.93** | PlyGem/Mira windows, patio + bi-parting doors, trim, AZEK porch/decking | $29,722.06 independently proven (Balance Due $0.00 / "CREDIT CRD" on invoice faces net of a $1,255.54 credit-noted return, plus $2,161.00 of 2022 debit-card charges read off Full Circle's 2022 GL) **+ $28,947.87 reclassified from §2 on 9/1/2026 per Joshua's instruction — Valley Building Supply / Allied Concrete has gone out of business and further documentation cannot be obtained. Backed by the itemized invoice detail in `282 Bald Rock - Windows and Doors (VBS Invoices).xlsx` and 10 dated photos (2022-03-23/24) of the final invoice batch. Taxpayer representation, not third-party proof — see §13.** |
+| **Prestige Plumbing LLC** | 2020-09 → 2021-06 | **$12,208.47** | Whole-house plumbing: under-sink filter system, whole-house filter, and full water softener replacement (Inv #I200925943, item list confirms "Filter System (Under Sink)," "Standard Whole House Filter," "Replace Premium Electronic Water Softener") + a later 2021 job | Inv #I200925943 (Due 09/25/2020): **$8,300.00**, Invoice Due $0.00 on the invoice face, corroborated by two Intuit card receipts on the same Mastercard ****9983 ($3,500.00 9/16/2020 + $3,300.00 10/7/2020). A separate card receipt **$2,200.00** (12/2/2020) and Inv #I210505245 (**$1,708.47**, paid in full, 6/2021) are additional Prestige Plumbing charges. Cross-corroborated: Joshua's 2020 CPA (Kris McMackin, 1/2022 email) lists "Prestige Plumbing" alongside Valley Building Supply, Lowe's and Commonwealth Tile as 2020 renovation subcontractor/R&M expense. Found and added 9/1/2026 — see §13. |
 | **Burns Builders Roofing** — financed portion | Loan funded ~2021-07; amortized to payoff by 2023-09 | **$15,357.47** | Roof (Est 1548, installed 7/6/2021, completion confirmed 7/10/2021) | **Service Finance Company, LLC** (Boca Raton FL, NMLS 140908, now a Truist subsidiary) retail installment contract, account ending **3624**, borrower **Hillary D. Davis**, 282 Bald Rock Road. Under dealer point-of-sale financing the lender pays the contractor at funding, so Burns was paid this amount. **24 consecutive monthly statements recovered** showing an unbroken amortization: $15,357.47 (due 09/14/2021) → $13,411.49 (01/2022) → $11,230.63 (09/2022) → $9,490.84 (02/2023) → $6,704.47 (04/2023) → **$891.92 (due 08/14/2023)**, past due $0.00. Payment $380.82/mo with accelerated principal in 2023 (consistent with beating the deferred-interest promotional expiry). Last payment-posted email 2023-07-03; last statement 2023-07-31; the account then goes silent — it ran to payoff. Added 8/31/2026. |
+| **Burns Builders Roofing** — unfinanced remainder | 2021-07-11 | **$7,050.00** | Roof (same job as above) | Debit-card charge to "Burns Builders Inc," Port Republic VA, from Joshua's personal DuPont account (831015-0090), dated the day after the roof's completion was confirmed (7/10/2021). Replaces the $6,392.53 estimate previously carried in §2 (the gap between the $21,750.00 estimate and the $15,357.47 financed portion) — actual payment was $657.47 more than the estimate implied. **Closed out 9/1/2026 per Joshua's instruction and his confirmation that this spending is 282 Bald Rock.** Moved from §2. |
 | **Weaver Irrigation, LLC** Inv 2248 + 2377 + 2773 | 2023-06 → 2024-05 | **$7,250.00** | Irrigation install and additions | **The vendor's own statements prove it.** QuickBooks statements list open items only. Statement #1240 (2024-02-28) shows just Inv 2377 open at $1,286.00 — **Inv 2248 ($4,400) is gone**, matching the four $1,100 DuPont payments of 2023-08-21 to the dollar. Statement #1274 (2025-07-30) no longer lists 2377 or 2773 either, and records a $600 payment (#217816712, 2024-09-06). All three invoices settled. Moved from §2 on 8/31/2026. *(Weaver's later small service invoices — 3117 $990, 3209 $109, 3375 $75, 3772 $109 — remain open at $1,159.50 and are recurring maintenance, not capital; see F-8.)* |
-| **Shreckhise Landscape & Design** | Bill Pay, 2023-01-18 | **$8,536.50** | Landscaping (per "Landscape Plan" / "Design for Between Walls" correspondence 2022-11 → 2023-03) | DuPont business acct bill-pay withdrawal "SHRECKHISE LANDS," documented in Lodestar Tax's Jan-2023 bookkeeping report (uncategorized-transactions detail); the 9 transaction amounts on that report sum to the report's own stated total to the penny, confirming $8,536.50 is the correct line, not a mis-parse. Found 8/31/2026. |
+| **Shreckhise Landscape & Design** | Bill Pay, 2023-01-18 → 2024-03-21 (9 payments) | **$18,036.50** | Landscaping (per "Landscape Plan" / "Design for Between Walls" correspondence 2022-11 → 2023-03, plus a later phase and an Oct-2024 mulch/tree delivery) | DuPont business acct (766518) bill-pay withdrawals "SHRECKHISE LANDS": $8,536.50 (1/18/23, documented in Lodestar's Jan-2023 bookkeeping report) + $5,000.00 (10/18/23) + $1,000.00 (11/15/23) + $1,000.00 (12/27/23) + $500.00 x5 (2/5/24, 2/29/24, 3/7/24, 3/14/24, 3/21/24). Found by re-scanning the full 2015-2024 business statement archive, 9/2/2026 — see §21. The recurring $500 bill-pay pattern was still running when the archive ends (June 2024), so more payments likely exist past that date. Also found: **Shreckhise Shrubbery Sales** (a separate, related retail nursery business) $107.41, debit card, 4/25/24 — small, kept as its own line item since it's a different legal entity, not summed into the $18,036.50. |
 | **Pro Quality Property Maintenance** ("282 Hardscape") Inv #4347 | 2024-12-31 → 2025-02-12 | **$7,800.00** | Front walkway + patio pavers | Check 5061 $3,000 (2024-12-31) + four $1,200 bill-pay installments (2025-01-22, 01-29, 02-05, 02-12), all from **Wells Fargo Checking 2797**, per Lodestar's 2025 uncategorized-transaction workbooks. Paid in full; the $3,000 was the deposit and #4347's $4,800 was the balance. Moved from §2 on 8/31/2026. |
 | **Renu Therapy** Order #5754 | 2023-05-27 | **$10,214.09** | **Cold plunge** — Cold Stoic 2.0, ship-to 282 Bald Rock | Paid order + shipment 7/16/23, BTX tracking LAX4059890 |
 | **Red Rock Concrete** | Inv #1244 final, 2022-08-07 | **$10,000.00** | Engineered retaining walls | Payment line on the vendor's own final invoice |
@@ -145,25 +148,37 @@ These are **Full Circle Finance business accounts**. To the extent they paid for
 | **Signature Hardware** (C1, C3, C18 + 2022 ledger) | 2020-04 → 2023-04 | **$1,883.00** | Bath/plumbing fixtures | PayPal txn 1VC80117373738041; AmEx ****7115 ($1,139.88) **plus $743.11 of 2022 debit-card charges ($588.63 on 2022-11-20, $154.48 on 2022-12-02) from the 2022 general ledger** — added 8/31/2026 |
 | **Commonwealth Tile** Inv 1252 / 1265 | 2021-04-08 / 2021-08-01 | **$400.00** | Tile labor + material | QuickBooks payment confirmations |
 | **Royal Swimming Pools** #151856 | 2022-12-01 | **$199.99** | Pool niche | PayPal receipt |
-| | | **$147,385.34** | | |
+| **Lowe's** (personal DuPont 831015-0090) | 2021, multiple | **$36,040.14** | **Very likely the kitchen cabinet job** — see §23 | Debit-card charges, Joshua's personal account. Confirmed 282 Bald Rock by Joshua 9/1/2026. Distinct from the $51,887.96 business-account Lowe's ACH total in §0b, still needing store-vs-property attribution and not counted here. **9/2/2026: the exact 12 transactions making up this total (Jan-Sept 2021, card ****6246) reconstruct to within $21.05 of the $35,830.19 cabinets-only line in the §3 kitchen quote — see §23 for the full reconciliation.** |
+| **EasyClosets.com** | 2021, three orders (6/15, 7/7, 7/28) | **$7,453.59** | Custom closet systems | Debit-card charges, personal DuPont account. Confirmed 282 Bald Rock by Joshua 9/1/2026. |
+| **Shades of Light** | 2021-2022, multiple | **$4,652.74** | Lighting fixtures | $3,128.43 (2021) + $1,305.57 (2022) personal-account charges + $218.74 (2022) business R&M ledger. Confirmed 282 Bald Rock by Joshua 9/1/2026. |
+| **Grand Home Furnishings** | 2022 | **$1,931.00** | Furniture | $200.00 personal-account charge + $1,731.00 business R&M ledger charge. Confirmed 282 Bald Rock by Joshua 9/1/2026. |
+| **Wayfair / AllModern** | 2022 (6/19, 11/9) | **$1,538.41** | Furniture/decor | Personal-account debit charges. Confirmed 282 Bald Rock by Joshua 9/1/2026. |
+| **Ashley Furniture** | 2022-03-29 | **$704.39** | Furniture | Business R&M ledger, debit card. Confirmed 282 Bald Rock by Joshua 9/1/2026. |
+| **Decor Planet** | 2021-02-02 | **$771.97** | Lighting/decor | Personal-account debit charge. Confirmed 282 Bald Rock by Joshua 9/1/2026. |
+| **Pottery Barn** | 2021-02-05 | **$414.67** | Furniture | Personal-account debit charge, Joshua's own card. **Joshua states most interior/exterior furniture was Pottery Barn purchases on Hillary's card, not yet located — this $414.67 is very likely a small fraction of the true Pottery Barn total. Open item — see §18.** |
+| **Sarisand Tile** (Charlottesville) | 2022-10-23 | **$550.93** | Tile | Personal-account debit charge. Confirmed 282 Bald Rock by Joshua 9/1/2026. |
+| **North American HVAC** | 2022-02-19 | **$260.79** | HVAC service | Business R&M ledger, debit card. Confirmed 282 Bald Rock by Joshua 9/1/2026. |
+| **Valley Comfort System** | 2022, three charges | **$771.90** | HVAC service | Business R&M ledger, debit card ($150+$436.90+$185). Confirmed 282 Bald Rock by Joshua 9/1/2026. |
+| **DJ's Fireplace Service** | 2022-01-31 | **$203.00** | Fireplace service | Business R&M ledger, Check #1188. Confirmed 282 Bald Rock by Joshua 9/1/2026. |
+| **Gonzales Virginia Painting** | 2023-05-31 | **$3,010.00** | Painting | Two Zelle payments ($10.00 + $3,000.00) from the Wells Fargo FCF business account. **Confirmed 282 Bald Rock by Joshua, 9/2/2026.** Moved from §19. |
+| **Pottery Barn / West Elm / Williams Sonoma** (Hillary's Comenity→Capital One card, acct ending 2988→9681) | 2021-2024 | **$211,724.20** | Furniture, furnishings | 2021: $97,695.65; 2022: $62,320.86; 2023: $49,344.69; 2024: $2,363.00. Card bills to Hillary D Davis, 282 Bald Rock Rd. **Confirmed 282 Bald Rock in full by Joshua, 9/2/2026** — not split with 14300 Woods Walk Lane, which Joshua clarified has been owned all along (not acquired 12/2021 as this log previously assumed — see the correction note in §20). Superseded the old $414.67 Pottery Barn figure (personal DuPont account only). |
+| | | **$475,119.42** | | |
 
 > **Note on Burns Builders Roofing $21,750.00 (§2 below):** an earlier draft cost-seg writeup (v4 docx, before 8/31/2026) had incorrectly promoted this to "proven" based on recurring monthly "Payment Posted" emails from Service Finance. Those are routine installment confirmations, not a payoff — they were never adequate proof. This master log's own §2 / F-1 treatment (invoiced, not proven, ~$6,400 arithmetic gap unresolved) was correct all along and was never changed. Flagging here so the correction carries into any future docx rebuild.
 
 ---
 
-# 2. INVOICED, PAYMENT NOT PROVEN — $77,240.30
+# 2. INVOICED, PAYMENT NOT PROVEN — $41,899.90
 
 | Vendor | Doc / Date | Amount | Note |
 |---|---|---|---|
-| **Valley Building Supply** | net invoiced $58,669.93 less $29,722.06 proven | **$28,947.87** | Open balances $950.75, $3,181.73 (after $5,200 PlyGem credit), $724.80; plus $6,232.64 where Balance Due is illegible on the scan. Reduced 8/31/2026 by the $2,161.00 of 2022 ledger payments now proven in §1. |
-| **Burns Builders Roofing** — unfinanced remainder | Est 1548 $21,750.00 less $15,357.47 financed (see §1) | **$6,392.53** | This is the old F-1 "~$6,400 gap," and it is now explained rather than mysterious: the Service Finance loan covered $15,357.47 of a $21,750 signed estimate. The remainder was either a deposit paid directly to Burns or the contract was revised down before signing. **Resolve with one document: the Retail Installment Contract for account 3624 (shows the exact Amount Financed) or Burns' final invoice.** Request from Service Finance servicing, 866.254.0497 / Servicing@svcfin.com, or from Bruce Burns, burnsbuildersinc@gmail.com. |
 | **Red Rock Concrete** | Inv #1244 balance | **$18,622.00** | No receipt, check, bank record or vendor acknowledgment anywhere after 2022-08-08. Not present in Full Circle's 2022 general ledger either (checked 8/31/2026) — so if it was paid, it was paid from a personal account, most likely Wells Fargo 2797. |
 | **Signature Hardware** | net $11,730.49 less $1,883.00 proven | **$9,847.50** | All orders ship to 282 Bald Rock; each has a matching shipment email. Reduced 8/31/2026 by $743.11 of 2022 ledger payments. |
 | **Royal Swimming Pools** | #151398 approved $14,980.93 + #152804 $530.95, less $5,592.86 Affirm-proven (see §1) | **$9,919.02** | #151398 customer-approved 2022-11-03 10:41:32 EDT, approval IP logged; kit shipped 11/28 + 12/02. The Affirm loan only financed part of #151398 — the remaining ~$9,388.07 (one payment made at purchase, per the Affirm approval email) and #152804 ($530.95) still have no receipt. |
 | **Commonwealth Tile** Inv 1233 / 1228 | | **$1,425.00** | |
 | **Lowe's** #761302963 + #771548245 | 2022-10 / 2023-03 | **$1,344.79** | Bald Rock / Verona referenced |
 | **Direct Door Hardware** #203991, **Builders Warehouse** #23752 / #23939 | 2020–2021 | **$741.59** | All shipped to 282 Bald Rock |
-| | | **$77,240.30** | |
+| | | **$41,899.90** | |
 
 > **Weaver Irrigation — resolved 8/31/2026.** The $7,250 install (Inv 2248 $4,400 + 2377 $1,386 + 2773 $1,464) is now **proven paid** and has moved to §1, on the strength of Weaver's own QuickBooks statements. Separately: there is **no ~$30K "addition to the irrigation system."** The only further Weaver invoices are small recurring service calls — 3117 $990.00, 3209 $109.00, 3375 $75.00, 3772 $109.00 — consistent with seasonal start-up and winterization, not a system expansion, and $1,159.50 of those remains open per Statement #1274.
 
@@ -221,12 +236,12 @@ A literal search for `45,364` / `45364` across all 276,529 mail bodies, all 58,6
 
 # 6. REFERENCED BUT NO DOLLAR AMOUNT RECOVERABLE
 
-1. **LL Flooring / Lumber Liquidators (Store #1420, Harrisonburg)** — the entire project is documented (in-home assessment 2020-09/10, quote 2020-10-10, install 2021-05, two staircases with custom treads, baseboards, trim, warranty complaint ID#5426534 into 2022) but **every dollar figure sits in PDF attachments never downloaded to this Mac.** The parent files are `.partial.emlx` stubs. Recoverable filenames: `0702794747_Quotation.PDF`, `0134505377_Invoice.PDF`, `0134879323_Invoice.PDF`. Only hard figure is a Synchrony Bank statement balance of $13,215.43 (2021-08-18) — a credit-card balance, not an invoice, and it may include non-282 charges.
+1. **LL Flooring / Lumber Liquidators (Store #1420, Harrisonburg) — CONFIRMED 9/1/2026 by Joshua: this was the new hardwood flooring installed at Bald Rock.** The entire project is documented (in-home assessment 2020-09/10, quote 2020-10-10, install 2021-05, two staircases with custom treads, baseboards, trim, warranty complaint ID#5426534 into 2022) but **every dollar figure sits in PDF attachments never downloaded to this Mac.** The parent files are `.partial.emlx` stubs. Recoverable filenames: `0702794747_Quotation.PDF`, `0134505377_Invoice.PDF`, `0134879323_Invoice.PDF`. Only hard figure is a Synchrony Bank statement balance of $13,215.43 (2021-08-18) — a credit-card balance, not an invoice, and it may include non-282 charges. **New lead (§17 pass):** the personal DuPont account (831015-0090) shows a recurring ACH "SYNCHRONY BANK" payment through all of 2021, declining every month in a classic amortization pattern — $552 (1/11) → $539 (2/9) → $527 (3/9) → $515 (4/9) → $503 (5/10) → $492 (6/9) → $482 (7/9) → $472 (8/9, the same month as the $13,215.43 statement balance) → $463 (9/9) → $390 (10/12) → $376 (11/9) → $363 (12/9), roughly $6,340 paid across the year on top of a January payment history not yet pulled. Synchrony is a common private-label financing partner for flooring retailers including LL Flooring, and the declining-balance pattern is consistent with paying down exactly the kind of balance already noted here. **This is the most promising path to a hard total dollar figure for the flooring project** — either re-download the LL Flooring email attachments (still the more direct fix, see action item below), or pull a Synchrony Bank account history/payoff statement, which would show the original financed amount directly.
 2. **Siding** — Joshua: *"I'm putting hardi plank on."* Burns declined to install. No installer, contract, or invoice anywhere.
 3. **The hot tub itself** — it exists (a cover was quoted $650 + tax + $350 delivery in 2024-06 texts) but there is no purchase invoice for the tub. A revenue-generating asset with zero documentation.
 4. **Lowe's "8 doors"** — no supporting document of any kind.
-5. **Lowe's kitchen cabinets — what was actually bought.** Only the $43,025.31 quote, despite a documented cabinet delivery (2021-07-04/05), a damage complaint (2021-04-06), install record `LOWES:0126689000148` (2021-04-05), and a backsplash install (2021-07-07).
-6. ~~**Shreckhise Landscape & Design** — the contractor actually used. Plans `Davis 101322.pdf` and `Davis 032323.pdf` exist; no proposal, invoice, or payment.~~ **UPDATED 8/31/2026 — moved to §1, $8,536.50 proven** (bill-pay withdrawal 2023-01-18). Joshua's recollection was "~$30K with Shreckhise" — a mail/text/file search covering all four accounts, all iCloud files, and this one confirmed bank withdrawal found only this single $8,536.50 figure. If the true total is materially higher, it likely moved through one of the 514 unidentified DuPont checks (§0b) or a period outside the DuPont statement coverage (post-Jan 2022) — pulling check images or later statements is the next lever, not further mail search. A "Shreckhise Shrubbery Refund Receipt" dated 2025-07-28 also exists, amount not read (separate small vendor, "Shreckhise Shrubbery Sales," not the landscape/design business).
+5. ~~Lowe's kitchen cabinets — what was actually bought.~~ **RESOLVED 9/2/2026 — see §23.** The $36,040.14 already proven and counted in §1 is very likely the cabinet job itself, reconstructed from the personal DuPont REWARDS scrub's own transaction dates and amounts, which line up almost to the dollar with the $35,830.19 cabinets-only portion of the $43,025.31 quote.
+6. ~~**Shreckhise Landscape & Design** — the contractor actually used. Plans `Davis 101322.pdf` and `Davis 032323.pdf` exist; no proposal, invoice, or payment.~~ **UPDATED 9/2/2026 — moved to §1, $18,036.50 proven** across 9 bill-pay withdrawals 2023-01-18 → 2024-03-21 (see §21 for the full re-scan). Joshua's recollection was "~$25-30K with Shreckhise" — still $7,000-12,000 short of that even with the newly found payments. The recurring $500/month pattern was still active when the DuPont business archive ends (June 2024), so the likeliest place for the remainder is bill-pay activity after that date — not further mail search, which has already been exhausted twice. A "Shreckhise Shrubbery Refund Receipt" dated 2025-07-28 also exists (a REFUND to Joshua, which would reduce not increase basis) — amount still not read, the local email only has a 0-byte partial download of the PDF attachment; would need to be opened live in Mail.app to get the figure.
 7. ~~**Plumbing — nothing at all.**~~ **UPDATED 8/31/2026:** the 2020 sweep already found Prestige Plumbing LLC $10,500 (§0b), and the Lodestar 2025 workbooks show a **recurring Wells Fargo bill-pay payee literally named "282 Plumber"** ($188 per payment; two instances visible in the sampled months, certainly more across the year). See §10.
 8. ~~**No Augusta County building permit exists** in mail, texts, or files.~~ **FALSE — corrected 8/31/2026.** Full Circle's 2022 general ledger records **Check 1219 to Augusta County, 2022-05-23, $76.50, coded Licenses & Permits, memo "282"**. Small dollars, disproportionate audit value: a permit corroborates that the work was real, inspected and scoped. **Request the permit file from Augusta County** — it will describe the work.
 9. Holloway Roofing proposal 2021-03-24 · Retex Roofing gutter job (scheduled 2022-09-22) · Williams Brothers Tree Est 6919 · pavementsoft driveway proposal 2024-08-28 · Happy Little Dumpsters Inv 11443/11836/12350/12462 (2021 demo debris) · 360 Painting (estimate appt at 282, 2022-03-08) · Blue Ridge Fence & Window · Decorative Concrete of Virginia (~700 sq ft pool deck overlay proposal, 2022-07-08) · Glasgow Decorative Concrete · Windridge Landscaping.
@@ -279,7 +294,7 @@ Book once. It appears under both the pool and landscaping headings.
 3. **Pull card statements** for MC ****0305, MC ****6246, MC ****1689, LCC ****1037, and Amex ****7115 / ****1005. These cards already paid Bald Rock vendors and would convert most of the $110,673.74 invoiced block to proven.
 4. **Find the Red Rock $18,622.00 payment.** Red Rock invoiced through `quickbooks@notification.intuit.com`, so a receipt should exist. Check Aug–Oct 2022.
 5. **Burns Builders final invoice + Service Finance loan xxx3624** origination and payoff — resolves F-1 and converts $21,750.
-6. **MyLowe's Pro purchase-history export**, 2020–2023, filtered to the Verona ship-to — resolves both the $43k cabinet quote-vs-actual and the "8 doors" question at once.
+6. ~~MyLowe's Pro purchase-history export, 2020–2023, filtered to the Verona ship-to.~~ **DEAD END, per Joshua 9/2/2026: MyLowe's Pro purchase history only goes back to 2024** — years after the 2021 cabinet job. This document does not exist for the period that matters. **See §23 — the cabinet question is resolved a different way, using bank records already in hand.**
 7. **OCR `.../Renovations/Davis Cab Estimate.pdf`** — image-only, the only cabinetry document.
 8. **OCR `282 Bald Rock - Scanned Doc CCF_001781.pdf`** (2 MB, Apr 2022, image-only) — likely another invoice bundle.
 9. **Request a Valley Building Supply customer statement** for account "JOSH DAVIS," 2020-01 → 2022-12. Settles the $45,364.90 question and the two invoices with illegible balances.
@@ -302,7 +317,7 @@ Prompted by a round of direct owner questions. Summary of what changed above; fu
 
 **"Cannonball Pools."** Does not exist as a vendor anywhere in mail, texts, files, or any of the 26 bank statements. The actual 2020–2023 pool project vendors are Fundamental Siteworks (demo/dig, §1, now fully proven at $5,329.00), Red Rock Concrete (retaining walls around the pool, §1/§2), and Royal Swimming Pools (equipment/kit, §1/§2) — not "Pool Warehouse," which only reached a $13,910 quote stage with no confirmed order anywhere in the record.
 
-**Shreckhise Landscaping — see §1 and §6.** $8,536.50 proven via a bank bill-pay withdrawal captured in Lodestar Tax's own Jan-2023 bookkeeping report; the "~$30K" recollection is not corroborated beyond that one figure.
+**Shreckhise Landscaping — see §1, §6, and §21.** $18,036.50 proven as of 9/2/2026 (up from the original $8,536.50) via nine bank bill-pay withdrawals through 2023-2024; the "~$25-30K" recollection is closer now but still not fully corroborated.
 
 **2025 HVAC.** Already fully documented pre-8/31/2026 — R.E. Boggs, Inc., $29,187.00, two Rheem systems (Inv I-5192-1 $15,936.00 + I-5192-2 $13,251.00), Service Finance loan 5977065 signed 2025-09-05, financed amount corrected down from an over-submitted $36,000 (see §4). This is very likely "the new HVACs" Joshua was recalling — no second/separate 2025 HVAC purchase found. One documentation caveat added in §1: Payzer (R.E. Boggs's own invoicing portal) still shows both invoices "Overdue" as of 2025-12-16, three months after the loan closed — normal for third-party POS financing but worth a confirming call to R.E. Boggs if ever challenged.
 
@@ -356,7 +371,7 @@ Two of those payees Joshua named himself when setting up bill pay: **"Electric 2
 > ### → PULL WELLS FARGO CHECKING 2797 STATEMENTS, 2024-01 → PRESENT.
 > This is now the highest-value document pull on the property, ahead of the DuPont check images. An entire funding account for the 2024–2025 work is undocumented in this file.
 
-### Paid, but property attribution unconfirmed — $17,275.53
+### Paid, but property attribution unconfirmed — $17,276.03
 
 Real cleared payments out of Full Circle's business accounts. The money moved; what is unconfirmed is the *service address*. Full Circle pays five pawn stores, 817 Richmond Rd, and this rental from the same accounts, so none of this may be booked to 282 without confirming where the work happened.
 
@@ -372,7 +387,7 @@ Real cleared payments out of Full Circle's business accounts. The money moved; w
 | ZELLE "Marlon" | Tile | 2025-07 | $3,000.00 | Low — "BORO" may mean the Waynesboro store |
 | Bill Pay "Flooring ON-LINE" | Flooring | 2025-09-16 | $1,000.00 | Medium |
 | ZELLE "GC" | Pocket door frames | 2025-09-03 | $832.03 | Medium |
-| | | | **$17,275.53** | |
+| | | | **$17,276.03** | |
 
 **Augusta Aluminum Gutterworks $4,500 also resolves the open gutter question** in §3 (Burns Est 1557 $7,693.85 vs. the Retex job). Neither of those bids appears to have been the work — Augusta Aluminum was paid.
 
@@ -478,3 +493,513 @@ A live search of the connected cloud account for `Burns Builders OR svcfin OR "R
 For 282 Bald Rock, the local index is a complete view of the email record. **The remaining gaps in this file are banking and document gaps, not email gaps** — Wells Fargo 2797, DuPont post-Jan-2022, DuPont check images, card statements, and a 2020–2021 Lodestar ledger export. More email searching will not move the number.
 
 **Caveat worth keeping:** the fcfpawn.com Workspace is the account Joshua now sends property correspondence *from* (the Valley Building Supply request, the Blue Ridge appraisal thread). Its local copy starts Feb 2024, so it is current — but anything he sends from it is only as searchable as the last nightly rebuild.
+
+
+---
+
+# 13. ADDENDUM 9/1/2026 — Valley Building Supply reclassified (vendor defunct); Prestige Plumbing found and proven; photo sweep
+
+## Valley Building Supply — reclassified from "invoiced, not proven" to "proof of payment"
+
+Joshua confirmed today that Valley Building Supply / Allied Concrete has **gone out of business**, and getting further invoices or a customer statement (the request that had been sitting out since 8/31/2026) is no longer realistic. Per his direct instruction, the remaining **$28,947.87** (open balances $950.75, $3,181.73 after the $5,200 PlyGem credit, $724.80, plus $6,232.64 where Balance Due was illegible on the scan) moves from §2 to §1.
+
+**What actually backs this now, beyond Joshua's representation:**
+- The full 33-page invoice packet was read line-by-line today and every window and door purchase itemized by date, invoice #, description, quantity and price into `282 Bald Rock - Windows and Doors (VBS Invoices).xlsx` (25 window lines / $28,171.26, 9 door lines / $17,404.65, total $45,575.91 — a subset of the full $58,669.93 net invoiced, the remainder being trim and AZEK decking already in evidence).
+- **10 photos found** in `.../02 Real Estate/282 Bald Rock Rd - Verona VA (Rental)/Valley Building Supply - PlyGEM - Emails & Media/`: IMG_1381.HEIC, IMG_1394–1399 (2).JPG, IMG_1406–1407 (2).JPG, IMG_1413 (2).JPG, IMG_1419–1420 (2).HEIC — all dated **2022-03-23/24**, three to four weeks after the final invoice batch #00306738 (2/9/2022 — the triple DH windows and gliding patio door, $11,146.63 of the total). Consistent with delivery/install photos or the "missing screens" complaint documented in the Feb 2023 email thread (`RE_ Still missing 69.eml` / `RE_ Still missing 25.eml`), which itself confirms these specific doors and windows were physically installed at the property.
+- No photos from the 2020–2021 invoice dates (04/2020, 06/2020, 10/2020, 05/2021, 09/2021) turned up in the same sweep — only the March 2022 batch has dated photographic corroboration.
+
+**Caveat to carry forward, stated plainly rather than buried:** unlike the $29,722.06 already proven via independent bank/GL matches, this $28,947.87 is not confirmed by a third-party payment record — it rests on the invoice's own line-item detail plus Joshua's representation that it was paid, given the vendor can no longer confirm it. **Flag this distinction for Silverline** — a CPA may want it noted as taxpayer-represented rather than bank-verified, which does not change its validity for basis purposes but is worth disclosing.
+
+## New vendor found: Prestige Plumbing LLC — $12,208.47
+
+Not in any bucket of this file before today. Found via a mail sweep for "water softener / filter system" per Joshua's description of a full water softener and filtration replacement.
+
+| Document | Date | Amount | Status |
+|---|---|---|---|
+| Estimate #E200912935 | 2020-09-11 | $8,300.00 | — |
+| Invoice #I200925943 | Due 2020-09-25 | **$8,300.00** | **Invoice Due: $0.00** on the invoice face |
+| Intuit card receipt, Mastercard ****9983 | 2020-09-16 | $3,500.00 | Payment toward the above job |
+| Intuit card receipt, Mastercard ****9983 | 2020-10-07 | $3,300.00 | Payment toward the above job (same day the paid invoice was sent) |
+| Intuit card receipt, Mastercard ****9983 | 2020-12-02 | **$2,200.00** | Separate charge, job unspecified |
+| Invoice #I210505245 | Due 2021-06-18 | **$1,708.47** | Invoice Due: $0.00 — paid in full |
+
+Item list on the Sept/Oct 2020 job (from the invoice PDF): **"Filter System (Under Sink)," "Standard Whole House Filter 10-IN Housing 1-IN," "Replace Premium Electronic Water Softener."** This is the whole-house water softener and filtration replacement Joshua described. Counted once at the $8,300.00 invoice face amount (the two card receipts are corroboration for the same job, not additional dollars) plus the two clearly separate charges ($2,200.00 and $1,708.47), for a total of **$12,208.47**.
+
+**Property attribution:** the invoice/receipt emails themselves don't carry the service address (Apple Mail stored them as partial/summary messages — invoiceasap.com notification emails, not the full PDF body). The attribution rests on: (1) vendor is Fisherville, VA — six miles from Verona, consistent service area; (2) Joshua's 2020 CPA, Kris McMackin, explicitly lists "Prestige Plumbing" in the same January 2022 email alongside Valley Building Supply, Lowe's, Commonwealth Tile and Wood I[ndustries?] as 2020 renovation subcontractor / repairs-and-maintenance expense — the same project bucket as everything else in this file. No competing property (Cypress Crossing wasn't owned until 2025) would explain a 2020 water-softener job. Treated as proven for Bald Rock on that basis.
+
+**No photos found** for the Prestige Plumbing work — the `Renovations` folder for this property contains only renovation-scope PDFs (cabinet/kitchen estimates, layout drawings), no images, and a targeted photo sweep for "prestige / softener / plumbing" across the indexed iCloud/Mail files returned only the invoice and estimate PDFs themselves.
+
+## Shreckhise — checked for a receipt beyond the bank record
+
+Joshua asked whether an actual Shreckhise invoice or receipt (not just the DuPont bill-pay withdrawal already in §1 at $8,536.50) exists. **None found.** The Shreckhise correspondence in the index is all scheduling/design threads ("Landscape Plan," "Design for Between Walls," quote-request replies) — no priced invoice or receipt document turned up in mail or files. The $8,536.50 in §1 stands on the bank bill-pay match to Lodestar's Jan-2023 bookkeeping report, which remains the only proof for this vendor.
+
+## Updated totals
+
+| Evidence class | Before 9/1/2026 | After 9/1/2026 |
+|---|---|---|
+| Proof of payment | $147,385.34 | **$188,541.68** |
+| Invoiced, payment not proven | $77,240.30 | **$48,292.43** |
+
+$28,947.87 moved between those two rows (VBS reclassification); $12,208.47 is genuinely new (Prestige Plumbing), so the combined proven+invoiced total grew from $224,625.64 to $236,834.11.
+
+
+## §14. ADDENDUM 9/1/2026 (pass 2) — 2017-2019 personal bank statements pulled and searched for hot tub vendor
+
+**Trigger:** Joshua downloaded 35 monthly statements (Feb 2017 - Dec 2019) plus a 1099-INT from DuPont Community Credit Union (personal account, account holder JOSHUA C DAVIS, then at 148 Hardinberry St, Oak Ridge TN 37830 — pre-dating his move to this area) and asked that they be added to the unified search and reviewed for the still-unidentified hot tub vendor (see §12/§13 background: cold plunge confirmed as Renu Therapy; hot tub vendor described by Joshua as "a group that was in the harrisonburg valley mall," possibly "Valley Pool and Spa," now out of business).
+
+**What was done:**
+- Files relocated from Downloads into `Taxes 2026/Bank Statements/2017-2019 Personal/` (kept together, not deleted).
+- Every statement run through `pdftotext` and scanned for hot-tub/pool/spa-vendor keywords (valley pool, hot spring, luxury pool, harrisonburg, spa, hot tub, pool and spa, valley mall, cal spas, master spa, watkins, leisure, backyard, etc.), and separately scanned for every withdrawal/purchase transaction of $1,000 or more across all 36 statements.
+- Files also queued into the permanent unified-search index (`usearch.py files` rebuild) so they're searchable going forward like the rest of the mail/text/file corpus.
+
+**What was found:**
+- **Blue Ridge Pools & Spa, Staunton VA** — a real, recurring merchant on this account: 10 separate debit-card charges from April 2017 through November 2019 (Apr 2017 x5, May 2017, Jan 2018, May 2018, Oct 2018, Nov 2019), each between **$24.21 and $487.32**. This size and cadence reads as ongoing pool/spa service or chemical purchases, not a single capital purchase of a hot tub — flagged here for the record since it is a real, previously-undocumented vendor relationship, but **not** put forward as the hot tub seller.
+- **No transaction of $1,000 or more to any pool-, spa-, or hot-tub-related merchant** appears anywhere in the 36 statements. The only $1,000+ non-mortgage, non-loan withdrawals in the whole period are unrelated: a Maserati dealership (Richmond VA, June 2017), Square-processed charges at "A&G 1 Stop" (Bridgewater/Dayton VA, 2017), an ACH mortgage payment to New American Funding (recurring monthly), two unlabeled disbursement checks tied to new loan originations (Mar 2017 $18,105; other large checks are loan proceeds, not purchases), and one payment to a podiatrist (Harrisonburg, July 2017).
+- **Conclusion: the hot tub purchase does not appear on this personal DuPont account for 2017-2019.** Taxpayer representation stands (hot tub was purchased, from a Harrisonburg-area retailer since closed, possibly "Valley Pool and Spa" or a similarly-named mall retailer), but it remains unproven by a bank or invoice record after searching mail, texts, iCloud files, and now this bank account. Most likely explanations if the purchase is real and simply not here: it went through a different account (a business account, a different personal account, or financing/credit rather than this debit card), or predates or postdates this 2017-2019 window.
+
+**Not yet done / open:** business-entity bank statements (Full Circle Finance / Valley Pawn accounts) have not been pulled or searched for this vendor — that is the logical next place to look if Joshua wants to keep pursuing bank-record proof of the hot tub. No change made to §1/§2 totals from this pass — nothing here rises to proof of payment for any new item.
+
+
+## §15. ADDENDUM 9/1/2026 (pass 3) — Business DuPont account (766518) found and searched; likely hot tub vendor identified
+
+**Trigger:** Joshua asked whether we already had statements for the old Full Circle Finance business DuPont account ending 766518 (confirmed as a Full Circle Finance account per Kris McMackin CPA's 1/2018 email: "Only wells fargo ending in 4807 and DCCU ending in 766518 are full circle accounts"). This account is separate from the personal DuPont account searched in §14.
+
+**What was found already on file (no download needed):** two folders of monthly statements for this business account already exist in iCloud Drive under `03 Personal/02 Taxes/`:
+- `2020/Dupont 2020 Statements/` — all 12 months, Jan-Dec 2020
+- `2021/Dupont Statements 2021/` — 13 months, Jan 2021 - Jan 2022
+
+No 2017-2019 or post-Jan-2022 monthly statements for this account exist on file (only scattered 1098/1099-INT forms for later years) — pulling 2017-2019 business statements, if Joshua has them, would be the next step if this window doesn't close the question.
+
+**What the scan found — likely hot tub vendor identified:**
+- **March 2020 statement:** a debit card charge of **$156.90** on 3/10/2020 (posted 3/11/2020) to **"SQ *LUXURY POOL AND SP[A]" — Harrisonburg, VA** (a Square-processed card transaction). This is the first hard, bank-verified record of a transaction with a business matching Joshua's recollection ("a group that was in the Harrisonburg Valley Mall... maybe Valley Pool and Spa, they aren't there anymore") — the real name appears to be **Luxury Pool and Spa**, not Valley Pool and Spa. Timing (March 2020) lines up well with the broader 2020 STR build-out (Valley Building Supply windows/doors work began the following month, April 2020).
+- This is the **only** transaction to this vendor found across all 26 statements in both folders (2020 full year + 2021-Jan 2022) — no repeat or larger charge to the same merchant appears anywhere else in the window.
+- **$156.90 is too small to be a full hot tub purchase** on its own — reads more like a deposit, a small parts/accessory purchase, or a delivery/service fee. **Flagging, not concluding:** the same day (3/10/2020) also shows an unlabeled **Check #1311 for $2,000.00** cashed from the same account — Full Circle's statements list a payee name for cashier's checks but not for ordinary numbered checks, so this cannot be confirmed as paid to Luxury Pool and Spa from the statement text alone. If Joshua wants to pursue this further, DCCU (or Joshua's own records) may be able to produce the cashed image of Check #1311 to confirm or rule out the payee.
+- No email receipt for this charge was found in mail search (expected — Square receipts email the *customer* of a Square merchant, and Joshua was the customer here, so no Square receipt would land in Joshua's own inbox for a purchase he made from a Square-using vendor).
+
+**Bottom line:** taxpayer representation is now meaningfully corroborated — Joshua's business account shows a real, dated transaction with a Harrisonburg pool/spa retailer named Luxury Pool and Spa in March 2020, consistent with his memory. It is not, by itself, proof of the full hot tub purchase price or amount, since $156.90 does not match a capital hot tub cost and no larger matching charge exists in this account for the following ~22 months. No change made to §1/§2 totals — this does not yet rise to proof of payment for the hot tub as a depreciable asset; it is offered as the strongest lead to date and the logical starting point if Joshua can locate the Check #1311 image, a Luxury Pool and Spa invoice, or earlier/later statements for this account.
+
+
+## §16. ADDENDUM 9/1/2026 (pass 4) — Full 2015-2024 business DuPont (766518) history supplied by Joshua; §15 finding confirmed as the only match in 9+ years
+
+**Trigger:** Joshua supplied the complete member-statement archive for the Full Circle Finance business DuPont account (766518) directly from the credit union — all 114 monthly statements, January 2015 through June 2024 — closing the gap noted in §15 (previously only 2020-Jan 2022 was on file).
+
+**Filed:** the full archive is now saved at `Taxes 2026/Bank Statements/DuPont 766518 Business (2015-2024)/`, organized into one folder per year, each file renamed `<Month> <Year> Statement.pdf`. Confirmed from the statement header: account number ending 518 (766518), mailing address on file circa 2020 was **282 Bald Rock Rd, Verona VA 24482** — i.e., Full Circle Finance's registered mailing address was the subject property itself at the time.
+
+**Result of re-running the keyword/vendor scan across the full 9+ year history:** the March 2020 finding in §15 (**$156.90 to "SQ *LUXURY POOL AND SP[A]," Harrisonburg VA, 3/10/2020**) is confirmed as the **only** transaction to any pool/spa/hot-tub-related merchant in the account's entire recorded history. No larger or repeat charge to Luxury Pool and Spa, and no other candidate vendor, appears in any of the 114 statements. The only other pool/spa-adjacent name found anywhere in nine years is **Blue Ridge Pools & Spa, Staunton VA** — small recurring charges in May 2018 ($5,370.96 running-balance context, actual charges under $50 each — see transaction detail if needed) and April 2019, consistent with the personal-account pattern already logged in §14 (service/chemicals, not a capital purchase).
+
+Regular numbered checks (e.g., Check #1311, $2,000.00, cashed 3/10/2020 — see §15) still do not carry payee names on this credit union's statement format; a cashed-check image from DCCU remains the only way to confirm or rule out that check as a possible additional payment toward the same purchase.
+
+**Conclusion, updated:** the case for "Luxury Pool and Spa" as the hot tub vendor is now as strong as bank records alone can make it — a genuine, dated, one-time transaction with a plausibly-matching Harrisonburg retailer, appearing exactly once across every business bank statement Full Circle Finance has from account opening through mid-2024. It still does not, by itself, prove the full purchase price or establish this as the complete cost basis of the hot tub — no invoice, no larger corroborating charge, and no email receipt exist. No change to §1/§2 totals. If Joshua wants to close this out fully, the two remaining levers are: (1) requesting the imaged/cashed copy of Check #1311 from DCCU, or (2) contacting Luxury Pool and Spa directly (if reachable) for a copy of the original invoice.
+
+
+## §17. ADDENDUM 9/1/2026 (pass 5) — Wells Fargo status, and the personal DuPont account (831015) resolves the VBS payment-source gap plus new furnishing vendors
+
+**Trigger:** Joshua asked whether Wells Fargo had been checked through 2023, and whether the personal DuPont account (831015) or business DuPont account (766518) showed additional home improvements.
+
+### Wells Fargo — what exists and what doesn't
+Statements on file: 2016 (Business Line 2016, Bank Statements 2016, Credit Card 2016), 2018 (Wells Business Line, 12 months), 2018-2019 (a "Wells" folder and a separate "Wells Loan" folder, ~13 months each), and 2024 (FCF business account, 12 months, `2024 Taxes/FCF INC/Debt/Wells Fargo FCF/`). **No Wells Fargo statements exist on file for 2020-2023** — the years that matter most for this property. Scanned everything that does exist for home-improvement vendor keywords; nothing relevant turned up (only boilerplate false-positives). If Joshua wants Wells Fargo fully ruled in or out for those years, statements would need to be requested from Wells Fargo directly, same as was done for DuPont.
+
+### RESOLVED: the $32,117.25 Valley Building Supply payment-source gap (open since the §11 lender/GL sweep)
+
+§0b/§11 already matched four VBS invoice payments — $9,100.00 (1/5), $4,021.47 (1/6), $3,880.00 and $15,115.78 (both 10/21, all 2021) — totaling **$32,117.25**, but flagged the source as unknown: *"not in this account [766518] — they came from a personal account, another institution, or a check."* Found it: all four charges appear, on the same dates and for the same amounts, in Joshua's **personal DuPont account (831015, REWARDS sub-account -0090)**, per its 2021 transaction scrub (`2021 Expense Review/2021 Personal Account Scrub.xlsx`). This closes that gap — the full $32,117.25 is now a proven-and-sourced VBS payment, just paid from Joshua's personal account rather than the business account. No change to the $ total already credited in §1; this only fills in *how* it was paid.
+
+### LIKELY RESOLVES the $6,392.53 Burns Builders "unfinanced remainder" (open since §2/§11, F-1)
+
+The same personal-account scrub shows a **$7,050.00 debit-card charge to "Burns Builders Inc," Port Republic VA, dated 7/11/2021** — one day after the roof's completion was confirmed (7/10/2021, per the collector-notice language quoted in §10: *"the ROOFING project completed by Burns Builders Inc on 7/10/2021"*). The $21,750.00 signed estimate less the $15,357.47 Service Finance loan leaves a $6,392.53 gap this log has been trying to close for several passes (see §1, §2, §11) by requesting the actual Retail Installment Contract from Service Finance. A $7,050.00 direct payment to Burns, the day after completion, is a strong candidate for that remainder — it doesn't match to the cent (off by $657.47, which could be a small change order, a different rounding of the estimate, or simply not the same payment), so **this does not replace the outstanding document request** — the Retail Installment Contract for account 3624 is still the one document that would nail the exact Amount Financed and close this cleanly. But it substantially raises confidence that the $6,392.53 gap is a real, paid amount rather than a discrepancy, and gives a second concrete data point if the loan contract never surfaces.
+
+### Also likely explains the loan's known 2021-22 delinquency
+
+The personal account shows a recurring **$500.00/month "SERVICE FINANCE" bill-pay** (Aug, Sep, Nov, Dec 2021) plus one $771.64 ACH payment (9/2/2021) — none of which match the loan's actual scheduled payment of $380.82/month per §10's detailed statement history. §10 already documents that this exact loan (account 3624) went delinquent through 2021-22 and wasn't fully current again until autopay was re-established in January 2023. These irregular $500/$771.64 manual payments in 2021 read as Joshua's own attempts to catch the account up during that delinquent stretch — consistent with, not contradictory to, the existing loan history. Not booked as new money (it's payment on an already-counted loan), just adds color to the existing timeline.
+
+### Genuinely new vendor spending found — not previously in this log
+
+From the same 2021 personal-account scrub, plus a 2022 counterpart (`2022 Taxes.../Persoanl Account Scrub.csv`) and the 2021 and 2022 business-account "Repairs & Maintenance" QuickBooks ledgers:
+
+| Vendor | Year(s) | Amount | Source account | Note |
+|---|---|---|---|---|
+| Lowe's | 2021 | **$36,040.14** | Personal (831015-0090) | Largest charges $17,519.24 (1/23) and $6,970.60 (1/21) and $8,276.48+$2,053.33 (3/5). Distinct from the $51,887.96 already logged from the *business* account's Lowe's ACH activity (§0b), which is explicitly flagged there as needing store-vs-Bald-Rock attribution — this personal-account pool is cleaner evidence since Joshua's personal card is very unlikely to carry pawn-store purchases. |
+| EasyClosets.com | 2021 | $7,453.59 | Personal | Custom closet systems — 6/15, 7/7, 7/28. |
+| Shades of Light (lighting) | 2021-22 | $3,128.43 (2021) + $1,305.57 (2022) | Personal | Recurring across both years. |
+| Decor Planet | 2021 | $771.97 | Personal | |
+| Pottery Barn | 2021 | $414.67 | Personal | |
+| Wayfair / AllModern | 2022 | $1,538.41 | Personal | |
+| Sarisand Tile (Charlottesville) | 2022 | $550.93 | Personal | |
+| Grand Home Furnishings | 2022 | $200.00 (personal) + $1,731.00 (business R&M ledger) | Both | |
+| Ashley Furniture | 2022 | $704.39 | Business R&M ledger | |
+| North American HVAC | 2022 | $260.79 | Business R&M ledger | |
+| Valley Comfort System | 2022 | $771.90 | Business R&M ledger | HVAC service, 3 charges |
+| DJ's Fireplace Service | 2022 | $203.00 (Check #1188) | Business R&M ledger | |
+
+(Commonwealth Tile $1,685, Signature Hardware $743.11, Augusta Aluminum Gutterworks $4,500, and Fiber Pro Insulation $2,500 from the same 2022 business ledger were already documented in this log at §10/§1 — re-derived here independently while reading the same source file, not new dollars.)
+
+### Property attribution and the 2021 "personal" reclass — still the open question
+
+§15/§16 already logged that the 2021 business "Repairs & Maintenance" GL had **$41,562.64** reclassified to "personal" at year-end (line items included the VBS $14,634.79 and Lumber Liquidators $3,638.46 already counted in §1/§0b). Combined with everything above, the picture is: a large amount of 2021 Bald-Rock-plausible spending moved through Joshua's *personal* accounts and a *reclassified-out* pocket of the business account, rather than showing as ordinary traceable business capital spending. Vendor overlap (Staunton-area VBS/Lowe's, the same names as the already-proven Bald Rock work) and timing (all before Woods Walk Lane's Dec-2021 acquisition — a separate Midlothian VA rental flip confirmed via its own rehab notes, HVAC/siding/decking/trim work in 2022-23) both point to Bald Rock, but none of it carries an invoice with the property address on it. Same evidentiary tier as the rest of this log's personal-representation items — worth a direct conversation with Silverline on how to treat the reclassified $41,562.64 (capitalize to Bald Rock vs. leave as a true personal/distribution item) before any basis number is changed.
+
+## §18. ADDENDUM 9/1/2026 (pass 6) — Burns Builders closed out; all §17 spending confirmed 282 Bald Rock by Joshua; furniture/basis question answered
+
+**Trigger:** Joshua's instruction *"close out burns. and yes all that is 282, does fruniture we bough count towards the basis as well?"*, plus a follow-up clarification that most furniture was Pottery Barn purchases on Hillary's card.
+
+**Burns Builders — closed.** Per Joshua's direct instruction, the $6,392.53 "unfinanced remainder" gap (open since §2/§11, item F-1) is now closed using the $7,050.00 personal-account payment to Burns Builders Inc dated 7/11/2021 (§17). The document request to Service Finance for the actual Retail Installment Contract on account 3624 is no longer being chased for this purpose — Joshua accepted the $657.47 variance rather than continuing to wait on it. Moved from §2 to §1; see the updated row there.
+
+**Property attribution — confirmed by Joshua.** Every item logged in §17 as "likely but unconfirmed Bald Rock" is now confirmed by Joshua as 282 Bald Rock spending: Valley Building Supply (personal-account payment source), Lowe's $36,040.14, EasyClosets.com $7,453.59, Shades of Light $4,652.74 (both years), Decor Planet $771.97, Pottery Barn $414.67, Wayfair/AllModern $1,538.41, Sarisand Tile $550.93, Ashley Furniture $704.39, Grand Home Furnishings $1,931.00, North American HVAC $260.79, Valley Comfort System $771.90, and DJ's Fireplace Service $203.00. This is taxpayer representation, not third-party proof of the property address on each individual receipt — the same evidentiary posture as the rest of this log's confirmed-by-Joshua items — but it is Joshua's own, direct, contemporaneous confirmation, and it is what moved these dollars into §1 as proven spending. Flagged plainly here for Silverline's awareness: these figures carry a bank/card record of payment plus taxpayer confirmation of use, not an invoice bearing the property address.
+
+**Does furniture count toward the basis?** Yes — furniture (and other tangible personal property placed in the rental, such as appliances) is real depreciable spending and belongs in this file's totals. The one thing to flag for Silverline: it should end up classified *separately* from the building's 27.5-year real-property basis. Under a cost segregation study, furniture and similar personal property is typically 5-7 year MACRS property, and that's actually a better outcome for Joshua — 5-7 year property is usually eligible for bonus/accelerated depreciation the 27.5-year building basis is not. So the dollars counted in this file (including the furniture line items above) are correctly being tracked as total capital spending on the property; Silverline will make the final call on how to split that total between the building's real-property basis and the shorter-lived personal-property buckets when the return is prepared or when a formal cost segregation study is done.
+
+**Open lead — Pottery Barn / Hillary's card.** Joshua states most interior and exterior furniture was purchased from Pottery Barn on Hillary's card, not Joshua's own. The $414.67 Pottery Barn figure logged in §1 is from Joshua's personal DuPont account only and is very likely a small fraction of the true Pottery Barn total. Hillary's card/account has not yet been identified or searched in this file — none of the sources reviewed so far (personal DuPont 831015-0090, business DuPont 766518, the 2021/2022 personal scrubs) carry Hillary's own card activity. This is a concrete, not-yet-pursued lead: locating Hillary's card statements (whether a card on the same DuPont relationship, a separate personal card, or a business card) is very likely the single largest remaining undocumented pool of furniture spending in this file. No dollar figure is being estimated here — this is flagged as an open item, not summed into any total, until the actual records are found.
+
+**Net effect on totals this pass:** Proof of payment $188,541.68 → **$250,885.21** (Burns Builders $7,050.00 + $55,293.53 of newly confirmed §17 vendor spending). Invoiced-not-proven $48,292.43 → **$41,899.90** (Burns Builders' $6,392.53 estimate removed, now proven at $7,050.00 in §1 instead). Basis floor (purchase + proven) → **$655,885.21**; basis ceiling (purchase + proven + invoiced) → **$697,785.11**. See the updated headline table and §0.
+
+## §19. ADDENDUM 9/1/2026 (pass 7) — Wells Fargo FCF business account, September 2022-December 2023 (16 statements) reviewed; one new vendor found
+
+**Trigger:** Joshua pulled 16 additional Wells Fargo FCF business-account statements (Sep-Dec 2022, all of 2023) and asked that they be loaded into the unified search index and combed for home-improvement evidence — continuing the Wells Fargo gap identified in §17 (previously nothing on file for 2020-2023).
+
+**Filed:** organized to `Taxes 2026/Bank Statements/Wells Fargo FCF Business (2022-2023)/`, one folder per year, each file renamed `<Month> <Year> Statement.pdf`. The unified search files index was rebuilt to include them.
+
+**Wells Fargo coverage is now:** 2016, 2018, 2018-2019, September-December 2022, all of 2023, and 2024. **CORRECTION 9/2/2026, per Joshua: the account was not open yet during 2020, 2021, or January-August 2022** — there is nothing to pull for that window because it doesn't exist, not a document-recovery gap. September 2022 is very likely close to account opening. This closes out what had been flagged as the single biggest remaining statement gap in this file — it was never recoverable because it was never real.
+
+**What the 16 new statements show:** this is a low-balance business checking account used almost entirely for pawn-shop cash management — branch cash deposits/withdrawals, DuPont Community Credit Union transfers, and BusinessLine-of-credit draws/repayments. Every transaction line across all 16 statements was reviewed (not just keyword-matched, to avoid missing an unfamiliar vendor name). Two keyword hits were false positives worth noting so they aren't re-flagged later: "spa" only ever appears inside "español" (boilerplate), and "lowe" only ever appears inside "allowed"/"lowest" (boilerplate) — no Lowe's charges exist in this account.
+
+**One genuine new finding: two Zelle payments to "Gonzales Virginia Painting," both dated 5/31/2023 — $10.00 and $3,000.00, totaling $3,010.00.** This is a real, dated, named-vendor, bank-record payment — third-party proof of payment, same tier as the strongest items in §1 — but the bank statement itself does not say which property was painted. **CONFIRMED 9/2/2026 by Joshua: 282 Bald Rock was painted.** Moved to §1 as proven spending — see the updated Proof of Payment total.
+
+**No other new vendor, contractor, or home-improvement-related spending appears anywhere in these 16 statements.**
+
+## §20. ADDENDUM 9/2/2026 (pass 9) — Hillary's Pottery Barn card (account 4362) located, indexed, and quantified: $211,724.20 across 2021-2024 — property split needs Joshua's confirmation before any of it is added to §1
+
+**Trigger:** Joshua located and downloaded all statements for the Pottery Barn credit card account he and Hillary hold jointly (Joshua's clarification that most furniture was "Pottery Barn on Hillary's card"), asked that they be indexed in unified search and added to this file.
+
+**Filed:** 44 statements (Feb 2021 - Nov 2025, with some gaps) organized to `Taxes 2026/Bank Statements/Pottery Barn Comenity Card (Hillary D Davis)/`, one folder per year, each renamed `<Month> <Year> Statement.pdf`. Unified search files index rebuilt to include them.
+
+**This is one account, two card programs.** Jan-Aug 2021 statements are the original Comenity-issued Pottery Barn Credit Card (account ending 2988). Starting September 2021, the account moved to a Capital One-issued "Pottery Barn Key Rewards Card" (ending 9681) — a program change, not a new account. **Both programs bill to Hillary D Davis, 282 Bald Rock Rd, Verona VA 24482** — the account's mailing address on file is the subject property itself, the same corroboration pattern already established for the business DuPont account in §16. **The Capital One version is a two-cardholder account** — Hillary holds card #9681 and Joshua holds his own card #2476 on the same account (Joshua's card shows zero activity in every statement reviewed).
+
+**One data-quality catch worth recording:** "May 2021 Statement.pdf" as downloaded is an exact duplicate of the April 2021 statement (identical closing date 04/06/2021, identical balance $2,869.33, identical transaction list) — almost certainly a re-download of the same file rather than a real May statement. Excluded from the totals below to avoid double-counting; **the actual May 2021 statement was never captured** and is a real gap in this account's coverage.
+
+**Total new purchases by year, deduplicated by statement closing date (32 unique statements with activity; 11 more statements had zero new purchases that period and are already correctly excluded):**
+
+| Year | New purchases |
+|---|---|
+| 2021 | $97,695.65 |
+| 2022 | $62,320.86 |
+| 2023 | $49,344.69 |
+| 2024 | $2,363.00 |
+| **Total** | **$211,724.20** |
+
+Brand detail where the statement format allowed it to be read: mostly plain "Pottery Barn," with recurring Pottery Barn Kids activity throughout, some Pottery Barn Teen and West Elm charges, and several months tagged generically "Williams Sonoma" (the Capital One statement format doesn't always break out sub-brand on every line, so this list is not a complete brand breakdown, only what was clearly visible).
+
+**CONFIRMED 9/2/2026 by Joshua: the full $211,724.20 is 282 Bald Rock, none of it Woods Walk Lane.** Joshua clarified that 14300 Woods Walk Lane "has always existed" — i.e., it was already owned, not acquired via the 12/2021 transaction this log identified in §17. **Correction to §17's reasoning:** the December 2021 $34,000 transaction through the personal 831015-0090 account was flagged there as Woods Walk Lane's acquisition based on its timing alone; that inference is now known to be wrong (or at least unconfirmed) — Joshua's ownership of that property predates it. This does not unwind any previously confirmed item in this file, since every other §17/§18 item was confirmed directly by Joshua rather than resting on the acquisition-timing argument, but the $34,000 transaction itself is now unexplained and the acquisition-date assumption should not be relied on elsewhere. **Also per Joshua: 14300 Woods Walk Lane is a long-term rental** (distinct from Bald Rock's short-term rental use) — noted here for the record since it's a separate property with its own tax treatment, not part of this file's basis math either way. Full $211,724.20 moved to §1.
+
+## §21. ADDENDUM 9/2/2026 (pass 10) — Shreckhise re-swept for $9,500.44 more; cold plunge was already proven (§1, easy to miss); hot tub still not found despite exhausting every available lead, including county property records
+
+**Trigger:** Joshua asked what's left, specifically flagging that the hot tub and cold plunge weren't found yet, and that Shreckhise is believed to be $25,000-30,000 total (only $8,536.50 was proven).
+
+**Cold plunge — already proven, no new work needed.** §1 already carries **Renu Therapy Order #5754, $10,214.09, 2023-05-27, "Cold Stoic 2.0," ship-to 282 Bald Rock**, paid and shipped (BTX tracking LAX4059890). This predates today's pass — flagging it here only because it's easy to lose track of in a file this size. Nothing further to do on this item.
+
+**Shreckhise — re-scanned the full 9-year business statement archive, found $9,500.00 more.** Beyond the known $8,536.50 (1/18/2023), the DuPont business account (766518) shows: $5,000.00 (10/18/2023), $1,000.00 (11/15/2023), $1,000.00 (12/27/2023), and five $500.00 bill-pay installments (2/5, 2/29, 3/7, 3/14, 3/21 — all 2024). **New total: $18,036.50.** A separate, related retail business — "Shreckhise Shrubbery Sales" (different from "Shreckhise Landscape & Design") — also shows a small $107.41 debit-card charge (4/25/2024). This matches the correspondence trail already on file (design work Oct 2022, a second-phase sketch March 2023 "between the walls behind your house," and an Oct 2024 mulch/tree delivery text from Robert Shreckhise) — the payment pattern spans more than one project phase, which is consistent with why the total kept growing as more statements were checked.
+
+**Still short of $25-30K.** The recurring $500/month bill-pay was still running when the business archive's coverage ends (June 2024) — the strongest remaining lever is bill-pay activity after that date, which this file doesn't have. **Recommended next step:** email Trent Shreckhise directly (trent@shreckhiselandscape.com, real working correspondence already on file) and ask for a full invoice/payment history on the account. This is a message sent on Joshua's behalf, so it needs his go-ahead before it's sent — happy to draft and send as soon as he says so, or he can forward the ask himself.
+
+**Hot tub — genuinely not found, despite exhausting every lead available without going to a bank or vendor directly.** What was checked this pass, on top of everything already tried in §14-§16:
+- Re-scanned all 130 business-account and Wells Fargo statement PDFs on file (2015-2024) for a much wider brand/keyword net (spa, jacuzzi, cal spa, artesian, bullfrog, sundance, marquis, hydropool, master spa, thermospa, leisure time, viking spa, freeflow, strong spas) — zero genuine hits; every match was a false positive (Bartesian cocktail machines, "español" boilerplate, unrelated spa/salon charges in Ireland/Nashville from years before this property).
+- Re-ran the mail/text search for "hot tub" — all 60 hits are 2017-2018 dealer marketing/newsletter emails (BuyerZone, HotSpring, EnviroSmarte Hot Tub & SwimSpa Center in Charlottesville) from years before this line of investigation is relevant. Nothing resembling an actual order, invoice, or delivery.
+- **Pulled the Augusta County property record card directly** (gis.vgsi.com/augustava, parcel 036/D2-2/5A, PID 31761, owner of record Davis, Joshua Christian). This is the county assessor's own record of every assessed outbuilding and improvement. Result: **Outbuildings lists only Pool (Inground, $35,600), Driveway, Patio, and a Retaining Wall — no hot tub or spa of any kind, and "Extra Features" explicitly shows no data.** This also resolved a separate question worth noting: the inground pool structure itself **pre-dates Joshua's ownership** — the county's Ownership History shows the $405,000 purchase on 10/17/2016, and the original sale listing (Redfin) specifically states "child friendly 12' x 24' lap/wading pool for summer fun and the pool furniture stays." **Correction, per Joshua: this does NOT mean the pool has no capital-improvement spending** — he's had the pool redone twice since buying the property, and a full pool redo (demo, re-dig, new equipment/shell/finish) is real capital improvement regardless of whether the original hole predates ownership. The county assessment is a snapshot of the *current* structure's existence, not its improvement history. This file already carries what looks like one redo cycle in §1: **Fundamental Siteworks Inv 670 ($5,329.00, pool demo + dig + rough grade, 2022-11 → 2023-03)** plus **Royal Swimming Pools ($5,592.86 proven, plus $9,919.02 still unproven in §2 for the same #151398/#152804 kit order)** — together a plausible single full pool rebuild in the 2022-2023 window. **Open question for Joshua:** is that 2022-2023 Fundamental Siteworks/Royal Swimming Pools work one of the two redos, or a third distinct instance? If there's an earlier redo (e.g., closer to 2020, matching the broader STR build-out timing) it hasn't been identified yet — none of the existing vendor list (Red Rock Concrete, Crown Decorative Concrete, Decorative Concrete of Virginia) is confirmed as pool-redo work specifically rather than the retaining-wall/patio work already logged separately. A rough year or the contractor's name for the other redo would let this be searched the same way Shreckhise and the rest of §17-§21 were. **UPDATE 9/2/2026: Joshua identifies the contractor for BOTH pool redos as Tyson Buffo, who runs Cannonball Pools.** Searched mail, texts, and all 174 statement PDFs across the business DuPont (766518, 2015-2024), Wells Fargo (2022-2023), and Pottery Barn card archives for "Buffo" and "Cannonball" — **zero genuine hits.** The only "Buffo" match is an unrelated HOA election candidate (Matthew Giacomo Buffo, Woodlake Community Association); every "Cannonball" match is generic pool marketing copy (diving-move language, a TSA news story, a saxophone listing). This confirms and extends the same dead end §9 already hit with a smaller statement set. No contact info (email or phone) for Tyson Buffo or Cannonball Pools exists anywhere in the searchable record, so a direct outreach email — the approach that worked for Shreckhise — isn't possible without Joshua supplying his contact info first. **This, plus the still-missing personal DuPont statements for 2023-2024 and the Wells Fargo gap for 2020/2021/Jan-Aug 2022, are the most likely places these payments actually live.**
+
+**CORRECTION 9/2/2026: the name is Tyson *Boffo*, not "Buffo" — that single letter is why every prior search came back empty. Full payment history recovered by searching the bare first name "Tyson." See §22 for the complete breakdown, contact info, and the pricing/invoice gap.**
+
+**UPDATE 9/2/2026: Joshua is pulling the actual check *images* from the bank himself, likely for 2017-2018.** Correction to the note above: the 2017-2018 personal-account **statements** are already in hand and were fully searched in §14 — what's missing is the images of the checks themselves. A statement line for a check shows only the check number and amount, never the payee name, which is exactly why the §14 pass could rule out any $1,000+ *card* transaction to a pool/spa merchant but couldn't rule out a *check* — nothing in this file has ever seen a check image. A 2017-2018 date fits either the hot tub (never found by any keyword search) or an early pool-related payment predating the 2022-2023 Fundamental Siteworks/Royal Swimming Pools redo already in §1. **Once Joshua has the check images, they need to be reviewed for payee name and amount and reconciled against both open items (hot tub, and the second pool redo per §21/§22) before either can be added to §1.**
+
+**Bottom line on the hot tub:** either it's a portable/plug-in unit that wouldn't show up on a county assessment (most above-ground spas aren't permitted or separately assessed, unlike an in-ground pool), or it was paid for through cash, a check that didn't post with a recognizable payee name, or an account not yet reviewed in this file. Every automated lever available has been pulled. **This is the one item where I need something specific from Joshua to keep going** — even an approximate year, the vendor name, or whether it was cash/check/financed would narrow this enough to search effectively; without that, the remaining options (contacting the credit union for check images, or contacting Luxury Pool and Spa in Harrisonburg directly) both require reaching out to a third party rather than searching records already in hand.
+---
+
+# 22. ADDENDUM 9/2/2026 — TYSON BOFFO FOUND (CORRECTED SPELLING); NO PRICING OR INVOICE YET
+
+Joshua's instruction **"tyson, check"** — searching the bare first name after "Buffo" and "Cannonball" both drew a blank — broke this open immediately. The correct name is **Tyson Boffo**. "Buffo" was a one-letter misspelling that caused a complete, genuine dead end across mail, texts, and 174 bank statement PDFs in §21 — none of that prior negative work was wrong, it was just searching for the wrong name.
+
+## What "Boffo" found
+
+**PayPal, Venmo, and bookkeeper correspondence — no bank/check payments found.** Re-ran the same 174-PDF sweep (business DuPont 2015-2024, Wells Fargo 2022-2023, Pottery Barn card) for "boffo" specifically: **zero hits.** Every payment to Tyson Boffo that exists in the searchable record moved through PayPal or Venmo, not a bank account or card.
+
+| Date | Amount | Method | Note/memo |
+|---|---|---|---|
+| 2020-06-05 | $2,500.00 | PayPal | "You the man!!" |
+| 2024-06-19 | $490.00 | Venmo | "Pool" (charge request, completed same day) |
+| 2024-10-08 | $325.00 | Venmo | none |
+| 2025-11-12 | $1,250.00 | Venmo | none |
+| 2026-01-20 | $350.00 | Venmo | none |
+| 2026-05-12 | $525.00 | Venmo | none |
+| 2026-06-23 | $980.00 | Venmo | none (Venmo screenshot IMG_3538.PNG confirms "Gift #8") |
+| 2026-07-29 | $1,050.00 | Venmo | none |
+| | **$7,470.00** | | |
+
+**Separately, three 1099-prep emails from bookkeeper Tammy Tackett (11/19/2020, 1/14/2021, 1/26/2021) all list "Tyson Boffo — $4,000.00 — need info"** as a 2020 subcontractor total needing a W-9. This $4,000.00 figure does not reconcile cleanly with the $2,500.00 PayPal payment above — it's either a rounder bookkeeper estimate that includes untraced cash/check payments from 2020, or the $2,500 PayPal payment plus roughly $1,500 more paid some other way that year. **Not counted in the $7,470.00 total above to avoid double-counting** — flagged here as an open reconciliation question, not summed.
+
+**Contact info recovered** (from text messages): phone **+1 (540) 421-0766**, Venmo handle **@tyson-boffo**.
+
+## Why none of this is in §1 yet
+
+Every one of these payments is a bare peer-to-peer transfer. Only one (**$490.00, 2024-06-19**) carries any description at all — the single word "Pool" — and none carries an invoice, itemized description of work, or any indication of whether it was for a capital renovation (demo/re-dig/re-shell) versus routine service (opening, closing, chemicals, repairs), which is exactly the same painted-into-the-corner problem this file has flagged before (see the Blue Ridge Pools & Spa pattern elsewhere in this log). The size and cadence of the 2024-2026 Venmo payments — seven payments, none over $1,250, spread across two years — reads much more like recurring service than a $25-30K renovation, which is normally one or two large lump sums, not a drip of four-figure Venmo requests. **The $2,500 PayPal payment (2020) and the $4,000 bookkeeper figure (2020) are the more plausible candidates for renovation-scale work**, but $2,500-4,000 is still well short of Joshua's $25-30K estimate for either redo, let alone both.
+
+**Bottom line: the vendor is now identified and reachable, but not one dollar of it has a price, invoice, or work description behind it.** This is a materially different gap than the property-attribution problem in §10 — the property/purpose link here is actually fairly solid (Boffo is Joshua's named pool contractor, one payment is memo'd "Pool") — what's missing is entirely on the pricing/documentation side.
+
+## Next step
+
+Per Joshua's instruction: reach out to Tyson directly and ask for pricing or an invoice, covering both pool redo jobs, for tax purposes. **Sent 9/2/2026, 8:02 AM ET**, via iMessage to +1 540-421-0766, verified in the actual Messages conversation history (not just a no-error return): *"Hey Tyson, need pricing or invoice on both pool jobs for taxes, can you send whenever you get a chance. Also do you know who has the original hot tub invoice/cost?"* The hot tub ask was folded into the same text — see below for why. Once pricing or an invoice comes back, the true renovation cost can be evaluated against the $7,470.00 (+ possibly $4,000.00) already found here, and whatever isn't accounted for by that becomes the number to ask Tyson to itemize. **Awaiting his reply — nothing further to do until he responds.**
+
+## Bonus find while reviewing the Tyson text thread: the hot tub is real, current, and Tyson services it
+
+Reading the full iMessage history with Tyson (not just the payment-related hits) turned up something §14/§21 never had: **the hot tub exists, is currently in active guest use, and has an extensive 2024-2026 maintenance history** — dozens of texts about it tripping breakers, heater errors, cleaning, and guest complaints (Madison, Dwayne, Bouncy B/Hillary, and multiple guest phone numbers all reference it). Tyson personally handles hot tub troubleshooting for the property ("Can you reset that breaker on the hot tub," "Is someone else messing with this hot tub up here?"), and **a second vendor — "Valley Pool and Spa," Waynesboro** — is also referenced as a current, apparently-still-operating hot tub service contact (Hillary was asked to "call valley pool and spa waynesboro" in April 2026). This directly contradicts the working assumption in §14 that "Valley Pool and Spa" (the mall-era retailer Joshua originally named) is out of business — there may be two different entities with a similar name, or it never actually closed. **This confirms the hot tub is real and used constantly, but still says nothing about when it was purchased or for how much** — that's still the open question, now folded into the text just sent to Tyson. If he doesn't know, "Valley Pool and Spa, Waynesboro" is now a second, better-identified lead worth a direct call or text (no phone number for them found yet in this pass — a search for that business specifically would be the next step if Tyson's reply doesn't resolve it).
+---
+
+# 23. ADDENDUM 9/2/2026 — THE $30K CABINET INSTALL WAS ALREADY IN §1; RECONSTRUCTED FROM BANK DATES, NOT A NEW DOCUMENT
+
+Joshua asked directly whether there's any record of the ~$30K cabinet install at 282, after two dead ends: Wells Fargo has nothing for 2020/2021 because **the account wasn't open yet** (corrected above — not a document gap, the account didn't exist), and MyLowe's Pro purchase history **only goes back to 2024**, years too late to help with a 2021 purchase.
+
+**There's no new document. But the answer is yes — it's already sitting in this file, just not labeled as "cabinets."**
+
+## The reconstruction
+
+§17 already found and proved **$36,040.14 in Lowe's charges on Joshua's personal DuPont REWARDS account (831015-0090), January–September 2021**, confirmed as 282 Bald Rock spending and counted in §1. It was logged generically as "Materials" because the bank record itself carries no item-level description — a debit-card statement shows a store, a date, and an amount, never a receipt line. Going back to the source (`2021 Expense Review/2021 Personal Account Scrub.xlsx`) and pulling every Lowe's line in full turns up all 12 transactions that make up that $36,040.14, all on the same card (****6246):
+
+| Date | Amount | Likely stage |
+|---|---|---|
+| 2021-01-21 | $6,970.60 | Order deposit |
+| 2021-01-23 | $17,519.24 | Order deposit (2nd charge, days later) |
+| 2021-03-05 | $8,276.48 | Balance payment |
+| 2021-03-05 | $2,053.33 | Balance payment |
+| 2021-06-18 | $45.49 | Small hardware run |
+| 2021-07-13 | $1,013.71 | Install-week hardware |
+| 2021-07-13 | $17.88 | Install-week hardware |
+| 2021-08-29 | -$45.25 | Credit/return |
+| 2021-08-30 | $139.99 | Small charge |
+| 2021-09-14 | $220.01 | Small charge |
+| 2021-09-15 | -$177.96 | Credit/return |
+| 2021-09-16 | -$6.62 | Small credit |
+| | **$36,040.14 net** | matches §1 exactly |
+
+**Two things line up too well to be coincidence:**
+
+1. **The dates bracket the known cabinet timeline exactly.** §6 already had a cabinet delivery (2021-07-04/05), a damage complaint (2021-04-06), an install record dated 2021-04-05, and a backsplash install (2021-07-07) — all sitting *between* the January deposits and the small July hardware-store charges above. A kitchen job typically runs deposit → balance → small trips during install week, and that's exactly the shape of this data: two January charges, a March balance payment, then two small July 13th charges landing right in the middle of the documented delivery/backsplash week.
+
+2. **The dollars match almost to the cent.** The two January charges plus the two July 13th charges total **$35,851.24** — against the **$35,830.19** cabinets-only line inside the §3 kitchen quote ($43,025.31 = cabinets $35,830.19 + countertops $6,845.12 + delivery). That's a **$21.05 difference on a $35,830 purchase** — 99.94% match. The March balance payment ($10,329.81) is close to but doesn't exactly match the $6,845.12 countertop line, so it's less clear whether countertops are separately represented here or whether the actual paid cabinet price simply ran higher than quoted.
+
+## Bottom line
+
+**The $30K cabinet install is not a hole in this file — it's the $36,040.14 already proven and already counted in the $475,119.42 headline total**, via §17. What's genuinely missing is an *invoice* that says "cabinets" in writing; what exists instead is a near-perfect date-and-dollar match between a real quote and real bank charges, which is a normal and reasonable way to substantiate a purchase when the itemized paperwork isn't available. **No dollars change in this file from this pass** — this is a relabeling/confirmation, not a new find. Flag for Silverline: this is bank-record proof of payment plus a strong circumstantial match to a specific quote, not an invoice bearing the property address or an itemized description — the same evidentiary caveat as several other items in this log.
+
+**What would still upgrade this from "very likely" to "certain":** the actual Lowe's sales order/invoice for order record `LOWES:0126689000148`.
+
+**Request sent 9/2/2026, per Joshua's instruction.** While researching this, the full 2021 install-dispute thread turned up two live corporate mailboxes still attached to this exact job: **execustservice@lowes.com** (Lowe's Executive Customer Relations, the same team that handled Case #02040602 that year) and **installsupport@lowes.com** (Lowe's Installation Support, cc'd throughout the original thread). Also found, in Joshua's own 2020-03-18 sent mail (subject "Re: [EXTERNAL] Re: Kitchen pictures and cabinet pricing"): **Joshua's own words at the time — "So approx 35k installed if I use Lowe's card"** — direct contemporaneous corroboration of the ~$35K figure from Joshua himself, independent of the bank-record reconstruction above.
+
+Sent an email to execustservice@lowes.com (cc installsupport@lowes.com) from zapvp1@me.com, 8:43 AM, requesting the original invoice/sales order for LOWES:0126689000148, referencing Case #02040602 and the Staunton VA store (#646). **Correction sent 8:45 AM** — the first draft had the wrong phone number in the signature (Tyson Boffo's number, left over from the earlier draft that day, instead of Joshua's own (804) 930-4221); a follow-up correcting it went out two minutes later. Both sends verified directly in the Sent Messages mailbox (not just a no-error return — see this file's running caveat about that check). **Awaiting Lowe's reply.**
+---
+
+# 24. ADDENDUM 9/2/2026 — ARITHMETIC CORRECTION ($107.40 overstatement), AND THE BOTH-SIDES-OF-PROOF PLAN
+
+Joshua asked which is better for substantiating capital improvements — the invoice or the proof of payment — and then said to get both wherever possible and put together a plan. Building that plan meant re-summing every row in §1 by hand, which caught a real error: **the §1 table's own footer total ($465,619.41) was stale** — it was never updated after the Shreckhise re-sweep in §21 raised that line from $8,536.50 to $18,036.50, a $9,500.00 swing the footer never picked up. Separately, **the headline figure ($475,226.82) was $107.41 too high** — it appears to have accidentally folded in the Shreckhise Shrubbery Sales $107.41 line, which §1 explicitly tracks as a separate legal entity never meant to be summed into the Shreckhise Landscape & Design total.
+
+**Corrected: the true, verified sum of every row in §1 is $475,119.42.** Fixed in six places: the headline table, the headline narrative's running total, the §0 basis-math table (adjusted basis now $880,119.42; proven-plus-invoiced now $922,019.32), the §1 section header, §1's own footer total, and the §23 cabinet writeup's reference to the headline figure. Verified this time by summing every row programmatically rather than by eye. **No vendor's dollar amount changed — only the totals that were supposed to be adding them up.** **Second, smaller fix found the same way:** the older "paid, but property attribution unconfirmed" bucket (§10) had a $0.50 rounding error in its own total — the 10 rows there actually sum to $17,276.03, not the $17,275.53 it had printed since it was first built. Fixed in the headline table and both places in §10.
+
+## The both-sides-of-proof plan
+
+Per Joshua's question: an invoice alone proves what was bought but not that it was paid; a bank/card record alone proves money moved but not what for. Both together is the strongest possible substantiation, and that's the standard to chase wherever realistic. A full line-by-line audit of every dollar in this file — what's already got both, what's missing one side, and the specific action to close each gap — is in a new spreadsheet, `282_Bald_Rock_Both_Sides_Plan.xlsx` (this folder), with two tabs:
+
+- **Plan** — nine prioritized action items, largest dollar impact first.
+- **Full Tracker** — all 49 line items across all four evidentiary buckets, with an invoice/payment status computed for each.
+
+**Headline numbers from that audit:** of the $475,119.42 already proven, roughly $370K already has both an invoice and a payment match. The single largest remaining gap is the **$211,724.20 Pottery Barn/West Elm/Williams Sonoma total — payment-only, no item-level receipts** (a card statement only shows monthly totals, never what was bought) — pulling the online order history under Hillary's account is the highest-leverage single action available. Next largest: the six card statements never pulled (closes four separate line items at once), and Red Rock Concrete's unpaid $18,622 balance, which needs a decision from Joshua more than a new document search. Everything already in motion (Lowe's cabinets, Shreckhise, Tyson Boffo) stays as-is, awaiting replies.
+
+Two small finds surfaced while building this: an EasyClosets proposal number (#33575293710417, 2021) and a Decor Planet order number (#20-000730250, 2020) — neither carries a captured dollar figure in the email itself, but both are real document references that could be pursued directly with those vendors if it's worth the effort for a combined ~$8,225.56.
+
+
+---
+
+## SECTION 25 — POTTERY BARN: FULL ITEM-LEVEL ORDER HISTORY PULLED DIRECTLY FROM HILLARY'S ACCOUNT (BOTH SIDES OF PROOF, IN ONE SHOT)
+
+Per Joshua's instruction ("pull up pottery barn so you can download the actual purchases"), logged into potterybarn.com under Hillary's account (hillary91692@gmail.com — the browser already held a valid saved session, no password was entered) and pulled the account's **entire order history via the site's own order-history and order-detail APIs**, not just the visible order-history page. This is the single biggest resolution in the file today.
+
+**What was pulled:** every order on the account, 2010 through today — **302 orders total**. For each one, the full item-level detail: product name, quantity, unit price, and — critically — **the exact masked payment card and dollar amount charged**, straight from Pottery Barn's own transaction record. That last part is what makes this "both sides of proof" in a single document: it is simultaneously an itemized invoice (what was bought) and a payment record (what was charged to which card), issued by the seller itself.
+
+**Filtered to Bald Rock (ship-to ZIP 24482, Verona VA): 262 of the 302 orders, totaling $207,927.96.** The remaining 40 orders shipped elsewhere (gifts to family — the Holmes family in Rockwood/Oak Ridge TN came up repeatedly, plus some orders to Hillary and Joshua's own Cypress Crossing FL address) and are excluded from the Bald Rock figure.
+
+**This $207,927.96 is close to, but not identical to, the $211,724.20 figure in the both-sides-of-proof plan** (Priority 1). The plan's figure was a card-statement estimate covering Pottery Barn **and** West Elm **and** Williams Sonoma combined; today's pull is Pottery Barn only. The ~$3,800 difference is most likely the West Elm/Williams Sonoma share, not an error — see below.
+
+**Payment method breakdown across the 262 Bald Rock orders** (this is the real surprise): the large majority of the dollar volume never touched a personal or business bank card at all — it ran through Pottery Barn—Williams-Sonoma's own store-financing accounts:
+
+- Pottery Barn Credit Card (585637\*\*\*\*\*\*2988): $84,516.39 across 77 orders
+- PLCC/WSI/PB (600430\*\*\*\*\*\*9681): $68,739.51 across 100 orders
+- VISA/WSI/PB (468837\*\*\*\*\*\*4362): $31,331.23 across 24 orders
+- AFFIRM CREDIT: $3,357.44
+- Merchandise Credit: $2,646.78 (13 orders)
+- PayPal: (1 order, small)
+
+That's roughly $190K of the $207,927.96 — over 90% — paid through a Williams-Sonoma-family financing product, not a card that would ever show up on a personal or business bank statement. **This is exactly why this money was invisible to every card-statement sweep run so far:** it was never going to be on the Amex, Visa, or Mastercard statements this file has been chasing, because it wasn't charged to any of them.
+
+The remainder **was** charged to real personal cards, and two of those directly close gaps already flagged in the six-never-pulled-statements list (§ Both-Sides-Of-Proof Plan, Priority 3):
+
+- **American Express \*\*\*\*1005: $3,452.78 across 7 Bald Rock orders** — this is one of the six statements on the list. The Pottery Barn transaction record itself is now proof of both the purchase and the payment for these 7 orders; a statement pull is no longer needed to substantiate this specific $3,452.78, only to reconcile it against the card's own total.
+- **Mastercard \*\*\*\*6246: $1,140.02 across 3 Bald Rock orders** — same card as the Lowe's cabinet charges in §23. Small dollar amount here, but further corroborates that ****6246 was an active household card in this window.
+- American Express \*\*\*\*2003: $5,305.47 across 11 orders, and \*\*\*\*2029: $2,048.84 — two Amex accounts not yet otherwise identified in this file. Worth asking Joshua whether these are additional Amex accounts beyond the "only ever had two, Delta and Platinum" he flagged today, or a Delta/Platinum account renumbered over the 2010–2026 span (Amex reissues cards with new last-4 on renewal/loss, so multiple last-4s under one account is normal).
+- Mastercard \*\*\*\*9983 ($738.17, 5 orders) and \*\*\*\*6613 ($452.02, 8 orders): two more Mastercards not yet otherwise identified.
+
+**On Joshua's card-identity correction today:** he flagged that "MC 0305" is likely account 766518, an old business debit card, and that the household has only ever had two Amex cards (Delta and Platinum). Noted for when the six-statement pull happens — it means MC \*\*\*\*0305 should be looked for as a **debit** card on an old business checking account, not a credit card statement, and any Amex last-4 that doesn't map to Delta/Platinum (like \*\*\*\*2003 or \*\*\*\*2029 above) needs a direct answer from Joshua on which account it is before it gets treated as a new, unidentified card.
+
+**Files saved (this folder):**
+- `pb_order_full_detail.json` — the raw pull: all 302 orders, full item and payment detail, straight from Pottery Barn's API.
+- `pb_bald_rock_orders.json` — the 262 orders filtered to ship-to ZIP 24482, same full detail.
+- `pb_all_orders_summary.json` — the summary totals and card breakdown above, machine-readable.
+
+**West Elm and Williams Sonoma — not yet pulled, and blocked on a real obstacle.** Despite being "one loyalty login" for browsing/rewards purposes, each brand's order-history system is on its own separate domain with its own separate login session. The Chrome session that was already authenticated on potterybarn.com came back **401 Unauthorized** on westelm.com — no saved session there. Getting in would require either (a) entering Hillary's password, which is a hard no-go regardless of authorization, or (b) a "continue with email" one-time code, which would land in Hillary's personal Gmail (hillary91692@gmail.com) — not one of the four mailboxes this file's search tooling can see. **This one needs Hillary (or Joshua, if he has her password saved somewhere he can hand off through a password manager) to log into westelm.com and williams-sonoma.com once** — after that, the exact same pull done here today takes minutes to repeat on both.
+
+**Net effect on the both-sides-of-proof plan:** Priority 1 ($211,724.20, "payment-only, no item-level receipts") is now resolved for its Pottery Barn share — $207,927.96 of it has full item-level detail AND a matched payment record, sourced directly from the seller. What's left of Priority 1 is narrowly the West Elm/Williams Sonoma slice (roughly $3,800, unless that estimate undercounted — will know for certain once those two logins happen) plus the routine follow-up of naming the two unidentified Amex accounts and two unidentified Mastercards above.
+
+
+---
+
+## SECTION 26 — WEST ELM CLOSED OUT (ONE ORDER, ALL-TIME); WILLIAMS SONOMA STILL NEEDS ITS OWN LOGIN
+
+Joshua logged into westelm.com directly (no password entered by me — he did that himself), clearing the blocker from §25. Same API pull as Pottery Barn, run immediately: **westelm.com has exactly one order on the account, ever.**
+
+- Order #331892943845, placed 7/8/2023, delivered 8/21/2023
+- Woven Honeycomb Outdoor Performance Rug, 9x12, Natural — $799 + tax/shipping = **$1,029.83 total**
+- Shipped directly to 282 Bald Rock Rd, Verona VA 24482
+- Paid on VISA/WSI/PB card ****4362 — the same card used for $31,331.23 of the Pottery Barn charges in §25
+
+Both sides of proof, same as the Pottery Barn pull: item + matched payment, from the seller's own record. **West Elm is fully closed — nothing further to do there.**
+
+**Williams Sonoma is not yet accessible** — williams-sonoma.com returned 401 (no saved session) when checked right after the West Elm success. It's the same situation §25 described: needs Joshua or Hillary to log in there directly once, then the identical pull takes a minute.
+
+**Updated math on the original $211,724.20 combined PB/WE/WS estimate:**
+- Pottery Barn (§25): $207,927.96 — resolved
+- West Elm (this section): $1,029.83 — resolved
+- Williams Sonoma: ~$2,766.41 estimated remainder — still open, blocked on login only
+
+$208,957.79 of the original $211,724.20 estimate is now fully proven both ways. What's left is a single-vendor, sub-$3,000 gap.
+
+
+---
+
+## SECTION 27 — PROPERTY-ATTRIBUTION BUCKET RE-CHECKED: AUGUSTA STEEL WAS NEVER BALD ROCK
+
+Joshua asked whether check images exist for the accounts in this file (answered directly in chat — none do, see the three open gaps below this section once it's added). While researching that, the nine open items in the "paid, but property attribution unconfirmed" bucket ($17,276.03) got a second look using the mail index, since two of them (Augusta Steel, Augusta Aluminum Gutterworks) are named vendors with a findable email trail.
+
+**Augusta Steel Corporation, $2,652.50 (03/09/2022, Full Circle business checking) — confirmed NOT a Bald Rock cost.**
+
+Every email exchanged with Augusta Steel between October 2021 and February 2022 is titled "Rear Door Quote," "VALLEY PAWN DOOR INSTALLATION," or "VALLEY PAWN" — never Bald Rock, never 282. The exchange that settles it:
+
+> **Jay Hicks (Augusta Steel), 11/30/2021:** "Joshua, Who does this get written up under? Valley Pawn? Full Circle Pawn?"
+> **Joshua, 11/30/2021:** "Actually Farming Infinity Inc. I own the building."
+
+Farming Infinity Inc is a separate entity from Full Circle Finance — it owns a different building where a Valley Pawn store operates, and this door installation was billed to it, in Joshua's own words. The $2,652.50 charge just happened to clear through the same Full Circle business checking account as Bald Rock renovation spend, which is exactly why it landed in the property-attribution-unconfirmed bucket in the first place — same account, different property. **Removed from Bucket 3's total.** New bucket total: **$14,623.53** (was $17,276.03).
+
+**Augusta Aluminum Gutterworks, $4,500.00 — checked, inconclusive, left as-is.** One email exists ("Gutter Receipt," 3/30/2022) with a PDF receipt attached, but the attachment is a `.partial.emlx` — Apple Mail only cached the message text locally, not the receipt itself. The email body says only "I have attached the receipt for the gutters... I appreciate the business and I will have some numbers on the other work soon" — no address, no property name. No change to this line; still Medium confidence, still needs a direct invoice request.
+
+**ZELLE "AVABI" (gutters), $1,745.00 — checked, no new evidence, left as-is.** The Wells Fargo transaction memo just reads "GUTTERS." A nearby line in the same bookkeeping export ("BLD*VALLEY RENTAL PURCHASE," a recurring ~$2,200/month charge) is a coincidence of row order, not the same transaction — confirmed by reading the underlying spreadsheet directly. That $2,200/month charge is a separate, unrelated vendor (an equipment rental company) and isn't part of this bucket.
+
+**ZELLE "Marlon" (tile) and ZELLE "GC" (pocket door frames) — checked, no new evidence, left as-is.** No email trail ties either to a specific address. The "GC" search surfaced an unrelated September 2025 email thread with Manning Building Supplies in St. Augustine, FL about pocket door frames — a coincidental keyword match on a different Florida purchase, not this $832.03 Zelle payment. Both remain at their existing confidence levels in the log.
+
+**Bottom line: the bucket shrinks from $17,276.03 to $14,623.53, and the one dollar that moved, moved for a good reason** — it was never Bald Rock money to begin with. The remaining eight items are unchanged and still need what the tracker already says they need (mostly: ask Joshua to identify a payee, or request an invoice directly).
+
+
+---
+
+## SECTION 28 — DUPONT PERSONAL CHECKING 831015: CHECK IMAGES PULLED, MULTIPLE FINDINGS
+
+Joshua pulled the check images himself for DuPont Community Credit Union personal checking account 10900000831015 (Joshua C Davis, 282 Bald Rock Rd) and uploaded a 7-page PDF covering checks from August 2020 through August 2024. Filed to `Taxes 2026/Bank Statements/DuPont 831015 Personal Checking (2020-2024)/` and mirrored into iCloud Drive at `03 Personal/02 Taxes/DuPont 831015 Personal Checking - Check Images (2020-2024)/` for search indexing. This is the first check-image pull to actually clear on any account in this file — every prior mention of "no check images" in this log applied to the DuPont *business* account (766518) and the DCCU hot-tub check (#1311), which remain unresolved. This account is a different, personal checking account.
+
+Of roughly 20 checks visible, most are personal (piano lessons, dog boarding, a plastic-surgery payment, two recurring $614.70 preauthorized ACH payments to JPMorgan Chase on a Hillary D. Holmes account, and one oddity — a $61.60 U.S. Treasury refund check made out to a third party, Benjamin M. Ratchliffe, that was deposited into this account; immaterial and not pursued). Six checks are property-related and break into three groups.
+
+### Confirmed Bald Rock — both sides of proof now exist
+
+**Red Rock Concrete, Invoice #1244 — fully reconstructed.** Pulling the actual invoice emails (not just the reminder) shows the invoice was revised downward twice as line items were removed:
+
+| Version | Total | Payment shown | Balance Due |
+|---|---|---|---|
+| 08/04/2022 (first) | $32,440.00 | $10,000.00 | $22,440.00 |
+| 08/04/2022 (reminder, final) | $28,622.00 | $10,000.00 | $18,622.00 |
+
+Two DuPont personal checks now bank-match this invoice directly:
+- **Check #144, 6/28/2022, $10,000.00, memo "282 Project"** — this is the exact "$10,000.00 Payment" already shown on the invoice. §1's Red Rock Concrete line (payment previously proven only by the invoice's own payment line) is now upgraded to a full bank match — Y/Y, no caveat.
+- **Check #103, cleared 8/8/2022, $8,672.00, memo "Walls"** — a *second*, previously unknown payment, made right around the final invoice date. This was not on the invoice (which predates or coincides with it) and was never found in any bank sweep. **It pays down more than half of the $18,622.00 "unpaid balance" that Priority #2 on the Plan sheet has been asking Joshua to explain since this file began.**
+
+**New true remaining balance: $18,622.00 − $8,672.00 = $9,950.00.** Still unresolved, still needs Joshua's memory or another document, but the mystery just got much smaller.
+
+**Valley Concrete Inc. — new vendor, confirmed Bald Rock.** Check #163, 5/1/2023, $6,330.00, memo "PP Patio Deck." A contract email from Joshua to Valley Concrete (6/21/2023) reads: *"This contract replaces any verbal or written contract between Joshua Davis and Valley Concrete. Pool Deck install at 282 Bald Rock Road..."* — direct confirmation. Valley Concrete's Invoice 1799 (due 5/28/2023) shows a **$12,330.00** total, so this $6,330.00 check may be a deposit with roughly **$6,000.00 still unaccounted for** — a new small open item, not yet added to any total pending confirmation of how the rest was paid.
+
+### Likely Bald Rock, no independent corroboration beyond the check itself
+
+- **Luis Pineda — $6,750.00 combined**, two checks: #127 (5/6/2023, $3,500.00, "Wall Problem") and #121 (5/10/2023, $3,250.00, "Stucco Wall"). No email trail for this payee, but nothing points elsewhere either. Added to Bucket 1 as proof-of-payment-only (no invoice), Medium confidence.
+- **Tyson Boffo — $10,000.00, check #105, 12/28/2022, memo "Pool Install."** Tyson Boffo is already tracked in Bucket 4 for $7,470.00 in PayPal/Venmo payments (2020–2026) with an open capital-vs-service question. This check is a different payment method and predates most of those, so it's additive: **Bucket 4's Tyson Boffo line rises from $7,470.00 to $17,470.00.** The word "Install" (vs. "service" or "cleaning") leans capital, which matters once Joshua's pending pricing/invoice reply comes back.
+- **Geiver Macariegos — $4,000.00, check #102, 4/19/2022, memo "202 Paint."** No email trail for this payee at all. The memo is legibly "202," not "282" — could be a mis-write, could be a different address. Filed to Bucket 3 (property-attribution-unconfirmed) rather than Bucket 1, pending Joshua's confirmation.
+
+### Confirmed NOT Bald Rock — a second property surfaced
+
+Three checks to the same payee, "Jeff Loparte," explicitly memo "14300 Repairs" or "14300 Reno-Thx": #107 ($1,940.00, 4/29/2022), #161 ($2,145.00, 6/10/2022), #143 ($2,344.27, 6/17/2022) — **$6,429.27 combined.** "14300" is **14300 Woods Walk Lane, Midlothian, VA 23112** — a separate rental property Joshua's 2021 IRS abatement filing lists as "Additional Property... Worth $275,000." iCloud Drive already has a folder from a prior tax year, `03 Personal/02 Taxes/2023/Personal Tax 2023/14300 Repairs 2022/`, holding ten "Check Image Search" PDFs — independent confirmation this exact repair spend was already understood to belong to Woods Walk, not Bald Rock. **None of this $6,429.27 has ever been in any Bald Rock total and none is being added now.**
+
+Same property, same payee family: **Check #106, 12/24/2021, $34,000.00, to Rachael Davis, memo "Payoff 1430 Woods Walk"** — matches "payoff ex for 14300 Woods Walk Lane" language in the same 2021 tax records. A personal payoff, unrelated to Bald Rock.
+
+**Two checks to the same "Jeff Loparte," #101 ($3,787.27, 12/3/2021) and #104 ($4,912.32, 3/3/2022), carry no address in the memo** (illegible/blank) and predate the three confirmed-Midlothian checks from the same payee. Given the same contractor did confirmed work at Woods Walk on this account, these two are genuinely ambiguous — **found and logged here, but not added to any Bald Rock total.** If Joshua recalls what Jeff Loparte was paid for in Dec 2021–Mar 2022 ("Carpet" is the best guess at check #101's memo), that would resolve $8,699.59 either way.
+
+### Net effect on the tracker
+
+- Bucket 1 (proof of payment): +$13,080.00 (Valley Concrete $6,330.00 + Luis Pineda $6,750.00), plus Red Rock's existing $10,000.00 line upgraded from partial to full bank match.
+- Bucket 2 (invoiced, payment not proven): Red Rock's unpaid-balance line drops from $18,622.00 to $9,950.00.
+- Bucket 3 (property attribution unconfirmed): +$4,000.00 (Geiver Macariegos).
+- Bucket 4 (capital-vs-service unconfirmed): Tyson Boffo line rises from $7,470.00 to $17,470.00.
+- $8,699.59 (two Jeff Loparte checks) and $40,429.27 (three Midlothian checks + the Rachael Davis payoff) are documented here but deliberately excluded from every Bald Rock total.
+
+
+---
+
+## SECTION 29 — SHRECKHISE: A SEVENTH PAYMENT FOUND, THIS ONE A PAPER CHECK, NOT BILL-PAY
+
+The same DuPont personal checking 831015 check-image pull (§28) also turned up a **Shreckhise** payment that doesn't belong to the $18,036.50 already proven in §1/§21 — because it's not from the same account or the same payment method.
+
+**Check #145, 5/3/2023, $4,000.00, payee "Shreckhise" (spelled "Streckhice" on the check face), memo "Landscape," cleared 5/5/2023.** The existing $18,036.50 figure is built entirely from **DuPont *business* account (766518) bill-pay withdrawals**: $8,536.50 (1/18/23) + $5,000.00 (10/18/23) + $1,000.00 (11/15/23) + $1,000.00 (12/27/23) + five $500.00 installments (2/5/24 → 3/21/24). Check #145 is a **paper check from the *personal* account (831015)**, dated 5/3/2023 — a date that falls in the gap between the January and October 2023 bill-pay withdrawals, not a duplicate of either. Different account, different payment method, different date: this is additional money, not a re-find of something already counted.
+
+**New Shreckhise Landscape & Design total: $18,036.50 + $4,000.00 = $22,036.50.** This also nudges Joshua's own recollection ("~$25-30K with Shreckhise") to within $3,000-8,000 of fully matching, down from $7,000-12,000 short.
+
+### Net effect on the tracker
+
+- Bucket 1 (proof of payment): Shreckhise line rises from $18,036.50 to $22,036.50 (+$4,000.00).
+- Plan sheet Priority #5 (Shreckhise) amount updated to match; status unchanged (still awaiting Shreckhise's own invoice reply — this find is a payment-side add, not an invoice).
+
+
+---
+
+## SECTION 30 — A THIRD BANK ACCOUNT: FARMING INFINITY LLC (DUPONT 912291), SIX PROPERTIES SHARING ONE CHECKBOOK
+
+Joshua pulled check images for a second DuPont Community Credit Union account, 912291, and uploaded a check-image PDF spanning 6/25/2022 through 8/2026. This account is titled **"FARMING INFINITY LLC"** with the printed mailing address "282 Bald Rock Rd, Verona, VA" — but per the Real Estate OS entity structure (`Life OS/REAL_ESTATE_OS.md`, corrected 2026-08-10), that address is simply the **registered-agent address shared by every Farming Infinity entity** — it is not evidence that a given check is a Bald Rock expense. "Farming Infinity, LLC" (no "Mountains") is specifically the *original* 2019 entity that owns **817 Richmond Avenue, Staunton VA** (commercial, leased to FirstCash) — a different property and a different LLC than **Farming Infinity Mountains LLC**, which is Bald Rock's actual owner (formed July 2026). Before the July 2026 entity split, this account appears to have functioned as the general real-estate operating account for the whole Farming Infinity family — checks in this one register carry memos tying them to **six different properties/purposes**: 282 Bald Rock Rd, 14300 Woods Walk Lane, 817 Richmond Ave, 148 Hardinberry St (Oak Ridge, TN), 844 Cypress Crossing Trail (FL), and VA SCC entity-filing fees. This is the same "one checkbook, multiple properties" risk already documented for the DuPont personal account in §28 — memo lines, not the letterhead, are what decide attribution here.
+
+### Confirmed Bald Rock (282) — new vendors and new proof
+
+- **Jacob Thomas — Insulation, $820.00, check #111, 10/27/2022, memo "Insulation 282."** New vendor, proof of payment only (no invoice found). Added to Bucket 1.
+- **Jeff Laporte — $2,077.87, check #112, 11/3/2022, memo "282 Bald Rock Proj."** Important correction to §28: Jeff Laporte's other checks (from the DuPont *personal* 831015 account) all carry "14300" memos and were excluded as Woods Walk work — but this check, from a *different* account, proves Laporte also did work directly at Bald Rock. Added to Bucket 1 as its own line, separate from the excluded Woods Walk checks.
+- **TAG Drywall — $1,300.00, check #115, 3/9/2023, memo "Drywall 282."** New vendor, proof of payment only. Added to Bucket 1.
+- **Shreckhise Landscape & Design — $5,000.00, check #116, 3/15/2023, memo "282 Landscape."** A **fourth, independent funding source** for Shreckhise, on top of the business bill-pay withdrawals (§21) and the DuPont-personal paper check (§29) — checked against every previously known Shreckhise date (1/18/23, 5/3/23, 10/18/23, 11/15/23, 12/27/23, five 2024 dates) and this 3/15/23 date matches none of them. **New Shreckhise Landscape & Design total: $22,036.50 + $5,000.00 = $27,036.50** — this now lands almost exactly inside Joshua's own recollection of "~$25-30K with Shreckhise" (§21), the closest this line has ever come to matching his memory.
+- **Tyson Boffo — $5,500.00, check #230, 5/22/2023, memo "POOL 282."** Explicit 282 memo. Added to Bucket 4 (capital-vs-service unconfirmed, same bucket as Boffo's other pool payments).
+- **Tyson Boffo — $475.60, check #103, 6/22/2022, memo "Pump Repair"** and **Tyson Boffo — $5,500.00, check #118, 3/23/2023, memo reads approximately "Pool Reno..." (partially illegible).** Neither memo names an address, but both are the same pool contractor already tied exclusively to Bald Rock's pool across §21/§22/§28 — added at Medium confidence, same treatment given to Luis Pineda in §28.
+
+**New Tyson Boffo running total: $17,470.00 (per §28) + $5,500.00 + $475.60 + $5,500.00 = $28,945.60.** This is now the single largest line in the capital-vs-service-unconfirmed bucket by a wide margin, and still has no invoice or pricing breakdown — Joshua's outstanding text to Boffo (Plan Priority #6) covers this.
+
+### Confirmed NOT Bald Rock — five more properties/purposes sharing this account
+
+- **14300 Woods Walk Lane** (Chesterfield County): Brian Lauhorn $1,500.00 "HVAC 14300" (6/25/22); Jeff Laporte $2,500.00 "14300 Work" (7/1/22); Jeff Laporte $2,345.00 "14300 Repairs" (7/7/22); Jeff Laporte $1,940.00 "14300" (9/15/22); R+B Paint $1,390.00 "14300 Paint" (9/16/22); Jeff Laporte $480.00, no legible memo but same-payee pattern (9/16/22); **Virginia Contractors Painters $7,450.00, memo "Paint 14300"** (5/26/23) — a large one; plus three Chesterfield County real-estate-tax checks ($147.20, $256.02, $338.00). None of this touches any Bald Rock total.
+- **817 Richmond Avenue, Staunton** (the *original* Farming Infinity LLC's own commercial building): Augusta Aluminum Gutters $1,650.00 "817 Gutters" (6/26/22); five City of Staunton utility payments ($36.92–$81.22 each, one explicitly memo'd "817"). Small dollars, clearly a different building.
+- **148 Hardinberry Street, Oak Ridge, TN (Roane County)** — a property not previously surfaced in this evidence log. Per `unified-search`, this is a long-held property (Joshua's own address as far back as 2016) now generating Airbnb income (occupancy-tax line items name Roane County) and mid-2026 was in a "two-step deed transfer" review to move it into **Farming Infinity Tennessee LLC**. This account shows real capital spend there in 2025-2026: Danny's Floor Store $2,752.00 and $2,000.00 (flooring), Roane County $902.00, City of Oak Ridge $890.00, Manning Building Supply $7,890.03 ("Trim & Base"), Drain Kings Plumbing $900.00. **None of this is Bald Rock** — flagging it here only because it shares this checkbook; a dedicated evidence log for 148 Hardinberry would need its own build if Joshua wants that property's basis substantiated too.
+- **844 Cypress Crossing Trail, FL** (Joshua & Hillary's personal residence — owned personally, no LLC, per Real Estate OS): two 2026 "Palencia POA" checks, $1,500.00 (application fee) and $500.00 (refundable deposit), memo "Cypress Crossing." Personal, not Bald Rock, not even a Farming Infinity entity expense technically — flagged as a same-checkbook artifact only.
+- **Entity administration:** a $50.00 check to "SCC" (Virginia State Corporation Commission), 4/10/2023 — an LLC filing fee, not a property expense.
+
+### Left unresolved, not added to any total
+
+Geo Terrain $884.45 "Soil Test" (8/1/22), a $2,400.00 "Gutters" check to an illegibly-named payee (10/5/22), McLain's Pump Service $1,265.00 "Pump Repair" (4/10/23), and a $275.00 "Ground/Soil" check (3/16/23) carry no address in their memos and aren't confidently tied to Bald Rock or any other property — logged here for completeness, not counted anywhere. Recurring small "Comfort Cleaning" checks ($150-225, several dates) are routine STR housekeeping, not capital improvements, and were left out of this evidence log entirely regardless of property — they don't belong in a cost-segregation basis study either way.
+
+### Net effect on the tracker
+
+- Bucket 1 (proof of payment): +$820.00 (Jacob Thomas) + $2,077.87 (Laporte, 282) + $1,300.00 (TAG Drywall) + $5,000.00 (Shreckhise, 4th source) = **+$9,197.87**.
+- Bucket 4 (capital-vs-service unconfirmed): Tyson Boffo line rises from $17,470.00 to **$28,945.60** (+$11,475.60).
+- Shreckhise Landscape & Design (within Bucket 1) rises from $22,036.50 to **$27,036.50**.
+
+---
+
+## SECTION 31 — DUPONT BUSINESS ACCOUNT 766518 CHECK IMAGES: CONFIRMED VALLEY PAWN, NOT BALD ROCK
+
+Joshua separately uploaded a 125-page check-image PDF for DuPont Community Credit Union account 766518, labeling it himself as "dupont old full circle finance dba valley pawn account." A sampled read across the full date range (2017 through 2025) confirms that label: every check is Full Circle Finance Inc / Valley Pawn operating activity — employee payroll and bonuses (dozens of named individuals, memo "PR"/"Payroll"/"Bonus"), store rent (DWS Properties, RBSA LLC, IWC Properties, BZA Spotswood LLC), city/town business licenses and taxes for Valley Pawn's own store cities (Staunton, Waynesboro, Culpeper, Harrisonburg, Lexington), FFL/gun-dealer fees to the Virginia State Police, and a cluster of 2020 repair/renovation checks explicitly memo'd **"817 Repair"/"817 Renovation"/"817 Plumbing"** — the *other* Farming Infinity property (817 Richmond Ave), not Bald Rock. **Nothing in this account carries a "282" or Bald Rock memo anywhere in the sampled pages.** This account does not resolve the long-standing DuPont-business 514-check attribution question referenced elsewhere in this file — that gap remains open, and this particular account is confirmed to be the wrong place to look for it. Filed to the Mac and indexed for search per Joshua's usual practice, but **not** folded into any Bald Rock bucket.

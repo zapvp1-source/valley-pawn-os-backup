@@ -9,13 +9,36 @@ gets answered is worse than never running it. Next run reads OPEN LOOPS first an
 
 | Opened | Format | Where | What has to happen | Due |
 |---|---|---|---|---|
-| 2026-08-22 | `eng_stock_poll` | Brand FB + IG + X, publishing 8/23 5:30 PM | Tally the category votes in the comments and **post the result** — plus what we actually bought because of it. The post promises this out loud. | Run of 2026-08-29 |
-| 2026-08-22 | `eng_best_find` | Waynesboro FB, publishing 8/24 5:45 PM | Reply to **every** answer individually. This format's whole premise is "we'll read every one of them." | Rolling, verify 2026-08-29 |
-| 2026-08-22 | `hum_overheard` | Brand FB + IG, publishing 8/26 6:00 PM | Answer the "what's lost its key" replies. Post says "we'll go first in the comments" on IG — so go first. | Rolling, verify 2026-08-29 |
+| 2026-08-22 | `eng_stock_poll` | Brand FB + IG + X, publishing 8/23 5:30 PM | **Partially closed 2026-09-02.** Only 1 real comment ever came in (Bobby Perkins, a joke — "Corpolite"), already replied to by the Page (reply timestamped ~8/31, presumably the missed run before it died). No real category votes exist to tally. Recommend Joshua's call: skip the "we bought X" reveal post since there was no real data, or roll it into next poll's framing. | Needs Joshua's call, not auto-closed |
+| 2026-08-22 | `eng_best_find` | Waynesboro FB, publishing 8/24 5:45 PM | **Closed 2026-09-02.** Verified via Business Suite Comments column: 0 comments ever received. Nothing to reply to. | Closed |
+| 2026-08-22 | `hum_overheard` | Brand FB + IG, publishing 8/26 6:00 PM | **Closed 2026-09-02.** Verified via Business Suite Comments column: 0 comments ever received. Nothing to reply to. | Closed |
 
 No Guess the Price or What Is This Thing has run yet, so there is no price/ID reveal outstanding.
 
 ---
+
+## 2026-09-02 (Wed) — Fleet Guardian recovery run for missed 2026-08-31 3:45pm run
+
+The 8/31 scheduled run silently died: no post ever landed in `#social-media` for it, but a reply to
+Bobby Perkins' comment on the 8/23 stock-poll post is timestamped ~8/31 and signed "Valley Pawn ·
+Author" — so the run partially executed (at least some of Step 6) before dying, with nothing logged.
+
+**Duplicate guard:** confirmed via `#social-media` (C0BMRC2LN3D) — no Lane D post exists for week of
+8/31. Genuinely missing; proceeded.
+
+**Reply sweep (Step 6):** checked all 6 Pages (Brand, Harrisonburg, Culpeper, Waynesboro, Lexington,
+Roanoke) via Business Suite's Content grid, Comments column, last 7 days (Aug 27–Sep 2) — **zero
+unanswered comments found anywhere.** Also checked the three carried-over open loops from the
+2026-08-22 run (see OPEN LOOPS table above) — all clear or already answered. **Comments replied to
+this run: 0** (nothing was unanswered).
+
+**Steps 1–5 (staging new posts) and Step 8 reveal post: NOT attempted this run** — time budget was
+spent entirely on the duplicate guard and the full 6-page reply sweep (including tracking down and
+verifying the three carried-over open loops individually, which took longer than a normal week
+because they spanned two different Business Portfolios in Meta Business Suite). Next run should
+prioritize Steps 1–5 first since the reply sweep is now fully caught up.
+
+Logged to `#social-media`.
 
 ## 2026-08-22 (Sat) — first run of the lane
 

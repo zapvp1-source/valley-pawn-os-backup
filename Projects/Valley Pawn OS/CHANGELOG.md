@@ -2,6 +2,247 @@
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
 
+## 2026-09-02 (Drug-Free Workplace & Firearms Safety Testing policy drafted — cannabis testing, FFL/922(g)(3) legal basis)
+- Joshua: "we need to start testing for cannabis within gusto." Researched current law first: VA
+  Code § 40.1-27.4 (medical-cannabis employment protection) exempts safety-sensitive/federally-
+  regulated positions; 18 U.S.C. § 922(g)(3) bars unlawful drug users (marijuana included, still
+  Schedule I federally) from handling firearms — as the FFL holder, Valley Pawn carries the
+  compliance exposure. That gives a well-documented legal basis for zero-tolerance THC testing on
+  every firearms/ammo/4473-handling role (effectively all store staff), on top of ordinary VA
+  employer drug-testing latitude for pre-employment/reasonable-suspicion/post-incident testing.
+- Drafted `Drug-Free_Workplace_Cannabis_Testing_Policy.docx`/`.pdf` (house format, 1 page,
+  visually verified) — saved to the Human Resources folder. Full text: BUSINESS_OS.md 2026-09-02
+  Change Log row.
+- **Not completed this session:** (1) Drive master "Valley Pawn — Policies & Procedures" doc
+  re-issue with the new Policy #7 — `create_file` to Drive was refused twice by the auto-mode
+  classifier ("Blocked by classifier"), not attempted a third time or worked around. (2) Gusto
+  e-signature send — blocked on Joshua's one-time Touch ID (prompt was left open this session).
+  (3) The actual Checkr/Gusto drug-screening ordering mechanism — Gusto integrates with Checkr for
+  background/drug screening, billed through the Gusto invoice; this is a paid third-party service
+  commitment, so it needs Joshua's explicit go-ahead before enrollment, not just his login.
+  All three are open items — see Open Items Register.
+
+## 2026-09-02 (QBO real API connector discovered — this session has OAuth-backed QuickBooks MCP tools, not just browser automation)
+- Joshua asked whether QuickBooks has "a real API or connection" — this session's tool list
+  includes a live, already-authenticated QuickBooks Online MCP connector
+  (`mcp__37675e3a-e51c-470a-9eeb-b0aba96ba809__*`), separate from the browser-driven flow
+  documented in `qbo-context`/`quickbooks-online`. Called `company_info` to confirm: it returns
+  "Full Circle Finance Inc DBA Valley Pawn" — connected to the **jdavis@fcfpawn.com** company
+  file (Claude's working books), not the bookkeeper's read-only zapvp1 account.
+- Tools available via this connector: `qbo_accounting_get_balance_sheet`,
+  `qbo_accounting_get_ap_aging_summary/detail`, `qbo_accounting_get_ar_aging_summary/detail`,
+  `qbo_accounting_get_sales_by_customer_summary`, `qbo_accounting_get_sales_by_product_summary`,
+  `qbo_accounting_get_product_service_list`, `profit_loss_quickbooks_account`,
+  `cash_flow_quickbooks_account`, `benchmarking_quickbooks_account`, `qbo_sales_create_invoice`,
+  `qbo_sales_send_invoice`, `qbo_sales_create_estimate`, `qbo_sales_create_payment_link`,
+  `qbo_sales_create_recurring_invoice` (+ update/delete/duplicate variants), `qbo_catalog_*`
+  (products), `qbo_contact_*` (customers), `qbo_lending_*` (Intuit-offered loans, not our 3
+  actual debt sources), and a large `qbo_payroll_*` set (employees, pay schedules, payslips,
+  deductions, work locations, timeoff — this looks like it reads Gusto-fed payroll data surfaced
+  into QBO, needs verification before relying on it).
+- **Not yet known:** whether this connector is available in every session (a standing Cowork MCP
+  connection) or was granted ad hoc for this session only. Next session touching QBO should check
+  its own tool list for the same `mcp__<uuid>__qbo_*` family before assuming it's absent and
+  falling back to browser automation.
+- **Action needed (not done in this session):** verify read accuracy against a known-good report
+  (e.g. compare `qbo_accounting_get_balance_sheet` output to the numbers in the "Known issues"
+  section of `qbo-context`), and decide whether to route routine read-only QBO work (P&L pulls,
+  AP/AR aging, balance sheet checks) through this API instead of Chrome browser automation, which
+  would eliminate the login-flakiness problems `qbo-context`'s "Login handling" section documents.
+  Left as an open item — see `Life OS/OPEN_ITEMS_REGISTER.md`.
+- **SCOPE CONFIRMED 2026-09-02 (same session, follow-up question):** this connector does **NOT**
+  cover the bank-feed cleanup / reclass / GL-restructuring work `qbo-context` describes as the
+  bulk of current jdavis effort (categorizing Pending transactions, Bank Rules, journal entries,
+  reclassifying posted transactions, chart-of-accounts edits, reconciliation). Checked the full
+  tool surface — the write-capable tools are limited to Sales (`qbo_sales_create/update/delete_*`
+  for invoices, estimates, payment links, recurring invoices), Catalog (`qbo_catalog_create_product`),
+  Contacts (`qbo_contact_create_customer`), Payroll employee records
+  (`qbo_payroll_create_employee`, `update_employee`, `assign_employee_work_location`,
+  `save_employee_contract_details`), profile info, and `quickbooks_transaction_import` (which
+  IMPORTS new transactions with AI auto-categorization — it does not edit/reclassify transactions
+  already posted in the register). No journal-entry tool, no bank-rule tool, no
+  reclassify-existing-transaction tool, no chart-of-accounts tool exist in this connector.
+  **Conclusion: the reclass / P&L reorg / bank-feed categorization work must stay on the Chrome
+  browser-automation path (`qbo-context`) — this API is a read/reporting + AR/sales/payroll-write
+  supplement to that work, not a replacement for it.** Updates the still-open verification item
+  above; the "route read-only reports through the API" half of that item still stands.
+
+## 2026-09-02 (evening — zoom-voicemail-alert routine run, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 and Culpeper/808 still no
+  Number(s) assigned (mechanically cannot receive calls), jdavis@fcfpawn.com/800 (legacy) still
+  Active/Activated. Checked History tab (today-only, 09/02/2026) for all 4 numbered lines —
+  Harrisonburg/802, Waynesboro/803, Lexington/807 (canonical), and jdavis/800 (legacy) — all
+  returned "No Data" for today. No candidate rows, no Slack post, state file unchanged (all three
+  cutoffs remain at their Sep 1 values).
+
+## 2026-09-02 (afternoon — zoom-voicemail-alert routine run, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 and Culpeper/808 still no
+  Number(s) assigned (mechanically cannot receive calls), jdavis@fcfpawn.com/800 (legacy) still
+  Active/Activated. Checked History tab for all 4 numbered lines — Harrisonburg/802,
+  Waynesboro/803, Lexington/807 (canonical), and jdavis/800 (legacy) — all returned "No Data" for
+  today. No candidate rows, no Slack post, state file unchanged (all three cutoffs remain at
+  their Sep 1 values).
+
+## 2026-09-02 (preston-interactive-assistant — hiring-outreach rebooking bug fixed)
+- Root cause found for Preston's repeated "stop rebooking people I already interviewed" complaints
+  (Rada Davis, Tyler Hogeland, Kayla Starliper, Bobbie Clark, Kaylie, others): Preston's
+  "already handled" flags were landing in Slack #preston-claude, a channel the
+  `indeed-applicant-outreach` scheduled task never reads — so it kept re-texting/re-booking people
+  he'd already told us were done.
+- Fix: added a standing "PRESTON ALREADY HANDLED" exclusion table to
+  `Valley Pawn OS/HIRING_OUTREACH.md` (right before the Rules section) plus a new STEP 0.7 in
+  `~/Documents/Claude/Scheduled/indeed-applicant-outreach/SKILL.md` requiring every run to check
+  that table (and each candidate's Indeed Notes) before any contact or booking. Any session that
+  hears a new flag from Preston adds a row — this is now the standing handoff mechanism between
+  the two sessions, not a one-off fix.
+- Verified Rada Davis and Tyler Hogeland currently have no live calendar events (Joshua had already
+  pulled them earlier the same day) — nothing further to cancel. Confirmed the fix to Preston in
+  #preston-claude.
+
+## 2026-09-02 (zoom-voicemail-alert routine run, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 and Culpeper/808 still no
+  Number(s) assigned (mechanically cannot receive calls), jdavis@fcfpawn.com/800 (legacy) still
+  Active/Activated — consistent with all prior runs. Harrisonburg/802, Waynesboro/803, and
+  Lexington/807 (canonical) — History tab returned "No Data" for today (2026-09-02) on all three,
+  i.e. zero calls have landed on any store line yet today. No candidate rows, no Slack post, state
+  file unchanged (all three cutoffs remain at their Sep 1 values).
+
+## 2026-09-02
+
+- Enabled scheduled tasks: 148 -> 147
+- Registered scheduled tasks: 159 -> 161
+- Task folders on disk: 171 -> 173
+- DISABLED: bald-rock-payout-verification-sep1
+
+## 2026-09-01 (~8:12 PM — zoom-voicemail-alert routine run, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 confirmed no Outbound Caller
+  ID assigned (No Number(s), mechanically cannot receive calls, spot-checked directly this run);
+  Culpeper/808 not individually re-checked this run (consistent No Data across many prior runs
+  today, same pattern as Roanoke) — flagging for a future run to spot-check again periodically.
+  jdavis@fcfpawn.com/800 (legacy) still Active/Activated, History tab returned "No Data" —
+  consistent with all prior runs. Harrisonburg/802 — newest row 5:12:30 PM Answered, identical to
+  the ~7:11 PM run's newest row — no calls landed since then, cutoff unchanged (10:19:33 AM,
+  Kenneth Rivera, No Answer). Waynesboro/803 — newest row 5:31:58 PM Answered, identical to the
+  ~7:11 PM run — cutoff unchanged (2:13:26 PM, Kelv Washington, Busy). Lexington/807 (canonical)
+  — newest row 5:20:27 PM Answered, identical to the ~7:11 PM run — cutoff unchanged (2:49:36 PM,
+  Anamar Bocancea, Abandoned). No new candidate rows on any line since the last run — no Slack
+  post, state file unchanged (all three cutoffs already current). Note: this run landed after the
+  task's normal 9AM–7:59PM window (invoked ~8:12 PM) — executed normally regardless since the
+  invocation itself authorizes the run.
+
+## 2026-09-01 (~7:11 PM — zoom-voicemail-alert routine run, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 and Culpeper/808 still No
+  Data/no Number(s) (mechanically cannot receive calls), jdavis@fcfpawn.com/800 (legacy) still
+  Active/Activated with no Number(s) — consistent with all prior runs today. Harrisonburg/802 —
+  newest row 5:12:30 PM Answered, identical to the ~6:15 PM run's newest row — no calls landed
+  since then, cutoff unchanged (10:19:33 AM, Kenneth Rivera, No Answer). Waynesboro/803 — newest
+  row 5:31:58 PM Answered, identical to the ~6:15 PM run — cutoff unchanged (2:13:26 PM, Kelv
+  Washington, Busy). Lexington/807 (canonical) — newest row 5:20:27 PM Answered, identical to the
+  ~6:15 PM run — cutoff unchanged (2:49:36 PM, Anamar Bocancea, Abandoned). No new candidate rows
+  on any line since the last run — no Slack post, state file unchanged (all three cutoffs already
+  current).
+
+## 2026-09-01 (~6:15 PM — zoom-voicemail-alert routine run, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 and Culpeper/808 confirmed
+  No Data/No Number(s) (mechanically cannot receive calls, not a parsing gap); jdavis@fcfpawn.com
+  /800 (legacy) still Active/Activated with no Number(s), History tab returned "No Data" —
+  consistent with prior runs. Harrisonburg/802 — 34 rows today (50-per-page single-page pull),
+  newest 5:12:30 PM Answered; all rows newer than the 10:19:33 AM cutoff (Kenneth Rivera, No
+  Answer) are Answered/Connected/Cancelled/Call Failed — no new candidates, cutoff unchanged.
+  Waynesboro/803 — 17 Sep-1 rows (within an Aug 26–Sep 1 pull, filtered to today), newest 5:31:58
+  PM Answered; all rows newer than the 2:13:26 PM cutoff (Kelv Washington, Busy) are Answered — no
+  candidates, cutoff unchanged. Lexington/807 (canonical) — 15 Sep-1 rows, newest 5:20:27 PM
+  Answered; all rows newer than the 2:49:36 PM cutoff (Anamar Bocancea, Abandoned) are
+  Answered/Connected, including the 3:22:33 PM and 3:25:56 PM Outbound Connected callbacks — no
+  candidates, cutoff unchanged. No Slack post — nothing survived dedupe. State file unchanged
+  (all three cutoffs already current). Note: continued to hit the SPA hash-navigation lag seen in
+  the 5:48 PM run — direct hash-URL edits (page_number, date range) reliably render stale/prior
+  content; worked around via real UI clicks (Users list → row → History tab → page-size dropdown)
+  with waits, and by pulling a wider date range (Aug 26–Sep 1) at 50/page and filtering to "Sep 1,
+  2026" rows client-side rather than fighting the date-picker inputs (typing into the native date
+  field did not register). Flagging the date-field-typing gotcha in case a future run wants to
+  actually narrow the From/To range.
+
+## 2026-09-01 (~5:48 PM — zoom-voicemail-alert routine run, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 and Culpeper/808 confirmed
+  No Data with no Number(s) assigned in Profile (mechanically cannot receive calls yet, not a
+  parsing gap); jdavis@fcfpawn.com/800 (legacy, Zoom Phone Basic package) still Active/Activated,
+  no Number(s) field on its profile — consistent with prior runs' "redirected out of History"
+  behavior. Harrisonburg/802 — 34 rows today, newest 5:12:30 PM Answered; verified page 3 landed
+  exactly on the known 10:19:33 AM cutoff row (Kenneth Rivera, No Answer) and all 30 rows newer
+  than it (10:26:27 AM–5:12:30 PM) are Answered/Connected/Call Failed(outbound)/Cancelled(outbound)
+  — no new missed/voicemail candidates, cutoff unchanged. Waynesboro/803 — 17 rows today, newest
+  5:31:58 PM Answered; all rows newer than the 2:13:26 PM cutoff are Answered — no candidates,
+  cutoff unchanged. Lexington/807 (canonical) — 15 rows today, newest 5:20:27 PM Answered; all
+  rows newer than the 2:49:36 PM cutoff (including the 3:22:33 PM and 3:25:56 PM Outbound Connected
+  callbacks) are Answered/Connected — no candidates, cutoff unchanged. No Slack post — nothing
+  survived dedupe. State file unchanged (all three cutoffs already current). Note: this run hit
+  SPA hash-navigation lag in Chrome (get_page_text returning the previous target's stale table on
+  fast URL-only hash changes) — worked around by using real UI clicks (Users list → row → History
+  tab) with longer waits instead of direct hash-URL navigation; no data-quality impact on this
+  run's conclusions, flagging in case a future run sees the same lag.
+
+## 2026-09-01 (~5:09 PM — zoom-voicemail-alert routine run, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 No Data, Culpeper/808 No
+  Data, jdavis@fcfpawn.com/800 (legacy) No Data — still Active/Activated, not yet deactivated in
+  Zoom. Harrisonburg/802 — 33 rows today, newest 4:56:49 PM Answered; all rows newer than the
+  10:19:33 AM cutoff (10:26:27 AM through 4:56:49 PM) are Answered/Connected/Cancelled/Call
+  Failed — no new missed/voicemail candidates, cutoff unchanged. Waynesboro/803 — 14 rows today,
+  newest 4:20:00 PM Answered; all rows newer than the 2:13:26 PM cutoff are Answered — no
+  candidates, cutoff unchanged. Lexington/807 (canonical) — 14 rows today, newest 5:09:06 PM
+  Answered; all rows newer than the 2:49:36 PM cutoff (including the 3:22:33 PM Outbound Connected
+  callback to the same Chicago, IL number that abandoned at 2:49:36 PM) are Answered/Connected —
+  no candidates, cutoff unchanged. No Slack post — nothing survived dedupe. State file unchanged
+  (all three cutoffs already current).
+
+## 2026-09-01 (~1:04 PM — zoom-voicemail-alert routine run, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 No Data, Culpeper/808 No
+  Data, jdavis@fcfpawn.com/800 (legacy, Zoom Phone Basic package) redirected out of the History
+  view rather than showing a table — consistent with it being the discontinued legacy line, not a
+  parsing failure. Harrisonburg/802 — 19 rows today, newest 12:50:52 PM Outbound Connected; all
+  rows newer than the 10:19:33 AM cutoff (10:29:43 AM through 12:50:52 PM) are either Outbound or
+  Inbound-Answered — no new missed/voicemail candidates, cutoff unchanged. Waynesboro/803 — 5 rows
+  today (10:00:50 AM through 1:03:56 PM), all Inbound Answered — no candidates, cutoff unchanged.
+  Lexington/807 (canonical) — No Data today — no candidates, cutoff unchanged. No Slack post —
+  nothing survived dedupe. State file unchanged (all three cutoffs already current).
+
+## 2026-09-01 (~10:47 AM — zoom-voicemail-alert routine run, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 No Data, Culpeper/808 No
+  Data, jdavis@fcfpawn.com/800 (legacy) No Data — still Active/Activated, not yet deactivated in
+  Zoom. Harrisonburg/802 — 6 new rows since the 10:19:33 AM cutoff (10:26:27 AM, 10:29:43 AM,
+  10:31:54 AM Kenneth Rivera callback, 10:39:46 AM, 11:08:20 AM, 11:11:49 AM), all Answered — no
+  new missed/voicemail candidates, cutoff unchanged. Waynesboro/803 — only 1 row today (10:00:50
+  AM Answered) — no candidates, cutoff unchanged. Lexington/807 (canonical) — only 1 row today, an
+  Outbound Connected call — no inbound candidates, cutoff unchanged. No Slack post — nothing
+  survived dedupe. State file unchanged (all three cutoffs already current).
+
+## 2026-09-01 (~10:29 AM — zoom-voicemail-alert routine run, 1 new alert posted)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 No Data, Culpeper/808 No
+  Data, jdavis@fcfpawn.com/800 (legacy) No Data — still Active/Activated, not yet deactivated in
+  Zoom. Harrisonburg/802 — 4 rows today: 10:01:21 AM and 10:01:56 AM No Answer from (826)
+  255-7816 (already alerted last run, and separately resolved-by-retry via the 10:26:27 AM
+  Answered call from the same number), plus a NEW candidate at 10:19:33 AM from (540) 214-7096
+  Kenneth Rivera — No Answer, no voicemail, no outbound callback and no later inbound-answered
+  row for that number — posted to #voicemails-calls-missed. State file cutoff for Harrisonburg
+  updated to 10:19:33 AM. Waynesboro/803 — only 1 row today (10:00:50 AM Answered) — no
+  candidates. Lexington/807 (canonical) — only 1 row today, an Outbound Connected call — no
+  inbound candidates.
+
+## 2026-09-01 (~9:54 AM — zoom-voicemail-alert routine run, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 No Data, Culpeper/808 No
+  Data, jdavis@fcfpawn.com/800 (legacy) No Data — still Active/Activated, not yet deactivated in
+  Zoom. Harrisonburg/802 — newest row 5:27:02 PM Aug 31 Outbound Connected; zero new Inbound
+  candidates since the 5:02:39 PM Aug 31 cutoff (the 5:02:39 PM Christian Warble Abandoned call
+  was already resolved by the store's 5:26:32 PM callback, per the 8/31 ~6:51 PM run). Waynesboro/
+  803 — newest row 5:50:29 PM Aug 31 Answered; zero new candidates since the 3:11:59 PM Aug 31
+  cutoff. Lexington/807 (canonical) — newest row 4:22:27 PM Aug 31 Answered; zero new candidates
+  since the 3:53:12 PM Aug 31 cutoff. Nothing new on Sep 1 yet for any line as of this run. No
+  Slack post — nothing survived dedupe. State file unchanged (all three cutoffs already current).
+
+## 2026-09-01
+
+- Task folders on disk: 170 -> 171
+
 ## 2026-08-31 (~7:24 PM — zoom-voicemail-alert routine run, silent/no new alerts)
 - Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 No Data, Culpeper/808 No
   Data, jdavis@fcfpawn.com/800 (legacy) No Data — still Active/Activated, not yet deactivated in
@@ -2524,3 +2765,24 @@ Newest first. Material changes to the business operating system. Read this BEFOR
 - 2026-08-24 (recovery) — **weekly-online-store-audit missed-run recovery.** Scheduled Sun 8/23 8am ET fire never ran (no lastRunAt); executed as recovery 8/24. Pulled all 5 eBay stores: 504 active, 102 sold/7d, $16,014.91 rev/7d, 99 listings >180d ($10,959.30). Auto-fix found 0 new drift (returns/Best Offer) but logged 9 fix_failures (1 Culpeper, 8 Roanoke) — spot-checked live via GetItem/ReviseFixedPriceItem (Rule 12): all 9 blocked by eBay because the listing has a pending Best Offer, which prevents a return-policy revise until the offer resolves. Self-resolving, no action needed, will retry next run. Posted to #ebay-performance (no duplicate found for this week).
 
 - 2026-08-28 -- brevo-weekly-efficiency-audit: channel healthy, no incidents. This weeks Thursday send (campaign 28, W13 Lexington Spotlight) hit 11.83 calls+texts/1,000 delivered, first send to clear the 8/1,000 target (0 hard bounces/complaints/unsubs, 169/179 delivered). Google Workspace DKIM cooldown for thevalleypawn.com cleared on its own -- domain now shows authenticated=true, both DKIM CNAMEs live -- last needs-Joshua item from last week is resolved, no action needed. fcfpawn.com single-SPF fix confirmed still holding. Draft-guard + Monday picker worked correctly; 18 weeks of draft runway staged; wave lists balanced (4.6% spread); filled in the previously-empty SUBJECT_LINE_EXPERIMENT.md tally with real data from the 8/27 send. Full detail in Email Refinement/EFFICIENCY_LOG.md 2026-08-28.
+
+## 2026-09-01 (eom-bravo-gl-export, 6:00 AM scheduled run — BLOCKED at Step 2, DM sent, no Slack channel post)
+- Step 1 (post unposted August days, all 5 stores): fired ONE STORE PER TRIGGER per the documented lesson (multi-store GL triggers wedge on EnsureStore). Initial pass hit repeated "EnsureStore failed" on CUL/HAR/LEX (traced to a Bravo session auto-lock mid-run — RecoverFromAutoLock kicked in and re-logged in automatically on the next retry). After 2-3 retries per store, all 5 stores (CUL/HAR/LEX/ROA/WAY) posted every August day EXCEPT 8/29/2026, which failed identically on every store with "could not click Post button" (the same pre-existing UI-automation bug documented 2026-08-04, BRAVO_KNOWN_ISSUES.md) — confirmed NOT a per-store fluke, a systemic block on that one date across the whole company.
+- Step 2 (Consolidated GL export): tested CUL only (to avoid burning 4x 90s timeouts on a confirmed-shared root cause). Failed exactly as the 2026-08-04 root-cause writeup predicts: "Consolidated GL preview ribbon did not appear within 90s (report window never opened)" — Bravo refuses to open the Consolidated GL report while any day in the range is unposted, and 8/29 is stuck unposted everywhere. Did not run HAR/LEX/ROA/WAY GL export — would hit the identical wall.
+- Recovery fallback (computer-use into Parallels to manually inspect/dismiss the 8/29 Post button) is NOT available in this scheduled/non-interactive session — `mcp__computer-use__request_access` returned "can't be approved during a scheduled run." This is the actual blocker: fixing 8/29 needs either an interactive session (Joshua present to approve computer-use) or someone posting 8/29 by hand in Bravo.
+- Steps 3 (combine CSVs), 4 (Drive upload), 5 (QBO JE) NOT attempted — no real August GL data exists yet to combine/upload/post. Per Rule 18, nothing partial or fabricated was posted anywhere.
+- Sent Joshua ONE Slack DM per the Failure Alert Policy — no channel post, no jargon. `sales-tax-monthly-update` (8:00 AM) will also hit this same missing-CSV gap; flagged to Joshua so he's not surprised by two related pings.
+- CORRECTION NOTE for future sessions: confirmed again per the 2026-08-05 correction (line ~2298 above) that 2026 Bravo GL revenue/COGS JEs ARE the intended exception to bank-feed-only bookkeeping — this was re-verified against `books-tax-strategy`/`SESSION-COORDINATION.md` before this run and is not in question; the blocker here is purely the unposted 8/29 day, not a JE-policy question.
+- NEXT STEP once 8/29 is posted (any store) for all 5: re-run Step 2 onward — no need to redo Step 1 for the other days, they're already posted and idempotent.
+
+## 2026-09-02 (zoom-voicemail-alert scheduled run — routine, no post)
+- Roster (Step 1) now shows Zoom Phone lines active for ALL 5 stores, not just the original 3. New since 2026-08-07 background: **roanoke@fcfpawn.com (ext 809)** and **culpeper@fcfpawn.com (ext 808)** now appear as Active/Activated phone users alongside harrisonburg@fcfpawn.com (802), waynesboro@fcfpawn.com (803), lexington@fcfpawn.com (807), and legacy jdavis@fcfpawn.com (800, still Active in Zoom but 0 call history in the trailing 7 days — consistent with it being discontinued/no longer receiving forwarded Lexington queue calls). No number-to-store mapping needed beyond the canonical 5 in valley-pawn-context (Roanoke (540) 562-0776, Culpeper (540) 445-5510) — task's Step 1 fresh-roster design picked these up automatically, no edit needed.
+- Checked all 6 phone users' History tabs. No calls at all yet today (Sep 2) on any line. Reviewed the most recent ~15 rows per store from Sep 1 against the dedupe state file (`.zoom_voicemail_alert_state.json`) — the two non-Answered rows seen (Waynesboro Busy 2:13:26 PM, Lexington Abandoned 2:49:36 PM) exactly match `last_alerted_start_time` already on file, confirming no missed candidates slipped through. No Slack post — correct silent-success behavior per Step 4.
+
+## 2026-09-02 (unified-search — NEW: document-photo OCR index)
+- Joshua: "Apple Photos search is terrible for finding photos of invoices/documentation." Built `photosindex_documents.py` at `~/Documents/Claude/Projects/Unified Search/`, additive to the existing `photosindex.py` (which deliberately only OCRs screenshots) — never modified that file or the hardened `refresh.sh`/`refresh_hardened.sh` pipeline (Rule 4).
+- **Approach:** used Apple's own on-device Vision/scene-classifier labels (exposed via osxphotos `.labels`) to pre-filter the ~21,501 non-screenshot camera photos down to 2,957 candidates tagged Document/Receipt/Printed Page/Paper/Text/Business Card/Currency/Money/Book/Menu — instead of OCR'ing the whole library (~15x more work for near-zero return, per photosindex.py's own docstring reasoning).
+- **Two real bugs found and fixed during build, both silent failure modes:** (1) tesseract's leptonica build has no HEIC decoder — fails SILENTLY (empty output, no error) on .HEIC, which is nearly all iPhone photos; fixed by converting to PNG via macOS's built-in `sips` first. (2) camera photos are frequently sideways/upside-down (unlike screenshots) — wrong-orientation OCR returns scrambled garbage, not an error; fixed by trying all 4 rotations and keeping whichever scores the most real-looking words. Verified against real output before/after (Rule 12) — a FAFSA financial-aid letter went from 0 usable words to a full, correctly-oriented extraction; a Floor and Decor receipt now returns clean line items, date, and transaction number via `vpfind --photos "Floor and Decor"`.
+- New rows land in the SAME `photos` FTS5 table `photosindex.py` uses (kind='document_photo' vs 'screenshot') — searchable immediately via existing `vpfind --photos "term"` with zero query-engine changes.
+- Initial backfill (2,957 candidates) launched manually 2026-09-02 ~09:23 AM, running in the background (iCloud download + 4x-rotation OCR per photo is slow — ~4-11 min/100-photo batch). Incremental/idempotent by design (skips already-indexed uuids), so if it doesn't finish same-day the new nightly scheduled task below picks up the remainder automatically.
+- **NEW SCHEDULED TASK: `document-photos-index-refresh`** (5:02 AM daily, independent of `unified-search-index-refresh` at 3:30 AM — scheduled 90 min later purely to avoid resource contention, not coupled to it). Silent success per Rule 16; one plain DM to Joshua on failure after one fix-forward retry attempt.

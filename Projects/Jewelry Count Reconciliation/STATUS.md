@@ -910,3 +910,21 @@ Posted to #jewlery-counts. No DM to Joshua - no anomalous OVER variance, all var
 
 ### Repeat check vs prior logged run (2026-08-27, the last RUN RECORD in this file before tonight)
 HAR Pendants ran -7 on 8/27 and -6 tonight, same direction and similar magnitude across the two most recent recorded HAR nights (8/28-8/30 were not logged in this file) - worth watching if it repeats again, may be a scope difference specific to HAR Pendants rather than one-night noise, not large enough to call loss. No other repeating pattern versus 8/27 for CUL, LEX, ROA, WAY.
+
+## RUN RECORD — 2026-09-02 (Wednesday) — jewelry-onhand-nightly-pull
+Open stores: CUL only (Wednesday gate).
+Freeze window: Bravo pull ran 20:36–20:47 EDT (inside 6PM close → 10AM reopen freeze window). PM count sheet posted by Sandi at 6:16 PM to #end-of-day, header confirmed 'VALLEYPAWN END OF DAY: CULPEPER', date 9/2/26. Both sides confirmed same freeze window.
+Contention check: clean, nothing claimed in prior 30 min. Health gate: PASS (exit 0).
+Trigger: jewelry-onhand-2026-09-02-CUL (v2 cell), claimed and completed, overall status success, all 8 rows status=ok, duration 633125ms.
+
+| Store | Category | Expected (Bravo) | Counted (PM sheet) | Variance |
+|---|---|---|---|---|
+| CUL | Rings | 631 | 631 | 0 |
+| CUL | Bracelets | 123 | 120 | -3 |
+| CUL | Earrings | 169 | 169 | 0 |
+| CUL | Pendants (Pendants+Charms+Brooches: 247+27+21) | 295 | 295 | 0 |
+| CUL | Necklaces (Chains+Necklaces: 108+98) | 206 | 206 | 0 |
+| CUL | **Total** | **1424** | **1421** | **-3** |
+
+Repeat check vs prior nights (8/26 CUL Total variance 0, 8/31 CUL Total variance -1, 9/1 catch-up CUL Total variance -1): tonight's -3 total (driven by Bracelets -3) is a one-night blip within normal noise range, not a repeating pattern — no same store/category variance repeating night over night. No anomalous OVER variance (all variances zero or negative). No DM sent to Joshua — clean night.
+Posted to #jewlery-counts: https://valleypawnworkspace.slack.com/archives/C0BM9NHGTT4/p1788396597207429

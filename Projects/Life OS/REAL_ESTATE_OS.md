@@ -27,7 +27,7 @@ any EIN or owner-of-record for these properties.
 | **817 Richmond Avenue, Staunton, VA** | Commercial, gross-leased to FirstCash | **Farming Infinity, LLC** (original, VA SCC S8306609, formed 2019) | **81-3269313** | Leased/performing | Not previously tracked in this file — found via Drive search 2026-08-10 |
 | **844 Cypress Crossing Trail, St. Augustine, FL 32095** (Parcel 072085-0710) | Was long-term rental → converted to **primary personal residence ~Aug 2025** | Joshua & Hillary Davis, personally — **no LLC, no EIN** | — | Owner-occupied since conversion | See "Cypress Crossing" below |
 | 14300 Woods Walk Lane, Chesterfield County, VA | Intended acquisition (deed assignment not yet confirmed) | **Farming Infinity Virginia LLC** (VA SCC 12045876) | **42-3980374** | Entity formed 7/13/2026, EIN issued 7/21/2026; property not yet confirmed/deeded to this LLC | Confirm by deed before relying on this mapping |
-| 148 Hardinberry Street, Oak Ridge, TN (Anderson County) | Intended acquisition (deed assignment not yet confirmed) | **Farming Infinity Tennessee LLC** (VA SCC 12045877 — formed in VA despite the name) | **42-3788196** | Entity formed 7/13/2026, EIN issued 7/13/2026; property not yet confirmed/deeded; may need foreign-LLC registration in TN | Confirm by deed + confirm TN foreign registration with counsel |
+| 148 Hardinberry Street, Oak Ridge, TN (mail/tax records show Roane County, not Anderson — unresolved) | **Already an active, income-generating Airbnb** — this was Joshua's own home address as far back as 2016; not merely an "intended acquisition." Deed/entity assignment into Farming Infinity Tennessee LLC still not confirmed — a "two-step deed transfer" was under attorney review as of July-Aug 2026. Real 2025-2026 capital spend confirmed via bank records (flooring, trim/base, plumbing — Danny's Floor Store, Manning Building Supply, Drain Kings Plumbing) and Roane County/City of Oak Ridge occupancy-tax payments. | **Farming Infinity Tennessee LLC** (VA SCC 12045877 — formed in VA despite the name) | **42-3788196** | Refined 2026-09-02 (Bald Rock evidence-log work, §30) — was tracked here only as "intended acquisition"; check-image review of the Farming Infinity LLC (DuPont 912291) account shows it's already operating and taxed as an STR | Confirm by deed + confirm TN foreign registration with counsel + resolve Anderson vs. Roane County discrepancy + consider a dedicated evidence log for this property's own basis if Joshua wants it substantiated |
 | Jacksonville, FL area | Prospective acquisition | TBD | — | Search-stage — `weekly-jacksonville-property-search` scheduled task exists but is on-disk/unregistered (never fires) | Future expansion |
 | St. Johns County / St. Augustine, FL area | Prospective acquisition | TBD | — | Search-stage — `weekly-st-augustine-property-search` scheduled task exists but is on-disk/unregistered (never fires) | Future expansion |
 
@@ -59,6 +59,13 @@ Virginia-resident commercial registered agent since Joshua's own residency is no
    (issued 7/13/2026, CP-575 on file). Intended property: 148 Hardinberry Street, Oak Ridge TN —
    **not yet confirmed by deed**; formed as a Virginia entity despite the name, likely needs TN
    foreign-LLC registration if it will hold TN property — flagged for counsel, not resolved.
+   **Update 2026-09-02:** this property is not a dormant "intended acquisition" — it's Joshua's own
+   long-held home (as far back as 2016) and is already a functioning, income-generating Airbnb with
+   real 2025-2026 capital spend, discovered via the "282 Bald Rock — Full Evidence Log" §30 check-image
+   review of the Farming Infinity LLC (DuPont 912291) account. A "two-step deed transfer" into this
+   LLC was under TN real-estate-attorney review as of July-Aug 2026 per email. Also unresolved: mail
+   and tax records consistently show **Roane County**, not the Anderson County named here — needs a
+   source check before relying on either.
 4. **Farming Infinity Mountains LLC** — VA SCC 12045879, effective 7/13/2026. **EIN 42-4031872**
    (issued 7/23/2026 — confirmed directly from the IRS CP-575 letter in Drive). Owns 282 Bald Rock
    Road, Verona VA — the STR. **The master index doc (last touched 7/21) still says this EIN is

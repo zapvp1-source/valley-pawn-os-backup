@@ -64,3 +64,13 @@ Nightly 8:30 PM pull for 2026-08-25 confirmed successful — all 5 store jewelry
 ## 2026-08-27 07:47 CATCH-UP CHECK
 Yesterday: Wednesday 2026-08-26 (CUL-only per open-stores gate). CUL CSV present, all 8 rows status=ok. Nightly run complete — no catch-up action needed, nothing posted.
 [2026-08-29 09:xx] jewelry-onhand-catchup: SKIPPED — 2026-08-28 nightly pull CSVs present for all 5 stores (CUL/HAR/LEX/ROA/WAY). No action needed.
+
+## 2026-09-02 07:46-09:35 — Jewelry Onhand CATCH-UP for 2026-09-01 (Tuesday)
+Trigger: nightly jewelry-onhand-nightly-pull did not run for 2026-09-01 (no CSVs found this morning) — catch-up self-heal executed before 9:30 AM freeze-window cutoff.
+Open stores (Tue): CUL, HAR, LEX, ROA, WAY — all 5 completed.
+Bravo pull (freeze-window Expected, this morning): CUL success 8/8. HAR partial 7/8 (Charms error — confirmed empty, matches prior-day 8/31, 8/28, 8/27, 8/25 CSVs, treated as 0). LEX partial 7/8 (Brooches error — confirmed empty, matches prior-day CSVs, treated as 0). ROA success 8/8. WAY partial 7/8 (Charms error — confirmed empty vs prior 4 days of CSVs incl 8/31, treated as 0; note: WAY Charms had a real positive count on 8/15 per prior list but has been error/0 consistently since 8/25-8/31, superseding that entry).
+PM count sheets read from #end-of-day (Chrome vision pass), all 5 sum-verified against each sheet own written Totals line.
+Per-store totals: CUL Expected 1425 / Counted 1424 (-1). HAR Expected 785 / Counted 793 (+8). LEX Expected 465 / Counted 467 (+2). ROA Expected 1092 / Counted 1093 (+1). WAY Expected 572 / Counted 571 (-1).
+No anomalous OVER variance at category level beyond normal case-count-vs-system-scope noise (largest single-category delta: HAR Rings +4, HAR Necklaces +4). No DM sent to Joshua - clean night.
+Posted Expected/Counted/Variance table to #jewlery-counts (C0BM9NHGTT4).
+No repeating variance pattern flagged; HAR small positive Rings/Necklaces delta this run is a one-night reading, not an established pattern - watch next few nights if it recurs.
