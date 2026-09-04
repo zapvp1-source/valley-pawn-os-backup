@@ -2,6 +2,116 @@
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
 
+## 2026-09-03 (zoom-voicemail-alert routine run #8, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 and Culpeper/808 still no
+  Number(s) assigned (mechanically cannot receive calls, skipped). Checked History tab for the 4
+  remaining lines — Harrisonburg/802 (24 calls today, all Answered/Connected, zero misses),
+  Waynesboro/803 (15 candidate rows newer than the state-file cutoff of 11:41:45 AM, all
+  Answered/Connected, zero misses, nothing new to alert), Lexington/807 canonical (all rows newer
+  than the state-file cutoff of 2:56:43 PM checked — the known Ring Timeout from (434) 981-5981
+  exactly matches the cutoff and its resolution via staff callback at 3:27:39 PM was already
+  confirmed, nothing strictly newer), and jdavis/800 legacy (No Data today — still shows
+  Active/Activated in Zoom, not yet actually deactivated).
+- Zero rows survived Step 3.5. State file left unchanged (no candidate row exceeded its store's
+  recorded cutoff), no Slack post (Step 4 silent-success path).
+
+## 2026-09-03 (zoom-voicemail-alert routine run #7, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 and Culpeper/808 still no
+  Number(s) assigned (mechanically cannot receive calls, skipped). Checked History tab
+  (today-only, 09/03/2026) for the 4 remaining lines — Harrisonburg/802 (24 calls, all
+  Answered/Connected, zero misses), Waynesboro/803 (25 calls; the known 11:41:45 AM Ring Timeout
+  from (540) 471-4862 exactly matches the state-file cutoff, already resolved-by-retry at
+  11:42:56 AM, nothing strictly newer), Lexington/807 canonical (29 calls; the known 2:56:43 PM
+  Ring Timeout from (434) 981-5981 exactly matches the state-file cutoff, already
+  resolved-by-staff-callback at 3:27:39 PM, nothing strictly newer), and jdavis/800 legacy (No
+  Data today).
+- Zero rows survived Step 3.5. State file left unchanged (no candidate row exceeded its store's
+  recorded cutoff), no Slack post (Step 4 silent-success path).
+
+## 2026-09-03 (zoom-voicemail-alert routine run #6, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 and Culpeper/808 still no
+  Number(s) assigned (mechanically cannot receive calls, skipped). Checked History tab
+  (today-only, 09/03/2026) for the 4 remaining lines — Harrisonburg/802 (24 calls, all
+  Answered/Connected, zero misses), Waynesboro/803 (23 calls; the known 11:41:45 AM Ring Timeout
+  from (540) 471-4862 exactly matches the state-file cutoff, already resolved-by-retry at
+  11:42:56 AM, nothing strictly newer), Lexington/807 canonical (29 calls; the known 2:56:43 PM
+  Ring Timeout from (434) 981-5981 exactly matches the state-file cutoff, already
+  resolved-by-staff-callback at 3:27:39 PM, nothing strictly newer), and jdavis/800 legacy (No
+  Data today).
+- Zero rows survived Step 3.5. State file left unchanged (no candidate row exceeded its store's
+  recorded cutoff), no Slack post (Step 4 silent-success path).
+
+## 2026-09-03 (zoom-voicemail-alert routine run #5, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 and Culpeper/808 still no
+  Number(s) assigned (mechanically cannot receive calls, skipped). Checked History tab
+  (today-only, 09/03/2026) for the 4 remaining lines — Harrisonburg/802 (22 calls, all
+  Answered/Connected, zero misses), Waynesboro/803 (21 calls; the known 11:41:45 AM Ring Timeout
+  from (540) 471-4862 exactly matches the state-file cutoff, already resolved-by-retry at
+  11:42:56 AM, nothing strictly newer), Lexington/807 canonical (27 calls; the known 2:56:43 PM
+  Ring Timeout from (434) 981-5981 exactly matches the state-file cutoff, already
+  resolved-by-staff-callback at 3:27:39 PM, nothing strictly newer), and jdavis/800 legacy (No
+  Data today).
+- Zero rows survived Step 3.5. State file left unchanged (no candidate row exceeded its store's
+  recorded cutoff), no Slack post (Step 4 silent-success path).
+
+## 2026-09-03 (zoom-voicemail-alert routine run #4, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 and Culpeper/808 still no
+  Number(s) assigned (mechanically cannot receive calls). Checked History tab (today-only,
+  09/03/2026) for all 4 numbered/legacy lines — Harrisonburg/802 (20 calls, all Answered/Connected,
+  zero misses), Waynesboro/803 (20 calls; the known 11:41:45 AM Ring Timeout from (540) 471-4862
+  exactly matches the state-file cutoff, already resolved-by-retry, nothing strictly newer),
+  Lexington/807 canonical (26 calls; the known 2:56:43 PM Ring Timeout from (434) 981-5981 exactly
+  matches the state-file cutoff, already resolved-by-staff-callback at 3:27:39 PM, nothing strictly
+  newer), and jdavis/800 legacy (No Data today).
+- Zero rows survived Step 3.5. State file left unchanged, no Slack post (Step 4 silent-success
+  path).
+
+## 2026-09-03 (zoom-voicemail-alert routine run #3, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 and Culpeper/808 still no
+  Number(s) assigned (mechanically cannot receive calls). Checked History tab (today-only,
+  09/03/2026) for all 4 numbered/legacy lines — Harrisonburg/802 (18 calls, all Answered/Connected,
+  one more inbound since the prior run this afternoon, still zero misses), Waynesboro/803 (19
+  calls; the known 11:41:45 AM Ring Timeout from (540) 471-4862 already resolved-by-retry, no rows
+  newer than the state-file cutoff), Lexington/807 canonical (20 calls; the known 2:56:43 PM Ring
+  Timeout from (434) 981-5981 already resolved-by-staff-callback, no rows newer than the
+  state-file cutoff), and jdavis/800 legacy (No Data today).
+- Zero rows survived Step 3.5 (all candidate rows exactly match cutoffs already in the state file
+  from earlier runs today — nothing strictly newer). State file left unchanged, no Slack post
+  (Step 4 silent-success path).
+
+## 2026-09-03 (zoom-voicemail-alert routine run #2, silent/no new alerts)
+- Fresh roster pull: same 6 users. Checked History tab (today-only, 09/03/2026) for all 4 numbered
+  lines — Harrisonburg/802 (17 calls, all Answered), Waynesboro/803 (18 calls; one Ring Timeout at
+  11:41:45 AM from (540) 471-4862, already resolved-by-retry — same number called back and was
+  Answered 71 sec later at 11:42:56 AM), Lexington/807 canonical (15 calls; one Ring Timeout at
+  2:56:43 PM from (434) 981-5981, already resolved-by-staff-callback — Outbound Connected 49 sec
+  call to the same number at 3:27:39 PM), and jdavis/800 legacy (No Data today).
+- Both candidate rows found exactly match the cutoffs already recorded in the state file from a
+  prior run this same day, confirming no new unresolved rows exist past those timestamps. State
+  file left unchanged, no Slack post (Step 4 silent-success path, zero rows survived Step 3.5).
+
+## 2026-09-03 (zoom-voicemail-alert routine run, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 and Culpeper/808 still no
+  Number(s) assigned (mechanically cannot receive calls), jdavis@fcfpawn.com/800 (legacy) still
+  Active/Activated. Checked History tab (today-only, 09/03/2026) for all 4 numbered lines —
+  Harrisonburg/802, Waynesboro/803, Lexington/807 (canonical), and jdavis/800 (legacy) — all
+  returned "No Data" for today. No candidate rows, no Slack post, state file unchanged (all three
+  cutoffs remain at their Sep 1 values).
+
+## 2026-09-03
+
+- Enabled scheduled tasks: 147 -> 148
+- Registered scheduled tasks: 161 -> 162
+- Task folders on disk: 173 -> 174
+- ENABLED: document-photos-index-refresh
+
+## 2026-09-03 (document-photos-index-refresh, 5:00 AM scheduled run — fix-forward, silent success)
+- Run found 1 new candidate (F9B761E7-811B-43AF-B49D-61E123CD51E8, IMG_5640.heic) but export failed with ok=0 fail=1 -- a 100% failure rate on the day's batch, not "fail small relative to ok," so treated as a failure requiring fix-forward (Rule 12 -- verified against actual output, not the run record).
+- Diagnosed via direct osxphotos query (not guessed): this uuid has ismissing=True, iscloudasset=False, path=None -- a genuinely orphaned Photos library reference with no local file and no iCloud copy to download. Confirmed non-transient: the same failure had been silently recurring every run since 2026-09-02 (fail=1 in the 2716-photo backfill, fail=1 again at 22:08, fail=1 again this morning) because a permanently-unexportable photo was never marked indexed, so it retried forever and inflated fail every single night.
+- Surgical fix to photosindex_documents.py (additive infra fix to infra that is itself additive, per the task's own constraint): list_document_candidates() now also returns ismissing/iscloudasset per photo. When export produces no file for a uuid, the script now distinguishes permanently-unexportable (ismissing and not iscloudasset -> insert a name/label-only row with empty ocr_text, same graceful-degradation pattern already used for sips failures, so it's still findable by filename/label and is marked indexed so it's never retried again) from genuinely transient (still a cloud asset not yet downloaded -> stays in fail, retried next run as before). New skipped_missing counter added to the batch/done log lines so this is visible going forward instead of hiding inside fail.
+- Verified fix live: re-run produced DOCUMENT PHOTOS INDEX DONE: ok=0 fail=0 skipped_missing=1. Follow-up dry-run confirms 2739 already indexed, 0 new to process -- the orphaned photo is now permanently resolved, not just retried successfully.
+- No Slack post (Rule 16 / task's own silent-success instruction) -- routine scheduled-task completion.
+
 ## 2026-09-02 (Drug-Free Workplace & Firearms Safety Testing policy drafted — cannabis testing, FFL/922(g)(3) legal basis)
 - Joshua: "we need to start testing for cannabis within gusto." Researched current law first: VA
   Code § 40.1-27.4 (medical-cannabis employment protection) exempts safety-sensitive/federally-
@@ -1713,6 +1823,31 @@ Newest first. Material changes to the business operating system. Read this BEFOR
   16 unreviewed applicants (Waynesboro 5, Harrisonburg 11) not yet contacted.
 - Open money decisions flagged to Joshua: sponsor Culpeper + Roanoke (flagged/invisible, ~$10/day
   each), Waynesboro sponsorship ends ~8/17, Harrisonburg listing still Paused.
+
+## 2026-09-03 (~10:00 ET — CLOCK SKEW: local clocks were 19 days wrong)
+
+- **Root cause found for the "date discrepancy."** The Linux sandbox `date` AND the Mac via
+  `osascript` both reported **2026-08-15 23:05 EDT (Saturday)** when the true time was
+  **2026-09-03 ~09:57 EDT (Thursday)** — off by **19 days**. Two nominally independent local reads
+  agreed with each other and were both wrong (VM suspend/resume clock drift), so local-clock
+  agreement is worthless as verification.
+- **Ground truth method:** external HTTP `Date` header (`curl -sI https://www.google.com`) +
+  timeapi.io + the session's own env date, all agreeing on 2026-09-03.
+- **Indeed's data was correct all along.** The "September 1, 2026 – Today" performance windows,
+  the applicant growth (Waynesboro 45→63, Store Manager 29→43) and the cumulative spend
+  ($233.97 Waynesboro, $44.88 Store Manager) are all consistent with early September. The
+  **Aug 15–29 15-day sponsorship windows simply expired on schedule** — which is why every listing
+  reads Paused, and why Waynesboro's cumulative total exceeds a single window's $150 cap. No cap
+  was breached; nothing malfunctioned on Indeed's side.
+- **Fix shipped:** the outreach task's Step 0 now REQUIRES an authoritative external time source,
+  compares it to the local clock, and treats the external source as authoritative on any
+  disagreement over ~5 minutes, logging the skew. Documented in `HIRING_OUTREACH.md` under
+  "How to establish the time — DO NOT TRUST THE LOCAL CLOCK ALONE."
+- **Cost of the bad clock:** a session refused to send outreach believing it was 11 PM Saturday
+  when it was actually mid-morning Thursday, inside the send window. No wrong-hour messages went
+  out, but roughly 19 days of hiring outreach were lost while listings sat expired/paused.
+- Standing state unchanged: all 5 listings Paused/Closed and `indeed-applicant-outreach` DISABLED
+  per Joshua's full-stop order.
 
 ## 2026-08-15 (23:05 ET — contact-window rule added after a near-miss)
 

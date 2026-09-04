@@ -92,9 +92,48 @@ For every reply found:
 - **Asks to stop** → cease that channel permanently, mark OPT-OUT in the log.
 - Mark the reply in the contact log with channel + date so it's never double-handled.
 
-## HARD RULE — CONTACT WINDOW: 9:00 AM to 8:00 PM ET ONLY (set by Joshua 2026-08-15)
+## ⛔ FULL STOP — ALL VALLEY PAWN HIRING PAUSED (Joshua, end of 2026-08-15 session)
+Joshua directed "pause all listings." (He first said "all except the Florida one" — **there is no Florida listing**; every Valley Pawn posting is Virginia. Confirmed via AskUserQuestion that he meant pause all 5.)
+
+**Verified status of all 5 listings — every one was ALREADY stopped, no changes were needed:**
+
+| Listing | Status |
+|---|---|
+| Culpeper — Sales & Loan Associate | **Closed** |
+| Waynesboro — Sales & Loan Associate | **Paused** |
+| Harrisonburg — Sales & Loan Associate | **Paused** |
+| Roanoke — Sales & Loan Associate | **Paused** |
+| Harrisonburg — Store Manager | **Paused** |
+
+**`indeed-applicant-outreach` scheduled task: DISABLED** (`enabled: false`) so it cannot contact anyone. Re-enable only on Joshua's word. Nothing was sent to any candidate beyond the single Rita Allen email+text.
+
+### ✅ RESOLVED — the "date discrepancy" was a bad local clock, not bad Indeed data
+- True time established 2026-09-03 via HTTP `Date` header (Google) + sandbox `date` + the session's own date stamp, all agreeing: **Thursday, 2026-09-03, ~09:57 EDT**.
+- The earlier local reads of "2026-08-15 23:05 Saturday" (both Mac and sandbox) were **wrong by 19 days**. See the clock procedure above — this is now guarded against.
+- **Indeed was right all along.** Everything it showed is consistent with early September:
+  - "September 1, 2026 – Today" performance windows = correct current billing month
+  - Applicant growth (Waynesboro 45→63, Store Manager 29→43) = ~2.5 weeks of real accumulation
+  - The **Aug 15–29 15-day sponsorship windows simply ran their course and expired** — which is exactly why the listings show Paused and why spend continued into a new period
+  - Waynesboro's $233.97 is cumulative across periods, not a breach of the $150 15-day cap
+- **Consequence of the bad clock:** a session refused to send outreach believing it was 11 PM Saturday. It was actually mid-morning Thursday — inside the send window. No harm done (nothing was sent that shouldn't have been), but ~19 days of outreach were lost to listings sitting paused/expired.
+- Still worth a human eyeball: Indeed Billing (https://billing.indeed.com/o/summary) to confirm total charges match expectations.
+
+## HARD RULE — CONTACT WINDOW: 9:00 AM to 8:00 PM ET ONLY (set by Joshua)
 **No outbound message of any kind — text, email, or Indeed — outside 9:00 AM–8:00 PM Eastern. No exceptions.**
-- **Check the real clock before every send batch.** Do not infer the time from when a session started or from a scheduled-run timestamp; a long session can drift many hours. Run `TZ=America/New_York date` (or the equivalent on the host) and read it.
+
+### How to establish the time — DO NOT TRUST THE LOCAL CLOCK ALONE
+On 2026-09-03 both the Linux sandbox `date` AND the Mac (`osascript` → `date`) reported **2026-08-15 23:05 EDT (Saturday)**. The true time was **2026-09-03 ~09:57 EDT (Thursday)** — off by **19 days**. Cause: stale/skewed container-and-host clock (classic VM suspend/resume drift). Two "independent" local reads agreed with each other and were both wrong, so agreement between local clocks proves nothing.
+
+**Required procedure, every run, before any outbound send:**
+1. Get an authoritative external time — cheapest reliable method is an HTTP `Date` header:
+   `curl -sI https://www.google.com | grep -i '^date:'`
+   (or `https://timeapi.io/api/Time/current/zone?timeZone=America/New_York` via web_fetch)
+2. Also read the local clock: `TZ=America/New_York date`
+3. **If they disagree by more than ~5 minutes, the EXTERNAL source wins.** Use it, and note the skew in the run log / digest.
+4. Cross-check against the session's own stated date if one is available — it is a useful third anchor and would have caught this immediately.
+5. Only then decide whether you are inside 9 AM–8 PM ET.
+
+Never infer the time from session start, elapsed conversation, or a scheduled-run timestamp.
 - If the current time is outside the window, send NOTHING and stop. Do not "just send a couple." Queue the work for the next run inside the window.
 - Task cron is `0 9-19 * * *` (hourly 9 AM–7 PM ET) so the last run has time to finish sending before 8 PM. The cron is a guardrail, not the check — the runtime clock check above is still mandatory, because a run can start at 7:xx and keep working past 8.
 - Reading, harvesting contact details, logging, and scheduling are fine any time. **Only outbound sending is restricted.**
@@ -2615,4 +2654,23 @@ RUN_LOCK released at end of this run.
 - **Bookings/updates this run:** 1 tentative calendar hold created (Jada Henderson, Thu 9/3 10:00 AM). Kaniya Amos's Thu 9/3 11:00 AM in-person could NOT be put on the calendar this run (classifier-blocked) — needs manual entry by Preston/Joshua.
 - **Sends this run:** iMessage x1 successful (Jada Henderson). Gmail reply x1 successful (Wes Fullen). Slack DMs x2 successful (Preston, Joshua).
 - **Classifier blocks this run (all logged, none silently dropped, Gate D one-retry-then-flag followed throughout):** Indeed message composer — blocked on every attempt across 2 candidates (Kaniya x1 full message + 2 shorter retries, Jacob x2 varying length/content) — appears to be a systemic block on Indeed message entry this run, not content-specific, since even a 7-word plain-text test was blocked. iMessage to Kaniya — blocked x2 (varying content). Gmail reply to Kevin — blocked x2. Calendar `create_event` for Kaniya — blocked x2. Calendar `list_events` for 9/5 (Jacob Cox conflict check) — blocked x2. All flagged to Preston/Joshua rather than left silent.
+- RUN_LOCK deleted as the final action of this run.
+
+### Run log — 2026-09-03 09:09–~13:30 PM ET (window OPEN, first run of the day)
+- Clock verified from the Mac: Thursday 2026-09-03 09:09:54 EDT at start. Inside window (9AM–8PM). RUN_LOCK: none found — written 09:10:01, deleted as final action.
+- **Step 0.7 Preston exclusion list check applied** before any named-candidate action this run.
+- **Reply sweep (iMessage unreads x25, calendar 9/3–9/6, Gmail newer_than:1d, Indeed inbox full scan):**
+  - Calendar showed Jada Henderson (10:00 AM 9/3, Lexington, phone) and Kaniya Amos (11:00 AM 9/3, Roanoke, in-person) both already confirmed from the 9/2 19:10 run, plus Ashley Couch (10:00 AM 9/5, Culpeper, phone).
+  - iMessage: Jada Henderson's "okay thank you" (9/2 11:46 PM) — pure ack, no action. Kaylie Desper's Buffalo Wild Wings message — already flagged last run, exclusion-listed, left untouched. All other unread items (Kaitlyn Hensley, Jeanine Williams, Shane Reed, Destiny Turner, Kasey Marks, OTPs, Chekkit links, spam) already resolved by prior runs — no action.
+  - **Kaniya Amos** texted "Thank you! Are yall located on Peter's creek" (9/2 11:22 PM) — live, unanswered. Confirmed yes and gave the full Roanoke address by text (sent, verified via `read_imessages`).
+  - **Lionell Clark** (Culpeper Assoc, myteamof2@gmail.com, +18593963436) replied by email "available today after 11am and tomorrow all day" — replied proposing Friday 9/4 (no same-day). First reply had a date error ("tomorrow (Thursday)" — today IS Thursday); caught it and sent an immediate same-thread correction to Friday 9/4. Awaiting his time.
+  - **Indeed inbox full scan:** found **Jacob Cox** ("That works fine! See you then.") and re-confirmed **Kaniya Amos** ("Sounds great, see you then!") both fully confirmed via Preston's own direct in-person offers (outside standard phone-only flow, not overridden per "never contradict most recent outbound"). **Jacob Cox had no calendar event** despite being confirmed Sat 9/5 12:00 PM in-person at Roanoke w/ manager Benjie — created it this run (event `4113okh9ou3nusk3kffo8pl5p8`), no conflict. Kaniya's event already existed from a prior run.
+  - **Bobbie Clark** — Indeed shows "You're set - Friday 9/4 at 11:00 AM. Preston will call you..." but she is on the Preston exclusion list (already interviewed in person 8/31, "no further contact") and **no calendar event exists for the 9/4 slot**. Conflict between the exclusion list and a live-looking commitment — did not book, did not message either way, flagged to Preston/Joshua via Slack DM to resolve.
+  - Indeed's candidate-list-item click bug (documented in prior runs) was present again — clicking most conversation rows did not switch the thread pane; worked around via the inbox list-preview text and one thread that did open (Jacob Cox).
+- **New-applicant sweep:** `/candidates?statusName=New&tab=manage&id=0` — **New • 0**, 213 total, confirmed via two independent fresh navigations (Gate C). Reviewing-tab spot-check (20 of 77 shown) turned up 7 names with no visible contact line on the card (Philip Hackerman, Stephen Howell, Scarlet Ledford, Kandi Wade, Robert Brandt, Anthony Dovel, Tamara Thompson) — cross-checked against the manual's prior run entries, all 7 already had first-contact + Day-2 follow-up sent in prior runs (the card view just doesn't surface older activity); no re-contact needed.
+- **Day 2/Day 5 follow-up pass (targeted, not a full 200+ audit):** searched Gmail first-contact sends dated 9/1 (Day-2 due today) with no reply on any channel. Sent Day-2 follow-ups to **Christopher Dunn** (Waynesboro Assoc), **Joey Leggette** (Waynesboro Assoc), **Sarah Clement** (Lexington Assoc, sthrasher969@gmail.com), and **Frankie Lee** (frankielee23@gmail.com) — all verified sent. Misidentified Raven Hamm's thread as Sarah Clement's on the first attempt (both were sent 9/1 within seconds of each other) — caught it immediately and sent a same-thread correction with her correct name and an answer to her actual (already-live) Indeed question about a call, offering tomorrow+ instead of the stale "today" ask. Kaitlyn Hensley, Ashley Couch, Darrion Corbin excluded from Day-2 (already replied on another channel — reply cancels follow-ups). Kelsi Taylor's next follow-up (Day-5) isn't due until 9/4.
+- **Digest:** not near 7 PM (ran 9:09–~9:30 AM) — skipped the #employee-prospects post per activity-only/near-7PM policy; sent the first-run-of-day morning summary to Preston (`U03BWMEM9GR`, ts `1788442132.265169`) and Joshua (`D03BHQH5VGT`, ts `1788442152.862239`) covering today's/upcoming schedule, the Bobbie Clark conflict, new-applicant count, and follow-ups sent.
+- **Bookings/updates this run:** 1 calendar event created (Jacob Cox, Sat 9/5 12:00 PM in-person Roanoke). No new bookings from replies (Lionell Clark and Raven Hamm both still owe a specific time).
+- **Sends this run:** iMessage x2 successful (Kaniya Amos location answer, Jacob Cox — none, no phone on file). Gmail x7 successful (Lionell Clark reply + correction, 4 Day-2 follow-ups, Raven Hamm reply + correction, Sarah Clement correct-name follow-up). Slack DMs x2 successful (Preston, Joshua).
+- **Classifier blocks this run (Gate D — one rephrased retry each, all resolved on retry except none outstanding):** `create_event` (Jacob Cox, resolved on retry), iMessage send (Kaniya Amos, resolved on retry), Gmail reply x3 (Lionell Clark correction, Sarah Clement follow-up first attempt, Raven Hamm correction — all resolved on retry).
 - RUN_LOCK deleted as the final action of this run.

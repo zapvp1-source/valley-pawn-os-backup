@@ -1,0 +1,493 @@
+<title>Bald Rock Rate Wall</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#F2F4F3;
+  --panel:#FFFFFF;
+  --ink:#141D1B;
+  --ink-2:#3A4645;
+  --muted:#6E7B79;
+  --rule:#D6DCDA;
+  --rule-soft:#E5EAE8;
+  --accent:#2F6485;
+  --accent-soft:#E3EDF3;
+  --moss:#406B45;
+  --clay:#9A5A24;
+  --rust:#9C3B2B;
+  --maxw:1120px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#101715;
+    --panel:#18211F;
+    --ink:#EAF0EE;
+    --ink-2:#BFCBC8;
+    --muted:#8B9895;
+    --rule:#2C3936;
+    --rule-soft:#232F2C;
+    --accent:#7FB4D4;
+    --accent-soft:#1B2C36;
+    --moss:#84B98A;
+    --clay:#D69A5E;
+    --rust:#E08976;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#101715;
+  --panel:#18211F;
+  --ink:#EAF0EE;
+  --ink-2:#BFCBC8;
+  --muted:#8B9895;
+  --rule:#2C3936;
+  --rule-soft:#232F2C;
+  --accent:#7FB4D4;
+  --accent-soft:#1B2C36;
+  --moss:#84B98A;
+  --clay:#D69A5E;
+  --rust:#E08976;
+}
+
+*{box-sizing:border-box;}
+body{
+  background:var(--ground);
+  color:var(--ink);
+  font-family:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:56px 28px 96px;}
+.prose{max-width:68ch;}
+
+h1,h2,h3{font-family:"Newsreader",Georgia,serif;font-weight:500;text-wrap:balance;margin:0;}
+h1{font-size:clamp(2.2rem,5vw,3.1rem);line-height:1.08;letter-spacing:-0.015em;}
+h2{font-size:clamp(1.5rem,3vw,1.95rem);line-height:1.15;letter-spacing:-0.01em;}
+h3{font-size:1.12rem;line-height:1.3;font-weight:600;}
+p{margin:0;}
+
+.eyebrow{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);
+}
+.lede{font-size:1.16rem;color:var(--ink-2);line-height:1.55;}
+
+header.head{display:flex;flex-direction:column;gap:18px;padding-bottom:34px;border-bottom:1px solid var(--rule);}
+.status{
+  display:flex;gap:16px;align-items:flex-start;
+  background:var(--accent-soft);border-left:3px solid var(--accent);
+  padding:16px 20px;margin-top:4px;
+}
+.status p{font-size:.94rem;line-height:1.5;color:var(--ink-2);}
+.status strong{color:var(--ink);font-weight:600;}
+.status-tag{
+  font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--accent);white-space:nowrap;
+  flex:none;margin-top:4px;font-weight:500;
+}
+@media (max-width:560px){.status{flex-direction:column;gap:8px;}}
+.head-meta{display:flex;flex-wrap:wrap;gap:8px 20px;}
+
+section{padding-top:52px;display:flex;flex-direction:column;gap:22px;}
+section + section{border-top:1px solid var(--rule-soft);margin-top:52px;}
+.sec-head{display:flex;flex-direction:column;gap:10px;}
+
+/* verdict */
+.verdict{
+  background:var(--panel);border:1px solid var(--rule);
+  padding:26px 28px;display:flex;flex-direction:column;gap:18px;
+}
+.verdict-line{display:flex;gap:16px;align-items:flex-start;}
+.tag{
+  font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.1em;
+  text-transform:uppercase;padding:4px 9px;border:1px solid currentColor;
+  white-space:nowrap;margin-top:3px;flex:none;
+}
+.tag.no{color:var(--moss);}
+.tag.yes{color:var(--rust);}
+.tag.watch{color:var(--clay);}
+.verdict-line p{color:var(--ink-2);}
+.verdict-line strong{color:var(--ink);font-weight:600;}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);}
+.stat{background:var(--panel);padding:20px 22px;display:flex;flex-direction:column;gap:5px;}
+.stat .n{font-family:"Newsreader",serif;font-size:2.05rem;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-0.02em;}
+.stat .k{font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.stat .d{font-size:.86rem;color:var(--ink-2);line-height:1.4;}
+.up{color:var(--moss);}
+.down{color:var(--rust);}
+
+/* tables */
+.scroll{overflow-x:auto;border:1px solid var(--rule);background:var(--panel);}
+table{border-collapse:collapse;width:100%;font-size:.92rem;min-width:520px;}
+caption{text-align:left;padding:16px 20px 0;font-size:.86rem;color:var(--muted);caption-side:top;}
+th,td{padding:11px 20px;text-align:right;border-bottom:1px solid var(--rule-soft);}
+th:first-child,td:first-child{text-align:left;}
+thead th{
+  font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);font-weight:400;
+  border-bottom:1px solid var(--rule);white-space:nowrap;
+}
+tbody td{font-variant-numeric:tabular-nums;color:var(--ink-2);}
+tbody td:first-child{color:var(--ink);font-weight:500;}
+tbody tr:last-child td{border-bottom:none;}
+tr.total td{border-top:1px solid var(--rule);font-weight:600;color:var(--ink);}
+.zero{color:var(--rust);font-weight:600;}
+
+/* rate wall chart */
+.wall{display:flex;flex-direction:column;gap:2px;background:var(--panel);border:1px solid var(--rule);padding:22px;}
+.wall-row{display:grid;grid-template-columns:78px 1fr;gap:16px;align-items:center;padding:7px 0;}
+.wall-label{font-family:"IBM Plex Mono",monospace;font-size:.74rem;color:var(--ink-2);}
+.bars{display:flex;flex-direction:column;gap:4px;}
+.bar{display:flex;align-items:center;gap:9px;}
+.bar-fill{height:13px;}
+.bar-fill.sold{background:var(--accent);}
+.bar-fill.ask{background:repeating-linear-gradient(135deg,var(--rust),var(--rust) 3px,transparent 3px,transparent 6px);border:1px solid var(--rust);}
+.bar-val{font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.legend{display:flex;flex-wrap:wrap;gap:18px;padding-top:14px;margin-top:10px;border-top:1px solid var(--rule-soft);}
+.leg{display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted);}
+.swatch{width:22px;height:11px;flex:none;}
+.swatch.sold{background:var(--accent);}
+.swatch.ask{background:repeating-linear-gradient(135deg,var(--rust),var(--rust) 3px,transparent 3px,transparent 6px);border:1px solid var(--rust);}
+
+/* rate card */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);}
+.card{background:var(--panel);padding:22px;display:flex;flex-direction:column;gap:12px;}
+.card h3{color:var(--ink);}
+.card .win{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
+.rates{display:flex;flex-direction:column;gap:6px;font-size:.9rem;}
+.rate{display:flex;justify-content:space-between;gap:12px;padding-bottom:6px;border-bottom:1px dotted var(--rule);}
+.rate span:last-child{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;color:var(--ink);}
+.card .note{font-size:.84rem;color:var(--muted);line-height:1.45;}
+
+/* action list */
+ol.actions{margin:0;padding:0;list-style:none;counter-reset:a;display:flex;flex-direction:column;gap:0;border:1px solid var(--rule);background:var(--panel);}
+ol.actions li{counter-increment:a;display:grid;grid-template-columns:44px 1fr;gap:16px;padding:18px 22px;border-bottom:1px solid var(--rule-soft);}
+ol.actions li:last-child{border-bottom:none;}
+ol.actions li::before{
+  content:counter(a,decimal-leading-zero);
+  font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--accent);padding-top:2px;
+}
+ol.actions .t{font-weight:600;color:var(--ink);display:block;margin-bottom:3px;}
+ol.actions .b{color:var(--ink-2);font-size:.93rem;line-height:1.5;}
+
+ul.plain{margin:0;padding-left:1.1em;color:var(--ink-2);display:flex;flex-direction:column;gap:8px;font-size:.94rem;}
+footer{margin-top:60px;padding-top:26px;border-top:1px solid var(--rule);color:var(--muted);font-size:.86rem;display:flex;flex-direction:column;gap:10px;}
+a{color:var(--accent);}
+@media (max-width:640px){
+  .wrap{padding:36px 18px 72px;}
+  .wall-row{grid-template-columns:60px 1fr;gap:10px;}
+}
+</style>
+
+<div class="wrap">
+
+<header class="head">
+  <div class="head-meta">
+    <span class="eyebrow">282 Bald Rock Road · Verona, VA</span>
+    <span class="eyebrow">Analysis · 3 September 2026</span>
+  </div>
+  <h1>Is our pricing costing us bookings?</h1>
+  <p class="lede prose">Short answer: not for the season we just ran &mdash; we are ahead of last year on both nights and revenue. But there is a flat&nbsp;$975 rate wall sitting across October through March, and it is priced 40&ndash;150% above what those same months actually cleared at last year. November and December are currently at zero.</p>
+  <div class="status">
+    <span class="status-tag">Applied 3 Sep</span>
+    <p>The rate wall is gone. Every night from <strong>5 November through 31 March is repriced and live</strong>, confirmed on Airbnb, and <strong>June and July 2027 now carry a real peak curve</strong> including a July 4th premium. Each night was read back off the calendar to verify. <strong>Minimum stay is 2 nights everywhere</strong>, holidays included. The owner block on 1&ndash;4 Nov was left untouched, and August 2027 was held on purpose. <strong>VRBO has taken the shoulder rate but not yet the holiday windows</strong>; a re-check is scheduled for the morning of 4 Sep.</p>
+  </div>
+</header>
+
+<section>
+  <div class="sec-head">
+    <span class="eyebrow">The three findings</span>
+    <h2>What the data says</h2>
+  </div>
+
+  <div class="verdict">
+    <div class="verdict-line">
+      <span class="tag no">No</span>
+      <p><strong>Price is not suppressing demand in-season.</strong> On the same calendar day last year we had 21 nights and $16,881 on the books for Sep&ndash;Dec. Today we have 24 nights and $24,093 &mdash; more nights, 43% more revenue, at a 25% higher average rate.</p>
+    </div>
+    <div class="verdict-line">
+      <span class="tag no">No</span>
+      <p><strong>Guests who see the listing are not balking at the price.</strong> Airbnb booking conversion for August was 6.71% against 0.46% for comparable listings in the area &mdash; roughly 14&times; the market. One in five people who open the listing page books it.</p>
+    </div>
+    <div class="verdict-line">
+      <span class="tag yes">Yes</span>
+      <p><strong>Price is blocking the off-season.</strong> Every open night from October 2026 through March 2027 is priced at a flat $975 weekday / $1,435&ndash;$1,549 weekend, with no seasonal curve, no holiday premium and no last-minute discount. Those months cleared at $400&ndash;$799 a night last year.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="eyebrow">Pace check</span>
+    <h2>On the books, same day, both years</h2>
+    <p class="prose" style="color:var(--ink-2)">This is the apples-to-apples test: everything confirmed as of 3 September, for stays between 1 September and 31 December of that year.</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <span class="k">Nights booked</span>
+      <span class="n">24 <span class="up" style="font-size:.9rem">+14%</span></span>
+      <span class="d">vs 21 nights on 3 Sep 2025</span>
+    </div>
+    <div class="stat">
+      <span class="k">Revenue on books</span>
+      <span class="n">$24.1k <span class="up" style="font-size:.9rem">+43%</span></span>
+      <span class="d">vs $16,881 on 3 Sep 2025</span>
+    </div>
+    <div class="stat">
+      <span class="k">Average nightly rate</span>
+      <span class="n">$1,004 <span class="up" style="font-size:.9rem">+25%</span></span>
+      <span class="d">vs $804 on 3 Sep 2025</span>
+    </div>
+    <div class="stat">
+      <span class="k">Reservations</span>
+      <span class="n">8 <span class="up" style="font-size:.9rem">+3</span></span>
+      <span class="d">vs 5 on 3 Sep 2025</span>
+    </div>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <caption>Confirmed nights and revenue for each month, as they stood on 3 September of each year.</caption>
+      <thead>
+        <tr><th>Stay month</th><th>Nights &rsquo;25</th><th>Nights &rsquo;26</th><th>Revenue &rsquo;25</th><th>Revenue &rsquo;26</th><th>Read</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>September</td><td>14</td><td>16</td><td>$11,685</td><td>$15,293</td><td>Ahead</td></tr>
+        <tr><td>October</td><td>2</td><td>8</td><td>$1,642</td><td>$8,800</td><td>Well ahead</td></tr>
+        <tr><td>November</td><td>4</td><td class="zero">0</td><td>$2,719</td><td class="zero">$0</td><td>Behind</td></tr>
+        <tr><td>December</td><td>1</td><td class="zero">0</td><td>$835</td><td class="zero">$0</td><td>Behind</td></tr>
+        <tr class="total"><td>Sep&ndash;Dec</td><td>21</td><td>24</td><td>$16,881</td><td>$24,093</td><td>+43% revenue</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="prose" style="color:var(--ink-2)">The Nov/Dec zeros are less alarming than they look on their own &mdash; off-season stays here book on a median 32-day lead time, versus 104 days for peak stays, so those months always fill late. Last year November and December still finished at 9 and 8 nights. The concern is not that they are empty today; it is the price they are being offered at.</p>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="eyebrow">Demand check</span>
+    <h2>People book. Fewer people look.</h2>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <span class="k">Booking conversion</span>
+      <span class="n">6.71%</span>
+      <span class="d">Comparable listings: 0.46%. We convert about 14&times; the local market.</span>
+    </div>
+    <div class="stat">
+      <span class="k">Listing &rarr; booking</span>
+      <span class="n">19.8%</span>
+      <span class="d">Nearly one in five listing-page visits ends in a booking.</span>
+    </div>
+    <div class="stat">
+      <span class="k">Page views (Aug)</span>
+      <span class="n">111 <span class="down" style="font-size:.9rem">&minus;47%</span></span>
+      <span class="d">Comparable listings averaged 210 over the same month.</span>
+    </div>
+    <div class="stat">
+      <span class="k">August occupancy</span>
+      <span class="n">100%</span>
+      <span class="d">17 nights sold on Airbnb, 13 unavailable, zero open-and-unsold nights.</span>
+    </div>
+  </div>
+
+  <p class="prose" style="color:var(--ink-2)">Those four numbers together rule out a price objection and point at something else. A listing with no open inventory stops appearing in search, which is why page views collapsed to 2&ndash;4 in the weeks where the calendar was full. We are getting half the market's traffic and converting fourteen times better on it. That is a visibility constraint, not a price ceiling.</p>
+
+  <p class="prose" style="color:var(--ink-2)">One number does cut the other way: August 2026 sold the same 22 nights as August 2025, but at $691 a night versus $746 &mdash; a 7% lower rate at identical occupancy. Peak August was left slightly cheap.</p>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="eyebrow">The actual problem</span>
+    <h2>A flat rate wall across the off-season</h2>
+    <p class="prose" style="color:var(--ink-2)">Every open date sampled from 28 September 2026 through early March 2027 carries exactly two prices: $975 on weekdays and $1,435 on Fridays and Saturdays &mdash; Christmas Day, a Tuesday in February and a Halloween weekend all included. Guesty PriceOptimizer is not enabled, so nothing is adjusting these by season, holiday, gap or lead time.</p>
+  </div>
+
+  <div class="wall">
+    <div class="wall-row">
+      <span class="wall-label">October</span>
+      <div class="bars">
+        <div class="bar"><div class="bar-fill sold" style="width:44%"></div><span class="bar-val">$697 cleared</span></div>
+        <div class="bar"><div class="bar-fill ask" style="width:62%"></div><span class="bar-val">$975 asking &nbsp;+40%</span></div>
+      </div>
+    </div>
+    <div class="wall-row">
+      <span class="wall-label">November</span>
+      <div class="bars">
+        <div class="bar"><div class="bar-fill sold" style="width:44%"></div><span class="bar-val">$686 cleared</span></div>
+        <div class="bar"><div class="bar-fill ask" style="width:62%"></div><span class="bar-val">$975 asking &nbsp;+42%</span></div>
+      </div>
+    </div>
+    <div class="wall-row">
+      <span class="wall-label">December</span>
+      <div class="bars">
+        <div class="bar"><div class="bar-fill sold" style="width:36%"></div><span class="bar-val">$560 cleared</span></div>
+        <div class="bar"><div class="bar-fill ask" style="width:62%"></div><span class="bar-val">$975 asking &nbsp;+74%</span></div>
+      </div>
+    </div>
+    <div class="wall-row">
+      <span class="wall-label">January</span>
+      <div class="bars">
+        <div class="bar"><div class="bar-fill sold" style="width:45%"></div><span class="bar-val">$710 cleared</span></div>
+        <div class="bar"><div class="bar-fill ask" style="width:62%"></div><span class="bar-val">$975 asking &nbsp;+37%</span></div>
+      </div>
+    </div>
+    <div class="wall-row">
+      <span class="wall-label">February</span>
+      <div class="bars">
+        <div class="bar"><div class="bar-fill sold" style="width:51%"></div><span class="bar-val">$799 cleared</span></div>
+        <div class="bar"><div class="bar-fill ask" style="width:62%"></div><span class="bar-val">$975 asking &nbsp;+22%</span></div>
+      </div>
+    </div>
+    <div class="wall-row">
+      <span class="wall-label">March</span>
+      <div class="bars">
+        <div class="bar"><div class="bar-fill sold" style="width:26%"></div><span class="bar-val">$400 cleared</span></div>
+        <div class="bar"><div class="bar-fill ask" style="width:62%"></div><span class="bar-val">$975 asking &nbsp;+144%</span></div>
+      </div>
+    </div>
+    <div class="legend">
+      <span class="leg"><span class="swatch sold"></span>Average rate actually paid, same month last year</span>
+      <span class="leg"><span class="swatch ask"></span>Weekday rate currently on the calendar</span>
+    </div>
+  </div>
+
+  <p class="prose" style="color:var(--ink-2)">The sharpest example is Christmas. The week of 21&ndash;28 December 2025 sold as a seven-night stay at $520 a night. The same week in 2026 is on the calendar at $975 weekday and $1,435 on Christmas Day &mdash; and has no bookings. Both numbers are probably wrong: last year's was a giveaway for a ten-person mountain house with a pool and hot tub over the holidays; this year's is a flat rate that happens to land there by accident rather than by decision.</p>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="eyebrow">Recommendation</span>
+    <h2>Replace the flat wall with a real season curve</h2>
+    <p class="prose" style="color:var(--ink-2)">Rates below are set at or above last year's proven clearing price, so nothing here is a discount off what the property has actually earned &mdash; it is a discount off an asking price that has never been tested and is not selling.</p>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <h3>Shoulder</h3>
+      <span class="win">5 Nov &ndash; 19 Dec &nbsp;·&nbsp; live</span>
+      <div class="rates">
+        <div class="rate"><span>Sun&ndash;Thu</span><span>$725</span></div>
+        <div class="rate"><span>Fri&ndash;Sat</span><span>$995</span></div>
+        <div class="rate"><span>Minimum stay</span><span>2 nights</span></div>
+      </div>
+      <p class="note">Cleared $560&ndash;$686 last year. Was asking $975 / $1,435.</p>
+    </div>
+    <div class="card">
+      <h3>Thanksgiving</h3>
+      <span class="win">23 &ndash; 29 Nov &nbsp;·&nbsp; live</span>
+      <div class="rates">
+        <div class="rate"><span>All nights</span><span>$1,100</span></div>
+        <div class="rate"><span>Minimum stay</span><span>2 nights</span></div>
+      </div>
+      <p class="note">Ten sleepers, pool and hot tub, three hours from DC. This week should never sit at the same price as a February Tuesday.</p>
+    </div>
+    <div class="card">
+      <h3>Christmas week</h3>
+      <span class="win">20 &ndash; 27 Dec &nbsp;·&nbsp; live</span>
+      <div class="rates">
+        <div class="rate"><span>All nights</span><span>$1,250</span></div>
+        <div class="rate"><span>Minimum stay</span><span>2 nights</span></div>
+      </div>
+      <p class="note">Sold at $520/night last year &mdash; roughly $5,000 left on the table for the week.</p>
+    </div>
+    <div class="card">
+      <h3>Between the holidays</h3>
+      <span class="win">28 &ndash; 29 Dec &nbsp;·&nbsp; live</span>
+      <div class="rates">
+        <div class="rate"><span>All nights</span><span>$1,100</span></div>
+        <div class="rate"><span>Minimum stay</span><span>2 nights</span></div>
+      </div>
+      <p class="note">Real family demand, but it had been sitting on the flat $850. Priced with Thanksgiving; the 2-night minimum lets the orphan gap fill.</p>
+    </div>
+    <div class="card">
+      <h3>New Year</h3>
+      <span class="win">30 Dec &ndash; 2 Jan &nbsp;·&nbsp; live</span>
+      <div class="rates">
+        <div class="rate"><span>All nights</span><span>$1,450</span></div>
+        <div class="rate"><span>Minimum stay</span><span>2 nights</span></div>
+      </div>
+      <p class="note">NYE 2025 cleared $835/night. New Year's Eve 2026 had been sitting at $850 &mdash; the same rate as an ordinary Tuesday.</p>
+    </div>
+    <div class="card">
+      <h3>Deep off-season</h3>
+      <span class="win">3 Jan &ndash; 31 Mar &nbsp;·&nbsp; live</span>
+      <div class="rates">
+        <div class="rate"><span>Sun&ndash;Thu</span><span>$675</span></div>
+        <div class="rate"><span>Fri&ndash;Sat</span><span>$950</span></div>
+        <div class="rate"><span>Minimum stay</span><span>2 nights</span></div>
+      </div>
+      <p class="note">Cleared $400&ndash;$799 last year; was asking $975 / $1,435. Set slightly above the original plan because January and February weekends actually cleared $799&ndash;$1,170.</p>
+    </div>
+    <div class="card">
+      <h3>Early summer</h3>
+      <span class="win">June 2027 &nbsp;·&nbsp; live</span>
+      <div class="rates">
+        <div class="rate"><span>Sun&ndash;Thu</span><span>$1,050</span></div>
+        <div class="rate"><span>Fri&ndash;Sat</span><span>$1,500</span></div>
+        <div class="rate"><span>Minimum stay</span><span>2 nights</span></div>
+      </div>
+      <p class="note">June 2026 ran 87% occupancy. A modest lift off the $975 / $1,435 flat rate.</p>
+    </div>
+    <div class="card">
+      <h3>July 4th</h3>
+      <span class="win">1 &ndash; 5 Jul 2027 &nbsp;·&nbsp; live</span>
+      <div class="rates">
+        <div class="rate"><span>All nights</span><span>$1,800</span></div>
+        <div class="rate"><span>Minimum stay</span><span>2 nights</span></div>
+      </div>
+      <p class="note">The holiday had no premium at all &mdash; it sat at the same rate as any other July day.</p>
+    </div>
+    <div class="card">
+      <h3>Peak summer</h3>
+      <span class="win">6 &ndash; 31 Jul 2027 &nbsp;·&nbsp; live</span>
+      <div class="rates">
+        <div class="rate"><span>Sun&ndash;Thu</span><span>$1,150</span></div>
+        <div class="rate"><span>Fri&ndash;Sat</span><span>$1,650</span></div>
+        <div class="rate"><span>Minimum stay</span><span>2 nights</span></div>
+      </div>
+      <p class="note">July 2026 ran 90% occupancy, and a July 2027 stay already booked 11 months out at full ask. The clearest headroom on the calendar.</p>
+    </div>
+    <div class="card">
+      <h3>August</h3>
+      <span class="win">Aug 2027 &nbsp;·&nbsp; held deliberately</span>
+      <div class="rates">
+        <div class="rate"><span>Sun&ndash;Thu</span><span>$975</span></div>
+        <div class="rate"><span>Fri&ndash;Sat</span><span>$1,435</span></div>
+        <div class="rate"><span>Minimum stay</span><span>2 nights</span></div>
+      </div>
+      <p class="note">August 2026 ran 71% &mdash; the softest of the three peak months. Left alone rather than raised into weakness.</p>
+    </div>
+  </div>
+  <p class="prose" style="color:var(--ink-2)">One correction worth recording: summer 2027 was <em>not</em> underpriced in the way the August-2026 number suggested. Three 2027 stays had already booked at $976&ndash;$1,435 a night, eleven months out, at the flat asking rate &mdash; so the market clearly pays it. What summer lacked was structure: no July 4th premium, and a soft August priced identically to a peak July Saturday. That is what these four windows fix.</p>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="eyebrow">Do this</span>
+    <h2>Six changes, in order</h2>
+  </div>
+
+  <ol class="actions">
+    <li><span><span class="t">Break the flat rate for Nov 2026 &ndash; Mar 2027</span><span class="b">Apply the season curve above in Guesty so it pushes to both Airbnb and VRBO. This is the single change that matters; everything below is refinement.</span></span></li>
+    <li><span><span class="t">Price the three holidays as holidays</span><span class="b">Thanksgiving, Christmas week and New Year each get their own rate and minimum stay. Right now all three carry the same price as a random weekday in February.</span></span></li>
+    <li><span><span class="t">Turn on a last-minute ladder</span><span class="b">Off-season only: 15% off inside 21 days, 25% off inside 7 days. Off-season stays here book on a 32-day median lead time, so the last three weeks are where those nights are won or lost.</span></span></li>
+    <li><span><span class="t">Add an orphan-gap rule</span><span class="b">Drop the minimum to 1 night and discount 20% on any gap of two nights or fewer between bookings. Last year's two lowest-rate stays &mdash; $353 and $320 a night &mdash; were exactly these gaps, filled by hand at a loss.</span></span></li>
+    <li><span><span class="t">Raise the summer floor</span><span class="b">August sold 100% of available nights at 7% below last year. Peak weeks are underpriced, not overpriced &mdash; the flat rate cuts both ways.</span></span></li>
+    <li><span><span class="t">Evaluate Guesty PriceOptimizer</span><span class="b">It is not currently enabled, which is why none of the above is happening automatically. A manual curve solves this winter; automation stops it recurring.</span></span></li>
+  </ol>
+
+  <p class="prose" style="color:var(--ink-2)">Last November through March delivered 30 nights and $19,620, excluding the 30-night corporate stay. A curve that recovers last year's occupancy and lifts the rate modestly puts that window near $30,000 &mdash; roughly $11,000 of upside against a calendar that today has zero nights booked in two of those five months.</p>
+</section>
+
+<footer>
+  <p><strong style="color:var(--ink-2)">Sources.</strong> Guesty reservations report (61 confirmed reservations, Aug 2025 &ndash; Jul 2027, with nights, source, booking date and accommodation fare); Airbnb host Performance dashboards for occupancy, nightly rate, booking conversion, page views and lead time; the Airbnb multi-calendar for forward rates; Guesty multi-calendar and PriceOptimizer status.</p>
+  <p><strong style="color:var(--ink-2)">Limits worth knowing.</strong> Guesty's history begins August 2025, so only one prior year is available for comparison &mdash; the pre-August-2025 Airbnb history is not in this dataset. Reservations imported at Guesty onboarding carry a placeholder booking date of 1 Sep 2025, so those are treated as "on the books" at that date and excluded from lead-time figures. The 30-night corporate stay (25 Feb &ndash; 27 Mar 2026) is excluded from all monthly rate averages. Forward rates were sampled across Oct 2026 &ndash; Mar 2027; 26 Dec &ndash; 3 Jan did not load and is unverified. Comparable-listing benchmarks are Airbnb's own peer set and likely include smaller homes.</p>
+</footer>
+
+</div>

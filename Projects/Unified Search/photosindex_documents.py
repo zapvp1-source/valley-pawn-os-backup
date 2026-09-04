@@ -76,7 +76,8 @@ def list_document_candidates():
         "    albums = ', '.join(p.albums) if p.albums else ''\n"
         "    out.append({'uuid': p.uuid, 'date': p.date.isoformat() if p.date else '',\n"
         "                'filename': p.original_filename, 'album': albums,\n"
-        "                'labels': sorted(hit)})\n"
+        "                'labels': sorted(hit),\n"
+        "                'ismissing': bool(p.ismissing), 'iscloudasset': bool(p.iscloudasset)})\n"
         "print(json.dumps(out))\n"
     )
     r = subprocess.run([VENV_PY, "-c", script], capture_output=True, text=True, timeout=300)
@@ -224,7 +225,7 @@ def main():
         return
 
     BATCH = 100
-    ok = fail = 0
+    ok = fail = skipped_missing = 0
     t0 = time.time()
     for i in range(0, len(todo), BATCH):
         chunk = todo[i:i + BATCH]
@@ -236,13 +237,34 @@ def main():
 
         rows = []
         for u in uuids:
+            m = meta_by_uuid[u]
             cands = [f for f in os.listdir(EXPORT_DIR) if f.startswith(u)]
             fpath = os.path.join(EXPORT_DIR, cands[0]) if cands else None
             if not fpath or not os.path.exists(fpath):
-                fail += 1
+                # 2026-09-03 fix: a photo can be permanently unexportable -- Photos.app has a
+                # metadata row (so it still surfaces via db.photos()/labels) but no local file
+                # AND it isn't a cloud asset either, so there is nothing for osxphotos to ever
+                # download (confirmed via `p.ismissing=True, p.iscloudasset=False, p.path=None`
+                # on a real case, F9B761E7-811B-43AF-B49D-61E123CD51E8 -- likely an orphaned
+                # library reference, e.g. original deleted outside Photos). Retrying that case
+                # nightly is pointless -- it will never succeed -- and it silently inflated
+                # `fail` forever (fail=1 every single run since 2026-09-02) while never getting
+                # marked done. Genuine cloud-asset-not-yet-downloaded cases (ismissing=True,
+                # iscloudasset=True) are still transient and stay in `fail` so they retry.
+                if m.get("ismissing") and not m.get("iscloudasset"):
+                    label_tag = " ".join(m["labels"])
+                    name = "%s [%s] (unexportable -- no local file, not in iCloud)" % (m["filename"] or u, label_tag)
+                    date_epoch = 0
+                    try:
+                        date_epoch = int(time.mktime(time.strptime(m["date"][:19], "%Y-%m-%dT%H:%M:%S")))
+                    except Exception:
+                        pass
+                    rows.append((name, "", u, date_epoch, m["album"], "document_photo"))
+                    skipped_missing += 1
+                else:
+                    fail += 1
                 continue
             text = ocr_file(fpath)
-            m = meta_by_uuid[u]
             date_epoch = 0
             try:
                 date_epoch = int(time.mktime(time.strptime(m["date"][:19], "%Y-%m-%dT%H:%M:%S")))
@@ -263,7 +285,7 @@ def main():
         if rows:
             c.executemany("INSERT INTO photos VALUES(?,?,?,?,?,?)", rows)
             c.commit()
-        log("  batch done: ok=%d fail=%d elapsed=%ds" % (ok, fail, time.time() - t0))
+        log("  batch done: ok=%d fail=%d skipped_missing=%d elapsed=%ds" % (ok, fail, skipped_missing, time.time() - t0))
 
     try:
         for f in os.listdir(EXPORT_DIR):
@@ -276,7 +298,7 @@ def main():
     c.execute("INSERT OR REPLACE INTO meta VALUES('doc_photos_count',?)",
               (str(int(c.execute("SELECT count(*) FROM photos WHERE kind='document_photo'").fetchone()[0])),))
     c.commit()
-    log("DOCUMENT PHOTOS INDEX DONE: ok=%d fail=%d in %ds" % (ok, fail, time.time() - t0))
+    log("DOCUMENT PHOTOS INDEX DONE: ok=%d fail=%d skipped_missing=%d in %ds" % (ok, fail, skipped_missing, time.time() - t0))
 
 
 if __name__ == "__main__":

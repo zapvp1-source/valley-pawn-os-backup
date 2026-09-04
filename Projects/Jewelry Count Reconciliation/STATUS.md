@@ -928,3 +928,29 @@ Trigger: jewelry-onhand-2026-09-02-CUL (v2 cell), claimed and completed, overall
 
 Repeat check vs prior nights (8/26 CUL Total variance 0, 8/31 CUL Total variance -1, 9/1 catch-up CUL Total variance -1): tonight's -3 total (driven by Bracelets -3) is a one-night blip within normal noise range, not a repeating pattern — no same store/category variance repeating night over night. No anomalous OVER variance (all variances zero or negative). No DM sent to Joshua — clean night.
 Posted to #jewlery-counts: https://valleypawnworkspace.slack.com/archives/C0BM9NHGTT4/p1788396597207429
+
+## RUN RECORD — Thursday 2026-09-03
+
+**Open stores (Thursday schedule):** CUL, HAR, LEX, ROA, WAY — all 5 completed.
+
+**Freeze-window confirmation:**
+- Bravo side: v2 per-store triggers ran 20:36–21:48 ET (well inside the 6:00 PM close → 10:00 AM reopen freeze window).
+- Manager side: PM count sheets posted to #end-of-day 6:08–7:32 PM (at/just after close), matching today's date on each sheet.
+
+**Empty-category rule applied:** HAR Charms, LEX Brooches, WAY Charms all read 'no STABLE row total after 120s' on both the initial attempt and the automatic retry. Each matches that same store+category being status=error on the most recent prior open day (2026-09-01) — treated as 0 per the empty-category rule, not a real failure.
+
+**Per-store table (Expected = Bravo on-hand, Counted = PM sheet, Variance = Counted-Expected):**
+
+| Store | Rings | Bracelets | Pendants | Earrings | Necklaces | Total Variance |
+|---|---|---|---|---|---|---|
+| CUL | 630/631 (+1) | 123/122 (-1) | 295/295 (0) | 169/169 (0) | 206/206 (0) | 0 |
+| HAR | 457/460 (+3) | 47/47 (0) | 119/118 (-1) | 47/48 (+1) | 120/124 (+4) | +7 |
+| LEX | 279/281 (+2) | 37/38 (+1) | 54/53 (-1) | 50/50 (0) | 47/47 (0) | +2 |
+| ROA | 558/558 (0) | 128/128 (0) | 158/157 (-1) | 88/88 (0) | 165/167 (+2) | +1 |
+| WAY | 339/339 (0) | 43/43 (0) | 66/66 (0) | 54/53 (-1) | 68/68 (0) | -1 |
+
+**Assessment:** All variances small (-1 to +4 per category, max total +7 at HAR). No anomalous OVER variance (nothing near the ROA +61 standing-case magnitude). Notably CUL's historical ~-130/night scope-noise pattern did NOT appear tonight — CUL matched almost exactly (net 0). Worth watching over the next few runs: if CUL keeps landing near 0 instead of -130, the scope-noise assumption in Step 7 of the task doc may need revisiting. HAR ran +7 net over, driven mostly by Necklaces (+4) and Rings (+3) — small enough to be normal count timing/rounding, but log for pattern-watching; if HAR repeats a positive Necklaces/Rings drift night over night, flag as process rather than one-night noise.
+
+**Slack table posted to #jewlery-counts:** https://valleypawnworkspace.slack.com/archives/C0BM9NHGTT4/p1788486975289349
+
+**DM to Joshua:** none sent — clean night, no anomalous over-variance, no run failure.

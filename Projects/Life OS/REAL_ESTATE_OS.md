@@ -26,10 +26,17 @@ any EIN or owner-of-record for these properties.
 | **282 Bald Rock Road, Verona, VA 24482** | Short-term rental (Airbnb + VRBO) | **Farming Infinity Mountains LLC** (VA SCC 12045879) | **42-4031872** | Active, performing well | See "Bald Rock" below + `bald-rock-property` skill |
 | **817 Richmond Avenue, Staunton, VA** | Commercial, gross-leased to FirstCash | **Farming Infinity, LLC** (original, VA SCC S8306609, formed 2019) | **81-3269313** | Leased/performing | Not previously tracked in this file — found via Drive search 2026-08-10 |
 | **844 Cypress Crossing Trail, St. Augustine, FL 32095** (Parcel 072085-0710) | Was long-term rental → converted to **primary personal residence ~Aug 2025** | Joshua & Hillary Davis, personally — **no LLC, no EIN** | — | Owner-occupied since conversion | See "Cypress Crossing" below |
-| 14300 Woods Walk Lane, Chesterfield County, VA | Intended acquisition (deed assignment not yet confirmed) | **Farming Infinity Virginia LLC** (VA SCC 12045876) | **42-3980374** | Entity formed 7/13/2026, EIN issued 7/21/2026; property not yet confirmed/deeded to this LLC | Confirm by deed before relying on this mapping |
-| 148 Hardinberry Street, Oak Ridge, TN (mail/tax records show Roane County, not Anderson — unresolved) | **Already an active, income-generating Airbnb** — this was Joshua's own home address as far back as 2016; not merely an "intended acquisition." Deed/entity assignment into Farming Infinity Tennessee LLC still not confirmed — a "two-step deed transfer" was under attorney review as of July-Aug 2026. Real 2025-2026 capital spend confirmed via bank records (flooring, trim/base, plumbing — Danny's Floor Store, Manning Building Supply, Drain Kings Plumbing) and Roane County/City of Oak Ridge occupancy-tax payments. | **Farming Infinity Tennessee LLC** (VA SCC 12045877 — formed in VA despite the name) | **42-3788196** | Refined 2026-09-02 (Bald Rock evidence-log work, §30) — was tracked here only as "intended acquisition"; check-image review of the Farming Infinity LLC (DuPont 912291) account shows it's already operating and taxed as an STR | Confirm by deed + confirm TN foreign registration with counsel + resolve Anderson vs. Roane County discrepancy + consider a dedicated evidence log for this property's own basis if Joshua wants it substantiated |
+| 14300 Woods Walk Lane, Chesterfield County, VA | **Active long-term rental with real tenants** — owned by Joshua alone | **Farming Infinity Virginia LLC** (VA SCC 12045876) | **42-3980374** | Corrected 2026-09-03: this is NOT a dormant "intended acquisition." Confirmed via the filed 2024 tax return (Schedule E "Type of Property" = 1/SFR, $21,600 rents, multi-year depreciation history) and real Avail/Trulia/HotPads tenant-inquiry and rent-collection emails ("Alexis is requesting information about 14300 Woods Walk Ln," "Payments Set Up for 14300 Woods Walk Lane \| Avail Team"). Deed-into-LLC paperwork status still unconfirmed, but the rental activity itself is real, ongoing, and has been for years. | 2024: rents $21,600, basis $225,785, accumulated depreciation $124,488 (~$101,297 remaining). Passive LTR — see `Taxes 2026/Real Estate Tax Strategy & Cost Segregation Notes.md`. |
+| 148 Hardinberry Street, Oak Ridge, TN (mail/tax records show Roane County, not Anderson — unresolved) | **Was a short-term rental (Airbnb) during its 2025-2026 capital-spend period; is now a long-term rental** (corrected directly by Joshua 2026-09-03 — supersedes this row's prior "already an active Airbnb" framing). **Owned by Joshua & Hillary jointly**, not Joshua alone (corrected 2026-09-03). Deed/entity assignment into Farming Infinity Tennessee LLC still not confirmed — a "two-step deed transfer" was under attorney review as of July-Aug 2026. Real 2025-2026 capital spend confirmed via bank records (flooring, trim/base, plumbing — Danny's Floor Store, Manning Building Supply, Drain Kings Plumbing) and Roane County/City of Oak Ridge occupancy-tax payments. | **Farming Infinity Tennessee LLC** (VA SCC 12045877 — formed in VA despite the name) | **42-3788196** | Refined 2026-09-03 per Joshua's direct correction + the filed 2024 return (Schedule E Type "1"/SFR, $16,110 rents sourced from "ZILLOW INC - FROM 1099-K," a long-term-rental payment platform — consistent with the LTR conversion) | Confirm by deed + confirm TN foreign registration with counsel + resolve Anderson vs. Roane County discrepancy |
 | Jacksonville, FL area | Prospective acquisition | TBD | — | Search-stage — `weekly-jacksonville-property-search` scheduled task exists but is on-disk/unregistered (never fires) | Future expansion |
 | St. Johns County / St. Augustine, FL area | Prospective acquisition | TBD | — | Search-stage — `weekly-st-augustine-property-search` scheduled task exists but is on-disk/unregistered (never fires) | Future expansion |
+
+---
+
+**Ownership — confirmed directly by Joshua, 2026-09-03 (do not assume joint ownership by default):**
+- **Joshua alone:** 282 Bald Rock Road, 14300 Woods Walk Lane, 817 Richmond Avenue. Hillary has no
+  ownership interest in Full Circle Finance Inc (Valley Pawn) either, despite being an employee.
+- **Joshua & Hillary jointly:** 148 Hardinberry Street, 844 Cypress Crossing Trail.
 
 ---
 
@@ -89,6 +96,27 @@ without checking why they were never registered) or replace them.
 
 ---
 
+## Tax strategy, passive losses & cost segregation (added 2026-09-03)
+
+Full analysis lives in **`Taxes 2026/Real Estate Tax Strategy & Cost Segregation Notes.md`** —
+read that file before answering anything about depreciation, passive-loss carryforwards, cost
+segregation, or the Augusta Rule for this portfolio. Built from the actual filed 2024 tax return
+(Schedule E, Form 8582, AMT passive-activity-loss reconciliation), not estimates.
+
+Headline facts (full detail and figures in the memo):
+- Only **282 Bald Rock** is a short-term rental with material-participation potential — the only
+  property whose cost-seg losses can offset Joshua's ACTIVE income (W-2/K-1/business income), and
+  only if material participation and average-guest-stay ≤7 days are actually proven. It has never
+  appeared on Schedule E — a fully "virgin," undepreciated basis.
+- Woods Walk, Hardinberry, and Richmond are long-term rentals / a commercial NNN lease — their
+  losses are PASSIVE and, absent real-estate-professional status, can only offset passive income,
+  not active income.
+- Suspended passive-loss carryforwards entering 2025 (per Form 8582 / AMT reconciliation detail):
+  Richmond $26,391, Cypress Crossing $24,681, Hardinberry $6,600, Woods Walk $0.
+- The 2025 return is on extension — filing deadline **October 15, 2026**.
+
+---
+
 ## 282 Bald Rock Road — the short-term rental
 
 Full operating detail (Wi-Fi, lockbox, guest messaging, DocuSign contract flow, cleaning,
@@ -109,6 +137,17 @@ ownership, and tax/basis.
   got its EIN in July 2026, but that is an entity-paperwork date, not evidence of a prior FCF Inc
   ownership period — don't infer one. Financially and operationally tracked separately from Valley
   Pawn (own P&L, own guests, own vendors).
+- **Personal-residence history — added 2026-09-03:** Bald Rock was Joshua & Hillary's own personal
+  residence before they moved to Florida full-time (844 Cypress Crossing became the personal
+  residence after). **Move date confirmed by Joshua 2026-09-03: 8/1/2025.** This matters because
+  depreciable basis on conversion to 100% rental is the
+  LESSER of adjusted basis or FMV at the conversion date (26 CFR 1.168(i)-4) — the Blue Ridge
+  Appraisal Joshua deliberately postponed needs to target 8/1/2025 specifically, not just
+  "today." Separately confirmed via the filed 2024 tax return: Bald Rock has **never** appeared on
+  Schedule E or any depreciation schedule — its entire basis is untouched for a fresh first-year
+  cost-seg placed-in-service treatment, *assuming* no unresolved issue with where its historical
+  Airbnb income (since Oct 2016) was reported. See the tax-strategy memo below — this is the
+  single biggest swing factor and needs Silverline's input before anything is filed.
 - **Capital improvements / basis substantiation:** `Taxes 2026/282 Bald Rock — Full Evidence
   Log.md` (built 2026-08-05 from the unified Apple Mail + iMessage + iCloud Drive index) is the
   **current, authoritative** evidence log — headline: $97,615.40 proof-of-payment,

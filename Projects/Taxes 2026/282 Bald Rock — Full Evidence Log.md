@@ -199,7 +199,7 @@ These are **Full Circle Finance business accounts**. To the extent they paid for
 | Vendor | Amount | Scope |
 |---|---|---|
 | Lowe's kitchen quote (KMTCC_22 + V11SLTN3_19) | $43,025.31 | Cabinets $35,830.19 + countertops $6,845.12 + delivery. **Two byte-identical PDFs exist under different filenames — one job.** |
-| Crutchfield home theater Est #46208897 | $22,845.41 | 2019-07-05 |
+| ~~Crutchfield home theater Est #46208897~~ | $22,845.41 | 2019-07-05 — **see §40, Joshua confirms this project WAS actually done** |
 | Sheaves Floors Est 7157 | $22,071.59 | Highest of a 5-figure revision set; **no invoice was ever issued** |
 | Commonwealth Tile Est 1005 | $9,250.00 | |
 | Burns Builders Est 1557 — gutters | $7,693.85 | Conflicts with a Retex gutter job scheduled 2022-09-22 — don't book both |
@@ -284,6 +284,45 @@ Irrigation systems are 15-year land improvements; plantings may be non-depreciab
 
 ### F-9 — Fundamental Siteworks Inv 670 covers pool demo AND grading
 Book once. It appears under both the pool and landscaping headings.
+
+---
+
+# 40. Crutchfield home theater — Joshua confirms 2026-09-03 this WAS installed at 282 Bald Rock
+
+Joshua directly confirmed (2026-09-03) that a Crutchfield home theater was actually put in at 282
+Bald Rock — this was previously carried in §3 as "quoted only," which is now known to be wrong.
+Two separate Crutchfield estimates exist for what looks like the same underlying project:
+
+- **Est #46208897, $22,845.41, 2019-07-05** — the earlier/larger-scope version, no line-item detail
+  pulled yet.
+- **Est #47400839, $14,362.10, 2020-06-10, prepared by Tyler Bare, Bill To: JOSHUA DAVIS, 282 BALD
+  ROCK RD, VERONA, VA 24482-2825** — line items: Sony VPLVW295ES 4K projector $4,999.99, SI 133"
+  perf screen $5,019.00, Control4 C4-EA1-V2-SR automation controller $650.00, HDMI balun/wire
+  $350.00, Sanus open-frame rack $219.99, Sanus mounting screws $5.94, Panasonic Blu-ray player
+  $399.99, tax $617.19, labor $2,100.00. **Confirmed billed to Bald Rock's own address on the
+  document face** — the strongest single piece of paper found so far.
+
+**Not yet added to the tracked total ($621,683.83) — here's why.** The 160" screen Joshua asked
+about is almost certainly NOT the 133" screen on this estimate: a separate, already-proven
+ProjectorScreen.com order (§1, $5,470.50, 2020-02-14, "SI 5 Series 160" screen, ship-to 282") is
+already counted in the furniture bucket. The likely sequence is Joshua bought the screen
+separately/bigger than what Crutchfield first quoted, then had Crutchfield supply and install the
+rest (projector, receiver/automation, mounting, cabling, labor). Real, dated Crutchfield activity
+consistent with an actual purchase (not just a quote) also exists: "Thank you for your order"
+confirmations across 2020, a "Payment confirmation for your Crutchfield installment plan" (Order
+47244765, $753.32), and multiple Crutchfield invoice PDFs (28048056 = $432.98 mount/surge
+protector, ship-to Crutchfield's own Harrisonburg store for in-house install; others not yet
+pulled). None of these individually match the $14,362.10 (or $22,845.41) estimate total, and
+Crutchfield often splits a big install into several smaller item-level orders plus labor billed
+separately — so the actual paid total for the non-screen equipment is very likely real but not yet
+reconstructed to a matched dollar figure.
+
+**Action item:** pull the remaining Crutchfield invoice PDFs already located (28424781, 30305500)
+and the installment-plan order (47244765) for their line items, and total whatever nets out to
+projector/Control4/labor at 282 Bald Rock (excluding any screen, which is already counted). Until
+that reconciliation is done, do not add either estimate total to the tracker — same rule as every
+other quote-only line in this file, now with the difference that Joshua has confirmed the
+underlying purchase is real, so this is worth finishing rather than closing out as a loser bid.
 
 ---
 
@@ -1003,3 +1042,384 @@ Geo Terrain $884.45 "Soil Test" (8/1/22), a $2,400.00 "Gutters" check to an ille
 ## SECTION 31 — DUPONT BUSINESS ACCOUNT 766518 CHECK IMAGES: CONFIRMED VALLEY PAWN, NOT BALD ROCK
 
 Joshua separately uploaded a 125-page check-image PDF for DuPont Community Credit Union account 766518, labeling it himself as "dupont old full circle finance dba valley pawn account." A sampled read across the full date range (2017 through 2025) confirms that label: every check is Full Circle Finance Inc / Valley Pawn operating activity — employee payroll and bonuses (dozens of named individuals, memo "PR"/"Payroll"/"Bonus"), store rent (DWS Properties, RBSA LLC, IWC Properties, BZA Spotswood LLC), city/town business licenses and taxes for Valley Pawn's own store cities (Staunton, Waynesboro, Culpeper, Harrisonburg, Lexington), FFL/gun-dealer fees to the Virginia State Police, and a cluster of 2020 repair/renovation checks explicitly memo'd **"817 Repair"/"817 Renovation"/"817 Plumbing"** — the *other* Farming Infinity property (817 Richmond Ave), not Bald Rock. **Nothing in this account carries a "282" or Bald Rock memo anywhere in the sampled pages.** This account does not resolve the long-standing DuPont-business 514-check attribution question referenced elsewhere in this file — that gap remains open, and this particular account is confirmed to be the wrong place to look for it. Filed to the Mac and indexed for search per Joshua's usual practice, but **not** folded into any Bald Rock bucket.
+
+## SECTION 32 — SHRECKHISE FULLY INVOICED ($30,645.83); PINEDA CONFIRMED AS POOL-WALL STUCCO (2026-09-03)
+
+**Shreckhise Landscape & Design sent their own paperwork** on 2026-09-02 ("Requested Paperwork,"
+Erica Taylor, erica@shreckhiselandscape.com → jdavis@fcfpawn.com), a 1.66MB PDF attachment
+("Joshua Davis Invoices.pdf") that was a partial/lazy-loaded message locally — pulled in full via
+Mail.app's own attachment-save (not the local mail index) on 2026-09-03. Four complete, itemized
+invoices, every one showing **TOTAL DUE $0.00** with handwritten payment-date annotations that
+reconcile exactly to each invoice total:
+
+| Invoice | Date | Amount | Work | Paid |
+|---|---|---|---|---|
+| #21874 | 11/28/2022 | $17,073.03 | Back landscape: assorted trees/shrubbery, topsoil/compost, mulch, tree guards, transplant labor, front tree additions (Blue Atlas Cedar, Green Giant Arborvitae) | 1/24/23 $8,536.50 + 3/17/23 $5,000.00 + 5/4/23 $3,536.53 = $17,073.03 exactly |
+| #22148 | 5/4/2023 | $4,569.44 | Assorted trees/shrubbery, sod, plant replacements | Handwritten payment notes present, partially illegible |
+| #22174 | 5/15/2023 | $428.55 | Mulch for shrubbery beds + delivery | Handwritten payment note present |
+| #22366 | 9/18/2023 | $8,574.81 | **Pool landscape** (trees/shrubbery, flagstone, compost/topsoil, mulch, seed/straw) + **driveway wall** (trees/shrubbery, mulch) | Multiple handwritten payments Oct 2023–Apr 2024 (e.g. 10/27/23 $4,571.45, 11/27/23 $1,000, 12/15 $1,000, 2/16/24 $500, 3/11 $500, 3/15 $500, 2/23 $500, 4/4 $336) |
+| **Total** | | **$30,645.83** | | |
+
+This **replaces** the prior $27,036.50 bank/check-derived estimate for Shreckhise with a fully
+documented, invoice-plus-payment-matched figure — the strongest possible evidence tier (both sides
+of proof, from the vendor's own paperwork, same pattern as Pottery Barn §25 / West Elm §26). All
+of this work is landscaping — a **Land Improvement (15-year, 100% bonus-depreciation-eligible)**
+category, not Structural. `build_tracker2.py` and `282_Bald_Rock_Both_Sides_Plan.xlsx` updated
+2026-09-03: Bucket 1 total now $505,006.62 (was $501,397.29); all-buckets total now $585,803.65
+(was $582,194.32).
+
+**Separately, Joshua confirmed 2026-09-03** that the two open-item vendors from §28 are:
+- **Valley Concrete Inc.** ($6,330 proven, ~$6,000 of Invoice 1799 still unresolved) — **the pool
+  deck.** Matches the tracker's existing note exactly; no change needed.
+- **Luis Pineda** ($6,750, DuPont checks #127 "Wall Problem" + #121 "Stucco Wall") — **stucco on
+  the pool walls, not the house.** This was previously bucketed as Structural (39-year, not
+  bonus-eligible) in the depreciation-category breakdown; **reclassified to Land Improvement**
+  (15-year, bonus-eligible) since it's a pool component, not part of the residence structure.
+
+**Net effect on the cost-seg basis analysis** (see `Taxes 2026/Real Estate Tax Strategy & Cost
+Segregation Notes.md` §4 for the full updated numbers): adjusted basis floor rises from
+$906,397.29 to $910,006.62 (ceiling $987,194.32 → $990,803.65); short-life/bonus-eligible portion
+rises from $316,847.84–$380,009.96 to **$327,207.17–$390,369.29** (the Pineda reclass alone moves
+$6,750 from non-eligible to eligible; the Shreckhise increase of $3,609.33 is itself a land
+improvement).
+
+**Also confirmed 2026-09-03: Joshua & Hillary moved from 282 Bald Rock to Florida full-time on
+8/1/2025.** This resolves the previously-open conversion-date question — the Blue Ridge Appraisal
+(still intentionally on hold pending the improvement list) should target FMV as of 8/1/2025
+specifically per 26 CFR 1.168(i)-4's lesser-of-adjusted-basis-or-FMV rule.
+
+**Still open, unchanged by this find:** the six never-pulled card statements (Signature Hardware,
+Royal Swimming Pools, Commonwealth Tile, Lowe's), Williams Sonoma (blocked on a direct login),
+Lowe's kitchen-cabinet records request (sent 9/2, no reply yet as of 9/3), Tyson Boffo pricing/
+invoice (text sent 9/2, no reply yet), and the Red Rock Concrete $9,950 remaining-balance question
+— all re-checked 2026-09-03 via the mail index, nothing new found on any of them.
+
+
+## SECTION 33 — EXHAUSTIVE THREE-ACCOUNT CHECK-IMAGE REVIEW FOR RED ROCK CONCRETE (2026-09-03)
+
+Joshua asked directly whether every check-image set he has sent was scoured for cost-seg basis, specifically recalling "I saw red rock checks" in what he called "the old FCF Inc account." Every check-image PDF in the Bank Statements folder was identified and reviewed page-by-page, image by image (not sampled):
+
+| Account | File | Pages | Result |
+|---|---|---|---|
+| DuPont 766518 — Full Circle Finance Inc / Valley Pawn business (the "old FCF Inc account" Joshua referenced) | Check Images 766518.pdf | 125 | Two full passes (all 125 pages at contact-sheet resolution, plus a targeted high-resolution re-read of the Jan 2022–May 2023 window). **No Red Rock Concrete check found.** Only payroll, RBSA/RBSA Properties rent, VA state/local tax and license payments, Jeff LaPorte reimbursements, small vendor/utility checks. |
+| DuPont 831015 — Joshua & Hillary personal checking | Check Images 831015.pdf | 7 | Full review, all pages, high resolution. **Both known Red Rock Concrete checks located here:** #144, 6/28/2022, $10,000.00, memo "282 Project" (the original deposit) and #103, 8/3/2022, $8,672.00, memo "Walls" (the partial payment already documented in §28). No third or additional Red Rock check. This account also independently confirmed the two Luis Pineda pool-wall-stucco checks (#127 $3,500 "Wall Stucco," #121 $3,250 "Stucco Wall," total $6,750 — matches §32) and the Valley Concrete pool-deck check (#163, $6,330, "PP Patio Deck"). |
+| DuPont 912291 — Farming Infinity LLC | Check Images 912291.pdf | 18 | Full review, all pages, high resolution. **No Red Rock Concrete check.** Confirmed the three already-known Tyson Boffo pool checks (#103 $475.60 "Pump Repair," #118 $5,500.00 "Pool Reno," #230 $5,500.00 "Pool 282") and the Shreckhise $5,000 landscape check (#116, "282 Landscape"). Also contains checks for an unrelated Florida property (844 Cypress Crossing Trl / Palencia POA) and two Roane County/Anderson County, TN checks tied to the separate 148 Hardinberry property (#143 Roane County $902.00, #140 City of Oak Ridge $890.00, both dated 11/1/25, both memo'd "148 Hardinberry") — flagged for the still-open 148 Hardinberry Anderson-vs-Roane-County discrepancy, not resolved here. |
+
+**Conclusion: all three check-image sets Joshua has sent have now been reviewed in full, not sampled.** Joshua's recollection of seeing Red Rock Concrete checks is correct — but the two checks that exist are the two already in the tracker ($10,000 deposit + $8,672 partial payment), both in the personal 831015 account, not a new/additional one in the business account. The math already in the Plan sheet holds exactly: original invoice #1244 balance $18,622.00 − $8,672.00 paid = **$9,950.00 still unaccounted for**, with no bank record of that remaining balance being paid anywhere across all three accounts. This is now a closed research question — the only way to close the $9,950 gap is Joshua confirming directly whether it was ever paid (cash, a payment app not covered by these three accounts, or written off), not further searching.
+
+
+## SECTION 34 — RED ROCK $9,950 BALANCE: JOSHUA RECALLS PAYING VIA SQUARE/QUICKBOOKS LINK; SEARCHED, NOT CONFIRMED (2026-09-03)
+
+Joshua stated the remaining balance was paid, "i think via square or quicbooks invoive payment link he sent." Investigated:
+
+**Confirmed Red Rock Concrete billed through QuickBooks/Intuit invoicing** (quickbooks@notification.intuit.com, sender name "Red Rock Concrete LLC") — so a Pay-Now-link payment was mechanically possible. Found the full negotiation trail for invoice 1244:
+- Three revised "New payment request... invoice 1244" emails, 8/4–8/8/2022, showing the invoice total being negotiated down: $34,060.00 → $32,440.00 → $28,622.00 (each already crediting the $10,000.00 deposit).
+- Two "Invoice - Reminder... has not been [paid]" emails, both 8/7–8/8/2022 — confirming the invoice was still unpaid as of that date.
+- A "Give me a call" email thread, 8/7/2022 evening, Joshua and Phil Coblentz (owner) directly negotiating the final number line-by-line (a $500 "rock remediation" error, wall-footage overages). Joshua's own stated bottom line: **"My expectation was 28672.00."** Phil's final reply: "We want our customers happy... Whatever you want. I will change it." Joshua's reply: "You're a gentleman. You'll have all my future business." — reads as a resolved, friendly close to the dispute, consistent with a payment following shortly after.
+
+**No payment confirmation was found for this invoice.** Searched: (1) every "Payment confirmation: Invoice #..." email from QuickBooks Payments in Joshua's mailbox for Aug–Oct 2022 — these exist for Joshua's *other* vendors billed the same way in this exact window (Enlit LLC #1054, S.A.F.E. Services #1545), but none exists for Red Rock Concrete / invoice 1244. (2) Any Square receipt/confirmation mentioning Red Rock — none found. (3) iMessages with Phil Coblentz — not searchable; the text index only reaches back to mid-2024, so an August 2022 text-coordinated payment (with no email trail) cannot be ruled in or out this way. (4) The one card/bank statement covering that window in the Taxes 2026 folder (Wells Fargo FCF Business) — that account wasn't opened until 9/23/2022, after the dispute, so it has no relevant activity and doesn't help.
+
+**Net effect:** either (a) Joshua paid it a way that left no email or currently-searchable record (a phone-coordinated Square/QB charge whose receipt went to a different inbox or was deleted, or a text-based confirmation from 2022 that predates the text index), or (b) it was never actually paid despite the friendly close to the dispute. The digital trail available doesn't distinguish between these. **This needs Joshua directly:** a screenshot of the charge, a card/bank statement from Aug–Sept 2022 showing an Intuit/Square/"Red Rock" charge for something in the $9,950–$18,672 range, or simply his memory of which card he used, would resolve it. Absent that, the $9,950 gap stays flagged as unconfirmed rather than closed.
+
+
+---
+
+## §35. RED ROCK $9,950 BALANCE: CLOSED ON JOSHUA'S DIRECT CONFIRMATION (2026-09-03)
+
+Following §34's negative search result (no QuickBooks Payments confirmation, no Square receipt,
+no usable text-message trail, no relevant bank statement — see §34 for the full search), Joshua
+was asked directly. His response, verbatim: **"the balnce was pid, i think via square or quicbooks
+invoive payment link he sent"** — followed by an explicit instruction: **"mark as paid, it was
+paid."**
+
+Per this project's standing evidentiary practice, Joshua's direct statement is accepted as ground
+truth and the item is closed on that basis. Recorded here plainly for audit purposes: **the
+$9,950.00 portion of Red Rock Concrete invoice #1244 rests on taxpayer representation alone, not
+on an independent bank, card, or vendor document** — unlike the $18,672.00 portion, which is
+bank-matched via check image (§28, confirmed via the exhaustive three-account review, §33), and
+unlike the confirmation emails found for Joshua's other same-era vendors billed the same way
+(Enlit LLC, S.A.F.E. Services). If this item is ever challenged, that distinction should be
+disclosed rather than presented as equally documented.
+
+**Status: full $28,622.00 invoice (both portions) now treated as paid in full.** Tracker
+(`build_tracker.py`, `build_tracker2.py`) and the tax strategy memo (§4) updated accordingly the
+same day; see `OPEN_ITEMS_REGISTER.md` for the corresponding closure entry.
+
+
+---
+
+## §36. SIGNATURE HARDWARE — FULL ORDER HISTORY PULLED DIRECTLY (2026-09-03)
+
+Joshua logged into his own signaturehardware.com account (zapvp1@me.com) — "ok pull up signature
+hardware, ill login" — no password entered on his behalf, same pattern as Pottery Barn/West Elm
+(§25/§26). Every year the account offers (2020, 2021, 2022, 2023 — nothing older or newer exists)
+was pulled via the account's own Order History pages, and every order's detail page was opened
+individually for item/SKU/price/tax confirmation. Full list, all Ship To 282 Bald Rock Road:
+
+| Order # | Date | Status | Items | Total |
+|---|---|---|---|---|
+| SHW201356646 | 04/12/2020 | Complete | Rim lock set (1) + steel floor register (1) | $122.04 |
+| SHW201364656 | 04/22/2020 | Complete | 66" Ocala solid surface freestanding tub (1) | $2,578.80 |
+| SHW201382912 | 05/15/2020 | Complete | Vertical brass rim lock set (8) | $766.17 |
+| SHW201424058 | 07/13/2020 | Complete | Carrara marble vessel sink (2) + pop-up drain (2) | $907.68 |
+| SHW201424065 | 07/13/2020 | Complete | Knox waterfall vessel faucet (2) | $966.65 |
+| SHW201427377 | 07/18/2020 | Complete | Carrara marble vessel sink, pop-up drain, Knox faucet (1 ea.) | $937.18 |
+| SHW201556262 | 01/31/2021 | Complete | Knox faucet + Carrara sink + pop-up drain (1 ea.) | $779.23 |
+| SHW201561027 | 02/07/2021 | Complete | Alledonia elongated skirted toilet (2) | $903.47 |
+| SHW201586125 | 03/18/2021 | **Cancelled** | Beasley kitchen faucet (2) | $798.17 — no charge |
+| SHW201620919 | 05/14/2021 | Complete* | Contemporary wall-mount pot filler faucet (1) | $304.32 — *already documented as fully refunded to Affirm 2021-09-16; excluded from the total |
+| SHW201652253 | 07/13/2021 | Complete | 4" brass pocket door pull (6) | $96.44 |
+| SHW201652260 | 07/13/2021 | Complete | 4" brass pocket door pull (8) | $117.94 |
+| SHW201652839 | 07/14/2021 | Complete | Hibiscus single-hole vessel faucet (5) | $1,995.44 |
+| SHW201821531 | 01/26/2022 | Complete | Rim lock set (2) + ceramic doorknob pairs (4) | $435.94 |
+| SHW202227294 | 11/30/2022 | Complete | Rim lock set (1) + ceramic doorknob pair (1) | $154.48 |
+| SHW250003576 | 04/12/2023 | Complete | Canopus matte resin vessel sink (1) | $251.67 |
+
+**Valid capital-improvement total (excludes the Cancelled and Affirm-refunded orders): $11,013.13**
+across 14 orders. All items are bathroom fixtures/hardware (vessel sinks, faucets, drains, a
+freestanding tub, rim locks/door hardware) — Furniture category (5-yr, 100% bonus-eligible), not
+Land Improvement or Structural.
+
+**Payment side:** the account's order-detail pages expose zero payment/card data — no masked
+card number, no "charged to," nothing — confirmed by searching the full page HTML, not just the
+visible text. This is unlike Pottery Barn/West Elm, whose own order APIs did carry a matched
+card + amount. So this pull closes the item/invoice side completely but cannot touch the payment
+side; that remains dependent on the card statements already requested from Joshua on 9/2/2026
+(AmEx ****7115 is one of the six).
+
+**Reconciliation against the prior $1,883.00 / $9,847.50 split:**
+- The existing $1,883.00 "proven portion" (PayPal txn 1VC80117373738041 + AmEx ****7115 $1,139.88
+  + 2022 ledger debit charges $588.63 on 11/20/2022 and $154.48 on 12/2/2022) stands unchanged.
+  The $154.48 debit charge now ties exactly to order SHW202227294 (11/30/2022, 2 days before the
+  charge) — upgraded from a partial to a full invoice+payment match. The $588.63 charge and the
+  specific order(s) behind the $1,139.88 AmEx total remain unmatched to a line in the table above;
+  low-dollar, flagged for whoever reconciles the AmEx ****7115 statement rather than chased further
+  here.
+- The old $9,847.50 "unproven portion" is revised to **$9,130.13** ($11,013.13 minus the $1,883.00
+  already matched above) — a net **-$717.37** to the grand total, all of it a downward, more
+  conservative revision. This portion is now backed by the vendor's own item-level order record
+  (stronger than the prior "matching shipment email" standard) but still lacks a payment match.
+
+Tracker (`build_tracker.py` Plan item 3/3b, `build_tracker2.py` Bucket 1/2) and tax strategy memo
+§4 updated the same day to reflect the corrected $9,130.13 figure and the resulting $593,758.28
+grand total (down from $594,475.65).
+
+## §37 — WILLIAMS SONOMA — FULL ORDER HISTORY PULLED DIRECTLY (2026-09-03)
+
+Joshua instructed "do william sonama" and then confirmed "ok we are in" once he/Hillary had
+logged into their own williams-sonoma.com account directly (no password entered on their behalf).
+The complete order history — 25 orders, all-time — was then pulled item-by-item via the same
+order-detail URL pattern used for Pottery Barn and West Elm
+(`williams-sonoma.com/customer-service/order-shipment-tracking/results.html?orderNumber=...`).
+
+**21 of the 25 orders shipped to 282 Bald Rock Road** (Hillary Davis / Hillary Holmes / Joshua
+davis, all at 282 Bald Rock Rd, Verona, VA 24482). The other 4 were gifts shipped to Darrell &
+Karen Holmes (Florida, zip 32137) and Sallie Davis (Virginia, zip 23111) and are excluded
+entirely — not Bald Rock spending.
+
+| Order # | Date | Item(s) | Amount | Category |
+|---|---|---|---|---|
+| 342433878838 | 2024-08-30 | Robert Welch Kingham flatware: salad fork x5, dinner fork x4, teaspoon x5 | $129.30 | Durable |
+| 333393366161 | 2023-12-05 | The Original Peppermint Bark x5 | $149.75 | Consumable |
+| 333133257134 | 2023-11-09 | SMEG Mini Kettle White | $149.95 | Durable |
+| 333133257134 | 2023-11-09 | Vanilla Hot Chocolate + Classic Hot Chocolate | $51.90 | Consumable |
+| 330382069715 | 2023-02-07 | Robert Welch Kingham Teaspoon x6 | $41.70 | Durable |
+| 330022397013 | 2023-01-02 | Boos Edge-Grain Maple Cutting & Carving Board, Large | $154.95 | Durable |
+| 323382707608 | 2022-12-04 | Snowman Salt & Pepper Set; Xmas Jacquard Tea Towels; Super-Absorbent Towels | $136.85 | Durable |
+| 321783953292 | 2022-06-27 | Le Creuset Enameled Steel Demi Tea Kettle, White | $80.00 | Durable |
+| 321502501802 | 2022-05-30 | WS Stainless-Steel Silicone ladle/turner/tongs/spoon (4 pcs) | $63.45 | Durable |
+| 321412185837 | 2022-05-21 | Antica Oil Dispenser, 13oz | $16.95 | Durable |
+| 320403737960 | 2022-02-09 | WS Fleur de Sel Hand Soap Refill, 32oz | $42.95 | Consumable |
+| 313353258178 | 2021-12-01 | St. Jude Children's Research Hospital Donation | $5.00 | Excluded (donation) |
+| 313353258178 | 2021-12-01 | Caraway Non-Toxic Ceramic Nonstick Cookware Set, Navy | $395.00 | Durable |
+| 313242933320 | 2021-11-20 | Stainless Steel & Glass Coasters, Set of 4, x2 | $59.90 | Durable |
+| 312773878151 | 2021-10-04 | Crafthouse by Fortessa Cocktail Smoking Box | $299.95 | Durable |
+| 312513788447 | 2021-09-08 | Prepara Vertuoso Coffee Capsule Carousel | $29.95 | Durable |
+| 311542107496 | 2021-06-03 | Capresso Ice Tea Maker | $59.95 | Durable |
+| 314392321738 | 2021-02-08 | Gourmet Whip Cream Maker with N2O Cartridges | $159.95 | Durable |
+| 301993091042 | 2020-07-17 | Glass Prep Mixing Bowls, Set of 8 | $24.95 | Durable |
+| 301772019966 | 2020-06-25 | WS Stainless-Steel Handle Ultimate Spatula Set, White | $49.95 | Durable |
+| 301663055194 | 2020-06-14 | All-Clad Nonstick Pro Release Bakeware, Set of 5 | $99.95 | Durable |
+| 301652179526 | 2020-06-13 | Robert Welch Westbury 42-Piece Flatware Set | $394.95 | Durable |
+| 301652377864 | 2020-06-13 | Gingham Oven Mitt & Potholder; WS Signature Utensils Set of 13; Multi-Pack Dishcloths Set of 8 | $554.85 | Durable |
+
+**Totals:** $3,152.10 across all 21 orders → **$2,902.50 durable kitchen FF&E** (capitalized,
+5-year furniture bucket) + **$244.60 consumable food/soap** (excluded, not capital) + **$5.00
+charitable add-on** (excluded — not a purchase at all).
+
+**Payment side:** Same finding as Signature Hardware — Williams Sonoma's order-detail pages
+expose no card/payment data anywhere. The "VIEW CHARGES" button was clicked on multiple orders
+and produces no populated panel; a full-page HTML search for "card"/"charge"/"Visa" style strings
+turned up only unrelated store-locator and newsletter modal text, never an actual charge record.
+Payment proof for the $2,902.50 depends entirely on a card statement — the same conclusion as
+Signature Hardware, and a hard contrast with Pottery Barn/West Elm, whose own order APIs exposed
+a matched card + amount directly (§25/§26).
+
+**Reconciliation:** replaces the prior $2,766.41 Bucket-1 (N/N) estimate — which was simply
+"$211,724.20 combined PB/WE/WS estimate minus the confirmed PB + WE amounts" — with a
+vendor-confirmed, item-level $2,902.50 Bucket-2 (Y/N) figure. Net effect on the grand total:
++$136.09.
+
+## §38 — AFFIRM ACCOUNT PULLED DIRECTLY: CLOSES MOST OF SIGNATURE HARDWARE AND ROYAL SWIMMING POOLS (2026-09-03)
+
+Joshua asked "does affirm have downloadebel staemtents or activiti" and then logged into his own
+Affirm account directly ("i m in there now") — no password entered on his behalf. Affirm's
+"Current loans" page shows every loan back to 2017: merchant, item description, amount, paid/
+refunded status, and date. Clicking into any individual loan reveals its full payment schedule —
+every installment, the exact date, and which card or bank account paid it. This is a first-party
+lender ledger, the same evidentiary tier as a bank/card statement.
+
+### Royal Swimming Pools — full loan schedule
+
+The Royal Swimming Pools loan (item: "Adjustable A-Frame Brace - 14 Gauge 42" Steel...", a line
+from the pool kit order) shows:
+
+| Date | Event | Amount |
+|---|---|---|
+| 2022-10-27 | Paid — MasterCard ****6246 (down payment) | -$10,052.91 |
+| 2022-10-28 | Loan processed/funded | $15,052.91 |
+| 2022-11-04 | Adjustment | -$71.98 |
+| 2022-11-28 → 2023-08-28 | 10 monthly payments — MasterCard ****6246 | -$233.04 each |
+| 2023-09-21 | Final payment — Bank Account ****1015 | -$2,991.01 |
+| — | **Paid to date / Remaining** | **$15,374.32 / $0.00** |
+
+$15,052.91 - $71.98 adjustment = **$14,980.93 exactly** — the customer-approved amount for order
+#151398 already in this log (§2, line 177). The $393.39 difference between principal ($14,980.93)
+and total paid ($15,374.32) is Affirm financing interest/fees, not a capital cost.
+
+**This proves the entire #151398 order was financed as ONE Affirm loan and paid in full** — not a
+$5,592.86 Affirm-financed piece plus a separately-paid $9,388.07 remainder, which was the prior
+assumption built only from the approval email ("the Affirm loan only financed part of #151398...
+one payment made at purchase, per the Affirm approval email," §2 line 177). The "$10,052.91 paid
+at purchase" the approval email described is itself part of this same Affirm loan's payment
+schedule, not a separate non-Affirm payment. Only order #152804 ($530.95, "no receipt" per the
+existing log) remains genuinely unmatched to any payment source.
+
+**Reconciliation:** Bucket 1 "Royal Swimming Pools (Affirm-financed portion)" revised from
+$5,592.86 to **$14,980.93** (renamed "order #151398, fully financed"). Bucket 2 "Royal Swimming
+Pools (unfinanced remainder)" revised from $9,919.02 down to **$530.95** (renamed "order #152804,
+no receipt"). Net shift: $9,388.07 from Bucket 2 to Bucket 1; zero change to the combined total
+($15,511.88 either way) or the grand total.
+
+### Signature Hardware — 9 of 16 orders match Affirm loans paid in full
+
+Cross-referencing the Affirm activity list's Signature Hardware entries against the order table in
+§36 by dollar amount:
+
+| Order # (§36) | Amount | Affirm loan status | Paid via |
+|---|---|---|---|
+| SHW201364656 | $2,578.80 | Paid in full, $0.00 remaining | MasterCard ****9983, 6 monthly installments |
+| SHW201424058 | $907.68 | Paid in full | Affirm activity list |
+| SHW201424065 | $966.65 | Paid in full | Affirm activity list |
+| SHW201427377 | $937.18 | Paid in full | Affirm activity list |
+| SHW201556262 | $779.23 | Paid in full | Affirm activity list |
+| SHW201561027 | $903.47 | Paid in full | Affirm activity list |
+| SHW201652253 | $96.44 | Paid in full | Affirm activity list |
+| SHW201652260 | $117.94 | Paid in full | Affirm activity list |
+| SHW201652839 | $1,995.44 | Paid in full | Affirm activity list |
+| SHW201620919 | $304.32 | **Refunded 2021-09-15** | Confirms the existing Affirm-refund claim directly from Affirm's own record (previously just an assertion in this log) |
+
+Sum of the 9 paid orders: **$9,282.83**. Added to the pre-existing $154.48 ledger match
+(SHW202227294, §36): **$9,437.31 of the $11,013.13 valid-order total is now proven both ways.**
+The 4 orders still without any payment source: SHW201356646 ($122.04), SHW201382912 ($766.17),
+SHW201821531 ($435.94), SHW250003576 ($251.67) — **$1,575.82 remaining, still payment-unmatched.**
+
+**A genuine open reconciliation question, disclosed rather than resolved by assumption:** the
+existing "$1,883.00 proven portion" (PayPal + AmEx ****7115 $1,139.88 + 2022 ledger $588.63 +
+$154.48) cannot simply be added on top of the new $9,437.31 — $1,883.00 + $9,437.31 = $11,320.31,
+which exceeds the $11,013.13 valid-order total by $307.18 (once the $154.48 shared between both
+figures is accounted for, the excess is $1,728.51 - $1,575.82 = $152.69 of unexplained overlap).
+Since an order financed through Affirm is, by construction, not also paid via a direct AmEx or
+debit-card charge for its full price, the most plausible explanation is that the $1,139.88 AmEx
+and $588.63 ledger amounts are **Affirm loan installment payments landing on those cards** (this
+session directly observed Affirm charging cards in recurring installments — e.g. $233.04/month,
+$429.80/month, $58.97/month, for the loans above) rather than separate one-time direct purchases,
+as the prior evidence log itself flagged ("the exact order(s) behind the $1,139.88 AmEx total
+remain unmatched to a specific order"). This is flagged here for resolution once the actual AmEx
+****7115 statement is reviewed (Plan #3) — not resolved by assumption. Pending that, the tracker
+now counts only the Affirm-verified $9,437.31 as proven, and treats the AmEx/ledger $1,728.51 as
+likely-duplicative rather than additive.
+
+**Reconciliation:** Bucket 1 "Signature Hardware (proven portion)" revised from $1,883.00 to
+**$9,437.31** (renamed "Affirm + ledger-matched orders"). Bucket 2 "Signature Hardware (unproven
+portion)" revised from $9,130.13 down to **$1,575.82** (renamed "still payment-unmatched"). Net
+shift: $7,554.31 from Bucket 2 to Bucket 1; zero change to the combined total ($11,013.13 either
+way) or the grand total.
+
+### New vendor found, not yet added to any proven total: Vent Covers Unlimited
+
+The same Affirm pull surfaced "Vent Covers Unlimited — Steel Designs Pro-Linear Registers &
+Returns — $235.87," paid in full via MasterCard ****6246 (the same card that financed Royal
+Swimming Pools) over 4 installments, March-May 2022. Plausible Bald Rock HVAC/vent-register
+purchase given the card overlap and timing, but Affirm's activity page carries no shipping
+address, unlike the vendor-side pulls (Signature Hardware, Williams Sonoma, Pottery Barn, West
+Elm) that confirmed "Ship To: 282 Bald Rock Rd" directly. Added to Bucket 3 (attribution
+unconfirmed) rather than assumed — $235.87, new dollars to the grand total.
+
+### Net effect on totals
+
+$16,942.38 moved from Bucket 2 (unproven) to Bucket 1 (proven) — zero change to either vendor's
+total or the grand total from the reclassification itself. Vent Covers Unlimited adds $235.87 in
+new dollars (Bucket 3). Tracker (`build_tracker.py` Plan items 3/3b/3c, `build_tracker2.py`
+Buckets 1/2/3) and tax strategy memo §4 updated the same day: new Bucket 1 $537,804.59, Bucket 2
+$8,520.65, Bucket 3 $18,859.40, Bucket 4 $28,945.60, grand total $594,130.24 (up from $593,894.37 — the $235.87 net increase is entirely the new Vent Covers Unlimited find; the $16,942.38 Bucket 1/2 shift is reclassification only, with zero effect on the grand total).
+
+## §39 — NINE MORE AFFIRM VENDORS CONFIRMED AS 282 BALD ROCK; CASPER TOTAL CORRECTED (2026-09-03)
+
+Following the Signature Hardware/Royal Swimming Pools/Casper reconciliation in §38, Joshua
+reviewed the rest of the Affirm activity list and confirmed directly which additional loans were
+for 282 Bald Rock:
+
+> "joss and main was for that house, decor planet, eight sleep, and vent covewrs unlimited,
+> molecule was for that house, trager grills were for that house in 2023, tonal was for that
+> house, platnum lights were for that house,, beat bot also. everything 2025 and beyond past the
+> beat boat is 844 cypress improvemnets"
+
+**Newly confirmed Bald Rock vendors ($16,903.28 in new dollars, all Furniture category except
+Vent Covers Unlimited):**
+
+| Vendor | Date | Item | Amount |
+|---|---|---|---|
+| Joss & Main | 2017-07-14 | Albertson Media Console | $754.99 |
+| Decor Planet | 2021-10-22 | Avanity BROOKS-V30-WT 30" vanity | $694.98 |
+| Decor Planet | 2020-12-12 | Avanity MADISON-V72-WT 72" vanity | $1,198.05 |
+| Eight Sleep | 2023-10-10 | General merchandise (smart mattress) | $2,574.59 |
+| Molekule | 2023-05-28 | Molekule Air, Molekule Air Mini | $841.34 |
+| Traeger Grills | 2023-09-21 | Timberline Pellet Grill | $3,485.78 |
+| Tonal | 2023-11-18 | Tonal + Smart Accessories | $3,924.97 |
+| PlatinumLED Therapy Lights | 2025-05-24 | BIOMAX Series | $1,472.10 |
+| Platinum Therapy Lights | 2025-04-10 | General merchandise | $693.93 |
+| Beatbot | 2025-08-08 | General merchandise (robotic pool cleaner) | $1,262.55 |
+
+Two additional loans (Decor Planet Avanity MADISON-V48-WT $1,813.27, 2020-06-05; Eight Sleep
+$1,942.79, 2022-06-30) show as **refunded** in Affirm — $0 net cost, noted but not counted.
+
+**Vent Covers Unlimited** ($235.87, found in §38 but held in Bucket 3 pending confirmation) is now
+confirmed and moved to Bucket 1.
+
+**Casper correction:** Joshua's dating rule — "everything 2025 and beyond past the beat boat [bot]
+is 844 cypress improvements" — means the Beatbot purchase (2025-08-08) is the last Bald Rock item
+chronologically; everything after it in the Affirm account belongs to 844 Cypress Crossing (his
+Florida personal residence, converted from a rental to personal use around August 2025 — see tax
+memo §7). This moves the 2026-07-28 Casper loan ($1,117.46), previously added to Bald Rock's total
+in §38, out entirely. **Bald Rock's Casper total is corrected from $11,767.77 (8 loans) to
+$10,650.31 (7 loans).**
+
+**Items in the same Affirm window that were NOT named as Bald Rock and are logged separately as
+844 Cypress Crossing improvements instead:** Kohler ($4,020.00, 2025-11-15), Amazon Business
+($3,937.30, 2025-12-26), a second Traeger Grill/Woodridge Elite ($1,916.99, 2026-02-04), Rebag
+($790.75, 2026-03-02), Aventon Bikes hitch rack + ebike ($2,395.18 + $1,862.69, 2026-05), Nordica
+Sauna ($6,367.63, 2026-06-08), the 2026-07-28 Casper loan above ($1,117.46), and Discount Tire
+($1,808.37, 2026-08-27). See `844 Cypress Crossing Improvements Substantiation.md` for these,
+appended the same day. Some of these (Rebag, a designer-handbag marketplace; Discount Tire; the
+Aventon e-bikes) read on their face as personal property/vehicle purchases rather than real-
+property improvements — flagged for the same capital-vs-personal judgment call the 844 log already
+applies elsewhere (§5C of that log), not assumed capital just because Joshua's dating rule places
+them in that window.
+
+**Net effect on Bald Rock's totals:** $16,903.28 in new Furniture-category dollars, minus $1,117.46
+removed (Casper 2026 item, now 844 Cypress) = **+$15,785.82 net**, plus the Vent Covers Unlimited
+reclassification from Bucket 3 to Bucket 1 (no new dollars, just a stronger tier). New Bucket 1
+$565,594.05, Bucket 3 $18,623.53 (back to its pre-§38 level, since Vent Covers Unlimited left it),
+grand total $621,683.83 (up from $605,898.01). Tracker (`build_tracker.py`, `build_tracker2.py`)
+and tax strategy memo §4 updated the same day.

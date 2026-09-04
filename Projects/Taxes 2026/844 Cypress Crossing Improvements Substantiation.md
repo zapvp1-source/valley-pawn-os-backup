@@ -335,3 +335,55 @@ The conversion date is currently only **"approximately August 2025."** It has no
 ---
 
 *Prepared from a read-only sweep. No emails were sent and no Drive or local files were modified other than the creation of this document.*
+
+---
+
+## 8. ADDENDUM 2026-09-03 — NINE MORE ITEMS FOUND VIA AFFIRM, CROSS-REFERENCED FROM THE 282 BALD ROCK REVIEW
+
+**Provenance note:** these items were NOT found by a dedicated 844 Cypress sweep (Gmail/Drive as
+in §0 above). They surfaced while reconciling Joshua's Affirm account for a *different* property
+(282 Bald Rock Road, Verona VA) in a same-day session. Joshua drew the property line himself:
+*"everything 2025 and beyond past the beat boat [bot] is 844 cypress improvemnets."* Beatbot
+(2025-08-08) was the last item he named as Bald Rock; everything chronologically after it in his
+Affirm account, he identified as 844 Cypress. This lines up with §0's conversion date (~August
+2025) — Beatbot sits right at the boundary.
+
+**Important framing point, not yet reflected in this log's §1 totals below:** 844 Cypress is now
+Joshua's **personal residence**, not a rental. Personal property — furniture, sporting goods,
+mattresses, vehicles and vehicle accessories — is not depreciable at all in personal-residence use,
+and does **not** add to the home's tax basis for a future sale gain calculation either (only
+capital improvements to the *structure or land* do that, per IRC §1016). A physical fixture
+permanently installed in or on the house (a sauna heater plumbed and wired in, a Kohler fixture
+actually installed) is a different matter and could add to basis. The table below flags each item
+accordingly — **do not add these to the §1 summary totals without resolving that distinction
+first.**
+
+| Date | Vendor | Item (per Affirm) | Amount | Paid via | Capital-improvement read |
+|---|---|---|---|---|---|
+| 2025-11-15 | Kohler | "Affirm Virtual Card" (no further detail) | $4,020.00 | — | **Possible capital** if this bought and installed plumbing fixtures (Kohler's core product) — but the Affirm description doesn't say what was purchased, so this needs a Kohler receipt to confirm scope before counting. |
+| 2025-12-26 | Amazon Business | "General merchandise" | $3,937.30 | — | **Unidentified.** Could be anything from tools to office supplies to furniture. Needs the actual Amazon order detail to classify at all. |
+| 2026-02-04 | Traeger Grills | Woodridge™ Elite Pellet Grill | $1,916.99 | — | **Personal property**, not a fixture — a freestanding grill is not normally added to real-property basis. |
+| 2026-03-02 | Rebag | "General merchandise" | $790.75 | — | **Almost certainly personal.** Rebag is a designer-handbag resale marketplace; this reads as a personal luxury purchase unrelated to the house. |
+| 2026-05-12 | Aventon Bikes | Aventure 3 Ebike | $1,862.69 | — | **Personal property** (a bicycle) — not a home improvement. |
+| 2026-05-24 | Aventon Bikes | Aventon Hitch Rack, Aventure 3 Step-Through Ebike | $2,395.18 | — | **Personal property** (bike rack/accessory) — not a home improvement. |
+| 2026-06-08 | Nordica Sauna | Harvia KIP45W 4.5kw Electric Sauna Heater Package | $6,367.63 | — | **Plausible capital** if permanently installed as a home sauna (plumbed/wired fixture) — the strongest capital-improvement candidate in this batch, but installation isn't confirmed from the Affirm description alone. |
+| 2026-07-28 | Casper | "General merchandise" (mattress, per pattern of other Casper loans) | $1,117.46 | — | **Personal property** (furniture) — not a home improvement, though it does furnish the residence. |
+| 2026-08-27 | Discount Tire | Defender LTX M/S2 | $1,808.37 | — | **Not a home item at all** — vehicle tires, unrelated to 844 Cypress or any real property. |
+
+**Total, all 9 items: $26,417.16.** Of that, only Kohler ($4,020.00, scope unconfirmed) and Nordica
+Sauna ($6,367.63, installation unconfirmed) have any plausible path to being a real-property
+capital improvement — combined **$10,387.63 at most**, and only once scope/installation is
+confirmed. The remaining $16,029.53 (Amazon Business, Traeger Grill, Rebag, both Aventon Bikes
+purchases, the Casper mattress, Discount Tire) reads as personal property or a vehicle expense and
+should not be added to this property's basis absent a very different explanation than what the
+Affirm description shows.
+
+**Action items to add to §7's list:** (26) get the Kohler receipt/invoice to confirm what was
+purchased and whether it was installed at 844 Cypress; (27) confirm whether the Nordica Sauna was
+professionally installed (permit, electrician invoice) as a permanent fixture, which would make it
+the strongest new capital-improvement candidate in this addendum; (28) get the Amazon Business
+order detail to identify what "$3,937.30 general merchandise" actually was.
+
+*Addendum prepared from Joshua's direct statement during a same-day 282 Bald Rock Affirm review,
+not from a dedicated 844-specific document sweep. Cross-reference against Gmail/Drive for 844
+directly before relying on this addendum for filing purposes.*

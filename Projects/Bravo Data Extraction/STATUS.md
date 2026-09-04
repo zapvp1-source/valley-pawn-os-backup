@@ -74,3 +74,6 @@ Per-store totals: CUL Expected 1425 / Counted 1424 (-1). HAR Expected 785 / Coun
 No anomalous OVER variance at category level beyond normal case-count-vs-system-scope noise (largest single-category delta: HAR Rings +4, HAR Necklaces +4). No DM sent to Joshua - clean night.
 Posted Expected/Counted/Variance table to #jewlery-counts (C0BM9NHGTT4).
 No repeating variance pattern flagged; HAR small positive Rings/Necklaces delta this run is a one-night reading, not an established pattern - watch next few nights if it recurs.
+
+## 2026-09-03 07:47 CATCH-UP CHECK
+Yesterday: Wednesday 2026-09-02 (CUL-only per open-stores gate). CUL CSV present, all 8 rows status=ok (Rings 631, Bracelets 123, Pendants 247, Charms 27, Brooches 21, Earrings 169, Chains 108, Necklaces 98). Nightly run complete — no catch-up action needed, nothing posted.
