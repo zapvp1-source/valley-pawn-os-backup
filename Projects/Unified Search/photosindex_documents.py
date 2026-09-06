@@ -80,7 +80,14 @@ def list_document_candidates():
         "                'ismissing': bool(p.ismissing), 'iscloudasset': bool(p.iscloudasset)})\n"
         "print(json.dumps(out))\n"
     )
-    r = subprocess.run([VENV_PY, "-c", script], capture_output=True, text=True, timeout=300)
+    # 2026-09-04: raised 300 -> 2700 (45 min). osxphotos.PhotosDB() normally returns in
+    # ~15s against a warm library, but on a cold/contended library (e.g. right after the
+    # 3:30 AM unified-search refresh has churned disk I/O, or after iCloud has rewritten
+    # the Photos DB) the full enumeration can exceed 5 minutes and the old timeout killed
+    # the whole nightly run before a single photo was processed. Enumeration is read-only
+    # and idempotent, so a long ceiling is safe; the task's own 60-min watchdog is the
+    # real backstop.
+    r = subprocess.run([VENV_PY, "-c", script], capture_output=True, text=True, timeout=2700)
     if r.returncode != 0:
         raise RuntimeError("osxphotos enumeration failed: %s" % r.stderr[-2000:])
     return json.loads(r.stdout)

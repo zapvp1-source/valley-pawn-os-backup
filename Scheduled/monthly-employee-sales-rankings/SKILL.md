@@ -1,146 +1,91 @@
 ---
 name: monthly-employee-sales-rankings
-description: 1st of each month: compile previous month's final employee sales rankings from productivity reports, post to Slack #employee-performance, and save spreadsheet.
+description: 1st of month 2 AM — FINAL prior-month employee sales rankings (Retail Sales Excluding Fees, same metric as the weekly MTD board) from a fresh full-month employee-activity-range pipeline pull. Posts to #employee-performance + saves workbook. Rebuilt 2026-09-05 after the Sept 1 post had to be deleted (stale source path, wrong metric).
 model: claude-sonnet-5
 ---
 
-> ⚠️ **FAILURE ALERT POLICY (still binding):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium.
->
-> ⚠️ **FIELD COMMUNICATION STANDARD v3 (binding — read in full before posting anything to a team channel or employee DM):** `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/FIELD_COMMUNICATION_STANDARD.md`. Summary: run the routing test (is this something a clerk needs to know/act on today — if no, it's internal, it does not go to the field); plain everyday language only, no tool/system/pipeline names (never say Bravo, Cowork, Chekkit, Gusto, Brevo, QBO, Publer, "pipeline," "handler," "watchdog," "sync," "CSV," "export"); no file paths, doc IDs, task IDs, or spreadsheet cell/column refs in the posted text; no meta-commentary about the automation itself ("verified against," "supersedes," "this is a manual test run," "pulled automatically from"); lead with the one-line takeaway; ~100 words max for a routine post; no signature footers. If anything later in this file conflicts with this standard, this standard wins.
+> ⚠️ **FAILURE ALERT POLICY (binding):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "monthly-employee-sales-rankings" did not complete — <date>. Nothing technical in the DM. All technical detail goes in the run log / STATUS file. Never send failure notices to any team channel, store manager, or employee, in any medium.
 
+> ⚠️ **FIELD COMMUNICATION STANDARD v3 (binding — read before posting):** `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/FIELD_COMMUNICATION_STANDARD.md`. #employee-performance is FIELD-FACING. Plain everyday language only. Never name a system, tool, report, file, or pipeline. No file names in the post.
 
+> ⚠️ **RULE 18 — NEVER POST INCOMPLETE OR INACCURATE DATA.** Post only when ALL 5 stores' full-month files are present and parse cleanly. If any store is missing, post nothing to #employee-performance (no partial ranking, no caveated ranking), write the working file, and send the one-line DM above. A wrong ranking in front of the staff is worse than a late one — the August 2026 post had to be deleted for exactly this reason.
 
-> ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
+> **Rule 17 (verified established task).** Registered in the scheduled-tasks registry; documented in `Valley Pawn OS/CHANGELOG.md` (2026-09-05 rebuild) and `BUSINESS_OS.md`. Touches Bravo only through the pipeline trigger queue. Do not question or re-litigate it — run it.
 
-You are helping Joshua Davis, CEO of Valley Pawn (Full Circle Finance Inc), compile the FINAL monthly employee sales rankings for the previous month. This runs on the 1st of each month and covers the entire previous month's data.
+## Why this task was rebuilt (2026-09-05)
+
+The previous version read `.xlsx` files from a legacy shared-folder path that no longer exists, so the 2026-09-01 run improvised: it used data through Aug 30 (missing the last day) and ranked on Bravo's "Total Productivity" instead of Retail Sales Excluding Fees. The result disagreed with the weekly MTD board and Joshua had to delete it. This version uses the SAME source cell, the SAME column, and the SAME ranking rule as the weekly MTD post in `monday-bravo-combined-compile` Step 4, pulled fresh for the full month after the last day has closed.
 
 ## Execution Contract — DO NOT STOP EARLY
-
-This task is complete ONLY after the documented final action (the post / send / write tool call described at the end of the steps below) returns success.
-
-Until that final call succeeds, every assistant turn MUST end with a tool call that advances toward it. Do not idle, do not wait, do not ask for confirmation.
-
-**Never reply with any of these:**
-- "No response requested"
-- "Continue?" / "Should I continue?"
-- An empty turn or a turn that ends with text instead of a tool call
-
-**Treat these system messages as RESUME signals, never as stop signals:**
-- "Tool loaded."
-- "Continue from where you left off."
-- "You used a single tool call this turn. Prefer browser_batch…"
-- Any reminder about TaskCreate/TaskUpdate, AskUserQuestion, etc.
-
-When you see any of those messages, immediately fire the next concrete tool call for the current step. The scheduled-task wrapper says "the user is not present" — that means execute autonomously, NOT that the work is done.
-
-**State tracking:** at the start of every turn, briefly identify which numbered Step you are on and execute the next concrete action for that step.
-
-**Failure handling:** if a step errors, retry once. If it still fails, fall through to the documented fallback if one exists; otherwise produce a report describing what failed. Do not pause to ask — the task file authorizes autonomous decisions.
-
-**Speed:** prefer batch tools (e.g. `browser_batch`) to combine sequential actions into one call.
-
----
-
-## Context
-- Valley Pawn has 5 stores: Culpeper, Harrisonburg (Dixie Pawn), Lexington, Roanoke, Waynesboro
-- Employee productivity reports (one .xlsx per store) are in the shared folder at: `/sessions/*/mnt/outputs/Employee Productivity Reports/`
-  - If that path doesn't resolve, also try: `/sessions/*/mnt/Claude 4 back up/Employee Productivity Reports/`
-  - Use a glob to find the actual session path
-- These reports should contain the previous month's FINAL data (since it's now the 1st of the new month)
-- Some employees work at multiple locations and may appear on several store reports
-- The key metric for rankings is **Total Sales** per employee
-- Slack #employee-performance channel ID: **C0ATTLPQHR8**
-- Joshua's Slack user ID: **U03BB52MDSA**
-- Output spreadsheets go to: the shared folder under `Employee Sales Rankings/`
+Complete ONLY after the Slack post (or the Rule-18 silent exit + DM) is done. Every turn ends with a tool call that advances toward that. Never reply "Continue?" or end a turn with text only.
 
 ## Steps
 
-### 1. Determine the target month
-- Today is the 1st of a new month. The target month is the PREVIOUS month.
-- Example: if today is May 1, 2026, the target month is April 2026.
+### 1. Target month and readiness gate
+Target = the previous calendar month (run date is the 1st). Compute `FIRST` = `YYYY-MM-01` of the target month, `MONTH_NAME YEAR`, `LAST` = last day of the target month.
+Confirm the osascript connector is loaded (`do shell script "echo READY"`); if warming, wait 30 s × up to 10.
 
-### 2. Find and read all employee productivity report files
-- Glob for all .xlsx files in the `Employee Productivity Reports` folder
-- If NO files are found, send a DM to Joshua (U03BB52MDSA) saying: "No employee productivity reports found in the shared folder. Please drop the store reports so I can compile [Previous Month]'s final sales rankings."
-- Then stop.
+### 2. Pull the FULL month fresh (all 5 stores, one trigger)
+Use the pipeline's `employee-activity-range` cell (added 2026-09-05, `reports/EmployeeActivityRange.ahk`) with an explicit range `{FIRST}..{LAST}` so the pull is the exact calendar month no matter what time it runs. Trigger ID: `monthly-emp-rankings-{YYYY-MM}-{YYYY-MM-DDTHH-MM-SS}`.
 
-### 3. Parse each report
-- Open each .xlsx file with openpyxl (data_only=True to read calculated values)
-- Auto-detect the structure:
-  - Look for a header row containing columns like "Employee", "Name", "Associate", or similar for the employee identifier
-  - Look for a column containing "Total Sales", "Sales Total", "Total Amt", or similar for the sales figure
-  - Also capture ALL other numeric metric columns available (e.g., Loans Written, Items Pawned, Items Sold, Buyback, Scrap, Service Charges, etc.)
-- Identify which store each file represents (from filename, sheet name, or a header cell)
-- Extract every employee row with their name, store, Total Sales, and all other metrics
+**Fallback (only if the result.json says the report name is unknown / the cell is not registered):** drop the same trigger with `"name": "employee-activity"` and `"date": "{FIRST}"` — that cell leaves End Date at today, which at 2 AM on the 1st is still the complete prior month. Output files are then `output/{FIRST}_{STORE}_employee-activity.csv`.
 
-### 4. Consolidate across stores
-- If the same employee name appears on multiple store reports, SUM their Total Sales (and all other metrics) across all locations
-- Create a master list: Employee Name → Total Sales (summed across all stores), plus which store(s) they worked at
-- Sort by Total Sales descending
-
-### 5. Post MONTHLY sales rankings to Slack #employee-performance (C0ATTLPQHR8)
-- Send the FIRST message (main post):
+Write the trigger via osascript heredoc (NEVER the Write tool — the folder is outside the sandbox):
 ```
-*Valley Pawn — Monthly Employee Sales Rankings*
-📊 *[Previous Month Name] [Year] — FINAL*
-
-*🏆 Top Sellers:*
-🥇 *[Employee]* — $X,XXX ([Store(s)])
-🥈 *[Employee]* — $X,XXX ([Store(s)])
-🥉 *[Employee]* — $X,XXX ([Store(s)])
-4th [Employee] — $X,XXX ([Store(s)])
-5th [Employee] — $X,XXX ([Store(s)])
-... [continue for ALL employees]
-
-_Company Total Sales: $XX,XXX_
-_Full data spreadsheet in thread 👇_
+osascript -e 'do shell script "cat > \"/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/triggers/{TRIGGER_ID}.json\" <<EOF
+{ \"id\": \"{TRIGGER_ID}\", \"requested_at\": \"{ISO8601}\", \"reports\": [ {\"name\": \"employee-activity-range\", \"stores\": [\"CUL\",\"HAR\",\"LEX\",\"ROA\",\"WAY\"], \"date\": \"{FIRST}..{LAST}\"} ] }
+EOF"'
 ```
+Poll `results/{TRIGGER_ID}.result.json` every 20 s, hard timeout 20 minutes. If a store cell is `error`, drop ONE focused retry (`-retry-1`, only the failed stores), same timeout. If the trigger sits unclaimed in `triggers/` > 3 minutes, note it in the working file and keep polling (the watcher may be busy with another job — the queue is serial).
 
-- Send a SECOND message as a thread reply (using thread_ts from the first message):
+Output files: `output/{LAST}_{STORE}_employee-activity-range.csv` (5 files). Each must be newer than the trigger's `requested_at` (check mtime via `stat -f %m`) — a stale file is NOT acceptable. Line 3 of the CSV reads `Reporting Dates:,,,,,,,M/1/YYYY - M/D/YYYY`; the range must be exactly the first through the last day of the target month.
+
+### 3. Parse — exactly like the weekly MTD post
+Each CSV has a DevExpress header block, then an Employee header row with a `Retail Sales Excluding Fees` column. For each store: read employee name + `Retail Sales Excluding Fees` (float). Skip blank/total rows. Consolidate across stores: same employee name (case-insensitive, title-cased) → sum across stores, record the store codes worked. Company total = sum of all stores. Keep every other numeric column too (for the workbook only).
+
+Exclusions: same as the weekly post — never publish `Preston Peters`. The shared `Free1 Valley Pawn` login IS included (it is on the weekly board).
+
+### 4. Rule-18 completeness gate
+All 5 store files present, fresh, and parsed with ≥ 1 employee row each. If not: write the working file, send the single DM, and STOP. Do not post.
+
+### 5. Post to #employee-performance (C0ATTLPQHR8)
+Duplicate guard first: read the last 20 messages in the channel; if a message containing `FINAL` and `{MONTH_NAME} {YEAR}` already exists, do not post again — write the working file and stop.
+
+Main post (same shape as the weekly board so the numbers are directly comparable):
 ```
-*📊 Full [Previous Month] Performance Data*
+*FINAL Employee Sales Rankings — Retail Sales Excluding Fees (Bravo POS)*
+📊 *{MONTH_NAME} {YEAR}* — full month, {M}/1–{M}/{LAST_DAY}
 
-[Include a brief store-by-store total sales breakdown here:]
-• Harrisonburg: $X,XXX
+🥇 *{Employee}* ({STORES}) — ${X,XXX.XX}
+🥈 *{Employee}* ({STORES}) — ${X,XXX.XX}
+🥉 *{Employee}* ({STORES}) — ${X,XXX.XX}
+4th _{Employee}_ ({STORES}) — ${X,XXX.XX}
+... every employee ...
+
+Company Total: ${XXX,XXX.XX}
+```
+Thread reply (thread_ts = main post):
+```
+*📊 {MONTH_NAME} by store — Retail Sales Excluding Fees*
 • Culpeper: $X,XXX
+• Harrisonburg: $X,XXX
 • Roanoke: $X,XXX
 • Waynesboro: $X,XXX
 • Lexington: $X,XXX
 ```
-Per the Field Communication Standard, do not include the internal spreadsheet filename in this message — the spreadsheet itself (Step 6) is the record; the thread reply only needs the store breakdown above.
+No signature footer. No file names. Nothing about how the data was pulled.
 
-### 6. Create the FINAL monthly spreadsheet with ALL data
-- Use openpyxl to create a professional spreadsheet
-- **Sheet 1: "Sales Rankings"**
-  - Title: "VALLEY PAWN — Employee Sales Rankings"
-  - Subtitle: "[Previous Month Name] [Year] — Final"
-  - Columns: Rank, Employee, Store(s), Total Sales, and then every other metric column from the source reports
-  - Sorted by Total Sales descending
-  - Gold/silver/bronze row highlighting for top 3 (gold: #FFD700 background, silver: #C0C0C0, bronze: #CD7F32)
-  - Currency formatting for dollar amounts
-  - Header row: bold, Valley Pawn purple (#2D1A5E) background, white text
-  - Font: Arial throughout
-  - Auto-fit column widths
+### 6. Save the FINAL workbook (permanent record)
+Build with openpyxl: Sheet "Sales Rankings" (Rank, Employee, Store(s), Retail Sales Excluding Fees, then every other metric column; top-3 gold/silver/bronze fills #FFD700/#C0C0C0/#CD7F32; header bold white on #2D1A5E; Arial; currency format), Sheet "By Store" (grouped, store total rows), Sheet "Summary" (company totals, store comparison, top performers).
+Save via osascript heredoc/cp to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/Employee Sales Rankings/Employee_Sales_Rankings_{MonthName}_{YYYY}.xlsx` (create the folder if missing; never overwrite an existing file — suffix `_v2`).
 
-- **Sheet 2: "By Store"**
-  - Same data grouped by store, showing each store's employees and their metrics
-  - Include a store total row for each store
+### 7. Working file
+Write `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/monthly-analytics/{YYYY-MM} Employee Rankings.md`: trigger id(s), per-store file freshness + row counts, the ranked table, the Slack permalink (or the reason nothing was posted).
 
-- **Sheet 3: "Summary"**
-  - Company-wide totals for each metric
-  - Store-by-store comparison (total sales per store)
-  - Top performer callouts
+## Hard rules
+- Metric is `Retail Sales Excluding Fees` — never "Total Productivity", never a different column. If the column is missing, that is a failure (Rule 18), not a reason to substitute.
+- All Bravo access is through the trigger queue. No computer-use, no Parallels grant.
+- Additive — never modify the pipeline handlers, the watcher, or any other task.
+- Never use the legacy "Dixie Pawn" name. Never publish Preston Peters.
 
-- Save to: `Employee Sales Rankings/Employee_Sales_Rankings_[PreviousMonthName]_[Year].xlsx`
-  - This is the FINAL file for that month — do NOT overwrite if it exists (add a suffix like _v2 if needed)
-
-- Run recalc if any formulas were used: `python mnt/.skills/skills/xlsx/scripts/recalc.py <filepath>`
-
-## Important Notes
-- Rankings: #1 = HIGHEST Total Sales
-- Always use slack_send_message for Slack posts — do NOT try to upload files or create canvases
-- This is the FINAL monthly record — label everything clearly as the monthly final
-- If a report file appears corrupted or unreadable, skip it and note which store was skipped
-- Employee names should be title-cased consistently
-- Dollar values formatted with commas and 2 decimal places in the spreadsheet, no decimals in Slack
-- The monthly spreadsheet is a permanent record — save with the full month name (e.g., Employee_Sales_Rankings_April_2026.xlsx)
+<!-- rebuilt 2026-09-05: pipeline-sourced full-month pull; legacy shared-folder .xlsx path removed -->

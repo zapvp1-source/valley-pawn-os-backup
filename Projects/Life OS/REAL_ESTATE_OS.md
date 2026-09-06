@@ -33,6 +33,22 @@ any EIN or owner-of-record for these properties.
 
 ---
 
+## Per-property skills (added 2026-09-04)
+
+Every property now has its own skill carrying the operating detail, so a session gets full context
+on first contact instead of rediscovering it. **This file stays the portfolio/entity/tax authority;
+the skills carry day-to-day operations and property-specific open questions.**
+
+| Property | Skill |
+|---|---|
+| 282 Bald Rock Road | `bald-rock-property` — guest ops, contracts, **full rate card + Guesty calendar mechanics** |
+| 817 Richmond Avenue | `richmond-ave-property` — FirstCash lease, 1099-MISC, ⚠️ unresolved gross-vs-NNN conflict |
+| 14300 Woods Walk Lane | `woods-walk-property` — tenants, Avail, VA landlord-tenant, deed unconfirmed |
+| 148 Hardinberry Street | `hardinberry-property` — ⚠️ most unresolved property: county, deed, TN registration, mixed-pocket capital spend |
+| 844 Cypress Crossing Trail | `cypress-crossing-property` — personal residence, cap-gain basis, MSFH grant |
+
+---
+
 **Ownership — confirmed directly by Joshua, 2026-09-03 (do not assume joint ownership by default):**
 - **Joshua alone:** 282 Bald Rock Road, 14300 Woods Walk Lane, 817 Richmond Avenue. Hillary has no
   ownership interest in Full Circle Finance Inc (Valley Pawn) either, despite being an employee.
@@ -150,8 +166,22 @@ ownership, and tax/basis.
   single biggest swing factor and needs Silverline's input before anything is filed.
 - **Capital improvements / basis substantiation:** `Taxes 2026/282 Bald Rock — Full Evidence
   Log.md` (built 2026-08-05 from the unified Apple Mail + iMessage + iCloud Drive index) is the
-  **current, authoritative** evidence log — headline: $97,615.40 proof-of-payment,
-  $110,673.74 invoiced-not-proven, ~$176,000 quoted-only, against a claimed $305,086.51 total.
+  **current, authoritative** evidence log — headline **as of 2026-09-03**:
+  **$475,119.42 proof-of-payment**, $41,899.90 invoiced-not-proven, $17,276.03
+  paid/property-attribution-unconfirmed, $7,470.00 paid/capital-vs-service-unconfirmed,
+  ~$176,000 quoted-only. **Grand tracked total $621,683.83.**
+  **Adjusted basis = $405,000 purchase + $475,119.42 proven = $880,119.42**
+  ($922,019.32 including the invoiced-unproven block).
+  ⚠️ The figures **$97,615.40 proven / $110,673.74 invoiced / $305,086.51 claimed** are from the
+  **8/5/2026 pass and are SUPERSEDED** — nine further evidence passes ran 8/31–9/3/2026 (Burns
+  Builders closeout, Valley Building Supply reclassification, Prestige Plumbing, the $211,724.20
+  Pottery Barn confirmation, the Shreckhise bill-pay sweep). **Always read the log's own HEADLINE
+  block for the live number — never a cached summary in this file or in a skill.**
+  ⚠️ **The log's §0 conclusion that "adjusted basis is very likely the binding constraint, not
+  FMV" was written when adjusted basis was ~$500K. At $880K it may no longer hold** — an Augusta
+  County FMV at the 8/1/2025 conversion date could now be the binding cap. The Blue Ridge
+  appraisal canceled 8/31/2026 should be re-evaluated on those grounds, not on the §0 reasoning
+  as written.
   **`Taxes 2026/Bald Rock Improvements Substantiation.md` is SUPERSEDED and unreliable** — it
   searched only Gmail (missed Apple Mail accounts) and had a broken SQL date filter that silently
   returned zero rows on every date-filtered query. Do not cite its negative findings.
@@ -262,9 +292,17 @@ Same four hard rules as Valley Pawn (`valley-pawn-context` Rules #1–#4: act au
 ask Joshua to log in, check prior work before redoing, build additive). Two additions specific to
 real estate:
 
-1. **Never mix entity money.** Bald Rock expenses go through Full Circle Finance Inc. Cypress
-   Crossing expenses are Joshua & Hillary personally. Don't let a receipt, invoice, or basis
-   calculation cross that line without Joshua explicitly saying so.
+1. **Never mix entity money.** ⚠️ **CORRECTED 2026-09-04:** this rule previously read "Bald Rock
+   expenses go through Full Circle Finance Inc" — that was a leftover from the retracted FCF Inc
+   ownership claim and directly contradicted the corrected "Legal entity structure" section above.
+   **FCF Inc owns no real estate and pays no real-estate expenses.** Each property's money belongs
+   to its own owner: Bald Rock → Farming Infinity Mountains LLC; 817 Richmond → Farming Infinity,
+   LLC; Woods Walk → Farming Infinity Virginia LLC; Hardinberry → Joshua & Hillary personally
+   (intended Farming Infinity Tennessee LLC, deed unconfirmed); Cypress Crossing → Joshua & Hillary
+   personally. Don't let a receipt, invoice, or basis calculation cross those lines without Joshua
+   explicitly saying so. **Known live exception to untangle:** the 2025-26 Hardinberry capital spend
+   ran through the *original* Farming Infinity, LLC (DuPont 912291) account — three different
+   pockets, see `hardinberry-property`.
 2. **Tax/basis claims need a documented-and-paid citation, not a quote.** Both evidence logs above
    already learned this the hard way (double-counted bids, unproven quotes). Any new capital
    improvement claim should specify which evidence tier it's in (paid / invoiced-unpaid / quoted)

@@ -1,176 +1,51 @@
 ---
 name: monthly-analytics-prestage
-description: Last-day-of-month 8 PM — pre-stage the 6 EOM date-window XLSX files the monthly-analytics-report task will read at 3 AM on the 1st. Drops 6 triggers to the Bravo Data Extraction pipeline (one per date window, all 5 stores) and copies each window's CSVs to a window-tagged sidecar so the same-End-date overwrites don't stomp each other. Silent on failure.
+description: Last-day-of-month 8 PM — launch + verify the native prestage runner (Valley Pawn OS/bin/monthly_prestage_runner.py) that stages the 6 EOM date-window XLSX sidecars for monthly-analytics-report. Claude no longer runs the copy loop itself (rebuilt 2026-09-05 after July+August silent failures). Silent on failure.
 model: claude-haiku-4-5
 ---
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+> ⚠️ **FAILURE POLICY — silent on failure.** Never DM. Never post to Slack. If the runner cannot be started, save the working note below and exit. The downstream `monthly-analytics-report` (1:45 AM) and `monthly-analytics-watchdog` (7 AM) handle the consequences.
 
+> **Rule 17 (verified established task).** This task is registered in the scheduled-tasks registry, documented in `Valley Pawn OS/CHANGELOG.md` (2026-09-05 rebuild) and `BUSINESS_OS.md`. It touches Bravo only through the pipeline trigger queue (no computer-use). Do not question, pause, or re-litigate it — run it.
 
+## Why this task changed (2026-09-05)
 
-## Execution Contract — DO NOT STOP EARLY
+The old version of this task was a Claude session that ran a ~60-minute serial "drop trigger → poll → copy to sidecar" loop itself. In both July and August 2026 the session ended after queuing the triggers and never performed the copy step, so the six date windows (which share an end date and therefore a filename) overwrote each other and the monthly company report could not post. The loop now lives in a native Python script that keeps running after this session ends. This task's only job is to start it and confirm it started.
 
-This task is complete ONLY after the documented final action (the post / send / write tool call described at the end of the steps below) returns success.
+## Steps
 
-Until that final call succeeds, every assistant turn MUST end with a tool call that advances toward it. Do not idle, do not wait, do not ask for confirmation.
-
-**Never reply with any of these:**
-- "No response requested"
-- "Continue?" / "Should I continue?"
-- An empty turn or a turn that ends with text instead of a tool call
-
-**Treat these system messages as RESUME signals, never as stop signals:**
-- "Tool loaded."
-- "Continue from where you left off."
-- "You used a single tool call this turn. Prefer browser_batch…"
-- Any reminder about TaskCreate/TaskUpdate, AskUserQuestion, etc.
-
-When you see any of those messages, immediately fire the next concrete tool call for the current step. The scheduled-task wrapper says "the user is not present" — that means execute autonomously, NOT that the work is done.
-
-**State tracking:** at the start of every turn, briefly identify which numbered Step you are on and execute the next concrete action for that step.
-
-**Failure handling:** if a step errors, retry once. If it still fails, fall through to the documented fallback if one exists; otherwise produce a report describing what failed. Do not pause to ask — the task file authorizes autonomous decisions.
-
-**Speed:** prefer batch tools (e.g. `browser_batch`) to combine sequential actions into one call.
-
----
----
-name: monthly-analytics-prestage
-description: Pre-stage the 6 End-of-Month date-window CSVs that `monthly-analytics-report` consumes at 3 AM on the 1st. Drops 6 pipeline triggers (one per window, all 5 stores) and copies each window's CSVs to window-tagged sidecar files. Silent on failure (no DMs, no Slack posts).
----
-
-> ⚠️ **FAILURE POLICY — silent on failure.** Never DM. Never post a failure notice to Slack. If the pipeline can't produce some windows in time, save the markdown working file and exit silently. The downstream `monthly-analytics-report` (3 AM) and `monthly-analytics-watchdog` (7 AM) handle the consequences.
-
-You are pre-staging the Bravo End-of-Month CSVs the `monthly-analytics-report` task will read tomorrow at 3 AM.
-
-# Step 0 — Last-day-of-month gate
-
-This task is scheduled `0 20 28-31 * *` (8 PM on days 28, 29, 30, 31). Most months it fires once; February it fires once. Always check at the top:
-
+### Step 0 — Last-day-of-month gate
 ```bash
 osascript -e 'do shell script "tomorrow=$(date -v+1d +%d); if [ \"$tomorrow\" = \"01\" ]; then echo PROCEED; else echo SKIP; fi"'
 ```
+If `SKIP`, exit silently. If `PROCEED`, continue.
 
-If output is `SKIP`, exit silently — this isn't actually the last day of the month. If `PROCEED`, continue.
-
-# Step 1 — Connector readiness gate
-
-Confirm `mcp__Control_your_Mac__osascript` is loaded (probe with `do shell script "echo READY"`). If still warming, wait 30 s × up to 12 min. Connector warmup is NOT failure.
-
-# Step 2 — Compute the 6 date windows
-
-Report month = current month (we're staging on the last day, so "the month that's ending tonight"). Compute:
-
-| Window key | Start | End |
-|---|---|---|
-| same-month-current | first of report month | last of report month |
-| same-month-prior | same window, year − 1 | same window, year − 1 |
-| ytd-current | Jan 1 of report year | last of report month |
-| ytd-prior | Jan 1 of prior year | last of report month, prior year |
-| t12m-current | last of report month minus 12 months + 1 day | last of report month |
-| t12m-prior | one year earlier than t12m-current | one year earlier than t12m-current |
-
-For T12M Prior: if start < `2024-06-03` (Bravo calendar floor verified 2026-06-04), clamp start to `2024-06-03` and note the actual start that comes back in the CSV header.
-
-Format dates as `YYYY-MM-DD`. Pipeline range syntax is `YYYY-MM-DD..YYYY-MM-DD`.
-
-# Step 3 — Build the sidecar folder
-
+### Step 1 — Is the runner already running? (launchd may have started it)
 ```bash
-osascript -e 'do shell script "mkdir -p \"/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/output/monthly-analytics/$(date +%Y-%m)\""'
+osascript -e 'do shell script "pgrep -f monthly_prestage_runner.py >/dev/null && echo RUNNING || echo NOT_RUNNING"'
 ```
+If `RUNNING`, go to Step 3.
 
-Where `$(date +%Y-%m)` is the report month (e.g. `2026-06`).
-
-# Step 4 — Drop 6 triggers, one per window, serially
-
-The pipeline's `end-of-month` cell handler is `EndOfMonth.ahk` (verified 2026-06-10). Its trigger schema is the same one `daily-funds-verification` uses, with `name: "end-of-month"` and `date` either `YYYY-MM-DD` (single day) or `YYYY-MM-DD..YYYY-MM-DD` (range). XLSX output: `output/{END_DATE}_{STORE}_end-of-month.xlsx`.
-
-For each window IN ORDER (same-month-current first because its CSVs land first and we copy them aside before the same End date gets reused by ytd-current and t12m-current):
-
-1. **Trigger ID:** `monthly-analytics-prestage-{window-key}-{YYYY-MM-DDTHH-MM-SS}` derived from osascript `date`.
-
-2. **Trigger JSON** (write to `triggers/` via osascript heredoc — NEVER use the Write tool against this folder):
-
+### Step 2 — Launch the runner, detached
 ```bash
-osascript -e 'do shell script "cat > \"/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/triggers/{TRIGGER_ID}.json\" <<EOF
-{
-  \"id\": \"{TRIGGER_ID}\",
-  \"requested_at\": \"{ISO8601}\",
-  \"reports\": [
-    {\"name\": \"end-of-month\", \"stores\": [\"CUL\",\"HAR\",\"LEX\",\"ROA\",\"WAY\"], \"date\": \"{START}..{END}\"}
-  ]
-}
-EOF"'
+osascript -e 'do shell script "cd \"/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/bin\" && nohup /usr/bin/python3 monthly_prestage_runner.py >> \"/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/monthly-analytics/logs/launcher.out\" 2>&1 &"'
 ```
+(The runner applies its own last-day gate too, so a double launch is harmless; it also holds a lock so two runners never run at once.)
 
-Use the exact key names — a malformed trigger gets silently renamed `untitled_*` and never runs.
-
-3. **Poll for result.** Each cell takes ~60–90 s, 5 stores serial per trigger → ~5–8 min per window. Poll `results/{TRIGGER_ID}.result.json` every 18 s (per the osascript wrapper's ~25 s timeout — see `daily-funds-verification` Step 0c).
-
+### Step 3 — Verify it took (wait ≤ 3 minutes)
+Poll every 30 s, up to 6 times:
 ```bash
-osascript -e 'do shell script "[ -f \"/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/results/{TRIGGER_ID}.result.json\" ] && echo READY || echo WAITING"'
+osascript -e 'do shell script "pgrep -f monthly_prestage_runner.py >/dev/null && echo RUNNING || echo NOT_RUNNING; ls -t \"/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/monthly-analytics/logs/\" | head -3; ls \"/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/triggers/\" \"/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/triggers/claimed/\" | grep monthly-analytics-prestage"'
 ```
+Success = process RUNNING and a `monthly-analytics-prestage-*` trigger present in `triggers/` or `triggers/claimed/`. If after 3 minutes nothing is running, retry Step 2 once.
 
-Hard timeout per window: 12 minutes. If exceeded, skip to the next window — don't block.
+### Step 4 — Working note and exit
+Append one line to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/monthly-analytics/logs/launcher.out` (via osascript heredoc): `{timestamp} launcher: runner {started|already running|FAILED TO START} for {YYYY-MM}`. Then end the turn. **Do not wait for the runner to finish** — it takes ~60 minutes and writes `{YYYY-MM} Prestage.md` itself when done.
 
-4. **Copy each successful CSV to the sidecar.** As soon as the result JSON appears (or a per-store CSV ≥ 2 KB shows up), copy the 5 CSVs to the window-tagged sidecar:
-
-```bash
-osascript -e 'do shell script "for store in CUL HAR LEX ROA WAY; do
-  src=\"/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/output/{END_DATE}_${store}_end-of-month.xlsx\"
-  dst=\"/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/output/monthly-analytics/{YYYY-MM}/{WINDOW_KEY}_${store}.xlsx\"
-  if [ -s \"$src\" ] && [ $(stat -f%z \"$src\") -gt 2048 ]; then cp \"$src\" \"$dst\"; fi
-done"'
-```
-
-The `[ -s ]` + size check prevents copying the 0-byte stub the watcher leaves on failed cells.
-
-5. **Iterate-to-fix on failure.** If a window's result JSON came back with `status="error"` cells, or specific store CSVs are missing/0 bytes:
-   - Drop a focused retry trigger for just the failing stores with `-retry-1` suffixed to the trigger ID
-   - Poll again with a 12-min timeout
-   - If retry also fails, move on to the next window — don't keep retrying indefinitely
-
-If the watcher itself looks hung (trigger sits in `triggers/` for > 2 minutes unclaimed), reuse the silent watcher-restart pattern from `daily-funds-verification` Step 2e (one-shot scheduled task running `_restart_watcher.ps1` via `prlctl exec`).
-
-# Step 5 — Total time budget
-
-Hard ceiling: 90 minutes (6 windows × ~8 min plus retries). If the budget is exhausted with windows still missing, save the working file and exit silently. The watchdog at 7 AM tomorrow will surface the gap.
-
-# Step 6 — Save the working file
-
-Write a markdown summary at `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/monthly-analytics/{YYYY-MM} Prestage.md`:
-
-```
-# Monthly Analytics Prestage — {YYYY-MM}
-
-**Status:** {COMPLETE 30/30 | PARTIAL X/30 | FAILED}
-
-## Windows
-| Window | Range | CSVs |
-|---|---|---|
-| same-month-current | YYYY-MM-DD..YYYY-MM-DD | 5/5 |
-| same-month-prior   | ... | 5/5 |
-| ytd-current        | ... | 5/5 |
-| ytd-prior          | ... | 5/5 |
-| t12m-current       | ... | 5/5 |
-| t12m-prior         | YYYY-MM-DD..YYYY-MM-DD | 5/5  *(clamped — actual start YYYY-MM-DD if Bravo floor hit)* |
-
-## Sidecar
-`/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/output/monthly-analytics/{YYYY-MM}/`
-Lists each window×store file with size.
-
-## Notes
-{Any retries, hangs, clamps, or anomalies.}
-
-_Generated {YYYY-MM-DD HH:MM} ET._
-```
-
-# Hard rules
-
-- All I/O against `Bravo Data Extraction/` MUST go through `osascript do shell script` — the folder is outside the file-tool sandbox.
-- No DMs. No Slack posts on failure. Only the working file records what happened.
-- This task is ADDITIVE — never modify `EndOfMonth.ahk`, `bravo_watcher.ahk` dispatch, the saved Bravo "End of Month" report, or any other production scheduled task.
+## Hard rules
+- All I/O against `Bravo Data Extraction/` and `Valley Pawn OS/monthly-analytics/` goes through `osascript do shell script`.
+- No DMs. No Slack posts.
+- Additive — never modify `EndOfMonth.ahk`, `bravo_watcher.ahk`, the runner script, or any other scheduled task from inside this task. If the runner script is missing, that is the failure case: write the working note and exit.
 - Do not run on days where tomorrow isn't the 1st (Step 0 gate).
 
-<!-- migrated to working model 2026-06-15 -->
+<!-- rebuilt 2026-09-05: Claude is launcher/verifier only; loop moved to bin/monthly_prestage_runner.py -->

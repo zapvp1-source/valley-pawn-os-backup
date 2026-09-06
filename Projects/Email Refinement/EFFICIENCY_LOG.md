@@ -317,3 +317,45 @@ can't fix older list-3 contacts with no Chekkit history — list 12
 "Valley Pawn - Lexington (Store List)" remains an untried candidate source
 for backfilling STORE=Lexington on its ~2,647 members, per the 2026-08-24
 audit's still-unsolved note).
+
+## 2026-09-04 (brevo-weekly-efficiency-audit — scheduled run)
+STATE: Channel stable and healthy, no incidents. This week's sends: W14 "30-Day
+Warranty" (campaign 29, Sep 3, lists 7+10) delivered 178/183 (6 soft bounces, 0
+hard, 0 complaints, 0 unsubs), 124 unique clicks / 132 clickers — strong
+engagement for a 178-person audience, consistent with last week's first
+above-target send. Monthly Gold & Silver (campaign 75, Sep 1, lists 3+10, the
+big list) delivered 11,000/11,209 (13 hard, 188 soft bounces = 1.8% bounce
+rate, 0 complaints, 16 unsubs = 0.15% unsub rate) — both well inside the 2%
+bounce / 0.5% unsub health ceilings. Domain auth fully intact on both fronts:
+fcfpawn.com and thevalleypawn.com each show exactly one SPF record, DMARC
+p=none with the working rua on both, thevalleypawn.com authenticated=true
+with both DKIM CNAMEs live. Both senders (jdavis@fcfpawn.com,
+hello@thevalleypawn.com) active with no DKIM/SPF errors.
+FIXED THIS RUN:
+- Purged 1 blacklisted contact (williamc246@gmail.com) that had re-appeared on
+  the engaged list (list 7) — removed via list-remove API, verified 178->177.
+STILL OPEN (needs Joshua): none new this week.
+STILL OPEN (queued, no input needed):
+- Draft calendar runway: 17 weeks staged (campaigns 54-70, Sep 10-Dec 31),
+  well above the 4-week floor -- no new drafting needed this run.
+- Wave lists 14-18 balanced (2,145-2,247 subscribers, 4.76% spread, well under
+  the 20% rebalance threshold) -- no rebalancing needed.
+- Attribute coverage on the engaged list flat vs last week as expected
+  (FIRSTNAME 35.0%, STORE 52.5%, SMS 50.3% vs last week's 35.3/52.6/50.9) --
+  bravo-brevo-attribute-sync continues its weekly slow top-up on its own
+  schedule.
+- Forfeited-loan win-back list (11) still holds 0 contacts.
+- Loan-due reminder flow still blocked on attribute sync reaching meaningful
+  phone/name coverage, plus a legal read on notice language.
+- True in-send A/B test still blocked by Brevo's API not persisting
+  winnerCriteria/winnerDelay (UI-only fields on this plan) -- sequential
+  experiment in SUBJECT_LINE_EXPERIMENT.md remains the working substitute.
+- Giveaway ladder emails 2 and 3 (campaigns 73, 74) correctly still queued for
+  9/24 and 10/24 -- no action needed.
+NEXT RUN SHOULD CHECK: whether the Sep 10 send (campaign 54, first real wave
+list test -- lists 7/10/14) actually jumps reach from ~180 to ~2,400+
+delivered as planned; whether draft runway has dropped under the 4-week floor
+as December drafts get consumed; keep an eye on whether a lightweight way to
+compute per-link calls+texts (vs the aggregate click proxy used this run) is
+worth building, since Brevo's exportRecipients endpoint needs a notify
+webhook we don't currently have.

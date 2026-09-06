@@ -57,3 +57,17 @@
 - CONFIRMED category (d) genuinely ambiguous, flag-only, no action: Harrisonburg 800055373631 (PS3 CECH-4001B/80GB — body style matches Super Slim family but no full-res photo shows a legible capacity sticker; Super Slim historically shipped 12GB/500GB not 80GB, so the capacity claim is plausible-but-unconfirmed either way).
 - Two items previously flagged 8/02 and 8/16 and fixed 8/21 (Harrisonburg Kindle 800406852492, Roanoke mirror 298226614316) were rechecked this run and confirmed still holding correctly — no regression.
 - Report DM'd to Joshua only (U03BB52MDSA), not posted to any team channel.
+
+## 2026-09-04 run (ebay-title-photo-accuracy-audit)
+- Scope: ALL active listings, all 5 stores (Culpeper 266, Waynesboro 37, Harrisonburg 31, Lexington 26, Roanoke 93 = 453 total).
+- Thumbnail screen: 79 contact sheets built, 17 candidate mismatches flagged by per-store subagents.
+- Full-res verification: 8 of 17 REJECTED as thumbnail misreads (PSP lot/case counts correct, Zelda cartridge label matched exactly, Blink 5-camera box confirmed, iPad triple-camera corner misread as iPhone, Sig Sauer KILO3000BDX confirmed genuine 2-barrel binocular with BDX box, laptop packaging didn't contradict Used status).
+- CONFIRMED and auto-fixed via ebay_title_revise.py --apply (reversible, state in ~/ebay_toolfix_state.json):
+  - Waynesboro 800548737480 (Sony a7 III body, +Battery & Charger)
+  - Roanoke 306998407053 (MacBook Pro A1278, +Charger)
+  - Waynesboro 800508952161 (McFarlane Batman: dropped incorrect "Red" from "Red Platinum Edition" - box only says Platinum Edition)
+  - Harrisonburg 800396466895 (brand was wrong - box is Monster Jam not Mattel/Hot Wheels; also fixed "Tack"->"Take")
+  - Harrisonburg 800396469929 (box reads "Mega Garage" not "Mega City Track Set")
+- CONFIRMED category (c) photo-content problem - DM'd store manager: Harrisonburg 385626892405 (Putnam End Milling Bit) -> Walker, RE-NOTIFY 3rd time (first flagged 8/21, again 8/23, still has fan-blade + bearing/washer photos mixed in as of this run).
+- CONFIRMED category (d) genuinely ambiguous, flag-only: Culpeper 398023637276 (Cabelas Nature Lot of 5 PSP Game - box art for 6 titles incl. non-nature Poker/fishing games shown but only 5 discs pictured, can't confirm actual lot contents); Lexington 157975837256 (Star Wars 2000pc puzzle New Sealed claim - no shrink wrap visible in photos but inconclusive).
+- Report DM'd to Joshua only (U03BB52MDSA), not posted to any team channel.

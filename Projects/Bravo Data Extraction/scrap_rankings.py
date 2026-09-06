@@ -129,18 +129,28 @@ def load_raw():
             status = r[4] if len(r) >= 7 else ""
             posted = r[5] if len(r) >= 7 else ""
             w = r[-1].strip()
-            k = (r[0], bucket, fy)
+            # 2026-09-05: key ALSO by CreatedOn. Harrisonburg reuses the exact
+            # same name ("GOLD W STONES") for a new bucket every month, so
+            # (store, bucket, fy) folded the Aug-posted bucket (72.8 dwt) into
+            # the June-created one and silently dropped it from August.
+            # CreatedOn is a stable per-physical-bucket timestamp.
+            k = (r[0], bucket, fy, created)
             e = rows.setdefault(k, {"created": "", "posted": "", "status": "",
                                     "weight": "", "file_years": set()})
             if fy:
                 e["file_years"].add(fy)
             if created and not e["created"]:
                 e["created"] = created
-            if posted and not e["posted"]:
+            # 2026-09-05: a bucket read while OPEN in an earlier pull leaves a
+            # stale OPEN row in the year file; a later CLOSED read of the same
+            # bucket must win (status, posted date AND weight), otherwise the
+            # bucket is excluded as still-collecting forever.
+            closing = status.upper() == "CLOSED" and (e["status"] or "").upper() == "OPEN"
+            if posted and (not e["posted"] or closing):
                 e["posted"] = posted
-            if status and not e["status"]:
+            if status and (not e["status"] or closing):
                 e["status"] = status
-            if w and not e["weight"]:
+            if w and (not e["weight"] or closing):
                 e["weight"] = w
     return rows
 
@@ -205,7 +215,7 @@ def resolve_month(bucket, e):
 def build():
     raw = load_raw()
     out, unresolved = [], []
-    for (st, bucket, _fy), e in sorted(raw.items()):
+    for (st, bucket, _fy, _cr), e in sorted(raw.items()):
         r = resolve_month(bucket, e)
         if not r:
             unresolved.append((st, bucket))
@@ -265,7 +275,7 @@ def validate():
     raw = load_raw()
     ok = bad = nomatch = 0
     misses = []
-    for (st, bucket, _fy), e in raw.items():
+    for (st, bucket, _fy, _cr), e in raw.items():
         c = parse_created(e["created"])
         if not c:
             continue

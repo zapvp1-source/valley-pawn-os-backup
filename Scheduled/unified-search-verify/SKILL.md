@@ -1,0 +1,29 @@
+---
+name: unified-search-verify
+description: 4:50 AM — verify last night's unified-search index rebuild and document-photos index against their logs (Rule 12); fix-forward once if failed; one plain DM to Joshua only if unrecoverable. Companion to unified-search-index-refresh (which now only launches).
+---
+
+This is an automated run of a scheduled task. The user is not present. Execute autonomously — no clarifying questions. Do NOT call mcp__cowork__request_cowork_directory (it stalls unattended). All host access is via mcp__Control_your_Mac__osascript (load with ToolSearch select:mcp__Control_your_Mac__osascript if deferred). The osascript tool times out at ~25 s per call — never sleep longer than 18 s inside one call.
+
+## Purpose
+You are the VERIFY half of the nightly unified-search rebuild. The task unified-search-index-refresh (3:30 AM) only LAUNCHES refresh_hardened.sh and exits (Phase 1 of Valley Pawn OS/SCHEDULED_TASK_RELIABILITY_PLAN.md, 2026-09-04 — the scheduler allows only 3 concurrent sessions, so nothing may babysit a long script). You check the result, fix forward once if needed, and are the ONLY task allowed to message Joshua about this pipeline. Target runtime: under 5 minutes unless a fix-forward relaunch is needed.
+
+## Step 1 — Unified search result
+Read via osascript: tail -c 1500 of ~/Documents/Claude/Projects/Unified Search/refresh_hardened.log (tr '\r' '\n', last 25 lines) and ls -l of stats.txt in the same folder, plus date.
+- SUCCESS = the log's newest run block contains "=== hardened success on attempt N ===" AND stats.txt mtime is today. Nothing to do; go to Step 2.
+- STILL RUNNING = a refresh_hardened.sh process exists (pgrep -fl refresh_hardened) and the log is advancing. Normal nights finish 3:50–4:40; Reminders can idle 10+ min at 0% CPU — that is not a hang. Do not kill it. Note "still running at <time>" and go to Step 2; do NOT DM.
+- NOT LAUNCHED = no success marker, no process, and the log's newest entry is from yesterday, or ~/Documents/Claude/Projects/Unified Search/launch_failures.log has a line for today → launch it yourself now, exactly: do shell script "(bash ~/Documents/Claude/Projects/Unified\ Search/refresh_hardened.sh) > /tmp/usearch_task_run.log 2>&1 < /dev/null & echo launched" — confirm with pgrep -fl refresh_hardened after 15 s, then go to Step 2 (do not wait for it).
+- FAILED = log shows "=== hardened FAILED after 3 attempts ===" for last night. Read the last ~80 lines, identify the cause. If it is surgically fixable (stale lock the wrapper missed, a full /tmp, a crashed helper process, an obviously bad filename match) fix it and relaunch once as above. If the cause is NOT fixable in-run, send ONE plain-language Slack DM to Joshua (channel D03BHQH5VGT): "⚠️ Overnight search index rebuild didn't finish — <date>." Nothing technical in the DM; full detail goes in your final report only.
+
+## Step 2 — Document-photos index result
+Read via osascript the last 8 lines of ~/Documents/Claude/Projects/Unified Search/photosindex_documents.log.
+- SUCCESS = a "DOCUMENT PHOTOS INDEX DONE:" line dated today with fail=0 (or a small fail count relative to ok). Nothing to do.
+- Its launcher (document-photos-index-refresh, 5:00 AM) fires AFTER you — so a missing today-line is normal; only act if the newest DONE line is older than 48 h: note it in your report. Do not launch it yourself and do not DM for this.
+
+## Step 3 — Append one line to the run log via osascript with >> (never the Edit tool):
+~/Documents/Claude/Projects/Unified Search/verify_runs.log → "<ISO timestamp> usearch=<SUCCESS|RUNNING|RELAUNCHED|FAILED-DM|FAILED-FIXED> photos=<SUCCESS|STALE|N/A>"
+
+## Hard rules
+- Silent on success — no Slack post, no DM (Rule 16). At most ONE DM per run, plain language.
+- Never modify refresh.sh, refresh_hardened.sh, photosindex.py, or photosindex_documents.py. Surgical fixes to other index scripts are allowed only when a run exposes a defect, and must be logged in Valley Pawn OS/CHANGELOG.md before ending the turn.
+- Never re-enable com.valleypawn.unified-search-refresh.plist.disabled-20260821-brokenTCC.

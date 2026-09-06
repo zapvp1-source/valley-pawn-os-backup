@@ -100,7 +100,7 @@ def render(s):
     L.append('| Enabled (will fire) | ' + str(s['enabled']) + ' |')
     L.append('| Registered but disabled | ' + str(s['disabled']) + ' |')
     L.append('| On disk but never registered | ' + str(len(s['unregistered'])) + ' |')
-    L.append('| Recorded skips (usage cap) | ' + str(s['skip_total']) + ' |')
+    L.append('| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | ' + str(s['skip_total']) + ' |')
     L.append('')
     L.append('### Enabled tasks')
     L.append('')

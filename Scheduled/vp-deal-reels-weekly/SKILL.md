@@ -1,12 +1,8 @@
 ---
 name: vp-deal-reels-weekly
 description: Monday 2:30 PM — render 5 store Deal Reels + 1 brand compilation from the week's manager deal photos via ffmpeg, publish to store FB Reels + Brand IG Reels + TikTok through Publer. Zero human input required.
----
-
----
 model: claude-sonnet-5
 ---
-
 # vp-deal-reels-weekly — Lane B1, the machine video engine
 
 **Why this task exists.** The 2026-08-22 audit found the content pipeline produced TWO videos in

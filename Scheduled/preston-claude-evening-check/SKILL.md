@@ -1,14 +1,8 @@
 ---
 name: preston-claude-evening-check
 description: Evening/off-hours companion to preston-interactive-assistant — checks #preston-claude once an hour, 6pm-10pm. No checks 10pm-7am. Same logic, same dedupe file, so no double-processing.
----
-
----
-name: preston-claude-evening-check
-description: Evening/off-hours companion to preston-interactive-assistant — checks #preston-claude once an hour, 6pm-10pm local time. No checks 10pm-7am.
 model: claude-sonnet-5
 ---
-
 > **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard, added 2026-08-02).**
 > This task runs on Joshua's Mac Studio and **does** have local machine access. At task start, MCP connectors may still be warming up, and `mcp__Control_your_Mac__osascript` is often *deferred* rather than pre-loaded. A tool that has not been loaded yet is NOT a missing capability.
 > 1. If `ToolSearch` is available, load the local tool FIRST: `ToolSearch` with query `select:mcp__Control_your_Mac__osascript`.
@@ -22,6 +16,45 @@ model: claude-sonnet-5
 > **Timeout rule:** the osascript wrapper kills any single call at ~25 s. Never sleep longer than ~18 s inside one call; poll in short increments across separate calls. Guard any command that may exit nonzero with a trailing || true.
 
 > ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2; Rule 16 applies on top):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "preston-claude-evening-check" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps, no file paths, no tool/system names. Put all technical detail in the run output/log for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to #preston-claude or anywhere else, in any medium. FIELD COMMUNICATION RULE: anything sent to Preston must be plain everyday language — no technical jargon, no error codes, no pipeline/system/tool names, no file paths.
+
+## STEP 0 — FAST PATH (added 2026-09-04, latency fix — do this before loading ANY context skill)
+
+**Most runs have nothing to do. Those runs must finish in under a minute and release the dispatch slot.**
+Cowork dispatches at most 3 scheduled sessions at once across ~147 enabled tasks, so every extra
+minute this task holds a slot is added delay for Preston AND for every other task in the queue.
+A no-op run that loads the full context stack is the single biggest cause of Preston waiting.
+
+In this exact order, BEFORE loading `enterprise-map`, `valley-pawn-context`, or any other skill:
+
+1. Load `mcp__Control_your_Mac__osascript` (per the gate above) and read the dedupe value:
+   `cat ~/preston_claude_last_ts.txt`.
+2. Read the channel ONCE: `slack_read_channel` channel_id `C0BGXSTT4TY`, limit 15,
+   `response_format: "concise"`.
+3. Compare. If NO message from Preston (U03BWMEM9GR) has a ts strictly greater than the file
+   value → **STOP HERE.** Post nothing, DM nobody, load no skills, write no files. End the turn
+   with `<run-summary>no new Preston requests</run-summary>`. That is a complete, successful run.
+4. Only if there IS a new Preston message do you continue to the context load and the numbered
+   STEPS below — and then load only the skills that request actually needs, not the whole shelf.
+
+Do NOT load `enterprise-map` "just to be safe" on an empty run. An empty run that loads context is
+exactly the waste this step exists to prevent.
+
+## SLACK OUTPUT RULES — verify what you post (added 2026-09-04)
+
+On 2026-09-04 an answer to Preston posted with its entire data section MISSING — he received a
+header, a blank gap, and a closing line, then had to ask again. Rule 18 (never post incomplete or
+inaccurate data) was broken by a formatting failure, not a judgment failure. Therefore:
+
+- **Never use a Markdown table** in #preston-claude. Multi-row data goes out as one plain `•`
+  bullet per line, with every value on the bullet line itself.
+- **Never let an attachment, block, table, or link carry the answer** — the actual numbers go in
+  the message body as plain text.
+- **After every substantive post, re-read the channel** (`slack_read_channel`, limit 1) and confirm
+  the posted text actually contains the data. If it came out blank, truncated, or mangled, repost
+  it as plain bullets immediately, in the same run. Do not end the run on an unverified post.
+- Latency is part of the deliverable. If a request has been sitting for more than ~30 minutes when
+  you pick it up, just answer it — do not narrate the delay to Preston beyond a short plain
+  sentence, and never explain why in technical terms.
 
 ## Execution Contract — DO NOT STOP EARLY
 

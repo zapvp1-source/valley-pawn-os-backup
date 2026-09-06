@@ -1,12 +1,8 @@
 ---
 name: vp-community-weekly
 description: Monday 3:10 PM — stage the week's city-specific Community posts (3-4/week per store, each town in its own voice) from CITY_COMMUNITY_KB.md, selected by the creative drift engine. Zero product-photo dependency.
----
-
----
 model: claude-sonnet-5
 ---
-
 # vp-community-weekly — Lane C, city-specific community content
 
 **Why this task exists and why it is SEPARATE.** The 2026-08-22 audit found that Community posts

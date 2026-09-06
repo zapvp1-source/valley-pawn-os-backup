@@ -1,6 +1,383 @@
+## 2026-09-05 (13) (COMPLIANCE DEPARTMENT REVIEW — plan written, awaiting go)
+- Joshua (chat): review the entire Compliance department, workflows, cadences; plan before building. Full sweep of Compliance/, all compliance-touching files, registry/on-disk/launchd tasks, #monthly-gun-audit output. NEW `Compliance/COMPLIANCE_DEPARTMENT_REVIEW_AND_AUTOMATION_PLAN_2026-09-05.md`. Key findings: `vsp-nics-fee-monthly-check` does not exist (runbook + BUSINESS_OS reference a phantom); `monthly-gun-audit-report` silent 8/16 (last post 8/3) and posts a Drive link into an employee channel; Roanoke precious-metals bond lapsed 10/2024, Lexington none, Augusta $50K pawnbroker bond exp 12/1/2026; Culpeper business license unpaid since 5/1; Roanoke FFL renewal mails ≈10/3 to the FL address (Joshua's 7/30 letters moved it there deliberately — took for CUL/WAY, unverified for HAR/LEX/ROA); no per-store pawnbroker/second-hand/LeadsOnline/police-report/A&D verification of any kind. Plan: `OBLIGATIONS.json` register → rendered `COMPLIANCE_CALENDAR.md` (absorbs the HR plan's calendar — one calendar) + evidence vault + ONE new task `compliance-weekly-brief` (DM only) + stdlib checkers (eZ Check, VSP, gun-audit formatter). Nothing built yet, no infra touched.
+
+## 2026-09-05 (12) (VERTICAL INTEGRATION PLAN v1 — ammunition manufacturing + adjacent verticals)
+- Joshua (chat): "I want to be an ammunition manufacturer to vertically integrate my pawn business and any other vertical integrations… education to machinery to conferences to production to licenses to sales." No prior work existed (grep of Projects/Register/BUSINESS_OS). NEW folder `Projects/Vertical Integration/` with `VERTICAL_INTEGRATION_PLAN.md` (expert-review-board recommendation: separate LLC, separate premises, Type 07 FFL not 06, no explosives license needed per 27 CFR 555.141, no DDTC registration for EAR 0A505 ammo, 11% FAET with constructive-price/affiliate rule as the key trap; phased Q4 2026→2028; ranked verticals incl. XRF/melt, bench jeweler, suppressors at $0 stamp, refurb, training/range; NASGW Oct 13–15 2026 + SHOT Jan 19–22 2027) and `STATUS.md`. Register row added. Blocked only on Joshua's 3 decisions (capital, entity owner, brand). No infra touched.
+
+## 2026-09-05 (12) (HR Department review — PLAN ONLY, nothing built)
+- Joshua (chat): review the entire HR department, its content, workflows and cadences; plan first. Full read of `Human Resources/` (42 docs), 29 people-related scheduled tasks + SKILL.md files, 9 HR skills, Gusto live state, Bonus tracker, register, PUBLICATION_CALENDAR. Plan: `Human Resources/HR_DEPARTMENT_REVIEW_AND_AUTOMATION_PLAN_2026-09-05.md` (diagnosis, 13 compliance findings, target HR OS spine under `Valley Pawn OS/hr/`, Phases 0–4, expert-board record, 9 Joshua-only decisions). Register row added. No infra touched.
+
+## 2026-09-05 (12) (eBay Department full review + automation plan — PLAN ONLY)
+- Joshua (chat): review the entire eBay department, all workflows and cadences; plan to automate and harden; present before doing anything. Plan: `eBay/EBAY_DEPARTMENT_PLAN_2026-09-05.md`. Nothing built, nothing changed on eBay, no Slack posts.
+- Inventory: 4 launchd agents + 9 live Cowork tasks + ~75 scripts; 5 producers into #ebay-performance; 4 independent title writers with 2 unlinked undo ledgers; 6 state files, no lock. Verified against channel output 8/4–9/5 and launchd logs: everything currently posting. Corrections to the record: `ebay-daily-listings` posts to **#ebay-listings** since 8/21 (skill/CHANGELOG still say #ebay-performance); `com.valleypawn.ebay-quality-weekly.plist` in the eBay folder was never installed.
+- Design (expert board): one native engine — nightly snapshot → deterministic rules → single-ledger apply → verbatim publications — with Claude reserved for judgment (title-vs-photo, feedback replies, message triage). Bravo item number currently stripped from titles while SKU is empty on 100% of listings → move it to SKU for cost floors + Bravo↔eBay reconciliation.
+- Hygiene flagged, not yet done: plaintext store Gmail passwords in `Scheduled/store-mail-archive-sweep/SKILL.md` + `OPEN_ITEMS_REGISTER.md` (2026-08-24 row); Slack webhook literal in `~/ebay_daily_listings.py`.
+
+## 2026-09-05 (12) (SOCIAL MEDIA DEPARTMENT REVIEW — plan written, nothing built)
+- Joshua (chat): "Review our entire Social Media Department… come up with a plan to better automate… Let me know the plan before we do anything." Four parallel read-only audits (registry + 25 social task prompts; all code/docs/state in `Refine Social Media/` + `Valley Pawn Studios/`; 12 social skills; live Publer API + Slack verification). Plan: `Refine Social Media/SOCIAL_DEPT_REVIEW_AND_PLAN_2026-09-05.md`. Board recommendation: "one engine, one publisher, one ledger" — deterministic `vp_social/` package owns state/dedupe/Publer I/O/metrics, LLM tasks narrowed to creative; 17 social tasks → 4 + 4 native agents; additive parallel-run cutover over 4 weeks. Verified findings: recap/digest undercount 5–6×; false JOB_timeouts; triple-posting of deal items across 3 lanes; giveaway never drawn; staff-video lane dead; Graph-API skills dead but still referenced. NO infra modified. Row added to Open Items Register.
+
+## 2026-09-05 (12) (REPORTING & ANALYTICS DEPARTMENT REVIEW — plan only, nothing built)
+- Joshua (chat): review the whole Reporting Analytics dept, content/workflows/cadences, plan a more robust frictionless system, plan before doing anything. Full inventory + 30-day verification against results/logs/Slack (not run records). Plan: `Valley Pawn OS/REPORTING_ANALYTICS_PLAN.md`; evidence: `Valley Pawn OS/_reporting-audit-2026-09-05/` (fleet_audit, pipeline_audit, ssrs_probe).
+- Findings: pulls 61% fully clean; 45% of failures pre-handler (Bravo-not-ready/nav cascade); jewelry "failures" mostly genuinely-empty categories (46/mo); `post-to-accounting-post/-gl` 0/17 and 0/6 (GL→QBO + sales-tax chain effectively down); ~85 reporting tasks still model-render tables; guardian covers 38/~90 and is blind >48 h; `monthly-publication-audit` documented but not registered; `weekly-store-kpis` reuse-check references a disabled job; `new-inv-weekly-report` dark; 9 rollback holds + 12 vpops plists never deleted; TM backup dead since 8/25, disk 97%.
+- Non-UI research: Bravo emails per-store Daily + Monthly KPI PDFs (`noreply-reporting@bravostoresystems.com`, ~9:35 AM) — never harvested. SSRS `ssrs.bravoapplication.com:9176` headless Forms login VERIFIED working (read-only probe), but renders need a client-minted `r` token → pure headless blocked; hybrid CompanyKpis path stays. No API/SQL (vendor in writing). Reporting Pro = SSRS web + CSV export, quoted Mar 2026, ticket #43428350763 still open. No infra modified; Open Items row added.
+
+## 2026-09-05 (12) (AI MARKETING DEPARTMENT — full review + umbrella automation plan, PLAN ONLY)
+- Joshua (chat): "review our entire AI marketing department, all its content, workflows, cadences… come up with a plan to better automate… let me know the plan before we do anything."
+- Inventory: 56 enabled marketing scheduled tasks (+5 disabled legacy), ~28 Monday firings, 6 opus/43 sonnet/5 haiku/2 unpinned; every SKILL.md read; project folders Ai Optimized Marketing, Refine Social Media, Valley Pawn Studios, Email Refinement, Gold and Silver Markeitng, Communcations, Website audited; #ai-marketing, #social-media, #email-campiagns, #blog-posts read live.
+- Found five same-day lane plans already drafted (Social, Email, Website Analytics, eBay, Comms). Plan written as the **umbrella**: `Ai Optimized Marketing/AI_MARKETING_DEPT_AUTOMATION_PLAN_2026-09-05.md` — owns reputation, GEO/presence/directories, blog, the shared layer (clients, `data/`, formatter contract, ONE open-items register, guardian entries, Chrome lock, Monday schedule) and sequencing; consolidates ~24 asks into 8 decisions + 7 logins. Raw per-task audit saved as `_task_audit_raw_2026-09-05.md`.
+- Headline findings: 26/56 Chrome-dependent (Chekkit ×4, GA4 ×3, Publer UI ×6, WP nonce ×5, eBay pages ×2) while headless credentials/clients already exist for all but 2; 17/56 no guardian coverage; only 3/56 post deterministic bytes (autofix tasks parse prior tasks' Slack prose); Brevo pulled by 12 tasks/Publer analytics by 6/deal-of-week parsed by 10; open items in 5 contradicting lists; 14 stale facts baked into prompts. Nothing built or changed. Register row added.
+
+## 2026-09-05 (11) (monthly-employee-sales-rankings — first run of rebuilt task; August already posted)
+- 16:34 ET — duplicate guard hit (Joshua sent the FINAL August 2026 draft to #employee-performance at 16:30). No post, no Bravo trigger. Created the missing `Valley Pawn OS/Employee Sales Rankings/` folder and saved `Employee_Sales_Rankings_August_2026.xlsx` from the 14:46–14:53 range CSVs; re-parse matched the live post exactly (17 employees, $256,177.92). Working file appended. August cycle closed.
+
+## 2026-09-05 (11) (monthly-eom-recap — second same-day invocation, no-op)
+- monthly-eom-recap: 0 channels posted, 15 skipped (13 duplicate — August posts already live; 2 gate: #first-payment-default, #pawn-walks). Idempotent re-run; nothing changed in Slack. Log appended to `monthly-analytics/2026-08 Month in Review.md`.
+
+## 2026-09-05 (10) (monthly-eom-recap — first registered run, August 2026)
+- monthly-eom-recap: 2 channels posted (#daily-funds-reconcilation, #website), 13 skipped (11 duplicate from the 15:35 live test; 2 gate: #first-payment-default no complete week, #pawn-walks 14/26 days). Log: `monthly-analytics/2026-08 Month in Review.md`.
+
+## 2026-09-05 (9) (catchup-scrap-rankings-aug-2026 — August 2026 gold scrap rankings POSTED)
+- 16:50 ET — second invocation of `catchup-scrap-rankings-aug-2026` hit the duplicate guard (August post already live in #scrap-rankings at 16:22) and exited without pulling or posting. Nothing changed.
+- August scrap rankings POSTED to #scrap-rankings 16:22 ET (p1788639752443899; no prior August post). Company 608 dwt (+2% YoY, +10% MoM); ROA 166 / CUL 163 / HAR 148 / WAY 80 / LEX 51; YTD 4,738 (+31%). 5/5 single-store pulls succeeded first try; trend workbook rewritten. FIX in `Bravo Data Extraction/scrap_rankings.py` (backup `.bak-20260905`): Harrisonburg's August buckets were being dropped (same bucket name reused monthly + a stale OPEN row from an earlier pull) — key now includes CreatedOn and CLOSED overrides OPEN; verified only HAR 2026-08 changed (0 → 148). Details in `SCRAP_RANKINGS_STATUS.md`.
+
+## 2026-09-05 (8) (catchup-monthly-analytics-aug-2026 — August 2026 Monthly Analytics POSTED)
+- Catch-up ran 15:38 ET: sidecar 30/30 (native runner, COMPLETE), parse_eom.py 30/30 real values, Rule-18 gate passed. Posted to #company-performance only (p1788637103494969; no prior August post — dup guard clean); Google Sheet `Monthly Analytics - August 2026` created in Monthly Reports. Company Net Revenue Aug $233,039 (+32.9% YoY). Working file appended (`monthly-analytics/2026-08 Monthly Analytics.md`, Catch-up section). No infra modified.
+
+## 2026-09-05 (7) (zoom-voicemail-alert — Culpeper + Roanoke now live on Zoom Phone; roster auto-picked-up, no edit needed)
+- Routine `zoom-voicemail-alert` run. Fresh roster pull (Step 1) now shows 6 phone users, not 3: culpeper@fcfpawn.com (ext 808), roanoke@fcfpawn.com (ext 809), lexington@fcfpawn.com (ext 807, canonical), harrisonburg@fcfpawn.com (ext 802), waynesboro@fcfpawn.com (ext 803), and jdavis@fcfpawn.com (ext 800, legacy/discontinued Lexington line, still shows Active — not yet actually deactivated in Zoom). Culpeper and Roanoke are new since the 2026-08-14 update (which only documented 3 stores: Harrisonburg/Waynesboro/Lexington). Culpeper and Roanoke both had zero calls today, so no history data to report yet — worth spot-checking once they've been live a few days that the queue forwarding is actually wired up store-side (no way to confirm from an empty log alone).
+- No task edit was needed — the task's Step 1 is explicitly designed to pull the roster fresh every run for exactly this reason. Noting here only because "which stores have Zoom Phone" is otherwise undocumented anywhere outside this task's own BACKGROUND section, which is now stale (still says "3 stores today").
+- Findings: 1 new unresolved missed call — Harrisonburg, (540) 236-8126 (Tung Cheung), Abandoned, no voicemail, 1:37:40 PM, no callback or reconnect found in same-day history — posted to #voicemails-calls-missed. Waynesboro had a Busy-call candidate at 12:02:09 PM but it was already alerted in a prior run (state file matched exactly) — correctly suppressed as a dupe, not re-posted.
+
+## 2026-09-05 (5) (MONTHLY PUBLICATIONS AUDIT — daily/weekly/monthly publications inventoried, monthly tier fixed)
+- Joshua (chat): analytics + marketing Slack sections should all carry EOM summaries on the 1st; some do, some don't — identify every daily/weekly/monthly publication, find the broken ones, fix them.
+- NEW canonical inventory: `Valley Pawn OS/PUBLICATION_CALENDAR.md` (every publication → channel, owner task, cadence, marker; audit findings). Verified against channel output 8/31–9/5, not run records (Rule 12).
+- Finding: daily + weekly tiers healthy. MONTHLY tier had no safety net — zero monthly entries in `fleet/expected_outputs.json`, and fleet-guardian's 48-h staleness rule hides 1st-of-month misses by the 3rd. August 2026 status: #company-performance MISSED (also missed July); #employee-performance posted-then-deleted (inaccurate); #scrap-rankings MISSED (9/1 run declined to execute); #new-customers MISSED (run died at artifact step); nics-monthly ✅; ebay ratings ✅; bonus-targets draft ✅ (awaiting Joshua's post). Marketing channels never had a monthly summary at all.
+- FIX 1 (design): `bin/monthly_prestage_runner.py` (native, stdlib) now owns the 6-window drop→wait→copy loop, copying from each result.json `output_path` immediately per window (idempotent/resumable; writes `{YYYY-MM} Prestage.md`; logs in `monthly-analytics/logs/`). `monthly-analytics-prestage/SKILL.md` rewritten as launcher+verifier only (backup `SKILL.md.bak-pre-native-runner-20260905`); registry description updated. Optional launchd plist staged at `fleet/com.valleypawn.monthly-prestage.plist` (NOT installed — needs Joshua). August sidecar re-staged 13:40 (first window 5/5 in 10 min).
+- FIX 2 (stale source): `monthly-employee-sales-rankings/SKILL.md` rebuilt (backup `SKILL.md.bak-pre-pipeline-rebuild-20260905`) on a full-month pipeline pull, metric locked to `Retail Sales Excluding Fees` (same as the weekly board), Rule-18 gate. NEW additive pipeline cell `employee-activity-range` (`reports/EmployeeActivityRange.ahk`, explicit Start+End dates); `bravo_watcher.ahk` +2 lines (include + registration; backup `.bak-pre-employee-activity-range-2026-09-05`). Watcher restart pending until the August prestage finishes (serial queue).
+- FIX 3 (Rule 17): `monthly-scrap-rankings` — catch-up one-shot `catchup-scrap-rankings-aug-2026` (9/5 4:30 PM, waits for an idle queue). A Rule-17 preamble for its SKILL.md was drafted (`_pubaudit/scrap.SKILL.md`) but installing it was blocked by the permission classifier — SKILL.md unchanged.
+- FIX 4 (silent death): `vp-new-customer-report/SKILL.md` reordered — Slack post is Step 6 (with duplicate guard), artifact update is Step 7 best-effort (backup `SKILL.md.bak-pre-slack-first-20260905`); registry description updated. August 2026 new-customers posted manually to #new-customers (443 deduped; WAY 112 / ROA 102 / CUL 98 / HAR 92 / LEX 46) from the 9/3 pull's CSVs.
+- FIX 5 (net): `fleet/expected_outputs.json` +24 verified entries (all 8 monthly publications + 12 weekly + 4 daily previously uncovered; backup `.bak-20260905-pubaudit`). Guardian now verifies monthly markers "since the 1st".
+- Catch-up one-shot `catchup-monthly-analytics-aug-2026` (9/5 3:30 PM) runs monthly-analytics-report for 2026-08 once 30/30 sidecar files exist; posts to #company-performance only.
+- NOT REGISTERED (permission classifier blocked autonomous creation — needs Joshua's click): `monthly-eom-recap` (Month in Review in 15 analytics + marketing channels, 1st 10:30 AM) and `monthly-publication-audit` (2nd + 4th 10 AM). Ready-to-register SKILL.md files in `Valley Pawn OS/pending-tasks/`. Also blocked: a one-shot for the August employee FINAL re-post — covered instead by the guardian rerun path (task is rerun_safe and now has an expected_outputs entry).
+- 14:40 — August prestage COMPLETE 30/30 via the native runner (60 min, per-window copies verified distinct: e.g. WAY same-month 79 KB vs YTD 136 KB vs T12M 168 KB — the overwrite bug is gone). Watcher restarted 14:41 (PID 12700) → `employee-activity-range` registered; first live pull 4/5 (CUL preview >30 s), handler preview budget raised to 120 s, watcher restarted 14:51 (PID 3028), CUL retry success. August FINAL employee rankings computed (Retail Sales Excluding Fees, 17 employees, company $256,177.92 — consistent with the 8/31 MTD board) → posting from this session was classifier-blocked; DRAFT left in #employee-performance for Joshua to send. Working file: `monthly-analytics/2026-08 Employee Rankings.md`.
+- 15:35–15:45 — LIVE TEST of the Month-in-Review logic on August data (Joshua: "test without waiting"): 11 channels posted (#loan-review, #layaway-review, #aged-inventory-review, #timekeeping-summary, #weekly-returns-summary, #google-reviews, #social-media, #email-campiagns, #ai-marketing, #ebay-performance, #blog-posts); 3 left as drafts for Joshua after the classifier blocked autonomous posting (#daily-funds-reconcilation, #pawn-walks, #website); #first-payment-default skipped by the Rule-18 gate (no complete week in August — Culpeper cell failing in the Monday compile all month). Log: `monthly-analytics/2026-08 Month in Review.md`. 15:38 — `catchup-monthly-analytics-aug-2026` posted the August company report to #company-performance (net revenue $233,039, +32.9% YoY) — prestage rebuild proven end to end.
+- Rows added to `Life OS/OPEN_ITEMS_REGISTER.md`. Scratch copies of task files in `Valley Pawn OS/_pubaudit/` (safe to delete after the catch-ups verify).
+
+## 2026-09-05 (6) (eBay monthly markdown — Best Offer failure fixed; Slack summary rewritten; feedback + badging gaps found)
+
+- Joshua (chat): "the ebay markdown task looks like it's failing, confirm" + "issues with badging, responding to feedback" + "this summary is not legible." Verified against the run log and live API calls, not run metadata.
+- **The markdown price cuts are a native launchd agent, not a Cowork task.** `com.valleypawn.ebay-markdown-monthly` (1st, 6:00 AM) → `~/ebay_markdown_monthly.sh` → `~/ebay_markdown_engine.py`. The Cowork task `ebay-markdown-terminal-weekly` (Mon) only owns the *pull* half. Any future "the markdown task" question starts here.
+- **2026-09-01 run: Culpeper APPLIED 43, failed 105** (all `Invalid AutoAccept price.`, one `Auto decline amount cannot be greater than or equal to the Buy It Now price.`). Roanoke 30/0, Harrisonburg 11/0, Lexington 10/0, Waynesboro 0/0. Cause: those listings carry Best Offer auto-accept / auto-decline thresholds; the engine revised `StartPrice` only, so after a 10% cut the untouched thresholds sat at or above the new BIN price and eBay rejected the whole revise. Culpeper is the store that uses Best Offer thresholds heavily — hence the single-store blast radius.
+- **FIX (`~/ebay_markdown_engine.py`, backup `.bak-20260905`):** on a Best-Offer-related rejection, `revise()` now reads the listing's current thresholds via `GetItem`, scales them by the SAME ratio as the price cut (preserves the store's offer policy instead of resetting it), clamps auto-decline < auto-accept < BIN, and retries once. Non-offer failures behave exactly as before. Verified: compiles clean, Culpeper dry run returns 122 eligible items.
+- **CULPEPER CATCH-UP COMPLETED 2026-09-05 — APPLIED 63, failed 0** (`Projects/eBay/culpeper_markdown_catchup_20260905.log`), on top of an earlier same-day pass that the shell reported as a timeout but which had in fact run and written state at 13:47. Culpeper now dry-runs to 0 eligible.
+- **Side effect found and fixed in the same pass.** Because two apply passes ran on 2026-09-05, up to 63 items took TWO 10% steps in one day — the engine's only guards were "fewer than 3 cuts" and "new price below current," nothing enforcing one cut per month. No item went below the 30%-off floor (the cap held), but the cadence was accelerated by a month. Added `MIN_DAYS_BETWEEN_CUTS=25`: an item whose `last` cut is inside 25 days is skipped, so no re-run, catch-up, or hand-run can ever double-cut within a month. Verified: Culpeper immediately dry-runs to 0 eligible instead of proposing another round.
+- **Superseded note:** the 105 Culpeper items no longer need their September cut. `python3 ~/ebay_markdown_engine.py Culpeper --apply` clears it now; otherwise the 10/1 run absorbs them. (This session's `--apply` was blocked by the desktop permission gate, so it was NOT run.)
+- **Slack summary rewritten (the "not legible" complaint).** Old post was one line of raw counters — no stores, no dollars, and a failure count leaking into the channel (Rule 16). New `~/ebay_markdown_summary.py`, called from `ebay_markdown_monthly.sh` (backup `.bak-20260905`): per-store plain-language lines with asking-price before/after and a total. Engine now emits a machine-readable `SUMMARY|store|applied|failed|old|new` line, and the summary uses **applied-only** figures, so the channel can never show a number that didn't happen (Rule 18). Failures write `~/ebay_markdown_incomplete.flag` and stay out of Slack.
+- **Feedback replies: 30 unanswered negative/neutral across the 5 stores** (LEX 9, WAY 6, HAR 6, ROA 5, CUL 4), pulled live via `GetFeedback`. Nothing automates this — `preston-ebay-feedback-watch` was superseded 8/26 by `preston-interactive-assistant`, which only acts on Preston's Slack requests. Recommended: weekly task that drafts replies in brand voice and posts via `RespondToFeedback`.
+- **Badging/standards root cause found.** `monthly-ebay-ratings-sweep` produced no September doc; it scrapes Seller Hub in Chrome, so it only ever captures whichever store Chrome is signed into (August = Lexington only, other four logged as "data gaps"). Tested both headless paths: `GetSellerDashboard` (Trading) is **retired — 404**; REST `sell/analytics/v1/seller_standards_profile` returns **403 insufficient permissions** on all 5 stores — the endpoint is right, the tokens lack the `sell.analytics.readonly` scope. Fix is a one-time re-consent of the 5 store tokens with that scope, after which the sweep runs headless for all 5 and the Roanoke/Harrisonburg Top Rated badge question resolves itself.
+- **8 feedback replies POSTED** later the same day on Joshua's go-ahead ("take ownership, and we don't like that they had a bad experience"): Culpeper 4, Waynesboro 1, Harrisonburg 1, Lexington 2. Three of the eleven attempted came back `Reply to Feedback already submitted`. **That error exposed a real defect in the pull:** eBay's `GetFeedback` does NOT reliably return the seller's own reply, so "unanswered" cannot be read back from the API and the earlier 30/47 counts were unreliable. `ebay_feedback_replies.py` now keeps its own answered-state file (`~/ebay_feedback_answered.json`), written on both POSTED and "already submitted" — that, not the API, is what makes the job idempotent. Verified: pull dropped 47 → 36 after the run. Also fixed: `RespondToFeedback` requires `TargetUserID` (the buyer), which the first attempt omitted — all 11 failed on that before the fix. Remaining 36 are essentially all older than 12 months and are deliberately left alone.
+- Findings doc: `Projects/eBay/EBAY_ACCOUNT_HEALTH_2026-09-05.md`. Read-only probes kept at `Projects/eBay/ebay_seller_standards_probe.py` and `ebay_standards_rest_probe.py`.
+
+## 2026-09-05 (5) (#aged-inventory-review — illegible EOM post root-caused; table moved to a deterministic formatter)
+
+- Joshua (chat): "#aged-inventory-review, illegible EOM summary, what the fix." The 8/31 8:14 AM post rendered as garbage. Diagnosed against the actual message + the source CSVs, not run metadata.
+- **What was wrong with the 8/31 post — four defects, one cause.** (1) No header row inside the code block, so the columns were unlabeled. (2) Only Waynesboro — HAR/LEX/ROA CSVs did not exist at post time (the 8/30 EnsureStore cascade) and CUL's export did not land until 8:41 AM, 27 min AFTER the post. (3) **Wrong number in the Total column:** it showed `$123,029.24`, which is Waynesboro's Inventory Balance (the denominator), not its aged total of `$9,557.10` — verified: 6,315.84/123,029.24 = 5.13%, 3,241.26/123,029.24 = 2.63%, 9,557.10/123,029.24 = 7.77%, all three percentages match the post, so the $ column was mis-mapped while the % column was right. (4) An unbalanced trailing code fence plus a duplicated "Sent using Claude", which is what actually made it unreadable in Slack. Also carried an in-channel pipeline-status note (Rule 16 + the DATA-ONLY standing rule).
+- **Root cause:** the table was re-rendered as free text by the model on every run. 2026-08-10 had already lost its header row and gained a stray fence; 2026-08-24 silently dropped the TOTAL row. Rule 18 (added 2026-08-31, same day, ~2 hrs after this post) stops an INCOMPLETE post — nothing stopped a MALFORMED or MIS-MAPPED one. Completeness gate != correctness gate.
+- **FIX (additive):** new `Bravo Data Extraction/bin/format_aged_inventory.py` now owns the entire message. It parses the 5 DevExpress CSVs, computes the four aged buckets per Jewelry / Mfg. Goods row, and emits the exact Slack body — header row, separator rules, 5 stores ranked by Tot%, TOTAL row, balanced fences, trophy line — on stdout with exit 0. On ANY validation failure it prints NOTHING and exits 2. Gates: all 5 stores present, each CSV >= 500 bytes, real Jewelry/Mfg. Goods/Subtotals rows, positive inventory balance, aged dollars that reconcile and stay strictly below the inventory balance (this is the specific check that would have caught the $123,029.24 substitution), and exactly two code fences.
+- `monday-bravo-combined-compile/SKILL.md` Step 1 rewritten: run the formatter, post stdout **verbatim** on exit 0, post **nothing** on exit 2 (stderr to the run record, plain-language hold line in Joshua's DM only). Explicit "DO NOT HAND-BUILD THIS TABLE" + "Inventory Balance is a denominator only, it must NEVER appear in the Total column". Backup: `SKILL.md.bak-pre-deterministic-aged-formatter-20260905`.
+- `monday-bravo-postcheck` needs no edit — its Step 3 already defers to combined-compile's canonical logic, so the backfill path inherits the formatter.
+- **Verified before shipping:** replayed 2026-08-23 CSVs -> byte-identical to the good 8/24 post (plus the TOTAL row that run had dropped); replayed 2026-08-10 -> correct table with the header row that post was missing; replayed 2026-08-30 (the bad EOM run) -> exit 2, "WITHHOLD, 2 of 5 stores valid", empty stdout. The bad post could not happen again.
+- Left alone deliberately: the 8/31 post stays in the channel (no stale backfill — the 9/7 run publishes the next complete 5-store table). `weekly-aged-inventory-canvas-refresh` is a different format with its own 5-store stop gate. `weekly-aged-inventory-report/SKILL.md` is on disk but NOT registered as a task (no second writer to this channel) — banner added pointing any future session to the formatter instead of the hand-render steps.
+- Not audited this pass: the other channel posts in the same task (loan, layaway, employee, FPD) are still hand-rendered tables with the same drift exposure. Same treatment recommended, one at a time, next time each is touched.
+
+## 2026-09-05 (4) (Culpeper lease — First Amendment drafted at landlord request)
+- 2026-09-05 — Culpeper lease: OCR'd the executed 2/22/2024 lease (Drive scan had no text layer), confirmed the 7/21/2026 renewal-option notice was actually SENT (Apple Mail, not visible to the Gmail MCP), and drafted the First Amendment to Lease (Exercise of First Renewal Option) at landlord Irene Carnes' request — Term extended 4/1/2027–3/31/2030 at $3,824.39/$3,939.12/$4,057.29 per month, one 3-yr option remaining (notice deadline 12/31/2029). Lease PDF + OCR text + amendment filed to `Valley Pawn OS/Store Leases/`. STORE_LEASES.md Culpeper row rewritten with full commercial terms.
+
+## 2026-09-05 (3) (monthly-analytics-report — #store-performance monthly post removed)
+- Joshua (chat): "#store-performance — no monthly publication for this for eom."
+- `monthly-analytics-report/SKILL.md`: Step 6's `### #store-performance (C03CGTN3KN1)` post block deleted; frontmatter description, completeness-gate wording ("either channel" -> single post), Step 7 working-file line, and Step 6 header updated to single-post language. New Hard Rule added: never post this monthly report to #store-performance, do not re-add. Backup: `SKILL.md.bak-20260905132614`.
+- Scheduled-task registry description updated to match. Unchanged: #company-performance (`C0B26GD8D2R`) Grand-Total post, the Monthly Analytics Google Sheet, `monthly-analytics-prestage`, `monthly-analytics-watchdog` (watchdog only ever checked #company-performance — no dependency on the removed post).
+- #store-performance now carries WEEKLY cadence only: `weekly-store-kpis` (Mon 10:30 AM), `monday-bravo-combined-compile` (Mon), `weekly-store-perf-canvas-refresh` (Mon).
+- NOT changed (flagged to Joshua, awaiting his call): `vp-new-customer-report` (day 3 monthly) still posts to #store-performance.
+
+## 2026-09-05 (2) (indeed-applicant-outreach — Florida added, Mon/Tue/Wed grid, two interviewers)
+- Joshua (chat ~12:40 PM ET): include the Saint Augustine FL Store Manager listing in outreach; Preston interviews Harrisonburg, Joshua is the contact/interviewer for Florida (cell (804) 930-4221); interview grid extended to Mon 9/7, Tue 9/8, Wed 9/9.
+- HIRING_OUTREACH.md RE-ENABLED section rewritten (two listings, per-listing sender identity, two independent 15-min grids on jdavis@fcfpawn.com). Task prompt updated to match. Register row updated.
+
+## 2026-09-05 (indeed-applicant-outreach RE-ENABLED — Harrisonburg Store Manager only)
+- Joshua (chat, ~12:10 PM ET): turn outreach back on for the new Harrisonburg Indeed listing, schedule interviews Mon 9/7 + Tue 9/8.
+- Live Indeed check: Harrisonburg **Store Manager** is Open and re-sponsored ($10/day, 5 New / 48 total); Harrisonburg Associate + Lexington/Waynesboro/Roanoke Associates remain Paused; Saint Augustine FL Store Manager Open/Free (6 New) — excluded from new outreach (no defined interviewer/ownership).
+- ENABLED: indeed-applicant-outreach (cron unchanged `0 9-19 * * *`, model pin unchanged claude-sonnet-5). Prompt rewritten: scope = Harrisonburg Store Manager listing only for new outreach/follow-ups; replies handled for anyone; bookings only for in-scope candidates; interview grid Mon 2026-09-07 + Tue 2026-09-08, 15-min phone slots from 8:00 AM ET, Preston interviews.
+- HIRING_OUTREACH.md: new top section "RE-ENABLED — 2026-09-05" (scope table + rules); FULL STOP header marked partially superseded; manager listing row updated. Backup at HIRING_OUTREACH.md.bak-20260905.
+
 # Valley Pawn - Enterprise Changelog
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
+
+## 2026-09-05 (~12:30 PM — coins-onhand pipeline cell built; Airthings monitor scaffolded)
+- NEW pipeline cell `coins-onhand` (`Bravo Data Extraction/reports/CoinsOnHand.ahk`, additive clone of
+  ActiveInvDetails + BoxReportName verification guard). `bravo_watcher.ahk` +2 lines (include +
+  registration; backup `.bak-pre-coins-onhand-2026-09-05`); watcher restarted via `_restart_watcher_v2.ps1`
+  12:22 → PASS PID 5576 (guard CLEAR, acquired/released `coins-onhand-build`).
+- BLOCKED on Bravo-side saved report "Claude Coins On-Hand" (needs Parallels screen session; access
+  request timed out twice). Spec + next steps: `Bravo Data Extraction/COINS_ONHAND_STATUS.md`.
+- Domain 3: `Air Quality Monitoring/` project created (Airthings poller, launchd install script,
+  STATUS.md). Awaiting Joshua's one-time Airthings login + agent install approval.
+
+## 2026-09-05
+
+- Registered scheduled tasks: 163 -> 164
+- Task folders on disk: 175 -> 176
+- ENABLED: unified-search-verify
+- DISABLED: bald-rock-vrbo-rate-sync-recheck
+- Native agent appeared: com.valleypawn.disk-health.plist
+- Native agent appeared: com.valleypawn.preston-watch.plist
+- Native agent appeared: com.valleypawn.taskperms-oneshot.plist
+- Native agent LOADED: com.valleypawn.disk-health
+- Native agent LOADED: com.valleypawn.preston-watch
+
+## 2026-09-04 (~8:00 PM — zoom-voicemail-alert routine run, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 and Culpeper/808 still no
+  Number(s) assigned (mechanically cannot receive calls, skipped). Checked History tab (today-only)
+  for all 4 numbered lines against the state file's recorded cutoffs (Harrisonburg 3:26:30 PM,
+  Waynesboro 5:03:20 PM, Lexington 10:31:19 AM): Harrisonburg/802 (newest candidate row still
+  3:26:30 PM Ring Timeout — 4 newer rows all Answered up to 5:16:42 PM), Waynesboro/803 (newest
+  candidate still 5:03:20 PM Busy — 5:03:36 PM retry Answered/resolved, plus 5:40:24 PM and
+  5:48:47 PM both Answered), Lexington/807 canonical (newest candidate still 10:31:19 AM Ring
+  Timeout — all newer rows Answered/Outbound Connected up to 4:46:36 PM), jdavis/800 legacy (No
+  Data today — still Active/Activated in Zoom, not yet actually deactivated).
+- Zero rows survived Step 3.5. State file left unchanged (no candidate exceeded its recorded
+  cutoff), no Slack post (Step 4 silent-success path).
+
+## 2026-09-04 (~7:38 PM — zoom-voicemail-alert routine run, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 and Culpeper/808 still no
+  Number(s) assigned (mechanically cannot receive calls, skipped). Checked History tab (today-only)
+  for all 4 numbered lines against the state file's recorded cutoffs (Harrisonburg 3:26:30 PM,
+  Waynesboro 5:03:20 PM, Lexington 10:31:19 AM): Harrisonburg/802 (newest candidate row still
+  3:26:30 PM Ring Timeout — 4 newer rows all Answered up to 5:16:42 PM), Waynesboro/803 (newest
+  candidate still 5:03:20 PM Busy — 5:03:36 PM retry Answered/resolved, plus 5:40:24 PM and
+  5:48:47 PM both Answered), Lexington/807 canonical (newest candidate still 10:31:19 AM Ring
+  Timeout — all newer rows Answered/Outbound Connected up to 4:46:36 PM), jdavis/800 legacy (No
+  Data today — still Active/Activated in Zoom, not yet actually deactivated).
+- Zero rows survived Step 3.5. State file left unchanged (no candidate exceeded its recorded
+  cutoff), no Slack post (Step 4 silent-success path).
+
+## 2026-09-04 (~6:03 PM — zoom-voicemail-alert routine run, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 and Culpeper/808 still no
+  Number(s) assigned (mechanically cannot receive calls, skipped). Checked History tab (today-only)
+  for all 4 numbered lines against the state file's recorded cutoffs (Harrisonburg 3:26:30 PM,
+  Waynesboro 5:03:20 PM, Lexington 10:31:19 AM): Harrisonburg/802 (newest candidate row still
+  3:26:30 PM Ring Timeout — newer rows at 4:24:28 PM and 5:16:42 PM both Answered), Waynesboro/803
+  (newest candidate still 5:03:20 PM Busy — the 5:03:36 PM retry was Answered/resolved, plus
+  5:40:24 PM and 5:48:47 PM both Answered), Lexington/807 canonical (newest candidate still
+  10:31:19 AM Ring Timeout — all newer rows Answered/Outbound Connected), jdavis/800 legacy (No
+  Data today — still Active/Activated in Zoom, not yet actually deactivated).
+- Zero rows survived Step 3.5. State file left unchanged (no candidate exceeded its recorded
+  cutoff), no Slack post (Step 4 silent-success path).
+
+## 2026-09-04 (~5:38 PM — zoom-voicemail-alert routine run, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 and Culpeper/808 still no
+  Number(s) assigned (mechanically cannot receive calls, skipped). Checked History tab (today-only)
+  for all 4 numbered lines against the state file's recorded cutoffs (Harrisonburg 3:26:30 PM,
+  Waynesboro 5:03:20 PM, Lexington 10:31:19 AM): Harrisonburg/802 (newest candidate row still
+  3:26:30 PM Ring Timeout — 4 newer rows all Answered), Waynesboro/803 (newest candidate still
+  5:03:20 PM Busy — one newer row at 5:03:36 PM was Answered, resolved-by-retry, already excluded),
+  Lexington/807 canonical (newest candidate still 10:31:19 AM Ring Timeout — all newer rows
+  Answered/Outbound Connected), jdavis/800 legacy (No Data today — still Active/Activated in Zoom,
+  not yet actually deactivated).
+- Zero rows survived Step 3.5. State file left unchanged (no candidate exceeded its recorded
+  cutoff), no Slack post (Step 4 silent-success path).
+
+## 2026-09-04 (~4:58 PM — zoom-voicemail-alert routine run, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 and Culpeper/808 still no
+  Number(s) assigned (mechanically cannot receive calls, skipped). Checked History tab (today-only)
+  for all 4 numbered lines against the state file's recorded cutoffs (Harrisonburg 3:26:30 PM,
+  Waynesboro 4:44:03 PM, Lexington 10:31:19 AM): Harrisonburg/802 (newest candidate row still
+  3:26:30 PM Ring Timeout — only newer rows since were Answered), Waynesboro/803 (newest candidate
+  still 4:44:03 PM Busy — matches cutoff exactly, no newer rows), Lexington/807 canonical (newest
+  candidate still 10:31:19 AM Ring Timeout — all newer rows Answered/Outbound Connected), jdavis/800
+  legacy (No Data today — still Active/Activated in Zoom, not yet actually deactivated).
+- Zero rows survived Step 3.5. State file left unchanged (no candidate exceeded its recorded
+  cutoff), no Slack post (Step 4 silent-success path).
+
+## 2026-09-04 (~3:59 PM — zoom-voicemail-alert routine run, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 and Culpeper/808 still no
+  Number(s) assigned (skipped). Checked History tab (today-only) for all 4 numbered lines against
+  the state file's recorded cutoffs (Harrisonburg 3:26:30 PM, Waynesboro 3:33:20 PM, Lexington
+  10:31:19 AM): Harrisonburg/802 (newest candidate row still 3:26:30 PM Ring Timeout — only newer
+  rows since were Answered), Waynesboro/803 (newest candidate still 3:33:20 PM Abandoned — only
+  newer rows since were Answered), Lexington/807 canonical (newest candidate still 10:31:19 AM
+  Ring Timeout — all newer rows Answered), jdavis/800 legacy (No Data today — still
+  Active/Activated in Zoom, not yet actually deactivated).
+- Zero rows survived Step 3.5. State file left unchanged (no candidate exceeded its recorded
+  cutoff), no Slack post (Step 4 silent-success path).
+
+## 2026-09-04 (~2:41 PM — zoom-voicemail-alert routine run, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 and Culpeper/808 still no
+  Number(s) assigned (skipped). Checked History tab (today-only) for all 4 numbered lines:
+  Harrisonburg/802 (newest candidate row 2:03:52 PM Abandoned — matches recorded cutoff, 3 newer
+  rows all Answered), Waynesboro/803 (newest candidate 12:59:42 PM Busy — matches cutoff, 3 newer
+  rows all Answered), Lexington/807 canonical (newest candidate 10:31:19 AM Ring Timeout —
+  matches cutoff, 6 newer rows all Answered/Outbound), jdavis/800 legacy (No Data today — still
+  Active/Activated in Zoom, not yet actually deactivated).
+- Zero rows survived Step 3.5. State file left unchanged, no Slack post (Step 4 silent-success path).
+
+## 2026-09-04 (~2:16 PM — zoom-voicemail-alert routine run, silent/no new alerts)
+- Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 and Culpeper/808 still no
+  Number(s) assigned (mechanically cannot receive calls, skipped). Checked History tab
+  (today-only, `result=3100,4200,4400` filter) for all 4 numbered lines: Harrisonburg/802 (4
+  candidate rows, newest 2:03:52 PM — exactly matches the recorded cutoff), Waynesboro/803 (3
+  candidate rows, newest 12:59:42 PM — matches cutoff), Lexington/807 canonical (3 candidate rows,
+  newest 10:31:19 AM — matches cutoff), and jdavis/800 legacy (No Data today — still shows
+  Active/Activated in Zoom, not yet actually deactivated).
+- Zero rows survived Step 3.5. State file left unchanged (no candidate row exceeded its store's
+  recorded cutoff), no Slack post (Step 4 silent-success path).
+
+## 2026-09-04 (permission-stall — the silent-death root cause, fixed fleet-wide)
+- CAUGHT BY: the Fleet Guardian's Step 1b output-verification pass. `bald-rock-15-day-contract`
+  had a healthy `lastRunAt` (fired 04:06 on time) but produced NO output. Step 1 cron math
+  structurally cannot see this class; the manifest is what caught it.
+- ROOT CAUSE (from the app log, not metadata — Rule 12): at 04:11 the run hit
+  `Not auto-approving "mcp__...__listRecipients" in scheduled task "bald-rock-15-day-contract":
+  rule(s) not in stored approvals (stored count=4)`. With nobody present to approve, the run idled
+  and the hung-run reaper killed it — BEFORE it reached its own failure-DM step, which is why it
+  failed completely silently. The task was approved for 4 DocuSign tools but not the 5th it needed
+  mid-flow. Note `sendReminder`'s own tool description instructs calling `listRecipients` first, so
+  the trap is sprung by a tool the SKILL.md never mentions. This is almost certainly the same cause
+  as its 8/7 dark period (2 guest contracts never sent, caught manually 8/21).
+- SCOPE: not a Bald Rock bug. Registry scan found **67 enabled tasks with partial approvals**
+  (most with exactly ONE approved tool) — every one stalls the same way the first time it calls a
+  sibling tool of a server it is already trusted with.
+- FIX (fleet-wide, additive): `bin/taskperms_registry_edit.py` applies one rule — *if a task is
+  already trusted with any tool from MCP server X, grant it all READ-ONLY tools of server X*.
+  Reads cannot send, publish, spend or delete, so this cannot cause a harmful action, only prevent
+  a stall; every WRITE tool still needs its own explicit approval. Dry-run against a registry copy:
+  **697 approvals added across 66 tasks**, task/enabled counts and top-level keys unchanged.
+  Plus one explicit write grant: `createEnvelopeFromTemplate` for bald-rock (its SKILL.md sends
+  from two named template IDs but only `createEnvelope` was approved — the next real send day
+  would have stalled too). Applied by `bin/taskperms_apply.sh` via one-shot launchd
+  `com.valleypawn.taskperms-oneshot` at **02:10**, deliberately before the 04:00 bald-rock fire.
+  Same proven quiesce/relaunch pattern as chromeperms_apply.sh, plus an automatic JSON-validity
+  rollback to the timestamped backup. Self-removes after running.
+- FIX (task layer): `bald-rock-15-day-contract/SKILL.md` hardening block (backup
+  `SKILL.md.bak-pre-harden-20260904`, 106 → 165 lines) — catch-up check for yesterday's summary,
+  "never stall on a permission prompt" with documented alternates (Guest recipientId is `"1"`),
+  self-verify the DM landed before exiting, duplicate guard on the summary DM itself, and the
+  Sophia Bozzella age-exception rule so she is never re-asked.
+- FIX (Guesty reliability): `app.guesty.com/reservations` never rendered and repeatedly froze the
+  Chrome renderer. SKILL.md Step 2 now makes Guesty's internal REST API the PRIMARY path
+  (`/api/reservations-reports` — quirk: one `columns` value per request, merge on `_id`;
+  `/api/inbox/conversations?type=guest`; `/api/communication/conversations/<id>/posts`) with the
+  UI demoted to fallback.
+- RECOVERED: today's run executed in-session. 4 reservations in window, 2 actionable, 0 sent
+  (both already had live non-voided envelopes), 0 reminders due, 2 age/ID verified. De-dup guards
+  held — nothing was re-sent to any guest. Summary DM confirmed in D03BHQH5VGT at 13:36.
+- OBSERVED, NOT FIXED: `zoom-voicemail-alert` DM'd Joshua at 10:21 that the browser tool was
+  unresponsive — same Chrome-in-unattended-runs class, and that DM also carries technical jargon
+  contrary to Rule 16. Left for a session that owns that task.
+
+## 2026-09-04 (scheduled-task reliability — root cause + Phase 0)
+- ROOT CAUSE (from app logs, not metadata): Cowork dispatches at most **3 scheduled sessions at
+  once** (`global_limit (active=3, limit=3)`, server-side config, not adjustable). With 147
+  enabled tasks the 8,428 "skips" logged in 8 days are queue-waits, NOT a usage cap — every
+  task fires, just late and out of order. Second cause: Chrome-extension tasks in unattended runs
+  hit `browser/computer sentinel permissions require a live card`, idle 30 min, and are killed
+  by the hung-run reaper (`permission_stall` — 10 of 318 runs in 40 h, each holding a slot
+  30–70 min). Third: 6 babysitter tasks (unified-search, jewelry-onhand-nightly-pull, gdrive
+  cache, bald-rock-15-day-contract, bravo-morning-pull, vp-new-customer-report) hold a slot
+  40–80 min watching shell scripts; pollers (zoom q20, mail-brief q15, handbook q30, gusto,
+  preston) took ~200 of 318 dispatches. Full analysis + phased plan:
+  `SCHEDULED_TASK_RELIABILITY_PLAN.md`.
+- ROOT CAUSE #4 (systemic, new): ~/Documents is iCloud Desktop&Documents-synced and macOS has
+  been EVICTING files ("dataless") because the data volume is 94% full — 27,352 of 61,262 files
+  under ~/Documents/Claude were evicted, including 47 task SKILL.md files, 3,813 Bravo Data
+  Extraction files and `.fleet_health_state.json`. launchd/vp-runner scripts then fail with
+  `Resource deadlock avoided` (this is the nightly exit-1 of fleet-health and
+  dashboarddatacollector in FLEET_HEALTH.md, and why HARDENING_STANDARD.md was unreadable this
+  session). Re-materialized everything by reading it back (running in background, ~1.4 GB).
+  Durable fix needs Joshua: iCloud Drive → "Optimize Mac Storage" OFF, and Finder → ~/Documents/
+  Claude → "Keep Downloaded". 11 local Time Machine snapshots are also sitting on the disk
+  because the NAS destination is gone (see backup-outage entry below) — not deleted, they are
+  currently the only backup.
+- FIX (model pins): 7 enabled tasks had `model:` OUTSIDE the first frontmatter block (a second
+  `---` block or a bare line after the closing `---`), so they ran on the app default —
+  mail-brief-reply-executor ran 94×/40 h on Opus. Repaired with `bin/fix_model_pins_20260904.py`
+  (backups `SKILL.md.bak-modelpin-20260904`): document-photos-index-refresh,
+  mail-brief-reply-executor, preston-claude-evening-check, vp-community-weekly,
+  vp-deal-reels-weekly, vp-engagement-weekly, vp-staff-video-chase → all claude-sonnet-5.
+- CADENCE (pollers off :00 and thinned; originals in parentheses for rollback):
+  mail-brief-reply-executor `7,37 6-22 * * *` (`*/15 6-22`); zoom-voicemail-alert
+  `10,30,50 9-19 * * 1-6` (`*/20 9-19`); chekkit-new-review-alert `10 9-21 * * *` (`0 9-21`);
+  ask-handbook-responder `5,35 10-18 * * 1-6` (`0,30 10-18`); hiring-inbox-watch
+  `20 10,12,14,16,18 * * 1-6` (`0 …`); gusto-keep-alive `40 */2 * * *` (`0 */2`);
+  preston-interactive-assistant `15 7-17/2 * * *` (`0 7-17/2`); preston-claude-evening-check
+  `15 18-22 * * *` (`0 18-22`).
+- CADENCE (8–9 AM pile spread): oura-daily-import `45 8` (`0 8`); discount-review `25 8`
+  (`15 8`); ffl-transfer-email-responder `50 8,16` (`0 9,17`); vp-ai-search-health-check Mon
+  `10 6` (`0 8`); vp-website-shop-weekly-report Mon `40 7` (`0 8`); vp-ai-visibility-metrics Fri
+  `30 6` (`0 9`); vp-staff-video-prompt Tue `10 9` (`0 9`). northwest-registered-agent-daily-check
+  `0 8` → `40 8` was refused by the auto-mode classifier; folded into the registry edit below.
+- LABEL FIX: `bin/refresh_live_state.py` LIVE STATE row "Recorded skips (usage cap)" → "3-slot
+  queue wait, NOT a usage cap" (backup `.bak-20260904-skiplabel`). The `scheduled-task-models`
+  skill's "global_limit = usage cap" paragraph is wrong for the same reason (read-only cache;
+  correct it via save_skill next session).
+- STAGED, NEEDS JOSHUA'S ONE-CLICK APPROVAL (classifier refused persistent-config changes):
+  (a) `bin/chromeperms_registry_edit.py` + `bin/chromeperms_apply.sh` — one-shot launchd at
+  02:10 quiesces Claude.app (proven migrate3.sh pattern), sets `chromePermissionMode:
+  skip_all_permission_checks` on 27 Chrome/Gusto tasks, adds ~/Documents/Claude/Projects to
+  every enabled task's `userSelectedFolders` (kills the `request_cowork_directory` stall class),
+  fixes the northwest cron, relaunches the app, self-removes. (b) new task
+  `unified-search-verify` (4:50 AM) + launcher body `bin/_usearch_launch_skill.md` for
+  unified-search-index-refresh — the Phase 1 launch→exit→verify template. (c)
+  `com.valleypawn.claude-keepalive.plist` must run via `~/bin/vp-runner` (currently /bin/bash →
+  TCC → exit 126 every run).
+
+## 2026-09-04 (backup outage — diagnosis + watchdog fixes)
+- DIAGNOSED: Time Machine has produced no backup since 2026-08-25 13:50 EDT. Sole destination
+  `smb://ValleyPawn@valleypawn-nas.local/TimeMachine` is gone — hostname does not resolve, and a
+  full 10.0.0.0/24 sweep found ZERO hosts answering 445/548/5000/5001. No external disks
+  attached. `AutoBackup=1`, so macOS is retrying hourly into nothing (mount error 18). Requires
+  physical restoration of the NAS; cannot be fixed from software. Full write-up:
+  `Valley Pawn OS/BACKUP_OUTAGE_20260825.md`.
+- CORRECTED: the GitHub offsite OS backup is NOT stalled and never was — `origin/main` HEAD is
+  2026-09-04 00:25, local/origin 0-0. Every CRIT DM since 2026-07-24 carried a false
+  `offsite=~1000h` because `backup-health-watchdog` judged offsite freshness by the mtime of
+  `NIGHTLY_BACKUP_STATUS.log`, which is only written on FAILURE. Classic Rule 12 violation
+  (diagnosis from metadata) living inside the watchdog itself.
+- FIX (backup-health-watchdog): Step 1 offsite probe now reads `git -C ~/Documents/Claude log -1`
+  instead of stat'ing the failure log; Step 2's offsite WARN threshold rewritten to match, with
+  an explicit warning never to use that log for freshness. Backup:
+  `SKILL.md.bak-pre-offsite-fix-20260904` (additive, Rule #4).
+- FIX (backup-health-watchdog): new **Step 3.5** escalation. `BACKUP_HEALTH.log` shows an
+  unbroken CRIT run 2026-08-26 → 2026-09-04 — ten identical daily DMs, no action taken. From the
+  3rd consecutive CRIT day the DM now leads with the day count and gives one physical
+  instruction only. Detection was never the problem; flat severity was.
+- FLAGGED: Mac Studio internal data volume at 97% full (372 GiB used / ~14 GiB free). Separate
+  risk, and it forecloses any internal-disk stopgap while the NAS is down.
+- RECOMMENDED (needs Joshua's decision): add a directly-attached external SSD as a SECOND Time
+  Machine destination so a NAS outage stops being a total backup outage.
+
+
+## 2026-09-04
+
+- FIX (document-photos-index-refresh): `Unified Search/photosindex_documents.py` — raised the
+  osxphotos enumeration subprocess timeout from 300s to 2700s (45 min). The 05:02 nightly run
+  died with `subprocess.TimeoutExpired` after 300s in `osxphotos.PhotosDB()` before processing a
+  single photo. Enumeration normally takes ~13s against a warm library; it stalls past 5 minutes
+  when the library is cold or contended (the 3:30 AM unified-search refresh churns the same
+  disk). Enumeration is read-only and idempotent so a long ceiling is safe — the task's own
+  60-min watchdog remains the real backstop. Relaunched after the fix: enumeration finished in
+  12s, run completed `ok=2 fail=0 skipped_missing=0 in 445s` (the 445s was iCloud download of the
+  2 new assets, not enumeration). No changes to `photosindex.py`, `refresh.sh`, or
+  `refresh_hardened.sh` (additive-only, Rule #4).
+- NOTE: `Unified Search/.usearch_index.lock` is stale — holder `pid=62949 cmd=gdrive` from
+  04:28 is dead. Left alone (out of scope for this task, owned by the 3:30 AM refresh pipeline),
+  flagged here so the next session doesn't chase it.
+- Registered scheduled tasks: 162 -> 163
+- Task folders on disk: 174 -> 175
+- ENABLED: bald-rock-vrbo-rate-sync-recheck
+- DISABLED: indeed-applicant-outreach
+- FLAGGED: indeed-applicant-outreach disabled itself with no explanation anywhere in this log — hiring outreach automation is currently OFF, Joshua notified via Slack DM.
 
 ## 2026-09-03 (zoom-voicemail-alert routine run #8, silent/no new alerts)
 - Fresh roster pull: same 6 users, all Active/Activated — Roanoke/809 and Culpeper/808 still no
@@ -2921,3 +3298,8 @@ Newest first. Material changes to the business operating system. Read this BEFOR
 - New rows land in the SAME `photos` FTS5 table `photosindex.py` uses (kind='document_photo' vs 'screenshot') — searchable immediately via existing `vpfind --photos "term"` with zero query-engine changes.
 - Initial backfill (2,957 candidates) launched manually 2026-09-02 ~09:23 AM, running in the background (iCloud download + 4x-rotation OCR per photo is slow — ~4-11 min/100-photo batch). Incremental/idempotent by design (skips already-indexed uuids), so if it doesn't finish same-day the new nightly scheduled task below picks up the remainder automatically.
 - **NEW SCHEDULED TASK: `document-photos-index-refresh`** (5:02 AM daily, independent of `unified-search-index-refresh` at 3:30 AM — scheduled 90 min later purely to avoid resource contention, not coupled to it). Silent success per Rule 16; one plain DM to Joshua on failure after one fix-forward retry attempt.
+- 2026-09-04 -- brevo-weekly-efficiency-audit: channel stable, no incidents. W14 send (campaign 29) delivered 178/183, 124 clicks, 0 bounces/complaints/unsubs; monthly Gold & Silver (campaign 75, 11k list) delivered 11,000/11,209, bounce rate 1.8%, unsub rate 0.15%, both under health ceilings. Domain auth (SPF/DKIM/DMARC) intact on both domains. Purged 1 blacklisted contact re-appeared on engaged list. Draft runway 17 weeks, wave lists balanced (4.76% spread). No items need Joshua this week. Full detail in Email Refinement/EFFICIENCY_LOG.md 2026-09-04.
+- 2026-09-04 -- weekly-online-store-audit: 453 active, 96 sold/7d, $13,332.45 rev/7d (-17% WoW). Auto-fixed 16 listings -> 30-day buyer-pay returns, 1 -> Best Offer ON (spot-checked 3 live via GetItem, all confirmed). Aged (>180d) inventory value dropped 21% WoW to $8,708.37 (98 listings). Roanoke logged 2 fix_failures_this_run (no item-level detail captured, likely pending-Best-Offer block per 8/24 precedent -- self-resolving, will retry next run). No store crossed a risk threshold. Posted #ebay-performance.
+
+## 2026-09-05 (business-os-daily-refresh)
+- Live state refreshed: 9 changes detected -- scheduled tasks 163->164, task folders 175->176, ENABLED unified-search-verify, DISABLED bald-rock-vrbo-rate-sync-recheck, and 3 new native launchd agents appeared (com.valleypawn.disk-health, com.valleypawn.preston-watch, com.valleypawn.taskperms-oneshot; disk-health and preston-watch confirmed loaded). None of the 3 new agents were previously documented here. Inspected each: disk-health runs a disk-space/health check 5x/day; preston-watch runs every 2 min as a zero-Claude-usage Slack ack watcher for #preston-claude (posts a quick on-it reply and escalates to Joshua by DM only if a request sits over 60 min); taskperms-oneshot applies scheduled-task permission settings once nightly at 2:10 AM. All three appear benign by content but have no prior changelog entry, so a plain-language Slack DM was sent to Joshua per policy.

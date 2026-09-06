@@ -52,7 +52,15 @@ Also relevant: the **"Looking up reservation data in Guesty"** subsection for na
 ## Run
 
 1. **Compute window** — `today` and `today + 15 days` in Joshua's local timezone (`YYYY-MM-DD` for both). The window is INCLUSIVE on both ends.
-2. **Pull candidate reservations from Guesty.** Open Chrome, navigate to `https://app.guesty.com/reservations`. The default "Upcoming Bookings" view already filters status=Confirmed and check-out in the future. Confirm the listing is "Mountain Luxury / Mountain Valley Luxury with Pool and Hot Tub". Capture every reservation whose `checkIn` date falls anywhere from today through today+15 (inclusive). For each, record: confirmation code, full guest name, check-in datetime, channel (VRB-… = VRBO; HM… = Airbnb). Skip any with check-in in the past (the guest is already in-house).
+2. **Pull candidate reservations from Guesty.** Capture every reservation whose `checkIn` date falls anywhere from today through today+15 (inclusive). For each, record: confirmation code, full guest name, check-in datetime, channel (VRB-… = VRBO; HM… = Airbnb). Skip any with check-in in the past (the guest is already in-house), and skip anything cancelled or that is an *inquiry* rather than a confirmed booking.
+
+   **PRIMARY PATH — Guesty's internal REST API (added 2026-09-04, use this first).** The `/reservations` grid is unreliable in unattended runs: on 2026-09-04 it never rendered after 60+ seconds and repeatedly froze the Chrome renderer, taking same-origin tabs with it. Instead, load any `app.guesty.com` page, then call Guesty's own REST API in-page (JS injection) using the Okta bearer token already in `localStorage`:
+   - Reservations → `/api/reservations-reports`. **Quirk:** it accepts only ONE `columns` value per request — fetch each needed column in its own request and merge on `_id`.
+   - Guest conversation threads → `/api/inbox/conversations?type=guest`
+   - Message history for a thread → `/api/communication/conversations/<id>/posts`
+   Far faster than the UI and does not depend on grid rendering.
+
+   **FALLBACK — the UI.** Only if the API path fails: navigate to `https://app.guesty.com/reservations`. The default "Upcoming Bookings" view already filters status=Confirmed and check-out in the future. Confirm the listing is "Mountain Luxury / Mountain Valley Luxury with Pool and Hot Tub". If the grid has not rendered within ~60 seconds, do NOT keep waiting on it — reload once, then return to the API path.
 3. **Classify each candidate via DocuSign API.** For EACH candidate, call `getEnvelopes` with `accountId = 320a0ff8-3001-4e1a-93b4-4fc3004b1116`, `from_date = today - 30 days`, and `search_text = <guest last name>`. Filter to envelopes for the same guest, excluding any with status = `voided`. Classify:
    - **SEND** — no matching non-voided envelope. Proceed to Step 4.
    - **SIGNED** — envelope status is `completed` or `signed`. Nothing to do here; still eligible for Step 6 (VERIFY) if not yet verified.
@@ -104,3 +112,54 @@ If a phase has zero items, still include the line with `0` so Joshua sees the ru
 - If DocuSign's ID Verification add-on pricing/terms change in the future (e.g. a lower-volume tier becomes available), flag it in the run log for Joshua's review — do not switch mechanisms without his sign-off, since it's a purchase decision.
 
 <!-- migrated to working model 2026-06-15 --><!-- age/ID verification step added 2026-08-07 per Joshua's directive to treat it as part of the standing contract workflow after DocuSign IDV add-on was priced out as not worth it -->
+
+---
+
+## Hardening block (added 2026-09-04 — HARDENING_STANDARD.md requirements #2, #3, #4, #5)
+
+**Why this exists.** On 2026-09-04 this task fired on time at 04:06, ran cleanly for five
+minutes, then died silently and produced nothing. App log:
+
+    04:11:00 Not auto-approving "mcp__...__listRecipients" in scheduled task
+             "bald-rock-15-day-contract": rule(s) not in stored approvals (stored count=4)
+
+It stalled on a tool permission with nobody present to approve it, and the hung-run reaper
+killed it before it ever reached the failure-DM step. Root cause is fixed at the registry level
+(`Valley Pawn OS/bin/taskperms_registry_edit.py`). The steps below are the second layer, so a
+run that goes wrong for ANY other reason still ends loudly instead of silently.
+
+**A. Catch-up on missed windows (requirement #4) — do this BEFORE Step 1.**
+Read Joshua's DM channel `D03BHQH5VGT` and look for a message containing
+`🏠 Bald Rock contracts (run` dated *yesterday*. If yesterday's summary is absent, the
+previous run died — widen nothing and change nothing about the logic (the 15-day window plus
+the de-dup guards already make the run self-correcting), but add a line to today's DM:
+`↺ Caught up: no summary posted <yesterday's date>` so the gap is visible. Never back-fill by
+re-sending contracts — the DocuSign envelope check in Step 3 is the only authority on what was
+already sent.
+
+**B. Never stall on a permission prompt (requirement #3).**
+If any tool call fails or hangs because a permission was not auto-approved, do NOT wait on it.
+Retry once; if it fails the same way, take the documented alternate path and note the substitution
+in the run log. Known alternates:
+- `listRecipients` unavailable → the Guest role recipientId is `"1"` for these templates; use it.
+- DocuSign MCP unavailable entirely → the DocuSign web UI via Chrome (Templates fallback).
+- Guesty grid unavailable → the REST API path in Step 2.
+A permission stall must never be the reason this task produces no output.
+
+**C. Self-verify output before exiting (requirement #2).**
+After sending the Slack DM, read `D03BHQH5VGT` back and confirm a message containing
+`🏠 Bald Rock contracts (run <today>)` is actually present. If it is not, retry the DM once.
+If it still is not there, the run has FAILED even if every earlier step succeeded — write the
+failure to the run log and send the one-line plain-language failure DM. A run that cannot confirm
+its own output treats itself as failed.
+
+**D. Duplicate guard on every external write (requirement #5).**
+Already load-bearing in Steps 3–6 (DocuSign envelope check; the "primary guest to be 30 or older"
+thread scan). Extend the same discipline to the summary DM itself: if a
+`🏠 Bald Rock contracts (run <today>)` message is ALREADY in the channel when the run
+starts, this task has already completed today — exit without re-sending anything to anyone.
+
+**E. Age-exception guests.** A guest with a documented age exception granted by Joshua in the
+thread is logged VERIFIED (with the exception noted), not PENDING — so the 30+ request is never
+re-sent to someone he has already cleared. As of 2026-09-04 this applies to Sophia Bozzella
+(age 28, exception granted 2026-06-06 and reaffirmed 2026-08-11).

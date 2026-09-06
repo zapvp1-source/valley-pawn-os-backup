@@ -1,12 +1,8 @@
 ---
 name: vp-engagement-weekly
 description: Monday 3:45 PM — stage the week's Engagement posts (Guess the Price, What Is This Thing, polls, caption contests) and the humor slot. Text/image only, zero image-pipeline dependency. Baseline to beat: 18 comments in 90 days.
----
-
----
 model: claude-sonnet-5
 ---
-
 # vp-engagement-weekly — Lane D, the lane that actually creates a community
 
 **Why this task exists.** The 2026-08-22 audit's most damning number: across 485 measured posts in

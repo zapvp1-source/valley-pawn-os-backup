@@ -87,31 +87,52 @@ For EVERY report/channel in this task (Steps 1–4.5), before posting: confirm a
 STEP 1 — Post to #aged-inventory-review (C04NGH4FF35)
 ==========================================================================
 
-Read `output/<TODAY>_<STORE>_aged-inventory-summary.csv` for each store. The CSV is a DevExpress export with:
-- A Jewelry row, a Mfg. Goods row, a Subtotals row
-- Columns: Category, Qty, Cost, Price, <6mo, 6mo-1yr, 1yr-18mo, 18mo-2yr, 2yr-3yr, >3yr
+**DO NOT HAND-BUILD THIS TABLE. (Hardened 2026-09-05.)** For months this table
+was re-rendered as free text by the model every run, and it drifted: 2026-08-10
+lost its header row and gained a stray code fence; 2026-08-31 posted a
+1-of-5-store table with no header row, an unbalanced fence, and the store's
+Inventory Balance ($123,029.24) sitting in the Total Aged $ column. Rule 18
+stops an INCOMPLETE post; it did not stop a MALFORMED or MIS-MAPPED one.
+A deterministic formatter now owns the whole message.
 
-For each store compute:
-- Aged Jewelry $ = Jewelry row's `1yr-18mo` + `18mo-2yr` + `2yr-3yr` + `>3yr`
-- Aged Merch $ = Mfg. Goods row's same four buckets
-- Inventory Balance = Subtotals row's Cost cell
-- J% = Aged Jewelry $ / Inv Bal × 100
-- GM% = Aged Merch $ / Inv Bal × 100
-- Tot% = (Aged Jewelry $ + Aged Merch $) / Inv Bal × 100
+Run it (PIPELINE_DATE = the CSV date per Step 0, POST_DATE = today):
 
-Sort stores highest-to-lowest by Tot%. Format the table in a fenced code block. Post:
-
-```
-📊 _Aged Inventory Review — <DATE>_
-_Inventory Aged Over 1 Year (Cost Basis)_
-_Ranked by Total Aged % of Inventory_
-
-<table>
-
-🏆 Cleanest book: <Store> (<Tot%>).  🛠️  Needs the most attention: <Store> (<Tot%>).
+```bash
+/usr/bin/python3 '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/bin/format_aged_inventory.py' \
+  --pipeline-date <PIPELINE_DATE> --post-date <POST_DATE>
 ```
 
-Use full store names (Culpeper, Harrisonburg, Lexington, Roanoke, Waynesboro) in the table.
+Then obey its exit code — no judgment calls, no repair attempts:
+
+- **exit 0** → post its stdout to C04NGH4FF35 **verbatim, byte for byte**. Do not
+  re-type it, re-align it, add a source footer, add a note, drop the TOTAL row,
+  or "clean it up." It already carries the header row, the separator rules, all
+  5 stores ranked by Tot%, the TOTAL row, balanced code fences, and the trophy /
+  attention line. Anything you add is drift.
+- **exit 2 or 1** → stdout is empty. **Post NOTHING to the channel this run** —
+  not a partial table, not a caveat, not an explanation (Rules 16 + 18). Copy
+  stderr into this run's own record only, and let the Joshua DM in Step 6 carry
+  one plain-language line that this report is being held pending complete data.
+  The next complete pull publishes it; never backfill a corrected table later in
+  the same run.
+
+The formatter already enforces the COMPLETENESS GATE for this report (all 5
+stores present, each CSV ≥ 500 bytes, real Jewelry / Mfg. Goods / Subtotals
+rows, a positive inventory balance, aged dollars that reconcile and that stay
+below the inventory balance, and exactly two code fences). You do not need to
+re-check any of that by hand, and you must not override a withhold.
+
+Reference only — what the formatter computes per store, from
+`output/<PIPELINE_DATE>_<STORE>_aged-inventory-summary.csv` (a DevExpress export
+with a Jewelry row, a Mfg. Goods row, a Subtotals row, and columns Category,
+Qty, Cost, Price, <6mo, 6mo-1yr, 1yr-18mo, 18mo-2yr, 2yr-3yr, >3yr):
+
+- Aged Jewelry $ = Jewelry row `1yr-18mo` + `18mo-2yr` + `2yr-3yr` + `>3yr`
+- Aged Merch $   = Mfg. Goods row, same four buckets
+- Inventory Balance = Subtotals row `Cost` — **this is a denominator only. It
+  must NEVER appear in the Total column.** That substitution is exactly what
+  made the 2026-08-31 post wrong.
+- J% / GM% / Tot% = each aged figure ÷ Inventory Balance × 100
 
 ==========================================================================
 STEP 2 — Post to #loan-review (C0B08RS2BMK) + #layaway-review (C04N24STDP1)

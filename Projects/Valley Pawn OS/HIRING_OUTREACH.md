@@ -18,6 +18,37 @@ Texts must read like Joshua actually typing, not a mail merge.
 ## APPROVED EXCEPTION — 2026-08-29 (Joshua, via chat): Culpeper same-day, in-person, TODAY ONLY
 Joshua confirmed: "if Culpeper has any today they can come by today." This explicitly blesses what Preston was already doing on-site at Culpeper 2026-08-29 — in-person, same-day interviews for Culpeper candidates, for today (2026-08-29) only. This is a one-store, one-day exception to the standing phone-only / no-same-day rule, not a reversal of it — the pre-booking validator (phone-only, not today, 7AM–9PM ET, no conflict, dialable number) still applies everywhere else and reverts for Culpeper after today unless Joshua says otherwise. Do not extend this to other stores or other days without a fresh confirmation.
 
+## ✅ RE-ENABLED — 2026-09-05 (Joshua, via chat) — TWO LISTINGS IN SCOPE, TWO INTERVIEWERS
+
+**Joshua's orders (Sat 2026-09-05, ~12:10 PM and ~12:40 PM ET):** turn the outreach task back on; work the new Harrisonburg listing AND the Florida listing; **Preston interviews Harrisonburg, Joshua interviews Florida**; schedule interviews **Mon 2026-09-07, Tue 2026-09-08, Wed 2026-09-09**.
+
+**Live Indeed state at re-enable (Jobs page, 2026-09-05 12:05 ET):**
+
+| Listing | Job status | Sponsorship | Candidates | IN SCOPE? | Interviewer / contact |
+|---|---|---|---|---|---|
+| Store Manager — Harrisonburg, VA 22801 | **Open** | Basic, $10/day ($21.81 spent — freshly re-sponsored) | 48 all / **5 New** | **YES** | **Preston Peters, (540) 836-4200** — messages sent as Preston |
+| Store Manager — Saint Augustine, FL | **Open** | Free | 12 all / **6 New** | **YES** | **Joshua Davis, (804) 930-4221** — messages sent as Joshua |
+| Sales & Loan Associate — Harrisonburg | Paused | — | 43 / 0 New | No | — |
+| Sales & Loan Associate — Lexington | Paused | — | 31 / 0 New | No | — |
+| Sales & Loan Associate — Waynesboro | Paused | — | 63 / 0 New | No | — |
+| Sales & Loan Associate — Roanoke | Paused | — | 27 / 0 New | No | — |
+
+Per-job URLs:
+- Harrisonburg Store Manager: https://employers.indeed.com/jobs/view?employerJobId=aXJpOi8vYXBpcy5pbmRlZWQuY29tL0VtcGxveWVySm9iLzQ0Yjc0MmM3LWVkN2YtNDJiMC1iMmI3LTdiOTEzM2I4OWRiYQ%3D%3D
+- Saint Augustine FL Store Manager: https://employers.indeed.com/jobs/view?employerJobId=aXJpOi8vYXBpcy5pbmRlZWQuY29tL0VtcGxveWVySm9iL2E4NzY2OGQ2LWJmNDUtNGI5Yi1iNWZkLTg3ZDM2ZjYyZmI3OQ%3D%3D
+
+**Scope rules while this section is current:**
+1. NEW applicant outreach (Step 1) and follow-ups (Step 2): the two Store Manager listings above only. Work every New plus any Reviewing applicant not in the contact log or the Preston exclusion list. Do NOT reopen, sponsor, or touch any Paused listing.
+2. **Sender identity depends on the listing.** Harrisonburg → first-contact template "sent as Preston" (existing template, his cell). Florida → the same template with **Joshua Davis** as the name and **(804) 930-4221** as the number. Never mix them up — a Florida candidate must never be told Preston will call, and vice versa.
+3. Replies (Steps 3–4): monitor all three channels for everyone previously contacted on any listing; answer them, but only BOOK candidates from the two in-scope listings. Anyone else who replies wanting a time → log it and DM Joshua; do not book.
+4. **Interview grid: Mon 2026-09-07, Tue 2026-09-08, Wed 2026-09-09 — 15-minute phone slots starting 8:00 AM ET, fill Monday first, then Tuesday, then Wednesday.** Two independent grids on the same calendar (jdavis@fcfpawn.com): the Preston/Harrisonburg grid and the Joshua/Florida grid. A Preston slot and a Joshua slot MAY share the same time (different interviewers); two slots for the SAME interviewer may not. Conflict check = list_events for that window, filter by store in the title. Phone only. No same-day. Can't do Mon–Wed → next available day within 7 AM–9 PM ET. (Mon 9/7 is Labor Day — Joshua chose it knowingly.)
+5. Calendar event titles: `Interview — {Name} — Store Manager, Harrisonburg (Phone)` or `Interview — {Name} — Store Manager, Saint Augustine FL (Phone)`. Description must name the interviewer (Preston Peters / Joshua Davis). Confirmation wording: Harrisonburg → "Preston will call you at this number from (540) 836-4200." Florida → "Joshua will call you at this number from (804) 930-4221."
+6. Florida candidates: the FL store is a location in development — if asked, say it's a new Valley Pawn location opening in the St. Augustine area; do not invent an address, open date, or FFL status. Answer everything else from the job post.
+7. Everything else in this manual (contact window 9 AM–8 PM ET, true-time check, Gate A–E hardening, exclusion list, digest rules, no-auto-renew sponsorship rule) applies unchanged.
+8. The FULL STOP section below is **superseded** for the two Store Manager listings; it remains accurate for the four Paused associate listings. The 2026-08-29 "Preston is in charge" policy still governs Harrisonburg; it does NOT apply to Florida (Joshua's listing).
+
+---
+
 ## POLICY CHANGE — 2026-08-29 (Joshua, mid-run via chat): PRESTON IS NOW IN CHARGE OF THIS PIPELINE
 Ad volume is up, so ownership of the day-to-day loop moves from Joshua to **Preston Peters (Operations Manager)** — same process, new interviewer/sender.
 - **Preston Peters** — cell **(540) 836-4200** / `+15408364200` (verified via Joshua's Contacts, "Preston Peters"), email `preston@fcfpawn.com`, Slack `U03BWMEM9GR` (`thevalleypawn@gmail.com`, no Slack DM phone field set).
@@ -92,7 +123,7 @@ For every reply found:
 - **Asks to stop** → cease that channel permanently, mark OPT-OUT in the log.
 - Mark the reply in the contact log with channel + date so it's never double-handled.
 
-## ⛔ FULL STOP — ALL VALLEY PAWN HIRING PAUSED (Joshua, end of 2026-08-15 session)
+## ⛔ FULL STOP — ALL VALLEY PAWN HIRING PAUSED (Joshua, end of 2026-08-15 session) — PARTIALLY SUPERSEDED 2026-09-05, see RE-ENABLED section above
 Joshua directed "pause all listings." (He first said "all except the Florida one" — **there is no Florida listing**; every Valley Pawn posting is Virginia. Confirmed via AskUserQuestion that he meant pause all 5.)
 
 **Verified status of all 5 listings — every one was ALREADY stopped, no changes were needed:**
@@ -1201,7 +1232,7 @@ The #employee-prospects post (activity days only) leads with:
 ## Manager listing (now IN SCOPE for triple-contact, added 2026-08-15)
 | Store | Title | Pay | Status | employerJobId (URL-encoded) |
 |---|---|---|---|---|
-| Harrisonburg | Store Manager | $22.00–$26.00/hr | Reopened 2026-08-15. Sponsorship capped to **15 days, ends 2026-08-29** ($10/day, $150 max — Joshua's explicit cap, not continuous). 29 total applicants (older, unreviewed — 5 marked New), pre-existing screening Qs incl. "list 2-3 interview time ranges". App updates also route to preston@fcfpawn.com (informational copy — does not replace the triple-contact process). | aXJpOi8vYXBpcy5pbmRlZWQuY29tL0VtcGxveWVySm9iLzQ0Yjc0MmM3LWVkN2YtNDJiMC1iMmI3LTdiOTEzM2I4OWRiYQ%3D%3D |
+| Harrisonburg | Store Manager | $22.00–$26.00/hr | **RE-SPONSORED / OPEN as of 2026-09-05 — the active listing, see RE-ENABLED section at top.** Previously: Reopened 2026-08-15. Sponsorship capped to **15 days, ends 2026-08-29** ($10/day, $150 max — Joshua's explicit cap, not continuous). 29 total applicants (older, unreviewed — 5 marked New), pre-existing screening Qs incl. "list 2-3 interview time ranges". App updates also route to preston@fcfpawn.com (informational copy — does not replace the triple-contact process). | aXJpOi8vYXBpcy5pbmRlZWQuY29tL0VtcGxveWVySm9iLzQ0Yjc0MmM3LWVkN2YtNDJiMC1iMmI3LTdiOTEzM2I4OWRiYQ%3D%3D |
 
 This manager listing is now included in the hourly scheduled task's checklist alongside the 4 associate listings — same triple-contact treatment, immediate on new applicant.
 
@@ -2674,3 +2705,120 @@ RUN_LOCK released at end of this run.
 - **Sends this run:** iMessage x2 successful (Kaniya Amos location answer, Jacob Cox — none, no phone on file). Gmail x7 successful (Lionell Clark reply + correction, 4 Day-2 follow-ups, Raven Hamm reply + correction, Sarah Clement correct-name follow-up). Slack DMs x2 successful (Preston, Joshua).
 - **Classifier blocks this run (Gate D — one rephrased retry each, all resolved on retry except none outstanding):** `create_event` (Jacob Cox, resolved on retry), iMessage send (Kaniya Amos, resolved on retry), Gmail reply x3 (Lionell Clark correction, Sarah Clement follow-up first attempt, Raven Hamm correction — all resolved on retry).
 - RUN_LOCK deleted as the final action of this run.
+
+### Run log — 2026-09-05 ~2:00-2:12 PM ET (indeed-applicant-outreach, continuation of the 1:xx PM run)
+- True time verified via curl to google.com: 18:01 GMT = 2:01 PM ET, matched local clock — no skew, inside 9AM-8PM send window.
+- Context: this run continued from an earlier same-session pass (1:17-1:53 PM ET) that had already sent first-contact Indeed messages to all New applicants on both in-scope listings (Harrisonburg: Sheilah Buckholz, Amanda McDaniel, Serina Allen, Kevin Arrington, Scott Fowler; Florida: Olivia Cox [closed - took another job], Travis Rexroad, Patrick Stockman, Kristal Jenkins, Ian Grady, Dan Hager) before pausing itself over an unfounded concurrency concern. Verified via mcp__scheduled-tasks__list_scheduled_tasks that indeed-applicant-outreach runs on a plain hourly cadence (lastRunAt 17:09:23Z, nextRunAt 18:09:02Z) with no evidence of a second overlapping run; the only "evidence" cited (a run-lock file) was traced to that same earlier pass. Proceeded per Rule 17 (verify before refusing).
+- **BOOKED:** Sheilah Buckholz (Harrisonburg Store Manager) — replied by email offering Mon 9/7 1pm or Tue 9/8 4:30pm; selected earlier slot per grid-fill order. Interview Mon 2026-09-07 1:00-1:15 PM ET phone, Interviewer Preston Peters, calendar event 0bfe5pr4lmeu96c00famasq5rs on jdavis@fcfpawn.com. Confirmed to her by email reply. DM'd Preston (U03BWMEM9GR) and Joshua (D03BHQH5VGT) on Slack.
+- **REPLY HANDLED — Jennifer Meneses** (FL Store Manager, Jenniferp96@icloud.com, (978) 858-6592): replied on Indeed offering a same-day 3pm call. Indeed in-app reply compose box did not accept typed text (known React-textarea blocker) — fell back to email + text redirecting to the grid: offered Mon 9/7 8:00 AM ET (next open Florida/Joshua slot), Tue 9/8 or Wed 9/9 as alternates. Awaiting her reply.
+- **REPLY HANDLED — Nanii Morales Lazu** (Harrisonburg Store Manager, pkiahnce@gmail.com, 571-349-9955): replied on Indeed "welcome to call anytime any day" (vague/flexible). Same Indeed compose-box blocker — sent email + text offering Mon 9/7 8:00 AM ET (next open Harrisonburg/Preston slot after Sheilah's 1pm), Tue 9/8 or Wed 9/9 as alternates. Awaiting her reply.
+- **Indeed in-app reply compose box confirmed broken again this run** for both of the above (types text, Send stays disabled/greyed) — consistent with the manual's documented blocker. First-contact sends via the main /messages inbox composer worked fine earlier in the day; only the reply-in-thread compose box failed this run. Logged as a gap, not re-attempted further per Joshua's standing guidance that email+text are sufficient.
+- **New-applicant sweep confirmed clean:** Harrisonburg Store Manager 49 All / 0 New; Saint Augustine FL Store Manager 12 All / 0 New. No untouched New applicants on either in-scope listing as of this run.
+- **Gmail sweep** for replies to "Valley Pawn — let's talk about your application" (newer_than:1d): only Sheilah's thread (handled above) plus an old, out-of-scope Culpeper Sales/Loan Associate thread (Lionell, myteamof2@gmail.com) last touched 9/3 — Paused listing, not in scope for this task, no new activity, left untouched.
+- **Follow-ups (Step 2):** none due — all in-scope first contacts today are <1 hour old; no Day-2/Day-5 follow-ups fall due yet for the two Store Manager listings (both only went live/re-sponsored today).
+- **Digest (Step 6):** skipped — run time (~2:10 PM ET) is not the nearest-7PM digest slot.
+- **Sponsorship:** Harrisonburg Basic sponsorship freshly re-sponsored 9/5, not within 3 days of lapsing — no flag needed.
+- No candidates on this run matched the Preston "ALREADY HANDLED" exclusion list.
+
+Contact log additions:
+| 2026-09-05 | Sheilah Buckholz | Store Manager, Harrisonburg | Indeed check (prior pass) | Email check (booked+confirmed) | n/a | BOOKED Mon 9/7 1:00 PM ET phone, Preston interviewing. |
+| 2026-09-05 | Jennifer Meneses | Store Manager, Saint Augustine FL | Indeed check (prior pass), reply attempt failed (compose box broken) | Email check (redirect to grid) | Text check +19788586592 | Offered Mon 9/7 8:00 AM ET / Tue / Wed. Awaiting reply. |
+| 2026-09-05 | Nanii Morales Lazu | Store Manager, Harrisonburg | Indeed check (prior pass), reply attempt failed (compose box broken) | Email check (redirect to grid) | Text check +15713499955 | Offered Mon 9/7 8:00 AM ET / Tue / Wed. Awaiting reply. |
+
+### Run log — 2026-09-05 ~2:14-2:26 PM ET (indeed-applicant-outreach, continuation)
+- True time verified: curl to google.com Date header = 18:14:49 GMT = 2:14:49 PM ET; local Mac/sandbox clock agreed (14:14:48 EDT); session's own stated date (2026-09-05) matched. No skew. Inside 9AM-8PM send window.
+- RUN_LOCK: prior lock already released (13:56 run note) — wrote a fresh lock at start, deleted as final action of this run.
+- **Reply sweep, all 3 channels, vs. the 2:00-2:12 PM run (~2 min prior):**
+  - Gmail (indeedemail.com + outreach-subject, newer_than:1d): confirmed Sheilah Buckholz's booking thread already fully worked (Preston's confirmation sent 18:02 UTC). Jennifer Meneses and Nanii Morales Lazu threads show only our own 18:04/18:05 UTC redirect-to-grid sends — no reply back yet. One new-application notification email (Patrick Stockman, timestamped 16:00 UTC / before this and the prior run) — candidate already triple-contacted, not new.
+  - iMessage unreads (15): all known noise (Preston's own "Yes. It was." reply to an unrelated question, restaurant cancellation, spam/OTP links, prior-logged acks) — nothing candidate-related or new.
+  - Indeed inbox (`/messages?threadType=highQualityMarketplace`, full scan): Jennifer Meneses's "I can give you a call at 3" (1:53 PM) and Nanii Morales Lazu's "welcome to call anytime any day" (1:33 PM) are both the SAME messages the 2:00-2:12 PM run already answered by email+text redirect to the Mon 9/7 grid — not new, no double-handling. No other new threads on either in-scope listing.
+- **New-applicant sweep:** `/candidates?statusName=New&tab=manage&id=0` — blank-canvas on first 2 loads (documented recurring Indeed SPA issue), confirmed on 3rd load: **New • 0** across all listings. Matches the prior run's finding. No new applicants on either in-scope listing.
+- **Follow-ups (Step 2):** none due — both in-scope listings only went live/re-sponsored today; no first-contact is old enough for a Day-2 touch yet.
+- **Bookings this run:** none (no candidate has yet picked a specific grid slot beyond Sheilah, already booked last run).
+- **Digest (Step 6):** skipped — not near the 7 PM slot.
+- **Sponsorship watch:** Harrisonburg Basic sponsorship freshly re-sponsored 9/5 — not within 3 days of lapsing, no flag needed. Florida listing remains Free.
+- No candidates this run matched the Preston "ALREADY HANDLED" exclusion list.
+- 0 new sends this run (pure verification pass — everything found was already actioned by the immediately-prior run). 0 calendar events created.
+- RUN_LOCK deleted as the final action of this run.
+
+### Run log — 2026-09-05 ~15:1x-15:21 PM ET (indeed-applicant-outreach)
+- True time verified: curl to google.com Date header = 19:09/19:20 GMT = 3:09/3:20 PM ET across the run; local Mac/sandbox clock agreed; session's own stated date (2026-09-05) matched. No skew. Inside 9AM-8PM send window.
+- RUN_LOCK: none found at start — wrote fresh lock, deleted as final action.
+- **Reply sweep, all 3 channels, vs. the 2:14-2:26 PM run:**
+  - **iMessage new inbound: Dan Hager** (FL Store Manager applicant, +19047881651, "Hi its Dan, I applied on Indeed. Im available anytime to talk", 3:06 PM) — interested but vague, no same-day. Replied by text offering Mon 9/7 8:15 AM ET / Tue 9/8 / Wed 9/9. Awaiting his pick.
+  - **Indeed inbox new inbound (4 candidates):**
+    - **Patrick Stockman** (FL) — "available now if you want to call" (3:11 PM). Indeed reply compose box confirmed broken again (typed text didn't register, Send stayed disabled) — one retry per Gate D, then fell back to email per standing "email+text sufficient" call (no phone on file for him). Replied by email offering Mon 9/7 8:00 AM ET / Tue / Wed.
+    - **Kevin Arrington** (Harrisonburg) — "out of town until Tuesday, call me Tuesday around 3 at 540-407-4011" (3:08 PM). Specific time given → **BOOKED**: Tue 2026-09-08 3:00-3:15 PM ET phone, Interviewer Preston Peters, calendar event `1ovj0h93vtaephovctt6it79dg` on jdavis@fcfpawn.com, no conflict (Gate B passed). Confirmed via email reply + text to 540-407-4011. DM'd Preston (`U03BWMEM9GR`) and Joshua (`D03BHQH5VGT`).
+    - **Serina Allen** (Harrisonburg) — "free after 3:30 today, tomorrow after 5:30" (2:45 PM). No same-day; replied by email offering Mon 9/7 8:00 AM ET / Tue / Wed, or evenings if grid doesn't work. Awaiting her pick.
+    - **Jennifer Meneses** (FL) — 1:53 PM "call at 3" — already answered by the prior run's 2:04 PM redirect; not new, no double-handling.
+  - **Gmail sweep** (indeedemail.com + outreach-subject, newer_than:1d): confirmed the above; also surfaced one new-application notification (Patrick Stockman + 2 others, 16:00 UTC) — already triple-contacted, not new.
+- **Errors this run (logging transparently, not burying them):**
+  1. Sent an unwarranted, out-of-cycle "circling back" follow-up to **Kristal Jenkins** (FL) whose first contact was only ~1.5 hrs old — no Day-2/Day-5 threshold had been reached and she hadn't gone silent long enough to warrant it. No harm to the pipeline (friendly, on-template, not spammy) but inconsistent with the pacing rule; noting so no other run re-touches her prematurely.
+  2. Initially sent the Serina Allen reply content to **Scott Fowler's** thread by mistake (wrong messageId). Caught it within the same run and sent a same-thread correction to Scott ("that last message was meant for another candidate, please disregard") followed by the correct follow-up asking for his availability; then sent the correct message to Serina's actual thread. Both threads verified sent correctly as of this log.
+- **New-applicant sweep:** Harrisonburg Store Manager job page confirmed 49 All / 0 New; Saint Augustine FL Store Manager job page confirmed 12 All / 0 New (via the per-job Gate C route — the aggregate `/candidates?statusName=New` view stayed blank-canvas across 3 reloads this run). No untouched New applicants on either in-scope listing.
+- **Preston exclusion list check:** none of today's touched candidates (Sheilah, Jennifer, Nanii, Dan, Patrick, Kristal, Serina, Scott, Kevin) appear on the list — clear.
+- **Follow-ups (Step 2):** none legitimately due yet — both in-scope listings only went live/re-sponsored today (except the Kristal Jenkins error above, corrected in the notes).
+- **Bookings this run:** 1 (Kevin Arrington, Tue 9/8 3:00 PM, Harrisonburg/Preston). Grid status: Harrisonburg/Preston — Sheilah Mon 9/7 1:00 PM, Kevin Tue 9/8 3:00 PM. Florida/Joshua — no confirmed bookings yet, Jennifer/Dan both offered Mon 9/7 morning slots, awaiting replies.
+- **Digest (Step 6):** skipped — run time (~3:15 PM ET) is not the nearest-7PM slot.
+- **Sponsorship watch:** Harrisonburg Basic ($10/day, $61.96 cumulative since 9/1 re-sponsor) — not within 3 days of lapsing, no flag needed. Florida listing remains Free ($0).
+- RUN_LOCK deleted as the final action of this run.
+
+### Run log — 2026-09-05 ~4:10-4:25 PM ET (indeed-applicant-outreach)
+- True time verified: curl to google.com Date header = 20:10:16 GMT = 4:10:16 PM ET; local Mac/sandbox clock agreed (16:10:16 EDT); session's own stated date (2026-09-05) matched. No skew. Inside 9AM-8PM send window.
+- RUN_LOCK: none found at start — wrote fresh lock, deleted as final action.
+- **Reply sweep, all 3 channels, vs. the ~3:1x-3:21 PM run:**
+  - iMessage unreads (25): one new inbound at +18653007980 (personal/family conversation, not a candidate) — out of scope, no action. Preston's "Yes. It was." reply to an unrelated prior question — no action. Remainder all known noise/already-resolved.
+  - **Serina Allen** (Harrisonburg) replied by email 19:43 UTC: "Monday morning works for me since i'm off that day yes!" — confirming the Mon 9/7 8:00 AM offer. She has not yet given a callback number (checked full thread — none on file). Per Gate B (dialable number required), did NOT book yet — replied confirming 8:00 AM and asking for her best number. Awaiting reply.
+  - **Indeed inbox (full scan, both in-scope listings):** found **Scott Fowler** (Harrisonburg) — "available by phone any time Monday through Friday. My number is (540) 810-2084 ... usually up at 6am, any time after 7am works" (3:20 PM, thread required a direct coordinate-click to open — ref-based click didn't register, known SPA issue). Specific/flexible enough to book → **BOOKED**: Mon 2026-09-07 8:15-8:30 AM ET phone, Interviewer Preston Peters, calendar event `17vt50354fv1k91cprdpccpc54` on jdavis@fcfpawn.com, no conflict with Sheilah's 1:00 PM or the tentative 8:00 AM Serina hold (Gate B passed). Confirmed via email reply (to scottfowler467_z2n@indeedemail.com) + text to 540-810-2084, both verified sent. All other Indeed threads (Patrick Stockman, Olivia Cox, Kevin Arrington, Jennifer Meneses, Dan Hager, Ian Grady, Kristal Jenkins, Travis Rexroad, Nanii Morales Lazu, Amanda McDaniel, Sheilah Buckholz) showed only our own prior outbound or previews already actioned by the 3:1x-3:21 PM run — no new action needed, no double-handling.
+  - Gmail sweep (indeedemail.com + outreach-subject, newer_than:1d): confirmed the above; no other new inbound beyond Serina's confirmation and Scott's thread (Indeed-only, not yet relayed to Gmail at sweep time).
+- **New-applicant sweep:** Harrisonburg Store Manager job page confirmed **49 All / 0 New**; Saint Augustine FL Store Manager job page confirmed **12 All / 0 New** (via per-job Gate C route, both loaded cleanly on first/second attempt this run). No untouched New applicants on either in-scope listing.
+- **Preston exclusion list check:** neither candidate touched this run (Serina Allen, Scott Fowler) appears on the list — clear.
+- **Follow-ups (Step 2):** none due — both in-scope listings only went live/re-sponsored today (9/5); no first-contact old enough for Day-2 yet.
+- **Bookings this run:** 1 (Scott Fowler, Mon 9/7 8:15 AM, Harrisonburg/Preston). Grid status: Harrisonburg/Preston — Scott Fowler Mon 8:15 AM, Sheilah Buckholz Mon 1:00 PM, Kevin Arrington Tue 3:00 PM; Serina Allen tentatively holding Mon 8:00 AM pending her callback number. Florida/Joshua — no confirmed bookings yet (Jennifer Meneses, Dan Hager, Patrick Stockman, Kristal Jenkins, Ian Grady, Travis Rexroad, Nanii Morales Lazu all offered Mon 9/7 morning / Tue / Wed, awaiting replies).
+- **Digest (Step 6):** skipped — run time (~4:20 PM ET) is not the nearest-7PM slot.
+- **Sponsorship watch:** Harrisonburg Basic — not within 3 days of lapsing, no flag needed. Florida listing remains Free.
+- **Sends this run:** Gmail reply x2 (Serina Allen confirmation ask, Scott Fowler booking confirmation). iMessage x1 (Scott Fowler booking confirmation). Slack DMs x2 (Preston, Joshua re: Scott Fowler booking + Serina status). 1 calendar event created.
+- No classifier blocks this run.
+- RUN_LOCK deleted as the final action of this run.
+
+Contact log additions:
+| 2026-09-05 | Serina Allen | Store Manager, Harrisonburg | n/a (no Indeed reply-compose attempt needed, resolved via email) | Email — confirmed Mon 9/7 AM works, asked for callback number | n/a | Awaiting phone number before booking Mon 9/7 8:00 AM. |
+| 2026-09-05 | Scott Fowler | Store Manager, Harrisonburg | Indeed reply read (gave number + availability) | Email confirmation sent | Text confirmation sent to 540-810-2084 | BOOKED Mon 9/7 8:15 AM ET phone, Preston interviewing. |
+
+### Run log — 2026-09-05 ~5:10-5:20 PM ET (indeed-applicant-outreach)
+- True time verified: curl to google.com Date header = 21:09:39 GMT = 5:09:39 PM ET; local Mac clock agreed (17:09:45 EDT); session's own stated date (2026-09-05) matched. No skew. Inside 9AM-8PM send window.
+- RUN_LOCK: none found at start — wrote fresh lock (17:10:04 EDT), deleted as final action.
+- **Preston exclusion list checked** before any named-candidate action — neither candidate touched this run (Patrick Stockman, Serina Allen) appears on it.
+- **Reply sweep, all 3 channels, vs. the ~4:10-4:25 PM run:**
+  - **Indeed inbox (full scan, both in-scope listings):** **Patrick Stockman** (FL) — new reply 4:48 PM: "Tues the 8th at 10:00 AM would be fine." Specific time given. Pulled his phone (+1 904 599 4936) and email (patrickstockman53qbw_dhz@indeedemail.com) from his candidate/resume view (no phone had been on file via the Indeed profile card; found on the parsed resume). Gate B passed (phone-only, not today, within 7AM-9PM, no conflict on Joshua/Florida grid at Tue 9/8 10:00 AM — only Kevin Arrington/Preston 3:00 PM existed that day). **BOOKED**: Tue 2026-09-08 10:00-10:15 AM ET phone, Interviewer Joshua Davis, calendar event `aqu8pscvq2jhef48ed28gamd48` on jdavis@fcfpawn.com. Confirmed via email + text (Indeed reply-compose box not attempted this run — documented broken in prior runs today; went straight to email+text per standing "email+text sufficient" call). Scott Fowler's ack (4:24 PM) and Olivia Cox's ack (3:08 PM) are both on already-closed/booked threads — no action. Kevin Arrington, Jennifer Meneses, Dan Hager, Ian Grady, Kristal Jenkins, Travis Rexroad, Nanii Morales Lazu, Amanda McDaniel, Sheilah Buckholz threads all showed only previously-actioned content — no new action needed.
+  - **Gmail (indeedemail.com + outreach-subject, newer_than:1d):** **Serina Allen** (Harrisonburg) replied 20:32 UTC with her callback number, 540-480-2233, confirming the tentative Mon 9/7 8:00 AM hold from the 4:10-4:25 PM run. Gate B passed (phone-only, not today, within window, no conflict on Preston/Harrisonburg grid at that time — only Scott Fowler 8:15 AM existed). **BOOKED**: Mon 2026-09-07 8:00-8:15 AM ET phone, Interviewer Preston Peters, calendar event `1j2m9j9ik0u3rbqsb4navu8vn0` on jdavis@fcfpawn.com. Confirmed via email reply + text. No other new inbound found (Jennifer Meneses, Dan Hager, Ian Grady, Kristal Jenkins, Travis Rexroad, Nanii Morales Lazu all still awaiting reply on our latest outbound).
+  - **iMessage unreads (25):** no new candidate-related inbound for either in-scope listing — remainder is personal messages, Preston's own unrelated ack, spam/OTP, and already-resolved items from prior weeks.
+- **New-applicant sweep:** Harrisonburg Store Manager confirmed **49 All / 0 New** (clean load, no Gate C retry needed); Saint Augustine FL Store Manager confirmed **12 All / 0 New** (blank-canvas on first load, confirmed on Gate C reload). No untouched New applicants on either in-scope listing.
+- **Follow-ups (Step 2):** none due — both in-scope listings only went live/re-sponsored today (9/5); no first-contact old enough for Day-2 yet.
+- **Bookings this run:** 2 — Patrick Stockman (Tue 9/8 10:00 AM, Florida/Joshua), Serina Allen (Mon 9/7 8:00 AM, Harrisonburg/Preston). Grid status: Harrisonburg/Preston — Scott Fowler Mon 8:15 AM, Serina Allen Mon 8:00 AM, Sheilah Buckholz Mon 1:00 PM, Kevin Arrington Tue 3:00 PM. Florida/Joshua — Patrick Stockman Tue 10:00 AM; Jennifer Meneses, Dan Hager, Kristal Jenkins, Ian Grady, Travis Rexroad, Nanii Morales Lazu (Harrisonburg) all still awaiting a reply to the Mon/Tue/Wed offer.
+- **Notifications:** Slack DM to Joshua (D03BHQH5VGT, ts `1788642837.002969`) covering both bookings. Slack DM to Preston (D03C7RBGY56, ts `1788642842.214379`) covering the Serina Allen booking.
+- **Digest (Step 6):** skipped — run time (~5:15 PM ET) is not the nearest-7PM slot; will be covered by the nearest-7PM run if there's been activity in the last 24h (there has).
+- **Sponsorship watch:** Harrisonburg Basic ($10/day, re-sponsored 9/1, ~$71 cumulative) — not within 3 days of lapsing (15-day window runs to ~9/16), no flag needed. Florida listing remains Free.
+- **Sends this run:** Gmail send x1 (Patrick Stockman confirmation) + reply x1 (Serina Allen confirmation). iMessage x2 (Patrick Stockman, Serina Allen confirmations). Slack DMs x2 (Joshua, Preston). 2 calendar events created.
+- No classifier blocks this run.
+- RUN_LOCK deleted as the final action of this run.
+
+Contact log additions:
+| 2026-09-05 | Patrick Stockman | Store Manager, Saint Augustine FL | Indeed reply read (gave time, no compose attempt — known broken) | Email confirmation sent | Text confirmation sent to +19045994936 | BOOKED Tue 9/8 10:00 AM ET phone, Joshua interviewing. |
+| 2026-09-05 | Serina Allen | Store Manager, Harrisonburg | n/a (resolved via email) | Email confirmation sent | Text confirmation sent to 540-480-2233 | BOOKED Mon 9/7 8:00 AM ET phone, Preston interviewing. |
+
+### Run log — 2026-09-05 ~6:10-6:20 PM ET (indeed-applicant-outreach)
+- True time verified: curl to google.com Date header = 22:09:54 GMT = 6:09:54 PM ET; local Mac/sandbox clock agreed (18:09:53 EDT); session's own stated date (2026-09-05) matched. No skew. Inside 9AM-8PM send window.
+- **Reply sweep, all 3 channels, vs. the ~5:10-5:20 PM run:**
+  - iMessage unreads (25): no new candidate-related inbound for either in-scope listing — all older/already-resolved threads (Kaylie Desper Buffalo Wild Wings note already exclusion-flagged, Isom Bryant ack, personal/spam/OTP noise).
+  - Gmail (indeedemail.com + outreach-subject, newer_than:1d, 17 threads): everything present (Sheilah booked, Nanii/Jennifer offered grid awaiting reply, Kristal circled back awaiting reply, Serina booked w/ number, Scott booked, Kevin booked, Patrick booked, Travis Rexroad application notice) already reflected in the 5:10-5:20 PM run's log — no new content.
+  - Indeed inbox (full scan, `/messages?threadType=highQualityMarketplace`, blank-canvas on first load — known recurring SPA issue — rendered clean on retry, Gate D): top messages are Patrick Stockman 4:48 PM (already actioned — the message that triggered his Tue 9/8 10:00 AM booking), Scott Fowler 4:24 PM ack, Olivia Cox 3:08 PM ack (closed/took other job), Kevin Arrington 3:08 PM (already actioned — triggered his Tue 9/8 3:00 PM booking), Serina Allen 2:45 PM (already actioned — triggered her Mon 9/7 8:00 AM booking). All at/before the 5:10-5:20 PM run's cutoff — no new replies this run.
+- **New-applicant sweep:** Harrisonburg Store Manager confirmed **49 All / 0 New** (clean load). Saint Augustine FL Store Manager confirmed **12 All / 0 New** (blank-canvas on first load, confirmed on Gate C retry). No untouched New applicants on either in-scope listing.
+- **Preston exclusion list check:** no named-candidate action taken this run (pure verification pass) — list reviewed, no conflicts.
+- **Follow-ups (Step 2):** none due — both in-scope listings only went live/re-sponsored 9/5; earliest Day-2 threshold is 9/7.
+- **Bookings this run:** none (pure verification pass — everything found was already actioned by the 4:10-5:20 PM runs). Grid status unchanged: Harrisonburg/Preston — Scott Fowler Mon 8:15 AM, Serina Allen Mon 8:00 AM, Sheilah Buckholz Mon 1:00 PM, Kevin Arrington Tue 3:00 PM. Florida/Joshua — Patrick Stockman Tue 10:00 AM; Jennifer Meneses, Dan Hager, Kristal Jenkins, Ian Grady, Travis Rexroad, Nanii Morales Lazu (Harrisonburg) all still awaiting a reply to the Mon/Tue/Wed offer.
+- **Digest (Step 6):** skipped — run time (~6:15 PM ET) is not the nearest-7PM slot; will be covered by the next near-7PM run given activity in the last 24h.
+- **Sponsorship watch:** Harrisonburg Basic ($10/day, $71.23 cumulative since 9/1 re-sponsor) — not within 3 days of lapsing. Florida listing remains Free ($0).
+- **Sends this run:** none (0 new sends — verification pass only). 0 calendar events created.
+- No classifier blocks this run.
+- 0 new sends, 0 candidates touched — no contact log additions this run.

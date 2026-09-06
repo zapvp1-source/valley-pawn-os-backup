@@ -1,3 +1,5 @@
+> ⛔ **NOT REGISTERED AS A SCHEDULED TASK (confirmed 2026-09-05).** The live writer to #aged-inventory-review is `monday-bravo-combined-compile`. If you ever revive this file, do NOT hand-render the table — call `/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/bin/format_aged_inventory.py` and post its stdout verbatim (exit 0) or post nothing (exit 2). Hand-rendering is what produced the unreadable 2026-08-31 post.
+
 ---
 name: weekly-aged-inventory-report
 description: Pull aged inventory data from Bravo POS for all 5 Valley Pawn locations, update the Aged Inventory Google Sheet, and post a summary to Slack #aged-inventory-review. Pipeline-driven — no Parallels grant required.

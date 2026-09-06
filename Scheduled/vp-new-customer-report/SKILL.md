@@ -1,6 +1,6 @@
 ---
 name: vp-new-customer-report
-description: Monthly new-customer count (MoM/YoY) across all 5 Valley Pawn stores via the Bravo pipeline's chekkit-invites-range cell; updates the vp-new-customer-report Cowork artifact and posts to #store-performance
+description: Monthly (3rd, 7 AM) new-customer count MoM/YoY across all 5 stores via the pipeline's chekkit-invites-range cell; posts the ranked summary to #new-customers FIRST, then best-effort updates the vp-new-customer-report artifact (reordered 2026-09-05 after the 9/3 run died at the artifact step).
 model: claude-sonnet-5
 ---
 
@@ -32,7 +32,7 @@ When you see any of those messages, immediately fire the next concrete tool call
 ---
 ---
 name: vp-new-customer-report
-description: Monthly new-customer count (MoM/YoY) across all 5 Valley Pawn stores via the Bravo pipeline's chekkit-invites-range cell; updates the vp-new-customer-report Cowork artifact and posts to #store-performance
+description: Monthly new-customer count (MoM/YoY) across all 5 Valley Pawn stores via the Bravo pipeline's chekkit-invites-range cell; posts to #new-customers (Slack first) and then best-effort updates the vp-new-customer-report Cowork artifact
 ---
 
 > **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard, added 2026-08-02).**
@@ -74,9 +74,7 @@ STEP 5 — Compute MoM and YoY from the rollup JSON:
 - Company-wide MoM: sum across 5 stores, same comparison. Company-wide total should be deduplicated by email (case-insensitive, fallback to phone if email blank) across the 5 stores' raw CSVs for that month — a customer whose "first time in" happened at two different stores in the same month should count once company-wide. Recompute this dedup from the raw CSVs in `output/`, not from the rollup counts (rollup counts are per-store, not deduplicated).
 - Per-store and company-wide YoY: this month's count vs. the same calendar month one year prior, if that row exists in the rollup; otherwise state "YoY not yet available for <store>" rather than guessing.
 
-STEP 6 — Update the dashboard artifact. Read the current `vp-new-customer-report` artifact via `mcp__cowork__list_artifacts`, then `Read` its `path`. Build an updated self-contained HTML (same visual style as the existing `vp-website-trend` / `asset-recovery-2025-vs-2026` artifacts — Chart.js line/bar trend by store and company total, plus a MoM/YoY summary table) with the new month's data baked in, and call `mcp__cowork__update_artifact` with `id: "vp-new-customer-report"`. Do NOT touch `vp-dashboard-refresh` or any other scheduled task — the nightly dashboard refresh already auto-syncs this artifact onto vp-dashboard.pages.dev.
-
-STEP 7 — Slack. Post a summary to **#new-customers** (channel ID **C0BHF9NM0BH**). **Stores must be RANKED by count, highest first — #1 is the store with the most new customers, not alphabetical/geographic order (set 2026-08-03 per Joshua).** Ties share the same rank number (both get the medal/number). Use this format:
+STEP 6 — Slack (THE deliverable — do this BEFORE the artifact; reordered 2026-09-05 after the 9/3 run died at the artifact step and August never posted). Duplicate guard: read the last 20 messages of #new-customers first; if a "New Customers — <Month Year>" post already exists, skip the post. Post a summary to **#new-customers** (channel ID **C0BHF9NM0BH**). **Stores must be RANKED by count, highest first — #1 is the store with the most new customers, not alphabetical/geographic order (set 2026-08-03 per Joshua).** Ties share the same rank number (both get the medal/number). Use this format:
 ```
 📊 New Customers — <Month Year> (ranked)
 1. 🥇 <Store>: <n> (MoM <±%>, YoY <±% or "n/a">)
@@ -88,5 +86,8 @@ STEP 7 — Slack. Post a summary to **#new-customers** (channel ID **C0BHF9NM0BH
 Company total (deduped): <n> (MoM <±%>, YoY <±% or "n/a">)
 ```
 (Ties: e.g. two stores tied for most — both are numbered `1.` with 🥇, next distinct count resumes at `3.`.) If any store's pull failed this run, do NOT add a line about it to this post — that historical-gap note is internal. Instead DM Joshua (U03BB52MDSA): "⚠️ New Customer Report <Month>: <store> pull failed this run — will retry next month; historical trend for that store has a gap for <month>." Never post fabricated or estimated numbers.
+
+STEP 7 — Update the dashboard artifact (BEST-EFFORT, after Slack). If `mcp__cowork__list_artifacts` / `mcp__cowork__update_artifact` are unavailable in this session or error twice, skip this step and note it in the run log — the artifact is a convenience view, the Slack post is the record. Read the current `vp-new-customer-report` artifact via `mcp__cowork__list_artifacts`, then `Read` its `path`. Build an updated self-contained HTML (same visual style as the existing `vp-website-trend` / `asset-recovery-2025-vs-2026` artifacts — Chart.js line/bar trend by store and company total, plus a MoM/YoY summary table) with the new month's data baked in, and call `mcp__cowork__update_artifact` with `id: "vp-new-customer-report"`. Do NOT touch `vp-dashboard-refresh` or any other scheduled task — the nightly dashboard refresh already auto-syncs this artifact onto vp-dashboard.pages.dev.
+
 
 Never use the legacy "Dixie Pawn" name. Never ask Joshua to log in or click anything — this task is fully autonomous, pipeline-driven, no computer-use/Parallels grant needed.

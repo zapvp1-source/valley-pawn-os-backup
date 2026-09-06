@@ -954,3 +954,26 @@ Posted to #jewlery-counts: https://valleypawnworkspace.slack.com/archives/C0BM9N
 **Slack table posted to #jewlery-counts:** https://valleypawnworkspace.slack.com/archives/C0BM9NHGTT4/p1788486975289349
 
 **DM to Joshua:** none sent — clean night, no anomalous over-variance, no run failure.
+
+## RUN RECORD -- 2026-09-04 (Friday) -- jewelry-onhand-nightly-pull
+
+Freeze window: fired ~8:36 PM ET, well inside the 6:00 PM close -> 10:00 AM reopen window for all 5 stores (all open Fri). Bravo pull (v2 cell) completed 20:36-22:11. PM count sheets read from #end-of-day ~22:1x via Chrome vision pass, each sum-verified against its own TOTALS line before use.
+
+Per-store Bravo category read status (8 categories each):
+- CUL: 8/8 ok. Rings 630, Bracelets 124, Pendants 247, Charms 27, Brooches 21, Earrings 169, Chains 108, Necklaces 99.
+- HAR: 7/8 ok, Charms=error (empty grid, 2 attempts). Same category also error on 9/3 prior-day CSV -> treated as 0 per empty-category rule. Rings 455, Bracelets 47, Pendants 116, Brooches 2, Earrings 47, Chains 71, Necklaces 47.
+- LEX: 7/8 ok, Brooches=error (empty grid, 2 attempts). Same category also error on 9/3 prior-day CSV -> treated as 0. Rings 278, Bracelets 37, Pendants 52, Charms 1, Earrings 48, Chains 29, Necklaces 18.
+- ROA: 8/8 ok. Rings 556, Bracelets 128, Pendants 98, Charms 58, Brooches 2, Earrings 88, Chains 97, Necklaces 68.
+- WAY: 7/8 ok, Charms=error (empty grid, 2 attempts). Same category also error on 9/3 prior-day CSV -> treated as 0 (note: WAY Charms had a real positive count as recently as 8/15, but 9/3 and 9/4 both empty/error -- watching for recurrence).
+
+Combined-category comparison (Rings/Bracelets/Earrings as-is; Pendants = Pendants+Charms+Brooches; Necklaces = Chains+Necklaces) vs PM count sheets, sum-verified against each sheet TOTALS line:
+
+CUL: Rings 630/630 (0), Bracelets 124/123 (-1), Earrings 169/169 (0), Pendants 295/295 (0), Necklaces 207/207 (0). Total 1425/1424 (-1).
+HAR: Rings 455/457 (+2), Bracelets 47/47 (0), Earrings 47/48 (+1), Pendants 118/117 (-1), Necklaces 118/122 (+4). Total 785/791 (+6).
+LEX: Rings 278/280 (+2), Bracelets 37/38 (+1), Earrings 48/48 (0), Pendants 53/52 (-1), Necklaces 47/47 (0). Total 463/465 (+2).
+ROA: Rings 556/556 (0), Bracelets 128/128 (0), Earrings 88/88 (0), Pendants 158/157 (-1), Necklaces 165/167 (+2). Total 1095/1096 (+1).
+WAY: Rings 334/334 (0), Bracelets 43/43 (0), Earrings 54/53 (-1), Pendants 66/66 (0), Necklaces 68/68 (0). Total 565/564 (-1).
+
+Posted to #jewlery-counts. No DM to Joshua -- no failures, and the largest single over-variance (HAR Necklaces +4) is small counting noise, well under the scale of the standing ROA-pendants-as-charms case (~+61) that would warrant flagging. All other cells within +/-2. Every store total variance is small (-1 to +6) tonight rather than the historical CUL ~-130 scope-noise pattern -- worth a night-over-night watch, not asserting a conclusion from one data point.
+
+Repeat-category watch: HAR Charms, LEX Brooches, and WAY Charms all also error/empty on 9/3 (prior day). HAR Charms and LEX Brooches have a longer standing history of confirmed-empty (since 8/16). WAY Charms is newer (positive as of 8/15) -- if it continues error on 9/5, treat as a third confirmed-empty category; if it flips back positive, that is genuine restocking, no action needed.

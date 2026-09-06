@@ -1,8 +1,8 @@
 ---
 name: document-photos-index-refresh
 description: Nightly incremental OCR index of Photos.app camera photos classified as documents/receipts (invoices, receipts, paperwork) into the Unified Search index — separate from and additive to unified-search-index-refresh.
+model: claude-sonnet-5
 ---
-
 This is an automated scheduled run. The user (Joshua) is not present — execute autonomously, no clarifying questions. FIX-FORWARD: if something breaks mid-run, try to overcome it in-run rather than just reporting failure.
 
 ## Background

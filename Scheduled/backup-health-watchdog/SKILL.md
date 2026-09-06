@@ -46,7 +46,7 @@ echo '=== BACKUPS ==='; tmutil listbackups -d "/Volumes/Backups of Mac Studio (2
 echo '=== SPACE ==='; df -g "/Volumes/Backups of Mac Studio (2)" 2>&1 | tail -2
 echo '=== NAS ==='; ping -c 1 -t 3 valleypawn-nas.local 2>&1 | head -2
 echo '=== EXCLUSIONS ==='; tmutil isexcluded /Users/joshuadavis/Documents /Users/joshuadavis/Documents/Claude /Users/joshuadavis/Parallels /Users/joshuadavis/Library/Parallels /Users/joshuadavis/Desktop 2>&1
-echo '=== GITHUB OS BACKUP ==='; ls -l /Users/joshuadavis/Documents/Claude/NIGHTLY_BACKUP_STATUS.log 2>&1; tail -3 /Users/joshuadavis/Documents/Claude/NIGHTLY_BACKUP_STATUS.log 2>&1
+echo '=== GITHUB OS BACKUP ==='; git -C /Users/joshuadavis/Documents/Claude log -1 --format='HEAD %ci %s' 2>&1; git -C /Users/joshuadavis/Documents/Claude log -1 --format='%ct' origin/main 2>&1; echo '--- last failure note (context only, NOT a freshness signal) ---'; tail -3 /Users/joshuadavis/Documents/Claude/NIGHTLY_BACKUP_STATUS.log 2>&1
 ```
 
 Split into two or three osascript calls if any single call errors. Do NOT use `$` variables or `for` loops inside `do shell script` — AppleScript mangles them.
@@ -66,7 +66,14 @@ Compute today's date first (`date` via osascript) — never assume.
 - Newest backup is 26–48 hours old
 - 4 or more of the last 14 calendar days have zero backups (count distinct dates in the BACKUPS list)
 - Backup destination is 85% or more full
-- NIGHTLY_BACKUP_STATUS.log has not been modified in over 72 hours (offsite OS backup stalled)
+- The newest commit in `~/Documents/Claude` (git, `origin/main`) is more than 72 hours old
+  (offsite OS backup stalled). **Do NOT judge this by the mtime of
+  `NIGHTLY_BACKUP_STATUS.log`** — that file is only rewritten when the nightly run
+  FAILS, so a healthy backup leaves it stale indefinitely. Judging by its mtime is
+  what produced a false `offsite=1008h` in every DM from 2026-07-24 to 2026-09-04
+  while the repo was in fact committing nightly (VP Operating Rule 12: verify
+  against the output, not the metadata). Read the log only for the text of the last
+  recorded failure, never for freshness.
 
 **OK**: none of the above.
 
@@ -94,6 +101,27 @@ Compute today's date first (`date` via osascript) — never assume.
 ```
 
 If Slack is unavailable, fall back to appending the same report to `/Users/joshuadavis/Documents/Claude/BACKUP_HEALTH.log` via osascript and note that Slack failed.
+
+## Step 3.5 — Escalate a CRIT that is not getting fixed (added 2026-09-04)
+
+A daily DM that reads the same every morning stops being read. Before sending, count
+how many consecutive prior days `BACKUP_HEALTH.log` ends in `CRIT`:
+
+`grep -c CRIT /Users/joshuadavis/Documents/Claude/BACKUP_HEALTH.log` is not enough —
+read the last 14 lines and count the unbroken CRIT run ending at the most recent entry.
+
+- **1–2 consecutive days:** send the normal DM from Step 3.
+- **3 or more consecutive days:** send the normal DM, and make the FIRST line instead:
+
+  `:rotating_light: *No backup has run in {N} days.* Everything on the Mac Studio is currently
+  one hardware failure away from being gone.`
+
+  Then, under *What to do*, give exactly one physical instruction and nothing else —
+  the person reading this on a phone needs an action, not a diagnosis.
+
+This exists because the NAS went offline 2026-08-25 and this task sent 10 identically
+shaped CRIT DMs before anyone acted. Detection was never the problem; the DM not
+conveying escalating severity was.
 
 ## Step 4 — Always log
 
