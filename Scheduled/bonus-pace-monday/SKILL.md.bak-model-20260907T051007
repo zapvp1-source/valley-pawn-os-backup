@@ -1,5 +1,4 @@
 ---
-model: claude-sonnet-5
 name: bonus-pace-monday
 description: Mondays 9:35 AM. Reads the Monday combined Bravo pull (no new Bravo touch) and DMs Joshua a one-line-per-store month-to-date pace against each store's bonus target, plus where each store stands on reviews, email, gold and Facebook. Never posts to a team channel.
 ---

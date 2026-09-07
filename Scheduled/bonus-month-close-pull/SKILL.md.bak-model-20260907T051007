@@ -1,5 +1,4 @@
 ---
-model: claude-sonnet-5
 name: bonus-month-close-pull
 description: 1st of month, 11:30 AM. Bravo Type A (drops one trigger). Pulls the closed month's EOM + Chekkit invites + employee activity, snapshots them into the Bonus Program data folder, computes next month's targets with bonus_engine.py, and DMs Joshua the draft. Never posts to any team channel.
 ---

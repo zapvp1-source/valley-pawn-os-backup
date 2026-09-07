@@ -1,5 +1,4 @@
 ---
-model: claude-sonnet-5
 name: bonus-month-close
 description: 10th of month, 9:00 AM. Pulls reviews (Chekkit) and Facebook follower gains (Publer), runs bonus_engine.py close for the completed month, writes the ledger and Gusto line list, and DMs Joshua the full payout breakdown. Never posts to any team channel.
 ---

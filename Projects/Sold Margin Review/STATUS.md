@@ -459,3 +459,5 @@ SOLD-REVIEW  2026-08-31T07:49:49  - Sunday 2026-08-30, all stores closed. OPEN_S
 - STEP 5 compile (`run_daily_sold_review.py`) MUST be backgrounded via osascript (nohup ... & ; echo $? > exitfile), same pattern as STEP 4.8. Running it inline (foreground, waiting on osascript to return) got killed by osascript's ~25s cap and left a 0-byte log with no visible error. Poll for completion like the fair_value.py sweep, then read the .exit file and log.
 
 SOLD-REVIEW    - 2026-09-04, all 5 stores reported (112 items, 5 flags, 1 critical, 4 below-market). Reused existing CSVs pulled earlier (discount-review ran first). SoldComps quota (60/day) already exhausted before this run - fair-value sweep found 2 cached, 0 fetched, quota_stopped true; DMd Joshua per policy. Posted to #sold-review + 2 DMs. STEP 6b: 8 Terapeak candidates checked via Chrome, all 8 returned zero sold results on eBay (cached as MISS, will not retry until cache expires) - no market comps added from this run.
+
+SOLD-REVIEW  2026-09-07T07:51:00 - Sunday 2026-09-06, all stores closed. OPEN_STORES empty per policy. No pull, no compile, no post, no DM. Correct no-op.

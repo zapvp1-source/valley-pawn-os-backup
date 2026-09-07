@@ -1,25 +1,16 @@
-## 2026-09-06 (BRAVO HANDLER FIXES — the 5 real bugs behind the missing stores in the Monday reports)
-- Joshua (chat): "fix it now" — the handler timing and the "Bravo session drop" I had deferred yesterday.
-- **The "session drop" does not exist.** Read from the real 2026-08-30 log: CUL clicked Submit at 18:17:05 and `SwitchStore`'s landing wait gave up at 18:17:30 — exactly its 25 000 ms deadline — logging `timeout waiting for CUL (saw CUL, onLogin=yes)`. The login was NOT failing: 17 s later the next cell logged `login screen visible — recovering`, submitted the same password, and `RecoverFromAutoLock: landed on CUL` at 18:18:04. Credentials and clicks were fine all along; Bravo simply takes longer than 25 s to complete a store login late in a long multi-store run. Every one of those timeouts cost a store its weekly number, and the leftover half-finished login is what produced the "login screen visible" lines that looked like a session drop.
-- FIVE fixes, each backed up `.bak-pre-*-2026-09-06`, each changing ONLY the failure path (every one of these waits returns the instant the element appears, so healthy runs are unaffected):
-  1. `lib/StoreCycle.ahk` — post-Submit landing wait **25 s → 75 s**. This was the #1 cause of missing stores.
-  2. `lib/StoreCycle.ahk` — store-row scan retry escalated from ONE retry to **4 attempts** with a fresh Global Access click and escalating scans (10/15/20/25 s). Evidence it was needed: the single retry added 2026-08-24 went **0-for-4** on the 8/30 run — it fired 4 times and every one still ended in "none of these store row Names matched after retry".
-  3. `reports/BuysFromPublic.ahk` — `WriteBuysGridToCsv`, the **shared grid walker used by ~20 handlers** (FPD, pawn-walk intake, items-to-price, sold review, jewelry counts, coins, aged jewelry, loan reviews, NICS, active inventory), treated a transient zero-DataItem enumeration right after `{PgDn}` as "grid finished" and broke out. Now re-enumerates 4× / 600 ms before believing an empty grid. This is what made fpd-cohort/WAY capture 22 of 44 rows on 8/30 (the truncation guard then correctly refused it).
-  4. `reports/SafeRegisterJournal.ahk` — `SetExportFilePath` (another shared helper, ~15 handlers) waited only **2 s** for the File-path LayoutItem; raised to **15 s**. That 2 s race is why aged-inventory-summary/HAR threw "File path LayoutItem not found" while the export dialog was demonstrably already up.
-  5. `reports/AgedInventorySummary.ahk` — preview wait **30 s → 120 s**, matching the EmployeeActivityRange change made 2026-09-05 (a full-calendar-month preview measured ~50 s).
-- Watcher restarted 10:29 (PID 14224) — new code loaded, `step3: PASS`.
-- Blast radius is deliberately wide and all in the same direction: fixes 3 and 4 sit in shared helpers, so pawn walks, sold review, items-to-price, jewelry counts and the NICS/FFL pulls all get the same resilience, not just the Monday reports.
-- **VERIFIED LIVE 10:40–10:42 against the two exact cells that failed on 8/30** (trigger `fixverify-2026-09-06T10-30-55`, overall status success):
-  - `aged-inventory-summary` / **LEX** — the cell that died with `EnsureStore failed for LEX` after the 0-for-4 store-row retry. Now: `landed on LEX`, 16 rows, 67 s. Its step 5→6 gap was **7 seconds** — comfortably past the old 2 s File-path timeout that killed the HAR cell, so fix 4 earned its keep on the very first run.
-  - `fpd-cohort` / **WAY** — the cell that captured 22 of 44 rows. Now: `[grid] captured all 40 rows`, 78 s.
-  Both CSVs on disk and non-trivial (988 B / 6 856 B). No retries needed, no errors.
-- **GAP-FILL PROVEN ON REAL DATA (Joshua ran it 01:00, 2026-09-06).** It recovered **all 9** failed cells from the 8/30 run — `Valley Pawn OS/monday-gapfill/2026-08-30.md`: "All cells recovered — Monday's compile has a complete 5-store set." The busy-queue guard fired correctly again ("Watcher restarted first: no / not confirmed").
-- Two defects that first live run exposed in the runner itself, both fixed 13:18 (backup `bin/monday_gapfill_runner.py.bak-pre-lock-2026-09-06`):
-  1. **No single-runner lock** — the task launched twice (01:00:58 and 01:01:35); the two runners each dropped a repair trigger and each waited on the other's, producing a spurious 45-min TIMEOUT and a duplicate retry-2. Outcome was still correct but it doubled the queue time. Added the same 3-hour lock the prestage runner already carries, with release on every exit path.
-  2. **`csv_present()` byte-floor was wrong** — MIN_GOOD_BYTES was 200, but the summary-style reports write tiny valid files (`2026-08-30_CUL_loans-75-days-past-due.csv` is 51 bytes: header + `CUL,2026-08-30,0,0.0`). All five stores' valid files were being classified as missing, which would have re-pulled already-successful cells on every future run. Replaced the byte floor with a header-plus-at-least-one-row check (floor dropped to 20 bytes, enough to reject 0-byte stubs only). A zero IS a real result here — the compile says so explicitly, and Culpeper genuinely ran all of August with zero loans past 75 days. Verified after the fix: the same dry-run now reports "no failed cells — nothing to do".
+# Valley Pawn - Enterprise Changelog
 
-- Tonight's real combined run (Sun 6 PM) is the full 30-cell test, with `monday-bravo-cell-gapfill` (8:39 PM) as the backstop and Monday's compile as the visible result.
-- NOT changed: the truncation guard, the false-zero guard, and Completeness Gate v2 all stay exactly as they are. They were never the bug — they were correctly refusing bad data. These fixes stop the bad data being produced in the first place.
+Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
+
+## 2026-09-07
+
+- Full stack model-tier audit (requested by Joshua): confirmed 0 tasks on Fable-5 across all 197 SKILL.md files, and every enabled/registered task already has a valid Haiku/Sonnet/Opus pin. No pins changed — the existing `scheduled-task-model-audit-weekly` automation (runs Mondays 5:03 AM) is already keeping this clean.
+- Cleaned up `~/Documents/Claude/Scheduled/`: archived 14 orphaned task folders (present on disk, not registered in the live scheduler) to `_archive/orphaned-tasks-2026-09-07/`, not deleted: close-fl-manager-posting, cybertruck-wrap-tint-quote-followup, daily-intake-margin, daily-intake-prestage, daily-loan-inventory-text, dashboard-data-collector, ebay-return-policy-retry, mm-merchandisers-daily-scan, monday-bravo-part1-watchdog, new-inv-weekly-report, weekly-aged-inventory-report, weekly-aged-inventory-review, weekly-employee-sales-rankings, weekly-loan-layaway-review. Most are superseded by monday-bravo-combined-run / monday-bravo-combined-compile. NOTE: monday-bravo-part1-watchdog was itself a self-heal watchdog for monday-bravo-combined-run and was found unregistered — worth a look re: whether that self-heal coverage gap is still wanted.
+- Left ~35 loose non-task files (xlsx/docx reports, gsheet links, screenshots, STATUS-*.md, tmp/json dumps) sitting directly in `~/Documents/Claude/Scheduled/` untouched — not scheduled tasks, likely misplaced report output, did not touch since they may be records Joshua wants kept.
+- Registered scheduled tasks: 183 -> 184
+- Task folders on disk: 196 -> 197
+- ENABLED: qbo-api-token-refresh
+- DISABLED: bonus-july-finish
 
 # Valley Pawn - Enterprise Changelog
 

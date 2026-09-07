@@ -1,7 +1,7 @@
 ---
 name: vp-content-batch-weekly
 description: Weekly Valley Pawn content batch. MOVED 2026-08-22 from Mon 2:02 AM to Mon 1:40 PM: the batch fired 7+ hours BEFORE manager deal submissions land (9:30-11 AM), so it ran a full week stale and its "no submission" exclusions were systematically wrong (8/10 run said "Uriah didn't submit" — he submitted 11:17 AM that same day). Now runs after vp-deal-of-week-monday-pick (12:33 PM). Brand tier 7/wk + store-local 35/wk via Publer.
-model: claude-opus-5
+model: claude-opus-4-8
 ---
 
 > **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard, added 2026-08-02).**

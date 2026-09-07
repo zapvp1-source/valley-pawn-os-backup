@@ -1,4 +1,5 @@
 ---
+model: claude-sonnet-5
 name: monthly-publication-audit
 description: 2nd and 4th of month, 10 AM — verifies every monthly publication in PUBLICATION_CALENDAR.md actually landed for the prior month (reads the channel, not run records), re-runs rerun-safe producers when a post is missing, and DMs Joshua one plain line only if something could not be recovered.
 ---

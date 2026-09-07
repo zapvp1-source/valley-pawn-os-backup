@@ -2979,3 +2979,25 @@ Contact log additions:
 - **Digest (Step 6):** not run — landed at 5:10 PM ET, not near the 7 PM slot.
 - Texts sent: 0. Emails: 0. Indeed messages: 0 (site down). Calendar events created: 0.
 - No classifier blocks this run.
+
+### Run log — 2026-09-07 09:10–09:20 AM ET (window OPEN, first run of the day)
+- Clock verified via osascript `TZ=America/New_York date` = Mon Sep 7 09:16:01 EDT 2026. Inside 9AM-8PM window. Prior run was 2026-09-06 19:10 PM (window closed at 8PM, nothing ran overnight — this is the first pass of 9/7).
+- Loaded top of manual (RE-ENABLED scope, Preston exclusion list, message templates, most recent 9/6 19:10 run log) before acting.
+- **Calendar check (jdavis@fcfpawn.com, Mon-Wed 9/7-9/9):** 9 confirmed interviews, no conflicts, no duplicates — Preston/Harrisonburg: Serina Allen (Mon 8:00), Scott Fowler (Mon 8:15), Amanda McDaniel (Mon 8:30), Monica Riggleman (Mon 9:00), Sheilah Buckholz (Mon 1:00 PM), Kevin Arrington (Tue 3:00 PM). Joshua/FL: Dan Hager (Tue 8:00), Kristal Jenkins (Tue 8:15), Patrick Stockman (Tue 10:00). All still show confirmed status.
+- **Reply sweep, text:** get_unread_imessages (30) — no new candidate inbound on either in-scope listing. Monica Riggleman's 9/6 3:37 PM text remains the same stale, already-actioned/booked message. Rest is known noise (OTP codes, delivery/spam links, personal contacts, non-candidate threads).
+- **Reply sweep, Gmail** (indeedemail.com + outreach subject, recent): found 2 new-applicant notification emails not yet actioned — Sean Nolan (FL SM, applied 9/7 7:37 AM) and Travis Rexroad (FL SM, applied 9/5 5:39 AM, missed by prior runs). Neither on the Preston exclusion list. Sent first-contact template to both via their Indeed relay email addresses (as Joshua, (804) 930-4221) — verified sent (message IDs 1a07c069335005a0, 1a07c069af841eae). Could not text either — no phone number available (Indeed down, see below). Also found Kevin Trautman (FL, orlandokevin74@gmail.com) had replied twice more (9/2, 9/4) with vague "following up" messages, never giving a time despite 2 prior touches (first contact 8/31, Day-2 follow-up 9/2) — sent a direct slot offer (Tue 9/8 8:30 AM, Wed 9/9 as backup) to close the loop, verified sent (id 1a07c06a5ca66aca). Patrick Stockman/Kristal Jenkins bundled-application email (9/5) — both already booked, no action needed. No other new inbound.
+- **Reply sweep + new-applicant sweep, Indeed in-app: BLOCKED — outage continues from 9/6.** Tried employers.indeed.com/jobs, /candidates, and /messages, each with fresh navigation + 8-10s waits (multiple cycles): page chrome (nav/footer) renders, main content area stays empty or stuck on Loading. This is the same genuine site-side rendering issue flagged repeatedly on 9/6 (15:10, 16:10, 18:10, 19:10 runs), now persisting into 9/7 morning — 5th+ consecutive affected run. Did not complete the New-status sweep, could not pull phone numbers for Sean Nolan/Travis Rexroad, could not send Indeed in-app messages, could not check the Indeed Messages inbox for replies.
+- **Day 2/Day 5 follow-up audit:** Damian McLaughlin (first-contacted 9/6 ~18:12 as Preston) and April Terry (first-contacted 9/6 ~17:18 as Joshua) are not yet due (Day-2 threshold ~9/8). No one else in the known contact log crossed a new threshold today besides Kevin Trautman, handled above.
+- **Booking summary this run:** 0 new bookings (no candidate provided a confirmable time+number this run).
+- **Sponsorship watch:** could not re-verify live (Indeed down). Last known: Harrisonburg SM re-sponsored 9/5 ($10/day Basic), not within 3 days of lapsing. FL listing remains Free. Not flagged.
+- **Notifications sent:** Slack DM to Joshua (D03BHQH5VGT, ts 1788787258.133129) covering the 2 new FL contacts, the Kevin Trautman nudge, the Indeed outage, and calendar confirmation — no separate Preston DM this run (no new Harrisonburg-side activity).
+- **Digest (Step 6):** not run — 9:10 AM ET, nowhere near the ~7 PM slot.
+- Texts sent this run: 0 (no phone numbers available for the 2 new applicants; Kevin Trautman is an email-only thread). Emails: 3 (Sean Nolan, Travis Rexroad first contacts; Kevin Trautman slot offer). Indeed messages: 0 (site down). Calendar events created: 0.
+- No classifier blocks this run.
+
+**Contact log additions:**
+| Name | Listing / Interviewer | Date | Channel | Outcome |
+|---|---|---|---|---|
+| Sean Nolan | Saint Augustine FL SM / Joshua Davis | 2026-09-07 | Email (Indeed relay) | First contact sent; awaiting reply. No phone on file yet (Indeed down). |
+| Travis Rexroad | Saint Augustine FL SM / Joshua Davis | 2026-09-07 | Email (Indeed relay) | First contact sent (delayed — applied 9/5, missed until this run); awaiting reply. No phone on file yet. |
+| Kevin Trautman | Saint Augustine FL SM / Joshua Davis | 2026-09-07 | Email | 3rd touch — offered Tue 9/8 8:30 AM / Wed 9/9 backup; awaiting confirmation. |

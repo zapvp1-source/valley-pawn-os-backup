@@ -1,5 +1,4 @@
 ---
-model: claude-haiku-4-5
 name: unified-search-verify
 description: 4:50 AM — verify last night's unified-search index rebuild and document-photos index against their logs (Rule 12); fix-forward once if failed; one plain DM to Joshua only if unrecoverable. Companion to unified-search-index-refresh (which now only launches).
 ---

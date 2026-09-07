@@ -1,5 +1,4 @@
 ---
-model: claude-sonnet-5
 name: bonus-paid-verify
 description: Monday after bonus payday, 10:00 AM. Compares what the bonus ledger says was owed against what Gusto actually paid, and DMs Joshua only if they disagree. Closes the month in the ledger. Never posts to a team channel.
 ---

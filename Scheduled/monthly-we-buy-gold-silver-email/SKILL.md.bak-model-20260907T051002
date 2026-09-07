@@ -1,7 +1,7 @@
 ---
 name: monthly-we-buy-gold-silver-email
 description: 1st of every month at 9 AM — build the Monthly Gold & Silver campaign by DUPLICATING VP Master Template 11 (never hand-built), run the instrumentation preflight, and ONLY send if it passes (all 5 stores' Call/Text buttons + utm_content). If preflight fails, do NOT send — alert #email-campaigns instead.
-model: claude-opus-5
+model: claude-opus-4-8
 ---
 
 > **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard, added 2026-08-02).**

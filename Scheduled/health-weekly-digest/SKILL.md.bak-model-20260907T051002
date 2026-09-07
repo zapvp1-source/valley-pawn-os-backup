@@ -1,7 +1,7 @@
 ---
 name: health-weekly-digest
 description: Sunday 9 AM — plain-language weekly health digest (episodes, night trends, new records, open tests aging) plus a case-file drift check.
-model: claude-sonnet-5
+model: claude-sonnet-4-5
 ---
 
 Build and send Joshua's weekly health digest. Domain 3 (Personal / Health). This one ALWAYS sends — it is the weekly heartbeat.

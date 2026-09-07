@@ -1,5 +1,4 @@
 ---
-model: claude-haiku-4-5
 name: monday-bravo-cell-gapfill
 description: Sunday 8:30 PM ET — re-pulls any cells that failed in the Sunday combined Bravo run so Monday morning's ops posts have all 5 stores. Runs the native gap-fill runner; silent, no Slack.
 ---

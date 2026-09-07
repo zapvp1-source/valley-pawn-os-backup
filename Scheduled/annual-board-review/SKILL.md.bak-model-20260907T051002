@@ -1,7 +1,7 @@
 ---
 name: annual-board-review
 description: Create Valley Pawn's annual board review presentation for the prior year and upload it to Google Drive
-model: claude-opus-5
+model: claude-opus-4-8
 ---
 
 ## Failure policy (Rule 16 / Hardening Standard #6 — updated 2026-09-05)

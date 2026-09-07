@@ -110,3 +110,11 @@
 - 3 installer file(s) >100MB, >14d old in ~/Downloads (Joshua-only to delete): 116M install_backblaze.dmg, 177M Intuit Meeting.dmg, 116M install_backblaze_005_b1f03755763e4dc02e48d27ec2fde9d55651aac6.dmg
 - **ESCALATE**: Could not determine last successful Time Machine backup time.
 
+## 2026-09-07 06:00 — CRITICAL
+- / : 460Gi used / 17Gi avail (41%)
+- /System/Volumes/Data : 460Gi used / 376Gi avail (94%)
+- Time Machine last success: unknown
+- Dataless (iCloud-evicted) files under Scheduled: 0
+- 3 installer file(s) >100MB, >14d old in ~/Downloads (Joshua-only to delete): 116M install_backblaze.dmg, 177M Intuit Meeting.dmg, 116M install_backblaze_005_b1f03755763e4dc02e48d27ec2fde9d55651aac6.dmg
+- **ESCALATE**: Could not determine last successful Time Machine backup time.
+

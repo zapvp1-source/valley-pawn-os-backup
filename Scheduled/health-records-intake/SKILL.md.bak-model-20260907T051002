@@ -1,7 +1,7 @@
 ---
 name: health-records-intake
 description: Nightly 9 PM — file anything dropped in Health Optimization/_inbox, parse lab values into the master CSV, and scan email for new result notices.
-model: claude-sonnet-5
+model: claude-sonnet-4-5
 ---
 
 Run Joshua's nightly health records intake. Domain 3 (Personal / Health). Silent on an empty night.
