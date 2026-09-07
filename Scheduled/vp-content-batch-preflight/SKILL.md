@@ -14,7 +14,7 @@ model: claude-sonnet-5
 > **Filesystem rule:** all I/O outside the agent sandbox goes through `mcp__Control_your_Mac__osascript do shell script`, never the Write tool.
 > **Timeout rule:** the osascript wrapper kills any single call at ~25 s. Never sleep longer than ~18 s in one call; poll in short increments across separate calls. Guard commands that may exit nonzero with `|| true`.
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "vp-content-batch-preflight" did not complete — <date>. Nothing technical in the DM. All technical detail goes in the run output/STATUS file. Joshua's DM is the ONLY place a failure may ever be mentioned — never to any team channel, store manager, or employee, in any medium. Field communication is always plain everyday language.
+> ⚠️ **FAILURE HANDLING (Rule 16, supersedes the 2026-07-22 v2 DM policy — updated 2026-09-06).** Failure notices NEVER go to Slack — not to a team channel, not to a store manager, and not to Joshua's DM. If this run fails or cannot complete its core work, append one dated plain-language line plus the technical detail to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn Studios/STATUS.md` under a `## Run holds` heading and stop. The next session picks it up from there. Anything that does go to the field stays in plain everyday language — no error codes, no tool or file names. This replaces every 'DM Joshua that it did not complete' and every 'stay silent on Slack' instruction elsewhere in this file.
 
 > **REPORTING POLICY:** Joshua sees NOTHING unless there's a blocker only he can fix, OR the one-line failure DM above. Everything else self-heals silently and is logged.
 
@@ -117,3 +117,14 @@ Append one JSON line per remediation to `~/.vp-studio/preflight_heal_ledger.json
 4. Completion notification lists: checks passed clean, checks self-healed, degraded-mode flags set, and any PERMANENT-FIX-NEEDED entries.
 
 Fires Sunday 9 PM ET via cron `0 21 * * 0`.
+## ADDENDUM 2026-09-06 — corrected checks
+
+- **Schedule:** fires **Monday 11:00 AM ET** for the **1:40 PM** batch. Every "Sunday 9 PM",
+  "2:02 AM", or "before 2 AM" reference above is stale — read them as "before 1:40 PM today".
+- **Check 1 (Bravo freshness):** look for the files the batch actually reads —
+  `_items-to-price.csv` and `_aged-inventory-summary.csv` in `Bravo Data Extraction/output/`.
+  `inventory_export` is a filename that never existed; that check has been passing vacuously.
+- **Check 2 (Publer):** the `~/.vp-studio/publer-session.json` restore file was never created, so this
+  check has been a hard gate on something that does not exist. Replace it with a reachability probe:
+  `cd '/Users/joshuadavis/Documents/Claude/Projects/Refine Social Media' && python3 -m vp_social sync --back 1 --forward 7` — a clean exit means the API key and
+  workspace are live, which is what the batch actually needs. Only a non-zero exit is a real blocker.

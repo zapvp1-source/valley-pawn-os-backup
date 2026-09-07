@@ -139,7 +139,7 @@ print("RESULT_JSON:"+json.dumps({
 
 Read the `RESULT_JSON:` line from stdout — that's your data for Step 2.
 
-=== STEP 2 — Report to Slack (#email-campaigns, channel ID C0APR5WUL2Z) ===
+=== STEP 2 — Report (exceptions → #email-campiagns C0APR5WUL2Z; routine all-clear → Joshua DM D03BHQH5VGT) ===
 
 Use the Slack send-message tool.
 
@@ -154,7 +154,7 @@ Use the Slack send-message tool.
 - If `seed_fixes` > 0 (and no hard fails) → post a quiet confirmation of the auto-repair (not an alert, just visibility):
   `:heavy_check_mark: Standing recipient rule: auto-added list 10 (Internal Seeds) to <seed_fixes> campaign(s) that were missing it: <ids/names>.`
 
-- If `failed` == 0 AND `seed_fixes` == 0 AND `seed_hard_fails` == 0 AND `checked` > 0 → post a brief green confirmation: `:white_check_mark: Email watchdog: <checked> upcoming send(s) checked, all carry full Call/Text + UTM instrumentation and the standing recipient list.`
+- If `failed` == 0 AND `seed_fixes` == 0 AND `seed_hard_fails` == 0 AND `checked` > 0 → **SILENT SUCCESS (silent-success 2026-09-06).** Post NOTHING to C0APR5WUL2Z. Send the green line to Joshua's DM (`D03BHQH5VGT`) instead: `:white_check_mark: Email watchdog: <checked> upcoming send(s) checked, all carry full Call/Text + UTM instrumentation and the standing recipient list.` A routine all-clear is an audit trail, not something the team must act on today (Field Communication Standard v3 §1) — daily green lines were burying the one weekly post in #email-campiagns that carries a decision. Keep the marker text `Email watchdog:` EXACTLY as written: the fleet-guardian verifies this task by that string, now in the DM. Everything above this line (red alerts, seed auto-repair confirmations) still goes to the channel — those are exceptions, and exceptions are what the channel is for.
 
 - If `checked` == 0 → post nothing (no sends scheduled; stay silent).
 

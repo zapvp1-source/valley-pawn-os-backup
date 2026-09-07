@@ -1,5 +1,5 @@
 # Website Analytics — Automation Overhaul Plan
-**Date:** 2026-09-05 · **Status:** PROPOSED — nothing changed yet · **Domain:** 1 (Valley Pawn)
+**Date:** 2026-09-05 · **Status: PHASES 1–2 BUILT AND PROVEN 2026-09-06** (see §7 below) · **Domain:** 1 (Valley Pawn)
 **Goal:** one Claude-free data layer feeding every website report; reports that measure calls/texts/emails/directions, not just sessions; deterministic posts that cannot drift or lie.
 
 ---
@@ -101,6 +101,26 @@ Native jobs run in shadow for one week alongside the current tasks; byte-compare
 - Touches: #website, #ai-marketing, Joshua DM, `vp-website-trend` artifact, Cloudflare dashboard, `/shop/` page 833, `/retail/` page 10, `marketing-ceo-briefing-weekly` (reads #website post — format stays a superset), `monthly-eom-recap`.
 - Does NOT touch: Bravo pipeline, any hardened infra, `daily-funds-verification`, WooCommerce page 1110 guard.
 - Risk: eBay throttling on the storefront endpoint (mitigated: per-store retry + reuse last good file, never publish a short list — Rule 18).
+
+## 7. BUILD LOG — what shipped 2026-09-06 (Joshua: "fix what you can fix")
+
+Everything below is live on disk and verified against real output, not run records.
+
+| Built | Where | Proven |
+|---|---|---|
+| `shop_refresh.py` — the whole shop pipeline, deterministic | `Website/analytics/bin/` | 00:57 ET: 469 scraped → 20 excluded → 449 published; live page 449 cards, 1 marker pair, 1 h1, valid ItemList, no Woo hijack. 16 s, no browser. |
+| `wp_client.py` — shared WP REST client (App Password; CDN-lag aware) | `Website/analytics/bin/` | Used by the proving run; `/retail/` and page 1110 untouched. |
+| `format_weekly_website.py` — the only renderer of the Monday post; **Leads block** (calls/texts/directions by store) + Search block | `Website/analytics/bin/` | Replayed real Aug 24–30 data → matches the live 8/31 post exactly; 8 corruption cases each exit 2 with empty stdout. |
+| `google_auth.py` / `ga4_pull.py` / `gsc_pull.py` / `google_grant.py` | `Website/analytics/bin/` | Compile clean; both pulls exit 1 with the setup file named, pending Phase 0. |
+| `vp-website-shop-nightly` → launcher/verifier | Cowork task (backup kept) | Freshness test added so a manual run can't cancel a scheduled refresh. |
+| `weekly-analytics-summary` → formatter-gated, now also pulls the GA4 **events** report | Cowork task | Falls back to Chrome scrape until Phase 0; posts formatter stdout verbatim or nothing. |
+| Guardian +4 entries (2 file-based) | `Valley Pawn OS/fleet/expected_outputs.json` | Backup `.bak-20260906-website`. |
+| `weekly-website-kpi-artifact-refresh` retired | Cowork task | Open Items L152 closed. |
+| Cleanup | `shop-build/_archive_20260906/` (59 files, ~38 MB), METHOD_NOTES retirement notice, `instore-sync/logs` 6 files → 1 | — |
+
+**Phase 0 correction:** a service account is the wrong answer — the fcfpawn.com org blocks SA key
+creation (`_shared/sheets_helper.py`). The real Phase 0 is a 3-minute re-consent of the existing
+OAuth client with two read-only scopes: `Website/analytics/GOOGLE_API_SETUP.md`.
 
 ## 6. Sequence & effort
 Phase 0 (Joshua, 10 min) → Phase 1 (1 session) → Phase 2 (1–2 sessions) → shadow week → Phase 3–4 (rolling, each item verified live) → Phase 5 cutover. Phase 4 cleanup and Open Items row can start immediately without Phase 0.

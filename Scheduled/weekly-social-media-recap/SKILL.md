@@ -39,7 +39,7 @@ When you see any of those messages, immediately fire the next concrete tool call
 **Speed:** prefer batch tools (e.g. `browser_batch`) to combine sequential actions into one call.
 
 ---
-⚠️ **FAILURE ALERT POLICY (platform standard, set by Joshua 2026-07-22, v2):** If this run fails or cannot complete, send Joshua ONE plain-language Slack DM (channel D03BHQH5VGT): `⚠️ Scheduled task "weekly-social-media-recap" did not complete — <date>.` Nothing technical in that DM. Never send failure notices to #social-media or any other team channel. This task's normal weekly output (the recap) always goes to #social-media regardless — that is not a "failure notice," it's the task's job.
+> ⚠️ **FAILURE HANDLING (Rule 16, supersedes the 2026-07-22 v2 DM policy — updated 2026-09-06).** Failure notices NEVER go to Slack — not to a team channel, not to a store manager, and not to Joshua's DM. If this run fails or cannot complete its core work, append one dated plain-language line plus the technical detail to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn Studios/STATUS.md` under a `## Run holds` heading and stop. The next session picks it up from there. Anything that does go to the field stays in plain everyday language — no error codes, no tool or file names. This replaces every 'DM Joshua that it did not complete' and every 'stay silent on Slack' instruction elsewhere in this file.
 
 This is an automated run. The user is not present. Execute autonomously. End with `<run-summary>one or two sentences</run-summary>`.
 
@@ -51,19 +51,24 @@ Post to the **#social-media** Slack channel (channel ID `C0BMRC2LN3D`) every Mon
 
 ## Steps
 
-1. Run the recap script via osascript:
-   `do shell script "cd ~/Documents/Claude/Projects/'Refine Social Media' && python3 weekly_social_recap.py --days 7 2>&1"`
-   This is a read-only script (`weekly_social_recap.py`, net-new, added 2026-08-04) that calls `PublerClient.list_posts(state='published')`, filters to the last 7 days by `scheduled_at`, and groups counts by platform and by store/page. It does NOT touch `publer_weekly_digest.py` or `friday_close_engagement.py`.
-2. The script's stdout contains the recap text between the marker lines `RECAP_START` and `RECAP_END`. Extract exactly that text (do not include the marker lines themselves, do not include the urllib3/OpenSSL warning line if present).
-3. Post that text to Slack channel `C0BMRC2LN3D` (#social-media) via `slack_send_message`. Use it verbatim — it's already Slack mrkdwn-formatted (bold headers, bullet counts).
-4. If the script's post count is 0, still post — the recap should say "0 posts published this week" so an actual outage is visible to the team, not silently skipped. Do not suppress a zero result.
-5. If the script errors (Publer API failure, missing config, etc.), do NOT post a broken/partial recap to #social-media. Instead follow the Failure Alert Policy above (one plain DM to Joshua) and write the raw error to `weekly_social_recap_error_{date}.log` in the same folder for the next session to diagnose.
-6. Optional context check (not required to complete the post): if you want extra confidence before posting, cross-check the total against `#vp-studio-queue`'s last-7-days log-card count — they should be in the same ballpark since that channel logs each item as it's staged. A mismatch is not a failure, just worth noting in the run-summary.
+1. Produce the recap with the deterministic formatter (osascript):
+   `do shell script "cd '/Users/joshuadavis/Documents/Claude/Projects/Refine Social Media' && python3 -m vp_social recap --days 7 2>/dev/null"`
+   - **exit 0** — stdout IS the Slack message. Post it to `C0BMRC2LN3D` (#social-media) **verbatim**
+     via `slack_send_message`. Do not reformat it, do not add a preamble, do not recompute a number.
+   - **exit 2** — stdout is empty on purpose (Rule 18: withhold, don't caveat). Post NOTHING and append
+     the stderr line to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn Studios/STATUS.md` under `## Recap holds`.
 
-## Cron
+2. That is the whole job. There is no marker extraction, no zero-post special case, and no fallback
+   to hand-counting: a zero week is itself treated as a withhold condition by the formatter, because
+   every real zero week to date has been a read failure, not an actual outage.
 
-Monday 9:00 AM ET (`0 9 * * 1`) — after `vp-content-batch-weekly` (Mon 2:02 AM) and `vp-content-batch-postflight` (Mon 3:30 AM) have both run, so the week's Monday batch is already reflected in Publer by the time this posts.
+**WHY (2026-09-06):** the previous step ran `weekly_social_recap.py`, which called Publer's `/posts`
+with no `from`/`to`. Publer silently returns a default slice, so the recap reported 15 posts for
+Aug 24-31 when 88 had actually published, and 16 for Aug 17-24 when the real number was 47. The
+August month-in-review inherited the error. `python3 -m vp_social recap` reads the local ledger,
+which is synced from Publer with explicit date ranges and full pagination. `weekly_social_recap.py`
+is left on disk but is no longer the source of the number.
 
-## Hard rule
-
-This task ONLY posts the weekly recap to #social-media. It never posts approval requests, never posts failure diagnostics to a team channel, and never modifies `vp-content-batch-weekly`, `vp-content-batch-postflight`, `vp-publer-analytics-friday`, or their scripts.
+**Timing note:** this task fires Monday 9:40 AM and covers the PRIOR seven days. The weekly content
+batch fires later the same day (Mon 1:40 PM, postflight 4:40 PM), so this recap never includes
+today's batch — that is intended, not a gap.

@@ -1,4 +1,4 @@
-; ============================================================================
+﻿; ============================================================================
 ; reports/SafeRegisterJournal_island.ahk  (slice 3 / UIA-v2 + CS-toggle patch)
 ;
 ; ISLAND VARIANT — clone of prod SafeRegisterJournal.ahk with two additive
@@ -457,7 +457,13 @@ SecVerifyEditValue(edit, expected) {
 }
 
 SetExportFilePath(outputPath) {
-    layout := FindByName(SRJ_ELEMENTS["export_file_path"], 2000)
+    ; Timeout raised 2000 -> 15000 on 2026-09-06. The Export Document dialog
+    ; can appear before its File path LayoutItem finishes rendering; a 2s wait
+    ; lost that race under load. Proven live 2026-08-30: aged-inventory-summary
+    ; for HAR threw "File path LayoutItem not found" even though the dialog was
+    ; up (export OK button had already been found). FindByName returns as soon
+    ; as the element exists, so this only changes the slow path.
+    layout := FindByName(SRJ_ELEMENTS["export_file_path"], 15000)
     if !layout {
         LogMessage("    WARN: File path LayoutItem not found by Name")
         throw Error("SetExportFilePath: File path LayoutItem not found")

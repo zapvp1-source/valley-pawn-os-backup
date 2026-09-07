@@ -1,6 +1,6 @@
 ---
 name: weekly-website-kpi-artifact-refresh
-description: SUPERSEDED 2026-08-03 by vp-website-trend-daily-refresh (runs daily, refreshes the vp-website-trend artifact which the vp-website-kpis artifact itself now flags as its replacement). Disabled to stop duplicate GA4 pulls; vp-website-kpis is kept only as a static historical snapshot from 2026-07-27 and should not be overwritten.
+description: RETIRED 2026-09-06 (was: disabled 2026-08-03/04, cause unconfirmed for a month — Open Items L152, now closed). Superseded by vp-website-trend-daily-refresh, which refreshes the vp-website-trend artifact daily; the older vp-website-kpis artifact is kept only as a static 2026-07-27 historical snapshot and must not be overwritten. Website Analytics plan Phase 2 replaces the trend artifact's hand-written data with bin/build_trend_artifact.py. DO NOT RE-ENABLE — re-enabling resumes duplicate GA4 pulls. Delete after 2026-12-01 if nothing has needed it.
 model: claude-sonnet-5
 ---
 

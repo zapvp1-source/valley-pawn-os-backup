@@ -123,6 +123,36 @@ def item_live(token, iid):
     }
 
 
+def post_digests(stage1_new, stage2_ended):
+    """One plain-language Slack message per store, not one per item."""
+    by_store = {}
+    for store, iid, title, price in stage1_new:
+        by_store.setdefault(store, {'flag': [], 'pull': []})['flag'].append((iid, title, price))
+    for store, iid, title, _ack in stage2_ended:
+        by_store.setdefault(store, {'flag': [], 'pull': []})['pull'].append((iid, title))
+    for store in sorted(by_store):
+        f, p = by_store[store]['flag'], by_store[store]['pull']
+        lines = ['*eBay markdown floor — %s*' % store]
+        if f:
+            lines.append('%d listing%s reached 30%% off with no sale. They will be pulled from eBay in '
+                         '%d days unless someone reprices, bundles, or pulls them early — reply here '
+                         'or update them in Bravo.' % (len(f), '' if len(f) == 1 else 's', GRACE_DAYS))
+            for iid, title, price in f[:40]:
+                lines.append('• %s — $%s (%s)' % (title, price, iid))
+            if len(f) > 40:
+                lines.append('• …and %d more' % (len(f) - 40))
+        if p:
+            lines.append('')
+            lines.append('%d listing%s pulled from eBay today after the %d-day grace period. Each needs '
+                         'a store decision: clearance, bundle, donate, or scrap.' % (
+                             len(p), '' if len(p) == 1 else 's', GRACE_DAYS))
+            for iid, title in p[:40]:
+                lines.append('• %s (%s)' % (title, iid))
+            if len(p) > 40:
+                lines.append('• …and %d more' % (len(p) - 40))
+        slack('\n'.join(lines))
+
+
 def main():
     md = load(MARKDOWN_STATE)
     term = load(TERMINAL_STATE)
@@ -154,13 +184,9 @@ def main():
         if tstate is None:
             if ONLY and ONLY != '1':
                 continue
-            msg = (":warning: *eBay markdown floor reached* — `%s` (%s) has been at 30%% off "
-                   "baseline for a full cycle with no sale ($%s, %s). It will be pulled from eBay "
-                   "in %d days unless someone reprices it, bundles it, or confirms an early pull. "
-                   "Reply in #ebay-performance or update it directly in Bravo." % (
-                       live['title'], store, live['price'], iid, GRACE_DAYS))
-            slack(msg)
-            stage1_new.append((store, iid, live['title']))
+            # Slack is posted as ONE digest per store at the end (see post_digests) — per-item
+            # posts flooded the channel on a 139-item first pass (2026-09-06).
+            stage1_new.append((store, iid, live['title'], live['price']))
             if APPLY:
                 term[iid] = {'store': store, 'title': live['title'], 'stage': 1,
                              'flagged_at': now.isoformat()}
@@ -185,14 +211,12 @@ def main():
                 term[iid]['stage'] = 2
                 term[iid]['ended_at'] = now.isoformat()
                 save(TERMINAL_STATE, term)
-                slack(":stop_sign: *Pulled from eBay* — `%s` (%s, item %s) never sold at 30%% off "
-                      "and its %d-day grace period expired. It's off eBay now — needs a Bravo-side "
-                      "call: in-store clearance, bundle, donate, or scrap." % (
-                          live['title'], store, iid, GRACE_DAYS))
                 stage2_ended.append((store, iid, live['title'], ack))
             else:
                 errs = [T(e, 'LongMessage') for e in r.findall('.//' + q('Errors'))]
                 errors.append((iid, '; '.join(errs[:1])))
+
+    post_digests(stage1_new, stage2_ended)
 
     print('\n==== SUMMARY (%s) ====' % ('APPLY' if APPLY else 'DRY RUN'))
     print('Stage 1 (newly flagged, 14-day clock starts): %d' % len(stage1_new))

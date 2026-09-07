@@ -4,7 +4,8 @@ description: 1st of month 2 AM — FINAL prior-month employee sales rankings (Re
 model: claude-sonnet-5
 ---
 
-> ⚠️ **FAILURE ALERT POLICY (binding):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "monthly-employee-sales-rankings" did not complete — <date>. Nothing technical in the DM. All technical detail goes in the run log / STATUS file. Never send failure notices to any team channel, store manager, or employee, in any medium.
+## Failure policy (Rule 16 / Hardening Standard #6 — updated 2026-09-05)
+Retry once, then try the documented alternate path. If still failing: write the technical detail to this task's run log/STATUS file and stop. Silence in every Slack channel. At most ONE plain-language DM to Joshua (D03BHQH5VGT), and only if a decision only he can make is blocking. Never post failure notices, technical jargon, or partial/incomplete data anywhere.
 
 > ⚠️ **FIELD COMMUNICATION STANDARD v3 (binding — read before posting):** `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/FIELD_COMMUNICATION_STANDARD.md`. #employee-performance is FIELD-FACING. Plain everyday language only. Never name a system, tool, report, file, or pipeline. No file names in the post.
 

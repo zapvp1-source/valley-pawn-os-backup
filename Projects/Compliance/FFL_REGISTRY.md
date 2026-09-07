@@ -14,14 +14,48 @@ sent 2026-05-04 (see "Known bad data in circulation" below).**
 
 | Store | FFL # | Type | Expires | Premise address | Source verified |
 |---|---|---|---|---|---|
-| Culpeper | **1-54-047-02-9J-25407** | 02 Pawnbroker | **2029-09-01** | 571 James Madison Hwy Unit C, Culpeper, VA 22701 | ✅ eZ Check live 2026-08-22 + renewed license PDF |
-| Waynesboro | 1-54-820-02-8B-24709 | 02 Pawnbroker | 2028-02-01 | 1321 W Broad St, Waynesboro, VA 22980 | ✅ eZ Check live 2026-08-22 |
-| Harrisonburg | 1-54-165-02-7M-26284 | 02 Pawnbroker | 2027-12-01 | 1790 E Market St Unit 22, Harrisonburg, VA 22801 | License PDF (eZ Check not re-run) |
-| Lexington | 1-54-163-02-8F-26584 | 02 Pawnbroker | 2028-06-01 | 125 Walker St, Lexington, VA 24450 | License scan (eZ Check not re-run) |
-| Roanoke | 1-54-770-02-7A-27330 | 02 Pawnbroker | **2027-01-01** | 2362-D Peters Creek Rd, Roanoke, VA 24017 | License scan (eZ Check not re-run) |
+| Culpeper | **1-54-047-02-9J-25407** | 02 Pawnbroker | **2029-09-01** | 571 James Madison Hwy Unit C, Culpeper, VA 22701 | ✅ eZ Check live 2026-09-06 + renewed license PDF |
+| Waynesboro | 1-54-820-02-8B-24709 | 02 Pawnbroker | 2028-02-01 | 1321 W Broad St, Waynesboro, VA 22980 | ✅ eZ Check live 2026-09-06 |
+| Harrisonburg | 1-54-165-02-7M-26284 | 02 Pawnbroker | 2027-12-01 | 1790 E Market St Unit 22, Harrisonburg, VA 22801 | ✅ eZ Check live 2026-09-06 |
+| Lexington | 1-54-163-02-8F-26584 | 02 Pawnbroker | 2028-06-01 | 125 Walker St, Lexington, VA 24450 | ✅ eZ Check live 2026-09-06 |
+| Roanoke | 1-54-770-02-7A-27330 | 02 Pawnbroker | **2027-01-01** | 2362-D Peters Creek Rd, Roanoke, VA 24017 | ✅ eZ Check live 2026-09-06 |
+
+**2026-09-06 full eZ Check pass — all five match this table; no LOA on any license; ATF mailing
+address is `844 CYPRESS CROSSING TRAIL, ST AUGUSTINE, FL 32095` on ALL FIVE** (not just Culpeper
+and Waynesboro as noted below — the 7/30 address-change letters took for every store). Roanoke's
+renewal form (≈2026-10-03) will therefore arrive in Florida. Machine record:
+`Compliance/state/ezcheck_2026-09-06.json`. The weekly `compliance-weekly-brief` re-runs this
+check; eZ Check is offline Sat 4 PM–Sun 6 AM ET and the Saturday after the 2nd Tuesday 6 PM–Sun 6 PM.
 
 **All five are Type 02 — Pawnbroker in Firearms Other Than Destructive Devices. None is a
 Type 01 Dealer.** Vendor forms that ask "01 or 02" get **02** for every store.
+
+### ⚠️ A SIXTH LICENSE EXISTS AND IS STILL ACTIVE — Salem (found 2026-09-06)
+
+| Store | FFL # | Type | Expires | Premise | Mailing address of record |
+|---|---|---|---|---|---|
+| **Salem — store CLOSED** | **1-54-161-02-6K-27258** | 02 Pawnbroker | **2026-10-01** | 1617 W Main Street, Salem, VA 24153 | **282 BALD ROCK RD, VERONA, VA** (not Florida) |
+
+**Verified live on ATF eZ Check 2026-09-06** — the record returns ACTIVE, licensee
+`FULL CIRCLE FINANCE INC`, trade name `VALLEY PAWN`. It was in **no** registry before that date:
+not this file, not `OBLIGATIONS.json`, not `ffl_vendors.json`, not the reminders capture except as
+a bare line reading "Salem 10/1/2026 ✅(closed)".
+
+Why it matters:
+1. **Expires in under a month.** If the intent is to let it lapse, that is a decision, not an
+   oversight — but ATF still expects the discontinuance to be handled.
+2. **A closed FFL has records obligations.** Under 27 CFR 478.127 the acquisition-and-disposition
+   records of a discontinued business must be delivered to the ATF Out-of-Business Records Center
+   (or to a successor) — this has not been confirmed as done.
+3. **Its ATF mail goes to Verona, not Florida**, unlike all five live licenses. Anything ATF sent
+   about this license went to Bald Rock Rd.
+4. **A live public listing still routes customers there** — MasterFFL carries a full Salem "Valley
+   Pawn" profile (1617 W Main St, 4.9★/213 ratings, storefront photos) as an operating dealer.
+   Same class of problem as the phantom Staunton cluster.
+
+**Open questions for Joshua:** when did Salem actually close, were the A&D records dispositioned
+with ATF, and should the license be formally surrendered now or allowed to expire on 10/1?
+Nothing has been filed or surrendered by any session.
 
 **2026-08-25: freshly SIGNED copies of all five licenses (signed by Joshua Davis, CEO,
 2026-08-21) are on file as `ffl-files/{store}-ffl.pdf`.** These satisfy the ATF original-
@@ -72,8 +106,12 @@ renewal form on 2026-06-03; Preston was watching Virginia mail for it and escala
 Consequence going forward: **every future renewal form and every ATF notice for all five
 licenses lands in St. Augustine.** Roanoke's renewal form should mail around **2026-10-03**
 (≈90 days before its 2027-01-01 expiration) — watch the Florida mail, not the store mail.
-Either accept that and build the watch around it, or file to change the mailing address of
-record back to a Virginia address that someone checks daily.
+
+**DECIDED 2026-09-05 (Joshua): the mailing address of record STAYS in Florida.** Do not file to
+change it. Joshua controls that mailbox daily; changing it would open a second ATF correspondence
+cycle weeks before Roanoke's renewal. The risk is covered instead by the expiration ladder in
+`Valley Pawn OS/bin/ffl_guardian.py`, which DMs Joshua at 120/90/60/30/14 days before each
+expiration and puts "renewal form should arrive in the Florida mail" on the calendar ≈90 days out.
 
 ---
 

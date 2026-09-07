@@ -26,11 +26,11 @@ Every item is tagged exactly one of `Brand` / `Store-local` / `Fan-out`, and onl
 | Brand | Valley Pawn `@thevalleypawn` | `1603970336542485` |
 | Store-local | Valley Pawn-Lexington | `379605279045904` |
 | Store-local | Valley Pawn-Waynesboro | `303444680270846` |
-| Store-local | Valley Pawn-Harrisonburg | `795439020329931` |
+| Store-local | Valley Pawn- Harrisonburg Va | `474248069342834` |
 | Store-local | Valley Pawn- Culpeper | `100478091680300` |
 | Store-local | Valley Pawn (Roanoke) | `188243497698836` |
 
-- Harrisonburg's correct page ID is `795439020329931`. Do **not** post Harrisonburg content to `188243497698836` (that is Roanoke). Do **not** post to legacy page `474248069342834`.
+- **CORRECTED 2026-09-06 — the Harrisonburg IDs in this file were inverted.** The live Harrisonburg page is **`474248069342834`** ("Valley Pawn- Harrisonburg Va", ~757 followers) — it is the page Publer actually routes to (`publer_accounts.json`), it is what `facebook-post/data/tokens.json` recorded on 2026-05-28 ("old page was 21-follower auto-created shell; new ID is the real 761-follower active page, was named Dixie Pawn Inc"), and it is where every real Harrisonburg post has landed. `795439020329931` is the 21-follower auto-created shell — do **not** post to it, and do not delete it (unpublish/merge only). Do **not** post Harrisonburg content to `188243497698836` (that is Roanoke). The stale mapping also survives in `vp-content-batch`, `facebook-post` and `valley-pawn-context`; anything reading those should trust this line and `publer_accounts.json`.
 - **Fan-out** (same content to all stores) is capped at **≤2 per quarter** and requires an explicit `--allow-fanout` flag plus a documented reason in the manifest.
 - **Hard rule:** the same image+caption may NEVER appear on more than one Store-local page in the same week. If two stores received the same SKU, one store runs it this week, the other next week.
 - Routing conflict (item tagged both Brand and Store-local) → **Brand wins**, drop the store-local copy.

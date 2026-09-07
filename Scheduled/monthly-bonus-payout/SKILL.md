@@ -1,6 +1,6 @@
 ---
 name: monthly-bonus-payout
-description: Monthly (10th, 11:30 AM — after qualifiers): compute per-employee bonus payouts for the completed month (two-bridge gate, Tier 2 / Aug+ penalty regime), fill the Payouts + Trend tabs in VP_Bonus_Tracker_MASTER_2026.xlsx, draft results for Joshua — never auto-sent, never touches Gusto. Payday = first Friday after the 15th.
+description: SUPERSEDED 2026-09-06 by `bonus-month-close` (10th 9 AM), which computes qualifiers and payouts in one deterministic run. Kept disabled as a rollback hold — delete after two clean cycles (Oct + Nov 2026). See Bonus Program/BONUS_PROGRAM_REVIEW_AND_PLAN_2026-09-05.md.
 model: claude-sonnet-5
 ---
 
@@ -17,7 +17,64 @@ model: claude-sonnet-5
 > **Timeout rule:** the osascript wrapper kills any single call at ~25 s. Never sleep longer than ~18 s inside one call; poll in short increments across separate calls. Guard any command that may exit nonzero with a trailing || true.
 
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+## Failure policy (Rule 16 / Hardening Standard #6 — updated 2026-09-05)
+Retry once, then try the documented alternate path. If still failing: write the technical detail to this task's run log/STATUS file and stop. Silence in every Slack channel. At most ONE plain-language DM to Joshua (D03BHQH5VGT), and only if a decision only he can make is blocking. Never post failure notices, technical jargon, or partial/incomplete data anywhere.
+
+## PRECONDITION + SELF-VERIFY (Hardening Standard #2/#5 — added 2026-09-05)
+
+**Before computing anything:** confirm `monthly-bonus-qualifiers` actually PRODUCED output for the
+target month — verify against the output, not the run record (Rule 12): a message whose first line is
+`🎯 *Bonus Qualifiers — {Month Year}*` in `#bonus-goals` (C04TXF0KGNL), or a written Bonus Qualifiers
+sheet for that month. If neither exists, do not recompute qualifiers yourself and do not guess: send
+ONE plain DM to Joshua saying the month's qualifier numbers aren't ready yet, and stop.
+
+**Basis gate:** if the qualifiers run withheld Bridge 1 results under the Bridge-1 Basis Consistency
+Gate, this task computes NO payouts for that month. Say so plainly in the DM to Joshua and stop.
+
+**Duplicate guard:** check Joshua's DM history for a payout summary already sent for the same month
+before sending another.
+
+**After sending:** confirm the DM was delivered, and confirm the master tracker month tab and
+Trend/Running Totals actually contain the new rows before declaring the run complete.
+
+**Verified history as of 2026-09-05:** `VP_Bonus_Tracker_MASTER_2026.xlsx` was last modified
+2026-07-21 and contains only `2026-06` and `2026-07 (MTD)` tabs — the 8/10 and 8/12 runs left no July
+FINAL or August tab despite reporting success. Confirm the tab write landed; do not trust the write
+call returning without error.
+
+## BRIDGE-1 BASIS CONSISTENCY GATE — ADDED 2026-09-05 (supersedes any conflicting wording below)
+
+**The problem this exists to stop.** Bridge 1 compares column D (2026 Revenue Actual) against column C
+(2026 Bonus Target). Those two columns are only comparable if they are computed on the SAME revenue
+basis. As of 2026-09-05 they are not: column D of `VP BONUS FINAL Updated.xlsx` is a **mixed series** —
+Jan–Jun 2026 rows hold the broader "Sales Revenue Profit + Interest & Fees Total" figure, while
+Jul–Aug 2026 rows hold Bravo's narrower native **Net Revenue** KPI (the two differ by roughly
+$5,300–$9,900 per store per month). July 2026 therefore showed 4 of 5 stores "failing" Bridge 1 purely
+because the target was set on the broad basis and the actual was measured on the narrow one. That is a
+measurement artifact, not performance — and it decides whether real people get paid.
+
+**Do NOT resolve this yourself. Bonus money is Joshua's call, never the task's.**
+
+**Hard gate, every run, before any pass/fail is written or posted:**
+1. Determine the basis of column C (target) and column D (actual) for the month being computed.
+   Both must be the same basis, and that basis must be stated explicitly in the Bonus Qualifiers
+   spreadsheet for that month.
+2. If the two bases match and are confirmed → proceed normally.
+3. If they do NOT match, or you cannot confirm both with evidence → **do not post any Bridge 1 /
+   "hit target" / pass-fail result to #bonus-goals, and do not compute any payout from it** (Rule 18:
+   withhold, never caveat). Still produce the qualifier metrics that don't depend on the gate
+   (Reviews, Email %, Gold, Facebook follower gain) and post those. Send ONE plain-language DM to
+   Joshua saying the revenue-target comparison for that month can't be made on a like-for-like basis
+   and needs his decision on which revenue figure the target is measured against — no jargon, no
+   column letters, no file names.
+4. Never restate historical column D values on a new basis without Joshua's explicit go-ahead — it
+   retroactively changes who did or didn't hit target.
+
+**Unchanged and NOT in scope of this gate:** the commission DOLLAR basis stays Bravo's native Net
+Revenue (PSC + Retail Sales GP + Scrap Sales GP), which was verified to the penny against Preston's
+real June 2026 figures. That is correct and stays. This gate is only about the pass/fail comparison.
+
+> ⚠️ **FIELD COMMUNICATION RULE (retained from the 2026-07-22 v2 banner):** anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths.
 
 
 ## Execution Contract — DO NOT STOP EARLY
@@ -81,7 +138,7 @@ Preston Peters (Market Manager, dept "Corporate Support") gets a separate, stand
 - Roles/titles/store assignment: Gusto `list_employees`, `department` field = store. Roles seen: Manager, Sales and Loan Associate, Sales and Loan Representative, Market Manager, Chief Executive Officer, Chief Support Officer. Only Manager and Sales-and-Loan (Associate/Representative) roles get the per-store commission bonus; corporate roles are excluded from that part — except Preston, whose separate Market Manager override is defined above.
 
 ## Output
-1. Spreadsheet `Bonus Payout — {Month} {Year}.xlsx` in Drive folder 1nR6j_0IL6Jqtn2pXlc4hqJjo_uahM7Ru: per-employee tab (name, role, store, basis, base rate, bonus rate applied, bonus $ — including Preston's Market Manager row), per-store rollup tab, Top-Performer-payout tab, a dedicated "Preston / Market Manager" line showing stores-hit count and total, and a "Gaps" tab listing anything you couldn't compute and why.
+1. Spreadsheet `Bonus Payout — {Month} {Year}.xlsx` in Drive folder 1nR6j_0IL6Jqtn2pXlc4hqJjo_uahM7Ru **[corrected 2026-09-05: this folder id does not exist in Drive ("Requested entity was not found") — write to the real Bonus Program folder id 1az4UOVebmEU28RNOIZJF9j7hFdkJBrsf instead]**: per-employee tab (name, role, store, basis, base rate, bonus rate applied, bonus $ — including Preston's Market Manager row), per-store rollup tab, Top-Performer-payout tab, a dedicated "Preston / Market Manager" line showing stores-hit count and total, and a "Gaps" tab listing anything you couldn't compute and why.
 2. A DRAFT Slack DM to Joshua (U03BB52MDSA) — never sent directly — summarizing total payout, per-store totals, which regime (OLD/NEW) applied and why, Bridge 1/Bridge 2 result per store, Preston's payout and store-hit count, and any gaps.
 3. Never silently drop an employee the formula would pay just because a reference list (e.g. Preston's June message) didn't happen to mention them — the formula is the source of truth for who's owed something, the reference data is only for validating the rate math.
 4. Never silently drop a store to $0 either — if Bridge 1 fails, show the store explicitly with a $0 result and the reason, so it's visible rather than absent from the sheet.
@@ -117,7 +174,7 @@ Pipeline note: run scrap-refining-gold and filter output rows by StatusDate mont
 ## SCHEDULE + OUTPUT TARGETS (set 2026-07-21, supersedes the 2nd/3rd schedule)
 Both tasks now run on the **10th of every month** (qualifiers 9:00 AM, payout 11:30 AM), computing the just-completed month. The 10th gives time for month-end data to settle and precedes payday (first Friday after the 15th).
 Required outputs each run - ALL of these, every month:
-1. **VP BONUS FINAL trackers (BOTH copies)**: write the completed month's 2026 Revenue actual into column D of the "2025 compared to Bonus" sheet for all 5 stores, in BOTH files: `VP BONUS FINAL Updated.xlsx` (Drive, id 1AC-LF0gEPDLY0oUWZ7D1hCITt_xECHcx - the live file Preston uses) and the local `/Users/joshuadavis/Documents/Claude/Projects/Optimize Loan Portfolio/_input_VP_BONUS_FINAL.xlsx` reference copy. Revenue = Sales Revenue Profit + Interest & Fees Total from Bravo EOM (the verified methodology).
+1. **VP BONUS FINAL trackers (BOTH copies)**: write the completed month's 2026 Revenue actual into column D of the "2025 compared to Bonus" sheet for all 5 stores, in BOTH files: `VP BONUS FINAL Updated.xlsx` (Drive, id 1AC-LF0gEPDLY0oUWZ7D1hCITt_xECHcx - the live file Preston uses) **[corrected 2026-09-05: id 1AC-LF… is the 2026-07-02 BACKUP, do NOT write to it — the LIVE file is id 1HKTWucLG8R2Yzgdm62vb2rrwYUTpntBB per the FILE-ID CORRECTION (2026-07-21) at the bottom of this file]** and the local `/Users/joshuadavis/Documents/Claude/Projects/Optimize Loan Portfolio/_input_VP_BONUS_FINAL.xlsx` reference copy. Revenue = Sales Revenue Profit + Interest & Fees Total from Bravo EOM (the verified methodology).
 2. **Master tracker**: `/Users/joshuadavis/Documents/Claude/Projects/Bonus Program/VP_Bonus_Tracker_MASTER_2026.xlsx` - append/fill the month tab (qualifiers run) and payout lines + Trend + Running Totals refresh (payout run). Keep the existing tab schema exactly.
 3. Slack: qualifiers summary to #bonus-goals (status data, direct post OK); payout numbers DRAFT-ONLY to Joshua.
 

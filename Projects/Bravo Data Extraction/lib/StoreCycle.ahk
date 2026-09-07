@@ -1,4 +1,4 @@
-; ============================================================================
+﻿; ============================================================================
 ; lib/StoreCycle.ahk — Bravo store-switching primitive (slice 3 / UIA-v2)
 ;
 ; Implements the bravo-store-cycle skill flow using UIA element lookups
@@ -256,16 +256,33 @@ SwitchStore(targetStore, password) {
         ; dropped from that day's report. One re-click of Global Access plus
         ; a fresh rescan reproduces that same incidental recovery on purpose
         ; instead of leaving it to chance.
-        LogMessage("  SwitchStore: store row not found on first scan — re-clicking Global Access and retrying once")
-        try ScreenshotToFile(targetStore . "_switchstore-store-row-attempt1")
-        Sleep(1500)
-        try {
-            ClickByName("Global Access", 8000)
-            Sleep(1500)
-        } catch as eRetryGA {
-            LogMessage("  SwitchStore: retry Global Access click failed: " . eRetryGA.Message)
+        ; --- Retry escalated to 3 attempts (2026-09-06) --------------------
+        ; The single retry added 2026-08-24 went 0-for-4 on the 2026-08-30
+        ; run: it fired for 4 store switches and every one still ended in
+        ; "none of these store row Names matched after retry". One extra 10s
+        ; scan is not enough when the Global Access list is slow late in a
+        ; long run. Escalating waits (10s / 15s / 20s) with a fresh Global
+        ; Access click before each, and a longer settle between attempts.
+        ; Each attempt exits the moment a row Name matches, so a healthy
+        ; list still resolves on the first scan at no extra cost.
+        attempt := 1
+        Loop 3 {
+            attempt++
+            LogMessage("  SwitchStore: store row not found — re-clicking Global Access, attempt " . attempt . " of 4")
+            try ScreenshotToFile(targetStore . "_switchstore-store-row-attempt" . (attempt - 1))
+            Sleep(2000)
+            try {
+                ClickByName("Global Access", 8000)
+                Sleep(2000)
+            } catch as eRetryGA {
+                LogMessage("  SwitchStore: retry Global Access click failed: " . eRetryGA.Message)
+            }
+            seen := WaitForAnyByName(storeCandidates, 5000 + (attempt * 5000))
+            if (seen != "") {
+                LogMessage("  SwitchStore: store row matched on attempt " . attempt . " ('" . seen . "')")
+                break
+            }
         }
-        seen := WaitForAnyByName(storeCandidates, 10000)
     }
     if (seen = "") {
         LogMessage("  SwitchStore: none of these store row Names matched after retry: " . StrJoin(storeCandidates, ", "))
@@ -493,7 +510,19 @@ SwitchStore(targetStore, password) {
     ; If a Login Error popup fires (wrong creds), DismissPopups will tap
     ; the popup and we'll see Login screen indefinitely - that's a clear
     ; failure signal.
-    deadline := A_TickCount + 25000
+    ; Wait raised 25000 -> 75000 on 2026-09-06. THIS WAS THE #1 CAUSE OF
+    ; MISSING STORES IN THE MONDAY REPORTS, and it was never a session drop.
+    ; Proven live 2026-08-30: CUL clicked Submit at 18:17:05 and this loop
+    ; gave up at 18:17:30 - exactly 25s - logging "timeout waiting for CUL
+    ; (saw CUL, onLogin=yes)". The login was NOT failing: 17 seconds later
+    ; the next cell logged "login screen visible - recovering", submitted the
+    ; same password, and "RecoverFromAutoLock: landed on CUL" at 18:18:04.
+    ; The credentials and the click were fine all along - Bravo just takes
+    ; longer than 25s to complete a store login late in a long multi-store
+    ; run, and every one of those timeouts cost a store its number for the
+    ; week. The loop returns the moment the store is up, so a fast login is
+    ; completely unaffected by this change.
+    deadline := A_TickCount + 75000
     while (A_TickCount < deadline) {
         Sleep(800)
         ; UIA calls can throw 0x80131505 during window-transition moments

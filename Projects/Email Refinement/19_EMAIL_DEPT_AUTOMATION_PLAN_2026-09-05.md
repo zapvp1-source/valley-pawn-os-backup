@@ -1,5 +1,5 @@
 # Email Department — Full Review & Automation Plan
-**Date:** 2026-09-05 · **Status:** PLAN — awaiting Joshua's go before any build
+**Date:** 2026-09-05 · **Status:** PHASE 0 + PHASE 1 SHIPPED 2026-09-05 (Joshua: "fix what you can fix"). Phases 2–5 queued.
 **Scope:** Every email-touching workflow, cadence, task, list, and data feed for Valley Pawn. Reviewed against live Brevo API, the scheduled-task registry (168 tasks), CHANGELOG, EFFICIENCY_LOG, the 8/22 audit, and all 19 prior files in this folder.
 
 ---
@@ -80,18 +80,21 @@ Not a finding, but a standing constraint: every task in the chain requires the M
 
 ## 4. The plan — five phases, additive only
 
-### Phase 0 — Hygiene, this week (zero risk, no new sends)
-1. Retime `monthly-we-buy-gold-silver-email` so the send lands **9:00 AM ET** on the 1st (fixes F1).
-2. Rename orphan drafts 43/49/23/1 to `[PARKED — do not send]` and strip their recipient lists (F7).
-3. Rewrite Step 5 of `vp-deal-of-week-monday-pick` to the proven WordPress photo path; remove the dead `/v3/media` instruction (backup first) (F6).
-4. Confirm whether `#email-campiagns` and `#email-campaigns` are one channel or two; point every task at one (F8).
-5. Add the Thursday send and the Friday audit to Fleet Guardian's `expected_outputs.json` so silent misses are caught within 12h.
-6. Set reply-to per store on the store-spotlight drafts (store@fcfpawn.com already exist and are monitored by `daily-unopened-email-eval`) (F9).
+### Phase 0 — Hygiene ✅ SHIPPED 2026-09-05
+1. ✅ **Retimed `monthly-we-buy-gold-silver-email`** — cron `15 2 1 * *` → `0 9 1 * *`. First 9 AM send 2026-10-01 (F1).
+2. ✅ **Orphan drafts 43/49/23/1 parked** — renamed `[PARKED — do not send] …` and repointed from list 3 to the internal seed list (10), so a stray send can only reach staff. Content untouched (F7).
+3. ✅ **`vp-deal-of-week-monday-pick` STEP 5 rewritten** to the proven website-media path; the dead `/v3/media` endpoint is now named as forbidden instead of instructed. Backup `.bak-pre-20260905-phase0` (F6).
+   ✅ *Bonus fix found while in there:* STEP 8's Slack confirmation named `#deal-of-the-week` but not its ID — that post has been silently missing every Monday since 7/27 while the sends themselves succeeded. Step 8 now pins `C0AVCANK7E3` and re-reads the channel to confirm it landed. **Watch Monday 9/7 — that is the test.**
+4. ✅ **Channel question settled** — there is only ONE channel and it really is spelled `#email-campiagns` (`C0APR5WUL2Z`, private). No split; nothing to merge. Every Brevo task already posts there (F8).
+5. ✅ **Fleet Guardian manifest** — `brevo-stage-next-quarter` added; the efficiency audit, preflight watchdog and monthly gold send were already covered by the same-day publications audit. 63 entries total, backup written.
+6. ⏸️ **Per-store reply-to — HELD FOR JOSHUA.** This is one of the three decisions that are his (it changes who answers customers), so it was not applied unilaterally (F9).
 
-### Phase 1 — Never run out of road (Sep)
-7. **New task `brevo-stage-next-quarter`** — quarterly. Drafts 13 weekly campaigns from Master Template 11 using the theme calendar (store spotlights ×5, gold, loans, layaway, warranty, seasonal), assigns CONCRETE/GENERIC subject styles per the experiment rules, wires lists 7+10+waves in rotation, names them so draft-guard and the picker match. First run: **Dec 1** for Q1 2027. Runs preflight on every draft it creates.
-8. Raise draft-guard's runway floor from 4 → 8 weeks so a stall is caught with two months of margin.
-9. **Engaged v2 list** (F5): membership = clicked a call/text/CTA link (not the logo, not the unsubscribe mirror) in ≥1 send in 90 days, *and* the click was ≥60s after delivery. Built as a new list, populated by a new weekly script, compared to list 7 for 4 weeks, then the draft-guard target flips. List 7 kept as-is until then.
+### Phase 1 — Never run out of road ✅ SHIPPED 2026-09-05
+7. ✅ **`brevo-stage-next-quarter` created** — quarterly, 25th of Jan/Apr/Jul/Oct at 6 AM, sonnet-pinned. Writes the quarter's theme spine (5 store spotlights, 2 gold, loans on bill-cycle weeks, warranty, seasonal, community-only holidays), then runs the new committed script `bin/stage_quarter.py`, which clones the live template, fills only the variable regions, continues the A–E wave rotation, and GET-verifies every draft (name, lists, deal placeholder, no unfilled markers, 5× call + 5× text links, primary CTA, no legal-name leak). Dry-run proven against live campaign 70. **First run 2026-10-25 for Q1 2027** — earlier than the Dec 1 originally planned, so the runway never dips below ~9 weeks.
+8. ✅ **Runway floor raised 4 → 8 weeks** in the Friday efficiency audit, and the draft-guard's hardcoded "calendar ends Dec 31" note replaced with a standing runway check pointed at the stager. Both backed up.
+9. ✅ **Engaged v2 built and populated — Brevo list 19.** *Correction to the 8/22 audit, which said the scanner purge "needs per-contact click data the API won't expose": it does expose it.* `GET /contacts/{email}` returns `statistics.clicked` (campaignId, url, eventTime, ip, count) and `statistics.delivered` to pair against. Scoring rule: an intent click (primary CTA / store call / text / map / store finder) within 90 days, **≥45 s after delivery**, in a campaign where the contact clicked ≤7 distinct URLs and not only chrome links.
+   **First pass result — F5 confirmed with real data: of 177 on list 7, only 87 are human-engaged.** 90 are stale or scanner-shaped (289 no-click-in-90d across the wider scan, 19 chrome-only, 4 clicked within 31 s of delivery, 1 walked 12 URLs). List 19 created and populated with the 87, verified by re-read.
+   Maintained by the new `brevo-engaged-v2-refresh` task (Wed 6:20 AM, sonnet-pinned) via `bin/engaged_v2.py`, which scans list 7 + v2 + a rotating slice of the 11.5k pool (capped so each run stays ~15–20 min and the pool cycles over ~10 weeks). **Nothing sends to list 19** — list 7 is still the live audience, and the switch stays Joshua's call after 4 stable weekly comparison rows.
 
 ### Phase 2 — Know the customer (Sep–Oct) — the unlock for everything below
 10. **Bravo Customers Ad Hoc report `Claude Customer Contact Sync`** (Email, Phone, First/Last, Home Store, DOB, SMS consent, Email consent). New AHK handler cloned from an existing one, **new pipeline cell**, registered additively, proven on the island, then daily. Contention check first, per `bravo-context`.
@@ -127,8 +130,8 @@ Not a finding, but a standing constraint: every task in the chain requires the M
 Everything else is technical and the board has decided it. All work is additive: new tasks, new lists, new scripts, new pipeline cell — no edits to the Monday combined run, existing saved Bravo reports, existing handlers, or the live Thursday chain beyond the two documented fixes (F1 retime, F6 doc correction) which are backed up first.
 
 ## 6. Sequencing & proof points
-- **Week of Sep 7:** Phase 0 complete. Proof: Oct 1 gold send lands at 9 AM; Sep 10 send reaches ~2,400 (first wave test).
-- **By Sep 30:** Phase 1 built; Engaged v2 populating. Proof: draft-guard reports 8+ weeks runway; v2 vs list 7 comparison in EFFICIENCY_LOG.
+- ~~Week of Sep 7: Phase 0~~ ✅ **done 2026-09-05.** Proof points to watch: **Mon 9/7** the picker posts its confirmation line to #deal-of-the-week (tests the channel-ID fix); **Thu 9/10** campaign 54 reach jumps ~180 → ~2,400 with wave list 14; **Thu 10/1** the gold send lands at 9 AM, not 2 AM.
+- ~~By Sep 30: Phase 1~~ ✅ **done 2026-09-05.** Proof points: **Wed 9/9** first automatic v2 refresh writes a comparison row; **Sun 10/25** the stager creates 13 Q1-2027 drafts that all pass preflight.
 - **By Oct 15:** Phase 2 cell live daily; attribute coverage on engaged list >85% names/store, DOB and due dates populated. Proof: EFFICIENCY_LOG fill-rate table.
 - **By Oct 31:** Phase 3 flows built; loan/layaway reminders dark pending approval; win-back and welcome series live. Proof: first triggered sends logged with per-contact flags.
 - **Dec 1:** first `brevo-stage-next-quarter` run stages Q1 2027. Proof: 13 new drafts pass preflight.

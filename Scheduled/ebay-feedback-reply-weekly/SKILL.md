@@ -1,6 +1,7 @@
 ---
 name: ebay-feedback-reply-weekly
 description: Weekly — replies to unanswered negative/neutral eBay feedback across all 5 Valley Pawn stores via the Trading API, and DMs Joshua a plain-language summary.
+model: claude-sonnet-5
 ---
 
 Reply to unanswered eBay buyer feedback for Valley Pawn (Full Circle Finance Inc), all 5 stores.

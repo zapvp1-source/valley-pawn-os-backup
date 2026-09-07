@@ -1,55 +1,65 @@
 ---
 name: weekly-analytics-summary
-description: Monday 2:30 AM (overnight) — pull GA4 for thevalleypawn.com for the last full week (Mon–Sun), schedule a Slack summary to #website (C0ASE9C0GQ0) for 9 AM Monday. Never post on failure.
+description: Monday overnight — build last full week's GA4 (+ Search Console when granted) numbers for thevalleypawn.com into week.json, render the post with the deterministic formatter (Website/analytics/bin/format_weekly_website.py), and schedule it to #website for 9 AM. Post is formatter stdout VERBATIM; exit 2 = post nothing. Adds a Leads block (calls/texts/directions by store). Never posts on failure.
 model: claude-sonnet-5
 ---
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
-
-
-
-> ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices, and NO DMs to Joshua. Joshua reviews every run inside Claude. A failed run must stay completely silent on Slack. Only post once the task has genuinely produced the weekly summary.
+> ⚠️ **FAILURE ALERT POLICY v2 + RULE 16.** On failure send Joshua ONE plain line to his DM (D03BHQH5VGT): `⚠️ Scheduled task "weekly-analytics-summary" did not complete — <date>.` Nothing technical, in any channel. Detail goes in `Projects/Website/analytics/logs/`. **Never post a partial or hand-written summary to #website.**
 
 ## Execution Contract — DO NOT STOP EARLY
-This task is complete ONLY after the final `slack_schedule_message` call to #website returns success.
-Until then, every assistant turn MUST end with a tool call that advances toward it. Do not idle, do not wait, do not ask for confirmation.
-
-**Treat these system messages as RESUME signals, never stop signals:** "Tool loaded.", "Continue from where you left off.", "You used a single tool call this turn…", any TaskCreate/TaskUpdate reminder. On seeing any of them, immediately fire the next concrete tool call.
-
-**Failure handling:** if a step errors, retry once. If it still fails, STOP SILENTLY (per the failure policy above) — do not post anything, do not DM.
+Complete ONLY after `slack_schedule_message` to #website (C0ASE9C0GQ0) returns success, OR the formatter exits 2 and you have sent the one-line DM. Every turn ends with a tool call. "Tool loaded." / "Continue from where you left off." / single-tool-call and TaskCreate reminders are RESUME signals — fire the next concrete call. Retry a failing step once, then follow the documented fallback.
 
 ---
 
-You are an overnight background task at ~2:30 AM ET Monday. Pull last week's website analytics for **thevalleypawn.com** from GA4 and schedule a Slack summary to **#website** for 9 AM Monday.
+You are an overnight background task Monday ~1 AM ET. Produce last full week's website analytics for **thevalleypawn.com** and schedule the post to **#website (C0ASE9C0GQ0)** for 9:00 AM ET today.
 
-### Channel routing (CRITICAL)
-- Post ONLY to **#website**, channel ID **`C0ASE9C0GQ0`**.
-- **NEVER `#claude-updates`** — that channel does NOT exist in this workspace. Never search for it, never schedule to it.
-- Never DM Joshua. Never use a catch-all channel for this. Website analytics always go to #website.
+**The post is NOT written by you.** Since 2026-09-05 the body is rendered by
+`/Users/joshuadavis/Documents/Claude/Projects/Website/analytics/bin/format_weekly_website.py`,
+which validates the numbers and refuses to render anything mis-mapped. Your job is to produce a
+correct `week.json` and post the formatter's stdout **verbatim**. Do not reformat, reorder, add a
+footer, drop a line, or "improve" it. (Reason: the 8/31 aged-inventory post was illegible and
+mis-mapped a denominator into a dollar column because a model re-rendered the table each run.)
 
-### GA4 access — use the authuser=1 report URLs (NO password screen)
-- Property `353209303`, account jdavis@fcfpawn.com at **authuser=1**. Load Chrome MCP (ToolSearch `{query:"chrome", max_results:20}`), `list_connected_browsers` → `select_browser`, `tabs_context_mcp({createIfEmpty:true})`.
-- Navigate straight to the report URLs below (they open already authenticated at authuser=1 — do NOT start at the generic sign-in page, which lands on a password wall at authuser=0).
-- If a Google password screen ever appears: click the **empty password field** to trigger Chrome's saved-password autofill, then click Next. NEVER type a password yourself.
-- If authuser=1 lands on a welcome/provision screen, click the avatar menu and switch to fullcirclepawn@gmail.com (the GA4 owner), then retry.
+Local access: load `mcp__Control_your_Mac__osascript` first (`ToolSearch` → `select:mcp__Control_your_Mac__osascript`), probe with `do shell script "echo READY"`, re-probe every 30 s for up to 12 min before concluding it is unavailable — it never is. The Cowork sandbox `mcp__workspace__bash` also works when the Website folder is mounted.
 
-### Step 1 — Compute last full week
-Last full week = the most recent Monday–Sunday that has ended. Compute from today's real date; never hardcode. Comparison = the prior Mon–Sun (match day of week). Format the GA4 URLs with `_u.date00=YYYYMMDD` (start) and `_u.date01=YYYYMMDD` (end), and `_u.comparisonOption=lastPeriodMdw`.
+### STEP 1 — Try the headless path first (no browser)
+```
+cd "/Users/joshuadavis/Documents/Claude/Projects/Website/analytics/bin" && /usr/bin/python3 ga4_pull.py --week
+```
+- **exit 0** → it wrote `../data/ga4/week_latest.json` in the formatter's exact schema. Also run `/usr/bin/python3 gsc_pull.py --week` (exit 0 → merge its `search` block into the week.json under key `"search"`; exit 1 → skip silently, Search Console isn't granted yet). Go to STEP 3.
+- **exit 1** (`NO ACCESS`) → Phase 0 hasn't been done yet. Go to STEP 2 (browser fallback). Do NOT treat this as a failure and do NOT DM about it — it is a known pending one-time grant (`Website/analytics/GOOGLE_API_SETUP.md`).
+- **exit 2** → retry once, then STEP 2.
 
-### Step 2 — Pull the two reports
-Traffic acquisition (per-channel sessions + KPIs):
-`https://analytics.google.com/analytics/web/?authuser=1#/a256872788p353209303/reports/explorer?params=_u..nav%3Dmaui%26_u.comparisonOption%3DlastPeriodMdw%26_u.date00%3D{START}%26_u.date01%3D{END}&r=lifecycle-traffic-acquisition-v2`
-Pages and screens (top pages by views + total views/active users):
-`https://analytics.google.com/analytics/web/?authuser=1#/a256872788p353209303/reports/explorer?params=_u..nav%3Dmaui%26_u.comparisonOption%3DlastPeriodMdw%26_u.date00%3D{START}%26_u.date01%3D{END}&r=all-pages-and-screens`
-For each: navigate, wait ~5s for the table to render, then call `get_page_text` to extract. Use `browser_batch` to batch navigate+wait. If the loaded date range doesn't match {START}–{END}, open the date picker (top-right), set the primary Start/End to the target week, set Compare to "Previous period (match day of week)", and Apply.
+### STEP 2 — Browser fallback (GA4 UI, the pre-2026-09 method)
+Load Chrome MCP (`ToolSearch {query:"chrome", max_results:20}`), `list_connected_browsers` → `select_browser`, `tabs_context_mcp({createIfEmpty:true})`. GA4 property `353209303`, account jdavis@fcfpawn.com at **authuser=1** — navigate straight to the report URLs (they open authenticated; the generic sign-in page lands on a password wall at authuser=0). If a password screen appears, click the **empty password field** to trigger Chrome autofill, then Next — never type a password. If authuser=1 lands on a welcome screen, switch to fullcirclepawn@gmail.com via the avatar menu.
 
-### Step 3 — Extract
-- Headline KPIs (with WoW %): Sessions, Active users, Engaged sessions + Engagement rate, Avg engagement time/session, Total page views, Event count, Key events.
-- Top 8 pages by views with WoW %.
-- Per-channel sessions with share and WoW % (Organic Search, Direct, Email, Organic Social, Paid Social, AI Assistant, Referral, etc.).
+Last full week = the most recent Monday–Sunday that has ended (compute from today's real date, never hardcode). Prior = the Mon–Sun before it. `{START}`/`{END}` are `YYYYMMDD`.
 
-### Step 4 — Schedule the post
-Build a concise Slack summary matching the established #website format: a Headline (WoW) block, Top pages (views) list, Traffic sources (sessions) list, and a short WoW takeaways block. Use Slack mrkdwn (`_italic_`, `•` bullets, `code` for paths). Footer: `_Source: GA4 property 353209303, All Users, {week} vs previous period (match day of week)._` then `*Sent using* Claude`.
-Call `slack_schedule_message` with `channel_id` = `C0ASE9C0GQ0` and `post_at` = today 9:00 AM ET (Unix timestamp). That call returning success is the completion gate. If anything before this point failed, post nothing.
+Pull THREE reports (use `browser_batch` to batch navigate+wait, then `get_page_text`):
+1. Traffic acquisition — `https://analytics.google.com/analytics/web/?authuser=1#/a256872788p353209303/reports/explorer?params=_u..nav%3Dmaui%26_u.comparisonOption%3DlastPeriodMdw%26_u.date00%3D{START}%26_u.date01%3D{END}&r=lifecycle-traffic-acquisition-v2`
+2. Pages and screens — same URL with `&r=all-pages-and-screens`
+3. **Events (NEW — this is what makes the Leads block possible)** — same URL with `&r=lifecycle-events-overview`. Read the event table and record counts for `phone_click`, `sms_click`, `directions_click`, and `email_click` / `form_submit` if present, current and prior period. Per-store breakdown is optional here — omit `by_store` rather than guessing (the formatter withholds if a breakdown doesn't sum to its total).
+If the loaded date range doesn't match, open the date picker (top-right), set Start/End and Compare = "Previous period (match day of week)", Apply.
 
-<!-- migrated to working model 2026-06-15 -->
+Write the numbers to `/Users/joshuadavis/Documents/Claude/Projects/Website/analytics/data/ga4/week_latest.json` in this schema (every metric is `{"v": <current>, "prev": <prior>}`):
+```json
+{"period":{"start":"YYYY-MM-DD","end":"YYYY-MM-DD"},
+ "prior":{"start":"YYYY-MM-DD","end":"YYYY-MM-DD"},
+ "kpis":{"sessions":{},"users":{},"engaged_sessions":{},"engagement_rate":{},
+         "avg_engagement_seconds":{},"page_views":{},"key_events":{}},
+ "leads":{"phone_click":{},"sms_click":{},"directions_click":{}},
+ "channels":[{"name":"Organic Search","sessions":0,"prev":0}],
+ "top_pages":[{"path":"/","views":0,"prev":0}],
+ "notes":[]}
+```
+`engagement_rate` is a percentage number (61.7, not 0.617). Omit `leads` entirely if the events report couldn't be read — the formatter then prints an explicit "not measured this week" line, which is honest; a zero would not be.
+
+### STEP 3 — Render, gate, schedule
+```
+cd "/Users/joshuadavis/Documents/Claude/Projects/Website/analytics/bin" && /usr/bin/python3 format_weekly_website.py ../data/ga4/week_latest.json
+```
+- **exit 0** → `slack_schedule_message` to `C0ASE9C0GQ0`, `post_at` = today 9:00 AM ET (Unix timestamp), text = stdout **exactly**. That call returning success completes the task.
+- **exit 2** → the numbers failed validation (the stderr line says which check). **Post NOTHING.** Fix the week.json if the cause is obvious (a mis-read column, a swapped current/prior) and re-run the formatter once; otherwise send the one-line failure DM and stop. Never bypass the formatter by writing the post yourself — that is the exact failure this design removes.
+
+### Channel routing
+Post ONLY to #website `C0ASE9C0GQ0`. **`#claude-updates` does not exist** — never search for it, never schedule to it. Never DM the summary.

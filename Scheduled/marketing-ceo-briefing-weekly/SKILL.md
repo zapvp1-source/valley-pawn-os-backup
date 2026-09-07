@@ -39,6 +39,15 @@ Assemble one table of the numbers that matter, each with this week's value, last
 Flag anything that moved more than ±20% week-over-week, and anything that has not moved for 3+ consecutive weeks (a stuck metric is a finding — it usually means an owner, not an algorithm, is the blocker). Write the new row into `history.json`.
 
 ## STEP 2 — Work the action register
+
+> **Register of record (added 2026-09-05):** the single marketing open-items register is now
+> `~/Documents/Claude/Projects/Ai Optimized Marketing/register/MARKETING_OPEN_ITEMS.json`, driven by
+> `register/open_items.py` (`list`, `add`, `resolve`, `touch`, `aging`, `slack`). `ceo-briefing/actions.json`
+> is kept as a VIEW for backward compatibility: read the register first, mirror any status change into
+> both, and never add an item to actions.json that is not in the register. For the "needs you" section use
+> `python3 open_items.py slack --owner joshua --max 6` (plain language, with ages) instead of composing by
+> hand. Known correction: SPF-MERGE is RESOLVED (fixed 2026-08-24, verified via dig) — actions.json was stale.
+
 `ceo-briefing/actions.json` is the running to-do list (create it on first run, seeded from the open marketing rows in `Life OS/OPEN_ITEMS_REGISTER.md`). Each item: `id`, `title`, `why_it_matters`, `owner` (`claude` or `joshua`), `effort` (S/M/L), `est_value`, `status` (`open`/`in_progress`/`done`/`dropped`), `first_seen`, `last_checked`, `evidence`.
 
 Every week: **verify each open item against live output, not against what the register claims** (Rule 12 — a prior session recorded a defect that did not exist and a fix that had already shipped; both wasted work). Mark done what is genuinely done, note what has been open 3+ weeks and why, and add anything the lane audits newly surfaced. Retire items honestly — if something is not going to happen, mark it `dropped` with the reason rather than carrying it forever.

@@ -16,20 +16,21 @@ detail?" It is intentionally short. Depth lives in the domain files.
 | # | Domain | Legal / personal owner | Master file | Mandatory skill |
 |---|---|---|---|---|
 | 1 | **Full Circle Finance Inc DBA Valley Pawn** — 5 VA pawn stores, FFL dealer | Full Circle Finance Inc | `Valley Pawn OS/BUSINESS_OS.md` | `enterprise-map` + `valley-pawn-context` |
-| 2 | **Real Estate** — Bald Rock STR (business-owned) + Cypress Crossing (personal) + future acquisitions | Mixed: FCF Inc (Bald Rock) / Joshua & Hillary Davis personally (Cypress Crossing) | `Life OS/REAL_ESTATE_OS.md` | `enterprise-map` + `real-estate-context` |
+| 2 | **Real Estate** — Bald Rock STR (Farming Infinity Mountains LLC) + Richmond Ave, Woods Walk, Hardinberry + Cypress Crossing (personal) + future acquisitions | Farming Infinity LLCs (single-member, Joshua) / Joshua & Hillary Davis personally (Cypress Crossing, Hardinberry) — **never FCF Inc**; see `Life OS/ENTITY_STRUCTURE.md` | `Life OS/REAL_ESTATE_OS.md` | `enterprise-map` + `real-estate-context` |
 | 3 | **Personal** — Joshua's own financials, health, family, taxes, life admin | Joshua Davis (and Hillary where joint) | `Life OS/PERSONAL_OS.md` | `enterprise-map` + `personal-life-context` |
 
 **Why they're kept separate:** different legal entities, different money, different stakes. Never
 let Valley Pawn brand voice/rules bleed into personal content, never charge a personal expense
-against FCF Inc books, never assume a Real Estate task is automatically a Valley Pawn task just
-because FCF Inc owns Bald Rock.
+against FCF Inc books, never assume a Real Estate task is automatically a Valley Pawn task —
+FCF Inc owns no real estate; Bald Rock is Farming Infinity Mountains LLC (Joshua), not FCF Inc.
 
 **Hard separation rule (set by Joshua 2026-08-10):** Domain 1 (Valley Pawn) and Domain 2 (Real
 Estate) must never reference, be associated with, or visibly touch each other — no shared or
 cross-linking domains, email addresses, letterhead, branding, social accounts, or customer/guest
-copy — **except from a tax/entity perspective**, where the link is real (Bald Rock is legally FCF
-Inc, same entity and tax return as Valley Pawn) and stays fine to note in bookkeeping, K-1s, basis
-work, and internal accounting. Outside that narrow lane, treat them as if they were unrelated
+copy — **except from a tax perspective**, where the link is real (Bald Rock is Farming Infinity
+Mountains LLC, a single-member disregarded LLC whose Schedule E lands on Joshua's personal 1040 —
+the same 1040 that receives his K-1 from FCF Inc; they are NOT the same entity or the same business
+return) and stays fine to note in bookkeeping, K-1s, basis work, and internal accounting. Outside that narrow lane, treat them as if they were unrelated
 businesses. Concretely: real-estate correspondence and aliases (e.g. FIMTN/FIVA/FITN) must never
 live on `fcfpawn.com` or route through `jdavis@fcfpawn.com` — use a neutral address instead
 (`zapvp1@me.com` / iCloud). This is stricter than, and takes precedence over, the general
@@ -47,10 +48,10 @@ returns, payroll, employee records, customer PII, leases, FFL licenses and full 
 safe subset. Full rule + rationale in `Valley Pawn OS/BUSINESS_OS.md` Rule 13.
 
 **Cross-domain overlap that IS real (not an error):**
-- Bald Rock (Domain 2) is legally owned by Full Circle Finance Inc — same entity as Valley Pawn
-  (Domain 1). It gets its own domain file because it's operationally and financially distinct
-  (different P&L line, different guests, different vendors) — but for tax/entity purposes it's
-  inside FCF Inc, same as Valley Pawn.
+- Bald Rock (Domain 2) is legally owned by Farming Infinity Mountains LLC (sole member Joshua) —
+  **NOT** Full Circle Finance Inc, which owns no real estate. The only overlap with Domain 1 is on
+  Joshua's personal 1040: all Farming Infinity single-member LLCs flow there via Schedule E, and
+  FCF Inc's K-1 lands on the same return. Nothing from Bald Rock touches FCF Inc's 1120-S or books.
 - Cypress Crossing (Domain 2) is 100% personal (Domain 3) — Joshua & Hillary Davis individually,
   not FCF Inc. It only lives in the Real Estate file because it's real property with its own
   cost-basis/improvement tracking needs, same shape of work as Bald Rock.
@@ -89,7 +90,11 @@ expectations.
 - **Joshua Davis** — jdavis@fcfpawn.com (business), zapvp1@me.com (personal/iCloud). Owner of
   Full Circle Finance Inc DBA Valley Pawn. Not a developer — bring him decisions and
   recommendations, not technical multiple-choice questions.
-- **Hillary Davis** — Joshua's wife; joint owner of Cypress Crossing (personal residence, FL).
+- **Hillary Davis** — Joshua's wife; joint owner of Cypress Crossing (personal residence, FL) and
+  148 Hardinberry (TN). No ownership interest in FCF Inc.
+- **Who owns what (entities, EINs, named insureds): `Life OS/ENTITY_STRUCTURE.md` wins.** FCF Inc
+  owns no real estate; every property is a Farming Infinity single-member LLC (Joshua) or
+  Joshua/Hillary personally. Check that file before writing any ownership or insurance statement.
 - **CPA:** Silverline Tax — Liana Motel (liana@silverline.tax) and Jonathan (co-owner),
   219-365-9520. Handles Full Circle Finance Inc books; scope for personal returns TBD — confirm
   before assuming Silverline also does Joshua & Hillary's personal 1040.

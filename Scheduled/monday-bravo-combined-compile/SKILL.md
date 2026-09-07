@@ -138,114 +138,86 @@ Qty, Cost, Price, <6mo, 6mo-1yr, 1yr-18mo, 18mo-2yr, 2yr-3yr, >3yr):
 STEP 2 — Post to #loan-review (C0B08RS2BMK) + #layaway-review (C04N24STDP1)
 ==========================================================================
 
-**LOAN POST:**
-
-Read `output/<TODAY>_<STORE>_loans-75-days-past-due.csv` for each store. Each is a single-row CSV: `store, date, count, dollar_sum`.
-
-For loan balances (denominators), read the **freshest complete per-store End-of-Month CSV set** at `output/<EOM_DATE>_<STORE>_end-of-month.csv` and extract the `Ending Loan Base ` row dollar value (canonical loan balance — the exact source `monday-store-rankings` uses; see its SKILL Step 2). Pick the most recent `<EOM_DATE>` for which all 5 stores' EOM CSVs exist and are ≥ 500 bytes.
-
-> ⚠️ **NEVER** scrape a loan balance from an old Slack post and **NEVER** hard-code a figure (e.g. the retired `$685,567.85`). Stale denominators produce non-comparable percentages — this was the documented failure. The balance MUST come from an EOM CSV, and the post MUST state its as-of date.
-
-- **If a complete fresh EOM set exists:** compute pct = dollar_sum / loan_balance × 100 per store (✅ if ≤ 5%, 🔴 if > 5%), and add a line to the post: `_Loan balances as of <EOM_DATE>._` If `<EOM_DATE>` is more than 8 days before today, also append `⚠️ loan balance is <N> days old — EOM/store-rankings has not refreshed` to the **Joshua DM** (not the channel).
-- **If NO complete EOM set exists:** post counts + dollars only, `%` shown as `n/a`, with the single channel line `5% policy check pending a current loan balance.` Do not invent a denominator.
-
-Post to #loan-review:
-
-```
-📋 *Weekly Past-Due Loan Review — <DATE>*
-
-*PAST DUE LOANS (75-day rule — cap 5% of loan balance)*
-• *CUL* — <N> items / $<amt> / <pct>% <✅/🔴>
-• *HAR* — <N> items / $<amt> / <pct>% <✅/🔴>
-• *LEX* — <N> items / $<amt> / <pct>% <✅/🔴>
-• *ROA* — <N> items / $<amt> / <pct>% <✅/🔴>
-• *WAY* — <N> items / $<amt> / <pct>% <✅/🔴>
-*Total past 75d:* <N> items / $<amt> (<company_pct>% of $<company_loan_bal> company loan balance)
-
-[For each store with 🔴, add an action line:]
-🔴 *<STORE>* is <pct>% past 75 days — out of the 5% policy. Needs to be caught up.
-```
-
-**LAYAWAY POST:**
-
-Read `output/<TODAY>_<STORE>_layaways.csv` for each store. CSV format: `store, date, overdue, past_pmt_due, contacted_no_activity, no_pmt_30d, locate`.
-
-For EACH of the four count metrics (overdue, past_pmt_due, contacted_no_activity, no_pmt_30d), compute each store's value as a percent of the company total for that metric, rounded to a whole number: `pct = round(store_value / company_total * 100)`. Show each store cell as `<N> (<pct>%)`. The **Locate** column stays a plain count (no %). The Company row shows plain sums (no %).
-
-Post to #layaway-review:
-
-```
-📋 *Weekly Layaway Review — <DATE>*
-_(% = store's share of the company total for that metric)_
-
-​```
-Store         Overdue    Past Pmt Due Contacted/No Act 30d-No-Pmt  Locate
-────────────  ───────    ──────────   ──────────────   ────────    ──────
-Culpeper      <N (P%)>   <N (P%)>     <N (P%)>         <N (P%)>    <X>
-Harrisonburg  <N (P%)>   <N (P%)>     <N (P%)>         <N (P%)>    <X>
-Lexington     <N (P%)>   <N (P%)>     <N (P%)>         <N (P%)>    <X>
-Roanoke       <N (P%)>   <N (P%)>     <N (P%)>         <N (P%)>    <X>
-Waynesboro    <N (P%)>   <N (P%)>     <N (P%)>         <N (P%)>    <X>
-────────────  ───────    ──────────   ──────────────   ────────    ──────
-Company       <sum>      <sum>        <sum>            <sum>       <sum>​```
-
-[If any store has non-zero Locate, prefix Company-row Locate with 🔴 like `🔴<N>`. Then for each store with non-zero Locate, add:]
-🔴 *<STORE> has <N> Locate Layaway(s)* — must be physically located and resolved
-[If NO store has any Locate layaways, instead add the line:]
-_No Locate layaways this week._
-```
-
-**Write the results JSON** for the downstream `weekly-loan-layaway-manager-dms` task (fires Monday 9 AM and reads this file):
+**DO NOT HAND-BUILD THIS POST — COMMS ENGINE (hardened 2026-09-06).** The Comms Engine renders it, checks it, and posts it
+as the *VP OPS ENGINE* bot (no "Sent using Claude" footer, not under Joshua's name). Run:
 
 ```bash
-# Write to /Users/joshuadavis/Documents/Claude/loan-layaway-results-latest.json
+/usr/bin/python3 '/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/bin/comms_engine.py' post --pub loan-review \
+  --pipeline-date <PIPELINE_DATE> --post-date <POST_DATE>
 ```
 
-Schema:
-```json
-{
-  "date": "<TODAY>",
-  "company_loan_balance": <float>,
-  "stores": {
-    "CUL": {
-      "loan_count": <int>, "loan_dollar": <float>, "loan_pct": <float>, "loan_status": "ok" | "over",
-      "layaway_overdue": <int>, "layaway_past_pmt_due": <int>,
-      "layaway_contacted_no_act": <int>, "layaway_no_pmt_30d": <int>, "layaway_locate": <int>
-    },
-    "HAR": { ... }, "LEX": { ... }, "ROA": { ... }, "WAY": { ... }
-  }
-}
-```
+Then obey the exit code — no judgment calls, no repair attempts, no re-typing:
+- **exit 0** → the bot already posted it. Post NOTHING yourself. Record the stderr line for the DM.
+- **exit 3** → the bot could not post (stderr says why). stdout carries the validated body —
+  post that stdout to C0B08RS2BMK via `slack_send_message` **verbatim, byte for byte** (it will carry the
+  connector footer; that is the only acceptable difference). Do not add, drop, or reflow anything.
+- **exit 4** → already posted today (duplicate guard). Post nothing; note `⏭️ skipped — already posted` in the DM.
+- **exit 2 or 1** → stdout is empty. **Post NOTHING to the channel this run** — not a partial
+  table, not a caveat, not a note about which store is missing (Rules 16 + 18). Copy stderr into
+  this run's record; the Step 6 DM carries one plain-language "held pending complete data" line.
+- Any `NOTE —` line on stderr is for the Joshua DM only (plain language), never for the channel.
 
-`loan_status` = `"ok"` if loan_pct ≤ 5%, `"over"` if > 5%. The downstream DM task uses this to format the per-manager Slack message.
+The engine already enforces COMPLETENESS GATE v2 for this report (all 5 stores present and
+valid). You do not re-check it by hand and you must never override a withhold.
+
+Then the layaway post, same contract:
+
+```bash
+/usr/bin/python3 '/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/bin/comms_engine.py' post --pub layaway-review \
+  --pipeline-date <PIPELINE_DATE> --post-date <POST_DATE>
+```
+(exit 3 fallback channel: C04N24STDP1.)
+
+**Write the results JSON** for the downstream `weekly-loan-layaway-manager-dms` task (fires
+Monday 9 AM and reads `/Users/joshuadavis/Documents/Claude/loan-layaway-results-latest.json`):
+
+```bash
+/usr/bin/python3 '/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/bin/comms_engine.py' results-json \
+  --pipeline-date <PIPELINE_DATE> --post-date <POST_DATE>
+```
+exit 0 = written. exit 2 = not written (a store's loan or layaway data is missing) — say so in
+the Step 6 DM in plain language so Joshua knows the manager DMs will not have fresh numbers.
+
+Reference only — what the engine computes: loans from `output/<PIPELINE_DATE>_<STORE>_loans-75-days-past-due.csv`
+(`store,date,count,dollar_sum`); denominators from the freshest complete 5-store
+`output/<DATE>_<STORE>_end-of-month.xlsx` set no more than 8 days old (`Ending Loan Base` row,
+last numeric) — never from a Slack post, never hard-coded; ✅ ≤ 5%, 🔴 > 5%; the as-of date is
+stated in the post. Item counts are omitted automatically when they hit the 22-row grid display
+cap (a NOTE line explains it). Layaways from `output/<PIPELINE_DATE>_<STORE>_layaways.csv`
+(`store,date,overdue,past_pmt_due,contacted_no_activity,no_pmt_30d,locate`) — each count shown
+as `N (P%)` share of company total, Locate as a plain count with a 🔴 action line per store.
 
 ==========================================================================
 STEP 3 — Post to #employee-performance (C0ATTLPQHR8)
 ==========================================================================
 
-Read `output/<FIRST_OF_MONTH>_<STORE>_employee-activity.csv` for each store. The CSV has a DevExpress header, then an Employee header row with columns including `Retail Sales Excluding Fees` (use that exact column).
+**DO NOT HAND-BUILD THIS POST — COMMS ENGINE (hardened 2026-09-06).** The Comms Engine renders it, checks it, and posts it
+as the *VP OPS ENGINE* bot (no "Sent using Claude" footer, not under Joshua's name). Run:
 
-For each employee row (skip `Total Store`, `SYSTEM`, `Report printed on`):
-- Parse name as everything after the first `' - '` in the Employee column
-- Capture Retail Sales Excluding Fees as a float
-
-Aggregate ACROSS stores by employee name — multi-store employees (Preston Peters, Martin Dowden, Chadd McClintic, etc.) get summed and shown as `STORE1+STORE2+...`. Filter out:
-- Any employee named PRESTON PETERS (always excluded)
-- Any employee with $0.00 total
-
-Sort highest-to-lowest. Use 🥇🥈🥉 for ranks 1-3, then "4th", "5th" etc. Post:
-
+```bash
+/usr/bin/python3 '/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/bin/comms_engine.py' post --pub employee-performance \
+  --pipeline-date <PIPELINE_DATE> --post-date <POST_DATE>
 ```
-*MTD Employee Sales Rankings — Retail Sales Excluding Fees (Bravo POS)*
-📊 Period: <FIRST_OF_MONTH>–<TODAY>
 
-🥇 *<NAME>* (<STORES>) — $<amt>
-🥈 *<NAME>* (<STORES>) — $<amt>
-🥉 *<NAME>* (<STORES>) — $<amt>
-4th *<NAME>* (<STORES>) — $<amt>
-...
-Nth *<NAME>* (<STORES>) — $<amt>
-```
+Then obey the exit code — no judgment calls, no repair attempts, no re-typing:
+- **exit 0** → the bot already posted it. Post NOTHING yourself. Record the stderr line for the DM.
+- **exit 3** → the bot could not post (stderr says why). stdout carries the validated body —
+  post that stdout to C0ATTLPQHR8 via `slack_send_message` **verbatim, byte for byte** (it will carry the
+  connector footer; that is the only acceptable difference). Do not add, drop, or reflow anything.
+- **exit 4** → already posted today (duplicate guard). Post nothing; note `⏭️ skipped — already posted` in the DM.
+- **exit 2 or 1** → stdout is empty. **Post NOTHING to the channel this run** — not a partial
+  table, not a caveat, not a note about which store is missing (Rules 16 + 18). Copy stderr into
+  this run's record; the Step 6 DM carries one plain-language "held pending complete data" line.
+- Any `NOTE —` line on stderr is for the Joshua DM only (plain language), never for the channel.
+
+The engine already enforces COMPLETENESS GATE v2 for this report (all 5 stores present and
+valid). You do not re-check it by hand and you must never override a withhold.
+
+Reference only — what the engine computes: reads `output/<FIRST_OF_MONTH>_<STORE>_employee-activity.csv`
+for all 5 stores and refuses any file older than PIPELINE_DATE (stale-month guard); column
+`Retail Sales Excluding Fees`; name = text after the first ` - `; skips `Total Store`, `SYSTEM`,
+`Report printed on`, PRESTON PETERS, and $0.00; sums multi-store employees and shows
+`STORE1+STORE2`; 🥇🥈🥉 then 4th, 5th…; period `<FIRST_OF_MONTH>–<PIPELINE_DATE>`.
 
 ==========================================================================
 STEP 4 — Post to #store-performance (C03CGTN3KN1) — store rankings
@@ -273,30 +245,42 @@ If all 5 available, run the parse + format per `/Users/joshuadavis/Documents/Cla
 STEP 4.5 — Post FPD ranking to #first-payment-default (C0B17894S2Y)
 ==========================================================================
 
-*(Added 2026-07-22 — revives the stalled weekly-fpd-ranking report inside this run. Its
-`fpd-cohort` cells now ride in the combined trigger dropped by monday-bravo-combined-run.)*
+**DO NOT HAND-BUILD THIS POST — COMMS ENGINE (hardened 2026-09-06).** The Comms Engine renders it, checks it, and posts it
+as the *VP OPS ENGINE* bot (no "Sent using Claude" footer, not under Joshua's name). Run:
 
-Read `output/<TODAY>_<STORE>_fpd-cohort.csv` for each store (row-level: `Ticket Number,
-Category, Full Description, Loan Amount`; header-only = clean store with zero FPD).
-Parse with a real CSV parser; strip `$`/`,` from Loan Amount.
+```bash
+/usr/bin/python3 '/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/bin/comms_engine.py' post --pub first-payment-default \
+  --pipeline-date <PIPELINE_DATE> --post-date <POST_DATE>
+```
 
-Follow `/Users/joshuadavis/Documents/Claude/Scheduled/weekly-fpd-ranking/SKILL.md`
-Steps 3, 3.5 and 4 exactly for: the three aggregations, the append-only 12-month archive
-(`_fpd-archive/fpd-history.csv`, dedupe by Ticket Number), and the Slack post format for
-#first-payment-default (C0B17894S2Y). DATA ONLY in the channel post, per the standing rule.
-The Word doc (that SKILL's Step 5) is NOT required in this run — skip it to stay light.
+Then obey the exit code — no judgment calls, no repair attempts, no re-typing:
+- **exit 0** → the bot already posted it. Post NOTHING yourself. Record the stderr line for the DM.
+- **exit 3** → the bot could not post (stderr says why). stdout carries the validated body —
+  post that stdout to C0B17894S2Y via `slack_send_message` **verbatim, byte for byte** (it will carry the
+  connector footer; that is the only acceptable difference). Do not add, drop, or reflow anything.
+- **exit 4** → already posted today (duplicate guard). Post nothing; note `⏭️ skipped — already posted` in the DM.
+- **exit 2 or 1** → stdout is empty. **Post NOTHING to the channel this run** — not a partial
+  table, not a caveat, not a note about which store is missing (Rules 16 + 18). Copy stderr into
+  this run's record; the Step 6 DM carries one plain-language "held pending complete data" line.
+- Any `NOTE —` line on stderr is for the Joshua DM only (plain language), never for the channel.
 
-Per COMPLETENESS GATE v2 above: if any store's fpd-cohort is missing/errored, DO NOT post
-to #first-payment-default this run — not even the stores that succeeded, and never with an
-in-channel note about why. Log which store(s) are missing internally; the post goes out once
-all 5 are valid. The Joshua DM may note in plain language that this report is being held.
+The engine already enforces COMPLETENESS GATE v2 for this report (all 5 stores present and
+valid). You do not re-check it by hand and you must never override a withhold.
+
+Reference only — what the engine computes: reads `output/<PIPELINE_DATE>_<STORE>_fpd-cohort.csv`
+for all 5 stores (header-only = zero FPD, valid); store ranking best→worst by count then $;
+company total; top-3 categories this week; chronic top-3 from the 12-month archive
+`Scheduled/_fpd-archive/fpd-history.csv`, which the engine appends to (deduped by ticket) only
+after a successful bot post. The old "Source: Bravo saved report…" line and the "not included —
+pipeline cell failed" line are gone for good — system names and partial-store notes never go to
+a team channel. The Word doc is NOT produced in this run.
 
 ==========================================================================
 STEP 5 — Save files
 ==========================================================================
 
 Save to `/Users/joshuadavis/Documents/Claude/Scheduled/`:
-- `Loan_Layaway_Review_<TODAY>.docx` — combined loan + layaway doc per weekly-loan-layaway-review SKILL
+- `Loan_Layaway_Review_<TODAY>.docx` — OPTIONAL / best-effort (the channel posts in Step 2 are the record of truth; never let this step block Step 6)
 - `Valley_Pawn_Store_Rankings_<MonthYYYY>.xlsx` — IF Step 4 ran (the 5 EOM CSVs were available)
 - `employee-sales-rankings-<TODAY>.xlsx` — the full unfiltered ranking including Preston and zeros, per weekly-employee-sales-rankings SKILL
 

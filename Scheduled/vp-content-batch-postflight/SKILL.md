@@ -4,7 +4,7 @@ description: Monday 4:40 PM post-flight verification for vp-content-batch-weekly
 model: claude-sonnet-5
 ---
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+> ⚠️ **FAILURE HANDLING (Rule 16, supersedes the 2026-07-22 v2 DM policy — updated 2026-09-06).** Failure notices NEVER go to Slack — not to a team channel, not to a store manager, and not to Joshua's DM. If this run fails or cannot complete its core work, append one dated plain-language line plus the technical detail to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn Studios/STATUS.md` under a `## Run holds` heading and stop. The next session picks it up from there. Anything that does go to the field stays in plain everyday language — no error codes, no tool or file names. This replaces every 'DM Joshua that it did not complete' and every 'stay silent on Slack' instruction elsewhere in this file.
 
 > **REPORTING POLICY (updated 2026-08-04):** Joshua no longer gets a routine "here's what published" DM from this task — that content is now covered every Monday 9 AM ET by the `weekly-social-media-recap` task, which posts a real, Publer-verified recap directly to `#social-media` (channel C0BMRC2LN3D). This task stays completely SILENT on a clean success (all platforms verified, no self-heal needed). It only DMs Joshua when something actually needs his attention: a partial failure, a silent platform drop that couldn't self-heal, or a backfill that needs his go-ahead. Claude (this session) still gets the completion notification either way and can self-heal.
 
@@ -90,3 +90,16 @@ Joshua is DM'd ONLY when something needs his attention — a partial/failure, a 
 <!-- 2026-08-04: Consolidated with weekly-social-media-recap per Joshua's explicit request ("only post to social media channel, delete the redundant scheduled post to me"). Removed the routine success-case DM (previous Step 5: "✅ Week of ... — N posts published, no action needed") since it duplicated the new Monday 9 AM #social-media recap. Failure/partial/backfill DMs are unaffected — those are alerts, not recaps, and stay on Joshua's DM per the hard failure-alert policy. Backup of prior version: SKILL.md.bak-pre-social-recap-consolidation-2026-08-04. -->
 <!-- 2026-07-21: Rewrote for the no-approval-gate world. Was previously "DM only when ready to approve, silent otherwise" — now verifies actual Publer publish (not just Slack staging). -->
 <!-- 2026-07-21 #2: Added mandatory per-platform (esp. Instagram) verification after discovering a real silent-drop: items 1-4 published fine to FB/GBP but never reached Instagram, and the prior postflight logic's aggregate "13 published" count was blind to it. -->
+## ADDENDUM 2026-09-06 — correct routing, correct timing, ledger verification
+
+- **Schedule:** this task fires **Monday 4:40 PM ET (cron `40 16 * * 1`)**, verifying the 1:40 PM
+  batch. Any "3:30 AM" / `0 30 3 * * 1` text above is stale.
+- **Routing to verify against (2026-08-04 redesign, supersedes anything above):**
+  Brand items → Brand FB + Brand IG + Brand X. Store-local items → that store's FB + that store's
+  GBP **only**. Store items no longer touch Brand IG, so a missing store-IG leg is correct behaviour,
+  not a silent drop — do not "self-heal" one.
+- **Preferred verification:** if `/Users/joshuadavis/Documents/Claude/Projects/Refine Social Media/state/plans/plan_<week>.json` exists, run
+  `cd '/Users/joshuadavis/Documents/Claude/Projects/Refine Social Media' && python3 -m vp_social postflight plan_<week>` — it reconciles every planned placement
+  against the ledger and withholds (exit 2) rather than reporting a half-verified run. Otherwise run
+  `python3 -m vp_social sync` first and verify against the ledger, never against the manifest.
+- Unchanged: publishing a brand-new replacement post still needs Joshua's explicit go-ahead.

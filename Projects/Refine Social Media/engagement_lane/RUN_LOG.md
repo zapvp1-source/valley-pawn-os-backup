@@ -103,3 +103,26 @@ behaviour. Backup at `vp_social_publisher.py.bak-pre-mediaids-2026-08-22`.
 
 **Baseline for next week:** 18 comments / 0 replies per 90 days → this run: **4 replies posted,
 3 formats live that each end on a real question.**
+
+---
+
+## 2026-09-06 — CORRECTION: a Guess-the-Price DID run, and its reveal was never posted
+
+An earlier entry in this log asserts that no Guess the Price had run yet. That is wrong, and the
+error mattered: the 8/31 run scheduled six engagement posts (verified live in Publer via the
+`engagement_lane_2026-08-31_publish_results_20260831T160816.json` manifest — Brand FB 9/1 17:31,
+X 9/1 17:36, Brand IG 9/1 19:45, Harrisonburg FB 9/2 17:45, Brand FB 9/3 18:01, Brand IG 9/3
+19:31), and the 9/1 posts told the audience the real number would go in the comments **the next
+evening**. The 8/31 run then died before logging, and the 9/2 recovery run did the reply sweep
+only. **The reveal was never posted.** Customers were asked a question and got no answer.
+
+Two things changed today so this cannot recur:
+
+1. `vp-engagement-weekly/SKILL.md` now carries a hard rule: any post promising a follow-up must
+   have its reveal scheduled **in the same run**, on the same accounts, containing the real number.
+2. The planner (`vp_social/plan.py`) emits an explicit `reveal` slot for any guess/answer format,
+   and `vp_social/publish.py` **blocks the whole plan** if a guess slot has no matching reveal.
+   A promise to customers is now a publish-time gate, not a note in a log.
+
+The 9/1 reveal itself is still outstanding and is Joshua's call — it is five days late, so the
+options are to answer it now (late but honest) or let it go. Flagged in the Open Items Register.

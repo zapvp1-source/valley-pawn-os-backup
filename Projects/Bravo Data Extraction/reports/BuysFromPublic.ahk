@@ -1,4 +1,4 @@
-; ============================================================================
+﻿; ============================================================================
 ; reports/BuysFromPublic.ahk
 ;
 ; Runs the "Buys From Public — Master" saved Ad Hoc Loan/Buy report for a
@@ -309,8 +309,35 @@ WriteBuysGridToCsv(outputPath) {
             LogMessage("    WARN scroll pass " . pageIdx . " enumerate: " . e.Message)
             break
         }
+        ; --- transient-empty retry (added 2026-09-06) ----------------------
+        ; A virtualized DevExpress grid can enumerate ZERO DataItems for a
+        ; moment right after {PgDn} while it re-renders. The original code
+        ; treated that as "the grid is finished" and broke out, keeping only
+        ; the rows read so far. Proven live 2026-08-30: fpd-cohort for WAY
+        ; captured 22 of 44 rows, logged "no DataItems on pass 4", and the
+        ; truncation guard below (correctly) threw - costing Waynesboro its
+        ; weekly first-payment-default number. Re-enumerate a few times
+        ; before believing an empty grid. A grid that is genuinely finished
+        ; still exits, ~2.4s later.
         if (!dataItems || dataItems.Length = 0) {
-            LogMessage("    [grid] no DataItems on pass " . pageIdx)
+            emptyRetry := 0
+            Loop 4 {
+                emptyRetry++
+                Sleep(600)
+                try {
+                    root := GetBravoRoot()
+                    dataItems := root.FindElements({Type: "DataItem"})
+                } catch as e {
+                    LogMessage("    WARN empty-retry " . emptyRetry . " enumerate: " . e.Message)
+                }
+                if (dataItems && dataItems.Length > 0) {
+                    LogMessage("    [grid] empty enumeration on pass " . pageIdx . " recovered after " . emptyRetry . " retry(s): " . dataItems.Length . " DataItems")
+                    break
+                }
+            }
+        }
+        if (!dataItems || dataItems.Length = 0) {
+            LogMessage("    [grid] no DataItems on pass " . pageIdx . " (confirmed empty after 4 retries)")
             break
         }
 

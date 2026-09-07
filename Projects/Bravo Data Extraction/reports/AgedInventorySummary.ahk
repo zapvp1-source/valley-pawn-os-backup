@@ -1,4 +1,4 @@
-; ============================================================================
+﻿; ============================================================================
 ; reports/AgedInventorySummary.ahk
 ;
 ; Pulls Bravo's "Aged Inventory Summary" report for a single store and exports
@@ -80,8 +80,14 @@ PullAgedInventorySummary(store, date, outputDir) {
         LogMessage("  step 3: click config Ok (defaults)")
         ClickByName(AGEDINV_ELEMENTS["config_ok"], 5000)
 
-        if !FindByName(AGEDINV_ELEMENTS["preview_export"], 30000)
-            throw Error("Preview did not render within 30s (Export Document button never appeared)")
+        ; Timeout raised 30s -> 120s on 2026-09-06. A full-store aged-inventory
+        ; preview is one of the heaviest reports Bravo renders and 30s lost the
+        ; race repeatedly (2026-08-30 CUL failed at the config Ok/preview step).
+        ; Same change made to EmployeeActivityRange.ahk on 2026-09-05 after a
+        ; full-calendar-month preview measured ~50s. FindByName returns as soon
+        ; as the button appears, so a fast render is unaffected.
+        if !FindByName(AGEDINV_ELEMENTS["preview_export"], 120000)
+            throw Error("Preview did not render within 120s (Export Document button never appeared)")
         Sleep(500)
 
         LogMessage("  step 4: click Export Document")

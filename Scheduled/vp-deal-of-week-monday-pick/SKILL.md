@@ -4,11 +4,8 @@ description: Every Monday 12:30pm ET — compile ALL qualifying Deal of the Week
 model: claude-sonnet-5
 ---
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+> ⚠️ **FAILURE HANDLING (Rule 16, supersedes the 2026-07-22 v2 DM policy — updated 2026-09-06).** Failure notices NEVER go to Slack — not to a team channel, not to a store manager, and not to Joshua's DM. If this run fails or cannot complete its core work, append one dated plain-language line plus the technical detail to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn Studios/STATUS.md` under a `## Run holds` heading and stop. The next session picks it up from there. Anything that does go to the field stays in plain everyday language — no error codes, no tool or file names. This replaces every 'DM Joshua that it did not complete' and every 'stay silent on Slack' instruction elsewhere in this file.
 
-
-
-> ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
 
 ## Execution Contract — DO NOT STOP EARLY
 
@@ -75,11 +72,12 @@ Build the list of submissions to feature. Include EVERY submission that has BOTH
 - If ZERO submissions qualify: do not force anything. Post in `#deal-of-the-week`: "No qualifying submissions this week — Thursday's send will run with the theme content only." Then proceed to STEP 6 with an empty deal list.
 - Let N = the count of qualifying submissions (0 to 5). N drives the section header wording in STEP 6 — never claim more coverage than actually qualified.
 
-STEP 5 — DOWNLOAD EVERY QUALIFYING PHOTO AND UPLOAD TO BREVO MEDIA LIBRARY
-For EACH qualifying submission:
-- Download the photo from Slack (use the file's `url_private` with `Authorization: Bearer <slack-bot-token>` if available, OR use the `slack_read_thread` file URLs).
-- Upload to Brevo via POST `/v3/media` (multipart form). Record the permanent CDN URL for that submission.
-- If a single photo retrieval fails, fall back to vp-hero-image skill to generate a cinematic-premium product render from that item's description. If even that fails for one submission, drop only that submission (skip its block) — do not abort the whole run.
+STEP 5 — DOWNLOAD EVERY QUALIFYING PHOTO AND HOST IT (PROVEN PATH ONLY)
+- **Do NOT use Brevo `POST /v3/media` — that endpoint does not exist** (returns not_found; it silently killed W10–W12 in Jul/Aug 2026).
+- Use the PROVEN PATH in the HARDENING ADDENDUM (2026-08-21) at the bottom of this file, RULE 1: Slack file → Chrome download → `sips -Z 1200` → localhost:8787 (with Access-Control-Allow-Private-Network) → authenticated fetch to `https://thevalleypawn.com/wp-json/wp/v2/media` → use the public WP URL in the email. Optionally import that public URL into the Brevo gallery via `POST /v3/emailCampaigns/images` (`{"imageUrl": ...}`).
+- Faster alternative when it exists: the website deal-image mirror (`thevalleypawn.com/wp-content/...` referenced by `deal_store.json`) — if the photo is already hosted there from a prior week, reuse that URL, no upload needed.
+- If a single photo retrieval fails after both paths, fall back to the vp-hero-image skill to generate a cinematic-premium product render from that item's description. If even that fails for one submission, drop only that submission (skip its block) — do not abort the whole run.
+- Record the final public image URL for each submission before moving on.
 
 STEP 6 — FILL THE PLACEHOLDER BLOCK IN THE DRAFT WITH ALL DEAL BLOCKS
 The draft contains a single marker `<div style="border: 2px dashed #c97b3a; ...">DEAL OF THE WEEK — POPULATED MONDAY ...</div>` (the styled placeholder block).
@@ -125,7 +123,7 @@ PUT `/emailCampaigns/{id}` with:
 Verify by GETting the campaign back and checking status is `queued`.
 
 STEP 8 — POST CONFIRMATION TO SLACK AND DM JOSHUA
-Post in `#deal-of-the-week`:
+Post in `#deal-of-the-week` — **use channel_id `C0AVCANK7E3`** (never the bare name; the name-only call has failed silently every Monday since 2026-07-27 while the send itself succeeded). After posting, re-read the channel and confirm your message is the newest — if it is not, retry once with the ID.:
 "This week's email features {N} deals — {comma-separated list of "ITEM_NAME ({STORE})"}. Drafting Thursday's send now." If any store was skipped for missing photo/price, add: "Skipped (incomplete): {store(s)}."
 
 DM Joshua (zapvp1@me.com):

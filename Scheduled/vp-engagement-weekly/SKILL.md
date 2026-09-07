@@ -100,3 +100,14 @@ a team channel or a manager.
 If last week's run posted a Guess the Price or What Is This Thing, **reveal the answer in that
 post's comments now** if it hasn't been done. Track open games in the run log so none is ever left
 hanging.
+
+## HARD RULE 2026-09-06 — REVEAL IS MANDATORY
+
+If this lane posts a Guess-the-Price, "answer tomorrow", poll, or any format that promises the
+audience a follow-up, the reveal post is **mandatory** the next evening on the **same accounts**, and
+must contain the real number. Schedule the reveal in the same run as the question — never leave it to
+a later session. Log both in `/Users/joshuadavis/Documents/Claude/Projects/Refine Social Media/engagement_lane/RUN_LOG.md`.
+
+This exists because the 2026-09-01 Guess-the-Price went out on Brand FB, Brand IG and X saying "the
+real number goes in the comments tomorrow evening," the 8/31 run died before logging, and the reveal
+was never posted. An open promise to customers is a brand problem, not a scheduling detail.

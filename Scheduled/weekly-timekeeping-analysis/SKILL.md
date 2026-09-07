@@ -4,9 +4,10 @@ description: Monday 12:30 AM — pull last week's Gusto time tracking via Gusto 
 model: claude-sonnet-5
 ---
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "weekly-timekeeping-analysis" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths.
+## Failure policy (Rule 16 / Hardening Standard #6 — updated 2026-09-05)
+Retry once, then try the documented alternate path. If still failing: write the technical detail to this task's run log/STATUS file and stop. Silence in every Slack channel. At most ONE plain-language DM to Joshua (D03BHQH5VGT), and only if a decision only he can make is blocking. Never post failure notices, technical jargon, or partial/incomplete data anywhere.
 
-> ⚠️ **DO NOT POST FAILURE/ERROR NOISE TO #timekeeping-summary.** Only post to the channel once a report has genuinely been produced. A failed run = one plain DM to Joshua (above) and full detail in the run log — nothing in the team channel.
+> ⚠️ **FIELD COMMUNICATION RULE (retained from the 2026-07-22 v2 banner):** anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths.
 
 ## Execution Contract — DO NOT STOP EARLY
 

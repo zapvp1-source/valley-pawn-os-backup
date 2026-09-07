@@ -1,13 +1,13 @@
 ---
 name: monthly-bonus-targets
-description: Generate next month's store revenue bonus targets for Valley Pawn using Option B yield methodology (Bravo data pulled via the trigger/watcher pipeline, no computer-use), update the VP BONUS FINAL spreadsheet, and draft a Slack message for Joshua's review. Runs automatically day 2 of each month, 9 AM.
+description: SUPERSEDED 2026-09-06 by `bonus-month-close-pull` (1st 11:30 AM, deterministic bonus_engine.py targets stage + isolated month snapshot). Kept disabled as a rollback hold — delete after two clean cycles (Oct + Nov 2026). See Bonus Program/BONUS_PROGRAM_REVIEW_AND_PLAN_2026-09-05.md.
 model: claude-opus-4-8
 ---
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+## Failure policy (Rule 16 / Hardening Standard #6 — updated 2026-09-05)
+Retry once, then try the documented alternate path. If still failing: write the technical detail to this task's run log/STATUS file and stop. Silence in every Slack channel. At most ONE plain-language DM to Joshua (D03BHQH5VGT), and only if a decision only he can make is blocking. Never post failure notices, technical jargon, or partial/incomplete data anywhere.
 
-
-> ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
+> ⚠️ **FIELD COMMUNICATION RULE (retained from the 2026-07-22 v2 banner):** anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths.
 
 ## Execution Contract — DO NOT STOP EARLY
 

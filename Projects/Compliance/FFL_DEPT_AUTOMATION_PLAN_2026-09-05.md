@@ -1,6 +1,13 @@
 # FFL Listing Management — Department Review & Automation Plan
 
-**Date:** 2026-09-05 · **Domain:** 1 — Valley Pawn · **Status:** PLAN ONLY — nothing built, nothing sent
+**Date:** 2026-09-05 · **Domain:** 1 — Valley Pawn
+**Status: EXECUTED 2026-09-06.** Phases 0–3 and 5 are done; Phase 4 is done except the parts that
+need a human at a store phone. Read `FFL_DEPT_OS.md` for current state and CHANGELOG 2026-09-06 for
+what shipped — this file is kept as the reasoning record, not as current truth.
+**Three claims in §2 below were later disproved and are corrected in `FFL_LISTINGS_STATUS.md`:**
+Culpeper also receives GunBroker transfers (not Roanoke only); all five stores ARE on MasterFFL with
+correct data (unclaimed ≠ missing); MasterFFL does not show "Dixie Pawn" for Harrisonburg.
+**§6 decision 1 answered by Joshua: the ATF mailing address stays in Florida.**
 **Home folder:** `Projects/Compliance/` (this is the department's durable memory — `FFL_REGISTRY.md` + `FFL_LISTINGS_STATUS.md` + `ffl-files/`)
 
 ---

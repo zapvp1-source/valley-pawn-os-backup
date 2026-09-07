@@ -1,3 +1,5 @@
+> **NOT A SOURCE OF TRUTH (banner added 2026-09-05).** This is the June 2026 draft. The live page on thevalleypawn.com is authoritative and has diverged (e.g. the loan maximum here says $25,000; live says $100,000 and that figure is itself unconfirmed — register `DEC-MAX-LOAN`). Never republish from this file without re-reading the live page and `../GEO_STATUS.md` first.
+
 # City-Level Answer Snippets (for AI search citation)
 
 These short, fact-dense intros are written the way people phrase questions to ChatGPT,

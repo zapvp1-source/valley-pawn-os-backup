@@ -24,9 +24,10 @@ monthly EOM post there. Every other analytics and marketing channel gets a month
 | #ebay-performance | eBay store ratings sweep | `monthly-ebay-ratings-sweep` | 1st 10:00 AM | `Ratings Sweep` | ✅ posted 9/1 10:12 |
 | #email-campiagns | Monthly Gold & Silver campaign (send notice) | `monthly-we-buy-gold-silver-email` | 1st 2:15 AM | `Monthly Gold & Silver` | ✅ 9/1 |
 | #new-customers | New customers ranked, MoM/YoY | `vp-new-customer-report` | 3rd 7:00 AM | `New Customers —` | **MISSED** (died at artifact step) → posted manually 9/5; SKILL reordered Slack-first |
-| Joshua DM → #bonus-goals | Next-month bonus targets (draft; Joshua posts) | `monthly-bonus-targets` | 2nd 9:00 AM | `Bonus Targets` | ✅ draft delivered 9/2 — **awaiting Joshua's post to #bonus-goals** |
-| #bonus-goals | Bonus qualifiers | `monthly-bonus-qualifiers` | 10th 9:00 AM | `qualif` | July's (8/10) not found in channel — verify 9/10 |
-| Joshua DM | Bonus payout | `monthly-bonus-payout` | 10th 11:30 AM | `Bonus Payout` | DM-only by design |
+| Joshua DM | Next-month bonus targets (draft) | `bonus-month-close-pull` (NEW 2026-09-06) | 1st 11:30 AM | `Bonus Targets` | replaces `monthly-bonus-targets` (disabled 9/6). **DM-only** while `field_posting=false` in `Bonus Program/bonus_rules.json` — an empty #bonus-goals is NOT a miss. File evidence: `Bonus Program/out/<YYYY-MM>/slack_targets.txt` |
+| Joshua DM | Bonus qualifiers + payouts (one run) | `bonus-month-close` (NEW 2026-09-06) | 10th 9:00 AM | `Bonus Payouts` | replaces `monthly-bonus-qualifiers` + `monthly-bonus-payout` (both disabled 9/6). File evidence: `Bonus Program/out/<YYYY-MM>/close.json`; a `hold.txt` there means the engine correctly refused to publish incomplete numbers — legitimate, but it needs Joshua |
+| Joshua DM | Weekly bonus pace vs target | `bonus-pace-monday` (NEW 2026-09-06) | Mon 9:35 AM | `% of target` | reads the Monday combined pull only, no Bravo contact |
+| Joshua DM | Bonus paid verification | `bonus-paid-verify` (NEW 2026-09-06) | Mon 10:00 AM | `bonuses paid` | **silent by design** except the Monday after a bonus payday (first Friday after the 15th) |
 | #monthly-gun-audit | Gun audit summary | `monthly-gun-audit-report` | 16th 2:30 AM | `Monthly Gun Audit Summary` | last post 8/3 (June period); 8/16 run produced nothing — **verify 9/16** |
 | every analytics + marketing channel below without its own monthly | **Month in Review** rollup | `monthly-eom-recap` (NEW 2026-09-05) | 1st 10:30 AM | `Month in Review` | first run 2026-10-01; Aug 2026 recaps back-filled by first run |
 | Joshua DM | Consolidated GL export | `eom-bravo-gl-export` | 1st 6:00 AM | ledger link | Aug ledger step failed 9/1 (finance, not a channel publication — tracked separately) |
@@ -52,7 +53,7 @@ Explicitly NOT covered (has its own monthly, or Joshua said no): `#store-perform
 | #timekeeping-summary | Weekly Timekeeping | `weekly-timekeeping-analysis` | Mon 12:30 AM | `Weekly Timekeeping` |
 | #weekly-returns-summary | Returns — Week of | `weekly-returns-summary` | Mon 1:20 AM | `Returns — Week of` |
 | #google-reviews | Google Reviews — Week of | `review-obtained-last-week` (net: `google-reviews-post-watchdog`) | Mon 1:15 AM | `ranked` |
-| #website | Weekly Website Analytics | `weekly-analytics-summary` | Mon 1:00 AM (posts 9 AM) | `Weekly Website Analytics` |
+| #website | Weekly Website Analytics | `weekly-analytics-summary` — body rendered by `Website/analytics/bin/format_weekly_website.py` since 2026-09-06 (post it VERBATIM; exit 2 = post nothing). Now leads with calls/texts/directions by store | Mon 1:00 AM (posts 9 AM) | `Weekly Website Analytics` |
 | #website | Weekly Website Health Audit | `weekly-website-health-audit` | Mon 5:15 AM | `Weekly Website Health Audit` |
 | #website | Retail page deals refreshed | `vp-website-deals-weekly` | Mon 1:05 PM | `deals refreshed` |
 | #social-media | Weekly Social Recap | `weekly-social-media-recap` | Mon 9:40 AM | `Weekly Social Recap` |
@@ -73,6 +74,17 @@ Explicitly NOT covered (has its own monthly, or Joshua said no): `#store-perform
 | Joshua DM | Marketing CEO Briefing | `marketing-ceo-briefing-weekly` | Mon 11:30 AM | `Marketing CEO Briefing` |
 | #airbnb (Domain 2) | Bald Rock Monday briefing | `bald-rock-monday-briefing` | Mon 4:15 AM | `Bald Rock` |
 
+## Website publications — deterministic formatters (2026-09-06)
+
+Two #website publications no longer have their body written by a model. The formatter is the only
+renderer; the task posts its stdout verbatim and posts NOTHING on exit 2. Same pattern as
+`format_aged_inventory.py` (2026-09-05), for the same reason.
+
+| Publication | Formatter | Gate |
+|---|---|---|
+| Weekly Website Analytics | `Website/analytics/bin/format_weekly_website.py` | mis-mapped columns, non-reconciling channels, zero sessions, overlapping prior window |
+| Shop refreshed | `slack_body()` inside `Website/analytics/bin/shop_refresh.py` | per-store fetch gate; a short store reuses its last-good part or the run withholds |
+
 ## DAILY
 
 | Channel | Publication | Owner task | Fires | Marker |
@@ -82,7 +94,7 @@ Explicitly NOT covered (has its own monthly, or Joshua said no): `#store-perform
 | Joshua DM + #sold-review / #discount-review | Sold review / Discount review | `sold-review` 7:45 / `discount-review` 8:25 | daily | `SOLD REVIEW` / `DISCOUNT REVIEW` |
 | #items-to-price | Items to price | `daily-items-to-price` | 8:00 AM | `Items to Price` |
 | #general | Clock-in / CloudCover / dress-code checks | `daily-clockin-check` 10:15 / `daily-cloudcover-check` 10:25 / `daily-dress-code-check` 10:30 (Mon–Sat) | daily | `Daily Clock-In Check` / … |
-| #website | Shop refreshed (2×/day) | `vp-website-shop-nightly` | 7 AM / 3 PM | `Shop refreshed` |
+| #website | Shop refreshed (2×/day) | `vp-website-shop-nightly` — **launcher/verifier only since 2026-09-06**; the work is native `Website/analytics/bin/shop_refresh.py` (plist staged at `fleet/com.valleypawn.shop-refresh.plist`, not installed) | 7 AM / 3 PM | `Shop refreshed` |
 | #google-reviews | New 5-star review shoutouts | `chekkit-new-review-alert` | hourly 9–21 | `new 5 star review` |
 | #chekkit-messages-missed / #chekkit-unanswered-summary | Unanswered Chekkit | `chekkit-unanswered-alert` 8 AM / `-eod-followup` 7 PM | Mon–Sat | `unanswered` |
 | #emails-missed / #voicemails-calls-missed / #general | Missed email / voicemail sweeps | `daily-unopened-email-eval` 6 PM / `zoom-voicemail-alert` / `zoom-voicemail-eod-review` 5:45 PM | daily | `missed` |

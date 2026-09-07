@@ -503,3 +503,43 @@ those notes remains the right default if a mismatch appears): 428 vp-card elemen
 `class="vp-card"` count, single VP-SHOP-START marker, exactly one h1.vp-h1, valid ItemList
 JSON-LD (numberOfItems=120, itemListElement length 120, parses cleanly). Posted summary to
 #website successfully.
+
+---
+
+# 2026-09-06 — THIS METHOD IS RETIRED. READ THIS FIRST.
+
+**Do not follow the run-by-run method above.** Everything from "fetch" to "post to #website" now
+lives in one deterministic script:
+
+    /Users/joshuadavis/Documents/Claude/Projects/Website/analytics/bin/shop_refresh.py
+
+    python3 shop_refresh.py            # normal run (same-slot guard prevents double-publish)
+    python3 shop_refresh.py --dry-run  # fetch + build + gate, no publish, no post
+    python3 shop_refresh.py --force    # ignore the slot guard
+    python3 shop_refresh.py --no-post  # publish + verify, skip Slack (proving runs)
+    python3 shop_refresh.py --post-only  # post a previous result's body if it wasn't posted
+
+The Cowork task `vp-website-shop-nightly` is now a launcher/verifier only, and
+`fleet/com.valleypawn.shop-refresh.plist` is staged to run it natively at 7 AM / 3 PM.
+Everything above this line is kept as the historical record and for the gotchas it documents —
+all of which are now encoded in the script:
+
+| Old gotcha (see run records above) | Where it lives now |
+|---|---|
+| `BASE` hand-edited every single run | paths derived from `__file__`; nothing to edit, ever |
+| Double-wrapped VP-SHOP markers (8/27) | wrapper adds only `<!-- wp:html -->`; marker count asserted before publish |
+| a8c CDN serves stale HTML for 20–60 s (8/24, 9/1) | `wp_client.wait_live()` retries 9× / 20 s; REST `context=edit` is ground truth |
+| ItemList is the LAST ld+json block, not the first (8/28) | verifier iterates every ld+json block |
+| Task double-fired the same day (8/26, 8/29) | same-slot guard + lock file |
+| Weapons filter drifted (excluded 0 / 21 / 132 in one week) | ONE regex, identical to `generate_shop_block.py`, count asserted against the generator's output |
+| A store returning a short list silently shrank the page | per-store gate: reuse last-good part (<36 h) or WITHHOLD the whole run (Rule 18) |
+| Slack post reformatted every run | `slack_body()` is the only renderer; the task posts it verbatim |
+| Connected-folder "Resource deadlock avoided" (8/28, 8/29) | writes go to `analytics/data/`, not into shop-build |
+
+Scratch from the old method (20+ `fetch_*.py` copies, their logs, ~38 MB of raw eBay HTML) was moved
+to `shop-build/_archive_20260906/` — see its README. `generate_shop_block.py` is unchanged and is
+still the block generator; do not edit it.
+
+**Verified 2026-09-06 00:57 ET:** 469 scraped → 20 excluded → 449 published to page 833, live page
+confirmed 449 cards, one marker pair, one `h1.vp-h1`, valid ItemList JSON-LD, no WooCommerce hijack —
+16 seconds end to end, no browser.

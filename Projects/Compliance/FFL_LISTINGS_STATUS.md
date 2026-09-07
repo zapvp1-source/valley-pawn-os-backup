@@ -1,5 +1,24 @@
 # FFL LISTINGS — STATUS
 
+> **2026-09-06 — READ THIS FIRST. The machine-readable roster is now
+> `Compliance/ffl_vendors.json`; this file is the narrative view.** The department map is
+> `FFL_DEPT_OS.md`. Corrections verified live this date, superseding claims below:
+>
+> - **All five stores ARE listed on MasterFFL under "VALLEY PAWN" with correct addresses and
+>   license data** — Waynesboro's profile shows the right FFL and a 2/1/2028 expiration. They are
+>   **unclaimed**, but unclaimed ≠ missing, and transfers do flow. Culpeper as well as Roanoke
+>   receives GunBroker/MasterFFL inbound transfers (verified against the mail store, not a search
+>   snippet). The "only Roanoke gets them" line written earlier the same day was wrong.
+> - **Claiming a MasterFFL profile cannot be automated.** The claim modal requires a reCAPTCHA plus
+>   an SMS/voice code to the store's own phone number. It is a two-minute job for whoever is
+>   standing at the store phone, five times. Do not keep re-attempting it from a session.
+> - **A SIXTH "Valley Pawn" is live on MasterFFL — Salem, VA (1617 W Main St).** It is a real,
+>   still-active FFL (`1-54-161-02-6K-27258`, expires 10/01/2026) for a store recorded as closed.
+>   See the Salem section of `FFL_REGISTRY.md`.
+> - GrabAGun disabled Culpeper on 2026-09-01; the renewed license plus all five signed copies were
+>   sent 2026-09-06, as were corrected records to Brownells, EuroOptic/MasterFFL and seven
+>   wholesale accounts. See the roster's `last_sent` fields.
+
 Where Valley Pawn's five FFLs appear (or don't) across dealer directories, transfer locators,
 and wholesale vendor networks. Paired with `FFL_REGISTRY.md` (canonical license data).
 

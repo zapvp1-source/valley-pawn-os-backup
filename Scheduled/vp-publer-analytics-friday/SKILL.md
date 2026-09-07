@@ -17,7 +17,7 @@ model: claude-sonnet-5
 > **Timeout rule:** the osascript wrapper kills any single call at ~25 s. Never sleep longer than ~18 s inside one call; poll in short increments across separate calls. Guard any command that may exit nonzero with a trailing || true.
 
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+> ⚠️ **FAILURE HANDLING (Rule 16, supersedes the 2026-07-22 v2 DM policy — updated 2026-09-06).** Failure notices NEVER go to Slack — not to a team channel, not to a store manager, and not to Joshua's DM. If this run fails or cannot complete its core work, append one dated plain-language line plus the technical detail to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn Studios/STATUS.md` under a `## Run holds` heading and stop. The next session picks it up from there. Anything that does go to the field stays in plain everyday language — no error codes, no tool or file names. This replaces every 'DM Joshua that it did not complete' and every 'stay silent on Slack' instruction elsewhere in this file.
 
 
 ## Execution Contract — DO NOT STOP EARLY
@@ -48,7 +48,6 @@ When you see any of those messages, immediately fire the next concrete tool call
 ---
 This is an automated run of a scheduled task. The user is not present. Execute autonomously. End with <run-summary>one or two sentences</run-summary>.
 
-⚠️ FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE. If the digest cannot be produced, stay silent on Slack; explain in the run-summary only (Claude self-heals via completion notification). Joshua gets exactly one DM, and only on success.
 
 ## Job
 Close Valley Pawn's weekly content loop using PUBLER's analytics API (the Meta Graph API path is retired/blocked — never use it, never browser-fallback to instagram.com/facebook.com).
@@ -65,3 +64,18 @@ Close Valley Pawn's weekly content loop using PUBLER's analytics API (the Meta G
 5. Sanity check: confirm weekly-adjustments.json was updated today (osascript: `do shell script "stat -f '%Sm' ~/Documents/Claude/Projects/'Refine Social Media'/weekly-adjustments.json"`). If not, treat as failure (silent).
 
 Guardrails: Publer API only. No Meta Graph API. No instagram.com/facebook.com browsing. Do not modify the digest script during a run — if it errors, report in run-summary and let interactive Claude fix it.
+
+
+## ADDENDUM 2026-09-06 — the DM text comes from the engine
+
+Keep running `publer_weekly_digest.py` (it still writes `friday_digests/`, `weekly-adjustments.json`,
+`adjustments_log.jsonl` and `~/.vp-studio/lessons.md`, which the Monday planner reads).
+
+Then, before DMing Joshua:
+`do shell script "cd '/Users/joshuadavis/Documents/Claude/Projects/Refine Social Media' && python3 -m vp_social digest --days 7 2>/dev/null"`
+- exit 0 → that stdout **is** the DM. Send it verbatim.
+- exit 2 → send no DM; append the reason to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn Studios/STATUS.md`.
+
+**WHY:** the old digest counted posts the same broken way the recap did — it reported 57 posts for
+Aug 29-Sep 4 when 89 published, and 64 vs 93 the week before. The engine's counts come from the
+ledger; the engagement figures still come from Publer's insights endpoint.

@@ -102,7 +102,7 @@ Schedule **Thursday–Saturday evening**. Nobody watches a comedy reel at 2 AM.
 
 ## Step 6 — Comment window
 Short-form comedy lives or dies in the first hour. After each publishes, schedule a
-`reel-comment-alert` one-shot for **publish time + 30 minutes**. Replying inside the first 60
+**Comments: the reply sweep owns comments.** Do NOT schedule a `reel-comment-alert` one-shot — that skill reads the Meta Graph API, whose Page tokens have been dead since 2026-08-21, so it cannot run. Comment replies are handled by the engagement lane's reply sweep through the Business Suite session.
 minutes is the single biggest reach signal on Meta.
 
 ## Step 7 — Record and log

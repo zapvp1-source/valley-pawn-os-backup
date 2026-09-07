@@ -110,6 +110,48 @@ Read the previous scorecard's `needs_joshua` array. For each item, check whether
 
 ---
 
+### PART 6 — FFL DIRECTORY & LICENSE SWEEP (added 2026-09-06)
+
+The FFL directories are the **order-routing layer for the firearm-transfer business** — when a
+customer at GrabAGun, Brownells, MidwayUSA or GunBroker cannot pick a Valley Pawn store as their
+receiving dealer, the $25 transfer and the walk-in go to a competitor. Parts 1–5 cover the
+channels that drive walk-in search; they do not cover these. Nothing else watches them.
+
+Source of truth for every number and address in this part: `Projects/Compliance/FFL_REGISTRY.md`
+(canonical licenses) and `Projects/Compliance/ffl_vendors.json` (the roster). Read both first.
+Never derive an FFL number from an email, a directory page, or memory.
+
+**6a. eZ Check — ONE store per week, rotating.** https://fflezcheck.atf.gov/FFLEzCheck/ — accept
+the DOJ banner, then enter the first three digits and the last five of that store's number. Rotate
+Culpeper → Waynesboro → Harrisonburg → Lexington → Roanoke so each is confirmed every five weeks
+(the site rate-limits after ~2 lookups, which is why this is not a five-at-once check). Compare the
+expiration and premise address to the registry. **Any mismatch is a finding, not an auto-fix.**
+
+**6b. Public directory pages** — for each of MasterFFL, FFLeasy, GunNook, FFLs.com and
+GunBroker/MyFFL, check that each of the 5 stores appears, that the name reads "Valley Pawn", and
+that the address and phone match the canonical NAP below. Three known defects to re-check until
+they clear: the FFLeasy Harrisonburg listing at `/virginia/harrisonburg/9854` (legacy "DIXIE PAWN
+INC"), the GunNook Harrisonburg duplicate dealer card, and the two phantom Staunton entries on
+FFLs.com (817 Richmond Ave — an address Valley Pawn does not occupy).
+
+**6c. Retailer locators — quarterly, not weekly** (first audit of each quarter). Search each
+store's ZIP in the GrabAGun, Brownells and MidwayUSA FFL locators. This is the only test that
+proves a customer can actually route an order to us. Culpeper was silently dropped by GrabAGun on
+2026-09-01 and nothing caught it — this is the check that would have.
+
+**Write results back to `Projects/Compliance/ffl_vendors.json`** (update each vendor's `listed`
+map; leave `copy_version` and `last_sent` alone — the FFL Guardian owns those), and add ONE line
+to the Slack post: `FFL directories: <N of 25 store-listings correct> · <M> needing attention`.
+Report only. The only auto-fix permitted here is correcting our own website. Anything needing a
+login or a claim goes in `needs_joshua` with the store and directory named.
+
+**Do NOT duplicate the FFL Guardian.** The native agent `com.valleypawn.ffl-guardian` already owns
+license expirations, vendor copy distribution, website transfer-form relaying and inbound transfer
+digests. This part owns only what a browser must check. If a license looks close to expiring, say
+so as a finding — do not email anyone.
+
+---
+
 ## OUTPUT — three artifacts, in this order
 
 Base path: `/Users/joshuadavis/Documents/Claude/Projects/Ai Optimized Marketing/AI-Search-GEO/presence/`

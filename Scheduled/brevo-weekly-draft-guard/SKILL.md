@@ -63,4 +63,4 @@ If this task cannot complete its core work, send Joshua ONE plain-language Slack
 
 ## Staged calendar for reference (all already exist as drafts)
 Aug 27 · Sep 3 · Sep 10 · Sep 17 · Sep 24 · Oct 1 · Oct 8 · Oct 15 · Oct 22 · Oct 29 · Nov 5 · Nov 12 · Nov 19 · Nov 26 · Dec 3 · Dec 10 · Dec 17 · Dec 24 · Dec 31 (2026).
-After Dec 31 2026 the calendar runs out — from mid-December, include in your Slack report: `Weekly email calendar ends Dec 31 — next quarter needs staging.`
+The quarterly `brevo-stage-next-quarter` task (Dec 1 / Mar 1 / Jun 1 / Sep 1) stages the following quarter's 13 drafts. If you find fewer than 8 future-dated weekly drafts on ANY run, say so in your Slack report in plain language (`Weekly email calendar has N weeks left — staging is behind`) — that is the signal the stager missed its run.

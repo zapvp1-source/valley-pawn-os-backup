@@ -5,7 +5,18 @@
 **Portal:** https://ebilling.vsp.virginia.gov (Oracle iReceivables — "eReceivables Self Service Portal")
 **Login username:** X009686 (password saved in Chrome)
 **Billing cycle:** VSP posts each invoice on the **1st** of the month. We check and pay starting the **5th**.
-**Automated check:** Scheduled task `vsp-nics-fee-monthly-check` runs the 5th of each month at 9:00 AM, pulls every store's balance, and reports what's due (does not auto-pay).
+
+**⚠️ There is NO automated VSP check.** A task called `vsp-nics-fee-monthly-check` is referenced in
+older copies of this runbook and in `BUSINESS_OS.md` — **it has never existed** in the scheduled-task
+registry or on disk (verified 2026-09-06). Do not go looking for it and do not assume the balance was
+checked. The balance check is a **documented manual step on the 5th**, surfaced as a row in
+`Compliance/OBLIGATIONS.json` (`vsp-nics-fee-monthly`) and reminded by the Monday compliance brief
+(`Valley Pawn OS/bin/compliance_brief.py`, native launchd `com.valleypawn.compliance-brief`).
+
+**⛔ BLOCKED as of 2026-09-06:** the portal rejected the Chrome-saved password on the first attempt
+(the account locks after 5 failures, so no further attempts were made). **Joshua must sign in once
+and re-save the password in Chrome**; after that the monthly balance read can resume. Until then no
+balance has been verified since 2026-06-23.
 
 ---
 

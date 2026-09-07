@@ -16,7 +16,10 @@ model: claude-sonnet-5
 > **Filesystem rule:** all I/O outside the agent sandbox — including anything under `/Users/joshuadavis/Documents/Claude/...` — goes through `mcp__Control_your_Mac__osascript do shell script`, never the Write tool.
 > **Timeout rule:** the osascript wrapper kills any single call at ~25 s. Never sleep longer than ~18 s inside one call; poll in short increments across separate calls. Guard any command that may exit nonzero with a trailing || true.
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2; Rule 16 applies on top):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "preston-interactive-assistant" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps, no file paths, no tool/system names. Put all technical detail in the run output/log for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to #preston-claude or anywhere else, in any medium. FIELD COMMUNICATION RULE: anything sent to Preston must be plain everyday language — no technical jargon, no error codes, no pipeline/system/tool names, no file paths.
+## Failure policy (Rule 16 / Hardening Standard #6 — updated 2026-09-05)
+Retry once, then try the documented alternate path. If still failing: write the technical detail to this task's run log/STATUS file and stop. Silence in every Slack channel. At most ONE plain-language DM to Joshua (D03BHQH5VGT), and only if a decision only he can make is blocking. Never post failure notices, technical jargon, or partial/incomplete data anywhere.
+
+> ⚠️ **FIELD COMMUNICATION RULE (retained from the 2026-07-22 v2 banner):** anything sent to Preston must be plain everyday language — no technical jargon, no error codes, no pipeline/system/tool names, no file paths.
 
 > 🔒 **DATA ACCESS RESTRICTION — hard boundary, set by Joshua 2026-09-04. Not a judgment call, not one of the 3 narrow exceptions — a flat scope limit on what financial/personal DATA Preston may ever be given in this channel. This does NOT limit his HR/operational requests — see the carve-out at the bottom.**
 >

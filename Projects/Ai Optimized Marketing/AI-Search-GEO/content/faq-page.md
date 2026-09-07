@@ -1,3 +1,5 @@
+> **NOT A SOURCE OF TRUTH (banner added 2026-09-05).** This is the June 2026 draft. The live page on thevalleypawn.com is authoritative and has diverged (e.g. the loan maximum here says $25,000; live says $100,000 and that figure is itself unconfirmed — register `DEC-MAX-LOAN`). Never republish from this file without re-reading the live page and `../GEO_STATUS.md` first.
+
 # Valley Pawn FAQ — Pawn Loans, Selling Gold, Hours & Locations
 
 **Quick answer:** Valley Pawn is a family-owned pawn shop with five locations across Virginia's Shenandoah Valley — Culpeper, Waynesboro, Harrisonburg, Lexington, and Roanoke. We offer no-credit-check pawn loans, buy gold/silver/coins, and sell quality pre-owned merchandise backed by a 30-day warranty. Locations serving the Valley since 1988.

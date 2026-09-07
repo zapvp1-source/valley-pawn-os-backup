@@ -71,3 +71,22 @@
 - CONFIRMED category (c) photo-content problem - DM'd store manager: Harrisonburg 385626892405 (Putnam End Milling Bit) -> Walker, RE-NOTIFY 3rd time (first flagged 8/21, again 8/23, still has fan-blade + bearing/washer photos mixed in as of this run).
 - CONFIRMED category (d) genuinely ambiguous, flag-only: Culpeper 398023637276 (Cabelas Nature Lot of 5 PSP Game - box art for 6 titles incl. non-nature Poker/fishing games shown but only 5 discs pictured, can't confirm actual lot contents); Lexington 157975837256 (Star Wars 2000pc puzzle New Sealed claim - no shrink wrap visible in photos but inconclusive).
 - Report DM'd to Joshua only (U03BB52MDSA), not posted to any team channel.
+
+## 2026-09-06 run (ebay-title-photo-accuracy-audit)
+- Scope: ALL active listings, all 5 stores (Culpeper 266, Waynesboro 36, Harrisonburg 32, Lexington 27, Roanoke 97 = 458 total).
+- Thumbnail screen: 79 contact sheets built, 17 candidate mismatches flagged by per-store subagents.
+- Full-res verification: 6 of 17 REJECTED as thumbnail misreads: Waynesboro 800335233860 (Zelda cart shell color is a normal authentic GBC translucent shell, label genuine); Roanoke 298312214008 (PS4 console color cast from red velvet backdrop lighting, same console both angles, not two units); Lexington 157921257295 (Dale Earnhardt jacket "different jacket" photo was actually the Jeff Hamilton brand tag/collar embroidery, previously resolved 8/23, confirmed still fine); Roanoke 306861872975 (Judith Ripka necklace "different pendant" photo was the reverse/back of the same pendant, hallmark stamp confirms); plus 2 items where the accessory/spec claim couldn't be confirmed either way on full-res (left titles untouched).
+- CONFIRMED and auto-fixed via ebay_title_revise.py --apply (reversible, state in ~/ebay_toolfix_state.json), all verified live via getitem_detail.py:
+  - Harrisonburg: 800616885259 (Sony PS4 Pro, +Controller), 800123750148 (Novation Launchpad Pro, +Case), 800112196687 (case reads "Playground" not "PowerStation 2" -- brand corrected).
+  - Lexington: 157975512781 (Bulova watch, +Box), 157488036886 (Philip Stein watch, +Box & Papers), 158260878900 (Samsung Tab S9+, +S Pen).
+  - Roanoke: 307077672852 (Buck 498 knife, +Gut Hook tool), 306413806292 (Uncle Henry Schrade knife, +Bonus Care Kit -- left "3-Blade" claim untouched, couldn't confirm blade count on the 2 available photos).
+- CONFIRMED category (c) photo-content problems -- DM'd store manager directly, no title/price/photo touched by this run:
+  - Culpeper -> Sandi: 398162170503 (Starborn Creations pendant -- a completely different scrollwork/tree-design pendant photo mixed in, confirmed against the correct pelican/starfish/shell pendant in photo 0).
+  - Harrisonburg -> Walker (RE-NOTIFY, 4th consecutive week unresolved -- first flagged 8/21, again 8/23, again 9/04, still wrong 9/06): 385626892405 (Putnam End Milling Bit -- photos 4-5 are a fan blade and a bearing/washer, confirmed on full-res again).
+  - Lexington -> Uriah (RE-NOTIFY -- first flagged 8/21, again 8/23, still wrong 9/06): 157840648182 (Jeff Gordon DuPont jacket -- photos 2-3 show a navy sleeve with GMAC/HAAS/Bosch Spark Plugs patches, a different (Stewart-Haas) team jacket, confirmed on full-res).
+  - Roanoke -> Benjie (RE-NOTIFY -- first flagged 8/10 as a reshoot request, ~4 weeks unresolved): 307104894147 (Apple Watch Series 9 -- every photo still shows the watch stuck on a foreign-language pairing/setup screen, no clean product photo exists to promote as primary).
+  - Roanoke -> Benjie (new this week): 307164619925 (Milwaukee 2236-20 Clamp Meter -- photos 4-5 are unambiguously Klein Tools clamp meter packaging, a different brand/product, confirmed on full-res).
+- No category (d) genuinely ambiguous items this run.
+- Regression check: two items fixed in prior runs (Harrisonburg Kindle 800406852492, Roanoke mirror 298226614316) rechecked via getitem_detail.py -- both still holding correctly.
+- Carryover check: Roanoke 307000372642 (Apple Watch, rejected revision from 8/23 run) is no longer in the active listing pull -- getitem_detail.py confirms ListingStatus: Completed, ended 2026-09-04. Self-resolved, no action needed.
+- Report DM'd to Joshua only (U03BB52MDSA), not posted to any team channel.

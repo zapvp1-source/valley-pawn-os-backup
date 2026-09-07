@@ -15,7 +15,7 @@ model: claude-opus-4-8
 >
 > **Filesystem rule:** all I/O outside the agent sandbox — including anything under `/Users/joshuadavis/Documents/Claude/...` — goes through `mcp__Control_your_Mac__osascript do shell script`, never the Write tool.
 > **Timeout rule:** the osascript wrapper kills any single call at ~25 s. Never sleep longer than ~18 s inside one call; poll in short increments across separate calls. Guard any command that may exit nonzero with a trailing || true.
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (v2, Joshua 2026-07-22).** If this run fails or can't complete, send Joshua ONE plain-language Slack DM (channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in it. Never send failure notices to any team channel, store manager, or employee, ever, in any medium. Technical detail goes in the manifest/run log only.
+> ⚠️ **FAILURE HANDLING (Rule 16, supersedes the 2026-07-22 v2 DM policy — updated 2026-09-06).** Failure notices NEVER go to Slack — not to a team channel, not to a store manager, and not to Joshua's DM. If this run fails or cannot complete its core work, append one dated plain-language line plus the technical detail to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn Studios/STATUS.md` under a `## Run holds` heading and stop. The next session picks it up from there. Anything that does go to the field stays in plain everyday language — no error codes, no tool or file names. This replaces every 'DM Joshua that it did not complete' and every 'stay silent on Slack' instruction elsewhere in this file.
 
 ## Execution Contract — DO NOT STOP EARLY
 
@@ -45,7 +45,6 @@ When you see any of those messages, immediately fire the next concrete tool call
 ---
 This is an automated, unattended run. Execute autonomously; make reasonable choices and note them. End with `<run-summary>...</run-summary>`.
 
-> ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails or can't complete its work, post nothing to Slack. Only post once the work is genuinely done.
 
 > ⛔ **NO-PAUSE CANARY (2026-08-04).** Never pause mid-batch to ask Joshua a question or wait for a reaction. Standing instruction, reinforced 2026-08-04: **"i dont need to approve anything here, we need them just to fire, ill correct if need be."** Reliability beats hitting an exact item count — if a real shortfall means shipping less than target, ship what's real and log it; never fabricate and never stall.
 
@@ -216,3 +215,26 @@ photo access — walk this list in order:**
 Rule: a store-local item needs a real photo (authenticity gate stands) — but with path 1
 available, "no reachable photo" is no longer a valid shortfall reason for a store that
 submitted a deal within 14 days.
+## ADDENDUM 2026-09-06 — engine handoff (read this BEFORE Step 11)
+
+1. **Publish through the engine's client, never a bare `PublerClient`.** Any Python this run writes
+   must do `sys.path.insert(0, "/Users/joshuadavis/Documents/Claude/Projects/Refine Social Media")` then `from vp_social.publish import Publisher` and use
+   `Publisher()`. It carries the browser User-Agent (Cloudflare 1010), refuses the bulk
+   `DELETE /posts` that wiped 63 queued posts on 2026-08-22, and accepts Publer's `"complete"` job
+   status — the base client only accepts `"completed"`, which is why every batch since August logged
+   5 phantom `JOB_timeout` entries for items that had actually published.
+
+2. **De-duplicate against the ledger before scheduling.**
+   `cd '/Users/joshuadavis/Documents/Claude/Projects/Refine Social Media' && python3 -m vp_social sync --back 7 --forward 14`
+   then skip any (item, page) pair that already has a post that week. Three lanes were independently
+   picking the same Deal of the Week.
+
+3. **Do NOT generate Community or Humor items.** `vp-community-weekly` owns community and
+   `vp-comedy-reel-weekly` owns humor, each with its own cooldown state in `creative_state.json`.
+   Generating them here as well breached the 1-humor-per-week cap and doubled community volume.
+
+4. **Timing (corrected):** this task fires **Monday 1:40 PM ET**; preflight 11:00 AM; postflight
+   4:40 PM. Any text in this file that says 2:02 AM, "90 minutes later", or 3:30 AM is stale.
+
+5. **Routing (corrected, 2026-08-04):** Brand items → Brand FB + Brand IG + Brand X.
+   Store-local items → that store's FB + that store's GBP only (no IG, no X).

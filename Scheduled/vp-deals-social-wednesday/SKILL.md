@@ -17,10 +17,8 @@ model: claude-sonnet-5
 > **Timeout rule:** the osascript wrapper kills any single call at ~25 s. Never sleep longer than ~18 s inside one call; poll in short increments across separate calls. Guard any command that may exit nonzero with a trailing || true.
 
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+> ⚠️ **FAILURE HANDLING (Rule 16, supersedes the 2026-07-22 v2 DM policy — updated 2026-09-06).** Failure notices NEVER go to Slack — not to a team channel, not to a store manager, and not to Joshua's DM. If this run fails or cannot complete its core work, append one dated plain-language line plus the technical detail to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn Studios/STATUS.md` under a `## Run holds` heading and stop. The next session picks it up from there. Anything that does go to the field stays in plain everyday language — no error codes, no tool or file names. This replaces every 'DM Joshua that it did not complete' and every 'stay silent on Slack' instruction elsewhere in this file.
 
-
-> ⚠️ FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE. Stay silent on failure. Joshua reviews runs in Claude. Only post to Slack when the work is complete.
 
 ## Execution Contract — DO NOT STOP EARLY
 
@@ -49,6 +47,23 @@ When you see any of those messages, immediately fire the next concrete tool call
 
 ---
 Run the Valley Pawn Deals-of-the-Week SOCIAL layer for this week. This is the social-media companion to the existing Brevo email flow (`vp-deal-of-week-monday-prompt` + `vp-deal-of-week-monday-pick`).
+
+## Step 0 — MANDATORY duplicate check before anything else
+
+The Monday batch (`vp-content-batch-weekly`) and the deal reels lane already publish this week's
+Deal of the Week items. On 2026-09-02 this task re-posted all five deals a second time; Culpeper's
+tiller landed on the same page three times in three days.
+
+1. `do shell script "cd '/Users/joshuadavis/Documents/Claude/Projects/Refine Social Media' && python3 -m vp_social sync --back 7 --forward 14"`
+2. For each store, check the ledger before staging anything:
+   `sqlite3 '/Users/joshuadavis/Documents/Claude/Projects/Refine Social Media/state/social_ledger.sqlite' "select account_key, scheduled_date, substr(text,1,60) from posts where account_key in ('<Store>','GBP_<Store>') and scheduled_date >= date('now','-2 day') and state in ('scheduled','published')"`
+3. If that store's page already has a post for the same product this week, **skip that store entirely**.
+   Only fill genuine gaps. Never publish the same deal photo twice to one page.
+
+**Routing (2026-08-04 redesign):** store deal items go to that store's Facebook Page + that store's
+Google Business Profile ONLY. Brand IG is not a store-local target — do not add it.
+
+**Submission cutoff is Monday 12:00 PM ET** (not end-of-day Tuesday).
 
 ## Step 1 — Read the week's deal submissions
 Read the last 7 days of Slack `#deal-of-the-week` via the Slack MCP. Each valid submission has: store name, item description, price, item photo. Match each to its store (Culpeper, Harrisonburg, Lexington, Roanoke, Waynesboro). Expected: up to 5 submissions (one per store). If a store didn't submit by end-of-day Tuesday, skip that store's slot and add it to the end-of-run DM to Joshua.

@@ -359,3 +359,45 @@ as December drafts get consumed; keep an eye on whether a lightweight way to
 compute per-link calls+texts (vs the aggregate click proxy used this run) is
 worth building, since Brevo's exportRecipients endpoint needs a notify
 webhook we don't currently have.
+
+## 2026-09-05 (Email Department review — Phase 0 + Phase 1 build)
+STATE: Channel healthy going in (W14 on 9/3 delivered 178/183 with 124 unique clicks; Sep 1 Gold &
+Silver 11,000 delivered, 1.8% bounce, 0.15% unsub; both domains authenticated). Full department review
+run against live Brevo, the task registry and the 8/22 audit — 11 findings, plan written to
+`19_EMAIL_DEPT_AUTOMATION_PLAN_2026-09-05.md`.
+FIXED THIS RUN:
+- Monthly Gold & Silver was sending at 2-3 AM, not the 9 AM its description claims (cron fired at 2:15
+  and the task sends on wake). Cron now `0 9 1 * *`; first 9 AM send 10/1.
+- Monday picker STEP 5 still told the runner to upload photos to Brevo's non-existent /v3/media
+  endpoint (the exact thing that killed W10-W12). Rewritten to the proven website-media path.
+- Monday picker STEP 8's Slack confirmation now pins the channel ID and verifies the post landed —
+  that post has been silently missing since 7/27 while the sends themselves were fine.
+- Four orphan drafts (43, 49, 23, 1) renamed [PARKED] and repointed from the 13k master list to the
+  internal seed list, so a stray send can't reach customers.
+- Draft-runway floor raised 4 -> 8 weeks; the guard's "calendar ends Dec 31" note now points at the
+  new quarterly stager instead of just warning.
+BUILT THIS RUN (additive, nothing existing removed):
+- `brevo-stage-next-quarter` (quarterly, 25th of Jan/Apr/Jul/Oct 6 AM) + `bin/stage_quarter.py`.
+  Stages 13 Thursday drafts per quarter from the live template, continues the wave rotation, and
+  verifies every draft it creates. First run 10/25 for Q1 2027. This is the permanent answer to the
+  calendar-exhaustion half of the August blackout.
+- Brevo list 19 "Engaged v2 — human-verified" + `brevo-engaged-v2-refresh` (Wed 6:20 AM) +
+  `bin/engaged_v2.py`. IMPORTANT CORRECTION TO THE 8/22 AUDIT: per-contact click data IS reachable —
+  `GET /contacts/{email}` returns statistics.clicked with campaignId/url/eventTime/ip/count plus
+  statistics.delivered for pairing. The audit's "scanner purge needs per-contact click data the API
+  won't expose" note is wrong and should not be repeated.
+  FIRST SCORING PASS: universe 400 of 11,585 (list 7 + v2 + a rotating slice; seeds excluded).
+  list7=177, v2=87, both=87, list7-only=90, v2-only=0. Reasons: no-clicks-90d 289, intent-click 87,
+  chrome-only 19, clicked-within-31s 4, walked-12-urls 1. List 19 populated with the 87, verified by
+  re-read. NOTHING SENDS TO LIST 19 — list 7 is still the live audience.
+STILL OPEN (needs Joshua): loan-due reminder copy (customer-facing + legal); confirm the birthday 20%
+offer; confirm per-store reply-to. These three are the only decisions in the whole plan that are his.
+STILL OPEN (queued, no input needed): Phases 2-5 of plan file 19 — the Bravo customer-contact pipeline
+cell (the unlock for names/store/phone/DOB/loan-due), triggered flows (loan-due, layaway-due, forfeited
+win-back, 3-step welcome, birthday), store-aware sends + Chekkit SMS orchestration, and collapsing to a
+single metric source. Forfeited win-back list 11 still holds 0 contacts.
+NEXT RUN SHOULD CHECK: (1) did the Monday 9/7 picker post its confirmation line to #deal-of-the-week —
+that is the test of the channel-ID fix; (2) did the 9/10 send (campaign 54) actually jump reach from
+~180 to ~2,400 with wave list 14 attached; (3) after the Wed 9/9 v2 refresh, whether the v2 count is
+stable — 4 stable weeks is the evidence Joshua needs for the audience switch; (4) 10/1 gold send should
+now land at 9 AM, not 2 AM.

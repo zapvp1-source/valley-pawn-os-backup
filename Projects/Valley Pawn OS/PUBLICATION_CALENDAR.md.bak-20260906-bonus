@@ -1,0 +1,138 @@
+# Valley Pawn — Publication Calendar (daily / weekly / monthly)
+
+**Created 2026-09-05** from a full audit of every scheduled task + native agent against what actually
+landed in Slack (Rule 12). This is the canonical list of what we publish, where, when, and which task
+owns it. `fleet/expected_outputs.json` is the machine-readable twin (the fleet-guardian verifies
+against it twice a day); `monthly-publication-audit` (2nd + 4th of month) is the monthly net.
+
+**Rule:** every publication has exactly ONE owner task, a fixed channel, a fixed cadence, and a marker
+string that appears in every successful post. If it isn't in this file it isn't a publication.
+
+**Standing decision (Joshua, 2026-09-05):** `#store-performance` carries WEEKLY cadence only — no
+monthly EOM post there. Every other analytics and marketing channel gets a month-end summary.
+
+---
+
+## MONTHLY (the tier that was broken — see audit below)
+
+| Channel | Publication | Owner task | Fires | Marker | Aug-2026 status (as of 9/5) |
+|---|---|---|---|---|---|
+| #company-performance | Monthly Analytics (3 views × 6 metrics, YoY) | `monthly-analytics-report` (data: `monthly-analytics-prestage` → `bin/monthly_prestage_runner.py`) | 1st 1:45 AM | `Monthly Analytics -` | **MISSED Jul + Aug** → prestage rebuilt native; Aug catch-up 9/5 3:30 PM |
+| #employee-performance | FINAL employee sales rankings | `monthly-employee-sales-rankings` | 1st 2:00 AM | `FINAL` | **Posted then deleted (inaccurate)** → task rebuilt on `employee-activity-range`; Aug re-post via guardian rerun after watcher restart |
+| #scrap-rankings | Gold scrap ranking + YoY + YTD | `monthly-scrap-rankings` | 1st 4:30 AM | `gold scrap` | **MISSED** (run refused to execute) → catch-up 9/5 4:30 PM |
+| #ffl-transfer-performance | FFL transfers (final) | `nics-monthly-ranking` | 1st 9:30 AM | `(final)` | ✅ posted 9/1 10:03 |
+| #ebay-performance | eBay store ratings sweep | `monthly-ebay-ratings-sweep` | 1st 10:00 AM | `Ratings Sweep` | ✅ posted 9/1 10:12 |
+| #email-campiagns | Monthly Gold & Silver campaign (send notice) | `monthly-we-buy-gold-silver-email` | 1st 2:15 AM | `Monthly Gold & Silver` | ✅ 9/1 |
+| #new-customers | New customers ranked, MoM/YoY | `vp-new-customer-report` | 3rd 7:00 AM | `New Customers —` | **MISSED** (died at artifact step) → posted manually 9/5; SKILL reordered Slack-first |
+| Joshua DM → #bonus-goals | Next-month bonus targets (draft; Joshua posts) | `monthly-bonus-targets` | 2nd 9:00 AM | `Bonus Targets` | ✅ draft delivered 9/2 — **awaiting Joshua's post to #bonus-goals** |
+| #bonus-goals | Bonus qualifiers | `monthly-bonus-qualifiers` | 10th 9:00 AM | `qualif` | July's (8/10) not found in channel — verify 9/10 |
+| Joshua DM | Bonus payout | `monthly-bonus-payout` | 10th 11:30 AM | `Bonus Payout` | DM-only by design |
+| #monthly-gun-audit | Gun audit summary | `monthly-gun-audit-report` | 16th 2:30 AM | `Monthly Gun Audit Summary` | last post 8/3 (June period); 8/16 run produced nothing — **verify 9/16** |
+| every analytics + marketing channel below without its own monthly | **Month in Review** rollup | `monthly-eom-recap` (NEW 2026-09-05) | 1st 10:30 AM | `Month in Review` | first run 2026-10-01; Aug 2026 recaps back-filled by first run |
+| Joshua DM | Consolidated GL export | `eom-bravo-gl-export` | 1st 6:00 AM | ledger link | Aug ledger step failed 9/1 (finance, not a channel publication — tracked separately) |
+
+### Month in Review — channels covered by `monthly-eom-recap`
+Analytics: `#loan-review` `#layaway-review` `#aged-inventory-review` `#first-payment-default`
+`#timekeeping-summary` `#weekly-returns-summary` `#daily-funds-reconcilation` `#pawn-walks` `#google-reviews`
+Marketing: `#social-media` `#email-campiagns` `#website` `#ai-marketing` `#ebay-performance` `#blog-posts`
+Explicitly NOT covered (has its own monthly, or Joshua said no): `#store-performance` (no monthly),
+`#company-performance`, `#employee-performance`, `#scrap-rankings`, `#ffl-transfer-performance`,
+`#new-customers`, `#bonus-goals`, `#monthly-gun-audit`, workflow channels (`#deal-of-the-week`,
+`#items-to-price`, `#items-to-markdown`, `#supply-request`, `#chekkit-*`, `#vp-studio-queue`).
+
+## WEEKLY
+
+| Channel | Publication | Owner task | Fires | Marker |
+|---|---|---|---|---|
+| #store-performance | Weekly Store Performance Rankings (MTD) | `weekly-store-kpis` | Mon 10:30 AM | `Weekly Store Performance Rankings` |
+| #store-performance / #loan-review / #layaway-review / #aged-inventory-review / #employee-performance / #first-payment-default | Monday Bravo compile (6 posts) | `monday-bravo-combined-compile` (data: `monday-bravo-combined-run` Sun 6 PM; net: `monday-bravo-postcheck` 8:30) | Mon 8:00 AM | `Store` / `Weekly Past-Due Loan Review` / `Weekly Layaway Review` / `Aged Inventory Review` / `MTD Employee Sales Rankings` / `Weekly First-Payment-Default` |
+| 5 canvases (loan, layaway, employee, aged, store) | Canvas refresh | `weekly-*-canvas-refresh` | Mon 9:20–9:28 | (canvas) |
+| #layaway-review | Layaway Yield % MTD | `layaway-yield-weekly` | Mon 11:15 AM | `Layaway Yield` |
+| #ffl-transfer-performance | FFL transfers MTD | `nics-weekly-mtd-ranking` | Mon 9:30 AM | `Month-to-Date` |
+| #timekeeping-summary | Weekly Timekeeping | `weekly-timekeeping-analysis` | Mon 12:30 AM | `Weekly Timekeeping` |
+| #weekly-returns-summary | Returns — Week of | `weekly-returns-summary` | Mon 1:20 AM | `Returns — Week of` |
+| #google-reviews | Google Reviews — Week of | `review-obtained-last-week` (net: `google-reviews-post-watchdog`) | Mon 1:15 AM | `ranked` |
+| #website | Weekly Website Analytics | `weekly-analytics-summary` — body rendered by `Website/analytics/bin/format_weekly_website.py` since 2026-09-06 (post it VERBATIM; exit 2 = post nothing). Now leads with calls/texts/directions by store | Mon 1:00 AM (posts 9 AM) | `Weekly Website Analytics` |
+| #website | Weekly Website Health Audit | `weekly-website-health-audit` | Mon 5:15 AM | `Weekly Website Health Audit` |
+| #website | Retail page deals refreshed | `vp-website-deals-weekly` | Mon 1:05 PM | `deals refreshed` |
+| #social-media | Weekly Social Recap | `weekly-social-media-recap` | Mon 9:40 AM | `Weekly Social Recap` |
+| #social-media | Community lane / Engagement lane | `vp-community-weekly` / `vp-engagement-weekly` | Mon 3:10 / 3:45 PM | `community posts staged` / `replied to` |
+| #ai-marketing | AI-search health check | `vp-ai-search-health-check` | Mon 6:10 AM | `AI-search health check` |
+| #ai-marketing | AI Visibility metrics | `vp-ai-visibility-metrics` | Fri 6:30 AM | `Visibility` |
+| #ai-marketing | Weekly presence audit | `vp-presence-audit-weekly` | Sun 4:20 PM | `WEEKLY PRESENCE AUDIT` |
+| #email-campiagns | Email — Week of (Brevo KPIs) | `email-analytics-weekly` | Fri 3:30 AM | `Email — Week of` |
+| #email-campiagns | Email channel efficiency | `brevo-weekly-efficiency-audit` | Fri 8:00 AM | `Email channel efficiency` |
+| #email-campiagns | Weekly Email Upload to Brevo | `bravo-brevo-attribute-sync` | Tue 5:30 PM | `Weekly Email Upload` |
+| #ebay-performance | Weekly Online Store Audit | `weekly-online-store-audit` (webhook) | Sun 8:00 AM | `Weekly Online Store Audit` |
+| #ebay-performance | eBay Efficiency — Weekly / Weekly Sales Rankings | native `com.valleypawn.ebay-efficiency-weekly` / `ebay-weekly-rankings` | Fri 3:30 PM / Mon 9:30 AM | `eBay Efficiency` / `eBay Weekly Sales Rankings` |
+| #ebay-performance | eBay Channel Pulse; markdown floor check | `ebay-weekly-channel-audit` / `ebay-markdown-terminal-weekly` | Mon 11:45 AM / 12:15 PM | `Channel Pulse` / `markdown floor` |
+| #mark-downs-summary | Markdown verification | `weekly-markdown-verification-review` (data: `-pull` Sun 7 PM) | Mon 9:35 AM | `Markdown` |
+| #in-store-checklists | Sunday checklist summary | `sunday-checklist-summary` | Sun 8 PM | `checklist` |
+| #supply-request / #supply-order-summary | Tuesday supply summary / checkout | `tuesday-supply-summary` / `tuesday-supply-checkout` | Tue | `Supply` |
+| #chekkit-updates | Weekly review requests | `chekkit-weekly-review-requests` | Tue 4:30 PM | `review requests` |
+| Joshua DM | Marketing CEO Briefing | `marketing-ceo-briefing-weekly` | Mon 11:30 AM | `Marketing CEO Briefing` |
+| #airbnb (Domain 2) | Bald Rock Monday briefing | `bald-rock-monday-briefing` | Mon 4:15 AM | `Bald Rock` |
+
+## Website publications — deterministic formatters (2026-09-06)
+
+Two #website publications no longer have their body written by a model. The formatter is the only
+renderer; the task posts its stdout verbatim and posts NOTHING on exit 2. Same pattern as
+`format_aged_inventory.py` (2026-09-05), for the same reason.
+
+| Publication | Formatter | Gate |
+|---|---|---|
+| Weekly Website Analytics | `Website/analytics/bin/format_weekly_website.py` | mis-mapped columns, non-reconciling channels, zero sessions, overlapping prior window |
+| Shop refreshed | `slack_body()` inside `Website/analytics/bin/shop_refresh.py` | per-store fetch gate; a short store reuses its last-good part or the run withholds |
+
+## DAILY
+
+| Channel | Publication | Owner task | Fires | Marker |
+|---|---|---|---|---|
+| #daily-funds-reconcilation (+ per-store funds channels) | Daily Funds Verification | `daily-funds-verification` (net: `funds-verification-watchdog` 6:45 PM) | 6:00 PM | `Daily Funds Verification` |
+| #pawn-walks | Daily Pawn Walk (intake margin) | `pawn-walk` | 7:15 AM | `Daily Pawn Walk` |
+| Joshua DM + #sold-review / #discount-review | Sold review / Discount review | `sold-review` 7:45 / `discount-review` 8:25 | daily | `SOLD REVIEW` / `DISCOUNT REVIEW` |
+| #items-to-price | Items to price | `daily-items-to-price` | 8:00 AM | `Items to Price` |
+| #general | Clock-in / CloudCover / dress-code checks | `daily-clockin-check` 10:15 / `daily-cloudcover-check` 10:25 / `daily-dress-code-check` 10:30 (Mon–Sat) | daily | `Daily Clock-In Check` / … |
+| #website | Shop refreshed (2×/day) | `vp-website-shop-nightly` — **launcher/verifier only since 2026-09-06**; the work is native `Website/analytics/bin/shop_refresh.py` (plist staged at `fleet/com.valleypawn.shop-refresh.plist`, not installed) | 7 AM / 3 PM | `Shop refreshed` |
+| #google-reviews | New 5-star review shoutouts | `chekkit-new-review-alert` | hourly 9–21 | `new 5 star review` |
+| #chekkit-messages-missed / #chekkit-unanswered-summary | Unanswered Chekkit | `chekkit-unanswered-alert` 8 AM / `-eod-followup` 7 PM | Mon–Sat | `unanswered` |
+| #emails-missed / #voicemails-calls-missed / #general | Missed email / voicemail sweeps | `daily-unopened-email-eval` 6 PM / `zoom-voicemail-alert` / `zoom-voicemail-eod-review` 5:45 PM | daily | `missed` |
+| #jewlery-counts / #end-of-day | Jewelry on-hand counts | `jewelry-onhand-nightly-pull` 8:30 PM / `jewelry-onhand-catchup` 7:45 AM | Mon–Sat | `Jewelry` |
+| Joshua DM | Mail brief (AM/PM), morning brief, Bald Rock contracts, backup health, spot prices, sales-tax sweep, registered-agent check | `ceo-mail-brief`, `morning-brief`, `bald-rock-15-day-contract`, `backup-health-watchdog`, `vp-weekly-spot-price-update`, `sales-tax-*`, `northwest-registered-agent-daily-check` | daily | various |
+| #employee-prospects / Preston DM | Hiring pipeline updates | `indeed-applicant-outreach` (hourly 9–19), `hiring-inbox-watch` | daily | `applicant` |
+
+---
+
+## Audit findings — 2026-09-05 (why monthly was inconsistent)
+
+Daily and weekly tiers were healthy (every channel read for 8/31–9/5 had its posts; the only misses
+were already caught by fleet-guardian and back-filled). **The monthly tier had no safety net at all:**
+none of the monthly publications were in `fleet/expected_outputs.json`, and the guardian's
+"ignore anything whose last scheduled fire is >48 h old" rule means a missed 1st-of-month post is
+invisible to it by the 3rd. Five distinct failure classes, one per broken publication:
+
+1. **Design flaw** — `monthly-analytics-prestage` (Claude/haiku) ran a 60-min drop→poll→copy loop and
+   ended its session before copying; the 6 windows share an end-date filename and overwrote each other.
+   Same failure July and August. **Fix:** loop moved to native `bin/monthly_prestage_runner.py`
+   (copies from each result.json's `output_path` immediately per window, idempotent, resumable); the
+   Cowork task is now launcher + verifier only. Optional launchd plist staged at
+   `fleet/com.valleypawn.monthly-prestage.plist` (not installed — needs Joshua's click).
+2. **Stale source** — `monthly-employee-sales-rankings` still pointed at a cloud-era shared-folder path;
+   the run improvised (data through 8/30, "Total Productivity" instead of Retail Sales Excluding Fees)
+   and the post had to be deleted. **Fix:** rebuilt on the pipeline; new additive cell
+   `employee-activity-range` (`reports/EmployeeActivityRange.ahk`, +2 lines in `bravo_watcher.ahk`,
+   backup `bravo_watcher.ahk.bak-pre-employee-activity-range-2026-09-05`) so the pull is the exact
+   calendar month; same metric/format as the weekly board; Rule-18 gate.
+3. **Rule 17 violation** — `monthly-scrap-rankings` 9/1 run stopped to object to its own execution
+   contract and never pulled. **Fix:** catch-up one-shot 9/5 4:30 PM; guardian coverage added. (A
+   Rule-17 preamble for the SKILL.md was drafted at `_pubaudit/scrap.SKILL.md` but not installed.)
+4. **Silent death at a non-essential step** — `vp-new-customer-report` died calling the Cowork
+   artifact-update tool after the data was complete; the Slack post never happened. **Fix:** August
+   posted manually 9/5; SKILL reordered so Slack posts first and the artifact is best-effort.
+5. **No monthly summary ever existed** for the other analytics channels and all marketing channels.
+   **Fix:** `monthly-eom-recap` (1st 10:30 AM) rolls each channel's own verified weekly/daily posts
+   into a Month in Review post in that channel.
+
+Plus the net: **`monthly-publication-audit`** (2nd and 4th, 10 AM) checks every monthly marker for the
+prior month and re-runs rerun-safe producers in-session; one plain DM to Joshua only if something can't
+be recovered.

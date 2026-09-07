@@ -1,6 +1,6 @@
 ---
 name: monthly-ebay-ratings-sweep
-description: Monthly (1st, 10 AM ET) — sweep public eBay feedback profiles for all 5 Valley Pawn store accounts, rank by 12-month positive %, post digest to #ebay-performance, save monthly doc, compare to prior month. Migrated from cloud 2026-08-21.
+description: Monthly (1st, 10 AM ET) — headless eBay feedback + Top Rated sweep for all 5 Valley Pawn store accounts via the Trading API (no browser), rank by 12-month positive %, post digest to #ebay-performance, save monthly doc, compare to prior month. Rewired 2026-09-06 off the Chrome-only path.
 model: claude-sonnet-5
 ---
 
@@ -20,7 +20,7 @@ model: claude-sonnet-5
 
 ## Execution Contract — DO NOT STOP EARLY
 
-This task is complete ONLY after the documented final action (the post / send / write tool call described at the end of the steps below) returns success.
+This task is complete ONLY after the documented final action (the Slack post in Step 3) returns success.
 
 Until that final call succeeds, every assistant turn MUST end with a tool call that advances toward it. Do not idle, do not wait, do not ask for confirmation.
 
@@ -41,26 +41,32 @@ When you see any of those messages, immediately fire the next concrete tool call
 
 **Failure handling:** if a step errors, retry once. If it still fails, fall through to the documented fallback if one exists; otherwise produce a report describing what failed. Do not pause to ask — the task file authorizes autonomous decisions.
 
-**Speed:** prefer batch tools (e.g. `browser_batch`) to combine sequential actions into one call.
-
 ---
+
 This is an automated run of a scheduled task. The user is not present. Execute autonomously. End with <run-summary>one or two sentences</run-summary>.
 
-> **MIGRATION NOTE (2026-08-21):** This task was moved from a claude.ai cloud scheduled task to this local task at Joshua's direction ("all cloud tasks should be moved to local"). The retired cloud trigger is disabled and will be deleted after this task's first clean local runs. Local tool names apply here: `mcp__Control_your_Mac__osascript`, `mcp__Control_Chrome__*`, `mcp__Filesystem__*` — never `mcp__remote-devices__*` (that prefix only exists in cloud sessions).
+> **REWIRED 2026-09-06.** The previous version scraped public feedback pages and the Seller Hub in Chrome, which only ever captured whichever store Chrome was signed into (August 2026 = Lexington only; September produced nothing). It now runs a headless script against all 5 store accounts via the Trading API using the existing per-store tokens. No browser is used at any point. Previous prompt: `SKILL.md.bak-pre-headless-20260906`.
 
 Run the monthly eBay ratings sweep for Valley Pawn's 5 eBay store accounts and post the results to Slack.
 
-ACCOUNTS (all public eBay usernames):
-- Roanoke: valley_pawn_roanoke
-- Culpeper: valley_pawn_culpeper
-- Waynesboro: valley_pawn_waynesboro
-- Harrisonburg: valley_pawn_harrisonburg
-- Lexington: valley_pawn_lexington
+## Step 1 — pull the data (headless)
 
-STEPS:
-1. For each account, load its public feedback profile at https://www.ebay.com/fdbk/feedback_profile/<username> . NOTE: WebFetch is blocked by eBay's robots.txt on these pages — use the local Chrome tools (`mcp__Control_Chrome__open_url` + `execute_javascript` reading document.body.innerText) instead. From each page capture: feedback score, 12-month positive %, the 1-month/6-month/12-month positive/neutral/negative counts, and any Top Rated Seller badge.
-2. Also open https://www.ebay.com/sh/performance/dashboard for whichever account Chrome is logged into and note the internal seller level (Top Rated / Above Standard / Below Standard) and its metrics. If not reachable, skip without failing.
-3. Post ONE formatted message to the Slack channel #ebay-performance (channel ID C0ANVN5KX4Y) via the Slack connector: title it "eBay Store Ratings Sweep — all 5 accounts" with the month, rank stores best to worst by 12-month positive %, one block per store with feedback score, positive %, 12-mo pos/neutral/neg counts, Top Rated badge if present, and a warning line for any account with new negative/neutral feedback in the past month. End with a short "Bottom line" of priorities (e.g., accounts below standard, feedback needing replies).
-4. Compare against last month's sweep if a prior doc exists in the "Online Store" Claude project (claude/online-sales-status-*.md or a monthly sweep doc) and note rating changes. Then save/update a doc in that project named claude/ebay-ratings-sweep-<YYYY-MM>.md with this month's numbers.
+    cd ~ && /usr/bin/python3 "$HOME/Documents/Claude/Projects/eBay/ebay_ratings_headless.py" > "$HOME/Documents/Claude/Projects/eBay/ebay-ratings-sweep-$(date +%Y-%m).md" 2>&1
 
-Do all of this autonomously — no check-ins with Joshua. Post whatever data you can get and note anything skipped.
+That writes the month's report directly as markdown: a ranked table (feedback score, 12-month positive %, Top Rated Seller yes/no), then per-store 1/6/12-month positive/neutral/negative counts. The Top Rated column is authoritative — eBay's `GetUser` only returns `TopRatedSellerDetails` for accounts that are in the program, so "No" means not Top Rated, not "couldn't tell."
+
+The script may take a minute; if the shell call reports a timeout, wait ~15 s and read the file rather than re-running. If any store shows `PULL FAILED`, retry the script once. If it still fails for that store, post the stores that succeeded and name the missing one plainly — never fill in a number you did not get (Rule 18).
+
+## Step 2 — compare to last month
+
+Read the prior month's file, `~/Documents/Claude/Projects/eBay/ebay-ratings-sweep-<prior YYYY-MM>.md` (the August 2026 one was hand-built from Chrome and has a slightly different layout; the numbers are comparable). Note for each store: change in feedback score, change in 12-month positive %, and any NEW negative or neutral feedback in the past 30 days (the 1-mo column).
+
+## Step 3 — post to Slack
+
+ONE message to #ebay-performance (channel ID C0ANVN5KX4Y) via the Slack connector. Title it "eBay Store Ratings Sweep — all 5 accounts" with the month. Rank stores best to worst by 12-month positive %. One short block per store: feedback score, 12-mo positive %, 12-mo pos/neutral/neg counts, Top Rated yes/no, and month-over-month change. Add a plain-language warning line for any store with new negative/neutral feedback this month. End with a short "Bottom line" — which stores need attention and why. Plain language only; no tool names, file paths, or error text in the channel.
+
+## Step 4 — Seller Standards (late shipment, defect rate, evaluation dates)
+
+These are NOT in the report and must not be estimated. eBay retired `GetSellerDashboard`, and the REST `sell/analytics/v1/seller_standards_profile` endpoint returns 403 because the store tokens lack the `sell.analytics.readonly` scope. Until Joshua re-consents the 5 tokens with that scope (logged in the Open Items Register 2026-09-05), the report's Seller Standards section says UNAVAILABLE. Do not open Chrome to try to scrape Seller Hub — that is the behaviour this rewrite removed. If the tokens have since been re-consented, the script will need a small update to call that endpoint; note it in the run summary and move on.
+
+Do all of this autonomously — no check-ins with Joshua.

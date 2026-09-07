@@ -17,7 +17,7 @@ model: claude-sonnet-5
 > **Timeout rule:** the osascript wrapper kills any single call at ~25 s. Never sleep longer than ~18 s inside one call; poll in short increments across separate calls. Guard any command that may exit nonzero with a trailing || true.
 
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+> ⚠️ **FAILURE HANDLING (Rule 16, supersedes the 2026-07-22 v2 DM policy — updated 2026-09-06).** Failure notices NEVER go to Slack — not to a team channel, not to a store manager, and not to Joshua's DM. If this run fails or cannot complete its core work, append one dated plain-language line plus the technical detail to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn Studios/STATUS.md` under a `## Run holds` heading and stop. The next session picks it up from there. Anything that does go to the field stays in plain everyday language — no error codes, no tool or file names. This replaces every 'DM Joshua that it did not complete' and every 'stay silent on Slack' instruction elsewhere in this file.
 
 
 ## Execution Contract — DO NOT STOP EARLY
@@ -48,7 +48,6 @@ When you see any of those messages, immediately fire the next concrete tool call
 ---
 This is an automated run of a scheduled task. The user is not present. Execute autonomously. End with <run-summary>one or two sentences</run-summary>.
 
-⚠️ FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE. If anything fails, stay completely silent on Slack; describe the failure only in your run-summary (Claude reviews it via completion notification and self-heals). Joshua gets exactly one DM, and only on success.
 
 ## Job
 Process Valley Pawn's casual-video inbox and auto-schedule the results to social via Publer. This is the phone-shot casual video pipeline (Joshua's 2026-07-06 decision: AUTO-SCHEDULE, no approval gate; channels = Brand FB + IG + TikTok + X).
@@ -56,7 +55,15 @@ Process Valley Pawn's casual-video inbox and auto-schedule the results to social
 ## Steps
 1. Check the inbox via the Control-your-Mac osascript tool:
    `do shell script "ls ~/Documents/Claude/Projects/'Valley Pawn Studios'/casual-video-inbox/*.mp4 ~/Documents/Claude/Projects/'Valley Pawn Studios'/casual-video-inbox/*.mov 2>/dev/null"`
-   If NO video files: end silently (run-summary: "inbox empty"). Do nothing else.
+   If NO video files: end silently (run-summary: "inbox empty") — but FIRST run the empty-streak check below. Do nothing else.
+
+   **Empty-streak check (added 2026-09-05 — the lane ran against an empty folder for 60+ days with nothing noticing).**
+   Bump a counter and escalate ONCE per streak, to a file, never to Slack (Rule 16):
+   `do shell script "D=~/Documents/Claude/Projects/'Valley Pawn Studios'; C=$D/.casual_inbox_empty_streak; N=$(cat $C 2>/dev/null || echo 0); N=$((N+1)); echo $N > $C; echo $N"`
+   - If the returned count is **14 or a multiple of 14**, append to `Valley Pawn Studios/STATUS.md` under `## Run holds`:
+     `YYYY-MM-DD — casual video: nobody has dropped a clip in the inbox for N days, so this lane has published nothing. Needs an owner and a weekly ask, or it should be paused.`
+   - Otherwise write nothing anywhere.
+   When files ARE found (step 2), reset the counter first: `do shell script "echo 0 > ~/Documents/Claude/Projects/'Valley Pawn Studios'/.casual_inbox_empty_streak"`
 2. If files exist, run the processor (note the PATH export — ffmpeg lives in /opt/homebrew/bin):
    `do shell script "export PATH=/opt/homebrew/bin:/usr/local/bin:$PATH; cd ~/Documents/Claude/Projects/'Refine Social Media' && python3 casual_video_processor.py 2>&1 | tail -30"`
    The script transcribes (faster-whisper/openai-whisper; if neither is importable, first run `python3 -m pip install --user faster-whisper` — it may take a few minutes), burns brand-spec captions, adds lower-third + end-card, normalizes to 9:16, then tries Publer API media upload + scheduling (Brand+BrandIG+BrandTikTok in one job at the next 6 PM ET slot, BrandTwitter in a second job with a ≤270-char caption).

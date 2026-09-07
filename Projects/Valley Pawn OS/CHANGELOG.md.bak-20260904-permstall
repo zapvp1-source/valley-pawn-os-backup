@@ -753,8 +753,8 @@ Newest first. Material changes to the business operating system. Read this BEFOR
 
 ## 2026-08-24 (later same day) — ALL 5 stores fixed; task DISABLED (superseded, not deleted)
 
-- Joshua supplied the 3 missing passwords directly (Waynesboro/Lexington: `HonestyRules1`,
-  Roanoke: `HonestyRules12`). Also reported still getting emails after the first pass — investigation
+- Joshua supplied the 3 missing passwords directly (Waynesboro/Lexington: `[redacted — see store-credentials skill]`,
+  Roanoke: `[redacted — see store-credentials skill]`). Also reported still getting emails after the first pass — investigation
   found two gaps: (1) the eBay pattern only matched `.com` domains, missing `.de`/`.co.uk` etc.,
   widened to bare `ebay`; (2) scope was too narrow — live sender audit found Classic Firearms,
   GunBroker.com enews, and CDNN Sports marketing newsletters as the dominant remaining volume.

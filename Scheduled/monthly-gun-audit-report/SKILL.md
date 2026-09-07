@@ -1,6 +1,6 @@
 ---
 name: monthly-gun-audit-report
-description: Read the 5 monthly gun audit forms from Slack, update the Valley Pawn Trends Google Sheet, and post a summary in #monthly-gun-audit. Deadline is the 15th of each month (changed from 5th starting April 2026 — historical data before Apr 2026 uses old 5th deadline). Submissions on or before the 15th = on-time (✓); after the 15th = Late.
+description: Read the 5 monthly gun audit forms from Slack, update the Valley Pawn Trends Google Sheet, and post a summary in #monthly-gun-audit built by Compliance/bin/gun_audit_format.py (never hand-written, never carrying a Drive link). Deadline is the 15th of each month (changed from 5th starting April 2026 — historical data before Apr 2026 uses old 5th deadline). Submissions on or before the 15th = on-time (✓); after the 15th = Late.
 model: claude-sonnet-5
 ---
 
@@ -12,7 +12,7 @@ model: claude-sonnet-5
 
 > ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
 
-You are updating the monthly gun audit trend report for Valley Pawn. This task runs on the 7th of each month (giving locations until the 5th to submit). Follow these steps:
+You are updating the monthly gun audit trend report for Valley Pawn. This task runs on the 16th of each month. Stores submit by the 15th (submissions on or before the 15th are on time; after the 15th is Late). The old 5th/7th dates are dead — do not reintroduce them. Follow these steps:
 
 ## Execution Contract — DO NOT STOP EARLY
 
@@ -72,7 +72,7 @@ The report uses a **rolling 12-month window**. Each month, add the new month's d
    - Forms Checked (number)
    - Errors Found (number)
    - Errors Corrected (number)
-   - Whether the submission was on-time (by the 5th), late, or missing
+   - Whether the submission was on time (on or before the 15th), late, or missing
    You may need to open form images in Chrome to read handwritten data. Use the Claude in Chrome tools (navigate, read_page, screenshot, zoom) to view Slack file attachments.
 
 3. **Update the Google Sheet** "Valley Pawn Trends":
@@ -83,12 +83,43 @@ The report uses a **rolling 12-month window**. Each month, add the new month's d
    - On the **Key Takeaways** tab: Update findings with any new observations (new trends, improvements, concerns)
    - Use JavaScript clipboard (navigator.clipboard.writeText + Ctrl+V) to paste TSV data efficiently
 
-4. **Post a summary to Slack** in #monthly-gun-audit (C07CPN020G0). Use the slack_send_message_draft tool to create a draft, then notify the user to review and send. Keep the summary itself short and plain per the Field Communication Standard — which locations submitted, which are missing, each submitted location's error rate, and one line for any real concern. A link to the Google Sheet is fine (that is the "full details" reference point); do not narrate the sheet's tab structure or the update process in the message.
+4. **Build the Slack message with the formatter — DO NOT HAND-WRITE THIS POST.**
+
+   Write the extracted numbers to a JSON file and run:
+
+   ```
+   python3 "/Users/joshuadavis/Documents/Claude/Projects/Compliance/bin/gun_audit_format.py" --file /tmp/gun_audit_<YYYY-MM>.json
+   ```
+
+   Input shape (all 5 stores, always; a store that did not submit gets `"submitted": null`):
+
+   ```json
+   {"period": "August 2026", "deadline": "2026-09-15",
+    "stores": [{"store": "Culpeper", "person": "Bree", "submitted": "2026-09-03",
+                "forms_checked": 133, "errors_found": 4, "errors_corrected": 0}, ...]}
+   ```
+
+   - **exit 0** → post stdout to #monthly-gun-audit (C07CPN020G0) **verbatim**, nothing added,
+     nothing removed. Post it directly with slack_send_message (this is a routine data post).
+   - **exit 2** → post NOTHING. Put the stderr reason in the run record and send Joshua ONE plain
+     line in his DM. Never post a partial or caveated table (Rule 18).
+
+   The formatter owns the wording, the ordering, the on-time/late calls and the error-rate math.
+   It refuses to emit a message whose numbers are internally impossible (e.g. errors_found larger
+   than forms_checked — the mis-mapped-column bug), and it refuses to emit any Drive/Sheets link.
+
+   **NEVER put the Google Sheet link (or any Drive link) in this channel** — store staff are
+   members, and no employee gets Drive content in any form (BUSINESS_OS Rule 13). The sheet stays
+   an internal reference.
+
+5. **Chase uncorrected errors.** If the formatter's "Still to fix" section is non-empty, DM each
+   affected store manager directly (not the channel) asking for the correction status on those
+   specific forms, and note it in the run record. Do not chase in the channel.
 
 ## IMPORTANT NOTES
 - Audit forms are usually handwritten on paper and photographed or scanned as PDFs
 - Waynesboro (Chad) typically submits clean PDFs; others submit photo images
 - Preston Peters is the manager who monitors compliance and sends reminders
 - Error Rate = (Errors Found / Forms Checked) × 100
-- If a location hasn't submitted by the 7th, mark them as "Late" (not missing yet — they may still submit)
+- If a location has not submitted by the 15th, it is Late. If still nothing on the 16th, the post says it is still needed.
 - The Google Sheet file upload is blocked; you must edit the sheet directly in Chrome using clipboard paste

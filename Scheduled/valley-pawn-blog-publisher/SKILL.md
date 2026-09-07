@@ -145,7 +145,7 @@ Available images in the media library (use the media REST endpoint to find more)
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>CTA text mentioning Valley Pawn's five locations, hours (Monday-Saturday 10 AM to 6 PM), and linking to <a href="https://thevalleypawn.com">thevalleypawn.com</a>. End with <em>What's Right Is Right.</em></p>
+<p>CTA text mentioning Valley Pawn's five locations, hours (Culpeper: Monday-Saturday 10 AM to 6 PM; Waynesboro, Harrisonburg, Lexington and Roanoke: Monday, Tuesday, Thursday, Friday and Saturday 10 AM to 6 PM — closed Wednesday and Sunday; never write "Monday-Saturday" for the chain as a whole), and linking to <a href="https://thevalleypawn.com">thevalleypawn.com</a>. End with <em>What's Right Is Right.</em></p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 ```
