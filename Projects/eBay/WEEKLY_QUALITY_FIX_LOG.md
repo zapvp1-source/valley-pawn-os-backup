@@ -90,3 +90,13 @@
 - Regression check: two items fixed in prior runs (Harrisonburg Kindle 800406852492, Roanoke mirror 298226614316) rechecked via getitem_detail.py -- both still holding correctly.
 - Carryover check: Roanoke 307000372642 (Apple Watch, rejected revision from 8/23 run) is no longer in the active listing pull -- getitem_detail.py confirms ListingStatus: Completed, ended 2026-09-04. Self-resolved, no action needed.
 - Report DM'd to Joshua only (U03BB52MDSA), not posted to any team channel.
+
+## 2026-09-07 run (ebay-weekly-quality-fix)
+- Scope: listings started in last 7 days, all 5 stores.
+- Counts: Culpeper 7, Waynesboro 0, Harrisonburg 1, Lexington 1, Roanoke 15 (24 total).
+- Mechanical (title-stripper + caps-fixer --apply): Roanoke -- 15 intake codes stripped, 1 ALL-CAPS title normalized (Milwaukee Tools 2236-20). No changes needed at Culpeper, Waynesboro, Harrisonburg, Lexington.
+- Weak-title rewrite (researched specs via web search, applied via ebay_title_revise.py --apply, state ~/ebay_toolfix_state.json): Roanoke 307164619925 "Milwaukee Tools 2236-20" -> "Milwaukee 2236-20 True-RMS Clamp Meter HVAC/R 600A AC/DC Tool Only" (confirmed against package photo -- model, 600A rating, HVAC/R use all match).
+- Category fix attempted (ebay_category_fix.py): Roanoke 298636228849 Milwaukee M12 REDLITHIUM CP2.5 battery, Battery Chargers -> Power Tool Batteries (per Taxonomy API suggestion). FAILED -- eBay requires the "Battery Technology" item specific before allowing this category, which the script doesn't set. Left as-is, flagged to Benjie for manual fix.
+- Photos: all 24 primary photos downloaded and visually reviewed. 23 clean (whole-item shots, no intake/webcam stills or wrong close-ups). 1 problem: Lexington 158260878900 (Samsung Galaxy Tab S9+) has a phone-settings-menu screenshot as the primary photo instead of the tablet itself. A clean back-of-tablet photo (with S Pen) already exists in the listing at position 3 -- attempted to reorder it to primary via ebay_photo_reorder.py --apply, but eBay rejected the revision ("You can only add pictures at this time"). Flagged to Uriah to swap manually or reshoot.
+- Slack: individual DMs to Sandi (Culpeper, all clean), Chadd (Waynesboro, no new listings), Walker (Harrisonburg, all clean), Uriah (Lexington, photo-order issue flagged), Benjie (Roanoke, fixes summarized + category flag); roll-up to Preston.
+- New additive files this run: new_listings_20260907/ (per-store scan), analysis_report.json (refreshed), title_fixes_20260907.json, cat_fixes_20260907.json, photo_reorder_20260907.json, primaries_20260907/ (downloaded primary photos + Lexington alt-angle photos for review). None of the existing scripts were modified.

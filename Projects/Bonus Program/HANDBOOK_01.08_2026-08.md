@@ -1,7 +1,9 @@
 ### 01.08 Monthly Bonus Program
-_Generated from bonus_rules.json on 2026-09-06 — effective for earning months from 2026-08. Supersedes all earlier versions of this section, including the 2.5%/50% and $3,000-minimum language carried over from the legacy manual._
+_Generated from bonus_rules.json on 2026-09-07 — effective for earning months from 2026-08. Supersedes all earlier versions of this section, including the 2.5%/50% and $3,000-minimum language carried over from the legacy manual._
 
-Store employees earn a monthly incentive bonus, paid once a month on the Friday after the 15th.
+Store employees earn a monthly incentive bonus, paid once a month on the Friday after the 15th of
+the month following the month in which it was earned. When the 15th falls on a Friday, the bonus is
+paid the following Friday.
 
 - **Store revenue goal (hard gate).** If the store does not hit its monthly revenue goal, no bonus is
   paid to anyone at that store for that month.

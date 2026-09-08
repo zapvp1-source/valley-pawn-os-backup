@@ -124,7 +124,7 @@ Judgment actions stay with Claude but read the queue and write the same ledger: 
 **Layer 4 — Publish (`ebay_publish.py`).** Deterministic formatters, posted verbatim (the same fix that cured `#aged-inventory-review`):
 - **Daily** — #ebay-listings (exists) + a net-change line (new − sold − ended − pulled) so the shrinking-catalog question answers itself.
 - **Monday "eBay Weekly"** — ONE post to #ebay-performance replacing rankings + efficiency + online-store audit + channel pulse + floor check: MTD sales ranking, sell-through/days-to-sell/aged, what the engine fixed this week, what needs a human (offers expiring, return messages, photo problems), TRS/standards per store.
-- **Monday manager DM** — one DM per store manager (and Preston roll-up) replacing the three separate DM streams: fixed for you / needs you / your aging items due to pull.
+- **Monday manager DM** — one DM per store manager replacing the three separate DM streams: fixed for you / needs you / your aging items due to pull. (No Preston roll-up — per Joshua 2026-09-07, eBay KPIs/results go only to #ebay-performance / #ebay-listings, never duplicated to Preston.)
 - **Monthly "eBay Month"** (1st 10:30 AM) — markdown results + ratings/standards + month totals; feeds `monthly-eom-recap`.
 - Dashboard artifact "eBay Channel Pulse" rebuilt from the snapshot.
 - Guardian: every publication registered in `fleet/expected_outputs.json`.

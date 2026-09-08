@@ -253,7 +253,7 @@ class PublerClient:
         while time.time() < deadline:
             status = self.job_status(job_id)
             state = status.get("status") if isinstance(status, dict) else None
-            if state in ("completed", "failed"):
+            if state in ("completed", "complete", "failed", "error"):
                 return status
             time.sleep(poll_interval)
         return {"status": "timeout", "job_id": job_id}

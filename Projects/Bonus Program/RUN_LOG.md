@@ -49,3 +49,36 @@ Not paid, not posted anywhere — output is in Joshua's DM only.
 
 **Ineligible-but-earned (terminated before payout), flagged not paid:** Andrew Clark $584.98 GP, Davon Camber
 $425.00, Chonn Grinnage $99.99, Steven Burch $379.99, Cris Lopez $625.93 (all August GP).
+
+## 2026-09-07 — bonus-pace-monday (September MTD pace check)
+
+September `data/2026-09/targets.json` did not exist (month-close-pull hadn't seeded it, and
+#bonus-goals had no September post — Sandi asked that morning, unanswered). Ran
+`bin/bonus_engine.py targets --month 2026-08` off already-collected August EOM/pipeline data to
+generate them (no new Bravo trigger) — targets: CUL $72,645 · HAR $53,216 · LEX $28,158 ·
+ROA $45,941 · WAY $50,019. Written to `data/2026-09/targets.json`, source noted as
+"bonus_engine targets from 2026-08". Not posted to #bonus-goals — Joshua still needs to send that.
+
+MTD net revenue (9/1–9/6, from newest 2026-09-06 EOM files, Reporting Dates verified as
+month-only): CUL $11,413.27 (15.7% of target, 79% of straight-line pace) · HAR $12,884.80 (24.2%,
+121% of pace — only store ahead) · LEX $4,077.64 (14.5%, 72% of pace) · ROA $7,145.19 (15.6%, 78%
+of pace) · WAY $7,670.20 (15.3%, 77% of pace). All 5 stores had usable data.
+
+Qualifiers: gold 0 dwt closed at every store (normal 6 days in). Reviews and email % left as a
+dash — the weekly #google-reviews recap straddles the Aug/Sep boundary so no clean September-only
+count exists yet, and no September chekkit-invites-range pull has run. DM'd Joshua
+(D03BHQH5VGT) only, per `field_posting: false`.
+
+## 2026-09-07 (cont'd) — WAY September target overridden per Joshua
+
+Joshua asked, mid-session: use the "top store yield over the past year" for Waynesboro's
+September target instead of Waynesboro's own trailing-12 historical average, since Waynesboro's
+yield was so high last year. Checked: Waynesboro's own trail-12 average (20.03%) is *already* the
+highest average yield of any store — so "top store yield" and "Waynesboro's own yield" are the
+same store. Read literally as wanting Waynesboro's peak rather than its average, used
+Waynesboro's single best trailing-12 monthly yield instead: **22.7918% (November 2025)**, next
+closest was Culpeper at 22.59% (October 2025). Applied to August 2026 ending assets ($249,683.44)
+→ **September WAY target $56,907** (vs $50,019 under the standard trail-12-average method).
+CUL/HAR/LEX/ROA unchanged. Updated `data/2026-09/targets.json` with a `way_override` block
+documenting the reasoning and both numbers. Not posted to #bonus-goals — `field_posting` is still
+false; drafted for Joshua's DM instead.

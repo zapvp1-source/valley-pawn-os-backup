@@ -3,6 +3,44 @@
 Any session diagnosing Bravo MUST read this index before forming a hypothesis,
 and MUST verify+stamp any OPEN item's next-run outcome before starting new work.
 
+## SOLVED/CONTAINED 2026-09-07 - EOM FILENAME COLLISION: a month file can hold the WRONG DATE RANGE
+- **Symptom:** an `output/<END_DATE>_<STORE>_end-of-month.xlsx` file whose revenue figures are ~11x
+  too large. Balances look fine (they are point-in-time and genuinely correct); PSC, Sales Profit
+  and layaway collections are garbage. Confirmed on `2025-08-31_*` (actually held 9/1/2024-8/31/2025)
+  and `2026-08-31_*` / `2026-08-30_*` (9/1/2025-8/31/2026), all 5 stores. 10 of 265 files affected.
+- **ROOT CAUSE — not a bad pull, a NAME COLLISION.** `EndOfMonth.ahk` names its output by END DATE
+  only. `monthly-analytics-prestage` (day 28-31, 8 PM) pulls **six windows per store per month** —
+  same-month, YTD and trailing-12, for the current AND prior year — and **every one of them ends on
+  the same day**. Six pulls, one filename; the last one written wins and silently replaces the
+  canonical month file. This is a RACE, so **any month can lose**, not just August.
+- **DO NOT** "fix" this by changing `OutputFilename()` or `EndOfMonth.ahk`. The name scheme is shared
+  by every handler and ~20 downstream tasks expect it (Rule #4). Patching the handler's date-setting
+  would also not help — the dates DID take; the file was clobbered afterward. The expert board
+  rejected both on 2026-09-07.
+- **THE CONTAINMENT (use this, don't re-invent):** `eom_validate.py`.
+  - `read_range(path)` returns the file's OWN reporting range. Fast path reads the xlsx zip's
+    `sharedStrings.xml` directly — ~1 ms vs ~400 ms through openpyxl (3 seconds vs 2 minutes across
+    300 files). **GOTCHA: the range VALUE sits around column AY/51 and drifts per store — scan the
+    FULL row width or you will find nothing and conclude the file is unreadable rather than wrong.**
+  - `resolve(store, 'YYYY-MM')` returns the best trustworthy file, trying: canonical pipeline file ->
+    `monthly-analytics/<ym>/same-month-current_<STORE>.xlsx` ->
+    `monthly-analytics/<ym+1y>/same-month-prior_<STORE>.xlsx` -> `eom_archive/`. A candidate whose
+    range is wrong is REJECTED, never used with a caveat.
+  - `archive_all()` maintains `eom_archive/<START>_<END>_<STORE>.xlsx` — range-stamped and therefore
+    collision-proof, so no window can destroy another's data again. Backfilled 221 files 2026-09-07.
+  - CLI: `python3 eom_validate.py audit` lists every month-end file whose range lies.
+- **RECOVERY IS USUALLY FREE — DO NOT RE-PULL BRAVO.** `monthly-analytics-prestage` already stages
+  each window under a range-stamped name, so the true month file is almost always still on disk under
+  `output/monthly-analytics/<YYYY-MM>/same-month-current_<STORE>.xlsx` (or `same-month-prior_*` in the
+  following year's folder). Both Augusts were fully recovered this way with zero Bravo contact, and
+  the recovered Aug 2026 matched the Bonus Program's independently-derived close to the penny on all
+  5 stores.
+- **STILL EXPOSED (open):** `store_kpis_compile.py`, `layaway_yield_compile.py` and monthly-analytics'
+  own parser still glob for `<date>_<STORE>_end-of-month.xlsx` and trust it. One-line fix each is to
+  call `eom_validate.resolve()`. Not done 2026-09-07 (Rule #4 — hardened, in production); do them
+  deliberately, one at a time, with a smoke test each. The Bonus Program engine already gates
+  independently and is NOT exposed.
+
 ## SOLVED - DO NOT RE-DIAGNOSE OR RE-PROPOSE (moved from OPEN 2026-08-04)
 - 2026-08-03/04: post-to-accounting-gl (Consolidated General Ledger) appeared to hang on preview render for EVERY store attempted ("Export... never appeared" / "preview ribbon did not appear"). TWO FIX ATTEMPTS chasing a Continuous-Scrolling render-hang theory (toggle-off after the wait, then toggle-off before the wait with longer timeouts) BOTH FAILED live-tested 2026-08-03/04 — because Continuous Scrolling was never the actual cause.
 - ACTUAL ROOT CAUSE (found 2026-08-04 via direct computer-use observation of a live run, not more timeout-guessing): Bravo's Consolidated GL report REFUSES to open at all if ANY day inside the requested date range is still unposted ("Post to Accounting" not yet run for that day). Submitting the report configuration in that state pops a `Warning` dialog — "There are dates that need to be posted first: <date>" — which the shared `DismissPopups()` correctly auto-dismisses, and then the automation is left waiting on a preview window that will NEVER appear, because the report was never generated. Every "did not render" / "ribbon did not appear" error of the last two days was this warning being silently swallowed, not a slow render.

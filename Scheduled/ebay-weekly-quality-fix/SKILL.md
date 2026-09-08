@@ -68,6 +68,6 @@ STEPS each run:
 
 THEN DM each store's manager on Slack (post to their user_id as the channel_id) a concise, friendly note in plain language: how many new listings you looked at, what was wrong with them in plain terms (weak title, wrong category, bad main photo), what you already fixed, anything only they can do (e.g. re-shoot a photo), and a one-line why (good titles/categories/photos help items sell faster). Do not mention script names, "Trading API," "ReviseFixedPriceItem," or any tool/system name in the DM — describe the fix in plain terms only. Manager Slack IDs:
   Roanoke → Benjie U0631AECK4K | Culpeper → Sandi U04C5DL5EKH | Waynesboro → Chadd U04U136MF6V | Harrisonburg → Walker U09UTFT4P7X | Lexington → Uriah U09H9ES2LKA
-Also DM Preston (Operations, U03BWMEM9GR) a short roll-up across all stores, same plain-language rule. If a store had no new listings or nothing to fix, send a quick "all clean this week" note or skip it.
+Do NOT DM Preston or post any eBay KPI/results roll-up to him -- those results are already published in the dedicated eBay Slack channels (#ebay-performance, #ebay-listings). (Changed 2026-09-07 per Joshua -- stop duplicating KPIs into Preston DMs.)
 
 All title changes are reversible via the state files. Consult the ebay-context and valley-pawn-context skills for brand voice. Keep DMs brief and warm.

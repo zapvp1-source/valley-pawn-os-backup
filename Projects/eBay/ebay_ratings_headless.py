@@ -9,22 +9,31 @@ Pulls, per store, with no browser:
   - feedback score, 1/6/12-month positive / neutral / negative counts, positive %
   - Top Rated Seller status and eBay's own site-visibility flags (GetUser -> SellerInfo)
 
-Seller Standards detail (late shipment rate, defect rate, next evaluation date) is NOT available
-here: eBay retired GetSellerDashboard, and the REST endpoint
-`sell/analytics/v1/seller_standards_profile` returns 403 because the store tokens lack the
-`sell.analytics.readonly` scope. Until those tokens are re-consented with that scope, this script
-reports standards as UNAVAILABLE rather than guessing (Rule 18).
+Seller Standards (late shipment rate, defect rate, cases closed without resolution, standards
+level, next evaluation date) come from `sell/analytics/v1/seller_standards_profile` via
+`ebay_analytics_auth.py`, using the 5 store refresh tokens minted 2026-09-06 (full 3-legged OAuth,
+~sell.analytics.readonly~ scope; good ~547 days). If that module or its saved tokens are ever
+missing, this script reports standards as UNAVAILABLE rather than guessing (Rule 18) — it must
+never estimate a standards level.
 
 Usage: python3 ebay_ratings_headless.py            # prints a markdown report to stdout
 """
 import datetime
+import json
 import os
 import sys
 import xml.etree.ElementTree as ET
 from urllib.request import Request, urlopen
+from urllib.error import HTTPError
 
 sys.path.insert(0, os.path.expanduser("~/.vp_secrets"))
 from ebay_store_tokens import APP_ID as APP, DEV_ID as DEV, CERT_ID as CERT  # noqa: E402
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+try:
+    from ebay_analytics_auth import access_token as _analytics_token
+except Exception:
+    _analytics_token = None
 
 NS = "urn:ebay:apis:eBLBaseComponents"
 URL = "https://api.ebay.com/ws/api.dll"
@@ -81,6 +90,48 @@ def profile(token):
     }
 
 
+STANDARDS_URL = "https://api.ebay.com/sell/analytics/v1/seller_standards_profile/PROGRAM_US/CURRENT"
+# The metrics that matter for a plain-language read — everything else (min days on site, min
+# transaction count, min GMV) is an eligibility gate all 5 stores clear comfortably and isn't
+# worth reporting monthly.
+KEY_METRICS = {
+    "SHIPPING_MISS_RATE": "Late shipment rate",
+    "DEFECTIVE_TRANSACTION_RATE": "Transaction defect rate",
+    "DEFECTIVE_TRANSACTION_COUNT": "Transaction defect count",
+    "CLAIMS_SAF_RATE": "Cases closed without seller resolution",
+    "VALID_TRACKING_UPLOADED_WITHIN_HANDLING_RATE": "Tracking uploaded on time",
+}
+
+
+def standards(store_name):
+    if _analytics_token is None:
+        return {"error": "ebay_analytics_auth.py not importable"}
+    tok = _analytics_token(store_name.lower())
+    req = Request(STANDARDS_URL, headers={"Authorization": f"Bearer {tok}", "Accept": "application/json"})
+    try:
+        with urlopen(req, timeout=30) as r:
+            d = json.loads(r.read().decode())
+    except HTTPError as e:
+        return {"error": f"HTTP {e.code}: {e.read()[:200].decode(errors='replace')}"}
+    out = {"level": d.get("standardsLevel"), "eval_date": d.get("cycle", {}).get("evaluationDate", "")[:10],
+           "eval_month": d.get("cycle", {}).get("evaluationMonth"), "metrics": {}, "below": []}
+    for m in d.get("metrics", []):
+        key = m.get("metricKey")
+        if key not in KEY_METRICS:
+            continue
+        v = m.get("value")
+        if isinstance(v, dict):
+            display = v.get("value")
+            if "numerator" in v:
+                display = f"{v['value']}% ({v['numerator']}/{v['denominator']})"
+        else:
+            display = v
+        out["metrics"][KEY_METRICS[key]] = display
+        if m.get("level") == "BELOW_STANDARD":
+            out["below"].append(KEY_METRICS[key])
+    return out
+
+
 def main():
     rows = []
     for st in stores():
@@ -115,10 +166,34 @@ def main():
         if "error" in r:
             print(f"- {r['store']}: PULL FAILED — {r['error']}")
     print("\n## Seller Standards\n")
-    print("UNAVAILABLE this run. `GetSellerDashboard` is retired by eBay (404) and the REST "
-          "`sell/analytics/v1/seller_standards_profile` endpoint returns 403 — the store tokens "
-          "lack the `sell.analytics.readonly` scope. Re-consent the 5 store tokens with that scope "
-          "and this section fills itself in for all 5 stores. Nothing is estimated here on purpose.")
+    if _analytics_token is None:
+        print("UNAVAILABLE this run — `ebay_analytics_auth.py` could not be imported. Nothing is "
+              "estimated here on purpose (Rule 18).")
+    else:
+        std_rows = []
+        for st in stores():
+            s = standards(st["name"])
+            s["store"] = st["name"]
+            std_rows.append(s)
+        print("| Store | Level | Evaluated | Late Shipment | Defect Rate | Cases w/o Resolution | Tracking On Time |")
+        print("|---|---|---|---|---|---|---|")
+        for s in std_rows:
+            if "error" in s:
+                print(f"| {s['store']} | UNAVAILABLE | — | pull failed: {s['error'][:80]} | | | |")
+                continue
+            m = s["metrics"]
+            print(f"| {s['store']} | {s['level']} | {s['eval_date']} | "
+                  f"{m.get('Late shipment rate','—')} | "
+                  f"{m.get('Transaction defect rate', m.get('Transaction defect count','—'))} | "
+                  f"{m.get('Cases closed without seller resolution','—')} | "
+                  f"{m.get('Tracking uploaded on time','—')} |")
+        below = [(s["store"], s["below"]) for s in std_rows if s.get("below")]
+        if below:
+            print("\n**Below standard on:**")
+            for store, metrics in below:
+                print(f"- {store}: {', '.join(metrics)}")
+        else:
+            print("\nNo store is below standard on any metric this cycle.")
 
 
 if __name__ == "__main__":

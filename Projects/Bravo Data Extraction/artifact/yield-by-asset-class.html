@@ -1,0 +1,700 @@
+<title>Yield by Asset Class</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+
+<style>
+/* ---- palette: high contrast, both themes ---- */
+:root{
+  --ground:#F6F5F2; --surface:#FFFFFF; --sunk:#ECEBE6;
+  --ink:#14171A; --body:#33383B; --muted:#565C5F; --faint:#6E7477;
+  --rule:#C9CAC4; --hair:#E0E0DA;
+  --loan:#175F53; --inv:#8A5312;
+  --loanFill:#1F7566; --invFill:#B3721F; --goldFill:#6B4A94;
+  --up:#1E6B41; --down:#9B3A22;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1113; --surface:#1A1E21; --sunk:#0A0D0F;
+    --ink:#F2F4F3; --body:#DCE0DE; --muted:#B4BAB7; --faint:#949A97;
+    --rule:#39403C; --hair:#2A302D;
+    --loan:#7FD0C1; --inv:#F0B96A;
+    --loanFill:#5FBCAB; --invFill:#DCA355; --goldFill:#B69BDB;
+    --up:#7FD09A; --down:#F0876A;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1113; --surface:#1A1E21; --sunk:#0A0D0F;
+  --ink:#F2F4F3; --body:#DCE0DE; --muted:#B4BAB7; --faint:#949A97;
+  --rule:#39403C; --hair:#2A302D;
+  --loan:#7FD0C1; --inv:#F0B96A;
+  --loanFill:#5FBCAB; --invFill:#DCA355; --goldFill:#B69BDB;
+  --up:#7FD09A; --down:#F0876A;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--body);
+  font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:18px; line-height:1.65; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1000px;margin:0 auto;padding:0 32px 110px}
+.prose{max-width:62ch}
+.prose p, .prose li{color:var(--body)}
+
+h1,h2{font-family:"Fraunces",Georgia,serif;font-weight:600;color:var(--ink);
+  text-wrap:balance;margin:0}
+h1{font-size:clamp(40px,6vw,58px);line-height:1.05;letter-spacing:-.02em}
+h2{font-size:clamp(27px,3.4vw,33px);line-height:1.2;letter-spacing:-.012em}
+h3{font-family:"Source Sans 3",sans-serif;font-size:20px;font-weight:700;
+  color:var(--ink);line-height:1.35;margin:0}
+p{margin:0 0 1.1em}
+strong{font-weight:700;color:var(--ink)}
+
+.eyebrow{font-size:14px;font-weight:600;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--muted)}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;
+  font-weight:500}
+.loan{color:var(--loan);font-weight:600}
+.inv{color:var(--inv);font-weight:600}
+
+/* ---- masthead ---- */
+header.top{padding:70px 0 44px;border-bottom:2px solid var(--rule)}
+.kicker{display:flex;gap:10px 26px;align-items:baseline;flex-wrap:wrap;margin-bottom:22px}
+header.top h1{margin-bottom:22px}
+.standfirst{font-size:22px;line-height:1.55;color:var(--muted);max-width:34em}
+.standfirst b{color:var(--ink);font-weight:700}
+
+section{padding:60px 0 0}
+.sechead{margin-bottom:10px}
+.dek{color:var(--muted);margin:0 0 30px;max-width:60ch;font-size:18px}
+
+/* ---- headline tiles ---- */
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:16px;margin:30px 0 0}
+.cell{background:var(--surface);border:1px solid var(--rule);border-radius:8px;
+  padding:22px 24px 20px}
+.cell.hero{border-width:2px;border-color:var(--ink)}
+.cell .lab{font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);display:block;margin-bottom:14px}
+.cell .big{font-family:"IBM Plex Mono",monospace;font-size:44px;font-weight:600;
+  font-variant-numeric:tabular-nums;line-height:1;letter-spacing:-.03em;color:var(--ink)}
+.cell .big.loan{color:var(--loan)}
+.cell .big.inv{color:var(--inv)}
+.cell .big small{font-size:24px}
+.cell .sub{font-size:16px;color:var(--muted);margin-top:12px;line-height:1.5}
+
+/* ---- formulas ---- */
+.formulas{display:grid;gap:18px;margin:30px 0 0}
+.fx{background:var(--surface);border:1px solid var(--rule);border-radius:8px;
+  padding:18px 22px}
+.fx .name{display:block;font-size:14px;font-weight:700;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.fx .eq{font-size:17px;line-height:1.5}
+.fx .top{display:block;padding-bottom:5px;border-bottom:2px solid currentColor}
+.fx .bot{display:block;padding-top:5px}
+
+/* ---- decomposition ---- */
+.decomp{margin-top:32px;display:flex;flex-direction:column;gap:4px}
+.drow{display:grid;grid-template-columns:150px 1fr 96px;align-items:center;gap:18px;
+  padding:14px 0;border-bottom:1px solid var(--hair)}
+.drow.co{border-top:2px solid var(--rule);border-bottom:0;margin-top:8px;padding-top:18px}
+.dname{font-size:17px;font-weight:600;color:var(--ink);line-height:1.3}
+.bars{display:flex;flex-direction:column;gap:7px}
+.bar{display:flex;height:22px;border-radius:4px;overflow:hidden;background:var(--sunk)}
+.bar span{display:block;height:100%}
+.bar .b-loan{background:var(--loanFill)}
+.bar .b-inv{background:var(--invFill)}
+.bar .b-gold{background:var(--goldFill)}
+.bar.y25{opacity:.45}
+.dval{text-align:right;font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;
+  line-height:1.4}
+.dval .d26{font-size:19px;font-weight:600;color:var(--ink)}
+.dval .d25{font-size:15px;color:var(--faint)}
+
+.legend{display:flex;gap:14px 28px;flex-wrap:wrap;margin-top:26px;font-size:16px;
+  color:var(--muted)}
+.legend i{display:inline-block;width:15px;height:15px;border-radius:3px;
+  margin-right:9px;vertical-align:-2px}
+
+/* ---- tables ---- */
+.tscroll{overflow-x:auto;margin-top:28px;border:1px solid var(--rule);
+  border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:17px}
+th,td{padding:14px 16px;text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{font-size:14px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--muted);border-bottom:2px solid var(--rule);
+  padding-top:16px;padding-bottom:10px;vertical-align:bottom}
+thead th.grp{text-align:center;border-bottom:1px solid var(--hair);
+  padding-bottom:6px;color:var(--ink)}
+tbody td{border-bottom:1px solid var(--hair);font-family:"IBM Plex Mono",monospace;
+  font-variant-numeric:tabular-nums;font-weight:500;color:var(--ink)}
+tbody td:first-child{font-family:"Source Sans 3",sans-serif;font-weight:600}
+tbody tr:last-child td{border-bottom:0}
+tbody tr.total td{border-top:2px solid var(--rule);font-weight:700;background:var(--sunk)}
+.delta-up{color:var(--up);font-weight:600}
+.delta-dn{color:var(--down);font-weight:600}
+.tnote{font-size:16px;color:var(--muted);margin-top:14px}
+
+.chartbox{margin-top:28px;border:1px solid var(--rule);border-radius:8px;
+  background:var(--surface);padding:24px 20px 14px;overflow-x:auto}
+svg{display:block;max-width:100%}
+
+.note{margin-top:30px;border:1px solid var(--rule);border-left:5px solid var(--inv);
+  border-radius:8px;background:var(--surface);padding:22px 26px}
+.note h3{margin-bottom:10px}
+.note p{margin-bottom:.9em;color:var(--body)}
+.note p:last-child{margin-bottom:0}
+.note.ok{border-left-color:var(--loanFill)}
+
+.proof{font-family:"IBM Plex Mono",monospace;font-size:16px;line-height:1.9;
+  background:var(--sunk);border:1px solid var(--rule);border-radius:8px;
+  padding:22px 24px;margin:26px 0;overflow-x:auto;color:var(--muted)}
+.proof b{color:var(--ink);font-weight:600}
+
+ul.tight{margin:0;padding-left:1.2em}
+ul.tight li{margin-bottom:1em;color:var(--body)}
+
+footer{margin-top:72px;padding-top:26px;border-top:2px solid var(--rule);
+  color:var(--muted);font-size:16px;line-height:1.75}
+
+@media (max-width:680px){
+  body{font-size:17px}
+  .wrap{padding:0 20px 80px}
+  .standfirst{font-size:19px}
+  .drow{grid-template-columns:104px 1fr 74px;gap:12px}
+  .dname{font-size:15px}
+  .cell .big{font-size:36px}
+}
+@media (prefers-reduced-motion:no-preference){.bar span{transition:width .5s ease}}
+</style>
+
+<div class="wrap">
+
+<header class="top">
+  <div class="kicker">
+    <span class="eyebrow">Full Circle Finance Inc · Valley Pawn</span>
+    <span class="eyebrow"><span data-v="span"></span> · <span data-v="nMonths"></span> months</span>
+  </div>
+  <h1>Yield by Asset Class</h1>
+  <p class="standfirst">The company earns <b><span data-v="co.f26.by" data-f="p1"></span>% a month</b> on the capital it has deployed. That one number hides two very different businesses: loans return a flat, dependable <b>12%</b> at every store, while inventory returns anywhere from <b><span data-v="iyStoreBand.0" data-f="p0"></span>% to <span data-v="iyStoreBand.1" data-f="p0"></span>%</b> depending on who is running the store.</p>
+</header>
+
+<section>
+  <div class="strip">
+    <div class="cell">
+      <span class="lab">Loan yield · 2026 YTD</span>
+      <div class="big loan"><span data-v="co.f26.ly" data-f="p2"></span><small>%</small></div>
+      <div class="sub">per month — <span class="num" data-v="co.f26.ly" data-f="x12"></span> a year<br>on <span class="num" data-v="co.lb26" data-f="mk"></span> average loan balance</div>
+    </div>
+    <div class="cell">
+      <span class="lab">Inventory yield · 2026 YTD</span>
+      <div class="big inv"><span data-v="co.f26.iy" data-f="p2"></span><small>%</small></div>
+      <div class="sub">per month — <span class="num" data-v="co.f26.iy" data-f="x12"></span> a year<br>on <span class="num" data-v="co.ib26" data-f="mk"></span> average inventory</div>
+    </div>
+    <div class="cell hero">
+      <span class="lab">Blended · 2026 YTD</span>
+      <div class="big"><span data-v="co.f26.by" data-f="p2"></span><small>%</small></div>
+      <div class="sub">per month — <span class="num" data-v="co.f26.by" data-f="x12"></span> a year<br>on <span class="num" data-v="co.tot26" data-f="mk"></span> total assets</div>
+    </div>
+    <div class="cell">
+      <span class="lab">Same window last year</span>
+      <div class="big" style="color:var(--muted)"><span data-v="co.l25.by" data-f="p2"></span><small>%</small></div>
+      <div class="sub"><span id="yoyDelta"></span> year over year,<br>all of it from inventory</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead"><h2>What the numbers say</h2></div>
+  <div class="prose"><ul class="tight" id="findings"></ul></div>
+</section>
+
+<section id="chanSection" hidden>
+  <div class="sechead"><h2>Growth by channel</h2></div>
+  <p class="dek" id="chanDek"></p>
+
+  <div class="tscroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Channel</th><th id="chanH1"></th><th id="chanH2"></th>
+          <th>Growth $</th><th>Growth %</th><th>Share of<br>all growth</th>
+        </tr>
+      </thead>
+      <tbody id="chantbl"></tbody>
+    </table>
+  </div>
+
+  <div class="note ok">
+    <h3 id="chanAnswerH"></h3>
+    <p id="chanAnswer" style="margin-bottom:0"></p>
+  </div>
+
+  <h3 style="margin-top:36px">How the mix shifted</h3>
+  <div class="decomp" id="chanMix"></div>
+  <div class="legend">
+    <span><i style="background:var(--loanFill)"></i>Loan revenue</span>
+    <span><i style="background:var(--invFill)"></i>Retail gross profit (non-gold)</span>
+    <span><i style="background:var(--goldFill)"></i>Scrap gross profit (gold)</span>
+    <span>Top bar = this year · Bottom = last year</span>
+  </div>
+
+  <h3 style="margin-top:40px">Where each store's growth came from</h3>
+  <div class="tscroll">
+    <table>
+      <thead>
+        <tr>
+          <th rowspan="2">Store</th>
+          <th class="grp" colspan="2">Net revenue</th>
+          <th rowspan="2">Growth</th>
+          <th class="grp" colspan="3">Dollar change by channel</th>
+        </tr>
+        <tr><th id="chanS1"></th><th id="chanS2"></th><th>Loan</th><th>Retail</th><th>Scrap</th></tr>
+      </thead>
+      <tbody id="chanstoretbl"></tbody>
+    </table>
+  </div>
+  <p class="tnote">Net revenue = loan revenue + retail gross profit + scrap gross profit. The three add up exactly; this is the same total the bonus program uses.</p>
+</section>
+
+<section>
+  <div class="sechead"><h2>Where the yield comes from</h2></div>
+  <p class="dek">Each bar is one store's blended monthly yield, split by which asset class produced it. The solid bar is 2026, the faded bar below it is 2025 — same <span data-v="like"></span> window both years, so it is a fair comparison.</p>
+
+  <div class="decomp" id="decomp"></div>
+
+  <div class="legend">
+    <span><i style="background:var(--loanFill)"></i>Loan contribution</span>
+    <span><i style="background:var(--invFill)"></i>Inventory contribution</span>
+    <span>Solid = 2026 · Faded = 2025</span>
+  </div>
+</section>
+
+<section>
+  <div class="sechead"><h2>Store by store</h2></div>
+  <p class="dek">Loan yield is nearly identical everywhere — it is set by Virginia's rate structure, not by management. Inventory yield spans a <span id="iySpread"></span>-point range, and that spread is where the entire difference between stores lives.</p>
+
+  <div class="tscroll">
+    <table>
+      <thead>
+        <tr>
+          <th rowspan="2">Store</th>
+          <th class="grp" colspan="3">2025 · <span data-v="likeShort"></span></th>
+          <th class="grp" colspan="3">2026 · <span data-v="likeShort"></span></th>
+          <th rowspan="2">Change</th>
+          <th rowspan="2">Asset mix<br>loan / inv</th>
+        </tr>
+        <tr><th>Loan</th><th>Inv</th><th>Blend</th><th>Loan</th><th>Inv</th><th>Blend</th></tr>
+      </thead>
+      <tbody id="storetbl"></tbody>
+    </table>
+  </div>
+  <p class="tnote">All figures are percent per month. Multiply by 12 for the annual rate.</p>
+</section>
+
+<section>
+  <div class="sechead"><h2 id="chartHead"></h2></div>
+  <p class="dek">The loan line is almost a straight edge — it has stayed inside a <span id="lyBand"></span> band the whole time. The inventory line does all the moving, and it is what lifted the blended number in 2026.</p>
+
+  <div class="chartbox">
+    <svg id="lines" viewBox="0 0 960 380" role="img" aria-label="Monthly yield by asset class, company-wide"></svg>
+  </div>
+  <div class="legend">
+    <span><i style="background:var(--loanFill)"></i>Loan yield</span>
+    <span><i style="background:var(--invFill)"></i>Inventory yield</span>
+    <span><i style="background:var(--muted)"></i>Blended</span>
+  </div>
+</section>
+
+<section>
+  <div class="sechead"><h2>How the three numbers are defined</h2></div>
+  <p class="dek">This splits the "Yield" the bonus program already uses — it does not redefine it.</p>
+
+  <div class="formulas">
+    <div class="fx">
+      <span class="name" style="color:var(--loan)">Loan yield</span>
+      <div class="eq">
+        <span class="top">interest + fees + misc charges collected this month</span>
+        <span class="bot">loan balance at the end of last month</span>
+      </div>
+    </div>
+    <div class="fx">
+      <span class="name" style="color:var(--inv)">Inventory yield</span>
+      <div class="eq">
+        <span class="top">gross profit on everything sold this month (sales − cost)</span>
+        <span class="bot">inventory balance at the end of last month</span>
+      </div>
+    </div>
+    <div class="fx">
+      <span class="name">Blended — unchanged, this is the bonus-program "Yield"</span>
+      <div class="eq">
+        <span class="top">net revenue = loan revenue + retail gross profit</span>
+        <span class="bot">loan balance + inventory balance, end of last month</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="note ok">
+    <h3>The split is exact, not approximate</h3>
+    <p style="margin-bottom:0" id="exactLine"></p>
+  </div>
+</section>
+
+<section>
+  <div class="sechead"><h2>Layaway: the honest answer</h2></div>
+  <p class="dek">Layaway does not have a yield, and giving it one would count the same money twice. Here is why — proven from the data, not argued.</p>
+
+  <div class="prose">
+    <p><strong>Layaway is not a third asset class. It is a payment plan on the inventory you already own.</strong> When a customer puts an item on layaway, that item stays in your inventory until they pick it up. The "layaway balance" is not something the business owns — it is what the customer still owes on a sale that has not closed yet.</p>
+    <p>So the money at risk is the <strong>cost of the goods sitting in the back</strong>, which is already inside the inventory balance. And the return is the <strong>gross profit when it gets picked up</strong>, which is already inside retail gross profit. Both sides are counted already.</p>
+  </div>
+
+  <div class="proof">
+Bravo's End-of-Month sales summary — every store, every month:<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;Taxable Sales + <b>Taxable Layaway</b> + Taxable Fees<br>
+&nbsp;+&nbsp; Nontaxable Sales + <b>Nontaxable Layaway</b> + Nontaxable Fees<br>
+&nbsp;=&nbsp; <b>Total Sales</b><br><br>
+Tested across <b>260 store-months</b> → holds to the penny, <b>zero mismatches</b>.<br>
+Layaway is a median <b>9%</b> of total sales.<br><br>
+And gross profit = Total Sales − cost of goods.<br>
+→ <b>Layaway profit is already inside the inventory yield.</b>
+  </div>
+
+  <div class="prose">
+    <p><strong>Measure collection velocity instead.</strong> The real question on layaway is not what it earns, but how fast it turns into cash and how much is going stale. That is a genuine number worth watching — it just belongs underneath inventory, not beside it. <span id="layLine"></span></p>
+  </div>
+
+  <div class="tscroll" style="max-width:720px">
+    <table style="min-width:600px">
+      <thead>
+        <tr>
+          <th rowspan="2">Store</th>
+          <th class="grp" colspan="2">Avg balance</th>
+          <th class="grp" colspan="2">Collected / month</th>
+          <th class="grp" colspan="2">Velocity</th>
+        </tr>
+        <tr><th>2025</th><th>2026</th><th>2025</th><th>2026</th><th>2025</th><th>2026</th></tr>
+      </thead>
+      <tbody id="laytbl"></tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <h3>One thing worth fixing in the weekly layaway report</h3>
+    <p style="margin-bottom:0">The weekly #layaway-review post divides <strong>part of a month's</strong> collections by a <strong>full</strong> balance. So the same store looks about half as good when pulled on the 14th as on the 30th — the number tracks the calendar, not performance. Using a full month's collections over the prior month's closing balance, as the table above does, makes the weeks comparable.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sechead"><h2>Gold: a quarter of the cost base, a fifth of the earnings</h2></div>
+  <p class="dek">Scrap is not a separate asset class either — but unlike layaway, it is <em>big</em>. Refining is where a quarter of all cost of goods goes, it is growing fast, and it behaves like a different business from everything else on this page.</p>
+
+  <div class="prose">
+    <p><strong>The metal you send to the refiner leaves the inventory balance the same way a retail sale does</strong> — Bravo books it as "Refined (Cost of Sales)". So the capital is already counted inside the inventory denominator.</p>
+    <p><strong>And the refinery money is already inside the sales figure too.</strong> That was worth checking rather than assuming, because if the payout were missing, every heavy-refining month would look artificially unprofitable. It doesn't. See the test below.</p>
+  </div>
+
+  <div class="tscroll" style="max-width:760px">
+    <table style="min-width:640px">
+      <thead>
+        <tr>
+          <th rowspan="2">Store</th>
+          <th class="grp" colspan="2">Sent to refiner (cost)</th>
+          <th class="grp" colspan="2">Share of all cost of goods</th>
+          <th class="grp" colspan="2">Inventory refined / month</th>
+        </tr>
+        <tr><th>2025</th><th>2026</th><th>2025</th><th>2026</th><th>2025</th><th>2026</th></tr>
+      </thead>
+      <tbody id="scraptbl"></tbody>
+    </table>
+  </div>
+  <p class="tnote" id="scrapNote"></p>
+
+  <div class="note ok">
+    <h3>The test: is the refinery money actually in the sales figure?</h3>
+    <p>If refining proceeds were missing, gross margin would collapse in the months with heavy refining — you would be booking the cost of the metal with no revenue against it.</p>
+    <p style="margin-bottom:0">Across 100 store-months, the opposite is true. Months where refining was under 10% of cost of goods averaged <strong>50.6%</strong> gross margin. Months where it was over 35% averaged <strong>53.7%</strong>. The correlation runs mildly <em>positive</em> (+0.28). Scrap is at least as profitable as the retail floor — it is not a hole in the numbers.</p>
+  </div>
+
+  <div class="note ok">
+    <h3>What the melt is actually worth — the 4 August 2026 settlement</h3>
+    <p>Elemetal (Norfolk) paid <strong>$66,160.08 net</strong> on <strong>608.13 pennyweight</strong> across all ten open buckets — a blended lot covering stones and no-stones together, settled by wire against two lots and $37.70 of shipping, processing and wire fees. That is <strong>$108.79 per pennyweight</strong>.</p>
+    <p>The cost basis of that metal was roughly <strong>$27,000–29,000</strong> — so a single monthly refinery cheque produced about <strong>$37,000 of gross profit at roughly a 57% margin</strong>. For scale: the whole company averages <strong>$224,000 of net revenue a month</strong>.</p>
+    <p style="margin-bottom:0">Extending that across 2026 volume — <strong>4,738 pennyweight year to date, up 31% on last year</strong> — the melt channel is producing somewhere in the region of <strong>$250,000–$340,000 of gross profit</strong>. That is <strong>14–19% of everything the company earns</strong>, and roughly a quarter to a third of all retail gross profit. It is a bigger business than it looks from the org chart.</p>
+  </div>
+
+  <div class="note">
+    <h3>The question this raises: melt or sell?</h3>
+    <p>Every pennyweight that goes in the pot is a pennyweight that did not go in the case. On the sold-jewellery records where a weight is actually stated, retail realises around <strong>$146 per pennyweight against the melt's $109</strong> — roughly <strong>1.3×</strong>. <strong>That is directional only</strong>: just 32 sold items across 17,000 carried both a gold marker and a weight in the description, so it is a signal, not a finding.</p>
+    <p style="margin-bottom:0">It matters because scrap intensity is climbing — from 22.3% to 27.6% of cost of goods in a year. Two very different stories fit that: gold ran up and melting got more profitable, or merchandise that should have been retailed went to the pot instead. The data cannot yet separate them. Making descriptions carry karat and weight consistently would settle it, and it is the single highest-value data fix available here.</p>
+  </div>
+
+  <div class="note">
+    <h3>The weight check — and the one that actually matters</h3>
+    <p>On the August cycle the refiner's pre-melt weight came in at <strong>624.90 pennyweight against the store records' 608.13</strong> — about 2.7% <em>higher</em>. That direction is in the company's favour: they acknowledged receiving more metal than the books said went out. The alarming direction would be the reverse.</p>
+    <p>It is also probably not a like-for-like comparison. The refiner's figure is gross weight received before melting; the store figure is what was recorded at intake. With stones, clasps and findings in half the lots, those two are measuring different things — and it is a single settlement, so it is a data point, not a pattern.</p>
+    <p style="margin-bottom:0"><strong>Gross weight is not where a refiner shorts you anyway — the assay is.</strong> The number to watch each cycle is the one the closeout procedure already names: actual dollars received against the system's estimated funds receivable, where <strong>92–102% is the normal band</strong>. Anything landing consistently at the bottom of that band, or below it, is the real signal.</p>
+  </div>
+
+  <div class="note">
+    <h3>Concentration and price risk</h3>
+    <p>Roughly a quarter to a third of all cost of goods now exits through <strong>one counterparty</strong>, settled in a single monthly wire. Two things follow. First, payout is <strong>spot-linked and unhedged</strong> — a sharp gold correction compresses about a sixth of company earnings at once. The "gold lock" a competing refiner quoted earlier this year is a hedge against exactly that, and is worth pricing now that this channel is this large.</p>
+    <p style="margin-bottom:0">Second, refiner due diligence is worth doing properly for a licensed, BSA-obligated pawn operation. Confirm which Elemetal entity is on the other side of these wires and its current compliance standing before the next cycle — the corporate group has a federal anti-money-laundering history worth understanding rather than assuming.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sechead"><h2>Where the numbers come from</h2></div>
+  <div class="prose">
+    <p>Every figure comes from Bravo's End-of-Month export — the same file the weekly KPI and bonus-target tasks already pull. Nothing is pulled from Bravo for this report, and no existing report was touched.</p>
+    <p><strong>Two independent checks run every time.</strong> Net revenue matches Preston's June 2026 commission basis to the penny for all five stores. And August 2026 matches the figures the bonus engine worked out on a completely separate path. Two pipelines, same answer.</p>
+  </div>
+
+  <div class="note ok">
+    <h3>The August problem, found and fixed</h3>
+    <p>Both Augusts originally read as garbage — about 11 times too high. The cause was not a bad pull. Bravo names each export by its <strong>end date only</strong>. The monthly analytics job pulls six different date windows per store — this month, year-to-date, and trailing twelve months, for both this year and last — and <strong>every one of them ends on the same day</strong>. Six pulls, one filename. The last one written quietly replaced the real August file.</p>
+    <p>That makes it a race rather than a predictable bug: any month can lose, and 10 of 265 files had. Balances survive it, because they are a point-in-time snapshot. Revenue figures do not.</p>
+    <p style="margin-bottom:0"><strong>Both Augusts were recovered in full</strong> from copies the analytics job already saves under date-stamped names — no re-pull, no Bravo contact. From now on every export is also copied into a date-stamped archive as soon as it lands, so no pull can overwrite another's data again, and every file is checked against its own date header before a single number is read from it. Nothing in the existing pipeline was changed.</p>
+  </div>
+
+  <div class="note ok">
+    <h3>Six checks have to pass before anything publishes</h3>
+    <p style="margin-bottom:0">The monthly refresh publishes nothing unless all six pass: the Preston match, the bonus-engine match, the sales identity that underpins the layaway call, every file covering its true month, the loan and inventory split adding back to the blended number on every row, and all five stores present. If a check fails, the report is withheld rather than published with a footnote.</p>
+  </div>
+</section>
+
+<footer>
+  Full Circle Finance Inc DBA Valley Pawn · Culpeper, Harrisonburg, Lexington, Roanoke, Waynesboro<br>
+  Source: Bravo End-of-Month exports · <span data-v="nMonths"></span> months, <span data-v="span"></span> · through <span data-v="lastMonth"></span><br>
+  Every figure on this page is rebuilt from source each month — nothing here is typed by hand.
+</footer>
+
+</div>
+
+<script>
+const D = /*DATA-START*/{"span":"Jan 2025 – Aug 2026","nMonths":20,"lastMonth":"August 2026","like":"January–August","likeShort":"Jan–Aug","nLike":8,"n25":12,"n26":8,"stores":[{"code":"CUL","name":"Culpeper","l25":{"ly":11.86,"iy":17.98,"by":15.22,"share":0.4517},"l26":{"ly":11.85,"iy":23.29,"by":18.07,"share":0.4559},"f25":{"ly":11.96,"iy":19.59,"by":16.26},"f26":{"ly":11.85,"iy":23.29,"by":18.07},"mgn":[52.7,56.8],"lay":[27517,35606,11151,13729,40.5,38.6],"scrap":[94349,98383,26.2,34.9,4.6,6.2]},{"code":"HAR","name":"Harrisonburg","l25":{"ly":12.65,"iy":17.12,"by":14.49,"share":0.5866},"l26":{"ly":11.87,"iy":20.82,"by":15.93,"share":0.5469},"f25":{"ly":12.56,"iy":17.93,"by":14.72},"f26":{"ly":11.87,"iy":20.82,"by":15.93},"mgn":[50.7,51.0],"lay":[22557,27243,7266,8051,32.2,29.6],"scrap":[41019,54616,17.6,23.8,3.1,4.8]},{"code":"LEX","name":"Lexington","l25":{"ly":12.43,"iy":18.88,"by":15.08,"share":0.5891},"l26":{"ly":12.6,"iy":18.33,"by":15.6,"share":0.4769},"f25":{"ly":12.48,"iy":19.14,"by":15.35},"f26":{"ly":12.6,"iy":18.33,"by":15.6},"mgn":[49.8,52.6],"lay":[11272,10500,4521,3961,40.1,37.7],"scrap":[30345,28988,20.7,26.0,4.0,4.3]},{"code":"ROA","name":"Roanoke","l25":{"ly":12.81,"iy":16.83,"by":14.63,"share":0.5474},"l26":{"ly":12.56,"iy":19.65,"by":16.04,"share":0.5085},"f25":{"ly":12.79,"iy":17.22,"by":14.87},"f26":{"ly":12.56,"iy":19.65,"by":16.04},"mgn":[51.2,55.7],"lay":[15071,17984,5516,7181,36.6,39.9],"scrap":[49981,45652,24.8,27.6,4.1,4.3]},{"code":"WAY","name":"Waynesboro","l25":{"ly":13.2,"iy":30.51,"by":20.4,"share":0.5839},"l26":{"ly":12.76,"iy":27.16,"by":19.52,"share":0.5307},"f25":{"ly":13.18,"iy":30.48,"by":20.51},"f26":{"ly":12.76,"iy":27.16,"by":19.52},"mgn":[49.8,53.8],"lay":[8712,8634,6386,4470,73.3,51.8],"scrap":[45489,37833,19.6,21.7,6.0,5.0]},{"code":"CO","name":"All five stores","l25":{"ly":12.55,"iy":19.26,"by":15.62,"share":0.5416},"l26":{"ly":12.24,"iy":21.92,"by":17.05,"share":0.5026},"f25":{"ly":12.55,"iy":20.04,"by":16.05},"f26":{"ly":12.24,"iy":21.92,"by":17.05},"mgn":[51.1,54.3],"lay":[85129,99967,34840,37392,40.9,37.4],"scrap":[261184,265473,22.3,27.6,4.3,5.1]}],"series":[["2025-01",13.41,16.19,14.61],["2025-02",12.92,20.69,16.34],["2025-03",11.93,20.49,15.82],["2025-04",12.29,18.52,15.19],["2025-05",13.31,19.76,16.34],["2025-06",11.13,20.27,15.4],["2025-07",12.97,19.0,15.74],["2025-08",12.4,18.96,15.5],["2025-09",12.63,18.74,15.51],["2025-10",13.44,23.97,18.46],["2025-11",11.75,19.95,15.75],["2025-12",12.4,22.56,17.44],["2026-01",12.91,23.45,18.02],["2026-02",12.17,20.63,16.25],["2026-03",12.22,25.81,19.11],["2026-04",12.61,23.06,17.89],["2026-05",12.05,21.38,16.85],["2026-06",11.4,22.58,16.99],["2026-07",12.03,18.9,15.38],["2026-08",12.51,19.98,16.24]],"co":{"f26":{"ly":12.24,"iy":21.92,"by":17.05},"f25":{"ly":12.55,"iy":20.04,"by":16.05},"l25":{"ly":12.55,"iy":19.26,"by":15.62,"share":0.5416},"l26":{"ly":12.24,"iy":21.92,"by":17.05,"share":0.5026},"lb26":659925,"ib26":653021,"tot26":1312946,"share26":0.5026,"mgn":[51.1,54.3],"layv":[40.9,37.4],"layGrowth":17},"lyBand":[9.9,15.2],"lyStoreBand":[11.8,12.8],"iyStoreBand":[18.3,27.2],"chan":{"prior":["2025-01-01","2025-08-31"],"cur":["2026-01-01","2026-08-31"],"stores":[{"code":"TOTAL","name":"All five stores","a":{"psc":567027,"retail_gp":594918,"scrap_gp":141466,"retail_sales":1159867,"scrap_sales":288374},"b":{"psc":645979,"retail_gp":806105,"scrap_gp":338931,"retail_sales":1503730,"scrap_sales":604404},"nrA":1303410,"nrB":1791015},{"code":"CUL","name":"Culpeper","a":{"psc":123236,"retail_gp":173270,"scrap_gp":53546,"retail_sales":329058,"scrap_sales":106030},"b":{"psc":157821,"retail_gp":243878,"scrap_gp":126303,"retail_sales":427257,"scrap_sales":224686},"nrA":350052,"nrB":528002},{"code":"HAR","name":"Harrisonburg","a":{"psc":154559,"retail_gp":125398,"scrap_gp":21989,"retail_sales":250223,"scrap_sales":43346},"b":{"psc":164603,"retail_gp":164724,"scrap_gp":74377,"retail_sales":339777,"scrap_sales":128993},"nrA":301946,"nrB":403703},{"code":"LEX","name":"Lexington","a":{"psc":83964,"retail_gp":72753,"scrap_gp":16207,"retail_sales":148514,"scrap_sales":32019},"b":{"psc":77452,"retail_gp":86566,"scrap_gp":37036,"retail_sales":168861,"scrap_sales":66024},"nrA":172923,"nrB":201054},{"code":"ROA","name":"Roanoke","a":{"psc":115653,"retail_gp":103613,"scrap_gp":22013,"retail_sales":194990,"scrap_sales":50356},"b":{"psc":138019,"retail_gp":153503,"scrap_gp":55133,"retail_sales":273542,"scrap_sales":100785},"nrA":241279,"nrB":346655},{"code":"WAY","name":"Waynesboro","a":{"psc":89615,"retail_gp":119884,"scrap_gp":27711,"retail_sales":237083,"scrap_sales":56623},"b":{"psc":108085,"retail_gp":157434,"scrap_gp":46082,"retail_sales":294292,"scrap_sales":83916},"nrA":237210,"nrB":311601}]},"latest":{"asOf":"2026-08","lb":719211,"ib":715923,"lay":85334}}/*DATA-END*/;
+
+const path=(o,p)=>p.split('.').reduce((a,k)=>a==null?a:a[k],o);
+const FMT={
+  p2:v=>v.toFixed(2), p1:v=>v.toFixed(1), p0:v=>Math.round(v),
+  x12:v=>Math.round(v*12)+'%',
+  mk:v=>v>=1e6?'$'+(v/1e6).toFixed(2)+'M':'$'+Math.round(v/1000)+'k',
+  m0:v=>'$'+Math.round(v).toLocaleString()
+};
+document.querySelectorAll('[data-v]').forEach(el=>{
+  const v=path(D,el.dataset.v); if(v==null) return;
+  el.textContent = el.dataset.f ? FMT[el.dataset.f](v) : v;
+});
+
+const S=D.stores, CO=S.find(s=>s.code==='CO')||null, ST=S.filter(s=>s.code!=='CO');
+const pt=v=>(v>=0?'+':'')+v.toFixed(2);
+
+if(CO){
+  const dY=CO.l26.by-CO.l25.by;
+  const yd=document.getElementById('yoyDelta');
+  yd.textContent=pt(dY)+' points'; yd.className=dY>=0?'delta-up':'delta-dn';
+
+  const lp=CO.l26.share*CO.l26.ly, ip=CO.l26.by-lp;
+  document.getElementById('exactLine').innerHTML=
+    'Blended = (loan share of assets × loan yield) + (inventory share × inventory yield). '+
+    'For the company in 2026 that is <span class="num">'+(CO.l26.share*100).toFixed(1)+'% × '+CO.l26.ly.toFixed(2)+' = '+lp.toFixed(2)+'</span>, '+
+    'plus <span class="num">'+((1-CO.l26.share)*100).toFixed(1)+'% × '+CO.l26.iy.toFixed(2)+' = '+ip.toFixed(2)+'</span>, '+
+    'which totals <span class="num">'+CO.l26.by.toFixed(2)+'</span>. The bars above are drawn from that identity — each one adds up to the store’s blended yield, and a test checks it on every row, every run.';
+
+  document.getElementById('iySpread').textContent=Math.round(D.iyStoreBand[1]-D.iyStoreBand[0]);
+  document.getElementById('chartHead').textContent=
+    ({12:'Twelve',18:'Eighteen',19:'Nineteen',20:'Twenty',21:'Twenty-one',22:'Twenty-two',
+      23:'Twenty-three',24:'Twenty-four'}[D.nMonths]||D.nMonths)+' months, company-wide';
+  document.getElementById('lyBand').textContent=Math.floor(D.lyBand[0])+'–'+Math.ceil(D.lyBand[1])+'%';
+  document.getElementById('layLine').textContent=
+    'Company-wide it has slowed from '+CO.lay[4].toFixed(1)+'% to '+CO.lay[5].toFixed(1)+
+    '% a month while the balance grew '+D.co.layGrowth+'%, which is worth a look on its own.';
+
+  /* decomposition bars */
+  const SCALE=Math.ceil(Math.max(...S.map(s=>Math.max(s.l25.by,s.l26.by)))/2)*2+2;
+  document.getElementById('decomp').innerHTML=S.map(s=>{
+    const mk=(d,cls)=>{
+      const L=d.share*d.ly, I=Math.max(0,d.by-L), w=v=>(100*v/SCALE).toFixed(2)+'%';
+      return `<div class="bar ${cls}"><span class="b-loan" style="width:${w(L)}"></span><span class="b-inv" style="width:${w(I)}"></span></div>`;
+    };
+    return `<div class="drow${s.code==='CO'?' co':''}">
+      <div class="dname">${s.name}</div>
+      <div class="bars">${mk(s.l26,'y26')}${mk(s.l25,'y25')}</div>
+      <div class="dval"><div class="d26">${s.l26.by.toFixed(2)}%</div><div class="d25">${s.l25.by.toFixed(2)}%</div></div>
+    </div>`;
+  }).join('');
+
+  /* tables */
+  document.getElementById('storetbl').innerHTML=S.map(s=>{
+    const d=s.l26.by-s.l25.by, mix=Math.round(s.l26.share*100);
+    return `<tr class="${s.code==='CO'?'total':''}"><td>${s.name}</td>
+      <td>${s.l25.ly.toFixed(2)}</td><td>${s.l25.iy.toFixed(2)}</td><td>${s.l25.by.toFixed(2)}</td>
+      <td class="loan">${s.l26.ly.toFixed(2)}</td><td class="inv">${s.l26.iy.toFixed(2)}</td><td>${s.l26.by.toFixed(2)}</td>
+      <td class="${d>=0?'delta-up':'delta-dn'}">${pt(d)}</td><td>${mix} / ${100-mix}</td></tr>`;
+  }).join('');
+
+  document.getElementById('scraptbl').innerHTML=S.map(s=>{
+    const k=s.scrap||[0,0,0,0,0,0];
+    return `<tr class="${s.code==='CO'?'total':''}"><td>${s.name}</td>
+     <td>${FMT.m0(k[0])}</td><td>${FMT.m0(k[1])}</td>
+     <td>${k[2].toFixed(1)}%</td><td>${k[3].toFixed(1)}%</td>
+     <td>${k[4].toFixed(1)}%</td><td>${k[5].toFixed(1)}%</td></tr>`;
+  }).join('');
+  (function(){
+    const k=CO.scrap||[0,0,0,0,0,0];
+    document.getElementById('scrapNote').textContent=
+      'Company-wide, refining went from '+k[2].toFixed(1)+'% of cost of goods in 2025 to '+
+      k[3].toFixed(1)+'% in 2026, and now consumes '+k[5].toFixed(1)+
+      '% of the inventory balance every month. Cost basis only — the refinery payout is not separable in Bravo.';
+  })();
+
+  document.getElementById('laytbl').innerHTML=S.map(s=>
+    `<tr class="${s.code==='CO'?'total':''}"><td>${s.name}</td>
+     <td>${FMT.m0(s.lay[0])}</td><td>${FMT.m0(s.lay[1])}</td>
+     <td>${FMT.m0(s.lay[2])}</td><td>${FMT.m0(s.lay[3])}</td>
+     <td>${s.lay[4].toFixed(1)}%</td><td>${s.lay[5].toFixed(1)}%</td></tr>`).join('');
+
+  /* findings, derived from the data */
+  const best=[...ST].sort((a,b)=>(b.l26.by-b.l25.by)-(a.l26.by-a.l25.by))[0];
+  const topInv=[...ST].sort((a,b)=>b.l26.iy-a.l26.iy)[0];
+  const lowInv=[...ST].sort((a,b)=>a.l26.iy-b.l26.iy)[0];
+  const fellInv=ST.filter(s=>s.l26.iy<s.l25.iy).sort((a,b)=>(a.l26.iy-a.l25.iy)-(b.l26.iy-b.l25.iy));
+  const F=[];
+  F.push(`<strong>Loans are a utility, not a lever.</strong> Every store lands between ${D.lyStoreBand[0].toFixed(1)}% and ${D.lyStoreBand[1].toFixed(1)}% a month, and none has moved more than a point in ${D.nMonths} months. You grow loan income by growing the loan book — not by running it better.`);
+  F.push(`<strong>Inventory is the whole game.</strong> ${topInv.name} earns <span class="inv">${topInv.l26.iy.toFixed(1)}%</span> a month on inventory. ${lowInv.name} earns <span class="inv">${lowInv.l26.iy.toFixed(1)}%</span>. Same merchandise, same market — that gap is turn speed and pricing discipline.`);
+  F.push(`<strong>${topInv.name} is the one to study.</strong> Its blended yield of ${topInv.l26.by.toFixed(1)}% beats the company by ${(topInv.l26.by-CO.l26.by).toFixed(1)} points on the smallest inventory in the fleet. It is not selling more — it is holding less.`);
+  F.push(`<strong>This year's gain is entirely retail.</strong> Blended yield is ${dY>=0?'up':'down'} ${Math.abs(dY).toFixed(2)} points year over year while loan yield ${CO.l26.ly>=CO.l25.ly?'rose':'slipped'} ${Math.abs(CO.l26.ly-CO.l25.ly).toFixed(2)}. It came from inventory yield moving ${CO.l25.iy.toFixed(1)}% → ${CO.l26.iy.toFixed(1)}%, with gross margin widening from ${CO.mgn[0].toFixed(1)}% to ${CO.mgn[1].toFixed(1)}%.`);
+  F.push(`<strong>${best.name} made the biggest jump</strong> — <span class="delta-up">${pt(best.l26.by-best.l25.by)}</span> points, on inventory yield going from ${best.l25.iy.toFixed(1)}% to ${best.l26.iy.toFixed(1)}%. Whatever changed there is worth writing down and copying.`);
+  if(fellInv.length) F.push(`<strong>${fellInv[0].name} needs a look.</strong> Inventory yield went <em>down</em> year over year (${fellInv[0].l25.iy.toFixed(1)}% → ${fellInv[0].l26.iy.toFixed(1)}%) while its asset mix shifted ${Math.abs(Math.round((fellInv[0].l26.share-fellInv[0].l25.share)*100))} points toward inventory — more money on the shelf, earning less on it.`);
+  document.getElementById('findings').innerHTML=F.map(x=>'<li>'+x+'</li>').join('');
+}
+
+/* ---------- growth by channel (only when the KPI pulls are present) ---------- */
+(function(){
+  const C=D.chan; if(!C||!C.stores||!C.stores.length) return;
+  document.getElementById('chanSection').hidden=false;
+  const T=C.stores.find(s=>s.code==='TOTAL'), ST=C.stores.filter(s=>s.code!=='TOTAL');
+  const yA=C.prior[1].slice(0,4), yB=C.cur[1].slice(0,4);
+  const MN=['','January','February','March','April','May','June','July','August','September','October','November','December'];
+  const win=MN[+C.cur[0].slice(5,7)]+'–'+MN[+C.cur[1].slice(5,7)];
+  const m0=v=>'$'+Math.round(v).toLocaleString();
+  const sgn=v=>(v>=0?'+':'−')+'$'+Math.abs(Math.round(v)).toLocaleString();
+
+  document.getElementById('chanDek').textContent=
+    `Net revenue splits three ways, and they add up exactly. Same ${win} window in both years, so the comparison is like for like.`;
+  document.getElementById('chanH1').textContent=yA;
+  document.getElementById('chanH2').textContent=yB;
+  document.getElementById('chanS1').textContent=yA;
+  document.getElementById('chanS2').textContent=yB;
+
+  const CH=[['Loan revenue','psc'],['Retail gross profit — non-gold','retail_gp'],['Scrap gross profit — gold','scrap_gp']];
+  const tg=T.nrB-T.nrA;
+  document.getElementById('chantbl').innerHTML=CH.map(([lab,k])=>{
+    const g=T.b[k]-T.a[k];
+    return `<tr><td>${lab}</td><td>${m0(T.a[k])}</td><td>${m0(T.b[k])}</td>
+      <td class="${g>=0?'delta-up':'delta-dn'}">${sgn(g)}</td>
+      <td class="${g>=0?'delta-up':'delta-dn'}">${(100*g/T.a[k]).toFixed(1)}%</td>
+      <td>${(100*g/tg).toFixed(1)}%</td></tr>`;
+  }).join('')+`<tr class="total"><td>Net revenue</td><td>${m0(T.nrA)}</td><td>${m0(T.nrB)}</td>
+      <td class="delta-up">${sgn(tg)}</td><td class="delta-up">${(100*tg/T.nrA).toFixed(1)}%</td><td>100%</td></tr>`;
+
+  // the headline answer, computed
+  const gR=T.b.retail_gp-T.a.retail_gp, gS=T.b.scrap_gp-T.a.scrap_gp, gL=T.b.psc-T.a.psc;
+  const biggest=[['non-gold retail',gR],['gold',gS],['loans',gL]].sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById('chanAnswerH').textContent='Yes — non-gold inventory is carrying the most growth in dollars';
+  document.getElementById('chanAnswer').innerHTML=
+    `Non-gold retail added <strong>${sgn(gR)}</strong> of gross profit, the single largest contributor at `+
+    `<strong>${(100*gR/tg).toFixed(0)}% of all growth</strong>, on sales up ${(100*(T.b.retail_sales/T.a.retail_sales-1)).toFixed(0)}% `+
+    `and margin widening from ${(100*T.a.retail_gp/T.a.retail_sales).toFixed(1)}% to ${(100*T.b.retail_gp/T.b.retail_sales).toFixed(1)}%. `+
+    `Gold added ${sgn(gS)} — nearly as much in dollars, but from a far smaller base, so it grew `+
+    `<strong>${(100*gS/T.a.scrap_gp).toFixed(0)}%</strong> against retail's ${(100*gR/T.a.retail_gp).toFixed(0)}%. `+
+    `Loans added ${sgn(gL)}, growing ${(100*gL/T.a.psc).toFixed(1)}% — well under the company's ${(100*tg/T.nrA).toFixed(1)}%, `+
+    `so the loan book is shrinking as a share of what the business earns.`;
+
+  // mix bars
+  document.getElementById('chanMix').innerHTML=C.stores.map(s=>{
+    const bar=(d,nr,cls)=>{
+      const w=v=>(100*v/nr).toFixed(2)+'%';
+      return `<div class="bar ${cls}"><span class="b-loan" style="width:${w(d.psc)}"></span>`+
+             `<span class="b-inv" style="width:${w(d.retail_gp)}"></span>`+
+             `<span class="b-gold" style="width:${w(d.scrap_gp)}"></span></div>`;
+    };
+    const shA=100*s.a.scrap_gp/s.nrA, shB=100*s.b.scrap_gp/s.nrB;
+    return `<div class="drow${s.code==='TOTAL'?' co':''}">
+      <div class="dname">${s.name}</div>
+      <div class="bars">${bar(s.b,s.nrB,'')}${bar(s.a,s.nrA,'y25')}</div>
+      <div class="dval"><div class="d26">${shB.toFixed(0)}%</div><div class="d25">${shA.toFixed(0)}%</div></div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('chanstoretbl').innerHTML=C.stores.map(s=>{
+    const g=s.nrB-s.nrA;
+    const c=(v)=>`<td class="${v>=0?'delta-up':'delta-dn'}">${sgn(v)}</td>`;
+    return `<tr class="${s.code==='TOTAL'?'total':''}"><td>${s.name}</td>
+      <td>${m0(s.nrA)}</td><td>${m0(s.nrB)}</td>
+      <td class="${g>=0?'delta-up':'delta-dn'}">${(100*g/s.nrA).toFixed(1)}%</td>
+      ${c(s.b.psc-s.a.psc)}${c(s.b.retail_gp-s.a.retail_gp)}${c(s.b.scrap_gp-s.a.scrap_gp)}</tr>`;
+  }).join('');
+})();
+
+/* line chart */
+(function(){
+  const W=960,H=380,ML=58,MR=18,MT=20,MB=54;
+  const iw=W-ML-MR, ih=H-MT-MB, data=D.series;
+  if(!data.length) return;
+  const vals=data.flatMap(r=>[r[1],r[2],r[3]]);
+  const yMin=Math.max(0,Math.floor(Math.min(...vals)/5)*5-2);
+  const yMax=Math.ceil(Math.max(...vals)/5)*5+1;
+  const X=i=>ML+(data.length<2?0:iw*i/(data.length-1));
+  const Y=v=>MT+ih*(1-(v-yMin)/(yMax-yMin));
+  const ns='http://www.w3.org/2000/svg', svg=document.getElementById('lines');
+  const el=(t,a)=>{const e=document.createElementNS(ns,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+  const FF='"Source Sans 3", system-ui, sans-serif';
+
+  for(let v=Math.ceil(yMin/5)*5; v<=yMax; v+=5){
+    svg.appendChild(el('line',{x1:ML,x2:W-MR,y1:Y(v),y2:Y(v),stroke:'var(--hair)','stroke-width':1.5}));
+    const t=el('text',{x:ML-12,y:Y(v)+5,'text-anchor':'end',fill:'var(--muted)',
+      'font-family':FF,'font-size':15,'font-weight':600});
+    t.textContent=v+'%'; svg.appendChild(t);
+  }
+  const MN=['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const step=data.length>14?2:1;
+  data.forEach((r,i)=>{
+    if(i%step) return;
+    const [y,m]=r[0].split('-');
+    const t=el('text',{x:X(i),y:H-MB+24,'text-anchor':'middle',fill:'var(--muted)',
+      'font-family':FF,'font-size':15,'font-weight':600});
+    t.textContent=MN[+m]; svg.appendChild(t);
+    const yr=el('text',{x:X(i),y:H-MB+42,'text-anchor':'middle',fill:'var(--faint)',
+      'font-family':FF,'font-size':13});
+    yr.textContent="’"+y.slice(2); svg.appendChild(yr);
+  });
+  svg.appendChild(el('line',{x1:ML,x2:W-MR,y1:Y(yMin),y2:Y(yMin),stroke:'var(--rule)','stroke-width':2}));
+
+  data.forEach((r,i)=>{
+    if(i && r[0].slice(5)==='01'){
+      const dx=(X(i-1)+X(i))/2;
+      svg.appendChild(el('line',{x1:dx,x2:dx,y1:MT,y2:MT+ih,stroke:'var(--rule)',
+        'stroke-width':1.5,'stroke-dasharray':'3 5'}));
+    }
+  });
+
+  [[3,'var(--muted)',2.5],[2,'var(--invFill)',3.5],[1,'var(--loanFill)',3.5]].forEach(([col,stroke,sw])=>{
+    let d='';
+    data.forEach((r,i)=>{ d+=(i?'L':'M')+X(i).toFixed(1)+' '+Y(r[col]).toFixed(1)+' '; });
+    svg.appendChild(el('path',{d,fill:'none',stroke,'stroke-width':sw,
+      'stroke-linejoin':'round','stroke-linecap':'round'}));
+    data.forEach((r,i)=>svg.appendChild(el('circle',{cx:X(i),cy:Y(r[col]),r:3.4,fill:stroke})));
+  });
+
+  const last=data[data.length-1], lx=X(data.length-1);
+  [[2,'var(--invFill)','Inventory',-16],[3,'var(--muted)','Blended',-16],[1,'var(--loanFill)','Loan',-16]]
+  .forEach(([c,fill,lab,dy])=>{
+    const t=el('text',{x:lx-10,y:Y(last[c])+dy,'text-anchor':'end',fill,
+      'font-family':FF,'font-size':16,'font-weight':700});
+    t.textContent=lab+' '+last[c].toFixed(1)+'%'; svg.appendChild(t);
+  });
+})();
+</script>

@@ -313,6 +313,64 @@ candidates (`com_under_your_feet`, `com_the_water`, `com_the_tracks`, `com_trail
 **Watch for this again in mid-November** — `com_last_warm_evening` drops out after Sept 15 and the
 fall-gated formats will themselves cycle into cooldown.
 
+## Verified additions — 2026-09-07 (Lane C run, week of Sept 13–19)
+
+**Registry note — Culpeper, Lexington, and Roanoke each had only ONE mural on file, and it
+was already used within 45 days.** `com_mural_corner` needed a second real mural per town.
+All three below were sourced from official/tourism pages, not generic search hits, and
+deliberately avoid re-describing the mural already on file for that town.
+
+**CULPEPER — "The Surveyor" mural `[C26 verified 2026-09-07]`.** Located at the corner of
+**West Cameron and Main Streets**, downtown Culpeper. Depicts a young George Washington as a
+surveyor, larger than life. Completed **Aug 25, 2017** by artists **Tom and Kerri Mullany**
+(Mullany Art Studios) — the first mural of Culpeper Renaissance Inc.'s Downtown Walls Mural
+Program. Distinct from "The Trailblazers" mural (E. Davis St, already in this file).
+*(Source: culpeperdowntown.com/programs/culpeper-walls-mural-program.)* Other CRI murals on
+file if a 3rd is ever needed: "Yowell Hardware Co. Historic Signage" (195 E. Davis St, 2018),
+"A Song to Share" (2023), the "Meaghan Taylor Memorial" guitar mural, and 5 Power Box murals
+along Main/Davis/Evans St (completed summer 2024, five different local artists).
+
+**LEXINGTON — "Millinery De Rousselot" mural `[C26 verified 2026-09-07]`.** On the
+south-facing wall of Pumpkinseeds, at the **corner of Main and Washington Streets**. Painted
+in 1992 as a set piece for a film production shot in downtown Lexington.
+> ⚠️ **Deliberately do not state the film's title, era, or cast in any post.** The film is a
+> Reconstruction-era Civil War drama — bringing that up at all risks brushing against this
+> town's hard exclusion on Confederate-adjacent content. Frame this ONLY as "a movie was
+> filmed here in 1992 and the set mural stayed." *(Source: explore.lexingtonvirginia.com /
+> lexingtonvirginia.com, official Rockbridge tourism site.)*
+> ⚠️ **Search hazard, same shape as the Lexington-Nebraska one already on file:** a plain web
+> search for "Lexington mural" returns **Lexington, KENTUCKY's** PRHBTN mural festival
+> (Kentucky Theatre, Vine Street, Louis Armstrong mural, etc.) almost exclusively. None of
+> that is this town. Always add "Virginia" or "Rockbridge" to any Lexington mural/public-art
+> search and verify the domain is a `.com` tied to Rockbridge/Lexington VA tourism, not a
+> Kentucky arts org.
+
+**ROANOKE — "Greetings from Roanoke" mural `[C26 verified 2026-09-07]`.** A postcard-style
+mural at **709 S Jefferson St**, on the RAMP Building, across from Elmwood Park. The
+postcard's block letters (R-O-A-N-O-K-E) are each filled with an iconic city landmark (Mill
+Mountain Star, City Market Building, Taubman Museum of Art, Hotel Roanoke, among others).
+Designed by **Joe Collins** with support from Virginia Western Community College and
+Downtown Roanoke, Inc. *(Source: downtownroanoke.org/post/downtown-murals — this page
+catalogs ~18 murals across downtown Roanoke; useful pool for future com_mural_corner rounds
+so this doesn't run dry: "Nature Train" N&W 1218 locomotive mural at 108 Church Ave,
+"Climbing Towards Success" McAfee Knob-themed mural at 207 Bullitt Ave SE, "Accentuated
+Forms in Space" by Dorothy Gillespie at 312 2nd St SW, and more.)*
+
+**CULPEPER — Lake Culpeper has NO trail or bank-fishing access `[C26 verified 2026-09-07]`.**
+255 acres, boat/paddle access only via a ramp off Lake Pelham Drive; VA DWR's own listing
+confirms no hiking trails, no bank access, no picnic/restroom facilities. **Do not use Lake
+Culpeper for any "trailhead" or walking-focused post** — it would be a wrong-detail post
+under Hard Rule 3. *(Source: dwr.virginia.gov/waterbody/lake-culpeper.)*
+
+**CULPEPER — Old Rag Mountain, ~20 miles via Sperryville Pike `[C26 verified 2026-09-07]`.**
+Used instead of Lake Culpeper for `com_trailhead`. Old Rag (Shenandoah National Park) is
+approximately 20 miles from Culpeper via the Sperryville Pike (Route 522 to Route 231 to
+Route 601), with a rock-scramble section near the summit. Not literally "nearest" to the
+store, but it is the trail Culpeper locals actually mean when they say they're going hiking
+— same honest-framing pattern already used for Roanoke's McAfee Knob and Lexington's Goshen
+Pass entries above. *(Source: multiple hiking-guide sites cross-checked for the mileage
+figure.)*
+
 ## Known gap — `com_local_news_desk` format (added 2026-08-24)
 The drift engine's `com_local_news_desk` format asks for "something verifiable that happened here
 this week" — genuine local news, sourced and dated. As of 2026-08-24 there is no live news-verification

@@ -1,45 +1,43 @@
-# Daily Funds Verification — 2026-09-06
+# Daily Funds Verification - 2026-09-06
 
-**Status: COMPLETE — all 5 verified. All matched.**
+**Status: INCOMPLETE - see below.** Watchdog run stalled overnight before completing all 5 stores; time budget exhausted (run started 2026-09-06 ~10:25 ET, session did not resume until 2026-09-07).
 
 ## Bottom line
-$0.00 expected vs $0.00 actual across all 5 stores — no funds transfer requests came in on Slack today (Sunday), and Bravo's Safe Register Journal shows no qualifying cash-in transfers at any store. Nothing to reconcile; all matched.
+No funds-request activity was found in any of the 5 store funds Slack channels for 2026-09-06 (net expected = 0.00 across the board - consistent with a Sunday). Only Culpeper's Bravo Safe Register Journal cell completed before the run stalled; it confirms 0.00 actual, matching 0.00 expected. Harrisonburg, Lexington, Roanoke, and Waynesboro were never verified against Bravo.
 
-## Step 1 — Slack ledger (today, 2026-09-06 ET)
-| Store | Channel | Request(s) | Joshua's reply | Net expected |
+## Step 1 - Slack ledger (2026-09-06 ET)
+| Store | Channel | Request(s) | Reply | Net expected |
 |---|---|---|---|---|
-| CUL — Culpeper | #pepper-funds | none | none | $0.00 |
-| HAR — Harrisonburg | #harrisonburg-funds | none | none | $0.00 |
-| LEX — Lexington | #lex-funds | none | none | $0.00 |
-| ROA — Roanoke | #roanoke-funds | none | none | $0.00 |
-| WAY — Waynesboro | #boro-funds | none | none | $0.00 |
+| CUL - Culpeper | pepper-funds | none | none | 0.00 |
+| HAR - Harrisonburg | harrisonburg-funds | none | none | 0.00 |
+| LEX - Lexington | lex-funds | none | none | 0.00 |
+| ROA - Roanoke | roanoke-funds | none | none | 0.00 |
+| WAY - Waynesboro | boro-funds | none | none | 0.00 |
 
-Cancellations: none. **Total expected: $0.00.**
+Cancellations: none. Total expected: 0.00.
 
-## Step 2 — Bravo extraction
-Trigger `daily-funds-verification-2026-09-06T18-05-00` → watcher status `success` on 5/5 cells (CUL 75.5s, HAR 69.2s, LEX 74.3s, ROA 71.5s, WAY 69.0s).
+## Step 2 - Bravo extraction
+Trigger watchdog-funds-verification-2026-09-06T10-26-41 - 1/5 cells completed (CUL) before the run stalled at the Harrisonburg store-switch/login-submit step (last log line 2026-09-06 10:29:10 EDT, no further progress by 2026-09-06 10:31:48 EDT). A watcher-restart one-shot task was prepared but by the time this session resumed the clock had advanced to 2026-09-07, so the restart window had passed. Not re-attempted given the run is far outside its time budget.
 
-## Step 3 — Bravo signature rows (TENDER TRANSFER · BANK · Cash · negative leg)
-| Store | Txn Num | Time | From→To | Amount |
-|---|---|---|---|---|
-| CUL — Culpeper | — | — | (no cash transfer) | $0.00 |
-| HAR — Harrisonburg | — | — | (no cash transfer) | $0.00 |
-| LEX — Lexington | — | — | (no cash transfer) | $0.00 |
-| ROA — Roanoke | — | — | (no cash transfer) | $0.00 |
-| WAY — Waynesboro | — | — | (no cash transfer) | $0.00 |
+## Step 3 - Bravo signature rows
+| Store | Status |
+|---|---|
+| CUL - Culpeper | No data returned - 0.00 confirmed |
+| HAR - Harrisonburg | NOT VERIFIED |
+| LEX - Lexington | NOT VERIFIED |
+| ROA - Roanoke | NOT VERIFIED |
+| WAY - Waynesboro | NOT VERIFIED |
 
-All 5 CSVs returned "No data returned for current report configuration" for 2026-09-06.
-
-## Step 5 — Reconciliation
-| Store | Net expected (Slack) | Net actual (Bravo) | Status |
+## Step 5 - Reconciliation
+| Store | Expected | Actual | Status |
 |---|---|---|---|
-| CUL — Culpeper | $0.00 | $0.00 | ✓ Matched |
-| HAR — Harrisonburg | $0.00 | $0.00 | ✓ Matched |
-| LEX — Lexington | $0.00 | $0.00 | ✓ Matched |
-| ROA — Roanoke | $0.00 | $0.00 | ✓ Matched |
-| WAY — Waynesboro | $0.00 | $0.00 | ✓ Matched |
-| **Total** | **$0.00** | **$0.00** | **5/5 matched** |
+| CUL - Culpeper | 0.00 | 0.00 | Matched |
+| HAR - Harrisonburg | 0.00 | - | Could not verify |
+| LEX - Lexington | 0.00 | - | Could not verify |
+| ROA - Roanoke | 0.00 | - | Could not verify |
+| WAY - Waynesboro | 0.00 | - | Could not verify |
+| Total | 0.00 | 0.00 (partial) | 1/5 verified |
 
-**Slack post: made.**
+Slack post: skipped (not all 5 stores verified - policy requires all 5 before posting to daily-funds-reconcilation).
 
-_Report generated 2026-09-06 ~18:15 ET._
+Report generated 2026-09-07 ~11:20 ET (originating run started 2026-09-06 ~10:25 ET).

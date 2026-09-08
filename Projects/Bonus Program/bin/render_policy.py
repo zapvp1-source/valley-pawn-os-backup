@@ -60,7 +60,7 @@ Ties go to the store with the most gold. The store still has to have hit its rev
 
 - A manager must have run the store for the **full month** to be paid on the manager rate.
 - You must be **employed on the day the bonus is paid**, not just the month you earned it.
-- Bonus is **paid monthly, on the first Friday after the 15th** of the following month.
+- Bonus is **paid monthly, on the Friday after the 15th** of the following month.
 - Bonus is paid at the sole discretion of management and may be changed at any time.
 
 ## Where the numbers come from
@@ -75,7 +75,9 @@ same way every month; nobody types a figure in by hand.
 handbook = f"""### 01.08 Monthly Bonus Program
 _Generated from bonus_rules.json on {dt.date.today()} — effective for earning months from {reg['effective_from']}. Supersedes all earlier versions of this section, including the 2.5%/50% and $3,000-minimum language carried over from the legacy manual._
 
-Store employees earn a monthly incentive bonus, paid once a month on the Friday after the 15th.
+Store employees earn a monthly incentive bonus, paid once a month on the Friday after the 15th of
+the month following the month in which it was earned. When the 15th falls on a Friday, the bonus is
+paid the following Friday.
 
 - **Store revenue goal (hard gate).** If the store does not hit its monthly revenue goal, no bonus is
   paid to anyone at that store for that month.

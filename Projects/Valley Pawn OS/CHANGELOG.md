@@ -1,6 +1,388 @@
+## 2026-09-07 (20) (zoom-voicemail-alert routine run — nothing new, silent)
+- Roster (fresh pull): same 6 users — roanoke@fcfpawn.com (809) and culpeper@fcfpawn.com (808)
+  still show "--" in Number(s), still skipped (not yet live lines). jdavis@fcfpawn.com (800,
+  legacy) still Active; checked its History tab this run (belt-and-suspenders) — "No Data"
+  confirmed for today.
+- Findings: Harrisonburg (newest row 4:57:08 PM Answered, all rows since the previously-alerted
+  4:32:37 PM Ring Timeout are Answered), Waynesboro (newest row 4:08:25 PM Answered, all rows
+  since the previously-alerted 1:01:08 PM are Answered), Lexington/ext 807 (newest row 5:09:58 PM
+  Answered, all rows since the previously-alerted 2:13:06 PM Ring Timeout are Answered, staff
+  Outbound Connected, or the same 2:13:06 PM row itself) — no new missed calls or voicemails on
+  any line. Correctly stayed silent, no Slack post.
+- State file: no changes (no new candidate rows on any store line).
+
+## 2026-09-07 (19) (zoom-voicemail-alert routine run — nothing new, silent)
+- Roster (fresh pull): same 6 users — roanoke@fcfpawn.com (809) and culpeper@fcfpawn.com (808)
+  still show "--" in Number(s), still skipped (not yet live lines). jdavis@fcfpawn.com (800,
+  legacy) still Active; checked its History tab this run (belt-and-suspenders) — "No Data"
+  confirmed for today.
+- Findings: Harrisonburg (newest row 4:57:08 PM Answered, all rows since the previously-alerted
+  4:32:37 PM Ring Timeout are Answered), Waynesboro (newest row 4:08:25 PM Answered, all rows
+  since the previously-alerted 1:01:08 PM are Answered), Lexington/ext 807 (newest row 5:09:58 PM
+  Answered, all rows since the previously-alerted 2:13:06 PM Ring Timeout are Answered, staff
+  Outbound Connected, or the same 2:13:06 PM row itself) — no new missed calls or voicemails on
+  any line. Correctly stayed silent, no Slack post.
+- State file: no changes (no new candidate rows on any store line).
+
+## 2026-09-07 (18) (zoom-voicemail-alert routine run — nothing new, silent)
+- Roster (fresh pull): same 6 users — roanoke@fcfpawn.com (809) and culpeper@fcfpawn.com (808)
+  still show "--" in Number(s), still skipped (not yet live lines). jdavis@fcfpawn.com (800,
+  legacy) still Active; checked its History tab this run (belt-and-suspenders) — "No Data"
+  confirmed for today.
+- Findings: Harrisonburg (newest row 4:57:08 PM Answered, all rows since the previously-alerted
+  4:32:37 PM Ring Timeout are Answered), Waynesboro (newest row 4:08:25 PM Answered, all rows
+  since the previously-alerted 1:01:08 PM are Answered), Lexington/ext 807 (newest row 5:09:58 PM
+  Answered, all rows since the previously-alerted 2:13:06 PM Ring Timeout are Answered, staff
+  Outbound Connected, or the same 2:13:06 PM row itself) — no new missed calls or voicemails on
+  any line. Correctly stayed silent, no Slack post.
+- State file: no changes (no new candidate rows on any store line).
+
+## 2026-09-07 (17) (Zoom call pipeline — full backfill complete, first #call-insights post published)
+- Ran the full backfill of all 793 Zoom Phone call recordings from the 2026-08-21 recording
+  go-live date through today, in six chunked runs of `zoom_ingest.py` (checkpointed after every
+  call via `state.json`, safe to resume/re-run). Final tally: 793/793 processed, matching the
+  measured split already on record (792 customer / 1 employee).
+- Found and fixed a real bug in `analyze_week.py`'s Rule 18 completeness gate: it treated any day
+  missing an `out/customer/<date>.jsonl` file as a possible outage, without accounting for the
+  fact that Harrisonburg/Waynesboro/Lexington are closed Wednesdays and Sundays (confirmed against
+  valley-pawn-context Store Hours) — a closed day produces zero recordings and so never writes a
+  file. As written, the gate would have refused to publish forever, every single week, on account
+  of the Sunday (and for these 3 stores, Wednesday) closures. Added `CLOSED_WEEKDAYS = {2, 6}`
+  (Wed, Sun) and only flag a missing file as incomplete on a day the stores were actually open.
+  Real gaps on an open weekday still correctly trigger Rule 18 and publish nothing.
+- With the fix, ran the analysis for the week of Aug 31–Sep 6 (the first complete week available):
+  321 calls across the 3 recorded stores, 9% spam/robocalls, most-asked-about categories Gold &
+  jewelry (49 calls, 12 times we had none) and Electronics (19 calls, 3 times we had none), 3
+  turned-away calls, 0% qualifying-question-script adherence on loan/buy/price calls.
+- Posted the rollup verbatim to **#call-insights** (`C0BVD57RETV`) — first real post in the
+  channel, confirmed landed intact on re-read. Per the individual-performance handling rule, the
+  0% qualifying-adherence rate stayed out of the channel; sent Preston a private, name-free DM
+  (`U03BWMEM9GR`) noting the aggregate rate and flagging it as worth a coaching pass. Never
+  mentioned in any channel, never fed into bonus qualifiers.
+- Note for next week's run: the analysis and the Preston-KB employee-call route share the same
+  ingest but are read by two completely separate consumers — nothing here touches the Preston
+  knowledge base or vice versa.
+
+## 2026-09-07 (16) (zoom-voicemail-alert routine run — nothing new, silent)
+- Roster (fresh pull): same 6 users as runs (12)-(15) — roanoke@fcfpawn.com (809) and
+  culpeper@fcfpawn.com (808) still no number assigned, skipped. jdavis@fcfpawn.com (800, legacy)
+  still Active; checked its History tab this run (belt-and-suspenders) — genuine "No Data"
+  confirmed via forced refetch, no traffic on that line.
+- Findings: Harrisonburg (newest row 4:57:08 PM Answered, all rows since the previously-alerted
+  4:32:37 PM Ring Timeout are Answered), Waynesboro (newest row 4:08:25 PM Answered, all rows
+  since the previously-alerted 1:01:08 PM are Answered), Lexington (newest row 5:09:58 PM
+  Answered, all rows since the previously-alerted 2:13:06 PM Ring Timeout are Answered or staff
+  Outbound Connected) — no new missed calls or voicemails on any line. Correctly stayed silent,
+  no Slack post.
+- State file: no changes (no new candidate rows on any store line).
+
+## 2026-09-07 (15) (zoom-voicemail-alert routine run — nothing new, silent)
+- Roster (fresh pull): same 6 users as runs (12)-(14) — roanoke@fcfpawn.com (809) and
+  culpeper@fcfpawn.com (808) still no number assigned, skipped. jdavis@fcfpawn.com (800, legacy)
+  still Active but not checked this run (no traffic pattern change reported).
+- Note: URL-query-param date editing (the documented fast path) returned stale "No Data" this run
+  despite genuine same-day call history existing — clicking through the UI (Users & Rooms → user
+  row → History tab, then using the date-picker "Last Week" quick-select) reliably re-triggered
+  the fetch and returned real data. Worth a future run confirming whether this is a one-off SPA
+  hiccup or a lasting regression in the URL-param approach.
+- Findings: Harrisonburg (newest row 4:57:08 PM Answered, all rows since the previously-alerted
+  4:32:37 PM Ring Timeout are Answered), Waynesboro (newest row 4:08:25 PM Answered, all rows
+  since the previously-alerted 1:01:08 PM are Answered), Lexington (newest row 5:09:58 PM
+  Answered, all rows since the previously-alerted 2:13:06 PM Ring Timeout are Answered or staff
+  Outbound Connected) — no new missed calls or voicemails on any line. Correctly stayed silent,
+  no Slack post.
+- State file: no changes (no new candidate rows on any store line).
+
+## 2026-09-07 (14) (zoom-voicemail-alert routine run — nothing new, silent)
+- Roster (fresh pull): same 6 users as runs (12)/(13) — roanoke@fcfpawn.com (809) and
+  culpeper@fcfpawn.com (808) still no number assigned, skipped. jdavis@fcfpawn.com (800, legacy) —
+  No Data again.
+- Findings: Harrisonburg (15 newest rows checked, newest 4:57:08 PM, all Answered past the
+  previously-alerted 4:32:37 PM Ring Timeout), Waynesboro (all rows past 1:01:08 PM Answered),
+  Lexington (all rows past 2:13:06 PM Answered/Connected incl. 2 staff outbound callbacks) — no new
+  missed calls or voicemails on any line. Correctly stayed silent, no Slack post.
+- State file: no changes (no new candidate rows on any store line).
+
+## 2026-09-07 (13) (zoom-voicemail-alert routine run — 1 new alert posted)
+- Roster (fresh pull): same 6 users as run (12) — roanoke@fcfpawn.com (809) and culpeper@fcfpawn.com
+  (808) still no number assigned, skipped. jdavis@fcfpawn.com (800, legacy) — No Data today, still
+  confirms lexington/807 carrying all Lexington traffic.
+- Findings: 1 new unresolved missed call — Harrisonburg, (540) 282-7521, Ring Timeout, no voicemail,
+  4:32:37 PM. No staff callback or customer reconnect found (newest row on the line, 4:34:39 PM
+  Answered, was from a different number) — posted to #voicemails-calls-missed. Waynesboro (15 rows
+  since last alert, all Answered) and Lexington (nothing newer than the previously-alerted 2:13:06 PM
+  Ring Timeout) had nothing new — correctly suppressed.
+- State file updated: Harrisonburg last_alerted_start_time → Sep 7, 2026, 4:32:37 PM.
+
+## 2026-09-07 (12) (zoom-voicemail-alert routine run — 1 new alert posted)
+- Roster (Step 1, fresh pull): 6 phone users — roanoke@fcfpawn.com (ext 809) and culpeper@fcfpawn.com
+  (ext 808) are provisioned in Zoom but have NO number assigned yet (Outbound Caller ID: "Select",
+  Number(s): "Assign", History: No Data) — not yet actually taking calls despite being in the
+  roster. lexington@fcfpawn.com (ext 807) confirmed as the live Lexington line (Outbound Caller ID
+  matches Lexington Store Queue). jdavis@fcfpawn.com (ext 800, legacy) still Active/Activated but
+  No Data today — confirms lexington/807 is fully carrying Lexington Store Queue traffic now.
+- Findings: 1 new unresolved missed call — Harrisonburg, (540) 914-3300 (Donna Allanson), Abandoned,
+  no voicemail, 4:12:37 PM, no callback or reconnect found in same-day history (it was the newest
+  event on the line) — posted to #voicemails-calls-missed. Waynesboro (25 calls today, all Answered)
+  and Lexington (25 events incl. 3 staff outbound callbacks, no new missed calls past the
+  previously-alerted 2:13:06 PM Ring Timeout) had nothing new — correctly suppressed.
+- State file updated: Harrisonburg last_alerted_start_time → Sep 7, 2026, 4:12:37 PM.
+
+## 2026-09-07 (11) (vp-community-weekly — Lane C, week of Sept 13-19 built and published)
+- Rule-12 check first: live Publer `/posts` query (2026-09-06 to 2026-09-21) showed 76 posts,
+  every one on Sept 7-12. The existing `manifest_2026-09-06.json` (generated 2026-08-31, 40
+  items) already owned the current week in full — confirmed independently by today's earlier
+  deal-reels collision note above. **Did not re-run or duplicate that week.** Built the next
+  batch in sequence instead, per the established ~1-week-ahead cadence.
+- `_lane_c/build_manifest_2026-09-13.py` → `manifest_2026-09-13.json`, 40 items (4 formats x
+  5 stores x FB+GBP). Formats from `creative_drift.py select --lane community --slots 4`
+  per store: com_early_shift/com_mural_corner/com_school_colors/com_trailhead
+  (Harrisonburg, Culpeper), com_early_shift/com_mural_corner/com_trailhead/com_park_hour
+  (Waynesboro), com_early_shift/com_mural_corner/com_school_colors/com_park_hour
+  (Lexington, Roanoke).
+- **CITY_COMMUNITY_KB.md gap found and fixed:** Culpeper, Lexington, and Roanoke each had only
+  ONE mural on file already used within 45 days. Verified and appended a second real mural per
+  town from official/tourism sources (The Surveyor — Culpeper; Millinery De Rousselot —
+  Lexington, deliberately framed to avoid the Confederate-adjacent hard exclusion; Greetings
+  from Roanoke — Roanoke). Also verified and rejected Lake Culpeper for the trailhead format
+  (VA DWR confirms no trail/bank access — would have been a wrong-detail post) in favor of Old
+  Rag, correctly distanced at ~20mi via Sperryville Pike.
+- Published via `_lane_c/publish_manifest_2026-09-13.py` (new, text-only, no media upload
+  needed). **Landmine: Publer job-status polling was far slower than the tool-call time
+  budget** — several jobs reported `timeout` on `wait_for_job` despite having actually
+  scheduled successfully. Switched the script to fire-and-forget submission + a single
+  end-of-run live `/posts` text-match verification instead of blocking per-item polling.
+  **Verified against live output, not job status (Rule 12): 40/40 posts confirmed live** in
+  Publer's Sept 13-19 window by text match.
+  Recorded all 20 format/account picks into `creative_drift.py`. Logged to #social-media.
+
+## 2026-09-07 (10) (vp-deal-reels-weekly — Lane B1 ran clean, one new cross-lane collision found)
+- 5/5 store Deal Reels rendered (`vp_deal_reel.py`) from this week's real #deal-of-the-week photos
+  (Rad Power Bike Plus/Culpeper, Dual Gumball Machine/Waynesboro, Lenovo Legion PC/Harrisonburg,
+  STIHL HTA 50/Lexington, Greenlee 849/Roanoke) + 1 brand compilation (`vp_deal_compilation.py`).
+  13/13 placements scheduled via `vp_deal_reel_publish.py` and **verified against a live Publer
+  query**, not the manifest. No photo fallback needed — all 5 were fresh.
+- **NEW LANDMINE: cross-lane exact-timestamp collision, distinct from the known same-account
+  same-lane one.** Waynesboro FB at 11:00am on 9/9 was already booked by a `vp-community-weekly`
+  post — Publer's schedule call failed outright with "There's another post..." rather than the
+  silent-success bug seen elsewhere. Fixed by moving the Deal Reel target to 11:20am and
+  re-verifying live. Worth a shared collision-checking utility across lanes (`vp_deal_reel_publish`,
+  `vp_social/plan.py`, community/casual lanes) rather than each one discovering the same class of
+  bug independently.
+- Recorded all 13 placements into `creative_drift.py` (format `vid_deal_reel`) for future format
+  selection. Logged to #vp-studio-queue.
+
+## 2026-09-07 (8) (vp-content-batch-weekly - first run fully on the vp_social engine)
+- Product batch for week 2026-09-07 built and published through `vp_social` (Publisher), not ad-hoc
+  scripts. **11 placements scheduled, 0 failed, 0 blocked**, verified against a live Publer sync
+  rather than job status: 5 Deal-of-the-Week photo items x (store FB + store GBP) landing Thu 9/10
+  10:00-15:30, plus 1 Brand FB how-a-pawn-loan-works explainer Tue 9/8 17:30.
+- **Deals came from the real 9/7 pick**, not a stale file: `vp-website-deals-weekly/deal_store.json`
+  (written 13:07 today) carried all 5 stores with manager photos re-hosted on thevalleypawn.com.
+  Downloaded those 5 to `deal_of_week_uploads/20260907_*.jpg` and built `state/deals_2026-09-07.json`.
+  Photos went up via `upload_media()` -> media id (never by URL). 0 photo gaps, 0 MJ renders needed.
+- **Scope held to the product lane per the 2026-09-06 addendum:** deal_video slots (6) left unfilled
+  for `vp-deal-reels-weekly` at 14:30 and community slots (12) left for `vp-community-weekly` at
+  15:10. No humor generated here. Those show as skipped/empty-caption in the results file by design,
+  not as failures.
+- **NEW LANDMINE FOUND AND WORKED AROUND - exact scheduled_at collision on a shared account.** The
+  Brand slot was planned for 2026-09-07T18:00:00-04:00. Publer accepted the schedule call and its
+  job reported `complete`, but **no post was created** - the casual-video lane had already booked
+  Brand FB at that exact same timestamp earlier today. Same silent-success signature as the
+  video-by-URL bug, different cause. Rescheduled to Tue 9/8 17:30 and confirmed present in Publer.
+  Takeaway: `wait_for_job` returning `complete` is still not proof a post exists - only a `sync` +
+  ledger check is. Worth having `plan.py` avoid minute-level collisions on Brand / BrandIG /
+  BrandTwitter, which already carry the 2-minute-gap rule.
+- Second, milder friction: re-running `publish` on the same plan to retry one slot is blocked by
+  `plan_level_checks` (identical caption already live) because the plan own just-published captions
+  are now in the ledger. Worked around by publishing a one-slot copy of the plan
+  (`plan_2026-09-07-brandfix.json`, same plan_id). A future engine tweak could exempt captions whose
+  ledger row carries the same plan_id.
+- Manifest: `Valley Pawn Studios/output/2026-09-07/batch_manifest_2026-09-07.json`. Item card stack
+  posted to #vp-studio-queue as an informational log (no approval gate).
+
+## 2026-09-07 (9) (eBay markdown-floor Slack report — fixed illegible per-store item dumps)
+- Root cause: ebay_markdown_terminal.py's post_digests() (written earlier the same session as a fix
+  for a worse 1-message-per-item flood) still posted one Slack message per store with every item
+  bulleted, capped at 40. Fired for real 2026-09-07 12:24pm via the ebay-markdown-terminal-weekly
+  scheduled task: 4 long messages in #ebay-performance (Culpeper 101 items, Roanoke 18, Harrisonburg 8,
+  Lexington 6).
+- Joshua's correction: needs ONE concise report, by store and by company total, with a spreadsheet or
+  link for full detail -- not itemized bullets in Slack.
+- Fix: posted a corrected single message to #ebay-performance (company total $15,108 across 133 items;
+  Culpeper 101/$13,142, Roanoke 18/$1,138, Harrisonburg 8/$260, Lexington 6/$568, Waynesboro unaffected)
+  with a linked Google Sheet (full item/price/ID/eBay-link detail), shared reader access to the 4
+  affected store email accounts (Culpeper@, Harrisonburg@, Lexington@, Roanoke@fcfpawn.com).
+- Durable fix: rewrote ebay_markdown_terminal.py's post_digests() to stop posting to Slack directly
+  (webhook) -- it now only writes markdown_floor_detail_latest.csv + ebay_markdown_terminal_summary.json.
+  Rewrote the ebay-markdown-terminal-weekly scheduled task's SKILL.md so the agent itself builds/shares
+  the Sheet and posts the one concise message every week going forward. Backup of the old script at
+  ebay_markdown_terminal.py.bak-20260907.
+- UNRESOLVED: the 4 original flood messages in #ebay-performance were posted by the incoming-webhook
+  Slack app identity, not the connected Slack MCP user -- no message-delete capability exists in this
+  session's toolset for either identity. They were NOT deleted; only a corrected follow-up was posted.
+  Manual deletion (hover message -> ... -> Delete) is the only way to remove them if Joshua wants them gone.
+
+## 2026-09-07 (11) (MEASURED: the employee-call vein is empty — Phase 2 premise does not hold)
+- Preston's cell **(540) 836-4200** located and confirmed by three independent references in the Joshua↔Preston DM (2026-06-29 Zoom/Comcast port contact; 2026-08-29 "your cell (540) 836-4200"; 2026-08-31 "from your own cell"). Added to `internal_roster.json`.
+- **Full scan of 2026-08-21 → 2026-09-07 with Preston in the roster: 793 recordings, 792 CUSTOMER, 1 EMPLOYEE.** Direction mix 668 inbound / 125 outbound. The one employee call (8/29, outbound, 14m42s to Preston) was classified correctly — the mechanism works; the traffic simply is not there.
+- **This falsifies the stated premise of KB Phase 2.** The design assumed store↔Preston calls would carry the judgment that never reaches Slack. In practice managers call Preston **cell-to-cell**, which Zoom never sees, and Culpeper/Roanoke are not on Zoom Phone at all. One call per 2.5 weeks cannot build a knowledge base. **Adding manager cell numbers will NOT fix it** — that only helps when a manager dials Preston *from the store line*, and the outbound data shows they overwhelmingly do not.
+- **Correction to the 2026-09-07 (9) framing:** call recordings are NOT the knowledge-capture channel. The Slack harvest (219 sourced entries) + the weekly verification loop remains the knowledge engine. The employee route stays wired because it costs nothing and occasionally catches a real 15-minute call, but it is a bonus, not a pipeline.
+- **The customer side is fully viable and unaffected** — 792 real calls in 17 days, ~46/day across HAR/WAY/LEX. That is where this pipeline's value sits.
+- `#call-insights` confirmed created by Joshua (private, `C0BVD57RETV`); wired into the staged `weekly-call-insights` task.
+
+## 2026-09-07 (10) (ZOOM PIPELINE LIVE — OAuth app created, auth working, real calls ingested)
+- **Zoom Server-to-Server OAuth app "Valley Pawn Ops Agent" created and ACTIVATED** (account-level, not published). Scopes are READ-ONLY: `phone:read:call_recording:admin` + `phone:read:list_call_recordings:admin`. Zoom's scope search surfaces the DELETE and UPDATE recording scopes first — both deliberately left unchecked, as were the `:master` variants (partner/reseller only). Credentials at `~/.vp_secrets/zoom_s2s.json`, mode 600. `--check` reports zoom auth OK.
+- whisper-cpp installed; **`ggml-small.en` (465 MB)** chosen over base.en — phone audio is 8 kHz/compressed and base drops numbers and proper nouns, exactly the tokens that matter. Local only; the code raises rather than ever falling back to a cloud transcription API.
+- **TWO REAL BUGS FOUND BY RUNNING IT, both fixed (Rule 12 — verified against live output, not assumed):**
+  1. **Recording `owner` is the CALL QUEUE, not the store user.** A Waynesboro call returns `owner.extension_number 806` (queue) while `accepted_by` is `803` (user). `EXT_TO_STORE` had user extensions only, so **every call resolved to UNK**. Now maps both user and queue extensions per store (queue ids from ZOOM_PHONE.md) and prefers `accepted_by` (whoever actually picked up), falling back to `owner`. After the fix all 58 test-day calls resolved: HAR 29 / WAY 15 / LEX 14, zero UNK.
+  2. **State was checkpointed only at end of run.** A backfill is hundreds of calls; a killed run lost all progress AND would re-append every record it had already written. Now checkpoints atomically after every call. Re-running a completed range is a verified no-op (`skipped=6`). Also added `--limit N` for chunking, and a startup sweep of audio left by a killed run.
+- **NEW PII FINDING not covered by the ephemeral-transcript design:** Zoom's recording metadata includes **`caller_name`** — carrier CNAM, i.e. the customer's real full name — arriving *outside* the audio. Explicitly never read, stored or logged; annotated in code so nobody "enriches" a record with it later.
+- Live verification on 2026-09-01: 58 recordings that day alone; 12 processed end-to-end through download → local transcription → structured record. Customer records contain **no transcript, no name, no number, no quote** — confirmed by grep. Zero audio left in temp after the run. A full backfill to the 8/21 go-live is ~900–1,000 calls.
+- ~1 call in 58 fails transcription (very short/silent recording): logged as a warning and skipped, never retried against a cloud service.
+- Still open: `internal_roster.json` has NO cell numbers, so **100% of calls currently classify CUSTOMER** and the employee/Preston-KB side produces nothing. Preston's cell is the single blocking value. `#call-insights` not confirmed created.
+
+## 2026-09-07 (9) (ZOOM CALL PIPELINE + CUSTOMER CALL ANALYSIS — built, blocked on Zoom credentials)
+- NEW `Projects/Zoom Call Pipeline/` (shared ingest) + NEW `Projects/Call Analysis/` (customer-call consumer). Joshua asked to build the customer-call analysis in parallel with the Preston KB's Phase 2, with its own publish, channel and analysis.
+- **Architecture: ONE ingest, TWO consumers.** `zoom_ingest.py` pulls Zoom Phone recordings once, transcribes once (locally), classifies each call EMPLOYEE vs CUSTOMER, and routes. Employee calls → Preston KB. Customer calls → Call Analysis. Neither consumer sees the other's calls. Two Zoom auth paths and two Whisper passes over the same audio would be waste plus a second thing to break.
+- **The classification step IS the privacy boundary, and it fails CLOSED.** Match against `internal_roster.json` → EMPLOYEE (transcript kept). Unknown/blocked/unparseable number → CUSTOMER. Rationale recorded in code: misclassifying an employee call as customer costs one lost KB entry; the reverse puts a customer's conversation into a base store staff can query. Not symmetric.
+- **Customer transcripts are EPHEMERAL by construction, not by policy.** Redaction on free-form speech leaks (a first name, a street, an odd item = re-identifiable). So customer transcripts are never written to disk in readable form — they exist in memory, reduce to a structured record with no name/number/quote, and are discarded in the same run. Only `{date,store,direction,duration,intent,category,outcome,qualifying_questions_asked,spam}` persists. Audio stays in Zoom under existing access control.
+- **Local transcription only, no cloud fallback.** whisper-cpp installed (`/opt/homebrew/bin/whisper-cli`); `ggml-small.en` chosen over base.en because phone audio is 8 kHz/compressed/noisy and base drops numbers and proper nouns — exactly the tokens that matter. If local Whisper fails the pipeline STOPS; it never degrades to a cloud API.
+- Zoom access is **read-only** (`phone_recording:read:admin`, `phone:read:admin`) — nothing can change a setting, delete a recording or place a call.
+- **Call Analysis answers what Bravo structurally cannot:** every existing KPI comes from completed transactions, so a sale that never happened is invisible. The phone shows demand (what we're asked for and don't have), what we turn away, qualifying-script adherence, buy-vs-pawn presentation, and spam volume. Covers **3 stores only (HAR/WAY/LEX)** — Culpeper/Roanoke still on Verizon; every output labels this and never presents 3 stores as a company number.
+- **Staff-performance handling is deliberate:** aggregate adherence → `#call-insights`; anything individual → Preston privately, never a channel, never a name. No ranking by call metrics, and explicitly never fed into bonus qualifiers — a number that touches pay gets optimized instead of the customer.
+- Verified end to end with synthetic data (Rule 12): complete week renders a clean ~60-word post; **deleting one day correctly exits 1 and publishes nothing** (Rule 18 gate proven, not asserted). A store with zero calls all week is also treated as an outage, not a quiet store. Test data removed after the run.
+- STAGED, not registered: `Call Analysis/pending-tasks/weekly-call-insights/` (Mon 11 AM, sonnet). Needs `#call-insights` created.
+- **Blocked on two things only:** the Zoom Server-to-Server OAuth credentials (`~/.vp_secrets/zoom_s2s.json`) and the manager/Preston cell numbers in `internal_roster.json` (store lines already filled from ZOOM_PHONE.md). Nothing posted to Slack, no task enabled.
+
+## 2026-09-07 (8) (VALLEY PAWN OPS AGENT — Preston knowledge base built, 219 sourced entries)
+- NEW project `Projects/Preston Knowledge Base/` + NEW saved skill `vp-ops-knowledge`. Answers store deal/valuation questions (gold, silver, coins, diamonds, jewelry, watches, scrap, testing, deal judgment, procedure) from Preston Peters' captured knowledge, with a citation and a date, and refuses when not covered. Operations ONLY — never financials/QBO/payroll/real-estate/personal.
+- **The finding that shaped the build: Preston's knowledge was already written down.** He has answered deal questions in writing, with numbers, since 2022. A first-pass sweep of the Joshua↔Preston DM, all 5 `*-funds` channels, #deal-questions, #loans-and-buys, #general, #scrap-rankings, #policy-announcements and #preston-claude yielded **219 sourced entries** — melt formula, pay-percentage bands, counterfeit tells (ACRE bars, "gas station gold", Kee-unreliable-on-bars), stone-weight rules, Elemetal terms, testing sequence, scrap SOP. That turns the project from "interview Preston for 40 hours" into "harvest, then have him confirm" — his cost drops to ~10 min/week.
+- **Design (additive, Rule 4 — nothing existing modified):** entries with mandatory provenance (claim + verbatim quote + Slack permalink + date; an entry missing the quote or permalink is DROPPED by the build, not published). Tiered trust — VERIFIED (Preston confirmed) and HIGH (explicit rule, quoted with date) may be answered from; MEDIUM/LOW may only be surfaced as "he hasn't set a rule, closest thing he said was…"; SUPERSEDED never. **10 conflicts publish side-by-side with the disagreement flagged — the build never picks a winner or averages** (Rule 18 applied to knowledge). `KB_CURRENT.md` is GENERATED by `kb_build.py` and rebuilt at the top of every responder run — same contract as `Ask_Handbook/build_sources.py`, for the same reason: a corpus that can go stale while still being cited confidently is the worst failure this class of system produces.
+- Verified before publishing (Rule 12): 219 entries / 219 SOURCE lines / 220 permalinks (1:1 provenance); 0 Wi-Fi/facilities content; 0 financial content; tiers 168 HIGH / 47 MEDIUM / 4 LOW.
+- **THREE TASKS STAGED, NOT REGISTERED — creation blocked by the permission classifier** (same as `bonus-payday-prep` 9/6). Staged at `Preston Knowledge Base/pending-tasks/`: `vp-ops-agent-responder` (every 30 min, store hours, sonnet), `preston-knowledge-capture` (nightly 9 PM, sonnet — turns each day's Preston answers into entries, ZERO effort from him), `preston-knowledge-verify-weekly` (Mon 10 AM, sonnet — ≤10 entries quoted back for yes/no/fix, writes `verified.json`).
+- **Ships in SHADOW mode** (`MODE.txt`): the responder DMs Joshua the answer it *would* have posted; nothing reaches a team channel until he flips SHADOW→LIVE. Deliberate — an agent posting a wrong valuation into #deal-questions costs real money, and a proving week is cheap.
+- **Continuity finding worth attention independent of this build:** Preston has NEVER named his diamond buyer, second diamond buyer, coin shop, the counterparty paying 96.5% of spot, or the referring jewelry store — across three years of Slack. Named and on file: Worthy (auction, 12% fee), Elemetal (refiner, 97→98% gold / 85% .925 / 250 troy oz per week), Velma Eades (private buyer via Benjie), Rocky's (competitor). If Preston were unavailable tomorrow, Valley Pawn could not sell a large diamond. Logged in `PRESTON_ASK.md` and the Open Items Register.
+- Also flagged for retrieval: the signed 2026-02-26 Gusto policy "precious metals melt calculations" is NOT in Slack and is likely the canonical written version of the melt rules.
+- Nothing posted to any Slack channel. No scheduled task enabled. Registered task count unchanged.
+
+## 2026-09-07 (7) (ebay-markdown-terminal-weekly — first run, closes the 2026-08-22 audit gap)
+- Ran `eBay/ebay_markdown_terminal.py --apply` for the first time — the "pull" half of the eBay
+  Listing-Age Standard that the 2026-08-22 audit found unimplemented (markdown engine cuts price
+  3x to 30% off, then previously did nothing). No prior terminal-state file existed, so this run
+  established the baseline: 139 items channel-wide are at 3 cuts (30% off) in the markdown engine's
+  state. **Stage 1** (14-day pull-warning clock started, Slack #ebay-performance post + store-manager
+  DM per item, no eBay writes): 133 items — Culpeper 101, Roanoke 18, Harrisonburg 8, Lexington 6,
+  Waynesboro 0. **Stage 2** (14+ days at Stage 1 with no override -> EndFixedPriceItem): 0, expected
+  on a first run since nothing had a prior Stage-1 timestamp to age out of grace. 0 errors in the
+  run log. State written to `~/ebay_markdown_terminal_state.json` (133 tracked items). Next run
+  (and every run 14+ days out) will start producing real Stage-2 pulls for whichever of these 133
+  are still unsold and unrepriced.
+
+## 2026-09-07 (6) (Marketing CEO Briefing — weekly synthesis, first run)
+- NEW weekly synthesis delivered: `Gold and Silver Markeitng/ceo-briefing/briefing-2026-09-07.md` (+ `history.json`, `actions.json` view, HTML artifact `marketing-ceo-briefing` updated). Rolled up all 8 marketing lane audits (website health, web analytics, social, presence/SEO, email perf, email health, eBay, store KPIs) from their published Slack output — no lane audit was re-run.
+- **Two real findings, neither auto-fixed (out of safe-reversible scope):** (1) `weekly-website-health-audit` fired on schedule (lastRunAt 2026-09-07T09:23:26Z per scheduler) but posted nothing to #website and wrote no new row to `Website/AUDIT_2026-08-22/weekly-history.json` — lane is dark this week, last good data point 2026-08-31. (2) `weekly-store-kpis` published two different Net Revenue MTD totals to #store-performance the same morning (08:14 $51,064.53 vs 11:13 $43,191.10) with identical loan/inventory/layaway balances — reproduces the same defect already flagged earlier today in this changelog; still unresolved.
+- Action register cross-check: read `Ai Optimized Marketing/register/MARKETING_OPEN_ITEMS.json` directly (45 open items, 3 resolved this week: SPF-MERGE, NOINDEX-LANE-CONFLICT, YELP-HAR-RENAME). Found `ceo-briefing/actions.json` had drifted stale (missing ~30 items added to the register 9/5) — regenerated as a fresh view from the register, not hand-composed.
+- Headline for Joshua: email cracked its calls+texts/1,000 target two weeks running (11.6 then 28.25, target 8). Needs-you: max loan amount decision (blocks website schema/FAQ regen), eBay Lexington shipping fix before Sep 20 re-eval, ~$25K aged eBay inventory pull-gate approval, ~10 stale directory logins.
+- Slack DM sent to Joshua (D03BHQH5VGT) per Step 5. Not posted to any team channel.
+- No auto-fixes attempted this run — both defects found require pipeline-level or automation-level fixes, not reversible content edits.
+
+## 2026-09-07 (5) (eBay weekly channel audit — clean pull, fee-categorization bug caught and fixed)
+- `ebay-weekly-channel-audit` ran its 3rd cycle (after 8/24 partial, 8/31 full): 446 active listings / $71,464 listed value, 572 sold/$86,762 (90d), fees $14,485 (16.7% of revenue), aged >90d 199 listings/$20,146. All deltas vs 8/31 in `Projects/eBay/audit_weekly/2026-09-07/summary.md`. Zero API errors across all 5 stores.
+- **Caught before publishing (Rule 18):** `GetAccount`'s fee-type strings shifted from the generic `CustomCode` (correctly mapped to Final Value Fee on 8/31) to short codes (`FeeInsertion`/`FeeAd`/`FeeReturnShipping`/`CustomCode`) that the original keyword-match script did not catch — would have silently reported 98.6% of channel fees as unclassified "other." Re-mapped explicitly before writing the summary; flagging that this fee-type string may keep drifting run to run since it's inference, not a documented eBay field.
+- **Caveat surfaced, not resolved (read-only task, not this task's call):** `GetFeedback`'s `Response` field does not reliably reflect replies sent via `RespondToFeedback` (confirmed by a separate 9/5 session) — this run's "10 negative/neutral with no response" figure should not be read as a trend against the 8 replies posted 9/5, which wouldn't show here regardless.
+- Best Offer enabled and no-returns fixes from 8/22 continue to hold at 100%/0% (sample-verified via `GetItem`, 214 of 446 listings, same under-reporting workaround as 8/31 — `GetMyeBaySelling`'s bulk response again returned quality fields blank). TRS Plus eligibility still 0% channel-wide (dispatch time, free-returns policy unchanged). Roanoke's 14-day-return straggler down to 1 listing (was 3) but the source template default is still unfixed per the 9/6 eBay-engine review.
+- New flag: 4 open Best Offers, all expiring 2026-09-07 evening ET (Roanoke x3, Lexington x1) — logged to Open Items Register, none Claude-executable.
+- Dashboard artifact ("eBay Channel Pulse") refreshed in place with this week's numbers.
+- Posted to `#ebay-performance`. Full detail: `Projects/eBay/audit_weekly/2026-09-07/summary.md`.
+
+## 2026-09-07 (CEO SCORECARDS — new weekly + monthly executive rollup)
+- NEW skill + scheduled task `ceo-weekly-scorecard` — Mondays 12:21 PM local, model pinned claude-sonnet-5. One-page CEO scorecard: company topline, 5 stores ranked, capped blocks for Financial/Operations/People/Marketing/Compliance, 5 owned actions, 3 risks. Delivers a Slack DM to D03BHQH5VGT plus a printable one-page HTML and a LAST_WEEK.json carry-forward in Projects/Communcations/ceo-scorecard/.
+- NEW skill + scheduled task `ceo-monthly-scorecard` — 3rd of the month 12:00 PM, model pinned claude-opus-5. Same shape with MoM/YoY framing plus QBO P&L depth. Runs on the 3rd because sales/GL/analytics/employee/scrap/FFL/eBay all close by the 1st and new-customer counts land the 3rd; bonus (10th), Amazon allocation (6th) and gun audit (16th) are reported as STILL OPEN with close dates rather than estimated.
+- Both are READ-ONLY aggregators by design (Rule 4, additive): they read what the ~40 existing report tasks already published and NEVER re-run a report, never touch Bravo/Parallels/computer-use, and post only to Joshua's DM. `marketing-ceo-briefing-weekly` retains ownership of the marketing lane — the scorecard summarizes its conclusion rather than rebuilding it.
+- Both carry a dedupe gate (read the DM before posting) and the standard Rule 16 failure policy.
+- FIRST RUN 2026-09-07 (manual proving run) delivered. Two findings worth attention, both logged in OPEN_ITEMS_REGISTER.md: (1) #store-performance published two different Net Revenue MTD totals the same morning ($51,064.53 at 08:14 vs $43,191.10 at 11:13) with identical balances — the figure was withheld from the scorecard rather than published; (2) #jewlery-counts posts carry no readable text body, so count variances are invisible to any downstream rollup.
+- Registered scheduled tasks: 184 -> 186
+
 # Valley Pawn - Enterprise Changelog
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
+
+## 2026-09-07 (4) (Stop duplicating eBay KPIs to Preston Slack DM)
+- Additive, one-line instruction change (Rule #4 -- not a hardened script, a task-file instruction): `Scheduled/ebay-weekly-quality-fix/SKILL.md` line 71 removed the "Also DM Preston...roll-up" instruction. Preston (Ops, U03BWMEM9GR) was getting a weekly eBay listing-quality roll-up via Slack DM that duplicated data already published to the canonical channels #ebay-performance and #ebay-listings. Per Joshua: eBay KPIs/results should only ever land in those dedicated channels, never in Preston DMs.
+- Store manager DMs (Benjie/Sandi/Chadd/Walker/Uriah) untouched -- those are per-store fix notes, not KPI duplication, and not in scope.
+- Also corrected the not-yet-built target architecture in `Projects/eBay/EBAY_DEPARTMENT_PLAN_2026-09-05.md` ("Monday manager DM" publish spec) to drop the planned Preston roll-up, so a future consolidation build does not reintroduce it.
+- No scheduled task disabled, no plist/script touched -- pure Slack-destination change inside one existing task.
+
+## 2026-09-07 (7) (GROWTH BY CHANNEL — the Company KPI report already had the scrap/retail split)
+- Joshua pointed out the split was in Bravo's **Company KPI report**. He was right, and it reconciles to my EOM figures **to the penny** for June 2026: PSC $77,160.79 + Retail GP $100,243.04 + Scrap GP $52,690.45 = Net Revenue $230,094.28, and `Scrap Sales Item Cost` $42,490.99 == the EOM `Refined (Cost of Sales)` exactly. **Net Revenue = PSC + Retail GP + Scrap GP.** EOM cannot split the last two; the KPI report can. Lesson logged: check the KPI report before concluding a metric is underivable.
+- NEW `channel_growth.py` — parses `<END_DATE>_ALL_company-kpis.xlsx` into per-store + Grand Total channel figures, writes `output/channel_growth.json`. Pulled 3 periods via one `company-kpis` trigger (contention CLEAR, Type A): 2025 Jan–Aug, FY2025, 2026 Jan–Aug.
+- **THE ANSWER — like-for-like Jan–Aug, net revenue +37.4% (+$487,605):**
+  - **Retail GP (NON-GOLD) $594,918 → $806,105, +35.5% (+$211,187) = 43.3% of ALL growth** — the largest single dollar contributor. **Yes, non-gold inventory is contributing growth**, on sales +29.6% and margin 51.3% → 53.6%.
+  - **Scrap GP (gold) $141,466 → $338,931, +139.6% (+$197,466) = 40.5% of growth** — nearly as much in dollars from a base a quarter the size. Scrap sales +109.6%, margin 49.1% → **56.1%** (gold price).
+  - **Loan revenue $567,027 → $645,979, +13.9% (+$78,953) = 16.2% of growth** — growing, but at well under half the company rate.
+- **MIX SHIFT:** loans 43.5% → 36.1% of net revenue (**−7.4 pts**), retail held 45.6% → 45.0%, gold 10.9% → **18.9% (+8.1 pts)**. Gold is taking share directly from loans; retail is holding its ground while growing.
+- **By store (net revenue growth Jan–Aug):** CUL +50.8% · ROA +43.7% · HAR +33.7% · WAY +31.4% · LEX +16.3%. **Lexington's loan revenue went DOWN −$6,512** — the only negative channel figure anywhere in the fleet, and worth a look.
+- `yield-by-asset-class-monthly` updated: new **Step 0** drops ONE `company-kpis` trigger (current YTD + same window prior year) before the harness, so the channel split stays current. Task is now Type A rather than pure Type B; contention check added, foreground guard not needed (watcher serialises trigger drops). Renderer omits the channel section entirely if the KPI data is absent — never shows a stale or invented split.
+- Deliverables: `Valley Pawn — Growth by Channel.csv`, channel section on the artifact.
+
+## 2026-09-07 (6) (GOLD sized — the melt channel is ~1/5 of company earnings; refiner is Elemetal)
+- Joshua confirmed **Elemetal** is the current refiner. Found the existing `precious-metals-settlement-handler` task (daily 9 AM, sonnet) + `Projects/Precious Metals Settlements/` — it already finds Elemetal settlement emails and allocates dollars across stores by Bravo scrap weight. **The settlement data I said was missing was there all along** — logged so no future session repeats that search.
+- **Real economics, from the 4 Aug 2026 settlement (Elemetal Norfolk, INV-20260804-285462):** $66,160.08 net (gross $66,197.78 less $37.70 fees) on **608.127 dwt = $108.79/dwt**, blended lot, wire EPAY-260804707016. Cost basis ≈ $27–29k → **≈$37k gross profit at ~57% margin on ONE monthly cheque**, against company net revenue of **$224k/month**.
+- **Sizing:** across 2026 volume (4,738 dwt YTD, +31% YoY) the melt channel produces roughly **$250–340k gross profit = 14–19% of ALL company net revenue**, ~22–30% of retail gross profit. Gold is not a category in this business — it is the substrate: loan collateral, dominant intake channel, top retail category, AND a commodity desk in the back room.
+- **Reconciliation check worth keeping:** Elemetal pre-melt weight 624.900 dwt vs Bravo buckets 608.127 dwt — a **2.7% delta** on the one settlement we can see. Track it per cycle.
+- **MELT vs RETAIL is the open strategic question and the data CANNOT answer it yet.** Directional only: retail realises ~$146/dwt vs melt $108.79/dwt (~1.3x), but that is **32 sold items out of 17,025** — only 1,859 of 24,306 descriptions carry any DWT, 101 carry a gold word. **Never publish that 1.3x as a finding.** Root fix is a store-procedure change (karat + pennyweight in every intake description), logged in the Open Items Register as the highest-value data fix available.
+- **Risk flagged to Joshua (his calls, not mine):** ~25–30% of COGS exits through ONE counterparty in a single monthly wire, spot-linked and unhedged — a sharp gold correction compresses ~1/6 of earnings at once (LGS quoted a "gold lock" Jan–Apr 2026, worth pricing). And refiner due diligence is warranted for a BSA-obligated pawn/FFL operation: confirm which Elemetal entity is counterparty and its current compliance standing.
+- **Action pending Joshua:** the Aug 2026 allocation REVIEW file has been unapproved since Aug 5, so the handler has archived and posted nothing; `state.json` shows only ONE settlement ever processed.
+
+## 2026-09-07 (5) (SCRAP analysed — it is a quarter of cost of goods, and it is NOT a separate asset class)
+- Joshua asked whether scrap yield is measurable. **Answer: scrap is a channel on the INVENTORY asset, not its own class — same call as layaway, but far bigger.** Metal sent to the refiner leaves the Inventory Base via `Refined (Cost of Sales)`, so the capital is already in the inventory denominator; the refinery proceeds are already inside Total Sales, so the return is already in the numerator. A separate scrap yield would double-count.
+- **Proceeds-in-sales verified empirically, not assumed** (this was the real question): if the payout were missing from sales, heavy-refining months would show collapsed gross margin. Across 100 store-months, months with refining <10% of COGS averaged **50.6%** GM; months >35% averaged **53.7%**; correlation of refining-share vs GM is **+0.28 (positive)**. Scrap is at least as profitable as the retail floor.
+- **SCALE — the finding worth acting on:** refining is **24.7% of ALL cost of goods** ($526,657 of $2,134,886 over 20 months) and climbing — **22.3% of COGS in 2025 → 27.6% in 2026**, now consuming **5.1% of the inventory balance every month** (was 4.3%). Culpeper most scrap-intensive (34.9% of its COGS), Waynesboro least (21.7%).
+- NEW columns in `yield_by_asset_class.csv` (real data, intensity NOT yield): `refined_cost`, `scrap_share_of_cogs`, `scrap_burn_of_inventory`. New scrap section on the artifact.
+- **A true scrap yield is NOT computable today** and must not be faked: the refinery **payout per lot** is commingled into Total Sales with no separating line item, and the **dollar value of scrap on hand does not exist** — the `scrap-refining-gold` pipeline captures **pennyweight only** (`CombinedMetalWeightDwt`, 186 rows in `scrap_history.csv`), no cost, no payout.
+- **THE UNLOCK = refiner settlement statements.** Searched the full mail + iCloud index: **Geib Refining** (Peter Spector) settlements exist **2019–2022** with Lot #, Settlement #, Gross Contents ozt, Accountability %, Refining Charges — **nothing for 2025 or 2026 in Joshua's mailbox or iCloud**; they go to a store inbox or Lainie/Preston. **LGS Refining** (Tim Smith) was quoting terms Jan–Apr 2026 (90% payout .925+ silver, 80% below, free assay, 20-business-day turnaround, gold-lock option) — **unconfirmed whether the refiner changed**, and payout % drives the whole metric. Logged in the Open Items Register.
+- **Standing rule for future sessions: do NOT estimate scrap proceeds from spot gold × an assumed payout %.** That is a plug and `books-tax-strategy` forbids it. Get the settlements.
+
+## 2026-09-07 (4) (Yield stack HARDENED — root cause found, both Augusts recovered, monthly task shipped)
+- **ROOT CAUSE of the August corruption found — it is a FILENAME COLLISION, not a bad pull.** Bravo's EOM handler names output by END DATE only (`<END_DATE>_<STORE>_end-of-month.xlsx`). `monthly-analytics-prestage` pulls **six windows per store per month** (same-month / YTD / trailing-12, current AND prior year) and **every one ends on the same day** — six pulls, one filename, last writer wins. That is why `2025-08-31_*` and `2026-08-31_*` held trailing-12 data. It is a RACE, not a deterministic bug: **any month can lose**. 10 of 265 files were affected.
+- **Both Augusts RECOVERED with zero Bravo contact** — `monthly-analytics-prestage` already stages each window under a range-stamped name, so the true files were on disk all along (`monthly-analytics/2026-08/same-month-current_*` for Aug 2026, `.../same-month-prior_*` for Aug 2025). Series is now a complete **20 months, Jan 2025 – Aug 2026**, full FY2025 and 2026 YTD through August. No re-pull needed; none should be attempted.
+- **Recovered Aug 2026 matched the Bonus Program's independently-derived August close to the penny on all 5 stores** (CUL 61,998.28 · HAR 54,413.07 · LEX 27,754.28 · ROA 48,167.81 · WAY 40,705.46). Two separate pipelines, same answer — now permanent regression check #2.
+- NEW `eom_validate.py` — **shared trust layer; import this in any new EOM consumer.** Reads each file's own `Reporting Dates:` header, resolves the best trustworthy file per (store, month) through a 4-step fallback, and REFUSES anything whose range isn't exactly the month. Fast path reads the xlsx zip's sharedStrings directly (~1 ms vs ~400 ms via openpyxl — 3 seconds vs 2 minutes over 300 files). GOTCHA: the range VALUE sits at col ~AY/51 and drifts per store — scan the full row width.
+- NEW `eom_archive/` — range-stamped `<START>_<END>_<STORE>.xlsx`, collision-proof by construction, so no window can ever destroy another's data again. Backfilled 221 files, 0 unreadable. Refreshed at the top of every extractor run.
+- NEW `test_yield_by_asset_class.py` — 6-check hard gate before any publish (Preston penny match, bonus-engine cross-check, sales-component identity, range integrity, decomposition reconciliation, no partial months). Exit 1 = publish nothing (Rule 18). Checks 1–2 are anchored to facts established outside the codebase — never edit them to make a test pass.
+- NEW `render_yield_artifact.py` — regenerates the published page's entire data blob from the CSV, so **no figure on that page is hand-typed** and none can go stale.
+- NEW scheduled task `yield-by-asset-class-monthly` — day 6, 2:00 PM, `claude-sonnet-5`, **Type B** (reads exported files only; zero Bravo contact, no trigger, no computer-use → no contention check needed). Runs the harness, re-renders, republishes the artifact to the same URL, DMs Joshua one plain line. Day 6 chosen: analytics staging (28–31) and month-end pulls (1–3) have settled; only other day-6 task fires at 9 AM.
+- Decision record: the expert board REJECTED changing `OutputFilename()` (shared by every handler, ~20 tasks depend on the names) and REJECTED patching `EndOfMonth.ahk` (the dates did take — the file was clobbered afterward). The collision is made **harmless** rather than prevented.
+- **Still exposed, deliberately not touched (Rule #4):** `store_kpis_compile.py`, `layaway_yield_compile.py` and monthly-analytics' own parser all still glob for `<date>_<STORE>_end-of-month.xlsx` without checking the range — same collision risk. One-line fix each is to call `eom_validate.resolve()`. Worth doing deliberately, one at a time, with a smoke test.
+- Docs: `Bravo Data Extraction/YIELD_BY_ASSET_CLASS.md` (rewritten), `YIELD_RUN_LOG.md` (new).
+
+## 2026-09-07 (3) (Yield by Asset Class — new analysis + EOM range guard)
+- NEW, additive: `Bravo Data Extraction/yield_by_asset_class.py` decomposes the existing bonus-program "Yield" (Net Revenue ÷ prior-month Ending Assets) into **Loan Yield** (PSC ÷ prior Loan Base) and **Inventory Yield** (Sales Profit ÷ prior Inventory Base). Exact split — share-weighted, they sum back to blended. Nothing redefined; reads EOM xlsx already on disk, zero Bravo cost. Methodology + results: `Bravo Data Extraction/YIELD_BY_ASSET_CLASS.md`. Deliverable published as a private artifact for Joshua.
+- **Finding:** loan yield is a near-constant ~12%/mo at all 5 stores (11–14% band for 18 straight months) — rate-driven, not management-driven. Inventory yield spans 18.0–28.5%/mo and is where the entire inter-store performance gap lives. 2026's +1.54pt blended gain (15.64 → 17.18 Jan–Jul) came **entirely** from inventory; loan yield slipped 0.38pt. Retail gross margin widened 51.3% → 54.2%.
+- **LAYAWAY IS NOT AN ASSET CLASS — do not build a layaway yield.** Proven, not asserted: Bravo's EOM Sales summary identity (Taxable+Layaway+Fees+Nontax+NontaxLayaway+NontaxFees == Total Sales) holds to the penny across **260/260 store-months**, and Sales Revenue (Profit) = Total Sales − COGS. So layaway GP is already inside the inventory-yield numerator and layaway merchandise is already inside the Inventory Base. A separate layaway yield double-counts. Report **Layaway Collection Velocity** as an inventory sub-metric instead (company 41.1% 2025 → 37.2% 2026 YTD).
+- **DEFECT FOUND (data, not code):** Bravo's EOM export does not always honour the requested month. `2025-08-31_*` came back as 9/1/2024–8/31/2025 and `2026-08-31_*` as 9/1/2025–8/31/2026 (trailing 12 months); `2026-08-30_*` likewise. 245 of 265 EOM files are correct. Balances stay valid (point-in-time); **flows run ~11× too large**. New extractor reads each file's own `Reporting Dates:` header and rejects any non-matching file outright (Rule 18 — withhold, don't caveat), so Aug 2025 + Aug 2026 are excluded and all YoY uses Jan–Jul both sides. Gotcha for anyone re-implementing: the range string sits at col AY/51 and drifts per store — scan the FULL row width.
+- Bonus Program was **already** gated against this same trap (see `Bonus Program/RUN_LOG.md` — reporting-dates equality + ±60% plausibility band + monthly-analytics sidecar fallback). Targets were not corrupted. Verified before flagging (Rule 17); this guard is a second independent implementation for a different consumer.
+- Separate defect logged, NOT changed (Rule #4 — hardened task): `layaway-yield-weekly` divides month-to-date collections by a full balance, so its published % moves with the calendar rather than performance. Its extraction is correct (matched `layaway_yield_compile.py` cell-for-cell on 2026-07-14, all 5 stores); only the period framing is wrong. Joshua's call.
+- Validation: Net Revenue reproduced to the penny vs Preston's June 2026 commission basis, all 5 stores.
+- Nothing scheduled, nothing posted to Slack.
+
+## 2026-09-07 (monthly-publication-audit)
+- Verified every MONTHLY publication whose cadence day is on or before the 7th (August 2026 close): monthly-analytics-report, monthly-employee-sales-rankings, monthly-scrap-rankings, nics-monthly-ranking, monthly-ebay-ratings-sweep, monthly-we-buy-gold-silver-email, vp-new-customer-report, monthly-eom-recap. All confirmed landed (Rule 12, read the channel, not run records) -- the ones flagged MISSED in the 9/5 publications audit (monthly-analytics-report, monthly-employee-sales-rankings, monthly-scrap-rankings, vp-new-customer-report) were confirmed as successfully recovered by that same 9/5 session; nothing left to fix this cycle.
+- One format note: monthly-analytics-report's 9/5 catch-up post used a shorter 'Monthly Business Update' title with a linked spreadsheet instead of the historical 'Monthly Analytics - {Month}' 3-view table -- content landed for the right month so treated as healthy, but fleet/expected_outputs.json's marker for this task ('Monthly Analytics -') no longer matches; needs a dated correction next time that task is touched.
+- bonus-month-close-pull (new task, created 9/6) has no Bonus Program/out/2026-09/ folder -- correctly not-yet-due, its first real fire is 10/1, not a miss.
+- eom-bravo-gl-export (August ledger) confirmed still failed as of the 9/2 DM with no later success found -- out of scope for this audit per PUBLICATION_CALENDAR.md (finance export, not a channel publication); eom-bravo-gl-export-watchdog already owns it, left untouched.
+- Silent run per Step 5 -- everything checked was already healthy or already recovered, so no DM to Joshua.
+- Log: Valley Pawn OS/fleet/publication_audits/2026-09-07.json
+
+
+## 2026-09-07 (2) (eBay Seller Standards — headless pull live, 2 real BELOW_STANDARD stores found)
+
+- **Completed the token re-consent flagged 2026-09-05.** Joshua signed into each of the 5 store eBay accounts in Chrome (Roanoke, Culpeper, Waynesboro, Harrisonburg, Lexington); for each, drove eBay's full 3-legged OAuth authorize URL directly (NOT the developer-portal "quick sign in," which only ever surfaces a 2hr access token and discards the refresh token — that's the exact gap that made the 8/24 tokens dead on arrival). Captured each authorization code off the eBay-hosted redirect page and exchanged it for access+refresh tokens via `POST /identity/v1/oauth2/token` (App ID/Cert ID Basic auth) before the 5-minute code expiry. Scopes: `sell.analytics.readonly`, `sell.account.readonly`, `commerce.identity.readonly`. All 5 refresh tokens saved to `~/.vp_secrets/ebay_analytics_oauth.json`, `refresh_token_expires_in_days: 547.5` each (~2028-03).
+- **New `Projects/eBay/ebay_analytics_auth.py`** — exchanges refresh→access token on demand, in-memory cache with 60s safety margin. Verified working for all 5 stores.
+- **`ebay_ratings_headless.py` extended** with a real Seller Standards section: level, evaluation date, late shipment rate, defect rate, cases closed without seller resolution, tracking-on-time — all 5 stores, zero browser, zero estimation. `monthly-ebay-ratings-sweep` task prompt rewritten (again) to report the SPECIFIC metric driving any BELOW_STANDARD level and to flag evaluations landing within 10 days.
+- **Two real findings, one a correction:** Lexington's BELOW_STANDARD is driven by cases closed without seller resolution (1.35% vs 0.30% threshold), NOT late shipment as the August Chrome-scrape sweep reported (that sweep's 4.23% late-shipment figure was from a different, since-improved snapshot — current rate is 3.64%, within range). **Harrisonburg is ALSO BELOW_STANDARD** — missed entirely in August because Chrome was only ever signed into Lexington — on defect rate (4.92% vs 2.00% threshold, 9/183 transactions) and cases closed without resolution (2.19% vs 0.30%, 4/183). Culpeper and Waynesboro are Top Rated; Roanoke is Above Standard. All 5 evaluated 2026-08-21; next cycle ~2026-09-20/21 — worth watching for Harrisonburg and Lexington specifically.
+- September sweep verified end to end: `Projects/eBay/ebay-ratings-sweep-2026-09.md`. This closes the Open Items Register row from 2026-09-05.
 
 ## 2026-09-07
 
@@ -3550,3 +3932,8 @@ Newest first. Material changes to the business operating system. Read this BEFOR
 ## 2026-09-05 (business-os-daily-refresh)
 - Live state refreshed: 9 changes detected -- scheduled tasks 163->164, task folders 175->176, ENABLED unified-search-verify, DISABLED bald-rock-vrbo-rate-sync-recheck, and 3 new native launchd agents appeared (com.valleypawn.disk-health, com.valleypawn.preston-watch, com.valleypawn.taskperms-oneshot; disk-health and preston-watch confirmed loaded). None of the 3 new agents were previously documented here. Inspected each: disk-health runs a disk-space/health check 5x/day; preston-watch runs every 2 min as a zero-Claude-usage Slack ack watcher for #preston-claude (posts a quick on-it reply and escalates to Joshua by DM only if a request sits over 60 min); taskperms-oneshot applies scheduled-task permission settings once nightly at 2:10 AM. All three appear benign by content but have no prior changelog entry, so a plain-language Slack DM was sent to Joshua per policy.
 - 2026-09-06 -- weekly-online-store-audit: 458 active, 104 sold/7d, $14786.99 rev/7d (+11% WoW). Auto-fixed 6 Roanoke listings -> 30-day buyer-pay returns (script's own summary undercounted this as 0 -- verified actual count via fix_history.log + live GetItem spot-check on 3 of 6, all confirmed). Aged (>180d) inventory value down 16% WoW to $7330.04 (95 listings). Roanoke logged 1 fix_failures_this_run, consistent with the known pending-Best-Offer block pattern from prior weeks -- self-resolving. No store crossed a risk threshold. Posted #ebay-performance.
+
+## 2026-09-07 (8) (New Customer YoY backfill - vp-new-customer-report)
+- Diagnosed the vp-new-customer-report artifact YoY n/a: the rollup (Bravo Data Extraction/output/new_customers_monthly_rollup.json) only had clean calendar-month rows from Jul 2026 onward, no same-month-prior-year data existed to compare against. Not a code bug; vp-new-customer-report SKILL.md Step 5 already computes YoY correctly once a matching row exists.
+- Fix: queued 3 additive trigger-drop backfills (new-customers-backfill2/3/4-2026-09-07T times) via the existing chekkit-invites-range pipeline cell (no UI interaction, no new saved report) covering all 5 stores x Jul 2025 through Jun 2026, 12 months, about 60 store-pulls, split into batches under the 45min trigger cap. This closes the loop going forward too, every future month YoY comparison will already have its prior-year row by the time the monthly task needs it.
+- Created one-time scheduled task new-customers-yoy-backfill-finalize, fires 2026-09-07 4:20 PM ET, to verify the backfill landed, append the new rows to the rollup, and republish the vp-new-customer-report artifact with real YoY. No existing scheduled task or pipeline handler was modified.

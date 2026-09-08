@@ -123,34 +123,68 @@ def item_live(token, iid):
     }
 
 
+DETAIL_CSV = os.path.expanduser('~/Documents/Claude/Projects/eBay/markdown_floor_detail_latest.csv')
+SUMMARY_JSON = os.path.expanduser('~/ebay_markdown_terminal_summary.json')
+
+
 def post_digests(stage1_new, stage2_ended):
-    """One plain-language Slack message per store, not one per item."""
+    """REWRITTEN 2026-09-07 — this used to post directly to Slack (webhook), one message per
+    store with every item bulleted (capped at 40). That flooded #ebay-performance with long,
+    illegible messages on the first real run (2026-09-07: 4 messages, one listing 101 items).
+
+    Per Joshua's correction that day, Slack needs ONE concise message — company total plus a
+    one-line-per-store breakdown (count + dollar value), never an itemized bullet dump — with
+    full item-level detail available via a linked spreadsheet for anyone who needs to drill in.
+
+    This function no longer posts to Slack at all (removing the SLACK_WEBHOOK dependency from
+    this unattended script entirely). Instead it writes the full detail to a CSV and a compact
+    JSON summary (counts + $ totals, company-wide and per store, for both stages). The
+    ebay-markdown-terminal-weekly scheduled task reads that JSON+CSV after this script runs,
+    builds/updates a shared Google Sheet from the CSV, and posts the one concise Slack message
+    itself — see that task's SKILL.md for the exact format. This keeps the unattended script
+    simple and auditable, and keeps message wording/formatting under the same review as every
+    other Slack post this business sends.
+    """
+    rows = []
+    for store, iid, title, price in stage1_new:
+        rows.append({'store': store, 'item_id': iid, 'title': title, 'price': price,
+                     'status': 'At 30% floor — grace period', 'ebay_link': 'https://www.ebay.com/itm/%s' % iid})
+    for store, iid, title, _ack in stage2_ended:
+        rows.append({'store': store, 'item_id': iid, 'title': title, 'price': None,
+                     'status': 'Pulled from eBay today', 'ebay_link': 'https://www.ebay.com/itm/%s' % iid})
+
+    if rows:
+        import csv
+        with open(DETAIL_CSV, 'w', newline='') as f:
+            w = csv.DictWriter(f, fieldnames=['store', 'item_id', 'title', 'price', 'status', 'ebay_link'])
+            w.writeheader()
+            w.writerows(rows)
+
     by_store = {}
     for store, iid, title, price in stage1_new:
-        by_store.setdefault(store, {'flag': [], 'pull': []})['flag'].append((iid, title, price))
+        s = by_store.setdefault(store, {'flag_count': 0, 'flag_value': 0.0, 'pull_count': 0})
+        s['flag_count'] += 1
+        try:
+            s['flag_value'] += float(price)
+        except (TypeError, ValueError):
+            pass
     for store, iid, title, _ack in stage2_ended:
-        by_store.setdefault(store, {'flag': [], 'pull': []})['pull'].append((iid, title))
-    for store in sorted(by_store):
-        f, p = by_store[store]['flag'], by_store[store]['pull']
-        lines = ['*eBay markdown floor — %s*' % store]
-        if f:
-            lines.append('%d listing%s reached 30%% off with no sale. They will be pulled from eBay in '
-                         '%d days unless someone reprices, bundles, or pulls them early — reply here '
-                         'or update them in Bravo.' % (len(f), '' if len(f) == 1 else 's', GRACE_DAYS))
-            for iid, title, price in f[:40]:
-                lines.append('• %s — $%s (%s)' % (title, price, iid))
-            if len(f) > 40:
-                lines.append('• …and %d more' % (len(f) - 40))
-        if p:
-            lines.append('')
-            lines.append('%d listing%s pulled from eBay today after the %d-day grace period. Each needs '
-                         'a store decision: clearance, bundle, donate, or scrap.' % (
-                             len(p), '' if len(p) == 1 else 's', GRACE_DAYS))
-            for iid, title in p[:40]:
-                lines.append('• %s (%s)' % (title, iid))
-            if len(p) > 40:
-                lines.append('• …and %d more' % (len(p) - 40))
-        slack('\n'.join(lines))
+        by_store.setdefault(store, {'flag_count': 0, 'flag_value': 0.0, 'pull_count': 0})['pull_count'] += 1
+
+    summary = {
+        'run_date': datetime.now(timezone.utc).date().isoformat(),
+        'grace_days': GRACE_DAYS,
+        'detail_csv': DETAIL_CSV if rows else None,
+        'company_flag_count': sum(s['flag_count'] for s in by_store.values()),
+        'company_flag_value': round(sum(s['flag_value'] for s in by_store.values()), 2),
+        'company_pull_count': sum(s['pull_count'] for s in by_store.values()),
+        'by_store': {store: {'flag_count': s['flag_count'], 'flag_value': round(s['flag_value'], 2),
+                              'pull_count': s['pull_count']} for store, s in sorted(by_store.items())},
+    }
+    with open(SUMMARY_JSON, 'w') as f:
+        json.dump(summary, f, indent=1)
+    print('SUMMARY_JSON', SUMMARY_JSON)
+    print(json.dumps(summary, indent=1))
 
 
 def main():

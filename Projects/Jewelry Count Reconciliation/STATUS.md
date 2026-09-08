@@ -977,3 +977,34 @@ WAY: Rings 334/334 (0), Bracelets 43/43 (0), Earrings 54/53 (-1), Pendants 66/66
 Posted to #jewlery-counts. No DM to Joshua -- no failures, and the largest single over-variance (HAR Necklaces +4) is small counting noise, well under the scale of the standing ROA-pendants-as-charms case (~+61) that would warrant flagging. All other cells within +/-2. Every store total variance is small (-1 to +6) tonight rather than the historical CUL ~-130 scope-noise pattern -- worth a night-over-night watch, not asserting a conclusion from one data point.
 
 Repeat-category watch: HAR Charms, LEX Brooches, and WAY Charms all also error/empty on 9/3 (prior day). HAR Charms and LEX Brooches have a longer standing history of confirmed-empty (since 8/16). WAY Charms is newer (positive as of 8/15) -- if it continues error on 9/5, treat as a third confirmed-empty category; if it flips back positive, that is genuine restocking, no action needed.
+
+## 2026-09-07 (Monday) — Jewelry Onhand Nightly Pull
+
+Freeze window: fired 8:30 PM target inside 6:00 PM close / 10:00 AM reopen freeze window (all 5 stores) — confirmed via Bravo health gate pass at 20:36 EDT and per-store trigger completion between 20:36–22:39 EDT. PM count sheets posted by managers to #end-of-day between 6:06–6:34 PM, well inside the freeze window on the sheet side.
+
+Stores open (Monday -> all 5): CUL, HAR, LEX, ROA, WAY. All 5 completed.
+
+Bravo pull results (jewelry-case-counts-v2):
+- CUL: SUCCESS, all 8/8 categories ok.
+- HAR: PARTIAL — 7/8 ok, Charms=error (no stable row total after 120s, retried once, same result). Matches prior-day (2026-09-05) HAR Charms=error baseline — treated as 0 per empty-category rule.
+- LEX: PARTIAL — 7/8 ok, Brooches=error (no stable row total after 120s, retried once, same result). Matches prior-day (2026-09-05) LEX Brooches=error baseline — treated as 0 per empty-category rule.
+- ROA: SUCCESS, all 8/8 categories ok.
+- WAY: PARTIAL — 7/8 ok, Charms=error (no stable row total after 120s, retried once, same result). Matches prior-day (2026-09-05) WAY Charms=error baseline — treated as 0 per empty-category rule. (Note: differs from the 8/15 note of a real WAY Charms=1 intake — that item is apparently no longer on hand; most-recent prior day is the authoritative comparison per the rule.)
+
+PM count sheets read via Chrome vision pass from #end-of-day (all sum-verified against each sheet's own TOTALS line):
+- CUL (Sandi, 6:31 PM): Rings 656 / Bracelets 123 / Necklaces 210 / Earrings 173 / Pendants 301 / Total 1463
+- HAR (Walker Tapley, 6:21 PM): Rings 461 / Bracelets 47 / Necklaces 118 / Earrings 47 / Pendants 117 / Total 790
+- LEX (Uriah, 6:06 PM): Rings 284 / Bracelets 39 / Necklaces 47 / Earrings 48 / Pendants 54 / Total 472
+- ROA (Benjie Moore, 6:34 PM): Rings 562 / Bracelets 136 / Necklaces 169 / Earrings 87 / Pendants 184 / Total 1138
+- WAY (Martin D., 6:18 PM): Rings 332 / Bracelets 44 / Necklaces 73 / Earrings 55 / Pendants 67 / Total 571
+
+Variance (Counted - Expected), posted to #jewlery-counts:
+- CUL: Rings 0, Bracelets -1, Necklaces 0, Earrings 0, Pendants 0 — Total -1
+- HAR: Rings +1, Bracelets +1, Necklaces +3, Earrings +1, Pendants -1 — Total +5
+- LEX: Rings +2, Bracelets +1, Necklaces 0, Earrings 0, Pendants -1 — Total +2
+- ROA: Rings 0, Bracelets 0, Necklaces +2, Earrings 0, Pendants -1 — Total +1
+- WAY: Rings 0, Bracelets 0, Necklaces 0, Earrings -2, Pendants 0 — Total -2
+
+No repeating same-store/category variance pattern of concern tonight — all variances are small (largest single-category variance is HAR Necklaces +3, largest store total is HAR +5), well inside normal night-to-night noise. Notably CUL's total variance was only -1 tonight versus the previously-documented ~-130 CUL scope-noise baseline in vp-operating-rules — worth watching over the next few nights to see if that's a one-off or a real shift in how much CUL inventory sits in safe/back-stock vs display case; not treated as an anomaly tonight since it's a smaller gap, not a larger one.
+
+No anomalous OVER variance (no case of Counted far exceeding Expected) and no run failure — no DM sent to Joshua per Step 7 clean-night rule.

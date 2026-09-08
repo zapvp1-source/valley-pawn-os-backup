@@ -12,10 +12,97 @@ gets answered is worse than never running it. Next run reads OPEN LOOPS first an
 | 2026-08-22 | `eng_stock_poll` | Brand FB + IG + X, publishing 8/23 5:30 PM | **Partially closed 2026-09-02.** Only 1 real comment ever came in (Bobby Perkins, a joke — "Corpolite"), already replied to by the Page (reply timestamped ~8/31, presumably the missed run before it died). No real category votes exist to tally. Recommend Joshua's call: skip the "we bought X" reveal post since there was no real data, or roll it into next poll's framing. | Needs Joshua's call, not auto-closed |
 | 2026-08-22 | `eng_best_find` | Waynesboro FB, publishing 8/24 5:45 PM | **Closed 2026-09-02.** Verified via Business Suite Comments column: 0 comments ever received. Nothing to reply to. | Closed |
 | 2026-08-22 | `hum_overheard` | Brand FB + IG, publishing 8/26 6:00 PM | **Closed 2026-09-02.** Verified via Business Suite Comments column: 0 comments ever received. Nothing to reply to. | Closed |
+| 2026-09-01 | `eng_guess_price` (Gibson BR-9) | Brand FB + IG + X | **CLOSED 2026-09-07.** Reveal posted six days late on the same 3 accounts, real number ($149.99), honest acknowledgment of the delay, no excuses. See 2026-09-07 run entry below. | Closed |
 
-No Guess the Price or What Is This Thing has run yet, so there is no price/ID reveal outstanding.
+No What Is This Thing has run yet, so there is no ID reveal outstanding. `eng_caption_this` and `eng_this_or_that` never promise a follow-up, so neither opens a loop.
 
 ---
+
+## 2026-09-07 (Mon) — full run: reveal close, 2 new engagement posts, reply sweep
+
+**Reveal close (Step 8 / HARD RULE 2026-09-06).** The 2026-09-01 Guess-the-Price (Gibson BR-9
+amp, Waynesboro/Chadd) promised the real number "tomorrow evening" and never got it — six days
+overdue. Verified the real price via #deal-of-the-week (2026-08-31 10:31:48 EDT, Chadd: $149.99)
+and cross-checked against the friday_digest 2026-09-04 casual-video caption, which had already
+stated the same $149.99 publicly — no risk of a mismatched reveal. Posted the reveal today on
+the same 3 accounts as the original (Brand FB, BrandIG, BrandTwitter), honestly naming the delay
+rather than pretending it didn't happen, reusing the same Publer media id for the amp photo.
+Logged in the Open Items Register as closed.
+
+**Drift selection** (season `late_summer`, 40% exploration): `creative_drift.py select --lane
+engagement --slots 2 --account Brand` returned `eng_hometown_bracket` + `eng_caption_this`
+(both NEW/top-ranked). `eng_hometown_bracket` was **substituted** with `eng_this_or_that`
+(confirmed independently eligible via `--slots 6`) after a collision check against Lane C's
+live Publer schedule turned up that nearly every verifiable fact in `CITY_COMMUNITY_KB.md` —
+school mascots, murals, creeks, railroads, the courthouse — is already scheduled across all 5
+towns within the next 10 days. Forcing a 5-store hometown-rivalry bracket into that same window
+would either duplicate a Lane C post on the same page within days or force an under-researched
+entrant. `eng_this_or_that` needed no new local fact (compares two already-priced items), so it
+carries zero collision risk. Humor lane returned "no eligible formats" (all on cooldown) —
+correctly shipped 0 humor posts, within the at-most-1 cap.
+
+`eng_what_is_it` (What Is This Thing) was also considered for the Greenlee Model 849 PVC heater
+(Roanoke) but rejected: Roanoke's own page already has that exact item named with its price
+scheduled 2026-09-10 and again 2026-09-12 by Lane A, which would spoil the mystery before or
+right after the ask could run. Left for a week when an item isn't already claimed by the
+product/deal-reel schedule.
+
+**Shipped: 6 posts (3 reveal + 2 this-or-that + 1 caption-this), verified live in Publer's own
+scheduled list (not the manifest), zero job failures.**
+
+| Publishes | Account | Format |
+|---|---|---|
+| Mon 9/7 5:30 PM | Brand FB | Guess-the-Price reveal |
+| Mon 9/7 5:40 PM | Brand IG | Guess-the-Price reveal |
+| Mon 9/7 5:50 PM | X (as Joshua) | Guess-the-Price reveal |
+| Thu 9/10 5:45 PM | Waynesboro FB | eng_caption_this |
+| Fri 9/11 5:30 PM | Brand FB | eng_this_or_that |
+| Fri 9/11 5:40 PM | Brand IG | eng_this_or_that |
+
+- **Sourcing:** all real, from #deal-of-the-week 2026-09-07 (all 5 stores, verified live in
+  Slack): Sandi/Culpeper Rad Power Bike Plus $899.99; Chadd/Waynesboro Dual Gumball Machine
+  $149.94; Uriah/Lexington STIHL HTA 50 pole pruner $160. Photos are the managers' own submission
+  photos, uploaded straight to Publer's media library via `PublerClient.upload_media()` — no
+  WordPress/Slack-download intermediary needed for this run.
+- **Store-lead rotation:** the intended queue (Waynesboro → Harrisonburg → Lexington → Roanoke →
+  Culpeper) got partially reshuffled by which stores had material that fit this week's
+  collision-safe formats — Waynesboro (caption-this) and, via the cross-store this-or-that,
+  Culpeper and Lexington all got a share. Roanoke and a clean Harrisonburg turn are next in line
+  once a store-local slot opens up again.
+- Six separate manifest items so FB/IG/X each got their own wording — zero byte-identical text.
+  GBP excluded (stays informational, PILLAR_OVERLAY §2). Humor: 0 items, within cap.
+
+**Reply sweep — 1 reply posted, zero unanswered comments remaining at the end of the run.**
+
+Checked all 6 Pages (Brand, Culpeper, Waynesboro, Harrisonburg, Lexington, Roanoke) via Business
+Suite's per-page Comments to-do widget, last 7 days (Aug 31–Sep 7):
+
+- **Roanoke — Rachel Campbell, Sep 3, on the Cummins 4000W inverter post ($349.99).** Asked for a
+  PM confirming availability, said she couldn't send messages herself. Replied as the Page with
+  the store's direct phone number so she isn't stuck. This was new — not caught by the previous
+  run's sweep.
+- **Waynesboro — Scottie Lafferty, 6d, on the "Basic City" post.** Already answered by an
+  existing Page reply from 1w prior that directly covers the Philippines-neighborhood question
+  both she and Scott Tyler asked. No new reply needed.
+- **Brand, Lexington, Harrisonburg, Culpeper:** nothing inside the 7-day window. Brand's only
+  in-window item (Bobby Perkins on the stock-poll post) was already answered.
+- **Old backlog still present** on Brand (Kim Patterson, Sylvia Coffey, Deni Dizdar, Kelly
+  DeMattia, Chance Dudley — all 4mo+ to 4y old) and on Waynesboro (a run of ~10 near-identical
+  "Sherri Dean" good-morning/attachment comments, 9w–13w old, that read like a bot account, not a
+  customer needing a reply). Same backlog flagged 2026-08-22; still recommend a one-time amnesty
+  pass (mark-as-read, don't reply) rather than resurrecting months-old threads. Not touched this
+  run — outside the 7-day scope and a judgment call, not a mechanical one.
+
+**Unrelated finding, not acted on (out of this lane's scope):** `#in-store-inventory`'s "Shop in
+Store Sync" task has been posting loud, repeated "CRITICAL BLOCKER" / "mission-critical, please
+reconfigure now" technical failure messages to that channel for weeks (runs 1–31+, 2026-08-06
+through at least 2026-09-06) — a clear standing violation of Rule 16 (no failure notifications or
+technical jargon to Slack, ever). Flagging for whoever owns that task; not fixed here since it's
+a different pipeline than this lane's.
+
+Logged to `#social-media`. Drift engine recorded: `eng_caption_this`/Waynesboro,
+`eng_this_or_that`/Brand, `eng_this_or_that`/BrandIG, `eng_guess_price`/Brand (the reveal, so the
+format's cooldown clock reflects the actual close date, not just the original ask).
 
 ## 2026-09-02 (Wed) — Fleet Guardian recovery run for missed 2026-08-31 3:45pm run
 

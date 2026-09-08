@@ -288,42 +288,60 @@ def next_evening_slot(now: datetime | None = None) -> datetime:
 
 
 def publer_upload_media(p: PublerClient, path: Path) -> str | None:
-    """Try Publer direct media upload. Returns hosted URL or None."""
-    import requests
-    for endpoint in ("/media", "/media/upload"):
-        try:
-            with open(path, "rb") as fh:
-                r = requests.post(
-                    p.api_base + endpoint,
-                    headers={"Authorization": f"Bearer-API {p.api_key}",
-                             "Publer-Workspace-Id": p.workspace_id or ""},
-                    files={"file": (path.name, fh, "video/mp4")},
-                    timeout=300,
-                )
-            if r.ok:
-                data = r.json() if r.text.strip() else {}
-                for k in ("url", "media_url", "path", "location"):
-                    v = data.get(k) if isinstance(data, dict) else None
-                    if isinstance(v, str) and v.startswith("http"):
-                        return v
-                if isinstance(data, dict) and isinstance(data.get("media"), dict):
-                    v = data["media"].get("url")
-                    if isinstance(v, str) and v.startswith("http"):
-                        return v
-        except Exception as e:
-            print(json.dumps({"warn": f"publer upload {endpoint}: {e}"}))
-    return None
+    """Upload to the Publer media library and return its LIBRARY ID (not a URL).
+
+    2026-09-07 fix: this used to POST /media directly and hand the resulting
+    hosted *url* to schedule_post(video_url=...). That is the documented Publer
+    landmine (SOCIAL_SYSTEM_SPEC.md #5) -- Publer's job_status reports the job
+    as "complete" but creates nothing, and the account-level failure is
+    "Calling Document.find with nil is invalid" (confirmed live, 5/5 jobs,
+    2026-09-07 casual-video catch-up run). The only path that actually creates
+    a post is upload via PublerClient.upload_media() -> real media id ->
+    reference it as {"type":"video","id": media_id}, exactly like
+    vp_social/publish.py does for every other lane. See that module's
+    Publisher.schedule_one() for the reference implementation.
+    """
+    try:
+        resp = p.upload_media(str(path))
+    except Exception as e:
+        print(json.dumps({"warn": f"upload_media: {e}"}))
+        return None
+    media_id = resp.get("id") if isinstance(resp, dict) else None
+    if not media_id:
+        print(json.dumps({"warn": f"upload_media returned no id: {str(resp)[:200]}"}))
+    return media_id
 
 
-def schedule(p: PublerClient, video_url: str, main_caption: str, x_caption: str,
+def _schedule_one_account(p: PublerClient, account_key: str, text: str,
+                           media_id: str, scheduled_at_iso: str) -> dict:
+    """Schedule a single video post to one account by media LIBRARY id, and
+    verify the job actually created a post (not just accepted the request)."""
+    meta = p._account_meta(account_key)
+    net = {"type": "video", "text": text, "media": [{"type": "video", "id": media_id}]}
+    body = {"bulk": {"state": "scheduled",
+                     "posts": [{"networks": {meta["network"]: net},
+                                "accounts": [{"id": meta["publer_id"], "scheduled_at": scheduled_at_iso}]}]}}
+    resp = p.post("/posts/schedule", json=body)
+    job_id = resp.get("job_id") if isinstance(resp, dict) else None
+    if not job_id:
+        return {"status": "failed", "reason": f"no job_id: {str(resp)[:200]}"}
+    deadline_status = p.wait_for_job(job_id, max_seconds=90, poll_interval=4.0)
+    state = deadline_status.get("status")
+    failures = (deadline_status.get("payload") or {}).get("failures") if isinstance(deadline_status, dict) else None
+    if state in ("complete", "completed") and not failures:
+        return {"status": "scheduled", "job_id": job_id}
+    return {"status": "failed", "job_id": job_id, "reason": str(deadline_status)[:300]}
+
+
+def schedule(p: PublerClient, media_id: str, main_caption: str, x_caption: str,
              when: datetime) -> dict:
     iso = when.isoformat()
-    j1 = p.schedule_post(text=main_caption,
-                         store_keys=["Brand", "BrandIG", "BrandTikTok"],
-                         scheduled_at=iso, video_url=video_url)
-    j2 = p.schedule_post(text=x_caption, store_keys=["BrandTwitter"],
-                         scheduled_at=iso, video_url=video_url)
-    return {"main_job": j1, "x_job": j2, "scheduled_at": iso}
+    results = {}
+    for i, acct in enumerate(("Brand", "BrandIG", "BrandTikTok")):
+        results[acct] = _schedule_one_account(p, acct, main_caption, media_id, iso)
+    results["BrandTwitter"] = _schedule_one_account(p, "BrandTwitter", x_caption, media_id, iso)
+    ok = all(r.get("status") == "scheduled" for r in results.values())
+    return {"accounts": results, "scheduled_at": iso, "all_ok": ok}
 
 
 # ---------------- main ----------------
@@ -358,10 +376,15 @@ def process_one(video: Path, p: PublerClient | None, dry_run: bool) -> dict:
             status["scheduled"] = False
             status["status"] = "processed_only"
         else:
-            url = publer_upload_media(p, final)
-            if url:
-                res = schedule(p, url, main_caption, x_caption, next_evening_slot())
-                status.update({"scheduled": True, "status": "scheduled", **res})
+            media_id = publer_upload_media(p, final)
+            if media_id:
+                res = schedule(p, media_id, main_caption, x_caption, next_evening_slot())
+                if res["all_ok"]:
+                    status.update({"scheduled": True, "status": "scheduled", **res})
+                else:
+                    # Real per-account failure (verified against job_status, not just
+                    # "job accepted") -- leave it visible rather than claiming success.
+                    status.update({"scheduled": False, "status": "partial_or_failed", **res})
             else:
                 status.update({"scheduled": False, "status": "needs_ui_upload",
                                "main_caption": main_caption, "x_caption": x_caption,
