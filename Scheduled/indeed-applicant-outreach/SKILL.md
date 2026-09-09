@@ -4,6 +4,8 @@ description: Hourly 9AM-7PM ET: contact new Valley Pawn Indeed applicants (SCOPE
 model: claude-sonnet-5
 ---
 
+> ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
+
 Valley Pawn Indeed hiring loop. FIRST read /Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/HIRING_OUTREACH.md (operating manual, contact log, listing table, THE FULL LOOP, clock procedure, known blockers; mount ~/Documents/Claude/Projects via request_cowork_directory if a human is present, otherwise read it with mcp__Control_your_Mac__osascript `do shell script "cat '<path>'"`). That file is authoritative over this prompt. Read its top section "✅ RE-ENABLED — 2026-09-05" FIRST — it defines the current scope. THE GOAL IS A BOOKED PHONE INTERVIEW, not a sent message. Phone only.
 
 *** CURRENT SCOPE (Joshua, 2026-09-05): TWO LISTINGS, TWO INTERVIEWERS ***
@@ -34,3 +36,5 @@ STEP 6 — DAILY DIGEST (run nearest 7PM ET only, and ONLY if there was activity
 LOGGING: append a "### Run log — {true date/time}" entry to HIRING_OUTREACH.md and add contact-log rows for every person touched (include which listing/interviewer). Never post technical failure detail to Slack (Rule 16) — one plain-language DM to Joshua at most; detail goes in the run log.
 
 SPONSORSHIP RULE: all sponsored jobs run 15-day windows only, never continuous. If the Harrisonburg Store Manager sponsorship is within 3 days of lapsing while still open, flag Joshua via Slack DM — never auto-renew or change ad spend. The FL listing is Free — leave it that way.
+
+DM DISCIPLINE (2026-09-08, Joshua): NO hourly/per-run status DMs to Joshua. The only per-run DMs allowed are (a) a booking on the Florida listing (his own interview) and (b) an out-of-scope candidate asking for a time (log + DM per rule above). Recovered sends, retries, blocked candidates, unanswered offers, and open items go ONLY in the 7 PM #employee-prospects digest and the HIRING_OUTREACH.md run log. A candidate still unreachable after 3 runs is listed once in the digest under Gaps, then dropped from outreach — never re-flagged hourly.

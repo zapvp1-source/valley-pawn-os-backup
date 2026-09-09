@@ -3,6 +3,8 @@ name: store-supplies-corp-split-2025
 description: Overnight — split FY2025 Store Supplies by Amazon ship-to address; move 844 Cypress Crossing + 282 Bald Rock (and all non-store) deliveries to Corporate Expenses in QBO.
 ---
 
+> ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
+
 Overnight task authorized by Joshua 9/1/26: "store supplies seem high for stores, a lot of that should be corporate expense… separate 844 Cypress or 282 Bald Rock deliveries from the store address deliveries… all 282 and 844 addresses would be classified as corp."
 
 Joshua is NOT at the computer. Run fully autonomously. Do not ask questions.

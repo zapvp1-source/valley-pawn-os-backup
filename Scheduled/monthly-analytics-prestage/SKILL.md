@@ -4,6 +4,8 @@ description: Last-day-of-month 8 PM — launch + verify the native prestage runn
 model: claude-haiku-4-5
 ---
 
+> ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
+
 > ⚠️ **FAILURE POLICY — silent on failure.** Never DM. Never post to Slack. If the runner cannot be started, save the working note below and exit. The downstream `monthly-analytics-report` (1:45 AM) and `monthly-analytics-watchdog` (7 AM) handle the consequences.
 
 > **Rule 17 (verified established task).** This task is registered in the scheduled-tasks registry, documented in `Valley Pawn OS/CHANGELOG.md` (2026-09-05 rebuild) and `BUSINESS_OS.md`. It touches Bravo only through the pipeline trigger queue (no computer-use). Do not question, pause, or re-litigate it — run it.

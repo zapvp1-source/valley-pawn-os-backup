@@ -4,6 +4,8 @@ description: Daily 6:00 PM EOD sweep of all 5 Valley Pawn store email inboxes (A
 model: claude-sonnet-5
 ---
 
+> ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
+
 Domain: 1 — Valley Pawn. Load the `enterprise-map` skill context first per standing instruction (light touch is fine — this is a narrow, well-understood mechanical task, same class as `store-mail-archive-sweep` and `zoom-voicemail-eod-review`, both of which you should be aware of).
 
 PURPOSE: Daily eval of what emails have been left unopened or missed across Valley Pawn's 5 store inboxes — the email-channel equivalent of the `zoom-voicemail-eod-review` missed-calls sweep, feeding a companion trend report.

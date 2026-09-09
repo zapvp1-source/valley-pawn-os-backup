@@ -4,6 +4,8 @@ description: Sunday 4:20 PM ET — weekly Valley Pawn internet-presence audit: w
 model: claude-sonnet-5
 ---
 
+> ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
+
 Run the weekly Valley Pawn INTERNET PRESENCE AUDIT. Each run starts fresh — everything you need is in this file.
 
 > ⚠️ **FAILURE ALERT POLICY v2 (Joshua, 2026-07-22):** If this run fails or cannot complete its core work, send Joshua ONE plain-language Slack DM (channel D03BHQH5VGT): `⚠️ Scheduled task "vp-presence-audit-weekly" did not complete — <date>.` Nothing technical in the DM. All technical detail goes in the run log / scorecard file. NEVER send failure notices to any team channel, store manager, or employee including Preston, in any medium.

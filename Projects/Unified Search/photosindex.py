@@ -64,7 +64,7 @@ def list_screenshot_uuids():
         "                'filename': p.original_filename, 'album': albums})\n"
         "print(json.dumps(out))\n"
     )
-    r = subprocess.run([VENV_PY, "-c", script], capture_output=True, text=True, timeout=180)
+    r = subprocess.run([VENV_PY, "-c", script], capture_output=True, text=True, timeout=420)
     if r.returncode != 0:
         raise RuntimeError("osxphotos enumeration failed: %s" % r.stderr[-2000:])
     return json.loads(r.stdout)

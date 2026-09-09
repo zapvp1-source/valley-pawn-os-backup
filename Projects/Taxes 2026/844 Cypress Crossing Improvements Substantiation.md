@@ -387,3 +387,52 @@ order detail to identify what "$3,937.30 general merchandise" actually was.
 *Addendum prepared from Joshua's direct statement during a same-day 282 Bald Rock Affirm review,
 not from a dedicated 844-specific document sweep. Cross-reference against Gmail/Drive for 844
 directly before relying on this addendum for filing purposes.*
+
+---
+
+## 9. ADDENDUM 2026-09-08 — FOUR MORE ITEMS FOUND VIA A 282 BALD ROCK CLEANUP PASS
+
+**Provenance note:** same pattern as §8 — these surfaced during a same-day 282 Bald Rock Road
+session, not a dedicated 844 sweep. That tracker had been carrying four Zelle/bill-pay payments as
+"attribution unconfirmed" for over a month (payee unidentified from the bank record alone). Joshua
+reviewed the full list directly and identified all four as 844 Cypress, not Bald Rock: *"these are
+844 cypress crossing improvements, everyhting esle is bald rock."*
+
+| Date | Method | Payee/memo | Item | Amount |
+|---|---|---|---|---|
+| 2025-06-05 | Zelle | "AVABI" — memo "GUTTERS" | Gutters | $1,745.00 |
+| 2025-07-16 | Zelle | "Marlon" — memo "TILE BORO" | Tile | $2,000.00 |
+| 2025-07-18 | Zelle | "Marlon" — memo "TILE 1790" | Tile | $1,000.00 |
+| 2025-09-03 | Zelle | "GC" — memo "POCKET DOOR FRAMES" | Pocket door frames | $832.03 |
+| 2025-09-16 | Bill Pay | "Flooring ON-LINE" | Flooring | $1,000.00 |
+| | | | **Total** | **$6,577.03** |
+
+**Capital-improvement read: all four are structural, not personal property.** Unlike §8's
+furniture/sporting-goods items, gutters, tile, pocket door frames, and flooring are physical
+components of the house — the same category of item that, on the Bald Rock side of this ledger, is
+treated as a 39-yr structural improvement without a second thought. At 844 Cypress (a personal
+residence, not a rental — see §8's framing note), there's no depreciation, but a capital
+improvement to the structure DOES add to the home's basis under IRC §1016 for a future sale gain
+calculation. **These four should be added to 844's basis once the pre/post-conversion question
+below is resolved — do not fold them into §1's totals without that resolution first**, consistent
+with this log's Rule 8 (a statement alone isn't substantiation, but these carry real Zelle/bill-pay
+payment records, which is the same evidentiary bar the rest of §1 was built on).
+
+**5B flag — dates straddle the ~August 2025 conversion.** 844 Cypress converted from a rental to
+Joshua and Hillary's personal residence around 8/1/2025 (§0). The AVABI (6/5) and first Marlon
+(7/16) payments are BEFORE that date — while the property may still have been a rental, meaning
+these could be depreciable rental capital improvements rather than personal-residence basis
+additions. The second Marlon payment (7/18), GC (9/3), and Flooring (9/16) are AFTER 8/1/2025 —
+squarely personal-residence-basis items, no depreciation. Silverline should treat the pre-8/1 items
+under whichever rental-conversion rule applies to 844's own conversion (the reverse direction of
+Bald Rock's — property going FROM rental TO personal use), not assume all four get the same
+treatment.
+
+**Action item to add to §7's list:** (29) confirm the exact date 844 Cypress stopped being a rental
+— this addendum assumes 8/1/2025 by analogy to Bald Rock's conversion, stated in §0, but that date
+was about Joshua and Hillary moving to Florida, not necessarily the precise day the Cypress lease
+or rental use ended; get that pinned down before splitting AVABI/first-Marlon from the other two.
+
+*Addendum prepared from a 282 Bald Rock evidence-log cleanup pass, cross-referencing Joshua's
+direct 2026-09-08 statement. See `282 Bald Rock — Full Evidence Log.md` §44 for the Bald Rock side
+of this reattribution.*

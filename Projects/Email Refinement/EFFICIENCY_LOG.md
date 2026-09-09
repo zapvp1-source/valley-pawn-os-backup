@@ -401,3 +401,38 @@ that is the test of the channel-ID fix; (2) did the 9/10 send (campaign 54) actu
 ~180 to ~2,400 with wave list 14 attached; (3) after the Wed 9/9 v2 refresh, whether the v2 count is
 stable — 4 stable weeks is the evidence Joshua needs for the audience switch; (4) 10/1 gold send should
 now land at 9 AM, not 2 AM.
+
+## 2026-09-08 (bravo-brevo-attribute-sync -- scheduled weekly run)
+Source: Bravo Data Extraction archive (125 chekkit-invites-range CSVs, 2025-01-31 -> 2026-08-31 --
+same newest file as the 2026-09-01 run, no new store-days landed this week; _shared-bravo-data
+stash checked too, newest dated folder 2026-09-06/chekkit-inactives is only 78 rows total across
+5 stores, far thinner than the archive, archive preferred per the task's own instructions). Ran
+via the established _audit/enrich_contacts_v2.py (PUT /contacts/{email}, attributes only, no list
+changes, enrichment-only, never overwrites non-empty data) -- no deviation needed this run.
+Rows processed: 5,287 unique archive emails | Brevo contacts on file: 14,004 (up from 13,966 last
+week). In archive but not yet in Brevo (skipped): 252 | Name looked like a username/handle
+(skipped): 139 | Phone was a shared/generic number, >=4 distinct emails archive-wide (skipped): 64
+| Contacts with at least one real gap: 141 (field fills queued: SMS 118, LASTNAME 85, FIRSTNAME
+67, STORE 87).
+Upserted: 107 | Failed: 34, all Brevo's own phone validation (duplicate_parameter -- number
+already attached to a different contact -- or invalid_parameter -- malformed number). Left blank
+rather than guessed, per the task's no-guessing rule; v2's fallback correctly still wrote any
+non-SMS attribute on records that also had a name gap.
+Attribute fill before -> after: whole file (sampled n=3,500, same fixed-offset method as prior
+runs): FIRSTNAME 42.1% -> 40.9% | LASTNAME 41.6% -> 40.4% | STORE 55.8% -> 56.5% | SMS 53.6% ->
+53.2%. As in the 2026-09-01 run, most whole-file metrics ticked down slightly despite 107 real
+upserts landing -- consistent with the same known cause (list 3 grew again, 13,966 -> 14,004, and
+the fixed sample offsets pick up more low-attribute new contacts each week; a true random sample
+would be more robust, still not built). Engaged list (7, the actual weekly audience, n=177, same
+as last week): FIRSTNAME 35.0% | STORE 52.5% | SMS 50.3% -- flat, unchanged from last week within
+rounding. No Slack post this run per the task's own quiet-infrastructure rule (no meaningful move,
+no gap).
+Issues: none blocking.
+NEXT RUN SHOULD CHECK: whether the archive gets files newer than 2026-08-31 (2 weeks flat now --
+worth flagging to the Friday audit if a 3rd week passes with no new store-days, since that would
+suggest the Bravo pipeline extraction has stalled again rather than just having a quiet week);
+whether STORE is still stuck around 55-57% (list 12, Valley Pawn - Lexington Store List, remains
+an untried candidate source for backfilling STORE=Lexington on its ~2,647 members, per the
+2026-08-24 audit's still-unsolved note -- still not attempted); consider building the true-random
+verification sample flagged in both of the last two runs, since the fixed-offset dilution artifact
+is now a recurring, predictable source of noise in this log.

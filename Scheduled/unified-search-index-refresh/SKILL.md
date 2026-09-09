@@ -4,6 +4,8 @@ description: Nightly 3:30 AM — rebuild Joshua's unified-search index (Mail, Dr
 model: claude-sonnet-5
 ---
 
+> ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
+
 This is an automated run of a scheduled task. The user is not present to answer questions. Execute autonomously — no clarifying questions. Only take "write" actions this file specifically asks for. FIX-FORWARD (Rule 15): if something breaks mid-run, the job is to overcome it in-run, not to report it.
 
 ## Background

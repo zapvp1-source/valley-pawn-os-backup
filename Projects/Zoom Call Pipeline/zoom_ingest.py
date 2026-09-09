@@ -200,7 +200,15 @@ def transcribe(audio_path):
     wav = os.path.join(TMP, "cur.wav")
     subprocess.run(["ffmpeg", "-y", "-i", audio_path, "-ar", "16000", "-ac", "1", wav],
                    check=True, capture_output=True)
-    out = subprocess.run([wb, "-m", mp, "-f", wav, "-nt", "-np"],
+    # -mc 0 is NOT optional. Without it, whisper carries decoded text forward as context and
+    # gets stuck repeating it. Every one of our calls opens with the same recorded-line
+    # announcement, which is the perfect trigger: the model locks onto that sentence, emits it
+    # 2-8 times, and drops the ENTIRE conversation that follows. That silently blanked 35% of
+    # the week's calls (112 of 321) and produced two confident, wrong business conclusions
+    # before Joshua listened to the audio and said the calls were plainly answered and talking.
+    # Verified 2026-09-08: identical file, same model — without -mc 0 the transcript is four
+    # copies of the announcement; with it, the full conversation (a gold/coin lead) comes back.
+    out = subprocess.run([wb, "-m", mp, "-f", wav, "-nt", "-np", "-mc", "0"],
                          check=True, capture_output=True, text=True)
     try:
         os.remove(wav)

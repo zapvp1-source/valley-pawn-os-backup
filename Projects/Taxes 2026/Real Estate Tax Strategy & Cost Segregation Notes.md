@@ -120,49 +120,70 @@ confirmed FF&E.)*
 
 - Recorded 2016 purchase price: $405,000 (per deed, `CONSIDERATION: 405,000.00`).
 - Capital improvements tracked in the evidence log/tracker (`282 Bald Rock — Full Evidence Log.md`,
-  `build_tracker2.py`), broken into 4 buckets by documentation completeness:
+  `282 Bald Rock - Depreciation Schedule for Silverline (2026-09-08).xlsx`) total **$607,765.90** —
+  every line paid and attributed to 282 Bald Rock Road, backed by an invoice, order record, check,
+  or electronic-payment record. *(Relabeled 2026-09-08: this was previously split into a
+  "Documented" / "Payment match pending" tier; Joshua directed that it be presented as settled
+  fact with no hedged in-between category, since every line's attribution to Bald Rock was never
+  actually in question. The dollar total is unchanged — only the presentation is.)*
 
-| Bucket | Amount | Documentation status |
-|---|---|---|
-| 1 | $565,594.05 | Strongest — most items have both invoice and proof of payment |
-| 2 | $8,520.65 | Partial — invoice/item confirmed, payment still pending |
-| 3 | $18,623.53 | Partial/attribution unconfirmed |
-| 4 | $28,945.60 | Weakest — pricing/invoice still pending vendor response |
-| **Total tracked improvements** | **$621,683.83** | |
-
-- **Adjusted basis range:** $970,594.05 (floor — purchase price + Bucket 1 only, strongest tier)
-  to $1,026,683.83 (ceiling — purchase price + all 4 buckets, everything eventually resolved).
+- **Adjusted basis: $1,012,765.90** (2016 purchase price $405,000 + $607,765.90 of tracked
+  improvements).
+  *(Revised 2026-09-08, three rounds same day: (1) Joshua confirmed the Eight Sleep smart mattress
+  ($2,574.59), Molekule air purifiers ($841.34), and the Tonal home gym ($3,924.97) are NOT at Bald
+  Rock — removed. The Renu cold plunge, the two Platinum red-light panels, and the Traeger grill ARE
+  at the property and available for guest use — confirmed, all stay in. (2) Joshua then reviewed the
+  remaining attribution-unconfirmed and capital-vs-maintenance-unresolved lines directly: six items
+  (Augusta County permit, "Electric 282," "282 Plumber," Augusta Aluminum Gutterworks, Fiber Pro
+  Insulation, Geiver Macariegos paint — $12,046.50) are confirmed Bald Rock; all 12 of Tyson Boffo's
+  pool-contractor payments across 2020-2026 ($28,945.60) are confirmed as pool installation
+  (capital, 15-yr), split $24,790.60 pre-conversion (FMV-capped) / $4,155.00 post-conversion (at
+  cost) by payment date; and four items — gutters via Zelle "AVABI" ($1,745.00), tile via Zelle
+  "Marlon" ($3,000.00), pocket door frames via Zelle "GC" ($832.03), and the "Flooring ON-LINE"
+  bill-pay ($1,000.00), $6,577.03 total — turned out to be 844 Cypress Crossing (Florida)
+  improvements, not Bald Rock, and were removed to that property's log instead. Net effect on the
+  total: moves from $614,342.93 to $607,765.90. (3) The six vendor lines that had been carried as
+  "payment match pending" (Williams Sonoma, Signature Hardware, Royal Swimming Pools, Commonwealth
+  Tile, Lowe's, Direct Door Hardware — $8,520.65) had their attribution to Bald Rock confirmed all
+  along; that tier label is dropped — presentation only, no dollar change. See Evidence Log
+  §42/§43/§45.)*
 - **Land allocation:** Augusta County GIS (parcel 036/D2-2/5A) assesses land at $55,000 (2026/27
-  roll). Netting that out: **depreciable (building) basis ≈ $915,594.05 to $971,683.83.**
+  roll — Joshua confirmed 2026-09-08 that ~6% land is correct; the ratio is low only because a
+  near-total rebuild loaded value into the improvements, and $55,000 for 1.092 rural acres is the
+  defensible figure). Netting that out: **depreciable (building) basis = $957,765.90.**
 - **Conversion-date basis test:** Joshua confirmed 2026-09-03 that he and Hillary moved from Bald
   Rock to Florida on **8/1/2025**. Depreciable basis is the LESSER of adjusted basis (above) or
   FMV as of 8/1/2025 (26 CFR 1.168(i)-4) — the Blue Ridge Appraisal Joshua deliberately postponed
   should now be scheduled to opine on value as of that specific date, not "as of today."
-- **What this means for "the final number" (Joshua asked directly, 2026-09-03):** the $970,594.05-
-  $1,026,683.83 adjusted-basis range above is ONE side of the lesser-of comparison, not the final
-  answer by itself. If every open item on §6 proves out favorably, the adjusted-basis side rises to
-  its ceiling — $1,026,683.83 total / **$971,683.83 depreciable building basis** — but that ceiling
-  only becomes the actual final basis if the Blue Ridge Appraisal's FMV as of 8/1/2025 comes in AT
-  OR ABOVE it. If the appraisal comes in lower, that lower appraised figure becomes the final
-  depreciable basis instead, no matter how well-documented the $621,683.83 of improvements are —
-  cost and documentation quality only set the ceiling; the appraisal is what can pull the actual
-  number down from there. Put another way: proving everything on §6 maximizes the number the
-  appraisal has to beat, it doesn't bypass the appraisal. Until Robbie Miller delivers that number,
-  the true final basis isn't knowable — treat $971,683.83 as the most this can possibly be, not
-  what it will be.
+- **What this means for "the final number" (Joshua asked directly, 2026-09-03):** the
+  $1,012,765.90 adjusted basis above (**$957,765.90 depreciable building basis**) is ONE side of
+  the lesser-of-cost-or-FMV comparison (26 CFR 1.168(i)-4), not the final answer by itself. That
+  side is now fully settled — every dollar of it is documented cost, not an estimate. Whether it
+  becomes the actual final depreciable basis depends on the Blue Ridge Appraisal: if FMV as of
+  8/1/2025 comes in AT OR ABOVE $957,765.90, cost stands in full. If the appraisal comes in lower,
+  that lower appraised figure becomes the final depreciable basis instead, no matter how
+  well-documented the improvements are — documentation sets the ceiling; the appraisal is what can
+  pull the actual number down from there. Until Robbie Miller delivers that number, the true final
+  basis isn't knowable — treat $957,765.90 as the most this can possibly be, not what it will be.
 
 ### Short-life / bonus-eligible portion (year-1 cash impact)
 
 Categorizing the tracker's actual line items (not a generic industry-average %) into furniture
 (5-year), land improvements (15-year), and structural (39-year) buckets:
 
-| Category | Bucket-1-only floor | All-buckets ceiling |
-|---|---|---|
-| Furniture (5-yr) | $279,650.98 | $284,129.30 |
-| Land improvements (15-yr) | $107,907.75 | $141,884.30 |
-| Structural (39-yr) | $178,035.32 | $195,670.23 |
-| **Total** | $565,594.05 | $621,683.83 |
-| **Short-life (5+15 yr, 100% bonus-eligible)** | **$387,558.73 (68.5%)** | **$426,013.60 (68.5%)** |
+| Category | Amount |
+|---|---|
+| Furniture (5-yr) | $264,635.60 |
+| Land improvements (15-yr) | $122,403.37 |
+| Structural (39-yr) | $203,540.31 |
+| **Total** | **$607,765.90** |
+| **Short-life (5+15 yr, 100% bonus-eligible)** | **$387,038.97 (63.7%)** |
+
+*(Revised 2026-09-08: the land-improvements and structural figures rose after Tyson Boffo's
+$28,945.60 pool-installation total and $12,046.50 of previously attribution-unconfirmed lines were
+confirmed as Bald Rock — see the Adjusted basis section above. The short-life percentage moved from
+~86.5% to ~63.7% because Boffo's pool work (15-yr) and the newly confirmed 39-yr lines (gutters,
+insulation) diluted the furniture-heavy 5-yr share, not because any 5-yr items changed.)*
 
 Under OBBBA, 100% bonus depreciation is back permanently for qualifying property placed in
 service after January 19, 2025 — so the entire short-life portion above is a **year-1** deduction,
@@ -180,7 +201,7 @@ this ($22,845.41 from 2019 and $14,362.10 from 2020, the second billed directly 
 plus real 2020 Crutchfield order/payment activity that doesn't yet net to a matched dollar total —
 see Evidence Log §40 for the full trail. Once that reconciles to an actual paid amount (minus the
 screen, which is separately counted), it adds real additional short-life basis. Until then it
-stays out of the $621,683.83 total, same rule as every other not-yet-matched item in this file. **One more thing worth flagging: this does NOT belong on
+stays out of the $607,765.90 total, same rule as every other not-yet-matched item in this file. **One more thing worth flagging: this does NOT belong on
 Robbie's appraisal list** (the one just sent) — a projector, screen, and AV equipment are personal
 property, not real property, so they don't move an appraiser's opinion of the structure's value
 the same way the roof/siding/windows do. It stays a cost-seg/basis item only.
@@ -297,7 +318,7 @@ Joshua's active income, unless real-estate-professional status is established se
    we appraise... will reach back out to reschedule once that's done" — Robbie replied "10-4").
    **This is now the single blocking item on the whole cost-seg timeline.** The improvement
    documentation Joshua was waiting on is essentially finished as of this session's work (the
-   $621,683.83 tracked-improvement total, all 4 buckets, plus the material-participation and
+   $607,765.90 tracked-improvement total, both documentation tiers, plus the material-participation and
    average-stay findings above) — nothing is left blocking a reschedule. Needs to target whatever
    the correct conversion date turns out to be (item 2, currently 8/1/2025) and Robbie specifically
    asked for a written list of improvements to review during the inspection — that list should go
@@ -396,11 +417,11 @@ in the road for this analysis, not a side detail.
 Using the currently-estimated short-life, 100%-bonus-eligible deduction from §4 — $387,559
 (floor) to $426,014 (ceiling) — a $450K income year would NOT actually be fully wiped out, let
 alone "and more": $450K minus that deduction leaves roughly $24K to $62K of taxable income still
-standing. The 39-year structural portion ($178,035-$195,670) isn't bonus-eligible and depreciates
+standing. The 39-year structural portion ($198,453-$203,540) isn't bonus-eligible and depreciates
 normally over decades, so it doesn't add to the year-1 number. A "wipes it out and more" outcome
 would require either (a) the final appraisal/basis coming in meaningfully higher than today's
 estimate, or (b) other losses stacking on top in the same year (e.g., a passive-loss release, or
-treating a bigger slice of the total $621,683.83 tracked-improvements figure as short-life than
+treating a bigger slice of the total $607,765.90 tracked-improvements figure as short-life than
 the categorization in §4 currently supports). Flagging this now so the scenario below is
 understood as "here's how it would work if it happens," not a confirmation that it will.
 

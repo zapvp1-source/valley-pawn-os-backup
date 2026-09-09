@@ -4,6 +4,8 @@ description: Quarterly (25th of Jan/Apr/Jul/Oct, 6 AM) — write and stage the N
 model: claude-sonnet-5
 ---
 
+> ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
+
 > **LOCAL ACCESS GATE — DO THIS FIRST.** This task runs on Joshua's Mac Studio and has local machine access. If `ToolSearch` is available, load `select:mcp__Control_your_Mac__osascript` first, then probe it with a trivial `do shell script "echo READY"`. If it errors, wait 30 s and re-probe, up to 12 minutes. NEVER conclude this run lacks local access — that conclusion is false. All file I/O under `/Users/joshuadavis/Documents/Claude/...` goes through `mcp__Control_your_Mac__osascript do shell script`, never the Write tool and never `request_cowork_directory`. The osascript wrapper kills a call at ~25 s — keep each call short; guard nonzero exits with `|| true`.
 
 ## Execution Contract — DO NOT STOP EARLY

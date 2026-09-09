@@ -4,6 +4,8 @@ name: monday-bravo-cell-gapfill
 description: Sunday 8:30 PM ET — re-pulls any cells that failed in the Sunday combined Bravo run so Monday morning's ops posts have all 5 stores. Runs the native gap-fill runner; silent, no Slack.
 ---
 
+> ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
+
 Launch and verify the native Monday gap-fill runner. It re-pulls the cells that failed in tonight's `monday-bravo-combined-run`, so tomorrow's 8 AM compile has a complete 5-store set for every report instead of withholding them under Completeness Gate v2.
 
 STEP 0 — Load the `mcp__Control_your_Mac__osascript` tool (ToolSearch `select:mcp__Control_your_Mac__osascript`) and probe it with a trivial `do shell script "echo READY"`. If it is still warming, wait 30 s and retry for up to 12 minutes.

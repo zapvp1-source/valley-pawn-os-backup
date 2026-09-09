@@ -3,6 +3,8 @@ name: catchup-scrap-rankings-aug-2026
 description: One-shot 2026-09-05 — the 9/1 run of monthly-scrap-rankings produced no August post; run that task's SKILL.md for reporting period 2026-08.
 ---
 
+> ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
+
 Catch-up run of the existing scheduled task `monthly-scrap-rankings` for reporting period August 2026 (its 9/1 run posted nothing).
 
 1. Invoke the `enterprise-map` skill first, then `bravo-context` and `vp-operating-rules`.

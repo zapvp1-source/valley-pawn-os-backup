@@ -3,6 +3,8 @@ name: store-mail-archive-sweep
 description: Sweeps eBay/store-notification mail out of the 5 Valley Pawn store Inboxes (Apple Mail) into each account's All Mail, since the native Mail Rules for this stopped working
 ---
 
+> ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
+
 Domain: 1 — Valley Pawn. Load `enterprise-map` skill context first per standing instruction (light touch is fine — this is a narrow, well-understood mechanical task).
 
 BACKGROUND: On 2026-08-21 a prior session added 5 Apple Mail rules ("Archive store mail - <account>") to move all mail landing in each of the 5 store IMAP inboxes (culpeper@fcfpawn.com, waynesboro@fcfpawn.com, harrisonburg@fcfpawn.com, lexington@fcfpawn.com, roanoke@fcfpawn.com — all in Mail.app on the Mac Studio) into that account's own "[Gmail]/All Mail" mailbox, so Joshua isn't staring at thousands of eBay notification emails. On 2026-08-22 it was discovered those Mail Rules do NOT fire automatically on new mail (confirmed: inboxes had re-accumulated 242-9,430 unarchived messages in ~1 day). Root cause is unconfirmed/likely an Apple Mail + Gmail-IMAP quirk where the rule's "move" action silently no-ops for new mail even though the rule shows enabled. A manual AppleScript sweep DOES work reliably ONLY when moving messages ONE AT A TIME (bulk list moves of 2+ messages at once hit a reproducible "Can't make {message id ...} into type specifier" AppleScript coercion bug that silently fails/no-ops). This task is the durable workaround until the real root cause of the native rule is found — do NOT modify or disable the existing 5 "Archive store mail" Mail Rules (Rule #4 — additive only, leave existing infra alone).
@@ -147,7 +149,8 @@ lands in the store inbox. Not executed - awaiting Joshua.
 DO NOT "fix" this by raising caps, changing loop style, or retrying - the move is the bug.
 Task left ENABLED and untouched per the no-delete-without-replacement rule; it is wasteful but
 harmless.
-VPEOF
+
+VPEOF
 
 ---
 

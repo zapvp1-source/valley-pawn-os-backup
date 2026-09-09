@@ -3,6 +3,8 @@ name: bonus-july-finish
 description: One-shot. Re-runs the July 2026 bonus close once the queued Roanoke employee-activity pull has landed, so the Roanoke associate lines are included, and DMs Joshua the corrected numbers. Never posts to a team channel.
 ---
 
+> ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
+
 Finish the July 2026 Valley Pawn bonus close. Autonomous, non-interactive.
 
 BACKGROUND: the July close ran on 2026-09-06 with everything except Roanoke's per-employee gross profit — July's month-range employee-activity CSV did not exist, so a pipeline trigger (`bonus-july-empact-20260906T0110`, employee-activity-range ROA 2026-07-01..2026-07-31) was queued behind another session's work. Roanoke is the only store that hit its target in July, so its associate lines are the only ones missing.

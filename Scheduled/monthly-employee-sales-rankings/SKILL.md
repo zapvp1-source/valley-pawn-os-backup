@@ -4,6 +4,8 @@ description: 1st of month 2 AM — FINAL prior-month employee sales rankings (Re
 model: claude-sonnet-5
 ---
 
+> ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
+
 ## Failure policy (Rule 16 / Hardening Standard #6 — updated 2026-09-05)
 Retry once, then try the documented alternate path. If still failing: write the technical detail to this task's run log/STATUS file and stop. Silence in every Slack channel. At most ONE plain-language DM to Joshua (D03BHQH5VGT), and only if a decision only he can make is blocking. Never post failure notices, technical jargon, or partial/incomplete data anywhere.
 

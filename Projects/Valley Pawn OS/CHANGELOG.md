@@ -1,28 +1,157 @@
-## 2026-09-07 (20) (zoom-voicemail-alert routine run — nothing new, silent)
+# Valley Pawn - Enterprise Changelog
+
+Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
+
+## 2026-09-08 (6) (FAILURE POLICY v3 — fleet stops DMing Joshua; one guardian digest a day; Human Queue)
+- WHY: Joshua received four separate pings today (an hourly Indeed status DM, a ‘tuesday-supply-checkout did not complete’ line, a Gusto re-verify ask, a Zoom page ‘worth a look’) and said plainly he is done maintaining the fleet by hand. Root cause is structural, not any one task: the v2 header in every SKILL.md told each task to DM him on failure, so 166 enabled tasks fighting for 3 scheduler slots (5,305 queue skips in 7d) turned into a stream of DMs. Rule 16 already said to stop this; the per-task headers still said the opposite.
+- BUILT (additive, all files backed up `*.bak-20260908-fp3`):
+  - `Valley Pawn OS/fleet/FAILURE_LEDGER.md` — the single place a failing task writes ONE row (`when | task | plain sentence | NEEDS_HUMAN yes/no | OPEN`). No task DMs anyone about a failure any more.
+  - `Life OS/HUMAN_QUEUE.md` — the ONLY list Joshua has to look at: deduped rows for walls only he can clear (MFA, device trust, OAuth consent, passwords not in Chrome). Seeded with 4 rows: Gusto device trust, WordPress.com connector, VSP eReceivables password, Google Analytics consent (~11 min total).
+  - 67 SKILL.md v2 headers rewritten to v3 (ledger row instead of DM); ALL 190 non-guardian SKILL.md files also got a v3 override banner directly under the frontmatter that voids any in-file ‘DM Joshua / worth a look / please sign in’ failure sentence. Success-path posts unchanged.
+  - `fleet-guardian` (12:45 + 21:45): new Step 1c reads OPEN ledger rows — re-runs rerun-safe ones, marks RECOVERED/COVERED/UNRECOVERED, routes NEEDS_HUMAN rows into HUMAN_QUEUE (dedupe by meaning; bump Last hit). Step 4 rewritten: 12:45 run always silent; 21:45 run sends at most ONE plain DM, only if something is unrecovered, a human item is new, or a human item is 7+ days stale. No all-clears. (No .bak for this file — the first edit attempt failed before its cp; prior content is in the 9/7 GitHub nightly backup.)
+  - `indeed-applicant-outreach`: DM DISCIPLINE rule — no hourly status DMs; only FL bookings and out-of-scope time requests DM Joshua; everything else goes in the 7 PM digest; unreachable candidates listed once then dropped.
+  - `com.valleypawn.chromeperms-oneshot` installed and loaded (02:10 tonight) — the Phase 0.4 script that was STAGED 9/4 but never applied (only `follow_a_plan` got set 9/5; 17 Chrome/Gusto tasks still stall 30 min unattended). Sets `skip_all_permission_checks` on 27 tasks, adds Projects to userSelectedFolders, fixes northwest cron, relaunches app, self-removes. Log: `bin/chromeperms_apply.log`.
+- NOT DONE / NEXT (the structural half — Phase 1/2 of SCHEDULED_TASK_RELIABILITY_PLAN.md): the fleet is still ~166 tasks on 3 slots. Next sessions: launch→exit→verify for the 6 babysitters, merge the Monday canvas refreshes and the 10 AM ops checks, Zoom Phone API instead of Chrome polling, `bin/dispatch_health.py` on launchd. Each cuts dispatches without cutting outputs. Do it without asking Joshua.
+- VERIFY TOMORROW (Rule 12): `bin/chromeperms_apply.log` shows skip_all_permission_checks = 27+; FAILURE_LEDGER has rows and guardian_runs/ shows them processed; Joshua received at most one fleet note for 9/9.
+
+## 2026-09-08 (5) (weekly-training-pipeline — SECOND concurrent TEST-MODE run; COLLISION with entry (4). Read this before trusting either set of numbers.)
+- **Two sessions ran `weekly-training-pipeline` at the same time today.** Entry (4) below is the
+  other one. There is only ONE registration of the task (`taskId: weekly-training-pipeline`,
+  cron `0 7 * * 1`, `lastRunAt 2026-09-08T16:05Z`) — verified against the scheduled-tasks registry,
+  so this was two concurrent invocations of one task, not a duplicate registration. Root cause of
+  the double invocation is NOT established and is not diagnosed here.
+- **What this run destroyed.** At 12:06 it re-ran `make_batches.py`, which deletes and rewrites the
+  batch directory — while the other session was mid-read on those files. At 12:17-12:20 it wrote
+  the seven pack files in `Weekly Packs/2026-08-31/`, overwriting the other session's versions.
+  The other session's packs are gone; only its headline numbers survive, in entry (4).
+  Its `supplement_241_266.txt` survives and is byte-identical to this run's `batch_07.txt`.
+- **What this run did NOT break.** Both runs read the same 266 customer calls with full coverage.
+  Ingest was a no-op in both (`harvested=0 already_had=321 failed=0`) — the Zoom API was queried
+  read-only and no transcript was altered. The 106 audio clips in
+  `Call Analysis/audio/2026-08-31_2026-09-06/` were pulled by THIS run (`pull_flagged.py`, new,
+  additive alongside the unmodified `pull_calls.py`); entry (4) observed that pull in progress and
+  correctly waited rather than starting a second one. Both `.mp3` and `.m4a` present for all 106,
+  no zero-byte files.
+- **The two reads disagree, and the disagreement is the finding.** Same 266 calls, two independent
+  rubric passes:
+
+  | Metric | Run (4) | Run (5), this one |
+  |---|---|---|
+  | Quote rate | 37% (22/59) | 36% (21/58) |
+  | Capture rate | 5% (1/21) | 0% (0/25 items) |
+  | Verification rate | 17% (13/76) | 0% (0/69) |
+  | Conduct MEDIUM+ | 44 (14 HIGH) | 57 (10 HIGH) |
+
+  Quote rate is effectively identical across two independent passes — that metric is robust.
+  The other three diverge, and every divergence sits where the rubric leaves judgment room:
+  what counts as "verified" (this run required name PLUS a non-public identifier and counted
+  outbound-to-number-on-file as unverified); whether a sell-side name capture counts toward
+  capture rate (this run counted only unfilled *item* requests, which is why 220 didn't count);
+  and where MEDIUM starts. **Until those three definitions are written down, week-over-week
+  movement on them is not measurable.** That is now the top blocker on the scoreboard, ahead of
+  the store-label bug.
+- Packs currently on disk in `Weekly Packs/2026-08-31/` are run (5)'s. Run (4)'s numbers are in
+  entry (4) below and nowhere else.
+- DELIVERY: TEST MODE, both runs. Everything went to Joshua's Slack DM only. Nothing to store
+  managers, nothing to Preston, nothing to #call-insights, no Gusto policy push, no public Call of
+  the Week, library folder not shared. Joshua has been told plainly, in his DM, that he received
+  two conflicting sets of packs for the same week and which parts to trust.
+- Open, unresolved, carried forward: (a) the double invocation itself; (b) the three rubric
+  definitions above; (c) the store-label and call-direction tagging bug, re-confirmed
+  independently by five of seven readers this run (calls 38, 39, 50, 67, 134, 151, 156, 160, 185,
+  193); (d) the Lexington firearm disposition (Call 233 in this numbering) — still no written
+  release from the Roanoke City Commonwealth's Attorney, gun still in the store.
+
+## 2026-09-08 (4) (weekly-training-pipeline — first TEST-MODE run, packs produced)
+- Window: Mon Aug 31 - Sun Sep 6, 2026 (the previous complete Mon-Sun relative to today, Tue
+  Sep 8). Stores: HAR, WAY, LEX. Wed Sep 2 and Sun Sep 6 have no recordings - both are closed
+  weekdays, not gaps. All 5 open days present on disk.
+- Ingest: no new pull needed - transcripts for all 5 open days were already complete on disk
+  (verified by reading the per-day transcript directories, not a run record). Zoom API untouched.
+- Read: 266 customer calls (>=20s, usable transcript) - 100% coverage. Six batch files were
+  dispatched to six parallel readers; a coverage check found the six batches only reached calls
+  1-240, so calls 241-266 were extracted to `batches/2026-08-31_2026-09-06/supplement_241_266.txt`
+  and read by a seventh pass. Do not assume 6 batches == full week on future runs; verify the
+  union of call numbers against the file count before aggregating.
+- Audio: a pull for this same window was already running on the host when this session started
+  and completed on its own (106 clips, new numbering, m4a via ffmpeg, in
+  `Call Analysis/audio/2026-08-31_2026-09-06/`). This run did NOT launch a second pull - it waited,
+  then verified all 26 flagged calls (14 HIGH conduct, 12 exemplars) have a valid clip. No collision.
+- Packs produced in `Call Analysis/Weekly Packs/2026-08-31/`: coaching_pack_HAR.md,
+  coaching_pack_WAY.md, coaching_pack_LEX.md, library_nominations.md, policy_queue.md,
+  want_list.md, scoreboard.md.
+- Findings: 14 HIGH conduct (7 HAR, 6 WAY, 1 LEX), 30 MEDIUM, 44 total. Quote rate 37% (22/59),
+  capture rate 5% (1/21), verification rate 17% (13/76). Six of the fourteen HIGH items are
+  firearms confirmed on premises or cleared for pickup to unverified callers.
+- DELIVERY: TEST MODE. Everything went to Joshua's Slack DM only. Nothing to store managers,
+  nothing to Preston, nothing to #call-insights, no Gusto policy push, no public Call of the Week,
+  library folder not shared. Awaiting Joshua's confirmation before switching to live routing.
+- Note on the numbers: this test window is the SAME week as the FINDINGS_v2 baseline, so there is
+  no week-over-week movement to report. Conduct count rose ~20 -> 44 because the rubric read is
+  more thorough than the hand read, not because the week got worse. 44 is the real baseline;
+  Sep 7-13 is the first true comparison.
+- STILL OPEN (both carried, neither fixed this run):
+  - Store labels wrong on ~1 in 5 checkable calls (confirmed mismatches: 38, 39, 50, 67, 160, 185,
+    193). Per-store rates are therefore WITHHELD from the coaching packs - company-wide only.
+    This is the top blocker on the program, since coaching packs are per-store by design.
+  - Call direction wrong on 9 calls (39, 67, 72, 74, 133, 179, 184, 185, 201), mostly outbound
+    collections tagged inbound.
+  - Lexington stolen firearm (Call 233) - still needs written release from the Roanoke City
+    Commonwealth's Attorney before that gun moves. Unchanged since week one.
+  - Cheap adjacent fix: only ~35 of 266 calls named the store in the greeting, which is currently
+    the only independent way to audit store attribution.
+
+## 2026-09-08 (3) (zoom-voicemail-alert run — new missed call found, alerted)
 - Roster (fresh pull): same 6 users — roanoke@fcfpawn.com (809) and culpeper@fcfpawn.com (808)
   still show "--" in Number(s), still skipped (not yet live lines). jdavis@fcfpawn.com (800,
   legacy) still Active; checked its History tab this run (belt-and-suspenders) — "No Data"
   confirmed for today.
-- Findings: Harrisonburg (newest row 4:57:08 PM Answered, all rows since the previously-alerted
-  4:32:37 PM Ring Timeout are Answered), Waynesboro (newest row 4:08:25 PM Answered, all rows
-  since the previously-alerted 1:01:08 PM are Answered), Lexington/ext 807 (newest row 5:09:58 PM
-  Answered, all rows since the previously-alerted 2:13:06 PM Ring Timeout are Answered, staff
-  Outbound Connected, or the same 2:13:06 PM row itself) — no new missed calls or voicemails on
-  any line. Correctly stayed silent, no Slack post.
+- Findings: Harrisonburg had 1 new missed call — Michael Barb (540) 335-3083 at 11:43:11 AM
+  (Ring to Member, Ring Timeout, no voicemail) — no Outbound rows exist on this line today at all
+  (0 outbound calls placed), and no later Inbound-Answered from that number, so it was unresolved
+  and posted to #voicemails-calls-missed. Waynesboro: 1 row today (11:03:41 AM Answered) — nothing
+  to alert. Lexington/ext 807: 17 rows today (confirmed via ascending sort + live count check to
+  page around a stuck pagination control), all either Inbound-Answered (3) or Outbound-Connected/
+  Cancelled — fully resolved, nothing to alert.
+- State file updated: Harrisonburg -> "Sep 8, 2026, 11:43:11 AM". Waynesboro/Lexington unchanged
+  (no new candidate rows).
+- Note: the Zoom History table's pagination (Next-page button, per-page selector) did not respond
+  reliably to clicks this run — worked around it via ascending Start Time sort to see the oldest
+  rows and cross-check the running result count instead of paging. Worth a look if a future run
+  hits the same friction on a store with many calls.
+
+## 2026-09-08 (2) (zoom-voicemail-alert routine run — nothing new, silent)
+- Roster (fresh pull): same 6 users — roanoke@fcfpawn.com (809) and culpeper@fcfpawn.com (808)
+  still show "--" in Number(s), still skipped (not yet live lines). jdavis@fcfpawn.com (800,
+  legacy) still Active; checked its History tab this run (belt-and-suspenders) — "No Data"
+  confirmed for today.
+- Findings: Harrisonburg (newest row 11:10:52 AM Answered; all rows since the previously-alerted
+  10:49:42 AM Abandoned are Answered), Waynesboro (1 row today, 11:03:41 AM Answered), Lexington
+  (13 rows today, all Inbound-Answered / Outbound-Connected or Cancelled) — no new missed calls or
+  voicemails on any line. Correctly stayed silent, no Slack post.
 - State file: no changes (no new candidate rows on any store line).
 
-## 2026-09-07 (19) (zoom-voicemail-alert routine run — nothing new, silent)
+## 2026-09-08 (zoom-voicemail-alert run — new missed call found, alerted)
 - Roster (fresh pull): same 6 users — roanoke@fcfpawn.com (809) and culpeper@fcfpawn.com (808)
   still show "--" in Number(s), still skipped (not yet live lines). jdavis@fcfpawn.com (800,
   legacy) still Active; checked its History tab this run (belt-and-suspenders) — "No Data"
   confirmed for today.
-- Findings: Harrisonburg (newest row 4:57:08 PM Answered, all rows since the previously-alerted
-  4:32:37 PM Ring Timeout are Answered), Waynesboro (newest row 4:08:25 PM Answered, all rows
-  since the previously-alerted 1:01:08 PM are Answered), Lexington/ext 807 (newest row 5:09:58 PM
-  Answered, all rows since the previously-alerted 2:13:06 PM Ring Timeout are Answered, staff
-  Outbound Connected, or the same 2:13:06 PM row itself) — no new missed calls or voicemails on
-  any line. Correctly stayed silent, no Slack post.
-- State file: no changes (no new candidate rows on any store line).
+- Findings: Harrisonburg had 1 new missed call — Kevin Steward (540) 830-8109 at 10:49:42 AM
+  (Ring to Member, Abandoned, no voicemail) — no later Outbound callback and no later
+  Inbound-Answered from that number, so it was unresolved and posted to
+  #voicemails-calls-missed. Waynesboro: No Data today. Lexington/ext 807: 11 rows, all either
+  Inbound-Answered or Outbound-Connected — fully resolved, nothing to alert.
+- State file updated: Harrisonburg -> "Sep 8, 2026, 10:49:42 AM". Waynesboro/Lexington unchanged
+  (no new candidate rows).
+
+## 2026-09-08
+
+- Enabled scheduled tasks: 163 -> 166
+- Registered scheduled tasks: 184 -> 188
+- Task folders on disk: 197 -> 188
+- ENABLED: ceo-monthly-scorecard
+- ENABLED: ceo-weekly-scorecard
+- ENABLED: yield-by-asset-class-monthly
 
 ## 2026-09-07 (18) (zoom-voicemail-alert routine run — nothing new, silent)
 - Roster (fresh pull): same 6 users — roanoke@fcfpawn.com (809) and culpeper@fcfpawn.com (808)
@@ -36,6 +165,79 @@
   Outbound Connected, or the same 2:13:06 PM row itself) — no new missed calls or voicemails on
   any line. Correctly stayed silent, no Slack post.
 - State file: no changes (no new candidate rows on any store line).
+
+## 2026-09-08 (1) (Call analysis — found and fixed a whisper bug that had silently blanked 40% of every call transcript)
+- **The bug.** whisper carries decoded text forward as context. Every Valley Pawn recording opens
+  with the same "this call may be recorded" announcement, which is the ideal trigger: the model
+  locks onto that sentence, emits it 2-8 times, and **drops the entire conversation that follows.**
+  224 of 789 recordings (28% overall, 35-40% of the busiest days) transcribed to nothing but the
+  announcement. Fix is one flag — `-mc 0` — now in `zoom_ingest.py` with a comment explaining why
+  it must never be removed. Verified on an identical file: four copies of the announcement before,
+  a full conversation (a gold/coin lead) after.
+- **How it was caught, and the lesson.** Two confident wrong conclusions were published off this
+  artifact before it was found. First "staff put people on long holds," then — after measuring the
+  audio and finding it loud and continuous — "a third of inbound calls may be abandoning in the
+  queue," reasoning from Zoom's `accepted_by` field. Joshua listened to the audio and said plainly
+  that the calls were answered and both parties were talking, which falsified both. **The audio was
+  never the problem and never had been.** Rule 12 applies to derived data too: measuring the file
+  is not the same as verifying the finding, and the cheapest check available (play the recording)
+  was skipped twice in favour of inference.
+- Re-transcribed all 224. 147 real conversations recovered; the residual 77 are genuinely empty
+  (median 18s, only two over 45s) — hangups and callers who never spoke.
+- **Re-ran the entire week's analysis on the complete data** — `FINDINGS_v2_2026-08-31_week.md`,
+  which supersedes the three earlier reports. Note batch renumbering: 256 → 266 calls, so call
+  numbers in the old docs do NOT map to the new one. The saved audio files are still correct (they
+  were pulled by Zoom call id).
+- **Most of the serious compliance findings were invisible before**, sitting inside calls that had
+  transcribed as blank: two third parties' delinquent accounts discussed with a caller who was
+  neither; a wife's account (possibly two guns, transcript garbles guns/games) read to her husband;
+  a mother's loan discussed with her son; a stolen-property allegation handled by searching a named
+  individual and reporting the result to the accuser; a firearm-transfer pickup window invented on
+  the spot by staff who said outright they didn't know the store's policy; and a second gold-coin
+  seller at the same store on the same day as the $4,500 quote, also lost.
+- New inventory signal that only appeared post-fix: **straight-wall deer rifles (350 Legend, 400
+  Legend, 450 Bushmaster) — one caller asked for all three, we had none**, and a bulk-ammo caller
+  was referred to Tractor Supply. Plus repeated demand for non-gaming laptops under $800.
+- Also confirmed post-fix: store labels and call direction are wrong on multiple records (calls
+  tagged Waynesboro where staff answer "Lexington"). Per-store call metrics are not yet trustworthy.
+- The two #call-insights posts are now stale — both were computed from the corrupted transcripts.
+  Left in place rather than posting a third correction to a channel Joshua is currently alone in.
+
+## 2026-09-07 (18) (Call analysis — transcripts now retained; first read-the-calls analysis; the weekly keyword read was misleading)
+- **Design change, Joshua's call:** the ephemeral-transcript rule is lifted ("don't worry about
+  privacy, we are covered"). Transcripts now persist at `Zoom Call Pipeline/out/transcripts/
+  <date>/<call_id>.json`, one file per call, written the moment it is transcribed (resumable, and
+  progress is observable — the old design could not do either). Audio still is never kept; Zoom
+  remains its system of record. New `harvest_transcripts.py` does the pull/transcribe/save.
+  Rationale: under the old rule, improving the classifier meant re-downloading and re-transcribing
+  ~800 recordings — about an hour of compute to answer one question. Now classification is a free
+  local re-run and the calls can actually be read.
+- Harvested 789 of 793 recordings (the ~4 failures are silent/very short, the known ~1/58 rate).
+- **The first weekly post was misleading and this correction matters.** It reported 68% of calls
+  as category "other" and was read as "customers want things we don't have." Reading the calls
+  shows that was an artifact of a narrow keyword list. Actual picture: only 3 calls turned away
+  and 29 not-in-stock out of 291 real calls; and 74 calls (~25%) were loan-adjacent, so "no loan
+  inquiries" was wrong too. CATEGORIES/INTENTS/QUALIFIERS in `zoom_ingest.py` were widened.
+- Also fixed a latent bug: `analyze_week.py`'s Rule 18 gate treated the Wednesday/Sunday store
+  closures as missing days, which would have blocked publishing every week forever. Added
+  `CLOSED_WEEKDAYS = {2, 6}`; genuine gaps on an open day still block publication.
+- **Read all 256 substantive calls from the Aug 31–Sep 6 week** across six parallel reading passes.
+  Findings written up in `Call Analysis/FINDINGS_2026-08-31_week.md`. Headline: the phone is a
+  collections/loan-servicing desk and is good at that; the buy side leaks badly. Every caller
+  quoted a number committed to coming in; nearly none of the callers told "text me photos" did.
+  Zero name/number capture on any unfilled request, zero cross-store stock checks in 256 calls.
+- **Settled the "40% of recordings are silent" question with data rather than a guess**
+  (`Call Analysis/check_answered.py`, joins Zoom's `accepted_by` against transcript content):
+  **0 of 273 inbound calls went unanswered**, all three stores, every day. 105 of the 114 silent
+  recordings WERE answered. So it is not missed calls — it looks like hold time (staff say "brief
+  hold" up to 8x in a call, and "I'm by myself today" in three separate calls). Next step is
+  Zoom's queue hold/abandon report, which is a different report from recordings.
+- Largest single financial miss found: ~2.5 oz of US gold coins quoted "very very roughly around
+  4,500" with the employee saying on the call "I'm kind of spitballin' here"; customer said he had
+  been offered ~10,000 elsewhere. Feeds directly into the existing melt-calculation policy.
+- Conduct items observed on recorded lines (customer speculation, mocking a customer by name,
+  blaming ownership to a customer's face, appraising via a consumer AI chatbot mid-call, payoff
+  amounts given to third parties) are in the findings doc and are deliberately NOT in any channel.
 
 ## 2026-09-07 (17) (Zoom call pipeline — full backfill complete, first #call-insights post published)
 - Ran the full backfill of all 793 Zoom Phone call recordings from the 2026-08-21 recording

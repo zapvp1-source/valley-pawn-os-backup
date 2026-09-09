@@ -21,12 +21,37 @@ export USEARCH_WORKERS="${USEARCH_WORKERS:-4}"
 NICE="/usr/bin/nice -n 10"
 
 echo "=== refresh $(date) ==="
-$NICE /usr/bin/python3 usearch.py mail
-$NICE /usr/bin/python3 usearch.py files
-$NICE /usr/bin/python3 msgindex.py
-$NICE /usr/bin/python3 notesindex.py
-$NICE /usr/bin/python3 remindersindex.py
-$NICE /usr/bin/python3 usearch.py gdrive
-$NICE /usr/bin/python3 photosindex.py
-$NICE /usr/bin/python3 usearch.py stats > stats.txt
-echo "=== done $(date) ==="
+
+# Fixed 2026-09-08: this used to run every step unconditionally and print
+# "=== done ===" no matter what, so a step that crashed (e.g. photosindex.py's
+# osxphotos timeout on 9/2 and 9/4) still got reported as success by
+# refresh_hardened.sh, which only checks for the literal "=== done" marker.
+# Now each step's exit code is checked; the final marker only says "=== done ==="
+# (the string the wrapper greps for) when every step actually succeeded. On a
+# partial failure it prints a marker WITHOUT that substring, so the hardened
+# wrapper correctly treats the run as failed and retries / reports it.
+FAILED_STEPS=""
+run_step() {
+  local label="$1"; shift
+  $NICE "$@"
+  local rc=$?
+  if [ $rc -ne 0 ]; then
+    echo "=== STEP FAILED: $label (exit $rc) $(date) ==="
+    FAILED_STEPS="$FAILED_STEPS $label"
+  fi
+}
+
+run_step "usearch.py mail" /usr/bin/python3 usearch.py mail
+run_step "usearch.py files" /usr/bin/python3 usearch.py files
+run_step "msgindex.py" /usr/bin/python3 msgindex.py
+run_step "notesindex.py" /usr/bin/python3 notesindex.py
+run_step "remindersindex.py" /usr/bin/python3 remindersindex.py
+run_step "usearch.py gdrive" /usr/bin/python3 usearch.py gdrive
+run_step "photosindex.py" /usr/bin/python3 photosindex.py
+run_step "usearch.py stats" /usr/bin/python3 usearch.py stats > stats.txt
+
+if [ -n "$FAILED_STEPS" ]; then
+  echo "=== refresh FINISHED WITH FAILURES ($FAILED_STEPS) $(date) ==="
+else
+  echo "=== done $(date) ==="
+fi

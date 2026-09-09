@@ -62,3 +62,41 @@ that ~20 tasks depend on.
 published % tracks the calendar rather than performance. Extraction verified correct (matched
 `layaway_yield_compile.py` cell-for-cell, 2026-07-14, all 5 stores). Logged in the Open Items
 Register for Joshua's call — not changed here.
+
+---
+
+## 2026-09-08 — fleet-guardian recovery of a missed run (data regenerated; publish step blocked)
+
+The scheduled `yield-by-asset-class-monthly` task never fired for its 2026-09-06 14:00 ET cron
+(lastRunAt null, ~47h overdue at detection — inside the 48h staleness window). fleet-guardian
+recovered it in-session:
+
+- **Step 0 (channel split trigger):** contention check CLEAR. Dropped trigger `yield-channel-20260908`
+  requesting company-kpis for 2025-01-01..2025-08-31 and 2026-01-01..2026-08-31. Trigger was claimed
+  and processed by the watcher; the 2026-08-31 file refreshed (12:56 ET), but no 2025-08-31 file
+  landed within the poll window. Per the SKILL's own fallback, continued without it —
+  `channel_growth.py` ran successfully against the 3 company-kpis files available on disk
+  (2025-12-31 FY, 2026-06-30, 2026-08-31) and wrote `output/channel_growth.json`.
+- **Step 1 (regression harness):** `test_yield_by_asset_class.py` → **RESULT: PASS**, all 6/6
+  checks green (Preston June match, bonus-engine August cross-check, sales-component identity,
+  full-month resolution, loan/inventory-to-blended reconciliation, all 5 stores + COMPANY present).
+  20 months, Jan 2025–Aug 2026, 120 rows.
+- **Step 2 (regenerate artifact data):** `render_yield_artifact.py` ran clean — 2026 YTD (Jan–Aug):
+  loan 12.24% / inventory 21.92% / blended 17.05%. August 2026 alone (COMPANY, from the CSV):
+  loan 12.51%/mo (150.1%/yr), inventory 19.98%/mo (239.8%/yr), blended 16.24%/mo (194.9%/yr).
+- **Step 3 (republish artifact) — DID NOT COMPLETE.** The SKILL.md's documented publish step
+  targets a claude.ai/code hosted artifact (`url: https://claude.ai/code/artifact/a2c1c285-...`)
+  via an "Artifact tool" with `action: "read"/"publish"` semantics. This Cowork fleet-guardian
+  session only has `mcp__cowork__create_artifact`/`update_artifact` (a different, id-based,
+  sidebar-artifact system — confirmed via `list_artifacts`, no `yield-by-asset-class` entry exists
+  there). There is no tool in this session that can reach the actual published URL Joshua has.
+  This is a tooling/environment gap, not a data problem — the regenerated HTML sits at
+  `Bravo Data Extraction/artifact/yield-by-asset-class.html` on disk, fully current and
+  harness-verified, waiting on a session with the claude.ai/code Artifact tool to publish it.
+- **Step 5 (Joshua DM) — withheld.** The SKILL's normal success DM says "Full report updated at
+  the usual link," which would be false this run. No DM sent claiming completion; logged here and
+  in the guardian's own run log / digest instead (Rule 18 — don't caveat a false claim, withhold it).
+- **Follow-up needed (logged in Open Items Register too):** a session with claude.ai/code Artifact
+  access should publish `artifact/yield-by-asset-class.html` to the existing URL, then send the
+  normal Step 5 DM with the August figures above. No harness re-run needed — data is already valid
+  and will not change unless the source files change first.

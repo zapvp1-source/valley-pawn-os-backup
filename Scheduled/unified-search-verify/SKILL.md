@@ -4,6 +4,8 @@ name: unified-search-verify
 description: 4:50 AM — verify last night's unified-search index rebuild and document-photos index against their logs (Rule 12); fix-forward once if failed; one plain DM to Joshua only if unrecoverable. Companion to unified-search-index-refresh (which now only launches).
 ---
 
+> ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
+
 This is an automated run of a scheduled task. The user is not present. Execute autonomously — no clarifying questions. Do NOT call mcp__cowork__request_cowork_directory (it stalls unattended). All host access is via mcp__Control_your_Mac__osascript (load with ToolSearch select:mcp__Control_your_Mac__osascript if deferred). The osascript tool times out at ~25 s per call — never sleep longer than 18 s inside one call.
 
 ## Purpose

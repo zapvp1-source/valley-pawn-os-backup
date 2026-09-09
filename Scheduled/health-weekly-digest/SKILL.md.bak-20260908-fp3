@@ -1,0 +1,33 @@
+---
+name: health-weekly-digest
+description: Sunday 9 AM — plain-language weekly health digest (episodes, night trends, new records, open tests aging) plus a case-file drift check.
+model: claude-sonnet-5
+---
+
+Build and send Joshua's weekly health digest. Domain 3 (Personal / Health). This one ALWAYS sends — it is the weekly heartbeat.
+
+> ⚠️ FAILURE ALERT POLICY (platform standard, v2): if this run cannot complete, send ONE plain-language Slack DM (D03BHQH5VGT): ⚠️ Scheduled task "health-weekly-digest" did not complete — <date>. Nothing technical.
+
+RUN ON THE HOST via `mcp__Control_your_Mac__osascript` + `do shell script`. Never the workspace Bash tool or a `/sessions/*/mnt/` path. Folder: /Users/joshuadavis/Documents/Claude/Projects/Health Optimization
+
+STEP 1 — refresh the nights ledger, then read the summary:
+do shell script "cd '<folder>' && python3 scripts/night_signature.py 2>&1 | tail -2 && cat Nights_Summary.md"
+
+STEP 2 — read this week's episodes: the last rows of Episode_Log.csv and any files added to episodes/ in the last 7 days.
+
+STEP 3 — read Open_Tests_Tracker.md and STATUS.md. Compute how many days each open row has been open (from its `Opened` date to today). Anything not `resulted`/`filed`/`n/a` and older than 30 days is overdue.
+
+STEP 4 — drift check. List files in the folder modified more recently than Master_Findings_Index.md:
+do shell script "cd '<folder>' && ls -lt *.md *.csv *.xlsx 2>/dev/null | head -20 && ls -l Master_Findings_Index.md"
+Any real content file newer than the index (ignore STATUS.md, CHANGELOG.md, Nights_Ledger.csv, Nights_Summary.md, Open_Tests_Tracker.md, and this week's episode files) means the case file has fallen behind. Write those filenames into the "Unfolded" section of STATUS.md.
+
+STEP 5 — send ONE Slack DM to D03BHQH5VGT. Plain English, no jargon, no file paths, no system or script names. Structure it like this, and drop any section with nothing to say:
+
+*This week's sleep* — how many nights flagged the episode pattern vs the four weeks before, and whether the trend is up, down, or flat. Mention specific nights only if they stand out.
+*Episodes you logged* — each with date, time, and what the Oura data showed. If you logged nothing this week, say so in one line — that itself is worth knowing.
+*New records* — anything filed this week and any flagged values, repeating only the lab's own flags.
+*Needs a nudge* — open tests and records requests over 30 days old, in one short list, each with what would close it.
+
+Keep the whole thing under ~200 words. Warm and direct, the way you'd tell a friend what his own data showed this week. Never diagnose, never speculate about causes, never recommend a treatment — describe what the data shows and what is outstanding. Medical decisions are Joshua's with his doctors.
+
+STEP 6 — append a one-line dated entry to CHANGELOG.md noting the digest ran and anything material it surfaced. Your final message: one line summarizing what you sent.

@@ -4,6 +4,8 @@ description: Verify that `monthly-analytics-report` posted to #company-performan
 model: claude-sonnet-5
 ---
 
+> ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
+
 > **NOTE (corrected 2026-09-01 per vp-operating-rules Rule 16 & Rule 18):** The failure-alert
 > wrapper this file used to carry, and the original Step 4 DM template, predate Rule 16 (set
 > 2026-08-24) and Rule 18 (set 2026-08-31), both of which supersede them. Rule 16 forbids failure

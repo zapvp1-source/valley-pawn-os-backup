@@ -4,6 +4,8 @@ description: Weekly walk of the insurance registry — drives every renewal on a
 model: claude-sonnet-5
 ---
 
+> ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
+
 Weekly insurance renewal runner for Joshua Davis. Runs Mondays 7:26 AM ET.
 
 STEP 1 — Load context. Invoke `enterprise-map`, then `insurance-context`. Connect ~/Documents/Claude/Projects (request_cowork_directory with that literal path; fall back to `mcp__Control_your_Mac__osascript` shell reads/writes if no human is present). Read `Life OS/Insurance/INSURANCE_REGISTRY.json` and `BROKER_PIPELINE.md`.

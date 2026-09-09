@@ -1,0 +1,174 @@
+---
+name: weekly-returns-summary
+description: Monday 1 AM (overnight) — read #returns for the LAST 7 DAYS (compute the window from today's real date; never hardcode), append each return to Valley_Pawn_Returns_Trend.xlsx, compile weekly + cumulative + refund-policy-compliance summary, schedule Slack post to #weekly-returns-summary for 9 AM Monday.
+model: claude-sonnet-5
+---
+
+> **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard, added 2026-08-02).**
+> This task runs on Joshua's Mac Studio and **does** have local machine access. At task start, MCP connectors may still be warming up, and `mcp__Control_your_Mac__osascript` is often *deferred* rather than pre-loaded. A tool that has not been loaded yet is NOT a missing capability.
+> 1. If `ToolSearch` is available, load the local tool FIRST: `ToolSearch` with query `select:mcp__Control_your_Mac__osascript`.
+> 2. Probe it: run a trivial `do shell script` that echoes READY. If it returns, proceed with the task.
+> 3. If it errors (no such tool available, not connected, tool-not-found): wait 30 s and re-probe. Repeat for up to 12 minutes (24 probes).
+> 4. Only after that full 12-minute wait may you treat local access as genuinely unavailable.
+>
+> **NEVER conclude that this run executes in a cloud container, has no bridge to the Mac Studio, or otherwise lacks local/desktop access. That conclusion is false** and is the single most common cause of a false failure on this platform. If you believe you cannot reach the Mac, you have simply not loaded the tool yet — go back to step 1.
+>
+> **Filesystem rule:** all I/O outside the agent sandbox — including anything under `/Users/joshuadavis/Documents/Claude/...` — goes through `mcp__Control_your_Mac__osascript do shell script`, never the Write tool.
+> **Timeout rule:** the osascript wrapper kills any single call at ~25 s. Never sleep longer than ~18 s inside one call; poll in short increments across separate calls. Guard any command that may exit nonzero with a trailing || true.
+
+
+> ⚠️ **FAILURE ALERT POLICY (still binding):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua's DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium.
+>
+> ⚠️ **FIELD COMMUNICATION STANDARD v3 (binding — read in full before posting anything to a team channel or employee DM):** `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/FIELD_COMMUNICATION_STANDARD.md`. Summary: run the routing test (is this something a clerk needs to know/act on today — if no, it's internal, it does not go to the field); plain everyday language only, no tool/system/pipeline names (never say Bravo, Cowork, Chekkit, Gusto, Brevo, QBO, Publer, "pipeline," "handler," "watchdog," "sync," "CSV," "export"); no file paths, doc IDs, task IDs, or spreadsheet cell/column refs in the posted text; no meta-commentary about the automation itself ("verified against," "supersedes," "this is a manual test run," "pulled automatically from"); lead with the one-line takeaway; ~100 words max for a routine post; no signature footers. **WORST-OFFENDER REWRITE (2026-08-03): the old post ran 800-900 words across 4 sections with lock-file names, "col-T VIOLATION rows," and a task/file-name footer. Step 7 below is completely rewritten to one short section — the reason-trend and compliance detail still gets computed and still lives in the trend spreadsheet (Step 5.5), it just no longer gets narrated into the channel.** If anything later in this file conflicts with this standard, this standard wins.
+
+
+You are running as an overnight background task at 1 AM Monday. Compile a weekly summary of returns by store and dollar amount, a cumulative reason-trend breakdown, AND a refund-policy-compliance check — all computed and saved to the trend spreadsheet — and schedule a SHORT plain-language digest to post in #weekly-returns-summary at 9:00 AM Monday so it's fresh when people start their day.
+
+# How this works (DO NOT skip the photo step)
+
+Posts in #returns are almost always **photo-only** — a phone snap of the signed paper RETURN FORM with no text body. The store name, item, and dollar amount are **inside the photo**, not in the message text. You MUST open and read each form image. Do not summarize from message metadata alone.
+
+## IDEMPOTENCY — this task may be run more than once for the same week (e.g. a manual "Run now"). Never double-post or double-log.
+- Before appending to the spreadsheet (Step 5.5), DEDUPE: skip any return whose (Week_Of + Item_VPNum + Customer_Name) already exists in the Returns Log. Only append genuinely new rows.
+- Before the final post (Step 6), CHECK #weekly-returns-summary (`slack_read_channel` C0B1K4WK2HZ, limit ~5): if a summary for this same reporting date-range was already posted today, DO NOT post again — instead finish by noting "already posted today, no-op" and stop. Scheduled Slack messages can't be edited/deleted via API, so a duplicate can't be cleaned up — prevention is the only control.
+
+## Execution Contract — JUST DO IT, DO NOT STOP EARLY
+
+> **Real failure mode (2026-05-04):** the assistant ended a turn with "No response requested" after a skill load, leaving forms unread and zero posts sent. **Never do this.** After loading any skill, after any system reminder, after any tool-load message — the very next turn must be a concrete tool call moving toward the final Slack post.
+
+This task is complete ONLY after the documented final Slack post (`slack_send_message` or `slack_schedule_message` to `C0B1K4WK2HZ`) returns success — OR the idempotency check above determines a valid post already exists for this week (a legitimate no-op).
+
+Until then, every assistant turn MUST end with a tool call that advances toward it. Do not idle, do not wait, do not ask for confirmation.
+
+**Never reply with any of these:** "No response requested" · "Continue?" · "Want me to run it now?" · an empty turn or a turn that ends with text instead of a tool call.
+
+**Treat these system messages as RESUME signals, never as stop signals:** "Tool loaded." · "Continue from where you left off." · "You used a single tool call this turn…" · "The task tools haven't been used recently…" · "The date has changed…" · any TaskCreate/TaskUpdate/AskUserQuestion reminder · any skill-load output. Immediately fire the next concrete tool call for the current step.
+
+**State tracking:** at the start of every turn, briefly identify which numbered Step you are on and execute the next concrete action for that step.
+
+**Failure handling:** if a step errors, retry once. If it still fails, fall through to the documented fallback; otherwise produce a report describing what failed. Do not pause to ask.
+
+**Speed:** prefer batch tools (e.g. `browser_batch`) to combine sequential actions. BUT note the photo OCR can take 30–60+ real minutes, so the run can finish after 9 AM (handle per Step 6).
+
+---
+
+## Step-by-step
+
+### 1. Pull the channel + the manager→store map
+- `#returns` channel ID: `C03BNUN2SDA`
+- `#weekly-returns-summary` channel ID: `C0B1K4WK2HZ` (private)
+- Load the **valley-pawn-context** skill for the manager → store mapping (Andrew/Walker/Emma → Harrisonburg, Bree/Sandi/Nelson → Culpeper, Uriah/Martin → Lexington, Chadd → Waynesboro, Benjie/Cris → Roanoke). Poster's name = the store via this map UNLESS the receipt header in the photo shows a different store — receipt store address wins.
+
+### 2. Read the channel — ⚠️ COMPUTE THE DATE WINDOW CORRECTLY (this is where a past run failed)
+
+**Root cause of the 2026-06-08 incident:** the assistant hardcoded an `oldest` epoch that resolved to the WRONG YEAR (June 2025 instead of the last 7 days), read stale months-old messages, wrongly concluded "channel quiet," and fell back to year-old forms. The whole week's real returns were missed. Do not repeat this.
+
+**a) NEVER hardcode an epoch. Compute it from the real current date** via bash and print both human + epoch so you can eyeball it:
+```bash
+TZ=America/New_York date '+now: %Y-%m-%d %H:%M %Z'
+python3 -c "import time; print('oldest_epoch:', int(time.time()) - 7*86400)"
+```
+Use that `oldest_epoch` as the `oldest` arg to `slack_read_channel` on `C03BNUN2SDA` (limit 50).
+
+**b) SANITY-CHECK the read before trusting it (mandatory guardrail).** Also do a second `slack_read_channel` with NO `oldest` (just `limit:30`) to get the absolute newest messages. Confirm the newest message timestamp is within ~10 days of today. The trend workbook (`Valley_Pawn_Returns_Trend.xlsx`, Trends tab) shows the most recent reported `Week_Of`. **If your windowed read shows only old messages while the no-oldest read (or the workbook) shows recent weeks, your date math is wrong — recompute and re-read. Do NOT fall back to an old week to "rescue" a bad query.**
+
+**c) Genuine fallback only:** ONLY after a clean no-`oldest` read confirms the true newest activity is itself older than 7 days may you fall back to the most recent active week. Label the exact date range transparently in the internal working notes (not necessarily the channel post, which stays short per Step 7).
+
+For each in-window message, capture: poster user_id, message_ts, file ID(s). Identify which messages are RETURN FORM photos (ignore plain-text commentary).
+
+### 3. Read each form image — FAST PATH
+The Slack MCP has no `download_file` tool. Use Chrome MCP:
+1. `tabs_context_mcp` with `createIfEmpty: true` to get a tab.
+2. `navigate` to `https://valleypawnworkspace.slack.com/archives/C03BNUN2SDA/p<TS>` where `<TS>` is the newest message's `message_ts` with the dot removed (e.g. `1780762681.197099` → `p1780762681197099`).
+3. Page shows "Launching Valley Pawn / open this link in your browser" — `find` that link and `left_click` it.
+4. Wait ~5–6s. The Slack web app loads scrolled to your target message with the form rendered inline.
+5. For each form on screen, `computer.zoom` on the image's bounding box (inline image roughly `[473, 300, 692, 530]`; adjust per layout). Read handwritten fields. If a stapled receipt covers the top, zoom the receipt separately — it carries the customer name, store address, and cleanest dollar figure.
+6. Scroll up/down and zoom each remaining form. Batch scroll + wait + screenshot in one `browser_batch` call.
+
+### 4. Form fields to extract
+GUEST NAME · GUEST PHONE # · (skip signature) · **ITEM DESCRIPTION** · **ITEM VP#** (store-prefixed, e.g. ROA…/VA…/VP…/VAP…) · **PURCHASE DATE** · **RETURN DATE** · **RETURN AMOUNT** (note cash / store credit "SC" / gift card; a stapled receipt's "Amount Paid to Customer" line is authoritative) · **RETURN REASON** (verbatim) · RETURN LOCATION · **TESTING RESULTS** · (skip employee signature). Capture PURCHASE and RETURN dates carefully — they drive Days_Held and the refund-policy check.
+
+### 5. Compile the weekly summary
+Group by store (receipt-store-first, else poster→store map). Per store: # returns, total $, item(s), refund type split, notable detail (e.g. net-zero immediate repurchase). Note **zero**-return stores. Totals: returns, $ value, cash vs credit vs gift-card split. This full detail feeds the spreadsheet (Step 5.5) and is available internally — only a short version goes to Slack (Step 7).
+
+### 5.5. Append to the trend spreadsheet (do not skip; DEDUPE first)
+**File:** `/Users/joshuadavis/Desktop/Claude Back Up/Claude 4 back up/Valley_Pawn_Returns_Trend.xlsx`
+Columns: A Week_Of, B Posted_Date, C Posted_By, D Store, E Customer_Name, F Customer_Phone, G Item_Description, H Item_Category, I Item_VPNum, J Purchase_Date, K Return_Date, L Days_Held (=K-J), M Return_Amount, N Refund_Type, O Return_Reason_Raw, P Reason_Category, Q Disposition, R Testing_Results, S Notes, T Policy_Compliant.
+
+**DEDUPE:** build a set of existing (Week_Of, Item_VPNum, Customer_Name) from the Returns Log and skip any return already present — so a re-run for the same week adds nothing.
+
+**Classify each return's reason** to one controlled-vocabulary category on the `Reason Taxonomy` tab (exact spelling): Defect · Doesn't Fit / Compatibility · Buyer's Remorse · Item Not As Described · Customer Repurchased · Warranty Claim · Quality Issue (Cosmetic) · Other.
+
+Append one row per NEW return with openpyxl (run via bash against the real path). `Week_Of` = the Monday of the run (today). Refund_Type exactly "Cash" / "Store Credit" / "Gift Card". Re-apply Days_Held `=K{r}-J{r}` (col L) and Policy_Compliant (col T) to every new row:
+```
+=IF(L{r}<=7,"OK (<=7d cash-ok)",IF(L{r}<=30,IF(N{r}="Cash","VIOLATION: cash after 7d (credit-only window)","OK (8-30d credit)"),"REVIEW (>30d)"))
+```
+Ensure a Trends-tab weekly row exists for this `Week_Of` (only add if missing).
+
+**Recalc / read-back:** the xlsx recalc helper is under the per-session sandbox and the session id CHANGES every run — never hardcode it. Find it dynamically:
+```bash
+RECALC=$(ls /sessions/*/mnt/.claude/skills/xlsx/scripts/recalc.py 2>/dev/null | head -1)
+[ -n "$RECALC" ] && python3 "$RECALC" "/Users/joshuadavis/Desktop/Claude Back Up/Claude 4 back up/Valley_Pawn_Returns_Trend.xlsx" 60
+```
+If recalc is missing or times out, DO NOT block — compute weekly + cumulative figures **directly from the Returns Log rows in Python** (the source of truth: sum Return_Amount by Week_Of, Reason_Category, Store, Refund_Type).
+
+### 6. Schedule (or send live) the post — with the idempotency check
+First run the Step-top idempotency check: `slack_read_channel` C0B1K4WK2HZ (limit ~5). If a summary for this same reporting date-range was already posted today, STOP (no-op) — do not post again.
+
+Otherwise: do ALL OCR + the append FIRST, then compute `post_at` for 9:00 AM EDT and check whether it is still future:
+```python
+from datetime import datetime, timezone, timedelta
+import time
+post_at = int(datetime(YYYY, MM, DD, 9, 0, 0, tzinfo=timezone(timedelta(hours=-4))).timestamp())
+print(post_at, "future?", post_at > int(time.time()))
+```
+- If 9 AM is still future → `slack_schedule_message` to `C0B1K4WK2HZ` with that `post_at`.
+- If already **past 9:00 AM EDT** → send immediately with `slack_send_message`. Scheduled Slack messages CANNOT be edited or deleted via API, so never schedule a placeholder to fix later, and verify content + date window BEFORE scheduling.
+
+### 7. Format of the post — REWRITTEN 2026-08-03: one short section, ~100 words max
+
+The channel gets a plain, short digest. All the reason-trend cross-tabs, cumulative violation tracking, and column/lock-file references stay in the spreadsheet (Step 5.5) — they do not get narrated into Slack.
+
+```
+📦 *Returns — Week of {start_date}–{end_date}*
+
+{total_count} returns this week, {total_$} total.
+
+• {Store}: {n} — {$amount}
+• {Store}: {n} — {$amount}
+• {Store}: {n} — {$amount}
+• {Store}: {n} — {$amount}
+• {Store}: {n} — {$amount}
+
+{If any return needed a manager follow-up this week (a Policy_Compliant VIOLATION row): "⚠️ {n} return(s) need a quick manager check-in this week." Otherwise omit this line entirely.}
+```
+
+That's it — no reason breakdown, no cumulative trend section, no formula/column references, no file name in a footer. If Joshua wants the fuller weekly detail (reason mix, trend-over-time, per-return dollar figures), that lives in the spreadsheet at all times and he can be pointed there separately; it does not belong in the recurring team post.
+
+# Channel + actor reference
+| Item | Value |
+|---|---|
+| #returns channel | C03BNUN2SDA |
+| #weekly-returns-summary channel | C0B1K4WK2HZ (private) |
+| Posting user (Joshua) | U03BB52MDSA |
+| Trend spreadsheet | /Users/joshuadavis/Desktop/Claude Back Up/Claude 4 back up/Valley_Pawn_Returns_Trend.xlsx |
+
+# Manager → store cheat sheet
+Andrew / Walker / Emma (Langford) → Harrisonburg · Bree / Sandi / Nelson → Culpeper · Uriah / Martin → Lexington · Chadd → Waynesboro · Benjie / Cris → Roanoke
+
+# Reason classification quick-reference
+"doesn't work / won't turn on / gets hot / won't hold charge / dead / broken / stopped working / won't update / bad frets / broken clasp" → Defect · "wouldn't fit / wrong size / doesn't fit / not compatible / too big / too small" → Doesn't Fit / Compatibility · "changed mind / don't need it / wife said no / found a better one / no longer wants / did not like anymore" → Buyer's Remorse · "not what I thought / missing parts / different model / not as described" → Item Not As Described · customer immediately bought a swap item (receipt shows net-$0 due) → Customer Repurchased · failed within 30 days + explicit "warranty" → Warranty Claim · "scratched / dented / blemish / looks worn" (still functional) → Quality Issue (Cosmetic) · anything else → Other (detail in Notes).
+
+# Don't do this (lessons from prior runs)
+- **Don't hardcode the `oldest` epoch or assume the year. Compute the 7-day window from today's real date and SANITY-CHECK it against a no-`oldest` read + the workbook's latest Week_Of before trusting it.** (Cause of the 2026-06-08 miss.)
+- Don't fall back to an older week to paper over a bad date query.
+- **Don't double-post or double-log on a re-run (e.g. manual "Run now"). Dedupe the append and check for an existing post for this week first.**
+- Don't summarize from message metadata alone — the $ and reason are in the photo.
+- Don't download the Slack file via curl/web_fetch (auth-walled). Use Chrome MCP + the channel-archives URL.
+- Don't schedule a placeholder to edit later — scheduled Slack messages can't be edited OR deleted via API. Finish the work first; if past 9 AM, send live.
+- Don't hardcode the recalc.py session path — find it dynamically; fall back to computing from log rows.
+- Don't blindly attribute by poster if the receipt header shows a different store. Receipt wins.
+- Don't end your turn with text after a skill load or system reminder. Fire the next tool call.
+- Don't skip Step 5.5 (trend append) or the col-T Policy_Compliant formula — that detail is still computed and stored, it's just no longer posted verbatim to the channel.
+- Don't invent a Reason_Category outside the controlled vocabulary. Use Other + Notes if nothing fits.
+- Don't reintroduce the old 4-section verbose post format. Step 7 above is the only format to use now.

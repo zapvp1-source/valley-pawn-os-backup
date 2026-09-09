@@ -1,10 +1,12 @@
 ---
 name: tuesday-supply-checkout
-description: Tuesdays 10 AM–6 PM every 15 min — Self-determining checkout. Reads SUPPLY_ORDER_DATA directly, computes the total, and auto-places orders under $350. Multi-address checkout, sets REQUIRED per-store Location tag (accounting), Amex 3001.
+description: Tuesdays 10 AM–6 PM every 15 min — Self-determining checkout. Reads SUPPLY_ORDER_DATA directly, computes the total, and auto-places orders under $500. Multi-address checkout, sets REQUIRED per-store Location tag (accounting), Amex 3001.
 model: claude-sonnet-5
 ---
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+> ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
+
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22; v3 2026-09-08):** If this run fails, errors out, or cannot complete its core work, do NOT message Joshua, Preston, or anyone else, in any medium. Instead append ONE row to the fleet failure ledger `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` (use `mcp__Control_your_Mac__osascript` `do shell script "printf ... >> file"` if file tools cannot reach it) in exactly this form: `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or: yes, <the single thing only Joshua can do>> | OPEN |`. The `fleet-guardian` task reads this ledger twice a day, re-runs whatever is safe to re-run, rolls anything that truly needs Joshua into `Life OS/HUMAN_QUEUE.md`, and sends Joshua at most ONE consolidated plain-language DM per day. Individual tasks never DM about failures. All technical detail goes in the run output/log/STATUS file for the next Claude session to pick up. Never send failure notices to any team channel, store manager, employee, or Preston. FIELD COMMUNICATION RULE (unchanged): anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This v3 supersedes both the v2 one-line-DM rule and any older rule in this file.
 
 
 > ⚠️ **FAILURE POLICY — DO NOT POST TO SLACK ON FAILURE.** If this task fails, errors out, or cannot complete its intended work for any reason, DO NOT post anything to Slack — no error messages, no partial results, no "I couldn't finish" notices. Joshua reviews every run inside Claude to confirm success or failure, so a failed run must stay completely silent on Slack. Only post to Slack once the task has genuinely completed the work it was designed to do. Posting failure or error noise clutters Slack and reflects poorly on the team.
@@ -41,11 +43,13 @@ When you see any of those messages, immediately fire the next concrete tool call
 Your job: read SUPPLY_ORDER_DATA from Joshua's DMs, decide whether to place the order based on the total, then add all items to the Amazon Business cart and complete a multi-address checkout — all in the same browser session.
 
 **Decision rule (no dependency on any other task or marker):**
-- If SUPPLY_ORDER_DATA total < **$350** → **place the order now**, no confirmation needed
-- If total ≥ $350 → only proceed if Joshua replied "order" in DMs today
+- If SUPPLY_ORDER_DATA total < **$500** → **place the order now**, no confirmation needed
+- If total ≥ $500 → only proceed if Joshua replied "order" in DMs today
 - If Joshua replied "skip" → stop for today
 
 This is the only task that drives the weekly supply order. It does NOT wait for any marker from `tuesday-supply-summary`. If that summary task posts something, fine. If it doesn't, this task still places the order.
+
+<!-- 2026-09-08: auto-order threshold raised from $350 to $500 per Joshua's instruction in chat -->
 
 ---
 
@@ -77,8 +81,8 @@ This is the only task that drives the weekly supply order. It does NOT wait for 
 
 ### STEP 3 — Decide whether to place the order
 
-- If `total < 350.00` → **GO**. Proceed to Step 4. No Slack post needed before placing.
-- If `total >= 350.00`:
+- If `total < 500.00` → **GO**. Proceed to Step 4. No Slack post needed before placing.
+- If `total >= 500.00`:
   - Look for a Joshua message in today's DMs containing the word "order" (case-insensitive, standalone word — ignore "ordered", "reordered", etc., and ignore the bot's own confirmation message)
   - If found → **GO**. Proceed to Step 4.
   - Look for a Joshua message containing the word "skip" (case-insensitive)
@@ -281,3 +285,4 @@ Order #{this store's order number(s)} · Estimated delivery: {delivery date, or 
 
 <!-- migrated to working model 2026-06-15 -->
 <!-- 2026-06-18: added Step 7B Location store accounting tag (set REQUIRED 2026-06-18) -->
+<!-- 2026-09-08: auto-order threshold raised from $350 to $500 per Joshua's instruction in chat -->

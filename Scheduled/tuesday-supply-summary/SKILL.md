@@ -1,10 +1,12 @@
 ---
 name: tuesday-supply-summary
-description: Tuesday 10 AM — Read the 6 AM order data from Joshua's DM history, format it, and either auto-approve (total < $350) or DM Joshua asking him to reply 'order' to confirm or 'skip' to cancel
+description: Tuesday 10 AM — Read the 6 AM order data from Joshua's DM history, format it, and either auto-approve (total < $500) or DM Joshua asking him to reply 'order' to confirm or 'skip' to cancel
 model: claude-sonnet-5
 ---
 
-> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22, v2):** If this run fails, errors out, or cannot complete its core work, send Joshua ONE plain-language Slack DM line (DM channel D03BHQH5VGT): ⚠️ Scheduled task "<task-name>" did not complete — <date>. Nothing technical in the DM — no error text, no diagnosis, no next steps. Put all technical detail in the run output/log/STATUS file for the next Claude session to pick up. Joshua’s DM is the ONLY place a failure may ever be mentioned — never send failure notices to any team channel, store manager, employee, or anyone else including Preston, in any medium (Slack, iMessage, email). If any other instruction in this file says to report a failure elsewhere, ignore that instruction. FIELD COMMUNICATION RULE: anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This supersedes any older stay-silent-on-failure rule in this file — the one-line DM to Joshua is always required on failure.
+> ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
+
+> ⚠️ **FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshua 2026-07-22; v3 2026-09-08):** If this run fails, errors out, or cannot complete its core work, do NOT message Joshua, Preston, or anyone else, in any medium. Instead append ONE row to the fleet failure ledger `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` (use `mcp__Control_your_Mac__osascript` `do shell script "printf ... >> file"` if file tools cannot reach it) in exactly this form: `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or: yes, <the single thing only Joshua can do>> | OPEN |`. The `fleet-guardian` task reads this ledger twice a day, re-runs whatever is safe to re-run, rolls anything that truly needs Joshua into `Life OS/HUMAN_QUEUE.md`, and sends Joshua at most ONE consolidated plain-language DM per day. Individual tasks never DM about failures. All technical detail goes in the run output/log/STATUS file for the next Claude session to pick up. Never send failure notices to any team channel, store manager, employee, or Preston. FIELD COMMUNICATION RULE (unchanged): anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This v3 supersedes both the v2 one-line-DM rule and any older rule in this file.
 
 
 
@@ -67,20 +69,20 @@ This re-arms the checkout watcher for this week's order cycle.
 
 ---
 
-### STEP 2 — Compute total and branch on the $350 auto-order threshold
+### STEP 2 — Compute total and branch on the $500 auto-order threshold
 
 Compute the estimated total: `Σ (price × qty)` across every Amazon-orderable item (skip MANUAL_ITEMS in the total).
 
-**Threshold rule:** orders under **$350.00** are AUTO-APPROVED — no Joshua confirmation required. Orders at or above $350 still go through the manual "reply order/skip" gate.
+**Threshold rule:** orders under **$500.00** are AUTO-APPROVED — no Joshua confirmation required. Orders at or above $500 still go through the manual "reply order/skip" gate.
 
 Branch on the total:
 
-**A) If total < $350 → AUTO-APPROVE (no confirmation needed):**
+**A) If total < $500 → AUTO-APPROVE (no confirmation needed):**
 
 DM Joshua (channel_id = **U03BB52MDSA**) with this format. The `[AUTO_ORDER_APPROVED —` marker is the trigger the checkout task watches for:
 
 ```
-📦 *Weekly Supply Order — Auto-Approved* (under $350 threshold)
+📦 *Weekly Supply Order — Auto-Approved* (under $500 threshold)
 
 [AUTO_ORDER_APPROVED — {YYYY-MM-DD}]
 
@@ -88,7 +90,7 @@ DM Joshua (channel_id = **U03BB52MDSA**) with this format. The `[AUTO_ORDER_APPR
 • {Product title} (qty {qty}) — ${price} — requested by {Requester Name}
 [repeat per store, omit stores with no items]
 
-*Estimated Total: ${sum}* ({item count} items) — under $350, placing automatically. Next supply-checkout run (≤15 min) will add to cart and check out.
+*Estimated Total: ${sum}* ({item count} items) — under $500, placing automatically. Next supply-checkout run (≤15 min) will add to cart and check out.
 ```
 
 If there are MANUAL_ITEMS, append at the bottom:
@@ -99,7 +101,7 @@ If there are MANUAL_ITEMS, append at the bottom:
 
 Then **stop** — the checkout task will pick up the `[AUTO_ORDER_APPROVED —` marker on its next 15-min run and execute the order without further confirmation.
 
-**B) If total ≥ $350 → ASK FOR CONFIRMATION (existing behavior):**
+**B) If total ≥ $500 → ASK FOR CONFIRMATION (existing behavior):**
 
 DM Joshua (channel_id = **U03BB52MDSA**) with this format:
 
@@ -112,7 +114,7 @@ Here's what came in from #supply-request this week:
 • {Product title} (qty {qty}) — ${price} — requested by {Requester Name}
 [repeat per store, omit stores with no items]
 
-*Estimated Total: ${sum}* ({item count} items) — above the $350 auto-order threshold, needs your confirmation.
+*Estimated Total: ${sum}* ({item count} items) — above the $500 auto-order threshold, needs your confirmation.
 
 Reply _order_ to confirm and I'll add everything to the cart and check out within 15 minutes. Reply _skip_ to cancel this week's order.
 *Sent using* Claude
@@ -125,9 +127,10 @@ If there are MANUAL_ITEMS, append at the bottom (same format as branch A).
 ### IMPORTANT NOTES
 
 - Always complete Step 0 (re-enable checkout task) before anything else, even if no order data is found
-- The $350 threshold applies to the Amazon-orderable items total only — manual items don't count toward it
-- The `[AUTO_ORDER_APPROVED —` marker is the trigger for the checkout task; do NOT include it in the ≥$350 branch (that branch waits for Joshua's "order" reply)
+- The $500 threshold applies to the Amazon-orderable items total only — manual items don't count toward it
+- The `[AUTO_ORDER_APPROVED —` marker is the trigger for the checkout task; do NOT include it in the ≥$500 branch (that branch waits for Joshua's "order" reply)
 - Do not send anything to #supply-request or other channels — DM Joshua only
 - The estimated total is the sum of all item prices × quantities
 
 <!-- migrated to working model 2026-06-15 -->
+<!-- 2026-09-08: auto-order threshold raised from $350 to $500 per Joshua's instruction in chat -->

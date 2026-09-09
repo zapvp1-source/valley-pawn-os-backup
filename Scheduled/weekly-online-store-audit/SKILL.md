@@ -4,6 +4,8 @@ description: Weekly eBay estate + website health check for Valley Pawn — pulls
 model: claude-sonnet-5
 ---
 
+> ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
+
 Weekly online-store audit for Full Circle Finance Inc DBA Valley Pawn. Runs every Sunday at 8 AM ET on Joshua's Mac. Fully autonomous — no clarifying questions, no check-ins.
 
 BACKGROUND: On 2026-08-22/23 a full audit of the eBay estate (5 stores, 514 listings) and thevalleypawn.com found and fixed a batch of issues: listings not on 30-day buyer-pay returns, listings with Best Offer off, and missing H1/structured-data on the /shop/ page. This task is the recurring, lighter-weight follow-on: catch NEW drift every week (new listings that don't inherit the fixed settings), track the KPIs that matter over time, and feed a real Slack post into #ebay-performance so it shows up when Joshua's weekly/monthly summaries scan Slack for the period.

@@ -287,6 +287,206 @@ Book once. It appears under both the pool and landscaping headings.
 
 ---
 
+# 41. Personal-use equipment sweep — two items REMOVED, two CONFIRMED (Joshua, 2026-09-08)
+
+The 9/4 review flagged roughly $23K of wellness/lifestyle equipment sitting in Bucket 1 that would
+only be a Bald Rock asset if it is physically at the property and available to guests. Joshua ruled
+on four of the six on 2026-09-08:
+
+**REMOVED — not Bald Rock assets:**
+- **Eight Sleep** smart mattress / cooling system — **$2,574.59**
+- **Molekule** air purifiers — **$841.34**
+
+**CONFIRMED — at the property, available for guest use, stay in Bucket 1 as 5-yr property:**
+- **Renu Therapy** Cold Stoic 2.0 cold plunge — $10,214.09
+- **Platinum** red-light therapy panels (two) — $2,166.03
+
+**STILL UNCONFIRMED, still counted — do not file without resolving:**
+- **Tonal** home gym system — $3,924.97
+- **Traeger** Timberline pellet grill — $3,485.78
+
+**Effect on the totals.** Bucket 1 drops $3,415.93, from $565,594.05 to **$562,178.12**. All-buckets
+grand total drops from $621,683.83 to **$618,267.90**. The 5-yr furniture/equipment class drops from
+$269,074.00 to **$265,658.07** (Bucket 1 basis). Adjusted basis range becomes $967,178.12 (floor) to
+$1,023,267.90 (ceiling); depreciable building basis ≈ $912,178.12 to $968,267.90 after the $55,000
+land allocation. The tax strategy memo §4 and
+`282 Bald Rock - Depreciation Schedule for Silverline (2026-09-08).xlsx` were both updated the same
+day; this log's older section totals still print the pre-removal figures and should be read against
+this section.
+
+**Where the two removed items went is not established here.** If they are at 844 Cypress Crossing
+they are furnishings in a personal residence — no depreciation, and not additions to that home's
+cap-gain basis either. They simply leave the analysis. Do not move them into the Cypress
+substantiation file as basis without confirming what they actually are there.
+
+**Land allocation also settled the same day:** ~6% is correct per Joshua, consistent with the county
+2026/27 roll ($55,000 of $846,000). The 9/4 review's "implausibly low" characterization was wrong
+and has been corrected in that file — a low ratio here is the arithmetic consequence of a near-total
+rebuild, and $55,000 for 1.092 rural acres in Verona is the defensible number. Blue Ridge should
+still state land value as of 8/1/2025 rather than off the later roll.
+
+---
+
+# 42. Personal-use equipment sweep CLOSED — Tonal removed, Traeger confirmed (Joshua, 2026-09-08)
+
+Joshua ruled on the two remaining items from §41 the same day: "tonal take out trager is there."
+
+**REMOVED — not a Bald Rock asset, joins Eight Sleep and Molekule:**
+- **Tonal** home gym system — **$3,924.97**
+
+**CONFIRMED — at the property, available for guest use, stays in Bucket 1 as 5-yr property:**
+- **Traeger** Timberline pellet grill — $3,485.78 (joins the cold plunge and red-light panels)
+
+**Effect on the totals.** Bucket 1 drops another $3,924.97, from $562,178.12 to **$558,253.15**.
+All-buckets grand total drops from $618,267.90 to **$614,342.93**. The 5-yr furniture/equipment
+class (Bucket 1 basis) drops from $265,658.07 to **$261,733.10**. Adjusted basis range becomes
+$963,253.15 (floor) to $1,019,342.93 (ceiling); depreciable building basis ≈ $908,253.15 to
+$964,342.93 after the $55,000 land allocation. The tax strategy memo §4 and
+`282 Bald Rock - Depreciation Schedule for Silverline (2026-09-08).xlsx` were both updated the same
+day.
+
+**The personal-use equipment sweep opened in §41 is now fully closed.** All six flagged items are
+resolved: Eight Sleep and Molekule removed (§41), cold plunge and red-light panels confirmed in
+(§41), Tonal removed and Traeger confirmed in (this section). No items remain unconfirmed in this
+category.
+
+**Where Tonal went is not established here**, same caveat as §41 — if it's at 844 Cypress Crossing
+it's a personal-residence furnishing with no depreciation and no cap-gain-basis effect either; it
+simply leaves the analysis.
+
+---
+
+# 43. TIER RELABELING + REMAINING ATTRIBUTION/CLASSIFICATION LINES RESOLVED (Joshua, 2026-09-08)
+
+Joshua flagged that the Silverline-facing workbook's "proven/unproven" bucket language "does not
+look professional" and asked what was still unproven so he could resolve it directly. The full list
+was sent to him (everything outside the old Bucket 1): $8,520.65 in Bucket 2 (invoice confirmed,
+payment not yet matched to a statement), $18,623.53 in Bucket 3 (paid, attribution unconfirmed),
+and $28,945.60 in Bucket 4 (Tyson Boffo, capital-vs-maintenance unresolved).
+
+**Presentation fix:** the workbook's numbered 1-4 bucket scheme is retired. The Asset Schedule tab
+now uses a "Documentation status" column with two plain-language values: **Documented** (paid and
+attributed to Bald Rock) and **Payment match pending** (invoice/item confirmed, payment not yet
+matched to a bank/card statement). The Summary tab headers changed from "Bucket 1 only (proven)" /
+"All buckets (1-4)" to "Documented" / "Total (incl. payment-match-pending)." No dollar figures
+changed from this relabeling alone.
+
+**Six of the ten old-Bucket-3 attribution-unconfirmed items are now confirmed Bald Rock** (Joshua,
+9/8: "everyhting esle is bald rock," referring to everything on the list except the four items
+covered in §44): Augusta County building permit $76.50 (Check 1219, 2022-05-23); "Electric 282"
+bill-pay $594.00 (post-conversion, vendor still unnamed); "282 Plumber" bill-pay $376.00
+(post-conversion, vendor still unnamed); Augusta Aluminum Gutterworks $4,500.00 (Check 1206,
+2022-04-08 — exact date recovered from the evidence trail); Fiber Pro Insulation Inc $2,500.00
+(Check 1210, 2022-04-21 — exact date recovered); Geiver Macariegos paint $4,000.00 (check #102,
+2022). Combined **$12,046.50**, moved from Bucket 3 into Documented.
+
+**Tyson Boffo's full $28,945.60 (old Bucket 4) is now classified.** Joshua, 9/8: "all tyson was
+pool install" — every one of the 12 payments across 2020-2026, including the $475.60 "Pump Repair"
+memo, is for the pool installation. Capital, 15-yr land improvement, not routine maintenance. Split
+by payment date against the 8/1/2025 conversion:
+- **Pre-conversion (FMV-capped), $24,790.60:** PayPal $2,500.00 (2020-06-05); Check #103 $475.60
+  (2022-06-22); Check #105 $10,000.00 (2022-12-28); Check #118 $5,500.00 (2023-03-23); Check #230
+  $5,500.00 (2023-05-22); Venmo $490.00 (2024-06-19); Venmo $325.00 (2024-10-08).
+- **Post-conversion (at cost), $4,155.00:** Venmo $1,250.00 (2025-11-12); $350.00 (2026-01-20);
+  $525.00 (2026-05-12); $980.00 (2026-06-23); $1,050.00 (2026-07-29).
+
+Moved into Documented as two Asset Schedule rows (pre/post), both class 15.
+
+**Net effect of this section alone (before §44's removal): no change to the grand total** — these
+are reclassifications within Bald Rock, not additions or removals. The total only moves because of
+§44's four Cypress Crossing items.
+
+---
+
+# 44. FOUR ITEMS REATTRIBUTED TO 844 CYPRESS CROSSING (Joshua, 2026-09-08)
+
+Of the same "what's unproven" list, Joshua identified four items — all previously carried in Bucket
+3 as "need to identify who this is" — as actually belonging to **844 Cypress Crossing Trail** (the
+Florida personal residence), not Bald Rock:
+
+| Item | Amount | Method | Date | Memo |
+|---|---|---|---|---|
+| Gutters | $1,745.00 | Zelle to "AVABI" | 2025-06-05 | "GUTTERS" |
+| Tile | $3,000.00 | Zelle to "Marlon" | 2025-07-16 / 07-18 | "TILE BORO" $2,000 + "TILE 1790" $1,000 |
+| Pocket door frames | $832.03 | Zelle to "GC" | 2025-09-03 | "POCKET DOOR FRAMES" |
+| Flooring | $1,000.00 | Bill Pay "Flooring ON-LINE" | 2025-09-16 | — |
+| **Total removed from Bald Rock** | **$6,577.03** | | | |
+
+**REMOVED from this tracker and the Silverline workbook.** All four have real payment evidence
+(Zelle transfers and a bill-pay, each with a date and either a memo or a payee name) — the gap was
+never whether they were paid, only which property they belonged to. Joshua's direct statement
+resolves that.
+
+**Logged instead in `844 Cypress Crossing Improvements Substantiation.md` §9** with the same detail
+above. Note for whoever reads that log next: all four dates sit close to Cypress Crossing's own
+~8/1/2025 rental-to-personal-residence conversion (the AVABI and Marlon payments are just before
+it, the GC and Flooring payments just after) — the existing §5B category there ("items whose date
+straddles the ~August 2025 conversion") is the right place to flag pre- vs post-conversion
+treatment for these, since a personal residence doesn't depreciate capital improvements the way a
+rental does; whether they add to future cap-gain basis is a different, and real, question — unlike
+the wellness-equipment items in §41 (furniture, no basis effect either way), gutters/tile/doors/
+flooring are structural and normally DO add to a personal residence's basis.
+
+**Effect on Bald Rock's totals.** All-buckets grand total drops from $614,342.93 to
+**$607,765.90**. Combined with §43's reclassifications, Documented tier is now **$599,245.25**,
+Payment-match-pending unchanged at $8,520.65. Adjusted basis range becomes $1,004,245.25 (floor) to
+$1,012,765.90 (ceiling); depreciable building basis ≈ $949,245.25 to $957,765.90 after the $55,000
+land allocation. The tax strategy memo §4 and
+`282 Bald Rock - Depreciation Schedule for Silverline (2026-09-08).xlsx` were both updated the same
+day.
+
+**With §43 and §44 both resolved, the old Bucket 3 and Bucket 4 categories are now empty** — every
+dollar in the tracker is either Documented or Payment-match-pending (the $8,520.65 six-vendor-line
+tier, attribution never in question, only the payment-statement match still pending).
+
+*(SUPERSEDED same day — see §45 below: the "Documented" / "Payment-match-pending" split described
+in this paragraph, and the resulting adjusted-basis range, were both eliminated later on 2026-09-08
+at Joshua's direction. The dollar totals in this paragraph are correct as of when §44 was written;
+for the current single-figure presentation, see §45.)*
+
+---
+
+# 45. TIER LANGUAGE ELIMINATED — SINGLE PRESENTATION, NO HEDGING (Joshua, 2026-09-08)
+
+Immediately after §43/§44 were logged, Joshua reviewed the resulting workbook and rejected the
+"Documented" / "Payment match pending" split outright: *"we dont wnat a pending payment matchg,
+everything we have stated here is truth and we need to sedn a memo to silverline that reflects
+whatthe depreciation Schedule ARE not some wish washy inbetween."*
+
+**What changed — presentation only, zero dollar impact:**
+
+- The six vendor lines that had been carried as "Payment match pending" (Williams Sonoma $2,902.50,
+  Signature Hardware $1,575.82, Royal Swimming Pools order #152804 $530.95, Commonwealth Tile
+  $1,425.00, Lowe's $1,344.79, Direct Door Hardware $741.59 — $8,520.65 total) never actually had an
+  attribution question; the "pending" label described only that the payment hadn't been individually
+  matched to a bank/card statement line, not that the item was in doubt. That tier is dropped. Every
+  improvement line in the Silverline workbook is now labeled "Documented" — there is no second tier.
+- The Summary tab in `282 Bald Rock - Depreciation Schedule for Silverline (2026-09-08).xlsx` was
+  simplified from two amount columns ("Documented" vs. "Total incl. payment-match-pending", which
+  were always going to reconcile to the same figure once every line resolved) down to one "Amount"
+  column.
+- **Total tracked improvements: $607,765.90 — unchanged.** This was already the true total under
+  the old two-tier presentation (Documented $599,245.25 + Payment match pending $8,520.65 =
+  $607,765.90); nothing here is a new fact, only a cleaner presentation of the same fact.
+- **Adjusted basis is now stated as a single number: $1,012,765.90** (2016 purchase price $405,000
+  + $607,765.90 of improvements) — not a $1,004,245.25–$1,012,765.90 range. **Depreciable building
+  basis: $957,765.90** (after the $55,000 land allocation) — not a $949,245.25–$957,765.90 range.
+  This single figure is still only ONE side of the lesser-of-cost-or-FMV test (26 CFR 1.168(i)-4);
+  the Blue Ridge Appraisal (inspection 9/15/2026, effective date 8/1/2025) is what determines
+  whether $957,765.90 is the actual final depreciable basis or whether a lower appraised FMV caps
+  it below that.
+
+**Files updated same day:** `282 Bald Rock - Depreciation Schedule for Silverline (2026-09-08).xlsx`
+(rebuilt, recalculated — zero formula errors, check formula reconciles to $0), the tax strategy memo
+(`Real Estate Tax Strategy & Cost Segregation Notes.md` — Adjusted basis section, short-life table),
+this Evidence Log (§44's tail note above, this section), and the Open Items Register.
+
+**Next step:** a cover memo to Silverline (contact: Jonathan Smith, jonathan@silverline.tax)
+presenting this depreciation schedule as settled fact, per Joshua's direction — drafted, not sent
+without his explicit go-ahead.
+
+---
+
 # 40. Crutchfield home theater — Joshua confirms 2026-09-03 this WAS installed at 282 Bald Rock
 
 Joshua directly confirmed (2026-09-03) that a Crutchfield home theater was actually put in at 282

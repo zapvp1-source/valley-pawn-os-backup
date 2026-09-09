@@ -78,8 +78,12 @@ The 8/4 order to Blue Ridge correctly asked for a "retrospective fair market val
 as of approximately August 2025." Good. But: (a) "approximately August" should be pinned to
 exactly 8/1/2025 now that Joshua has confirmed the date; (b) **no land-vs-improvements allocation
 as of that date was requested** — the intake package and evidence log both say the cost-seg firm
-will bounce the file without it, and the county's $55,000/6.5% land figure is implausibly low for
-1.092 acres and is exactly what a cost-seg engineer will refuse to use; (c) the improvement list
+will bounce the file without it, and while a land figure as of that date is
+still needed, the county's $55,000/6.5% is NOT the problem this review originally called it
+(**corrected 2026-09-08**: Joshua confirms ~6% land is right, and $55,000 for 1.092 rural acres in
+Verona is a defensible dollar figure — the low ratio is just the arithmetic of a near-total rebuild
+loading value into the improvements; what's still needed is that land value stated as of 8/1/2025
+rather than off the 2026/27 roll); (c) the improvement list
 I sent Robbie on 9/3 includes the Sept 2025 HVAC, which is after his effective date.
 
 **Fix:** a 3-line email to Robbie. **Drafted and sitting in Gmail Drafts as a reply on the same

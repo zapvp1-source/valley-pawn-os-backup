@@ -3,6 +3,8 @@ name: qbo-rent-reconcile-resume
 description: One-time retry (~1 hr) — resume the FY2025 store-rent reconciliation in QBO after Intuit login throttling clears.
 ---
 
+> ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
+
 Resume the FY2025 store-rent reconciliation in QuickBooks Online for Full Circle Finance Inc DBA Valley Pawn. Joshua authorized this work and asked to retry ~1 hour after Intuit began throttling logins on 9/1/26.
 
 ## STEP 0 — MANDATORY CONTEXT LOAD
