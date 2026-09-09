@@ -1008,3 +1008,23 @@ Variance (Counted - Expected), posted to #jewlery-counts:
 No repeating same-store/category variance pattern of concern tonight — all variances are small (largest single-category variance is HAR Necklaces +3, largest store total is HAR +5), well inside normal night-to-night noise. Notably CUL's total variance was only -1 tonight versus the previously-documented ~-130 CUL scope-noise baseline in vp-operating-rules — worth watching over the next few nights to see if that's a one-off or a real shift in how much CUL inventory sits in safe/back-stock vs display case; not treated as an anomaly tonight since it's a smaller gap, not a larger one.
 
 No anomalous OVER variance (no case of Counted far exceeding Expected) and no run failure — no DM sent to Joshua per Step 7 clean-night rule.
+
+## RUN RECORD — Tuesday 2026-09-08
+
+Freeze window: 6:00 PM close -> 10:00 AM reopen. Bravo pull ran ~8:38-11:07 PM (later than usual 8:30 PM target due to per-store combo-select retries; each pull still landed inside the freeze window). PM count sheets posted to #end-of-day 6:10-6:58 PM, read via Chrome vision pass ~9:15-9:35 PM (also inside freeze window since sheets are the 6PM close snapshot).
+
+Stores: CUL, HAR, LEX, ROA, WAY (Tuesday = all 5 open).
+
+Empty-category rule applied: HAR Charms, LEX Brooches, WAY Charms all errored (no stable grid read) and all three matched error on the most recent prior-day CSV (2026-09-07) -> treated as 0 per rule. WAY Charms cross-checked against Waynesboro's independent PM sheet: Pendants expected (62+0+5=67) matched counted (67) exactly, confirming the 0 treatment was correct.
+
+Per-store table (Expected = Bravo on-hand, Counted = PM sheet, Variance = Counted-Expected):
+
+CUL: Rings 653/653 (0), Bracelets 123/122 (-1), Earrings 173/173 (0), Pendants 300/300 (0), Necklaces 210/210 (0), Total 1459/1458 (-1)
+HAR: Rings 460/462 (+2), Bracelets 46/47 (+1), Earrings 46/47 (+1), Pendants 118/117 (-1), Necklaces 114/118 (+4), Total 784/791 (+7)
+LEX: Rings 282/284 (+2), Bracelets 38/39 (+1), Earrings 48/48 (0), Pendants 55/54 (-1), Necklaces 47/47 (0), Total 470/472 (+2)
+ROA: Rings 562/562 (0), Bracelets 136/136 (0), Earrings 87/87 (0), Pendants 185/184 (-1), Necklaces 167/169 (+2), Total 1137/1138 (+1)
+WAY: Rings 332/332 (0), Bracelets 44/44 (0), Earrings 57/55 (-2), Pendants 67/67 (0), Necklaces 73/73 (0), Total 573/571 (-2)
+
+Repeat check: no store/category variance repeats night-over-night at meaningful scale (largest tonight is HAR Necklaces +4, one-night, not a pattern from prior runs). All variances single-digit -- ordinary count-timing noise, not loss (per known CUL/negative-variance scope-noise rule, and no OVER variance approached the ROA-pendants-as-charms scale of concern). No DM sent -- clean night.
+
+Posted to #jewlery-counts: https://valleypawnworkspace.slack.com/archives/C0BM9NHGTT4/p1788924627019609
