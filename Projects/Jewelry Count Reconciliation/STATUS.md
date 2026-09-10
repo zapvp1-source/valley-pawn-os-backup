@@ -1028,3 +1028,29 @@ WAY: Rings 332/332 (0), Bracelets 44/44 (0), Earrings 57/55 (-2), Pendants 67/67
 Repeat check: no store/category variance repeats night-over-night at meaningful scale (largest tonight is HAR Necklaces +4, one-night, not a pattern from prior runs). All variances single-digit -- ordinary count-timing noise, not loss (per known CUL/negative-variance scope-noise rule, and no OVER variance approached the ROA-pendants-as-charms scale of concern). No DM sent -- clean night.
 
 Posted to #jewlery-counts: https://valleypawnworkspace.slack.com/archives/C0BM9NHGTT4/p1788924627019609
+
+## RUN RECORD — 2026-09-09 (Wednesday) — jewelry-onhand-nightly-pull
+
+**Open stores:** CUL only (Wednesday gate). Fired 8:36 PM ET, inside the 6PM-10AM freeze window (all stores closed since 6PM, CUL freeze intact).
+
+**Contention/health:** last claimed trigger was 18:14 ET (>30 min old, clear). bravo_health_gate.sh exit 0 (PASS).
+
+**Trigger:** jewelry-onhand-2026-09-09-CUL.json, claimed immediately (20:37). Run completed 20:49, Overall status: success, all 8 categories status=ok, no empty-category rule needed (CUL Charms/Brooches both had real positive counts, not empty).
+
+**Freeze-window confirmation:**
+- Bravo side (live on-hand pull): 2026-09-09 20:37-20:49 ET, well inside the 6PM close -> next-day 10AM freeze window.
+- Sheet side (PM count): Sandi posted #end-of-day photos at 6:18 PM ET for date 9/9/26, also inside freeze window (after 6PM close, sheet reflects EOD case count).
+
+**Per-store table (CUL):**
+| Category | Expected (Bravo) | Counted (PM sheet) | Variance |
+|---|---|---|---|
+| Rings | 653 | 653 | 0 |
+| Bracelets | 123 | 122 | -1 |
+| Earrings | 173 | 173 | 0 |
+| Pendants (Pendants+Charms+Brooches: 252+27+21) | 300 | 300 | 0 |
+| Necklaces (Chains+Necklaces: 109+101) | 210 | 210 | 0 |
+| **Total** | **1459** | **1458** | **-1** |
+
+**Repeat check:** exceptionally tight night — only Bracelets off by -1, well within normal scope noise (case+safe+back-stock+bins vs display-case-only scope gap). No repeating same-store/category variance pattern to flag; not a process or data problem. No anomalous OVER variance seen (Counted never exceeds Expected in any category) so no DM sent to Joshua per STEP 7 (clean night, no DM required).
+
+**Posted to #jewlery-counts:** https://valleypawnworkspace.slack.com/archives/C0BM9NHGTT4/p1789001473055579

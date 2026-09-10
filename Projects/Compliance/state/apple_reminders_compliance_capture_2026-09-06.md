@@ -47,3 +47,96 @@ Send out Revenue Goals by store monthly (9/1) · Review Profit and Loss (9/18) �
 **Interpretation rule:** unlabeled store-name reminders are carried into `OBLIGATIONS.json` as
 `class: "unknown-annual"` with the date, so the calendar shows them and the brief asks for
 identification the first time each comes due — never guessed into a specific obligation.
+
+---
+
+## UPDATE 2026-09-09 — the lists in this capture NO LONGER EXIST; live list is now "Compliance"
+
+A fresh read of Reminders.app on 2026-09-09 (AppleScript, working — see technique note below)
+returns exactly **10 lists**: CLAUDE AI (50), Joshua (647), Hillary (17), Madison (47),
+Savannah (94), Kennedy (11), Audrey (8), PRIORITY (1074), Preston Joshua (0), Culpeper (4),
+Waynesboro (0), Harrisonburg (12), Lexington (0), Roanoke (0).
+
+**None of the four lists this capture documented — "Annual Compliance and Tax Items",
+"Compliance Tasks", "Taxes and Legal", "Corporate Monthly" — are present**, and none of their
+recurring items ("Pawnbroker Bond", "PM Boro", "PM Pepper", "PM Lex", "Renew Surety Bond",
+"Scale Certifications") exist anywhere in the store. The Unified Search reminders index, refreshed
+2026-09-09 08:14 UTC, agrees: 1964 reminders across those 10 lists, and only **5** incomplete
+reminders carry a due date at all (none compliance-related). Those lists are either deleted or
+live in a Reminders account not enabled on this Mac. Do not keep treating this capture's tables as
+live state — they are a 2026-09-06 historical snapshot.
+
+**New durable home: the `Compliance` list**, created 2026-09-09, seeded with the six real dated
+obligations (5 surety bonds + the Lexington license), each with bond number, obligee, term, broker
+contact and the caveats in the body. Due dates are set 60 days BEFORE expiry so they are
+actionable, with the true expiration date in the reminder title. `OBLIGATIONS.json` remains the
+system of record; this list is the human-facing surface.
+
+### AppleScript technique — Reminders IS scriptable, if you do it right
+Earlier sessions concluded "AppleScript access to Reminders is denied on this Mac." That was
+wrong. Access works. What fails is the *query shape*: `whose` clauses, and per-item iteration
+(`repeat with r in reminders of lst` then `name of r`) hang or time out on the large lists
+(Joshua 647, PRIORITY 1074), which reads like a permission failure but is a performance cliff.
+The working pattern is already implemented in `Unified Search/remindersindex.py`: **one list per
+osascript subprocess with its own timeout, and bulk-fetch each property composed directly**
+(`set nms to name of reminders of lst`) — never through an intermediate variable, which breaks
+AppleScript's bulk-elements resolution. That is ~6 Apple Events per list instead of ~6 per item.
+Creating and editing individual reminders is fast and needs none of this.
+
+Reading the raw Reminders SQLite store is NOT a viable fallback any more — the current
+`~/Library/Group Containers/group.com.apple.reminders/.../Data-*.sqlite` files no longer expose
+titles or list names to plain SQL (checked 2026-09-09). Use AppleScript with the pattern above.
+
+---
+
+## CORRECTION 2026-09-09 (second pass) — the lists DO exist. AppleScript was lying.
+
+Everything in the "UPDATE 2026-09-09" section above is WRONG and is retained only as a record of
+the mistake. Joshua said the compliance lists were still there; he was right.
+
+**Root cause: AppleScript enumerates only a SUBSET of reminder lists on this Mac.**
+`tell application "Reminders" to get name of lists` returns **15** lists. EventKit returns **46** —
+all in the same single "Personal" (CalDAV/iCloud) source. Every list this capture originally
+documented is alive: `Annual Compliance and Tax Items`, `Compliance Tasks`, `Taxes and Legal`,
+`Corporate Monthly`, plus ~30 more AppleScript never showed (`Audit`, `Human Resources`,
+`Facilities`, `Stores`, `Marketing`, `Real Estate`, `Payables`, `Supervisor Daily/Weekly/Monthly`,
+the per-property lists `282 Bald Rock Road` / `817 Richmond Road` / `14300 Woods Walk Lane` /
+`148 Hardinberry Street` / `844 Cypress Crossing Trail`, and others).
+
+**NEVER trust AppleScript for Reminders enumeration on this machine.** It silently returns a
+partial list — no error, no warning. Two prior sessions drew wrong conclusions from it: first
+"AppleScript access is denied" (it is not), then "those lists no longer exist" (they do).
+
+### The tool: `Life OS/bin/ekrem`
+A small Swift/EventKit CLI, source at `Life OS/bin/ekrem.swift`.
+Rebuild with `swiftc -O -o ekrem ekrem.swift` in that directory.
+
+```
+ekrem lists                                  # every list, all sources
+ekrem dump "<list>" [all|open]               # id, due date, open/done, recurring
+ekrem setdue <itemIdentifier> <yyyy-MM-dd>   # also resets the alarm to that date
+ekrem setnotes <itemIdentifier> "<notes>"
+ekrem rename <itemIdentifier> "<title>"
+ekrem complete <itemIdentifier>
+ekrem add "<list>" "<title>" <yyyy-MM-dd> "<notes>"
+ekrem dellist "<list>"
+```
+Run it via `Control your Mac` → `do shell script`. It handles large lists without hanging, and it
+reads and writes. Use single quotes around arguments; avoid apostrophes inside note text.
+
+### Bond / licence dates set this pass (all in `Annual Compliance and Tax Items`)
+| Reminder | Due | Change |
+|---|---|---|
+| PM Lex | 2026-11-14 | **CREATED** — Lexington licence renewal; no PM Lex reminder existed |
+| PM Harrisonburg | 2027-06-01 | date already right; notes added (3-year term) |
+| PM Pepper | 2027-07-28 | **was 2026-07-28**, a year stale |
+| PM Boro | 2027-08-03 | date already right; notes added |
+| PM Roanoke | 2027-08-28 | **CREATED** — no Roanoke bond reminder existed at all |
+| Pawnbroker Bond | 2027-12-01 | **was 2026-12-01**; the 12/1/2026 term was already paid 9/2/2026 |
+
+Each now carries bond number, obligee, amount, term, surety and broker phone in its notes.
+The short-lived duplicate `Compliance` list created earlier this session has been deleted.
+
+Still undated in that list, deliberately left alone rather than guessed into a specific
+obligation: `Renew Surety Bond`, `Renew Precious Metals License`, `Renew Business Licnese` [sic],
+`Submit Personal Property Tax`, `Scale Certifications`, `FFL Renewal`.

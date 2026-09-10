@@ -1,5 +1,7 @@
 # Phase 0 — the one thing only Joshua can do (~3 minutes, once, forever)
 
+> ✅ **DONE 2026-09-09.** Grant complete (3 scopes on the cached token), both APIs enabled on project 284722922565, and `jdavis@fcfpawn.com` added as **Viewer** on GA4 property 353209303 (the property owner is `fullcirclepawn@gmail.com`; without this the Data API returns 403 PERMISSION_DENIED even with the right scopes). `ga4_pull.py --check` and `gsc_pull.py --check` both return OK. Everything below is kept for the record / re-run instructions.
+
 **What it unlocks:** every website number stops being screen-scraped out of the GA4 web UI by a
 browser four times a week, and Search Console data (organic = ~70% of the site's traffic) becomes
 available for the first time. After this, the weekly #website post can show **calls, texts and

@@ -1,6 +1,6 @@
 # Insurance Portfolio — All Domains
 
-**GENERATED 2026-09-06 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
+**GENERATED 2026-09-09 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
 Update the registry, then run `Life OS/Insurance/bin/regen_portfolio.py`.
 Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker history: `BROKER_PIPELINE.md`.
 
@@ -8,11 +8,11 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 
 | Date | Line | Entity | Carrier | Policy # | Premium |
 |---|---|---|---|---|---|
-| 2026-10-15 | Homeowners HO3 (Special Form) | Joshua & Hillary Davis personally (no LLC) | Kin Interinsurance Network | KIN-HO-FL-275099318 (servicer shows KINHOFL275099318) | — |
+| 2026-10-15 | Homeowners HO3 (Special Form) | Joshua & Hillary Davis personally (no LLC) | Kin Interinsurance Network | KIN-HO-FL-275099318 (servicer shows KINHOFL275099318) | $1,354 |
 | 2026-11-28 | Personal auto | Hillary D. Davis / Joshua C. Davis personally | Progressive Select Insurance Co (NAIC 10192) | 998062549 | — |
 | 2026-12-15 (open enrollment deadline for 1/1 coverage - typical) | Health | Joshua & Hillary Davis personally | — | — | — |
 | 2027-01-09 | Landlord / rental dwelling | Joshua & Hillary Davis (deed transfer to Farming Infinity Tennessee LLC unresolved - see hardinberry-property skill) | — | OB3-TN-22196824-01 | — |
-| 2027-04-12 | Landlord / rental dwelling | Joshua & Hillary Davis (see REAL_ESTATE_OS / woods-walk-property skill) | Travelers Personal Insurance Company (renewal offer 4/12/2024 via Steadily) - current carrier unverified | 611614155-653-1 (portfolio shows 6116141556531) | — |
+| 2027-04-12 | Landlord / rental dwelling | Joshua & Hillary Davis (see REAL_ESTATE_OS / woods-walk-property skill) | Travelers Personal Insurance Company via Steadily Ins Agency | 611614155-653-1 (portfolio shows 6116141556531) | $1,051 |
 | 2027-06-13 | Workers compensation & employers liability | Full Circle Finance Inc | HDI Global Insurance Company (NCCI carrier; brief referenced Glencar - policy endorsement shows HDI Global Insurance Company) | GC29P101236-02 (expired 6/13/2026); -03 renewal presumed but NO DOCUMENT FOUND | — |
 | 2027-07-02 | Commercial package | Full Circle Finance Inc | HDI Global Specialty SE (A.M. Best A+), surplus lines VA | IK29P109337-05 | $11,103.04 |
 | 2027-07-02 | Commercial building (lessor's risk) | Farming Infinity LLC (owner) - see ENTITY_STRUCTURE.md | HDI Global Specialty SE | IK29P109337-05 (Loc 5) | $1,104 |
@@ -67,6 +67,11 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - Coverage C $59,500 (10% of A) is low for a primary residence with recent high-value appliances/improvements.
 - Roof age 0 / 'Times rented 0' on 2024 dec; house converted from rental to residence ~8/1/2025 - ensure occupancy is Owner-occupied on current term.
 - Current-term premium and any 2025-26 changes not captured (zapvp1 mailbox).
+- Kin's online auto-bundle tool (in-account, prefilled with all 4 household vehicles: Rivian R1S, Tesla Model 3, Model Y, Cybertruck) could NOT produce an instant bundle estimate on 2026-09-09 - routed to 'Request a call / one of our experts can take it from here' instead, likely due to the EV/high-value vehicle mix. No online bundle premium exists yet; requires a phone underwriting call ((855) 717-0022) to get one.
+- 2026-09-09 PROGRESSIVE DECLINED. Full home+auto bundle application completed under Hillary D Davis (quote 0325-7968-4179, linked to Progressive auto 998062549 for the multi-policy discount). Progressive's entire panel returned KickOutDnq. Cause is almost certainly the ORIGINAL 2004 ROOF (22 years) - every other attribute is strong (all windows/doors/garage impact protected, monitored central-station alarm, zero home claims in 5 years, electrical fully replaced 2026, plumbing partially 2026). IMPLICATION: the roof - not price - is the binding constraint on this risk. State Farm Florida excludes roofs >15 yrs and will likely decline for the same reason. Kin's $1,354 renewal may be the only standard offer available, which makes it a reasonable renewal rather than a bad one. ACTION: pursue My Safe Florida Home for the roof (2004 build confirmed - clears the pre-2008 gate; homestead active; Coverage A $595K is under the $700K cap but DO NOT raise it above $700K before applying), and get a wind mitigation inspection (OIR-B1-1802) to document the impact openings.
+- DECISION 2026-09-09 (Joshua): RENEW WITH KIN. Market check complete - Allstate does not write new FL homeowners at all; Progressive's full panel declined (KickOutDnq) on the 22-year-old original roof; State Farm FL excludes roofs >15 yrs and would almost certainly decline for the same reason. Kin is the only carrier willing to write this risk today. Policy AUTO-RENEWS 10/15/2026 at $1,354 - NO ACTION REQUIRED to renew. Do not re-shop this property until the roof is replaced.
+- MONEY ON THE TABLE before 10/15: no wind mitigation inspection (OIR-B1-1802) has ever been submitted to Kin, despite the July 2026 whole-house impact window/door/garage package ($56,621.72). In Florida a filed wind-mit form is the single largest premium credit available and Kin will re-rate mid-term on receipt. Order the inspection (~$75-150) and send the form to support@kin.com.
+- ESCROW CHECK before 10/15: renewal is $1,354 but the paper letter Joshua received said $1,288.81 (~$65 low, matches the prior-year figure). If ServiceMac built the escrow analysis off the letter, the escrow account will be short. Confirm ServiceMac has the $1,354 figure and the correct mortgagee clause (ServiceMac ISAOA ATIMA, PO Box 29411, Phoenix AZ 85038-9411, loan ending 7287) so the renewal is paid from escrow on time.
 
 **RE-BALDROCK-HO — Homeowners HO3 written as 'Primary home'**
 
@@ -85,6 +90,10 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 
 - Confirm the 4/12/2026 renewal actually bound and get current dec (carrier, limits, premium).
 - No umbrella.
+- TRAVELERS ISSUED A NOTICE OF NONRENEWAL. Steadily emailed 2026-01-23 ('Your insurance coverage on 14300 WOODS WALK LN needs review!') attaching a Travelers NOTICE OF NONRENEWAL, policy 611614155 653 1, expiring 4/12/2026, and warned: 'If we don't hear from you prior to 4/12/2026, we will assume you no longer require coverage and the policy will expire without further action.' NO REPLY FROM JOSHUA IS ON RECORD.
+- NO EVIDENCE OF REPLACEMENT COVERAGE. Exhaustive search of Gmail, Apple Mail (all accounts, via the Unified Search index), iCloud Drive and Google Drive finds NOTHING for this property after a Travelers 'Recurring Credit Card Charge Notice' dated 2026-04-22. No new declarations page, no binder, no payment confirmations. The Steadily quote thread from 7/30-7/31/2026 (Damian Perez, team.luna@steadily.com) was about 282 Bald Rock Rd, NOT this property, and it went unresolved.
+- EXPOSURE IF LAPSED: a tenant (Cynthia Stewart) is in occupancy paying $2,500/mo as of September 2026 on a dwelling last insured at Coverage A $360,000 with $300,000 premises liability. An uninsured occupied rental is the single largest unmanaged risk found in this portfolio.
+- RESOLVE IMMEDIATELY - one call: Steadily 888-966-1611 (same agency and login that services 148 Hardinberry) or Travelers policy service 1-888-966-1611 / app.steadily.com. Ask: (1) is 611614155 653 1 in force today, (2) if not, when did it lapse, (3) what was the stated nonrenewal reason (likely roof age - it was 13 years in 2025 on a 1985 build), (4) bind replacement coverage today if there is a gap.
 
 **PERS-AUTO — Personal auto**
 
@@ -226,7 +235,7 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - **Carrier:** Kin Interinsurance Network · **Program/MGA:** Kin Insurance Network Distributor (KIND), 222 Merchandise Mart Plaza Ste 228, Chicago IL 60654; (855) 717-0022; support@kin.com; claims (866) 204-2219 / claims@kin.com
 - **Broker:** Direct (Kin) · support@kin.com
 - **Policy #:** KIN-HO-FL-275099318 (servicer shows KINHOFL275099318) · **Term:** 2025-10-15 → 2026-10-15 · **Renews:** 2026-10-15
-- **Premium:** — — 2024-25 term total $1,287.21 ($1,179 coverage premium: hurricane $560 + AOP $619; + $118 surplus contribution, FIGA, fees). 2025-26 and 2026-27 premiums not found (renewal docs go to zapvp1). Escrowed - paid by servicer ~2 weeks before 10/15.
+- **Premium:** $1,354 — CONFIRMED in Kin portal 2026-09-09: 2026-27 renewal premium is $1,354.00, effective 10/15/2026 (auto-renew). This does NOT match the $1,288.81 figure in the physical renewal letter Joshua received - $1,288.81 is essentially identical to the 2024-25 total ($1,287.21), so the letter appears to be a stale/prior-year figure, not the actual 2026-27 bill. Portal is source of truth. Coverage limits unchanged from 2024-25 dec (not independently reverified this pass).
 - **Payment:** Mortgage escrow (Lakeview, subserviced by ServiceMac; loan ending 7287)
 - **Key limits:**
   - **A dwelling:** $595,000
@@ -245,9 +254,9 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
   - **hurricane calendar year:** 10% of Coverage A ($59,500 on 2024-25 dec)
 - **First Mortgagee (2024-25 dec):** United Wholesale Mortgage ISAOA/ATIMA, PO Box 202028, Florence SC 29502-2028, Loan #1224722227
 - **Required mortgagee clause per servicer notice 8/31/2026:** ServiceMac ISAOA ATIMA, PO Box 29411, Phoenix AZ 85038-9411; loan ending 7287; insurancedepartment@ihaveinsurance.com; (833) 811-3064
-- **Status:** In force; renews 2026-10-15. Servicer expects bill from Kin.
+- **Status:** active - renewing with Kin 10/15/2026 (DECIDED 2026-09-09)
 - **Documents:** Drive: Kin_Insurance_Declarations_2024-2025.pdf (id 1GyVcYH2eAkUo35p14Ivv6HaGdtPZlt4P) · Gmail: ServiceMac 'Important: Your Upcoming Insurance Renewal' 8/31/2026 to zapvp1 (thread 1a057d9d818333e6)
-- **Last verified:** 2026-09-05 — source: Kin 2024-25 dec (Drive); ServiceMac notice 8/31/2026
+- **Last verified:** 2026-09-09 — source: Kin 2024-25 dec (Drive); ServiceMac notice 8/31/2026
 
 ### RE-BALDROCK-HO — Homeowners HO3 written as 'Primary home' - property is now a short-term rental (Airbnb/VRBO)
 
@@ -298,17 +307,17 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - **Named insured (entity):** Joshua & Hillary Davis (see REAL_ESTATE_OS / woods-walk-property skill)
 - **Named insured (as written on policy):** Joshua Davis (Hillary Davis on Safeco docs)
 - **Scope:** 14300 Woods Walk Ln, Midlothian VA 23112
-- **Carrier:** Travelers Personal Insurance Company (renewal offer 4/12/2024 via Steadily) - current carrier unverified · **Program/MGA:** Steadily Insurance Agency Inc
+- **Carrier:** Travelers Personal Insurance Company via Steadily Ins Agency · **Program/MGA:** Steadily Insurance Agency Inc
 - **Broker:** Steadily · support@steadily.com, 888-966-1611
 - **Policy #:** 611614155-653-1 (portfolio shows 6116141556531) · **Term:** ? → ? · **Renews:** 2027-04-12
-- **Premium:** — — No 2025 or 2026 renewal documents found in jdavis mailbox.
+- **Premium:** $1,051 — $1,051.00 for the 4/12/2025-4/12/2026 term (issued 3/21/2025), after $268 of Loss Free / Good Payer / Fire Protective Device discounts. Prior term 4/12/2023-4/12/2024 was $1,296.00. Source: Steadily_Renewal_Offer_2025-2026.pdf and Steadily_Travelers_Declarations_2023-2024.pdf in the Drive Insurance folder.
 - **Key limits:**
   - **dwelling:** None
   - **liability:** None
 - **Mortgagee:** None per Steadily evidence of insurance 8/7/2024
-- **Status:** Presumed in force - UNVERIFIED for 2026-27 term.
+- **Status:** *** COVERAGE STATUS UNRESOLVED - POSSIBLE LAPSE SINCE 4/12/2026 ***
 - **Documents:** Gmail: Fwd 'Property Insurance Renewal Notice' (Steadily 3/19/2024 + 8/7/2024 chain, thread 19f669dff812fafc) with RENEWAL OFFER_6116141556531.pdf, EVIDENCE OF INSURANCE.pdf · Mail: Insurance_Application_for_611614155-653-1.pdf
-- **Last verified:** 2026-09-05 — source: Steadily 2024 emails; prior portfolio
+- **Last verified:** 2026-09-09 — source: Steadily 2024 emails; prior portfolio
 
 ## DOMAIN 3 — Personal
 

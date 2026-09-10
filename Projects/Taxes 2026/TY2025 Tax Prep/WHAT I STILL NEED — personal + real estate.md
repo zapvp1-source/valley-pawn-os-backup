@@ -5,7 +5,9 @@ Personal 1040 + the five real-estate Schedule E's. Built 2026-09-08 against the 
 ---
 
 ## ALREADY DONE — don't redo
-Per-property 2025 P&Ls drafted · Bald Rock depreciation schedule for Silverline (9/8) · improvement substantiation for Bald Rock + 844 · material-participation reconstruction (~210–355 hrs) · average stay 3.61–4.12 nights · conversion dates confirmed Aug 2025 · suspended PALs known ($26,391 / $6,600 / $24,681).
+Per-property 2025 P&Ls drafted · Bald Rock depreciation schedule for Silverline (9/8) · improvement substantiation for Bald Rock + 844 · material-participation reconstruction (~210–355 hrs) · average stay 3.61–4.12 nights · conversion dates confirmed Aug 2025 · suspended PALs known ($26,391 / $6,600 / $24,681) · **Chesterfield County 2025 tax — paid** · **Blue Ridge Appraisal — improvement list sent to Robert Miller 9/9 ahead of Tuesday 9/15 11am inspection** · **Bald Rock cost-seg engagement live with Overline IQ / Modern CFO Group (Matthew Gigantelli, Sam Young) — benefit-analysis quote requested 9/4, timeline flagged for end-of-September delivery**.
+
+**Gusto wage data pulled for the two FCF W-2s:** Joshua — CEO, $75,000/yr effective 9/25/2023, unchanged through 2025. Hillary — Chief Support Officer, $600/week effective 10/28/2024 through 2025 (raised to $1,153.84/week 7/20/2026, after the 2025 tax year). These confirm the wage figures once the official 2025 W-2s arrive from Gusto — no need to re-derive them.
 
 ---
 
@@ -30,7 +32,7 @@ Per-property 2025 P&Ls drafted · Bald Rock depreciation schedule for Silverline
 
 **817 Richmond** — income complete ($45,750). Need: **DCCU year-end interest**, insurance premium, whether a 2nd-half Staunton tax installment was paid. Confirm the new NNN lease effective date (rent stepped to $4,000 Oct) for the expense cut-over.
 
-**14300 Woods Walk** — rent final ($5,400). Need: **⚠️ Chesterfield County 2025 tax was never paid** — the only attempt was returned 1/5/2026. Check the portal, pay it, get penalties. Also: HOA, vacancy utilities, confirm the $800 + $150 handyman payments, confirm Steadily $1,051 paid. **Classify the $8,318 "Flooring"/Dan's Floor Store payments — which property?**
+**14300 Woods Walk** — rent final ($5,400). **Chesterfield County 2025 tax is paid** — confirmed. Remaining: HOA, vacancy utilities, confirm the $800 + $150 handyman payments, confirm Steadily $1,051 paid. **Classify the $8,318 "Flooring"/Dan's Floor Store payments — which property?**
 
 **148 Hardinberry** — income complete ($16,500). Need: TN property tax (**the bill PDF is attached to your 12/11/2025 "Tax Bills" email — just open it**), HOA, HVAC repair final amount, verify the March Steadily payment.
 

@@ -20,6 +20,7 @@ Generated 2026-09-05 (Phase 0b). Source: Gmail jdavis@fcfpawn.com (read-only). U
 - 2026-08-07: Roper asks again for valuation; Joshua resends; Roper acknowledges.
 - 2026-08-13: OneInc payment confirmation - $10,000 check #7928, "Full and final settlement of all claims".
 - 2026-08-24: $7,000 settlement paid to customer (per brief).
+- 2026-09-09: Weekly follow-up check (insurance-claims-follow-up) — searched Gmail for PBIH26050007 and droper@narisk.com; no correspondence since the 8/13 payment confirmation. Claim is carrier-closed ("full and final settlement"), so no adjuster nudge sent. Open items unchanged: (1) confirm check #7928 deposited and both the $10,000 recovery and $7,000 customer settlement are posted in QBO (jdavis@fcfpawn.com books), (2) verify with Roper/Howard whether a deductible applied — payment equaled the full claimed amount. Neither requires an adjuster follow-up; QBO reconciliation is an internal bookkeeping task.
 
 ## Other claims found
 - None in 2026 in the jdavis mailbox. Joshua's 7/14/2026 email to Howard references a second, earlier claim (total of two under $17K combined in 10 years) - details not in any source read this pass. Loss runs were requested from ULCAccounts@jmpartners.com on 2026-06-18; no response found. **Action: obtain 5-year loss runs from ULC (property/GL and WC) and append here.**

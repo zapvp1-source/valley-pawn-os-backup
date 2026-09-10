@@ -436,3 +436,22 @@ an untried candidate source for backfilling STORE=Lexington on its ~2,647 member
 2026-08-24 audit's still-unsolved note -- still not attempted); consider building the true-random
 verification sample flagged in both of the last two runs, since the fixed-offset dilution artifact
 is now a recurring, predictable source of noise in this log.
+
+## 2026-09-09 (brevo-engaged-v2-refresh)
+v2 count 87 -> 86 (+0 added / -1 removed, summertea157@aol.com dropped — no intent click in the
+90d window on re-score). List 7 for comparison: 177 (unchanged mechanism, still scanner-fed).
+Overlap: both=86, list-7-only(scanner-shaped or stale)=91, v2-only(new humans)=0. Reasons histogram
+this run: no-clicks-90d 1090, intent-click 86, chrome-only 19, clicked-2s-after-delivery 1,
+clicked-22s-after-delivery 1, clicked-26s-after-delivery 1, clicked-31s-after-delivery 1,
+walked-12-urls 1 (universe scanned: 1200 of 11,583 total pool — priority tier v2+list7=175 fully
+rescored, rotating slice covered 1,025 more of the ~11.4k remainder; rotate_offset now at 250,
+so the rotating slice has covered roughly 250/11,408 (~2%) of the non-priority pool so far across
+the two runs to date). Verified independently against live Brevo (not just the script's own
+output): GET /v3/contacts/lists/19 = 86, GET /v3/contacts/lists/7 = 177 — both match exactly.
+Nothing else changed: list 7 untouched, no campaign recipient lists touched, no Slack post (move
+was 1.1%, under the 15% threshold). This is weekly row 2 of 4 toward the stabilization check
+(row 1 was the 9/5 creation pass, v2=87); not yet enough rows to call it stable either way.
+
+## 2026-09-09 (brevo-welcome-new-contacts)
+Welcomed: 38 new contacts | Skipped (already welcomed/blacklisted/failed): 0
+Note: template 72 send required omitting the `params` field entirely — Brevo's /smtp/email rejects an explicit empty `params: {}` as 'params is blank' even though the template has no merge tags. Sends with `params` key omitted succeed (201).

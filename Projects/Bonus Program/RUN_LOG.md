@@ -82,3 +82,12 @@ closest was Culpeper at 22.59% (October 2025). Applied to August 2026 ending ass
 CUL/HAR/LEX/ROA unchanged. Updated `data/2026-09/targets.json` with a `way_override` block
 documenting the reasoning and both numbers. Not posted to #bonus-goals — `field_posting` is still
 false; drafted for Joshua's DM instead.
+
+## 2026-09-09T09:58 — sheet_sync 2026-08
+Sheet refreshed with 2026-08 actuals; 2026-09 targets from sheet: CUL $63,239, HAR $52,739, ROA $57,087, LEX $32,065, WAY $41,335. Plan source: sheet.
+
+## 2026-09-09 — interactive session with Joshua: target method review + sheet rebuild
+Findings: (1) trail-12 yield-on-ending-assets penalises asset growth (r=-0.37 over 95 store-months; fast-growth months average 15.35% yield vs 17.28% flat); (2) yield is seasonally distorted because assets fall in tax season while revenue rises (Mar implied yield 1.09x, Jul 0.93x) — hit rate by month under the live method ran Jan 100%/Mar 100%/May 20%/Jul 20%; (3) Gusto actual store-only bonus TTM Sep25–Aug26 = $29,786 (prior year $35,594; calendar YTD +34%; Preston separately +96%); (4) Facebook +15 qualifier confirmed NOT implemented — Roanoke August mis-scored, $587.00 owed; (5) the plan sheet had gone stale in May and its monthly targets were unusable. Actions: sheet rebuilt (annual plan preserved, seasonal spread, run-rate floor); `bin/sheet_sync.py` added; `bonus-month-close-pull` step 7 now calls it; `data/2026-09/targets.json` rewritten from the sheet with the trail-12/WAY-override numbers kept under `superseded`; `_proposals[0]` in bonus_rules.json holds the sandbox regime (effective 2999-01, never selectable). `bin/bonus_sandbox.py` and `sandbox/2026-08/` hold the comparison runs. No live regime rates changed. Nothing posted to the field except the #eom-task-rankings format check Joshua requested.
+
+## 2026-09-09T17:48 — sheet_sync 2026-08
+Sheet refreshed with 2026-08 actuals; 2026-09 targets from sheet: CUL $63,239, HAR $53,804, ROA $47,629, LEX $27,444, WAY $41,335. Plan source: sheet.

@@ -50,6 +50,33 @@ regenerating them was out of scope for this verification-only task anyway. Worth
 the Monday `vp-content-batch-weekly` caption-fill step completed for 2 of 6 lanes and not the
 other 4, so this doesn't repeat next week.
 
+### 2026-09-09 (vp-casual-video-daily nightly run) — Sandi's Culpeper brooch clip posted to 3 of 4 channels; Facebook silently did not go out despite two "successfully scheduled" confirmations
+Plain language: one new manager clip came in this week (Sandi, Culpeper store, a vintage diamond
+brooch). It's live and correct on Instagram, TikTok, and X, going out tomorrow (Thu 9/10) at
+6:00 PM ET. The Facebook copy of the same post did not make it out. The scheduling screen said
+"successfully scheduled" both times it was tried (once at 6:05 PM, once at 6:20 PM), but the post
+never actually appeared anywhere in the real schedule afterward -- checked the live calendar
+directly both times, not just the on-screen confirmation message. No third attempt was made
+tonight to avoid the risk of creating a hidden duplicate later.
+
+Also worth flagging: the auto-transcription that gets burned into the video itself misheard
+Sandi's name and store name ("Sandy" / "Valley Pong Co. Pepper" instead of "Sandi" / "Valley Pawn
+Culpeper"). All the written captions posted alongside the video were hand-corrected before
+posting, so nothing customer-facing reads wrong except the burned-in on-video text on this one
+clip. Re-rendering the video to fix that text was judged out of scope tonight.
+
+Technical detail for whoever picks this up: this is the same "job reports complete but creates no
+post" landmine already logged in this file for 2026-09-07 (Publer job status lies about success),
+but this is the first time it's been confirmed happening through the Chrome UI composer path
+specifically (not just the API path `publer_upload_media()`/`schedule_post()` already had a fix
+for). Reproduced twice in a row on the Brand Facebook account only -- Instagram, TikTok, and X all
+posted correctly via the same UI flow in the same session. Verified via the Publer calendar's
+Failed and Drafts filters (empty on both) and a manual scroll of the live Sep 10 schedule at both
+attempted times (6:05 PM and 6:20 PM) -- the post is not sitting anywhere, it's just gone. Next
+session should try scheduling Facebook alone, first, before any other network, to rule out a
+same-minute-collision side effect, and/or reach out to Publer support with the two timestamps
+above if it recurs.
+
 ## PERMANENT-FIX-NEEDED (from preflight 2026-08-24)
 
 1. Store-photo website mirror (Check 8, path 1) does not exist. No deal_store.json feed is reachable on thevalleypawn.com — checked WP-JSON route list (no deal routes) and three guessed static paths (all 404). No file anywhere on this Mac references deal_store.json either. This is the same class of blind assumption that zeroed out store-local content for three straight weeks (8/3, 8/10, 8/17) per the check's own history. Next interactive session should either (a) find/build the real feed endpoint on the WordPress site and document its actual URL, or (b) drop path 1 from the check entirely and rely on paths 2 (Slack) + 3 (local deal_of_week_uploads/), which both verified healthy today.

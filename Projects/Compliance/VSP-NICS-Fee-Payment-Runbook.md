@@ -13,10 +13,18 @@ checked. The balance check is a **documented manual step on the 5th**, surfaced 
 `Compliance/OBLIGATIONS.json` (`vsp-nics-fee-monthly`) and reminded by the Monday compliance brief
 (`Valley Pawn OS/bin/compliance_brief.py`, native launchd `com.valleypawn.compliance-brief`).
 
-**⛔ BLOCKED as of 2026-09-06:** the portal rejected the Chrome-saved password on the first attempt
-(the account locks after 5 failures, so no further attempts were made). **Joshua must sign in once
-and re-save the password in Chrome**; after that the monthly balance read can resume. Until then no
-balance has been verified since 2026-06-23.
+**✅ UNBLOCKED 2026-09-09 (root cause found — it was never the password).** The portal serves its TLS
+certificate WITHOUT the DigiCert intermediate (`DigiCert Global G2 TLS RSA SHA256 2020 CA1`), so Chrome on
+the Mac Studio showed `NET::ERR_CERT_AUTHORITY_INVALID` ("Your connection is not private"). Chrome refuses to
+autofill saved passwords on a page with a certificate error — that is what looked like "password rejected"
+on 9/6. Fix applied: the missing intermediate was installed into the login keychain
+(`security add-certificates -k ~/Library/Keychains/login.keychain-db`) and Chrome restarted; the portal now
+loads clean with the UserName/Password/Login form. The saved Chrome credential for
+https://ebilling.vsp.virginia.gov (username X009686, last used 7/1) is intact. If the interstitial ever
+returns: `curl -sS -o /tmp/dg2.crt https://cacerts.digicert.com/DigiCertGlobalG2TLSRSASHA2562020CA1-1.crt &&
+openssl x509 -inform DER -in /tmp/dg2.crt -out /tmp/dg2.pem && security add-certificates -k
+~/Library/Keychains/login.keychain-db /tmp/dg2.pem`, then restart Chrome. Never click "Proceed (unsafe)" —
+autofill stays disabled on that origin and the login will fail again.
 
 ---
 
