@@ -214,3 +214,59 @@
 - 3 installer file(s) >100MB, >14d old in ~/Downloads (Joshua-only to delete): 116M install_backblaze.dmg, 177M Intuit Meeting.dmg, 116M install_backblaze_005_b1f03755763e4dc02e48d27ec2fde9d55651aac6.dmg
 - **ESCALATE**: Could not determine last successful Time Machine backup time.
 
+## 2026-09-10 18:00 — CRITICAL
+- / : 460Gi used / 17Gi avail (36%)
+- /System/Volumes/Data : 460Gi used / 388Gi avail (93%)
+- Time Machine last success: unknown
+- Dataless (iCloud-evicted) files under Scheduled: 15
+- 3 installer file(s) >100MB, >14d old in ~/Downloads (Joshua-only to delete): 116M install_backblaze.dmg, 177M Intuit Meeting.dmg, 116M install_backblaze_005_b1f03755763e4dc02e48d27ec2fde9d55651aac6.dmg
+- **ESCALATE**: 15 scheduled-task file(s) under ~/Documents/Claude/Scheduled are iCloud-evicted (dataless) right now — this breaks automation silently. Could not determine last successful Time Machine backup time.
+
+## 2026-09-10 22:00 — CRITICAL
+- / : 460Gi used / 17Gi avail (46%)
+- /System/Volumes/Data : 460Gi used / 401Gi avail (96%)
+- Time Machine last success: unknown
+- Dataless (iCloud-evicted) files under Scheduled: 15
+- 3 installer file(s) >100MB, >14d old in ~/Downloads (Joshua-only to delete): 116M install_backblaze.dmg, 177M Intuit Meeting.dmg, 116M install_backblaze_005_b1f03755763e4dc02e48d27ec2fde9d55651aac6.dmg
+- **ESCALATE**: 15 scheduled-task file(s) under ~/Documents/Claude/Scheduled are iCloud-evicted (dataless) right now — this breaks automation silently. Could not determine last successful Time Machine backup time.
+
+## 2026-09-11 06:00 — CRITICAL
+- / : 460Gi used / 17Gi avail (45%)
+- /System/Volumes/Data : 460Gi used / 396Gi avail (95%)
+- Time Machine last success: unknown
+- Dataless (iCloud-evicted) files under Scheduled: 770
+- 3 installer file(s) >100MB, >14d old in ~/Downloads (Joshua-only to delete): 116M install_backblaze.dmg, 177M Intuit Meeting.dmg, 116M install_backblaze_005_b1f03755763e4dc02e48d27ec2fde9d55651aac6.dmg
+- **ESCALATE**: 770 scheduled-task file(s) under ~/Documents/Claude/Scheduled are iCloud-evicted (dataless) right now — this breaks automation silently. Could not determine last successful Time Machine backup time.
+
+## 2026-09-11 10:00 — CRITICAL
+- / : 460Gi used / 17Gi avail (48%)
+- /System/Volumes/Data : 460Gi used / 399Gi avail (96%)
+- Time Machine last success: unknown
+- Dataless (iCloud-evicted) files under Scheduled: 0
+- 3 installer file(s) >100MB, >14d old in ~/Downloads (Joshua-only to delete): 116M install_backblaze.dmg, 177M Intuit Meeting.dmg, 116M install_backblaze_005_b1f03755763e4dc02e48d27ec2fde9d55651aac6.dmg
+- **ESCALATE**: Could not determine last successful Time Machine backup time.
+
+## 2026-09-11 14:00 — CRITICAL
+- / : 460Gi used / 17Gi avail (21%)
+- /System/Volumes/Data : 460Gi used / 354Gi avail (85%)
+- Time Machine last success: unknown
+- Dataless (iCloud-evicted) files under Scheduled: 0
+- 3 installer file(s) >100MB, >14d old in ~/Downloads (Joshua-only to delete): 116M install_backblaze.dmg, 177M Intuit Meeting.dmg, 116M install_backblaze_005_b1f03755763e4dc02e48d27ec2fde9d55651aac6.dmg
+- **ESCALATE**: Could not determine last successful Time Machine backup time.
+
+## 2026-09-11 18:00 — CRITICAL
+- / : 460Gi used / 17Gi avail (23%)
+- /System/Volumes/Data : 460Gi used / 362Gi avail (87%)
+- Time Machine last success: unknown
+- Dataless (iCloud-evicted) files under Scheduled: 0
+- 3 installer file(s) >100MB, >14d old in ~/Downloads (Joshua-only to delete): 116M install_backblaze.dmg, 177M Intuit Meeting.dmg, 116M install_backblaze_005_b1f03755763e4dc02e48d27ec2fde9d55651aac6.dmg
+- **ESCALATE**: Could not determine last successful Time Machine backup time.
+
+## 2026-09-11 22:00 — CRITICAL
+- / : 460Gi used / 17Gi avail (25%)
+- /System/Volumes/Data : 460Gi used / 368Gi avail (88%)
+- Time Machine last success: unknown
+- Dataless (iCloud-evicted) files under Scheduled: 0
+- 3 installer file(s) >100MB, >14d old in ~/Downloads (Joshua-only to delete): 116M install_backblaze.dmg, 177M Intuit Meeting.dmg, 116M install_backblaze_005_b1f03755763e4dc02e48d27ec2fde9d55651aac6.dmg
+- **ESCALATE**: Could not determine last successful Time Machine backup time.
+

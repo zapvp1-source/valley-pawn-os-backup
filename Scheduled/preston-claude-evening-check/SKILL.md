@@ -1,6 +1,6 @@
 ---
 name: preston-claude-evening-check
-description: Evening/off-hours companion to preston-interactive-assistant — checks #preston-claude once an hour, 6pm-10pm. No checks 10pm-7am. Same logic, same dedupe file, so no double-processing.
+description: SUPERSEDED 2026-09-10 by preston-interactive-assistant, which now runs every 15 minutes 7am-10pm and covers this task's entire 6pm-10pm window. Disabled, not deleted — rollback hold only. Do NOT re-enable without first lowering preston-interactive-assistant's cadence, or the two will double-process #preston-claude.
 model: claude-sonnet-5
 ---
 

@@ -1054,3 +1054,28 @@ Posted to #jewlery-counts: https://valleypawnworkspace.slack.com/archives/C0BM9N
 **Repeat check:** exceptionally tight night — only Bracelets off by -1, well within normal scope noise (case+safe+back-stock+bins vs display-case-only scope gap). No repeating same-store/category variance pattern to flag; not a process or data problem. No anomalous OVER variance seen (Counted never exceeds Expected in any category) so no DM sent to Joshua per STEP 7 (clean night, no DM required).
 
 **Posted to #jewlery-counts:** https://valleypawnworkspace.slack.com/archives/C0BM9NHGTT4/p1789001473055579
+
+## RUN RECORD — 2026-09-11 (Friday) — jewelry-onhand-nightly-pull
+
+**Open stores:** CUL, HAR, LEX, ROA, WAY (Fri gate = all 5). Fired ~8:35 PM ET, inside the 6PM-10AM freeze window.
+
+**Contention/health:** last claimed/processed trigger activity was ~19:26 ET (>30 min old, clear). bravo_health_gate.sh exit PASS (Rung1-4 all green, recovered to WAY dashboard).
+
+**Triggers:** one per store, dropped 2s apart, jewelry-case-counts-v2 cell. Run order followed claim order: CUL (20:36-20:48, success), HAR (20:48-21:04, partial), LEX (21:04-21:19, partial), ROA (21:19-21:31, success), WAY (21:31-21:49, partial).
+
+**Empty-category rule applied:** HAR Charms=error, LEX Brooches=error, WAY Charms=error, each timed out twice (120s, no stable row total) after verified report-name commit. Checked most-recent prior-day CSV (2026-09-10) for all three: same store+category was also error yesterday, so all three treated as 0 per the documented rule. All other 37 category reads were status=ok.
+
+**Freeze-window confirmation:**
+- Bravo side (live on-hand pulls): 2026-09-11 20:36-21:49 ET, inside the 6PM close to next-day 10AM freeze window for all 5 stores.
+- Sheet side (PM count, #end-of-day): Uriah (LEX) 6:17 PM, Sandi (CUL) 6:21 PM, Walker Tapley (HAR) 6:23 PM, Benjie Moore (ROA) 6:38 PM, Preston Peters (WAY) 6:41 PM, all posted after 6PM close, inside freeze window.
+
+**Per-store table (Expected = Bravo on-hand, Counted = PM sheet, Variance = Counted-Expected):**
+CUL: Rings 656/656 (0), Bracelets 125/124 (-1), Earrings 173/173 (0), Pendants 301/301 (0), Necklaces 210/210 (0), Total 1465/1464 (-1)
+HAR: Rings 459/461 (+2), Bracelets 46/47 (+1), Earrings 46/47 (+1), Pendants 118/118 (0, Charms treated as 0), Necklaces 114/117 (+3), Total 783/790 (+7)
+LEX: Rings 283/285 (+2), Bracelets 39/40 (+1), Earrings 48/48 (0), Pendants 55/54 (-1, Brooches treated as 0), Necklaces 47/47 (0), Total 472/474 (+2)
+ROA: Rings 559/559 (0), Bracelets 136/136 (0), Earrings 79/79 (0), Pendants 180/178 (-2), Necklaces 167/169 (+2), Total 1121/1121 (0)
+WAY: Rings 333/334 (+1), Bracelets 44/44 (0), Earrings 57/56 (-1), Pendants 67/67 (0, Charms treated as 0), Necklaces 74/74 (0), Total 575/575 (0)
+
+**Repeat check:** no store/category variance repeats night-over-night at meaningful scale. HAR's scattered +1 to +3 overs are new tonight, not a prior pattern, largest is +3 (Necklaces), well short of anything resembling the ROA-pendants-as-charms scale of concern (~+61). All other variances are single-digit, consistent with ordinary count-timing noise; negative variances are expected scope noise per the standing CUL rule. No anomalous OVER variance. No DM sent, clean night.
+
+**Posted to #jewlery-counts:** https://valleypawnworkspace.slack.com/archives/C0BM9NHGTT4/p1789178193614449

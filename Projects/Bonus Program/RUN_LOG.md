@@ -91,3 +91,27 @@ Findings: (1) trail-12 yield-on-ending-assets penalises asset growth (r=-0.37 ov
 
 ## 2026-09-09T17:48 — sheet_sync 2026-08
 Sheet refreshed with 2026-08 actuals; 2026-09 targets from sheet: CUL $63,239, HAR $53,804, ROA $47,629, LEX $27,444, WAY $41,335. Plan source: sheet.
+
+## 2026-09-10 — bonus-month-close (scheduled, 10th 9:00) — August 2026 DM'd to Joshua
+Data (reviews.json, fb_gains.json, roster.json, targets.json) and the engine `close --month 2026-08`
+run were already on disk from earlier today's rate-correction rebuild (`out/2026-08/close_report.md`
+generated 2026-09-10T10:55:57, using the corrected 2%/2.5% mgr and 4%/5% associate rates). Verified
+Joshua's DM history had NOT yet received the August payout content (checked before resending —
+nothing else on the fleet-note/mail-brief/backup-health/Bald-Rock posts between 10:00 and 11:19
+today mentioned bonus). Sent the full payout breakdown + qualifiers table to Joshua's DM
+(D03BHQH5VGT) with the approve/hold prompt. `field_posting` is false — nothing went to
+#bonus-goals or any store/manager.
+
+**Stores that hit:** Harrisonburg ($54,413.07/$53,282), Lexington ($27,754.28/$26,657), Roanoke
+($48,167.81/$43,879, also top store — reviews + gold). **Missed:** Culpeper ($61,998.28/$72,235),
+Waynesboro ($40,705.46/$50,721) — $0 for those stores. Task bonus (all qualifiers) hit only at
+Roanoke; Harrisonburg and Lexington hit revenue but missed reviews/gold respectively.
+**Total payout $4,537.84** — Walker Tapley $1,088.26, Michael Chambers $344.48, Uriah Tiglao
+$555.09, Martin Dowden $182.51 + $2.00, Benjie Moore $1,204.20, Joseph Epperly $261.30, Roanoke
+top-store pool $300.00, Preston Peters $900.00 (3/5 stores).
+**Held/missing:** nothing — engine did not exit HELD, no gates tripped. **Flagged, not paid:**
+five terminated employees who earned GP in August (Andrew Clark $584.98, Davon Camber $425.00,
+Chonn Grinnage $99.99, Steven Burch $379.99, Cris Lopez $625.93) — ineligible per the
+employed-at-payday rule. **Not yet resolved from prior entries:** July 2026 ($1,032 at Roanoke)
+still shows unpaid in Gusto as of this run; August is now computed and awaiting Joshua's
+approve/hold reply — nothing loaded into payroll yet.

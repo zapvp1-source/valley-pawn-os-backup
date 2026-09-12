@@ -77,3 +77,16 @@ No repeating variance pattern flagged; HAR small positive Rings/Necklaces delta 
 
 ## 2026-09-03 07:47 CATCH-UP CHECK
 Yesterday: Wednesday 2026-09-02 (CUL-only per open-stores gate). CUL CSV present, all 8 rows status=ok (Rings 631, Bracelets 123, Pendants 247, Charms 27, Brooches 21, Earrings 169, Chains 108, Necklaces 98). Nightly run complete — no catch-up action needed, nothing posted.
+
+## 2026-09-11 09:48 ET — jewelry-onhand-catchup run (for 2026-09-10, Thursday)
+Nightly jewelry-onhand-nightly-pull did not produce 2026-09-10 CSVs (no run found for that date) — catch-up pull fired this morning inside the 6PM-10AM freeze window (started 07:49 ET, well before the 09:30 cutoff).
+
+Bravo pull (Expected, on-hand this morning, reflects 9/10 close): all 5 open stores (CUL, HAR, LEX, ROA, WAY — Thursday is a full-open day) completed via jewelry-case-counts-v2. Combo-select flakiness caused retries at CUL Rings, LEX Chains, ROA Chains (all recovered via the handler's own retry/GUID-probe/outer-retry ladder — no manual intervention). Confirmed-empty-category reads: HAR Charms, LEX Brooches, WAY Charms — each cross-checked against the most recent prior-day CSV (2026-09-08), which also showed error/empty for the same store+category, so treated as 0 per the no-false-zeros rule.
+
+PM count sheets read via Chrome from #end-of-day (C03C7HV8L48), 2026-09-10 date block on each store's sheet, sum-verified against each sheet's own written TOTALS line.
+
+Per-store Total (Expected/Counted/Variance): CUL 1458/1457/-1, HAR 785/791/+6, LEX 471/473/+2, ROA 1126/1126/0, WAY 573/572/-1. All variances small and within normal scope-noise range (Bravo counts case+safe+back-stock+bins vs sheet's display case only) — no anomalous OVER variance, no DM sent to Joshua.
+
+Posted Expected/Counted/Variance table to #jewlery-counts (C0BM9NHGTT4): https://valleypawnworkspace.slack.com/archives/C0BM9NHGTT4/p1789134489387119
+
+No variance repeats a prior night's pattern in a way that suggests a process/data problem (single-night figures, not compared multi-night here — see nightly runs for trend).

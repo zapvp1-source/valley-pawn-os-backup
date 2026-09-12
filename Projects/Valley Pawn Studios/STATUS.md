@@ -144,3 +144,37 @@ Two distinct root causes, both real, both fixed:
 Verification method: queried Publer's `/posts` list directly for both `state=scheduled` and `state=published`, matched by media filename against the outbox files, and required a real `post_link`/post id before counting anything as done (Rule 12) -- did not trust `job_status` alone a second time given finding #1 above.
 
 No Slack notification sent tonight: Joshua's own 1:32pm message to the 5 managers already covered this (accurate at the time, and the gap it left was invisible until this run's direct-Publer check), and per Rule 16 the failure/fix detail belongs here, not in chat. Nothing forward-looking is blocked -- tomorrow's run will behave correctly against the wait_for_job fix.
+
+### 2026-09-10 (vp-casual-video-daily nightly run) — closed a 4-clip gap: Uriah/Benjie/Martin/Walker were rendered 9/8 but never scheduled
+Plain language: no new Slack submissions this run (all clips currently in #deal-of-the-week are
+already in the collection ledger). But a direct Publer check turned up 4 clips from the 9/8 batch
+(Uriah's pressure washer - Lexington, Benjie's Valve Index VR kit - Roanoke, Martin's tile saw -
+Waynesboro, Walker's e-bike - Harrisonburg) that had been transcribed and rendered into outbox/ on
+9/8 evening but were never actually scheduled to Publer -- no matching post existed anywhere in
+Publer's scheduled or published lists, and no STATUS.md entry logged that night's run at all. Root
+cause not fully diagnosed (no log survives from that run), but the effect is a real gap: rendered-
+but-never-scheduled clips are invisible to future nightly runs because casual_video_processor.py's
+inbox check only looks for raw video files in the folder root, and these had already been moved to
+outbox/processed by the render step.
+
+Fix applied tonight: safety-checked a frame from each of the 4 outbox finals (no firearms/off-brand
+content), wrote fresh hand-corrected captions (the burned-in auto-transcription mangled names/prices
+on all 4 -- "Valley Pond", "Wainsboro", implausible digit-dropped prices like "$9.99" for a VR kit --
+so captions were written from the real transcripts+visuals rather than trusting the raw ASR text,
+same approach used for Sandi's brooch clip on 9/9), uploaded each already-rendered final.mp4 to the
+Publer media library, and scheduled all 4 across Brand FB/IG/TikTok/X for tomorrow 9/11, staggered
+6:00/6:12/6:24/6:36 PM ET to avoid the known same-minute collision landmine.
+
+**New landmine found:** `_schedule_one_account`'s job_status check reported "failed" for all 16
+of tonight's schedule calls (a "one minute gap required" collision message for FB/IG/TikTok, and
+an X duplicate-content policy message for Twitter) -- but a direct `/posts?state=scheduled` check
+(paginated via `page=N`, since the API caps each page at 15 regardless of the `limit` param) showed
+all 16 posts actually exist, correctly, at the intended times. This is the same "job reports the
+wrong thing" family as the 2026-09-07 and 2026-09-09 landmines, but inverted: those were false
+successes, this is a false failure. Did not change `wait_for_job`/`_schedule_one_account` tonight --
+flagging for next session to add a `/posts` re-check fallback when a schedule call reports failed,
+before treating it as real (mirrors the "needs_ui_upload"/"partial_or_failed" fallback already in
+place for the true-failure cases).
+
+Slack: replied in-thread to Uriah, Benjie, Martin, and Walker with their post time. One DM to
+Joshua per Rule 16 (plain, no technical detail).

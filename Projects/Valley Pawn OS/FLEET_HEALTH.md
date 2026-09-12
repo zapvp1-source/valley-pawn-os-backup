@@ -2,6 +2,50 @@
 
 Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). Newest first, last 30 runs kept. DM alerts go to Joshua only when an issue is first detected.
 
+## 2026-09-11 22:30 — ISSUES FOUND
+
+- 'monthly-we-buy-gold-silver-email' (cron 0 9 1 * *) missed its Tue Sep 1 9:00 AM run — last started Tue Sep 1 2:18 AM
+- launchd agent com.valleypawn.claude-keepalive last exited with status 126
+- launchd agent com.valleypawn.dashboarddatacollector last exited with status 127
+
+## 2026-09-11 13:30 — ISSUES FOUND
+
+- 'monthly-we-buy-gold-silver-email' (cron 0 9 1 * *) missed its Tue Sep 1 9:00 AM run — last started Tue Sep 1 2:18 AM
+- launchd agent com.valleypawn.claude-keepalive last exited with status 126
+- launchd agent com.valleypawn.dashboarddatacollector last exited with status 127
+
+
+## 2026-09-10 22:30 — ISSUES FOUND
+
+- 'monthly-we-buy-gold-silver-email' (cron 0 9 1 * *) missed its Tue Sep 1 9:00 AM run — last started Tue Sep 1 2:18 AM
+- usage-cap skips climbing: +447 since Thu 1:30 PM (~50/hr) — tasks are being throttled right now
+- launchd agent com.valleypawn.ffl-guardian last exited with status 2
+- launchd agent com.valleypawn.claude-keepalive last exited with status 126
+- launchd agent com.valleypawn.dashboarddatacollector last exited with status 127
+
+
+
+## 2026-09-10 13:30 — ISSUES FOUND
+
+- 'monthly-we-buy-gold-silver-email' (cron 0 9 1 * *) missed its Tue Sep 1 9:00 AM run — last started Tue Sep 1 2:18 AM
+- 'preston-interactive-assistant' (cron */5 7-21 * * *) missed its Thu Sep 10 11:55 AM run — last started Wed Sep 9 5:18 PM
+- 'morning-brief' (cron 0 8 * * 1-5) missed its Thu Sep 10 8:00 AM run — last started Wed Sep 9 8:10 AM
+- 'ceo-mail-brief' (cron 0 7,16 * * *) missed its Thu Sep 10 7:00 AM run — last started Wed Sep 9 4:07 PM
+- 'mail-brief-reply-executor' (cron 7,37 6-22 * * *) missed its Thu Sep 10 11:37 AM run — last started Wed Sep 9 10:46 PM
+- 'document-photos-index-refresh' (cron 0 5 * * *) missed its Thu Sep 10 5:00 AM run — last started Wed Sep 9 5:02 AM
+- 'unified-search-verify' (cron 50 4 * * *) missed its Thu Sep 10 4:50 AM run — last started Wed Sep 9 4:56 AM
+- 'ebay-feedback-reply-weekly' (cron 20 10 * * 4) missed its Thu Sep 10 10:20 AM run — last started Sat Sep 5 3:46 PM
+- 'insurance-inbox-watch' (cron 44 6 * * *) missed its Thu Sep 10 6:44 AM run — last started Wed Sep 9 6:49 AM
+- 'bonus-month-close' (cron 0 9 10 * *) missed its Thu Sep 10 9:00 AM run — last started NEVER
+- 'health-episode-capture' (cron 15 9 * * *) missed its Thu Sep 10 9:15 AM run — last started Wed Sep 9 9:18 AM
+- 'connector-health-daily' (cron 40 5 * * *) missed its Thu Sep 10 5:40 AM run — last started NEVER
+- usage-cap skips climbing: +5346 since Wed 10:30 PM (~356/hr) — tasks are being throttled right now
+- launchd agent com.valleypawn.dashboarddatacollector last exited with status 127
+- launchd agent com.valleypawn.disk-health last exited with status 126
+
+
+
+
 ## 2026-09-09 22:30 — ISSUES FOUND
 
 - 'monthly-we-buy-gold-silver-email' (cron 0 9 1 * *) missed its Tue Sep 1 9:00 AM run — last started Tue Sep 1 2:18 AM
@@ -11,6 +55,10 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 - launchd agent com.valleypawn.dashboarddatacollector last exited with status 127
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
 - launchd agent com.valleypawn.chromeperms-oneshot is installed but NOT loaded
+
+
+
+
 
 ## 2026-09-09 13:30 — ISSUES FOUND
 
@@ -23,6 +71,10 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 - launchd agent com.valleypawn.chromeperms-oneshot is installed but NOT loaded
 
 
+
+
+
+
 ## 2026-09-08 22:30 — ISSUES FOUND
 
 - 'monthly-we-buy-gold-silver-email' (cron 0 9 1 * *) missed its Tue Sep 1 9:00 AM run — last started Tue Sep 1 2:18 AM
@@ -31,6 +83,10 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 - launchd agent com.valleypawn.compliance-brief last exited with status 1
 - launchd agent com.valleypawn.dashboarddatacollector last exited with status 127
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
+
+
 
 
 
@@ -46,6 +102,10 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
+
+
 ## 2026-09-07 22:30 — ISSUES FOUND
 
 - 'monthly-we-buy-gold-silver-email' (cron 0 9 1 * *) missed its Tue Sep 1 9:00 AM run — last started Tue Sep 1 2:18 AM
@@ -53,6 +113,10 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 - launchd agent com.valleypawn.compliance-brief last exited with status 1
 - launchd agent com.valleypawn.dashboarddatacollector last exited with status 127
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
+
+
 
 
 
@@ -71,11 +135,19 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
+
+
 ## 2026-09-06 22:30 — ISSUES FOUND
 
 - 'monthly-we-buy-gold-silver-email' (cron 0 9 1 * *) missed its Tue Sep 1 9:00 AM run — last started Tue Sep 1 2:18 AM
 - launchd agent com.valleypawn.claude-keepalive last exited with status 126
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
+
+
 
 
 
@@ -96,10 +168,18 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
+
+
 ## 2026-09-05 22:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.claude-keepalive last exited with status 126
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
+
+
 
 
 
@@ -123,10 +203,18 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
+
+
 ## 2026-09-04 22:30 — ISSUES FOUND
 
 - 'oura-daily-import' (cron 45 8 * * *) missed its Fri Sep 4 8:45 AM run — last started Fri Sep 4 8:06 AM
 - launchd agent com.valleypawn.claude-keepalive last exited with status 126
+
+
+
+
 
 
 
@@ -155,12 +243,20 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
+
+
 ## 2026-09-03 22:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.claude-keepalive last exited with status 126
 - launchd agent com.valleypawn.perf-guard last exited with status 126
 - launchd agent com.valleypawn.dashboarddatacollector last exited with status 1
 - launchd agent com.valleypawn.fleet-health last exited with status 1
+
+
+
+
 
 
 
@@ -193,11 +289,19 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
+
+
 ## 2026-09-02 22:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.claude-keepalive last exited with status 126
 - launchd agent com.valleypawn.dashboarddatacollector last exited with status 1
 - launchd agent com.valleypawn.fleet-health last exited with status 1
+
+
+
+
 
 
 
@@ -235,10 +339,18 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
+
+
 ## 2026-09-01 22:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.perf-guard last exited with status 126
 - launchd agent com.valleypawn.dashboarddatacollector last exited with status 1
+
+
+
+
 
 
 
@@ -279,6 +391,10 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
+
+
 ## 2026-08-31 22:30 — ISSUES FOUND
 
 - 'monthly-capability-drift-audit' (cron 40 7 1 * *) missed its Sat Aug 1 7:40 AM run — last started Sat Aug 1 7:00 AM
@@ -286,6 +402,10 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 - launchd agent com.valleypawn.claude-keepalive last exited with status 126
 - launchd agent com.valleypawn.dashboarddatacollector last exited with status 1
 - launchd agent com.valleypawn.fleet-health last exited with status 1
+
+
+
+
 
 
 
@@ -332,12 +452,20 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
+
+
 ## 2026-08-30 22:30 — ISSUES FOUND
 
 - 'monthly-capability-drift-audit' (cron 40 7 1 * *) missed its Sat Aug 1 7:40 AM run — last started Sat Aug 1 7:00 AM
 - 'vp-hr-policy-monthly-sync' (cron 35 8 1 * *) missed its Sat Aug 1 8:35 AM run — last started Sat Aug 1 8:07 AM
 - launchd agent com.valleypawn.claude-keepalive last exited with status 126
 - launchd agent com.valleypawn.fleet-health last exited with status 1
+
+
+
+
 
 
 
@@ -387,12 +515,20 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
+
+
 ## 2026-08-29 22:30 — ISSUES FOUND
 
 - 'monthly-capability-drift-audit' (cron 40 7 1 * *) missed its Sat Aug 1 7:40 AM run — last started Sat Aug 1 7:00 AM
 - 'vp-hr-policy-monthly-sync' (cron 35 8 1 * *) missed its Sat Aug 1 8:35 AM run — last started Sat Aug 1 8:07 AM
 - launchd agent com.valleypawn.claude-keepalive last exited with status 126
 - launchd agent com.valleypawn.fleet-health last exited with status 1
+
+
+
+
 
 
 
@@ -453,6 +589,10 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
+
+
 ## 2026-08-28 13:30 — ISSUES FOUND
 
 - 'monthly-capability-drift-audit' (cron 40 7 1 * *) missed its Sat Aug 1 7:40 AM run — last started Sat Aug 1 7:00 AM
@@ -486,137 +626,11 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
+
+
 ## 2026-08-27 13:30 — ISSUES FOUND
-
-- 'monthly-capability-drift-audit' (cron 40 7 1 * *) missed its Sat Aug 1 7:40 AM run — last started Sat Aug 1 7:00 AM
-- 'vp-hr-policy-monthly-sync' (cron 35 8 1 * *) missed its Sat Aug 1 8:35 AM run — last started Sat Aug 1 8:07 AM
-- launchd agent com.valleypawn.claude-keepalive last exited with status 126
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## 2026-08-26 22:30 — ISSUES FOUND
-
-- 'monthly-capability-drift-audit' (cron 40 7 1 * *) missed its Sat Aug 1 7:40 AM run — last started Sat Aug 1 7:00 AM
-- 'vp-hr-policy-monthly-sync' (cron 35 8 1 * *) missed its Sat Aug 1 8:35 AM run — last started Sat Aug 1 8:07 AM
-- launchd agent com.valleypawn.claude-keepalive last exited with status 126
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## 2026-08-26 13:30 — ISSUES FOUND
-
-- 'monthly-capability-drift-audit' (cron 40 7 1 * *) missed its Sat Aug 1 7:40 AM run — last started Sat Aug 1 7:00 AM
-- 'vp-hr-policy-monthly-sync' (cron 35 8 1 * *) missed its Sat Aug 1 8:35 AM run — last started Sat Aug 1 8:07 AM
-- launchd agent com.valleypawn.claude-keepalive last exited with status 126
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## 2026-08-25 22:30 — ISSUES FOUND
-
-- 'monthly-capability-drift-audit' (cron 40 7 1 * *) missed its Sat Aug 1 7:40 AM run — last started Sat Aug 1 7:00 AM
-- 'vp-hr-policy-monthly-sync' (cron 35 8 1 * *) missed its Sat Aug 1 8:35 AM run — last started Sat Aug 1 8:07 AM
-- launchd agent com.valleypawn.claude-keepalive last exited with status 126
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## 2026-08-25 13:30 — ISSUES FOUND
 
 - 'monthly-capability-drift-audit' (cron 40 7 1 * *) missed its Sat Aug 1 7:40 AM run — last started Sat Aug 1 7:00 AM
 - 'vp-hr-policy-monthly-sync' (cron 35 8 1 * *) missed its Sat Aug 1 8:35 AM run — last started Sat Aug 1 8:07 AM

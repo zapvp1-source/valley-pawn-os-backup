@@ -117,6 +117,24 @@ Delinquency is real and is **why** we're automating. Joshua handles the **back-m
   on-time filing (VA moved ST-9 → unified **Form ST-1** ~Apr 2025 period; portal shows the right form).
 
 ## Build log
+- **2026-09-10 — Filing Status tab corrected per Joshua's confirmation ("all filed except august").**
+  The tab had been showing several past periods as "Not Filed"/"In Process" (July, June, May, April
+  2026; Dec, Nov, Oct, Sep 2025) — Joshua confirmed in chat those are all actually filed; the tab was
+  just stale/hand-maintained, not a real delinquency. Updated all of them to "Filed"/"Detail" and
+  added a new row for **August 2026 = Not Filed** (the only real open period — just closed, due by
+  Joshua's standing Sept-18 self-imposed target ahead of the state's Sept 20 due date). Filing Status
+  tab is now: everything through July 2026 Filed, August 2026 the sole open item.
+- **2026-09-10 — AUG 2026 row backfilled (2nd consecutive monthly miss by `sales-tax-monthly-update`).**
+  Joshua asked for VA taxable-sales/eBay-by-store numbers; AUG row was blank (same failure as the
+  July miss on 2026-08-24 — upstream `eom-bravo-gl-export` GL CSVs landed 5 days late, past this
+  task's wait/retry window, and no FAILURE_LEDGER row was written despite the v3 policy header).
+  Backfilled directly from the 5 stores' `post-to-accounting-gl.csv` (hand-verified line-by-line,
+  not just script output). AUG Taxes Due by store: Culpeper $1,436.90 · Harrisonburg $2,162.98 ·
+  Lexington $898.59 · Roanoke $1,479.07 · Waynesboro $1,884.81 · **company total $7,862.35**.
+  Full incident + recurring-pattern flag logged in `Valley Pawn OS/fleet/FAILURE_LEDGER.md` and
+  `Life OS/OPEN_ITEMS_REGISTER.md` (2026-09-10 rows) — the 2-hour buffer between the two monthly
+  tasks needs widening or an event-driven trigger; flagged as a future architecture fix, not
+  reopened here.
 - **2026-07-20 — Phase 1 BUILT & running (DRY-RUN).**
   - Engine: `Projects/Sales Tax/sales_tax_daily_sweep.py` — reads latest month from `Sales Tax.xlsx`,
     computes daily = total ÷ days-in-month, appends to `Sales_Tax_Reserve_Ledger.xlsx` (idempotent per

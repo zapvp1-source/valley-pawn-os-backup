@@ -1,5 +1,5 @@
 # Bonus close — July 2026
-Generated 2026-09-06T01:08:34 · regime: Jul-2026 regime (two-bridge, symmetric penalty) · payday 2026-08-21 · field posting OFF
+Generated 2026-09-10T10:54:16 · regime: Jul-2026 regime (two-bridge, symmetric penalty) · payday 2026-08-21 · field posting OFF
 
 ## Stores
 | Store | Net rev | Target | Hit | 2025 | YoY | Reviews | Email | Gold | FB | Task | Assets | Txns |
@@ -18,11 +18,11 @@ Category wins: {'ROA': ['Email %'], 'CUL': ['Gold dwt']} → top store CUL
 | CUL | (store) | — | None | 0 | $0.00 | Bridge 1 not met ($61,751.95 vs target $77,117.00) — $0 for the store |
 | HAR | (store) | — | None | 0 | $0.00 | Bridge 1 not met ($42,881.84 vs target $57,724.00) — $0 for the store |
 | LEX | (store) | — | None | 0 | $0.00 | Bridge 1 not met ($21,701.62 vs target $27,545.00) — $0 for the store |
-| ROA | Benjie Moore | Manager | $48,831.78 | 0.015 | $732.48 | Tier 2 missed |
+| ROA | Benjie Moore | Manager | $48,831.78 | 0.02 | $976.64 | Tier 2 missed |
 | WAY | (store) | — | None | 0 | $0.00 | Bridge 1 not met ($40,329.99 vs target $48,694.00) — $0 for the store |
 | ALL | Preston Peters | Market Manager | 1 | 300.0 | $300.00 | 1/5 stores hit target x $300 |
 
-**Total $1,032.48**
+**Total $1,276.64**
 
 ## Notes
 - Top performer Culpeper did not pass Bridge 1 — $300 pool not paid

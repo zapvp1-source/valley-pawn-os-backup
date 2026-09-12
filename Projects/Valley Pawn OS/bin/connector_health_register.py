@@ -3,6 +3,8 @@
 Run ONLY while Claude.app is fully quit (connector_health_register.sh handles that).
 Additive: appends one task entry if absent; touches nothing else. Backup + atomic write,
 same pattern as chromeperms_registry_edit.py (proven 2026-09-04)."""
+# NOTE 2026-09-10: NEVER write null for lastRunAt/lastScheduledFor — the app validates the registry with a
+# string-or-absent schema; a null makes the WHOLE registry fail to load (no sidebar, zero dispatches). Omit the keys.
 import json, os, shutil, time, glob
 STAMP = time.strftime("%Y%m%d-%H%M%S")
 cands = glob.glob(os.path.expanduser("~/Library/Application Support/Claude/local-agent-mode-sessions/*/*/scheduled-tasks.json"))
@@ -18,8 +20,6 @@ entry = {
   "enabled": True,
   "filePath": SKILL,
   "createdAt": int(time.time()*1000),
-  "lastRunAt": None,
-  "lastScheduledFor": None,
   "userSelectedFolders": ["/Users/joshuadavis/Documents/Claude/Projects"],
   "chromePermissionMode": "skip_all_permission_checks",
   "approvedPermissions": [

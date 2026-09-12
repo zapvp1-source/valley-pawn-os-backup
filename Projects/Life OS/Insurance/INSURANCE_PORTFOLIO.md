@@ -1,6 +1,6 @@
 # Insurance Portfolio — All Domains
 
-**GENERATED 2026-09-09 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
+**GENERATED 2026-09-11 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
 Update the registry, then run `Life OS/Insurance/bin/regen_portfolio.py`.
 Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker history: `BROKER_PIPELINE.md`.
 
@@ -12,13 +12,15 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 | 2026-11-28 | Personal auto | Hillary D. Davis / Joshua C. Davis personally | Progressive Select Insurance Co (NAIC 10192) | 998062549 | — |
 | 2026-12-15 (open enrollment deadline for 1/1 coverage - typical) | Health | Joshua & Hillary Davis personally | — | — | — |
 | 2027-01-09 | Landlord / rental dwelling | Joshua & Hillary Davis (deed transfer to Farming Infinity Tennessee LLC unresolved - see hardinberry-property skill) | — | OB3-TN-22196824-01 | — |
-| 2027-04-12 | Landlord / rental dwelling | Joshua & Hillary Davis (see REAL_ESTATE_OS / woods-walk-property skill) | Travelers Personal Insurance Company via Steadily Ins Agency | 611614155-653-1 (portfolio shows 6116141556531) | $1,051 |
+| 2027-06-01 | Surety | Full Circle Finance Inc | Travelers Bond | 107451942 | — |
 | 2027-06-13 | Workers compensation & employers liability | Full Circle Finance Inc | HDI Global Insurance Company (NCCI carrier; brief referenced Glencar - policy endorsement shows HDI Global Insurance Company) | GC29P101236-02 (expired 6/13/2026); -03 renewal presumed but NO DOCUMENT FOUND | — |
 | 2027-07-02 | Commercial package | Full Circle Finance Inc | HDI Global Specialty SE (A.M. Best A+), surplus lines VA | IK29P109337-05 | $11,103.04 |
 | 2027-07-02 | Commercial building (lessor's risk) | Farming Infinity LLC (owner) - see ENTITY_STRUCTURE.md | HDI Global Specialty SE | IK29P109337-05 (Loc 5) | $1,104 |
 | 2027-07-02 | Homeowners HO3 written as 'Primary home' | Farming Infinity Mountains LLC / Joshua (per REAL_ESTATE_OS) - NOT FCF Inc | Homesite Insurance Company of the Midwest (Homesite Group) via GEICO Insurance Agency, LLC | 39168908 | — |
-| 2027-08-28 | Surety | Full Circle Finance Inc | — | Bond #101103000 (Document Set #101103000) | $300 |
-| 2027-12-01 | Surety | Full Circle Finance Inc | — | Renewal #72603580 (bond number not in email; earlier docs: 'Full Circle Finance Inc. 50K Bond.pdf' in Mail archive) | $250 |
+| 2027-07-28 | Surety | Full Circle Finance Inc | Travelers Bond | 107884069 | — |
+| 2027-08-03 | Surety | Full Circle Finance Inc | American Contractors Indemnity Company (HCC Surety) | 100982291 | — |
+| 2027-12-01 | Surety | Full Circle Finance Inc | CNA Surety | Renewal #72603580 (bond number not in email; earlier docs: 'Full Circle Finance Inc. 50K Bond.pdf' in Mail archive) | $250 |
+| 2029-08-25 | Surety | Full Circle Finance Inc | American Contractors Indemnity Company (HCC Surety) | Bond #101103000 (Document Set #101103000) | $300 |
 
 ## OPEN COVERAGE ISSUES (every open_issue in the registry)
 
@@ -45,14 +47,29 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - NEXT/Gusto pay-as-you-go declined 6/18/2026; state-fund quote promised, never delivered.
 - Loss runs requested from ULCAccounts 6/18/2026 - no response found.
 
-**VP-SURETY-PAWN-50K — Surety**
-
-- Surety carrier name and bond number not captured - download renewal confirmation from connect.suretybonds.com link in 9/2 email.
-
 **VP-SURETY-ROANOKE-10K — Surety**
 
-- Term/expiration not confirmed (bond PDF is image-only) - verify 1-year vs continuous.
 - Confirm the original bond was filed with City of Roanoke with the permit application.
+
+**VP-SURETY-HARRISONBURG-PMG — Surety**
+
+- Bond amount/premium not captured - request from SuretyBonds.com.
+- Confirm exact obligee name and named insured against the bond form.
+
+**VP-SURETY-WAYNESBORO-PMG — Surety**
+
+- Bond amount/premium not captured - request from SuretyBonds.com.
+- Confirm exact obligee name and named insured against the bond form.
+
+**VP-SURETY-CULPEPER-PMG — Surety**
+
+- Bond amount/premium not captured - request from SuretyBonds.com.
+- Confirm exact obligee name and named insured against the bond form.
+
+**GAP-SURETY-LEXINGTON-PMG — Surety**
+
+- Confirm with the City of Lexington (or Rockbridge County) whether a precious metal & gem dealer bond is actually required for this location.
+- If required, obtain one from SuretyBonds.com under the correct obligee (City of Lexington vs Rockbridge County) - this is Joshua's decision on which broker/carrier, not an autonomous bind.
 
 **RE-RICHMOND-817 — Commercial building (lessor's risk)**
 
@@ -88,12 +105,10 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 
 **RE-WOODSWALK-LL — Landlord / rental dwelling**
 
-- Confirm the 4/12/2026 renewal actually bound and get current dec (carrier, limits, premium).
+- Pull the new policy documents from the Steadily portal (app.steadily.com, login zapvp1@me.com) to capture: underlying carrier, effective/term dates, dwelling limit, liability limit, deductible, and confirm underwriting cleared (not voided).
+- Historical gap: Travelers non-renewed this policy effective 4/12/2026 and no replacement coverage was found in any mailbox until this 9/10/2026 binder - roughly a 5-month window where the tenant-occupied property may have been uninsured. Nothing further to do about that window itself, but flag it if a loss during that period is ever raised.
+- Confirm mortgagee/lienholder (if any) is correctly listed on the new policy.
 - No umbrella.
-- TRAVELERS ISSUED A NOTICE OF NONRENEWAL. Steadily emailed 2026-01-23 ('Your insurance coverage on 14300 WOODS WALK LN needs review!') attaching a Travelers NOTICE OF NONRENEWAL, policy 611614155 653 1, expiring 4/12/2026, and warned: 'If we don't hear from you prior to 4/12/2026, we will assume you no longer require coverage and the policy will expire without further action.' NO REPLY FROM JOSHUA IS ON RECORD.
-- NO EVIDENCE OF REPLACEMENT COVERAGE. Exhaustive search of Gmail, Apple Mail (all accounts, via the Unified Search index), iCloud Drive and Google Drive finds NOTHING for this property after a Travelers 'Recurring Credit Card Charge Notice' dated 2026-04-22. No new declarations page, no binder, no payment confirmations. The Steadily quote thread from 7/30-7/31/2026 (Damian Perez, team.luna@steadily.com) was about 282 Bald Rock Rd, NOT this property, and it went unresolved.
-- EXPOSURE IF LAPSED: a tenant (Cynthia Stewart) is in occupancy paying $2,500/mo as of September 2026 on a dwelling last insured at Coverage A $360,000 with $300,000 premises liability. An uninsured occupied rental is the single largest unmanaged risk found in this portfolio.
-- RESOLVE IMMEDIATELY - one call: Steadily 888-966-1611 (same agency and login that services 148 Hardinberry) or Travelers policy service 1-888-966-1611 / app.steadily.com. Ask: (1) is 611614155 653 1 in force today, (2) if not, when did it lapse, (3) what was the stated nonrenewal reason (likely roof age - it was 13 years in 2025 on a 1985 build), (4) bind replacement coverage today if there is a gap.
 
 **PERS-AUTO — Personal auto**
 
@@ -170,34 +185,94 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - **Named insured (entity):** Full Circle Finance Inc
 - **Named insured (as written on policy):** Full Circle Finance Inc DBA Valley Pawn (principal)
 - **Scope:** VA pawnbroker license bond; obligee wrote form as 'continuous until canceled'
-- **Carrier:** — · **Program/MGA:** SuretyBonds.com (agency)
+- **Carrier:** CNA Surety · **Program/MGA:** SuretyBonds.com (agency)
 - **Broker:** SuretyBonds.com, 1 (800) 308-4358, customercare@suretybonds.com · Customer Care (Jordan, supervisor); bob@suretybonds.com
-- **Policy #:** Renewal #72603580 (bond number not in email; earlier docs: 'Full Circle Finance Inc. 50K Bond.pdf' in Mail archive) · **Term:** 2026-12-01 → ? · **Renews:** 2027-12-01
-- **Premium:** $250 — Renewal approved for $250.00; paid in full 9/2/2026 (order confirmation $250 premium, $0 shipping). New term begins 12/1/2026.
+- **Policy #:** Renewal #72603580 (bond number not in email; earlier docs: 'Full Circle Finance Inc. 50K Bond.pdf' in Mail archive) · **Term:** 2026-12-01 → 2027-12-01 · **Renews:** 2027-12-01
+- **Premium:** $250 — Renewal approved for $250.00; paid in full 9/2/2026 (order confirmation $250 premium, $0 shipping). New term 12/1/2026-12/1/2027 confirmed by SuretyBonds.com 9/9/2026 with continuation certificate attached.
 - **Payment:** Online card checkout 9/2/2026
 - **Key limits:**
   - **bond amount:** $50,000
-- **Obligee:** Commonwealth of Virginia (pawnbroker) - confirm exact obligee on bond form
-- **Status:** Renewed and in full force; continuous until canceled.
-- **Documents:** Gmail: 'Renewal #72603580 Finalized for Full Circle Finance Inc' 9/2/2026 (msg 1a064104188984b5) · Gmail: 'It's time to renew your bond' 9/2/2026 ($50,000 VA Pawnbroker Bond, $250) · Gmail: Order Confirmation 9/2/2026 (msg 1a06410fea4d8cbf) · Mail archive: Full Circle Finance Inc. 50K Bond.pdf; Valley Pawn - Client Bond Docs - 07 28 23 / 10 26 23 / 06 03 21
-- **Last verified:** 2026-09-05 — source: SuretyBonds.com emails 9/2/2026
+- **Obligee:** Augusta County, Virginia (per SuretyBonds.com 9/9/2026 list - portfolio previously said 'Commonwealth of Virginia'; confirm exact obligee on bond form)
+- **Status:** Renewed and in full force. Carrier confirmed CNA Surety, term 12/1/2026-12/1/2027.
+- **Documents:** Gmail: 'Renewal #72603580 Finalized for Full Circle Finance Inc' 9/2/2026 (msg 1a064104188984b5) · Gmail: 'It's time to renew your bond' 9/2/2026 ($50,000 VA Pawnbroker Bond, $250) · Gmail: Order Confirmation 9/2/2026 (msg 1a06410fea4d8cbf) · Mail archive: Full Circle Finance Inc. 50K Bond.pdf; Valley Pawn - Client Bond Docs - 07 28 23 / 10 26 23 / 06 03 21 · Gmail: SuretyBonds.com 'List of Bonds' reply 9/9/2026 (thread 1a085cc686796c9e), attachment 'Valley Pawn - Continuation Certificate - 09 02 26.pdf' - carrier confirmed CNA Surety
+- **Last verified:** 2026-09-10 — source: SuretyBonds.com emails 9/2/2026 and 9/9/2026
 
 ### VP-SURETY-ROANOKE-10K — Surety - City of Roanoke Precious Metals Dealer Bond $10,000
 
 - **Named insured (entity):** Full Circle Finance Inc
 - **Named insured (as written on policy):** Full Circle Finance Inc DBA Valley Pawn
 - **Scope:** Roanoke precious metals dealer permit, 2362 Peters Creek Rd Ste C&D
-- **Carrier:** — · **Program/MGA:** SuretyBonds.com
+- **Carrier:** American Contractors Indemnity Company (HCC Surety) · **Program/MGA:** SuretyBonds.com
 - **Broker:** SuretyBonds.com · customercare@suretybonds.com; Teresa Huddleston (City of Roanoke) teresa.huddleston@roanokeva.gov
-- **Policy #:** Bond #101103000 (Document Set #101103000) · **Term:** 2026-08-28 → ? · **Renews:** 2027-08-28
-- **Premium:** $300 — Purchased online 8/25-8/28/2026: $300 premium + $20 shipping = $320. A separate $100 approval (bob@suretybonds.com 8/28) was for the emailed request Joshua withdrew. Prior bond Document Set #100811902 issued 10/26/2023 lapsed 10/26/2024.
+- **Policy #:** Bond #101103000 (Document Set #101103000) · **Term:** 2026-08-25 → 2029-08-25 · **Renews:** 2029-08-25
+- **Premium:** $300 — Purchased online 8/25-8/28/2026: $300 premium + $20 shipping = $320. 3-year term confirmed by SuretyBonds.com 9/9/2026: 8/25/26-8/25/29. A separate $100 approval (bob@suretybonds.com 8/28) was for the emailed request Joshua withdrew. Prior bond Document Set #100811902 issued 10/26/2023 lapsed 10/26/2024.
 - **Payment:** Online card checkout
 - **Key limits:**
   - **bond amount:** $10,000
 - **Obligee:** City of Roanoke, Virginia
-- **Status:** Issued and delivered 9/1/2026. Permit application with City of Roanoke in process (Preston/Benjie handling in-store).
-- **Documents:** Gmail: Bond #101103000 Shipped 8/28/2026 (thread 1a049c15d3c2ac50, attachment 'Valley Pawn - Client Bond Docs - 08 28 26.pdf' - scanned image, not text-extractable) · Gmail: FedEx 876440185117 delivered 9/1/2026 · Gmail: Order Confirmation 8/28/2026 (msg 1a049063a572de48) · Mail: City of Roanoke Virginia Surety Bond Form.pdf
-- **Last verified:** 2026-09-05 — source: SuretyBonds.com emails 8/25-9/2/2026; Roanoke permit thread 1a039ef6520b9da6
+- **Status:** Issued and delivered 9/1/2026. Term confirmed 8/25/26-8/25/29 (3-year). Permit application with City of Roanoke in process (Preston/Benjie handling in-store).
+- **Documents:** Gmail: Bond #101103000 Shipped 8/28/2026 (thread 1a049c15d3c2ac50, attachment 'Valley Pawn - Client Bond Docs - 08 28 26.pdf' - scanned image, not text-extractable) · Gmail: FedEx 876440185117 delivered 9/1/2026 · Gmail: Order Confirmation 8/28/2026 (msg 1a049063a572de48) · Mail: City of Roanoke Virginia Surety Bond Form.pdf · Gmail: SuretyBonds.com 'List of Bonds' reply 9/9/2026 (thread 1a085cc686796c9e) - confirmed term and carrier
+- **Last verified:** 2026-09-10 — source: SuretyBonds.com emails 8/25-9/9/2026; Roanoke permit thread 1a039ef6520b9da6
+
+### VP-SURETY-HARRISONBURG-PMG — Surety - Harrisonburg VA Precious Metal & Gem Dealer Bond
+
+- **Named insured (entity):** Full Circle Finance Inc
+- **Named insured (as written on policy):** Full Circle Finance Inc DBA Valley Pawn (principal) - unconfirmed, verify against bond form
+- **Scope:** Harrisonburg, VA precious metal & gem dealer license bond, 1790 E Market St location
+- **Carrier:** Travelers Bond · **Program/MGA:** SuretyBonds.com (agency)
+- **Broker:** SuretyBonds.com, 1 (800) 308-4358, customercare@suretybonds.com · customercare@suretybonds.com
+- **Policy #:** 107451942 · **Term:** 2024-06-01 → 2027-06-01 · **Renews:** 2027-06-01
+- **Premium:** — — Not captured this pass - amount not stated in the 9/9/2026 SuretyBonds.com list reply.
+- **Key limits:**
+  - **bond amount:** None
+- **Obligee:** City of Harrisonburg, Virginia (unconfirmed - verify on bond form)
+- **Status:** NEW TO REGISTRY 2026-09-10 - discovered via SuretyBonds.com bond-list reply, not previously tracked. Term per broker: 6/1/24-6/1/27.
+- **Documents:** Gmail: SuretyBonds.com 'List of Bonds' reply 9/9/2026 (thread 1a085cc686796c9e) - first time this bond appears in the registry
+- **Last verified:** 2026-09-10 — source: SuretyBonds.com 'List of Bonds' reply 9/9/2026
+
+### VP-SURETY-WAYNESBORO-PMG — Surety - Waynesboro City VA Precious Metal & Gem Dealer Bond
+
+- **Named insured (entity):** Full Circle Finance Inc
+- **Named insured (as written on policy):** Full Circle Finance Inc DBA Valley Pawn (principal) - unconfirmed, verify against bond form
+- **Scope:** Waynesboro City, VA precious metal & gem dealer license bond, 1321 W Broad St location
+- **Carrier:** American Contractors Indemnity Company (HCC Surety) · **Program/MGA:** SuretyBonds.com (agency)
+- **Broker:** SuretyBonds.com, 1 (800) 308-4358, customercare@suretybonds.com · customercare@suretybonds.com
+- **Policy #:** 100982291 · **Term:** 2026-08-03 → 2027-08-03 · **Renews:** 2027-08-03
+- **Premium:** — — Not captured this pass - amount not stated in the 9/9/2026 SuretyBonds.com list reply.
+- **Key limits:**
+  - **bond amount:** None
+- **Obligee:** Waynesboro City, Virginia (unconfirmed - verify on bond form)
+- **Status:** NEW TO REGISTRY 2026-09-10 - discovered via SuretyBonds.com bond-list reply, not previously tracked. Term per broker: 8/3/26-8/3/27.
+- **Documents:** Gmail: SuretyBonds.com 'List of Bonds' reply 9/9/2026 (thread 1a085cc686796c9e) - first time this bond appears in the registry
+- **Last verified:** 2026-09-10 — source: SuretyBonds.com 'List of Bonds' reply 9/9/2026
+
+### VP-SURETY-CULPEPER-PMG — Surety - Town of Culpeper VA Precious Metal & Gem Dealer Bond
+
+- **Named insured (entity):** Full Circle Finance Inc
+- **Named insured (as written on policy):** Full Circle Finance Inc DBA Valley Pawn (principal) - unconfirmed, verify against bond form
+- **Scope:** Town of Culpeper, VA precious metal & gem dealer license bond, 571 James Madison Hwy location
+- **Carrier:** Travelers Bond · **Program/MGA:** SuretyBonds.com (agency)
+- **Broker:** SuretyBonds.com, 1 (800) 308-4358, customercare@suretybonds.com · customercare@suretybonds.com
+- **Policy #:** 107884069 · **Term:** 2026-07-28 → 2027-07-28 · **Renews:** 2027-07-28
+- **Premium:** — — Not captured this pass - amount not stated in the 9/9/2026 SuretyBonds.com list reply.
+- **Key limits:**
+  - **bond amount:** None
+- **Obligee:** Town of Culpeper, Virginia (unconfirmed - verify on bond form)
+- **Status:** NEW TO REGISTRY 2026-09-10 - discovered via SuretyBonds.com bond-list reply, not previously tracked. Term per broker: 7/28/26-7/28/27.
+- **Documents:** Gmail: SuretyBonds.com 'List of Bonds' reply 9/9/2026 (thread 1a085cc686796c9e) - first time this bond appears in the registry
+- **Last verified:** 2026-09-10 — source: SuretyBonds.com 'List of Bonds' reply 9/9/2026
+
+### GAP-SURETY-LEXINGTON-PMG — Surety - City of Lexington VA Precious Metal & Gem Dealer Bond - NO BOND ON FILE
+
+- **Named insured (entity):** Full Circle Finance Inc
+- **Scope:** Lexington, VA store, 125 Walker St (moved from 439 E Nelson St eff 7/31/2026)
+- **Carrier:** — · **Program/MGA:** SuretyBonds.com (agency)
+- **Broker:** SuretyBonds.com · customercare@suretybonds.com
+- **Policy #:** — · **Term:** ? → ? · **Renews:** —
+- **Premium:** —
+- **Status:** GAP - CONFIRMED NO BOND ON FILE as of 9/9/2026. If Lexington's precious-metal/gem-dealer license requires a bond the way Harrisonburg/Waynesboro/Culpeper do, the store may be operating out of compliance.
+- **Documents:** Gmail: SuretyBonds.com 'List of Bonds' reply 9/9/2026 (thread 1a085cc686796c9e) - confirms 'no bond on file' for Lexington · Gmail: SuretyBonds.com 6/18/2024 note (referenced in Joshua's 9/9/2026 email) - original bond was written for Rockbridge County, not City of Lexington
+- **Last verified:** 2026-09-10 — source: SuretyBonds.com 'List of Bonds' reply 9/9/2026
 
 ## DOMAIN 2 — Real Estate
 
@@ -305,19 +380,20 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 ### RE-WOODSWALK-LL — Landlord / rental dwelling
 
 - **Named insured (entity):** Joshua & Hillary Davis (see REAL_ESTATE_OS / woods-walk-property skill)
-- **Named insured (as written on policy):** Joshua Davis (Hillary Davis on Safeco docs)
+- **Named insured (as written on policy):** Joshua Davis
 - **Scope:** 14300 Woods Walk Ln, Midlothian VA 23112
-- **Carrier:** Travelers Personal Insurance Company via Steadily Ins Agency · **Program/MGA:** Steadily Insurance Agency Inc
+- **Carrier:** — · **Program/MGA:** Steadily Insurance Agency Inc
 - **Broker:** Steadily · support@steadily.com, 888-966-1611
-- **Policy #:** 611614155-653-1 (portfolio shows 6116141556531) · **Term:** ? → ? · **Renews:** 2027-04-12
-- **Premium:** $1,051 — $1,051.00 for the 4/12/2025-4/12/2026 term (issued 3/21/2025), after $268 of Loss Free / Good Payer / Fire Protective Device discounts. Prior term 4/12/2023-4/12/2024 was $1,296.00. Source: Steadily_Renewal_Offer_2025-2026.pdf and Steadily_Travelers_Declarations_2023-2024.pdf in the Drive Insurance folder.
+- **Policy #:** SP3-VA-33470384-00 (NEW POLICY bound 9/10/2026 - replaces prior Travelers policy 611614155-653-1, which Travelers non-renewed effective 4/12/2026) · **Term:** ? → ? · **Renews:** —
+- **Premium:** — — PRIOR TERM (Travelers, non-renewed 4/12/2026): $1,051.00 for 4/12/2025-4/12/2026. NEW POLICY SP3-VA-33470384-00: $251.62 charged to Amex x3001 on 9/10/2026 per Steadily 'Payment confirmation' email - reads as a binder/first installment, not a confirmed annual premium; full annual premium not yet captured.
+- **Payment:** American Express x3001 via Steadily/Braintree (new policy, 9/10/2026)
 - **Key limits:**
   - **dwelling:** None
   - **liability:** None
-- **Mortgagee:** None per Steadily evidence of insurance 8/7/2024
-- **Status:** *** COVERAGE STATUS UNRESOLVED - POSSIBLE LAPSE SINCE 4/12/2026 ***
-- **Documents:** Gmail: Fwd 'Property Insurance Renewal Notice' (Steadily 3/19/2024 + 8/7/2024 chain, thread 19f669dff812fafc) with RENEWAL OFFER_6116141556531.pdf, EVIDENCE OF INSURANCE.pdf · Mail: Insurance_Application_for_611614155-653-1.pdf
-- **Last verified:** 2026-09-09 — source: Steadily 2024 emails; prior portfolio
+- **Mortgagee:** Unconfirmed on new policy - prior Travelers policy showed none per 8/7/2024 evidence of insurance
+- **Status:** GAP LIKELY RESOLVED 9/10/2026 - new policy SP3-VA-33470384-00 bound with Steadily (underlying carrier not yet stated in binder emails) after the prior Travelers non-renewal. Steadily's issuance email states coverage is subject to Underwriting review before the effective date and 'may be voided' if the property doesn't meet eligibility guidelines - treat as bound-but-not-fully-confirmed until the policy documents are pulled and underwriting clearance verified.
+- **Documents:** Gmail: Fwd 'Property Insurance Renewal Notice' (Steadily 3/19/2024 + 8/7/2024 chain, thread 19f669dff812fafc) with RENEWAL OFFER_6116141556531.pdf, EVIDENCE OF INSURANCE.pdf · Mail: Insurance_Application_for_611614155-653-1.pdf · Gmail: 'Finish your insurance quote for 14300 Woods Walk Ln' (Steadily 9/10/2026 22:39 ET, thread 1a08d79bf6a98d6c) · Gmail: 'Insurance coverage on 14300 Woods Walk Ln has been issued' (Steadily 9/10/2026 22:44 ET, thread 1a08d7eddf6f599e) · Gmail: 'Payment confirmation: 14300 Woods Walk Ln' (Steadily 9/10/2026 22:45 ET, thread 1a08d7fcba9e57e2 - policy SP3-VA-33470384-00, $251.62, Amex x3001) · Gmail: 'Policy documents are ready: 14300 Woods Walk Ln' (Steadily 9/11/2026 04:01 ET, thread 1a08ea1180b9a06c)
+- **Last verified:** 2026-09-11 — source: Steadily emails 9/10-9/11/2026 (quote, issuance, payment, documents-ready)
 
 ## DOMAIN 3 — Personal
 
