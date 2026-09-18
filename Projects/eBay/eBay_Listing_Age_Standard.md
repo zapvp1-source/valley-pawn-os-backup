@@ -1,6 +1,43 @@
 # Valley Pawn eBay — Listing-Age Standard (Reprice & Pull Cadence)
 
+> # ⚠️ SUPERSEDED 2026-09-17 — DO NOT WORK FROM THE LADDER BELOW
+>
+> **Joshua amended this standard on 2026-09-17 after feedback from the stores: markdowns now start
+> at 90 days aged, not 30.** Cutting at day 30 was giving away margin on items that were still
+> selling at full price.
+>
+> **The cadence in force is:**
+>
+> | Age | Action |
+> |---|---|
+> | Day 0–89 | **Hands off.** No reprice, no price cut, no offers to watchers. Make the title, photos and item specifics right at listing time instead. |
+> | **Day 90** | **First price cut (~10%)** via Markdown Manager, after a sold-comp check. |
+> | **Day 120** | Second reduction (~10%), or end & relist fresh (Sell Similar) if it has no watchers. |
+> | **Day 150** | **Pull or final relist.** One last relist with a materially new price + title + photos, or pull it from eBay — move to in-store retail, bundle, liquidate, or write off. |
+>
+> Cuts stop at the **30%-off floor** (3 cuts max), minimum 25 days between cuts. At the floor +
+> 14 days with no sale, the listing is ended.
+>
+> **Also changed the same day, and binding on every listing regardless of age:**
+> - **Best Offer is never switched on by anyone's automation.** A listing marked "no offers
+>   allowed" stays that way — that is the store's decision. **Video games never take offers at all.**
+> - **Model numbers are never removed from a title.** Only our own stock number — one of
+>   `VAP VP VA CUL ROA WAY HAR LEX` followed by 5 or more digits, e.g. `(VAP031234)` — comes out,
+>   and it gets moved into the listing's custom label rather than deleted. A code like `(A2482)`
+>   or `(DCD771)` is the manufacturer's model number and is one of the most searched things in the
+>   title. When in doubt, leave it in.
+>
+> **Status of this document:** every script and scheduled task was changed to the 90/120/150
+> ladder on 2026-09-17. **This document itself has not yet been re-issued for signature** — it was
+> e-signed by all 14 employees through Gusto on 2026-08-05 in its original 30/60/90 form. It must
+> be redrafted and re-signed through `policy-lifecycle`; see `Life OS/OPEN_ITEMS_REGISTER.md`
+> (2026-09-17). Until then, **this banner governs and everything below it is historical context
+> only** — the evidence and reasoning are still worth reading, the day numbers are not.
+
+---
+
 **Prepared 2026-07-04 · Based on our own sales data + eBay platform research**
+**Original ladder below SUPERSEDED 2026-09-17 — see the banner above.**
 
 ## The question
 eBay is a "buy it now" marketplace — how long should a listing sit before we cut the price, and before we pull/relist it? We wanted the sweet spot backed by evidence, not a guess.
@@ -40,16 +77,20 @@ Important context: our items sell **much faster than the eBay average** (industr
 
 ---
 
-## The Valley Pawn standard (recommended)
+## The Valley Pawn standard (recommended) — ⚠️ SUPERSEDED 2026-09-17, see the banner at the top of this file
+
+> **The day numbers in this section are the OLD ladder and are no longer in force.** The cadence
+> in force is 90 → first cut · 120 → second · 150 → pull or final relist. Nothing is repriced or
+> offered to watchers before day 90.
 
 A simple three-gate cadence, tuned to our data (90% of sales happen by day 60, 94% by day 90):
 
 **Days 0–14 — Hands off.** This is the freshness window and when 64% of our sales happen. Don't reprice, don't relist. Just make sure title, photos, and item specifics are good from the start.
 
-**Day 21–30 — First intervention.** If it hasn't sold:
-- Has watchers? → **Send Offer to Watchers**, 5–10% below list, 48-hour expiry.
-- No watchers? → **First price cut (~10%)** via Markdown Manager, after a quick sold-comp check.
-- (By day 30, 79% of the sales that will ever happen already have — a still-unsold item is now in the slow tail.)
+~~**Day 21–30 — First intervention.** If it hasn't sold:~~ **← SUPERSEDED 2026-09-17. There is no day-21 or day-30 intervention. Nothing happens to a listing before day 90.**
+- ~~Has watchers? → **Send Offer to Watchers**, 5–10% below list, 48-hour expiry.~~ **No offers to watchers before day 90.**
+- ~~No watchers? → **First price cut (~10%)** via Markdown Manager, after a quick sold-comp check.~~ **The first cut happens at day 90.**
+- (By day 30, 79% of the sales that will ever happen already have — a still-unsold item is now in the slow tail. *Still true as data; it is no longer the basis for acting at day 30 — cutting that early was giving away margin on items that were still selling at full price.*)
 
 **Day 60 — Act decisively.** Still no sale:
 - **Second reduction (~10–15%)**, or
@@ -61,12 +102,13 @@ A simple three-gate cadence, tuned to our data (90% of sales happen by day 60, 9
 - **Nothing sits past 90 days untouched.**
 
 ### One-line version for the team
-> **Reprice at 30 days. Reduce or relist at 60. Pull or final-relist at 90. Never let a listing sit past 90 days as-is.**
+> ~~**Reprice at 30 days. Reduce or relist at 60. Pull or final-relist at 90.**~~ **← SUPERSEDED 2026-09-17.**
+> **The line in force is: first cut at 90 days. Second at 120. Pull or final-relist at 150. Nothing is repriced before day 90.**
 
 ---
 
 ## How this plugs into our automation
 - **"Aged / needs action" = 90+ days** — this is the line for the weekly cleanup email (already matches our aged-inventory report).
-- Natural next step: the weekly job can flag **three buckets per store** — *reprice now (30–59d, no sale)*, *relist/reduce (60–89d)*, and *pull now (90+d)* — so the team gets a specific worklist, not just a pile.
+- ~~Natural next step: the weekly job can flag three buckets per store — *reprice now (30–59d)*, *relist/reduce (60–89d)*, *pull now (90+d)*.~~ **SUPERSEDED 2026-09-17** — the buckets are now *first cut (90–119d)*, *second cut / relist (120–149d)*, *pull or final relist (150d+)*. Nothing under 90 days appears on a worklist at all.
 
 *Data source: eBay Trading API (GetOrders + GetSellerList + GetMyeBaySelling), all 5 Valley Pawn stores, pulled 2026-07-04. Analysis script: `ebay_dts_analysis.py`.*

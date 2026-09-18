@@ -1,6 +1,6 @@
 ---
 name: bravo-preflight-relaunch
-description: Daily 4:00 AM ET — proactively relaunch Bravo POS + watcher to a clean logged-in state ahead of the 6:50 AM pipeline pull, via the proven _relaunch_bravo_and_watcher.ps1. Verify processes, one retry, DM Joshua only on failure. Replaces the redundant cloud pair nightly-bravo-restart / Bravo Pre-Flight Relaunch (merged 2026-08-21).
+description: RETIRED 2026-09-17 → native launchd com.valleypawn.bravo-relaunch (Valley Pawn OS/bin/bravo_relaunch.sh). This Cowork version died at step 0 every run because the Mac-control (osascript) connector is absent from scheduled sessions. Keep disabled; the native agent owns it.
 model: claude-sonnet-5
 ---
 

@@ -22,8 +22,13 @@ DATA_DIR = os.path.join(ENGINE_DIR, "data")
 LEDGER = os.path.join(ENGINE_DIR, "ledger.jsonl")
 LOCK = os.path.expanduser("~/ebay_engine.lock")
 
-# Bravo intake code as it appears in titles, e.g. "(VAP031234)", "(VA1056309)", "(CUL12345)"
-CODE_RE = re.compile(r"\(([A-Za-z]{1,4}\d{3,}[A-Za-z]?)\)")
+# Bravo intake code as it appears in titles, e.g. "(VAP031234)", "(VA1056309)", "(ROA011853)"
+# Known store prefix + 5 or more digits. Tightened 2026-09-17 (Joshua, store feedback):
+# the old [A-Za-z]{1,4}\d{3,}[A-Za-z]? form also matched real manufacturer model
+# numbers — (A2482), (DCD771), (MT2500), (2236) — which must NEVER be treated as an
+# intake code: never stripped from a title, never written into SKU as a Bravo link.
+# group(1) is the FULL code (prefix + digits) — callers rely on that.
+CODE_RE = re.compile(r"\(((?:VAP|VP|VA|CUL|ROA|WAY|HAR|LEX)\d{5,})\)")
 
 
 def token_for(store):

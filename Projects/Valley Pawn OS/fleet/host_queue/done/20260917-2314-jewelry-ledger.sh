@@ -1,0 +1,4 @@
+#!/bin/bash
+set +e
+BIN="$HOME/Documents/Claude/Projects/Valley Pawn OS/bin"
+bash "$BIN/append_line.sh" "Valley Pawn OS/fleet/FAILURE_LEDGER.md" "| 2026-09-17 23:14 ET | jewelry-onhand-nightly-pull | LEX jewelry case count did not complete after two attempts inside the 6PM-10AM freeze window (first attempt: EnsureStore failed for LEX; retry after self-heal: full 40-min timeout with no result at all) -- CUL, HAR, ROA, and WAY all completed successfully (HAR/WAY Charms=0 applied per the confirmed-empty-category rule, matching each store's most recent prior-day CSV), so per the all-or-nothing completeness rule nothing was posted to #jewlery-counts tonight and no DM was sent per Failure Policy v3. | NEEDS_HUMAN: no -- matches the known wedged-LEX-login pattern documented in bravo-context; self-resolves on a future run once LEX's Bravo session is unwedged, or a manual bravo_relaunch.sh/bravo_unwedge.sh pass on LEX would let tomorrow's run pick it up | OPEN |"

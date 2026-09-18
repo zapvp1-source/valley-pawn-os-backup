@@ -1,6 +1,6 @@
 ---
 name: bravo-health-watchdog
-description: Twice daily (5 AM & 5 PM) — proactively run the Bravo Health Gate so Bravo is on a verified Dashboard before the morning pipeline batch and the 6 PM funds run. Silent on success; DMs Joshua ONLY if Bravo cannot be auto-recovered (the one case needing manual help).
+description: RETIRED 2026-09-17 → native launchd com.valleypawn.bravo-health-watchdog (Valley Pawn OS/bin/bravo_health_watchdog.sh). This Cowork version died at step 0 every run because the Mac-control (osascript) connector is absent from scheduled sessions. Keep disabled; the native agent owns it.
 model: claude-sonnet-5
 ---
 

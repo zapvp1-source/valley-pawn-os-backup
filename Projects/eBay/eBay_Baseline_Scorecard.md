@@ -52,7 +52,7 @@ Underneath those: 68 listings (34%) have interested buyers eligible for offers, 
 ## Prioritized action plan
 
 ### Do now (this week, low effort / high return)
-- **Answer the waiting buyer offer** and send offers to the 68 eligible listings (within the cost-basis floor).
+- **Answer the waiting buyer offer.** ~~and send offers to the 68 eligible listings~~ **← STRUCK 2026-09-17 (Joshua): no offers to watchers before day 90, and Best Offer is never switched on for a listing that has it off. Answering an offer a buyer already sent is fine at any age; proactively sending offers is not.**
 - **Decide on the 30%-off Promoted Listings promo before 6/30** — turning on a modest Promoted Listings General campaign (suggested ad rate) on the top-viewed listings is the fastest sales lever.
 - **Tighten shipping discipline** — buy labels through eBay so tracking auto-uploads on time (fixes the 76.74% gap and protects the late-shipment metric).
 

@@ -39,9 +39,9 @@ Structure: Culpeper carries 59% of listings for 31–38% of revenue at $27–42/
 
 | Task | When | Does | Writes to eBay? |
 |---|---|---|---|
-| `weekly-online-store-audit` | Sun 8:06 AM | estate pull; **auto-fixes** returns policy + Best Offer; per-store table | yes |
+| `weekly-online-store-audit` | Sun 8:06 AM | estate pull; **auto-fixes returns policy ONLY** (Best Offer auto-fix removed 2026-09-17); per-store table | yes |
 | `ebay-title-photo-accuracy-audit` | Sun 8:05 AM | title vs photos, all listings; **auto-fixes** confirmed title errors; DMs managers on photo problems | yes |
-| `ebay-weekly-quality-fix` | Mon 11:08 AM | new listings: strip intake codes, fix CAPS, rewrite weak titles, fix categories, reorder photos; DM each manager | yes |
+| `ebay-weekly-quality-fix` | Mon 11:08 AM | new listings: move our own stock number (prefix + 5 digits) into SKU — **never a model number** (2026-09-17), fix CAPS, rewrite weak titles, fix categories, reorder photos; DM each manager | yes |
 | `ebay-weekly-channel-audit` | Mon 11:45 AM | read-only Channel Pulse (sales/fees/quality/TRS/messages/feedback/offers); refreshes dashboard | no |
 | `ebay-markdown-terminal-weekly` | Mon 12:24 PM | the "pull" half: flag at 30% floor, 14-day grace, then end listing | yes |
 | `ebay-feedback-reply-weekly` | Thu 10:23 AM | replies to unanswered neg/neutral feedback (<12 mo) | yes (permanent) |
@@ -54,7 +54,8 @@ Consumers (read, don't touch eBay): `vp-presence-audit-weekly`, `marketing-ceo-b
 
 **Scripts:** ~30 `~/ebay_*.py` in the home folder + ~45 in this project folder. Credentials in `~/.vp_secrets/` (Trading Auth'n'Auth tokens ×5; one 2-hour REST OAuth token for Lexington only).
 
-**Policy:** *eBay Listing-Age Standard (Reprice & Pull)* — signed by all 14 employees via Gusto 8/5. "Reprice at 30 days. Reduce or relist at 60. Pull or final-relist at 90."
+**Policy:** *eBay Listing-Age Standard (Reprice & Pull)* — signed by all 14 employees via Gusto 8/5, as: "Reprice at 30 days. Reduce or relist at 60. Pull or final-relist at 90."
+**⚠️ SUPERSEDED IN PRACTICE 2026-09-17** — Joshua, from store feedback: markdowns now start at **90 days**, ladder 90/120/150. Every script and task has been changed. **The signed employee policy document still says 30 and must be re-issued through `policy-lifecycle` (draft → publish → Gusto e-signature → manual update).** Open Items Register row 2026-09-17.
 
 **Publications:** 5 different producers post into `#ebay-performance` (rankings, efficiency, online-store audit, channel pulse, markdown floor + monthly ratings + monthly markdown). All verified live in the channel this week.
 
@@ -111,9 +112,9 @@ All native Python 3.9 (`/usr/bin/python3`, stdlib only, launchd), in `Projects/e
 **Layer 1 — Snapshot (`ebay_snapshot.py`, nightly 5:00 AM + on-demand).** One pull per store per day: active listings with `GetItem` detail (price, offers thresholds, returns, handling, photos count, specifics, SKU/ApplicationData, start date, watchers if exposed), 90-day orders, fees (`GetAccount`), feedback, messages, open Best Offers, seller standards (REST, once consented). Written to `engine/data/YYYY-MM-DD/<store>.json` + `latest/`. Everything downstream reads the snapshot — eBay is hit once, not five times.
 
 **Layer 2 — Rules (`ebay_rules.py`).** Deterministic evaluation of every listing against the two written standards, emitting an action queue with a reason per row:
-- Listing-Age Standard: day 21–30 → send offer to watchers / first 10% cut; day 60 → second cut; day 90 → third cut; at floor + 14 days → end listing (existing markdown + terminal logic, moved in as-is; `MIN_DAYS_BETWEEN_CUTS` kept).
-- Policy drift: returns not 30-day, Best Offer off, thresholds not 90/75 — auto-fix (already proven safe).
-- Mechanical title hygiene: intake code → **moved into SKU** (not deleted), CAPS normalised, duplicate-title suffix.
+- Listing-Age Standard **(AMENDED 2026-09-17 by Joshua — markdowns start at 90 days, not 30)**: day 90 → first 10% cut; day 120 → second cut; day 150 → third cut; at floor + 14 days → end listing (`MIN_DAYS_BETWEEN_CUTS` kept). **Nothing is repriced or offered to watchers before day 90.** This matches `ebay_markdown_engine.py`'s existing `AGED_DAYS=90`.
+- Policy drift: returns not 30-day → auto-fix (proven safe). **Best Offer is NOT a drift item and is never auto-fixed (Joshua 2026-09-17):** a listing marked "no offers allowed" stays that way, and video games never take offers at all. The 90/75 thresholds apply only to listings that already have offers on.
+- Mechanical title hygiene: intake code → **moved into SKU** (never deleted), CAPS normalised, duplicate-title suffix. **A code only counts as an intake code if it carries a known store prefix (`VAP VP VA CUL ROA WAY HAR LEX`) plus 5+ digits. Anything else is a manufacturer model number and stays in the title (Joshua 2026-09-17).**
 - Flags (no auto-write): photos <8, specifics <5, title <60 chars, category mismatch, listing not in Bravo active inventory, Bravo item sold in-store while still listed (double-sell), unread return/refund message, open Best Offer expiring <48 h, feedback needing a reply.
 - Cost floor: once SKU = Bravo item number, cost from the Bravo pipeline's inventory CSVs; no cut or auto-accept ever goes below cost + fees.
 
@@ -139,7 +140,7 @@ Judgment actions stay with Claude but read the queue and write the same ledger: 
 | **1 — Access + link** | wk 1–2 | OAuth refresh-token flow, consent 4 remaining stores; snapshot layer live; intake-code → SKU migration (all active listings, reversible); Bravo↔eBay reconciliation report (first real read of double-sells / cost floors) | `monthly-ebay-ratings-sweep` (Chrome scrape) → headless standards in snapshot |
 | **2 — Engine** | wk 2–3 | rules + apply + ledger; markdown engine and terminal action moved in unchanged; returns/Best-Offer drift moved in; caps/intake hygiene moved in; **shadow-run dry alongside existing tasks for one full week, diff the queues** | `weekly-online-store-audit`'s fixer half, `ebay-weekly-quality-fix`'s mechanical half, launchd `ebay-markdown-monthly` + `ebay-markdown-terminal-weekly` (logic preserved) |
 | **3 — Publications** | wk 3–4 | eBay Weekly, manager DM, eBay Month, dashboard from snapshot; guardian entries | `ebay-weekly-rankings`, `ebay-efficiency-weekly`, `ebay-weekly-channel-audit`, remaining halves of the Sun/Mon tasks |
-| **4 — Growth levers** | wk 4–6 | send-offers-to-watchers at day 21 (policy already says so); Promoted Listings campaigns via API at the 4 dark stores (**after your budget call**); item-specifics fill from eBay catalog match only (verified, ≥$100 first); buyer-message triage → same-day manager DM for returns/refunds; photo-count nudges in the Monday DM | `SPECIFICS_FILL_QUEUE.md` manual queue |
+| **4 — Growth levers** | wk 4–6 | ~~send-offers-to-watchers at day 21~~ **STRUCK 2026-09-17 (Joshua): nothing is repriced or offered to watchers before day 90 — do not build this lever at day 21. If a watcher-offer lever is built at all, it fires at day 90 alongside the first cut.**; Promoted Listings campaigns via API at the 4 dark stores (**after your budget call**); item-specifics fill from eBay catalog match only (verified, ≥$100 first); buyer-message triage → same-day manager DM for returns/refunds; photo-count nudges in the Monday DM | `SPECIFICS_FILL_QUEUE.md` manual queue |
 
 What stays exactly as is: `ebay-title-photo-accuracy-audit` (re-pointed to the ledger), `ebay-feedback-reply-weekly`, `vp-website-shop-nightly` (moves to the snapshot as its source, later), `preston-interactive-assistant`.
 

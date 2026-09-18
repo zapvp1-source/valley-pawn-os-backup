@@ -1,6 +1,6 @@
 ---
 name: unified-search-index-refresh
-description: Nightly 3:30 AM — rebuild Joshua's unified-search index (Mail, Drive, iMessage, Notes, Reminders, Photos OCR, stats) via the self-healing refresh_hardened.sh wrapper. Replaces the broken native launchd agent (TCC-blocked). Hardened 2026-08-21 — retries and stale-lock reclaim are built into the wrapper; a failure DM is only sent after ALL self-healing is exhausted.
+description: RETIRED 2026-09-17 → native launchd com.valleypawn.usearch-refresh (Valley Pawn OS/bin/usearch_refresh.sh). This Cowork version died at step 0 every run because the Mac-control (osascript) connector is absent from scheduled sessions. Keep disabled; the native agent owns it.
 model: claude-sonnet-5
 ---
 

@@ -5,7 +5,11 @@ Created 2026-08-22 from the eBay Channel Audit.
 
 Fixes three verified defects on LIVE listings. Does NOT modify any existing script or automation.
 
-  A) BESTOFFER  - enable Best Offer on Culpeper listings that have it switched off (193 found)
+  A) BESTOFFER  - RETIRED 2026-09-17. This script no longer enables Best Offer on anything.
+                  Joshua, from store feedback: a listing marked "no offers allowed" is a
+                  store decision and must be left alone, and video games never take offers.
+                  --revert still restores the 193 Culpeper listings this script turned on
+                  in August; only the forward path is gone.
   B) RET30      - move Roanoke listings from 14-day to 30-day returns (103 found)
   C) RETON      - turn returns ON (30-day) for listings currently ReturnsNotAccepted (45 found)
 
@@ -23,8 +27,13 @@ Safety design (mirrors ebay_title_revise.py / ebay_category_fix.py conventions):
 Usage:
   python3 ebay_policy_fix.py                      # dry run, all fixes, all stores
   python3 ebay_policy_fix.py --apply
-  python3 ebay_policy_fix.py --apply --only BESTOFFER
-  python3 ebay_policy_fix.py --revert             # restore every item this script changed
+  python3 ebay_policy_fix.py --apply --only RET30     # (--only BESTOFFER is retired and refused)
+  python3 ebay_policy_fix.py --revert --only BESTOFFER          # DRY RUN — lists what would change
+  python3 ebay_policy_fix.py --revert --only BESTOFFER --apply  # switches Best Offer back OFF
+
+--revert now REQUIRES --only. A blanket revert would also undo the RET30/RETON returns
+fixes, which we want to keep — those protect Top Rated Seller standing. --revert without
+--apply is a dry run (it used to write live; fixed 2026-09-17).
 """
 
 import json
@@ -153,7 +162,10 @@ RET30_BLOCK = ('<ReturnPolicy>'
                '<ShippingCostPaidByOption>Buyer</ShippingCostPaidByOption>'
                '</ReturnPolicy>')
 
-BO_BLOCK = '<BestOfferDetails><BestOfferEnabled>true</BestOfferEnabled></BestOfferDetails>'
+# BO_BLOCK (the "turn Best Offer on" payload) was DELETED 2026-09-17 (Joshua, store
+# feedback). This script can no longer construct an enable-Best-Offer revision at all.
+# The --revert path builds its own <BestOfferEnabled>false</BestOfferEnabled> payload
+# inline and is unaffected.
 
 
 def build_targets():
@@ -161,18 +173,18 @@ def build_targets():
     tg = []
     for store, items in Q.items():
         for iid, v in items.items():
-            bo_off = str(v.get('best_offer')).lower() != 'true'
             no_ret = v.get('returns') == 'ReturnsNotAccepted'
             d14 = v.get('returns_within') == 'Days_14'
             if no_ret:
                 tg.append((store, iid, 'RETON'))
             elif d14:
                 tg.append((store, iid, 'RET30'))
-            if bo_off and not no_ret:
-                # no_ret items get returns fixed first; best offer handled on a later pass
-                tg.append((store, iid, 'BESTOFFER'))
-            elif bo_off and no_ret:
-                tg.append((store, iid, 'BESTOFFER'))
+            # BESTOFFER targeting REMOVED 2026-09-17 (Joshua, from store feedback):
+            # "Stop changing listings that are marked as no offers allowed to offers
+            #  allowed. We do not want make an offer on video games at all."
+            # Best Offer off is a deliberate store decision. This script no longer
+            # proposes turning it on for anything. --revert still works for the 193
+            # Culpeper listings this script switched on back in August.
     return tg
 
 
@@ -187,11 +199,28 @@ def main():
     st = load_state()
 
     if revert:
+        # SAFETY, added 2026-09-17. Two bugs were found in this path before it was used
+        # to carry out Joshua's Best Offer reversal:
+        #   1. It ignored --only, so a blanket --revert would ALSO undo the RET30/RETON
+        #      returns fixes — putting listings back to 14-day or no-returns and directly
+        #      damaging Top Rated Seller standing. Those fixes must be KEPT.
+        #   2. It wrote to eBay immediately; --apply was only honoured on the forward path,
+        #      so `--revert` alone was a live write with no dry run.
+        # Both are fixed here. --only now filters the revert, and a bare --revert is a dry run.
+        if not only:
+            raise SystemExit(
+                "REFUSING: a blanket --revert would also undo the returns-policy fixes "
+                "(RET30/RETON), which we want to keep.\n"
+                "Say which one:  --revert --only BESTOFFER   (Joshua 2026-09-17: undo the "
+                "193 Culpeper Best Offer enables)\n"
+                "Add --apply to actually write; without it this is a dry run.")
         n = 0
         for key, rec in list(st.items()):
             if rec.get('reverted') or not rec.get('applied'):
                 continue
             store, iid, fix = rec['store'], rec['item'], rec['fix']
+            if fix != only:
+                continue
             before = rec['before']
             if fix == 'BESTOFFER':
                 inner = '<BestOfferDetails><BestOfferEnabled>false</BestOfferEnabled></BestOfferDetails>'
@@ -208,6 +237,11 @@ def main():
                              '</ReturnPolicy>') % (before.get('ret_accepted'), before.get('ret_refund') or 'MoneyBack',
                                                    before.get('ret_within') or 'Days_30',
                                                    before.get('ret_shipby') or 'Buyer')
+            if not apply_:
+                n += 1
+                print('WOULD REVERT %-12s %-13s %s | %s' % (store, fix, iid,
+                      (rec.get('before') or {}).get('title', '')[:50]))
+                continue
             ack, errs = revise(STORES[store], iid, inner)
             rec['reverted'] = (ack in ('Success', 'Warning'))
             rec['revert_errs'] = errs[:2]
@@ -215,7 +249,8 @@ def main():
             print('REVERT', store, iid, fix, ack)
             save_state(st)
             time.sleep(PACE)
-        print('reverted', n)
+        print('reverted %d (%s)' % (n, only) if apply_ else
+              'DRY RUN — %d %s items would be reverted. Add --apply to write.' % (n, only))
         return
 
     targets = build_targets()
@@ -259,7 +294,11 @@ def main():
             counts['skip_ok'] += 1
             continue
 
-        inner = BO_BLOCK if fix == 'BESTOFFER' else RET30_BLOCK
+        if fix == 'BESTOFFER':
+            # Unreachable via build_targets(), and refused here as a second gate:
+            # nothing in this codebase may enable Best Offer (Joshua 2026-09-17).
+            raise SystemExit('BESTOFFER is retired — this script never enables Best Offer.')
+        inner = RET30_BLOCK
         if not apply_:
             counts['would'] += 1
             print('WOULD %-13s %-12s %s | %s' % (fix, store, iid, cur['title']))

@@ -4,6 +4,19 @@ description: 6:45 PM daily watchdog — checks if daily-funds-verification poste
 model: claude-sonnet-5
 ---
 
+> ## HOST ACCESS — READ FIRST (2026-09-17). The `mcp__Control_your_Mac__osascript` connector is GONE from scheduled sessions; this task died at Step 0 every day since 9/12 waiting for it. Do NOT wait for it, do NOT ledger "osascript missing". Every `do shell script` below is now done through the **host job queue**, which the Projects folder mount gives you:
+> 1. **Run something on the Mac:** use the Write tool to create `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/host_queue/<YYYYMMDD-HHMM>-<task-name>.sh` containing exactly (one command per line, nothing else — no `;` `&&` `|` `$(...)`):
+>    ```
+>    #!/bin/bash
+>    set +e
+>    BIN="$HOME/Documents/Claude/Projects/Valley Pawn OS/bin"
+>    bash "$BIN/bravo_pull.sh" <report-name> <date or from..to> <STORES,comma,separated> [trigger-id]
+>    ```
+>    `bravo_pull.sh` = health gate + trigger drop + wait for the result (self-heals the watcher once) — i.e. the pull/poll/restart steps of this file in one call. Other allow-listed commands: `bash "$BIN/append_line.sh" "<file under Projects>" "<line>"` (append a line, e.g. STATUS.md run records), `bash "$BIN/host_diag.sh" scorecard`. Anything not in `fleet/host_queue_allowlist.txt` is refused.
+> 2. **Wait for it:** a native agent picks the job up within ~2 min. Poll (Read tool, no more than every 60 s) `fleet/host_queue/done/<same name>.log` — it exists when the job finished and its last line is `exit=N`. `bravo_pull.sh` prints `RESULT <path>` and the result JSON. A pull takes 5–10 min per store.
+> 3. **Read outputs** directly from the mounted `Bravo Data Extraction/output/` and `results/` folders (Read tool). Write your own report/markdown files with the Write tool (Projects is mounted). Never write trigger files yourself — use the queue.
+> 4. Slack reading/posting and Chrome are unchanged (their MCP tools are still present). The "one-shot scheduled task to restart the watcher" trick is no longer needed — `bravo_pull.sh` restarts it itself.
+
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
 
 > **LOCAL ACCESS GATE — DO THIS FIRST, BEFORE ANY OTHER STEP (platform standard, added 2026-08-02).**

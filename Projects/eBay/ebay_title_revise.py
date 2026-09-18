@@ -22,8 +22,33 @@ if "--revert" in sys.argv:
     for iid,rec in state.items():
         if apply: ok,m=revise(TOK[rec['store']],iid,rec['old']); print(('OK ' if ok else 'FAIL ')+iid,m)
     sys.exit()
+# Model-number guard, added 2026-09-17 (Joshua, store feedback): a rewritten title may
+# never silently drop a parenthesised code that was in the old title. Our own stock number
+# (VAP/VP/VA/CUL/ROA/WAY/HAR/LEX + 5+ digits) is allowed to go — everything else in parens
+# is a manufacturer model number and is the highest-value search term on the listing.
+import re as _re
+_OURS = _re.compile(r"^(?:VAP|VP|VA|CUL|ROA|WAY|HAR|LEX)\d{5,}$")
+_PAREN = _re.compile(r"\(([^)]{1,24})\)")
+def _dropped_model_numbers(old, new):
+    lost = []
+    for c in _PAREN.findall(old or ""):
+        c = c.strip()
+        if _OURS.match(c.upper()):      # our stock number — fine to remove
+            continue
+        if not _re.search(r"\d", c):    # words like (Tested), (Read), (Open Box)
+            continue
+        # a real model number: it must survive somewhere in the new title
+        if c.lower() not in (new or "").lower():
+            lost.append(c)
+    return lost
+
 for iid,v in fixes.items():
     if len(v['new'])>80: print("TOO LONG",iid); continue
+    _lost = _dropped_model_numbers(v.get('old'), v.get('new'))
+    if _lost:
+        print("REFUSED",iid,"— new title drops model number(s):", ", ".join(_lost),
+              "| keep them in the title (Joshua 2026-09-17)")
+        continue
     if not apply: print("DRY",v['store'],iid,'->',v['new']); continue
     ok,m=revise(TOK[v['store']],iid,v['new'])
     if ok: state[iid]={"store":v['store'],"old":v['old']}; print("OK  ",v['store'],iid,v['new'])

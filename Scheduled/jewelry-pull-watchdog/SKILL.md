@@ -1,6 +1,6 @@
 ---
 name: jewelry-pull-watchdog
-description: Morning watchdog 9:15 AM (Tue-Sun): verify last night's jewelry-onhand CSVs exist; if missing, DM Joshua one plain-language alert.
+description: RETIRED 2026-09-17 → native launchd com.valleypawn.jewelry-pull-watchdog (Valley Pawn OS/bin/jewelry_pull_watchdog.sh). This Cowork version died at step 0 every run because the Mac-control (osascript) connector is absent from scheduled sessions. Keep disabled; the native agent owns it.
 model: claude-haiku-4-5
 ---
 

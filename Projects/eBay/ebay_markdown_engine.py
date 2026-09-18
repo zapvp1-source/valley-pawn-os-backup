@@ -4,6 +4,15 @@ Valley Pawn — eBay Auto-Markdown Engine (all 5 stores)
 Rule: every listing 90+ days old gets 10% off; then 10% more each subsequent run;
 STOP at 30% off the baseline (max 3 cuts). No cost data needed — the 30% cap is the floor.
 
+EXCEPTION — PRECIOUS METAL IS NEVER REPRICED (Joshua 2026-09-17, from store feedback:
+"the managers are saying that they are pricing things at lowest possible for things like
+silver etc etc, so we likely shouldn't be repricing anything precious metals"). Metal is
+priced at or just above melt at intake, so there is no retail margin for a cut to eat —
+a 10% cut sells the metal for less than the metal is worth, and the cuts stack to 30%.
+Detection is `engine/ebay_precious.py`. This script FAILS CLOSED: if that module cannot
+be imported it refuses to run rather than risk cutting metal, because skipping a month of
+markdowns is recoverable and selling gold under melt is not.
+
 State: ~/ebay_markdown_state.json  { ItemID: {"baseline": price_at_first_cut, "cuts": n, "last": "YYYY-MM-DD", "store": name} }
 
 Usage:
@@ -22,6 +31,20 @@ PATHS=["/sessions/fervent-admiring-noether/mnt/Desktop/Claude/Claude Back Up/Cla
 NS="urn:ebay:apis:eBLBaseComponents"; URL="https://api.ebay.com/ws/api.dll"
 STATE=os.path.expanduser("~/ebay_markdown_state.json")
 AGED_DAYS=90; STEP=0.10; MAX_CUTS=3  # 10% per cut, cap at 30% off baseline
+
+# Precious-metal guard (Joshua 2026-09-17). FAIL CLOSED: refuse to run rather than
+# risk repricing metal. Never wrap this in a try/except that lets the run continue.
+_ENGINE_DIR = _os.path.expanduser("~/Documents/Claude/Projects/eBay/engine")
+if _ENGINE_DIR not in _sys.path:
+    _sys.path.insert(0, _ENGINE_DIR)
+try:
+    from ebay_precious import is_precious_metal
+except ImportError:
+    raise SystemExit(
+        "REFUSING TO RUN: cannot import ebay_precious from %s.\n"
+        "Precious metal must never be auto-repriced (Joshua 2026-09-17) and without "
+        "this module there is no way to tell metal from everything else. Restore the "
+        "file, then re-run. No prices were changed." % _ENGINE_DIR)
 
 def stores():
     for p in PATHS:
@@ -52,7 +75,10 @@ def active(token):
             st=pdt(it.findtext(f".//{{{NS}}}ListingDetails/{{{NS}}}StartTime") or "")
             pr=it.findtext(f".//{{{NS}}}SellingStatus/{{{NS}}}CurrentPrice") or it.findtext(f".//{{{NS}}}BuyItNowPrice") or it.findtext(f".//{{{NS}}}StartPrice")
             if not st or pr is None: continue
-            out.append({"id":it.findtext(f"{{{NS}}}ItemID"),"title":(it.findtext(f"{{{NS}}}Title") or "")[:55],
+            _t=it.findtext(f"{{{NS}}}Title") or ""
+            # full_title is kept UNtruncated: the precious-metal check reads it, and a
+            # weight mark like "2.1dwt" often sits at the very end of an 80-char title.
+            out.append({"id":it.findtext(f"{{{NS}}}ItemID"),"title":_t[:55],"full_title":_t,
                         "price":float(pr),"age":(datetime.datetime.now(timezone.utc)-st).days})
         tp=r.findtext(f".//{{{NS}}}ActiveList/{{{NS}}}PaginationResult/{{{NS}}}TotalNumberOfPages")
         try: tp=int(tp)
@@ -86,9 +112,15 @@ def main():
         print(f"{store}: reverted {changed} items" + ("" if apply else "  (dry run)")); return
 
     items=active(tok)
-    proposed=[]
+    proposed=[]; skipped_metal=[]
     for it in items:
         if it["age"] < AGED_DAYS: continue
+        # Precious metal is priced off melt at intake — there is no retail margin for a
+        # cut to eat, so a 10% markdown sells the metal for less than it is worth.
+        # Joshua 2026-09-17, from store feedback. These are reported, never repriced.
+        _pm,_why = is_precious_metal(it.get("full_title") or it["title"])
+        if _pm:
+            skipped_metal.append((it,_why)); continue
         rec=state.get(it["id"], {"baseline":it["price"],"cuts":0,"store":store})
         if rec["cuts"]>=MAX_CUTS: continue                     # already at 30% off, stop
         baseline=rec["baseline"]; next_cut=rec["cuts"]+1
@@ -98,6 +130,12 @@ def main():
 
     tot_old=sum(it["price"] for it,_,_,_ in proposed); tot_new=sum(n for _,_,n,_ in proposed)
     print(f"{store}: {len(proposed)} items eligible (aged>{AGED_DAYS}d, <{MAX_CUTS} cuts) | ${tot_old:,.0f} -> ${tot_new:,.0f}")
+    if skipped_metal:
+        _mv=sum(i["price"] for i,_ in skipped_metal)
+        print(f"  PROTECTED (precious metal, never repriced): {len(skipped_metal)} items, ${_mv:,.2f}")
+        for i,w in skipped_metal[:8]:
+            print(f"    {i['id']} | {i['age']}d | ${i['price']:.2f} | {w[:26]:<26} | {i['title']}")
+        if len(skipped_metal)>8: print(f"    ... +{len(skipped_metal)-8} more")
     for it,rec,new,nc in proposed[:8]:
         print(f"  {it['id']} | {it['age']}d | ${it['price']:.2f}->${new:.2f} (cut {nc}/3) | {it['title']}")
     if len(proposed)>8: print(f"  ... +{len(proposed)-8} more")

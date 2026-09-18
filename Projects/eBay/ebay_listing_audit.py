@@ -45,7 +45,9 @@ def title_flags(t):
     f=[]
     n=len(t)
     if n<40: f.append(f"short({n}/80)")
-    if re.search(r"\([A-Z]{2,4}\d{3,}\)", t): f.append("has_intake_code")   # e.g. (ROA008189) — internal, wastes chars
+    # Known store prefix + 5+ digits ONLY (tightened 2026-09-17, Joshua). The old
+    # [A-Z]{2,4}\d{3,} form flagged real model numbers like (DCD771), (MT2500).
+    if re.search(r"\((?:VAP|VP|VA|CUL|ROA|WAY|HAR|LEX)\d{5,}\)", t): f.append("has_intake_code")   # e.g. (ROA008189) — internal, wastes chars
     if t.isupper(): f.append("all_caps")
     if not re.search(r"\d", t) and n<55: f.append("no_specs")
     return f

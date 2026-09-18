@@ -1,6 +1,6 @@
 ---
 name: bravo-prestaging-7am
-description: Bravo pre-staging relaunch + verification before the 7 AM pipeline exports (Type C — direct process control, foreground-guarded as of 2026-08-13)
+description: RETIRED 2026-09-17 → native launchd com.valleypawn.bravo-relaunch (Valley Pawn OS/bin/bravo_relaunch.sh). This Cowork version died at step 0 every run because the Mac-control (osascript) connector is absent from scheduled sessions. Keep disabled; the native agent owns it.
 model: claude-sonnet-5
 ---
 

@@ -1,5 +1,22 @@
 # Valley Pawn eBay Channel — In-Depth Audit
 
+> ## ⚠️ ONE RECOMMENDATION IN THIS AUDIT WAS REVERSED 2026-09-17 — DO NOT ACT ON IT
+>
+> This audit's **#1 action — "Turn Best Offer on for 193 Culpeper listings"** — was carried out in
+> August and has since been **reversed as policy by Joshua**, from store feedback:
+>
+> *"Stop changing listings that are marked as no offers allowed to offers allowed. We do not want
+> make an offer on video games at all."*
+>
+> A listing with Best Offer switched off is a deliberate store decision. **Nothing in this codebase
+> may enable Best Offer any more** — `ebay_policy_fix.py`'s BESTOFFER path now refuses, and
+> `ebay_apply.py` dropped `bestoffer_on` from its allow-list. Video games never take offers at all.
+> Do not re-run this recommendation and do not re-propose it. The 193 listings switched on in
+> August can be undone with `ebay_policy_fix.py --revert` — ask Joshua first.
+>
+> Everything else in this audit (returns-policy drift, listing quality, fees, seller standards)
+> still stands. See `SKILL.md` §THREE HARD RULES and `Life OS/OPEN_ITEMS_REGISTER.md` 2026-09-17.
+
 **Date:** 2026-08-22 · **Window:** trailing 90 days (2026-05-24 → 2026-08-22)
 **Method:** live eBay Trading API pull against all 5 store accounts (read-only, additive scripts in
 `eBay/audit_2026-08-22/`). Nothing on eBay was changed. Every headline number below was verified a
@@ -71,7 +88,10 @@ Aug 1, zero failures. But **it has no terminal action.** 154 items take their th
 **September 1** and then sit at 30% off forever with nothing scheduled to touch them again. The
 *eBay Listing-Age Standard (Reprice & Pull)* policy exists on paper; nothing enforces the "pull" half.
 
-### 4. Best Offer is switched off on 193 Culpeper listings — $15,372 of inventory
+### 4. ~~Best Offer is switched off on 193 Culpeper listings — $15,372 of inventory~~ — NOT A DEFECT (reclassified 2026-09-17)
+> Best Offer being off is a **store decision, not drift.** Joshua reversed this finding on
+> 2026-09-17 after store feedback. Leave these listings alone. Original finding kept below for
+> the record only.
 Confirmed by direct `GetItem` (no `BestOfferDetails` node at all — genuinely off, not a reporting gap).
 Every other store runs Best Offer on 100% of listings. Culpeper is the store with the worst aging, and
 it's the only one that has the negotiation lever disabled.
@@ -153,7 +173,7 @@ moved to `~/.vp_secrets/`. This one didn't, and it's the file everything depends
 
 | # | Action | Impact | Effort | Decision |
 |---|---|---|---|---|
-| 1 | Turn Best Offer on for 193 Culpeper listings | $15,372 of stuck inventory gets a negotiation path | 1 script run | Mine |
+| ~~1~~ | ~~Turn Best Offer on for 193 Culpeper listings~~ **← REVERSED 2026-09-17 by Joshua. DO NOT DO THIS. Best Offer is never switched on; video games never take offers at all. See the banner at the top of this file.** | — | — | — |
 | 2 | Roanoke → 30-day returns (from 14) on all 106 listings | Conversion + TRS eligibility | 1 script run | Mine |
 | 3 | Fix the 45 no-returns listings → 30-day returns | $10,932, conversion, TRS gate | 1 script run | Mine |
 | 4 | Terminal action for max-markdown items **before Sep 1** | Stops 154 items becoming permanent shelf-warmers | Build + policy | Mine, per policy |

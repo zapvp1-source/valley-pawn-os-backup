@@ -57,6 +57,27 @@ Division of labor: **Sentinel detects (always alive), Guardian recovers (when Cl
 per-task requirements #2–#5 prevent (inside each run).** This is not a "new per-task watchdog" —
 it's the fleet-wide outer detection ring the moratorium above assumes exists.
 
+## Layer 0 — Registry Guard (native, added 2026-09-16)
+The scheduler registry (`scheduled-tasks.json`) is a single point of failure: one invalid value
+(a `null` where the app's validator wants string-or-absent) makes the app load ZERO tasks — empty
+sidebar, whole fleet dark, no error anywhere a task could see (9/10 and 9/16 outages). Native agent
+`com.valleypawn.registry-guard` (`bin/registry_guard.py`, every 5 min via vp-runner) is the fix:
+detects nulls / ZodError / a silent scheduler (cron-aware: only when enabled tasks were actually
+due), repairs with backup + strip + quit/relaunch, VERIFIES recovery (registry rewritten again),
+launches the app if it is down, and DMs Joshua only if recovery failed. Report: `fleet/REGISTRY_GUARD.md`.
+**Rule for anything that edits the registry:** never write `null`; omit the key. Back up first.
+`touch fleet/host_queue/.registry_guard_force_relaunch` forces one clean quit/relaunch.
+
+## Host Job Queue (added 2026-09-16)
+Interactive sessions cannot mount `~/Library/Application Support/Claude`, `~/Library/Logs/Claude`
+or `~/Library/LaunchAgents`, and computer-use treats Terminal/Script Editor as click-only. The
+sanctioned path to the host is the queue: drop an idempotent script at
+`fleet/host_queue/<YYYY-MM-DDTHHMM>-<name>.sh`; the every-2-min `preston-watch` agent (and the
+registry-guard) execute it on the host via vp-runner within minutes, detached from launchd's
+process-group kill, output to `fleet/host_queue/done/<name>.log`. Use it for launchctl
+bootstrap/bootout, registry edits (backup first, never null), reading app logs, plist fixes.
+Rule 16 still applies inside jobs: no Slack chatter; write to files.
+
 ## Rerun-safety manifest
 `Valley Pawn OS/fleet/rerun_manifest.json`. Default for any task not listed: **verify-only** (safe default). Classification rules:
 - **rerun-safe:** reads files/APIs, posts internal Slack reports/refreshes with duplicate guards. No external humans contacted, no public publishing, no money, no Bravo UI driving.

@@ -6,14 +6,15 @@ appended to ledger.jsonl with before/after so any run can be reverted.
 
 Whitelisted actions — nothing else can ever be applied by this module:
   returns_fix    -> ReturnsAccepted / Days_30 / buyer pays return shipping
-  bestoffer_on   -> Best Offer on, auto-accept 90% of list, auto-decline below 75%
+  bestoffer_on   -> RETIRED 2026-09-17. Never enabled. Forward path is a no-op; the
+                    handler survives only so --revert can switch Best Offer back OFF.
   sku_set        -> Bravo item number into the SKU (custom label) field; buyers never see it
 
 Deliberately NOT here (judgment, or burned us before): titles, item specifics, categories,
 photos, price cuts (the markdown engine owns those), ending listings (the terminal task owns
 that), feedback replies.
 
-Usage: ebay_apply.py [--apply] [--kind returns_fix,bestoffer_on,sku_set] [--store NAME]
+Usage: ebay_apply.py [--apply] [--kind returns_fix,sku_set] [--store NAME]
        ebay_apply.py --revert RUN_ID [--apply]
 Dry run by default: prints exactly what it would do and changes nothing.
 """
@@ -21,7 +22,13 @@ import json, os, sys, time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from ebay_common import *  # noqa
 
-ALLOWED = ("returns_fix", "bestoffer_on", "sku_set")
+# 2026-09-17 (Joshua, store feedback): "bestoffer_on" is REMOVED from the allow-list.
+# We never turn Best Offer on. A listing marked "no offers allowed" stays that way, and
+# video games never take offers at all. The handler below is kept only so that --revert
+# can still switch Best Offer back OFF for anything a previous run turned on; it can no
+# longer be reached on the forward path, because the queue never emits this kind and it
+# is not in ALLOWED. Do not re-add it.
+ALLOWED = ("returns_fix", "sku_set")
 BO_ACCEPT, BO_DECLINE = 0.90, 0.75
 
 
@@ -52,16 +59,11 @@ def build(row, item):
                "<ShippingCostPaidByOption>Buyer</ShippingCostPaidByOption></ReturnPolicy>")
         return xml, before, "ReturnsAccepted/Days_30/Buyer"
     if k == "bestoffer_on":
-        price = float(item.get("list_price") or item.get("price") or 0)
-        if price <= 0:
-            return None, None, None
-        acc, dec = round(price * BO_ACCEPT, 2), round(price * BO_DECLINE, 2)
-        if not (dec < acc < price):
-            return None, None, None
-        xml = ("<BestOfferDetails><BestOfferEnabled>true</BestOfferEnabled></BestOfferDetails>"
-               "<ListingDetails><BestOfferAutoAcceptPrice>%.2f</BestOfferAutoAcceptPrice>"
-               "<MinimumBestOfferPrice>%.2f</MinimumBestOfferPrice></ListingDetails>" % (acc, dec))
-        return xml, "off", "on, accept>=%.2f decline<%.2f" % (acc, dec)
+        # RETIRED 2026-09-17 (Joshua, store feedback). We never enable Best Offer on a
+        # listing that has it switched off, and video games never take offers at all.
+        # Returning a no-op here is a second gate behind ALLOWED, so even a hand-passed
+        # --kind bestoffer_on or a stale queue.json cannot turn Best Offer on.
+        return None, None, None
     if k == "sku_set":
         code = row.get("code")
         if not code or item.get("SKU"):

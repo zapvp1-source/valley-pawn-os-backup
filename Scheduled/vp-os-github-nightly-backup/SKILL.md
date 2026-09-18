@@ -1,6 +1,6 @@
 ---
 name: vp-os-github-nightly-backup
-description: Nightly auto-commit/push of Valley Pawn OS .md files to the private GitHub backup repo
+description: RETIRED 2026-09-17 → native launchd com.valleypawn.github-backup (Valley Pawn OS/bin/github_backup.sh). This Cowork version died at step 0 every run because the Mac-control (osascript) connector is absent from scheduled sessions. Keep disabled; the native agent owns it.
 model: claude-haiku-4-5
 ---
 

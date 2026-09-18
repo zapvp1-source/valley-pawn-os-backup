@@ -9,6 +9,27 @@ from urllib.request import Request,urlopen
 import sys as _sys, os as _os
 _sys.path.insert(0, _os.path.expanduser("~/.vp_secrets"))
 from ebay_credentials import APP_ID as APP, DEV_ID as DEV, CERT_ID as CERT  # never hardcode these -- see ~/.vp_secrets/ebay_credentials.py
+
+# ── Model-number guard, added 2026-09-17 (Joshua, store feedback) ──────────────
+# A rewritten title may never silently drop a parenthesised code that was in the
+# old title. Our own stock number (VAP/VP/VA/CUL/ROA/WAY/HAR/LEX + 5+ digits) may
+# go; anything else in parens containing a digit is a manufacturer model number
+# and is the highest-value search term on the listing.
+import re as _re
+_OURS = _re.compile(r"^(?:VAP|VP|VA|CUL|ROA|WAY|HAR|LEX)\d{5,}$")
+_PAREN = _re.compile(r"\(([^)]{1,24})\)")
+def _dropped_model_numbers(old, new):
+    lost = []
+    for c in _PAREN.findall(old or ""):
+        c = c.strip()
+        if _OURS.match(c.upper()):
+            continue
+        if not _re.search(r"\d", c):
+            continue
+        if c.lower() not in (new or "").lower():
+            lost.append(c)
+    return lost
+# ──────────────────────────────────────────────────────────────────────────────
 PATHS=[os.path.expanduser("~/ebay_weekly_rankings.py"),"/sessions/fervent-admiring-noether/mnt/Desktop/Claude/Claude Back Up/Claude 4 back up/ebay_weekly_rankings.py"]
 SHORT=os.path.expanduser("~/ebay_short_titles.json");STATE=os.path.expanduser("~/ebay_title_enrich_state.json")
 NS="urn:ebay:apis:eBLBaseComponents";URL="https://api.ebay.com/ws/api.dll"
@@ -38,6 +59,10 @@ def main():
     for iid,newt in batch.items():
         if iid not in short: print(f"  skip {iid} (not in short list)"); continue
         st=short[iid]["store"];old=short[iid]["title"]
+        _lost=_dropped_model_numbers(old,newt)
+        if _lost:
+            print(f"  REFUSED {iid} ({st}) — new title drops model number(s): {', '.join(_lost)} | keep them (Joshua 2026-09-17)")
+            continue
         if not apply: print(f"  {st}: {old}  ->  {newt}"); continue
         ok,err=revise(toks[st],iid,newt)
         if ok: state[iid]={"original":old,"store":st};done+=1

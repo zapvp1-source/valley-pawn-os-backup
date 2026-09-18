@@ -1,7 +1,7 @@
 ---
-model: claude-haiku-4-5
 name: unified-search-verify
-description: 4:50 AM — verify last night's unified-search index rebuild and document-photos index against their logs (Rule 12); fix-forward once if failed; one plain DM to Joshua only if unrecoverable. Companion to unified-search-index-refresh (which now only launches).
+description: RETIRED 2026-09-17 → native launchd com.valleypawn.usearch-verify (Valley Pawn OS/bin/usearch_verify.sh). This Cowork version died at step 0 every run because the Mac-control (osascript) connector is absent from scheduled sessions. Keep disabled; the native agent owns it.
+model: claude-haiku-4-5
 ---
 
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.

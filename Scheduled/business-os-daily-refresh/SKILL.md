@@ -1,6 +1,6 @@
 ---
 name: business-os-daily-refresh
-description: Daily 5:00 AM refresh of the BUSINESS_OS.md LIVE STATE block and the enterprise CHANGELOG, so the master map can never drift from reality again.
+description: RETIRED 2026-09-17 → native launchd com.valleypawn.business-os-refresh (Valley Pawn OS/bin/business_os_refresh.sh). This Cowork version died at step 0 every run because the Mac-control (osascript) connector is absent from scheduled sessions. Keep disabled; the native agent owns it.
 model: claude-sonnet-5
 ---
 

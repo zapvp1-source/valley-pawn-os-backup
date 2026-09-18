@@ -6,7 +6,9 @@ md=json.load(open(mdp)) if os.path.exists(mdp) else {}
 sp=os.path.expanduser('~/ebay_short_titles.json')
 short=json.load(open(sp)) if os.path.exists(sp) else []
 price={x['id']:x.get('price') for x in short}
-code=re.compile(r'\((?:[A-Za-z]{1,4})?\d{3,}[A-Za-z]?\)')
+# Known store prefix + 5+ digits only (tightened 2026-09-17, Joshua) — a model
+# number such as (A2482) or (DCD771) is not an intake code.
+code=re.compile(r'\((?:VAP|VP|VA|CUL|ROA|WAY|HAR|LEX)\d{5,}\)')
 cands=[]
 for iid,rec in ts.items():
     if not isinstance(rec,dict): continue

@@ -3,6 +3,26 @@
 Any session diagnosing Bravo MUST read this index before forming a hypothesis,
 and MUST verify+stamp any OPEN item's next-run outcome before starting new work.
 
+## 2026-09-17 — Manually clicking "Company KPIs" (Reporting Pro) is a known-unreliable path; Edge closing is not a new bug
+- Joshua reported Edge won't stay open when he manually runs the Company KPI report from the Bravo
+  Dashboard's Reporting Pro panel. Live check at the time (WAY store, Dashboard idle, no stuck dialog):
+  VM using 8.5 GB, host at 26.4 GB/32 GB used, 0 bytes swap — not under acute pressure at that moment,
+  but this Mac Studio chronically hits memory pressure/swap under load (see Security/Tech Hardware
+  Stack project) and a heavy multi-column SSRS render is exactly the kind of spike that trips it.
+- This is the SAME handoff `CompanyKpis.ahk` had to be rebuilt around on 2026-07-03: the raw-URL /
+  direct export approach "RELIABLY FAILS" (timeouts, `rsProcessingAborted`, stale render GUIDs), and
+  the automated version was moved off Edge onto Chrome as the default browser specifically for
+  reliability. Manually clicking "Company KPIs" still hands the report to whatever the VM's default
+  browser is for an interactive SSRS render — the fragile path, not the hardened one.
+- **Separately, and more importantly: Reporting Pro is currently retired as a data source entirely.**
+  `FLEET_FREEZE_2026-09-16.md` Rule 5, Joshua's own words: "no on Bravo [emailed reports / Reporting
+  Pro]." Company-wide KPIs should come from the End of Month pipeline (canonical source, see
+  `bravo-context` skill) or the `company-kpis` pipeline cell's own CSV/xlsx in `output/`, not from a
+  human clicking Company KPIs and waiting on Edge.
+- **Do not chase an Edge fix here.** If Joshua wants current company-wide numbers, pull the latest
+  `output/*_ALL_company-kpis.xlsx` (last one on disk as of 9/17: 2026-08-31) or run the End of Month
+  export for the needed range instead of reopening this report by hand.
+
 ## SOLVED/CONTAINED 2026-09-07 - EOM FILENAME COLLISION: a month file can hold the WRONG DATE RANGE
 - **Symptom:** an `output/<END_DATE>_<STORE>_end-of-month.xlsx` file whose revenue figures are ~11x
   too large. Balances look fine (they are point-in-time and genuinely correct); PSC, Sales Profit
@@ -652,3 +672,11 @@ Also affects: `sales-tax-monthly-update` (same dependency, will fail the same wa
   that undercount company-wide FPD exposure by omitting Culpeper. Flagged to Joshua directly rather than
   posting a same-day backfill, since actually pulling Culpeper's numbers requires live Bravo access this
   session did not have.
+
+## 2026-09-17 — OPEN, HIGH: `bravo-morning-pull` fires but dies before writing its trigger (pawn walk / sold review / discount review dark since 9/12)
+
+**Confirmed against output (Rule 12):** task enabled, `lastRunAt` 2026-09-17T10:53Z (06:53 EDT today), yet no `morning-pull-*` trigger, log, or CSV after 2026-09-12. `_morning_pull_history.log` ends 9/12 07:22 (all cells CLEAN). Nothing in `triggers/failed`, no stale claim. The Cowork task starts and exits without ever writing the trigger file. `daily-items-to-price` survives only because it has its own fallback pull.
+
+**Correction (same day):** a first write-up of this entry claimed a second "false-empty store-switch" defect because a manual 9/16 pull returned rows for CUL only. **9/16 was a Wednesday — Culpeper is the only store open Wednesdays.** Those zeros are correct; the handler's empty-day path worked exactly as designed. That claim is withdrawn, the files were restored to `output/`, and the pipeline's store-switch is NOT suspect. (Lesson logged: check the store calendar before calling any zero a defect.)
+
+**Fix (2026-09-17):** the trigger drop is moved off Cowork onto a native launchd agent (`com.valleypawn.morning-pull-trigger`, `bin/morning_pull_trigger.sh`) that writes the identical JSON at 06:50 daily; the Cowork `bravo-morning-pull` task is disabled so the two cannot double-pull. A trigger file cannot die silently.

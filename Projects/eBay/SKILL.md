@@ -19,6 +19,65 @@ Operating manual for Valley Pawn's eBay channel. Jump to the relevant section us
 
 ---
 
+## 🛑 FOUR HARD RULES — set by Joshua 2026-09-17 from store feedback
+
+These came back from the stores after watching what our automation was actually doing to their
+listings. They override anything else in this file, in any eBay script, in any task SKILL.md, and
+in any older audit document. Do not soften them, tune them, or reverse them without Joshua.
+
+**1. Markdowns start at 90 days aged — not 30.**
+Nothing is repriced, cut, or offered to watchers before a listing is 90 days old. The ladder is
+now **90 → first 10% cut · 120 → second cut · 150 → third cut / pull**, capped at the same 30%
+floor with `MIN_DAYS_BETWEEN_CUTS=25`. The native monthly engine (`~/ebay_markdown_engine.py`,
+`AGED_DAYS=90`) always worked this way; the rules layer and the signed Listing-Age Standard did
+not, and cutting at day 30 was giving away margin on items still selling at full price. The
+signed employee policy *eBay Listing-Age Standard (Reprice & Pull)* still reads "Reprice at 30" —
+**it needs re-issuing through `policy-lifecycle`; see Open Items Register 2026-09-17.**
+
+**2. Best Offer is never turned on. Video games never take offers at all.**
+Joshua, verbatim: *"Stop changing listings that are marked as no offers allowed to offers allowed.
+We do not want make an offer on video games at all."*
+A listing with Best Offer OFF is a deliberate store decision — leave it alone. Never enable Best
+Offer, never set or adjust auto-accept / auto-decline on a listing that has offers off, never
+"restore" it because an old state file says it used to be on. Never enable Best Offer on a video
+game, console, or game accessory under any circumstances, at any price, at any age. The
+90%/75% thresholds below apply **only** to listings that already have offers switched on.
+Enforced in three places: `bestoffer_on` removed from `ebay_rules.py`; removed from
+`ebay_apply.py`'s `ALLOWED` and its builder made a no-op; BESTOFFER targeting removed from
+`ebay_policy_fix.py`. `--revert` still works on all three for anything already switched on.
+
+**3. Never delete a model number that looks like an internal tracking number.**
+The title stripper used to remove any parenthesised `(letters + 3 digits)` code, which swallowed
+real manufacturer model numbers — `(A2482)` Apple, `(DCD771)` DeWalt, `(MT2500)` Snap-on,
+`(2236)` Milwaukee. Those are the highest-value search terms in a title.
+A code may be removed **only** if it is a real Bravo intake code: prefix `VAP VP VA CUL ROA WAY
+HAR LEX` + **5 or more digits** — `(VAP031234)`, `(ROA011853)`, `(VA5020375)`. Everything else
+stays. **When in doubt, leave it in the title** — a model number left in costs nothing, a model
+number deleted costs a sale. When a real intake code is removed it must be written into SKU in
+the same revision, never simply deleted (it is the only Bravo↔eBay link). Pattern is now
+`\((?:VAP|VP|VA|CUL|ROA|WAY|HAR|LEX)\d{5,}\)` in both `ebay_title_stripper.py` and
+`engine/ebay_common.py` `CODE_RE`. **Never widen it.**
+
+**4. Precious metal is never repriced — at any age, by anything.**
+Joshua, verbatim: *"the managers are saying that they are pricing things at lowest possible
+for things like silver etc etc, so we likely shouldn't be repricing anything precious metals."*
+The counter prices metal at or just above melt when it comes in, so **there is no retail margin
+for a markdown to eat** — a 10% cut sells the metal for less than the metal is worth, and the
+cuts stack to 30%. Every other category carries a retail markup; metal does not.
+Metal listings are still **aged and surfaced** at 90 and 150 days (`aged_metals_review` FLAG) so
+they cannot sit invisibly — but the decision is a person's: relist, pull, or send to the refiner.
+Photo/specifics/title quality checks still run on them; only the pricing ladder is skipped.
+Detection is `engine/ebay_precious.py` — **use it, never hand-roll a keyword match.** Matching on
+"gold"/"silver" alone is wrong in both directions and was tested against all 459 live listings:
+`Gold Label` figures, `Platinum Edition` toys, `in Gold Size 10M` shoes, `Gold Tone` costume
+jewelry, `Gold Plated` chain, a tachometer's `10k` RPM and a watch model `E110-K1675` are **not**
+metal; while real sterling turns up filed under *Kitchen*, *Collectibles* and *Fashion Jewelry*.
+The reliable signal is the fineness or weight mark in the title — `sterling`, `.925`, `.999`,
+`14K`, `dwt`, `troy oz`, `bullion` — not the category and not the word "gold".
+`ebay_markdown_engine.py` **fails closed**: if it cannot import the detector it refuses to run.
+
+---
+
 ## Quick Map
 
 | If you need to know... | Section |
@@ -63,10 +122,10 @@ Operating manual for Valley Pawn's eBay channel. Jump to the relevant section us
   - `ebay_weekly_rankings.py` — **Monday 9:30 AM** LaunchAgent → weekly sales rankings to Slack `#ebay-performance`. (Moved from 6 AM → 9:30 AM 2026-07-03 to land at store open; original plist backed up as `.bak-*` in `~/Library/LaunchAgents/`.)
   - `~/ebay_daily_listings.py` (HOME — not Desktop; Desktop is Google-Drive-synced and wiped the file) — **daily 1:30 PM** LaunchAgent `com.valleypawn.ebay-daily-listings` (plist in `~/Library/LaunchAgents/`) → posts per-store *new listings (prior day)*, total active listings, and total listed value to **`#ebay-listings`** (moved off `#ebay-performance` 2026-08-21; dedicated webhook), ranked by count then value. Logs to `~/ebay_daily_listings.log`/`.err`. Built 2026-06-30, relocated to home 2026-07-01. **Counts "listed yesterday" via `GetSellerList` filtered by StartTime — this includes items listed AND sold the same day (an active-list scan misses fast-sellers). Fixed 2026-07-03 after Chadd flagged Waynesboro undercount.** Run `--post` to send; no flag = dry run. Source-of-truth copy also in this eBay project folder.
   - `~/ebay_efficiency_weekly.py` — **Friday 3:30 PM** LaunchAgent `com.valleypawn.ebay-efficiency-weekly` (moved off Monday 2026-07-03 to spread the #ebay-performance cadence; late-afternoon own slot) → weekly efficiency scorecard to `#ebay-performance`: per-store + channel **sell-through % (30d), days-to-sell (median), aged inventory >90d ($ & % of active value), revenue/listing, and 7-day new-listing velocity**, ranked by sell-through. Days-to-sell maps sold ItemIDs to listing StartTime via GetSellerList (last 120d). Longer run (~90s) — fine under LaunchAgent. Built 2026-07-03. Source copy in this eBay project folder.
-  - `~/ebay_markdown_monthly.sh` → `~/ebay_markdown_engine.py` — **1st of month 6:00 AM** LaunchAgent `com.valleypawn.ebay-markdown-monthly`: 10% cut on 90+ day listings, 3 cuts max (30% floor), scales Best Offer thresholds with the cut, `MIN_DAYS_BETWEEN_CUTS=25`. Summary to `#ebay-performance` via `~/ebay_markdown_summary.py`. The "pull" half is the Cowork task `ebay-markdown-terminal-weekly` (Mon).
+  - `~/ebay_markdown_monthly.sh` → `~/ebay_markdown_engine.py` — **1st of month 6:00 AM** LaunchAgent `com.valleypawn.ebay-markdown-monthly`: 10% cut on 90+ day listings, 3 cuts max (30% floor), `MIN_DAYS_BETWEEN_CUTS=25`. It rescales Best Offer thresholds alongside a cut **only on listings that already have Best Offer on — it must never switch Best Offer on** (Hard Rule 2). `AGED_DAYS=90` here is the canonical first-markdown age and already matches Hard Rule 1. Summary to `#ebay-performance` via `~/ebay_markdown_summary.py`. The "pull" half is the Cowork task `ebay-markdown-terminal-weekly` (Mon).
   - Cowork tasks (Sun/Mon/Thu, 1st): `weekly-online-store-audit`, `ebay-title-photo-accuracy-audit`, `ebay-weekly-quality-fix`, `ebay-weekly-channel-audit`, `ebay-markdown-terminal-weekly`, `ebay-feedback-reply-weekly`, `monthly-ebay-ratings-sweep` — full detail in the department plan §2.
 - **Confirmed per-store state (2026-09-04):** Active listings — Culpeper 266, Roanoke 93, Waynesboro 37, Harrisonburg 31, Lexington 26 (453). **All 5 stores carry an eBay Store subscription** (confirmed 2026-08-22 via insertion-fee data — the 2026-06-29 "only Culpeper" finding is superseded). Feedback usernames: `valley_pawn_<city>`. Top Rated: Culpeper + Waynesboro; Lexington Below Standard (late shipments), re-eval 2026-09-20.
-- **Bravo link:** Bravo-created listings carry the Bravo item number in the title as `(VAP######)`. As of 2026-09-05 the SKU field is empty on 100% of listings; the department plan moves the code into SKU (do not strip it without preserving it).
+- **Bravo link:** Bravo-created listings carry the Bravo item number in the title as `(VAP######)` — also seen as `VP`, `VA`, `ROA`, `CUL`, `WAY`, `HAR`, `LEX` + 5 or more digits. As of 2026-09-05 the SKU field is empty on 100% of listings; the department plan moves the code into SKU (do not strip it without preserving it). **A parenthesised code that does NOT match that prefix + 5-digit shape is a manufacturer model number, not a Bravo code — never strip it and never write it into SKU (Hard Rule 3).**
 - **Login flow:** Chrome saved passwords. Per `valley-pawn-context` Rule #2, never ask Joshua to log in — navigate to eBay in Chrome and use saved credentials.
 - **Seller Hub:** `https://www.ebay.com/sh/ovw` (Overview)
 - **Key Seller Hub URLs:**
@@ -86,11 +145,11 @@ Operating manual for Valley Pawn's eBay channel. Jump to the relevant section us
 
 Pawn inventory maps well to eBay's highest-velocity categories:
 
-- **Jewelry & watches** — gold, silver, diamond, brand-name watches (strong eBay premium vs. local)
+- **Jewelry & watches** — gold, silver, diamond, brand-name watches (strong eBay premium vs. local). *Anything priced by metal weight is never auto-repriced — Hard Rule 4.*
 - **Electronics** — phones, tablets, laptops, gaming consoles, audio
 - **Tools** — power tools and hand tools (brand-name move well)
 - **Musical instruments**
-- **Coins / bullion** — gold/silver coins and bars
+- **Coins / bullion** — gold/silver coins and bars *(never auto-repriced — Hard Rule 4)*
 - **Collectibles**
 
 ### NEVER list (compliance — non-negotiable)
@@ -107,8 +166,9 @@ Pawn inventory maps well to eBay's highest-velocity categories:
 - Default list price: **the sold-comp median**, adjusted for condition. For aged-inventory clearance, list at the lower quartile to move it; for premium/rare items, list at the upper quartile or run an auction.
 
 - **Format:** Buy It Now is the default (predictable, supports Best Offer and Promoted Listings). Use **Auction** only for genuinely rare/collectible items or bullion where demand is hot and price discovery beats a fixed price.
-- **Best Offer:** Enable on most fixed-price listings. Set **auto-accept** at ~90% of list and **auto-decline** at ~75% of list so the team only manually handles the middle band. *(CONFIRM final thresholds with Joshua; these are sensible starting points.)*
+- **Best Offer:** **Never switched on by Claude or by any automation — see Hard Rule 2 above.** Whether a listing takes offers is the store's call, made when the item is listed. Video games never take offers at all. For listings that already have Best Offer on, the thresholds are **auto-accept ~90% of list** and **auto-decline ~75% of list**, so the team only handles the middle band by hand.
 - **Floor:** Never let a Best Offer or markdown drop below cost basis (loan amount / acquisition cost + eBay fees + shipping). Pull cost basis from Bravo before accepting low offers.
+- **Precious metal is priced off melt, not off comps** — gold, silver, platinum, bullion, coins and anything sold by weight (dwt/troy oz). The counter already prices these at the bottom, so **they are never marked down by any automation** (Hard Rule 4). Aged metal gets a person's decision, not a percentage cut.
 - **Promotions:** Use **Markdown Manager** for time-boxed sales on aged stock and **Volume Pricing / coupons** to clear multiples. Tie clearance events to the same seasonal calendar as the in-store/email promos where it makes sense.
 
 ---
@@ -203,7 +263,7 @@ When an item sells on eBay it MUST come out of in-store availability in Bravo so
 1. Confirm it's clear to sell (loan period elapsed, not on active hold) and pull cost basis from Bravo.
 2. Photograph per Listing Standards (8–12, flaws included).
 3. Seller Hub → Create listing (or **Sell Similar** off an existing comparable listing to reuse the template — big time saver).
-4. Title (80 char formula) → category → **all item specifics** → condition + sub-grade → description with trust block → sold-comp-based price + Best Offer thresholds → 30-day returns → shipping.
+4. Title (80 char formula, model number included) → category → **all item specifics** → condition + sub-grade → description with trust block → sold-comp-based price → 30-day returns → shipping. Whether the listing takes Best Offer is the store's decision at listing time; never on a video game.
 5. Add **Promoted Listings** (see Optimization) at the suggested-or-slightly-below ad rate.
 6. Publish, then mark the item "on eBay" in Bravo.
 
@@ -211,7 +271,7 @@ When an item sells on eBay it MUST come out of in-store availability in Bravo so
 - SLA: reply within **24 hours** (eBay tracks response time). Brand voice, helpful, no off-platform contact. Templates: shipping-time questions, condition clarifications, offer negotiation, return requests.
 
 ### Handle a Best Offer
-- Auto-accept ≥ ~90% of list, auto-decline ≤ ~75%, counter the middle — never below cost-basis floor. *(CONFIRM thresholds.)*
+- Applies only to listings that ALREADY have Best Offer enabled. Auto-accept ≥ ~90% of list, auto-decline ≤ ~75%, counter the middle — never below cost-basis floor. Never enable Best Offer on a listing that has it off, and never on a video game (Hard Rule 2).
 
 ### Process a return
 Accept → eBay return label → receive → inspect → refund → relist or restock in Bravo.
@@ -233,10 +293,10 @@ Pull and record: active listing count, last-90-day sold vs. unsold (sell-through
 
 ### Sales (grow revenue)
 1. **Listing quality pass** — titles using the full 80 chars, 8–12 photos with flaw shots, and **complete item specifics** on every active listing. This is the cheapest, highest-ROI lever (free, and directly drives Cassini ranking).
-2. **Re-price off sold comps** — audit active listings against current sold medians; cut over-priced laggards, nudge under-priced winners.
+2. **Re-price off sold comps** — audit active listings against current sold medians; cut over-priced laggards, nudge under-priced winners. **No automated cut before day 90 (Hard Rule 1), and never on precious metal at any age (Hard Rule 4).**
 3. **Promoted Listings (Standard)** — eBay's pay-per-sale ads; only charged when the item sells via the ad. Start at or just below eBay's suggested ad rate, then tune by category using the campaign report. Biggest single visibility lever.
 4. **More inventory live** — systematically list aged Bravo stock (pull aged-inventory candidates via `bravo-context`). More quality SKUs = more funnel.
-5. **Markdown events & coupons** — clear slow movers; align with seasonal calendar.
+5. **Markdown events & coupons** — clear slow movers; align with seasonal calendar. **Never include precious metal** (Hard Rule 4).
 
 ### Cost (protect margin)
 1. **Right-size the store subscription** — match tier (Basic/Premium/Anchor) to actual listing volume; the higher tiers lower per-listing and final-value fees once volume justifies them. Recompute after Phase 0.

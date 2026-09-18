@@ -11,7 +11,17 @@ from ebay_credentials import APP_ID as APP, DEV_ID as DEV, CERT_ID as CERT  # ne
 PATHS=["/sessions/fervent-admiring-noether/mnt/Desktop/Claude/Claude Back Up/Claude 4 back up/ebay_weekly_rankings.py", os.path.expanduser("~/ebay_weekly_rankings.py")]
 NS="urn:ebay:apis:eBLBaseComponents";URL="https://api.ebay.com/ws/api.dll"
 STATE=os.path.expanduser("~/ebay_title_state.json")
-CODE=re.compile(r"\s*\((?:[A-Za-z]{1,4})?\d{3,}[A-Za-z]?\)\s*")
+# Bravo intake codes ONLY. Must carry a known store prefix AND 5+ digits.
+#
+# 2026-09-17 (Joshua, from store feedback): the previous pattern
+#     \s*\((?:[A-Za-z]{1,4})?\d{3,}[A-Za-z]?\)\s*
+# made the letter prefix OPTIONAL and allowed 3 digits, so it deleted real
+# manufacturer model numbers that merely LOOK like internal tracking numbers:
+#   (A2482) Apple  ·  (DCD771) DeWalt  ·  (MT2500) Snap-on  ·  (2236) Milwaukee
+# Those are the most searched terms in the title — stripping them cost us sales.
+# NEVER widen this pattern. If a code does not carry a known Bravo store prefix
+# followed by at least 5 digits, it is a model number: leave it in the title.
+CODE=re.compile(r"\s*\((?:VAP|VP|VA|CUL|ROA|WAY|HAR|LEX)\d{5,}\)\s*")
 def stores():
     for p in PATHS:
         if os.path.exists(p):

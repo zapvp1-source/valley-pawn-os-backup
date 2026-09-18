@@ -1,6 +1,6 @@
 ---
 name: bravo-morning-pull
-description: Daily 6:50 AM — ONE combined Bravo pipeline pull (intake-detail, sold-discount-detail, items-to-price × 5 stores) so the 7-8 AM report tasks compile from disk instead of each driving Bravo separately. Starts with watcher singleton hygiene (_restart_watcher_v2.ps1) + health gate. Writes a per-report CLEAN/FAILED certificate; downstream tasks fall back to their own pulls if it's absent. Silent — never posts to Slack, never DMs.
+description: RETIRED 2026-09-17 → native launchd com.valleypawn.morning-pull (bin/morning_pull.sh, 06:50). This Cowork version fired daily but died before writing its trigger (no CSVs 9/12–9/16). Keep disabled; the native agent owns the morning pull.
 model: claude-sonnet-5
 ---
 

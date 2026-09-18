@@ -13,7 +13,13 @@ from ebay_credentials import APP_ID as APP, CERT_ID as CERT, DEV_ID as DEV  # ne
 PATHS=[os.path.expanduser("~/ebay_weekly_rankings.py"),"/sessions/fervent-admiring-noether/mnt/Desktop/Claude/Claude Back Up/Claude 4 back up/ebay_weekly_rankings.py"]
 NS="urn:ebay:apis:eBLBaseComponents";URL="https://api.ebay.com/ws/api.dll"
 HOOK = open(os.path.expanduser("~/.vp_secrets/slack_webhook_ebay_markdown")).read().strip()  # never hardcode -- see ~/.vp_secrets/slack_webhook_ebay_markdown
-CODE=re.compile(r"\((?:[A-Za-z]{1,4})?\d{3,}[A-Za-z]?\)")
+# Real Bravo intake codes only: known store prefix + 5 or more digits.
+# Tightened 2026-09-17 (Joshua, store feedback). The old permissive form
+# \((?:[A-Za-z]{1,4})?\d{3,}[A-Za-z]?\) flagged real model numbers — (A2482),
+# (DCD771), (MT2500), (2236) — and this script's Slack message tells managers
+# to remove "intake codes", so a loose pattern here makes a PERSON delete a
+# model number by hand. Never widen it.
+CODE=re.compile(r"\((?:VAP|VP|VA|CUL|ROA|WAY|HAR|LEX)\d{5,}\)")
 def stores():
     for p in PATHS:
         if os.path.exists(p):
@@ -79,7 +85,8 @@ def main():
         for t,iss in flagged[:6]: lines.append(f"   • {t} — {', '.join(iss)}")
     msg=(f"🔎 *eBay New-Listing Quality Check* — last 7 days\n"
          f"{tot_new} new listings, *{tot_flag}* with issues (title / category / photos)\n\n"+"\n".join(lines)+
-         "\n\n_Fix flagged items: full 80-char keyword titles, no intake codes, proper case, right category, 3+ clear photos (whole-item primary)._")
+         "\n\n_Fix flagged items: full 80-char keyword titles, proper case, right category, 3+ clear photos (whole-item primary). "
+         "Keep the model number in the title — only our own stock number (like VAP031234) comes out._")
     _uo(Request_(HOOK,data=json.dumps({"text":msg}).encode(),headers={"Content-Type":"application/json"}),timeout=15)
     print("posted;",tot_new,"new",tot_flag,"flagged")
 if __name__=="__main__": main()

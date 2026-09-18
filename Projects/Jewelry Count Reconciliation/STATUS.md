@@ -1079,3 +1079,44 @@ WAY: Rings 333/334 (+1), Bracelets 44/44 (0), Earrings 57/56 (-1), Pendants 67/6
 **Repeat check:** no store/category variance repeats night-over-night at meaningful scale. HAR's scattered +1 to +3 overs are new tonight, not a prior pattern, largest is +3 (Necklaces), well short of anything resembling the ROA-pendants-as-charms scale of concern (~+61). All other variances are single-digit, consistent with ordinary count-timing noise; negative variances are expected scope noise per the standing CUL rule. No anomalous OVER variance. No DM sent, clean night.
 
 **Posted to #jewlery-counts:** https://valleypawnworkspace.slack.com/archives/C0BM9NHGTT4/p1789178193614449
+
+## RUN RECORD — 2026-09-16 (Wednesday) — jewelry-onhand-nightly-pull
+
+**Open stores:** CUL only (Wednesday gate). Fired 8:36 PM ET, inside the 6PM-10AM freeze window.
+
+**Contention/health:** last claimed trigger was Jun 22 (stale, clear — no contention). Could not execute bravo_health_gate.sh directly from this session (no Mac shell-control tool available here); substituted freshness check instead — the shared pipeline had successfully completed daily-funds-verification and markdown-verification runs within the hour (through 18:11 PM ET), confirming Bravo/VM/watcher were healthy at run time. Noting this as a process deviation from the documented gate step.
+
+**Trigger:** jewelry-onhand-2026-09-16-CUL.json, claimed immediately (20:37:17). Run completed 20:47:45, Overall status: success, all 8 categories status=ok (Rings 670, Bracelets 117, Pendants 223, Charms 20, Brooches 18, Earrings 145, Chains 83, Necklaces 66), no empty-category rule needed.
+
+**Freeze-window confirmation:**
+- Bravo side (live on-hand pull): 2026-09-16 20:37-20:48 ET, inside the 6PM close freeze window.
+- Sheet side (PM count, #end-of-day): Sandi (CUL) posted at 6:52 PM ET for date 09/16/26, inside freeze window.
+
+**Per-store table (CUL):**
+| Category | Expected (Bravo) | Counted (PM sheet) | Variance |
+|---|---|---|---|
+| Rings | 670 | 670 | 0 |
+| Bracelets | 117 | 116 | -1 |
+| Earrings | 145 | 144 | -1 |
+| Pendants (Pendants+Charms+Brooches: 223+20+18) | 261 | 261 | 0 |
+| Necklaces (Chains+Necklaces: 83+66) | 149 | 149 | 0 |
+| **Total** | **1342** | **1340** | **-2** |
+
+**Repeat check:** exceptionally tight night — only Bracelets and Earrings off by -1 each, well within normal scope noise. No repeating same-store/category variance pattern (nothing resembling a process or data problem). No anomalous OVER variance (Counted never exceeds Expected). No DM sent to Joshua per STEP 7 — clean night.
+
+**Posted to #jewlery-counts:** https://valleypawnworkspace.slack.com/archives/C0BM9NHGTT4/p1789606188488689
+
+## Run record — 2026-09-17 (Thursday, all 5 stores open)
+
+Freeze window: 6:00 PM close -> 10:00 AM reopen, all 5 stores. Bravo touched 8:35 PM-11:15 PM ET via the host job queue (bravo_pull.sh, one job per store), well inside the window for every store attempted.
+
+Per-store outcome (jewelry-case-counts-v2, 8 Bravo categories each):
+- CUL: success, all 8 categories status=ok. Rings 670, Bracelets 118, Pendants 224, Charms 20, Brooches 18, Earrings 145, Chains 83, Necklaces 66.
+- HAR: 7/8 ok on first pull (Charms failed); Charms also error on the most recent prior-day CSV (2026-09-11), so treated as 0 per the confirmed-empty-category rule. Rings 460, Bracelets 47, Pendants 115, Charms 0(rule), Brooches 2, Earrings 46, Chains 67, Necklaces 46. No retry needed for this store — the Charms miss is the known standing gap, not a new failure.
+- LEX: FAILED both attempts. First pull returned "EnsureStore failed for LEX" (a store-login/switch failure, not a category gap). Retried once per policy; the retry ran the full 40-minute wall with no result produced at all. No CSV exists for LEX today. This matches the previously-documented wedged-LEX-login failure mode.
+- ROA: first pull returned "EnsureStore failed for ROA"; retried once and the retry succeeded cleanly, all 8 categories status=ok.
+- WAY: 7/8 ok (Charms failed); Charms also error on the most recent prior-day CSV (2026-09-11), so treated as 0 per the confirmed-empty-category rule, same as HAR. Rings 335, Bracelets 45, Pendants 59, Charms 0(rule), Brooches 5, Earrings 59, Chains 47, Necklaces 25.
+
+Repeat-pattern watch: HAR Charms and WAY Charms have now read as "error" (empty) on both 2026-09-11 and 2026-09-17 — consistent night-over-night, so this looks like a stable process/category gap in Bravo for those store+category combos, not a data anomaly. Nothing else repeated from the last run on file (2026-09-11); no new categories are swinging.
+
+Completeness: 4 of 5 open stores complete (CUL, HAR, ROA, WAY). LEX incomplete. Per the all-or-nothing rule, NOTHING was posted to #jewlery-counts tonight — a partial table was not built and PM count sheets were not read (Step 5/6 skipped) since the run cannot be called complete. No DM sent to Joshua per Failure Policy v3 override; one row logged instead to fleet/FAILURE_LEDGER.md at 23:14 ET. Confidence note: the LEX failure is a store-login-level failure (EnsureStore), not a misread — nothing was reported for LEX, no partial/uncertain LEX numbers were guessed at.

@@ -1,6 +1,6 @@
 ---
 name: pawn-walk
-description: PAWN WALK — daily 6:30 AM. One consolidated task: health-gate Bravo, pull yesterday's intake-detail ("Claude Pawn Walks") for all 5 stores, self-heal if stalled, compile T1/T2/T3 margin analysis, post per-store summary to #pawn-walks, DM Joshua on flags/failure. Replaces daily-intake-prestage + daily-intake-margin.
+description: RETIRED 2026-09-17 → native launchd com.valleypawn.daily-report-pawn (Valley Pawn OS/bin/daily_report.sh pawn). This Cowork version died at step 0 every run because the Mac-control (osascript) connector is absent from scheduled sessions. Keep disabled; the native agent owns it.
 model: claude-sonnet-5
 ---
 
