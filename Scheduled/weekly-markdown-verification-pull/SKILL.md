@@ -63,3 +63,52 @@ Do not alter key names — a malformed trigger gets silently renamed and never r
 3. Do NOT poll for the result. This 5-store pull takes roughly 15-20 minutes to run serially (confirmed via a live smoke test 2026-08-13 — each store took 150-260 seconds) — Part 2 fires Monday morning, many hours later, so there is no need to wait here. Waiting risks the session running out of context mid-wait (the exact failure `monday-bravo-combined-run` hit before it was split into two tasks — do not repeat that mistake here).
 
 4. Exit. No team-channel post, regardless of outcome — this task is silent to the field by design (mirrors monday-bravo-combined-run); the one Joshua DM in Step 2 is the only output.
+
+## Final step (MANDATORY) — write the publication receipt
+
+This task publishes to a surface with no readable history (a DM or a Slack canvas), so this receipt
+is the ONLY evidence the task ran and delivered. Without it, a healthy run and a dead task are
+indistinguishable in the fleet audit, and this task will read as AWAITING RECEIPTS forever.
+
+Run this as the LAST action of the task, only after the publication actually succeeded:
+
+```bash
+python3 "$HOME/Documents/Claude/Projects/Valley Pawn OS/bin/vp_receipt.py" write weekly-markdown-verification-pull \
+  --surface slack-dm --target "D03BHQH5VGT" --note "<first line of what you published>"
+```
+
+Rules:
+- Write it ONLY on a real, confirmed send. Never write a receipt for something you did not publish.
+- If the task is silent by design this run (nothing to report), still write the receipt, with
+  `--note "checked, nothing to report"`. Recording the look is what makes the silence trustworthy.
+- If the publication FAILED, write it with `--ok false` and the reason in `--note`. Do not post the
+  failure to Slack (Rule 16).
+
+
+## Precondition (MANDATORY) — FLEET PUBLISH GUARD
+
+Before publishing ANYTHING — a channel post, a DM to Joshua, a DM to a store manager, a canvas
+refresh, an email, a Facebook post — check whether the fleet publish guard is armed:
+
+```bash
+python3 "$HOME/Documents/Claude/Projects/Valley Pawn OS/bin/vp_dryrun.py" status
+```
+
+Exit code 0 means **ARMED**. When it is armed:
+
+- Do the ENTIRE task for real — same pull, same data, same compile, same message text. The point is
+  to test the task, not to skip it.
+- Publish NOTHING. Not to a channel, not to a DM, not to a manager, not to a canvas, not anywhere.
+- Instead write exactly what you would have published to
+  `Valley Pawn OS/fleet/test_output/<task-name>-<YYYYMMDD-HHMMSS>.txt`, with a first line naming the
+  channel or person it would have gone to.
+- Do NOT write a normal publication receipt. A diverted run is not evidence that the task delivered,
+  and recording it as one would corrupt the fleet audit.
+- Say clearly in your final summary that the guard was armed and nothing was published.
+
+Exit code 1 means not armed — run and publish normally.
+
+This guard is ENFORCED for native scripts (they all publish through `vp_slack.py`, which intercepts
+them). A Cowork task like this one has no such chokepoint, so here the guard is only as good as this
+instruction. Honour it exactly. The guard always carries an expiry and disarms itself, so a stale
+flag can never silence this task indefinitely.

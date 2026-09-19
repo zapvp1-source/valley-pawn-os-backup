@@ -21,6 +21,10 @@ MAIL = os.path.join(HOME, "Library/Mail")
 ICLOUD = os.path.join(HOME, "Library/Mobile Documents/com~apple~CloudDocs")
 MAXTEXT = 60000
 
+# Fraction of the last recorded corpus count a fresh scan must reach before the
+# destructive rebuild is allowed to run. See shrink_guard() below.
+SHRINK_FLOOR = float(os.environ.get("USEARCH_SHRINK_FLOOR", "0.5"))
+
 
 def _workers():
     """Worker cap (added 2026-08-21): full-machine pools (cpu_count-1 = 9 on the
@@ -42,6 +46,54 @@ def detag(s):
     s = TAG2.sub(" ", s)
     s = html.unescape(s)
     return NL.sub("\n\n", WS.sub(" ", s)).strip()
+
+
+class ShrinkGuard(Exception):
+    pass
+
+
+def shrink_guard(c, corpus, found):
+    """Refuse to wipe a corpus when the scan came back empty or implausibly small.
+
+    Added 2026-09-18. Every indexer here does `DELETE FROM <corpus>` and COMMITS it
+    BEFORE inserting anything, so a source that is merely UNREADABLE (not empty) makes
+    the rebuild silently destroy the whole corpus. That is not theoretical: on the night
+    of 2026-09-18 the mail step, running for the first time under the native launchd
+    agent `com.valleypawn.usearch-refresh` instead of the old osascript path, scanned
+    ~/Library/Mail and reported "found 0 messages" — a Full Disk Access (TCC) denial,
+    which os.walk reports as an empty tree rather than an error. All 346,748 mail rows
+    survived only because the process happened to be SIGTERM'd before the DELETE
+    committed (index.db was verified untouched). The next run would have wiped them.
+
+    Rule: a rebuild may GROW a corpus freely and may shrink it moderately, but a scan
+    yielding 0 rows, or fewer than SHRINK_FLOOR of the last recorded count, aborts the
+    step before the DELETE. refresh.sh then marks the step FAILED (non-zero exit), the
+    hardened wrapper retries, and usearch-verify ledgers it — i.e. it surfaces loudly
+    instead of destroying data quietly.
+
+    Deliberate shrink (source really did empty out): USEARCH_ALLOW_SHRINK=1.
+    """
+    if os.environ.get("USEARCH_ALLOW_SHRINK") == "1":
+        return
+    try:
+        row = c.execute("SELECT v FROM meta WHERE k=?", (corpus + "_count",)).fetchone()
+        prev = int(row[0]) if row and row[0] is not None else 0
+    except Exception:
+        prev = 0
+    if prev <= 0:
+        return  # nothing recorded yet — first build, nothing to protect
+    floor = int(prev * SHRINK_FLOOR)
+    if found <= 0:
+        raise ShrinkGuard(
+            "ABORT %s: scan found 0 items but %d are indexed. The source is unreadable, "
+            "not empty (Full Disk Access / volume not mounted / path moved). Refusing to "
+            "DELETE %d rows. Nothing was changed." % (corpus, prev, prev))
+    if found < floor:
+        raise ShrinkGuard(
+            "ABORT %s: scan found %d items, under the %d floor (%.0f%% of the %d indexed). "
+            "Refusing to rebuild — this looks like a partially readable source. Nothing was "
+            "changed. Re-run with USEARCH_ALLOW_SHRINK=1 if the shrink is real."
+            % (corpus, found, floor, SHRINK_FLOOR * 100, prev))
 
 
 def db_connect():
@@ -283,6 +335,7 @@ def index_mail():
                 paths.append(os.path.join(root, f))
     print("found %d messages" % len(paths), flush=True)
     c = db_connect()
+    shrink_guard(c, "mail", len(paths))
     c.execute("DELETE FROM mail")
     c.commit()
     n = 0
@@ -428,6 +481,7 @@ def index_files():
     print("found %d files (%d iCloud + %d mail attachments)"
           % (len(paths), n_icloud, len(paths) - n_icloud), flush=True)
     c = db_connect()
+    shrink_guard(c, "files", len(paths))
     c.execute("DELETE FROM files")
     c.commit()
     n = 0
@@ -483,16 +537,23 @@ def _gdrive_mtime(raw):
 def index_gdrive():
     t0 = time.time()
     c = db_connect()
-    c.execute("DELETE FROM gdrive")
-    c.commit()
     n = 0
     bad = 0
+    # 2026-09-18: count the cache BEFORE the destructive DELETE. Previously a missing or
+    # empty cache file wiped the gdrive corpus and recorded count 0 (see shrink_guard).
     if not os.path.exists(GDRIVE_CACHE):
         print("no gdrive cache at %s (nothing to ingest)" % GDRIVE_CACHE, flush=True)
+        shrink_guard(c, "gdrive", 0)
+        c.execute("DELETE FROM gdrive")
         c.execute("INSERT OR REPLACE INTO meta VALUES('gdrive_indexed_at',?)", (str(int(time.time())),))
         c.execute("INSERT OR REPLACE INTO meta VALUES('gdrive_count',?)", ("0",))
         c.commit()
         return
+    with open(GDRIVE_CACHE, "r", encoding="utf-8") as f:
+        cache_lines = sum(1 for line in f if line.strip())
+    shrink_guard(c, "gdrive", cache_lines)
+    c.execute("DELETE FROM gdrive")
+    c.commit()
     batch = []
     with open(GDRIVE_CACHE, "r", encoding="utf-8") as f:
         for line in f:
@@ -734,12 +795,15 @@ if __name__ == "__main__":
             os.nice(10)  # never compete with interactive apps
         except OSError:
             pass
-    if cmd == "mail":
-        index_mail()
-    elif cmd == "files":
-        index_files()
-    elif cmd == "gdrive":
-        index_gdrive()
+    if cmd in ("mail", "files", "gdrive"):
+        # 2026-09-18: a tripped shrink_guard is a clean, loud, NON-destructive abort —
+        # exit 3 so refresh.sh marks the step FAILED and usearch-verify ledgers it,
+        # instead of a bare traceback that reads like a crash.
+        try:
+            {"mail": index_mail, "files": index_files, "gdrive": index_gdrive}[cmd]()
+        except ShrinkGuard as e:
+            print("SHRINK GUARD TRIPPED — %s" % e, flush=True)
+            sys.exit(3)
     elif cmd == "query":
         q(sys.argv[2:])
     elif cmd == "ocrlist":

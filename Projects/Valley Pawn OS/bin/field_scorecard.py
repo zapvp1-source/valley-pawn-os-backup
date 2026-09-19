@@ -67,6 +67,9 @@ CLOSE_HOURS = 32          # a calendar date's window is considered fully closed 
 LOOKBACK_DAYS = {"daily": 2, "weekdays": 4, "weekly": 9, "monthly": 40, "quarterly": 100}
 FRESH_MISS_HOURS = 30     # a miss older than this is history (ledger only) — no DM, no channel notice
 NOTICES_ENABLED = False   # Phase 0.5 delay notices: OFF (2026-09-17). See the block in main() for why.
+FLEET_EVENT_MIN = 5       # this many unrelated tasks missing TODAY = one shared outage, not N faults
+SIMULATE = "--simulate-fleet-event" in sys.argv   # prove the alarm fires WITHOUT waiting for a real
+                                                  # outage. Dry: writes the ledger row, DMs nothing.
                           # The scorecard stays silent in team channels; it reports to the file + Joshua only.
 
 # Plain-language names for the delayed-notice line (Rule 16: no task ids or jargon in team
@@ -105,11 +108,25 @@ def hb(msg):
 
 
 def load_json(path, default=None):
+    """Valid JSON of the WRONG SHAPE is the dangerous case, and it is what actually happened:
+    field_scorecard_state.json held a bare string, so `state.setdefault(...)` raised AttributeError
+    on EVERY run and the watchdog was dead — silently, while the fleet had two multi-day outages
+    nobody was told about. json.load() happily returns a str, so the try/except never fired. Now the
+    shape is checked against the default's, and a mismatch falls back instead of crashing."""
     try:
         with open(path) as f:
-            return json.load(f)
+            got = json.load(f)
     except Exception:
         return default
+    if default is not None and not isinstance(got, type(default)):
+        hb("state file %s holds %s, expected %s — ignoring it and starting clean"
+           % (os.path.basename(path), type(got).__name__, type(default).__name__))
+        try:
+            os.replace(path, path + ".corrupt-" + now().strftime("%Y%m%d-%H%M%S"))
+        except Exception:
+            pass
+        return default
+    return got
 
 
 def save_json_atomic(path, data):
@@ -197,6 +214,22 @@ def candidates_for(cadence):
             return sorted(out, reverse=True)
     except Exception:
         return None
+    return None
+
+
+def todays_instance(cadence):
+    """The instance scheduled for TODAY, or None if this cadence does not fire today.
+    Added 2026-09-18: `most_recent_due` returns YESTERDAY's instance for a daily task checked
+    before its time, so a row read "daily-cloudcover-check MISSED Thu 09/17 10:25" at 09:54 on
+    Friday — true about yesterday, but it reads as "this task is broken", and that is exactly how
+    Joshua got told three working checks were dead. TODAY is now reported separately."""
+    cands = candidates_for(cadence)
+    if not cands:
+        return None
+    today = now().date()
+    for c in cands:
+        if c.date() == today:
+            return c
     return None
 
 
@@ -338,8 +371,8 @@ def post_delay_notice(entry):
 
 # ---------------------------------------------------------------- Slack DM
 def dm_joshua(text):
-    if DRY:
-        hb("DRY DM: " + text)
+    if DRY or SIMULATE:
+        hb(("SIMULATED DM (not sent): " if SIMULATE else "DRY DM: ") + text)
         return
     tok = slack_token()
     if not tok:
@@ -360,7 +393,24 @@ def dm_joshua(text):
 
 
 # ---------------------------------------------------------------- report + history
-def write_report(rows, generated_at):
+def ledger_fleet_event(n, day, tasks):
+    """ONE row in FAILURE_LEDGER.md. Failure Policy v3 says a failure gets a ledger row and no DM —
+    a FLEET event is the exception that policy did not contemplate, because the thing it is meant to
+    prevent (noise) is not what happened here; what happened is six days of silence. So: ledger
+    always, DM once per day of the event, never once per task."""
+    try:
+        line = ("| %s | fleet-event%s | %d Tier-1 publications missed their window on the same day "
+                "(day %d of this event): %s | shared dependency suspected (Bravo / pipeline) | "
+                "field_scorecard |\n"
+                % (now().strftime("%Y-%m-%d %H:%M"), " (SIMULATED — no outage)" if SIMULATE else "",
+                   n, day, ", ".join(sorted(tasks))[:300]))
+        with open(os.path.join(OS_DIR, "fleet", "FAILURE_LEDGER.md"), "a") as f:
+            f.write(line)
+    except Exception as e:
+        hb("ledger write failed: %s" % e)
+
+
+def write_report(rows, generated_at, today_rows=None):
     lines = ["# Field Scorecard — Tier-1 publications\n",
              "Native, launchd, zero-Claude-usage (`bin/field_scorecard.py`). Verifies real Slack/file "
              "output against each publication's cadence + grace period — never just a scheduled task's "
@@ -369,6 +419,21 @@ def write_report(rows, generated_at):
              "Generated: %s\n" % generated_at.strftime("%Y-%m-%d %H:%M:%S ET"),
              "| Task | Status | Expected | Note |",
              "|---|---|---|---|"]
+    if today_rows is not None:
+        n_missed = sum(1 for r in today_rows if r["state"] == "MISSED TODAY")
+        head = ["# Field Scorecard — Tier-1 publications\n",
+                "## TODAY (%s) — read THIS before saying anything is broken\n" % generated_at.strftime("%A %Y-%m-%d"),
+                "**A task is NOT broken until its window has closed.** `NOT DUE YET` and `IN GRACE` mean "
+                "nothing is wrong — it simply has not run yet. Only `MISSED TODAY` is a real miss. The table "
+                "below this one is the HISTORICAL ledger (it shows each task's most recent expected instance, "
+                "which for a daily task is often YESTERDAY) — never quote it as today's health.\n",
+                "**Right now: %d missed today.**\n" % n_missed,
+                "| Task | Today | Scheduled | Note |", "|---|---|---|---|"]
+        for r in today_rows:
+            head.append("| %s | %s | %s | %s |" % (r["task"], r["state"], r["inst"].strftime("%H:%M"),
+                                                   (r["note"] or "").replace("|", "/")[:90]))
+        head += ["", "---", "", "## HISTORICAL — most recent expected instance per task (NOT today's status)", ""]
+        lines = head + lines[4:]
     for r in rows:
         lines.append("| %s | %s | %s | %s |" % (
             r["task"], r["status"],
@@ -506,8 +571,38 @@ def main():
             rows.append({"task": tid, "status": "NO COVERAGE", "instance": None,
                         "note": "Tier-1 publication with no expected_outputs.json entry yet — add one verified against a real post (additive-only)"})
 
+    # ---- TODAY view: what is true RIGHT NOW (never call a task broken before its window closes) ----
+    # NOTE 2026-09-18: the loop variable below was called `state`, which SHADOWED the persistent
+    # state dict loaded above. After this loop `state` held a string like "POSTED", and
+    # save_json_atomic(STATE, state) then wrote that string into field_scorecard_state.json — so the
+    # NEXT run hit `state.setdefault(...)` on a str and died with AttributeError. The watchdog
+    # corrupted its own state every run and crashed on the following one. That is why nothing raised
+    # an alarm through the 8/17-8/20 and 9/12-9/17 outages. Renamed to `tstate`; do not rename back.
+    today_rows = []
+    for e in entries:
+        inst = todays_instance(e.get("cadence", ""))
+        if inst is None:
+            continue
+        grace = dt.timedelta(hours=e.get("grace_hours", 4))
+        if e.get("output") == "slack-canvas" or e.get("output", "").startswith("slack-dm:") or e.get("channel_id", "").startswith("D"):
+            tstate, note = "NOT SCORED", "DM/canvas surface — not readable by this bot"
+        elif now() < inst:
+            tstate, note = "NOT DUE YET", "scheduled %s" % inst.strftime("%H:%M")
+        else:
+            ok, why = check_entry(e, inst)
+            if ok is True:
+                tstate, note = "POSTED", "seen in %s" % (e.get("output") or "?")
+            elif now() < inst + grace:
+                tstate, note = "IN GRACE", "due %s, grace until %s" % (inst.strftime("%H:%M"), (inst + grace).strftime("%H:%M"))
+            elif ok is False:
+                tstate, note = "MISSED TODAY", "window closed %s, nothing found" % (inst + grace).strftime("%H:%M")
+            else:
+                tstate, note = "UNVERIFIED", why or ""
+        today_rows.append({"task": e["task"], "state": tstate, "inst": inst, "note": note})
+    order = {"MISSED TODAY": 0, "UNVERIFIED": 1, "IN GRACE": 2, "NOT DUE YET": 3, "POSTED": 4, "NOT SCORED": 5}
+    today_rows.sort(key=lambda r: (order.get(r["state"], 9), r["inst"]))
     rows.sort(key=lambda r: (r["status"] != "MISSED", r["task"]))
-    write_report(rows, now())
+    write_report(rows, now(), today_rows)
     streak, hist = update_history(rows)
     save_json_atomic(STATE, state)
 
@@ -521,6 +616,56 @@ def main():
           sum(1 for r in rows if r["status"] == "SKIPPED"),
           len(uncovered), streak))
 
+    # ---- FLEET EVENT: many unrelated tasks missing TODAY is ONE outage, not N problems ----
+    # This is the fleet's dominant failure mode and its biggest blind spot. 2026-09-18 measurement:
+    # 60% of every miss in the fleet's history falls on 17 dates where 5+ unrelated tasks missed at
+    # once; 9/12-9/17 ran SIX DAYS before anyone noticed, and 9/14 alone took out 23 tasks. Reporting
+    # that as 23 separate late reports buries the one fact that matters — something shared is down —
+    # and invites 23 pointless investigations. So: name it as one event, say what is almost certainly
+    # shared, and escalate by DAY rather than repeating the same line every morning.
+    missed_today = [r for r in today_rows if r["state"] == "MISSED TODAY"]
+    if SIMULATE:
+        # Force the alarm with today's real task names so the wording and the ledger row can be
+        # inspected before an outage ever happens. An alarm nobody has seen fire is not a control.
+        missed_today = [{"task": r["task"], "state": "MISSED TODAY", "inst": r["inst"], "note": "SIMULATED"}
+                        for r in today_rows[:max(FLEET_EVENT_MIN, 7)]]
+        hb("SIMULATION: forcing %d missed-today rows" % len(missed_today))
+    n_today = len(missed_today)
+    ev = state.setdefault("fleet_event", {})
+    today_key = now().strftime("%Y-%m-%d")
+    if n_today >= FLEET_EVENT_MIN:
+        if ev.get("last_date") != today_key:
+            ev["days"] = ev.get("days", 0) + 1 if ev.get("last_date") == (now() - dt.timedelta(days=1)).strftime("%Y-%m-%d") else 1
+            ev["last_date"] = today_key
+            day = ev["days"]
+            names = ", ".join(friendly(r["task"]) for r in missed_today[:6])
+            more = "" if n_today <= 6 else " and %d more" % (n_today - 6)
+            if day == 1:
+                body = ("%d reports missed their window today — %s%s. That many unrelated reports "
+                        "failing together is almost always one shared thing being down (Bravo or the "
+                        "pipeline), not %d separate problems. Worth a look today rather than letting "
+                        "it run." % (n_today, names, more, n_today))
+            else:
+                body = ("Day %d: %d reports missed their window again today (%s%s). This has now been "
+                        "going on since %s. The last time this pattern ran unattended it lasted six "
+                        "days and cost about a third of the month's reporting — it needs someone to "
+                        "look at Bravo directly." % (day, n_today, names, more,
+                                                     ev.get("started", today_key)))
+            if day == 1:
+                ev["started"] = today_key
+            dm_joshua(body)
+            ledger_fleet_event(n_today, ev.get("days", 1), [r["task"] for r in missed_today])
+            hb("FLEET EVENT day %d: %d tasks missed today" % (ev["days"], n_today))
+        if SIMULATE:
+            # a rehearsal must not leave state behind, or tomorrow's REAL day-1 alert is suppressed
+            # as a duplicate — the exact way a test silences the alarm it was meant to prove
+            state["fleet_event"] = {}
+            hb("SIMULATION: fleet_event state reset — a real event tomorrow still alerts as day 1")
+        new_misses = []          # the event IS the message; individual lines would bury it
+    elif ev.get("last_date") and ev["last_date"] != today_key and ev.get("days"):
+        hb("fleet event cleared (ran %d day(s), last %s)" % (ev["days"], ev["last_date"]))
+        state["fleet_event"] = {}
+
     if new_misses:
         if len(new_misses) == 1:
             body = "One of today's reports didn't post on time: %s. Checking again next cycle." % friendly(new_misses[0][0])
@@ -528,6 +673,7 @@ def main():
             names = ", ".join(friendly(t) for t, _ in new_misses[:6])
             body = "%d of today's reports didn't post on time: %s. Checking again next cycle." % (len(new_misses), names)
         dm_joshua(body)
+    save_json_atomic(STATE, state)
     return 0
 
 

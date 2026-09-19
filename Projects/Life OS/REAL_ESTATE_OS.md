@@ -21,9 +21,34 @@ that framed it as "moved out of FCF Inc in July 2026" was also wrong — there i
 ownership period to reference. See "Legal entity structure" section below — read it before citing
 any EIN or owner-of-record for these properties.
 
-| Property | Type | Owner (entity) | EIN | Status | Detail |
+> ## 🛑 TITLE REALITY CHECK — READ BEFORE CITING ANY "OWNER ENTITY" BELOW
+>
+> **Confirmed by Joshua 2026-09-18: NO deed work has been done. Apart from 817 Richmond Avenue,
+> none of these properties is legally held by a Farming Infinity entity yet.** The LLCs were
+> formed (July 2026), EINs issued, and the per-entity **banking** was set up in Aug–Sep 2026 —
+> but title has not moved. **Deeds are the next workstream, not a completed one.**
+>
+> The "Owner (entity)" column below records the **INTENDED** owner. **Actual record title, read
+> off the recorded deeds 2026-09-18:**
+>
+> | Property | ACTUAL record owner today | Intended entity | Deed status |
+> |---|---|---|---|
+> | 282 Bald Rock | **Joshua Christian Davis**, individually — Augusta Co., recorded 10/17/2016, instrument 160008019, grantor Joseph Anthony Ruoto, $405,000 | Farming Infinity Mountains LLC | **not done** |
+> | 14300 Woods Walk | **Joshua C. Davis**, individually — Deed of Gift 12/3/2021 (grantors Joshua + Rachael M. Davis → Joshua alone); original deed 10/3/2002 | Farming Infinity Virginia LLC | **not done** |
+> | 148 Hardinberry | **Hillary D. Holmes AND Joshua Christian Davis**, joint tenants with right of survivorship — Quitclaim Deed, January 2017 | Farming Infinity Tennessee LLC | **not done** |
+> | 817 Richmond Ave | **FARMING INFINITY LLC** — grantor DJS Properties, LLC | (already correct) | ✅ **DONE** |
+> | 844 Cypress Crossing | Joshua & Hillary Davis personally | n/a — stays personal | n/a |
+>
+> Deed PDFs live in `~/Library/Mobile Documents/com~apple~CloudDocs/02 Real Estate/<property>/`.
+> **This supersedes the 2026-08-10 framing that Bald Rock "is owned by" Farming Infinity Mountains
+> LLC** — that was always the intent, never a recorded fact. (Bald Rock was never owned by Full
+> Circle Finance Inc either; that separate correction still stands.) Corroborating signal: DCCU's
+> Credit Dept consent letter for "the Bald Rock deed transfer into FI Mountains" was still pending
+> as of 7/31/2026.
+
+| Property | Type | Owner (entity — **INTENDED**, see title reality check above) | EIN | Status | Detail |
 |---|---|---|---|---|---|
-| **282 Bald Rock Road, Verona, VA 24482** | Short-term rental (Airbnb + VRBO) | **Farming Infinity Mountains LLC** (VA SCC 12045879) | **42-4031872** | Active, performing well | See "Bald Rock" below + `bald-rock-property` skill |
+| **282 Bald Rock Road, Verona, VA 24482** | Short-term rental (Airbnb + VRBO) | **Farming Infinity Mountains LLC** (VA SCC 12045879) — ⚠️ intended only, title still personal | **42-4031872** | Active, performing well | See "Bald Rock" below + `bald-rock-property` skill |
 | **817 Richmond Avenue, Staunton, VA** | Commercial, gross-leased to FirstCash | **Farming Infinity, LLC** (original, VA SCC S8306609, formed 2019) | **81-3269313** | Leased/performing | Not previously tracked in this file — found via Drive search 2026-08-10 |
 | **844 Cypress Crossing Trail, St. Augustine, FL 32095** (Parcel 072085-0710) | Was long-term rental → converted to **primary personal residence ~Aug 2025** | Joshua & Hillary Davis, personally — **no LLC, no EIN** | — | Owner-occupied since conversion | See "Cypress Crossing" below |
 | 14300 Woods Walk Lane, Chesterfield County, VA | **Active long-term rental with real tenants** — owned by Joshua alone | **Farming Infinity Virginia LLC** (VA SCC 12045876) | **42-3980374** | Corrected 2026-09-03: this is NOT a dormant "intended acquisition." Confirmed via the filed 2024 tax return (Schedule E "Type of Property" = 1/SFR, $21,600 rents, multi-year depreciation history) and real Avail/Trulia/HotPads tenant-inquiry and rent-collection emails ("Alexis is requesting information about 14300 Woods Walk Ln," "Payments Set Up for 14300 Woods Walk Lane \| Avail Team"). Deed-into-LLC paperwork status still unconfirmed, but the rental activity itself is real, ongoing, and has been for years. | 2024: rents $21,600, basis $225,785, accumulated depreciation $124,488 (~$101,297 remaining). Passive LTR — see `Taxes 2026/Real Estate Tax Strategy & Cost Segregation Notes.md`. |

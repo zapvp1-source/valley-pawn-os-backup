@@ -176,3 +176,31 @@ Save markdown at `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/mo
 - **Retail/scrap revenue split does NOT exist in the EOM report.** Report Total Sales (= Sales Total row, equals KPI Retail + Scrap exactly) and Scrap Cost (= Refined Cost of Sales). Never label scrap cost as scrap sales.
 - **Never post this monthly report to #store-performance (`C03CGTN3KN1`).** Removed 2026-09-05 at Joshua's direction — no monthly publication in that channel. That channel keeps its weekly cadence only (`weekly-store-kpis`, `monday-bravo-combined-compile`). Do not re-add it.
 - **Additive — never modify `EndOfMonth.ahk`, `monday-store-rankings`, `monday-bravo-combined-run`, or any other production infra.**
+
+## Precondition (MANDATORY) — FLEET PUBLISH GUARD
+
+Before publishing ANYTHING — a channel post, a DM to Joshua, a DM to a store manager, a canvas
+refresh, an email, a Facebook post — check whether the fleet publish guard is armed:
+
+```bash
+python3 "$HOME/Documents/Claude/Projects/Valley Pawn OS/bin/vp_dryrun.py" status
+```
+
+Exit code 0 means **ARMED**. When it is armed:
+
+- Do the ENTIRE task for real — same pull, same data, same compile, same message text. The point is
+  to test the task, not to skip it.
+- Publish NOTHING. Not to a channel, not to a DM, not to a manager, not to a canvas, not anywhere.
+- Instead write exactly what you would have published to
+  `Valley Pawn OS/fleet/test_output/<task-name>-<YYYYMMDD-HHMMSS>.txt`, with a first line naming the
+  channel or person it would have gone to.
+- Do NOT write a normal publication receipt. A diverted run is not evidence that the task delivered,
+  and recording it as one would corrupt the fleet audit.
+- Say clearly in your final summary that the guard was armed and nothing was published.
+
+Exit code 1 means not armed — run and publish normally.
+
+This guard is ENFORCED for native scripts (they all publish through `vp_slack.py`, which intercepts
+them). A Cowork task like this one has no such chokepoint, so here the guard is only as good as this
+instruction. Honour it exactly. The guard always carries an expiry and disarms itself, so a stale
+flag can never silence this task indefinitely.

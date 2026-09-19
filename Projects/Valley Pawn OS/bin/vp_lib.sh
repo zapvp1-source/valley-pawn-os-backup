@@ -13,6 +13,7 @@ VM='{7dc84f03-4e68-4f43-9596-bf8a7dfb8e0a}'
 PRLCTL=/usr/local/bin/prlctl
 PY=/usr/bin/python3
 slack() { "$PY" "$BIN/vp_slack.py" "$@"; }   # (a $SLACK string breaks on the space in "Valley Pawn OS")
+export VP_TASK="${AGENT:-native}"           # every send through slack() leaves a receipt (vp_receipt.py)
 
 vlog() { echo "$(date '+%Y-%m-%d %H:%M:%S') $*" | tee -a "$VLOG/${AGENT:-native}.log"; }
 

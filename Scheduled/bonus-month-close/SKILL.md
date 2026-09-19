@@ -27,3 +27,32 @@ STEPS
 6. Run `cd '/Users/joshuadavis/Documents/Claude/Projects/Bonus Program' && /usr/bin/python3 bin/bonus_engine.py collect --month <MONTH>` then `... close --month <MONTH>`. Exit 2 = HELD → Rule-18 path, stop.
 7. DM Joshua the contents of `out/<MONTH>/dm_payout.txt` (slack_send_message to D03BHQH5VGT), followed by the qualifier table from `out/<MONTH>/slack_qualifiers.txt` in a code block and the line: "Nothing has gone to the team. Reply *approve* to load these into the payday payroll, or *hold*."
 8. Append a dated entry to `Bonus Program/RUN_LOG.md`: stores that hit, total payout, anything held or missing.
+
+
+## Precondition (MANDATORY) — FLEET PUBLISH GUARD
+
+Before publishing ANYTHING — a channel post, a DM to Joshua, a DM to a store manager, a canvas
+refresh, an email, a Facebook post — check whether the fleet publish guard is armed:
+
+```bash
+python3 "$HOME/Documents/Claude/Projects/Valley Pawn OS/bin/vp_dryrun.py" status
+```
+
+Exit code 0 means **ARMED**. When it is armed:
+
+- Do the ENTIRE task for real — same pull, same data, same compile, same message text. The point is
+  to test the task, not to skip it.
+- Publish NOTHING. Not to a channel, not to a DM, not to a manager, not to a canvas, not anywhere.
+- Instead write exactly what you would have published to
+  `Valley Pawn OS/fleet/test_output/<task-name>-<YYYYMMDD-HHMMSS>.txt`, with a first line naming the
+  channel or person it would have gone to.
+- Do NOT write a normal publication receipt. A diverted run is not evidence that the task delivered,
+  and recording it as one would corrupt the fleet audit.
+- Say clearly in your final summary that the guard was armed and nothing was published.
+
+Exit code 1 means not armed — run and publish normally.
+
+This guard is ENFORCED for native scripts (they all publish through `vp_slack.py`, which intercepts
+them). A Cowork task like this one has no such chokepoint, so here the guard is only as good as this
+instruction. Honour it exactly. The guard always carries an expiry and disarms itself, so a stale
+flag can never silence this task indefinitely.

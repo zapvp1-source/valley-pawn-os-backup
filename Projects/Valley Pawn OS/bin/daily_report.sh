@@ -7,8 +7,14 @@
 #   pawn     -> Pawn Walks/run_daily_intake.py           -> #pawn-walks       C0B8WR95N31
 #   sold     -> Sold Margin Review/run_daily_sold_review.py -> #sold-review     C0BK802MP43
 #   discount -> Discount Outlier Review/run_daily_discount_review.py -> #discount-review C0BQ6JA27MX
-AGENT="daily-report-$1"; . "$HOME/Documents/Claude/Projects/Valley Pawn OS/bin/vp_lib.sh"; vp_lock "$AGENT" 60
+# --render : compile and show EXACTLY what would be posted, publish NOTHING. Isolation testing
+# (Joshua 2026-09-18: "test everything and see if it's working in isolation without publishing a
+# bunch of bullshit to Slack"). Output goes to fleet/test_output/<task>-<date>.txt.
+RENDER=0; for a in "$@"; do [ "$a" = "--render" ] && RENDER=1; done
+AGENT="daily-report-$1"; . "$HOME/Documents/Claude/Projects/Valley Pawn OS/bin/vp_lib.sh"
+[ $RENDER -eq 0 ] && vp_lock "$AGENT" 60
 KIND="$1"; Y="${2:-$(date -v-1d +%Y-%m-%d)}"; TODAY=$(date +%Y-%m-%d)
+case "$Y" in --render) Y=$(date -v-1d +%Y-%m-%d);; esac
 case "$KIND" in
   pawn)     REPORT=intake-detail;        PROJ="$HOME/Documents/Claude/Projects/Pawn Walks";              SCRIPT=run_daily_intake.py;          SUM="daily/${Y}_intake_margin_summary.json";  CH=C0B8WR95N31; TASK=pawn-walk; LABEL="Pawn walk" ;;
   sold)     REPORT=sold-discount-detail; PROJ="$HOME/Documents/Claude/Projects/Sold Margin Review";      SCRIPT=run_daily_sold_review.py;     SUM="daily/${Y}_sold_review_summary.json";    CH=C0BK802MP43; TASK=sold-review; LABEL="Sold review" ;;
@@ -54,6 +60,18 @@ PY
 EOF
 if [ "$MSG_OK" != "1" ] || [ "$MISSING_N" != "0" ]; then
   ledger "$TASK" "$LABEL for $Y is on hold — ${INFO//_/ } (missing stores: $MISSING_N). Detail is saved for the next look." "no"; exit 1
+fi
+if [ $RENDER -eq 1 ]; then
+  OUT="$OS_DIR/fleet/test_output"; mkdir -p "$OUT"
+  cp "$PROJ/$SUM.msg" "$OUT/${TASK}-${Y}.txt"
+  echo "=== RENDER ONLY — nothing was published ==="
+  echo "task=$TASK date=$Y open_stores=[$OPEN] flags=$FLAGS missing=$MISSING_N xlsx=$XLSX"
+  echo "would post to $CH ($(wc -c < "$PROJ/$SUM.msg" | tr -d ' ') bytes):"
+  echo "---------------------------------------------"
+  cat "$PROJ/$SUM.msg"
+  echo "---------------------------------------------"
+  echo "saved -> fleet/test_output/${TASK}-${Y}.txt"
+  exit 0
 fi
 TITLE=$(head -1 "$PROJ/$SUM.msg" | sed 's/^[[:space:]:_*a-z]*//' | cut -c1-60)   # first line = report title incl. the date
 if [ -n "$TITLE" ] && slack has "$CH" "$TITLE" 20 2>/dev/null; then vlog "already posted today — skip"; exit 0; fi

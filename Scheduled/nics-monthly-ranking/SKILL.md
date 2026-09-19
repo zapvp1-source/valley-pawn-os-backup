@@ -23,3 +23,31 @@ STEP 4 — post to Slack #ffl-transfer-performance (C0BPH5T1NFL): markdown table
 STEP 5 — update the Drive trend report IN PLACE (use the shared sheets helper, NOT the Drive create_file connector): run `/usr/bin/python3 "<DIR>/ffl_trend_sync.py"`. It rebuilds every COMPLETE month from the raw CSVs and upserts keyed by Month into "Valley Pawn - FFL Transfer Trend (Monthly)" (id 1cek7S5KNKAywF_cPWgiASOZaNAVrF4e1EpMv-4KDURs, tab Monthly) — same sheet each month, in place. Print its output. Sheet URL: https://docs.google.com/spreadsheets/d/1cek7S5KNKAywF_cPWgiASOZaNAVrF4e1EpMv-4KDURs/edit
 
 Never present partial data as complete. Done after this run.
+
+## Precondition (MANDATORY) — FLEET PUBLISH GUARD
+
+Before publishing ANYTHING — a channel post, a DM to Joshua, a DM to a store manager, a canvas
+refresh, an email, a Facebook post — check whether the fleet publish guard is armed:
+
+```bash
+python3 "$HOME/Documents/Claude/Projects/Valley Pawn OS/bin/vp_dryrun.py" status
+```
+
+Exit code 0 means **ARMED**. When it is armed:
+
+- Do the ENTIRE task for real — same pull, same data, same compile, same message text. The point is
+  to test the task, not to skip it.
+- Publish NOTHING. Not to a channel, not to a DM, not to a manager, not to a canvas, not anywhere.
+- Instead write exactly what you would have published to
+  `Valley Pawn OS/fleet/test_output/<task-name>-<YYYYMMDD-HHMMSS>.txt`, with a first line naming the
+  channel or person it would have gone to.
+- Do NOT write a normal publication receipt. A diverted run is not evidence that the task delivered,
+  and recording it as one would corrupt the fleet audit.
+- Say clearly in your final summary that the guard was armed and nothing was published.
+
+Exit code 1 means not armed — run and publish normally.
+
+This guard is ENFORCED for native scripts (they all publish through `vp_slack.py`, which intercepts
+them). A Cowork task like this one has no such chokepoint, so here the guard is only as good as this
+instruction. Honour it exactly. The guard always carries an expiry and disarms itself, so a stale
+flag can never silence this task indefinitely.

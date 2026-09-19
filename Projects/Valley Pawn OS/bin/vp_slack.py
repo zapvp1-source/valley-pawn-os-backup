@@ -52,17 +52,60 @@ def dm_channel(user):
     return r["channel"]["id"]
 
 
+def receipt(surface, target, ok, nbytes=0, note=""):
+    """Record that this task published (see bin/vp_receipt.py). Keyed off $VP_TASK, which the
+    launchd agents already export as their agent name. A DM is invisible to the audit bot, so
+    without this line a delivered DM and a task that never ran are indistinguishable.
+    Best-effort by design: a receipt failure must NEVER take down a real publication."""
+    task = os.environ.get("VP_TASK", "").strip()
+    if not task:
+        return
+    try:
+        subprocess.run([sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                        "vp_receipt.py"), "write", task, "--surface", surface, "--target", target,
+                        "--bytes", str(nbytes), "--ok", "true" if ok else "false", "--note", note],
+                       capture_output=True, timeout=10)
+    except Exception:
+        pass
+
+
+def dryrun_intercept(surface, target, text):
+    """Fleet-wide publish guard (bin/vp_dryrun.py). Returns True if this send was DIVERTED.
+    Fails OPEN on purpose: if the guard cannot be read, a real publication still goes out. A
+    publication silently swallowed by a broken guard is a worse outcome than one extra Slack post."""
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import vp_dryrun
+        task = os.environ.get("VP_TASK", "").strip()
+        if not vp_dryrun.active_for(task):
+            return False
+        p = vp_dryrun.divert(task, surface, target, text)
+        print("DRY RUN — not sent. Would have gone to %s. Written to %s" % (target, p))
+        return True
+    except Exception:
+        return False
+
+
 def post(channel, text):
     if not text.strip():
         sys.exit("refusing to post empty text")
+    surface = "slack-dm" if channel.startswith("D") else "slack"
+    if dryrun_intercept(surface, channel, text):
+        return
     r = call("chat.postMessage", {"channel": channel, "text": text, "unfurl_links": False})
     if not r.get("ok"):
+        receipt("slack", channel, False, len(text.encode()), "chat.postMessage: " + r.get("error", "?"))
         sys.exit("chat.postMessage: " + r.get("error", "?"))
+    receipt("slack-dm" if channel.startswith("D") else "slack", channel, True, len(text.encode()),
+            text.strip().splitlines()[0][:120])
     print(r.get("ts", ""))
 
 
 def upload(target, path, title):
     size = os.path.getsize(path)
+    if dryrun_intercept("file-upload", target, "(binary) %s — %d bytes, title: %s"
+                        % (os.path.basename(path), size, title)):
+        return
     r = call("files.getUploadURLExternal", params={"filename": os.path.basename(path), "length": size})
     if not r.get("ok"):
         sys.exit("getUploadURLExternal: " + r.get("error", "?"))
@@ -73,7 +116,9 @@ def upload(target, path, title):
     r2 = call("files.completeUploadExternal",
               {"files": [{"id": r["file_id"], "title": title}], "channel_id": ch})
     if not r2.get("ok"):
+        receipt("file-upload", ch, False, size, "completeUploadExternal: " + r2.get("error", "?"))
         sys.exit("completeUploadExternal: " + r2.get("error", "?"))
+    receipt("file-upload", ch, True, size, os.path.basename(path))
     print(r["file_id"])
 
 

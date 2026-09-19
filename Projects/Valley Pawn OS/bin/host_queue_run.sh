@@ -56,7 +56,19 @@ validate_job() {  # $1 = job path ; prints reasons; returns 0 = ok, 1 = refused
     first="${line%% *}"
     case "$first" in
       set|echo|printf|sleep|exit|mkdir|true|:) continue ;;
-      [A-Za-z_]*=*) continue ;;                       # VAR=value
+      [A-Za-z_]*=*)                                   # VAR=value — a BARE assignment only
+        # "VAR=value some_command args" is a command with an env prefix. The old rule matched it as
+        # an assignment and skipped script validation entirely, so it would have smuggled ANY binary
+        # past this allow-list. Found 2026-09-18 by a refused self-test. Accept a fully-quoted value
+        # (paths here contain spaces) or an unquoted value with none; refuse anything after it.
+        val="${line#*=}"; bad=0
+        case "$val" in
+          \"*) q="${line//[!\"]/}"; [ "${#q}" -eq 2 ] || bad=1
+               case "$line" in *\") ;; *) bad=1 ;; esac ;;
+          *)   case "$val" in *" "*) bad=1 ;; esac ;;
+        esac
+        [ $bad -eq 1 ] && { echo "REFUSED: line $n is not a bare assignment — a variable prefix must not carry a command: $line"; ok=1; }
+        continue ;;
       bash|/bin/bash|python3|/usr/bin/python3) ;;      # checked below
       *) echo "REFUSED: line $n starts with '$first' (not allowed): $line"; ok=1; continue ;;
     esac

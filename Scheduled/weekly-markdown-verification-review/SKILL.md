@@ -107,3 +107,32 @@ If a store had no fresh check this week (from step 1), replace its bullet with "
 5. Also DM Joshua (not the channel) one extra line the channel post does not carry, since he specifically asked to see trend/frequency, not just a snapshot: "Markdown check [DATE]: company-wide [X] items / $[Y] still not marked down (jewelry $[Yj] / general merch $[Ym]) — was [prior week's totals] if available, otherwise 'first run with the jewelry split, no prior week to compare yet'. Note: the report doesn't currently record WHEN an item was last marked down, only whether it currently has a reduced price — so this can't yet show whether markdowns are actively continuing vs. static. Ask Preston whether a last-price-change date can be added to the report if you want that." Save this run's totals to the running history file `/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/logs/_markdown_verification_history.csv` (append one row per store: `date,store,not_marked_count,not_marked_dollars,jewelry_count,jewelry_dollars,genmerch_count,genmerch_dollars` — via osascript; this file already has a 2026-08-13 baseline row per store in this exact format) so next week's DM can actually compare instead of asking Joshua to remember.
 
 6. If Step 1b's retry still cannot produce usable numbers for ANY store, do not post a partial or broken table to the channel and **do not send any Slack failure message** (Rule 16). Log what happened to `BRAVO_KNOWN_ISSUES.md` and stop. If SOME stores have numbers and others don't, that is not a failure — post the report with the stores you have and mark the rest "no fresh check this week," per Rule 15's skip-and-continue.
+
+
+## Precondition (MANDATORY) — FLEET PUBLISH GUARD
+
+Before publishing ANYTHING — a channel post, a DM to Joshua, a DM to a store manager, a canvas
+refresh, an email, a Facebook post — check whether the fleet publish guard is armed:
+
+```bash
+python3 "$HOME/Documents/Claude/Projects/Valley Pawn OS/bin/vp_dryrun.py" status
+```
+
+Exit code 0 means **ARMED**. When it is armed:
+
+- Do the ENTIRE task for real — same pull, same data, same compile, same message text. The point is
+  to test the task, not to skip it.
+- Publish NOTHING. Not to a channel, not to a DM, not to a manager, not to a canvas, not anywhere.
+- Instead write exactly what you would have published to
+  `Valley Pawn OS/fleet/test_output/<task-name>-<YYYYMMDD-HHMMSS>.txt`, with a first line naming the
+  channel or person it would have gone to.
+- Do NOT write a normal publication receipt. A diverted run is not evidence that the task delivered,
+  and recording it as one would corrupt the fleet audit.
+- Say clearly in your final summary that the guard was armed and nothing was published.
+
+Exit code 1 means not armed — run and publish normally.
+
+This guard is ENFORCED for native scripts (they all publish through `vp_slack.py`, which intercepts
+them). A Cowork task like this one has no such chokepoint, so here the guard is only as good as this
+instruction. Honour it exactly. The guard always carries an expiry and disarms itself, so a stale
+flag can never silence this task indefinitely.

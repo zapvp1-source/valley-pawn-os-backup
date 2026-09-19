@@ -127,6 +127,25 @@ def build():
         body, person, chatname,
         handle UNINDEXED, service UNINDEXED, ts UNINDEXED, from_me UNINDEXED, rowid_src UNINDEXED,
         tokenize="porter unicode61")""")
+    # 2026-09-18: same shrink guard as usearch.py — this DELETE commits before any insert,
+    # so an unreadable chat.db (Full Disk Access denial returns rows=0, not an error) would
+    # silently destroy the whole texts corpus. Count first, refuse to wipe on an empty or
+    # implausibly small read. Override with USEARCH_ALLOW_SHRINK=1.
+    src_rows = src.execute("SELECT count(*) FROM message").fetchone()[0]
+    try:
+        out.execute("CREATE TABLE IF NOT EXISTS meta(k TEXT PRIMARY KEY, v TEXT)")
+        _prev_row = out.execute("SELECT v FROM meta WHERE k='msgs_count'").fetchone()
+        _prev = int(_prev_row[0]) if _prev_row and _prev_row[0] is not None else 0
+    except Exception:
+        _prev = 0
+    if os.environ.get("USEARCH_ALLOW_SHRINK") != "1" and _prev > 0:
+        _floor = int(_prev * float(os.environ.get("USEARCH_SHRINK_FLOOR", "0.5")))
+        if src_rows <= 0 or src_rows < _floor:
+            print("SHRINK GUARD TRIPPED — ABORT msgs: chat.db reports %d messages, under the "
+                  "%d floor (%d indexed). The source is unreadable or partial, not empty. "
+                  "Refusing to DELETE %d rows. Nothing was changed."
+                  % (src_rows, _floor, _prev, _prev), flush=True)
+            sys.exit(3)
     out.execute("DELETE FROM msgs")
     out.commit()
 
