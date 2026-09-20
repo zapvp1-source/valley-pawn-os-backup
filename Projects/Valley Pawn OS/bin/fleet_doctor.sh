@@ -39,6 +39,13 @@ run_tool() {   # run_tool <label> <cmd...> — a diagnostic that CRASHES must ne
   echo
   echo "Nightly self-check. Runs outside Claude; cannot be taken out by a connector outage."
   echo
+  echo "## 0. Sandbox regression suite — does the monitoring itself still work?"
+  echo
+  echo "Every scenario encodes a fault already found and fixed once. A red line here means a"
+  echo "regression has been shipped, and nothing below this section can be trusted."
+  echo
+  run_tool fleet_sim $PY "$BIN/fleet_sim.py"
+  echo
   echo "## 1. Launchd agents pointing at programs that do not exist"
   echo
   run_tool agent_doctor $PY "$BIN/agent_doctor.py"
@@ -82,6 +89,9 @@ MSG=""
 # That is precisely the failure that let the watchdog sit dead through two multi-day outages, and it
 # must be louder than anything it might have found.
 [ -n "$TOOLFAIL" ] && MSG="$MSG""The overnight check could not complete — part of it errored, so tonight's all-clear cannot be trusted and should not be read as one. "
+# A red sandbox means a monitoring regression shipped: the checks themselves are wrong, so every
+# other number in tonight's report is suspect. Say that first and in those terms.
+grep -q "RESULT: .* 0 failed" "$R" || MSG="The self-test of the monitoring itself did not come back clean, so tonight's results are not trustworthy until that is looked at. $MSG"
 [ "${DEAD:-0}" -gt 0 ]   && MSG="$MSG$DEAD background job(s) logged errors this week. "
 [ "${STALE:-0}" -gt 0 ]  && MSG="$MSG$STALE background job(s) have gone quiet for longer than their own schedule allows, which usually means they have stopped running. "
 [ -n "$TOOLFAIL" ] && vlog "TOOL FAILURES:$TOOLFAIL"

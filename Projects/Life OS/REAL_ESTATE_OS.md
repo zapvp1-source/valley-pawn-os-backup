@@ -39,6 +39,21 @@ any EIN or owner-of-record for these properties.
 > | 817 Richmond Ave | **FARMING INFINITY LLC** — grantor DJS Properties, LLC | (already correct) | ✅ **DONE** |
 > | 844 Cypress Crossing | Joshua & Hillary Davis personally | n/a — stays personal | n/a |
 >
+> ### ⚠️ Farming Infinity Tennessee LLC is HILLARY's — confirmed by Joshua 2026-09-19
+>
+> **"Hillary owns the LLC."** Farming Infinity Tennessee LLC is a single-member LLC whose **sole
+> member is Hillary Davis (Hillary D. Holmes)**, not Joshua. This is the **one exception** to the
+> otherwise-uniform "all Farming Infinity entities are single-member LLCs, sole member Joshua
+> Christian Davis" statement that appears elsewhere in this file and in the skills — that statement
+> is correct for FI original, FI Virginia and FI Mountains, and **wrong for FI Tennessee.**
+>
+> Consequences: Hillary signs the LLC's documents, the TN annual report and the receiving side of
+> the Hardinberry deed; the entity is **disregarded to her**, so Hardinberry's Schedule E activity
+> attributes to her side; the W-9/1099-K on the `fitnsee@icloud.com` Zillow account and DCCU ...0951
+> must match. ⚠️ **The EIN (42-3788196) was issued naming Joshua; an EIN change went to the IRS
+> 7/30/2026 and the outcome is unconfirmed** — until it clears, the IRS record and the operating
+> agreement disagree.
+>
 > Deed PDFs live in `~/Library/Mobile Documents/com~apple~CloudDocs/02 Real Estate/<property>/`.
 > **This supersedes the 2026-08-10 framing that Bald Rock "is owned by" Farming Infinity Mountains
 > LLC** — that was always the intent, never a recorded fact. (Bald Rock was never owned by Full

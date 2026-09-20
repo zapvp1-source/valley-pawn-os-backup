@@ -91,6 +91,11 @@ FRIENDLY = {
 }
 
 DRY = "--dry-run" in sys.argv
+# --sim: suppress the DM like a dry run, but DO persist state. Exists so fleet_sim.py can assert
+# BEHAVIOUR (does the state file survive a run as a dict?) instead of grepping the source. A
+# source-grep test passed even with the state-shadowing bug reinstated — mutation testing caught
+# that on 2026-09-19. Never used in production; nothing schedules it.
+SIM = "--sim" in sys.argv
 os.makedirs(LOG_DIR, exist_ok=True)
 
 WEEKDAYS = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
@@ -130,7 +135,7 @@ def load_json(path, default=None):
 
 
 def save_json_atomic(path, data):
-    if DRY:
+    if DRY and not SIM:
         return
     tmp = path + ".tmp"
     with open(tmp, "w") as f:
@@ -371,7 +376,7 @@ def post_delay_notice(entry):
 
 # ---------------------------------------------------------------- Slack DM
 def dm_joshua(text):
-    if DRY or SIMULATE:
+    if DRY or SIMULATE or SIM:
         hb(("SIMULATED DM (not sent): " if SIMULATE else "DRY DM: ") + text)
         return
     tok = slack_token()

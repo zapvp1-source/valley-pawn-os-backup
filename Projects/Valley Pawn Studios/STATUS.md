@@ -178,3 +178,7 @@ place for the true-failure cases).
 
 Slack: replied in-thread to Uriah, Benjie, Martin, and Walker with their post time. One DM to
 Joshua per Rule 16 (plain, no technical detail).
+
+## Recap holds
+
+- 2026-09-19 12:5x ET (fleet-guardian 12:45 pass) — weekly-social-media-recap: `python3 -m vp_social recap --days 7` exited 2 (withhold) with stderr "Publer sync failed: disk I/O error". Ran directly from this session's sandbox mount of Projects/Refine Social Media (no osascript needed for this task — the ledger DB lives inside the mounted folder). A stale `state/social_ledger.sqlite-journal` file is present next to `state/social_ledger.sqlite`, consistent with an interrupted write from a prior run; the "disk I/O error" is the classic SQLite symptom when a journal rollback can't get the locking it needs over some mount types. Did NOT attempt to delete/repair the sqlite journal myself (no diagnosis from metadata — a session with full native host access should confirm whether this is a real interrupted write or just a sandbox-mount locking limitation before touching the file). Posted nothing to #social-media (correct per the task's own Rule 18 withhold path). No Slack post made this pass for this task.

@@ -1140,3 +1140,30 @@ ROA: Rings 568/568 (0), Bracelets 140/140 (0), Earrings 79/79 (0), Pendants 179/
 WAY: Rings 335/335 (0), Bracelets 45/45 (0), Earrings 59/59 (0), Pendants 64/64 (0, Charms treated as 0), Necklaces 72/72 (0), Total 575/575 (0)
 Repeat check: no store or category variance repeats night-over-night at meaningful scale. HAR and LEX overs of +3/+4 are small, ordinary count-timing noise, nowhere near the ROA-pendants-as-charms scale of concern (about +61). No anomalous OVER variance. No DM sent to Joshua per STEP 7, clean night aside from the WAY mid-run stall, noted above and resolved by retry.
 Posted to #jewlery-counts: https://valleypawnworkspace.slack.com/archives/C0BM9NHGTT4/p1789784795047409
+
+## 2026-09-19 Run Record — jewelry-onhand-nightly-pull (Saturday, all 5 stores open)
+
+Precondition gate: `vp_dryrun.py status` = dry run OFF, live publications authorized this run.
+Freeze window: stores close 6:00 PM ET; host-queue Bravo pulls ran 20:37-22:30 ET, entirely inside the freeze window.
+
+BRAVO PULL (Steps 1-4), one host-queue job per store via bravo_pull.sh / jewelry-case-counts-v2, verified against CSV content not just result status:
+- CUL: 8/8 ok. Rings 661, Bracelets 118, Pendants 224, Charms 20, Brooches 18, Earrings 143, Chains 83, Necklaces 66. Report cats: Rings 661, Bracelets 118, Pendants(P+Ch+Br) 262, Earrings 143, Necklaces(Ch+N) 149.
+- HAR: 7/8 ok, Charms error (no stable read after 120s + 1 retry). 2026-09-18 HAR Charms was also error -> treated as 0 per empty-category rule. Rings 462, Bracelets 47, Pendants 114, Brooches 2, Earrings 46, Chains 66, Necklaces 46. Report cats: Rings 462, Bracelets 47, Pendants(P+0+Br) 116, Earrings 46, Necklaces(Ch+N) 112.
+- LEX: 7/8 ok, Brooches error (no stable read + retry). 2026-09-18 LEX Brooches also error -> treated as 0. Rings 294, Bracelets 37, Pendants 55, Charms 1, Earrings 47, Chains 29, Necklaces 18. Report cats: Rings 294, Bracelets 37, Pendants(P+Ch+0) 56, Earrings 47, Necklaces(Ch+N) 47.
+- ROA: 8/8 ok. Rings 566, Bracelets 139, Pendants 112, Charms 65, Brooches 2, Earrings 79, Chains 98, Necklaces 69. Report cats: Rings 566, Bracelets 139, Pendants(P+Ch+Br) 179, Earrings 79, Necklaces(Ch+N) 167. NOTE: Charms=65 is the standing documented ROA pendants-entered-as-charms scope quirk, not a new anomaly.
+- WAY: 7/8 ok, Charms error (no stable read + retry). 2026-09-18 WAY Charms also error -> treated as 0. Rings 337, Bracelets 45, Pendants 59, Brooches 5, Earrings 58, Chains 47, Necklaces 25. Report cats: Rings 337, Bracelets 45, Pendants(P+0+Br) 64, Earrings 58, Necklaces(Ch+N) 72.
+
+PM COUNT SHEETS (Step 5), read via #end-of-day (Chrome vision, lightbox for rotated sheets):
+- CUL (Sandi, 6:30 PM): Rings 670, Bracelets 117, Necklaces 149, Earrings 144, Pendants 262, Totals 1342. Sum-verified 670+117+149+144+262=1342 OK.
+- HAR (Walker Tapley, 6:05 PM): sheet rotated 90 deg with corrections/cross-outs. Reconciled via TOTALS sum-check (787): Rings 462, Bracelets 47, Necklaces 47, Earrings 116, Pendants 115 (sum=787 OK). Lower confidence on the individual Bracelets/Necklaces/Earrings/Pendants row mapping — sum checks out but the sheet had heavy correction marks.
+- LEX (Uriah, 6:13 PM): Rings 297, Bracelets 38, Necklaces 47, Earrings 47, Pendants 55, Totals 484. Sum-verified OK.
+- ROA (Benjie Moore, 6:23 PM): Rings 566, Bracelets 140, Necklaces 168, Earrings 79, Pendants 177, Totals 1130. Sum-verified OK.
+- WAY (Martin D., 6:31 PM): NOT USABLE. EOD form shows "Jewelry & Firearm Counts Completed" initialed done for 9/19/2026, but the attached "Jewelry Daily Count" photo shows only ONE filled date block, dated 9/17/26 (Rings 335/337, Bracelets 45/45, Necklaces 72/72, Earrings 59/58, Pendants 64/64, Totals 575/576) — the next two date blocks on that page are blank, no 9/18 or 9/19 entry anywhere on the sheet photographed. This is a DIFFERENT physical sheet than the one Chadd photographed yesterday (9/18, which had 9/17+9/18 filled with a blank reserved 9/19 block) — two jewelry-count sheets appear to be circulating at Waynesboro. Checked the full channel for a correction/follow-up photo: none exists; Martin D.'s 6:31 PM post is the last message in #end-of-day tonight.
+
+DECISION: Per Step 5's explicit protocol ("if a store's sheet isn't posted yet ... follow the failure path — no partial posts") and this log's own precedent (see prior entries for CUL/HAR and LEX all-or-nothing skips), WAY's manager PM count is unavailable tonight even though Bravo/Expected data is clean for all 5 stores. NOTHING posted to #jewlery-counts. No DM sent to Joshua (Failure Policy v3 override) — one row logged to fleet/FAILURE_LEDGER.md instead.
+
+Bravo pull is fully captured and reusable if Waynesboro posts a corrected/current jewelry-count photo later — do not re-pull Bravo, just re-read #end-of-day for WAY's PM sheet and build the table from the Expected numbers already in this record.
+
+Cross-check for the record (table not built/posted, but checked): CUL, HAR, LEX, ROA all show Counted <= Expected or near-zero variance, consistent with prior nights' scope-driven pattern — no anomalous OVER variance at any of the 4 complete stores.
+
+Process flag (not a Bravo/pipeline issue, for Preston/Joshua's attention only): Waynesboro appears to have two different physical "Jewelry Daily Count" sheets circulating this week — worth having tonight's/tomorrow's closer confirm which page is current and consolidate to one sheet.

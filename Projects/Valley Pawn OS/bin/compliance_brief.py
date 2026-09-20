@@ -109,22 +109,32 @@ def get_token():
 
 
 def slack_dm(text):
-    token = get_token()
-    if not token:
-        return False
-    payload = json.dumps({"channel": JOSHUA_DM, "text": text}).encode()
-    req = urllib.request.Request(
-        "https://slack.com/api/chat.postMessage", data=payload,
-        headers={"Authorization": "Bearer " + token,
-                 "Content-Type": "application/json; charset=utf-8"})
+    """Route through bin/vp_slack.py — the ONE Slack primitive for native scripts.
+
+    ROOT CAUSE, 2026-09-19: this used to POST to the hardcoded channel id D03BHQH5VGT using the
+    vp_ops_engine bot token. That DM channel belongs to a DIFFERENT Slack app, and a bot cannot post
+    into another app's DM — so every send failed with `channel_not_found`. Silently: the only record
+    was a log line nobody read, and the compliance brief had therefore reached Joshua exactly never.
+    The correct move is `conversations.open` against Joshua's USER id, which vp_slack.py already
+    does (fleet_health_sentinel.py was fixed the same way earlier).
+
+    Routing through the primitive rather than copying its logic also means this brief now gets the
+    publication receipt and the fleet publish guard for free, instead of being a fourth private
+    implementation of "send a Slack message" that can rot on its own.
+    """
+    vp = os.path.join(os.path.dirname(os.path.abspath(__file__)), "vp_slack.py")
+    env = dict(os.environ)
+    env.setdefault("VP_TASK", "compliance-brief")
     try:
-        r = json.loads(urllib.request.urlopen(req, timeout=30).read().decode())
-        if not r.get("ok"):
-            log("slack refused: %s" % r.get("error"))
-        return bool(r.get("ok"))
+        r = subprocess.run([sys.executable, vp, "dm", text],
+                           capture_output=True, text=True, env=env, timeout=60)
     except Exception as e:
         log("slack send failed: %s" % e)
         return False
+    if r.returncode != 0:
+        log("slack refused: %s" % ((r.stderr or r.stdout).strip()[:200] or "unknown"))
+        return False
+    return True
 
 
 def days_to(d):

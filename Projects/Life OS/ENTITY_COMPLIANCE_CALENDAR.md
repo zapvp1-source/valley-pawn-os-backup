@@ -16,7 +16,7 @@ This file is the authority for **filing deadlines and registrations only.**
 |---|---|---|---|---|---|
 | **Farming Infinity, LLC** (original) | VA | SCC **S8306609** | 81-3269313 | 5/30/2019 | 817 Richmond Ave ✅ (only property actually deeded to an entity) |
 | **Farming Infinity Virginia LLC** | VA | SCC **12045876** | 42-3980374 | eff. 7/13/2026 | *(intended: 14300 Woods Walk — deed not done)* |
-| **Farming Infinity Tennessee LLC** | VA, + **TN foreign qualified** | VA SCC **12045877**; TN Control **002134214** | 42-3788196 | VA eff. 7/13/2026; **TN Certificate of Authority APPROVED 7/31/2026** (tracking B2026619727, $307.05 paid) | *(intended: 148 Hardinberry — deed not done)* |
+| **Farming Infinity Tennessee LLC** ⚠️ **HILLARY's LLC — sole member Hillary Davis, NOT Joshua** | VA, + **TN foreign qualified** | VA SCC **12045877**; TN Control **002134214** | 42-3788196 | VA eff. 7/13/2026; **TN Certificate of Authority APPROVED 7/31/2026** (tracking B2026619727, $307.05 paid) | *(intended: 148 Hardinberry — deed not done)* |
 | **Farming Infinity Mountains LLC** | VA | SCC **12045879** | 42-4031872 | eff. 7/13/2026 | *(intended: 282 Bald Rock — deed not done)* |
 | **Full Circle Finance Inc** (DBA Valley Pawn) | VA corporation | SCC Entity ID **07794274** | 47-1198118 | — | Valley Pawn, 5 stores, FFL |
 | **Davis Management LLC** | FL (planned) | — | — | **NOT FORMED** | intended management co. |
@@ -99,16 +99,43 @@ agent with a physical TN address, and Northwest may or may not be covering that.
   Deeds, Book 1601, Page 351 (recorded 1/31/2017)."* Any file still saying Anderson is stale.
 - ✅ **Hardinberry is unencumbered** — no mortgage, so no due-on-sale clause to clear there.
 
+## ✅ RESOLVED 2026-09-19 — Farming Infinity Tennessee LLC is HILLARY's
+
+**Confirmed directly by Joshua 2026-09-19: "Hillary owns the LLC."**
+
+Farming Infinity Tennessee LLC is a **single-member LLC whose sole member is Hillary Davis
+(Hillary D. Holmes)** — NOT Joshua. The operating agreement (Hillary 100%) is correct; Joshua's
+attorney engagement letter calling it "her single-member LLC" is correct.
+
+**This is the ONE exception to the otherwise-uniform rule** that every Farming Infinity entity is
+a single-member LLC with Joshua as sole member. Do not flatten it back.
+
+Consequences to carry into every downstream task:
+
+- **Hillary signs** the LLC's documents, the TN annual report, and the receiving side of the
+  Hardinberry deed. Joshua signs only as grantor of his own interest (Step 1 of the two-deed plan).
+- **Disregarded to HILLARY**, not Joshua — Hardinberry's Schedule E activity belongs on her side of
+  the return. They file jointly, so the bottom line may not move, but the attribution, the K-1-less
+  reporting path and any future separate-filing scenario all depend on getting this right.
+- **The TN annual report** ($300 min, due April 1) lists her as the member.
+- **1099-K / W-9** for the `fitnsee@icloud.com` Zillow account and DCCU ...0951 must carry the TIN
+  that matches the corrected membership.
+
+**EIN correction — SENT, and nothing further to chase.** The EIN (42-3788196) was originally issued
+listing Joshua as responsible party; the correction form was **filed with the IRS on 7/30/2026**,
+confirmed by Joshua 2026-09-19. **The IRS does not send a written acknowledgment for a
+responsible-party change**, so the absence of a confirmation letter is expected and is NOT evidence
+that it failed. Do not re-open this as a task or ask Joshua to chase it.
+
+The one place a stale IRS record would actually surface is at a filing: if the **4/1/2027 TN annual
+report** or a **W-9 / 1099-K** on the `fitnsee@icloud.com` Zillow account or DCCU ...0951 comes back
+naming the wrong member. Treat it as a watch item at those moments, not a standing to-do.
+
 ## Open questions that affect compliance
 
-1. **FI Tennessee membership: Joshua or Hillary?** The EIN/TIN lists **Joshua** as sole member;
-   the operating agreement lists **Hillary at 100%**; an EIN change was submitted to the IRS
-   (7/30/2026) and the outcome is unrecorded. Joshua's own attorney email describes it as
-   **"her single-member LLC."** This drives who signs, whose 1040 reports the income, and the TN
-   annual report. **Resolve before the 4/1/2027 TN report and before the deed.**
-2. **FCF Inc's VA annual report date and share-based fee** — unverified (above).
-3. **TN registered agent** — who, and is it current.
-4. **BOI/FinCEN** — current requirement status.
+1. **FCF Inc's VA annual report date and share-based fee** — unverified (above).
+2. **TN registered agent** — who, and is it current.
+3. **BOI/FinCEN** — current requirement status.
 
 ---
 

@@ -2,6 +2,189 @@
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
 
+## 2026-09-19 (final) — FY2026: every bank feed at zero; WF 2797 residual traced to payroll JEs
+
+Joshua ruled the last three feed items ("irs is personal, 4100 corporate repairs and
+maintenance"): the two remaining $5,000 IRS ACH payments went to Shareholder Distributions
+(matching the 08-31 one already there) and check 1450137 for $4,100 to Repairs &
+Maintenance - Corp. **Every connected bank feed is now at Pending (0).**
+
+**WF 2797 residual traced.** QBO -$55,273.46 vs bank $7,835.79, a $63,109.25 gap. All 142
+uncleared register items were scraped and grouped: **53 journal entries debit WF 2797 with
+no matching bank debit — 48 "Check for <employee>" entries totalling $42,273.68 and 5 Gusto
+"Debit net pay / tax / reimbursement" entries totalling $12,866.93, together $55,140.61, or
+87% of the gap.** The rest is ordinary uncleared timing. These are the same entries flagged
+on 9/17, and they are also why Gusto Clearing sits at -$185,667.48 and Payroll wages and tax
+to pay at -$200,373.01 — both impossible signs. **WF 2797 cannot tie until these are
+re-homed or removed as duplicates of the Gusto Clearing side; that is one decision from
+Joshua, and it is the last structural blocker on the 2026 balance sheet.**
+
+**Lowes for PROS** — $7,874.23 vs bank $798.58. Duplicate payments RULED OUT: the monthly
+LOWES BRC PAYMENT entries appear once each Jan–Aug 2026 and a date+amount check across both
+the Transfer and Credit Card Pmt types found no duplicate pairs; the four journal entries in
+that register are all 12/31/2025 conformance work netting into the correct $973.26 closing
+balance. The $7,075.65 overstatement is on the charge side and needs a tie to the Synchrony
+statements.
+
+Register-scraping technique (account ids, the No Status filter, the gridcell column map, and
+the fact that payment/deposit columns read from the register's own account perspective) is
+written up in Quickbooks Set UP/SESSION-COORDINATION.md so the next session doesn't rediscover it.
+
+## 2026-09-19 (later) — FY2026: every bank feed worked to zero; $59,500 of LOC draws to individuals found
+
+Joshua completed the DuPont bank re-authentication, which unblocked the three accounts
+that were throwing Error 185. All feeds were then worked to zero except three items
+that need his ruling.
+
+**THE FINDING.** Twelve Dupont Line of Credit "Loan Advance Online Banking Transfer"
+lines had been posted as transfers to the company's DuPont checking account. Reading the
+FULL bank description — the visible column truncates it — showed the draws went straight
+to named members' share accounts: **Preston Peters $45,500, Walker Tapley $9,000, Tim
+Thompson $5,000 = $59,500**, plus $3,000 to Farming Infinity. All twelve were reversed
+and re-posted to a new Other Current Asset account, **Employee & Officer Advances**
+($59,500.00); the Farming Infinity draw went to Due To Farming Infinity.
+**Joshua must rule whether these are repayable advances, compensation (which would need
+payroll treatment and carries real W-2 exposure), or distributions.** This is the same
+item the register flagged in January as "DCCU→Peters/Thompson/Tapley 12,750" — it has
+grown to $59,500.
+
+**Rule for every future session: on a credit-union feed, read `origDescription`, never
+the truncated Bank description column.** "To Share 0090" is the company account;
+"To LASTNAME,FIRSTNAME … Share nnnn" is a person.
+
+**Mercury sales-tax escrow** — the 9/18 disconnect/reconnect had made QBO download the
+Mercury history twice; all 12 duplicates were excluded, and the account now ties exactly
+at **$2,119.13 = bank** (14,000.00 deposits already recorded + 0.46 − 11,881.33 of
+Virginia sales-tax payments, which post to the sales-tax EXPENSE line per the CPA ruling).
+
+**Now tying exactly to the bank:** WF 3563 $3,200.00 · WF 6507 $0.00 · WF LOC 4116
+$39,555.68 · Sales Tax Reserve $2,119.13 · Delta Amex $0.00.
+
+**Zero pending but a residual remains** (needs a register trace, not feed work): Dupont
+LOC $7,367.01 · Lowes for PROS $7,075.65 over · Amex 3001 $5,378.67 · WF 2797 $63,109.25
+· DuPont savings $37.20.
+
+**Rulings applied** (all from Joshua's existing rulings): Zelle to Gorelov/Quintana/
+Revenko, the $10,000 wire to Flooring By Austin and Florida Custom Marble $6,875.98 all
+to **Leasehold Improvements**; Courtesy Screening $1,000 to Repairs & Maintenance;
+$28,000 of deposits from Farming Infinity moved out of "Capital Contributed" to **Due To
+Farming Infinity**. Leasehold Improvements has gone $45,590.32 (12/31/25) → $184,032.30
+as the St. Augustine build-out is capitalised rather than expensed.
+
+**Still pending, needs Joshua:** two IRS ACH payments of $5,000 (06-30, 08-02) and check
+1450137 for $4,100, all on the DuPont checking account. A third identical IRS $5,000 on
+08-31 already posted to Shareholder Distributions — make all three consistent once he rules.
+
+**Control** — 12/31/2025 re-verified after everything: Amex 0.00, RE 1,017,385.95, NI
+269,825.43, total assets 1,389,394.29, unchanged. Nothing entered the closed year, no plugs.
+
+UI mechanics that cost real time are written up in Quickbooks Set UP/SESSION-COORDINATION.md:
+every "phantom" control in the QBO banking UI (select-all, row checkboxes, the category
+field, row Post/Match links) needs a real HOVER before the click or the click is silently
+swallowed; the page's scroll container is `.banking-main-wrapper`, not the document.
+
+## 2026-09-19 (FY2026 books — Amex/Lowes/DuPont LOC feeds cleared; earlier Mercury/DCCU call corrected)
+
+**CORRECTION to the 2026-09-18 entry.** That entry recorded that the connected account
+ending *3861 was a DCCU personal account. That was wrong — it is a **Mercury** account
+(Sales Tax Reserve Account 3861). Cause: in the QBO bank-feed UI, clicking an account
+tile does not reliably switch the page, and the React props read afterwards still belong
+to the previous account. A header-verification guard is now mandatory before trusting
+anything scraped from that screen (see SESSION-COORDINATION.md, 2026-09-19 entry).
+
+**Feeds cleared**
+- **Amex Card 3001 — 1,149 pending lines worked to zero.** Balance moved
+  **-150,674.98 -> -3,302.36** (bank 2,076.31). The distortion was not duplicates: Amex
+  *payments* had been posted from the WF feed while the *charges* sat unposted.
+- **Lowes for PROS — 105 lines to zero.** -9,833.97 -> 7,874.23 (bank 798.58).
+- **Dupont Line of Credit — 28 of 29 posted as transfers to BUSINESS CHECKING (-S90)**,
+  counterparty verified against the mirror entries in the -S90 feed first.
+  26,558.13 -> 40,058.13 (bank 78,425.14).
+
+**Rulings applied** (Joshua's existing St. Augustine build-out ruling, extended to
+identical vendors): Tile Shop (11 lines, incl. 14,025.28), Florida Custom Marble 1,550.11
+and Saylor Grace Plumbing 900.00 all capitalised to **Leasehold Improvements**
+(151,676.15 -> 166,428.32).
+
+**Control check** — 12/31/2025 balance sheet re-pulled after all posting and is
+**unchanged** (Amex 0.00, RE 1,017,385.95, NI 269,825.43). Nothing entered the closed
+year. No plugs: every entry is a real bank-feed transaction at its real amount.
+
+**BLOCKED, needs Joshua** — QBO Error 185 "More security info required by your bank" on
+BUSINESS CHECKING (-S90), BUSINESS MAIN SHARE SAVINGS (8-S0) and Dupont Line of Credit.
+No new transactions download for those three until the bank MFA is completed.
+
+**Open reclass list** (items parked in a holding category pending Joshua's call) and the
+three residual bank-vs-QBO gaps (Amex 5,378.67 / Lowes 7,075.65 / LOC 38,367.01) are in
+Quickbooks Set UP/FY2026-BALANCE-SHEET-STATUS.md.
+
+**Note for other agents:** other automations were writing to these books during this run
+(401K Traditional, Payroll Liabilities, Bravo POS Clearing, WF 2797 all moved untouched
+by this session). Do not attribute every balance delta between two report pulls to one
+session's work.
+
+## 2026-09-19 (fleet-guardian 12:45 pass — new blocker found: the guardian can't publish its own recoveries)
+
+- **Zero cron-based misses** (Step 1): all 56 enabled+cron tasks have current lastRunAt. The real problem this week is entirely in Step 1b (output verification) and the failure ledger.
+- **Correlated Slack silence across ~25+ weekly tasks, most departments, since ~9/7–9/11** (store-performance, email-campiagns, ai-marketing, social-media, website, ffl-transfer-performance, layaway/loan review, chekkit-updates, blog-posts). Root cause is NOT 25 separate defects — it traces mainly to `mcp__Control_your_Mac__osascript` being absent from this Cowork session class (already ~35 OPEN ledger rows on this since 9/16), which most rerun-safe tasks' own SKILL.md requires for Bravo/Brevo/host-file access.
+- **NEW BLOCKER, found by trying to actually recover something:** ran `vp-ai-search-health-check` end-to-end (no osascript needed) — schema 7/7, llms.txt live, Google NAP 4/5 clean (Harrisonburg's stale "Ste 22" persists, known issue). The Slack post to #ai-marketing was then **denied by the auto-mode classifier** ("[External System Writes]", no one present to approve) — not a connector gap this time, a live-approval gap. Same wall as the 2026-09-16 HUMAN_QUEUE row about scheduled sessions and Slack/Chrome approval, but this confirms it also blocks **fleet-guardian's own recovery posts**, not just individual task runs. Bumped that HUMAN_QUEUE row.
+- `weekly-social-media-recap` attempted directly (its data lives inside the mounted Projects folder, no osascript needed): withheld itself (exit 2) on a real `Publer sync failed: disk I/O error` — a stale `sqlite-journal` file sits next to the ledger db, consistent with an interrupted prior write. Not force-repaired (no diagnosis from metadata); logged to `Valley Pawn Studios/STATUS.md` under `## Recap holds`.
+- New FAILURE_LEDGER row (2026-09-19 12:45) has the full detail and the unpublished AI-search findings verbatim, in case a session with Slack approval wants to post them rather than re-run the check. Run log: `fleet/guardian_runs/2026-09-19-1245.json`.
+- Per policy, this pass sends no DM (12:45 is always silent) — and could not have sent one anyway given the approval denial.
+
+## 2026-09-19
+
+- Enabled scheduled tasks: 55 -> 57
+- Registered scheduled tasks: 195 -> 196
+- Task folders on disk: 196 -> 197
+- ENABLED: ebay-bestoffer-revert-oneshot
+- ENABLED: entity-compliance-check
+- Native agent appeared: com.valleypawn.fleet-doctor.plist
+- Native agent removed: com.valleypawn.dashboarddatacollector.plist
+- Native agent LOADED: com.valleypawn.fleet-doctor
+- Native agent STOOD DOWN: com.valleypawn.dashboarddatacollector
+
+## 2026-09-19 (THE REPAIR LIST IS REAL — every miss spot-checked against the source of record is a genuine absence. No marker drift.)
+
+- **The question this settles:** after the "empty messages" claim collapsed, the 11-task daily repair list was suspect — it had been built before that was known. An audit miss is two different things wearing one face: **TRULY DARK** (nothing posted — real work) vs **MARKER MISSED** (it posted, the marker just stopped matching — a one-line manifest fix). Sending someone to fix a task that is actually working is exactly the waste this week has already produced twice.
+- **NEW `bin/audit_spotcheck.py`** — for any task the audit calls dark, it reads the channel **with the posting app's own token** for that exact window and reports which kind of miss it was.
+- **RESULT — 8 tasks, ~40 dark dates checked, ZERO marker drift.** cloudcover 6/6 · pawn-walk 4/4 · jewelry-onhand 5/5 · dress-code 6/6 · clock-in 5/5 · discount-review 5/5 · chekkit-alert 5/5 · funds-verification 5/5 — **every single one a real absence. The repair list is genuine work and the gate's delivery numbers are trustworthy.**
+- **The tool was wrong twice first, and both corrections mattered.** (1) It counted ANY channel traffic as "something posted", so a day Joshua wrote "Thanks man!" in #general read as marker drift — now only the PUBLISHER's messages count. (2) Even then, #general carries cloudcover, dress-code AND clock-in, so a sibling report made a dark task look like a marker problem — it now cross-references the manifest and names the sibling explicitly: *"STILL DARK — only a sibling report posted here (daily-cloudcover-check)"*. Without both fixes this tool would have reported 5 phantom marker problems and sent the repair work in the wrong direction. **Tenth and eleventh self-corrections in three days.**
+
+## 2026-09-19 (CROSS-APP READ BLINDNESS — one root cause behind three symptoms, including a THREE-DAY false alarm that had reports declared broken while they were working perfectly.)
+
+- **WITHDRAWN: "pawn-walk and sold-review are posting empty messages."** Fleet-guardian logged this on 9/17 21:45, 9/18 12:45 and 9/18 21:45, and put it in HUMAN_QUEUE as a standing defect. **It was wrong.** Verified against the SOURCE OF RECORD — `conversations.history` read with the **vp_ops_engine bot's own token**, the app that actually posted them: **9/19 07:15:33 = 2,029 chars · 9/18 07:15:30 = 2,206 chars · 9/17 16:31:01 = 1,460 chars**, each a complete, correctly-formatted Daily Pawn Walk. Sold-review the same. **The native conversion has been working since day one.** Three days of "needs a human" was a measurement error, and this session came within one step of repeating it a fourth time.
+- **THE ROOT CAUSE, and it explains three unrelated-looking failures at once:** a Slack channel read performed through the **Cowork connector** does not surface the TEXT of messages posted by a **different Slack app** (vp_ops_engine) — they appear present-but-empty — and a bot likewise cannot post into another app's DM channel. That single boundary produced: (1) DM and canvas publications appearing unmeasurable (fixed 9/18 with receipts); (2) `compliance_brief.py` dying on `channel_not_found`; and (3) this three-day phantom defect.
+- **FIXED — `compliance_brief.py` had never once reached Joshua.** It POSTed to the hardcoded channel id `D03BHQH5VGT` (the Cowork app's DM) using the ops-bot token, so every send failed with `channel_not_found` — silently, into a log nobody read. Now routed through `bin/vp_slack.py`, which does `conversations.open` against Joshua's USER id, and which also brings the publication receipt and the publish guard for free instead of being a fourth private copy of "send a Slack message". **Verified live: DM delivered to `D0BKWHP503C` with a receipt** — `compliance-brief 2026-09-19T16:00:08 slack-dm -> D0BKWHP503C ok`.
+- `fleet_health_sentinel.py` was checked for the same bug and is CLEAN — it already opens the DM correctly (it was fixed this way once before, which is precisely why the pattern needed a structural guard rather than a third manual repair).
+- **NEW structural guard + mutation:** no script carrying the ops-bot token may use a hardcoded DM id as a `"channel"` value. **Made PRECISE after it first fired on correct code** — the naive version flagged `fleet_health_sentinel.py` (which names the id in a *comment* explaining this very bug) and the suite itself (which carries the id inside a mutation string). A guard that fires on correct code is the same false-alarm disease being fixed everywhere else, so it now requires the id — or a constant bound to it — to be USED as a channel value on a non-comment line. That was the **ninth** self-correction of my own tooling in two days.
+- **STANDING RULE, written into `expected_outputs.json` and the ledger:** never judge a vp_ops_engine publication by a Cowork-connector channel read. Verify with `bin/vp_slack.py last <channel>` (the posting app's own view) or `bin/vp_audit.py`, which already uses that token. The audit's delivery numbers were never affected — it has always read with the correct token.
+- Ledger: correction row appended withdrawing the claim in full, with the evidence. **Suite now 36/36 green, 8/8 mutations caught.**
+
+## 2026-09-19 (THE REPLAY — the alarm would have caught all 6 outages on day 1, proven against real history, not synthetic faults.)
+
+- **The question the sandbox could NOT answer: "would this have caught 9/14?"** Waiting for the next outage to find out is worse than waiting a week, because the answer only arrives when it is too late to matter. It does not have to be waited for: **60 days of real outcomes are already measured** in `fleet/audit.json` — which publication missed, on which date, since its own inception.
+- **NEW `bin/fleet_replay.py`** walks that real history forward day by day and applies the CURRENT fleet-event rule, producing the alert timeline Joshua *would* have received had this code existed in July.
+- **THE RESULT — 6 distinct outages, every one flagged on DAY 1:** 08/10 (7 down) · 08/14 (5) · **08/17, 4 days, 11 down** · 08/30 (2 days, 5) · 09/10 (7) · **09/12, 6 days, peaking at 23 publications down at once.** 15 alert-days total, and **36 days correctly stayed quiet** — the alarm is not noisy, which is the property that decides whether a real alert ever gets read.
+- **The 09/12 line is the whole point.** That outage ran six days and nobody was told, because the watchdog had been dead with the state-shadowing bug. Under the current code it is a DM on its first morning and an escalating one every day after. That is the difference between the fleet's worst month and a one-day interruption.
+- **THE RULE IS IMPORTED, NEVER RETYPED.** `THRESHOLD` comes from `field_scorecard.FLEET_EVENT_MIN` itself, and the tool **REFUSES to run** if it cannot import it rather than falling back to a guess. A replay carrying its own copy of the threshold would stay green while production used a different number — evidence for a system nobody runs, which is worse than no evidence. Locked by a sandbox scenario **and** a mutation: hardcoding `THRESHOLD = 5` is CAUGHT.
+- **Honest limits written into the tool**, because this is evidence and will be quoted: it replays MISSES (what the audit records), not runs that produced a WRONG number — accuracy is a separate axis. And it proves the alarm would have *fired*; whether anyone acts on the DM is not a code question.
+- **Suite now 35/35 green, 7/7 mutations caught, 0 survived.**
+
+## 2026-09-19 (THE SANDBOX — prove the monitoring works in seconds instead of waiting a week. Then prove the proof.)
+
+- **Joshua, verbatim:** *"we should be able to sandbox everything, test in a simulated environment, and know production is reliable."* Correct, and the reason it matters: waiting seven days to learn whether a detector works is not a test, it is a hope — and the conditions that matter (corrupt state, a deleted script, six reports failing the same morning) only occur during a real outage, which is exactly when you cannot afford to be debugging the thing meant to catch it.
+- **NEW `bin/fleet_sim.py` — a throwaway HOME, real faults planted on purpose, the REAL scripts run against it.** `bin/` is **symlinked, not copied**, so the suite can never drift into testing a second version of the code nobody runs. Fixtures: fake `Library/Logs/valleypawn`, fake `Library/LaunchAgents`, synthetic plists and logs, a manifest and Tier-1 file. Production is never touched. **32 scenarios, all green.**
+- **Every scenario encodes a real bug or false alarm from 9/18–9/19**, so none of them can silently come back: weekly agent idle 4 days is not stale · daily agent quiet 40h is · an old `.err.log` is health, not fault · "FAILED WAY" is a store code · `REFUSED` in the host queue is the allow-list working · a tail crash is still-failing but an earlier-and-fixed one is resolved · the retirement tool refuses a live agent · the allow-list refuses the env-prefix smuggle · the publish guard expires on read, has a ceiling, keeps diverted sends out of the real receipts, and fails OPEN.
+- **THEN THE SUITE WAS TESTED AGAINST ITSELF — `--mutate`.** 32 green proves nothing if the checks cannot fail. Mutation mode re-introduces each fixed bug into a **copy** of `bin/` and requires the named check to go red. **First run: 4 caught, 2 SURVIVED.** Two of the 32 checks were decorative — they passed with the bug reinstated:
+  - the benign-filter check inspected a sliced string rather than the actual count;
+  - the state-shadowing check **grepped the source** for `tstate`, which still appeared elsewhere.
+  Both were rewritten as **behavioural** assertions: read benign.log's own problem count out of the table and require 0; and actually RUN the scorecard against the sandbox and require its state file to survive as a `dict`. Added `--sim` to `field_scorecard.py` (suppress the DM like a dry run, but still persist state) purely so behaviour can be asserted instead of source-grepped. **Source-grepping is a weak test; this is the lesson.**
+- **The mutations themselves were also wrong, and that was found the same way.** Removing the BENIGN filter alone was a no-op because `BAD` had been narrowed in the same sitting; and renaming ONE `tstate` never executed, because the sandbox entry takes the POSTED branch. **A mutation that does not actually reinstate the bug is a false reassurance, exactly like a decorative check.** Both sharpened (restore the over-broad pattern too; rename every occurrence). **Final: 32/32 green, 6/6 mutations CAUGHT, 0 survived.**
+- **Wired into the nightly doctor as section 0.** The sandbox now runs first every night at 02:10; a red result is reported as *"the self-test of the monitoring itself did not come back clean, so tonight's results are not trustworthy"* — ahead of every other finding, because if the checks are wrong the numbers beneath them are meaningless. Verified live: report written, DM sent, ledger row, findings correctly dropped 8 → 3 as the scorecard's own crash entries aged out of the tail.
+- **WHAT THIS PROVES AND WHAT IT DOES NOT — stated in the tool's own docstring so no future session overclaims it.** It proves the CONTROL plane: detectors fire on real faults, stay quiet on healthy ones, survive corrupt input, and cannot report "clean" while broken. It does NOT prove the DATA plane — whether Bravo's UI stalls tomorrow is a property of Bravo, not of this code. **A green run means: if production breaks, we WILL be told. It does not mean production will not break.**
+- Allowlist: +`fleet_sim.py`. All files `py_compile` / `bash -n` clean.
+
 ## 2026-09-18 (HARDENING — the watchdog had been dead for an unknown length of time, and an agent had been failing hourly since August. Both found, both fixed, both now self-checked nightly.)
 
 - **THE WATCHDOG WAS DEAD. Root cause found, not guessed.** `field_scorecard.py` — the fleet's own Tier-1 watchdog — crashed with `AttributeError: 'str' object has no attribute 'setdefault'` on **every run**. Cause: in the TODAY-view loop the loop variable was named `state`, **shadowing the persistent state dict**; after the loop `state` held a string like `"POSTED"`, and `save_json_atomic(STATE, state)` then wrote that string into `field_scorecard_state.json`. So each run corrupted its own state and the next run died on it. **A crashed watchdog raises no alarm about itself** — which is precisely why the 8/17–8/20 and 9/12–9/17 outages ran for days with nobody told. Renamed to `tstate` (with a comment saying never rename it back).
