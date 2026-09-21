@@ -2,6 +2,556 @@
 
 Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guard`, every 5 min, zero Claude usage). Newest first, last 40 event entries kept. Heartbeats go to ~/Library/Logs/valleypawn/registry-guard.log.
 
+## 2026-09-20 22:03 — GREEN
+
+- App running: True (pid 10923, started 2026-09-18 03:52:47)
+- Registries found: 1
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 56 enabled, 0 null value(s), 648793 bytes, mtime 2026-09-20 21:59:04
+- ZodError lines in app logs: 0 (since app start: None)
+- Scheduler-related log lines (last 12):
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+- Force-relaunch flag present: False
+- Registry last written 4 min ago; app up 3970 min
+
+**Events**
+- snapshot saved (196 tasks) -> scheduled-tasks-20260920-220337.json
+
+## 2026-09-20 21:53 — GREEN
+
+- App running: True (pid 10923, started 2026-09-18 03:52:47)
+- Registries found: 1
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 56 enabled, 0 null value(s), 648793 bytes, mtime 2026-09-20 21:49:48
+- ZodError lines in app logs: 0 (since app start: None)
+- Scheduler-related log lines (last 12):
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+- Force-relaunch flag present: False
+- Registry last written 3 min ago; app up 3960 min
+
+**Events**
+- snapshot saved (196 tasks) -> scheduled-tasks-20260920-215336.json
+
+## 2026-09-20 20:43 — GREEN
+
+- App running: True (pid 10923, started 2026-09-18 03:52:47)
+- Registries found: 1
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 56 enabled, 0 null value(s), 650018 bytes, mtime 2026-09-20 20:40:38
+- ZodError lines in app logs: 0 (since app start: None)
+- Scheduler-related log lines (last 12):
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+- Force-relaunch flag present: False
+- Registry last written 2 min ago; app up 3890 min
+
+**Events**
+- snapshot saved (196 tasks) -> scheduled-tasks-20260920-204332.json
+
+## 2026-09-20 20:13 — GREEN
+
+- App running: True (pid 10923, started 2026-09-18 03:52:47)
+- Registries found: 1
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 56 enabled, 0 null value(s), 651440 bytes, mtime 2026-09-20 20:09:09
+- ZodError lines in app logs: 0 (since app start: None)
+- Scheduler-related log lines (last 12):
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+- Force-relaunch flag present: False
+- Registry last written 4 min ago; app up 3860 min
+
+**Events**
+- snapshot saved (196 tasks) -> scheduled-tasks-20260920-201330.json
+
+## 2026-09-20 20:08 — GREEN
+
+- App running: True (pid 10923, started 2026-09-18 03:52:47)
+- Registries found: 1
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 56 enabled, 0 null value(s), 651482 bytes, mtime 2026-09-20 20:07:58
+- ZodError lines in app logs: 0 (since app start: None)
+- Scheduler-related log lines (last 12):
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+- Force-relaunch flag present: False
+- Registry last written 0 min ago; app up 3855 min
+
+**Events**
+- snapshot saved (196 tasks) -> scheduled-tasks-20260920-200830.json
+
+## 2026-09-20 19:03 — GREEN
+
+- App running: True (pid 10923, started 2026-09-18 03:52:47)
+- Registries found: 1
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 56 enabled, 0 null value(s), 651482 bytes, mtime 2026-09-20 19:01:24
+- ZodError lines in app logs: 0 (since app start: None)
+- Scheduler-related log lines (last 12):
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+- Force-relaunch flag present: False
+- Registry last written 2 min ago; app up 3790 min
+
+**Events**
+- snapshot saved (196 tasks) -> scheduled-tasks-20260920-190326.json
+
+## 2026-09-20 18:48 — GREEN
+
+- App running: True (pid 10923, started 2026-09-18 03:52:47)
+- Registries found: 1
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 56 enabled, 0 null value(s), 651524 bytes, mtime 2026-09-20 18:47:55
+- ZodError lines in app logs: 0 (since app start: None)
+- Scheduler-related log lines (last 12):
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+- Force-relaunch flag present: False
+- Registry last written 0 min ago; app up 3775 min
+
+**Events**
+- snapshot saved (196 tasks) -> scheduled-tasks-20260920-184825.json
+
+## 2026-09-20 18:18 — GREEN
+
+- App running: True (pid 10923, started 2026-09-18 03:52:47)
+- Registries found: 1
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 56 enabled, 0 null value(s), 651524 bytes, mtime 2026-09-20 18:15:23
+- ZodError lines in app logs: 0 (since app start: None)
+- Scheduler-related log lines (last 12):
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+- Force-relaunch flag present: False
+- Registry last written 2 min ago; app up 3745 min
+
+**Events**
+- snapshot saved (196 tasks) -> scheduled-tasks-20260920-181823.json
+
+## 2026-09-20 18:13 — GREEN
+
+- App running: True (pid 10923, started 2026-09-18 03:52:47)
+- Registries found: 1
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 56 enabled, 0 null value(s), 651524 bytes, mtime 2026-09-20 18:10:45
+- ZodError lines in app logs: 0 (since app start: None)
+- Scheduler-related log lines (last 12):
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+- Force-relaunch flag present: False
+- Registry last written 2 min ago; app up 3740 min
+
+**Events**
+- snapshot saved (196 tasks) -> scheduled-tasks-20260920-181322.json
+
+## 2026-09-20 18:08 — GREEN
+
+- App running: True (pid 10923, started 2026-09-18 03:52:47)
+- Registries found: 1
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 56 enabled, 0 null value(s), 651566 bytes, mtime 2026-09-20 18:08:04
+- ZodError lines in app logs: 0 (since app start: None)
+- Scheduler-related log lines (last 12):
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+- Force-relaunch flag present: False
+- Registry last written 0 min ago; app up 3735 min
+
+**Events**
+- snapshot saved (196 tasks) -> scheduled-tasks-20260920-180822.json
+
+## 2026-09-20 18:03 — GREEN
+
+- App running: True (pid 10923, started 2026-09-18 03:52:47)
+- Registries found: 1
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 56 enabled, 0 null value(s), 651566 bytes, mtime 2026-09-20 18:03:03
+- ZodError lines in app logs: 0 (since app start: None)
+- Scheduler-related log lines (last 12):
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+- Force-relaunch flag present: False
+- Registry last written 0 min ago; app up 3730 min
+
+**Events**
+- snapshot saved (196 tasks) -> scheduled-tasks-20260920-180322.json
+
+## 2026-09-20 16:18 — GREEN
+
+- App running: True (pid 10923, started 2026-09-18 03:52:47)
+- Registries found: 1
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 56 enabled, 0 null value(s), 652119 bytes, mtime 2026-09-20 16:13:47
+- ZodError lines in app logs: 0 (since app start: None)
+- Scheduler-related log lines (last 12):
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+- Force-relaunch flag present: False
+- Registry last written 4 min ago; app up 3625 min
+
+**Events**
+- snapshot saved (196 tasks) -> scheduled-tasks-20260920-161815.json
+
+## 2026-09-20 16:08 — GREEN
+
+- App running: True (pid 10923, started 2026-09-18 03:52:47)
+- Registries found: 1
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 56 enabled, 0 null value(s), 652119 bytes, mtime 2026-09-20 16:06:28
+- ZodError lines in app logs: 0 (since app start: None)
+- Scheduler-related log lines (last 12):
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+- Force-relaunch flag present: False
+- Registry last written 1 min ago; app up 3615 min
+
+**Events**
+- snapshot saved (196 tasks) -> scheduled-tasks-20260920-160814.json
+
+## 2026-09-20 13:02 — GREEN
+
+- App running: True (pid 10923, started 2026-09-18 03:52:47)
+- Registries found: 1
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 56 enabled, 0 null value(s), 653146 bytes, mtime 2026-09-20 13:02:07
+- ZodError lines in app logs: 0 (since app start: None)
+- Scheduler-related log lines (last 12):
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+- Force-relaunch flag present: False
+- Registry last written 0 min ago; app up 3430 min
+
+**Events**
+- snapshot saved (196 tasks) -> scheduled-tasks-20260920-130259.json
+
+## 2026-09-20 12:52 — GREEN
+
+- App running: True (pid 10923, started 2026-09-18 03:52:47)
+- Registries found: 1
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 56 enabled, 0 null value(s), 653936 bytes, mtime 2026-09-20 12:49:48
+- ZodError lines in app logs: 0 (since app start: None)
+- Scheduler-related log lines (last 12):
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+- Force-relaunch flag present: False
+- Registry last written 3 min ago; app up 3420 min
+
+**Events**
+- snapshot saved (196 tasks) -> scheduled-tasks-20260920-125258.json
+
+## 2026-09-20 09:12 — GREEN
+
+- App running: True (pid 10923, started 2026-09-18 03:52:47)
+- Registries found: 1
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 56 enabled, 0 null value(s), 660613 bytes, mtime 2026-09-20 09:08:21
+- ZodError lines in app logs: 0 (since app start: None)
+- Scheduler-related log lines (last 12):
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+- Force-relaunch flag present: False
+- Registry last written 4 min ago; app up 3199 min
+
+**Events**
+- snapshot saved (196 tasks) -> scheduled-tasks-20260920-091244.json
+
+## 2026-09-20 09:07 — GREEN
+
+- App running: True (pid 10923, started 2026-09-18 03:52:47)
+- Registries found: 1
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 56 enabled, 0 null value(s), 660613 bytes, mtime 2026-09-20 09:06:57
+- ZodError lines in app logs: 0 (since app start: None)
+- Scheduler-related log lines (last 12):
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+- Force-relaunch flag present: False
+- Registry last written 0 min ago; app up 3194 min
+
+**Events**
+- snapshot saved (196 tasks) -> scheduled-tasks-20260920-090743.json
+
+## 2026-09-20 08:07 — GREEN
+
+- App running: True (pid 10923, started 2026-09-18 03:52:47)
+- Registries found: 1
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 56 enabled, 0 null value(s), 660613 bytes, mtime 2026-09-20 08:06:40
+- ZodError lines in app logs: 0 (since app start: None)
+- Scheduler-related log lines (last 12):
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+- Force-relaunch flag present: False
+- Registry last written 0 min ago; app up 3134 min
+
+**Events**
+- snapshot saved (196 tasks) -> scheduled-tasks-20260920-080739.json
+
+## 2026-09-20 07:47 — GREEN
+
+- App running: True (pid 10923, started 2026-09-18 03:52:47)
+- Registries found: 1
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 56 enabled, 0 null value(s), 661608 bytes, mtime 2026-09-20 07:46:49
+- ZodError lines in app logs: 0 (since app start: None)
+- Scheduler-related log lines (last 12):
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+- Force-relaunch flag present: False
+- Registry last written 0 min ago; app up 3114 min
+
+**Events**
+- snapshot saved (196 tasks) -> scheduled-tasks-20260920-074738.json
+
+## 2026-09-20 07:12 — GREEN
+
+- App running: True (pid 10923, started 2026-09-18 03:52:47)
+- Registries found: 1
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 56 enabled, 0 null value(s), 661608 bytes, mtime 2026-09-20 07:11:18
+- ZodError lines in app logs: 0 (since app start: None)
+- Scheduler-related log lines (last 12):
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+- Force-relaunch flag present: False
+- Registry last written 1 min ago; app up 3079 min
+
+**Events**
+- snapshot saved (196 tasks) -> scheduled-tasks-20260920-071236.json
+
+## 2026-09-20 07:07 — GREEN
+
+- App running: True (pid 10923, started 2026-09-18 03:52:47)
+- Registries found: 1
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 56 enabled, 0 null value(s), 661608 bytes, mtime 2026-09-20 07:06:27
+- ZodError lines in app logs: 0 (since app start: None)
+- Scheduler-related log lines (last 12):
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+- Force-relaunch flag present: False
+- Registry last written 1 min ago; app up 3074 min
+
+**Events**
+- snapshot saved (196 tasks) -> scheduled-tasks-20260920-070736.json
+
+## 2026-09-20 04:12 — GREEN
+
+- App running: True (pid 10923, started 2026-09-18 03:52:47)
+- Registries found: 1
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 56 enabled, 0 null value(s), 662356 bytes, mtime 2026-09-20 04:12:15
+- ZodError lines in app logs: 0 (since app start: None)
+- Scheduler-related log lines (last 12):
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+- Force-relaunch flag present: False
+- Registry last written 0 min ago; app up 2899 min
+
+**Events**
+- snapshot saved (196 tasks) -> scheduled-tasks-20260920-041225.json
+
 ## 2026-09-19 22:42 — GREEN
 
 - App running: True (pid 10923, started 2026-09-18 03:52:47)
@@ -451,553 +1001,3 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
 
 **Events**
 - snapshot saved (196 tasks) -> scheduled-tasks-20260919-091103.json
-
-## 2026-09-19 09:06 — GREEN
-
-- App running: True (pid 10923, started 2026-09-18 03:52:47)
-- Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 57 enabled, 0 null value(s), 671382 bytes, mtime 2026-09-19 09:05:05
-- ZodError lines in app logs: 0 (since app start: None)
-- Scheduler-related log lines (last 12):
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-- Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 1753 min
-
-**Events**
-- snapshot saved (196 tasks) -> scheduled-tasks-20260919-090603.json
-
-## 2026-09-19 08:11 — GREEN
-
-- App running: True (pid 10923, started 2026-09-18 03:52:47)
-- Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 57 enabled, 0 null value(s), 672492 bytes, mtime 2026-09-19 08:08:05
-- ZodError lines in app logs: 0 (since app start: None)
-- Scheduler-related log lines (last 12):
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-- Force-relaunch flag present: False
-- Registry last written 2 min ago; app up 1698 min
-
-**Events**
-- snapshot saved (196 tasks) -> scheduled-tasks-20260919-081100.json
-
-## 2026-09-19 07:50 — GREEN
-
-- App running: True (pid 10923, started 2026-09-18 03:52:47)
-- Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 57 enabled, 0 null value(s), 673245 bytes, mtime 2026-09-19 07:48:02
-- ZodError lines in app logs: 0 (since app start: None)
-- Scheduler-related log lines (last 12):
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-- Force-relaunch flag present: False
-- Registry last written 2 min ago; app up 1678 min
-
-**Events**
-- snapshot saved (196 tasks) -> scheduled-tasks-20260919-075058.json
-
-## 2026-09-19 07:15 — GREEN
-
-- App running: True (pid 10923, started 2026-09-18 03:52:47)
-- Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 57 enabled, 0 null value(s), 679328 bytes, mtime 2026-09-19 07:12:36
-- ZodError lines in app logs: 0 (since app start: None)
-- Scheduler-related log lines (last 12):
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-- Force-relaunch flag present: False
-- Registry last written 3 min ago; app up 1643 min
-
-**Events**
-- snapshot saved (196 tasks) -> scheduled-tasks-20260919-071556.json
-
-## 2026-09-19 07:10 — GREEN
-
-- App running: True (pid 10923, started 2026-09-18 03:52:47)
-- Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 57 enabled, 0 null value(s), 681303 bytes, mtime 2026-09-19 07:07:24
-- ZodError lines in app logs: 0 (since app start: None)
-- Scheduler-related log lines (last 12):
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-- Force-relaunch flag present: False
-- Registry last written 3 min ago; app up 1638 min
-
-**Events**
-- snapshot saved (196 tasks) -> scheduled-tasks-20260919-071055.json
-
-## 2026-09-19 04:15 — GREEN
-
-- App running: True (pid 10923, started 2026-09-18 03:52:47)
-- Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 57 enabled, 0 null value(s), 684147 bytes, mtime 2026-09-19 04:13:58
-- ZodError lines in app logs: 0 (since app start: None)
-- Scheduler-related log lines (last 12):
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-- Force-relaunch flag present: False
-- Registry last written 1 min ago; app up 1462 min
-
-**Events**
-- snapshot saved (196 tasks) -> scheduled-tasks-20260919-041544.json
-
-## 2026-09-19 04:10 — GREEN
-
-- App running: True (pid 10923, started 2026-09-18 03:52:47)
-- Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 57 enabled, 0 null value(s), 684147 bytes, mtime 2026-09-19 04:08:46
-- ZodError lines in app logs: 0 (since app start: None)
-- Scheduler-related log lines (last 12):
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-- Force-relaunch flag present: False
-- Registry last written 1 min ago; app up 1457 min
-
-**Events**
-- snapshot saved (196 tasks) -> scheduled-tasks-20260919-041043.json
-
-## 2026-09-18 22:35 — GREEN
-
-- App running: True (pid 10923, started 2026-09-18 03:52:47)
-- Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 57 enabled, 0 null value(s), 684147 bytes, mtime 2026-09-18 22:33:39
-- ZodError lines in app logs: 0 (since app start: None)
-- Scheduler-related log lines (last 12):
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-- Force-relaunch flag present: False
-- Registry last written 1 min ago; app up 1122 min
-
-**Events**
-- snapshot saved (196 tasks) -> scheduled-tasks-20260918-223520.json
-
-## 2026-09-18 22:00 — GREEN
-
-- App running: True (pid 10923, started 2026-09-18 03:52:47)
-- Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 57 enabled, 0 null value(s), 684105 bytes, mtime 2026-09-18 21:56:46
-- ZodError lines in app logs: 0 (since app start: None)
-- Scheduler-related log lines (last 12):
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-- Force-relaunch flag present: False
-- Registry last written 3 min ago; app up 1087 min
-
-**Events**
-- snapshot saved (196 tasks) -> scheduled-tasks-20260918-220017.json
-
-## 2026-09-18 21:55 — GREEN
-
-- App running: True (pid 10923, started 2026-09-18 03:52:47)
-- Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 57 enabled, 0 null value(s), 684148 bytes, mtime 2026-09-18 21:50:43
-- ZodError lines in app logs: 0 (since app start: None)
-- Scheduler-related log lines (last 12):
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-- Force-relaunch flag present: False
-- Registry last written 4 min ago; app up 1082 min
-
-**Events**
-- snapshot saved (196 tasks) -> scheduled-tasks-20260918-215517.json
-
-## 2026-09-18 20:40 — GREEN
-
-- App running: True (pid 10923, started 2026-09-18 03:52:47)
-- Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 57 enabled, 0 null value(s), 685333 bytes, mtime 2026-09-18 20:36:00
-- ZodError lines in app logs: 0 (since app start: None)
-- Scheduler-related log lines (last 12):
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-- Force-relaunch flag present: False
-- Registry last written 4 min ago; app up 1007 min
-
-**Events**
-- snapshot saved (196 tasks) -> scheduled-tasks-20260918-204012.json
-
-## 2026-09-18 19:10 — GREEN
-
-- App running: True (pid 10923, started 2026-09-18 03:52:47)
-- Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 57 enabled, 0 null value(s), 687863 bytes, mtime 2026-09-18 19:07:00
-- ZodError lines in app logs: 0 (since app start: None)
-- Scheduler-related log lines (last 12):
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-- Force-relaunch flag present: False
-- Registry last written 3 min ago; app up 917 min
-
-**Events**
-- snapshot saved (196 tasks) -> scheduled-tasks-20260918-191005.json
-
-## 2026-09-18 19:05 — GREEN
-
-- App running: True (pid 10923, started 2026-09-18 03:52:47)
-- Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 57 enabled, 0 null value(s), 687863 bytes, mtime 2026-09-18 19:03:07
-- ZodError lines in app logs: 0 (since app start: None)
-- Scheduler-related log lines (last 12):
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-- Force-relaunch flag present: False
-- Registry last written 1 min ago; app up 912 min
-
-**Events**
-- snapshot saved (196 tasks) -> scheduled-tasks-20260918-190505.json
-
-## 2026-09-18 18:50 — GREEN
-
-- App running: True (pid 10923, started 2026-09-18 03:52:47)
-- Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 57 enabled, 0 null value(s), 687863 bytes, mtime 2026-09-18 18:48:23
-- ZodError lines in app logs: 0 (since app start: None)
-- Scheduler-related log lines (last 12):
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-- Force-relaunch flag present: False
-- Registry last written 1 min ago; app up 897 min
-
-**Events**
-- snapshot saved (196 tasks) -> scheduled-tasks-20260918-185004.json
-
-## 2026-09-18 18:15 — GREEN
-
-- App running: True (pid 10923, started 2026-09-18 03:52:47)
-- Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 57 enabled, 0 null value(s), 688021 bytes, mtime 2026-09-18 18:14:55
-- ZodError lines in app logs: 0 (since app start: None)
-- Scheduler-related log lines (last 12):
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-- Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 862 min
-
-**Events**
-- snapshot saved (196 tasks) -> scheduled-tasks-20260918-181501.json
-
-## 2026-09-18 18:10 — GREEN
-
-- App running: True (pid 10923, started 2026-09-18 03:52:47)
-- Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 57 enabled, 0 null value(s), 688890 bytes, mtime 2026-09-18 18:06:24
-- ZodError lines in app logs: 0 (since app start: None)
-- Scheduler-related log lines (last 12):
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-- Force-relaunch flag present: False
-- Registry last written 3 min ago; app up 857 min
-
-**Events**
-- snapshot saved (196 tasks) -> scheduled-tasks-20260918-181001.json
-
-## 2026-09-18 18:05 — GREEN
-
-- App running: True (pid 10923, started 2026-09-18 03:52:47)
-- Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 57 enabled, 0 null value(s), 689169 bytes, mtime 2026-09-18 18:05:00
-- ZodError lines in app logs: 0 (since app start: None)
-- Scheduler-related log lines (last 12):
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-- Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 852 min
-
-**Events**
-- snapshot saved (196 tasks) -> scheduled-tasks-20260918-180501.json
-
-## 2026-09-18 17:04 — GREEN
-
-- App running: True (pid 10923, started 2026-09-18 03:52:47)
-- Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 196 tasks / 57 enabled, 0 null value(s), 691223 bytes, mtime 2026-09-18 17:03:37
-- ZodError lines in app logs: 0 (since app start: None)
-- Scheduler-related log lines (last 12):
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-- Force-relaunch flag present: False
-- Registry last written 1 min ago; app up 792 min
-
-**Events**
-- snapshot saved (196 tasks) -> scheduled-tasks-20260918-170457.json
-
-## 2026-09-18 16:14 — GREEN
-
-- App running: True (pid 10923, started 2026-09-18 03:52:47)
-- Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 195 tasks / 56 enabled, 0 null value(s), 692741 bytes, mtime 2026-09-18 16:11:53
-- ZodError lines in app logs: 0 (since app start: None)
-- Scheduler-related log lines (last 12):
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-- Force-relaunch flag present: False
-- Registry last written 2 min ago; app up 742 min
-
-**Events**
-- snapshot saved (195 tasks) -> scheduled-tasks-20260918-161451.json
-
-## 2026-09-18 16:09 — GREEN
-
-- App running: True (pid 10923, started 2026-09-18 03:52:47)
-- Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 195 tasks / 56 enabled, 0 null value(s), 693452 bytes, mtime 2026-09-18 16:07:23
-- ZodError lines in app logs: 0 (since app start: None)
-- Scheduler-related log lines (last 12):
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-- Force-relaunch flag present: False
-- Registry last written 2 min ago; app up 737 min
-
-**Events**
-- snapshot saved (195 tasks) -> scheduled-tasks-20260918-160950.json
-
-## 2026-09-18 13:54 — GREEN
-
-- App running: True (pid 10923, started 2026-09-18 03:52:47)
-- Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 195 tasks / 56 enabled, 0 null value(s), 696217 bytes, mtime 2026-09-18 13:52:47
-- ZodError lines in app logs: 0 (since app start: None)
-- Scheduler-related log lines (last 12):
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-- Force-relaunch flag present: False
-- Registry last written 1 min ago; app up 601 min
-
-**Events**
-- snapshot saved (195 tasks) -> scheduled-tasks-20260918-135437.json
-
-## 2026-09-18 13:09 — GREEN
-
-- App running: True (pid 10923, started 2026-09-18 03:52:47)
-- Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 195 tasks / 55 enabled, 0 null value(s), 697820 bytes, mtime 2026-09-18 13:04:54
-- ZodError lines in app logs: 0 (since app start: None)
-- Scheduler-related log lines (last 12):
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-- Force-relaunch flag present: False
-- Registry last written 4 min ago; app up 556 min
-
-**Events**
-- snapshot saved (195 tasks) -> scheduled-tasks-20260918-130934.json

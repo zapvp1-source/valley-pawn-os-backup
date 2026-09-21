@@ -2,6 +2,184 @@
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
 
+## 2026-09-20 (close) — FY2026: three JEs posted; bank section -194,221.79 → -5,192.18
+
+Joshua ruled two things and both were verified against source data before anything was posted:
+**eBay belongs in the monthly Bravo GL pull**, and **the check-paid payrolls were funded from
+operations cash, not by issuing cheques**.
+
+| JE | Entry | Amount |
+|---|---|---:|
+| `PAYROLL-CLEARING-FIX-` | Dr Gusto Clearing / Cr Payroll wages and tax to pay | 185,000.02 |
+| `GUSTO-CHECKPAY-FIX-` | Dr WF Checking 2797 / Cr Payroll wages and tax to pay | 55,140.61 |
+| `EBAY-CLEARING-FIX` | Dr eBay Clearing / Cr Bravo POS Clearing | 189,029.61 |
+
+All balance-sheet only. **Net income unchanged at -60,288.70** and **12/31/2025 re-verified
+identical after every entry** (RE 1,017,385.95, NI 269,825.43, assets 1,389,394.29).
+
+**Result:** WF Checking 2797 **-55,273.46 → -132.85** against a bank balance of 7,835.79 ·
+eBay Clearing **-189,029.61 → 0.00** · Gusto Clearing **-185,667.48 → -667.46** · Payroll wages
+and tax to pay **-200,373.01 → +39,767.62** (a positive liability for the first time).
+
+**The check-paid payrolls were proven from Gusto's own API**, not inferred: Gusto's `check_amount`
+field — the part of a payroll Gusto does NOT debit because it is paid outside direct deposit —
+matches five of the seven stranded journal entries to the cent (05/26 11,476.61 · 06/05 8,165.72 ·
+06/18 11,840.29 · 07/31 1,263.87 · 09/04 9,527.19).
+
+**eBay was proven from the source code**: Bravo's Consolidated GL carries a per-store `BANK - EBAY`
+line and `gl_to_je.py` maps every `BANK - *` account into Bravo POS Clearing. So the Bravo side of
+every eBay sale was already in Bravo POS Clearing while the cash sat in a separate eBay Clearing
+account — 491 transactions, all 2026, all one direction, nothing ever offsetting them.
+
+**⚠️ What this exposed:** Bravo POS Clearing now reads **-333,433.47**. The entry did not damage it
+— it removed a mask. It had been -950.81 at 31 August only because ~$154K of unmatched `BANK - EBAY`
+debits coincidentally offset an unrelated shortfall. **Re-measure after the 1 October September GL
+import, then reconcile it properly — do not paper it over with a journal entry.**
+
+**Correction to the 2026-09-19 entry:** the Bravo GL mapping store paid-outs to the payroll
+liability is NOT an error. It is the correct counterpart to the check-paid payroll accrual. Leave it.
+
+**401K Traditional -117,175.55 still open.** Gusto's connector only returns payroll-level totals that
+lump 401(k) with all other benefits, and per-employee benefit detail is withheld
+(`unavailable_data: ["benefits"]`) because the connection lacks `employee_benefits:read`. Unblock with
+a Guideline Contributions export, a Gusto benefits report filtered to the 401(k), or — best — granting
+the connector that scope so it becomes self-serve.
+
+## 2026-09-20 (HARDWARE) — Thunderbolt SSD IS ATTACHED, and it is formatted ExFAT (unusable as-is). Time Machine's 16-day "CRITICAL" was a false alarm and is now fixed.
+
+**THE DRIVE ARRIVED AND NOBODY KNEW.** `FLEET_FREEZE_2026-09-16.md` 0.3 and
+`FLEET_PLAN_V2_2026-09-18.md` 4.3 both still read "ordered, not yet arrived." It is attached and
+mounted, verified live, not inferred: `/dev/disk7`, **Sabrent SB-XTM5, 4.1 TB, Protocol
+PCI-Express, Solid State: Yes**, mounted at `/Volumes/SB-XTM5`. Those two files are now stale on
+this point.
+
+**IT CANNOT BE USED FOR EITHER INTENDED JOB UNTIL IT IS REFORMATTED.** `diskutil list` shows a
+`Microsoft Reserved` partition plus `Microsoft Basic Data`, and `diskutil info` reports **File
+System Personality: ExFAT**. That is the factory Windows format. Consequences, both hard:
+- **Time Machine will not accept an ExFAT destination at all** — it requires APFS (or HFS+).
+- **A Parallels VM on ExFAT is a corruption risk**: no journaling, no POSIX permissions, no
+  sparse-file support. An unclean shutdown mid-write can take the Bravo VM with it, and the
+  missing permission bits are their own class of launchd/TCC failure.
+Contents verified before saying "safe to erase": **7 entries, all Sabrent factory files**
+(`.VolumeIcon.icns`, `.sab.ico`, `Autorun.inf`, `System Volume Information/`, Spotlight/fseventsd
+stubs). 15.0 MB used of 4.1 TB. **Zero user data.** Erase is safe; it has not been done — it is
+irreversible, so it waits for Joshua's go.
+
+**THE DISK EMERGENCY IS OVER, WHICH CHANGES WHAT THE DRIVE IS FOR.** On 9/16 the internal volume
+had 46 GB free. Today: **106 GB free** (Data 349 GB used of 460 GB, 76%). Measured consumers:
+Parallels **45 GB**, Claude app support 13 GB, Unified Search 8.9 GB, CloudStorage 177 MB, and
+**Bravo Data Extraction output just 58 MB**. So moving the Bravo output — the thing 0.3 was
+written to do — would reclaim 58 MB. It is not worth a single line of change. Moving the VM
+reclaims 45 GB onto a disk that already has 106 GB free, in exchange for a **new hard dependency
+where an unmounted volume means Bravo does not start and the whole morning pull dies.** That is
+the wrong trade during a reliability freeze. Board decision: **Time Machine destination first,
+cold archives second, VM move only after a mount-gate exists and has proven for a week.**
+
+**TIME MACHINE HAS BEEN HEALTHY THE ENTIRE TIME. THE ALARM WAS THE BUG.** `DISK_HEALTH.md` has
+written `CRITICAL ... Could not determine last successful Time Machine backup time` **every four
+hours since 2026-09-04 — ~100 entries over 16 days.** Root cause, proven not guessed:
+`disk_health_sentinel.py` called `tmutil latestbackup` and nothing else, and that command
+**requires Full Disk Access**, which the launchd runner does not have. It returns a permission
+message; the regex misses; the sentinel converted *"I am not allowed to look"* into *"CRITICAL."*
+Meanwhile the real record: backups completing to the NAS **every ~2 hours all day today**, newest
+`2026-09-20 16:12:39` local — **71 minutes old** at the time of the check. Same Full Disk Access
+gap already logged for unified-search and ffl-guardian; this is its third victim.
+
+**FIXED (`bin/disk_health_sentinel.py`, backup `.bak-pre-tmhardening-20260920`).**
+`tm_last_success_age_hours()` now tries three independent routes and takes the first that answers:
+(1) `tmutil latestbackup` (unchanged, still best when FDA lands), (2) the `SnapshotDates` array
+inside `defaults read /Library/Preferences/com.apple.TimeMachine` — **no FDA required**, (3) the
+dated `.backup` snapshot the destination currently has mounted. Route 2 deliberately reads ONLY
+`SnapshotDates` and **ignores `StableLocalSnapshotDate` / `ReferenceLocalSnapshotDate`** — those
+are LOCAL snapshots, and counting them would report a healthy backup while the NAS was
+unreachable, which is precisely the 8/25 outage this sentinel exists to catch.
+**Tested before shipping, four cases:** a fixture whose local-snapshot dates are deliberately
+NEWER than the real backup dates (parser correctly returns the older, correct one — the trap that
+would have made this fix worse than the bug), empty preferences, an error string, and finally
+**live on the host**: route 1 `None` · route 2 `2026-09-20 16:12:39` · route 3
+`2026-09-20 13:53:37` · RESULT `1.1 hours ago` · VERDICT `healthy - no alarm`. The 18:00 run is
+the first that should come back clean.
+
+**NEW: `bin/storage_diag.sh`** (read-only, allow-listed, sections `volumes|tm|tmprobe|tmcheck|space|big|all`).
+Nothing in `bin/` could answer "what volumes are attached, how are they formatted, where is Time
+Machine actually pointed" — `host_diag.sh` covers agents/registry/logs only, which is why a drive
+plugged into this machine went unnoticed in two planning documents. It never formats, mounts,
+unmounts, erases or deletes. Added to `fleet/host_queue_allowlist.txt` (backup
+`.bak-pre-storagediag-20260920`) per Freeze Rule 4's documented extension path — a new versioned
+script in `bin/`, listed, called by name; the check itself was not widened.
+
+**Also seen, not acted on (one thing at a time):** 7 local Time Machine snapshots accumulated
+today; `com.valleypawn.chrome-tab-hygiene` last exit status 1; `com.valleypawn.commandcenter`
+status -9.
+
+Freeze-compliant: no new scheduled task, no registry change, no launchd/plist change, no
+`fleet/` structural change, no quiesce/relaunch. One backed-up edit to one existing script, one
+new read-only script, four read-only host-queue probes.
+
+## 2026-09-20 — FY2026 payroll clearing FIXED: $370K of impossible balances removed from the balance sheet
+
+**JE `PAYROLL-CLEARING-FIX-` posted 09/20/2026: Dr Gusto Clearing 185,000.02 / Cr Payroll
+wages and tax to pay 185,000.02.** Verified live — Gusto Clearing **-185,667.48 → -667.46**,
+Payroll wages and tax to pay **-200,373.01 → -15,372.99**, net income unchanged, 12/31/2025
+re-verified untouched.
+
+**The cause.** Three overlapping payroll recording paths ran in 2026. (1) `GUSTO-PAY-2026-MM`
+monthly JEs debited payroll expense and credited **Gusto Clearing** — Jan–Apr only, 229,000.98.
+(2) The Gusto ACH drafts out of WF 2797 were worked in the bank feed as *transfers* debiting
+**Payroll wages and tax to pay** — 56 transactions, 185,000.02. (3) From 22 May the Gusto app's
+own per-payroll JEs took over, debiting expense and crediting WF 2797 directly. So for Jan–Apr
+the expense half and the cash half of the same payrolls sat in two different suspense accounts
+and neither could ever clear. Both froze the moment path 3 started, which is the fingerprint
+that identified it.
+
+Not a plug: same identified population on both sides, amount taken from the registers. The
+control that validates the method is that **2025 nets to exactly zero** (454,716.72 each side)
+because the earlier TRUEUP-2025 entry did the same job for 2025 — 2026 simply re-created the
+problem afterwards.
+
+**Left open deliberately, with reasons recorded:** the residual -15,372.99 payroll liability is
+the Bravo GL import mapping store paid-outs to the payroll liability (**fix the import mapping,
+not the balance** — a JE would be undone next month); **401K Traditional -117,175.55** needs
+Guideline's remittance detail to split employee deferral from employer match and was NOT guessed
+at (Gate 3); **Bravo POS Clearing -144,403.86** is mostly September's settlements awaiting the
+1 October GL import (it was -950.81 at 31 August); **eBay Clearing -189,029.61** is the one
+clearing account that never self-corrects and needs its payout-to-revenue mapping decided.
+
+**Needs Joshua:** seven `Journal #Gusto` entries credit WF 2797 for 55,140.61 with no Gusto debit
+at the bank (05/22, 05/28, 06/05, 06/18, 07/30, 09/04, 09/18). Their lines read "Check for
+<employee>" — Gusto's wording for a payroll paid by paper cheque, where Gusto does not draft the
+net pay. How were those seven funded? One answer closes the whole remaining WF 2797 gap.
+
+**Technique now documented** in Quickbooks Set UP/SESSION-COORDINATION.md: non-bank accounts have
+registers via Chart of Accounts → View register (ids recorded); the gridcell 6/7 increase/decrease
+convention and the requirement to prove it against the balance sheet before concluding; and the
+balance-sheet-split-by-MONTH report as the fastest diagnostic — watching two accounts freeze in the
+same month is what cracked this.
+
+## 2026-09-20
+
+- Enabled scheduled tasks: 57 -> 56
+- DISABLED: ebay-bestoffer-revert-oneshot
+- Native agent appeared: com.valleypawn.monday-pull.plist
+- Native agent LOADED: com.valleypawn.monday-pull
+
+## 2026-09-20 (UNIFIED SEARCH - FDA denial PROVEN, not theorised. The guard has now stopped two separate data wipes. Silent-rot bug in the verifier fixed.)
+
+- **Joshua: "fix it you know how."** Everything fixable without a security-settings change is now done. The remaining step is a Full Disk Access grant, which is a system security setting - a session does not make those, whoever asks. It is one click and it is described at the bottom of this entry.
+- **THE CAUSE IS NOW PROVEN.** Two nights ran with the 9/18 shrink guard live. `.refresh_attempt.log` for 2026-09-19 04:50 is unambiguous:
+  - `mail` - `found 0 messages` against 346,748 indexed -> guard aborted, exit 3.
+  - `files` - `found 7712 files (7712 iCloud + **0 mail attachments**)` against 50,407 indexed -> guard aborted, exit 3.
+  - `msgs` - `sqlite3.DatabaseError: **authorization denied**` opening `~/Library/Messages/chat.db`. **That string is macOS TCC refusing the open.** It is not inference, not a timeout, not a missing file - it is the operating system denying the read. The FDA diagnosis is now evidence, and the 9/18 "leading cause, not certainty" hedge is retired.
+  - `notes` - reached the AppleScript fetch and hung, then the whole chain took `Terminated: 15`, so `reminders`, `gdrive`, `photos` and `stats` never ran at all. **That is why `stats.txt` is still dated Sep 12** - and `stats.txt` is exactly what the verifier checks.
+- **THE GUARD HAS NOW PREVENTED TWO WIPES, not one.** 9/18 saved 346,748 mail rows. 9/19 saved those **plus 50,407 file rows**, which would have been rebuilt down to 7,712 - an 85% silent loss of the file corpus that nobody would have noticed until a search came back empty. Verified after both nights: `index.db` mtime still Sep 12 05:02, every table's `max(rowid)` unchanged.
+- **WIDER THAN UNIFIED SEARCH - `com.valleypawn.ffl-guardian` is very probably failing the same way, silently.** `bin/ffl_guardian_run.sh`'s own header says it is routed through `vp-runner` "for TCC access to ~/Documents **and ~/Library/Mail**", and `ffl_guardian.py` reads `~/Library/Mail/V10` directly via `find`. The proof above shows `vp-runner` cannot read `~/Library/Mail`, so the FFL compliance agent is reading an empty candidate set and would report "nothing found" indistinguishably from "nothing to report". **Not touched this session** (different agent, freeze Rule 2, one thing at a time) but it needs verifying against its real output, and it is a compliance surface. Logged in the Open Items Register.
+- **FIXED - the silent-rot bug, which is the reason this went 8 days unnoticed** (`bin/usearch_verify.sh`, backup `usearch_verify.sh.bak-pre-stalegate-20260920`). The verifier's only alarm was the literal `hardened FAILED after 3 attempts` marker - which the wrapper can only write if it SURVIVES all three attempts. On both 9/18 and 9/19 the wrapper was SIGTERM'd mid-attempt-1, so the status stayed `RELAUNCHED`, no ledger row was ever written, and **two nights of 100% failure were indistinguishable from a healthy relaunch**. A verifier whose alarm depends on the thing it is verifying finishing cleanly is not a verifier. NEW **staleness gate**: it now measures the only thing that matters - how old `stats.txt` is - and ledgers one plain-language row per calendar day once the index is 2+ days stale, independent of how or why any run died. Wording branches on whether the guard tripped, so the row names the actual ask. Rule 16 respected: plain sentences, ledger only, no Slack, no jargon, one row per day not per run.
+- **Tested before shipping, six cases, with the BSD-specific `stat`/`date` calls stubbed** (a first harness gave false silence because Linux `stat -f` reports filesystem info, not mtime - the harness was wrong, not the code): current real state ledgers correctly and names Sep 12 - a second run the same day stays silent - the no-guard-message branch reads correctly - a healthy same-day index stays silent - a 1-day-old index stays silent - a missing `stats.txt` reads "has never finished a rebuild" instead of "20716 days". `bash -n` clean.
+- **WHAT IS STILL BROKEN AND WHY IT IS NOT MINE TO FIX.** Granting Full Disk Access hands a background daemon permanent read access to the entire disk - mail, messages, every file. That is a system security setting, and a session does not change those on anyone's behalf, including on direct instruction. It is also genuinely 30 seconds: **System Settings -> Privacy & Security -> Full Disk Access -> `+` -> Cmd+Shift+G -> `/Users/joshuadavis/bin` -> select `vp-runner` -> leave it on.** `vp-runner` already exists for exactly this purpose - `install_agent.sh` REFUSES any agent that does not route through it, precisely so there is ONE grant target for the whole fleet - so this single grant fixes unified-search AND ffl-guardian AND anything else added later.
+- **After the grant, to confirm rather than assume:** run `bash "$HOME/Documents/Claude/Projects/Unified Search/refresh_hardened.sh"` (allow-listed as `usearch_refresh.sh` in the host queue) and check `refresh_hardened.log` shows `MAIL DONE: ~347,000 messages` and a `=== hardened success` line, and that `stats.txt` carries today's date. If FDA on `vp-runner` does NOT clear it, the fallback is to run this one job back through an FDA-capable path rather than re-litigating the 9/17 native migration - the other ten agents from it are unaffected.
+- Freeze-compliant: one backed-up edit to one existing script, logged here. No new task, no registry change, no launchd/plist change, no `fleet/` structural change, no host-queue job dropped, no quiesce.
+
+
 ## 2026-09-19 (final) — FY2026: every bank feed at zero; WF 2797 residual traced to payroll JEs
 
 Joshua ruled the last three feed items ("irs is personal, 4100 corporate repairs and
@@ -143,6 +321,16 @@ session's work.
 - Native agent removed: com.valleypawn.dashboarddatacollector.plist
 - Native agent LOADED: com.valleypawn.fleet-doctor
 - Native agent STOOD DOWN: com.valleypawn.dashboarddatacollector
+
+## 2026-09-20 (THE WEEKLY CHAIN WAS NEVER CONVERTED — root cause of three lost Mondays, found and fixed before a fourth.)
+
+- **Joshua: "cloud cover works fine, find the stuff that doesnt." He was right and the framing was wrong.** Cloudcover's 48.7% was a LIFETIME rate dominated by the 9/12–9/17 outage and by pre-conversion history — it answered "how has this done since July" when the question was "is it working now." It posted 9/18 and 9/19. Rebuilt the view as **day-by-day over 14 days** (`bin/recent_truth.py`, `fleet/WHATS_ACTUALLY_BROKEN_2026-09-20.md`): **zero tasks dead**, every daily worked through 9/11, went dark 9/12–9/16, and returned 9/17–9/19. That block of dashes is one outage, not twelve broken tasks. Real daily defects: **3**, not 11 — `daily-unopened-email-eval` (missed 9/18 AND 9/19), `daily-items-to-price` (WAY 241/247 stall), `jewelry-onhand-nightly-pull` (LEX wedge).
+- **THE REAL FIND — the weeklies FIRED on 9/14 and published nothing.** Not "didn't run": the live registry shows all 12 `enabled: true`, correct crons, correct next-run times, and `lastRunAt` of 9/14 or later. That is the fires-then-dies-mid-run class — the reason `lastRunAt` can never be evidence a task worked.
+- **Why:** the 9/17 fix converted **eleven DAILY tasks** to native launchd agents. **The weekly Monday chain was never converted.** `bin/dep_scan.py` shows **11 of 12 still gate on the osascript/Control_your_Mac connector at step 0**, and that connector is **still absent today** (confirmed by tool search). Monday 9/21 would have failed for the third consecutive week.
+- **NEW `com.valleypawn.monday-pull` (Sundays 16:30)** — native, same proven shape as `morning_pull.sh`. Health-gate, drop triggers, verify, honest certificate. No Claude session, no osascript, so the missing connector cannot reach it. It **publishes nothing**; it puts real CSVs on disk before the Monday tasks wake up so they have something to read instead of dying at step 0.
+- **Report names PROVEN against the live pipeline, not assumed** — a wrong name does not error, it silently returns nothing. Ran it live on a Sunday morning (stores closed, zero contention): **`aged-inventory-summary` 5/5 · `loans-75-days-past-due` 5/5 · `layaways` confirmed valid and running · `employee-activity` and `chekkit-inactives` verified against 44 historical artifacts.**
+- **Two bugs in my own script, found only by running it live — which is the argument for running it live.** (1) `vlog` tees to stdout, so `n=$(pull ...)` returned log text instead of a count and turned a genuine 5/5 into `[: integer expression expected`. All logging inside that function now goes to stderr. (2) I concluded "these handlers never write a result.json" after seeing CSVs with no result file — **wrong**: it is written at the END, after every store. I had looked mid-run. The comment in the code was **corrected in place rather than quietly deleted**, and CSV-polling was kept for reasons that survive the correction: per-store progress, retry just the stragglers, and Rule 12 (a result file is a run record; the CSV is the output).
+- **Still open:** the publish side of the Monday reports still runs through the dead connector. Data on disk removes the hard blocker; converting each publish step to native is what turns Monday from "should work" into "provably works."
 
 ## 2026-09-19 (THE REPAIR LIST IS REAL — every miss spot-checked against the source of record is a genuine absence. No marker drift.)
 

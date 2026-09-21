@@ -30,7 +30,7 @@ Actions each run:
        - a Time Machine backup to the NAS has not completed successfully in the last 72h.
      Otherwise: log only, no escalation flag set.
 """
-import subprocess, os, time, json, glob, re
+import subprocess, os, time, json, glob, re, calendar
 
 OS_DIR = os.path.expanduser('~/Documents/Claude/Projects/Valley Pawn OS')
 LOG = os.path.join(OS_DIR, 'fleet', 'DISK_HEALTH.md')
@@ -63,17 +63,86 @@ def avail_gib(mount):
         return None
 
 
-def tm_last_success_age_hours():
+def _tm_from_tmutil():
+    """Route 1 — the obvious one. REQUIRES Full Disk Access; returns None without it."""
     latest = sh('tmutil latestbackup 2>&1')
     m = re.search(r'(\d{4})-(\d{2})-(\d{2})-(\d{2})(\d{2})(\d{2})', latest)
     if not m:
         return None
     ts = '-'.join(m.groups()[:3]) + ' ' + ':'.join(m.groups()[3:])
     try:
-        t = time.mktime(time.strptime(ts, '%Y-%m-%d %H:%M:%S'))
-        return (time.time() - t) / 3600.0
+        # tmutil prints local time
+        return time.mktime(time.strptime(ts, '%Y-%m-%d %H:%M:%S'))
     except Exception:
         return None
+
+
+def _tm_from_prefs():
+    """Route 2 — completed-backup timestamps straight out of Time Machine's own preferences.
+
+    Needs NO Full Disk Access. Reads ONLY the `SnapshotDates` array inside Destinations (those are
+    backups that actually completed to that destination) and deliberately ignores
+    StableLocalSnapshotDate / ReferenceLocalSnapshotDate, which are LOCAL snapshots — counting
+    those would report a healthy backup while the NAS was unreachable, which is the exact failure
+    this sentinel exists to catch.
+    """
+    out = sh('/usr/bin/defaults read /Library/Preferences/com.apple.TimeMachine 2>/dev/null')
+    if not out or out.startswith('ERROR'):
+        return None
+    newest, in_array = None, False
+    for line in out.splitlines():
+        s = line.strip()
+        if re.match(r'^(SnapshotDates|BackupDates)\s*=\s*\(', s):
+            in_array = True
+            continue
+        if in_array:
+            if s.startswith(')'):
+                in_array = False
+                continue
+            m = re.search(r'(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) \+0000', s)
+            if m:
+                try:
+                    t = calendar.timegm(time.strptime(m.group(1), '%Y-%m-%d %H:%M:%S'))  # stored UTC
+                    newest = t if newest is None else max(newest, t)
+                except Exception:
+                    pass
+    return newest
+
+
+def _tm_from_mounts():
+    """Route 3 — last resort: the dated .backup snapshot the destination currently has mounted."""
+    out = sh("/sbin/mount | grep -oE 'com\\.apple\\.TimeMachine\\.[0-9-]+\\.backup'")
+    best = None
+    for m in re.finditer(r'(\d{4})-(\d{2})-(\d{2})-(\d{2})(\d{2})(\d{2})', out or ''):
+        ts = '-'.join(m.groups()[:3]) + ' ' + ':'.join(m.groups()[3:])
+        try:
+            t = time.mktime(time.strptime(ts, '%Y-%m-%d %H:%M:%S'))
+            best = t if best is None else max(best, t)
+        except Exception:
+            pass
+    return best
+
+
+def tm_last_success_age_hours():
+    """Age in hours of the last COMPLETED Time Machine backup, or None if genuinely unknowable.
+
+    HARDENED 2026-09-20. Previously this called `tmutil latestbackup` and nothing else. That
+    command requires Full Disk Access, which the launchd runner does not have, so it returned a
+    permission error on every run since 2026-09-04 — and the sentinel turned "I am not allowed to
+    look" into "Could not determine ... **CRITICAL**". Sixteen days, ~100 CRITICAL entries, four
+    per day, while Time Machine was in fact backing up to the NAS every two hours the whole time
+    (proven 2026-09-20: newest completed backup was 71 minutes old). A check that cannot tell
+    "broken" apart from "blocked" is worse than no check — it trains everyone to ignore it.
+    Three independent routes now; the first one that answers wins.
+    """
+    for route in (_tm_from_tmutil, _tm_from_prefs, _tm_from_mounts):
+        try:
+            t = route()
+        except Exception:
+            t = None
+        if t:
+            return (time.time() - t) / 3600.0
+    return None
 
 
 def thin_local_snapshots():
