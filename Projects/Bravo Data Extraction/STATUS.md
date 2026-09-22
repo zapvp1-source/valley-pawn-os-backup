@@ -90,3 +90,59 @@ Per-store Total (Expected/Counted/Variance): CUL 1458/1457/-1, HAR 785/791/+6, L
 Posted Expected/Counted/Variance table to #jewlery-counts (C0BM9NHGTT4): https://valleypawnworkspace.slack.com/archives/C0BM9NHGTT4/p1789134489387119
 
 No variance repeats a prior night's pattern in a way that suggests a process/data problem (single-night figures, not compared multi-night here — see nightly runs for trend).
+
+## 2026-09-21 23:50 ET — jewelry-onhand-nightly-pull
+
+Monday — all 5 stores open (Culpeper + HAR/LEX/ROA/WAY). Freeze window (6PM close → 10AM reopen) confirmed on both sides: Bravo pulled between 21:06-23:47 ET tonight (within window), PM count sheets photographed by managers 18:08-18:37 ET tonight (also within window, before close-adjacent freeze).
+
+Host-access note: `mcp__Control_your_Mac__osascript` is confirmed permanently gone from this session class (per CHANGELOG 2026-09-20). Ran entirely via the host job queue (`bravo_pull.sh`, one trigger per store) per this task's own 2026-09-17 HOST ACCESS override. HAR and LEX both wedged on their first pass (host-queue TIMEOUT after self-heal) — ran `bravo_unwedge.sh` once, then re-queued both; both completed clean on retry (HAR finished 23:14, LEX finished 23:47 after a long combo-select stall on Chains that resolved via the handler's own outer-retry ladder, no manual intervention).
+
+**Bravo (expected, on-hand tonight) — all 5 stores 7/8 or 8/8, all errors are the already-confirmed-empty categories (matched against 2026-09-19 CSVs, same category also errored that night):**
+- CUL: 8/8 ok
+- HAR: 7/8 ok, Charms error (confirmed empty, treated as 0)
+- LEX: 7/8 ok, Brooches error (confirmed empty, treated as 0)
+- ROA: 8/8 ok
+- WAY: 7/8 ok, Charms error (confirmed empty, treated as 0)
+
+**PM count sheets (#end-of-day, Chrome vision, sum-verified against each sheet's own TOTALS line):**
+- CUL (Sandi): Rings 672, Bracelets 117, Necklaces 149, Earrings 142, Pendants 260 — sheet total 1340 ✓
+- HAR (Walker Tapley): Rings 461, Bracelets 47, Necklaces 114, Earrings 47, Pendants 116 — sheet total 785 ✓
+- LEX (Uriah): Rings 297, Bracelets 38, Necklaces 47, Earrings 47, Pendants 55 — sheet total 484 ✓
+- ROA (Benjie Moore): Rings 566, Bracelets 139, Necklaces 168, Earrings 74, Pendants 177 — sheet total 1124 ✓
+- WAY (Chadd): **NOT USABLE.** The photo posted tonight is the same physical sheet flagged 9/19 — 9/19 and 9/20 blocks are filled, but the 9/21 block was left blank. No correction posted afterward. Excluded from tonight's table, no data guessed. This is the 2nd time in 3 nights this has happened at Waynesboro — worth a direct nudge to Chadd/Martin D. to consolidate onto one current sheet.
+
+**Variance table (Counted − Expected; category mapping: PENDANTS = Pendants+Charms+Brooches, NECKLACES = Chains+Necklaces per the 2026-08-14 standard):**
+
+| Store | Category | Expected | Counted | Variance |
+|---|---|---|---|---|
+| CUL | Rings | 672 | 672 | 0 |
+| CUL | Bracelets | 118 | 117 | -1 |
+| CUL | Necklaces | 149 | 149 | 0 |
+| CUL | Earrings | 142 | 142 | 0 |
+| CUL | Pendants | 260 | 260 | 0 |
+| **CUL** | **Total** | **1341** | **1340** | **-1** |
+| HAR | Rings | 461 | 461 | 0 |
+| HAR | Bracelets | 47 | 47 | 0 |
+| HAR | Necklaces | 112 | 114 | +2 |
+| HAR | Earrings | 46 | 47 | +1 |
+| HAR | Pendants | 117 | 116 | -1 |
+| **HAR** | **Total** | **783** | **785** | **+2** |
+| LEX | Rings | 294 | 297 | +3 |
+| LEX | Bracelets | 37 | 38 | +1 |
+| LEX | Necklaces | 47 | 47 | 0 |
+| LEX | Earrings | 47 | 47 | 0 |
+| LEX | Pendants | 56 | 55 | -1 |
+| **LEX** | **Total** | **481** | **484** | **+3** |
+| ROA | Rings | 566 | 566 | 0 |
+| ROA | Bracelets | 139 | 139 | 0 |
+| ROA | Necklaces | 166 | 168 | +2 |
+| ROA | Earrings | 79 | 74 | -5 |
+| ROA | Pendants | 179 | 177 | -2 |
+| **ROA** | **Total** | **1129** | **1124** | **-5** |
+| WAY | — | — | — | excluded, no usable PM sheet tonight |
+
+No variance is anomalous in the OVER direction beyond routine noise (largest single-category over is HAR/LEX +2/+3, nowhere near the ROA-pendants-as-charms magnitude that would warrant urgent attention). All within normal scope-noise range documented for this task (Bravo counts case+safe+back-stock+bins vs. sheet counts display case only).
+
+**NOT POSTED to #jewlery-counts** — `slack_send_message` was auto-declined ("no one was available to approve it during this scheduled run"), the same unattended-approval gap already on record fleet-wide for browser/Slack-writing tasks in this session class. Table above is ready to post verbatim once approved. Logged to FAILURE_LEDGER.md per Failure Policy v3 — no DM sent.
+
+Repeat-check: no store/category combo above repeats a prior night's anomaly pattern (HAR/LEX small overs and ROA -5 look like independent one-night noise, not a recurring drift — nothing here matches the standing ROA-pendants-as-charms swing).

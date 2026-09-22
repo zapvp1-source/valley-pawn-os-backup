@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-09-20
+# LIVE STATE - auto-refreshed 2026-09-21
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -17,7 +17,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | Enabled (will fire) | 56 |
 | Registered but disabled | 140 |
 | On disk but never registered | 1 |
-| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 4483 |
+| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 4270 |
 
 ### Enabled tasks
 
@@ -79,21 +79,21 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-09-20 | Valley Pawn OS | - |
-| 2026-09-20 | Unified Search | - |
+| 2026-09-21 | Valley Pawn OS | - |
+| 2026-09-21 | Unified Search | - |
+| 2026-09-21 | Bravo Data Extraction | STATUS.md |
+| 2026-09-20 | Sold Margin Review | STATUS.md |
 | 2026-09-20 | Quickbooks Set UP | - |
+| 2026-09-20 | Precious Metals Settlements | - |
+| 2026-09-20 | Pawn Walks | STATUS.md |
 | 2026-09-20 | Life OS | - |
-| 2026-09-20 | Bravo Data Extraction | STATUS.md |
+| 2026-09-20 | Discount Outlier Review | STATUS.md |
+| 2026-09-20 | Daily Funds Verification | - |
+| 2026-09-20 | Compliance | - |
+| 2026-09-20 | Communcations | - |
 | 2026-09-19 | Valley Pawn Studios | STATUS.md |
-| 2026-09-19 | Sold Margin Review | STATUS.md |
 | 2026-09-19 | Refine Social Media | - |
-| 2026-09-19 | Precious Metals Settlements | - |
-| 2026-09-19 | Pawn Walks | STATUS.md |
 | 2026-09-19 | Jewelry Count Reconciliation | STATUS.md |
-| 2026-09-19 | Discount Outlier Review | STATUS.md |
-| 2026-09-19 | Daily Funds Verification | - |
-| 2026-09-19 | Compliance | - |
-| 2026-09-19 | Communcations | - |
 | 2026-09-18 | Taxes 2026 | - |
 | 2026-09-18 | Landscap Plan | - |
 | 2026-09-18 | Air Quality Monitoring | STATUS.md |

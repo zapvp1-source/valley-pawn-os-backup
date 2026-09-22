@@ -18,6 +18,7 @@ detail?" It is intentionally short. Depth lives in the domain files.
 | 1 | **Full Circle Finance Inc DBA Valley Pawn** — 5 VA pawn stores, FFL dealer | Full Circle Finance Inc | `Valley Pawn OS/BUSINESS_OS.md` | `enterprise-map` + `valley-pawn-context` |
 | 2 | **Real Estate** — Bald Rock STR (Farming Infinity Mountains LLC) + Richmond Ave, Woods Walk, Hardinberry + Cypress Crossing (personal) + future acquisitions | Farming Infinity LLCs (single-member, Joshua) / Joshua & Hillary Davis personally (Cypress Crossing, Hardinberry) — **never FCF Inc**; see `Life OS/ENTITY_STRUCTURE.md` | `Life OS/REAL_ESTATE_OS.md` | `enterprise-map` + `real-estate-context` |
 | 3 | **Personal** — Joshua's own financials, health, family, taxes, life admin | Joshua Davis (and Hillary where joint) | `Life OS/PERSONAL_OS.md` | `enterprise-map` + `personal-life-context` |
+| 4 | **Client Digital Footprint Services** — side service helping other small-business owners (e.g. a brother-in-law) get a website + Google Business Profile + directories/socials set up. Clients: Solaterra LLC, First Coast Tile. | Joshua Davis personally — never FCF Inc, never a Farming Infinity entity | `Life OS/CLIENT_SERVICES_OS.md` | `enterprise-map` + `client-digital-footprint-setup` |
 
 **Why they're kept separate:** different legal entities, different money, different stakes. Never
 let Valley Pawn brand voice/rules bleed into personal content, never charge a personal expense

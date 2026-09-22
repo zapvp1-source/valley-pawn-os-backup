@@ -34,9 +34,16 @@ if [ "$AGE_DAYS" -ge 2 ] && [ "$(cat "$STAMP" 2>/dev/null)" != "$TODAY" ]; then
   echo "$TODAY" > "$STAMP"
   # Plain language only, no jargon (Rule 16). One row per calendar day, never a per-run burst.
   if grep -q "SHRINK GUARD TRIPPED" "$U/.refresh_attempt.log" 2>/dev/null; then
+    # 2026-09-21: this used to tell Joshua the rebuild was "being denied access to Apple Mail and
+    # Messages" and to grant Full Disk Access to ~/bin/vp-runner. THAT WAS FALSE and it sent him a
+    # standing NEEDS_HUMAN request, every night for nine days, for a permission he already had.
+    # Proven that day: vp-runner read ~/Library/Mail (58,042 unread) AND ~/Library/Messages/chat.db
+    # (64,767 rows), and the indexer's own walk found 349,588 .emlx files. Access was never the
+    # problem. The guard trips for some other reason, and this row must NOT invent one — naming a
+    # cause we have not proven is what cost those nine days.
     ledger "unified-search-verify" \
-      "Joshua's mail/text/file search $AGE_TEXT and cannot until someone grants permission on the Mac. The nightly rebuild is being denied access to Apple Mail and Messages, so it stops itself instead of rebuilding — no search data has been lost, but nothing newer than $LAST_GOOD is findable." \
-      "yes — Full Disk Access for ~/bin/vp-runner in System Settings > Privacy & Security. Detail: CHANGELOG 2026-09-18/09-20, Open Items Register 2026-09-18."
+      "Joshua's mail/text/file search $AGE_TEXT — nothing newer than $LAST_GOOD is findable. The nightly rebuild stopped itself rather than risk damaging the existing index, which is the safe behaviour, but it means the search is going stale. No data has been lost. Cause not yet established — it is NOT a permissions problem (that was checked and ruled out on 2026-09-21)." \
+      "no — do NOT grant Full Disk Access; vp-runner already has it. This needs a look at why the rebuild's safety check is tripping, not a settings change."
   else
     ledger "unified-search-verify" \
       "Joshua's mail/text/file search $AGE_TEXT. The nightly rebuild is starting but never finishing." \

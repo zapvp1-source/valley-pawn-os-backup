@@ -1,6 +1,6 @@
 ---
 name: daily-unopened-email-eval
-description: Daily 6:00 PM EOD sweep of all 5 Valley Pawn store email inboxes (Apple Mail) — counts today's arrivals vs. still-unopened, appends to the Missed & Unopened Emails trend log, refreshes the HTML report, posts summary to #emails-missed. Companion to zoom-voicemail-eod-review.
+description: RETIRED 2026-09-21 — replaced by native agent com.valleypawn.mail-brief (18:00 daily), which reads Apple Mail's Envelope Index directly. The Cowork version drove Mail.app through the Control_your_Mac connector, which is permanently absent from scheduled sessions.
 model: claude-sonnet-5
 ---
 

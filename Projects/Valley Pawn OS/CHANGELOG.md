@@ -2,6 +2,151 @@
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
 
+## 2026-09-21 — Employee & Officer Advances resolved: silver buy / store funding → Bravo POS Clearing
+
+Joshua ruled there were no advances — the LOC transfers to Peters/Tapley/Thompson funded a large
+silver buy and store cash (the 6/30 8,000 ties to the Culpeper safe the same afternoon). Posted
+LOC-STORE-CASH-RECLASS 59,500 → Bravo POS Clearing; advances account 0.00; POS Clearing
+−333,433.47 → −273,933.47. Standing rule recorded: LOC/bank transfers to a manager's personal DCCU
+account are store-cash funding → POS Clearing, never an advance.
+
+
+## 2026-09-21 (final) — PAYROLL-0501-MISSING posted; Gusto Clearing resolved to −1,342.66
+
+Joshua signed Gusto back in. Pulled the 04/20–04/26 payroll (paid 5/1): net 8,290.79 = the 05/01
+bank draft to the cent. Its gross, ER taxes, match and reimbursement had never been booked (manual
+JEs stop 4/30, integration starts 5/07). Posted 14,076.42: Dr wages 12,631.03 / ER tax 982.63 /
+match 276.80 / reimb 185.96; Cr Gusto Clearing 11,556.40 / Cr 401K liability 2,520.02. Verified:
+Gusto Clearing +10,213.74 → −1,342.66 exactly as predicted; 401K liability 2,520.02 (one payroll's
+tail); NI −105,008.79. Session total P&L effect of today's corrections: −44,801.79, every dollar
+real employer cost paid and never recorded. 2025 untouched throughout.
+
+
+## 2026-09-21 (late close) — Uncategorized Asset zeroed; Amex holding items reclassed; St Johns rule
+
+Joshua: "stop stopping, fix all you can fix outside of anything needing my ruling." Posted
+UNCAT-ASSET-FIX-2026 (27,000: 21,000 FI deposits → Due To FI, 6,000 HELOC draws → HELOC).
+Reclassed seven Amex items from standing rulings (Epolos→Uniforms, Store Supply→Supplies, five St
+Johns County bills + Parchment + the 7,752.76 Home Depot credit → Distributions); Distributions moved
+exactly +5,993.53. Created bank rule #468 "JOHNS COUNTY" → Distributions (auto-suggest, not a rule,
+had been tagging them Automotive). Verified May payroll complete. Learned: register column order
+differs by account type — read the header. Left for ruling: $59,500 advances, Corporate Filings
+5-way split, six ambiguous Amex vendors. Left for trace: Gusto Clearing 10,213.74 (5/1 duplicates),
+-S90 gap, DuPont consolidation, Lowes over-statement.
+
+
+## 2026-09-21 (close) — 401K-PRIORYR-FIX-2025 posted; 401K Traditional reads 0.00
+
+Joshua ruled: no 2025 amendment unless P&L affected; Silverline not involved; do not touch 2025.
+Pulled Gusto Year-2025: deferral 68,549.68 + match 12,858.61 = 81,408.29 — the unexplained
+residual was 81,408.52. Twenty-three cents. Filed 2025 P&L shows 7,019.07 of match booked vs
+12,858.61 actual → 5,839.54 under-expensed (≈$2K tax, not amendment-worthy). Posted, dated
+09/21/2026: Dr RE 75,568.98 / Dr 401K match expense 5,839.54 / Cr 401K liability 81,408.52.
+Verified: 401K Traditional 0.00, RE −75,568.98 exactly, NI −91,014.07; 12/31/2025 identical.
+Together with PAYROLL-ERCOST-FIX-JA the 401(k) is closed for both years. Gusto's integration
+has booked it correctly since May 2026 — nothing recurs.
+
+
+## 2026-09-21 (late) — POSTED PAYROLL-ERCOST-FIX-JA; 401(k) closed out for 2026
+
+Signed into Gusto (2FA by Joshua), built a Custom report with the Guideline Traditional 401(k)
+employee/employer columns. Jan–Apr 2026: employee 30,880.79, employer 4,886.24 — and the same report
+showed **the four manual GUSTO-PAY JEs booked gross wages only**: employer payroll taxes 19,999.59
+and the match 4,886.24 were paid into balance-sheet accounts and never expensed. **Posted
+`PAYROLL-ERCOST-FIX-JA`** (Dr ER taxes 19,999.59 / Dr 401K match expense 4,886.24 / Dr Gusto
+Clearing 10,881.20 / Cr 401K Traditional 35,767.03). Verified live: 401K −117,175.55 → −81,408.52,
+NI → −85,174.53, every figure to the cent as predicted; 12/31/2025 identical. **Read Gusto JE 15200
+line by line: from May the integration expenses ER taxes and the match correctly** — no mapping
+change needed, nothing recurs. Residual −81,408.52 is entirely 2025 contributions never accrued
+(50,591.26 inside the filed return) → Silverline prior-period question, not in-house.
+Chrome's QBO renderer froze twice on the Gusto Clearing register page; cleared by navigating the
+hung tab away and using a fresh tab. Full Disk Access granted by Joshua and verified on screen
+(`vp-runner` toggled on); effectiveness proves out at tonight's 03:30 run.
+
+
+## 2026-09-21 — nics-weekly-mtd-ranking: recovered via host job queue (osascript confirmed gone); posted MTD ranking
+
+Task's own Step 1 (recover Bravo via `mcp__Control_your_Mac__osascript`) is permanently dead per
+the 2026-09-20 CONFIRMED root-cause row in FAILURE_LEDGER.md. Followed the DATA-FIRST GATE
+OVERRIDE instead: no fresh on-disk nics-transfers CSVs existed for the 2026-09-01..2026-09-21 MTD
+range (latest was 09-01..09-07), so queued a host job (`bravo_pull.sh nics-transfers
+2026-09-01..2026-09-21 CUL,HAR,LEX,ROA,WAY`) via `fleet/host_queue/`. LEX failed report-select
+("Claude NICS Transfers" not selectable after 3 attempts) on both the main pull and one retry;
+succeeded on a second single-store retry. All 5 stores clean on the 3rd combined attempt. Posted
+ranked table to #ffl-transfer-performance: Culpeper $200/8 leads, Harrisonburg $50/2 lags, company
+total $590/23 transfers. **Confirms `bravo_pull.sh` via the host job queue is a working substitute
+for osascript-gated Cowork tasks that need a live Bravo pull** — same pattern already proven for
+monday-bravo-postcheck (2026-09-21, employee-activity) and worth applying to other tasks still
+gated on the dead connector.
+
+## 2026-09-21 — 401(k) root cause proven from QBO alone; unified-search still FDA-blocked
+
+**Books / 401K Traditional (−117,175.55) — DIAGNOSED, nothing posted.**
+Scraped the full register (accountId 43, 204 rows, 5 pages), column convention proved from the
+header row. **Jan–Apr 2026: $66,806.17 remitted to Guideline with zero accrual ever posted**;
+May onward accruals track remittances, i.e. May onward works. Reconciles exactly against the
+balance sheet, and correcting Jan–Apr leaves almost exactly the 50,865.11 inherited from the
+FILED 2025 return — that self-check is the proof. **Cause read, not inferred:** `GUSTO-PAY-2026-04`
+(txnId 6118) is `Dr Store Level Expenses ×4 / Cr Gusto Clearing` and nothing else — no 401(k) line.
+Same defect family and same May-2026 changeover as the Gusto Clearing bug fixed 9/20.
+**Also found: the per-employee detail chased through the Gusto API is already in QBO memos**
+(`Benefit Liabilities For Guideline Traditional 401(k) - for <Employee>`), May-2026 onward only.
+**Still blocked**, but the ask shrank from the full year to **Jan–Apr 2026 only**: the employee-
+deferral vs employer-match split. Employer match has never been recorded in 2026 at all, so it
+moves the P&L — not guessed (Gate 3). Durable fix is granting the Gusto connector
+`employee_benefits:read`.
+Side findings logged, neither actioned: `PAYROLL-PLUG-FIX-2026` (txnId 12210, $1,005.85) whose memo
+falsely claims the liability is zero and which may be an orphan; and an $80.85 Steadily landlord-
+insurance charge sitting in the 401(k) liability, dated inside the closed 2025 year — untouchable.
+**No JE, no deletion, no balance changed; 12/31/2025 untouched.**
+
+**Infrastructure — unified-search index is 9 days stale and the cause is confirmed, not suspected.**
+`.refresh_attempt.log` for the 2026-09-21 04:50 run: mail `found 0 messages` of 346,748; files
+`found 7712` of 50,407; msgs `sqlite3.DatabaseError: authorization denied` opening `chat.db`; notes
+step `Terminated: 15`. The shrink guard aborted every destructive step — **the index is intact and
+nothing was lost** — but it cannot refresh. This is the already-open Full Disk Access item: it needs
+a GUI grant on `/Users/joshuadavis/bin/vp-runner` that only Joshua can make. Same root cause blocks
+reading 2FA codes out of Messages.
+
+
+## 2026-09-21 — weekly-loan-layaway-manager-dms: source file stale 2 weeks; used verified #loan-review/#layaway-review output instead
+
+`loan-layaway-results-latest.json` (the file this task's Step 1 reads) last updated 2026-09-07 —
+14 days stale at run time, and no fresher copy exists anywhere on disk. Per Rule 12, verified
+against actual output instead of trusting the file: `#loan-review` and `#layaway-review` both had
+complete, current, all-5-store posts from earlier the same morning (2026-09-21 08:12 ET), sourced
+from fresh `2026-09-20` Bravo CSV pulls in `Bravo Data Extraction/output/`. Same root-cause shape as
+today's earlier employee-performance finding — a newer posting pipeline (comms_engine.py via the
+native Monday run) has taken over the live weekly reports, but nothing kept
+`loan-layaway-results-latest.json` in sync, so this DM task's own data source silently died while
+the company-facing reports kept working. Fixed forward this run: built all 9 DMs (8 store
+contacts + Preston) from the verified Slack output instead of the stale JSON, per-store loan $ and
+full layaway breakdown, all current as of 2026-09-20. **One field genuinely unavailable this week
+and left blank rather than invented:** loan-balance % (the source #loan-review post itself noted
+"5% policy check pending a current loan balance" for all 5 stores).
+
+**Open gap, not yet fixed:** `loan-layaway-results-latest.json` needs either (a) a job that
+refreshes it from the same native pipeline that now feeds `#loan-review`/`#layaway-review`, or (b)
+this DM task repointed to read those two Slack channels / the dated Bravo CSVs directly instead of
+the JSON snapshot. Next session touching `weekly-loan-layaway-manager-dms` or the loan/layaway
+native pipeline should close this so Step 1's staleness check stops being a live tripwire.
+
+## 2026-09-21 — monday-bravo-postcheck: backfilled #employee-performance; found and fixed stale MTD employee-activity pull
+
+Postcheck found 3 of 4 Monday reports posted (aged-inventory, loan-review, layaway-review, all
+~08:11 ET) but #employee-performance missing. Root cause: `comms_engine.py`'s employee-performance
+renderer reads the first-of-month-keyed `<YYYY-MM-01>_<STORE>_employee-activity.csv`, and that file
+hadn't been refreshed since 2026-09-06 — the native Sunday `monday-pull` agent has been pulling a
+rolling 30-day `employee-activity` file (dated by pipeline date) instead, so the MTD file silently
+went stale for two weeks. Fixed forward: queued a host job (`bravo_pull.sh employee-activity
+2026-09-01 CUL,HAR,LEX,ROA,WAY`) to refresh the MTD file for all 5 stores (succeeded, ~6 min), then
+re-ran `comms_engine.py post --pub employee-performance`, which posted cleanly to
+#employee-performance at 08:47 ET. **Open gap, not yet fixed:** the underlying MTD-file staleness
+will recur every Monday until either the native `monday-pull` agent is changed to pull the
+first-of-month range instead of (or in addition to) the rolling 30-day range, or the
+employee-performance renderer is pointed at the rolling-window file. Next session touching
+`monday-pull.sh` or `comms_engine.py`'s employee-performance path should close this properly.
+
 ## 2026-09-20 (close) — FY2026: three JEs posted; bank section -194,221.79 → -5,192.18
 
 Joshua ruled two things and both were verified against source data before anything was posted:
@@ -44,6 +189,52 @@ lump 401(k) with all other benefits, and per-employee benefit detail is withheld
 (`unavailable_data: ["benefits"]`) because the connection lacks `employee_benefits:read`. Unblock with
 a Guideline Contributions export, a Gusto benefits report filtered to the 401(k), or — best — granting
 the connector that scope so it becomes self-serve.
+
+## 2026-09-21 — FULL DISK ACCESS GRANTED AND PROVEN on all three surfaces. Board verdict on the SSD: RETURN IT.
+
+**FDA IS LIVE.** Joshua granted it this morning. Verified against output, not assumed (Rule 12),
+and the timing itself is the proof because two identical checks straddle the grant:
+- **Mail** — the scheduled 04:50 run today logged `found 0 messages` against 346,748 indexed and
+  correctly tripped the shrink guard (exit 3). A rebuild triggered by hand at **10:34 logged
+  `found 349468 messages`**. Same script, same machine, six hours apart. The source became
+  readable in between.
+- **Time Machine** — `tmutil latestbackup` returned nothing on 9/20 and returned
+  `2026-09-21 08:49:05` today.
+- **Messages** — `chat.db` no longer raises `authorization denied`.
+The full index rebuild is running now rather than waiting for 04:50 tomorrow. This unblocks
+unified-search AND `com.valleypawn.ffl-guardian`, which has very probably been reading an empty
+candidate set for weeks — **that one still needs verifying against its real output** before anyone
+calls it healthy. HUMAN_QUEUE row closed.
+
+**The 16-day false CRITICAL is confirmed dead.** `DISK_HEALTH.md`: CRITICAL at 2026-09-20 14:00,
+then **OK at 18:00, 22:00, and OK again 09-21 06:00 and 10:00**. `criticalOpen: false`. Note the
+fix earns its keep independently of the FDA grant — route 2 (Time Machine preferences) works with
+no special access at all, so this check no longer silently depends on a permission that can be
+revoked or lost on a macOS update.
+
+**SSD — BOARD SAYS RETURN IT.** Panel: SRE/storage, desktop/Mac systems, finance-discipline
+reviewer. The drive was bought on 2026-09-16 to solve disk pressure. Measured today, that case
+has collapsed:
+- Internal free space **46 GB (9/16) → 111 GB today**, holding steady at 74-78% used across every
+  4-hour sample for five days. The actual cause of the 2026 crunch — Google Drive's 172 GB local
+  mirror — was permanently fixed 2026-08-21 by switching Drive to streaming. Eviction risk is
+  also gone: "Optimize Mac Storage" is OFF and dataless files have read 0 for ten straight days.
+- The Bravo Data Extraction output the plan meant to relocate is **58 MB**. Measured, not assumed.
+- Moving the 45 GB Parallels VM reclaims 45 GB on a disk with 111 GB free, and buys a **new failure
+  mode where an unmounted volume stops Bravo and kills the morning pull** — the single most
+  fragile path in the fleet, during a freeze whose whole purpose is removing moving parts.
+- Backup redundancy is already 3-2-1 and verified working: Time Machine to the NAS (completed
+  08:49 today, ~every 2 hours, 4.0 TB free), Backblaze offsite, GitHub for the OS folder.
+- **The decisive point: the only job left for it is Time Machine, and Time Machine cannot use a
+  TB5 drive.** A backup target is bandwidth-trivial. On this 2022 M1 Max it would run at TB4 speed
+  anyway. Roughly $800 is being paid for sequential throughput that nothing in this architecture
+  will ever read or write.
+This also matches the 2026-09-18 audit's own conclusion — *"hardware is not why the fleet is at
+62%. Software gaps are. Buy no more hardware for reliability reasons until the gate is being met."*
+The binding constraint is the serial one-VM-one-screen Bravo queue; no drive shortens it.
+**Recommended instead:** return it; if the local fast-restore path is wanted, a ~$200 4 TB USB-C
+SSD does the identical Time Machine job. Saves ~$600 and keeps the benefit. Nothing was written
+to the drive and it was never reformatted, so it is returnable in original condition.
 
 ## 2026-09-20 (HARDWARE) — Thunderbolt SSD IS ATTACHED, and it is formatted ExFAT (unusable as-is). Time Machine's 16-day "CRITICAL" was a false alarm and is now fixed.
 
@@ -321,6 +512,35 @@ session's work.
 - Native agent removed: com.valleypawn.dashboarddatacollector.plist
 - Native agent LOADED: com.valleypawn.fleet-doctor
 - Native agent STOOD DOWN: com.valleypawn.dashboarddatacollector
+
+## 2026-09-21 (THE CHEKKIT FAILURE WAS A PERMISSION CARD, NOT A SITE — fix scheduled 02:10, self-verifying.)
+
+- **Joshua: "chekkit has worked fine for months."** He was right. I had repeated the watchdog's own claim that `dashboard.chekkit.io` "would not settle to a usable page state." Tested directly: the leaderboard loaded **first attempt, complete data** (36 invites, full employee table, all six locations). Evidence I should have weighed first — `chekkit-unanswered-alert` and `-eod-followup` post EVERY day, so Chekkit data was visibly flowing. **Withdrawn in the ledger and the CHANGELOG.**
+- **THE REAL CAUSE, stated factually by the task itself at 03:27:** *"both the Chrome extension and the built-in browser refused to open dashboard.chekkit.io in this unattended overnight session (no live user present to approve site access)."* A **permission card**, not a site outage.
+- **The fix already existed and this task was left off it.** `chromePermissionMode = "skip_all_permission_checks"` was applied to 27 tasks on 2026-09-09 precisely so unattended runs would not stall on that card. Live registry now confirms: `review-obtained-last-week` has **mode=None and NO allowed domains at all**; `google-reviews-post-watchdog` HAS `dashboard.chekkit.io` allow-listed but **mode='follow_a_plan'**, which still blocks. That is both failures explained, at 03:27 and at 11:02.
+- **SCOPE HELD TO TWO TASKS ON PURPOSE.** The audit found **25 of 35** enabled browser-driving tasks lack the flag — but `chekkit-unanswered-alert` also lacks it and posts successfully every single day. So the flag is **not** universally required, and blanket-applying it would mean changing things that work to fix things that do not (Rule 17). Only the two with recorded failures are being touched.
+- **NEW `com.valleypawn.chekkitperms-oneshot` (02:10 tonight).** A live registry edit does **not** hold — the app resyncs from its own per-task session state, which is exactly how the 0.1 fleet diet silently reverted 66→167 and sat wrong for 2.5 hours. So this uses the proven quiesce pattern from `chromeperms_apply.sh`: wait for any scheduled run to finish, quit Claude.app, confirm every process is dead, confirm the registry has stopped being written, edit, relaunch — **then re-read the registry 45s AFTER relaunch to prove the change survived the resync.** Additive (domains appended, never dropped), backed up, atomic, and it aborts rather than guessing if a target id is missing. Installed and verified healthy.
+- **AUDIT TOOL CORRECTED MID-FLIGHT.** The first version reported "enabled tasks scanned: **0**" — which I treated as a tool failure rather than a clean fleet, and it was: the registry's container is `scheduledTasks` (a list) with records keyed `id`, not `taskId`. Rewritten, then found 55 enabled / 35 browser-driving. **A zero from a tool is a tool failure until proven otherwise.**
+- **Standing note for future sessions:** `CHEKKIT_API_STATUS.md` (2026-09-05) already established that Chekkit's internal API is a dead end — JWT-scoped to the UI, 403 on the endpoints we need — and drafted an email to Chekkit support asking for real webhook credentials. That email is still unsent and would retire ~2 hours of nightly clicking across four tasks.
+
+## 2026-09-21 (FIX PASS — four fixed, two were never broken, one genuinely blocked.)
+
+- **FIXED `daily-unopened-email-eval`** (worst task in the fleet, 1/7 days). New native agent `com.valleypawn.mail-brief`, 18:00 daily, reading Apple Mail's Envelope Index directly — no connector, no AppleScript. Rendered correctly (216 unopened, real senders/subjects), installed, verified healthy. The Cowork task is **disabled** so the two cannot both fire.
+- **RESOLVED — the search index is current.** `MAIL DONE: 349,437 messages`, newest mail timestamped **today 12:51**, index.db written 11:14. It was never a permissions problem and the discovery step was never empty: the indexer's own walk finds **349,588 .emlx files**. Nine days of "grant Full Disk Access" was chasing a cause that did not exist.
+- **FIXED the false alarm that caused it.** `usearch_verify.sh` was hard-coded to tell Joshua the rebuild was "being denied access to Apple Mail and Messages" and to grant FDA — a standing NEEDS_HUMAN request, nightly, for a permission he already had. Rewritten to state what is known (the guard tripped, the search is going stale, no data lost) and explicitly **"do NOT grant Full Disk Access; vp-runner already has it."** Naming an unproven cause is what cost the nine days.
+- **FIXED, and it was my bug: the Monday pull was stamping the wrong date.** `monday-bravo-combined-compile` reported "today's data pull did not include that report at all for any store" while **all 25 CSVs sat on disk under 2026-09-20** — I scheduled the pull for Sunday 16:30 to beat the Sunday-evening chain, so every file carried SUNDAY's date while the Monday tasks look for TODAY's. Now runs **Sunday 16:30 AND Monday 05:30**: Sunday still feeds the Sunday-evening tasks (markdown-pull 19:00, cell-gapfill 20:30), Monday 05:30 is what the Monday reports actually read. Re-pulled immediately with Monday's date so today's tasks are not left short.
+- **NOT BROKEN — `daily-items-to-price`.** Per-store row counts show all five stores pulling every day (WAY 238 today, 226 on 9/20, 229 on 9/19) and the report posted 9/19, 9/20 and 9/21. The "WAY stalls at 241 of 247" was a **single incident on 9/18**, not a standing defect. Removed from the repair list rather than fixed.
+- **NOT BROKEN — `jewelry-onhand-nightly-pull`.** 8 rows per store for all five stores on 9/17, 9/18 and 9/19. Blank 9/20 (Sunday, closed) and blank so far today only because it runs at 20:30.
+- **WITHDRAWN — "Chekkit is blocked."** I reported that `dashboard.chekkit.io` would not load, quoting the watchdog's own failure row. **Wrong.** Joshua: "chekkit has worked fine for months." Tested directly: the leaderboard loaded on the first attempt with complete data (36 invites, full employee table, all six locations). Evidence I should have weighed first: `chekkit-unanswered-alert` and `chekkit-unanswered-eod-followup` post EVERY day — the data was visibly flowing. **Third time this week a session repeated a cause a failed run invented about itself** (after the 1Password claim and "pawn-walk posts empty messages"). `review-obtained-last-week`'s real cause is UNKNOWN and stays unknown until tested.
+- **`monday-bravo-combined-compile` held rather than published, which was CORRECT** — the month-to-date sales file was last refreshed Sep 6 and it refused to present two-week-old figures as current (Rule 18). `weekly-store-kpis` ran its own host-queue pull at 10:42 today to refresh exactly that file, using the data-first path without being told to.
+
+## 2026-09-21 (TWO THINGS SETTLED: the connector is gone for good, and the Full Disk Access theory was wrong.)
+
+- **SETTLED — `Control_your_Mac` is NOT available to scheduled sessions, whatever the app shows.** Joshua reported his connectors appear connected. An interactive session cannot answer this (tool availability differs by session type), so a **one-shot probe task ran inside a real scheduled session**: exact tool `mcp__Control_your_Mac__osascript` present = **NO**; `select:` returned "No matching deferred tools found"; keyword search returned only unrelated tools. The probe was written to explicitly NOT count near-matches like computer-use — a false YES would have sent someone to rebuild eleven tasks on a capability that does not exist. **Stop re-testing this.** Native/host-queue is the permanent path.
+- **CORRECTION — `vp-runner` HAS Full Disk Access, and the theory that it didn't was never tested.** The 9/18 CHANGELOG blamed the never-successful mail rebuild on missing FDA, called it "a GUI-only grant no agent can perform," and — to its credit — named the proof required: one `ls ~/Library/Mail` through vp-runner from a launchd context. **That test has now been run and the theory is FALSE.** `bin/fda_probe.py`, executed through the host queue (which runs under vp-runner): `ls ~/Library/Mail` → OK · Envelope Index located · opened read-only · **UNREAD COUNT = 58,042**. **Do not ask Joshua for a Full Disk Access grant — he already has it, and the unified-search rebuild failure now needs a different root cause.**
+- **Also checked rather than assumed:** the unified-search `mail` table has **no read/unread column** (`subject, sender, recipients, body, path, mailbox, account, ts, msgid`), so that index could never have answered "unopened." Apple's Envelope Index is the only source, and it is reachable.
+- **NEW `bin/mail_unread.py` — the fleet's worst task no longer needs the dead connector.** `daily-unopened-email-eval` sat at **1 of 7 days** because it drove Mail.app through the connector. It now reads Apple Mail's Envelope Index directly, read-only, natively. Two schema corrections found by running it live: `subject` and `sender` are **integer foreign keys** into `subjects`/`addresses` (selecting them raw returned ints and crashed the first run — now LEFT JOINed so a missing lookup degrades to "(no subject)" rather than dropping mail); and **every message appears once per mailbox it lives in**, so the raw 24h count read **310** when the true figure is **205** — now collapsed on `global_message_id`. An inbox report that inflates by 50% is worse than none.
+- **Monday 9/21 partial recovery:** `monday-bravo-postcheck` (8:37), `weekly-returns-summary` (1:22 AM) and `weekly-timekeeping-analysis` (12:37 AM) all published for the first time since 9/07 — the Sunday native pull put clean data on disk and the data-first override let them proceed. `monday-bravo-combined-compile` and `review-obtained-last-week` still missed; forensics in progress.
 
 ## 2026-09-20 (THE WEEKLY CHAIN WAS NEVER CONVERTED — root cause of three lost Mondays, found and fixed before a fourth.)
 

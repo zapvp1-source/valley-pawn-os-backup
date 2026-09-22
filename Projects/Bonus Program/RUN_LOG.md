@@ -2,6 +2,23 @@
 
 Newest first. One entry per engine run or material change. Scheduled tasks append here.
 
+## 2026-09-21 — bonus-paid-verify: August 2026 payout — MISMATCH found
+
+Payday 2026-09-18 (August 2026 earning month, close.json). Expected total per `gusto_lines.csv`:
+$4,837.84 across 7 people. Actual Gusto payroll (main run check-date 9/18, uuid a6a40624…, +
+off-cycle correction check-date 9/21, uuid 30f9d1cb…) paid $5,220.15 in bonus lines. NOT a clean
+match — DM sent to Joshua (D03BHQH5VGT) with the breakdown:
+- Michael Chambers (HAR) — owed $344.48 — **not paid at all**
+- Martin Dowden (LEX $182.51 + ROA $2.00 = $184.51) — **not paid at all**
+- Walker Tapley $1,088.26, Uriah Tiglao $555.09, Benjie Moore $1,354.20 (Gusto legal name "George
+  Moore"), Joseph Epperly $411.30 (paid via the 9/21 correction) — all match.
+- Preston Peters — owed $900, actually paid $1,400 (+$500 via the 9/21 correction run).
+- A Gusto employee "Robert Swagger" (uuid 1f74c46d…) received a $411.30 bonus in the main 9/18
+  run — not in the August bonus calc at all; same dollar amount as Joseph Epperly's, so possibly a
+  UUID mix-up rather than an intentional extra payment. Flagged to Joshua, not corrected (this task
+  never touches Gusto).
+No changes made in Gusto. Trend tab note not yet added — see follow-up.
+
 ## 2026-09-06 — REBUILD + July & August 2026 closes (session: bonus department review)
 
 **Built (all additive, nothing hardened was modified):**

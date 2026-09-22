@@ -15,6 +15,13 @@
 #
 # It does NOT publish anything. Its only job is to put CSVs on disk so the Monday compile steps
 # have something real to read. Publishing stays where it is until each report is converted too.
+#
+# RUNS TWICE: Sunday 16:30 AND Monday 05:30. That is not belt-and-braces, it is a correctness fix.
+# The Sunday-only schedule (my first version) stamped every CSV with SUNDAY's date, and the Monday
+# tasks look for TODAY's date — so monday-bravo-combined-compile reported on 2026-09-21 that "today's
+# data pull did not include that report at all for any store" while all 25 files sat on disk under
+# 2026-09-20. The Sunday run still matters for the Sunday-evening tasks (markdown-pull 19:00,
+# cell-gapfill 20:30); the Monday 05:30 run is what the Monday reports actually read.
 AGENT="monday-pull"
 . "$HOME/Documents/Claude/Projects/Valley Pawn OS/bin/vp_lib.sh"
 RENDER=0; for a in "$@"; do [ "$a" = "--render" ] && RENDER=1; done
