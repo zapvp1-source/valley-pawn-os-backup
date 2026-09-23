@@ -18,7 +18,7 @@ obvious, ask Joshua only for the genuine gap, then ADD the new answer to this fi
 |---|---|---|
 | Named insured / owners | Joshua C Davis & Hillary D Davis, personally (no LLC, no EIN) | ENTITY_STRUCTURE.md |
 | Joshua DOB | **03/20/1973** | given 2026-09-09 |
-| Hillary DOB | 1992 (exact date on file with Progressive/Kin; ask her or read from a prefilled form) | — |
+| Hillary DOB | **09/16/1992** | Joshua, 2026-09-22 |
 | Marital status | Married (both) | — |
 | Relationship on apps | Joshua = co-applicant / spouse when Hillary is primary | — |
 | People living in home | **3** | — |
@@ -112,7 +112,7 @@ obvious, ask Joshua only for the genuine gap, then ADD the new answer to this fi
 | Account holder | **Hillary** (user ID Hillary916) — quote bundles under HER name or the multi-policy discount will not link |
 | Purchased through a local agent? | **No** — direct |
 | Loyalty tier | Diamond |
-| Current payment | $536.67 due 9/28/2026, autopay, card ending 5075 |
+| Current payment | $536.67/mo due 9/28/2026, autopay, card ending 5075 (~$3,220 per 6-month term / ~$6,440/yr for 4 vehicles at 50/100/25) |
 | Vehicles (4) | 2024 Rivian R1S · 2025 Tesla Model 3 · 2026 Tesla Model Y · 2026 Tesla Cybertruck |
 | Active auto coverage now? | Yes |
 | DUIs / major violations in household, last 5 yrs | **No** |
@@ -163,3 +163,40 @@ hip roof. The roof is the only disqualifying attribute in the file.
    before applying for MSFH.**
 5. **Get a wind mitigation inspection (OIR-B1-1802) regardless.** The impact windows/doors/garage
    are already installed and are worth a large credit that no carrier has documented yet.
+
+
+---
+
+## 282 Bald Rock Rd, Verona, VA 24482 — short-term rental (added 2026-09-22)
+
+| Question | Answer | Source |
+|---|---|---|
+| Record owner / named insured | **Joshua Christian Davis, individually** (Augusta Co. instr. 160008019, 10/17/2016, $405,000). Farming Infinity Mountains LLC is the *intended* owner — deed NOT done; do not name the LLC yet | real-estate-context |
+| Occupancy | **Secondary/seasonal home with part-time short-term rental** — Joshua & family use it themselves throughout the year; rented on Airbnb + Vrbo the rest of the time, self-managed via Guesty; NOT primary residence; no professional manager (Joshua, 9/22/2026) | bald-rock-property + Joshua |
+| Contact | zapvp1@me.com · 804-930-4221 | — |
+| Type / size | Single-family, 2 stories, ~4,200 sf, 5 BR / 4 BA, sleeps 10, attached garage | bald-rock-property |
+| Year built / exterior | 2006, Hardie plank / cement fiber | Homesite dec 2026-27 |
+| Roof | **REPLACED since 2006** (Joshua, 9/22/2026) — exact year still to confirm; Proper/CBIZ/Obie applications were submitted with 'original 2006', so tell each carrier the roof is newer when they call | Joshua |
+| Pool / hot tub | Heated in-ground pool (Homesite pool surcharge), hot tub, cold plunge; **pool is enclosed by a self-latching fence** (Joshua, 9/22/2026); no diving board or slide | bald-rock-property + Joshua |
+| Dock / pier, bunk beds, ladder loft, events, Swimply | No (bunk beds assumed no — confirm) | — |
+| Fire alarm / sprinklers | No central-station fire alarm (assumed); no sprinklers | — |
+| Claims last 3 yrs | None | registry |
+| Gross rental income | ~$150K/yr (Guesty ADR × nights, Aug 2025–Jul 2026 ≈ $115K excl. a 30-night corporate stay; use $150K for loss-of-rents) | bald-rock-property |
+| Current coverage | Homesite HO-3 #39168908: A $897,000 / B $89,700 / C $448,500 / D $269,100 / E $300K, $5K ded, 10% wind ($89,700), $2,356/yr, 10-pay | dec 2026-27 |
+| Mortgagee | DuPont Community Credit Union ISAOA/ATIMA, PO Box 1365, Waynesboro VA 22980 (ref 43240) | dec 2026-27 |
+| Prior STR decline | Steadily declined 7/30/2026 | BROKER_PIPELINE |
+
+## 148 Hardinberry St, Oak Ridge, TN 37830 — long-term rental (added 2026-09-22)
+
+| Question | Answer | Source |
+|---|---|---|
+| Record owners / named insureds | **Hillary D. Holmes AND Joshua Christian Davis** (Quitclaim Deed 1/31/2017, Roane Co. Book 1601 Page 351). Farming Infinity Tennessee LLC (Hillary's) intended — deed NOT done | assessor + real-estate-context |
+| County | **ROANE** (not Anderson). Parcel 039F A 02600 000, subdivision Preserve @ Rarity Ridge (marketed "The Preserve at Clinch River"), Lot T65A, Plat Book D pp. 60-63 | assessment.cot.tn.gov |
+| Structure type | **Fee-simple attached single-family townhome/villa, END UNIT** — own lot (land assessed $30,000), NOT a condominium, no condo regime | assessor + MLS #933309 |
+| Size | 1,067 sf living (1 story) + 240 sf attached finished garage + 136 sf open porch; 2 BR / 2 full bath; 8 plumbing fixtures | assessor |
+| Built / construction | 2007; common brick; slab on grade / continuous footing; gable-hip comp-shingle roof; forced air + central AC (gas) | assessor |
+| HOA | ~$199/mo (landscaping $94, social/wellness $60.36, assessment $42.92, alley $2). Amenities: indoor/outdoor pools, tennis, fitness, dock | MLS |
+| County value (2025 reappraisal) | Land $30,000 + improvement $218,300 = $248,300 | assessor |
+| Replacement cost | Steadily's $105K is a WALLS-IN condo valuation (BA8U-V7KF.1). Full-structure RC ≈ $200-230K (Woods Walk rate $183/sf) | Value360 PDFs |
+| Occupancy / tenant | Tenant-occupied LTR (Brandon Anderson, Zillow-collected rent); no pets | hardinberry-property |
+| Contact | zapvp1@me.com · 804-930-4221 | — |

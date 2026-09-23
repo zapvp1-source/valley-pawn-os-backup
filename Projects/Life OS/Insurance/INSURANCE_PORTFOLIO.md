@@ -1,6 +1,6 @@
 # Insurance Portfolio — All Domains
 
-**GENERATED 2026-09-11 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
+**GENERATED 2026-09-22 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
 Update the registry, then run `Life OS/Insurance/bin/regen_portfolio.py`.
 Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker history: `BROKER_PIPELINE.md`.
 
@@ -8,17 +8,18 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 
 | Date | Line | Entity | Carrier | Policy # | Premium |
 |---|---|---|---|---|---|
-| 2026-10-15 | Homeowners HO3 (Special Form) | Joshua & Hillary Davis personally (no LLC) | Kin Interinsurance Network | KIN-HO-FL-275099318 (servicer shows KINHOFL275099318) | $1,354 |
 | 2026-11-28 | Personal auto | Hillary D. Davis / Joshua C. Davis personally | Progressive Select Insurance Co (NAIC 10192) | 998062549 | — |
 | 2026-12-15 (open enrollment deadline for 1/1 coverage - typical) | Health | Joshua & Hillary Davis personally | — | — | — |
-| 2027-01-09 | Landlord / rental dwelling | Joshua & Hillary Davis (deed transfer to Farming Infinity Tennessee LLC unresolved - see hardinberry-property skill) | — | OB3-TN-22196824-01 | — |
+| 2027-01-09 | Landlord / rental dwelling | Joshua & Hillary Davis (deed transfer to Farming Infinity Tennessee LLC unresolved - see hardinberry-property skill) | Obsidian Insurance Company | OB3-TN-22196824-01 | $960 |
 | 2027-06-01 | Surety | Full Circle Finance Inc | Travelers Bond | 107451942 | — |
 | 2027-06-13 | Workers compensation & employers liability | Full Circle Finance Inc | HDI Global Insurance Company (NCCI carrier; brief referenced Glencar - policy endorsement shows HDI Global Insurance Company) | GC29P101236-02 (expired 6/13/2026); -03 renewal presumed but NO DOCUMENT FOUND | — |
 | 2027-07-02 | Commercial package | Full Circle Finance Inc | HDI Global Specialty SE (A.M. Best A+), surplus lines VA | IK29P109337-05 | $11,103.04 |
 | 2027-07-02 | Commercial building (lessor's risk) | Farming Infinity LLC (owner) - see ENTITY_STRUCTURE.md | HDI Global Specialty SE | IK29P109337-05 (Loc 5) | $1,104 |
-| 2027-07-02 | Homeowners HO3 written as 'Primary home' | Farming Infinity Mountains LLC / Joshua (per REAL_ESTATE_OS) - NOT FCF Inc | Homesite Insurance Company of the Midwest (Homesite Group) via GEICO Insurance Agency, LLC | 39168908 | — |
+| 2027-07-02 | Homeowners HO3 written as 'Primary home' | Farming Infinity Mountains LLC / Joshua (per REAL_ESTATE_OS) - NOT FCF Inc | Homesite Insurance Company of the Midwest (Homesite Group) via GEICO Insurance Agency, LLC | 39168908 | $2,356 |
 | 2027-07-28 | Surety | Full Circle Finance Inc | Travelers Bond | 107884069 | — |
 | 2027-08-03 | Surety | Full Circle Finance Inc | American Contractors Indemnity Company (HCC Surety) | 100982291 | — |
+| 2027-09-11 | Landlord / rental dwelling | Joshua & Hillary Davis (see REAL_ESTATE_OS / woods-walk-property skill) | — | SP3-VA-33470384-00 (NEW POLICY bound 9/10/2026 - replaces prior Travelers policy 611614155-653-1, which Travelers non-renewed effective 4/12/2026) | $1,904.92 |
+| 2027-10-15 | Homeowners HO3 (Special Form) | Joshua & Hillary Davis personally (no LLC) | Kin Interinsurance Network | KIN-HO-FL-275099318 (servicer shows KINHOFL275099318) | $1,354 |
 | 2027-12-01 | Surety | Full Circle Finance Inc | CNA Surety | Renewal #72603580 (bond number not in email; earlier docs: 'Full Circle Finance Inc. 50K Bond.pdf' in Mail archive) | $250 |
 | 2029-08-25 | Surety | Full Circle Finance Inc | American Contractors Indemnity Company (HCC Surety) | Bond #101103000 (Document Set #101103000) | $300 |
 
@@ -26,6 +27,7 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 
 **VP-PKG — Commercial package**
 
+- PAST-DUE INVOICE $12,523.78 (JM74343 BOP) as of 9/21/2026 - risk of cancellation for nonpayment if not resolved. IPFS premium finance agreement sent 9/21/2026 awaiting Joshua's e-signature + $3,757.13 down payment - his decision (financing terms/cost not yet reviewed).
 - Non-firearm/jewelry inventory NOT COVERED at Waynesboro, Lexington, Culpeper, Harrisonburg (Bravo 7/12/2026: inventory at cost $113K/$86K/$204K/$161K). ULC needs market-value LIMITS per location to quote.
 - Business income $0 and BPP/tenant improvements Not Covered at the same 4 stores. ULC needs limits.
 - Employee Dishonesty not covered anywhere - complete and return EMPLOYEE DISHONESTY Supp app.pdf; may not qualify due to loss history.
@@ -75,10 +77,11 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 
 - Insurable-interest / named-insured mismatch: owner (Farming Infinity LLC) is only an AI/loss payee; FCF Inc is named insured. Joshua flagged 7/31/2026 that a standalone policy under the real estate company may be needed.
 - Premium paid by FCF Inc for a Domain 2 asset - bookkeeping allocation.
+- 9/22/2026: Attempted standalone lessor's-risk quote via NEXT Insurance (app.nextinsurance.com), Lessors of Commercial Buildings product, applicant Farming Infinity LLC. NEXT DECLINED and redirected to a Tivly lead-gen page (not a real quote) - not pursued further. Fallback: emailed Howard Baker (incumbent broker, already carries this building as Loc 5) to quote it as a standalone policy in Farming Infinity LLC's own name, using the existing Loc 5 schedule as the starting spec ($577K building RC, $1M/$2M GL, DCCU mortgagee). If bound, drop Loc 5 from VP-PKG (IK29P109337) for the ~$1,104/yr credit.
 
 **RE-CYPRESS-HO — Homeowners HO3 (Special Form)**
 
-- MORTGAGEE CLAUSE: dec page lists UWM; servicer now ServiceMac ISAOA ATIMA - confirm Kin has ServiceMac listed so escrow pays the renewal on time.
+- MORTGAGEE CLAUSE CONFIRMED 2026-09-22: Kin's portal lists ServiceMac, LLC as lender with mortgagee clause ISAOA/ATIMA, PO Box 29411, Phoenix AZ 85038-9411, loan #6014097287 - matches servicer, escrow should pay on time.
 - NO FLOOD POLICY found for a Flood Zone A home - confirm whether lender requires it / whether one exists elsewhere.
 - Personal liability only $100,000 and no umbrella - primary target of broker shop.
 - Coverage C $59,500 (10% of A) is low for a primary residence with recent high-value appliances/improvements.
@@ -92,21 +95,27 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 
 **RE-BALDROCK-HO — Homeowners HO3 written as 'Primary home'**
 
-- WRONG FORM / MISREPRESENTATION RISK: written HO3 'Primary home' in Joshua's name; property is an STR owned by Farming Infinity Mountains LLC. A guest-caused loss or liability claim could be denied. Needs STR/landlord form (e.g., Proper, Steadily declined 7/30/2026, or Chubb via WeShop).
+- PROPER PROPOSAL 9/22/2026 (PDF saved in Life OS/Insurance/documents/bald-rock/04_proper-proposal_2026-09-22.pdf): Premium $6,134 + $342.52 taxes/fees = $6,476.52/yr; 11-pay $827.65 then 10 x $624.20. Building $3,900, contents $390, ord/law $120, bed bug $50, squatters $50, equip breakdown $100, civil authority flood $50, business income $591, CGL $1M/$2M $883. Building only $800K (vs Homesite $897K), contents $100K (vs $448.5K), BI $100K (vs $269K loss of use). Ask for requote at $897K/$250K contents/$500K liability before deciding. Inputs to correct with Proper: roof HAS been replaced since 2006 (year TBD), pool is fenced, occupancy is part-time STR + owner use.
+- NON-PAY CANCEL NOTICE 12/11/2025 - READ AND UNDERSTOOD 2026-09-22: the 12/09/2025 automatic payment of $153.92 failed (expired card / NSF / connection); Homesite issued a legal Notice of Cancellation effective 12/24/2025 12:01 AM for non-payment. It WAS CURED - the policy ran to term and renewed 7/2/2026 (2026-27 billing shows $589.03 paid at renewal and installments current). Cause is consistent with a card-on-file failure; autopay is now on the DCCU checking account, which is more durable. Residual risk: the backup Mastercard x-1689 shows 'Expires Soon 09-2026' in the portal - remove or replace it so a fallback charge never bounces. No action on the 2025 notice itself.
+- CARD EXPIRING: the backup Mastercard on file (X-1689) shows 'Expires Soon: 09-2026' - the primary autopay method is the Dupont Community CU bank account (Automatic Payments is ON), but update the card on file to avoid a repeat of the 2025-12-10 non-pay situation.
+- WRONG FORM / MISREPRESENTATION RISK: written HO3 'Primary home' in Joshua's name; property is actually a SECONDARY/SEASONAL residence - Joshua & family use it themselves throughout the year AND it's rented short-term (Airbnb/VRBO) the rest of the time (confirmed by Joshua 9/22/2026 - not a full-time commercial rental). Either way 'PRIMARY RESIDENCE' on the declarations is inaccurate, which is what creates the misrepresentation exposure - the correct occupancy classification is secondary/seasonal home with part-time short-term rental use, not primary residence and not a pure commercial STR. A guest-caused loss or liability claim (and potentially ANY claim, per the policy's Concealment or Fraud condition) could be denied. Needs an STR/seasonal-home form that supports mixed personal-and-rental use (Proper's form already covers 'Vacant or Unoccupied' and guest-caused damage regardless of rental frequency, so this doesn't change the Proper quote strategy - just corrects the stated occupancy for the file and any future application).
 - Named insured is Joshua individually, not the owning LLC.
 - No umbrella; liability $300K.
-- Current-term limits and premium not captured (zapvp1 mailbox / Homesite portal).
 
 **RE-HARDINBERRY-LL — Landlord / rental dwelling**
 
-- Pull current dec from Steadily portal: carrier, dwelling limit, liability, loss of rents, deductible, term.
-- Named insured vs intended LLC ownership; tenant/long-term-rental occupancy must match form.
+- CHANGE REQUEST SUBMITTED TO STEADILY 2026-09-22 (portal, status Pending) asking them to: (1) correct 'Condominium unit / Anderson County' to fee-simple attached townhome / Roane County; (2) re-run 360Value for the FULL structure and re-rate the dwelling at ~$200-230K RC (their BA8U-V7KF.1 valuation was run WALLS-IN — no roof, foundation, exterior walls, rough electrical/plumbing or HVAC — which is why the limit is $105K, roughly half the rebuild); (3) quote premises liability at $1M/$2M in addition to the current $300K; (4) confirm named insured = Joshua Christian Davis AND Hillary D. Holmes per the deed. Revised quote to zapvp1@me.com. Joshua decides on the new limit/premium when it arrives — nothing bound.
+- Confirm from the HOA CC&Rs whether the association's master policy covers any part of the attached structure (party walls/roof). Fee-simple townhome PUDs usually do NOT — but if it does, the dwelling limit can stay lower.
+- Named insured currently Joshua Davis only; deed is Hillary D. Holmes AND Joshua Christian Davis; intended entity is Farming Infinity Tennessee LLC (Hillary's) but title has not moved — do not change to the LLC until the deed records.
+- Read the 'Notice of Changes at Renewal' PDF (01_notice-of-changes-at-renewal.pdf) to confirm what changed at the 1/9/2026 renewal.
 - No umbrella.
 
 **RE-WOODSWALK-LL — Landlord / rental dwelling**
 
-- Pull the new policy documents from the Steadily portal (app.steadily.com, login zapvp1@me.com) to capture: underlying carrier, effective/term dates, dwelling limit, liability limit, deductible, and confirm underwriting cleared (not voided).
-- Historical gap: Travelers non-renewed this policy effective 4/12/2026 and no replacement coverage was found in any mailbox until this 9/10/2026 binder - roughly a 5-month window where the tenant-occupied property may have been uninsured. Nothing further to do about that window itself, but flag it if a loss during that period is ever raised.
+- Private Structures $32,300 shows on the dec although the property has no detached structures — it is an automatic 10%-of-dwelling inclusion at $0.00 premium (see dec), so removing it saves nothing. Leave as is. 360Value BE9Y-W2TN.1 confirms 'Single Family Detached', 1,760 sf, $183.03/sf → $323K dwelling is a full-structure RC (correct, unlike Hardinberry).
+- Named insured is Joshua Davis individually (mailing 844 Cypress Crossing); property is intended for Farming Infinity Virginia LLC - align named insured with title once the deed question is settled (see real-estate-context).
+- Personal Property limit is only $3,000 - fine if no landlord-owned appliances/furnishings of value are in the unit; raise if there are.
+- Historical gap: Travelers non-renewed this policy effective 4/12/2026 and no replacement coverage was found in any mailbox until the 9/10/2026 binder - roughly a 5-month window where the tenant-occupied property may have been uninsured. Nothing further to do about that window itself, but flag it if a loss during that period is ever raised.
 - Confirm mortgagee/lienholder (if any) is correctly listed on the new policy.
 - No umbrella.
 
@@ -114,7 +123,8 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 
 - Limits 50/100/25 with nonstacked UM and no MedPay are far below net worth - raise to $500K CSL + stacked UM or move with umbrella package.
 - Business-use classification on any vehicle used for store runs.
-- Post-Cybertruck premium not captured.
+- MARKET CHECK 9/22/2026 (3 competing quotes, 4 vehicles, Hillary+Joshua, 6-month terms). Scenario A = match current 50/100/25, UM 50/100 non-stacked, PIP $1K ded, $1,000 comp/coll: GEICO $3,378 (ref 564962U2449652); State Farm $3,396 (agent Brandon Thomas, St Augustine 904-342-3459; includes an un-enrolled Drive Safe & Save intro credit, so real number is higher); Travelers $4,752 (Quote ID 0005721342836). Scenario B = 250/500/100, UM 250/500 STACKED, MedPay $5K, $1K ded: GEICO $5,543; State Farm $7,402; Travelers $7,369 (incl. gap on 3 financed cars). Allstate would not quote online without TCPA marketing consent. CONCLUSION: Progressive is NOT overpriced - at ~$3,220/term it is the cheapest at current limits, and its own 8/22/2026 upgrade quote ($4,413/term for $500K CSL + stacked UM + extended PIP + MedPay + loan payoff x4) is cheaper than every competitor's Scenario B. The 4-EV/Cybertruck household is simply expensive to insure in FL. Recommended action: stay with Progressive and buy the upgrade package before the 11/28/2026 renewal; re-shop only if Howard Baker (JM) comes back with a bundled number that beats $4,413.
+- HOUSEHOLD DRIVER FLAG: State Farm and Travelers prefill both surfaced a 'Madison Davis' associated with 844 Cypress Crossing - excluded from the quotes. If Madison is a licensed resident of the household she must be listed (or excluded in writing) on the Progressive policy; confirm with Joshua.
 
 **GAP-UMBRELLA — Personal umbrella and commercial umbrella/excess**
 
@@ -157,9 +167,9 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - **Mortgagee (Loc 5 building):** Dupont Community Credit Union, C/O Business Services, PO Box 1365, Waynesboro VA 22980
 - **Additional Insured / Loss Payee - Building (Loc 5):** Farming Infinity, LLC
 - **Additional Insured (Loc 3):** IWC Properties - address not yet provided to ULC
-- **Status:** In force; 7/31/2026 location endorsement issued ($1,279 return premium). Coverage-add requests (inventory GM at 4 stores, BI/BPP at 4 stores, employee dishonesty, EPLI, umbrella) OPEN - ULC waiting on Joshua for limits + completed supplementals.
+- **Status:** In force; 7/31/2026 location endorsement issued ($1,279 return premium). Coverage-add requests (inventory GM at 4 stores, BI/BPP at 4 stores, employee dishonesty, EPLI, umbrella) OPEN - ULC waiting on Joshua for limits + completed supplementals. **PAST-DUE PREMIUM AS OF 9/21/2026 - $12,523.78** (Angie Fajardo, JM A/R, reminder emails 8/21, 8/24, 9/21/2026 to zapvp1@me.com cc hbaker@jmpartners.com). Joshua replied 9/21 "We typically make payments" and "You'd like a financing?" exchange followed - JM (Angie) sent an IPFS (Imperial PFS) premium finance agreement 9/21/2026 8:32pm requiring e-signature and a down payment of $3,757.13 directly to IPFS (jminspartnersinc.ipfs.com e-sign link, QuoteID 76c0bc52-1955-49ec-b485-9d62e268a39b). NOT SIGNED OR PAID as of this run - awaiting Joshua (financial commitment + e-signature, cannot be actioned autonomously).
 - **Documents:** Mail: 109337 VALLEY PAWN CURRENT COVERAGE AS OF 7-31-26.pdf (Howard 8/24/2026, thread 1a035923e7ea0a7e) · Mail: Pages from 109337 VALLEY PCH AMEND LOCS AND CVRG 07-31-26.pdf (endorsement, same thread) · Mail: EMPLOYEE DISHONESTY Supp app.pdf; EPLI Application Over 5 locations - 2026 V1.pdf (same thread, UNCOMPLETED) · Mail: Valley Pawn ~ Quote ~ RN V1 LL 2026 .pdf (Howard 7/1 and 7/13/2026, thread 19f1f86c0b06e1b2) · Mail: Valley Pawn IK29P109337-04.pdf (prior term policy, Howard 7/31/2026) · Drive: General Liability Policy.pdf (id 12S7umI5rWe_yiKkiGxPRmDvaxBTmcTUZ, uploaded 7/29/2026 - not parsed this pass)
-- **Last verified:** 2026-09-05 — source: Howard Baker email 8/24/2026 + attachments; 7/1 and 7/13/2026 renewal quote; IK29P109337-04 dec page
+- **Last verified:** 2026-09-22 — source: Howard Baker email 8/24/2026 + attachments; 7/1 and 7/13/2026 renewal quote; IK29P109337-04 dec page; Angie Fajardo (JM A/R) past-due/financing thread 8/21-9/21/2026 (threads 1a0c46799e940068, 1a0c5ab4e5cb2502)
 
 ### VP-WC — Workers compensation & employers liability
 
@@ -300,7 +310,7 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - **Additional Insured / Loss Payee - Building:** Farming Infinity, LLC
 - **Status:** In force via VP-PKG.
 - **Documents:** Same as VP-PKG
-- **Last verified:** 2026-09-05 — source: 8/17/2026 schedule; IK29P109337-04 mortgagee page
+- **Last verified:** 2026-09-22 — source: 8/17/2026 schedule; IK29P109337-04 mortgagee page; NEXT Insurance application attempt 9/22/2026
 
 ### RE-CYPRESS-HO — Homeowners HO3 (Special Form)
 
@@ -309,29 +319,34 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - **Scope:** 844 Cypress Crossing Trl, Saint Augustine FL 32095-6846; frame/stucco, slab, built 2004, 3,274 sf, pool, Flood Zone A
 - **Carrier:** Kin Interinsurance Network · **Program/MGA:** Kin Insurance Network Distributor (KIND), 222 Merchandise Mart Plaza Ste 228, Chicago IL 60654; (855) 717-0022; support@kin.com; claims (866) 204-2219 / claims@kin.com
 - **Broker:** Direct (Kin) · support@kin.com
-- **Policy #:** KIN-HO-FL-275099318 (servicer shows KINHOFL275099318) · **Term:** 2025-10-15 → 2026-10-15 · **Renews:** 2026-10-15
-- **Premium:** $1,354 — CONFIRMED in Kin portal 2026-09-09: 2026-27 renewal premium is $1,354.00, effective 10/15/2026 (auto-renew). This does NOT match the $1,288.81 figure in the physical renewal letter Joshua received - $1,288.81 is essentially identical to the 2024-25 total ($1,287.21), so the letter appears to be a stale/prior-year figure, not the actual 2026-27 bill. Portal is source of truth. Coverage limits unchanged from 2024-25 dec (not independently reverified this pass).
-- **Payment:** Mortgage escrow (Lakeview, subserviced by ServiceMac; loan ending 7287)
+- **Policy #:** KIN-HO-FL-275099318 (servicer shows KINHOFL275099318) · **Term:** 2026-10-15 → 2027-10-15 · **Renews:** 2027-10-15
+- **Premium:** $1,354 — CONFIRMED in Kin portal 2026-09-22 (upcoming term 10/15/2026-10/15/2027): premium $1,354.00 (auto-renew), Coverage A raised to $635,000 (up from $595,000 the year before). $5,914 in Kin discounts applied this year (Electronic Policy, Home Buyer Discount, Windstorm Mitigation). This does NOT match the $1,288.81 figure in the physical renewal letter Joshua received - that figure is stale/prior-year. Portal is source of truth.
+- **Payment:** Mortgage escrow via ServiceMac, loan #6014097287, scheduled payment 10/14/2026
 - **Key limits:**
-  - **A dwelling:** $595,000
-  - **B other structures:** $5,950
-  - **C personal property:** $59,500
-  - **D loss of use:** $59,500
+  - **A dwelling:** $635,000
+  - **B other structures:** $6,350
+  - **C personal property:** $63,500
+  - **D loss of use:** $63,500
   - **E personal liability:** $100,000
   - **F medical payments:** $1,000
-  - **ordinance or law:** 10%
+  - **deductible standard:** $5,000
+  - **deductible hurricane:** 63,500 (10% of Coverage A)
+  - **ordinance or law:** $63,500
   - **water backup:** $10,000
-  - **limited fungi:** 10,000 / 50,000
+  - **limited fungi:** $10,000
+  - **loss assessment:** $1,000
+  - **identity fraud:** $0
+  - **animal liability:** $0
   - **flood:** NOT INCLUDED - no flood policy found; property is Flood Zone A
-  - **note:** Limits are from the 2024-25 declarations; 2025-26 may differ
+  - **note:** CONFIRMED from Kin portal Policy Details page 2026-09-22, upcoming term (10/15/26-10/15/27). Supersedes 2024-25 declaration figures below.
 - **Deductibles:**
   - **all other perils:** $5,000
   - **hurricane calendar year:** 10% of Coverage A ($59,500 on 2024-25 dec)
 - **First Mortgagee (2024-25 dec):** United Wholesale Mortgage ISAOA/ATIMA, PO Box 202028, Florence SC 29502-2028, Loan #1224722227
 - **Required mortgagee clause per servicer notice 8/31/2026:** ServiceMac ISAOA ATIMA, PO Box 29411, Phoenix AZ 85038-9411; loan ending 7287; insurancedepartment@ihaveinsurance.com; (833) 811-3064
-- **Status:** active - renewing with Kin 10/15/2026 (DECIDED 2026-09-09)
-- **Documents:** Drive: Kin_Insurance_Declarations_2024-2025.pdf (id 1GyVcYH2eAkUo35p14Ivv6HaGdtPZlt4P) · Gmail: ServiceMac 'Important: Your Upcoming Insurance Renewal' 8/31/2026 to zapvp1 (thread 1a057d9d818333e6)
-- **Last verified:** 2026-09-09 — source: Kin 2024-25 dec (Drive); ServiceMac notice 8/31/2026
+- **Status:** CONFIRMED IN FORCE 2026-09-22 - active, auto-renewing with Kin 10/15/2026 at $1,354/yr, Coverage A $635,000. Mortgagee clause confirmed as ServiceMac ISAOA/ATIMA on the portal's lender details (matches what escrow needs).
+- **Documents:** Life OS/Insurance/documents/cypress-crossing/upcoming-term-2026-2027/ - renewal packet, declaration page, mortgagee invoice, notice of renewal - pulled from Kin portal 2026-09-22 · Life OS/Insurance/documents/cypress-crossing/current-term-2024-2025/ - renewal packet, declaration page, amended subscriber agreement, notice of renewal - pulled from Kin portal 2026-09-22 · Drive: Kin_Insurance_Declarations_2024-2025.pdf (id 1GyVcYH2eAkUo35p14Ivv6HaGdtPZlt4P) · Gmail: ServiceMac 'Important: Your Upcoming Insurance Renewal' 8/31/2026 to zapvp1 (thread 1a057d9d818333e6)
+- **Last verified:** 2026-09-22 — source: Kin portal (app.kin.com) direct pull 2026-09-22, Policy Details + Documents pages for both current and upcoming term; supersedes 2026-09-09 email-only capture
 
 ### RE-BALDROCK-HO — Homeowners HO3 written as 'Primary home' - property is now a short-term rental (Airbnb/VRBO)
 
@@ -341,41 +356,61 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - **Carrier:** Homesite Insurance Company of the Midwest (Homesite Group) via GEICO Insurance Agency, LLC · **Program/MGA:** GEICO Insurance Agency, LLC
 - **Broker:** Direct (GEICO agency), 1-866-372-8903 · GEICO/Homesite service line 866-372-8903
 - **Policy #:** 39168908 · **Term:** 2026-07-02 → 2027-07-02 · **Renews:** 2027-07-02
-- **Premium:** — — Renewed 7/2/2026 (Homesite 'renewing soon' 5/31/2026; autopay reminder 8/29/2026 shows $199.33 installment incl fees drafting 9/2/2026). Historical: 2022-23 $1,522; 2023-24 $1,584 (Dwelling $798,000). 2026-27 total premium not captured.
-- **Payment:** Homesite autopay from bank account, monthly installments
+- **Premium:** $2,356 — CONFIRMED from the 2026-27 renewal declarations (Renewal Package dated 5/16/2026, filed in Life OS/Insurance/documents/bald-rock/): RENEWAL POLICY PREMIUM $2,356.00. Build-up: Coverage A base $3,625 + E $70 + F $2, less $1,389 coverage modifications (10% wind/hail deductible credit -$1,029, deductible credit -$360), plus $108 pool surcharge, less $60 roof-it-over discount. 10-Pay plan: 25% down ($589.03 paid 7/2/2026) then $199.33/mo x 9 (incl $3 EFT fee) Aug 2026-Apr 2027. Historical: 2022-23 $1,522; 2023-24 $1,584; 2025-26 ~$1,539 (implied by $153.92/mo installments on the 12/2025 notice).
+- **Payment:** Homesite autopay (10 Pay Plan) from Dupont Community CU checking x-2291; backup Mastercard x-1689 expires 09-2026
 - **Key limits:**
-  - **A dwelling:** 798,000 (2023-24 EOI; current unknown)
-  - **B other structures:** 79,800 (2023-24)
-  - **C personal property:** 399,000 (2023-24)
-  - **D loss of use:** 239,400 (2023-24)
+  - **A dwelling:** $897,000
+  - **B other structures:** $89,700
+  - **C personal property:** $448,500
+  - **D loss of use:** $269,100
   - **E personal liability:** $300,000
   - **F medical payments:** $1,000
-  - **form:** HO3, Residence: Primary home
+  - **ordinance or law:** 10% of A (policy default per VA notice)
+  - **valuation:** Replacement Cost (Coverage A)
+  - **form:** HA 00 03 07 23 Homeowners 3 - Special Form - Virginia; dwelling described as '2006 Hardy Plank/Cement fiber, Single family home, PRIMARY RESIDENCE'; occupancy type on underwriting info: Primary
+  - **endorsements:** HA 80 66 Diminishing Deductible Credit; HA 01 45 Special Provisions VA; HA 01 55 Amendatory VA; HD-074 Presence of Pool surcharge
+  - **note:** ALL limits CONFIRMED from the 2026-27 declarations page 2026-09-22
 - **Deductibles:**
   - **all perils:** $5,000
-  - **wind hail:** 10% of Coverage A ($79,800 on 2023-24 EOI)
-- **Status:** IN FORCE (corrects 8/22 portfolio which treated it as last-confirmed 2024). Renewed 7/2/2026 on autopay.
-- **Documents:** Drive: GEICO_Homesite_Evidence_of_Insurance_2023-2024.pdf (id 11jDKJrzx6zFvWquKdqci6XivfcQNk6I9) · Drive: 02 Bald Rock Insurance - named insured JOSHUA DAVIS.pdf (2022-23 EOI, ids 1UQwZPXPh56x07dJ8oWgtuhb5SHR5nIna / 1nsrmmWj_fYzaWVoa2FnP4h8ia-OuPm4k) · Gmail: Fwd 'Your home Policy is Renewing Soon' (Homesite 5/31/2026, thread 19f669b577e12c1e) · Gmail: Fwd 'Proof of insurance for 282 BALD ROCK RD' (EOI_39168908 PDF, 10/8/2024, thread 19f669adc95f6fef) · Gmail: Homesite 'Home Policy Autopay Reminder' 8/29/2026 (msg 1a04b6c6d090fdb1)
-- **Last verified:** 2026-09-05 — source: Homesite emails 5/31 and 8/29/2026; Drive EOIs
+  - **wind hail:** 10% of Coverage A = $89,700
+  - **deductible credit:** $400
+- **Mortgagee:** DuPont Community Credit Union ISAOA/ATIMA, PO Box 1365, Waynesboro VA 22980 (loan ref 43240) - CONFIRMED on 2026-27 declarations
+- **Status:** IN FORCE (Homesite HO-3, wrong form - written 'primary residence'; property is a secondary/seasonal home with part-time STR use). REPLACEMENT SHOP IN PROGRESS 9/22/2026: Proper Insurance PROPOSAL IN HAND $6,476.52/yr ($800K bldg / $100K contents / $100K BI / $1M-$2M CGL, $5K ded; Lloyd's/Concert; valid 30 days from 9/22) - Joshua's reaction: too expensive for less building/contents than Homesite. Competing requests submitted same day: CBIZ (application e-signed), Wexford/STR Guard, Ford Agency, Valley Trust Insurance; Obie/Markel and Steadily declined. Decision pending until at least one more number lands. Once something binds, cancel Homesite pro-rata.
+- **Documents:** Life OS/Insurance/documents/bald-rock/04_proper-proposal_2026-09-22.pdf (Proper Insurance proposal, 9pp) · Life OS/Insurance/documents/bald-rock/ - Billing Summary (7/14/26), Renewal Package with Bill (5/16/26, 52pp), Uniform Non Pay Cancel notice (12/10/25) - pulled 2026-09-22 (Joshua downloaded directly from the Homesite portal after the automated pull kept hitting session timeouts on the larger files) · Drive: GEICO_Homesite_Evidence_of_Insurance_2023-2024.pdf (id 11jDKJrzx6zFvWquKdqci6XivfcQNk6I9) · Drive: 02 Bald Rock Insurance - named insured JOSHUA DAVIS.pdf (2022-23 EOI, ids 1UQwZPXPh56x07dJ8oWgtuhb5SHR5nIna / 1nsrmmWj_fYzaWVoa2FnP4h8ia-OuPm4k) · Gmail: Fwd 'Your home Policy is Renewing Soon' (Homesite 5/31/2026, thread 19f669b577e12c1e) · Gmail: Fwd 'Proof of insurance for 282 BALD ROCK RD' (EOI_39168908 PDF, 10/8/2024, thread 19f669adc95f6fef) · Gmail: Homesite 'Home Policy Autopay Reminder' 8/29/2026 (msg 1a04b6c6d090fdb1)
+- **Last verified:** 2026-09-22 — source: 2026-27 Renewal Package with Bill / declarations (5/16/2026), Billing Statement (7/18/2026) and Non-Pay Cancel notice (12/11/2025) - all read in full 2026-09-22; Homesite portal Billing page
 
 ### RE-HARDINBERRY-LL — Landlord / rental dwelling
 
 - **Named insured (entity):** Joshua & Hillary Davis (deed transfer to Farming Infinity Tennessee LLC unresolved - see hardinberry-property skill)
 - **Named insured (as written on policy):** Joshua Davis
-- **Scope:** 148 Hardinberry St, Oak Ridge TN 37830
-- **Carrier:** — · **Program/MGA:** Steadily Insurance Agency Inc (CA Lic 6002990), 888-966-1611, support@steadily.com
+- **Scope:** 148 Hardinberry St, Oak Ridge TN 37830 — ROANE County parcel 039F A 02600 000, Preserve @ Rarity Ridge (marketed as The Preserve at Clinch River), Lot T65A, Plat Book D pp. 60-63. FEE-SIMPLE attached single-family townhome/villa, END UNIT, 1 story, brick, slab, comp shingle, built 2007; 1,067 sf living + 240 sf attached finished garage + 136 sf open porch. HOA ~$199/mo (landscaping, social club, assessment). County 2025 reappraisal: land $30,000 + improvement $218,300 = $248,300. NOT a condominium (land separately owned/assessed; no condo regime). Verified 2026-09-22 on assessment.cot.tn.gov.
+- **Carrier:** Obsidian Insurance Company · **Program/MGA:** Steadily Insurance Agency Inc (CA Lic 6002990), 888-966-1611, support@steadily.com
 - **Broker:** Steadily · support@steadily.com; historically Cameron Hopkins, Sr Account Manager
-- **Policy #:** OB3-TN-22196824-01 · **Term:** ? → ? · **Renews:** 2027-01-09
-- **Premium:** — — $80.00 payment 7/9/2026 (Amex x2003) - looks like a monthly installment, not full premium. Renewal date ~1/9 per prior portfolio (Safeco OY9071463 ran 1/8/2024-1/8/2025 at $725/yr; Safeco non-renewed 1/2025 when Steadily lost appointment). Prior: Erie Q60 6504801 VT 12/15/21-12/15/22 (owner-occupied, $150K RC).
+- **Policy #:** OB3-TN-22196824-01 · **Term:** 2026-01-09 → 2027-01-09 · **Renews:** 2027-01-09
+- **Premium:** $960 — CONFIRMED in Steadily portal 2026-09-22: carrier Obsidian Insurance Company, annual premium $960.00, status Renewal (Active). Mailing address on file is 282 Bald Rock Rd, Verona VA 24482 (routed to Joshua's Bald Rock address, not Hardinberry itself). $80.00 payment 7/9/2026 (Amex x2003) reads as a monthly installment (12 x $80 = $960, consistent).
 - **Payment:** American Express x2003 via Steadily/Braintree
 - **Key limits:**
-  - **dwelling:** None
-  - **liability:** None
-  - **loss of rents:** None
+  - **form:** DP-0003 Dwelling Policy (Special Form) + GL-0605 Commercial Liability (Premises Only - Landlords), Occupancy: TENANT-OCCUPIED - correct form for a long-term rental
+  - **dwelling:** $105,000
+  - **dwelling valuation:** Replacement Cost
+  - **private structures:** $0
+  - **personal property:** $20,000
+  - **additional living costs fair rental value:** $10,500
+  - **loss assessment:** $10,000
+  - **ordinance or law:** 10,500 (10%)
+  - **vandalism:** 105,000 (100%)
+  - **water damage limitation:** 10,500 (10%), fungi/rot sublimit 5,000
+  - **premises liability:** 300,000 per occurrence (animal liability sublimit 10,000)
+  - **medical payments:** 1,000 per person / 25,000 per occurrence
+  - **flood earthquake sinkhole:** EXCLUDED (standard notices)
+  - **note:** ALL limits CONFIRMED from renewal declarations 2026-09-22. Premium build: dwelling $650 - $9 private structures + PP $126 + loss assessment $27 + O&L $32 + liability $127 + med pay $7 = $960
+- **Deductibles:**
+  - **all other perils:** $5,000
+  - **wind hail:** $5,000
 - **Mortgagee:** None (Steadily confirmed no mortgagee 8/7/2024)
-- **Status:** In force (payment processing 7/9/2026). Carrier, limits, term unknown.
-- **Documents:** Gmail: Fwd 'Payment confirmation: 148 Hardinberry St' (Steadily 7/9/2026, thread 19f669f7dc48c088) · Mail: policy packet with declaration.pdf (Safeco OY9071463, 2024-25) · Mail: Update - Joshuan Davis - 148 Hardinberry St - Travelers.pdf · Drive: 0e02a09193de8bee_148 Insurance Declaration.pdf (Erie 2021-22, historical)
-- **Last verified:** 2026-09-05 — source: Steadily payment confirmation 7/9/2026; prior portfolio
+- **Status:** CONFIRMED IN FORCE 2026-09-22 - Renewal (Active), term 1/9/2026-1/9/2027, carrier Obsidian Insurance Company, premium $960/yr. A 'Notice of Changes at Renewal' was sent 11/20/2025 and shows as delivered - read the actual PDF next review to see what changed.
+- **Documents:** Life OS/Insurance/documents/hardinberry/ - notice of changes at renewal, policy packet (renewal), declaration (renewal), Value360 valuation - pulled from Steadily portal 2026-09-22 · Gmail: Fwd 'Payment confirmation: 148 Hardinberry St' (Steadily 7/9/2026, thread 19f669f7dc48c088) · Mail: policy packet with declaration.pdf (Safeco OY9071463, 2024-25) · Mail: Update - Joshuan Davis - 148 Hardinberry St - Travelers.pdf · Drive: 0e02a09193de8bee_148 Insurance Declaration.pdf (Erie 2021-22, historical)
+- **Last verified:** 2026-09-22 — source: Steadily portal (app.steadily.com) direct pull 2026-09-22, policy detail page + Documents section
 
 ### RE-WOODSWALK-LL — Landlord / rental dwelling
 
@@ -384,16 +419,37 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - **Scope:** 14300 Woods Walk Ln, Midlothian VA 23112
 - **Carrier:** — · **Program/MGA:** Steadily Insurance Agency Inc
 - **Broker:** Steadily · support@steadily.com, 888-966-1611
-- **Policy #:** SP3-VA-33470384-00 (NEW POLICY bound 9/10/2026 - replaces prior Travelers policy 611614155-653-1, which Travelers non-renewed effective 4/12/2026) · **Term:** ? → ? · **Renews:** —
-- **Premium:** — — PRIOR TERM (Travelers, non-renewed 4/12/2026): $1,051.00 for 4/12/2025-4/12/2026. NEW POLICY SP3-VA-33470384-00: $251.62 charged to Amex x3001 on 9/10/2026 per Steadily 'Payment confirmation' email - reads as a binder/first installment, not a confirmed annual premium; full annual premium not yet captured.
+- **Policy #:** SP3-VA-33470384-00 (NEW POLICY bound 9/10/2026 - replaces prior Travelers policy 611614155-653-1, which Travelers non-renewed effective 4/12/2026) · **Term:** 2026-09-11 → 2027-09-11 · **Renews:** 2027-09-11
+- **Premium:** $1,904.92 — CONFIRMED in Steadily portal 2026-09-22: full annual premium is $1,904.92 (New/Active status - not voided). PRIOR TERM (Travelers, non-renewed 4/12/2026): $1,051.00 for 4/12/2025-4/12/2026. The $251.62 charged 9/10/2026 was a first installment, not the full premium.
 - **Payment:** American Express x3001 via Steadily/Braintree (new policy, 9/10/2026)
 - **Key limits:**
-  - **dwelling:** None
-  - **liability:** None
-- **Mortgagee:** Unconfirmed on new policy - prior Travelers policy showed none per 8/7/2024 evidence of insurance
-- **Status:** GAP LIKELY RESOLVED 9/10/2026 - new policy SP3-VA-33470384-00 bound with Steadily (underlying carrier not yet stated in binder emails) after the prior Travelers non-renewal. Steadily's issuance email states coverage is subject to Underwriting review before the effective date and 'may be voided' if the property doesn't meet eligibility guidelines - treat as bound-but-not-fully-confirmed until the policy documents are pulled and underwriting clearance verified.
+  - **form:** DP-0003 Dwelling Policy (Special Form), Occupancy: TENANT-OCCUPIED - correct form for a long-term rental
+  - **dwelling:** $323,000
+  - **dwelling valuation:** Replacement Cost
+  - **private structures:** $32,300
+  - **personal property:** $3,000
+  - **additional living costs fair rental value:** $32,300
+  - **ordinance or law:** 32,300 (10% of dwelling)
+  - **vandalism:** 323,000 (100%)
+  - **water backup sump:** $5,000
+  - **water damage limitation:** 32,300 (10%), fungi/rot sublimit 5,000
+  - **limited theft:** $3,000
+  - **bed bug:** 15,000 policy agg / 5,000 per location
+  - **hoa fines:** 1,000 agg / 500 per occurrence
+  - **loss assessment:** Excluded
+  - **premises liability:** 1,000,000 per occurrence / 2,000,000 aggregate (animal liability sublimit 10,000)
+  - **medical payments:** 500 per person / 25,000 per occurrence
+  - **flood earthquake:** EXCLUDED (standard Steadily notices)
+  - **note:** ALL limits CONFIRMED from declarations page 2026-09-22. Premium build: dwelling $1,418 + PP $16 + bed bug $18 + theft $49 + O&L $142 + water backup $50 + liability $144 + $26 inspection fee = $1,863 + $41.92 SL tax = $1,904.92
+- **Deductibles:**
+  - **all other perils:** $10,000
+  - **windstorm hail:** $10,000
+  - **limited theft:** $10,000
+  - **water backup:** $250
+- **Mortgagee:** NONE listed on the 2026-27 declarations (consistent with prior Travelers policy)
+- **Status:** CONFIRMED IN FORCE 2026-09-22 - policy SP3-VA-33470384-00 shows status 'New (Active)' in the Steadily portal (not voided), term 9/11/2026-9/11/2027, premium $1,904.92. Full document set (property inspection report, policy packet, declaration, underwriting attestation, quote, Value360 valuation) pulled from the portal and filed to Life OS/Insurance/documents/woods-walk/.
 - **Documents:** Gmail: Fwd 'Property Insurance Renewal Notice' (Steadily 3/19/2024 + 8/7/2024 chain, thread 19f669dff812fafc) with RENEWAL OFFER_6116141556531.pdf, EVIDENCE OF INSURANCE.pdf · Mail: Insurance_Application_for_611614155-653-1.pdf · Gmail: 'Finish your insurance quote for 14300 Woods Walk Ln' (Steadily 9/10/2026 22:39 ET, thread 1a08d79bf6a98d6c) · Gmail: 'Insurance coverage on 14300 Woods Walk Ln has been issued' (Steadily 9/10/2026 22:44 ET, thread 1a08d7eddf6f599e) · Gmail: 'Payment confirmation: 14300 Woods Walk Ln' (Steadily 9/10/2026 22:45 ET, thread 1a08d7fcba9e57e2 - policy SP3-VA-33470384-00, $251.62, Amex x3001) · Gmail: 'Policy documents are ready: 14300 Woods Walk Ln' (Steadily 9/11/2026 04:01 ET, thread 1a08ea1180b9a06c)
-- **Last verified:** 2026-09-11 — source: Steadily emails 9/10-9/11/2026 (quote, issuance, payment, documents-ready)
+- **Last verified:** 2026-09-22 — source: Steadily portal (app.steadily.com) direct pull 2026-09-22, policy detail page + Documents section; supersedes 9/10-9/11/2026 email-only capture
 
 ## DOMAIN 3 — Personal
 
@@ -405,7 +461,7 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - **Carrier:** Progressive Select Insurance Co (NAIC 10192)
 - **Broker:** Direct (Progressive), 1-800-776-4737; claims 1-800-274-4499
 - **Policy #:** 998062549 · **Term:** 2026-05-28 → 2026-11-28 · **Renews:** 2026-11-28
-- **Premium:** — — 6-month premium $2,265.00 for 3 vehicles on 4/24/2026 renewal dec (Rivian $859, Model 3 $703, Model Y $703). Cybertruck added 8/22/2026 - revised premium not captured. Upgrade quote declined 8/22/2026: $4,413/6 mo for $500K CSL + stacked UM + extended PIP + MedPay + payoff x4.
+- **Premium:** — — 6-month premium $2,265.00 for 3 vehicles on 4/24/2026 renewal dec (Rivian $859, Model 3 $703, Model Y $703). Cybertruck added 8/22/2026 - revised premium not captured. Upgrade quote declined 8/22/2026: $4,413/6 mo for $500K CSL + stacked UM + extended PIP + MedPay + payoff x4. CURRENT (9/22/2026, per Progressive autopay): $536.67/mo => ~$3,220 per 6-mo term / ~$6,440 per year for 4 vehicles at 50/100/25, $2,000 deductibles.
 - **Payment:** Automatic card payments (ACP discount)
 - **Key limits:**
   - **bodily injury:** 50,000 / 100,000
@@ -424,7 +480,7 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - **Lienholder/Additional interest:** Santander Consumer USA, Carmel IN 46082 (Model 3)
 - **Status:** In force; ACTIVE DECISION before 11/28/2026 renewal (limits kept low 8/22/2026 to take Cybertruck delivery).
 - **Documents:** Drive: Declarations Page.pdf (Progressive renewal dec dated 4/24/2026, id 1--Ulw0EuDBq7dNTXeoIxFy91zsPriGWv) · Drive: 11 Auto Insurance Declarations CSAA.pdf (misnamed - actually CSAA 2019 homeowners dec for 8018 Hampton Station Ct; historical)
-- **Last verified:** 2026-09-05 — source: Progressive dec 4/24/2026 (Drive); prior portfolio 8/22/2026
+- **Last verified:** 2026-09-22 — source: Progressive dec 4/24/2026 (Drive); prior portfolio 8/22/2026
 
 ### PERS-HEALTH — Health - ACA marketplace plans (VA and FL, 1095-A)
 

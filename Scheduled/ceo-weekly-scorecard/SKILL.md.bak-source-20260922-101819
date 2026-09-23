@@ -54,27 +54,3 @@ A thin week still ships. Silence is worse than a short scorecard.
 
 ## Dedupe before posting — required
 Before composing anything, read **#ceo-briefs `C0C06PWLQCR`** (last 20 messages) and check whether a scorecard for this same reporting week has already been posted today. If one has, STOP — do not post a second one. Write a one-line note in the STATUS file that a duplicate was avoided and end the run cleanly. A double-posted scorecard is worse than a missing one.
-
-
----
-
-# SOURCE-OF-RECORD RULE for 'what published' (2026-09-22)
-
-**Never judge whether a report published by reading its channel through the Slack connector.**
-Most Tier-1 reports are now posted by the `vp_ops_engine` bot — a different Slack app — and the
-connector shows those messages as present-but-empty or misses them entirely. On 2026-09-21 this
-brief reported the pawn walk and sold review "dark for the week"; they had posted every day. Joshua
-read that as fact.
-
-For every "did X publish / what did X say" question, read these instead, in this order:
-1. `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/receipts/<task>.jsonl` — one
-   line per real publication, with timestamp and the first line of what was sent.
-2. `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/audit.json` — per task:
-   hit/miss per instance, rate, last_good. Regenerated nightly.
-3. `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/WHATS_ACTUALLY_BROKEN_2026-09-20.md`
-   — the current day-by-day picture, maintained by the fleet owner.
-4. The report's own output files (e.g. `Pawn Walks/daily/<date>_intake_margin_summary.json`) for
-   the numbers themselves.
-
-A channel read is acceptable ONLY for messages posted by people or by the Cowork app itself.
-If none of the sources above has a task, say "not measured" — never "dark" or "didn't post."

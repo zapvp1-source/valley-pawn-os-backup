@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-09-21
+# LIVE STATE - auto-refreshed 2026-09-22
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -12,20 +12,20 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Metric | Count |
 |---|---|
-| Task folders on disk | 197 |
-| Registered with scheduler | 196 |
-| Enabled (will fire) | 56 |
-| Registered but disabled | 140 |
-| On disk but never registered | 1 |
-| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 4270 |
+| Task folders on disk | 199 |
+| Registered with scheduler | 197 |
+| Enabled (will fire) | 73 |
+| Registered but disabled | 124 |
+| On disk but never registered | 2 |
+| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 3976 |
 
 ### Enabled tasks
 
-`bald-rock-15-day-contract`, `bonus-month-close`, `bonus-month-close-pull`, `bonus-pace-monday`, `bonus-paid-verify`, `ceo-mail-brief`, `ceo-monthly-scorecard`, `ceo-weekly-scorecard`, `chekkit-unanswered-alert`, `chekkit-unanswered-eod-followup`, `daily-clockin-check`, `daily-cloudcover-check`, `daily-dress-code-check`, `daily-funds-verification`, `daily-items-to-price`, `daily-unopened-email-eval`, `entity-compliance-check`, `eom-bravo-gl-export`, `eom-bravo-gl-export-watchdog`, `fleet-guardian`, `funds-verification-watchdog`, `google-reviews-post-watchdog`, `jewelry-onhand-catchup`, `jewelry-onhand-nightly-pull`, `layaway-yield-weekly`, `monday-bravo-cell-gapfill`, `monday-bravo-combined-compile`, `monday-bravo-combined-run`, `monday-bravo-postcheck`, `monthly-analytics-prestage`, `monthly-analytics-report`, `monthly-analytics-watchdog`, `monthly-employee-sales-rankings`, `monthly-eom-recap`, `monthly-gun-audit-report`, `monthly-publication-audit`, `monthly-scrap-rankings`, `nics-monthly-ranking`, `nics-weekly-mtd-ranking`, `precious-metals-settlement-handler`, `preston-sep16-outbound-calls`, `review-obtained-last-week`, `sales-tax-monthly-update`, `sunday-checklist-summary`, `vp-new-customer-report`, `weekly-aged-inventory-canvas-refresh`, `weekly-employee-perf-canvas-refresh`, `weekly-layaway-review-canvas-refresh`, `weekly-loan-layaway-manager-dms`, `weekly-loan-review-canvas-refresh`, `weekly-markdown-verification-pull`, `weekly-markdown-verification-review`, `weekly-returns-summary`, `weekly-store-kpis`, `weekly-store-perf-canvas-refresh`, `weekly-timekeeping-analysis`
+`backup-health-watchdog`, `bald-rock-15-day-contract`, `bald-rock-guest-reviews`, `bald-rock-monday-briefing`, `bonus-month-close`, `bonus-month-close-pull`, `bonus-pace-monday`, `bonus-paid-verify`, `ceo-mail-brief`, `ceo-monthly-scorecard`, `ceo-weekly-scorecard`, `chekkit-unanswered-alert`, `chekkit-unanswered-eod-followup`, `connector-health-daily`, `daily-clockin-check`, `daily-cloudcover-check`, `daily-dress-code-check`, `daily-funds-verification`, `daily-items-to-price`, `ebay-weekly-channel-audit`, `email-analytics-weekly`, `entity-compliance-check`, `eom-bravo-gl-export`, `eom-bravo-gl-export-watchdog`, `fleet-guardian`, `funds-verification-watchdog`, `google-reviews-post-watchdog`, `gusto-keep-alive`, `health-records-intake`, `health-weekly-digest`, `insurance-inbox-watch`, `insurance-renewal-runner`, `jewelry-onhand-catchup`, `jewelry-onhand-nightly-pull`, `layaway-yield-weekly`, `monday-bravo-cell-gapfill`, `monday-bravo-combined-compile`, `monday-bravo-combined-run`, `monday-bravo-postcheck`, `monthly-analytics-prestage`, `monthly-analytics-report`, `monthly-analytics-watchdog`, `monthly-employee-sales-rankings`, `monthly-eom-recap`, `monthly-gun-audit-report`, `monthly-publication-audit`, `monthly-scrap-rankings`, `morning-brief`, `nics-monthly-ranking`, `nics-weekly-mtd-ranking`, `northwest-registered-agent-daily-check`, `oura-daily-import`, `precious-metals-settlement-handler`, `review-obtained-last-week`, `sales-tax-monthly-update`, `sunday-checklist-summary`, `vp-new-customer-report`, `vp-website-shop-weekly-report`, `weekly-aged-inventory-canvas-refresh`, `weekly-analytics-summary`, `weekly-employee-perf-canvas-refresh`, `weekly-layaway-review-canvas-refresh`, `weekly-loan-layaway-manager-dms`, `weekly-loan-review-canvas-refresh`, `weekly-markdown-verification-pull`, `weekly-markdown-verification-review`, `weekly-returns-summary`, `weekly-store-kpis`, `weekly-store-perf-canvas-refresh`, `weekly-timekeeping-analysis`, `weekly-website-health-audit`, `zoom-voicemail-alert`, `zoom-voicemail-eod-review`
 
 ### On disk but NOT registered (never fire)
 
-`registry-restore-copy-oneshot-20260916`
+`preston-sep16-outbound-calls`, `registry-restore-copy-oneshot-20260916`
 
 ## Native launchd agents (run without Claude)
 
@@ -34,6 +34,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.bravo-health-watchdog.plist` | installed | YES |
 | `com.valleypawn.bravo-relaunch.plist` | installed | YES |
 | `com.valleypawn.business-os-refresh.plist` | installed | YES |
+| `com.valleypawn.chekkitperms-oneshot.plist` | installed | YES |
 | `com.valleypawn.chrome-extension-watchdog.plist` | installed | YES |
 | `com.valleypawn.chrome-tab-hygiene.plist` | installed | YES |
 | `com.valleypawn.claude-keepalive.plist` | installed | YES |
@@ -54,6 +55,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.github-backup.plist` | installed | YES |
 | `com.valleypawn.jewelry-pull-watchdog.plist` | installed | YES |
 | `com.valleypawn.mac-maintenance.plist` | installed | YES |
+| `com.valleypawn.mail-brief.plist` | installed | YES |
 | `com.valleypawn.monday-pull.plist` | installed | YES |
 | `com.valleypawn.morning-pull.plist` | installed | YES |
 | `com.valleypawn.perf-guard.plist` | installed | YES |
@@ -79,18 +81,20 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-09-21 | Valley Pawn OS | - |
-| 2026-09-21 | Unified Search | - |
-| 2026-09-21 | Bravo Data Extraction | STATUS.md |
+| 2026-09-22 | Valley Pawn OS | - |
+| 2026-09-22 | Unified Search | - |
+| 2026-09-22 | Bravo Data Extraction | STATUS.md |
+| 2026-09-21 | Solaterra Site | - |
+| 2026-09-21 | Quickbooks Set UP | - |
+| 2026-09-21 | Precious Metals Settlements | - |
+| 2026-09-21 | Life OS | - |
+| 2026-09-21 | Daily Funds Verification | - |
+| 2026-09-21 | Compliance | - |
+| 2026-09-21 | Communcations | - |
+| 2026-09-21 | Bonus Program | - |
 | 2026-09-20 | Sold Margin Review | STATUS.md |
-| 2026-09-20 | Quickbooks Set UP | - |
-| 2026-09-20 | Precious Metals Settlements | - |
 | 2026-09-20 | Pawn Walks | STATUS.md |
-| 2026-09-20 | Life OS | - |
 | 2026-09-20 | Discount Outlier Review | STATUS.md |
-| 2026-09-20 | Daily Funds Verification | - |
-| 2026-09-20 | Compliance | - |
-| 2026-09-20 | Communcations | - |
 | 2026-09-19 | Valley Pawn Studios | STATUS.md |
 | 2026-09-19 | Refine Social Media | - |
 | 2026-09-19 | Jewelry Count Reconciliation | STATUS.md |
@@ -98,7 +102,6 @@ below disagrees with this block, THIS BLOCK WINS.
 | 2026-09-18 | Landscap Plan | - |
 | 2026-09-18 | Air Quality Monitoring | STATUS.md |
 | 2026-09-17 | eBay | - |
-| 2026-09-17 | Bonus Program | - |
 | 2026-09-16 | Zoom Call Pipeline | - |
 | 2026-09-16 | Website | - |
 | 2026-09-16 | Health Optimization | STATUS.md |
@@ -108,7 +111,6 @@ below disagrees with this block, THIS BLOCK WINS.
 | 2026-09-10 | Sales Tax | STATUS.md |
 | 2026-09-10 | Human Resources | - |
 | 2026-09-09 | _scratch | - |
-| 2026-09-08 | Solaterra Site | - |
 | 2026-09-08 | Call Analysis | - |
 | 2026-09-07 | Preston Knowledge Base | - |
 | 2026-09-06 | Ai Optimized Marketing | - |
@@ -128,6 +130,19 @@ below disagrees with this block, THIS BLOCK WINS.
 **Created:** 2026-05-20
 **Owner:** Joshua Davis (jdavis@fcfpawn.com)
 **Update cadence:** Update whenever a new piece of infrastructure ships, or a constraint changes.
+
+---
+
+## Tooling note — NOT using 1Password (2026-09-22)
+
+Joshua does **not** use 1Password as his password manager — it was tried during a browser
+credential-autofill flow (Claude in Chrome → LinkedIn sign-in) and turned out to be more work
+than it was worth (repeated `transport_error`, nothing filled). **Do not call
+`request_credentials`/`autofill_credential` expecting 1Password to answer** — it will stall the
+task. For sign-ins going forward: check if the target site already has a live session in the
+Chrome extension or the built-in browser first (many do); if not, ask Joshua to sign in manually
+in the browser pane (one click, e.g. "Continue with Google") rather than retrying the credential
+flow. This applies fleet-wide, all 3 domains, anywhere browser sign-in comes up.
 
 ---
 

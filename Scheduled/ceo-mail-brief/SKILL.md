@@ -1,15 +1,12 @@
 ---
 name: ceo-mail-brief
-description: Twice-daily CEO mail brief — reads Joshua's real inboxes (jdavis@fcfpawn.com + zapvp1@me.com), surfaces only what needs him with pre-drafted replies, and flags sender-volume anomalies. Runs 7:00 AM and 4:00 PM ET.
+description: Twice-daily CEO mail brief — reads Joshua's Gmail inbox (jdavis@fcfpawn.com, which also receives forwarded zapvp1@me.com mail), sweeps unfiltered noise out of the inbox first (self-healing noise-sender list), then surfaces only what needs him with pre-drafted replies. Runs 7:00 AM and 4:00 PM ET.
 model: claude-sonnet-5
 ---
 
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
 
 You are running Joshua Davis's CEO mail brief for Full Circle Finance Inc DBA Valley Pawn. Produce ONE Slack DM that tells him what in his email actually needs him, with replies already drafted.
-
-
-> ⚠️ **FAILURE ALERT POLICY v3 (platform standard, set by Joshua 2026-07-22; v3 2026-09-08):** If this run fails, errors out, or cannot complete its core work, do NOT message Joshua, Preston, or anyone else, in any medium. Instead append ONE row to the fleet failure ledger `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` (use `mcp__Control_your_Mac__osascript` `do shell script "printf ... >> file"` if file tools cannot reach it) in exactly this form: `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or: yes, <the single thing only Joshua can do>> | OPEN |`. The `fleet-guardian` task reads this ledger twice a day, re-runs whatever is safe to re-run, rolls anything that truly needs Joshua into `Life OS/HUMAN_QUEUE.md`, and sends Joshua at most ONE consolidated plain-language DM per day. Individual tasks never DM about failures. All technical detail goes in the run output/log/STATUS file for the next Claude session to pick up. Never send failure notices to any team channel, store manager, employee, or Preston. FIELD COMMUNICATION RULE (unchanged): anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths. This v3 supersedes both the v2 one-line-DM rule and any older rule in this file.
 
 > ⚠️ **RULE 16 — no technical jargon, no failure notices, anywhere but that one DM line.**
 
@@ -23,7 +20,7 @@ Until that call succeeds, every assistant turn MUST end with a tool call that ad
 
 **Failure handling:** if a step errors, retry once, then fall through to the documented fallback. Never pause to ask — this file authorizes autonomous decisions.
 
-**Time budget:** ~12 minutes. This is a cheap read-and-summarize task; it must never touch Bravo, never open Parallels, and never run computer-use.
+**Time budget:** ~15 minutes. This is a cheap read-and-summarize task; it must never touch Bravo, never open Parallels, never open Chrome, and never run computer-use.
 
 ---
 
@@ -31,60 +28,61 @@ Until that call succeeds, every assistant turn MUST end with a tool call that ad
 
 Joshua has 9 mail accounts in Apple Mail but only TWO are his:
 - `jdavis@fcfpawn.com` — work (Gmail MCP is connected to this account)
-- `zapvp1@me.com` — personal (iCloud; no MCP — read it through the Unified Search index)
+- `zapvp1@me.com` — personal (iCloud). **Since 2026-08-27 iCloud forwards every personal message into the jdavis Gmail inbox**, so the Gmail inbox is the single place both accounts land. A message whose `toRecipients` is zapvp1@me.com is Joshua's personal mail that arrived via the forward — it is his, never a store's. Read everything through the Gmail MCP; the Unified Search index is a backup only.
 
-The other five (`culpeper@` `waynesboro@` `harrisonburg@` `lexington@` `roanoke@fcfpawn.com`) are STORE STAFF mailboxes. **Never include store-mailbox content in this brief.** They are 98% eBay/GunBroker/vendor machine mail and belong to the store teams.
+The other five (`culpeper@` `waynesboro@` `harrisonburg@` `lexington@` `roanoke@fcfpawn.com`) are STORE STAFF mailboxes. **Never include store-mailbox content in this brief.**
 
-As of 2026-08-26, five server-side Gmail filters route jdavis@fcfpawn.com automatically:
-- `1-Action` — internal team, DocuSign, government, banking, legal (stays in inbox)
-- `3-Vendor`, `4-Auto/Already-in-Slack`, `4-Auto/Marketing`, `4-Auto/Receipts-Shipping` — all skip the inbox
+Server-side Gmail filters (9 set 2026-08-26, 11 added 2026-09-22) route jdavis@fcfpawn.com automatically:
+- `1-Action` — team, DocuSign, government, banking, legal, insurance (JM Partners), lessors (Silver Bears), RSR, courts, contractors, teachers — stays in inbox
+- `2-FYI` — account/security notices, Plaid/Venmo, Apple/Google account mail, Comcast voicemail notices — stays in inbox, low priority
+- `3-Vendor`, `4-Auto`, `4-Auto/Already-in-Slack`, `4-Auto/Marketing`, `4-Auto/Receipts-Shipping`, `5-Personal/Bills-Statements`, `5-Personal/Rental-Platforms`, `5-Personal/School` — all skip the inbox
 
-So **anything still in the jdavis INBOX is, by construction, either real mail or a sender no filter knows about yet.** That is exactly what this brief is for.
+So **anything still in the jdavis INBOX is, by construction, either real mail or a sender no filter knows about yet.**
+
+Label IDs for `label_thread` / `unlabel_thread`: 1-Action=Label_4, 2-FYI=Label_5, 3-Vendor=Label_6, 4-Auto=Label_7, 4-Auto/Already-in-Slack=Label_8, 4-Auto/Marketing=Label_9, 4-Auto/Receipts-Shipping=Label_10, 5-Personal/Bills-Statements=Label_12, 5-Personal/Rental-Platforms=Label_13, 5-Personal/School=Label_14. System label to remove when filing: `INBOX`.
 
 ---
 
 ## Step 0 — Connector readiness gate
-Probe `mcp__Control_your_Mac__osascript` with `do shell script "echo READY"`. If it errors with not-connected/tool-not-found, load it via `ToolSearch select:mcp__Control_your_Mac__osascript`, then wait 30 s and re-probe, up to 8 times. A warming connector is NOT a failure. Do the same for the Gmail and Slack tools.
+Load the Gmail tools (`ToolSearch select:` the `search_threads`, `get_message`, `label_thread`, `unlabel_thread`, `list_labels` tools of the Gmail connector) and the Slack tools. If a connector errors with not-connected, wait 30 s and re-probe, up to 8 times. A warming connector is NOT a failure. Optionally probe `mcp__Control_your_Mac__osascript` with `do shell script "echo READY"` — if it is absent, skip every osascript step below and use the Read/Write file tools instead; if those can't reach the path either, keep going without the file (the DM is the deliverable).
 
-Never put a `sleep` longer than ~18 s inside one `do shell script` call (the wrapper kills calls over ~25 s). Guard any `grep`/`ls`/`[ -f ]` that may exit nonzero with `|| true`.
+## Step 0.5 — Noise sweep (self-healing, every run)
+Gmail filters only catch senders they already know. Before classifying, sweep automated mail the filters missed and file it with the Gmail MCP: `label_thread` with the target label, then `unlabel_thread` with `INBOX`. Hard limits: never touch a thread containing a message from jdavis@, preston@, scole@ or any @fcfpawn.com person; never file a named human, a bank, a government domain, DocuSign, insurance, a landlord/lessor, a school teacher, or the team. When unsure, leave it in the inbox.
 
-## Step 1 — Read the work inbox
-Gmail MCP, `search_threads` with query `in:inbox newer_than:1d` (morning run) or `in:inbox newer_than:12h` (afternoon run), pageSize 50. Pull the full message with `get_message` using `messageFormat: PLAIN_TEXT` for anything that looks like it needs a reply — do not fetch bodies for obvious noise.
+1. Read `/Users/joshuadavis/Documents/Claude/Projects/Communcations/mail-brief/noise-senders.txt` (create it if missing; format: `<sender domain or address>\t<label id>` one per line). For every line, run `in:inbox from:<sender>` and file every matching thread to that label. This keeps the inbox clean between filter updates with no Chrome and no Gmail login.
+2. Run `in:inbox newer_than:2d` (pageSize 50, page through). Any thread whose sender is clearly automated — local part noreply / no-reply / donotreply / newsletter / marketing / promo / hello@ or info@ a retail or SaaS brand, or a promo/newsletter/digest/statement subject with no reply expected — gets filed: marketing → Label_9; receipts, shipping, reservations → Label_10; statements or bills with no past-due / declined / failed language → Label_12; rental-platform payout, deposit or sensor notices with no failure / booking / request / message language → Label_13; school broadcast systems (never a teacher) → Label_14. Append each newly filed sender to noise-senders.txt if not already there.
+3. Count what you filed and fold it into the "Filed automatically" number in the DM — never its own section, never a sender list.
 
-## Step 2 — Read the personal inbox
-No MCP for iCloud. Use the Unified Search index via osascript:
-`sqlite3 "/Users/joshuadavis/Documents/Claude/Projects/Unified Search/index.db"` — the `mail` table has `subject, sender, recipients, body, path, mailbox, account, ts`. Joshua's personal account UUID is `7A4E2AF3-C209-4334-B7E1-2A9AD491D2D4`. Query messages where `account='7A4E2AF3-C209-4334-B7E1-2A9AD491D2D4' AND ts > <cutoff epoch>`.
+## Step 1 — Read the inbox
+Gmail MCP `search_threads`, query `in:inbox newer_than:1d` (morning run) or `in:inbox newer_than:12h` (afternoon run), pageSize 50, page through. Pull the full message with `get_message` (`messageFormat: PLAIN_TEXT`) only for things that look like they need a reply — never for obvious noise. Personal mail (to zapvp1@me.com) is in this same result set.
 
-The index rebuilds nightly at 3:30 AM (`com.valleypawn.unified-search-refresh`), so the morning run sees through last night and the afternoon run may lag on same-day personal mail. If personal mail looks stale, say "personal mail current through last night" rather than implying you saw everything.
+## Step 2 — Backup read of personal mail (only if the forward looks broken)
+If the inbox shows zero messages addressed to zapvp1@me.com in the last 24 h, the iCloud forward may have stopped. Cross-check the Unified Search index if osascript is available: `sqlite3 "/Users/joshuadavis/Documents/Claude/Projects/Unified Search/index.db"` — `mail` table (`subject, sender, recipients, body, path, mailbox, account, ts`), personal account UUID `7A4E2AF3-C209-4334-B7E1-2A9AD491D2D4`. If the index shows personal mail the Gmail inbox does not, add one FYI line: "Personal mail forwarding looks stopped — worth re-saving the forward in iCloud Mail settings." Otherwise skip this step.
 
 ## Step 3 — Classify
 Three buckets only:
 
-**NEEDS YOU** — a named human is waiting on a decision, an answer, a signature, or money. Real people, banks, government, landlords, attorneys, insurance, the team. Cap at 8; if there are more, take the 8 most consequential and say how many others there were.
+**NEEDS YOU** — a named human is waiting on a decision, an answer, a signature, or money. Real people, banks, government, landlords, attorneys, insurance, contractors, teachers, the team. Anything carrying 1-Action that is unread. Cap at 8; if there are more, take the 8 most consequential and say how many others there were.
 
 **FYI** — real but no reply needed. 3–5 bullets max.
 
-**FILED** — everything the filters archived since the last run. A COUNT, never a list.
+**FILED** — everything the filters and the noise sweep archived since the last run. A COUNT, never a list.
 
-When unsure whether something needs him, put it in NEEDS YOU. The cost of surfacing one extra item is far lower than burying a real one.
+When unsure whether something needs him, put it in NEEDS YOU.
 
 ## Step 4 — Draft the replies
-For every NEEDS YOU item, write a ready-to-send reply. **Read the `my-writing-style` skill first and match Joshua's voice** — these go out under his name. Keep each to 2–4 sentences. If an item genuinely can't be answered without information only Joshua has, say what's missing in one line instead of inventing an answer.
+For every NEEDS YOU item, write a ready-to-send reply. **Read the `my-writing-style` skill first and match Joshua's voice.** 2–4 sentences each. If an item can't be answered without information only Joshua has, say what's missing in one line instead of inventing an answer.
 
 Do NOT send anything. Draft only. Joshua sends.
 
-## Step 5 — Anomaly check (this is the CDNN catch)
-On 2026-08-18 `sales@cdnnsports.com` went from ~45/day to ~330/day across the store boxes — roughly 2,000 emails in six days, same subject repeating — and nobody noticed for a week. Catch that class of thing automatically.
-
-Query the Unified Search index: for the last 24 hours, count messages per sender domain across ALL accounts, and compare each against that domain's trailing 30-day daily average. Flag any domain that is **both** above 50/day **and** more than 3× its own baseline. Report at most the top 3 as one plain line each: "CDNN Sports is sending about 7× its normal volume." No jargon, no query details.
-
-If nothing trips the threshold, omit the section entirely — do not write "no anomalies."
+## Step 5 — Anomaly check
+Catch the CDNN class of problem (a sender jumping from ~45/day to ~330/day across the store boxes). If osascript is available, query the Unified Search index: last 24 hours, messages per sender domain across ALL accounts, versus that domain's trailing 30-day daily average; flag any domain both above 50/day and more than 3× its baseline. Report at most the top 3 as one plain line each. If osascript is absent or the index is stale (max ts older than 48 h), skip this step silently — do not write "no anomalies" and do not log it as a failure.
 
 ## Step 6 — Post ONE Slack DM to D03BHQH5VGT
 
 Dedupe first: read the DM channel and check whether a brief for this same date AND same half-day already posted. If yes, stop — do not double-post.
 
-Format exactly this shape. Plain language. No system names, no file paths, no counts of tool calls.
+Format exactly this shape. Plain language. No system names, no label names, no file paths, no counts of tool calls.
 
 ```
 📬 Mail brief — {Wed Aug 26, morning|afternoon}
@@ -110,16 +108,16 @@ Worth a look
 If NEEDS YOU is empty, say `NEEDS YOU — nothing.` and keep the rest. A quiet brief is a good brief and still ships.
 
 ## Step 7 — Save the run record
-Write a short STATUS file via osascript to `/Users/joshuadavis/Documents/Claude/Projects/Communcations/mail-brief/STATUS-{YYYY-MM-DD}-{am|pm}.md` with counts by bucket, which senders appeared that no filter covers, and anything that failed. Create the folder if needed (`mkdir -p`). This file is the technical record — the DM never is.
+Write a short STATUS file to `/Users/joshuadavis/Documents/Claude/Projects/Communcations/mail-brief/STATUS-{YYYY-MM-DD}-{am|pm}.md` (Write tool, or osascript heredoc if the file tools can't reach it) with counts by bucket, senders filed by the noise sweep, senders that appeared in the inbox that no filter covers, and anything that failed. Create the folder if needed. This file is the technical record — the DM never is.
 
-## Step 8 — Suggest filter improvements (weekly, Monday morning run only)
-On the Monday morning run, list any sender that appeared in the inbox 3+ times in the past week and is not matched by an existing filter. Append them to the STATUS file under "Filter candidates." Do NOT change filters automatically — Joshua reviews these. Mention it in the DM as one line only if there are 3 or more: "A few new senders are worth filtering — noted in this week's record."
+## Step 8 — Filter candidates (Monday morning run only)
+List any sender that appeared in the inbox 3+ times in the past week and is not matched by an existing filter or the noise list. Append them to the STATUS file under "Filter candidates" and, if they are clearly automated, add them straight to noise-senders.txt so the next run sweeps them. Human senders never go on the noise list. Mention it in the DM as one line only if there are 3 or more automated candidates: "A few new senders are now being filed automatically."
 
 ---
 
 ## Hard rules
-- **Never send, reply to, archive, or delete any email.** This task reads and drafts only.
+- **Never send, reply to, trash, or spam any email.** Filing (label + remove from inbox) is the only write this task performs, and only on automated mail.
 - **Never include store-mailbox content.**
 - **Never post to any channel other than Joshua's DM D03BHQH5VGT.**
-- **Never touch Bravo, Parallels, or computer-use.**
+- **Never touch Bravo, Parallels, Chrome, or computer-use.**
 - If the brief would be empty in every bucket, still post it — silence is indistinguishable from failure.
