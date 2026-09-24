@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-09-22
+# LIVE STATE - auto-refreshed 2026-09-23
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -13,11 +13,11 @@ below disagrees with this block, THIS BLOCK WINS.
 | Metric | Count |
 |---|---|
 | Task folders on disk | 199 |
-| Registered with scheduler | 197 |
+| Registered with scheduler | 196 |
 | Enabled (will fire) | 73 |
-| Registered but disabled | 124 |
-| On disk but never registered | 2 |
-| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 3976 |
+| Registered but disabled | 123 |
+| On disk but never registered | 3 |
+| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 2832 |
 
 ### Enabled tasks
 
@@ -25,7 +25,7 @@ below disagrees with this block, THIS BLOCK WINS.
 
 ### On disk but NOT registered (never fire)
 
-`preston-sep16-outbound-calls`, `registry-restore-copy-oneshot-20260916`
+`insurance-claims-follow-up`, `preston-sep16-outbound-calls`, `registry-restore-copy-oneshot-20260916`
 
 ## Native launchd agents (run without Claude)
 
@@ -81,29 +81,29 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-09-22 | Valley Pawn OS | - |
-| 2026-09-22 | Unified Search | - |
-| 2026-09-22 | Bravo Data Extraction | STATUS.md |
+| 2026-09-23 | Valley Pawn OS | - |
+| 2026-09-23 | Unified Search | - |
+| 2026-09-23 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-09-23 | Bravo Data Extraction | STATUS.md |
+| 2026-09-22 | Website | - |
+| 2026-09-22 | Sold Margin Review | STATUS.md |
+| 2026-09-22 | Quickbooks Set UP | - |
+| 2026-09-22 | Pawn Walks | STATUS.md |
+| 2026-09-22 | Life OS | - |
+| 2026-09-22 | Discount Outlier Review | STATUS.md |
+| 2026-09-22 | Daily Funds Verification | - |
+| 2026-09-22 | Compliance | - |
+| 2026-09-22 | Communcations | - |
 | 2026-09-21 | Solaterra Site | - |
-| 2026-09-21 | Quickbooks Set UP | - |
 | 2026-09-21 | Precious Metals Settlements | - |
-| 2026-09-21 | Life OS | - |
-| 2026-09-21 | Daily Funds Verification | - |
-| 2026-09-21 | Compliance | - |
-| 2026-09-21 | Communcations | - |
 | 2026-09-21 | Bonus Program | - |
-| 2026-09-20 | Sold Margin Review | STATUS.md |
-| 2026-09-20 | Pawn Walks | STATUS.md |
-| 2026-09-20 | Discount Outlier Review | STATUS.md |
 | 2026-09-19 | Valley Pawn Studios | STATUS.md |
 | 2026-09-19 | Refine Social Media | - |
-| 2026-09-19 | Jewelry Count Reconciliation | STATUS.md |
 | 2026-09-18 | Taxes 2026 | - |
 | 2026-09-18 | Landscap Plan | - |
 | 2026-09-18 | Air Quality Monitoring | STATUS.md |
 | 2026-09-17 | eBay | - |
 | 2026-09-16 | Zoom Call Pipeline | - |
-| 2026-09-16 | Website | - |
 | 2026-09-16 | Health Optimization | STATUS.md |
 | 2026-09-16 | Gold and Silver Markeitng | - |
 | 2026-09-16 | Business Dashboard Website | - |
@@ -566,6 +566,26 @@ The pipeline is the load-bearing infrastructure that powers all Bravo-touching s
 ---
 
 ## Section 5 — Operating Principles (consolidated)
+
+### ⚠️ GOOGLE DRIVE SYNC — A DRIVE MOVE IS A LOCAL DELETE (added 2026-09-23 after a real break)
+
+`~/Documents/Claude/Projects/Human Resources` is **Google Drive-synced**. Moving or trashing a
+file on the Drive side REMOVES IT FROM LOCAL DISK. On 2026-09-23 a session consolidating
+duplicate P&P manuals moved the HR-root copy of the current manual into a Drive `_RETIRED`
+folder as a "byte-identical duplicate." It was byte-identical; it was not redundant.
+`Ask_Handbook/build_sources.py` globs the HR root **non-recursively** for the highest-versioned
+`Valley_Pawn_PP_Manual_v*_FINAL.docx` and `Employee_Handbook_v*_FINAL.docx` and exits FATAL if
+either is missing, and the responder refuses to answer rather than serve a stale file — so
+#ask-handbook went dark for ~43 minutes until the file was moved back.
+
+**Never move, in Drive, the HR-root copy of the current P&P Manual or Employee Handbook.**
+Archiving *older* versions out of the root is the established, safe pattern (`_archive/<date>/`
+with a README) — removing the *newest* is what breaks the pipeline. More generally: "duplicate"
+is a claim about bytes, "redundant" is a claim about consumers, and only the second licenses a
+deletion. Full protocol, including the pre-move checks and the post-move verification, is in the
+**`drive-sync-file-safety`** skill — read it before any Drive cleanup, de-duplication or
+folder tidying.
+
 
 Every rule that's been baked into skills + memory, in one place. Read this whenever starting a new build.
 

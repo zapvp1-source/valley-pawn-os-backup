@@ -1167,3 +1167,99 @@ Bravo pull is fully captured and reusable if Waynesboro posts a corrected/curren
 Cross-check for the record (table not built/posted, but checked): CUL, HAR, LEX, ROA all show Counted <= Expected or near-zero variance, consistent with prior nights' scope-driven pattern — no anomalous OVER variance at any of the 4 complete stores.
 
 Process flag (not a Bravo/pipeline issue, for Preston/Joshua's attention only): Waynesboro appears to have two different physical "Jewelry Daily Count" sheets circulating this week — worth having tonight's/tomorrow's closer confirm which page is current and consolidate to one sheet.
+
+---
+
+## 2026-09-22 (Tuesday, all 5 stores open) — RUN RECORD
+
+Freeze window: stores close 6:00 PM, pull started ~8:40 PM ET, ran well past 10 PM into the
+early hours of 9/23 due to LEX retries (see below) — still inside the 6 PM->10 AM freeze window
+throughout, so all Bravo reads remain comparable to the 6 PM PM-count sheets.
+
+BRAVO PULL (jewelry-case-counts-v2, per-store triggers via host queue, one trigger per store):
+- CUL: 8/8 ok, first attempt. Rings 671, Bracelets 120, Pendants 221, Charms 20, Brooches 18,
+  Earrings 142, Chains 81, Necklaces 67. Report cats: Rings 671, Bracelets 120,
+  Pendants(P+Ch+Br) 259, Earrings 142, Necklaces(Ch+N) 148.
+- HAR: 7/8 ok, Charms error (matches 09-21's Charms error -> treated as 0 per empty-category
+  rule). Rings 461, Bracelets 47, Pendants 115, Brooches 2, Earrings 46, Chains 67, Necklaces 46.
+  Report cats: Rings 461, Bracelets 47, Pendants(P+0+Br) 117, Earrings 46, Necklaces(Ch+N) 113.
+- ROA: 8/8 ok. Rings 560(Bravo)/-, Bracelets 134, Pendants 177, Charms 60, Brooches -, Earrings
+  168, Chains -, Necklaces 65. (Full CSV in output/2026-09-22_ROA_jewelry-case-counts.csv.)
+- WAY: 7/8 ok after 1 retry (first attempt timed out mid-run, retry succeeded). Charms error
+  matches 09-21's Charms error -> treated as 0. Rings 330, Bracelets 42, Pendants 59, Brooches 5,
+  Earrings 58, Chains 47, Necklaces 25.
+- LEX: **DID NOT COMPLETE after 4 attempts spanning ~20:47 to 00:30 (3.5+ hours).** Attempt 1 and
+  the first retry both wedged indefinitely on the Bracelets category (combo-select never
+  resolved; each eventually hit the pipeline's 45-min trigger wall with zero categories read).
+  Attempt 3 finally ran the store end to end but Charms came back as a genuine read failure — NOT
+  the known-empty pattern, since 09-21's LEX Charms was a real positive value (1), so per this
+  task's own rule this could not be zeroed. Attempt 4 repeated the exact same result (Charms
+  failed twice within that run too, Brooches failed as expected/known-empty). Two independent
+  full runs (3 and 4) agreeing on Charms failing, with Rings/Bracelets/Pendants/Earrings/
+  Chains/Necklaces all reading clean and consistent both times (Rings 289 both times, Bracelets
+  36, Pendants 52, Earrings 46, Chains 27, Necklaces 17), points at a real problem with the
+  "Claude Jewelry Audit - Charms" saved report for LEX specifically, not a transient flake.
+
+PM COUNT SHEETS (read via #end-of-day, Chrome lightbox):
+- CUL (Sandi, 6:18 PM): PM COUNT Rings 671, Bracelets 119, Necklaces 148, Earrings 142,
+  Pendants 259, Totals 1339. Sum-verified 671+119+148+142+259=1339 OK.
+- LEX (Uriah, 6:26 PM): PM COUNT Rings 292, Bracelets 37, Necklaces 44, Earrings 46, Pendants 51,
+  Totals 470. Sum-verified OK.
+- ROA (Benjie Moore, 6:19 PM, sheet rotated 90 deg): PM COUNT Rings 560, Bracelets 134,
+  Necklaces 163, Earrings 78, Pendants 167, Totals 1106 (written). Individual digits re-zoomed
+  twice and read consistently; they sum to 1102, a 4-off from the written 1106 — looks like the
+  manager's own addition slip on the paper, not a misread; using the individual digits.
+- HAR: NOT POSTED. No #end-of-day message from Walker Tapley (or anyone else for Harrisonburg)
+  tonight — checked the full channel history for 9/22, only 4 posts total (Uriah/LEX,
+  Benjie/ROA, Sandi/CUL, Martin D./WAY).
+- WAY (Martin D. covering, 6:15 PM): sheet posted but the "Jewelry Daily Count" photo's most
+  recent filled date block is 9/21/26 — the 9/22 block is blank. Confirmed the store name is
+  Waynesboro from the sheet's own printed header ("END OF DAY: WAYNESBORO").
+
+DECISION: LEX's Bravo pull genuinely failed (real Charms miss, confirmed twice, not the
+known-empty pattern) — per this task's own rule ("still hold everything only if the BRAVO side
+failed... half a Bravo picture must not be published"), **NOTHING posted to #jewlery-counts
+tonight**, even though CUL/HAR/ROA/WAY were all clean or correctly treatable on the Bravo side.
+This supersedes the HAR-missing and WAY-blank-sheet issues, which would otherwise have been a
+partial-post (exclude those two, DM their managers) — moot tonight since the whole post is held
+on the Bravo failure, not the paperwork. No DM sent to Joshua (Failure Policy v3 override) — one
+row logged to fleet/FAILURE_LEDGER.md (NEEDS_HUMAN: yes — LEX's Charms saved report needs a
+human look at the store terminal) instead.
+
+If LEX's Charms report gets fixed and re-pulled later, all other stores' Bravo data above is
+already captured and reusable — no need to re-pull CUL/HAR/ROA/WAY. HAR and WAY still need a
+current PM count sheet from their managers before any table can be built.
+
+## 2026-09-23 (Wednesday, CUL only per store calendar) — RUN RECORD
+
+Freeze window: stores close 6:00 PM, host-queue trigger dropped 8:42 PM ET, health gate PASS,
+result ready 8:53 PM ET — well inside the 6 PM→10 AM freeze window, comparable to the 6 PM PM-count
+sheet.
+
+BRAVO PULL (jewelry-case-counts-v2, single-store trigger via host queue — the
+mcp__Control_your_Mac__osascript connector remains absent from scheduled sessions, so this ran via
+the fleet/host_queue/ + bravo_pull.sh path per the CHANGELOG's Fix part 2):
+- CUL: 8/8 ok, first attempt, no retries. Rings 671, Bracelets 120, Pendants 221, Charms 20,
+  Brooches 18, Earrings 141, Chains 81, Necklaces 67. Report cats: Rings 671, Bracelets 120,
+  Pendants(P+Ch+Br) 259, Earrings 141, Necklaces(Ch+N) 148.
+
+PM COUNT SHEET (read via #end-of-day, Chrome lightbox):
+- CUL (Sandi Cole, 6:28 PM): PM COUNT Rings 671, Bracelets 119, Necklaces 148, Earrings 141,
+  Pendants 259, Totals 1338. Sum-verified 671+119+148+141+259=1338 OK (matches written Totals
+  line).
+
+VARIANCE TABLE (CUL only — Wednesday, no other store scheduled):
+| Category   | Expected | Counted | Variance |
+|------------|----------|---------|----------|
+| Rings      | 671      | 671     | 0        |
+| Bracelets  | 120      | 119     | -1       |
+| Necklaces  | 148      | 148     | 0        |
+| Earrings   | 141      | 141     | 0        |
+| Pendants   | 259      | 259     | 0        |
+| **Total**  | **1339** | **1338**| **-1**   |
+
+DECISION: Bravo pull complete (8/8 ok) and PM sheet present/sum-verified for the only open store
+tonight — posted to #jewlery-counts (C0BM9NHGTT4). No anomalous OVER variance (Counted never
+exceeds Expected); the single -1 on Bracelets is routine scope/miscount noise, not repeating
+night-over-night at CUL from what's on record. No DM sent to Joshua — clean night, nothing needing
+his attention per the task's own DM criteria.
