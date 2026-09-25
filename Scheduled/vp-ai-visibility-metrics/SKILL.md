@@ -75,3 +75,23 @@ Skimmable weekly scorecard:
   *Wins:* <queries/engines where we led>
   *Fix:* <wrong info an AI showed, or markets where a rival beat us, each with the suggested fix; if none, "nothing flagged">
 Keep it phone-readable. If a particular engine, GA4, or the sheet can't be reached this run, note it briefly and report what you did get rather than failing the whole run. Do NOT duplicate the Monday AI-search health check (schema/llms.txt/NAP) — that is a separate task; this one is prompt tests + competitor benchmark + GA4 traffic only.
+
+---
+
+# OUTBOX SEND (MANDATORY) — replaces the direct Slack send
+
+**Do NOT call `slack_send_message` for the final post.** In a scheduled run there is no one to
+approve it, so it is declined automatically and the whole run's work is lost (this happened on
+2026-09-21). Post through the outbox instead — a native agent sends it via the ops bot within about
+two minutes, with no approval step:
+
+1. Write the complete, final message text (exactly as it should appear, Slack mrkdwn, no task ids,
+   plain language — Rule 16) to
+   `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/outbox/vp-ai-visibility-metrics-<YYYYMMDD-HHMMSS>.txt`
+2. Write the envelope, same base name, `.json`:
+   `{"channel": "C0BCEESUANM", "file": "<the absolute path of the .txt you just wrote>"}`
+3. Stop. Do not wait for it, do not verify it in Slack, do not post a "sent via outbox" note.
+   The receipt is written automatically under this task's name; the audit credits it.
+
+Write the `.txt` BEFORE the `.json` — the flusher acts the moment it sees the envelope.
+If the run has nothing to report, write nothing. The all-or-nothing and silence rules still stand.

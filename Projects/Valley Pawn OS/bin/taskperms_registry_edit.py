@@ -130,6 +130,15 @@ EXPLICIT_WRITES = {
     'bald-rock-15-day-contract': [
         'mcp__8ff1eb8f-1c43-4cbb-bcb3-9167c3c96cc7__createEnvelopeFromTemplate',
     ],
+    # 2026-09-24: the 09:01 run stalled on Gmail search_threads ("not covered by usable stored
+    # approvals", usable=11) — the task's whole job is finding Elemetal settlement emails, but it
+    # never had a Gmail trust anchor, so the sibling rule above granted it nothing. Reads only.
+    'precious-metals-settlement-handler': [
+        'mcp__00007879-ef17-43e5-9d59-6325cd2f0a31__search_threads',
+        'mcp__00007879-ef17-43e5-9d59-6325cd2f0a31__get_thread',
+        'mcp__00007879-ef17-43e5-9d59-6325cd2f0a31__get_message',
+        'mcp__00007879-ef17-43e5-9d59-6325cd2f0a31__list_labels',
+    ],
 }
 
 

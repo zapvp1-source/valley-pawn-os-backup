@@ -1263,3 +1263,92 @@ tonight — posted to #jewlery-counts (C0BM9NHGTT4). No anomalous OVER variance 
 exceeds Expected); the single -1 on Bracelets is routine scope/miscount noise, not repeating
 night-over-night at CUL from what's on record. No DM sent to Joshua — clean night, nothing needing
 his attention per the task's own DM criteria.
+
+## 2026-09-24 (Thursday, all 5 stores open) — RUN RECORD
+
+Freeze window: stores close 6:00 PM, host-queue triggers dropped ~8:41 PM ET (one per store,
+per-store walls). Run stretched to ~10:28 PM ET due to LEX needing a full manual retry (see
+below) — still inside the 6 PM→10 AM freeze window throughout, so all Bravo reads remain
+comparable to the 6 PM PM-count sheets.
+
+BRAVO PULL (jewelry-case-counts-v2, per-store triggers via host queue):
+- CUL: 8/8 ok, first attempt, no retries. Rings 671, Bracelets 119, Pendants 219, Charms 20,
+  Brooches 18, Earrings 141, Chains 80, Necklaces 67. Report cats: Rings 671, Bracelets 119,
+  Pendants(P+Ch+Br) 257, Earrings 141, Necklaces(Ch+N) 147.
+- HAR: 7/8 ok, Charms error (matches 9/22's prior-day Charms error → treated as 0 per
+  empty-category rule). Rings 431, Bracelets 46, Pendants 110, Brooches 2, Earrings 46,
+  Chains 66, Necklaces 44. Report cats: Rings 431, Bracelets 46, Pendants(P+0+Br) 112,
+  Earrings 46, Necklaces(Ch+N) 110.
+- ROA: 8/8 ok, first attempt. Rings 554, Bracelets 138, Pendants 106, Charms 58, Brooches 2,
+  Earrings 79, Chains 96, Necklaces 63. Report cats: Rings 554, Bracelets 138,
+  Pendants(P+Ch+Br) 166, Earrings 79, Necklaces(Ch+N) 159.
+- WAY: 7/8 ok, Charms error (matches 9/22's prior-day Charms error → treated as 0). Rings 335,
+  Bracelets 43, Pendants 60, Brooches 5, Earrings 58, Chains 49, Necklaces 26. Report cats:
+  Rings 335, Bracelets 43, Pendants(P+0+Br) 65, Earrings 58, Necklaces(Ch+N) 75.
+- LEX: **first attempt did not complete** — wedged silently on the Bracelets/Charms step for
+  40+ min; one self-heal at 725s silent did not recover it; hit the 2400s trigger wall with
+  zero categories read, exit=1. Dropped a manual retry trigger (jewelry-onhand-2026-09-24-LEX-retry)
+  once the pipeline was confirmed idle; that retry itself sat unclaimed for ~3 min and needed a
+  second self-heal before the watcher picked it up, then ran end-to-end: Rings 289, Bracelets 36,
+  Pendants 52, Charms error (x2, matches 9/22's prior-day Charms error → treated as 0), Brooches
+  error (x2, on the confirmed-empty list → treated as 0), Earrings 46, Chains 27, Necklaces 17.
+  Report cats: Rings 289, Bracelets 36, Pendants(P+0+0) 52, Earrings 46, Necklaces(Ch+N) 44.
+  Logged to fleet/FAILURE_LEDGER.md (NEEDS_HUMAN: yes) — this is the second run in three trading
+  days LEX has needed manual intervention; the underlying "Claude Jewelry Audit - Charms" saved
+  report at the Lexington terminal likely needs a direct look.
+
+PM COUNT SHEETS (read via #end-of-day, Chrome lightbox):
+- HAR (Walker Tapley, 6:14 PM, sheet rotated): PM COUNT Rings 434, Bracelets 47, Necklaces 112,
+  Earrings 47, Pendants 113, Totals 753. Sum-verified 434+47+112+47+113=753 OK.
+- LEX (Uriah, 6:16 PM): DATE 9/24/26 block — PM COUNT Rings 292, Bracelets 37, Necklaces 44,
+  Earrings 46, Pendants 51, Totals 470. Sum-verified OK (AM count identical to PM — no case
+  activity logged that day).
+- ROA (Benjie Moore, 6:26 PM, sheet rotated): DATE 9/24/26 — PM COUNT Rings 554, Bracelets 138,
+  Necklaces 160, Earrings 79, Pendants 165, Totals 1096. Sum-verified 554+138+160+79+165=1096 OK.
+- WAY (Chadd, 6:18 PM): DATE 9/24/26 block — PM COUNT Rings 335, Bracelets 43, Necklaces 75,
+  Earrings 58, Pendants 65, Totals 576. Sum-verified OK.
+- CUL: **wrong sheet posted.** Rob posted at 6:49 PM but all 3 attachments were 9/23's EOD/jewelry
+  sheets (old data, previously already posted and reconciled 9/23). Preston Peters flagged it
+  live in-channel at 6:50 PM ("Wrong EOD sheet Rob") and no correction followed by the time this
+  ran (~10:20 PM). Employee-side issue, not a Claude/Bravo issue — CUL's Bravo pull itself was
+  clean (8/8 ok, see above).
+
+VARIANCE TABLE (HAR/LEX/ROA/WAY — CUL excluded per partial-post rule, see below):
+| Store | Category  | Expected | Counted | Variance |
+|-------|-----------|----------|---------|----------|
+| HAR   | Rings     | 431      | 434     | +3       |
+| HAR   | Bracelets | 46       | 47      | +1       |
+| HAR   | Earrings  | 46       | 47      | +1       |
+| HAR   | Pendants  | 112      | 113     | +1       |
+| HAR   | Necklaces | 110      | 112     | +2       |
+| **HAR Total** |   | **745**  | **753** | **+8**   |
+| LEX   | Rings     | 289      | 292     | +3       |
+| LEX   | Bracelets | 36       | 37      | +1       |
+| LEX   | Earrings  | 46       | 46      | 0        |
+| LEX   | Pendants  | 52       | 51      | -1       |
+| LEX   | Necklaces | 44       | 44      | 0        |
+| **LEX Total** |   | **467**  | **470** | **+3**   |
+| ROA   | Rings     | 554      | 554     | 0        |
+| ROA   | Bracelets | 138      | 138     | 0        |
+| ROA   | Earrings  | 79       | 79      | 0        |
+| ROA   | Pendants  | 166      | 165     | -1       |
+| ROA   | Necklaces | 159      | 160     | +1       |
+| **ROA Total** |   | **1096** | **1096**| **0**    |
+| WAY   | Rings     | 335      | 335     | 0        |
+| WAY   | Bracelets | 43       | 43      | 0        |
+| WAY   | Earrings  | 58       | 58      | 0        |
+| WAY   | Pendants  | 65       | 65      | 0        |
+| WAY   | Necklaces | 75       | 75      | 0        |
+| **WAY Total** |   | **576**  | **576** | **0**    |
+
+DECISION: Per the 2026-09-22 partial-post rule (Joshua), CUL's Bravo side was clean so this is an
+employee paperwork error, not a Claude/pipeline failure — posted HAR/LEX/ROA/WAY to
+#jewlery-counts (via outbox, C0BM9NHGTT4) with one line noting CUL was excluded, and DMed Sandi
+Cole (Culpeper manager, U04C5DL5EKH) directly about the wrong sheet (via outbox). ROA and WAY
+came back with essentially zero variance (perfect or ±1). HAR and LEX both showed small,
+uniformly-positive OVER variances (Counted slightly above Expected — HAR +8 total across 5
+categories, LEX +3 total) — small enough to plausibly be post-6PM case activity (items sold
+between the physical count and the ~9-10 PM Bravo pull would leave Bravo's on-hand count lower
+than the paper count), not a data-entry problem, but DMed Joshua a brief low-key note per Step 7
+since it's a consistent OVER direction rather than random noise. Worth watching if HAR repeats
+this pattern on the next run.

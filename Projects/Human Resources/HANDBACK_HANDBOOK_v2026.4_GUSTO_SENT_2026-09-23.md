@@ -56,3 +56,9 @@ Built, not sent (in this folder): Valley_Pawn_Offer_Letter_Template_OL-2026-01, 
 - Jacob Cox accommodation approval letter — send in Gusto as an Individual document 9/24 afternoon (Joshua's instruction); due by 9/28.
 - #policy-announcements Slack post — awaiting Joshua's approval of text.
 - Not reachable from this session: Valley Pawn OS/CHANGELOG.md and Life OS/OPEN_ITEMS_REGISTER.md — next session with those folders should log this.
+
+## Handbook v2026.5 (2026-09-24) — 401(k) section corrected to the actual plan
+Source of record: Guideline signed Adoption Agreement (restated eff. 1/1/2025; original plan eff. 1/1/2023) — attachment in Gmail thread "Full Circle Finance Inc (DBA Valley Pawn)" with July Business Services, 8/4/2026 — plus Guideline's 8/14/2026 participant invite (current auto-enroll/match settings).
+Plan facts: age 18; 12 months service by ELAPSED TIME (no 1,000-hour test, part-time included); entry = first administratively feasible payroll, no later than later of 2 pay periods/2 weeks; excluded = CBA, NRA, leased, Puerto Rico residents; Roth + rollovers allowed; auto-enroll default 3%; safe harbor match 100% of 1st 3% + 50% of next 2%; all contributions 100% vested; discretionary nonelective permitted.
+Old handbook text (age 21, 1,000 hrs, "regular" employees, enroll after 1 yr) contradicted the plan on age and hours — replaced. No other handbook change. Issued under HR-2026-04 §5 amendment clause, no new acknowledgments. build_sources.py now selects v2026.5.
+OPEN: Gusto signed out 9/24 — upload Handbook v2026.5 as a view-only Team document and archive the v2026.4 view-only copy (template 8168390) next Gusto session. Verify in Gusto → Benefits → 401(k) that auto-escalation is on if the plan is subject to SECURE 2.0 §414A (plan first effective 1/1/2023).

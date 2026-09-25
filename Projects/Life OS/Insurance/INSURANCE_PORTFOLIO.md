@@ -1,6 +1,6 @@
 # Insurance Portfolio — All Domains
 
-**GENERATED 2026-09-23 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
+**GENERATED 2026-09-24 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
 Update the registry, then run `Life OS/Insurance/bin/regen_portfolio.py`.
 Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker history: `BROKER_PIPELINE.md`.
 
@@ -78,6 +78,7 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - Insurable-interest / named-insured mismatch: owner (Farming Infinity LLC) is only an AI/loss payee; FCF Inc is named insured. Joshua flagged 7/31/2026 that a standalone policy under the real estate company may be needed.
 - Premium paid by FCF Inc for a Domain 2 asset - bookkeeping allocation.
 - 9/22/2026: Attempted standalone lessor's-risk quote via NEXT Insurance (app.nextinsurance.com), Lessors of Commercial Buildings product, applicant Farming Infinity LLC. NEXT DECLINED and redirected to a Tivly lead-gen page (not a real quote) - not pursued further. Fallback: emailed Howard Baker (incumbent broker, already carries this building as Loc 5) to quote it as a standalone policy in Farming Infinity LLC's own name, using the existing Loc 5 schedule as the starting spec ($577K building RC, $1M/$2M GL, DCCU mortgagee). If bound, drop Loc 5 from VP-PKG (IK29P109337) for the ~$1,104/yr credit.
+- QUOTE RECEIVED 9/23/2026: Wexford Insurance / Christian Bandy (cbandy@wexfordins.com, 317-942-0549 ext 2) quoted the standalone LRO policy at $3,309.16/yr ($1,220.06 down + 10 x $208.91), GL $1M/$2M occ/agg incl $1M personal & advertising injury, $100K damage-to-premises-rented, $5K medical expense; property $577,000 building RC, $45,000 BI w/ extra expense, $10,000 deductible, Cause of Loss Basic. Attachments (Pathpoint cover letter addressed to Farming Infinity, LLC; Navigators Quote Letter) saved to Gmail thread 1a0cfb68ada34da3, not yet copied to Drive. Awaiting Howard Baker's competing number before Joshua picks.
 
 **RE-CYPRESS-HO — Homeowners HO3 (Special Form)**
 
@@ -106,6 +107,7 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 **RE-HARDINBERRY-LL — Landlord / rental dwelling**
 
 - CHANGE REQUEST SUBMITTED TO STEADILY 2026-09-22 (portal, status Pending) asking them to: (1) correct 'Condominium unit / Anderson County' to fee-simple attached townhome / Roane County; (2) re-run 360Value for the FULL structure and re-rate the dwelling at ~$200-230K RC (their BA8U-V7KF.1 valuation was run WALLS-IN — no roof, foundation, exterior walls, rough electrical/plumbing or HVAC — which is why the limit is $105K, roughly half the rebuild); (3) quote premises liability at $1M/$2M in addition to the current $300K; (4) confirm named insured = Joshua Christian Davis AND Hillary D. Holmes per the deed. Revised quote to zapvp1@me.com. Joshua decides on the new limit/premium when it arrives — nothing bound.
+- REVISED QUOTE RECEIVED 2026-09-23 (Steadily, John Jungen, support@steadily.com): property type corrected to single family; premises liability quoted at $1,000,000/$2,000,000; Hillary Holmes added as an additional named insured. PDF attached to Gmail thread 1a0cb628a878111e, not yet parsed for the new dwelling limit/premium (still needs pulling from the PDF or the Steadily portal). Nothing bound — Joshua's decision on the new premium once the dwelling RC figure is confirmed.
 - Confirm from the HOA CC&Rs whether the association's master policy covers any part of the attached structure (party walls/roof). Fee-simple townhome PUDs usually do NOT — but if it does, the dwelling limit can stay lower.
 - Named insured currently Joshua Davis only; deed is Hillary D. Holmes AND Joshua Christian Davis; intended entity is Farming Infinity Tennessee LLC (Hillary's) but title has not moved — do not change to the LLC until the deed records.
 - Read the 'Notice of Changes at Renewal' PDF (01_notice-of-changes-at-renewal.pdf) to confirm what changed at the 1/9/2026 renewal.
@@ -311,7 +313,7 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - **Additional Insured / Loss Payee - Building:** Farming Infinity, LLC
 - **Status:** In force via VP-PKG.
 - **Documents:** Same as VP-PKG
-- **Last verified:** 2026-09-22 — source: 8/17/2026 schedule; IK29P109337-04 mortgagee page; NEXT Insurance application attempt 9/22/2026
+- **Last verified:** 2026-09-23 — source: 8/17/2026 schedule; IK29P109337-04 mortgagee page; NEXT Insurance application attempt 9/22/2026; Wexford Insurance (Pathpoint/Navigators) quote 9/23/2026
 
 ### RE-CYPRESS-HO — Homeowners HO3 (Special Form)
 
@@ -411,7 +413,7 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - **Mortgagee:** None (Steadily confirmed no mortgagee 8/7/2024)
 - **Status:** CONFIRMED IN FORCE 2026-09-22 - Renewal (Active), term 1/9/2026-1/9/2027, carrier Obsidian Insurance Company, premium $960/yr. A 'Notice of Changes at Renewal' was sent 11/20/2025 and shows as delivered - read the actual PDF next review to see what changed.
 - **Documents:** Life OS/Insurance/documents/hardinberry/ - notice of changes at renewal, policy packet (renewal), declaration (renewal), Value360 valuation - pulled from Steadily portal 2026-09-22 · Gmail: Fwd 'Payment confirmation: 148 Hardinberry St' (Steadily 7/9/2026, thread 19f669f7dc48c088) · Mail: policy packet with declaration.pdf (Safeco OY9071463, 2024-25) · Mail: Update - Joshuan Davis - 148 Hardinberry St - Travelers.pdf · Drive: 0e02a09193de8bee_148 Insurance Declaration.pdf (Erie 2021-22, historical)
-- **Last verified:** 2026-09-22 — source: Steadily portal (app.steadily.com) direct pull 2026-09-22, policy detail page + Documents section
+- **Last verified:** 2026-09-23 — source: Steadily portal (app.steadily.com) direct pull 2026-09-22, policy detail page + Documents section; revised quote email 9/23/2026
 
 ### RE-WOODSWALK-LL — Landlord / rental dwelling
 

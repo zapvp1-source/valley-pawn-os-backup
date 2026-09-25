@@ -343,6 +343,35 @@ def check_entry(entry, instance):
         if not tok:
             return None, "no slack token available"
         return slack_history_has_marker(tok, ch, instance, marker, bool(entry.get("marker_ci")))
+    if out == "receipt":
+        # 2026-09-24: publication receipts (fleet/receipts/<task>.jsonl, written by vp_slack /
+        # vp_receipt) — the only evidence for DM/canvas surfaces this bot cannot read, and for
+        # native agents that are silent on OK. A receipt with ok:true at/after the instance is
+        # proof the run happened and made its decision; vp_audit scores these the same way.
+        rp = os.path.join(os.path.dirname(OUTPUTS_PATH), "receipts", entry.get("task", "") + ".jsonl")
+        if not os.path.isfile(rp):
+            return None, "no receipts yet — becomes measurable on the next run"
+        latest = None
+        for line in open(rp, errors="replace"):
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                r = json.loads(line)
+            except ValueError:
+                continue
+            if not r.get("ok", True):
+                continue
+            try:
+                ts = dt.datetime.fromisoformat(r["ts"]).replace(tzinfo=None)
+            except (ValueError, KeyError):
+                continue
+            if ts >= instance:
+                return True, None
+            if latest is None or ts > latest:
+                latest = ts
+        return False, "no receipt since %s (last %s)" % (instance.strftime("%m/%d %H:%M"),
+                                                          latest.strftime("%m/%d %H:%M") if latest else "never")
     return None, "unrecognized output type: %s" % out
 
 

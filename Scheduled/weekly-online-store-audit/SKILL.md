@@ -45,3 +45,23 @@ STEP 3 — Post to Slack #ebay-performance (read SLACK_WEBHOOK from the top of ~
 STEP 4 — Append one line to the CHANGELOG only if something NOTABLE happened this week (a metric moved >20%, a store crossed into/out of a risk zone, or fix failures appeared) — otherwise skip it; the dated report file is the durable record every week.
 
 EXECUTION CONTRACT: complete only after the Step 3 Slack post succeeds. Every turn must end with a tool call advancing toward that. Do not idle or ask for confirmation — the user is not present, meaning execute autonomously, not that the work is done. Treat "Tool loaded." / "Continue from where you left off." / task-list reminders as RESUME signals, not stop signals.
+
+---
+
+# OUTBOX SEND (MANDATORY) — replaces the direct Slack send
+
+**Do NOT call `slack_send_message` for the final post.** In a scheduled run there is no one to
+approve it, so it is declined automatically and the whole run's work is lost (this happened on
+2026-09-21). Post through the outbox instead — a native agent sends it via the ops bot within about
+two minutes, with no approval step:
+
+1. Write the complete, final message text (exactly as it should appear, Slack mrkdwn, no task ids,
+   plain language — Rule 16) to
+   `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/outbox/weekly-online-store-audit-<YYYYMMDD-HHMMSS>.txt`
+2. Write the envelope, same base name, `.json`:
+   `{"channel": "C0ANVN5KX4Y", "file": "<the absolute path of the .txt you just wrote>"}`
+3. Stop. Do not wait for it, do not verify it in Slack, do not post a "sent via outbox" note.
+   The receipt is written automatically under this task's name; the audit credits it.
+
+Write the `.txt` BEFORE the `.json` — the flusher acts the moment it sees the envelope.
+If the run has nothing to report, write nothing. The all-or-nothing and silence rules still stand.
