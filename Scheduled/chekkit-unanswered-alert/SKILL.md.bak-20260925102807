@@ -1,7 +1,7 @@
 ---
 name: chekkit-unanswered-alert
 description: Daily 8 AM Chekkit unanswered message summary — counts ONLY messages received during store OPEN HOURS (excludes before-open, after-close, and closed days). DMs store employees their store's in-hours count for YESTERDAY (no Preston/Joshua). Runs the morning AFTER the reviewed day.
-model: claude-sonnet-5
+model: claude-haiku-4-5
 ---
 
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -14,8 +14,6 @@ Retry once, then try the documented alternate path. If still failing: write the 
 You are compiling the daily Chekkit unanswered message summary for Valley Pawn. This runs once at 8 AM Mon–Sat the MORNING AFTER, and summarizes YESTERDAY's misses (the full prior calendar day, now closed). **The metric measures responsiveness DURING BUSINESS HOURS ONLY** — messages that arrived before a store opened, after it closed, or on a day the store was closed do NOT count.
 
 **IMPORTANT — date labeling:** The summary header date and DM wording reference the day being REVIEWED (yesterday). They never reference today's posting date.
-
-**PATHS:** the Valley Pawn OS folder is `~/Documents/Claude/Projects/Valley Pawn OS` on the Mac; inside a sandbox shell it may be mounted at `/sessions/*/mnt/Projects/Valley Pawn OS`. Find it once with `ls -d /sessions/*/mnt/Projects/"Valley Pawn OS" "$HOME/Documents/Claude/Projects/Valley Pawn OS" 2>/dev/null` and use that path below as <VPOS>.
 
 ## Execution Contract — DO NOT STOP EARLY
 
@@ -50,11 +48,11 @@ This task is complete ONLY after the documented final action (the summary post i
 - **Waynesboro, Harrisonburg, Lexington, Roanoke:** Monday, Tuesday, Thursday, Friday & Saturday 10:00 AM – 6:00 PM. Closed **Wednesday & Sunday**.
 - Only if the Step 1 weekday is **Wednesday** are the four non-Culpeper stores closed. Only if it is **Sunday** are all stores closed.
 
-4. **Who gets the store DM — from the shared staff roster, never from a hard-coded list.** For each store with 1+ counted messages:
-   a. PRIMARY: run `python3 "<VPOS>/bin/roster_write.py" --check`. If it prints `ok`, read `<VPOS>/hr/ROSTER.json` and take every employee whose `department` equals the store name and whose `slack_id` is not null. (That file is rebuilt every morning at 6:15 from Gusto + Slack by the roster-refresh task.)
-   b. FALLBACK if the check is not ok: Gusto connector `list_employees` (`terminated: false`), employees whose `department` equals the store, then `slack_search_users` by their Gusto email (accept only an exact email match).
-   c. LAST RESORT if both fail: write the ledger row and still post the Step 6 summary, but send no store DMs.
-   Never DM Joshua Davis, Preston Peters, or anyone in Corporate Support or Marketing. People with no Slack ID are skipped (list them in your final report).
+4. **Who gets the store DM — resolve from the live roster every run (never from a hard-coded list).** For each store with 1+ counted messages:
+   a. Gusto connector `list_employees` with `terminated: false`. Take the active employees whose `department` equals the store name (Culpeper, Waynesboro, Harrisonburg, Lexington, Roanoke). Never Joshua Davis, Preston Peters, or anyone in Corporate Support or Marketing.
+   b. Find each person's Slack user ID with `slack_search_users` — first by their Gusto email, then by "First Last", then by last name alone. Accept a match only if the name matches.
+   c. Anyone with no Slack match is skipped (list them in your final report as "not on Slack").
+   d. Fallback ONLY if Gusto cannot be read: Culpeper Sandi (U04C5DL5EKH), Joshua Burnett (U0C3H004BUP); Waynesboro Chadd (U04U136MF6V); Harrisonburg Walker (U09UTFT4P7X); Lexington Uriah (U09H9ES2LKA), Martin (U05TV57FH0B); Roanoke Benjie (U0631AECK4K), Joey Epperly (U0BN3VC2E8G).
    Send EXACTLY ONE DM to each resolved employee:
    📊 *Response check for [Store Name] — [Yesterday's Date]:* [X] customer message(s) sent during business hours went 10+ minutes without a response yesterday. Please make sure to check for new messages regularly so customers get fast replies!
 
@@ -81,8 +79,8 @@ This task is complete ONLY after the documented final action (the summary post i
 
 ## Precondition (MANDATORY) — FLEET PUBLISH GUARD
 
-Before publishing ANYTHING, run `python3 "<VPOS>/bin/vp_dryrun.py" status`. If the script cannot be run, read `<VPOS>/fleet/DRY_RUN.json` directly: `"active": true` with an unexpired expiry = ARMED.
+Before publishing ANYTHING, check the fleet publish guard. The script is `Valley Pawn OS/bin/vp_dryrun.py`. In this environment the Projects folder may be mounted under `/sessions/*/mnt/Projects/` rather than `$HOME/Documents/Claude/Projects/` — find it with `ls /sessions/*/mnt/Projects/"Valley Pawn OS"/bin/vp_dryrun.py "$HOME/Documents/Claude/Projects/Valley Pawn OS/bin/vp_dryrun.py" 2>/dev/null` and run `python3 <that path> status`. If neither path exists, read `Valley Pawn OS/fleet/DRY_RUN.json` directly: `"active": true` with an unexpired expiry = ARMED.
 
-ARMED (exit 0 / active): do the ENTIRE task for real but publish NOTHING; write exactly what you would have published to `<VPOS>/fleet/test_output/chekkit-unanswered-alert-<YYYYMMDD-HHMMSS>.txt` (first line = the channel or person), write no receipt, and say clearly in your final summary that the guard was armed.
+ARMED (exit 0 / active): do the ENTIRE task for real but publish NOTHING; write exactly what you would have published to `Valley Pawn OS/fleet/test_output/chekkit-unanswered-alert-<YYYYMMDD-HHMMSS>.txt` (first line = the channel or person), write no receipt, and say clearly in your final summary that the guard was armed.
 
 Not armed (exit 1 / inactive): run and publish normally.

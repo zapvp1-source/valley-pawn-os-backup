@@ -1,5 +1,21 @@
 # Jewelry Count Reconciliation — STATUS
 
+## RUN RECORD — Friday 2026-09-25 (jewelry-onhand-nightly-pull, consolidated task)
+
+Open stores (Fri, all 5): CUL, HAR, LEX, ROA, WAY. Freeze window confirmed both sides: Bravo pulls fired 8:41-8:45 PM ET (inside the 6 PM close to 10 AM reopen window); manager PM count sheets posted to #end-of-day 6:16-6:34 PM ET, all for today's date.
+
+CUL — Bravo pull: success (all 8 categories ok). Expected (mapped): Rings 671, Bracelets 119, Necklaces 147 (Chains 80 + Necklaces 67), Earrings 141, Pendants 257 (Pendants 219 + Charms 20 + Brooches 18). Counted (manager PM sheet): Rings 671, Bracelets 118, Necklaces 147, Earrings 141, Pendants 257, Total 1334. Variance: Bracelets -1, else 0. COMPLETE both sides — held from publish only because the company-wide post requires all stores' Bravo side to be accounted for tonight (see outcome below).
+
+HAR — manager PM sheet does NOT sum: Rings 430, Bracelets 47, Necklaces 42, Earrings 47, Pendants 112 add to 678 but the written total is 748 (off by 70; re-zoomed twice, digits confirmed legible). Employee-side issue, not a misread. DMed Walker Tapley via outbox. Bravo pull also stalled mid-run (wedged on Bracelets ~21:15 PM, never completed).
+
+LEX — manager PM sheet sums cleanly: Rings 292, Bracelets 37, Necklaces 44, Earrings 46, Pendants 51, Total 470. Bravo pull wedged on the Chains/Brooches combo-select starting ~21:15 PM and never completed despite two watcher restarts (bravo_unwedge.sh at 21:59 and 22:09) plus the trigger's own internal retry; watchdog.log showed the process still hung 19+ min after the second restart.
+
+WAY — manager PM sheet sums cleanly: Rings 334, Bracelets 42, Necklaces 74, Earrings 58, Pendants 65, Total 573. Bravo pull never started tonight — queued behind the wedged LEX/ROA runs for the whole session.
+
+ROA — manager PM sheet photo is real but cropped: only the Pendants (164) and Totals (1,086 for one count, 1,095/1,096 for the adjacent one) columns are legible for today's date; Rings/Bracelets/Necklaces/Earrings for the PM row fall outside the photo frame in all 3 attachments (confirmed by scrolling the lightbox to its actual edge, not a viewport limit). DMed Benjie Moore via outbox asking for a fuller photo. Bravo pull also wedged on Necklaces starting ~21:53 and never completed.
+
+OUTCOME: nothing posted to #jewlery-counts tonight. Per the partial-post rule's own carve-out ("still hold everything only if the BRAVO side failed"), a Bravo-pull failure on 4 of 5 stores blocks the whole company post even though CUL and the LEX/WAY paper sheets were clean — this is a pipeline problem, not an employee one. Manager DMs for the two employee-side sheet issues (HAR, ROA) went out regardless, since those are independent of the pipeline hold. A watcher restart was attempted three times (21:59, 22:09, 22:29) without clearing the wedge — this looks like the underlying Bravo/Parallels VM itself, not just the watcher script. FAILURE_LEDGER row filed; this specific two-store simultaneous wedge hasn't shown up before in this project's history, worth watching if it recurs.
+
 > ## ▶ NEXT SESSION — READ THIS FIRST (one job, ~2 minutes)
 >
 > **Everything is built. The ONLY thing left is registering the scheduled task.**

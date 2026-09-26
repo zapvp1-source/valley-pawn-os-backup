@@ -238,7 +238,11 @@ def decide(calls, cfg, state, now, lookback_min, render):
     """Return list of (decision, reason, call, store_code, caller, during) — pure, testable."""
     stores = cfg["stores"]
     missed = {norm(x) for x in cfg["missed_results"]}
-    exclude = {e164(x) for x in cfg.get("exclude_numbers", []) + [s.get("did") for s in stores.values()]}
+    # Staff phones come from hr/ROSTER.json (refreshed daily from Gusto) PLUS the static list in the
+    # config, so a new hire is never texted and nobody has to hand-edit the config (2026-09-25).
+    roster = load_json(os.path.join(OS_DIR, "hr", "ROSTER.json"), {}).get("employees", [])
+    exclude = {e164(x) for x in cfg.get("exclude_numbers", []) + [s.get("did") for s in stores.values()]
+               + [r.get("phone") for r in roster]}
     exclude.discard(None)
     grace = dt.timedelta(seconds=cfg.get("grace_seconds", 120))
     oldest = now - dt.timedelta(minutes=lookback_min)
