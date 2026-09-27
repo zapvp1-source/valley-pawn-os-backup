@@ -2,6 +2,25 @@
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
 
+## 2026-09-26
+
+- insurance-inbox-watch: updated INSURANCE_REGISTRY.json (RE-WOODSWALK-LL, RE-HARDINBERRY-LL open_issues + last_verified) and regenerated INSURANCE_PORTFOLIO.md; 2 items logged to Open Items Register (Woods Walk coverage-gap confirmation, Hardinberry dwelling reclass premium decision); silence-sweep nudge to ULCAccounts@jmpartners.com blocked again (Gmail draft-creation declined, no approver on scheduled run) - see FAILURE_LEDGER.md.
+- Enabled scheduled tasks: 76 -> 74
+- Registered scheduled tasks: 197 -> 198
+- Task folders on disk: 200 -> 201
+- ENABLED: roster-refresh
+- DISABLED: email-analytics-weekly
+- DISABLED: zoom-voicemail-alert
+- DISABLED: zoom-voicemail-eod-review
+- Native agent appeared: com.valleypawn.email-analytics-weekly.plist
+- Native agent appeared: com.valleypawn.sms-code-relay.plist
+- Native agent appeared: com.valleypawn.zoom-missed-alert.plist
+- Native agent appeared: com.valleypawn.zoom-missed-eod.plist
+- Native agent LOADED: com.valleypawn.email-analytics-weekly
+- Native agent LOADED: com.valleypawn.sms-code-relay
+- Native agent LOADED: com.valleypawn.zoom-missed-alert
+- Native agent LOADED: com.valleypawn.zoom-missed-eod
+
 ## 2026-09-25
 
 - **Unified search dark 9/17→9/25 — root-caused and fixed.** Both native usearch agents launched the rebuild in the background and exited, and launchd killed the orphaned rebuild with the job (SIGTERM seconds in, every night; the 'needs permission' ledger wording was wrong). `AbandonProcessGroup=true` added to `com.valleypawn.usearch-refresh` and `-verify`; relaunched 10:40 and it survived. Scanned every other plist for the same launch-and-exit pattern: none affected.

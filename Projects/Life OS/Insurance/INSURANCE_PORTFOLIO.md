@@ -1,6 +1,6 @@
 # Insurance Portfolio — All Domains
 
-**GENERATED 2026-09-24 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
+**GENERATED 2026-09-26 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
 Update the registry, then run `Life OS/Insurance/bin/regen_portfolio.py`.
 Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker history: `BROKER_PIPELINE.md`.
 
@@ -108,6 +108,7 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 
 - CHANGE REQUEST SUBMITTED TO STEADILY 2026-09-22 (portal, status Pending) asking them to: (1) correct 'Condominium unit / Anderson County' to fee-simple attached townhome / Roane County; (2) re-run 360Value for the FULL structure and re-rate the dwelling at ~$200-230K RC (their BA8U-V7KF.1 valuation was run WALLS-IN — no roof, foundation, exterior walls, rough electrical/plumbing or HVAC — which is why the limit is $105K, roughly half the rebuild); (3) quote premises liability at $1M/$2M in addition to the current $300K; (4) confirm named insured = Joshua Christian Davis AND Hillary D. Holmes per the deed. Revised quote to zapvp1@me.com. Joshua decides on the new limit/premium when it arrives — nothing bound.
 - REVISED QUOTE RECEIVED 2026-09-23 (Steadily, John Jungen, support@steadily.com): property type corrected to single family; premises liability quoted at $1,000,000/$2,000,000; Hillary Holmes added as an additional named insured. PDF attached to Gmail thread 1a0cb628a878111e, not yet parsed for the new dwelling limit/premium (still needs pulling from the PDF or the Steadily portal). Nothing bound — Joshua's decision on the new premium once the dwelling RC figure is confirmed.
+- 9/25/2026 (same thread): Joshua asked Steadily what's driving the higher premium. John Jungen replied the primary driver is dwelling coverage - the current policy is rated as a condo (walls-in only, $105K); reclassifying to single-family townhome raises dwelling to $260K-$270K, which will more than double the premium. Other levers (liability, deductibles) are secondary. Awaiting Joshua's decision on whether to proceed at the higher premium - his call (limits/spend), not actioned autonomously.
 - Confirm from the HOA CC&Rs whether the association's master policy covers any part of the attached structure (party walls/roof). Fee-simple townhome PUDs usually do NOT — but if it does, the dwelling limit can stay lower.
 - Named insured currently Joshua Davis only; deed is Hillary D. Holmes AND Joshua Christian Davis; intended entity is Farming Infinity Tennessee LLC (Hillary's) but title has not moved — do not change to the LLC until the deed records.
 - Read the 'Notice of Changes at Renewal' PDF (01_notice-of-changes-at-renewal.pdf) to confirm what changed at the 1/9/2026 renewal.
@@ -119,6 +120,7 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - Named insured is Joshua Davis individually (mailing 844 Cypress Crossing); property is intended for Farming Infinity Virginia LLC - align named insured with title once the deed question is settled (see real-estate-context).
 - Personal Property limit is only $3,000 - fine if no landlord-owned appliances/furnishings of value are in the unit; raise if there are.
 - Historical gap: Travelers non-renewed this policy effective 4/12/2026 and no replacement coverage was found in any mailbox until the 9/10/2026 binder - roughly a 5-month window where the tenant-occupied property may have been uninsured. Nothing further to do about that window itself, but flag it if a loss during that period is ever raised.
+- 9/25/2026: Steadily (Rose Arachtingi) emailed asking Joshua directly to confirm whether the property was insured elsewhere or in a lapse between 4/12/2026 and 9/11/2026 (thread 19f669dff812fafc, msg 1a0d98a16c1cce75) - unanswered as of this run. Factual rep only Joshua can make; logged to Open Items Register rather than answered autonomously.
 - Confirm mortgagee/lienholder (if any) is correctly listed on the new policy.
 - No umbrella.
 
@@ -413,7 +415,7 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - **Mortgagee:** None (Steadily confirmed no mortgagee 8/7/2024)
 - **Status:** CONFIRMED IN FORCE 2026-09-22 - Renewal (Active), term 1/9/2026-1/9/2027, carrier Obsidian Insurance Company, premium $960/yr. A 'Notice of Changes at Renewal' was sent 11/20/2025 and shows as delivered - read the actual PDF next review to see what changed.
 - **Documents:** Life OS/Insurance/documents/hardinberry/ - notice of changes at renewal, policy packet (renewal), declaration (renewal), Value360 valuation - pulled from Steadily portal 2026-09-22 · Gmail: Fwd 'Payment confirmation: 148 Hardinberry St' (Steadily 7/9/2026, thread 19f669f7dc48c088) · Mail: policy packet with declaration.pdf (Safeco OY9071463, 2024-25) · Mail: Update - Joshuan Davis - 148 Hardinberry St - Travelers.pdf · Drive: 0e02a09193de8bee_148 Insurance Declaration.pdf (Erie 2021-22, historical)
-- **Last verified:** 2026-09-23 — source: Steadily portal (app.steadily.com) direct pull 2026-09-22, policy detail page + Documents section; revised quote email 9/23/2026
+- **Last verified:** 2026-09-26 — source: Steadily portal (app.steadily.com) direct pull 2026-09-22, policy detail page + Documents section; revised quote email 9/23/2026; premium-driver follow-up email 9/25/2026
 
 ### RE-WOODSWALK-LL — Landlord / rental dwelling
 
@@ -450,7 +452,7 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
   - **limited theft:** $10,000
   - **water backup:** $250
 - **Mortgagee:** NONE listed on the 2026-27 declarations (consistent with prior Travelers policy)
-- **Status:** CONFIRMED IN FORCE 2026-09-22 - policy SP3-VA-33470384-00 shows status 'New (Active)' in the Steadily portal (not voided), term 9/11/2026-9/11/2027, premium $1,904.92. Full document set (property inspection report, policy packet, declaration, underwriting attestation, quote, Value360 valuation) pulled from the portal and filed to Life OS/Insurance/documents/woods-walk/.
+- **Status:** CONFIRMED IN FORCE 2026-09-22 - policy SP3-VA-33470384-00 shows status 'New (Active)' in the Steadily portal (not voided), term 9/11/2026-9/11/2027, premium $1,904.92. Full document set (property inspection report, policy packet, declaration, underwriting attestation, quote, Value360 valuation) pulled from the portal and filed to Life OS/Insurance/documents/woods-walk/. 9/25: Steadily reopened the thread asking Joshua to confirm coverage status during the 4/12-9/11 gap - see open_issues.
 - **Documents:** Gmail: Fwd 'Property Insurance Renewal Notice' (Steadily 3/19/2024 + 8/7/2024 chain, thread 19f669dff812fafc) with RENEWAL OFFER_6116141556531.pdf, EVIDENCE OF INSURANCE.pdf · Mail: Insurance_Application_for_611614155-653-1.pdf · Gmail: 'Finish your insurance quote for 14300 Woods Walk Ln' (Steadily 9/10/2026 22:39 ET, thread 1a08d79bf6a98d6c) · Gmail: 'Insurance coverage on 14300 Woods Walk Ln has been issued' (Steadily 9/10/2026 22:44 ET, thread 1a08d7eddf6f599e) · Gmail: 'Payment confirmation: 14300 Woods Walk Ln' (Steadily 9/10/2026 22:45 ET, thread 1a08d7fcba9e57e2 - policy SP3-VA-33470384-00, $251.62, Amex x3001) · Gmail: 'Policy documents are ready: 14300 Woods Walk Ln' (Steadily 9/11/2026 04:01 ET, thread 1a08ea1180b9a06c)
 - **Last verified:** 2026-09-22 — source: Steadily portal (app.steadily.com) direct pull 2026-09-22, policy detail page + Documents section; supersedes 9/10-9/11/2026 email-only capture
 

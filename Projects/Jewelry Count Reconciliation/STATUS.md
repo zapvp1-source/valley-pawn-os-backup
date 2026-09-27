@@ -1,5 +1,23 @@
 # Jewelry Count Reconciliation — STATUS
 
+## RUN RECORD — Saturday 2026-09-26 (jewelry-onhand-nightly-pull, consolidated task)
+
+Open stores (Sat, all 5): CUL, HAR, LEX, ROA, WAY. This is the SECOND consecutive night of the same failure mode as 2026-09-25 below — worth treating as a pattern, not a one-off.
+
+Bravo side: CUL succeeded cleanly on the first try (all 8 categories, ok). HAR, LEX, ROA, WAY each failed across 2 retries apiece (8 retry attempts total): first a real EnsureStore error on LEX and combo-select wedges on HAR/ROA/WAY, then the underlying AHK watcher process was found fully dead (watchdog.log: "RESTART: alive=False pending=5" at 23:07), then even after a watcher restart plus bravo_unwedge.sh (closed stray terminals, health gate PASS) every further retry (HAR-retry, LEX-retry, ROA-retry, ROA-retry2, WAY-retry) claimed its trigger and then sat at "Run started" for ~30 minutes with zero further progress before timing out. This is deeper than the watcher-level self-heal/restart logic can clear — looks like the Windows VM or Bravo.exe itself needs attention, not just the AHK watcher.
+
+PM count sheets (manager side) — all 5 read from #end-of-day tonight, all sum-verified clean against their own written totals (kept for whichever session re-pulls the Bravo side):
+- CUL (Sandi, 6:33 PM): Rings 670, Bracelets 118, Necklaces 147, Earrings 141, Pendants 257, Total 1333. Matches Bravo exactly (Rings 670, Bracelets 118, Pendants+Charms+Brooches 219+20+18=257, Necklaces Chains+Necklaces 80+67=147) — 0 variance every category, the only store with both sides tonight.
+- LEX (Uriah, 6:17 PM): Rings 293, Bracelets 37, Necklaces 44, Earrings 46, Pendants 51, Total 471.
+- ROA (Benjie Moore, 6:21 PM, rotated photo): Rings 555, Bracelets 139, Necklaces 160, Earrings 79, Pendants 165, Total 1098.
+- WAY (Chadd, 6:30 PM): Rings 339, Bracelets 43, Necklaces 74, Earrings 58, Pendants 65, Total 579.
+- HAR (Preston Peters posting on Harrisonburg's behalf, 6:54 PM): Rings 429, Bracelets 47, Necklaces 112, Earrings 47, Pendants 112, sum=747 but the sheet's own written total says 746 (off by 1 — digits re-zoomed and confirmed legible, so this is the sheet's own arithmetic, not a misread; use 747, the sum of the line items, if reconciling).
+- HAR Charms and LEX Charms both errored again on the Bravo side (before the deeper wedge hit) — both were also error/empty on the most recent prior-day CSV (HAR 9/24, LEX 9/25), so per the empty-category rule these read as 0 Charms for both stores, not a failure.
+
+OUTCOME: nothing posted to #jewlery-counts tonight — Bravo pull failed on 4 of 5 stores (HAR, LEX, ROA, WAY), which per the partial-post rule's own carve-out ("still hold everything only if the BRAVO side failed") blocks the whole company post even though CUL and all 5 PM sheets were clean. No manager DMs went out tonight (unlike 9/25) because tonight's failures were 100% pipeline-side, not paperwork — the partial-post rule's manager-DM path is for a bad/missing PM sheet, which didn't happen tonight. FAILURE_LEDGER row filed, no Slack DM to Joshua per the standing failure policy (ledger only). Total time in the pull/retry loop: ~20:41 PM to ~23:40 PM (about 3 hours) across the original 5 triggers plus 5 retries.
+
+**Flag for next session:** two nights running (9/25, 9/26) the Bravo pipeline has wedged on multiple stores in a way the watcher-level self-heal (restart the AHK watcher, close stray terminals) cannot clear — it needs something with deeper host access (a real Parallels/Windows VM restart) before the next scheduled run. See FAILURE_LEDGER.md 2026-09-26 23:45 row.
+
 ## RUN RECORD — Friday 2026-09-25 (jewelry-onhand-nightly-pull, consolidated task)
 
 Open stores (Fri, all 5): CUL, HAR, LEX, ROA, WAY. Freeze window confirmed both sides: Bravo pulls fired 8:41-8:45 PM ET (inside the 6 PM close to 10 AM reopen window); manager PM count sheets posted to #end-of-day 6:16-6:34 PM ET, all for today's date.
