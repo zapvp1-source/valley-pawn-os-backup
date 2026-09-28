@@ -1,5 +1,26 @@
 # Jewelry On-Hand Nightly Pull — Run Records
 
+## 2026-09-27 (Sunday, catch-up run for missed Sat 9/26 nightly) — jewelry-onhand-catchup
+
+**Run window:** ~8:12 AM – 10:42 AM ET
+
+**Why this ran:** Sat 9/26 8:30 PM nightly run apparently only partially completed (CUL, HAR, WAY CSVs present; LEX, ROA missing). Catch-up fired the next morning before 9:30 AM per its self-heal design (Bravo on-hand doesn't change 6PM-10AM close).
+
+**Contention check:** an unrelated task (`morning-pull-retry`) was actively driving Bravo (sold-discount-detail + items-to-price, all 5 stores) from 7:41-8:08 AM. Waited for it to reach `triggers/processed/` (confirmed success 08:08:40) before dropping any jewelry trigger.
+
+**Bravo pull (system on-hand, 8 categories x 5 stores, date=2026-09-26):**
+- CUL: already on disk from the 9/26 run, 8/8 categories ok.
+- HAR: already on disk, 7/8 ok — Charms empty/error, matches 2026-09-24 baseline (also error that day) → treated as 0.
+- WAY: already on disk, 7/8 ok — Charms empty/error, matches 2026-09-24 baseline (also error that day) → treated as 0.
+- LEX: fresh pull dropped 08:12 ET (jewelry-onhand-2026-09-26-catchup-LEX). Rings=290, Bracelets=36, Pendants=52 all read clean. Charms FAILED after 2 full retry cycles (~08:21-08:42) — consistent with 2026-09-25 baseline (also error) → would treat as 0. Brooches then hung mid-read ("no STABLE row total after 120s") at 08:45:56 and the trigger never advanced again — sat claimed with zero log activity through 10:40+ ET. Ran bravo_unwedge.sh (closed stray terminals) and bravo_health_watchdog.sh (health gate PASS on CUL both times) via the host queue — neither resumed the stuck trigger. No CSV was ever written for LEX. **Incomplete — Chains/Necklaces/Earrings never attempted.**
+- ROA: fresh trigger queued 08:12 ET behind LEX (per one-trigger-per-store watcher ordering) — never got a turn since LEX never released. No pull attempted, no CSV.
+
+**PM count sheets (#end-of-day):** NOT READ. Both claude-in-chrome and the built-in browser pane refused app.slack.com access in this unattended session (no person present to approve the site). No fallback exists for reading image-based count sheets without a browser.
+
+**Outcome:** Per the Bravo-side-failure / all-or-nothing rule, held the ENTIRE post — nothing published to #jewlery-counts, no manager DMs sent. Logged to FAILURE_LEDGER.md (2026-09-27 10:42 ET row) — this is the same LEX/ROA Bravo-wedge pattern seen on the 9/25 and 9/26 night runs (three nights running now), needs a real VM/Bravo restart, not just the host-queue self-heal scripts.
+
+---
+
 ## 2026-08-17 (Monday) — jewelry-onhand-nightly-pull
 
 **Run window:** ~6:12 PM – 11:09 PM ET (extended by CUL combo-select flakiness; no manual intervention per task rules — retry logic ran on its own)

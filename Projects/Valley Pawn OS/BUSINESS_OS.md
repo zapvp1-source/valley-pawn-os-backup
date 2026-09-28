@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-09-26
+# LIVE STATE - auto-refreshed 2026-09-27
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -17,7 +17,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | Enabled (will fire) | 74 |
 | Registered but disabled | 124 |
 | On disk but never registered | 3 |
-| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 209 |
+| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 224 |
 
 ### Enabled tasks
 
@@ -89,26 +89,26 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-09-26 | Valley Pawn OS | - |
-| 2026-09-26 | Unified Search | - |
-| 2026-09-26 | Bravo Data Extraction | STATUS.md |
-| 2026-09-25 | Sold Margin Review | STATUS.md |
-| 2026-09-25 | Precious Metals Settlements | - |
-| 2026-09-25 | Pawn Walks | STATUS.md |
-| 2026-09-25 | Life OS | - |
-| 2026-09-25 | Jewelry Count Reconciliation | STATUS.md |
-| 2026-09-25 | Health Optimization | STATUS.md |
-| 2026-09-25 | Discount Outlier Review | STATUS.md |
-| 2026-09-25 | Daily Funds Verification | - |
-| 2026-09-25 | Compliance | - |
-| 2026-09-25 | Communcations | - |
+| 2026-09-27 | Valley Pawn OS | - |
+| 2026-09-27 | Unified Search | - |
+| 2026-09-27 | Bravo Data Extraction | STATUS.md |
+| 2026-09-26 | Website | - |
+| 2026-09-26 | Sold Margin Review | STATUS.md |
+| 2026-09-26 | Refine Social Media | - |
+| 2026-09-26 | Precious Metals Settlements | - |
+| 2026-09-26 | Pawn Walks | STATUS.md |
+| 2026-09-26 | Life OS | - |
+| 2026-09-26 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-09-26 | Health Optimization | STATUS.md |
+| 2026-09-26 | Discount Outlier Review | STATUS.md |
+| 2026-09-26 | Daily Funds Verification | - |
+| 2026-09-26 | Compliance | - |
+| 2026-09-26 | Communcations | - |
 | 2026-09-24 | Quickbooks Set UP | - |
 | 2026-09-24 | Human Resources | - |
-| 2026-09-22 | Website | - |
 | 2026-09-21 | Solaterra Site | - |
 | 2026-09-21 | Bonus Program | - |
 | 2026-09-19 | Valley Pawn Studios | STATUS.md |
-| 2026-09-19 | Refine Social Media | - |
 | 2026-09-18 | Taxes 2026 | - |
 | 2026-09-18 | Landscap Plan | - |
 | 2026-09-18 | Air Quality Monitoring | STATUS.md |
