@@ -120,12 +120,13 @@ def instances(cadence, start, end):
     kind = p[0]
     out = []
     try:
-        if kind in ("daily", "weekdays", "monsat"):
+        if kind in ("daily", "weekdays", "monsat", "tuesun"):
             h, m = hhmm(p[1])
-            limit = {"daily": 7, "weekdays": 5, "monsat": 6}[kind]
+            ok = {"daily": lambda w: True, "weekdays": lambda w: w < 5, "monsat": lambda w: w < 6,
+                  "tuesun": lambda w: w != 0}[kind]   # tuesun: see field_scorecard.candidates_for
             d = start.date()
             while d <= end.date():
-                if d.weekday() < limit:
+                if ok(d.weekday()):
                     out.append(dt.datetime.combine(d, dt.time(h, m)))
                 d += dt.timedelta(days=1)
         elif kind == "weekly":

@@ -220,6 +220,34 @@ def load_sold_for_date(date: datetime.date) -> tuple[list[dict], list[str]]:
 
 
 # ── Discount computation ────────────────────────────────────────────────────
+# ── Item age (Valuation Core, added 2026-09-28) ─────────────────────────────
+# Joshua 2026-09-28: a fresh item (just out of pawn / a recent buy) should not be
+# discounted heavily; an item that sat 78 or 167 days can take a bigger discount to
+# move. The allowance per age band lives in Valuation Core/discount_policy.json.
+# Items whose age can't be determined keep the original flat flag below.
+_AGE = {"idx": None, "loaded": False}
+
+
+def _age_judge(r: dict, discount_pct, discount_dollars):
+    if not _AGE["loaded"]:
+        _AGE["loaded"] = True
+        try:
+            sys.path.insert(0, os.environ.get("VP_VALUATION_CORE",
+                            "/Users/joshuadavis/Documents/Claude/Projects/Valuation Core"))
+            from item_age import AgeIndex
+            import discount_policy
+            _AGE["idx"], _AGE["pol"] = AgeIndex.load(), discount_policy
+        except Exception as e:
+            print(f"WARNING: item age unavailable ({e}) — using flat flags", file=sys.stderr)
+    if not _AGE["idx"] or not r.get("number"):
+        return None
+    try:
+        age = _AGE["idx"].estimate(r["number"], r.get("date"))
+        return _AGE["pol"].judge(discount_pct, discount_dollars, age)
+    except Exception:
+        return None
+
+
 def compute_discount(r: dict) -> dict:
     price, last, cost = r["price"], r["last_price"], r.get("cost")
     raw_discount = price - last
@@ -228,12 +256,26 @@ def compute_discount(r: dict) -> dict:
     discount_pct = (discount_dollars / price) if price else None
     into_loss = bool(cost is not None and last <= cost and discount_dollars > 0)
     excluded = r["generic_sku"] or r["placeholder_price"]
-    flag = (not excluded) and (
-        (discount_pct is not None and discount_pct >= FLAG_PCT) or discount_dollars >= FLAG_DOLLARS
-    )
+    flat_flag = (discount_pct is not None and discount_pct >= FLAG_PCT) or discount_dollars >= FLAG_DOLLARS
+    j = None if excluded else _age_judge(r, discount_pct, discount_dollars)
+    if j and j.get("age_flag") is not None:
+        flag = bool(j["age_flag"])            # age-aware rule
+    else:
+        flag = (not excluded) and flat_flag   # no age -> original flat rule
     out = dict(r, discount_dollars=discount_dollars, discount_pct=discount_pct,
-               sold_above_list=sold_above_list, into_loss=into_loss, flag=flag or into_loss)
+               sold_above_list=sold_above_list, into_loss=into_loss, flag=flag or into_loss,
+               age_days=(j or {}).get("age_days"), age_band=(j or {}).get("band"),
+               allowed_pct=(j or {}).get("allowed_pct"),
+               age_lower_bound=(j or {}).get("age_lower_bound", False))
     return out
+
+
+def _age_txt(r: dict) -> str:
+    if r.get("age_days") is None:
+        return ""
+    d = r["age_days"]
+    old = f"{d}+ days old" if r.get("age_lower_bound") else (f"{d} day old" if d == 1 else f"{d} days old")
+    return f" · {old} (OK up to {r['allowed_pct']*100:.0f}%)"
 
 
 # ── Build Slack message ─────────────────────────────────────────────────────
@@ -306,7 +348,9 @@ def build_slack_message(valued: list[dict], date: datetime.date, missing_stores:
         return f"{m * 100:.0f}%" if m is not None else "—"
 
     lines = [f"🏷️ *Discount Review — {ds}*", "",
-             f"> Ticket price vs actual sale price on yesterday's sold items. Flag: ≥{int(FLAG_PCT*100)}% off OR ≥${FLAG_DOLLARS:.0f} off.",
+             f"> Ticket price vs actual sale price on yesterday's sold items. Flag: more off than the item's age allows "
+             f"(up to 30 days old 10% · 31-60 days 15% · 61-90 days 20% · 91-180 days 30% · 181-365 days 40% · over a year 50%). "
+             f"Items we can't date use ≥{int(FLAG_PCT*100)}% OR ≥${FLAG_DOLLARS:.0f} off.",
              ""]
 
     # Show EVERY store that has traded at all this year, not just the ones with sales
@@ -373,6 +417,19 @@ def build_slack_message(valued: list[dict], date: datetime.date, missing_stores:
         day_word = "selling day" if ytd_days == 1 else "selling days"
         lines.append(f"_YTD = total discounted off ticket in {ytd_year}, across {ytd_days} {day_word}._")
 
+    # Discount by age band — where the discount dollars actually went
+    band_order = ["0-30", "31-60", "61-90", "91-180", "181-365", "365+"]
+    band_names = {"0-30": "≤30d", "31-60": "31-60d", "61-90": "61-90d", "91-180": "91-180d",
+                  "181-365": "181-365d", "365+": "1yr+"}
+    parts = []
+    for b in band_order:
+        bi = [r for r in real if r.get("age_band") == b]
+        ps = sum(r["price"] for r in bi)
+        if bi and ps:
+            parts.append(f"{band_names[b]} {sum(r['discount_dollars'] for r in bi)/ps*100:.0f}% ({len(bi)})")
+    if parts:
+        lines.append("_Avg discount by how long the item sat (items):_ " + " · ".join(parts))
+
     ranked_pct = sorted([r for r in real if r["discount_pct"] is not None],
                         key=lambda r: -r["discount_pct"])[:10]
     if ranked_pct:
@@ -387,7 +444,10 @@ def build_slack_message(valued: list[dict], date: datetime.date, missing_stores:
             crit = " ⛔ into a loss" if r["into_loss"] else ""
             lines.append(f"• {r['store']} · {_pct(r['discount_pct'])} off (${r['discount_dollars']:,.0f}) · ${r['price']:,.0f}→${r['last_price']:,.0f} · {desc}{crit}")
 
-    flagged = sorted([r for r in real if r["flag"]], key=lambda r: -(r["discount_pct"] or 0))
+    # Worst first: how far past the age allowance, then raw %
+    flagged = sorted([r for r in real if r["flag"]],
+                     key=lambda r: -(((r["discount_pct"] or 0) - r["allowed_pct"]) if r.get("allowed_pct") is not None
+                                     else (r["discount_pct"] or 0)))
     if flagged:
         lines.append("")
         lines.append(BAR)
@@ -398,7 +458,7 @@ def build_slack_message(valued: list[dict], date: datetime.date, missing_stores:
             if len(desc) > 40:
                 desc = desc[:39] + "…"
             crit = " ⛔CRITICAL(into a loss)" if r["into_loss"] else ""
-            lines.append(f"• {r['store']} · {_pct(r['discount_pct'])} off · ${r['discount_dollars']:,.0f} · {desc}{crit}")
+            lines.append(f"• {r['store']} · {_pct(r['discount_pct'])} off · ${r['discount_dollars']:,.0f} · {desc}{_age_txt(r)}{crit}")
         if len(flagged) > 12:
             lines.append(f"…and {len(flagged) - 12} more — full detail in the spreadsheet")
 
@@ -465,8 +525,8 @@ def write_excel(valued: list[dict], date: datetime.date, path: str) -> bool:
     ws1 = wb.active
     ws1.title = "Items"
     ws1.freeze_panes = "A3"
-    title = f"Valley Pawn — Discount Review  |  {ds}  |  Flag: >={int(FLAG_PCT*100)}% or >=${FLAG_DOLLARS:.0f} off"
-    ws1.merge_cells("A1:L1")
+    title = f"Valley Pawn — Discount Review  |  {ds}  |  Flag: discount above what the item's age allows (undated items: >={int(FLAG_PCT*100)}% or >=${FLAG_DOLLARS:.0f})"
+    ws1.merge_cells("A1:O1")
     t = ws1["A1"]; t.value = title
     t.fill = PatternFill("solid", fgColor="0D1B40")
     t.font = Font(name="Calibri", bold=True, color="FFFFFF", size=12)
@@ -474,7 +534,8 @@ def write_excel(valued: list[dict], date: datetime.date, path: str) -> bool:
     ws1.row_dimensions[1].height = 22
 
     hdrs1 = ["Store", "Item #", "Category", "Description", "Ticket Price", "Sale Price",
-             "Discount $", "Discount %", "Sold Above List?", "Into a Loss?", "Generic SKU?", "Flag?"]
+             "Discount $", "Discount %", "Sold Above List?", "Into a Loss?", "Generic SKU?", "Flag?",
+             "Days Old", "Age Band", "OK Discount %"]
     for ci, h in enumerate(hdrs1, 1):
         _hdr(ws1, 2, ci, h)
     ws1.row_dimensions[2].height = 28
@@ -502,8 +563,11 @@ def write_excel(valued: list[dict], date: datetime.date, path: str) -> bool:
         _cell(ws1, ri, 10, "⛔ YES" if r["into_loss"] else "")
         _cell(ws1, ri, 11, "generic" if r["generic_sku"] else ("placeholder" if r["placeholder_price"] else ""))
         _cell(ws1, ri, 12, "⛔ CRITICAL" if r["into_loss"] else ("🚨" if r["flag"] else ""))
+        _cell(ws1, ri, 13, (f"{r['age_days']}+" if r.get("age_lower_bound") else r.get("age_days")))
+        _cell(ws1, ri, 14, r.get("age_band") or "")
+        _cell(ws1, ri, 15, r.get("allowed_pct"), fmt='0%')
 
-    for ci, w in enumerate([7, 12, 20, 46, 12, 11, 11, 11, 15, 12, 12, 12], 1):
+    for ci, w in enumerate([7, 12, 20, 46, 12, 11, 11, 11, 15, 12, 12, 12, 10, 10, 12], 1):
         ws1.column_dimensions[get_column_letter(ci)].width = w
 
     # ── Summary tab ──────────────────────────────────────────────────────────

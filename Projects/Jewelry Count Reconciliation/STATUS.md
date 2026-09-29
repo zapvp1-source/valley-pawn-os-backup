@@ -1386,3 +1386,55 @@ between the physical count and the ~9-10 PM Bravo pull would leave Bravo's on-ha
 than the paper count), not a data-entry problem, but DMed Joshua a brief low-key note per Step 7
 since it's a consistent OVER direction rather than random noise. Worth watching if HAR repeats
 this pattern on the next run.
+
+## RUN RECORD — Monday 2026-09-28 (jewelry-onhand-nightly-pull) — INCOMPLETE, Bravo-only, nothing posted
+
+Open stores (Mon, all 5): CUL, HAR, LEX, ROA, WAY. Fleet publish guard checked first: the
+9/28 18:10 ET dryrun-status host job logged "dry run is off — publications are live" (guard NOT
+armed, normal publish rules apply), though that host job itself exited 1 for an unrelated reason —
+noted for completeness, did not change how this run proceeded.
+
+Bravo pull: trigger `jewelry-onhand-20260928` dropped via host_queue at 20:41:57 ET
+(`bravo_pull.sh jewelry-case-counts-v2 2026-09-28 CUL,HAR,LEX,ROA,WAY`). CUL and HAR both
+completed cleanly; the host job then sat with no further log progress and self-timed-out at
+21:22:13 ET ("TIMEOUT waiting for jewelry-onhand-20260928", exit=1) — LEX, ROA and WAY never
+produced a CSV or a result JSON. This is a pipeline failure for those 3 stores, not an employee
+one (see FAILURE_LEDGER.md 2026-09-28 21:40 row).
+
+Expected (Bravo on-hand), mapped to the 5 reporting buckets:
+
+| Store | Rings | Bracelets | Pendants (Pendants+Charms+Brooches) | Necklaces (Chains+Necklaces) | Earrings | Total |
+|-------|-------|-----------|--------------------------------------|-------------------------------|----------|-------|
+| CUL | 668 | 118 | 214+20+18=252 | 80+67=147 | 141 | 1326 |
+| HAR | 428 | 47 | 109+0*+2=111 | 66+44=110 | 46 | 742 |
+| LEX | — pull never completed — | | | | | |
+| ROA | — pull never completed — | | | | | |
+| WAY | — pull never completed — | | | | | |
+
+\* HAR Charms read as an error today (same as its most recent prior pull, 2026-09-26 — also
+error), so per the known empty-category exception this reads as 0, not a failure. HAR is
+otherwise complete (Rings/Bracelets/Pendants/Brooches/Earrings/Chains/Necklaces all `ok`).
+
+PM count sheets: a real Slack MCP connector was available this session (unlike the Chrome-vision
+approach used in earlier entries in this file) and confirmed all 5 managers/posters put up EOD
+photos tonight between 18:12–18:31 ET (Sandi/CUL, Walker/HAR, Uriah/LEX, Benjie/ROA, and Martin D.
+posting — historically the WAY/LEX substitute poster, no Chadd post seen tonight). However the
+connector only returns file metadata (filename, id, size) for image attachments — no
+image-download or vision/OCR tool was available in this session to actually read the handwritten
+counts off any of the photos. So no real "Counted" figures exist for ANY store tonight, including
+the two with clean Bravo data.
+
+OUTCOME: nothing posted to #jewlery-counts tonight. Did not post a distorted Expected-only table
+(no Counted column, which is not the requested format), and did not DM any store manager about a
+"missing" PM sheet — all 5 genuinely posted their photos on time, so a manager DM would be
+inaccurate; the gap is this session's own tooling (no image-download/vision capability), not a
+paperwork problem. Logged to FAILURE_LEDGER.md (2026-09-28 21:40 ET row). CUL and HAR's Bravo
+Expected figures are recorded above in case a future session with Slack image-reading capability
+wants to reconcile against them without re-pulling Bravo.
+
+Flag for next session: this is the 4th time in 5 nights (9/25, 9/26, 9/27 catchup, 9/28) that the
+Bravo jewelry pull has failed to complete for 3+ of 5 stores — worth escalating as a recurring
+pipeline issue rather than one-off flakiness. Separately, whichever task or connector setup is
+meant to give this pipeline Slack image-reading ability (Chrome vision per the earlier RUN
+RECORDs above, or a Slack file-download tool) was not available in this session — confirm which
+approach the currently-registered scheduled task actually uses before the next run.

@@ -163,14 +163,16 @@ def candidates_for(cadence):
             days = LOOKBACK_DAYS["daily"]
             return sorted((dt.datetime.combine(today - dt.timedelta(days=d), dt.time(h, m))
                            for d in range(days + 1)), reverse=True)
-        if kind in ("weekdays", "monsat"):
+        if kind in ("weekdays", "monsat", "tuesun"):
             h, m = parse_hhmm(parts[1])
             days = LOOKBACK_DAYS["weekdays"]
-            limit = 5 if kind == "weekdays" else 6   # Mon–Fri vs Mon–Sat
+            # Mon–Fri / Mon–Sat / Tue–Sun. tuesun (2026-09-28) = the morning store reports: Monday's
+            # run reviews Sunday, when every store is closed, and is correctly silent.
+            ok = {"weekdays": lambda w: w < 5, "monsat": lambda w: w < 6, "tuesun": lambda w: w != 0}[kind]
             out = []
             for d in range(days + 1):
                 day = today - dt.timedelta(days=d)
-                if day.weekday() < limit:
+                if ok(day.weekday()):
                     out.append(dt.datetime.combine(day, dt.time(h, m)))
             return sorted(out, reverse=True)
         if kind == "weekly":

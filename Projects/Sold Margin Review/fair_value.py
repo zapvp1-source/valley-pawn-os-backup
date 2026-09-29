@@ -205,6 +205,22 @@ def _decayed_stats(pairs: list[tuple[float, float]]) -> dict:
             "n_eff": round(n_eff, 1), "n_raw": len(pairs), "cv": round(max(cv, 0.02), 3)}
 
 
+# ── Firearm engine (Valuation Core) — loaded once per run, optional ──────────
+_GUN_ENGINES = {}
+
+
+def _gun_engine(ref_iso, exclude):
+    key = (ref_iso, exclude)
+    if key not in _GUN_ENGINES:
+        try:
+            sys.path.insert(0, os.environ.get("VP_VALUATION_CORE", "/Users/joshuadavis/Documents/Claude/Projects/Valuation Core"))
+            from gun_value import GunValue
+            _GUN_ENGINES[key] = GunValue(exclude_date=exclude, ref_date=ref_iso)
+        except Exception:
+            _GUN_ENGINES[key] = None      # never let the gun module break the report
+    return _GUN_ENGINES[key]
+
+
 # ── Engine ────────────────────────────────────────────────────────────────────
 class FairValueEngine:
     """
@@ -391,6 +407,18 @@ class FairValueEngine:
             else:
                 out.update(basis="melt", note=f"precious metal — {note}")
             return out
+
+        # (b0) firearms -> Valuation Core gun_value (added 2026-09-28): gun-category-only
+        # comps, calibers never used as match keys, GunBroker sold data when connected.
+        # The generic index below matched a $460 SIG P320 to $22 magazines ("9MM", "P320").
+        _gv = _gun_engine(self.ref.isoformat(), self.exclude)
+        if _gv is not None:
+            from gun_value import is_firearm as _is_gun
+            if _is_gun(category, desc):
+                g = _gv.estimate(desc, category, allow_live=self.allow_live_api)
+                out.update(fair=g["fair"], band=g["band"], basis=g["basis"],
+                           internal=g["internal"], external=g["external"])
+                return out
 
         iv = self.internal(desc, category)
         # (b) firearms -> internal only, never eBay

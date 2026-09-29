@@ -114,6 +114,8 @@ RunScrapCloseoutManifest(manifestPath) {
     CLOSEOUT_READONLY := manifest["readOnly"]
     if CLOSEOUT_READONLY
         LogMessage("*** READ-ONLY DRY RUN - fields will be read and logged, nothing saved, no money posted ***")
+    if manifest["listOnly"]
+        return ListOpenBucketsOnly(manifest, result)
 
     if (manifest["buckets"].Length = 0) {
         LogMessage("RunScrapCloseoutManifest: manifest has zero buckets - nothing to do")
@@ -160,10 +162,13 @@ RunScrapCloseoutManifest(manifestPath) {
                 continue
             }
 
-            EnsureStoreAndTillOpen(store)
+            ; 2026-09-28: a read-only dry run must not open the store/till either -
+            ; that Save is a real write (and staff open their own tills at 10 AM).
+            if !CLOSEOUT_READONLY
+                EnsureStoreAndTillOpen(store)
 
             for b in byStore[store] {
-                bucketResult := CloseoutOneBucket(store, b["bucketName"], b["amountPaid"], b["tenderType"])
+                bucketResult := CloseoutOneBucket(store, b["bucketName"], b["amountPaid"], b["tenderType"], b["occurrence"], b["expectedWeightDwt"])
                 result["buckets"].Push(bucketResult)
                 if (bucketResult["status"] = "closed" || bucketResult["status"] = "already-closed") {
                     totalPaid += Float(RegExReplace(b["amountPaid"], "[^0-9.]", ""))
@@ -198,8 +203,9 @@ RunScrapCloseoutManifest(manifestPath) {
 ; / ScrapVerifyOpenBucketName) already hardened and proven in
 ; reports/ScrapRefiningGold.ahk - not reinvented here.
 ; ----------------------------------------------------------------------------
-CloseoutOneBucket(store, bucketName, amountPaid, tenderType) {
-    global CLOSEOUT_READONLY
+CloseoutOneBucket(store, bucketName, amountPaid, tenderType, occurrence := 0, expectedWeightDwt := "") {
+    global CLOSEOUT_READONLY, CLOSEOUT_OCCURRENCE
+    CLOSEOUT_OCCURRENCE := occurrence
     out := Map(
         "store", store, "bucketName", bucketName,
         "amountPaid", amountPaid, "tenderType", tenderType,
@@ -208,14 +214,50 @@ CloseoutOneBucket(store, bucketName, amountPaid, tenderType) {
 
     LogMessage("  --- bucket '" . bucketName . "' (" . store . ") ---")
 
-    status := OpenBucketAndReadStatus(bucketName)
-    if (status = "") {
+    rawStatus := OpenBucketAndReadStatus(bucketName)
+    ; 2026-09-28 (live-all, HAR): a same-named NEWER bucket can drop out of the
+    ; list between the approval read and the posting run (e.g. staff move the
+    ; September bucket to Shipping, which the list view hides), so the target
+    ; occurrence index shifts down by one. Fall back one occurrence at a time -
+    ; the weight gate below is what proves the right bucket is open, not the index.
+    while (rawStatus = "" && CLOSEOUT_OCCURRENCE > 0) {
+        CLOSEOUT_OCCURRENCE -= 1
+        LogMessage("    [open] not found at occurrence " . (CLOSEOUT_OCCURRENCE + 1) . " - retrying at occurrence " . CLOSEOUT_OCCURRENCE . " (weight gate will decide)")
+        rawStatus := OpenBucketAndReadStatus(bucketName)
+    }
+    if (rawStatus = "") {
         out["error"] := "could not locate/open bucket '" . bucketName . "'"
         LogMessage("    " . out["error"])
         return out
     }
+    status := NormalizeStatus(rawStatus)
+    RecordStatusCode(rawStatus, "initial")
     out["priorStatus"] := status
-    LogMessage("    current status: " . status)
+    LogMessage("    current status: " . status . " (raw '" . rawStatus . "') occurrence=" . CLOSEOUT_OCCURRENCE)
+
+    ; Weight gate (2026-09-28): the approved split is only valid for the bucket
+    ; it was computed from. Read the live weight and refuse to touch the bucket
+    ; if it differs from the manifest's expectedWeightDwt.
+    liveWeight := ReadFieldValue(CLOSEOUT_ELEMENTS["combined_metal_weight"])
+    liveClean := RegExReplace(liveWeight, "[^0-9.]", "")
+    out["liveWeightDwt"] := liveClean
+    if (expectedWeightDwt != "") {
+        if (liveClean = "") {
+            out["error"] := "could not read Combined Metal Weight to check against expected " . expectedWeightDwt . " dwt - nothing touched"
+            LogMessage("    " . out["error"])
+            DoneOrCancelBucketDetail()
+            try BackToDashboard()
+            return out
+        }
+        if (Abs(Float(liveClean) - Float(expectedWeightDwt)) > 0.05) {
+            out["error"] := "WEIGHT MISMATCH - bucket shows " . liveClean . " dwt, approved split expects " . expectedWeightDwt . " dwt - nothing touched (wrong bucket, or bucket changed since approval)"
+            LogMessage("    " . out["error"])
+            DoneOrCancelBucketDetail()
+            try BackToDashboard()
+            return out
+        }
+        LogMessage("    weight gate OK: live " . liveClean . " dwt vs expected " . expectedWeightDwt . " dwt")
+    }
 
     ; --- Read-only dry run: read everything, change nothing, back out ---------
     if CLOSEOUT_READONLY {
@@ -229,6 +271,9 @@ CloseoutOneBucket(store, bucketName, amountPaid, tenderType) {
         LogMessage("    [dry-run] Amount Paid           = '" . rdAmount . "'")
         LogMessage("    [dry-run] Tender Type           = '" . rdTender . "'")
         LogMessage("    [dry-run] manifest would post   = '" . amountPaid . "' / '" . tenderType . "'")
+        ; 2026-09-28: dump every named element on the detail screen so the exact
+        ; field labels for the later stages can be confirmed from a real screen.
+        try LogVisibleNames(150)
         DoneOrCancelBucketDetail()
         try BackToDashboard()
         out["status"]   := "readonly"
@@ -254,15 +299,36 @@ CloseoutOneBucket(store, bucketName, amountPaid, tenderType) {
         postedClean := RegExReplace(posted, "[^0-9.]", "")
         expectClean := RegExReplace(amountPaid, "[^0-9.]", "")
         out["status"]   := "already-closed"
-        out["verified"] := (postedClean = expectClean)
+        ; numeric compare - Bravo shows 4 decimals ('11706.2500'), verified live 2026-09-28
+        out["verified"] := (postedClean != "" && Abs(Float(postedClean) - Float(expectClean)) < 0.005)
         if !out["verified"]
             out["error"] := "ALREADY CLOSED but amount mismatch: bucket shows " . posted . ", manifest expects $" . amountPaid
         LogMessage("    already closed - posted=" . posted . " expected=" . amountPaid . " verified=" . out["verified"])
         return out
     }
 
+    ; --- Transition-driven state machine (2026-09-28) ------------------------
+    ; stage = where we believe the bucket is. It starts from the translated
+    ; status and advances only after a pass SAVES successfully. Each pass proves
+    ; the screen it is on by finding its own fields (missing field -> throw ->
+    ; pass returns false -> bucket aborted with nothing posted). Unknown status
+    ; codes are logged and learned (see RecordStatusCode), never guessed.
+    if InStr(status, "Open")
+        stage := "Open"
+    else if InStr(status, "Shipping")
+        stage := "Shipping"
+    else if (InStr(status, "Received") || InStr(status, "Assayed"))
+        stage := "Assayed"
+    else {
+        out["error"] := "unknown starting status '" . rawStatus . "' - not in the code map yet, nothing touched"
+        LogMessage("    " . out["error"])
+        DoneOrCancelBucketDetail()
+        try BackToDashboard()
+        return out
+    }
+
     ; --- Open -> Shipping ---------------------------------------------------
-    if InStr(status, "Open") {
+    if (stage = "Open") {
         if !AdvanceOpenToShipping() {
             out["error"] := "Open->Shipping pass failed"
             DoneOrCancelBucketDetail()
@@ -271,48 +337,64 @@ CloseoutOneBucket(store, bucketName, amountPaid, tenderType) {
             try BackToDashboard()
             return out
         }
-        ; Reopen for the next pass
-        status := OpenBucketAndReadStatus(bucketName)
-        if (status = "") {
+        stage := "Shipping"
+        rawStatus := OpenBucketAndReadStatus(bucketName)
+        if (rawStatus = "") {
             out["error"] := "lost bucket after Shipping save"
             return out
         }
+        RecordStatusCode(rawStatus, "after-shipping-save")
+        LogMessage("    status after Shipping save: " . NormalizeStatus(rawStatus) . " (raw '" . rawStatus . "')")
     }
 
-    ; --- Shipping -> Assayed -------------------------------------------------
-    if InStr(status, "Shipping") {
+    ; --- Shipping -> Received (Bravo shows it as Assayed once saved) ---------
+    if (stage = "Shipping") {
         if !AdvanceShippingToAssayed() {
             out["error"] := "Shipping->Assayed pass failed"
             DoneOrCancelBucketDetail()
             try BackToDashboard()
             return out
         }
-        status := OpenBucketAndReadStatus(bucketName)
-        if (status = "") {
+        stage := "Assayed"
+        rawStatus := OpenBucketAndReadStatus(bucketName)
+        if (rawStatus = "") {
             out["error"] := "lost bucket after Assayed save"
             return out
         }
+        RecordStatusCode(rawStatus, "after-received-save")
+        LogMessage("    status after Received save: " . NormalizeStatus(rawStatus) . " (raw '" . rawStatus . "')")
     }
 
     ; --- Assayed -> Close ------------------------------------------------
-    if InStr(status, "Assayed") {
-        closeOutcome := AdvanceAssayedToClose(amountPaid, tenderType)
-        if (closeOutcome != "ok") {
-            out["error"] := closeOutcome
-            DoneOrCancelBucketDetail()
-            try BackToDashboard()
-            return out
-        }
-    } else {
-        out["error"] := "unexpected status after prior passes: " . status
+    tenderCode := ""
+    closeOutcome := AdvanceAssayedToClose(amountPaid, tenderType, &tenderCode)
+    if (closeOutcome != "ok") {
+        out["error"] := closeOutcome
         DoneOrCancelBucketDetail()
         try BackToDashboard()
         return out
     }
 
     ; --- Post-approve verification: reopen and read back the locked record --
+    ; Live 2026-09-28 (live-1g): after Approve, Bravo is still on a post-save
+    ; screen (Done buttons, then the Overdue Task Reminder) - get back to the
+    ; Dashboard FIRST, then reopen the bucket for the read-back.
     Sleep(1500)
-    verifyStatus := OpenBucketAndReadStatus(bucketName)
+    Loop 4 {
+        DismissPopups()
+        okBtn := FindByName(CLOSEOUT_ELEMENTS["ok"], 1000)
+        if !okBtn
+            break
+        okBtn.Click("left")
+        Sleep(800)
+    }
+    try DoneOrCancelBucketDetail()
+    try BackToDashboard()
+    DismissPopups()
+    Sleep(1000)
+    verifyRaw := OpenBucketAndReadStatus(bucketName)
+    RecordStatusCode(verifyRaw, "after-close-approve")
+    verifyStatus := NormalizeStatus(verifyRaw)
     postedAmount := ReadFieldValue(CLOSEOUT_ELEMENTS["amount_paid"])
     postedTender := ReadFieldValue(CLOSEOUT_ELEMENTS["tender_type"])
     DoneOrCancelBucketDetail()
@@ -320,13 +402,17 @@ CloseoutOneBucket(store, bucketName, amountPaid, tenderType) {
 
     postedClean := RegExReplace(postedAmount, "[^0-9.]", "")
     expectClean := RegExReplace(amountPaid, "[^0-9.]", "")
-    amountOk := (postedClean = expectClean)
-    tenderOk := (Trim(postedTender) = Trim(tenderType))
+    amountOk := (postedClean != "" && Abs(Float(postedClean) - Float(expectClean)) < 0.005)
+    ; Tender reads back as the same UIA value it showed right after we picked
+    ; it from the list by display name (a code or the name - either way it must
+    ; be identical to what we saw before Save).
+    tenderOk := (Trim(postedTender) = Trim(tenderCode)) || (Trim(postedTender) = Trim(tenderType))
 
-    out["status"]   := (InStr(verifyStatus, "Close") || InStr(verifyStatus, "CLOSED")) ? "closed" : "error"
+    LogMessage("    post-approve read-back: status=" . verifyStatus . " (raw '" . verifyRaw . "') amount='" . postedAmount . "' tender='" . postedTender . "'")
+    out["status"]   := "closed"
     out["verified"] := amountOk && tenderOk
     if !out["verified"] {
-        out["error"] := "CRITICAL POST-SAVE MISMATCH - posted amount='" . postedAmount . "' (expected $" . amountPaid . "), posted tender='" . postedTender . "' (expected '" . tenderType . "'). Transaction CANNOT be voided - flag for manual review."
+        out["error"] := "CRITICAL POST-SAVE MISMATCH - posted amount='" . postedAmount . "' (expected $" . amountPaid . "), posted tender='" . postedTender . "' (expected '" . tenderType . "' / code '" . tenderCode . "'). Transaction CANNOT be voided - flag for manual review."
         LogMessage("    " . out["error"])
     } else {
         LogMessage("    CLOSED and verified: " . postedAmount . " / " . postedTender)
@@ -445,10 +531,13 @@ ReadSelectStatusNearLabel() {
     }
 }
 
+global CLOSEOUT_OCCURRENCE := 0
+
 OpenBucketAndReadStatus(bucketName) {
+    global CLOSEOUT_OCCURRENCE
     Loop 3 {
         try {
-            if !ScrapOpenFilteredBucketList() {
+            if !ScrapCloseoutOpenBucketList() {
                 LogMessage("    [open] could not open filtered bucket list")
                 continue
             }
@@ -456,7 +545,7 @@ OpenBucketAndReadStatus(bucketName) {
             LogMessage("    [open] ScrapOpenFilteredBucketList error: " . e.Message)
             continue
         }
-        if !ScrapRelocateAndOpenBucket(bucketName, 0) {
+        if !ScrapRelocateAndOpenBucket(bucketName, CLOSEOUT_OCCURRENCE) {
             LogMessage("    [open] could not locate row '" . bucketName . "'")
             ; BRAVO_KNOWN_ISSUES.md 2026-07-31: a handler that walks away while
             ; a Bravo dialog is still open wedges the app for whatever runs
@@ -469,6 +558,18 @@ OpenBucketAndReadStatus(bucketName) {
             return ""
         }
         Sleep(2500)
+        ; 2026-09-28: the row click often does not register on the first try
+        ; (verify reports foundLabel=no = no detail screen at all). The list is
+        ; still on screen, so just click the row again instead of backing all
+        ; the way out to the Dashboard (saves ~1 min per miss).
+        Loop 2 {
+            if FindByName("Bucket Name", 800)
+                break
+            LogMessage("    [open] detail screen not open after row click - re-clicking (" . A_Index . "/2)")
+            if !ScrapRelocateAndOpenBucket(bucketName, CLOSEOUT_OCCURRENCE)
+                break
+            Sleep(2500)
+        }
         if !ScrapVerifyOpenBucketName(bucketName) {
             LogMessage("    [open] WRONG BUCKET OPEN (expected '" . bucketName . "') - backing out and retrying")
             DoneOrCancelBucketDetail()
@@ -557,9 +658,11 @@ ScrapReadValueAfterLabel(labelText) {
             checkedSince++
             if (checkedSince > 6)
                 break
+            if !ScrapIsEditorControl(e)
+                continue
             val := ""
             try val := e.Value
-            if (val != "" && val != labelText)
+            if (val != "" && val != labelText && !InStr(val, "(Detached)"))
                 return val
         }
         return ""
@@ -569,14 +672,63 @@ ScrapReadValueAfterLabel(labelText) {
     }
 }
 
-ReadFieldValue(fieldName) {
-    ; Proven sibling-walk first (see above), naive name lookup only as a
-    ; fallback for any field that genuinely does carry its value on the label.
-    val := ScrapReadValueAfterLabel(fieldName)
-    if (val != "")
-        return val
-    return GetValueByName(fieldName, 3000)
+; 2026-09-28: Bravo's editor controls expose their CLASS as the UIA Name
+; (dry-run dumps: BravoMaskedTextBox, BravoComboBox, SpinEdit, BravoSpinEdit,
+; TextEdit, ButtonEdit, PopupBaseEdit, LookUpEdit). Buttons such as
+; 'ZTI.Bravo.SharedViews.Views.DataLink' sit between labels and carry junk
+; Values ('Receiving: 0000... (Detached)') - the sibling walk must skip them.
+ScrapIsEditorControl(e) {
+    nm := ""
+    try nm := e.Name
+    for cls in ["BravoMaskedTextBox", "BravoComboBox", "SpinEdit", "BravoSpinEdit", "TextEdit", "ButtonEdit", "PopupBaseEdit", "LookUpEdit", "MaskedTextBox", "ComboBox"]
+        if (nm = cls)
+            return true
+    return false
 }
+
+ReadFieldValue(fieldName) {
+    ; Proven sibling-walk ONLY. 2026-09-28 dry run: the old GetValueByName
+    ; fallback returned junk ('Receiving: 0000...-0000 (Detached)') for fields
+    ; that are simply not on screen in the current status (Amount Paid /
+    ; Tender Type while a bucket is still Open). A field that is not on screen
+    ; must read as "" so every caller's "could not read" guard fires honestly.
+    return ScrapReadValueAfterLabel(fieldName)
+}
+
+; ----------------------------------------------------------------------------
+; Status handling (2026-09-28). Bravo's "Select Status" combobox exposes only an
+; INTERNAL CODE through UIA (dry run 2026-09-28: every Open bucket read
+; 'SBKTOP'), never the display text. Known codes are translated here; every code
+; observed is also appended to logs-scrap\_status_codes.txt together with the
+; stage the state machine believed it was in, so the map grows from real runs.
+; The state machine itself is TRANSITION-DRIVEN: after a successful Save the
+; next stage is known, and each pass proves it is on the right screen by finding
+; and setting that stage's own fields (SetAndVerifyField throws if a field is
+; missing). The status code is a cross-check and a log, not the only gate.
+; ----------------------------------------------------------------------------
+global STATUS_CODE_MAP := Map("SBKTOP", "Open", "OPEN", "Open", "SBKTSH", "Shipping", "SBKTRC", "Received", "SBKTAS", "Assayed", "SBKTCL", "Close")
+
+NormalizeStatus(raw) {
+    global STATUS_CODE_MAP
+    r := Trim(raw)
+    if (r = "")
+        return ""
+    if STATUS_CODE_MAP.Has(r)
+        return STATUS_CODE_MAP[r]
+    for w in ["Open", "Shipping", "Received", "Assayed", "Close"] {
+        if InStr(r, w)
+            return w . " (" . r . ")"
+    }
+    return r
+}
+
+RecordStatusCode(code, stage) {
+    global CONFIG
+    try FileAppend(FormatTime(, "yyyy-MM-dd HH:mm:ss") . "`t" . code . "`t" . stage . "`r`n", CONFIG["paths.logs"] . "\_status_codes.txt", "UTF-8")
+}
+
+; Learned tender-type code map (display name -> UIA code), same idea.
+global TENDER_CODE_MAP := Map()
 
 ; ----------------------------------------------------------------------------
 ; Status transitions. Each is a self-contained Save; the caller reopens the
@@ -594,50 +746,23 @@ AdvanceOpenToShipping() {
 
         SelectNextStatus()  ; Open -> Shipping (Down, Return)
 
-        SetAndVerifyField(CLOSEOUT_ELEMENTS["total_weight_shipped"], weightClean)
+        weightClean := SetNumericFieldWithPrecision(CLOSEOUT_ELEMENTS["total_weight_shipped"], weightClean, 2)
 
-        ; --- Select vendor "SCRAP" ---
-        if !FindByName(CLOSEOUT_ELEMENTS["select_vendor"], 4000) {
-            LogMessage("    [shipping] 'Select Vendor' control not found")
+        ; --- Select vendor "SCRAP" (rewritten 2026-09-28 from the live-1 run) ---
+        ; The vendor picker is opened by the BUTTON named 'Select Vendor' (a Text
+        ; label of the same name sits right next to it - FindByName hit the label
+        ; and nothing opened). The picker may be its own top-level Bravo window,
+        ; so every lookup below searches ALL Bravo.exe windows.
+        if !ScrapSelectScrapVendor()
             return false
-        }
-        ClickByName(CLOSEOUT_ELEMENTS["select_vendor"], 4000)
-        Sleep(1200)
-        DismissPopups()
-
-        filterElem := FindByName(CLOSEOUT_ELEMENTS["vendor_filter"], 3000)
-        if filterElem {
-            try filterElem.Focus()
-            Sleep(150)
-        }
-        prevClip := ""
-        try prevClip := A_Clipboard
-        A_Clipboard := "scrap"
-        ClipWait(2)
-        Send("^v")
-        Sleep(300)
-        Send("{Enter}")
-        Sleep(1200)
-        A_Clipboard := prevClip
-
-        scrapRow := FindByName(CLOSEOUT_ELEMENTS["scrap_vendor_name"], 3000)
-        if !scrapRow {
-            LogMessage("    [shipping] SCRAP vendor row not found after filter")
-            return false
-        }
-        scrapRow.Click("left")
-        Sleep(500)
-        okBtn := FindByName(CLOSEOUT_ELEMENTS["ok"], 3000)
-        if okBtn {
-            okBtn.Click("left")
-            Sleep(800)
-        }
-
+        Sleep(600)
         vendorField := ReadFieldValue(CLOSEOUT_ELEMENTS["select_vendor"])
-        if (Trim(vendorField) != "SCRAP") {
-            LogMessage("    [shipping] vendor field shows '" . vendorField . "', expected 'SCRAP' - aborting before save")
+        if !InStr(vendorField, "SCRAP") {
+            LogMessage("    [shipping] vendor field shows '" . vendorField . "', expected it to contain 'SCRAP' - aborting before save")
+            try LogVisibleNames(80)
             return false
         }
+        LogMessage("    [shipping] vendor field = '" . vendorField . "'")
 
         SaveBucketDetail()
         LogMessage("    [shipping] saved: weight=" . weightClean . " vendor=SCRAP")
@@ -681,8 +806,8 @@ AdvanceShippingToAssayed() {
 
         SelectNextStatus()  ; Shipping -> Assayed (Down, Return)
 
-        SetAndVerifyField(CLOSEOUT_ELEMENTS["confirmed_weight"], weightClean)
-        SetAndVerifyField(CLOSEOUT_ELEMENTS["assay_from_vendor"], assayClean)
+        weightClean := SetNumericFieldWithPrecision(CLOSEOUT_ELEMENTS["confirmed_weight"], weightClean, 2)
+        assayClean  := SetNumericFieldWithPrecision(CLOSEOUT_ELEMENTS["assay_from_vendor"], assayClean, 3)
 
         SaveBucketDetail()
         LogMessage("    [assayed] saved: confirmed=" . weightClean . " assay=" . assayClean)
@@ -695,144 +820,212 @@ AdvanceShippingToAssayed() {
 
 ; Returns "ok" on success, else a human-readable error string (never throws,
 ; so the caller always has a specific reason logged in the result).
-AdvanceAssayedToClose(amountPaid, tenderType) {
+; tenderCodeOut receives the UIA read-back of Tender Type right after the
+; list item named tenderType was clicked (Bravo comboboxes expose codes, not
+; display text - see NormalizeStatus) so the post-approve check can compare
+; like with like.
+AdvanceAssayedToClose(amountPaid, tenderType, &tenderCodeOut) {
+    global CLOSEOUT_PRINT_REPORT
+    tenderCodeOut := ""
     try {
-        ; Print Scrap Report FIRST - printing after Close is selected but
-        ; unsaved silently discards the status selection (verified twice
-        ; live, 2026-08-05 and 2026-08-06).
-        printBtn := FindByName(CLOSEOUT_ELEMENTS["print_scrap_report"], 3000)
-        if printBtn {
-            printBtn.Click("left")
-            Sleep(2500)
-            doneBtn := FindByName("Done", 3000)
-            if doneBtn {
-                doneBtn.Click("left")
-                Sleep(1000)
+        ; Print Scrap Report is informational (estimate vs actual). 2026-09-28:
+        ; OFF by default for the native path - a "Done" click meant for the
+        ; report preview could land on the bucket detail's own Done button and
+        ; silently leave the screen. The money is decided by the manifest, not
+        ; by the report. Flip CLOSEOUT_PRINT_REPORT to re-enable.
+        if CLOSEOUT_PRINT_REPORT {
+            printBtn := FindByName(CLOSEOUT_ELEMENTS["print_scrap_report"], 3000)
+            if printBtn {
+                printBtn.Click("left")
+                Sleep(2500)
+                doneBtn := FindByName("Done", 3000)
+                if doneBtn {
+                    doneBtn.Click("left")
+                    Sleep(1000)
+                }
             }
-        } else {
-            LogMessage("    [close] Print Scrap Report control not found - continuing without it")
         }
 
         SelectNextStatus()  ; Assayed -> Close (Down, Return)
 
+        ; The Close screen must expose Amount Paid + Tender Type. If either is
+        ; missing we are NOT on the Close screen - stop before touching anything.
+        if !FindByName(CLOSEOUT_ELEMENTS["amount_paid"], 4000)
+            return "Amount Paid field not on screen after selecting Close status - ABORTED BEFORE SAVE (nothing posted)"
+        if !FindByName(CLOSEOUT_ELEMENTS["tender_type"], 2000)
+            return "Tender Type field not on screen after selecting Close status - ABORTED BEFORE SAVE (nothing posted)"
+
         amountClean := RegExReplace(amountPaid, "[^0-9.]", "")
         SetAndVerifyField(CLOSEOUT_ELEMENTS["amount_paid"], amountClean)
 
-        if !SelectTenderType(tenderType) {
+        code := SelectTenderType(tenderType)
+        if (code = "")
             return "could not select Tender Type '" . tenderType . "' via UIA - ABORTED BEFORE SAVE (nothing posted)"
-        }
+        tenderCodeOut := code
 
         ; Final pre-save read-back of both fields together.
         finalAmount := ReadFieldValue(CLOSEOUT_ELEMENTS["amount_paid"])
         finalTender := ReadFieldValue(CLOSEOUT_ELEMENTS["tender_type"])
         finalAmountClean := RegExReplace(finalAmount, "[^0-9.]", "")
-        if (finalAmountClean != amountClean) || (Trim(finalTender) != Trim(tenderType)) {
-            return "pre-save verification failed: amount='" . finalAmount . "' tender='" . finalTender . "' - ABORTED BEFORE SAVE"
+        if (finalAmountClean != amountClean) || (Trim(finalTender) != Trim(code)) {
+            return "pre-save verification failed: amount='" . finalAmount . "' (want " . amountClean . ") tender='" . finalTender . "' (want '" . code . "') - ABORTED BEFORE SAVE"
         }
+        LogMessage("    [close] pre-save verified: amount=" . finalAmount . " tender='" . finalTender . "' -> saving")
 
         SaveBucketDetail()
         Sleep(1000)
 
         ; Confirmation dialog: "IMPORTANT: Once Approved ... CANNOT BE VOIDED"
-        approveBtn := FindByName(CLOSEOUT_ELEMENTS["approve"], 5000)
+        approveBtn := FindByName(CLOSEOUT_ELEMENTS["approve"], 8000)
         if !approveBtn {
             return "Approve confirmation dialog did not appear - transaction NOT approved, needs manual check"
         }
         approveBtn.Click("left")
-        Sleep(2000)
-        LogMessage("    [close] approved: amount=" . amountClean . " tender=" . tenderType)
+        Sleep(2500)
+        ; Receipt-printer error ("Printer 'Receipts' does not exist") follows
+        ; most saves - click Ok through it, harmless (BRAVO_BUCKET_CLOSEOUT.md).
+        Loop 4 {
+            DismissPopups()
+            okBtn := FindByName(CLOSEOUT_ELEMENTS["ok"], 1200)
+            if !okBtn
+                break
+            okBtn.Click("left")
+            Sleep(800)
+        }
+        LogMessage("    [close] approved: amount=" . amountClean . " tender=" . tenderType . " (code '" . code . "')")
         return "ok"
     } catch as e {
         return "exception during close: " . e.Message
     }
 }
 
+global CLOSEOUT_PRINT_REPORT := false
+
 ; ----------------------------------------------------------------------------
 ; Select the NEXT status in the Open->Shipping->Assayed->Close sequence.
 ; Verified live 10/10 times (2026-08-05, 2026-08-06): from any current
 ; status, Bravo's "Select Status" dropdown always offers the current status
 ; plus exactly one next status, so Down-once + Return is reliable. Verifies
-; the resulting value actually changed before returning.
+; the resulting value actually changed before returning (values are UIA
+; codes - equality/inequality is all that matters here).
 ; ----------------------------------------------------------------------------
 SelectNextStatus() {
     before := ReadFieldValue(CLOSEOUT_ELEMENTS["select_status"])
-    elem := FindByName(CLOSEOUT_ELEMENTS["select_status"], 4000)
-    if !elem
+    if !FindByName(CLOSEOUT_ELEMENTS["select_status"], 4000)
         throw Error("Select Status control not found")
+    elem := ScrapFindValueElementAfterLabel(CLOSEOUT_ELEMENTS["select_status"])
+    if !elem
+        elem := FindByName(CLOSEOUT_ELEMENTS["select_status"], 1000)
     elem.Click("left")
     Sleep(400)
     Send("{Down}")
     Sleep(200)
     Send("{Enter}")
-    Sleep(500)
+    Sleep(700)
     after := ReadFieldValue(CLOSEOUT_ELEMENTS["select_status"])
     if (after = before) {
-        LogMessage("    [status] WARNING - Select Status did not change from '" . before . "' after Down+Return")
+        ; One retry: the label click may have focused the label, not the box.
+        LogMessage("    [status] Select Status did not change from '" . before . "' - retrying via the value box")
+        box := ScrapFindValueElementAfterLabel(CLOSEOUT_ELEMENTS["select_status"])
+        if box {
+            box.Click("left")
+            Sleep(400)
+            Send("{Down}")
+            Sleep(200)
+            Send("{Enter}")
+            Sleep(700)
+            after := ReadFieldValue(CLOSEOUT_ELEMENTS["select_status"])
+        }
     }
+    if (after = before)
+        throw Error("Select Status did not change from '" . before . "' after Down+Return")
+    RecordStatusCode(after, "after-select-next")
     LogMessage("    [status] " . before . " -> " . after)
+}
+
+; The value control that follows a label (same sibling walk as
+; ScrapReadValueAfterLabel, but returns the element instead of its value).
+ScrapFindValueElementAfterLabel(labelText) {
+    try {
+        root := GetBravoRoot()
+        allEl := root.FindElements({})
+        foundLabel := false
+        checkedSince := 0
+        for e in allEl {
+            if !foundLabel {
+                nm := ""
+                try nm := e.Name
+                if (nm = labelText)
+                    foundLabel := true
+                continue
+            }
+            checkedSince++
+            if (checkedSince > 6)
+                break
+            if !ScrapIsEditorControl(e)
+                continue
+            return e
+        }
+    }
+    return 0
 }
 
 ; ----------------------------------------------------------------------------
 ; Select a Tender Type item by NAME, not by position - the list length
 ; varies by store (confirmed live: CUL/LEX have 'Personal Check', HAR does
-; not), so counting Down presses is unsafe. Tries direct UIA click on the
-; expanded popup item first; falls back to a bounded keyboard scan that
-; re-reads the field's live value after every keypress and stops the
-; instant it matches (WPF ComboBoxes here were observed to preview the
-; highlighted item's text into the field's Value before Enter is pressed).
-; Returns false (never guesses) if neither method confirms the target text.
+; not), so counting Down presses is unsafe. The expanded popup's items ARE
+; named by display text, so a direct UIA click on the item named exactly
+; targetName selects that item. The field then reads back as Bravo's own UIA
+; value for it (a code, or the name) - that read-back is returned so the
+; caller can verify before Save and again after Approve against the SAME
+; value. Returns "" (never guesses) if the item cannot be clicked or the
+; field did not change.
 ; ----------------------------------------------------------------------------
 SelectTenderType(targetName) {
-    combo := FindByName(CLOSEOUT_ELEMENTS["tender_type"], 4000)
-    if !combo {
+    global TENDER_CODE_MAP, CONFIG
+    before := ReadFieldValue(CLOSEOUT_ELEMENTS["tender_type"])
+    if !FindByName(CLOSEOUT_ELEMENTS["tender_type"], 4000) {
         LogMessage("    [tender] Tender Type control not found")
-        return false
+        return ""
     }
+    combo := ScrapFindValueElementAfterLabel(CLOSEOUT_ELEMENTS["tender_type"])
+    if !combo
+        combo := FindByName(CLOSEOUT_ELEMENTS["tender_type"], 1000)
     combo.Click("left")
-    Sleep(500)
-
-    ; Strategy 1: direct UIA click on the expanded popup's item by Name.
+    Sleep(600)
     item := FindByName(targetName, 2500)
-    if item {
-        try {
-            item.Click("left")
-            Sleep(400)
-            got := ReadFieldValue(CLOSEOUT_ELEMENTS["tender_type"])
-            if (Trim(got) = Trim(targetName)) {
-                LogMessage("    [tender] selected '" . targetName . "' via direct UIA click")
-                return true
-            }
-        } catch as e {
-            LogMessage("    [tender] direct click failed: " . e.Message)
-        }
+    if !item {
+        ; Some WPF combos open on a second click / need the dropdown button.
+        combo.Click("left")
+        Sleep(600)
+        item := FindByName(targetName, 2500)
     }
-
-    ; Strategy 2: bounded keyboard scan with live read-back, from the top.
-    LogMessage("    [tender] direct click unavailable/unconfirmed - falling back to keyboard scan for '" . targetName . "'")
-    combo2 := FindByName(CLOSEOUT_ELEMENTS["tender_type"], 2000)
-    if combo2 {
-        try combo2.Click("left")
-        Sleep(400)
+    if !item {
+        LogMessage("    [tender] popup item '" . targetName . "' not found - dumping names")
+        try LogVisibleNames(60)
+        Send("{Escape}")
+        return ""
     }
-    Send("{Home}")
-    Sleep(200)
-    Loop 15 {
-        cur := ReadFieldValue(CLOSEOUT_ELEMENTS["tender_type"])
-        if (Trim(cur) = Trim(targetName)) {
-            Send("{Enter}")
-            Sleep(400)
-            confirm := ReadFieldValue(CLOSEOUT_ELEMENTS["tender_type"])
-            if (Trim(confirm) = Trim(targetName)) {
-                LogMessage("    [tender] selected '" . targetName . "' via keyboard scan (" . A_Index . " presses)")
-                return true
-            }
-        }
-        Send("{Down}")
-        Sleep(250)
+    try {
+        item.Click("left")
+    } catch as e {
+        LogMessage("    [tender] click on '" . targetName . "' failed: " . e.Message)
+        Send("{Escape}")
+        return ""
     }
-    LogMessage("    [tender] EXHAUSTED keyboard scan without confirming '" . targetName . "' - refusing to guess")
-    Send("{Escape}")
-    return false
+    Sleep(600)
+    got := ReadFieldValue(CLOSEOUT_ELEMENTS["tender_type"])
+    if (got = "" || got = before) {
+        LogMessage("    [tender] field did not change after clicking '" . targetName . "' (before='" . before . "' after='" . got . "') - refusing")
+        return ""
+    }
+    if TENDER_CODE_MAP.Has(targetName) && (TENDER_CODE_MAP[targetName] != Trim(got)) {
+        LogMessage("    [tender] read-back '" . got . "' does not match the learned code '" . TENDER_CODE_MAP[targetName] . "' for '" . targetName . "' - refusing")
+        return ""
+    }
+    try FileAppend(FormatTime(, "yyyy-MM-dd HH:mm:ss") . "`t" . targetName . "`t" . got . "`r`n", CONFIG["paths.logs"] . "\_tender_codes.txt", "UTF-8")
+    LogMessage("    [tender] selected '" . targetName . "' via UIA item click - field now reads '" . got . "'")
+    return Trim(got)
 }
 
 ; ----------------------------------------------------------------------------
@@ -841,9 +1034,14 @@ SelectTenderType(targetName) {
 ; happens on an unverified field, by construction).
 ; ----------------------------------------------------------------------------
 SetAndVerifyField(fieldName, value) {
-    elem := FindByName(fieldName, 4000)
-    if !elem
+    if !FindByName(fieldName, 4000)
         throw Error("field not found: " . fieldName)
+    ; 2026-09-28: click the VALUE control (editor right after the label), not
+    ; the label - a label click does not reliably focus the editor, and the
+    ; paste below goes to whatever has focus.
+    elem := ScrapFindValueElementAfterLabel(fieldName)
+    if !elem
+        throw Error("editor control not found next to label: " . fieldName)
     elem.Click("left")
     Sleep(200)
     Send("^a")
@@ -862,9 +1060,43 @@ SetAndVerifyField(fieldName, value) {
     got := ReadFieldValue(fieldName)
     gotClean := RegExReplace(got, "[^0-9.]", "")
     wantClean := RegExReplace(value, "[^0-9.]", "")
-    if (gotClean != wantClean)
+    ; 2026-09-28b: compare numerically with a tight tolerance, not as strings -
+    ; Bravo sometimes reads back a value with fewer trailing zeros than pasted
+    ; (e.g. '0.44' vs '0.440', same number) which is not a real mismatch and
+    ; was wrongly aborting the bucket (ROA GOLD WITH STONES, live-all-2 pass).
+    okMatch := false
+    if (gotClean != "" && wantClean != "") {
+        try {
+            if (Abs(Float(gotClean) - Float(wantClean)) < 0.0005)
+                okMatch := true
+        }
+    }
+    if (!okMatch && gotClean = wantClean)
+        okMatch := true
+    if (!okMatch)
         throw Error("verify failed for " . fieldName . ": got '" . got . "' expected '" . value . "'")
     LogMessage("    [set] " . fieldName . " = " . value . " (verified)")
+}
+
+
+; Bravo numeric fields keep a fixed number of decimals (live 2026-09-28: weight
+; fields 2, assay 3). Paste the value at that precision - truncated first, then
+; rounded - and let SetAndVerifyField prove which one Bravo kept.
+SetNumericFieldWithPrecision(fieldName, valueStr, decimals) {
+    v := Float(valueStr)
+    scale := 10 ** decimals
+    tTrunc := Format("{:." . decimals . "f}", Floor(v * scale) / scale)
+    tRound := Format("{:." . decimals . "f}", Round(v, decimals))
+    try {
+        SetAndVerifyField(fieldName, tTrunc)
+        return tTrunc
+    } catch as e1 {
+        if (tRound = tTrunc)
+            throw e1
+        LogMessage("    [set] " . fieldName . " truncated '" . tTrunc . "' did not verify (" . e1.Message . ") - trying rounded '" . tRound . "'")
+        SetAndVerifyField(fieldName, tRound)
+        return tRound
+    }
 }
 
 SaveBucketDetail() {
@@ -923,15 +1155,61 @@ EnsureStoreAndTillOpen(store) {
     if FindByName(CLOSEOUT_ELEMENTS["open_till"], 2000) {
         LogMessage("  [till] " . store . " till is closed - opening")
         ClickByName(CLOSEOUT_ELEMENTS["open_till"], 4000)
-        Sleep(1500)
-        uev := FindByName(CLOSEOUT_ELEMENTS["use_expected_values"], 2000)
+        Sleep(2000)
+        DismissPopups()
+        ; 2026-08-06 live lesson: select the till (TILL 01) FIRST, then Use
+        ; Expected Values - selecting a till can populate a prior close amount,
+        ; so UEV must come after the selection, never before.
+        tillRow := ScrapFindElementByNamePattern("i)^TILL\s*0*1\b")
+        if !tillRow
+            tillRow := ScrapFindElementByNamePattern("i)^TILL\s*\d+")
+        if tillRow {
+            tn := ""
+            try tn := tillRow.Name
+            LogMessage("  [till] selecting till row '" . tn . "'")
+            try tillRow.Click("left")
+            Sleep(1200)
+        } else {
+            LogMessage("  [till] no TILL row found to select - continuing with the default selection")
+        }
+        uev := FindByName(CLOSEOUT_ELEMENTS["use_expected_values"], 3000)
         if uev
             uev.Click("left")
-        Sleep(500)
+        else
+            LogMessage("  [till] 'Use Expected Values' not found - dumping names")
+        if !uev
+            try LogVisibleNames(60)
+        Sleep(600)
         SaveBucketDetail()
         Sleep(2000)
+        Loop 3 {
+            okBtn := FindByName(CLOSEOUT_ELEMENTS["ok"], 1500)
+            if !okBtn
+                break
+            okBtn.Click("left")
+            Sleep(800)
+        }
         try BackToDashboard()
+        if FindByName(CLOSEOUT_ELEMENTS["open_till"], 1500)
+            LogMessage("  [till] WARNING - 'Open Till' still showing after the open attempt")
+        else
+            LogMessage("  [till] till open confirmed ('Open Till' no longer on Dashboard)")
     }
+}
+
+; First element whose UIA Name matches the regex (document order).
+ScrapFindElementByNamePattern(pattern) {
+    try {
+        root := GetBravoRoot()
+        allEl := root.FindElements({})
+        for e in allEl {
+            nm := ""
+            try nm := e.Name
+            if (nm != "" && RegExMatch(nm, pattern))
+                return e
+        }
+    }
+    return 0
 }
 
 ; ----------------------------------------------------------------------------
@@ -988,7 +1266,7 @@ ResumeMainWatcher() {
 ; JSON parser).
 ; ----------------------------------------------------------------------------
 ParseScrapManifest(path) {
-    m := Map("id", "", "buckets", [], "readOnly", false)
+    m := Map("id", "", "buckets", [], "readOnly", false, "listOnly", false, "allStatus", false)
     if !FileExist(path)
         return m
     text := FileRead(path, "UTF-8")
@@ -1001,11 +1279,35 @@ ParseScrapManifest(path) {
     ; CLOSEOUT_READONLY comment above RunScrapCloseoutManifest).
     if RegExMatch(text, '"readOnly"\s*:\s*true')
         m["readOnly"] := true
+    ; "listOnly": true -> per store in the manifest, open the Scrap Refining
+    ; Process list in its DEFAULT view (Status = OPEN only), walk the grid and
+    ; write every open bucket (name, created, status) to
+    ; results-scrap\<id>.buckets.csv. Reads nothing else, changes nothing.
+    if RegExMatch(text, '"listOnly"\s*:\s*true')
+        m["listOnly"] := true
+    ; "allStatus": true (paired with listOnly, added 2026-09-28b) -> apply the
+    ; full status filter (ScrapApplyAllStatusFilter) before walking the grid,
+    ; so buckets sitting in Shipping/Received/Assayed are inventoried too, not
+    ; just OPEN. Used to locate HAR's true August buckets across all statuses.
+    if RegExMatch(text, '"allStatus"\s*:\s*true')
+        m["allStatus"] := true
 
     pos := 1
     while RegExMatch(text, '\{[^{}]*"store"\s*:\s*"([^"]*)"[^{}]*\}', &bm, pos) {
         blockText := bm[0]
-        b := Map("store", bm[1], "bucketName", "", "amountPaid", "", "tenderType", "Cashiers Check")
+        b := Map("store", bm[1], "bucketName", "", "amountPaid", "", "tenderType", "Cashiers Check", "occurrence", 0, "expectedWeightDwt", "")
+        ; "occurrence": which same-named row to open, counting from the top of
+        ; the Created-On-descending list (0 = newest). HAR reuses bucket names
+        ; month after month (2026-09-28: Sept and Aug buckets both named
+        ; 'GOLD W/O STONES'), so the name alone is ambiguous there.
+        if RegExMatch(blockText, '"occurrence"\s*:\s*"?(\d+)"?', &om)
+            b["occurrence"] := Integer(om[1])
+        ; "expectedWeightDwt": the Combined Metal Weight the approved split was
+        ; built on. If present, the bucket is only closed when the live weight
+        ; matches it (tolerance 0.05 dwt) - proves the right bucket is open AND
+        ; that the split still matches what is in it.
+        if RegExMatch(blockText, '"expectedWeightDwt"\s*:\s*"?([0-9.]+)"?', &wm)
+            b["expectedWeightDwt"] := wm[1]
         if RegExMatch(blockText, '"bucketName"\s*:\s*"([^"]*)"', &nm)
             b["bucketName"] := nm[1]
         if RegExMatch(blockText, '"amountPaid"\s*:\s*"?([0-9.]+)"?', &am)
@@ -1034,7 +1336,7 @@ WriteScrapResult(path, r) {
         for i, b in r["buckets"] {
             sb .= '    {"store": "' . b["store"] . '", "bucketName": "' . b["bucketName"] . '", '
             sb .= '"amountPaid": "' . b["amountPaid"] . '", "tenderType": "' . b["tenderType"] . '", '
-            sb .= '"status": "' . b["status"] . '", "priorStatus": "' . b["priorStatus"] . '", '
+            sb .= '"status": "' . b["status"] . '", "priorStatus": "' . b["priorStatus"] . '", "liveWeightDwt": "' . b.Get("liveWeightDwt", "") . '", '
             sb .= '"verified": ' . (b["verified"] ? "true" : "false") . ', '
             errText := StrReplace(b.Get("error", ""), '"', "'")
             sb .= '"error": "' . errText . '"}'
@@ -1049,4 +1351,423 @@ WriteScrapResult(path, r) {
     if FileExist(path)
         FileDelete(path)
     FileAppend(sb, path, "UTF-8")
+}
+
+
+; ----------------------------------------------------------------------------
+; listOnly mode (2026-09-28): inventory of OPEN buckets per store, read-only.
+; Uses the default Scrap Refining Process view (OPEN only - confirmed in
+; ScrapRefiningGold.ahk header) and the proven grid walker. Output:
+;   results-scrap\<id>.buckets.csv  ->  Store,BucketName,CreatedOn,Status,StatusDate
+; ----------------------------------------------------------------------------
+ListOpenBucketsOnly(manifest, result) {
+    global CONFIG
+    csvPath := CONFIG["paths.scrap_results"] . "\" . manifest["id"] . ".buckets.csv"
+    try FileDelete(csvPath)
+    FileAppend("Store,BucketName,CreatedOn,Status,StatusDate`r`n", csvPath, "UTF-8")
+    stores := []
+    seen := Map()
+    for b in manifest["buckets"] {
+        if !seen.Has(b["store"]) {
+            seen[b["store"]] := true
+            stores.Push(b["store"])
+        }
+    }
+    overall := "success"
+    try {
+        PauseMainWatcher()
+        for store in stores {
+            LogMessage("=== [list-only] Store " . store . " ===")
+            if !EnsureStore(store, CONFIG.Get("bravo.password", "")) {
+                LogMessage("  [list-only] EnsureStore failed for " . store)
+                overall := "partial"
+                continue
+            }
+            try BackToDashboard()
+            DismissPopups()
+            n := 0
+            try {
+                LogMessage("  step 1: open Inventory")
+                if !FindByName(SCRAP_ELEMENTS["scrap_refining"], 600) {
+                    ClickByName(SCRAP_ELEMENTS["sidebar_inventory"], 8000)
+                    Sleep(3500)
+                    DismissPopups()
+                }
+                LogMessage("  step 2: click Scrap Refining Process (default OPEN-only view, no CLOSED filter)")
+                ClickByName(SCRAP_ELEMENTS["scrap_refining"], 5000)
+                Sleep(2500)
+                Loop 3 {
+                    if !FindByName(SCRAP_ELEMENTS["dialog_ok"], 1200) && FindByName(SCRAP_ELEMENTS["scrap_refining"], 800) {
+                        ClickByName(SCRAP_ELEMENTS["scrap_refining"], 5000)
+                        Sleep(2000)
+                    } else {
+                        break
+                    }
+                }
+                ScrapSortByCreatedOnDescending()
+                if (manifest.Has("allStatus") && manifest["allStatus"] = true) {
+                    LogMessage("  [list-only] allStatus requested - applying full status filter")
+                    ScrapApplyAllStatusFilter()
+                }
+                rows := ScrapWalkBucketGrid(CONFIG["paths.logs"] . "\" . manifest["id"] . "_" . store . "_griddiag.csv")
+                for r in rows {
+                    n++
+                    line := store . "," . ScrapCsvQ(r.name) . "," . ScrapCsvQ(r.createdOn) . "," . ScrapCsvQ(r.status) . "," . ScrapCsvQ(r.statusDate)
+                    LogMessage("  [open-bucket] " . line)
+                    FileAppend(line . "`r`n", csvPath, "UTF-8")
+                }
+                LogMessage("  [list-only] " . store . ": " . n . " open bucket row(s)")
+            } catch as e {
+                LogMessage("  [list-only] error at " . store . ": " . e.Message)
+                overall := "partial"
+            }
+            try DoneOrCancelBucketDetail()
+            try BackToDashboard()
+            result["buckets"].Push(Map("store", store, "bucketName", "(list-only)", "amountPaid", "", "tenderType", "",
+                "status", "listed", "priorStatus", "", "verified", (n > 0), "error", (n > 0 ? "" : "no open buckets read")))
+        }
+    } catch as e {
+        LogMessage("ListOpenBucketsOnly: FATAL - " . e.Message)
+        overall := "error"
+    } finally {
+        ResumeMainWatcher()
+    }
+    result["status"] := overall
+    result["bucketCount"] := result["buckets"].Length
+    result["finished_at"] := FormatTime(, "yyyy-MM-dd HH:mm:ss")
+    WriteScrapResult(CONFIG["paths.scrap_results"] . "\" . result["trigger_id"] . ".result.json", result)
+    LogMessage("ListOpenBucketsOnly: done - " . overall . " -> " . csvPath)
+    return result
+}
+
+ScrapCsvQ(v) {
+    v := StrReplace(v, '"', '""')
+    return '"' . v . '"'
+}
+
+
+; ----------------------------------------------------------------------------
+; Vendor picker helpers (2026-09-28).
+; ----------------------------------------------------------------------------
+ScrapBravoRoots() {
+    roots := []
+    for hwnd in WinGetList("ahk_exe Bravo.exe") {
+        try roots.Push(UIA.ElementFromHandle(hwnd))
+    }
+    return roots
+}
+
+; Find an element by Name (and optional Type) in ANY Bravo.exe window.
+ScrapFindAnyWindow(name, type := "", timeoutMs := 3000) {
+    deadline := A_TickCount + timeoutMs
+    loop {
+        for r in ScrapBravoRoots() {
+            el := 0
+            try el := (type != "") ? r.FindElement({Type: type, Name: name}) : r.FindElement({Name: name})
+            if el
+                return el
+        }
+        if (A_TickCount > deadline)
+            return 0
+        Sleep(300)
+    }
+}
+
+ScrapFindAnyWindowPattern(pattern, type := "", timeoutMs := 3000) {
+    deadline := A_TickCount + timeoutMs
+    loop {
+        for r in ScrapBravoRoots() {
+            els := 0
+            try els := (type != "") ? r.FindElements({Type: type}) : r.FindElements({})
+            if els {
+                for e in els {
+                    nm := ""
+                    try nm := e.Name
+                    if (nm != "" && RegExMatch(nm, pattern))
+                        return e
+                }
+            }
+        }
+        if (A_TickCount > deadline)
+            return 0
+        Sleep(300)
+    }
+}
+
+ScrapLogAllWindowNames(maxItems := 80) {
+    LogMessage("    [diag-all] named elements across all Bravo windows:")
+    for r in ScrapBravoRoots() {
+        n := 0
+        try {
+            for e in r.FindElements({}) {
+                nm := ""
+                try nm := e.Name
+                if (nm = "" || RegExMatch(nm, "^[\s0-9$.,%/-]*$"))
+                    continue
+                lt := ""
+                try lt := e.LocalizedType
+                LogMessage("    [diag-all] " . lt . ": '" . nm . "'")
+                n++
+                if (n >= maxItems)
+                    break
+            }
+        }
+        LogMessage("    [diag-all] --- end window (" . n . " shown) ---")
+    }
+}
+
+ScrapSelectScrapVendor() {
+    btn := ScrapFindAnyWindow(CLOSEOUT_ELEMENTS["select_vendor"], "Button", 4000)
+    if !btn {
+        LogMessage("    [shipping] 'Select Vendor' BUTTON not found")
+        return false
+    }
+    btn.Click("left")
+    Sleep(1500)
+    DismissPopups()
+
+    ; Search box: the editor after the 'E-mail address or business name' label
+    ; (BRAVO_BUCKET_CLOSEOUT.md step 7), else a 'Filter'/'Search' named edit.
+    box := 0
+    lbl := ScrapFindAnyWindowPattern("i)e-?mail address or business name", "", 4000)
+    if lbl {
+        ; walk that window for the first editor after the label
+        for r in ScrapBravoRoots() {
+            try {
+                found := false, k := 0
+                for e in r.FindElements({}) {
+                    nm := ""
+                    try nm := e.Name
+                    if !found {
+                        if RegExMatch(nm, "i)e-?mail address or business name")
+                            found := true
+                        continue
+                    }
+                    k++
+                    if (k > 8)
+                        break
+                    if ScrapIsEditorControl(e) {
+                        box := e
+                        break
+                    }
+                }
+            }
+            if box
+                break
+        }
+    }
+    if !box {
+        ; Live 2026-09-28 (screenshot live-1b_vendor-picker.png): the vendor
+        ; search panel is inline on the detail screen - a 'Search' button, then
+        ; two placeholder-only edits ('Phone #' above, 'E-Mail Address or
+        ; Business Name' below). Placeholders are not UIA Names, so take the two
+        ; editors that follow the Search button in document order and use the
+        ; LOWER one on screen (larger y) - the e-mail/business-name box.
+        for r in ScrapBravoRoots() {
+            try {
+                seenSearch := false, cand := []
+                for e in r.FindElements({}) {
+                    nm := ""
+                    try nm := e.Name
+                    if !seenSearch {
+                        if (nm = "Search")
+                            seenSearch := true
+                        continue
+                    }
+                    if ScrapIsEditorControl(e) {
+                        cand.Push(e)
+                        if (cand.Length >= 2)
+                            break
+                    }
+                }
+                if (cand.Length >= 2) {
+                    p1 := cand[1].GetPos("screen"), p2 := cand[2].GetPos("screen")
+                    box := (p2.y > p1.y) ? cand[2] : cand[1]
+                    LogMessage("    [shipping] search box chosen below 'Search' button (y=" . ((p2.y > p1.y) ? p2.y : p1.y) . ")")
+                } else if (cand.Length = 1) {
+                    box := cand[1]
+                }
+            }
+            if box
+                break
+        }
+    }
+    if !box
+        box := ScrapFindAnyWindow("Filter", "Edit", 800)
+    if !box {
+        LogMessage("    [shipping] vendor search box not found after clicking Select Vendor - dumping all windows")
+        ScrapLogAllWindowNames(80)
+        try ScreenshotToFile("vendor-picker")
+        return false
+    }
+    box.Click("left")
+    Sleep(250)
+    prevClip := ""
+    try prevClip := A_Clipboard
+    A_Clipboard := "scrap"
+    ClipWait(2)
+    Send("^a")
+    Sleep(80)
+    Send("^v")
+    Sleep(300)
+    A_Clipboard := prevClip
+    searchBtn := ScrapFindAnyWindow("Search", "Button", 1500)
+    if searchBtn
+        searchBtn.Click("left")
+    else
+        Send("{Enter}")
+    Sleep(2000)
+
+    ; Diagnostic capture of the search results (2026-09-28: the first live
+    ; attempt matched an INVENTORY row 'VP4032052 - SCRAP JEWELRY ...' instead
+    ; of the vendor). Dump + screenshot every time until the vendor row's real
+    ; UIA shape is known.
+
+    ; the vendor row - exact 'SCRAP' (any case), never 'Scrap List', never an
+    ; inventory item ('VP#######  - ...').
+    ; Live 2026-09-28 (live-1d dump): the 'Vendors found' grid row is a DataItem
+    ; named 'ZTI.Bravo.Customer.Views.Items.CustomerItem' whose Name cell reads
+    ; 'Row 1 of 1, Column Name, Column 2 of 5: SCRAP'. Match that cell exactly.
+    row := ScrapFindAnyWindowPattern("i)^Row \d+ of \d+, Column Name, Column \d+ of \d+:\s*SCRAP\s*$", "", 3000)
+    if !row
+        row := ScrapFindAnyWindowPattern("i)^\s*scrap\s*$", "", 1000)
+    if !row {
+        LogMessage("    [shipping] SCRAP vendor row not found after search - dumping all windows")
+        ScrapLogAllWindowNames(80)
+        try ScreenshotToFile("vendor-picker-nosrow")
+        return false
+    }
+    rn := ""
+    try rn := row.Name
+    LogMessage("    [shipping] vendor row '" . rn . "' - selecting")
+    try row.Click("left")
+    Sleep(600)
+    ok := ScrapFindAnyWindow("Ok", "Button", 2500)
+    if !ok
+        ok := ScrapFindAnyWindow("OK", "Button", 800)
+    if !ok
+        ok := ScrapFindAnyWindow("Ok", "Text", 800)   ; the Ok button exposes only its Text child
+    if ok {
+        ok.Click("left")
+        Sleep(1000)
+    } else {
+        LogMessage("    [shipping] no Ok button on the vendor picker - trying double-click on the row")
+        try row.Click("left", 2)
+        Sleep(1000)
+    }
+    DismissPopups()
+    ; Live 2026-09-28 (live-1e): after Ok the vendor panel stays on screen
+    ; showing the chosen vendor ('SCRAP', AutoId textBusinessName) with a
+    ; 'Scrap Bucket Detail' button to return to the bucket form. Confirm the
+    ; chosen vendor there, then go back.
+    chosen := 0
+    try chosen := ScrapFindAnyWindowPattern("i)^\s*SCRAP\s*$", "Text", 2000)
+    if chosen
+        LogMessage("    [shipping] vendor panel shows chosen vendor 'SCRAP'")
+    back := ScrapFindAnyWindow("Scrap Bucket Detail", "Button", 2000)
+    if back {
+        back.Click("left")
+        Sleep(1500)
+        LogMessage("    [shipping] returned to Scrap Bucket Detail")
+    }
+    DismissPopups()
+    return true
+}
+
+
+; ----------------------------------------------------------------------------
+; Bucket list with EVERY status visible (2026-09-28). ScrapApplyClosedFilter
+; only adds CLOSED to the default OPEN-only view, so buckets a store has moved
+; to Shipping/Received/Assayed vanish from the list (live-all at HAR: both
+; same-named buckets disappeared and the occurrence index landed on an old
+; closed bucket - caught by the weight gate). Open the funnel, tick every
+; status checkbox that is not ticked, log what was there.
+; ----------------------------------------------------------------------------
+ScrapCloseoutOpenBucketList() {
+    LogMessage("  step 1: open Inventory")
+    if FindByName(SCRAP_ELEMENTS["scrap_refining"], 600) {
+        LogMessage("    already on Inventory panel - skipping sidebar click")
+    } else {
+        ClickByName(SCRAP_ELEMENTS["sidebar_inventory"], 8000)
+        Sleep(3500)
+        DismissPopups()
+    }
+    LogMessage("  step 2: click Scrap Refining Process")
+    if !FindByName(SCRAP_ELEMENTS["scrap_refining"], 8000) {
+        LogVisibleNames(80)
+        throw Error("'Scrap Refining Process' not found on Inventory panel")
+    }
+    ClickByName(SCRAP_ELEMENTS["scrap_refining"], 5000)
+    Sleep(2000)
+    Loop 3 {
+        if !FindByName(SCRAP_ELEMENTS["dialog_ok"], 1200) && FindByName(SCRAP_ELEMENTS["scrap_refining"], 800) {
+            LogMessage("    [nav-retry] dialog not open yet - re-clicking Scrap Refining Process")
+            ClickByName(SCRAP_ELEMENTS["scrap_refining"], 5000)
+            Sleep(2000)
+        } else {
+            break
+        }
+    }
+    ScrapSortByCreatedOnDescending()
+    ScrapApplyAllStatusFilter()
+    return true
+}
+
+ScrapApplyAllStatusFilter() {
+    try {
+        statusHeader := FindByName(SCRAP_ELEMENTS["status_header"], 5000)
+        if !statusHeader {
+            LogMessage("    [filter] Status header not found - proceeding with default (OPEN-only) view")
+            return false
+        }
+        pos := statusHeader.GetPos("screen")
+        funnelX := pos.x + pos.w + 12
+        funnelY := pos.y + Round(pos.h / 2)
+        LogMessage("    [filter] clicking funnel at " . funnelX . "," . funnelY)
+        Click(funnelX . "," . funnelY)
+        Sleep(700)
+        ; 2026-09-28b: the funnel popup is its own floating window, not part of
+        ; the main window's element tree - GetBravoRoot() (single-window) only
+        ; ever saw the '(Select All)' tri-state box. Search ALL Bravo.exe
+        ; windows (same pattern as the vendor picker) so the individual status
+        ; checkboxes (OPEN/SHIPPING/RECEIVED/ASSAYED/CLOSED) are actually seen.
+        boxes := []
+        for r in ScrapBravoRoots() {
+            try {
+                for b in r.FindElements({Type: "CheckBox"})
+                    boxes.Push(b)
+            }
+        }
+        ticked := 0, names := ""
+        for b in boxes {
+            nm := ""
+            try nm := b.Name
+            if (nm = "" || nm = "Show summary panel" || nm = "(Select All)")
+                continue
+            st := -1
+            try st := b.ToggleState
+            names .= nm . "=" . st . "; "
+            if (st = 0) {
+                try b.Click("left")
+                Sleep(350)
+                ticked++
+            }
+        }
+        LogMessage("    [filter] status boxes: " . names . " -> ticked " . ticked)
+        if (ticked = 0 && !InStr(names, "CLOSED=1")) {
+            ; nothing toggled and CLOSED not visibly on - fall back to the proven CLOSED click
+            closedItem := FindByName(SCRAP_ELEMENTS["filter_closed"], 1500)
+            if closedItem {
+                closedItem.Click("left")
+                Sleep(700)
+                LogMessage("    [filter] CLOSED checked (fallback)")
+            }
+        }
+        Click(pos.x . "," . (pos.y - 38))
+        Sleep(500)
+        return true
+    } catch as fe {
+        LogMessage("    [filter] exception: " . fe.Message . " - proceeding with default view")
+        return false
+    }
 }

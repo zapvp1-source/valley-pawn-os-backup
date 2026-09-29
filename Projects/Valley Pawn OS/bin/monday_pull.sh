@@ -139,4 +139,16 @@ if [ -n "$FAILED" ]; then
   ledger "$AGENT" "Sunday prep pull for Monday's reports came back incomplete ($FAILED). Monday's affected reports will hold rather than post partial numbers." "no"
   exit 1
 fi
+# 2026-09-28: keep loan-layaway-results-latest.json in step with the pull. Nothing had written it since
+# 9/7 (the old combined run did), so weekly-loan-layaway-manager-dms held its store DMs on 9/21 and
+# 9/28 for stale data. comms_engine.py already has the writer; it just was never called.
+if [ $RENDER -eq 0 ]; then
+  LL_DATE=$(ls "$BRAVO/output" 2>/dev/null | grep -E '^[0-9]{4}-[0-9]{2}-[0-9]{2}_[A-Z]{3}_loans-75-days-past-due\.csv$' | sort | tail -1 | cut -c1-10)
+  LL_POST=$(date +%Y-%m-%d); [ "$(date +%u)" = 7 ] && LL_POST=$(date -v+1d +%Y-%m-%d)   # Sunday prep -> Monday
+  if [ -n "$LL_DATE" ] && "$PY" "$BIN/comms_engine.py" results-json --pipeline-date "$LL_DATE" --post-date "$LL_POST" >>"$VLOG/$AGENT.log" 2>&1; then
+    vlog "loan-layaway-results-latest.json refreshed from $LL_DATE"
+  else
+    ledger "$AGENT" "The Monday pull finished, but the loan and layaway summary file the store DMs read could not be refreshed." "no"
+  fi
+fi
 vlog "=== monday pull done — all reports on disk ==="

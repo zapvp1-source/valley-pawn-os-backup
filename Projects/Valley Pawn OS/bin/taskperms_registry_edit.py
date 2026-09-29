@@ -133,6 +133,29 @@ EXPLICIT_WRITES = {
     # 2026-09-24: the 09:01 run stalled on Gmail search_threads ("not covered by usable stored
     # approvals", usable=11) — the task's whole job is finding Elemetal settlement emails, but it
     # never had a Gmail trust anchor, so the sibling rule above granted it nothing. Reads only.
+    # 2026-09-28: both stalled over the weekend on a READ they were never granted (app log: "not
+    # covered by usable stored approvals"). Northwest: Drive search_files (checks the Registered Agent
+    # folder for what is already filed). roster-refresh: Gusto list_employees / get_token_info. Reads only.
+    'northwest-registered-agent-daily-check': [
+        'mcp__2ce817f2-5038-4cde-a6ab-8dedbe8abd84__search_files',
+        'mcp__2ce817f2-5038-4cde-a6ab-8dedbe8abd84__get_file_metadata',
+        'mcp__2ce817f2-5038-4cde-a6ab-8dedbe8abd84__list_recent_files',
+    ],
+    'roster-refresh': [
+        'mcp__ca1b6a08-a5e1-43c1-b6ee-b11de4e2e8df__list_employees',
+        'mcp__ca1b6a08-a5e1-43c1-b6ee-b11de4e2e8df__get_token_info',
+        'mcp__ca1b6a08-a5e1-43c1-b6ee-b11de4e2e8df__get_employee',
+        'mcp__ca1b6a08-a5e1-43c1-b6ee-b11de4e2e8df__list_locations',
+    ],
+    # 2026-09-28 (task_preflight.py TOOL wall): tools these SKILLs name but were never granted.
+    # slack_read_channel / slack_search_users / wpcom-user-sites are reads. Drive create_file is the
+    # monthly analytics report's own documented output (it saves the report doc) — its whole job.
+    'monthly-analytics-report': ['mcp__2ce817f2-5038-4cde-a6ab-8dedbe8abd84__create_file'],
+    'monthly-analytics-watchdog': ['mcp__f92ce7c6-0353-4419-8491-f0843b182ff2__slack_read_channel'],
+    'sunday-checklist-summary': ['mcp__f92ce7c6-0353-4419-8491-f0843b182ff2__slack_read_channel'],
+    'mail-brief-reply-executor': ['mcp__f92ce7c6-0353-4419-8491-f0843b182ff2__slack_read_channel',
+                                  'mcp__f92ce7c6-0353-4419-8491-f0843b182ff2__slack_search_users'],
+    'valley-pawn-blog-publisher': ['mcp__40f0bfed-dd3b-4c55-b43a-ad8386c9caa0__wpcom-user-sites'],
     'precious-metals-settlement-handler': [
         'mcp__00007879-ef17-43e5-9d59-6325cd2f0a31__search_threads',
         'mcp__00007879-ef17-43e5-9d59-6325cd2f0a31__get_thread',

@@ -1,0 +1,4 @@
+# Never commit or share the ElevenLabs API key
+.elevenlabs.json
+# one-off voice tests
+media/voice/sample.mp3

@@ -327,6 +327,37 @@ def group_of(r: dict) -> str:
     return 'Everything Else'
 
 
+# ── Firearm T2 via Valuation Core (added 2026-09-28) ───────────────────────────
+_GUNV = {"eng": None, "loaded": False}
+
+
+def _gun_t2(cat: str, desc: str):
+    """(value, source, n, conf) for a firearm, or None to fall back to the generic comp."""
+    try:
+        if not _GUNV["loaded"]:
+            _GUNV["loaded"] = True
+            sys.path.insert(0, os.environ.get("VP_VALUATION_CORE",
+                            "/Users/joshuadavis/Documents/Claude/Projects/Valuation Core"))
+            import gun_value
+            _GUNV["mod"], _GUNV["eng"] = gun_value, gun_value.GunValue()
+        if not _GUNV["eng"] or not _GUNV["mod"].is_firearm(cat, desc):
+            return None
+        e = _GUNV["eng"].estimate(desc, cat)
+        if not e.get("fair"):
+            return (None, "GUN-NO-COMP", 0, "none")
+        iv, ev = e.get("internal"), e.get("external")
+        n = (iv or {}).get("n", 0) + (ev or {}).get("n", 0)
+        if ev or ((iv or {}).get("tier") == "model" and n >= 8):
+            conf = "high"
+        elif (iv or {}).get("tier") == "model":
+            conf = "medium"
+        else:
+            conf = "low"                    # brand+category only: shown, never trusted to flag
+        return (e["fair"], "GUN-" + ("GB+INT" if ev and iv else "GB" if ev else "INT"), n, conf)
+    except Exception:
+        return None
+
+
 # ── Value one item (T1 → T2 → T3 routing) ─────────────────────────────────────
 def value_item(it: dict, by_cat: dict, cat_prices: dict) -> dict:
     """
@@ -354,8 +385,15 @@ def value_item(it: dict, by_cat: dict, cat_prices: dict) -> dict:
             # PM but no parseable weight — don't token-comp (garbage result)
             val, src, n, conf = None, 'PM-NEEDS-WEIGHT', 0, 'none'
         else:
-            # T2: internal comp index (model-number token match → high; cat median → low)
-            val, src, n, conf = comp_value(cat, desc, by_cat, cat_prices)
+            # T2-GUN (added 2026-09-28): firearms use Valuation Core gun_value — comps from
+            # gun-category sales only, calibers never used as match keys, GunBroker sold data
+            # when connected. The generic token index matched pistols to "9MM" ammo/magazines.
+            g = _gun_t2(cat, desc)
+            if g is not None:
+                val, src, n, conf = g
+            else:
+                # T2: internal comp index (model-number token match → high; cat median → low)
+                val, src, n, conf = comp_value(cat, desc, by_cat, cat_prices)
 
     # UNQUANTIFIED COIN/BULLION LOT GUARD: coins/bullion are valued per single unit.
     # Until Bravo's Quantity column feeds in, a piece priced way under what we paid is a

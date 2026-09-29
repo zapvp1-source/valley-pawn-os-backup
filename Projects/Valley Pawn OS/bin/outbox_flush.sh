@@ -24,6 +24,9 @@ for j in "$BOX"/*.json; do
   name="$(basename "$j" .json)"
   ch="$(/usr/bin/python3 -c 'import json,sys;print(json.load(open(sys.argv[1])).get("channel",""))' "$j" 2>/dev/null)"
   f="$(/usr/bin/python3 -c 'import json,sys;print(json.load(open(sys.argv[1])).get("file",""))' "$j" 2>/dev/null)"
+  # 2026-09-28: a Cowork task may write the path it SEES (/sessions/<vm>/mnt/Projects/...) instead of
+  # the host path; the chekkit-eod follow-up bounced this way on 9/26. Map it back to the host.
+  case "$f" in /sessions/*/mnt/Projects/*) f="$HOME/Documents/Claude/Projects/${f#/sessions/*/mnt/Projects/}" ;; esac
   if [ -z "$ch" ] || [ ! -s "$f" ]; then
     mv "$j" "$FAIL/$name.json"; echo "$(date '+%F %T') $name: bad envelope (channel=$ch file=$f)" >> "$BOX/outbox.log"; continue
   fi

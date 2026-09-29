@@ -1,5 +1,7 @@
 # Zoom Phone — Store Lines & Extension Map
 
+> **UPDATE 2026-09-28: all 5 stores are LIVE on Zoom Phone.** Culpeper (808) and Roanoke (809) went live after this table was written (see CHANGELOG). The "still on Verizon / staged only" rows below are stale history.
+
 Built 2026-08-07. Reference for anything touching Zoom Phone (missed calls, voicemail, extensions).
 
 ## Account
@@ -12,7 +14,7 @@ Built 2026-08-07. Reference for anything touching Zoom Phone (missed calls, voic
 - **No Zoom Phone MCP connector exists** (checked connector registry 2026-08-07 — "Zoom for Claude" is
   meetings-only). Automation drives the admin web UI via Claude in Chrome instead.
 
-## Extension / Line Map (updated 2026-08-21 — 3 of 5 stores LIVE on Zoom Phone; Culpeper/Roanoke staged)
+## Extension / Line Map (updated 2026-09-28 — ALL 5 stores LIVE on Zoom Phone)
 
 | Store | Zoom user (login) | User Ext. | Queue / Ext. | Number | Live? |
 |---|---|---|---|---|---|
@@ -20,8 +22,14 @@ Built 2026-08-07. Reference for anything touching Zoom Phone (missed calls, voic
 | Lexington | lexington@fcfpawn.com | 807 | Lexington Store Queue / 804 | (540) 461-8349 | LIVE |
 | Harrisonburg | harrisonburg@fcfpawn.com | 802 | Harrisonburg Store Queue / 805 | (540) 574-4500 | LIVE |
 | Waynesboro | waynesboro@fcfpawn.com | 803 | Waynesboro Store Queue / 806 | (540) 221-6346 | LIVE |
-| Culpeper | culpeper@fcfpawn.com | 808 | Culpeper Store Queue / 810 | still on Verizon (540) 445-5510 | staged only |
-| Roanoke | roanoke@fcfpawn.com | 809 | Roanoke Store Queue / 812 | still on Verizon (540) 562-0776 | staged only |
+| Culpeper | culpeper@fcfpawn.com | 808 | Culpeper Store Queue / 810 | (540) 445-5510 (ported from Comcast, order 2026091714102086203) | LIVE |
+| Roanoke | roanoke@fcfpawn.com | 809 | Roanoke Store Queue / 812 | (540) 562-0776 (ported from Cox/Spectrum, order 2026092314264588062) | LIVE (outbound fixed 2026-09-28) |
+
+**Per-extension checklist state (verified live 2026-09-28):** Outbound Caller ID = store queue number on 808 and 809; Time Zone Eastern on both; E911 personal address set and default on both (Culpeper 571 James Madison Hwy Ste C; Roanoke 2362 Peters Creek Rd NW Ste C — the physical storefront, NOT the bill's "Ste D"). Carrier/account detail lives in the `vp-telecom-carriers` skill.
+
+**2026-09-28 incident — Roanoke could not dial out (resolved).** Same cause as Lexington 8/21: ported number landed on queue 812, ext 809 Outbound Caller ID never set, account-wide "Block calls without caller ID" rejects the call (History shows outbound "Connected" 4–8 s = the error prompt). Fixed by setting 809 → Roanoke Store Queue (540) 562-0776. **Rule: setting Outbound Caller ID is the FIRST step after any port completes, before anything else.**
+
+**Roanoke carrier close-out (2026-09-28, Spectrum/Cox live chat, agent Kirk B.):** confirmed no voice services remain on Cox/Spectrum account 001 5310 002188702 — a port-out of the only voice line closes phone service automatically, no call needed; internet untouched. Verify on the next statement (~10/10). Chat path that works: `myaccount-business.cox.com` login page → chat bubble → type "chat with a live agent" → Account services. Use the built-in browser; the Chrome extension can't render Spectrum pages. Chekkit told to keep hosted SMS on both ported numbers (reply on the 9/23 "Roanoke number porting" thread) — awaiting their confirmation.
 
 **Licenses (2026-08-21):** exactly 5 × US/CA Unlimited Calling Plan seats ($75/mo) on exts 802/803/807/808/809.
 Joshua's ext 800 has NO calling plan (removed 2026-08-21 — admin-only account, not in any call path).
@@ -285,3 +293,33 @@ recording announcement at all.
 **Next:** per Joshua, "see how it goes" on the inbound wording — no further action queued unless he
 reports it's still deterring callers, in which case the fallback is disabling the inbound "started" prompt
 entirely too.
+
+## 2026-09-28 — Closed Hours voicemail greeting added, all 5 Store Queues
+
+Prompted by Joshua forwarding a Zoom Virtual Agent sales pitch and asking whether to adopt any of
+it. Declined the pitch itself (Contact Center add-on, no Bravo integration, wrong tool for a pawn
+counter) but the review surfaced a real, smaller gap: every queue's **Closed Hours > Overflow**
+was still on Zoom's stock "Leave Voicemail to Current Extension" with no custom greeting — callers
+outside business hours got Zoom's generic voicemail beep with no mention of hours or of the
+missed-call text-back that already exists (`bin/missed_call_text.py`).
+
+Fixed via Phone System Management > Call Queues > [store] > Profile > Closed Hours > Edit >
+Voicemail Greeting > Edit > Add Audio > Text to Speech — same mechanism used for the 8/26 recording
+notice (Matthew-Male, English US). One asset built per store, each stating that store's real hours
+and pointing the caller to text back:
+
+| Store | Asset name | Hours stated |
+|---|---|---|
+| Culpeper | Closed Hours Greeting - Culpeper | Mon–Sat, 10 AM–6 PM |
+| Harrisonburg | Closed Hours Greeting - Harrisonburg | Mon, Tue, Thu, Fri, Sat, 10 AM–6 PM |
+| Lexington | Closed Hours Greeting - Lexington | Mon, Tue, Thu, Fri, Sat, 10 AM–6 PM |
+| Roanoke | Closed Hours Greeting - Roanoke | Mon, Tue, Thu, Fri, Sat, 10 AM–6 PM |
+| Waynesboro | Closed Hours Greeting - Waynesboro | Mon, Tue, Thu, Fri, Sat, 10 AM–6 PM |
+
+Overflow routing itself (Leave Voicemail to Current Extension) was left unchanged on all 5 — this
+only adds the greeting that plays before the beep. Verified live: each queue's Profile tab showed
+"Updated Call Queue successfully" and the new asset name under Voicemail Greeting after save.
+
+Blocked earlier in the same session on Zoom requiring the Google sign-in to be linked to the
+account password before granting admin access — Joshua completed that one-time link, unblocking
+this and future Zoom admin automation. See Open Items Register 2026-09-28 entry (now closed).

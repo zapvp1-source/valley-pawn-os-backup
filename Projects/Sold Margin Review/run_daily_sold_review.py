@@ -288,8 +288,36 @@ def load_sold_for_date(date: datetime.date) -> tuple[list[dict], list[str]]:
     return rows, missing_files
 
 
+# ── Item age fallback (Valuation Core, added 2026-09-28) ─────────────────────
+# Bravo's sold export has no shelf-age column, so the aged-clearance tag above never
+# fired. Estimate days-on-shelf from the SKU (item_age.py, backtested ~1-3 day error).
+_AGE_IDX = {"idx": None, "loaded": False}
+
+
+def _fill_age(r: dict) -> None:
+    if r.get("days_on_shelf") is not None or not r.get("ticket"):
+        return
+    if not _AGE_IDX["loaded"]:
+        _AGE_IDX["loaded"] = True
+        try:
+            sys.path.insert(0, os.environ.get("VP_VALUATION_CORE",
+                            "/Users/joshuadavis/Documents/Claude/Projects/Valuation Core"))
+            from item_age import AgeIndex
+            _AGE_IDX["idx"] = AgeIndex.load()
+        except Exception:
+            _AGE_IDX["idx"] = None
+    if _AGE_IDX["idx"]:
+        try:
+            e = _AGE_IDX["idx"].estimate(r["ticket"], r.get("date_sold"))
+            if e.get("age_days") is not None:
+                r["days_on_shelf"] = e["age_days"]
+        except Exception:
+            pass
+
+
 # ── Value / margin computation ────────────────────────────────────────────────
 def compute_margin(r: dict) -> dict:
+    _fill_age(r)
     cost, price = r["cost"], r["price"]
     margin = (price - cost) / price if price else None
     margin_dollars = price - cost
