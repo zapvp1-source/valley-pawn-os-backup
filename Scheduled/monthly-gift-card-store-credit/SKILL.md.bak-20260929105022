@@ -1,0 +1,40 @@
+---
+name: monthly-gift-card-store-credit
+description: 2nd of month 2:30 AM — Bravo Type A (one trigger drop, no computer-use). Pulls Credit Balance (as of month-end) + Credit Journal (prior month) for all 5 stores, runs Valley Pawn OS/bin/gift_credit_monthly.py (deterministic, reconciles or HOLDs), posts formatter stdout VERBATIM to #company-performance AND DMs it to Preston Peters (marker "Gift Cards & Store Credit —"), saves detail workbook to Drive 08 Reports & Analysis. Built 2026-09-29.
+---
+
+> ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | monthly-gift-card-store-credit | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Success-path posts are unchanged.
+
+Monthly Gift Cards & Store Credit report for the PRIOR full month, by store. Bravo Type A (one trigger drop; the watcher serializes it). BOUNDED — reuse the existing pipeline cells `credit-balance` and `credit-journal` (handlers reports/CreditBalance.ahk, reports/CreditJournal.ahk — never edit them) and the deterministic formatter. You never hand-write numbers.
+
+CONTEXT: Read skills enterprise-map, valley-pawn-context, bravo-context, vp-operating-rules. File access: the mounted Projects folder if present, otherwise mcp__Control_your_Mac__osascript `do shell script`. <DIR> = /Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction. <OS> = /Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS. <GC> = /Users/joshuadavis/Documents/Claude/Projects/Gift Card & Store Credit. Stores CUL, HAR, LEX, ROA, WAY. Full build notes: <GC>/README.md.
+
+FACTS (verified 2026-09-29 on the Aug 2026 pull — do not re-derive):
+- `credit-balance` with a SINGLE date D gives balances as of END of day D. Given a range it uses the START date — so ALWAYS pass a single date (month-end).
+- Store Credits and Gift Cards are company-wide in Bravo (every store's file has the same list); the formatter attributes them by ISSUING store. Layaway Credits are per store. "STA" = the closed Staunton store (legacy gift cards).
+- Journal store prefixes: VP4=CUL, VA5=HAR, VA1=LEX, ROA=ROA, VAP=WAY.
+
+STEP 0 — dates (python): YM = prior calendar month (YYYY-MM). START = 1st of that month, END = last day (calendar.monthrange; handle January rollover).
+
+STEP 1 — reuse check: if all 10 files `<DIR>/output/<END>_<STORE>_credit-balance.csv` and `<END>_<STORE>_credit-journal.csv` already exist AND `python3 "<OS>/bin/gift_credit_monthly.py" <YM> "<DIR>/output" /tmp/gc_check` exits 0, skip to STEP 3.
+
+STEP 2 — pull. (a) Contention: `bash "<DIR>/_bravo_foreground_guard.sh" check`; if BUSY, re-check every 2 min up to 30 min (a trigger-drop queues safely behind other triggers, so after 30 min proceed anyway). (b) Make Bravo ready: `B='<DIR>'; rm -f "$B/logs/_health_gate_status.txt"; nohup bash "$B/bravo_health_gate.sh" WAY >/dev/null 2>&1 &` then poll `<DIR>/logs/_health_gate_status.txt` every ~25 s up to ~4 min for a line starting `PASS`. No PASS → ledger row + stop. (c) Drop ONE trigger `<DIR>/triggers/giftcredit-<YM>-<epoch>.json`:
+{"id":"giftcredit-<YM>-<epoch>","requested_at":"<ISO now>","reports":[{"name":"credit-balance","stores":["CUL","HAR","LEX","ROA","WAY"],"date":"<END>"},{"name":"credit-journal","stores":["CUL","HAR","LEX","ROA","WAY"],"date":"<START>..<END>"}]}
+Each cell takes ~1.5–2 min per store (~20 min total). Poll every 2 min up to 45 min for all 10 CSVs (mtime from this run). "Not claimed yet" is queue depth, not a hang. If specific stores are missing after the trigger finishes, re-drop ONE trigger for only the missing store/cell combos, once.
+
+STEP 3 — compile: `python3 "<OS>/bin/gift_credit_monthly.py" <YM> "<DIR>/output" "<GC>/out/<YM>"`.
+- Exit 0 → stdout (also saved as slack_post.txt) is the post. Use it VERBATIM. Do not edit, add, or round anything.
+- Exit 2 → HOLD.txt explains what failed to reconcile. Publish NOTHING (Rule 18). If the cause is a stale/missing input, re-pull that cell once (STEP 2c) and re-run; otherwise ledger row "Gift card / store credit report held — Bravo numbers did not reconcile" and stop.
+
+STEP 4 — publish (after the fleet publish guard check below), the SAME verbatim text to both:
+(a) Slack #company-performance (channel C0B26GD8D2R);
+(b) a Slack DM to Preston Peters (user U03BWMEM9GR) — Joshua asked 2026-09-29 that Preston get this every month.
+Customer names never go to Slack — the formatter already excludes them; never add detail rows.
+
+STEP 5 — archive: copy `<GC>/out/<YM>/gift_credit_<YM>.xlsx` (contains customer names — internal only) to Google Drive `~/Library/CloudStorage/GoogleDrive-jdavis@fcfpawn.com/My Drive/01 Business/Full Circle Finance (Valley Pawn)/08 Reports & Analysis/Gift Card & Store Credit/` (mkdir -p; `cp` works into the synced folder). If that path is unavailable, upload with the Google Drive connector into Drive folder "Gift Card & Store Credit" (id 1MKOYRJIGv2YWBjWC_q4gkSh61VgGJq9B). An archive failure does not undo the post — write a ledger row for it.
+
+Never present partial data as complete. Done after this run.
+
+## Precondition (MANDATORY) — FLEET PUBLISH GUARD
+
+Before publishing ANYTHING, run `python3 "$HOME/Documents/Claude/Projects/Valley Pawn OS/bin/vp_dryrun.py" status`. Exit 0 = ARMED: do the entire task for real but publish nothing; write what you would have posted to `Valley Pawn OS/fleet/test_output/monthly-gift-card-store-credit-<YYYYMMDD-HHMMSS>.txt` (first lines: `#company-performance` and `DM Preston U03BWMEM9GR`), write no publication receipt, and say the guard was armed. Exit 1 = not armed — publish normally.

@@ -1,0 +1,54 @@
+---
+name: monthly-mobilepawn-participation
+description: 1st–3rd of month 9:15 AM (self-retrying, posts once) — MobilePawn participation by store for the PRIOR month (% of loan payments made in the app, vs last year, active app customers) from End-of-Month reports already on file; deterministic formatter Valley Pawn OS/bin/mobilepawn_monthly.py; posts verbatim to #mobilepawn-participation via the outbox. Marker "MobilePawn Participation —". Built 2026-09-29.
+model: claude-sonnet-5
+---
+
+> ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES everything below.** On any failure, stall, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | monthly-mobilepawn-participation | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` handles recovery and Joshua's one daily DM.
+
+## Execution Contract — DO NOT STOP EARLY
+This task is complete only when STEP 4 has written the outbox envelope, or STEP 1 found the month already posted, or a documented HOLD/ledger exit happened. Every turn ends with a tool call that advances the current step. "Tool loaded.", "Continue from where you left off", and TaskCreate/AskUserQuestion reminders are RESUME signals. The user is not present — execute autonomously, never ask for confirmation.
+
+# What this task does
+Monthly MobilePawn participation report for the PRIOR calendar month, by store: share of loan payments made in the MobilePawn app vs in-store (renewals, partial payments, extensions — redemptions excluded because pickup is in-store), change vs the same month last year, and active app customers. Published to Slack **#mobilepawn-participation (C0C55HRGPBP)**, Analytics section. You never hand-write or edit numbers — the formatter produces the post.
+
+CONTEXT: Read skills enterprise-map, valley-pawn-context, bravo-context, vp-operating-rules. File access: the mounted Projects folder if present, otherwise `mcp__Control_your_Mac__osascript` `do shell script`. Paths:
+- <OS> = /Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS
+- <DIR> = /Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction
+- <MPP> = /Users/joshuadavis/Documents/Claude/Projects/MobilePawn Participation (README.md has the build notes)
+Stores CUL, HAR, LEX, ROA, WAY.
+
+DATA SOURCES (verified 2026-09-29 — do not re-derive): the formatter reads Bravo End-of-Month XLSX already on disk. First choice: `<DIR>/output/monthly-analytics/<YM>/same-month-current_<STORE>.xlsx` and `same-month-prior_<STORE>.xlsx`, staged the last night of each month by `monthly-analytics-prestage` (native runner) for `monthly-analytics-report`. Fallback: any `<DIR>/output/<YYYY-MM-DD>_<STORE>_end-of-month.xlsx` whose Reporting Dates cover exactly that full month. It validates every file's store and date range and HOLDs (exit 2) rather than publish anything incomplete (Rule 18).
+
+# STEP 0 — dates
+YM = prior calendar month as YYYY-MM (handle January → December of prior year). START = first day of YM, END = last day (calendar.monthrange). YA = same month one year earlier (YYYY-MM), YA_START / YA_END likewise.
+
+# STEP 1 — already posted? (this task fires on the 1st, 2nd and 3rd; it must post exactly once)
+If `<MPP>/out/<YM>/POSTED.txt` exists → stop, nothing to do. Also check the outbox receipts: if any file in `<OS>/fleet/outbox/sent/` named `monthly-mobilepawn-participation-*` has an mtime on/after the 1st of the current month → write POSTED.txt with that filename and stop.
+
+# STEP 2 — compile
+`python3 "<OS>/bin/mobilepawn_monthly.py" <YM> "<MPP>/out/<YM>"`
+- Exit 0 → go to STEP 4. stdout (also `<MPP>/out/<YM>/slack_post.txt`) is the post, VERBATIM.
+- Exit 2 → HOLD. Read `<MPP>/out/<YM>/HOLD.txt`, go to STEP 3.
+
+# STEP 3 — self-heal a HOLD
+Today is the 1st: the month-end staging may still be finishing. Re-run STEP 2 every 10 minutes for up to 60 minutes. Still HOLD → ledger row "MobilePawn participation report held — month-end numbers not on file yet; will retry tomorrow" (NEEDS_HUMAN: no) and stop.
+Today is the 2nd or 3rd: pull what is missing, once. Parse HOLD.txt for which (store, month) pairs are missing — lines look like `CUL 2026-09: ...` or `CUL 2025-09 (year-ago): ...`.
+ (a) Contention: `bash "<DIR>/_bravo_foreground_guard.sh" check`; if BUSY re-check every 2 min up to 30 min, then proceed (a trigger drop queues safely behind other triggers).
+ (b) Bravo ready: `B='<DIR>'; rm -f "$B/logs/_health_gate_status.txt"; nohup bash "$B/bravo_health_gate.sh" WAY >/dev/null 2>&1 &` then poll `<DIR>/logs/_health_gate_status.txt` every ~25 s up to ~4 min for a line starting `PASS`. No PASS → ledger row + stop.
+ (c) Drop ONE trigger file `<DIR>/triggers/mobilepawn-<YM>-<epoch>.json` (write to a `.tmp` name then rename) using the existing `end-of-month` cell — never edit any handler:
+ `{"id":"mobilepawn-<YM>-<epoch>","requested_at":"<ISO now>","reports":[{"name":"end-of-month","stores":[<stores missing for YM>],"date":"<START>..<END>"},{"name":"end-of-month","stores":[<stores missing for YA>],"date":"<YA_START>..<YA_END>"}]}` (omit an entry whose store list is empty).
+ (d) Poll every 2 min up to 45 min for the resulting `<DIR>/output/<END>_<STORE>_end-of-month.xlsx` (and `<YA_END>_...`) files with mtime from this run. "Not claimed yet" is queue depth, not a hang. Then re-run STEP 2. Exit 0 → STEP 4. Still HOLD → ledger row "MobilePawn participation report held — month-end numbers could not be pulled" and stop (the 3rd-of-month run is the last automatic try; NEEDS_HUMAN: no — fleet-guardian may re-run).
+
+# STEP 4 — publish (plain language only; the formatter output already complies with the Field Communication Standard — post it VERBATIM, add nothing, no caveats, no mention of how it was produced)
+FLEET PUBLISH GUARD first: `python3 "$HOME/Documents/Claude/Projects/Valley Pawn OS/bin/vp_dryrun.py" status`. Exit 0 = ARMED → publish nothing; copy slack_post.txt to `<OS>/fleet/test_output/monthly-mobilepawn-participation-<YYYYMMDD-HHMMSS>.txt` with first line `#mobilepawn-participation`, do NOT write POSTED.txt, say in your summary the guard was armed, stop. Exit 1 = publish:
+OUTBOX SEND (MANDATORY — never call slack_send_message in this task; scheduled runs cannot get send approval):
+ 1. Copy the verbatim post to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/outbox/monthly-mobilepawn-participation-main-<YYYYMMDD-HHMMSS>.txt`
+ 2. THEN write the envelope, same base name `.json`: `{"channel": "C0C55HRGPBP", "file": "/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/outbox/monthly-mobilepawn-participation-main-<YYYYMMDD-HHMMSS>.txt"}` — always the `/Users/joshuadavis/...` path, never a `/sessions/...` path. The ops bot (already a channel member) delivers within ~2 minutes.
+ 3. Write `<MPP>/out/<YM>/POSTED.txt` containing the outbox base name and timestamp. Done — do not wait or verify in Slack.
+
+# Hard rules
+- Rule 18: all 5 stores and the year-ago month complete, or nothing posts. Never a partial table, never a caveat note.
+- Rule 16: nothing technical ever goes to Slack; failures go only to the ledger row.
+- Never edit the formatter output, EndOfMonth handler, the prestage runner, or any other task's files. Additive only.
+- Customer names never appear (the report has none).

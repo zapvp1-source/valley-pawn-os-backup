@@ -1438,3 +1438,49 @@ pipeline issue rather than one-off flakiness. Separately, whichever task or conn
 meant to give this pipeline Slack image-reading ability (Chrome vision per the earlier RUN
 RECORDs above, or a Slack file-download tool) was not available in this session — confirm which
 approach the currently-registered scheduled task actually uses before the next run.
+
+## RUN RECORD — Tuesday 2026-09-29 (host_queue pipeline, all 5 stores)
+
+All 5 stores open (Tuesday). Bravo pull ran clean end-to-end tonight via the host_queue
+(bravo_pull.sh, jewelry-case-counts-v2, one trigger per store, CUL→HAR→LEX→ROA→WAY sequentially,
+~20:45–22:30 ET). No collision with the earlier 6PM daily-funds-verification wedge, which had
+already cleared by the time this run's health gate passed (PASS CUL at 20:45).
+
+PM count-sheet photos: the native `eod-photo-fetch` agent had already downloaded all 5 stores'
+photos to `fleet/eod_photos/2026-09-29/` by 20:15 ET, so this session read them directly with the
+Read tool (no Chrome-vision or Slack-download workaround needed — first night this has worked
+cleanly). Poster→store mapping by elimination + roster match: Sandi-Cole=CUL, Walker-Tapley=HAR,
+Uriah=LEX, Chadd=WAY, and Joey-Epperly(Joseph Epperly)=ROA by elimination (his EOD sheet header
+confirms "END OF DAY: ROANOKE" — not on the roster in the task file, which still lists Benjie
+Moore for Roanoke; flagging that roster line as stale).
+
+Empty-category rule applied (confirmed against each store's most recent prior CSV before
+treating as 0, per the rule's own condition):
+- HAR Charms: error today, error on 9/26 (prior) → read as 0. HAR otherwise 7/7 ok.
+- LEX Charms AND Brooches: both error today, both error on 9/28 (prior, LEX's most recent) → both
+  read as 0. (Note: this promotes LEX Charms alongside the already-documented LEX Brooches as a
+  second consistently-empty category for this store — worth updating the standing empty-category
+  list in the task file.)
+- WAY Charms: error today, error on 9/28 (prior) → read as 0. WAY otherwise 7/7 ok.
+- CUL and ROA: all 8 categories ok, no empty-category treatment needed.
+
+Expected (Bravo) vs. Counted (PM sheet), mapped to the 5 reporting buckets — full table posted to
+#jewlery-counts via outbox (jewelry-onhand-nightly-pull-20260929-223200):
+
+| Store | Expected Total | Counted Total | Variance |
+|-------|----------------|----------------|----------|
+| CUL | 1324 | 1324 | 0 |
+| HAR | 742 | 753 | +11 |
+| LEX | 471 | 474 | +3 |
+| ROA | 1112 | 1112 | 0 |
+| WAY | 581 | 579 | -2 |
+
+All per-category variances were small (-1 to +4) and consistent with normal same-day timing drift
+between the live Bravo pull and the 6PM physical close — no anomalous OVER variance sharp enough
+to warrant a manager DM (HAR's own sheet total (752) also didn't foot to its own line items (753)
+by 1, a sheet-side arithmetic slip, not a misread on this session's part — individual category
+lines were legible and used directly). No DM sent to Joshua; nothing else needed follow-up
+tonight. This is the first fully clean, all-5-stores, no-workaround run in this file's recent
+history — the host_queue + native eod-photo-fetch combination appears to have resolved both of
+the recurring gaps (Bravo multi-store timeout, and PM-sheet image access) documented in the
+entries above.

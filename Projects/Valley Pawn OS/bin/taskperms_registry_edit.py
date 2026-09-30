@@ -189,8 +189,11 @@ def main():
 
         approvals = task.get('approvedPermissions') or []
         have = {a.get('toolName') for a in approvals if a.get('toolName')}
-        if not have:
-            # No trust anchor on any server -> this rule grants nothing. Left alone.
+        if not have and task['id'] not in EXPLICIT_WRITES:
+            # No trust anchor on any server -> the sibling rule grants nothing. Left alone.
+            # (2026-09-29: EXPLICIT entries are deliberate per-task grants and apply WITHOUT an anchor —
+            # roster-refresh has no stored approvals at all, so the 9/29 pass silently skipped it and it
+            # was auto-declined again at 08:22.)
             continue
 
         trusted_servers = {server_of(t) for t in have if t.startswith('mcp__')}

@@ -23,6 +23,8 @@ monthly EOM post there. Every other analytics and marketing channel gets a month
 | #ffl-transfer-performance | FFL transfers (final) | `nics-monthly-ranking` | 1st 9:30 AM | `(final)` | ✅ posted 9/1 10:03 |
 | #ebay-performance | eBay store ratings sweep | `monthly-ebay-ratings-sweep` | 1st 10:00 AM | `Ratings Sweep` | ✅ posted 9/1 10:12 |
 | #email-campiagns | Monthly Gold & Silver campaign (send notice) | `monthly-we-buy-gold-silver-email` | 1st 2:15 AM | `Monthly Gold & Silver` | ✅ 9/1 |
+| #company-performance + Preston DM | Gift Cards & Store Credit by store (outstanding + month activity) | `monthly-gift-card-store-credit` (NEW 2026-09-29; formatter `bin/gift_credit_monthly.py`) | 2nd 2:30 AM | `Gift Cards & Store Credit —` | first scheduled run 2026-10-02 (September). Aug built + verified 9/29, not posted |
+| #mobilepawn-participation | MobilePawn participation by store (% of loan payments in the app, vs LY, active app customers) | `monthly-mobilepawn-participation` (NEW 2026-09-29; formatter `bin/mobilepawn_monthly.py`; data = prestage `same-month-current/prior` EOM files, fallback own end-of-month pull on 2nd/3rd) | 1st 9:15 AM (retries 2nd + 3rd, posts once) | `MobilePawn Participation —` | first run 2026-10-01 (September). Aug built + verified 9/29, not posted |
 | #new-customers | New customers ranked, MoM/YoY | `vp-new-customer-report` | 3rd 7:00 AM | `New Customers —` | **MISSED** (died at artifact step) → posted manually 9/5; SKILL reordered Slack-first |
 | Joshua DM | Next-month bonus targets (draft) | `bonus-month-close-pull` (NEW 2026-09-06) | 1st 11:30 AM | `Bonus Targets` | replaces `monthly-bonus-targets` (disabled 9/6). **DM-only** while `field_posting=false` in `Bonus Program/bonus_rules.json` — an empty #bonus-goals is NOT a miss. File evidence: `Bonus Program/out/<YYYY-MM>/slack_targets.txt` |
 | Joshua DM | Bonus qualifiers + payouts (one run) | `bonus-month-close` (NEW 2026-09-06) | 10th 9:00 AM | `Bonus Payouts` | replaces `monthly-bonus-qualifiers` + `monthly-bonus-payout` (both disabled 9/6). File evidence: `Bonus Program/out/<YYYY-MM>/close.json`; a `hold.txt` there means the engine correctly refused to publish incomplete numbers — legitimate, but it needs Joshua |
@@ -38,7 +40,7 @@ Analytics: `#loan-review` `#layaway-review` `#aged-inventory-review` `#first-pay
 Marketing: `#social-media` `#email-campiagns` `#website` `#ai-marketing` `#ebay-performance` `#blog-posts`
 Explicitly NOT covered (has its own monthly, or Joshua said no): `#store-performance` (no monthly),
 `#company-performance`, `#employee-performance`, `#scrap-rankings`, `#ffl-transfer-performance`,
-`#new-customers`, `#bonus-goals`, `#monthly-gun-audit`, workflow channels (`#deal-of-the-week`,
+`#new-customers`, `#mobilepawn-participation`, `#bonus-goals`, `#monthly-gun-audit`, workflow channels (`#deal-of-the-week`,
 `#items-to-price`, `#items-to-markdown`, `#supply-request`, `#chekkit-*`, `#vp-studio-queue`).
 
 ## WEEKLY

@@ -103,6 +103,7 @@ Persistent
 #Include reports\SoldDiscountDetail.ahk
 #Include reports\CoinsOnHand.ahk
 #Include reports\EmployeeActivityRange.ahk
+#Include reports\ForfeitureWinback.ahk
 ; Add #Include for each new report module here.
 
 ; ----- Globals ---------------------------------------------------------------
@@ -228,6 +229,10 @@ Main() {
     REPORT_HANDLERS["sold-discount-detail"] := PullSoldDiscountDetail
     REPORT_HANDLERS["coins-onhand"]         := PullCoinsOnHand
     REPORT_HANDLERS["employee-activity-range"] := PullEmployeeActivityRange
+    REPORT_HANDLERS["forfeiture-winback"]            := PullForfeitureWinback
+    REPORT_HANDLERS["forfeiture-winback-comparison"] := PullForfeitureWinbackComparison
+    REPORT_HANDLERS["forfeiture-winback-discover"]   := PullForfeitureWinbackDiscover
+    REPORT_HANDLERS["forfeiture-winback-layouts"]    := PullForfeitureWinbackLayouts
     ; Add additional registrations here as we build out reports.
 
     pollMs := Integer(CONFIG.Get("watcher.poll_interval_ms", "30000"))

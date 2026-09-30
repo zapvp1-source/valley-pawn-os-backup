@@ -1,5 +1,57 @@
 # FFL LISTINGS — STATUS
 
+> **2026-09-29 EVENING — "everything that doesn't need anyone" pass.** Per-vendor detail in `ffl_vendors.json`.
+> - **MasterFFL Culpeper:** support fixed the verify phone to 540-445-5510 within 30 min; claim staged in Chrome
+>   (culpeper@, verify by phone) — waiting on Joshua's CAPTCHA click + someone at Culpeper to take the call.
+> - **ROOT CAUSE FOUND: ATF's own record lists Culpeper's phone as (804) 930-1221.** MasterFFL and MidwayUSA both pull
+>   it from ATF, so it will keep reappearing everywhere until ATF is corrected. Correction emailed to FFLC@atf.gov from jdavis@
+>   2026-09-29 (as responsible person). Only Culpeper is wrong; other 4 verified correct.
+> - **MidwayUSA:** all 5 submitted through the FFL portal (no account): current signed license images (HAR's on-file
+>   copy expired 2024, LEX's 2025, WAY/ROA had none), store emails (LEX was on legacy thevalleypawn@gmail.com), $25
+>   fees, correct hours (Midway defaulted to 8-5). Pending Midway verification.
+> - **Impact Guns:** all 5 already on file since April; renewed Culpeper 9J sent. **GrabAGun:** reinstated 9/7,
+>   transfers flowing. **Davidson's:** updated 9/8. **Brownells:** CUL confirmed 9/8; follow-up sent for WAY/LEX/ROA.
+> - **Primary Arms, KYGUNCO, BattleHawk:** full signed set (links) sent. **Sportsman's:** WAY/HAR/LEX submitted;
+>   ROA ineligible (SW Roanoke store ~2 mi away). **Sports South, Chattanooga, Crow:** chased in-thread.
+> - **Needs Joshua:** RSR application (bank refs + handwritten signature; 3 requests since 9/11), Camfour one-vs-five
+>   accounts + application, Bill Hicks application, send the ATF phone-correction draft.
+
+> **2026-09-29 — HARRISONBURG RE-VERIFIED LIVE (Joshua: "Harrisonburg seems to be the low man").**
+> Transfer volume: HAR 49 transfers Aug-25→Aug-26 (~4/mo) vs CUL 281, WAY 286, LEX 201, ROA 78; in
+> record June 2026 (189 company-wide) HAR did 2. Listing state today, read on the live pages:
+> - **MasterFFL / GunBroker: VALLEY PAWN, correct FFL, UNCLAIMED.** The old myffl.com "dixie-pawn"
+>   URL now redirects to the Valley Pawn MasterFFL profile. The roster's "shows DIXIE PAWN" was stale.
+> - **GunNook: live as Valley Pawn; the `-2` duplicate is gone** ("Invalid dealer id"). But the card
+>   shows **wrong hours** (Mon–Sat 9–5, open Wednesday) and a $20 fee. Fix needs sign-in/claim.
+> - **FFLeasy: still "DIXIE PAWN INC".** Claim and Add both route to account creation — human step.
+> - **FFLs.com: current 7M record correct (VALLEY PAWN, exp 2027-12-01).** The expired 4M record is
+>   titled "Dixie Pawn" and outranks it in search; labeled expired — historical, nothing to fix.
+> - Other "Dixie Pawn" pages still indexed (not FFL-routing, lower priority): Yellow Pages, pawnbat,
+>   amgoa.org, armsdirectory, gunlaws101, a Facebook page `facebook.com/dixiepawnhburg`.
+> - HAR is already the only Brownells featured dealer, so listings are not the whole story.
+>
+> **Every remaining HAR listing fix needs a human** (store-phone SMS code or account creation).
+>
+> **MasterFFL claim phones on file (read in each claim modal 2026-09-29):** HAR 540-574-4500 ✓ ·
+> WAY 540-221-6346 ✓ · LEX 540-461-8349 ✓ · **ROA defaults to 540-461-8349 (LEXINGTON's number)**;
+> 540-562-0776 is the second option — pick it. **CUL offers ONLY 804-930-1221**, a retired number
+> (see AI-Search-GEO/AUDIT-2026-08-21) — Culpeper cannot be phone-claimed until MasterFFL support
+> changes it; the CUL profile also still shows the pre-renewal 6J license (exp 9/1/2026).
+> Claims staged 9/29 with store emails + "Verify by phone"; the CAPTCHA + Continue is Joshua's click.
+>
+> **2026-09-29 PM — HAR, WAY, LEX, ROA CLAIMED on MasterFFL and optimized (free tier only).** Each profile
+> now has: a rewritten About (Valley Pawn, $25/firearm transfer, call/text number, 4473 + VSP check, signed-FFL
+> link, services, 30-day warranty, correct hours); Transfer fees Handgun/Long gun/Other = $25; Services = Retail;
+> website = thevalleypawn.com/ffl-transfer/; current storefront photo (old Gold-N-Pawn, Dixie-era, construction,
+> Dollar General and Pizza-Hut-lot photos removed). **Transfer-notification contact moved off the legacy
+> thevalleypawn@gmail.com (ROA's was jdavis@ + LEXINGTON's phone) to `<store>+ffl@fcfpawn.com`** so MasterFFL
+> transfer notices land in the store inbox that ffl_guardian reads (the bare store address is the login and is
+> rejected as 'already exists'). LEX contact name 'Jeshan Dams' replaced. Logins: store email + 8-digit code
+> emailed to the store inbox (read via `bin/mail_latest_body.py masterffl --to <store>` in the host queue).
+> Premium-only (not done): public phone/email, hours, overview. Roanoke suite RESOLVED 9/29 (Joshua): the store
+> occupies BOTH Suites C and D — ATF's 2362-D and the brand's Suite C are both correct; not a discrepancy. Culpeper: support@masterffl.com emailed
+> 9/29 to fix phone/email/license.
+
 > **2026-09-06 — READ THIS FIRST. The machine-readable roster is now
 > `Compliance/ffl_vendors.json`; this file is the narrative view.** The department map is
 > `FFL_DEPT_OS.md`. Corrections verified live this date, superseding claims below:

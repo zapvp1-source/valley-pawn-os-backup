@@ -1,6 +1,6 @@
 # Insurance Portfolio — All Domains
 
-**GENERATED 2026-09-26 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
+**GENERATED 2026-09-29 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
 Update the registry, then run `Life OS/Insurance/bin/regen_portfolio.py`.
 Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker history: `BROKER_PIPELINE.md`.
 
@@ -12,7 +12,7 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 | 2026-12-15 (open enrollment deadline for 1/1 coverage - typical) | Health | Joshua & Hillary Davis personally | — | — | — |
 | 2027-01-09 | Landlord / rental dwelling | Joshua & Hillary Davis (deed transfer to Farming Infinity Tennessee LLC unresolved - see hardinberry-property skill) | Obsidian Insurance Company | OB3-TN-22196824-01 | $960 |
 | 2027-06-01 | Surety | Full Circle Finance Inc | Travelers Bond | 107451942 | — |
-| 2027-06-13 | Workers compensation & employers liability | Full Circle Finance Inc | HDI Global Insurance Company (NCCI carrier; brief referenced Glencar - policy endorsement shows HDI Global Insurance Company) | GC29P101236-02 (expired 6/13/2026); -03 renewal presumed but NO DOCUMENT FOUND | — |
+| 2027-06-13 | Workers compensation & employers liability | Full Circle Finance Inc | HDI Global Insurance Company, managed/direct-billed by Glencar Underwriting Managers (ar@glencarum.com, 630-361-9400) | GC29P101236-03 (bound eff 6/13/2026 per ULC binder; -02 expired 6/13/2026) | — |
 | 2027-07-02 | Commercial package | Full Circle Finance Inc | HDI Global Specialty SE (A.M. Best A+), surplus lines VA | IK29P109337-05 | $11,103.04 |
 | 2027-07-02 | Commercial building (lessor's risk) | Farming Infinity LLC (owner) - see ENTITY_STRUCTURE.md | HDI Global Specialty SE | IK29P109337-05 (Loc 5) | $1,104 |
 | 2027-07-02 | Homeowners HO3 written as 'Primary home' | Farming Infinity Mountains LLC / Joshua (per REAL_ESTATE_OS) - NOT FCF Inc | Homesite Insurance Company of the Midwest (Homesite Group) via GEICO Insurance Agency, LLC | 39168908 | $2,356 |
@@ -43,11 +43,12 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 
 **VP-WC — Workers compensation & employers liability**
 
-- Obtain -03 policy/dec page: carrier, premium, EL limits, e-mod, payroll basis.
-- Named insured reads 'Full Circle Finance, LLC' - should be Inc.
-- Audit outcome for -02 (payroll $501,849 est vs actual) may generate additional premium.
-- NEXT/Gusto pay-as-you-go declined 6/18/2026; state-fund quote promised, never delivered.
-- Loss runs requested from ULCAccounts 6/18/2026 - no response found.
+- Obtain -03 policy/dec page + Glencar statement of account (confirm no balance due). Joshua re-requested from ULC 9/6-9/9 and 9/27; request SENT to Glencar AR 9/29 (thread 1a0ed6f9c8801915).
+- Independent proof: VA Workers Comp Commission coverage search (ewccv.com) - site prohibits automated queries, Joshua runs it himself.
+- Named insured reads 'Full Circle Finance, LLC' - should be Inc. Correct by endorsement.
+- Owner/officers Joshua + Hillary EXCLUDED (confirmed by Edna 6/10/2026).
+- Audit of -02 (Legacy National Audit) - payroll + 941s sent 8/4-8/6; outcome may generate additional premium.
+- Loss runs requested from ULCAccounts 6/18, 9/6-9/9, 9/27 - no response.
 
 **VP-SURETY-ROANOKE-10K — Surety**
 
@@ -133,8 +134,9 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 
 **GAP-UMBRELLA — Personal umbrella and commercial umbrella/excess**
 
-- Quote $2M and $5M commercial excess over $1M GL (ULC/Laura Sullins).
-- Quote $2M-$5M personal umbrella; requires auto limits raised to underlying minimums first.
+- Quote $2M and $5M commercial excess over $1M GL (ULC/Laura Sullins) - still no quote as of 9/26.
+- PERSONAL: RLI quote in hand (ref PUPSUB-0800183) - Joshua's decision: (1) pick a limit ($1M-$5M), (2) upgrade Progressive to the $500K CSL package first (already quoted $4,413/6mo, cheaper than every competitor's equivalent tier per PERS-AUTO), (3) confirm Kin's Cypress Crossing liability meets the $300K condition, (4) then return to rlipersonalumbrella.com to complete the Application/Purchase steps (payment - Claude does not do this step).
+- biBerk (Berkshire Hathaway Direct) also has a self-service online commercial umbrella quote-and-buy flow, but appetite for a pawnshop/FFL dealer with this inventory profile is unconfirmed - not attempted.
 
 ## DOMAIN 1 — Full Circle Finance Inc DBA Valley Pawn
 
@@ -181,19 +183,19 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - **Named insured (entity):** Full Circle Finance Inc
 - **Named insured (as written on policy):** Full Circle Finance, LLC DBA Valley Pawn (NOTE: policy says LLC - entity is Inc; correct at renewal)
 - **Scope:** All VA locations; class code 8017 (retail store NOC)
-- **Carrier:** HDI Global Insurance Company (NCCI carrier; brief referenced Glencar - policy endorsement shows HDI Global Insurance Company) · **Program/MGA:** Union Life & Casualty Insurance Agency
+- **Carrier:** HDI Global Insurance Company, managed/direct-billed by Glencar Underwriting Managers (ar@glencarum.com, 630-361-9400) · **Program/MGA:** Union Life & Casualty Insurance Agency
 - **Broker:** JM Insurance Agency Partners, Inc. · Howard Baker hbaker@jmpartners.com; ULCAccounts@jmpartners.com
-- **Policy #:** GC29P101236-02 (expired 6/13/2026); -03 renewal presumed but NO DOCUMENT FOUND · **Term:** 2026-06-13 → 2027-06-13 · **Renews:** 2027-06-13
+- **Policy #:** GC29P101236-03 (bound eff 6/13/2026 per ULC binder; -02 expired 6/13/2026) · **Term:** 2026-06-13 → 2027-06-13 · **Renews:** 2027-06-13
 - **Premium:** — — -02 term (6/13/2025-6/13/2026): estimated annual premium $5,750 after payroll endorsement (class 8017 payroll raised $400,000 -> $501,849 in lieu of 24-25 audit; additional $1,090 billed). -03 premium unknown. Premium audit for 6/1/2025-5/31/2026 in progress with Legacy National Audit (Brenda Shamblin, bshamblin@legacynationalaudit.com, 304-543-1117) - payroll by employee + 941s Q1'25-Q2'26 sent 8/4/2026.
-- **Payment:** Recurring ACH to ULC (per Joshua 6/18/2026)
+- **Payment:** Direct bill from Glencar; historically paid by ACH from WF Checking 2797 (bank descriptor "GLENCAR UND MGR INS.PREM"). -03 installment payments NOT yet confirmed against the bank.
 - **Key limits:**
-  - **employers liability:** None
+  - **employers liability:** $1M/$1M/$1M per 2021 ACORD app and 2023 proposal - confirm on -03 dec
   - **class codes:** 8017
   - **payroll basis prior term:** $501,849
   - **experience mod:** None
-- **Status:** Presumed in force (-03) - UNVERIFIED. Joshua asked Howard for WC policy 7/14/2026; no reply found. Audit of -02 open.
-- **Documents:** Drive: Workers Comp Policy.pdf (id 13YSytl_zWbfhlVFBpDzUl9HivpNF8U1W) - WC 89 06 00 B endorsement to GC29P101236-02 · Drive: Union Life - WC Policy Docs (2021).pdf (id 1mTiOHA4o3ZA7mdUylRxzTJbTwtwbiEKN) · Drive: VP Worek Comp Declarations Page.pdf (2019, id 1woTJ8Rg0QrcWlaIkHBlvGhLNI0lfcoN7) · Mail: 06.13.2023-24 Full Circle Finance, Inc. DBA Valley Pawn POLICY GC29P101236-00.pdf · Gmail: Premium Audit Notice thread 19fb9caf80a941a3 (7/31-8/4/2026)
-- **Last verified:** 2026-09-05 — source: Drive Workers Comp Policy.pdf; Gmail audit thread; Gmail NEXT thread
+- **Status:** IN FORCE - binder confirms -03 bound 6/13/2026-6/13/2027. No cancellation / non-pay notice found in any mailbox through 2026-09-29 (Glencar has e-notice consent on file, so notices would arrive by email). Premium payment status on -03 and the policy/dec page itself still unconfirmed.
+- **Documents:** Drive: Workers Comp Policy.pdf (id 13YSytl_zWbfhlVFBpDzUl9HivpNF8U1W) - WC 89 06 00 B endorsement to GC29P101236-02 · Drive: Union Life - WC Policy Docs (2021).pdf (id 1mTiOHA4o3ZA7mdUylRxzTJbTwtwbiEKN) · Drive: VP Worek Comp Declarations Page.pdf (2019, id 1woTJ8Rg0QrcWlaIkHBlvGhLNI0lfcoN7) · Mail: 06.13.2023-24 Full Circle Finance, Inc. DBA Valley Pawn POLICY GC29P101236-00.pdf · Gmail: Premium Audit Notice thread 19fb9caf80a941a3 (7/31-8/4/2026) · Mail (zapvp1): BINDER email from Edna Villarino evillarino@jmpartners.com 2026-06-12 6:36pm - "Coverage is bound effective 06/13/2026 ... GC29P101236-03 is the policy number"
+- **Last verified:** 2026-09-29 — source: Apple Mail index (binder 6/12/2026), Gmail audit thread, Glencar 2025 invoice, FY2025 bank detail
 
 ### VP-SURETY-PAWN-50K — Surety - Virginia Pawnbroker Bond $50,000
 
@@ -501,14 +503,17 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 
 ### GAP-UMBRELLA — Personal umbrella and commercial umbrella/excess - NOT IN FORCE
 
-- **Named insured (entity):** —
-- **Scope:** None
-- **Carrier:** —
-- **Broker:** — · Commercial: Laura Sullins lsullins@jmpartners.com (assigned 8/24/2026). Personal: broker shop (see BROKER_PIPELINE.md)
+- **Named insured (entity):** Joshua C Davis & Hillary D Davis personally (personal umbrella leg)
+- **Scope:** Personal: household of 2 drivers (Joshua DOB 3/20/1973, Hillary DOB 9/16/1992), 4 vehicles, 4 residential properties (Cypress Crossing, Hardinberry, Woods Walk, Bald Rock), no watercraft/RVs/antiques. Commercial: Valley Pawn $1M GL.
+- **Carrier:** PERSONAL LEG - RLI Insurance Company (quoted, not bound). Commercial leg - carrier TBD (Laura Sullins/JM has not quoted). · **Program/MGA:** RLI Underwriting Services, Inc. (personal leg, direct self-service online)
+- **Broker:** Personal: Direct online, RLI Insure Direct (rlipersonalumbrella.com), 866-234-5530. Commercial: Laura Sullins, JM Insurance Agency Partners. · Commercial: Laura Sullins lsullins@jmpartners.com (assigned 8/24/2026). Personal: direct online quote, see below.
 - **Policy #:** — · **Term:** ? → ? · **Renews:** —
 - **Premium:** —
-- **Status:** GAP - primary open exposure across all domains.
-- **Last verified:** 2026-09-05 — source: Prior portfolio; Howard 8/24/2026
+- **Key limits:**
+  - **personal umbrella quote 2026-09-26:** reference id PUPSUB-0800183; 1M $597; 2M $1,075; 3M $1,432; 5M $1,881; excess UM UIM 1M addon $551; condition underlying auto Must maintain $500K BI per person/per occurrence + $50K PD, OR $500K CSL, on ALL household autos (Limit A) - Progressive is currently only 50/100/25, so this must be upgraded before RLI will bind (Progressive's own 8/22/2026 upgrade quote is $4,413/6mo for $500K CSL + stacked UM).; condition underlying home Must maintain $300K+ homeowners/CPL liability - selected/agreed on the quote; Kin's actual current liability limit on Cypress Crossing not yet cross-checked against this.; quote valid note Subject to further underwriting review by RLI before any policy issues; not bound. Quote emailed to zapvp1@me.com from the RLI portal 2026-09-26.
+- **Status:** GAP - primary open exposure across all domains. PERSONAL LEG: live bindable quote in hand from RLI (self-service online, no agent) as of 2026-09-26 - $597/yr for $1M up to $1,881/yr for $5M - but NOT bound; blocked on raising Progressive auto to the $500K CSL underlying minimum first. COMMERCIAL LEG: still nothing from Laura Sullins/JM.
+- **Documents:** RLI Insure Direct quote email sent to zapvp1@me.com 2026-09-26, reference PUPSUB-0800183
+- **Last verified:** 2026-09-26 — source: Prior portfolio; Howard 8/24/2026; RLI Insure Direct self-service quote 2026-09-26 (rlipersonalumbrella.com, ProducerID 57075)
 
 ## KNOWN DATA GAPS (sources not reachable at last build)
 

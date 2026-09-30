@@ -30,6 +30,23 @@ check; eZ Check is offline Sat 4 PM–Sun 6 AM ET and the Saturday after the 2nd
 **All five are Type 02 — Pawnbroker in Firearms Other Than Destructive Devices. None is a
 Type 01 Dealer.** Vendor forms that ask "01 or 02" get **02** for every store.
 
+### Virginia State Police Dealer Identification Numbers (DIN) — from Joshua 2026-09-29
+
+The VSP-issued dealer number each store uses for Virginia point-of-contact background checks (VCheck /
+Firearms Transaction Center) and VSP eReceivables. Culpeper's DIN 9686 is the VSP portal login `X009686`.
+
+| Store | VSP DIN | FFL # |
+|---|---|---|
+| Culpeper | **9686** | 1-54-047-02-9J-25407 |
+| Waynesboro | **9499** | 1-54-820-02-8B-24709 |
+| Harrisonburg | **6855** | 1-54-165-02-7M-26284 |
+| Lexington | **9095** | 1-54-163-02-8F-26584 |
+| Roanoke | **1301** | 1-54-770-02-7A-27330 |
+| Salem (CLOSED) | **10222** | 1-54-161-02-6K-27258 |
+
+Not the same as the VSP billing account numbers in `OBLIGATIONS.json` (vsp-nics-fee-monthly: 15848 ROA /
+16284 WAY / 16627 HAR / 280758 CUL / 283759 LEX). Use the DIN when VSP asks for the dealer number.
+
 ### ⚠️ A SIXTH LICENSE EXISTS AND IS STILL ACTIVE — Salem (found 2026-09-06)
 
 | Store | FFL # | Type | Expires | Premise | Mailing address of record |

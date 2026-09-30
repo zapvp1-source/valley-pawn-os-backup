@@ -1,0 +1,5 @@
+#!/bin/bash
+set +e
+BIN="$HOME/Documents/Claude/Projects/Valley Pawn OS/bin"
+bash "$BIN/ebay_ship_alert.sh" am
+bash "$BIN/ebay_ship_alert.sh" am

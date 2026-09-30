@@ -245,3 +245,7 @@ For Joshua:
 - **H8.** Approve the Account Details by Phone & Text policy (account holder only, "including spouses") and align P&P §08.02, which still allows spouse or attorney. Lessons teach account holder only and test only non-spouse third parties. *(L1-05, L8-04)*
 - **H9.** Loan-expiration date: Oct 1 or Sat Oct 3? Lessons say "in October" and don't test the date. *(L3-01, L3-06, L4-04, M-01; F6)*
 - **H10.** eBay jewelry markdowns (154 items) vs the "never reprice precious metal online" rule. M-02 and L4-04 still teach the rule in force. *(M-02, L4-04; F5)*
+
+## Added 2026-09-29: L8-06 Handbags
+- **J-L8-06.** Joshua: adopt a paid authentication service for luxury bags (Authentic Detective recommended, pay per item)? If yes, add it as the step before "pass" in L8-06 and to the P&P. *(L8-06)*
+- **P-L8-06.** Preston/Sandi: supply photos (or a short video) of a Coach creed patch, an MK seam tag and a Dooney serial tag for the lesson. *(L8-06)*

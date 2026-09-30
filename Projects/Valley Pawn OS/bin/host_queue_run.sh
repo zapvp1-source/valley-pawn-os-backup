@@ -25,7 +25,11 @@ LOCK="$Q/.lock"
 LOG="$HOME/Library/Logs/valleypawn/host-queue.log"
 mkdir -p "$Q" "$DONE" "$(dirname "$LOG")"
 
-# stale-lock guard: a lock older than 30 min is abandoned
+# stale-lock guard: a lock older than 30 min lets a SECOND runner start. That is deliberate — it is the
+# lane that keeps short jobs moving behind a long Bravo pull (a 5-store jewelry pull ~100 min, the
+# forfeiture win-back ~90 min). 2026-09-29: raised to 130 for a few hours and it stalled the whole queue
+# behind one long job — daily-funds-verification missed its 18:10 pull. Reverted. Two runners are safe
+# because a job is claimed by an atomic mv (see the loop: a failed mv = someone else took it = skip).
 if [ -d "$LOCK" ]; then
   if [ -n "$(find "$Q" -maxdepth 1 -name .lock -mmin +30 2>/dev/null)" ]; then rmdir "$LOCK" 2>/dev/null; fi
 fi
@@ -86,10 +90,12 @@ validate_job() {  # $1 = job path ; prints reasons; returns 0 = ok, 1 = refused
 shopt -s nullglob
 for job in "$Q"/*.sh; do
   name="$(basename "$job" .sh)"
-  stamp="$(date '+%F %T')"
-  echo "$stamp START $name" >> "$LOG"
-  # move first so a crash mid-run can never re-execute the same job
-  mv "$job" "$DONE/$name.sh"
+  # move first so a crash mid-run can never re-execute the same job. The mv is also the CLAIM: with two
+  # runners alive (see the stale-lock guard) both can have this job in their glob list; only the one
+  # whose mv succeeds may run it. Before 2026-09-29 a failed mv fell through and ran the job twice.
+  [ -f "$job" ] || continue
+  mv "$job" "$DONE/$name.sh" 2>/dev/null || { echo "$(date '+%F %T') SKIP  $name (claimed by another runner)" >> "$LOG"; continue; }
+  echo "$(date '+%F %T') START $name" >> "$LOG"
   if ! reasons="$(validate_job "$DONE/$name.sh")"; then
     { echo "=== $name REFUSED by host_queue allow-list $(date '+%F %T') ==="; echo "$reasons"; } > "$DONE/$name.log"
     echo "$(date '+%F %T') REFUSED $name" >> "$LOG"

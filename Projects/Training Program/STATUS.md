@@ -2,6 +2,12 @@
 
 **Read `TRAINING_PROGRAM_MASTER_PLAN.md` first.** Resume from the build order there; never restart.
 
+## 2026-09-29 — L8-06 Handbags added (Joshua: "make sure we have Sandi's verification process in our training stack")
+- NEW lesson `lessons/L8/06_handbags_and_designer_goods.json` — Sandi Cole's handbag process (Slack #general 2024-01-22): condition first, Coach creed/tag (date code then model, F = factory), MK tag in seam, model must match bag or pass, Kate Spade priced off used eBay sold, Dooney serial tag or pass, top brands no flaws + stitching/stamps, can't authenticate → tell customer and pass / call Preston. 8 Qs (7 scenario/mc + 1 T/F), answer bias 0/7 correct-longest, floor check set.
+- Voiceover generated (9 lines, 3,616 chars) and embedded; build + validate ALL GREEN.
+- Uploaded to TalentLMS course 133 as unit 2117 "8.6 Handbags: check it, price it, or pass" (course still inactive). Academy now 53 lessons.
+- Not taught: any paid authentication service (OPEN — Joshua deciding; see Designer Goods Authentication/FINDINGS.md).
+
 ## 2026-09-28 (late night) — plan + onboarding flow
 - Joshua chose the **Grow** plan (he purchases). He wants to test Level 1 as an employee: test learner to be created by Joshua (Claude is blocked from creating accounts) using jdavis+academy@fcfpawn.com, enrolled in course 126 as learner.
 - Onboarding flow proposed in `ONBOARDING_FLOW.md`: Gusto hire → academy-sync (TalentLMS API) creates learner + New Hire learning path + store group → Slack welcome DM + manager DM → daily nudges, day-3 escalation, Monday scorecard. Cadence: L1 by day 3, one level/week, Certified by day 45, L8 by day 90.

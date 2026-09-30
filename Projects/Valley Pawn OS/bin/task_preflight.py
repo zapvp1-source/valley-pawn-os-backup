@@ -60,7 +60,7 @@ def mac_ledger(days=14):
     return out
 
 
-MAC_LEDGER = mac_ledger()
+MAC_LEDGER = mac_ledger(int(sys.argv[sys.argv.index('--mac-days') + 1]) if '--mac-days' in sys.argv else 14)
 
 
 def load_registry():

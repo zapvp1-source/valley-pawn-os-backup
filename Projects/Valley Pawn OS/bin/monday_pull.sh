@@ -139,6 +139,18 @@ if [ -n "$FAILED" ]; then
   ledger "$AGENT" "Sunday prep pull for Monday's reports came back incomplete ($FAILED). Monday's affected reports will hold rather than post partial numbers." "no"
   exit 1
 fi
+# 2026-09-29: closes the 9/21 open gap. #employee-performance (MTD Employee Sales Rankings) reads the
+# first-of-month-keyed <YYYY-MM-01>_<STORE>_employee-activity.csv, but this script only ever pulled a
+# single-day employee-activity file, so the MTD file went stale and comms_engine correctly WITHHELD the
+# post on 9/21 and 9/28. Pull the month-to-date range too (same primitive the 9/21 fix used by hand).
+if [ $RENDER -eq 0 ]; then
+  MTD_FIRST=$(date +%Y-%m-01); [ "$(date +%u)" = 1 ] && MTD_FIRST=$(date -v-1d +%Y-%m-01)   # Monday run -> Sunday's month
+  if bash "$BIN/bravo_pull.sh" employee-activity "$MTD_FIRST" CUL,HAR,LEX,ROA,WAY "monday-emp-mtd-$(date +%Y%m%d-%H%M)" >>"$VLOG/$AGENT.log" 2>&1; then
+    vlog "MTD employee-activity refreshed from $MTD_FIRST"
+  else
+    ledger "$AGENT" "The Monday pull could not refresh month-to-date employee activity, so the Employee Sales Rankings post will hold." "no"
+  fi
+fi
 # 2026-09-28: keep loan-layaway-results-latest.json in step with the pull. Nothing had written it since
 # 9/7 (the old combined run did), so weekly-loan-layaway-manager-dms held its store DMs on 9/21 and
 # 9/28 for stale data. comms_engine.py already has the writer; it just was never called.
