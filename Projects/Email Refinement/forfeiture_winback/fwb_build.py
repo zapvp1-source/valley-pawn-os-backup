@@ -105,8 +105,13 @@ def main():
         fl = os.path.join(OUT, f"{run}_{st}_forfeiture-winback-addr.csv")
         fcs = sorted(glob.glob(os.path.join(OUT, f"*_{st}_forfeiture-winback-comparison-contacts.csv")))
         fvs = sorted(glob.glob(os.path.join(OUT, f"*_{st}_forfeiture-winback-comparison-visits.csv")))
-        full_v = [p for p in fvs if (run - fdate(p)).days >= FULL_DAYS]
-        full_c = [p for p in fcs if (run - fdate(p)).days >= FULL_DAYS]
+        def rows_ok(p):  # a full directory can never be empty; an empty one means the pull did not render
+            try:
+                return sum(1 for _ in open(p, encoding="utf-8-sig")) > 1
+            except Exception:
+                return False
+        full_v = [p for p in fvs if (run - fdate(p)).days >= FULL_DAYS and rows_ok(p)]
+        full_c = [p for p in fcs if (run - fdate(p)).days >= FULL_DAYS and rows_ok(p)]
         why = []
         if not os.path.exists(fl): why.append("loans file missing")
         if not full_v: why.append("no full visits directory yet")
@@ -129,7 +134,7 @@ def main():
                 con_na[(kn, kaddr(c["addr"]))].append(c)
                 con_nz[(kn, zip5(c["addr"]))].append(c)
         # ---- visits: (name,zip) -> latest Last Time In; count distinct people per key from the full file
-        vis_last, vis_people = {}, Counter()
+        vis_last, vis_people, vis_name_last = {}, Counter(), {}
         for p in fvs:
             is_full = p in full_v
             for r in read(p):
@@ -139,6 +144,8 @@ def main():
                     vis_people[k] += 1
                 if d and (k not in vis_last or d > vis_last[k]):
                     vis_last[k] = d
+                if d and (k[0] not in vis_name_last or d > vis_name_last[k[0]]):
+                    vis_name_last[k[0]] = d
 
         # ---- forfeits per customer identity (name + address on the ticket)
         per = {}
@@ -192,6 +199,10 @@ def main():
                 v = "excluded: no Last Time In found for this customer"
             elif lt >= lf:
                 v = "returned"
+            elif vis_name_last.get(kn) and vis_name_last[kn] >= lf:
+                # someone with the SAME NAME (other zip / duplicate record) was in after the forfeit —
+                # could be this person under a second Bravo record; never risk it
+                v = "excluded: same name seen in store after the forfeit (possible duplicate record)"
             else:
                 v = "target"
             c["status"] = v
@@ -200,7 +211,7 @@ def main():
             cnt[v] += 1
             if v == "target":
                 cnt["target_email"] += bool(c["email"])
-                cnt["target_sms"] += bool(c["phone"] and c["sms_status"] == "SMS" and not c["ticket_dnt"])
+                cnt["target_sms"] += bool(c["phone"])  # Joshua 9/30: Chekkit manages opt-out
                 cnt["target_phone_any"] += bool(c["phone"])
             elif v.startswith("excluded"):
                 excluded.append([st, c["name"], c["addr"], c["last_forfeit"], v])
@@ -225,14 +236,34 @@ def main():
         w = csv.writer(f); w.writerow(["PHONE", "FIRSTNAME", "LASTNAME", "STORE", "LAST_FORFEIT_DATE", "LAST_TIME_IN"])
         ph = {}
         for c in tg:
-            if c["phone"] and c.get("sms_status") == "SMS" and not c.get("ticket_dnt"):
+            if c["phone"]:  # Joshua 9/30: text everyone with a phone; Chekkit handles STOP/opt-out
                 ph.setdefault(c["phone"], c)
         for p, c in ph.items():
             a, b = nm(c); w.writerow([p, a, b, c["store"], c["last_forfeit"], c.get("last_time_in", "")])
+    # per-store Chekkit upload files (same format as the Shop Us Online text lists); staff phones removed
+    staff = set()
+    try:
+        ros = json.load(open(os.path.normpath(os.path.join(HERE, "..", "..", "Valley Pawn OS", "hr", "ROSTER.json"))))
+        staff = {phone10(str(e.get("phone") or "")) for e in ros.get("employees", [])} - {""}
+    except Exception:
+        pass
+    # phones already texted (the Chekkit send step writes runs/<RUN>/chekkit_sent_<Store>.txt, one phone per line)
+    texted = set()
+    for tp in glob.glob(os.path.join(HERE, "runs", "*", "chekkit_sent_*.txt")):
+        texted |= {phone10(l) for l in open(tp)} - {""}
+    SN = {"CUL": "Culpeper", "HAR": "Harrisonburg", "LEX": "Lexington", "ROA": "Roanoke", "WAY": "Waynesboro"}
+    for code, nmx in SN.items():
+        rows = [c for p2, c in ph.items() if c["store"] == code and p2 not in staff and p2 not in texted]
+        with open(os.path.join(rd, f"chekkit_{nmx}.csv"), "w", newline="") as f:
+            w = csv.writer(f); w.writerow(["First Name", "Last Name", "Phone", "Email"])
+            for c in rows:
+                w.writerow([" ".join(ntoks(c["name"])).title(), "", c["phone"], c.get("email", "")])
+            w.writerow(["JOSHUA DAVIS", "", "8049304221", "jdavis@fcfpawn.com"])  # confirmation copy (runbook)
+
     with open(os.path.join(rd, "excluded.csv"), "w", newline="") as f:
         w = csv.writer(f); w.writerow(["STORE", "NAME", "ADDRESS", "LAST_FORFEIT", "REASON"]); w.writerows(excluded)
     lines += ["", f"Target customers (verified not back): {len(tg)}", f"Unique emails: {len(seen)}",
-              f"Textable phones (SMS consent, not DNT): {len(ph)}", f"Stores skipped: {', '.join(skipped) or 'none'}"]
+              f"Textable phones (all with a phone; Chekkit handles opt-out): {len(ph)}", f"Stores skipped: {', '.join(skipped) or 'none'}"]
     state["runs"].append({"run": run.isoformat(), "skipped": skipped, "target": len(tg), "emails": len(seen), "sms": len(ph)})
     json.dump(state, open(sp + ".tmp", "w"), indent=1, default=str); os.replace(sp + ".tmp", sp)
     open(os.path.join(rd, "report.md"), "w").write("\n".join(lines) + "\n")

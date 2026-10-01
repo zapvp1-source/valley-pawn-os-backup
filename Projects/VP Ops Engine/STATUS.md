@@ -1,5 +1,7 @@
 # VP Ops Engine — STATUS
 
+> **Name:** as of 2026-09-30 this engine is called **Goldilocks** (Slack app A0BKF6KKTC7 display name + bot username `goldilocks`). Internal folder/package/launchd/Keychain names intentionally unchanged — see CHANGELOG 2026-09-30.
+
 **Project:** Standalone (Claude-independent) KPI dashboard + automation engine.
 **Spec:** BUILD_SPEC.md v1.0 (2026-07-26) — the authoritative build document.
 **Build model:** claude-sonnet-5. Design escalations go back to a Fable/Opus design session.

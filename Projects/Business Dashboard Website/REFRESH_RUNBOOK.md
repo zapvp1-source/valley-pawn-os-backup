@@ -35,7 +35,35 @@ If a NEW artifact appears (not in site/data/artifacts.json), add a manifest entr
 Update `updated` dates for changed artifacts.
 
 ## Step 3 — Deploy to Cloudflare Pages
-PREFERRED (works in any session, incl. scheduled tasks) — deploy from the Mac via osascript
+
+### Option A (use this FIRST if the session has no Control_your_Mac/osascript tool —
+confirmed working 2026-09-30): sandbox-direct wrangler deploy
+In Cowork sessions where `~/Documents/Claude/Artifacts` isn't mountable and
+`mcp__Control_your_Mac__osascript` doesn't exist even via ToolSearch (this has been a
+recurring gap since ~9/17 — see FAILURE_LEDGER.md), the "Business Dashboard Website" and
+"Projects" folders are still directly mounted into the sandbox, and the sandbox has its own
+node/npm and outbound network access. No osascript is needed for the deploy step at all:
+
+```
+mkdir -p /tmp/npm-global   # or any writable dir in the sandbox, e.g. under the scratchpad
+npm config set prefix /tmp/npm-global
+export PATH=/tmp/npm-global/bin:$PATH
+npm install -g wrangler --silent
+cd "<mounted path to 'Business Dashboard Website'>"
+export CLOUDFLARE_API_TOKEN=$(cat .cloudflare/api_token)
+export CLOUDFLARE_ACCOUNT_ID=$(cat .cloudflare/account_id)
+PROJECT=$(cat .cloudflare/project_name)
+wrangler pages deploy site --project-name="$PROJECT" --branch=main \
+  --commit-message="Auto-refresh: $(date +%F)" --commit-dirty=true
+```
+(A plain `npm install -g wrangler` without setting `prefix` first fails EACCES in the
+sandbox — the default global path isn't writable there. Also note: this sandbox mount has no
+`.git` directory, so none of the host-Mac git-hang gotchas below apply — no `--commit-hash`
+needed.) This does NOT sync `site/artifacts/` (Step 2 still needs Control_your_Mac to reach
+`~/Documents/Claude/Artifacts`) — it just deploys whatever is already in the mounted
+`site/` folder, so run Step 1 (and Step 2 if possible) first.
+
+### Option B — deploy from the Mac via osascript (use when Control_your_Mac IS available)
 `do shell script` (node lives at ~/Documents/Claude/tools/node).
 
 **Two confirmed gotchas on this Mac, both with workarounds baked in below:**

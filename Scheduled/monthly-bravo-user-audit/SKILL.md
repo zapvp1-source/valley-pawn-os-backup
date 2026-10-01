@@ -1,0 +1,20 @@
+---
+name: monthly-bravo-user-audit
+description: 3rd of each month 10:00 AM ET - Type B (never touches Bravo). Compares Bravo users at all 5 stores (ledger hr/BRAVO_USERS.json, as last seen on screen) and last month's Bravo employee-activity report against the Gusto active roster + dismissed list via Valley Pawn OS/bin/bravo_user_audit.py; DMs Joshua through the fleet outbox (Goldilocks bot) only when a former employee can still log in, new loans/buys were written under a former employee's name, or the on-screen list is over 35 days old. Built 2026-09-30 (offboarding hardening).
+model: claude-sonnet-5
+---
+
+Monthly Bravo logins check for Valley Pawn (Full Circle Finance Inc). Joshua, 2026-09-30: "make sure bravo is clean of all old employees and that should be a part of our offboarding process." This is a registered, approved task — run it (Rule 17). Type B: NEVER open, drive or trigger Bravo; read files only.
+
+Load skills first: anthropic-skills:enterprise-map, anthropic-skills:vp-operating-rules. Projects folder = /Users/joshuadavis/Documents/Claude/Projects (file tools); in the session shell it is mounted under /sessions/<id>/mnt/Projects.
+
+1. Refresh the Gusto dismissed list. Call the Gusto connector list_employees(terminated=true, per=100, page 1..n). For each person take the LAST employment effective_date (the termination date). Write `Valley Pawn OS/hr/GUSTO_DISMISSED.json` as {"_about": "...", "generated": "<today>", "employees": [{"name": "First Last", "last_day": "YYYY-MM-DD"}, ...]}. If the connector is unavailable, keep the existing file and say so in step 4's log line. `hr/ROSTER.json` (active roster) is refreshed daily by another job — just check its generated_at is within 3 days; if older, note it in the log line.
+
+2. Run the check: `python3 "<mounted Projects>/Valley Pawn OS/bin/bravo_user_audit.py" --send` (prior month is the default). It prints one line: MONTH=.. FORMER_ACTIVE=n NEW_TXN_FLAGS=n STALE=bool FILE=.. and SENT=<envelope> / ALREADY_SENT / SENT=none(clean). It only messages Joshua when something needs him, once per month, through the fleet outbox (Goldilocks bot) — do NOT also call slack_send_message, never post to a team channel, never message an employee or store manager.
+   If the mounted shell path is not reachable, drop a host-queue job instead: write `Valley Pawn OS/fleet/host_queue/<YYYYmmdd-HHMM>-bravo-user-audit.sh` containing exactly one line: python3 "/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/bin/bravo_user_audit.py" --send  — then read `fleet/host_queue/done/<same name>.log` after ~5 minutes.
+
+3. Verify the output before finishing (Rule 12): read `Valley Pawn OS/hr/bravo_user_audit/<YYYY-MM>.json` and `.mrkdwn.txt`. If SENT=<envelope>, confirm the envelope JSON is in `fleet/outbox/` or `fleet/outbox/sent/`.
+
+4. Log: append one line to `Valley Pawn OS/hr/bravo_user_audit/RUN_LOG.md` is done by the script; additionally, IF former_active or new_txn_flags is non-empty, add a row to the top of the OPEN table in `Life OS/OPEN_ITEMS_REGISTER.md`: "<date> | 1 — Valley Pawn (HR / Bravo) | Monthly Bravo logins check found: <names, store> | OPEN — needs a Bravo on-screen termination (offboard-employee Step 4, Joshua present to approve screen control) | ...". Do NOT terminate anyone yourself in this task — the fix needs Bravo's screen, which this task never touches. If stale=true, the same row asks for the monthly on-screen sweep (System Configuration -> VALPAW Company -> Stores -> each store -> Employees) which updates `hr/BRAVO_USERS.json`.
+
+Rules: no technical words in anything Joshua sees (Rule 16); never report a negative from a source that can't show it (Rule 19) — the ledger shows Bravo as last seen on screen, not live; "APPROVAL SANDI", FREE1, BACKUP and SYSTEM are known non-person logins held for Joshua and are excluded by the script. On any failure: log it in RUN_LOG.md and the Register; no Slack failure notices.

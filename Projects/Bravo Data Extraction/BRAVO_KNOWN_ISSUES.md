@@ -3,6 +3,32 @@
 Any session diagnosing Bravo MUST read this index before forming a hypothesis,
 and MUST verify+stamp any OPEN item's next-run outcome before starting new work.
 
+## 2026-09-30 — `pawn-activity-summary`: (a) a "success" cell can carry the WRONG DATE RANGE; (b) export can hang Bravo
+- (a) `PawnActivitySummary.ahk` sets Start/End with ValuePattern and, by design, falls through to Bravo's defaults if the
+  value doesn't commit — the cell still reports `success`. Seen 9/30: LEX requested 2026-07-16..2026-09-29, log says
+  "position=1 set to 7/16/2026 via ValuePattern", CSV header says `Reporting Dates: 9/1/2026 - 9/29/2026`.
+  **Every consumer must check the CSV's "Reporting Dates" row against the requested range** (the jewelry-sourcing
+  scripts in `Life OS/Reminders Execution 2026-09-30/analyses/` do, and refuse to run on a mismatch). Handler not edited (Rule 4).
+- (b) Export OK → CSV stays 0 bytes, Bravo "(Not Responding)" on Report Preview (Continuous Scrolling was toggled off
+  fine). Hit CUL 14:12 (7/16/2025–9/29/2026 range) and HAR 14:35 (7/16–9/29/2026, small range — so NOT size-driven).
+  Next cells then fail `EnsureStore` and the nav-cascade breaker aborts the trigger. Recovery = health gate Rung3/4b
+  (guarded kill + relaunch), 10–20 min. Same pattern as the 2026-07-16 runs. Pulling one store per `bravo_pull.sh`
+  call (gate before each) contains it: CUL/LEX/ROA then succeeded. Retry the failed store alone.
+
+## 2026-09-30 — `loans-75-days-past-due` COUNT is capped at ~22 (the rows Bravo draws); dollar Sum is correct
+- `Loans75DaysPastDue.ahk` → `ParseCountFromTitle()` does not read the title bar; it counts
+  `DataItem` rows, and the DevExpress virtualiser renders ~22 at a time. Any store with more than
+  ~22 rows reports exactly 22 (9/28: HAR/ROA/WAY all "22"; HAR really had 27 rows). `dollar_sum`
+  comes from the summary panel and is right — verified 9/30 13:07–13:14 against a full-capture
+  pull on all 5 stores, to the cent.
+- NOT fixed in place (Rule 4 — the cell feeds the weekly review and Monday DMs). Fix-forward:
+  NEW cell `loans75-detail` (`reports/Loans75Detail.ahk`, generic `FwbRun` + `FwbWriteGrid`, `.meta`
+  expected/captured) returns every row; count = rows, tickets = distinct Ticket Number. If a
+  consumer only needs HOW MANY, the 2026-08-09 rule below applies (read the "Row N of TOTAL"
+  header). `loans75-gridread` (single-pass DataItem read) has the same cap — treat it as legacy.
+- Rows on the 75-day report are per ITEM, not per ticket (a 3-item ticket = 3 rows, each with its
+  item amount; the per-ticket sum equals the ticket's loan amount).
+
 ## 2026-09-17 — Manually clicking "Company KPIs" (Reporting Pro) is a known-unreliable path; Edge closing is not a new bug
 - Joshua reported Edge won't stay open when he manually runs the Company KPI report from the Bravo
   Dashboard's Reporting Pro panel. Live check at the time (WAY store, Dashboard idle, no stuck dialog):

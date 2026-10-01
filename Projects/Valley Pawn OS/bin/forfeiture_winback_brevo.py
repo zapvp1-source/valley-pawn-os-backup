@@ -35,22 +35,24 @@ REPLY_TO = "jdavis@fcfpawn.com"
 DRY = "--dry" in sys.argv
 
 EMAILS = {
-    1: {"subject": "Whenever you need us, we're here", "slug": "winback_here_for_you",
-        "eyebrow": "STILL HERE FOR YOU", "headline": "No judgment. Just help when you need it.",
-        "subline": "A pawn loan is the rare kind of borrowing that never follows you home — and our door is open the same as it always was.",
+    1: {"subject": "You're always welcome back at Valley Pawn", "slug": "winback_welcome_back",
+        "eyebrow": "NO HARD FEELINGS", "headline": "You can get another loan anytime.",
+        "subline": "You can get another loan anytime \u2014 just bring us something of value.",
         "cta_label": "Find your store", "cta_url": "https://thevalleypawn.com/locations",
-        "cta_sub": "Walk in any time — no appointment, no pressure.",
+        "cta_sub": "Walk in any time \u2014 no appointment, no pressure.",
         "body": """<p style="margin:0 0 16px;">Hey there,</p>
-<p style="margin:0 0 16px;">We wanted to reach out for one simple reason: to say the door at Valley Pawn is always open to you — same as it's ever been.</p>
-<p style="margin:0 0 16px;">Sometimes a loan works out one way, sometimes another. Either way, you walked out that day with what you needed — and that's exactly what we're here for. There's nothing to feel funny about, and nothing to make up for.</p>
-<p style="margin:0 0 8px;"><strong>A pawn loan is one of the most honest ways to borrow there is:</strong></p>
+<p style="margin:0 0 16px;">We just wanted to say it plainly: you're always welcome back at Valley Pawn.</p>
+<p style="margin:0 0 16px;">Sometimes a loan works out one way, sometimes another. That's how pawn loans are built to work \u2014 no credit check, nothing reported, no collections, nothing following you home. You walked out that day with what you needed, and that's what we're here for. There's nothing to feel funny about. Really.</p>
+<p style="margin:0 0 16px; font-size:18px;"><strong>You can get another loan with us anytime. Just bring us something of value \u2014 same fair look, cash the same day.</strong></p>
+<p style="margin:0 0 8px;"><strong>Whenever you're ready, here's how we can help:</strong></p>
 <ul style="margin:0 0 16px; padding-left:20px;">
-<li style="margin:0 0 6px;">No credit check, and it never touches your credit score.</li>
-<li style="margin:0 0 6px;">No collections, no debt that lingers — when a loan ends, it ends.</li>
-<li style="margin:0 0 6px;">A fair, straight look at what you bring in, every time.</li>
+<li style="margin:0 0 6px;"><strong>Get another loan, anytime</strong> \u2014 tools, electronics, jewelry, instruments, just about anything of value. No credit check.</li>
+<li style="margin:0 0 6px;"><strong>We buy gold and silver</strong> \u2014 jewelry, coins, broken chains, even a single earring. Fair price, paid on the spot.</li>
+<li style="margin:0 0 6px;"><strong>Sell us something else</strong> \u2014 rather sell than borrow? We'll give it a fair, straight look.</li>
+<li style="margin:0 0 6px;"><strong>Or just come browse</strong> \u2014 quality pre-owned gear, and everything we sell has a 30-day warranty.</li>
 </ul>
-<p style="margin:0 0 16px;">So whether you ever need a hand again, or you just want to come browse and see what's new, we'd be glad to see you. You're always welcome here.</p>
-<p style="margin:0 0 4px;">Warmly,</p>
+<p style="margin:0 0 16px;">Same people, same fair deal, same open door. It's all good.</p>
+<p style="margin:0 0 4px;">See you soon,</p>
 <p style="margin:0;">Your Valley Pawn family</p>"""},
     2: {"subject": "The one loan that can't hurt your credit", "slug": "winback_protects_credit",
         "eyebrow": "GOOD TO KNOW", "headline": "The loan that can't hurt your credit",
@@ -185,6 +187,20 @@ def last_unsub_rate():
     return None
 
 
+def next_send_slot():
+    """Next Tuesday 10:00 America/New_York as ISO-8601 with offset; None = send now (--now flag)."""
+    if "--now" in sys.argv:
+        return None
+    from zoneinfo import ZoneInfo
+    tz = ZoneInfo("America/New_York")
+    now = dt.datetime.now(tz)
+    d = now.date() + dt.timedelta(days=(1 - now.weekday()) % 7)   # Tuesday = weekday 1
+    slot = dt.datetime(d.year, d.month, d.day, 10, 0, tzinfo=tz)
+    if slot <= now + dt.timedelta(minutes=30):
+        slot += dt.timedelta(days=7)
+    return slot.isoformat()
+
+
 def send_group(run, emails, n, label):
     if not emails:
         log(f"send {label}: nobody to send"); return []
@@ -209,10 +225,17 @@ def send_group(run, emails, n, label):
     log(f"preflight campaign {cid}: rc={pf.returncode}\n{pf.stdout[-1500:]}")
     if pf.returncode != 0:
         raise SystemExit(f"preflight FAILED for campaign {cid} — not sent")
-    st, res = req("POST", f"/emailCampaigns/{cid}/sendNow")
+    # Timing (research 9/30): Tuesday is the top day for opens/clicks (Omnisend 2026; Klaviyo midweek),
+    # and 10 AM ET lands after stores open so Call/Text taps reach a person. The Sunday build therefore
+    # SCHEDULES the send for the next Tuesday 10:00 ET instead of sending immediately.
+    when = next_send_slot()
+    if when is None:
+        st, res = req("POST", f"/emailCampaigns/{cid}/sendNow")
+    else:
+        st, res = req("PUT", f"/emailCampaigns/{cid}", {"scheduledAt": when})
     if st >= 300:
-        raise SystemExit(f"sendNow failed {st} {res}")
-    log(f"SENT campaign {cid} Email {n} to {len(emails)} ({label})")
+        raise SystemExit(f"send/schedule failed {st} {res}")
+    log(f"{'SENT' if when is None else 'SCHEDULED ' + when} campaign {cid} Email {n} to {len(emails)} ({label})")
     return [cid]
 
 

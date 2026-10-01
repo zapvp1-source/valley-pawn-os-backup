@@ -250,6 +250,7 @@ def decide(calls, cfg, state, now, lookback_min, render):
     processed = state.get("processed", {})
     texted = state.get("texted", {})
     out, unknown = [], {}
+    sending = set()  # callers already marked SEND in this batch — one call can log two rows (abandoned + voicemail legs); 2026-09-30 a HAR caller got 2 texts in the same second
 
     # index later activity per caller number for reconnect / call-back suppression
     answered_in, called_out = {}, {}
@@ -320,6 +321,10 @@ def decide(calls, cfg, state, now, lookback_min, render):
         if not s.get("webhook"):
             rec("SKIP", "no Chekkit webhook configured for %s" % code)
             continue
+        if caller in sending:
+            rec("SKIP", "duplicate leg of a call already being texted")
+            continue
+        sending.add(caller)
         rec("SEND", "missed (%s)" % res)
     return out, unknown
 

@@ -42,3 +42,13 @@ Pipeline cell options (in the `date` field): `<date|saved>|rows=N|stamp=YYYY-MM-
 - `sms.csv`: textable phones.
 - `excluded.csv`: who was left out and why.
 - `report.md`: per-store counts.
+
+## Send timing (researched 2026-09-30, approved copy)
+- **Email**: the Sunday build SCHEDULES the campaign for the next **Tuesday 10:00 AM ET**. Tuesday is the top day for opens and clicks (Omnisend 2026 data; Klaviyo shows midweek strongest), and 10 AM is after the stores open, so Call/Text taps reach a person. Pass `--now` to send immediately. The first send went out 9/30 at 8:16 AM (campaign #77, 806 recipients).
+- **Text**: scheduled task `forfeiture-winback-texts-weekly`, **Thursday 10:33 AM ET**, through Chekkit from each store's own number.
+  - Thursday is the one weekday all 5 stores are open other than Mon/Tue/Fri, so replies are answered live. The HAR/WAY/LEX/ROA stores are closed Wed and Sun.
+  - Tue–Thu late morning is the top response window for promotional SMS.
+  - It lands ahead of the Friday payday. Pawn demand peaks at the start of the month (rent), and the first send, Thu 10/1, falls on the 1st.
+  - Phones already texted are logged in `runs/*/chekkit_sent_<Store>.txt` and are never texted twice.
+- Email and text never go out on the same day.
+- Approved text: "Hi from Valley Pawn in {TOWN}! Pawn loans are different: your credit is always good with us, and you're always approved for another loan. Just bring in something of value. Gold & silver get the most! Stop by anytime or text us right here."

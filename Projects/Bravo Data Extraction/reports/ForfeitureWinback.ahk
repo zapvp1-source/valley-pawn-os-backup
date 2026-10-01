@@ -195,7 +195,7 @@ FwbRun(store, dateOrRange, outputDir, sidebar, reportName, slug) {
         Sleep(5000)
 
         anyRows := false
-        Loop 15 {
+        Loop 60 {
             try {
                 root := GetBravoRoot()
                 items := root.FindElements({Type: "DataItem"})

@@ -1484,3 +1484,43 @@ tonight. This is the first fully clean, all-5-stores, no-workaround run in this 
 history — the host_queue + native eod-photo-fetch combination appears to have resolved both of
 the recurring gaps (Bravo multi-store timeout, and PM-sheet image access) documented in the
 entries above.
+
+---
+
+## 2026-09-30 (Wednesday — Culpeper only, per open-stores gate)
+
+Host-queue pull dropped at 20:40 (`jewelry-onhand-nightly-pull-CUL`), health gate PASS, trigger
+claimed after one self-heal cycle (watcher had gone 181s unclaimed — routine, not a failure).
+Run completed 20:54, freeze window (6PM close → 10AM reopen) intact throughout.
+
+Result-level status came back "partial" / cell status "error": the v2 handler's duplicate-value
+guard flagged Charms=19 and Brooches=19 as a possible stale-grid read (same count on two
+different categories). Checked the raw log before accepting that: each category was selected,
+verified via BoxReportName, and read with an independent stable two-reads-6s-apart confirmation —
+Charms at 20:48:56, Brooches at 20:50:04, fully separate report selections, not a repeated read of
+one grid. Cross-checked against history: Charms has been flat at 19 since 9/29 (no change), and
+Brooches moved 18→19, a plausible single-item intake (same class of case the task file already
+flags for WAY Charms on 8/15 — "a real intake the old list would have wrongly zeroed"). Treated
+this as a false-positive coincidence-detector hit, not a real corruption, and used the CSV's 8/8
+status=ok rows as written. All 8 Bravo categories for CUL: Rings 674, Bracelets 118, Pendants 215,
+Charms 19, Brooches 19, Earrings 142, Chains 82, Necklaces 68.
+
+PM count sheet: Sandi Cole posted CUL's sheet to #end-of-day at 18:30, read directly from the
+`fleet/eod_photos/2026-09-30/` download (no Chrome-vision needed). Sheet already reports the 5
+combined buckets directly (Pendants and Necklaces pre-summed by the store), self-footing to 1337.
+
+Mapped to the 5 reporting buckets — Expected (Bravo) vs. Counted (PM sheet):
+
+| Store | Category | Expected | Counted | Variance |
+|-------|----------|----------|---------|----------|
+| CUL | Rings | 674 | 674 | 0 |
+| CUL | Bracelets | 118 | 118 | 0 |
+| CUL | Pendants | 253 | 253 | 0 |
+| CUL | Earrings | 142 | 142 | 0 |
+| CUL | Necklaces | 150 | 150 | 0 |
+| CUL | Total | 1337 | 1337 | 0 |
+
+Perfect match across every category — no variance of any size, in either direction. No repeating
+same-store/same-category drift to flag (nothing to repeat off a zero). No DM to Joshua — no
+anomalous OVER variance, no failure. Posted to #jewlery-counts via outbox
+(jewelry-onhand-nightly-pull-20260930-205600).

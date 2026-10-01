@@ -1,0 +1,36 @@
+---
+name: bravo-former-employee-cleanup-oneshot-20261001
+description: One-shot Thu 10/1 1:15 PM ET, Type C (drives Bravo's screen in Parallels; needs Joshua to approve screen control). Lists Bravo users at all 5 stores, terminates every Gusto-dismissed former employee (Lee Cornelison confirmed; check Josh Stagner), leaves APPROVAL SANDI and service logins alone, updates hr/BRAVO_USERS.json. Joshua approved 2026-09-30. Created by the access-cleanup session 2026-09-30.
+---
+
+You are running a ONE-TIME Bravo POS cleanup for Joshua Davis (Full Circle Finance Inc DBA Valley Pawn). Joshua explicitly approved this on 2026-09-30 in chat: "we need to make sure bravo is clean of all old employees and that should be a part of our offboarding process." This is execution of an approved instruction, not discovery.
+
+FIRST load skills: anthropic-skills:enterprise-map, anthropic-skills:vp-operating-rules, anthropic-skills:bravo-context, anthropic-skills:offboard-employee (Step 4 is the exact Bravo path). Paths: Projects = /Users/joshuadavis/Documents/Claude/Projects (file tools); in the session shell it is mounted under /sessions/<id>/mnt/Projects.
+
+STEP 0 — Already done? Read `Valley Pawn OS/hr/BRAVO_USERS.json`. If `last_onscreen_sweep` is 2026-10-01 or later AND Lee Cornelison shows TERMINATED with how=on-screen, another session already did this: log one line to the CHANGELOG and stop.
+
+STEP 1 — Safe to touch Bravo? ALL must hold, else STOP (see STOP below):
+ a) Health: `Bravo Data Extraction/logs/_health_gate_status.txt` must start with PASS (FAIL no-dashboard / no-window = unhealthy; on 9/30 16:12-16:25 it read FAIL no-dashboard during a Bravo program update).
+ b) Contention: IMPORTANT — `_bravo_foreground_guard.sh` hard-codes the host path /Users/joshuadavis/...; run from the session shell that path does not exist and `find` silently finds nothing, so it prints a FALSE "CLEAR". Run it with the base rewritten to the mounted path, e.g.
+    G="<mounted Projects>/Bravo Data Extraction/_bravo_foreground_guard.sh"; sed "s#^B=.*#B=\"<mounted Projects>/Bravo Data Extraction\"#" "$G" > /tmp/guard.sh; bash /tmp/guard.sh check
+    Also check yourself: no file in `triggers/claimed/` or `results/` modified in the last 10 minutes, no *.json waiting in `triggers/`, and `logs/_bravo_foreground_owner.txt` absent or older than 45 min.
+ c) Clock: now is before 17:45 ET (keep clear of the 18:30 funds check, 20:00/20:30 evening pulls, 22:30 map run).
+ If CLEAR: `bash /tmp/guard.sh acquire bravo-former-employee-cleanup` and ALWAYS `release bravo-former-employee-cleanup` at the end, success or failure.
+
+STEP 2 — Screen access. request_access for "Parallels Desktop" (clipboardWrite true), reason "Remove former employees' Bravo logins (approved by Joshua 9/30)". Full-screen control is REQUIRED (background app_* clicks do not reach the Windows VM). If access or full control is not granted, STOP.
+
+STEP 3 — List every Bravo user, all 5 stores. Bravo user admin is company-wide from ANY store: right sidebar System Configuration -> VALPAW Company -> Stores -> <store> -> Employees. For CUL, HAR, LEX, ROA, WAY expand Employees and record every entry (name, login if shown, Region, status). Do not use bravo-store-cycle; do not switch stores.
+
+STEP 4 — Decide, per person, against the source of record:
+ - Active roster = `Valley Pawn OS/hr/ROSTER.json` (Gusto active, refreshed daily). Dismissed list = `Valley Pawn OS/hr/GUSTO_DISMISSED.json` (Gusto dismissed + last day); refresh it first with the Gusto connector list_employees(terminated=true) if available (termination effective_date).
+ - Names drift: Benjie Moore = George Moore; Sandi = Sandra Cole; Steve = Steven Burch; Chadd Mcclintic = Chadd McClintic. Match on last name + first name/nickname.
+ - TERMINATE = anyone who matches a Gusto DISMISSED person and is not on the active roster. Known: Lee Cornelison (Waynesboro, quit 8/27). Check Harrisonburg for Joshua "Josh" Stagner (never started, dismissed 9/23) — terminate if a user exists.
+ - DO NOT TERMINATE: "APPROVAL SANDI" (Lexington), FREE1 VALLEY PAWN (automation login), BACKUP BACKUP, SYSTEM, or ANY account that matches nobody in Gusto (active or dismissed) — list those for Joshua instead. Do not touch anyone on the active roster.
+ - Path per person: select them -> Edit -> Status dropdown -> TERMINATED -> Save. VERIFY BOTH: the record reads TERMINATED AND they are gone from that store's active Employees tree. Read the Region field and note "VA REGION" (= login reached every store).
+ - If anything looks different from this description, stop changing things and report (Rule 20).
+
+STEP 5 — Record. Rewrite `Valley Pawn OS/hr/BRAVO_USERS.json` (keep its _about/aliases/service_accounts/hold_for_joshua keys) with every user seen, status as seen, verified=today, how=on-screen, and set last_onscreen_sweep=today. Then run `python3 "<mounted Projects>/Valley Pawn OS/bin/bravo_user_audit.py" --month 2026-09` (NO --send) and confirm FORMER_ACTIVE=0. Add a CHANGELOG entry (newest-first, under a 2026-10-01 heading) and update the OPEN_ITEMS_REGISTER rows dated 2026-09-30 (security audit), 2026-09-24 (Stagner) and 2026-08-27 (Cornelison) with exactly who was terminated and how it was verified. Release the guard.
+
+STEP 6 — Tell Joshua (only through the fleet outbox, never slack_send_message, never a team channel, no messages to employees): write a plain-language text file `Valley Pawn OS/hr/bravo_user_audit/2026-10-01-cleanup.mrkdwn.txt` (e.g. "*Bravo logins cleaned up* — turned off: Lee Cornelison (Waynesboro). Still there for you to decide: APPROVAL SANDI (Lexington), <any others>.") and drop `Valley Pawn OS/fleet/outbox/bravo-cleanup-joshua-<YYYYmmdd-HHMMSS>.json` containing {"channel": "U03BB52MDSA", "file": "/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/hr/bravo_user_audit/2026-10-01-cleanup.mrkdwn.txt"}. No technical words (Rule 16).
+
+STOP (any gate fails, or access not granted): change nothing in Bravo, release the guard if held, append one line to the OPEN_ITEMS_REGISTER 2026-09-30 security-audit row saying why it did not run, and send Joshua ONE plain line through the outbox the same way as Step 6: "Bravo cleanup of old employee logins still needs 5 minutes with you at the Mac — say the word and I'll do it." Never retry in a loop; never force-relaunch Bravo.

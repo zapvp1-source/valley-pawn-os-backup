@@ -34,7 +34,12 @@ past_deadline() { [ -n "$DL_EPOCH" ] && [ "$(date +%s)" -ge "$DL_EPOCH" ]; }
 
 pull() {  # $1 report  $2 date-string  $3 store  $4 id-suffix  $5 expected output file
   local f="$BRAVO/output/$5"
-  if [ -s "$f" ] && [ -s "$f.meta" ] && grep -q "^captured=" "$f.meta"; then vlog "reuse $5"; return 0; fi
+  if [ -s "$f" ] && [ -s "$f.meta" ] && grep -q "^captured=" "$f.meta"; then
+    if [ "$4" = "vfull" ] || [ "$4" = "cfull" ]; then
+      [ "$(wc -l < "$f")" -gt 1 ] && { vlog "reuse $5"; return 0; }
+      vlog "full file $5 is empty — pulling again"
+    else vlog "reuse $5"; return 0; fi
+  fi
   for i in 1 2 3; do
     [ -z "$(find "$BRAVO/triggers/claimed" -type f -mmin -3 ! -name 'fwb-*' 2>/dev/null | head -1)" ] && break
     vlog "pipeline busy with another task — wait 60s ($i/3)"; sleep 60
@@ -66,7 +71,9 @@ if [ $PULL -eq 1 ]; then
         if past_deadline; then vlog "deadline reached — full directory for $ST left for next run"; else
           pull forfeiture-winback-comparison "$DFULL|rows=20000|layout=$L_VISITS|tag=visits" "$ST" vfull "${DFULL}_${ST}_forfeiture-winback-comparison-visits.csv"
           pull forfeiture-winback-comparison "$DFULL|rows=20000|layout=$L_CONTACTS|tag=contacts" "$ST" cfull "${DFULL}_${ST}_forfeiture-winback-comparison-contacts.csv"
-          [ -s "$BRAVO/output/${DFULL}_${ST}_forfeiture-winback-comparison-visits.csv" ] && [ -s "$BRAVO/output/${DFULL}_${ST}_forfeiture-winback-comparison-contacts.csv" ] && echo "$RUN" > "$MK"
+          NV=$(wc -l < "$BRAVO/output/${DFULL}_${ST}_forfeiture-winback-comparison-visits.csv" 2>/dev/null || echo 0)
+          NC=$(wc -l < "$BRAVO/output/${DFULL}_${ST}_forfeiture-winback-comparison-contacts.csv" 2>/dev/null || echo 0)
+          if [ "${NV:-0}" -gt 1 ] && [ "${NC:-0}" -gt 1 ]; then echo "$RUN" > "$MK"; else vlog "full directory for $ST came back empty (visits=$NV contacts=$NC) — will retry next run"; fi
         fi
       fi
     fi

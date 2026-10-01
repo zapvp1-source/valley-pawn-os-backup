@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Store Purchasing Research</title>
+<style>
+:root{--bg:#F4EDE0;--card:#fffdf8;--ink:#0F1A2E;--muted:#55607a;--accent:#B08A3E;--line:#e2d8c6;--good:#1f6b45;--warn:#722F37;--blue:#0099DD}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1A2E;--card:#16233b;--ink:#F4EDE0;--muted:#aab3c7;--accent:#d2ad62;--line:#2a3a5a;--good:#6fd39b;--warn:#e7a0a8;--blue:#3DB8E8}}
+:root[data-theme="dark"]{--bg:#0F1A2E;--card:#16233b;--ink:#F4EDE0;--muted:#aab3c7;--accent:#d2ad62;--line:#2a3a5a;--good:#6fd39b;--warn:#e7a0a8;--blue:#3DB8E8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,-apple-system,Segoe UI,Roboto,sans-serif}
+main{max-width:1040px;margin:0 auto;padding:28px 16px 60px}
+h1{font:600 30px/1.2 "Playfair Display",Georgia,serif;margin:0 0 6px}
+h2{font:600 23px/1.25 "Playfair Display",Georgia,serif;margin:36px 0 10px;border-bottom:2px solid var(--accent);padding-bottom:6px}
+h3{margin:22px 0 8px;font-size:17px}
+.sub{color:var(--muted);margin:0 0 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:14px 0}
+.rec{border-left:5px solid var(--good)}
+.flag{border-left:5px solid var(--warn)}
+.tbl{overflow-x:auto;margin:10px 0}
+table{border-collapse:collapse;width:100%;min-width:720px;background:var(--card)}
+th,td{border:1px solid var(--line);padding:8px 9px;text-align:left;vertical-align:top;font-size:14px}
+th{background:var(--ink);color:var(--bg);font-weight:600}
+td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.pick td{background:rgba(31,107,69,.08)}
+.tag{display:inline-block;font-size:12px;padding:1px 8px;border-radius:10px;background:var(--accent);color:#0F1A2E;font-weight:600}
+pre{white-space:pre-wrap;background:var(--card);border:1px dashed var(--accent);border-radius:8px;padding:12px;font:13px/1.5 ui-monospace,Menlo,monospace}
+a{color:var(--blue)}
+small,.small{color:var(--muted);font-size:13px}
+ul{padding-left:20px}
+</style>
+</head>
+<body>
+<main>
+<h1>Store Purchasing Research — Traffic Sensors &amp; "Optic Stick" Signage</h1>
+<p class="sub">Prepared 2026-09-30 from Joshua's Apple Reminders (list "Joshua"). Research only: <b>nothing ordered, no forms submitted, no emails sent.</b> Prices are what the sellers' own pages showed on 9/30/2026 and exclude sales tax unless noted.</p>
+
+<div class="card rec">
+<b>Bottom line</b>
+<ul>
+<li><b>Traffic sensors:</b> buy <b>Storetraffic PEARL + the Standard plan, paid yearly</b>. For 5 stores that's <b>$3,926.75 in year 1, then $1,677 a year</b>. It exports daily counts and has an API, so we can work out conversion against Bravo transactions ourselves. Dor is the more accurate option, but it costs <b>$9,600 in year 1 and $8,100 a year</b>. If you want Dor, ask them for the 5-store enterprise price first. They offered one on Aug 13 (draft email below).</li>
+<li><b>"Optic stick signage":</b> this most likely means the <b>OptiSigns "OptiStick"</b>, a $99.99 stick that plugs into a TV and turns it into a remotely managed digital sign. It is the only product actually called that, and it lines up with the Yodeck digital-signage account you opened in January, which lapsed in July (evidence below). A branded screen in each store runs about <b>$2,450–$2,600 in year 1 and $810 a year after</b>.</li>
+<li><b>Harrisonburg Open sign:</b> a <b>$9.99 Kasa EP10 smart plug</b> on a schedule turns the sign on at 10:00 and off at 6:00 with nobody touching it. That's about <b>$50 for all 5 stores</b>. One condition: the sign has to come back on by itself after its power is cut (see the test in Section B3).</li>
+</ul>
+</div>
+
+<!-- ============================ A ============================ -->
+<h2>A. "Buy store traffic sensors"</h2>
+<p><b>Goal:</b> count the people who walk in each day at all 5 stores, then compare that with Bravo's daily transaction counts to get a conversion rate.</p>
+
+<div class="card">
+<b>Prior work found (not redone):</b> On Aug 13, 2026 Joshua asked Dor (getdor.com) for pricing. Victoria Shartzer quoted <b>$300 per sensor and $150/mo per location, or $135/mo on an annual plan</b>. The quote includes data export and an API key, plus 1-click POS integrations for Shopify, Square, RICS, Heartland and Lightspeed. <b>Bravo is not on that list.</b> She followed up Aug 24 and copied Spencer Mink (enterprise team, who runs the EZCORP account, about 1,100 pawn stores). That thread is still waiting on Joshua's reply. <small>Source: Apple Mail, "Dor Foot Traffic | Valley Pawn", 8/13 and 8/24/2026.</small>
+</div>
+
+<h3>Comparison (5 stores, 1 entrance each)</h3>
+<div class="tbl"><table>
+<tr><th>Product</th><th>How it works / install</th><th>Accuracy (seller's claim)</th><th>Daily export / API</th><th>Hardware ×5</th><th>Subscription ×5 / yr</th><th>Year 1 total</th><th>Ongoing / yr</th></tr>
+<tr class="pick"><td><b>Storetraffic PEARL</b> + Standard plan (1-yr prepaid) <span class="tag">PICK</span></td><td>Infrared beam across the doorway. Peel-and-stick, AA batteries, 2.4 GHz Wi-Fi, self-install in minutes. Best on outward-opening doors.</td><td>"Upwards of 98%" when people pass one at a time. Only counts people 54"+ tall.</td><td>Yes: Standard plan has Export &amp; API, 15-minute detail, Excel reports, all history. (Free "Lite" plan keeps only 4 weeks and has no export.)</td><td class="num">$2,249.75<br><small>$449.95 ea ($499.95 − $50 prepaid credit)</small></td><td class="num">$1,677.00<br><small>$27.95/mo ea</small></td><td class="num"><b>$3,926.75</b></td><td class="num"><b>$1,677</b></td></tr>
+<tr><td><b>Dor</b> (getdor.com) — you already have a quote</td><td>Thermal sensor on top of the door frame. Peel-and-stick, 2 D-cell lithium batteries (1–1.5 yrs, free replacements). 2.4 GHz Wi-Fi with no captive portal; a cellular base is +$300 if the Wi-Fi won't work. Lifetime warranty.</td><td>"On par with camera-based" systems. Handles groups side by side. EZCORP runs it in about 1,100 pawn stores.</td><td>Yes: data export + API key included. No Bravo integration (we would compute conversion ourselves).</td><td class="num">$1,500<br><small>$300 ea</small></td><td class="num">$8,100<br><small>$135/mo ea, annual</small></td><td class="num">$9,600</td><td class="num">$8,100<br><small>($9,000 if paid monthly)</small></td></tr>
+<tr><td><b>V-Count Nano AI</b> + BoostBI</td><td>AI 3D camera on the ceiling (2.4–4 m). Needs USB-C power or a PoE cable, so a handyman or electrician may be needed. Wi-Fi or Ethernet.</td><td>"Up to 99%". Staff exclusion available as an add-on.</td><td>Yes, but API access is a "sublicence" you have to confirm is in the quote.</td><td class="num">$1,495–$3,995 published<br><small>$299–$799 ea</small></td><td class="num">$540–$2,940<br><small>$9–$49/mo ea</small></td><td class="num">~$3,000 (bundle)*</td><td class="num">~$3,000*</td></tr>
+<tr><td><b>Traf-Sys Direct Count One</b></td><td>Wireless beam counter, pro-grade (library and retail).</td><td>Not published.</td><td>VisiCount web software. Price is quote-only. No POS or conversion view.</td><td class="num">$3,745<br><small>$749 ea (Bayscan/Brodart)</small></td><td class="num">quote only</td><td class="num">$3,745 + software</td><td class="num">unknown</td></tr>
+<tr><td><b>Budget Bluetooth counter</b> (e.g., FOORIR FP110 on Amazon)</td><td>IR beam, battery. Data syncs over Bluetooth to a phone. No cloud.</td><td>Not published.</td><td>CSV export from a phone app only. Someone has to export it by hand every day.</td><td class="num">~$250–$325<br><small>~$50–$65 ea (seller's own article; Amazon price not verifiable by fetch)</small></td><td class="num">$0</td><td class="num">~$300</td><td class="num">$0 + staff time</td></tr>
+</table></div>
+<p class="small">*V-Count's shop listing advertises an annual bundle of $600 per sensor per year with the Nano AI sensor included. Confirm in writing and add install labor. V-Count's own pricing page gives only ranges and says "your written proposal confirms" the price.</p>
+
+<h3>Why PEARL, and when to choose Dor instead</h3>
+<ul>
+<li><b>Cost:</b> PEARL is 41% of Dor's year-1 cost and 21% of Dor's ongoing cost. Over 3 years that's <b>$7,281 vs $25,800</b>.</li>
+<li><b>It does what we need:</b> Standard has export and an API. The Bravo Data Extraction pipeline already produces daily transaction data per store, so a small new job (built alongside the existing ones, never inside them) can pull each day's door count and post a conversion number.</li>
+<li><b>Install:</b> nothing to wire. It sticks to the frame, runs on AA batteries and joins the store Wi-Fi.</li>
+<li><b>The trade-off:</b> a beam counts one body at a time. Two customers walking in side by side count as one, and kids under 54" aren't counted. Because the error is consistent, day-to-day and store-to-store trends still hold. Just don't read the conversion rate as an exact figure. Also, no sensor here removes staff trips through the door; set the daily number net of staff (for example, subtract a fixed staff-trip estimate).</li>
+<li><b>Choose Dor instead</b> if exact counts are worth about $6,400 a year more ($8,100 vs $1,677), or if any store door opens inward in a way that blocks a side beam. Dor mounts on top of the frame and reads groups correctly. Ask Dor for the 5-store enterprise price first.</li>
+<li><b>Before ordering either one:</b> get a photo of each front door (which way it opens and how wide it is). Both products need 2.4 GHz Wi-Fi with no sign-in page. Storetraffic ships free by FedEx 2-day and has a 30-day return; Dor has a 30-day money-back guarantee.</li>
+</ul>
+
+<h3>Draft emails (NOT sent)</h3>
+<p><b>1. Reply to Dor asking for enterprise pricing</b> (reply in the existing thread to victoria@getdor.com, cc spencer@getdor.com):</p>
+<pre>Subject: Re: Dor Foot Traffic | Valley Pawn
+
+Hi Victoria and Spencer,
+
+Thanks for the pricing. We're evaluating people counters for all 5 Valley Pawn stores in Virginia (Culpeper, Waynesboro, Harrisonburg, Lexington, Roanoke). Each store has one customer entrance.
+
+Could you send an enterprise quote for 5 sensors on an annual plan? Please include:
+- per-sensor hardware and per-location monthly price at 5 locations
+- whether the API / daily CSV export is included (our POS is Bravo, so we'd join the data on our side)
+- battery, warranty and cancellation terms
+- anything we'd need on our store Wi-Fi
+
+We're comparing a couple of options and plan to decide in the next two weeks.
+
+Thanks,
+Joshua Davis
+Valley Pawn</pre>
+<p><b>2. Pre-purchase question to Storetraffic</b> (via storetraffic.com/contact-storetraffic):</p>
+<pre>Subject: PEARL for 5 retail stores – door fit and API question
+
+Hi,
+
+We plan to put a PEARL counter at each of our 5 stores (one customer entrance each) on the Standard plan, 1-year prepaid. Before ordering:
+1. Our doors are standard commercial glass doors; some may open inward. Will PEARL work on an inward-opening door, and what mounting do you recommend?
+2. Can the Standard plan's API or scheduled export deliver one daily IN count per store (CSV or JSON)?
+3. Please confirm the 5-unit price: $449.95 per PEARL with the prepaid credit, plus $27.95 per month per device billed annually, with free US shipping.
+
+Thank you,
+Joshua Davis
+Valley Pawn</pre>
+
+<!-- ============================ B ============================ -->
+<h2>B. "Optic stick signage"</h2>
+
+<h3>B1. What the reminder most likely means</h3>
+<div class="card">
+<p><b>Most likely: the OptiSigns "OptiStick" digital-signage player.</b> Confidence: moderate to high. Only Joshua can confirm it.</p>
+<ul>
+<li><b>The name fits exactly.</b> "OptiStick" is a real product ($99.99, OptiSigns, Houston TX). It plugs into any TV's HDMI port and turns the TV into a sign you manage from your phone or computer. Said out loud, or dictated to Siri, it comes out as "optic stick". A web search for the exact phrase "optic stick" signage returns the OptiStick first.</li>
+<li><b>It matches what you were already doing.</b> You opened a <b>Yodeck</b> digital-signage account (fullcirclepawn@gmail.com) on <b>Jan 21–22, 2026</b> and asked Yodeck's support bot "do you have anyone who can put together the content?" The account went unused, and Yodeck sent <b>account deletion notices on Jul 21 and Sep 20, 2026</b>. The "Optic stick signage" reminder was last modified <b>Aug 3, 2026</b>, about two weeks after the first deletion notice. That timing looks like a note to try a different digital-signage option. You also get Displays2Go "digital signage" mailings and have had a DigitalSignage.com account since 2017.</li>
+<li><b>The other reading is less likely:</b> fiber-optic or LED light-up window signs, like an "OPEN" sign. Nothing in the mail, texts, notes or files uses "optic" that way. Culpeper already has an LED "OPEN" sign: Amazon, 16.5"×9", $29.99, delivered Feb 27, 2026. Both options are priced below so either reading is covered.</li>
+</ul>
+<small>Sources checked: Apple Reminders (the reminder has no notes), Apple Mail, iMessage, Apple Notes, iCloud and Drive indexes via unified search (index refreshed 9/30).</small>
+</div>
+
+<h3>B2. Option 1 — OptiStick digital sign in each store (the likely meaning)</h3>
+<div class="tbl"><table>
+<tr><th>Item</th><th>Per store</th><th>5 stores</th><th>Notes</th></tr>
+<tr><td>OptiSigns OptiStick player</td><td class="num">$99.99</td><td class="num">$499.95</td><td>Official OptiSigns shop. 4K, Wi-Fi + Ethernet, USB-C power. A subscription is required for more than 3 screens.</td></tr>
+<tr><td>43" 4K TV (e.g., TCL 43" S Class at Walmart)</td><td class="num">$198–$229</td><td class="num">~$1,000–$1,145</td><td>Skip this at any store that already has a spare TV. Window-facing screens need a brighter commercial display (quote separately).</td></tr>
+<tr><td>Wall or ceiling mount + HDMI extension</td><td class="num">~$30 (est.)</td><td class="num">~$150</td><td>Estimate. Not quoted.</td></tr>
+<tr><td>OptiSigns <b>Pro Plus</b> plan (annual)</td><td class="num">$13.50/mo ($162/yr)</td><td class="num">$810/yr</td><td>Includes the <b>Operational Schedule</b>: screens power on and off automatically at set times. Standard is $9/mo annual ($540/yr for 5) but has no power schedule.</td></tr>
+<tr><td><b>Total</b></td><td></td><td class="num"><b>~$2,450–$2,600 year 1<br>$810/yr after</b></td><td>Low end uses the $198 TV; high end uses $229.</td></tr>
+</table></div>
+<ul>
+<li><b>Content in brand colors:</b> OptiSigns imports designs straight from Canva, which we already use. Build rotating slides from the Valley Pawn studio palette: navy #0F1A2E, gold #B08A3E, ivory #F4EDE0, with the logo's #0099DD blue. Good topics: We Buy Gold, loans, the 30-Day Warranty, Free Layaway, the app, "What's Right Is Right". Firearm content is allowed on <i>in-store</i> screens (the no-firearms rule covers social, GBP, ads and email), but keep window-facing screens general.</li>
+<li><b>Same kind of product, for comparison:</b> Yodeck (your old account) is $8/screen/mo on Basic or $12 on Premium, and the free plan covers 1 screen. Amazon Signage Stick is $99.99 plus a separate software subscription. OptiSigns is recommended because the player and software come from one vendor and the power schedule is built in.</li>
+<li><b>Suggested rollout:</b> start with one store (Harrisonburg or Culpeper) for about $330 plus $13.50 a month. Add the other 4 once the slides are built.</li>
+</ul>
+
+<h3>B3. Option 2 — Light-up window "OPEN" signs + automatic on/off (also fixes the Harrisonburg checklist item)</h3>
+<div class="tbl"><table>
+<tr><th>Item</th><th>Per store</th><th>5 stores</th><th>Notes</th></tr>
+<tr><td>Generic LED "OPEN" sign (same as Culpeper's)</td><td class="num">~$30</td><td class="num">~$150</td><td>Culpeper paid $29.99 on Amazon (Feb 2026). Colors are the seller's fixed red/blue, not brand-exact.</td></tr>
+<tr><td>Custom Neon® pre-designed LED neon "OPEN" sign</td><td class="num">$159–$276</td><td class="num">$795–$1,380</td><td>customneon.com: free shipping, 2-year warranty. <b>Custom brand-blue #0099DD "OPEN"</b> = get a quote with their design tool.</td></tr>
+<tr><td><b>TP-Link Kasa EP10 smart plug</b></td><td class="num">$9.99</td><td class="num">~$50</td><td>Wi-Fi plug with a weekly schedule, run from the Kasa app. Indoor only.</td></tr>
+</table></div>
+<div class="card flag">
+<b>How the automatic Open sign works, and the one thing to test</b>
+<ul>
+<li>Plug the sign into the Kasa plug and the plug into the wall. In the Kasa app (one shared login), set the schedule: <b>ON 10:00 AM / OFF 6:00 PM</b> on <b>Mon, Tue, Thu, Fri, Sat</b> for Harrisonburg, Waynesboro, Lexington and Roanoke, and <b>Mon–Sat</b> for Culpeper. The sign then follows store hours on its own. That's exactly what Preston's 8/11 checklist note asked for ("Open sign should be automatic turn on when we open the store").</li>
+<li><b>Test first:</b> leave the sign's own switch ON, then unplug it and plug it back in. If it lights up again, the smart plug will work. If it stays dark (common on signs with a push-button or a remote), the plug can't turn it on. Buy a sign with a plain rocker switch or no switch.</li>
+<li>Holidays and snow days: open the app and switch the plug off or on as needed.</li>
+</ul>
+</div>
+
+<h3>Recommendation for B</h3>
+<ul>
+<li><b>Do now, whatever the reminder meant:</b> 5 Kasa EP10 plugs (~$50) to put every store's Open sign on a schedule, starting with Harrisonburg. This is a normal supplies order through the Amazon Business account.</li>
+<li><b>"Optic stick signage":</b> if Joshua confirms it means OptiStick digital screens, pilot one store (~$330 + $13.50/mo), then roll out to all 5 (~$2,450–$2,600 year 1, $810/yr). If it meant light-up window signs instead, Custom Neon's two-color OPEN sign ($219 each, ~$1,095 for 5) plus the Kasa plugs is the brand-quality choice.</li>
+</ul>
+<p><b>Draft quote request (NOT sent) — Custom Neon, brand-color OPEN signs</b> (customneon.com "Get a Quote"):</p>
+<pre>Subject: Quote – 5 LED neon "OPEN" window signs in our brand blue
+
+Hi,
+
+We'd like a quote for 5 identical LED neon "OPEN" signs for our store windows (Valley Pawn, 5 locations in Virginia).
+- Text: OPEN
+- Color: bright blue to match our brand (#0099DD); optional thin border in soft coral (#F58C8A)
+- Size: about 24" wide, clear acrylic backing, for hanging in a window
+- Important: the sign must turn back ON by itself when power is restored (we run it on a smart-plug timer), so please use a plain rocker switch or no switch, not a push-button or remote-only switch
+- Ship to 5 addresses (can be one shipment if a split costs extra)
+
+Please include the per-sign price, the 5-sign total, lead time and warranty.
+
+Thank you,
+Joshua Davis
+Valley Pawn</pre>
+
+<h2>Sources</h2>
+<ul class="small">
+<li>Dor pricing — <a href="https://www.getdor.com/pricing">getdor.com/pricing</a> ($300 hardware; $150/mo or $135/mo annual; API and data export included); Dor quote email from Victoria Shartzer, 8/13/2026 (Apple Mail).</li>
+<li>Storetraffic PEARL and plans — <a href="https://storetraffic.com/people-counter-pricing/">storetraffic.com/people-counter-pricing</a> (PEARL $499.95; Standard $33.95/mo, or $27.95/mo prepaid with a $50/ea PEARL credit; Export &amp; API; free FedEx 2-day).</li>
+<li>V-Count pricing — <a href="https://v-count.com/pricing/">v-count.com/pricing</a> (checked 9/19/2026 by V-Count: $299–$799 per sensor; $9–$49/sensor/mo); Nano AI power and install — <a href="https://v-count.com/nano-ai-people-counting-sensor/">v-count.com/nano-ai-people-counting-sensor</a>; bundle listing — <a href="https://shop.v-count.com/product/people-counting-subscription/">shop.v-count.com</a>.</li>
+<li>Traf-Sys Direct Count One $749 — <a href="https://bayscan.com/product/traf-sys-count-one/">bayscan.com</a>, <a href="https://www.shopbrodart.com/Library-Equipment/Circulation-Equipment/Patron-Counters/_/Traf-Sys-Direct-Count-One-People-Counter/">shopbrodart.com</a>.</li>
+<li>FOORIR budget counter — <a href="https://www.amazon.com/FOORIR-Infrared-Counter-Business-Bidirectional/dp/B0GX661KNY">Amazon listing</a>; price range from <a href="https://www.foorir.com/what-is-the-people-counter-system-price-compare-top-brands-for-best-deals/">foorir.com</a>.</li>
+<li>OptiStick $99.99 — <a href="https://shop.optisigns.com/products/optisigns-android-stick-player-2">shop.optisigns.com</a>; OptiSigns plans (Standard $9, Pro Plus $13.50 billed annually, with Operational Schedule) — <a href="https://www.optisigns.com/pricing">optisigns.com/pricing</a>.</li>
+<li>Yodeck pricing — <a href="https://www.yodeck.com/docs/user-manual/how-is-yodeck-priced/">yodeck.com docs</a>; Amazon Signage Stick $99.99 — <a href="https://brixsignage.com/blog/amazon-signage-stick-price/">brixsignage.com</a>.</li>
+<li>43" TV prices — <a href="https://www.walmart.com/browse/electronics/43-inch-tvs/3944_1060825_2489948_5999833">Walmart 43" TVs</a>, <a href="https://www.bestbuy.com/site/searchpage.jsp?id=pcat17071&amp;st=43+inch+tv">Best Buy</a>.</li>
+<li>Custom Neon OPEN signs — <a href="https://customneon.com/signs-for-sale/open-signs/">customneon.com/signs-for-sale/open-signs</a>.</li>
+<li>Kasa EP10 $9.99 — <a href="https://www.bhphotovideo.com/c/product/1641360-REG/tp_link_kasa_smart_ep10_smart.html">B&amp;H</a>.</li>
+<li>Internal: Apple Reminders "Buy store traffic sensors" and "Optic stick signage" (list "Joshua"); Harrisonburg reminders citing Preston's 8/11/2026 #in-store-checklists note; Yodeck emails 1/21/2026–9/20/2026; Amazon order 114-6791651-0149800 (Culpeper LED OPEN sign).</li>
+</ul>
+</main>
+</body>
+</html>

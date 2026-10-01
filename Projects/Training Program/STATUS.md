@@ -2,6 +2,15 @@
 
 **Read `TRAINING_PROGRAM_MASTER_PLAN.md` first.** Resume from the build order there; never restart.
 
+## 2026-09-30 — L1-07 "Meet Goldilocks, our reports bot" added (Joshua: "we renamed the slack bot goldilocks… put this in our training, what it does and what reports and updates it accomplished")
+- NEW lesson `lessons/L1/07_goldilocks_reports_bot.json` (7 slides, 8 Qs: 5 scenario / 2 mc / 1 T/F). Every report named was verified against a live Goldilocks post in Slack on 9/30 (bot U0BLQTHLUTA): Daily Pawn Walk 7:15, Sold Review 7:45, Discount Review 8:25 (age-based limits), #voicemails-calls-missed + missed-call auto-text → store Chekkit, #chekkit-messages-missed 7 PM follow-up, funds verification, nightly jewelry count (P&P §02.14 same-day escalation), #deal-of-the-week video ask (Wed 2 PM), weekly loan/layaway/FPD/employee rankings; "what it took off our plate" slide.
+- Voiceover 9 lines (4,582 chars) generated + embedded; build ALL GREEN; answer bias 17.6%.
+- Uploaded to TalentLMS course 126 as unit 2118 "1.7 Meet Goldilocks, our reports bot", published (sits after 1.6; sequential order confirmed in learner preview). Academy now 54 lessons.
+- M-03 corrected in the same pass: #discount-review now flags by item age (10% ≤30d … 50% >1yr; undated keeps 20%/$50). Slide 1 bullet+say, key point 1 and Q1 rewritten; 2 voice lines re-generated; rebuilt GREEN; re-uploaded to course 134 unit 2112 (course inactive, not published). Pre-edit copy: lessons_backup_2026-09-28_pre-huddle/M-03_pre-goldilocks-agerule_2026-09-30.json.
+- Keep L1-07 in sync: when the Monday chain moves native (Valley Pawn OS/fleet/NATIVE_MIGRATION_PLAN_2026-09-30.md), add any new Goldilocks channels to the lesson.
+- Rename announcement SENT 9/30 at Joshua's OK to #policy-announcements (Academy line left out; staff not yet on the Academy).
+- PENDING at launch: post "lesson 1.7 in the Academy" follow-up in #policy-announcements (Joshua: post later). Logged in OPEN_ITEMS_REGISTER.
+
 ## 2026-09-29 — L8-06 Handbags added (Joshua: "make sure we have Sandi's verification process in our training stack")
 - NEW lesson `lessons/L8/06_handbags_and_designer_goods.json` — Sandi Cole's handbag process (Slack #general 2024-01-22): condition first, Coach creed/tag (date code then model, F = factory), MK tag in seam, model must match bag or pass, Kate Spade priced off used eBay sold, Dooney serial tag or pass, top brands no flaws + stitching/stamps, can't authenticate → tell customer and pass / call Preston. 8 Qs (7 scenario/mc + 1 T/F), answer bias 0/7 correct-longest, floor check set.
 - Voiceover generated (9 lines, 3,616 chars) and embedded; build + validate ALL GREEN.

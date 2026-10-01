@@ -1,0 +1,217 @@
+---
+name: "offboard-employee"
+description: "Offboard a departing Valley Pawn employee end to end — Gusto dismissal (final pay + separation type), Slack deactivation, Chekkit removal, Bravo POS user termination, and the Virginia final-pay / records checklist. Use whenever Joshua says \"offboard [name],\" \"[name] is done,\" \"terminate [name],\" \"[name] quit,\" \"[name] no-showed,\" \"let [name] go,\" \"remove [name] from everything,\" \"kill [name]'s access,\" or any variation of ending someone's employment or revoking a departing employee's access. Pairs with `onboard-employee` and `onboard-employee-slack-chekkit` (the mirror-image provisioning skills), `gusto-access`, and `valley-pawn-context`. Run autonomously — the ONLY thing to ask Joshua is voluntary vs involuntary if it isn't already obvious from context. BRAVO IS THE STEP THAT GETS SKIPPED — an offboarding is not complete until Bravo shows TERMINATED, verified on screen."
+---
+
+# Offboard Employee — Gusto + Slack + Chekkit + Bravo
+
+The exit counterpart to `onboard-employee` / `onboard-employee-slack-chekkit`. Revokes pay,
+access, and tools in the right order, and closes the Virginia compliance loop.
+
+Run the whole thing without check-ins. See "The one question" below for the single exception.
+
+> **READ THIS BEFORE ANYTHING ELSE.** The one step that has actually failed in practice is
+> **Bravo (Step 4)**. Gusto, Slack and Chekkit have been done correctly every time. Bravo was
+> silently skipped on *every* offboarding before 2026-09-17, and a sweep that day found **four**
+> ex-employees with working POS logins — the system that touches cash, loans and inventory.
+> **An offboarding is not complete until Bravo reads TERMINATED and you have seen it.**
+
+## Step 0 — Identify the person and their store
+
+1. `slack_search_public_and_private` on the name — `#general` daily clock-in posts and
+   `#timekeeping-summary` reliably give the legal name and store.
+2. Gusto → People → find them. Capture: **legal name, job title, department (= store),
+   manager, start date, personal email**. The personal email is the key that links their
+   Slack and Chekkit accounts.
+3. Watch for name drift: Gusto carries the legal name, Slack/Chekkit often carry a nickname
+   (Joseph Epperly = "Joey", Chadd McClintic = "Chadd"). Match on **email**, not display name.
+
+## The one question — voluntary vs involuntary
+
+Gusto **requires** "Did [name] choose to leave?" and it is not a cosmetic field: it is the
+record behind a VEC (Virginia Employment Commission) unemployment claim response and behind
+any later wrongful-termination allegation. **Never guess it.** If the answer isn't already
+explicit in Joshua's request or in Slack, ask exactly this one question via AskUserQuestion
+with two options (involuntary / voluntary) and nothing else. Everything else is decided here.
+
+If their last confirmed clock-in is materially earlier than today, ask the effective date in
+the same AskUserQuestion call — it drives final pay and the VEC record, and guessing it is the
+same class of error as guessing the separation type.
+
+Reason-for-dismissal dropdown is optional — leave it blank unless Joshua stated a reason in
+words. A wrong reason code is worse than no reason code.
+
+## Step 1 — Gusto dismissal
+
+1. `https://app.gusto.com/payroll_admin` to confirm the session (see `gusto-access` — expect
+   at most one Touch ID from Joshua; never enter credentials).
+2. People → the employee → **Work** tab → **Dismiss** link.
+   - ⚠️ **The Gusto API employee uuid is NOT the web-app people id.** Building the dismiss URL
+     from the uuid returned by `list_employees` gives a "No person found" 404. Go through
+     `https://app.gusto.com/payroll_admin/employees` and click the person's name link; the URL
+     that lands is the correct `/payroll_admin/people/<id>/…`.
+3. Fill the form:
+   - **Last working date** and **Pay through date** — both the effective date.
+   - **Did they choose to leave?** — the answer from above. *Required.*
+   - Reason / dismissal notes — only if Joshua gave one.
+   - Personal email — Gusto pre-fills it; **record it before continuing**, you need it for
+     Slack and Chekkit and it gets harder to retrieve after dismissal.
+4. Save & continue → Review → **Dismiss employee**. This is irreversible; Gusto says so.
+5. Verify: the page lands on the **Offboarding checklist** showing `Offboarding` and
+   "Last working date on <date>". "<Name> will be paid on normal payrolls" = final pay is
+   scheduled — that satisfies Virginia's "on or before the next regular payday" rule.
+
+### Browser gotchas
+
+- **Typing into the date fields is blocked by the action classifier.** Use `form_input` on the
+  MM / DD / YYYY spinbuttons. They accept values directly and the review screen will confirm
+  them — don't re-enter if a screenshot looks empty.
+- **Submitting with the required radio blank reloads the page with `?cache_reset=` and wipes
+  every field.** Set the voluntary/involuntary radio FIRST, then the dates, then submit.
+- After a reload, `read_page` refs are stale — re-read before clicking.
+- The Gusto MCP connector has **no termination tool** — `list_employee_terminations` reads only.
+  The web UI is the only path; don't burn a cycle looking for an API shortcut.
+
+## Step 2 — Slack
+
+1. Check first: `slack_search_users` on the name AND on the personal email. New hires who
+   lasted days often never got a Slack account — if there's no hit, there's nothing to do.
+2. Confirm at `https://valleypawnworkspace.slack.com/admin` (Manage members) — filter by name
+   or email. Also check **Invitations → Pending** for an unaccepted invite and revoke it.
+3. If an account exists: row's `•••` → **Deactivate account**. Deactivate, never delete —
+   deactivation preserves their message history, which is the record you want if a claim or a
+   loss-prevention question comes up later.
+4. ⚠️ **Verify correctly.** The **Account type** column still reads "Regular Member" after a
+   successful deactivation — that column is the account *type*, not its status, and reading it
+   as failure will send you round the loop re-clicking a thing that already worked. The real
+   proof: reopen the row's `•••` menu and confirm it now offers **"Activate account"**.
+
+## Step 3 — Chekkit
+
+1. `https://dashboard.chekkit.io/settings/team`.
+2. **Switch the location context (top-left switcher) to their home store first** — the team
+   list is per-location, so a "not found" in the wrong location proves nothing. Locations:
+   Culpeper, Harrisonburg, Roanoke, Waynesboro, Lexington (plus a non-VP "Tax Experts" tenant).
+   Select the location by element ref, not by coordinate — the list scrolls and a coordinate
+   click lands on the wrong store (this has happened; Lexington got selected instead of
+   Harrisonburg). After switching, the app shows "Preparing your workspace…" for ~10s and you
+   must re-navigate to `/settings/team`.
+3. Find their row by email → the row's `⋮`/pencil → **Delete** → confirm (the dialog names the
+   email — read it before confirming).
+4. If they moved stores during employment, check the prior store's list too.
+
+## Step 4 — Bravo POS — THE STEP THAT GETS SKIPPED. TREAT IT AS THE PRIORITY.
+
+Bravo is the access that touches **cash, loans, and inventory**. It matters more than Slack and
+Chekkit combined. **Never report an offboarding complete without a verified Bravo status of
+TERMINATED.** If you cannot get into Bravo this session, the offboarding is NOT done — say so
+plainly, log it as open in the register, and tell Joshua exactly whose access is still live.
+
+> **Why this is written this way (2026-09-17):** a sweep found four ex-employees with working
+> POS logins. **Andrew Clark** (Harrisonburg manager, gone 11 weeks, Region = `VA REGION`, so
+> his login reached **every store**), **Davon Camber** (7 weeks), **Logan Dean** (Harrisonburg
+> manager), and **Jonathan Smith** (an outside accountant, also `VA REGION`). Every one of them
+> had been correctly removed from Gusto, Slack and Chekkit. The written process was never the
+> problem — the execution was.
+
+**Exact path (verified 2026-09-17):**
+
+1. **Contention check first**, per `bravo-context`:
+   `bash ".../Bravo Data Extraction/_bravo_foreground_guard.sh" check` → must print `CLEAR`;
+   then `acquire <task-name>`, and `release <task-name>` when done, success or failure.
+   If `BUSY`, stop — do not fight another session for the screen.
+2. **Full-screen control is REQUIRED.** Background `app_*` clicks do **not** reach the
+   Parallels guest OS — they return "ok" and silently do nothing. Ask for the takeover up
+   front and say why (Bravo runs inside the VM); don't rediscover this every time.
+3. **Bravo user admin is COMPANY-WIDE from ANY store's System Configuration.** You do NOT need
+   `bravo-store-cycle`, and it does not matter which store Bravo is currently logged into.
+   Path: right sidebar **System Configuration** → `VALPAW Company` → **Stores** → *their store*
+   → **Employees** → the person.
+4. **Edit** → **Status** dropdown (CURRENT / TERMINATED / UNKNOWN) → **TERMINATED** → **Save**.
+   Edit and Save are the same control in the same screen position, so the sequence is
+   Edit → Status → TERMINATED → Save.
+5. **Verify both:** the record reads `TERMINATED` **and** the person disappears from that
+   store's active Employees tree. One without the other is not confirmation.
+6. **Read the Region field before closing.** `This Store Only` is normal; **`VA REGION` means
+   their login reached every store** — call that out to Joshua, it changes how urgent the gap
+   was.
+
+**While you're in there (~1 minute, do it every time):** expand the other four stores'
+Employees nodes and compare against the Gusto active roster. This is how the four stale users
+were caught. Expected non-employees that are fine to leave: `FREE1 VALLEY PAWN` (the universal
+automation login) and `BACKUP BACKUP` (service account). Anything else that isn't a current
+employee gets **reported to Joshua, not terminated** — verify against the source of record
+before acting (Rule 12).
+
+## Step 4.5 — Store email password rotation (hand to Joshua — Claude never sets it)
+
+Each store's Gmail (`culpeper@`, `waynesboro@`, `harrisonburg@`, `lexington@`, `roanoke@`
+fcfpawn.com) is shared by everyone at that store, and it is also the login — directly or through
+password reset — for that store's **eBay, Amazon Business store login, Zoom, GunBroker and
+Chekkit**. Anyone who leaves still knows it. Under the 8/14 Store Email Password Policy only
+Joshua or Preston sets these passwords, and **Claude must not set, choose or type a password
+itself**. So this step creates the task instead of performing it:
+
+1. **Which store(s):** their home store from Step 0 (Gusto department). If they worked at more
+   than one store during employment, one task per store.
+2. **Open item** — add it to the Step 7 register row (or its own row if Step 7 is already
+   written): `Change <store>@fcfpawn.com password — <name> left <effective date>. Then re-sign-in
+   / confirm the logins that use it: eBay, Amazon Business store login, Zoom, GunBroker, Chekkit.
+   When the new password is shared, update the store-credentials skill.` Status `OPEN — Joshua`.
+3. **DM Joshua once** (Slack `D03BHQH5VGT`), exactly one line, plain language, nothing else:
+   `Change <store>@fcfpawn.com password — <name> left`
+   (one line per store if more than one). No explanation, no system names, no follow-up
+   pings (Rule 16). This is the only Slack message this step sends — never to a team channel,
+   the store manager or Preston.
+4. **Do not** rotate the password, reset it, or log into the store account to "check" it.
+   **Do not** close the open item yourself — it closes when Joshua (or Preston) says it's done
+   or supplies the new value for `store-credentials`.
+
+> **Why (2026-09-30):** an account-access audit found no record of a store email password change
+> after five departures between 8/24 and 9/12, and the offboarding checklist had no step for it.
+> Whoever knew a store password could still read that store's email and, through password
+> resets, reach its eBay and Amazon accounts.
+
+## Step 5 — Notify the manager
+
+DM the store manager on Slack (Harrisonburg = Walker Tapley, Waynesboro = Chadd McClintic,
+Culpeper = Sandi Cole, Lexington = Uriah Tiglao, Roanoke = Benjie Moore — see
+`valley-pawn-context`): plain language, one message, what's revoked and what they need to
+physically collect (keys, store phone, any assigned equipment). No technical detail, no failure
+jargon (Rule 16). Draft it in Joshua's voice per `my-writing-style` — short, no greeting, no
+sign-off, the ask last.
+
+## Step 6 — Compliance close-out (Virginia)
+
+- **Final pay** — due on or before the next regular payday. Gusto handles it via normal
+  payroll once dismissed; if the person needs paying sooner, run an off-cycle.
+- **Unpaid final hours** — verify their last timecard is complete **before** the payroll runs;
+  a missing clock-out becomes an unpaid-wages problem. ⚠️ Once dismissed, the person drops out
+  of the `list_time_records` connector response entirely — so check this in the Gusto **Time &
+  attendance** UI, or pull it *before* you dismiss them.
+- **VEC claim** — expect a claim notice if the separation was involuntary. The Gusto record
+  and any documented warnings (`#records-of-warning`, ROC PDFs in the Human Resources folder)
+  are the response file. Note in the summary if the person had *no* warnings and good
+  performance numbers — that shapes how Joshua responds to a claim.
+- **Records retention** — keep the personnel file; do not purge anything.
+- **COBRA** — only if they were enrolled in benefits. Gusto flags this on the dismissal form.
+
+## Step 7 — Log it (Rule 14)
+
+Add a row to `~/Documents/Claude/Projects/Life OS/OPEN_ITEMS_REGISTER.md`: who, effective
+date, separation type, which systems were revoked **and how each was verified**, plus anything
+left open (keys not yet collected, timecard unconfirmed).
+
+## Verification, not assumption (Rule 12)
+
+Before reporting done, confirm each of:
+
+- **Gusto** shows `Offboarding` / dismissed with the right last working date
+- **Slack** row's `•••` offers "Activate account" (or the person genuinely never had an account)
+- **Chekkit** team list for their store no longer lists them
+- **Bravo** status reads `TERMINATED` and they are off the store's active Employees tree
+- **Store email password** — the open item exists and the one-line DM to Joshua was sent (the
+  rotation itself is Joshua's; report it as "handed to Joshua", never as done)
+
+"I clicked it" is not verification. If any one of these is unconfirmed, say which — do not
+round up to "all done."

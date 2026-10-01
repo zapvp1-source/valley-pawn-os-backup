@@ -1,6 +1,6 @@
 # Insurance Portfolio — All Domains
 
-**GENERATED 2026-09-29 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
+**GENERATED 2026-09-30 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
 Update the registry, then run `Life OS/Insurance/bin/regen_portfolio.py`.
 Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker history: `BROKER_PIPELINE.md`.
 
@@ -43,10 +43,12 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 
 **VP-WC — Workers compensation & employers liability**
 
-- Obtain -03 policy/dec page + Glencar statement of account (confirm no balance due). Joshua re-requested from ULC 9/6-9/9 and 9/27; request SENT to Glencar AR 9/29 (thread 1a0ed6f9c8801915).
+- Parse the newly-received -03 policy PDF and Endorsement #1 PDF (thread 1a0ed6f9c8801915) for exact dec-page limits/dates and the endorsement's revised premium.
+- Glencar statement of account (confirm what's paid, what's due, installment schedule, no balance past due) - requested 9/29 from ar@glencarum.com and via Edna/Howard; Edna is chasing Glencar's controller for the right contact - still outstanding.
 - Independent proof: VA Workers Comp Commission coverage search (ewccv.com) - site prohibits automated queries, Joshua runs it himself.
-- Named insured reads 'Full Circle Finance, LLC' - should be Inc. Correct by endorsement.
+- Named insured reads 'Full Circle Finance, LLC' - should be Inc. Joshua asked Edna/Howard to endorse the correction 9/29; Edna's 9/29 reply asked Howard to 'review and send the acord change request along w/ERM 14' - correction not yet issued.
 - Owner/officers Joshua + Hillary EXCLUDED (confirmed by Edna 6/10/2026).
+- Payroll Endorsement #1 (eff. 6/13/2026) raised class 8017 payroll from $501,849 to $555,697 in lieu of the 25-26 audit - additional premium not yet quantified; will bill directly by Glencar.
 - Audit of -02 (Legacy National Audit) - payroll + 941s sent 8/4-8/6; outcome may generate additional premium.
 - Loss runs requested from ULCAccounts 6/18, 9/6-9/9, 9/27 - no response.
 
@@ -186,16 +188,17 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - **Carrier:** HDI Global Insurance Company, managed/direct-billed by Glencar Underwriting Managers (ar@glencarum.com, 630-361-9400) · **Program/MGA:** Union Life & Casualty Insurance Agency
 - **Broker:** JM Insurance Agency Partners, Inc. · Howard Baker hbaker@jmpartners.com; ULCAccounts@jmpartners.com
 - **Policy #:** GC29P101236-03 (bound eff 6/13/2026 per ULC binder; -02 expired 6/13/2026) · **Term:** 2026-06-13 → 2027-06-13 · **Renews:** 2027-06-13
-- **Premium:** — — -02 term (6/13/2025-6/13/2026): estimated annual premium $5,750 after payroll endorsement (class 8017 payroll raised $400,000 -> $501,849 in lieu of 24-25 audit; additional $1,090 billed). -03 premium unknown. Premium audit for 6/1/2025-5/31/2026 in progress with Legacy National Audit (Brenda Shamblin, bshamblin@legacynationalaudit.com, 304-543-1117) - payroll by employee + 941s Q1'25-Q2'26 sent 8/4/2026.
+- **Premium:** — — -02 term (6/13/2025-6/13/2026): estimated annual premium $5,750 after payroll endorsement (class 8017 payroll raised $400,000 -> $501,849 in lieu of 24-25 audit; additional $1,090 billed). -03 premium unknown - Glencar statement of account requested 9/29, not yet received. -03 Endorsement #1 (eff. 6/13/2026, per policy documents emailed by Edna Villarino 9/29/2026): class 8017 payroll raised from $501,849 to $555,697 for all locations in lieu of the 25-26 audit - this changes the -03 premium versus the binder estimate; amount to be reflected on Glencar's direct billing statement (still outstanding).
 - **Payment:** Direct bill from Glencar; historically paid by ACH from WF Checking 2797 (bank descriptor "GLENCAR UND MGR INS.PREM"). -03 installment payments NOT yet confirmed against the bank.
 - **Key limits:**
   - **employers liability:** $1M/$1M/$1M per 2021 ACORD app and 2023 proposal - confirm on -03 dec
   - **class codes:** 8017
   - **payroll basis prior term:** $501,849
+  - **payroll basis current term endorsement 1:** $555,697
   - **experience mod:** None
-- **Status:** IN FORCE - binder confirms -03 bound 6/13/2026-6/13/2027. No cancellation / non-pay notice found in any mailbox through 2026-09-29 (Glencar has e-notice consent on file, so notices would arrive by email). Premium payment status on -03 and the policy/dec page itself still unconfirmed.
-- **Documents:** Drive: Workers Comp Policy.pdf (id 13YSytl_zWbfhlVFBpDzUl9HivpNF8U1W) - WC 89 06 00 B endorsement to GC29P101236-02 · Drive: Union Life - WC Policy Docs (2021).pdf (id 1mTiOHA4o3ZA7mdUylRxzTJbTwtwbiEKN) · Drive: VP Worek Comp Declarations Page.pdf (2019, id 1woTJ8Rg0QrcWlaIkHBlvGhLNI0lfcoN7) · Mail: 06.13.2023-24 Full Circle Finance, Inc. DBA Valley Pawn POLICY GC29P101236-00.pdf · Gmail: Premium Audit Notice thread 19fb9caf80a941a3 (7/31-8/4/2026) · Mail (zapvp1): BINDER email from Edna Villarino evillarino@jmpartners.com 2026-06-12 6:36pm - "Coverage is bound effective 06/13/2026 ... GC29P101236-03 is the policy number"
-- **Last verified:** 2026-09-29 — source: Apple Mail index (binder 6/12/2026), Gmail audit thread, Glencar 2025 invoice, FY2025 bank detail
+- **Status:** IN FORCE - binder confirms -03 bound 6/13/2026-6/13/2027. Policy document and payroll Endorsement #1 now IN HAND as of 9/29/2026 (received via email, not yet fully parsed). No cancellation / non-pay notice found in any mailbox through 2026-09-29 (Glencar has e-notice consent on file, so notices would arrive by email). Premium payment status on -03 (post-endorsement) still unconfirmed - Glencar statement of account requested 9/29, Edna says she's chasing Glencar's controller for the right AR contact.
+- **Documents:** Drive: Workers Comp Policy.pdf (id 13YSytl_zWbfhlVFBpDzUl9HivpNF8U1W) - WC 89 06 00 B endorsement to GC29P101236-02 · Drive: Union Life - WC Policy Docs (2021).pdf (id 1mTiOHA4o3ZA7mdUylRxzTJbTwtwbiEKN) · Drive: VP Worek Comp Declarations Page.pdf (2019, id 1woTJ8Rg0QrcWlaIkHBlvGhLNI0lfcoN7) · Mail: 06.13.2023-24 Full Circle Finance, Inc. DBA Valley Pawn POLICY GC29P101236-00.pdf · Gmail: Premium Audit Notice thread 19fb9caf80a941a3 (7/31-8/4/2026) · Mail (zapvp1): BINDER email from Edna Villarino evillarino@jmpartners.com 2026-06-12 6:36pm - "Coverage is bound effective 06/13/2026 ... GC29P101236-03 is the policy number" · Gmail thread 1a0ed6f9c8801915 (9/29/2026): Edna Villarino (JM/ULC WC Underwriter) emailed the -03 policy document ('06.13.2026-27 Full Circle Finance, LLC DBA Valley Pawn POLICY GC29P101236-03.pdf'), Biller Direct instructions, and the payroll Endorsement #1 PDF ('Full Circle Finance, LLC DBA Valley Pawn Endors#1 - Payroll Change AP $552.pdf') - attachments received but not yet parsed for the dec-page limits/dates line by line; she is separately chasing Glencar's controller for the statement-of-account email address
+- **Last verified:** 2026-09-30 — source: Apple Mail index (binder 6/12/2026), Gmail audit thread, Glencar 2025 invoice, FY2025 bank detail; Gmail thread 1a0ed6f9c8801915 (Joshua's 9/29 request to Glencar AR + Edna Villarino's 9/29 reply with policy doc, biller-direct instructions and Endorsement #1 attached)
 
 ### VP-SURETY-PAWN-50K — Surety - Virginia Pawnbroker Bond $50,000
 
@@ -351,8 +354,8 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
   - **hurricane calendar year:** 10% of Coverage A ($59,500 on 2024-25 dec)
 - **First Mortgagee (2024-25 dec):** United Wholesale Mortgage ISAOA/ATIMA, PO Box 202028, Florence SC 29502-2028, Loan #1224722227
 - **Required mortgagee clause per servicer notice 8/31/2026:** ServiceMac ISAOA ATIMA, PO Box 29411, Phoenix AZ 85038-9411; loan ending 7287; insurancedepartment@ihaveinsurance.com; (833) 811-3064
-- **Status:** CONFIRMED IN FORCE 2026-09-22 - active, auto-renewing with Kin 10/15/2026 at $1,354/yr, Coverage A $635,000. Mortgagee clause confirmed as ServiceMac ISAOA/ATIMA on the portal's lender details (matches what escrow needs).
-- **Documents:** Life OS/Insurance/documents/cypress-crossing/upcoming-term-2026-2027/ - renewal packet, declaration page, mortgagee invoice, notice of renewal - pulled from Kin portal 2026-09-22 · Life OS/Insurance/documents/cypress-crossing/current-term-2024-2025/ - renewal packet, declaration page, amended subscriber agreement, notice of renewal - pulled from Kin portal 2026-09-22 · Drive: Kin_Insurance_Declarations_2024-2025.pdf (id 1GyVcYH2eAkUo35p14Ivv6HaGdtPZlt4P) · Gmail: ServiceMac 'Important: Your Upcoming Insurance Renewal' 8/31/2026 to zapvp1 (thread 1a057d9d818333e6)
+- **Status:** CONFIRMED IN FORCE 2026-09-22 - active, auto-renewing with Kin 10/15/2026 at $1,354/yr, Coverage A $635,000. Mortgagee clause confirmed as ServiceMac ISAOA/ATIMA on the portal's lender details (matches what escrow needs). Kin confirmed receipt of a policy payment 9/29/2026 (generic payment-received notice, no amount stated) - consistent with the escrow-funded renewal already on file, nothing further to reconcile from this notice alone.
+- **Documents:** Life OS/Insurance/documents/cypress-crossing/upcoming-term-2026-2027/ - renewal packet, declaration page, mortgagee invoice, notice of renewal - pulled from Kin portal 2026-09-22 · Life OS/Insurance/documents/cypress-crossing/current-term-2024-2025/ - renewal packet, declaration page, amended subscriber agreement, notice of renewal - pulled from Kin portal 2026-09-22 · Drive: Kin_Insurance_Declarations_2024-2025.pdf (id 1GyVcYH2eAkUo35p14Ivv6HaGdtPZlt4P) · Gmail: ServiceMac 'Important: Your Upcoming Insurance Renewal' 8/31/2026 to zapvp1 (thread 1a057d9d818333e6) · Gmail: Kin 'We received your payment' 9/29/2026 to zapvp1 (thread 1a0ed9d7c1fb4f04) - confirms policy payment received on KIN-HO-FL-275099318, no dollar figure stated in the notice itself
 - **Last verified:** 2026-09-22 — source: Kin portal (app.kin.com) direct pull 2026-09-22, Policy Details + Documents pages for both current and upcoming term; supersedes 2026-09-09 email-only capture
 
 ### RE-BALDROCK-HO — Homeowners HO3 written as 'Primary home' - property is now a short-term rental (Airbnb/VRBO)

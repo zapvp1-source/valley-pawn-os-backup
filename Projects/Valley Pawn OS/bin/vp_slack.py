@@ -86,9 +86,29 @@ def dryrun_intercept(surface, target, text):
         return False
 
 
+def to_mrkdwn(text):
+    """Standard markdown -> Slack mrkdwn, the same conversion Claude's Slack connector applies to what a
+    Cowork task sends. Without it a bot post shows **bold** and [text](url) literally, so a report moved
+    to a native agent would stop looking like the one it replaced (Joshua 2026-09-30: formatting must
+    be the same). Code blocks (``` ... ```) are left untouched — the table formatters rely on them."""
+    import re
+    parts = re.split(r"(```.*?```)", text, flags=re.S)
+    for i, seg in enumerate(parts):
+        if seg.startswith("```"):
+            continue
+        seg = re.sub(r"\[([^\]\n]+)\]\((https?://[^)\s]+)\)", r"<\2|\1>", seg)          # [t](u) -> <u|t>
+        seg = re.sub(r"\*\*(?=\S)([^*\n]+?)(?<=\S)\*\*", r"*\1*", seg)                   # **b** -> *b*
+        seg = re.sub(r"(?m)^#{1,6}\s+(.+?)\s*#*\s*$", r"*\1*", seg)                     # ## h -> *h*
+        seg = re.sub(r"~~(?=\S)([^~\n]+?)(?<=\S)~~", r"~\1~", seg)                      # ~~s~~ -> ~s~
+        parts[i] = seg
+    return "".join(parts)
+
+
 def post(channel, text):
     if not text.strip():
         sys.exit("refusing to post empty text")
+    if os.environ.get("VP_SLACK_RAW") != "1":
+        text = to_mrkdwn(text)
     surface = "slack-dm" if channel.startswith("D") else "slack"
     if dryrun_intercept(surface, channel, text):
         return

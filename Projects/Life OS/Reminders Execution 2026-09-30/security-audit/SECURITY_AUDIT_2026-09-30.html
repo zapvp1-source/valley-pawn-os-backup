@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Account Access Audit</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1b22;--muted:#5d5968;--line:#e3e0da;--card:#ffffff;--crit:#b3261e;--high:#c25e00;--med:#8a6d00;--low:#2f6f4f;--accent:#2D1A5E;--chip:#f1eee8}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#15131a;--fg:#ece9f2;--muted:#a7a2b3;--line:#2e2a36;--card:#1d1a23;--crit:#ff8a80;--high:#ffb366;--med:#e6c65c;--low:#7fd1a6;--accent:#b9a6ff;--chip:#26222d}}
+:root[data-theme="dark"]{--bg:#15131a;--fg:#ece9f2;--muted:#a7a2b3;--line:#2e2a36;--card:#1d1a23;--crit:#ff8a80;--high:#ffb366;--med:#e6c65c;--low:#7fd1a6;--accent:#b9a6ff;--chip:#26222d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+main{max-width:1000px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:26px;margin:0 0 4px;color:var(--accent)}
+h2{font-size:19px;margin:34px 0 10px;border-bottom:1px solid var(--line);padding-bottom:6px}
+.sub{color:var(--muted);margin:0 0 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:10px 0}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:99px;margin-right:6px;background:var(--chip)}
+.crit{color:var(--crit)}.high{color:var(--high)}.med{color:var(--med)}.low{color:var(--low)}
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:640px}
+th,td{border-bottom:1px solid var(--line);padding:8px 8px;text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:13px}
+ol li,ul li{margin:6px 0}
+.note{color:var(--muted);font-size:13px}
+code{background:var(--chip);padding:1px 5px;border-radius:4px;font-size:13px}
+</style>
+</head>
+<body>
+<main>
+<h1>Account Access Audit — Valley Pawn</h1>
+<p class="sub">Full Circle Finance Inc · run 2026-09-30 · read-only. Nothing was changed, removed, reset or signed out anywhere.</p>
+
+<div class="card">
+<strong>Bottom line.</strong> Slack, DocuSign, the website and Chekkit are clean: no former employees have access. Three things need action. <strong>(1)</strong> Two Gusto payroll admin logins use the old accounting firm's web address, and that address is now unregistered, so anyone could buy it. <strong>(2)</strong> A Bravo register login for a Waynesboro employee who quit in August appears never to have been shut off. <strong>(3)</strong> The shared store email passwords have not been changed since five people left in late August and September, as far as the logs show. Most tools also run without 2-step login.
+</div>
+
+<h2>Ranked risks</h2>
+
+<div class="card"><span class="tag crit">1 · CRITICAL</span><strong>Gusto: two payroll admins on a dead email domain</strong>
+<p><code>jsmith@lodestar.tax</code> (Custom admin, "External accountant") and <code>beth@lodestar.tax</code> (Custom admin) are still on Gusto's admin list. Lodestar is the old name of Silverline Tax. The <code>lodestar.tax</code> domain is <strong>not registered</strong>: the .tax registry answered "no such domain" on 9/30. Anyone who buys that name could receive Gusto password-reset emails for two accounts with payroll access. Gusto's 2-step code to a phone on file is the only remaining barrier. Silverline already has its own seats (Beth Johnson, Jonathan Smith, Liana Motel @silverline.tax), so these two are redundant.</p>
+<p class="note">Checked: Gusto Settings → Permissions → Assignees (live). Registry lookup through two DNS paths. Did not check: whether Gusto has a phone number on file for these two.</p></div>
+
+<div class="card"><span class="tag high">2 · HIGH</span><strong>Bravo: Lee Cornelison's register login likely still active</strong>
+<p>Lee quit on 8/27 (Waynesboro). His 8/27 offboarding left the Bravo step open. The 9/17 five-store Bravo sweep marked Waynesboro "clean" but listed Cornelison as <em>active in Gusto</em>. That was wrong: Gusto shows him dismissed as of 8/27. So his Bravo user was very likely never terminated. Also still open from earlier work: Josh Stagner at Harrisonburg is unconfirmed, the Lexington <code>APPROVAL SANDI</code> account is unexplained, and the accounting-admin workstation license removal is still waiting on Bravo (emailed 9/17).</p>
+<p class="note">Source: Open Items Register rows 8/27, 9/17, 9/24 plus the live Gusto dismissed list. Bravo itself was not opened (per instructions), so this is from records and not a live read.</p></div>
+
+<div class="card"><span class="tag high">3 · HIGH</span><strong>Shared store email logins not rotated after departures</strong>
+<p>Each store's Gmail (culpeper@, waynesboro@ and so on) is shared by that store's staff. It is also the login for eBay, Amazon Business, Zoom, GunBroker and the directory listings. Under the 8/14 Store Email Password Policy, only Joshua or Preston changes these passwords. Since 8/14 these people have left: Bree Grayson (8/24), Annabella Funkhouser (8/26), Lee Cornelison (Waynesboro, 8/27), Logan Dean (Waynesboro then Harrisonburg, 9/4) and Michael Chambers (Harrisonburg, 9/12). I found no record of a password change after any of those exits. Whoever knew a store password can still reach that store's email and, through password resets, its eBay and Amazon accounts.</p>
+<p class="note">Checked: Open Items Register and CHANGELOG. Rotations may happen without being logged, so this means "no record found", not "proven not rotated". The offboarding checklist has no store-password step.</p></div>
+
+<div class="card"><span class="tag high">4 · HIGH</span><strong>Gusto: wide "All access" admin list</strong>
+<p>Besides Joshua (account owner), <strong>four people have All-access admin</strong>: Beth Johnson, Jonathan Smith and Liana Motel (all Silverline) plus Hillary Davis. Preston has Custom admin. That means three outside-firm seats with full payroll, bank and tax access. It's worth confirming that all three Silverline staff need <em>full</em> access and not a reduced role.</p></div>
+
+<div class="card"><span class="tag med">5 · MEDIUM</span><strong>2-step login is off on most tools</strong>
+<ul>
+<li><strong>Slack:</strong> 2-step is "Not required". Only Joshua and Preston have it on; the other 12 active members use email and password only. Desktop and mobile sessions never expire.</li>
+<li><strong>Zoom:</strong> account-wide "Sign in with two-step verification" is <strong>off</strong>. Only one-time passcodes for unfamiliar devices are on.</li>
+<li><strong>Brevo</strong> (14,105 customer contacts): 2-step is <strong>not enabled</strong> on the only login (owner jdavis@).</li>
+<li><strong>Chekkit</strong> (customer texting, all 5 stores): the owner login jdavis@ shows "Two factor auth has not been enabled".</li>
+<li><strong>Meta Business portfolio:</strong> "Who's required to turn on two-factor: No one"; passkeys are also not required.</li>
+</ul></div>
+
+<div class="card"><span class="tag med">6 · MEDIUM</span><strong>Meta: Joshua is not a full admin of the old Waynesboro portfolio</strong>
+<p>The legacy "Valley Pawn Waynesboro" portfolio still holds the Waynesboro Facebook page. There, Joshua has only <em>Partial / Basic</em> access. The only full-access member is the old Instagram account <code>@valleypawn_waynesboro</code>. Whoever holds that Instagram login controls the portfolio. The planned move of Waynesboro into the main portfolio (open since May) is what fixes this. Meta Business Verification (started 5/28) is also still unfinished.</p></div>
+
+<div class="card"><span class="tag med">7 · MEDIUM</span><strong>Amazon Business: store logins carry former employees' names; admin is a personal Gmail</strong>
+<p>There are 6 users. <code>harrisonburg@fcfpawn.com</code> is named "Andrew Clark" (left 6/29) and <code>waynesboro@fcfpawn.com</code> is named "Timothy Thompson" (left 2/24). Both have the Buyer role. Their access follows the store email password (risk 3). The only admin is <code>Fullcirclepawn@gmail.com</code>, a consumer Gmail and not a company account. <code>office@silverline.tax</code> (Chris Snure) has the Finance role, which is expected for the accountant.</p></div>
+
+<div class="card"><span class="tag low">8 · LOW</span><strong>Smaller items</strong>
+<ul>
+<li><strong>Chekkit</strong> lists a location "Tax Experts: South Crater Road, Petersburg, VA" in the account switcher. It's not a Valley Pawn store and should be confirmed or removed by Chekkit. Active hires Jacob Cox, Camden Ahern and Joshua Burnett are not provisioned; that's an onboarding gap, not a security one.</li>
+<li><strong>Brevo:</strong> "Authorize Brevo to access your account to provide support" is on.</li>
+<li><strong>Slack:</strong> Madison and Savannah Davis are active in Gusto but deactivated in Slack. That's fine if intended.</li>
+<li><strong>Stale reference doc:</strong> the <code>valley-pawn-context</code> employee directory still lists Andrew, Bree, Nelson, Cris and Emma, who have all left. A session could message them or add them to something.</li>
+</ul></div>
+
+<h2>Per-system table</h2>
+<div class="wrap"><table>
+<tr><th>System</th><th>How checked</th><th>Admins / owners</th><th>Former employees with access</th><th>Shared logins</th><th>2-step</th></tr>
+<tr><td>Slack</td><td>Live (connector + admin pages)</td><td>Joshua (Primary Owner). Nobody else is admin.</td><td class="low">None. All 30 former members deactivated, including every 2026 departure.</td><td>No</td><td class="med">Not required; on for Joshua and Preston only</td></tr>
+<tr><td>Gusto</td><td>Live (Permissions → Assignees)</td><td>Joshua (owner). All access: Beth Johnson, Jonathan Smith, Liana Motel (Silverline), Hillary. Custom: Preston, jsmith@lodestar.tax, beth@lodestar.tax</td><td class="crit">2 dead-domain accountant logins (not employees)</td><td>No</td><td>Not shown per user</td></tr>
+<tr><td>DocuSign</td><td>Live (getUsers)</td><td>Joshua (zapvp1@me.com), the only user</td><td class="low">None</td><td>No</td><td>Not visible</td></tr>
+<tr><td>WordPress (thevalleypawn.com)</td><td>Live (user management)</td><td>1 administrator (Joshua's account). 0 pending invites.</td><td class="low">None</td><td>No</td><td>Not visible</td></tr>
+<tr><td>Chekkit</td><td>Live (Team, all 5 stores)</td><td>Joshua (Owner); Preston (Location Admin)</td><td class="low">None</td><td>No (individual logins)</td><td class="med">Off on owner login</td></tr>
+<tr><td>Zoom</td><td>Live (Users, Security)</td><td>jdavis@ (Owner)</td><td class="low">None by name</td><td class="high">Yes: 5 store accounts</td><td class="med">Off account-wide</td></tr>
+<tr><td>Brevo</td><td>Live (Users, Security)</td><td>jdavis@ (Owner), the only user</td><td class="low">None</td><td>No</td><td class="med">Off</td></tr>
+<tr><td>Amazon Business</td><td>Live (Users)</td><td>Fullcirclepawn@gmail.com (Admin)</td><td class="med">2 store logins named after former employees</td><td class="high">Yes: store emails</td><td>Not visible</td></tr>
+<tr><td>Meta / Facebook</td><td>Live (both portfolios, Security Center)</td><td>Main: Joshua full, plus 3 Instagram-linked full-access identities. Waynesboro: only @valleypawn_waynesboro full.</td><td class="low">None. Sandra Cole and Preston have partial access (active).</td><td>IG identities</td><td class="med">Required for no one</td></tr>
+<tr><td>Bravo POS</td><td>Records only (by instruction)</td><td>—</td><td class="high">Lee Cornelison likely; Stagner unconfirmed</td><td>FREE1 automation + BACKUP service accounts</td><td>n/a</td></tr>
+<tr><td>Google Workspace</td><td class="med">Not checked</td><td colspan="4">Admin console asked for a password re-check; Claude does not enter passwords.</td></tr>
+<tr><td>QuickBooks</td><td class="med">Not checked</td><td colspan="4">Signed out; sign-in needs a password.</td></tr>
+<tr><td>Indeed</td><td class="med">Not checked</td><td colspan="4">Signed out.</td></tr>
+<tr><td>eBay (5 stores)</td><td class="med">Not checked live</td><td colspan="4">Each store account is a single shared login on the store email, so access follows risk 3.</td></tr>
+</table></div>
+
+<h2>Stale-access list</h2>
+<div class="wrap"><table>
+<tr><th>Who</th><th>Status</th><th>Where access remains</th><th>Confidence</th></tr>
+<tr><td>jsmith@lodestar.tax</td><td>Old firm address, domain unregistered</td><td>Gusto Custom admin</td><td>Verified live</td></tr>
+<tr><td>beth@lodestar.tax</td><td>Old firm address, domain unregistered</td><td>Gusto Custom admin</td><td>Verified live</td></tr>
+<tr><td>Lee Cornelison (WAY, left 8/27)</td><td>Dismissed in Gusto</td><td>Bravo POS login (probable); knew waynesboro@ password</td><td>From records</td></tr>
+<tr><td>Josh Stagner (HAR, never started)</td><td>Dismissed 9/23</td><td>Bravo unconfirmed</td><td>From records</td></tr>
+<tr><td>Andrew Clark (HAR, left 6/29)</td><td>Dismissed</td><td>Name on the harrisonburg@ Amazon Business user</td><td>Verified live (label only)</td></tr>
+<tr><td>Timothy Thompson (WAY, left 2/24)</td><td>Dismissed</td><td>Name on the waynesboro@ Amazon Business user</td><td>Verified live (label only)</td></tr>
+<tr><td>Bree Grayson, Annabella Funkhouser, Logan Dean, Michael Chambers</td><td>Dismissed 8/24 to 9/12</td><td>Store email passwords they knew (no rotation on record)</td><td>No record found</td></tr>
+<tr><td>Lexington "APPROVAL SANDI"</td><td>Not an employee</td><td>Bravo user</td><td>From records, still open</td></tr>
+</table></div>
+
+<h2>Recommended fixes (none done; each needs Joshua's OK)</h2>
+<ol>
+<li><strong>Today:</strong> remove <code>jsmith@lodestar.tax</code> and <code>beth@lodestar.tax</code> from Gusto admins (Silverline replacements exist).</li>
+<li>Terminate Lee Cornelison's Bravo user and confirm there's none for Stagner (next session with Bravo access, after the contention check). Rule on Lexington <code>APPROVAL SANDI</code>.</li>
+<li>Change the store email passwords for Culpeper, Waynesboro and Harrisonburg now (Preston or Joshua, per the 8/14 policy). Add "rotate the store email password" as a step in the <code>offboard-employee</code> skill so it happens on every exit.</li>
+<li>Trim Gusto All-access: decide whether Beth, Jonathan and Liana each need full access or a reduced role.</li>
+<li>Turn on 2-step login: Brevo, Chekkit owner, Zoom (account-wide), Slack (require for all), Meta (require for admins). Each is a settings change, so it waits on your go.</li>
+<li>Meta: finish moving the Waynesboro page into the main portfolio, or have the @valleypawn_waynesboro login grant Joshua full control.</li>
+<li>Amazon Business: rename the two store users to the store name, and add jdavis@fcfpawn.com as a second admin next to the Gmail.</li>
+<li>Ask Chekkit what the "Tax Experts, Petersburg" location is.</li>
+<li>Let the next live session read Google Workspace admins and 2-step status, plus QuickBooks users and Indeed users. Each needs one sign-in by you.</li>
+</ol>
+
+<p class="note">Method: Gusto active and dismissed roster (live API; 18 active, 63 dismissed) compared against each system. Prior work built on: 9/17 Bravo sweep, 8/14 Drive lockdown, the offboarding rows in the Open Items Register. Nothing was posted to Slack.</p>
+</main>
+</body>
+</html>

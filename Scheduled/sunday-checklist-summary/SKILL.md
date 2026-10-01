@@ -52,6 +52,8 @@ Retry once, then try the documented alternate path. If still failing: write the 
 
 > ⚠️ **FIELD COMMUNICATION RULE (retained from the 2026-07-22 v2 banner):** anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths.
 
+> 🛑 **NO-DUPLICATE RULE (added 2026-09-30) — read before STEP 5.** The 8/10–8/15 store-checklist TO-DOs were created in Apple Reminders TWICE — once by a manual backfill session on Fri 8/21 12:58 PM and again by this task's Sun 8/23 8:11 PM run — with differently worded titles, because nothing checked whether the same week's photo had already been logged. Every reminder this task creates must now pass STEP 4.5 first. Title wording is NEVER the match key; the source (week + photo filename / Slack message) in the reminder NOTES is. Reminders must be ENUMERATED via the EventKit CLIs in `/Users/joshuadavis/Documents/Claude/Projects/Life OS/bin/` (`ekrem`, `ekremnotes`) — NEVER via AppleScript (`get name of lists`, `reminders of list`), which silently sees only a subset of this Mac's lists (15 of 46 on 2026-09-09).
+
 
 You are running an automated weekly review for Joshua Davis (CEO of Valley Pawn / Full Circle Finance Inc). This runs every Sunday at 8:00 PM ET. Be fully autonomous — do not ask questions, just complete the work.
 
@@ -59,7 +61,7 @@ GOAL
 Review the past week of the Valley Pawn "in-store checklists" Slack channel, summarize by store what Preston Peters (Operations Manager) talked about, identify any TO-DOs, and log those TO-DOs into Apple Reminders.
 
 STEP 1 — Determine the date window.
-The window is LAST WEEK, Monday through Saturday (the most recent Mon–Sat that just ended before this Sunday run). Use a bash `date` call to compute the exact dates. Example: if today is Sunday 2026-06-28, the window is Mon 2026-06-22 through Sat 2026-06-27. Note the window explicitly in your summary.
+The window is LAST WEEK, Monday through Saturday (the most recent Mon–Sat that just ended before this Sunday run). Use a bash `date` call to compute the exact dates. Example: if today is Sunday 2026-06-28, the window is Mon 2026-06-22 through Sat 2026-06-27. Note the window explicitly in your summary. Record the window's MONDAY as `WEEK` in YYYY-MM-DD form — STEP 4.5 keys on it. Only photos/messages POSTED inside this window belong to this run; never process an older week's posts (dates mentioned elsewhere in this file, e.g. "August 11th", are examples, not targets).
 
 STEP 2 — Read the Slack channel.
 Channel: #in-store-checklists, channel ID `C0B5Q65QZUJ` (private). Use the Slack MCP tool `mcp__f92ce7c6-0353-4419-8491-f0843b182ff2__slack_read_channel` to read messages in the window, and `slack_read_thread` to expand any threaded replies. Focus on messages from Preston Peters (Slack user `U03BWMEM9GR`, preston@fcfpawn.com) — what he flagged, asked for, instructed, or noted. Include relevant replies/context from store employees when they clarify a Preston item.
@@ -74,7 +76,7 @@ For every Preston message in the window that has a file attachment:
 4. The channel loads scrolled to the newest messages. Use `scroll` (up = older, down = newer) on the message pane to find the date range you need — Slack shows date divider pills ("Tuesday, August 11th" etc.) so you can navigate visually. This channel is low-volume (a handful of posts a week), so scrolling to the right dates is quick; do not overthink it with in-app search.
 5. Each checklist photo renders inline in the message list once you scroll it into view (may take a second to load from blurry placeholder to sharp — screenshot again if it still looks blurry). Once sharp, use the `zoom` action on the image's region (get the bounding box from a screenshot first) to read it at full resolution — you have native vision, no external OCR needed. Read: the Store name (top-left field), the Date, every Yes/No checkbox that's marked No (these are flags), and the full handwritten "Additional Notes" section at the bottom — that notes section is where Preston/the store manager write real instructions and is the single most important field to capture completely and accurately.
    - If the inline image is too small/cropped to read even after zoom, click it to open Slack's full-size lightbox viewer, then use the lightbox's own zoom-to-fit / minus button (or zoom the whole modal region) before reading — do not stay stuck on a partial crop.
-6. Note in your working notes which store/date each photo covers, every "No" checkbox, and the verbatim (or near-verbatim) Additional Notes text.
+6. Note in your working notes which store/date each photo covers, every "No" checkbox, and the verbatim (or near-verbatim) Additional Notes text. Also note each photo's FILENAME (e.g. IMG_2990.jpg, from the Slack read tool's file info) — it is the dedupe source key in STEP 4.5.
 7. Feed all of this into STEP 3 (per-store summary) and STEP 4 (TO-DO extraction) exactly as if it had arrived as message text from Preston. Mark in your output which items came from a photo transcription so Joshua can spot-check if something looks off.
 8. Close any tabs you opened before finishing.
 
@@ -94,26 +96,38 @@ For every actionable item Preston raised (from text or from a transcribed photo 
   (A) CORPORATE / COMPANY deliverable — something Joshua or the corporate office owns (e.g., order signage company-wide, fix a policy, vendor/payroll/marketing/IT items, anything not a single-store floor task).
   (B) STORE / EMPLOYEE deliverable — a task a specific store or its employees must do (e.g., "Lexington needs to redo the jewelry case," "Roanoke clean the back room," a specific checklist "No" item).
 Write a clear, action-oriented reminder title for each (start with a verb; include the store name in store items, e.g. "Lexington: re-merchandise jewelry case"). If a due date is implied, include it.
+Tag every TO-DO with its SOURCE KEY: the photo filename stem (e.g. `IMG_2990`) for photo items, or `slack-ts-<message ts>` for typed-text items.
+
+STEP 4.5 — Duplicate guard (MANDATORY before any reminder is created).
+Run, via `mcp__Control_your_Mac__osascript` `do shell script` (use `quoted form of` for every argument):
+  `/usr/bin/python3 "/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/bin/checklist_reminder_dedupe.py" check --week <WEEK> --source <KEY1> --source <KEY2> ... || true`
+One `--source` per distinct source key from STEP 4. It checks, in order: the state ledger `Valley Pawn OS/fleet/state/sunday-checklist-summary_created.json`; the live Reminders NOTES of all 6 canonical lists via `Life OS/bin/ekremnotes` (EventKit — it compiles itself from `ekremnotes.swift` on first use); and, only if that is unavailable, the Unified Search index snapshot of Reminders. A match = any reminder, OPEN or COMPLETED, whose notes carry the same photo/message key AND the same week. It prints `LOGGED <key> via=... evidence=...` or `NEW <key>` per source, then a `CHECKS ...` line.
+- `LOGGED` → create NOTHING from that source, even if this run worded or split its items differently. List those items in the output under "Already logged — not re-created" with the evidence shown.
+- `NEW` → proceed to STEP 5 for that source's items.
+- If the script's last line shows BOTH `live=unavailable` and `index=unavailable` (exit 3), or the script itself cannot run: create NO reminders this run. Put the full TO-DO list in the output instead (grouped Corporate vs each store) and append one FAILURE_LEDGER row ("checklist reminders not logged — duplicate check could not run"). A missed reminder is recoverable; a duplicate set is what this guard exists to stop.
+- Within one run, never create two reminders from the same source + same Additional Notes line.
 
 STEP 5 — Log TO-DOs into Apple Reminders (via `mcp__Control_your_Mac__osascript`).
-First enumerate the existing Reminders lists so you use exact names:
-  `tell application "Reminders" to get name of lists`
+First enumerate the existing Reminders lists so you use exact names — with EventKit, never AppleScript:
+  `"/Users/joshuadavis/Documents/Claude/Projects/Life OS/bin/ekrem" lists`
 As of 2026-08-21 these lists exist and are the canonical destinations — do not recreate them, just confirm they're still present:
   "Preston Joshua" (corporate), "Culpeper", "Waynesboro", "Harrisonburg", "Lexington", "Roanoke" (one per store).
 - CORPORATE deliverables → add to the list named exactly **"Preston Joshua"**.
 - STORE deliverables → add to that store's own list by exact name match (Culpeper, Waynesboro, Harrisonburg, Lexington, Roanoke).
-- If, on some future run, a list from this canonical set is genuinely missing (renamed/deleted), do not silently drop the item and do not just fall back — first try `tell application "Reminders" to get name of lists` to confirm, and if it's truly gone, create a new list with that exact name (`make new list with properties {name:"<StoreName>"}`) and add the reminder there, then note in the output that you had to recreate a missing list.
+- If, on some future run, a list from this canonical set is genuinely missing from `ekrem lists` output (renamed/deleted), do not silently drop the item and do not just fall back — re-run `ekrem lists` once to confirm, and if it's truly gone, create a new list with that exact name (AppleScript is acceptable for this one CREATE action only: `tell application "Reminders" to make new list with properties {name:"<StoreName>"}`), confirm it now appears in `ekrem lists`, add the reminder there, then note in the output that you had to recreate a missing list.
 
-To add a reminder, use AppleScript like:
-  tell application "Reminders"
-    set theList to list "Preston Joshua"
-    make new reminder at end of theList with properties {name:"<title>", body:"From #in-store-checklists week of <window>. Source: <text message | photo transcription, Preston Peters post <date/time>, <image filename>>. <supporting detail — flagged checkbox and/or verbatim note text>"}
-  end tell
-(Substitute the correct list name per item.) Every body should say clearly whether the item came from typed text or a photo transcription, and include enough of the original note/flag that Joshua can verify it against the source photo if needed.
+To add a reminder (only for sources STEP 4.5 returned as NEW), use ekrem — due-date argument `none` leaves the reminder undated exactly as before (ekrem prints a harmless "bad date none" line, then "OK added ... :: <id>"):
+  do shell script "'/Users/joshuadavis/Documents/Claude/Projects/Life OS/bin/ekrem' add " & quoted form of "<List>" & " " & quoted form of "<title>" & " none " & quoted form of "<notes>"
+Notes text (same content as before, plus the key line at the end):
+  "From #in-store-checklists week of <window>. Source: <text message | photo transcription, Preston Peters post <date/time>, <image filename>>. <supporting detail — flagged checkbox and/or verbatim note text>. Dedupe key: wk=<WEEK> src=<KEY>"
+(Get the exact key line from `/usr/bin/python3 "/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/bin/checklist_reminder_dedupe.py" key --week <WEEK> --source <KEY>` if unsure.) Every body should say clearly whether the item came from typed text or a photo transcription, and include enough of the original note/flag that Joshua can verify it against the source photo if needed.
+IMMEDIATELY after each successful add (before the next add), record it:
+  `/usr/bin/python3 "/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/bin/checklist_reminder_dedupe.py" record --week <WEEK> --source <KEY> --list <List> --title <title> --id <id from the ekrem OK line>`
+so a crash or re-run can never create the same item twice. If `ekrem add` itself errors, retry once; if it still fails, fall back to the AppleScript create (`tell application "Reminders" to make new reminder at end of list "<List>" with properties {name:"<title>", body:"<notes>"}`) — still followed by `record`.
 
-IMPORTANT — Reminders permission: this Mac may need automation access granted for the Reminders app the first time. If the osascript calls error with a permissions/automation failure, DO NOT silently fail. Instead: (a) still produce the full summary and the complete TODO list (clearly grouped into Corporate vs each store) in your output so nothing is lost, and (b) state clearly at the top of the output that reminders could not be written because Reminders automation access needs to be approved on the Mac, and the listed items should be added manually or the task re-run once access is granted.
+IMPORTANT — Reminders permission: this Mac may need automation/Reminders access granted the first time. If the ekrem/osascript calls error with a permissions failure ("ERROR: no Reminders access" or an automation error), DO NOT silently fail. Instead: (a) still produce the full summary and the complete TODO list (clearly grouped into Corporate vs each store) in your output so nothing is lost, and (b) state clearly at the top of the output that reminders could not be written because Reminders access needs to be approved on the Mac, and the listed items should be added manually or the task re-run once access is granted.
 
 STEP 6 — Output.
-Produce a clean summary report with: the date window; per-store sections of what Preston discussed (noting which items came from a photo transcription, including any flagged "No" checkboxes); a "TO-DOs Logged" section listing each reminder created and which Reminders list it went into (Corporate vs store); an "Images not read this run" section (if any, should be rare per STEP 2.5) with filename/timestamp/date; and any fallback/permission notes. This output is delivered to Joshua as the run notification.
+Produce a clean summary report with: the date window; per-store sections of what Preston discussed (noting which items came from a photo transcription, including any flagged "No" checkboxes); a "TO-DOs Logged" section listing each reminder created and which Reminders list it went into (Corporate vs store); an "Already logged — not re-created" section (from STEP 4.5, if any); an "Images not read this run" section (if any, should be rare per STEP 2.5) with filename/timestamp/date; and any fallback/permission notes. This output is delivered to Joshua as the run notification.
 
-Do not post anything back into the Slack channel. Do not message employees. The only writes you perform are to Apple Reminders.
+Do not post anything back into the Slack channel. Do not message employees. The only writes you perform are to Apple Reminders and to this task's state ledger (`Valley Pawn OS/fleet/state/sunday-checklist-summary_created.json`) — plus a FAILURE_LEDGER row if STEP 4.5 blocks creation.

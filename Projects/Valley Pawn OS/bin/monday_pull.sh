@@ -151,6 +151,15 @@ if [ $RENDER -eq 0 ]; then
     ledger "$AGENT" "The Monday pull could not refresh month-to-date employee activity, so the Employee Sales Rankings post will hold." "no"
   fi
 fi
+# 2026-09-30: #first-payment-default has not posted since 9/6 — its fpd-cohort CSVs were only ever
+# pulled by the Cowork monday-bravo-combined-run, which stopped producing results after 9/6. Pull them
+# here (registered handler "fpd-cohort"; comms_engine reads <pipeline_date>_<STORE>_fpd-cohort.csv).
+if [ $RENDER -eq 0 ]; then
+  FPD_DATE=$(date +%Y-%m-%d); [ "$(date +%u)" = 1 ] && FPD_DATE=$(date -v-1d +%Y-%m-%d)   # Monday run -> Sunday stamp
+  bash "$BIN/bravo_pull.sh" fpd-cohort "$FPD_DATE" CUL,HAR,LEX,ROA,WAY "monday-fpd-$(date +%Y%m%d-%H%M)" >>"$VLOG/$AGENT.log" 2>&1 \
+    && vlog "fpd-cohort pulled for $FPD_DATE" \
+    || ledger "$AGENT" "The Monday pull could not refresh the first-payment-default data, so that ranking will hold." "no"
+fi
 # 2026-09-28: keep loan-layaway-results-latest.json in step with the pull. Nothing had written it since
 # 9/7 (the old combined run did), so weekly-loan-layaway-manager-dms held its store DMs on 9/21 and
 # 9/28 for stale data. comms_engine.py already has the writer; it just was never called.
