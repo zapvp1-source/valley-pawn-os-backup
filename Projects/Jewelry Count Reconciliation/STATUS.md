@@ -1,5 +1,70 @@
 # Jewelry Count Reconciliation — STATUS
 
+## RUN RECORD — Thursday 2026-10-01 (jewelry-onhand-nightly-pull, consolidated task) — INCOMPLETE, LEX Bravo-side failure, nothing posted
+
+Open stores (Thu, all 5): CUL, HAR, LEX, ROA, WAY. Fleet publish guard checked first: `vp_dryrun.py status` → "dry run is off — publications are live" (guard NOT armed, normal publish rules apply). Contention check clean (nothing claimed in the last 30 min before the run). Freeze window (6PM close → 10AM reopen) intact throughout — run fired ~20:40 ET.
+
+Bravo side: dropped one host-queue job per store (`bravo_pull.sh jewelry-case-counts-v2 2026-10-01 <store>`), CUL→HAR→LEX→ROA→WAY sequentially via the watcher's one-trigger-at-a-time queue.
+- **CUL**: 8/8 categories read ok on the first trigger (21:06 result). Charms=19 and Brooches=19 tripped the duplicate-value guard ("possible stale-grid contamination") — checked the raw log: each was independently selected via its own BoxReportName-verified report pick and stable two-reads-6s-apart confirmation 52 seconds apart, not a repeated read of one grid. Cross-checked history: CUL Charms has been flat at 19 since 9/29, Brooches moved 18→19 (consistent with a single-item intake, same class of case the task doc already flags for WAY Charms on 8/15). Treated as the same false-positive coincidence-detector hit as 9/30, used the CSV's 8/8 status=ok rows.
+- **HAR**: original trigger timed out after 40 min wedged on the Charms grid-read (no CSV). One retry: health gate PASS, retry completed 7/8 — Charms failed cleanly after 2 in-script attempts ("recorded as error, NOT as zero"), matches HAR Charms' error status on every prior-day CSV checked back to 9/21 → treated as 0 per the empty-category rule.
+- **LEX**: original trigger timed out after 40 min (Rings/Bracelets/Pendants read fine, then Charms failed "no STABLE row total after 120s" twice, then wedged solid on Brooches past the wall — no CSV, no result JSON). One retry dropped after a fresh health-gate PASS: same pattern — Rings 292/Bracelets 37/Pendants 52 read clean, Charms failed twice again, then wedged on Brooches for the full 40 min and timed out again with no CSV. Prior-day history confirms both LEX Charms and LEX Brooches error out most nights (9/22, 9/24, 9/25, 9/28, 9/29 all error on both), so a clean error would normally zero out — but tonight the handler never reached a clean error state on either attempt; the whole trigger died via the external wrapper timeout both times, not a graceful per-category failure. No LEX Expected data exists for tonight.
+- **ROA**: original trigger timed out after 40 min wedged on the Necklaces grid-read (not a documented-empty category — no CSV). One retry: health gate PASS, retry completed 8/8 clean, ~11 min.
+- **WAY**: original trigger timed out after 40 min wedged on the Earrings grid-read (no CSV). One retry: health gate PASS, retry completed 7/8 — Charms failed cleanly after 2 attempts, matches WAY Charms' error status on every prior-day CSV back to 9/21 → treated as 0 per the empty-category rule.
+
+Pattern note: every store except CUL needed a retry tonight, and all 4 original triggers died via the 40-minute wrapper timeout rather than a clean in-script error — broader than the usual single documented-empty-category stall. Worth flagging if this repeats (possible Bravo/VM degradation building up over a long multi-store session rather than isolated per-category flakiness).
+
+Expected (Bravo on-hand), mapped to the 5 reporting buckets:
+
+| Store | Rings | Bracelets | Pendants (Pendants+Charms+Brooches) | Necklaces (Chains+Necklaces) | Earrings | Total |
+|-------|-------|-----------|--------------------------------------|-------------------------------|----------|-------|
+| CUL | 672 | 118 | 214+19+19=252 | 82+68=150 | 142 | 1334 |
+| HAR | 427 | 49 | 108+0*+2=110 | 67+44=111 | 46 | 743 |
+| LEX | — pull never completed (2 attempts) — | | | | | |
+| ROA | 577 | 139 | 117+58+2=177 | 97+62=159 | 82 | 1134 |
+| WAY | 341 | 43 | 61+0*+5=66 | 48+25=73 | 58 | 581 |
+
+\* HAR and WAY Charms both read as errors tonight, matching their most recent prior-day CSVs (error every check back through 9/21) — per the known empty-category exception these read as 0, not a failure. Both stores are otherwise complete (all other categories `ok`).
+
+PM count sheets (manager side) — all 5 read directly from `fleet/eod_photos/2026-10-01/` (native eod-photo-fetch download, no Chrome-vision needed), all sum-verified clean against their own written TOTALS lines:
+- CUL (Rob Swogger, posted 6:33 PM): PM COUNT Rings 672, Bracelets 118, Necklaces 150, Earrings 142, Pendants 252, Totals 1334. Sum-verified OK. Matches Bravo exactly — 0 variance every category.
+- HAR (Walker Tapley, 6:06 PM): PM COUNT Rings 431, Bracelets 50, Necklaces 113, Earrings 49, Pendants 112, Totals 755. Sum-verified OK.
+- LEX (Uriah Tiglao, 6:14 PM): AM and PM COUNT identical — Rings 295, Bracelets 38, Necklaces 44, Earrings 46, Pendants 51, Totals 474. Sum-verified OK (no case activity today per the sheet).
+- ROA (Joseph Epperly, 6:40 PM): AM COUNT Rings 577/Bracelets 134/Necklaces 160/Earrings 82/Pendants 168/Totals 1,126 did NOT sum (1121≠1126, off by 5); PM COUNT Rings 577/Bracelets 134/Necklaces 160/Earrings 82/Pendants 176/Totals 1134 also off by 5 in the same direction. Disambiguated via total-minus-other-categories (both AM and PM independently resolve to Earrings=87, not 82, once backed out from the written totals) — used Earrings 87 for both, which makes both AM (1126) and PM (1134) foot exactly. PM COUNT used: Rings 577, Bracelets 134, Necklaces 160, Earrings 87, Pendants 176, Totals 1134.
+- WAY (Martin Dowden, 6:24 PM): AM COUNT had a struck-through Necklaces digit (74→73); PM COUNT clean — Rings 341, Bracelets 43, Necklaces 73, Earrings 58, Pendants 66, Totals 581. Sum-verified OK.
+
+Comparison (Expected = Bravo, Counted = PM sheet), for the 4 stores with both sides:
+
+| Store | Category | Expected | Counted | Variance |
+|-------|----------|----------|---------|----------|
+| CUL | Rings | 672 | 672 | 0 |
+| CUL | Bracelets | 118 | 118 | 0 |
+| CUL | Pendants | 252 | 252 | 0 |
+| CUL | Earrings | 142 | 142 | 0 |
+| CUL | Necklaces | 150 | 150 | 0 |
+| **CUL Total** | | **1334** | **1334** | **0** |
+| HAR | Rings | 427 | 431 | +4 |
+| HAR | Bracelets | 49 | 50 | +1 |
+| HAR | Pendants | 110 | 112 | +2 |
+| HAR | Earrings | 46 | 49 | +3 |
+| HAR | Necklaces | 111 | 113 | +2 |
+| **HAR Total** | | **743** | **755** | **+12** |
+| ROA | Rings | 577 | 577 | 0 |
+| ROA | Bracelets | 139 | 134 | -5 |
+| ROA | Pendants | 177 | 176 | -1 |
+| ROA | Earrings | 82 | 87 | +5 |
+| ROA | Necklaces | 159 | 160 | +1 |
+| **ROA Total** | | **1134** | **1134** | **0** |
+| WAY | Rings | 341 | 341 | 0 |
+| WAY | Bracelets | 43 | 43 | 0 |
+| WAY | Pendants | 66 | 66 | 0 |
+| WAY | Earrings | 58 | 58 | 0 |
+| WAY | Necklaces | 73 | 73 | 0 |
+| **WAY Total** | | **581** | **581** | **0** |
+
+Assessment: CUL and WAY matched perfectly (0 variance every category). HAR's small, uniformly-positive OVER variance (+1 to +4 per category, +12 total) matches its own recurring pattern from prior runs (9/4 +7, 9/26 +8, 9/29 +11) — not a new anomaly, no DM warranted. ROA's total matches exactly (0) but two categories offset each other (Bracelets -5, Earrings +5, plus the usual ±1 Pendants/Necklaces noise already seen in ROA's history) — reads as a row-level transcription slip on the sheet rather than real inventory movement, since the grand total ties out exactly; not an anomalous OVER variance in the sense Step 7 means (no single category exceeds system on-hand by an amount that isn't offset elsewhere), so no DM.
+
+DECISION: LEX's Bravo pull never completed on either attempt (health-gate self-escalation ran before the retry and the retry still wedged) — a pipeline/Claude-side failure, not an employee paperwork one (LEX's own PM sheet was clean and read with no issues). Per the partial-post rule's point 4 ("still hold everything only if the BRAVO side failed... half a Bravo picture must not be published"), held the ENTIRE table tonight rather than post the 4 clean stores — this differs from the 9/22-style partial-post precedent, which applies only to employee-side (missing/illegible sheet) exclusions, not Bravo-side ones. Nothing posted to #jewlery-counts. No DM to Joshua (Failure Policy v3 override) — one row logged to `fleet/FAILURE_LEDGER.md` (2026-10-01 23:50 ET) instead. All 5 stores' figures above are preserved for whichever session gets a clean LEX pull, so CUL/HAR/ROA/WAY don't need re-pulling.
+
 ## RUN RECORD — Saturday 2026-09-26 (jewelry-onhand-nightly-pull, consolidated task)
 
 Open stores (Sat, all 5): CUL, HAR, LEX, ROA, WAY. This is the SECOND consecutive night of the same failure mode as 2026-09-25 below — worth treating as a pattern, not a one-off.

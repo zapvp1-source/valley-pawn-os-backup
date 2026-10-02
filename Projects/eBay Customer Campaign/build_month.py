@@ -62,8 +62,21 @@ EXCLUDE = re.compile(
     r"ammo|ammunition|holster|scope|magazine|airsoft|bb|pellet|taser|stun|pepper|crossbow|"
     r"bayonet|machete|dagger|katana|tactical|knuckle|knuckles|nunchuck|throwing|hatchet|axe)\b", re.I)
 
-HOURS = ("Culpeper: Mon&ndash;Sat 10am&ndash;6pm. All other stores: Mon, Tue, Thu, Fri &amp; Sat "
-         "10am&ndash;6pm (closed Wed &amp; Sun).")
+# 2026-10-01: Roanoke now open Wednesdays (Joshua) — canonical hours line updated.
+# 2026-10-01 (later): any store open 6 days a week closes 5 PM Saturdays (Joshua) — Culpeper & Roanoke Sat 10am-5pm.
+HOURS = ("Culpeper &amp; Roanoke: Mon&ndash;Fri 10am&ndash;6pm, Sat 10am&ndash;5pm. Harrisonburg, Waynesboro &amp; Lexington: "
+         "Mon, Tue, Thu, Fri &amp; Sat 10am&ndash;6pm (closed Wed &amp; Sun).")
+SIX_DAY_BLOCK = "Mon\u2013Fri 10am\u20136pm, Sat 10am\u20135pm"
+# The base shell (sent campaign 28) still carries the pre-10/1 hours in its LOCKED footer + YOUR STORE block;
+# build_email() swaps these exact strings so every new build ships the current hours.
+OLD_HOURS_FIXES = [
+    ("Culpeper: Mon&ndash;Sat 10am&ndash;6pm. All other stores: Mon, Tue, Thu, Fri &amp; Sat 10am&ndash;6pm (closed Wed &amp; Sun).", HOURS),
+    ("Culpeper &amp; Roanoke: Mon&ndash;Sat 10am&ndash;6pm. Harrisonburg, Waynesboro &amp; Lexington: "
+     "Mon, Tue, Thu, Fri &amp; Sat 10am&ndash;6pm (closed Wed &amp; Sun).", HOURS),
+    ("Roanoke &middot; Mon, Tue, Thu, Fri & Sat 10am\u20136pm", "Roanoke &middot; " + SIX_DAY_BLOCK),
+    ("Roanoke &middot; Mon\u2013Sat 10am\u20136pm", "Roanoke &middot; " + SIX_DAY_BLOCK),
+    ("Culpeper &middot; Mon\u2013Sat 10am\u20136pm", "Culpeper &middot; " + SIX_DAY_BLOCK),
+]
 
 
 # ------------------------------------------------------------------ helpers
@@ -213,6 +226,8 @@ def build_email(base, cfg, featured, camp):
     h = h[:cs] + cta + h[ce:]
     # campaign tag everywhere (locked regions keep their utm_content)
     h = h.replace(BASE_UTM, camp)
+    for a, b in OLD_HOURS_FIXES:   # 2026-10-01 Roanoke Wednesdays
+        h = h.replace(a, b)
     return h
 
 

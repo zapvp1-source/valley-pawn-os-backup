@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-09-30
+# LIVE STATE - auto-refreshed 2026-10-01
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -12,16 +12,16 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Metric | Count |
 |---|---|
-| Task folders on disk | 214 |
-| Registered with scheduler | 211 |
-| Enabled (will fire) | 118 |
-| Registered but disabled | 93 |
+| Task folders on disk | 223 |
+| Registered with scheduler | 220 |
+| Enabled (will fire) | 120 |
+| Registered but disabled | 100 |
 | On disk but never registered | 3 |
-| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 636 |
+| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 675 |
 
 ### Enabled tasks
 
-`annual-board-review`, `asset-recovery-daily-refresh`, `bald-rock-15-day-contract`, `bald-rock-guest-reviews`, `bald-rock-monday-briefing`, `bonus-month-close`, `bonus-month-close-pull`, `bonus-pace-monday`, `bonus-paid-verify`, `ceo-mail-brief`, `ceo-monthly-scorecard`, `ceo-weekly-scorecard`, `chekkit-culpeper-sms-ticket-watch`, `chekkit-new-review-alert`, `chekkit-smart-replies-weekly-check`, `chekkit-unanswered-alert`, `chekkit-unanswered-eod-followup`, `comcast-retention-chat-waynesboro-harrisonburg`, `connector-health-daily`, `daily-clockin-check`, `daily-cloudcover-check`, `daily-dress-code-check`, `daily-funds-verification`, `daily-items-to-price`, `daily-supply-order`, `document-photos-index-refresh`, `ebay-campaign-chekkit-monthly`, `ebay-weekly-channel-audit`, `entity-compliance-check`, `eom-bravo-gl-export`, `eom-bravo-gl-export-watchdog`, `fleet-guardian`, `funds-verification-watchdog`, `gdrive-cache-refresh`, `google-reviews-post-watchdog`, `gusto-keep-alive`, `health-weekly-digest`, `hiring-inbox-watch`, `insurance-coverage-audit`, `insurance-inbox-watch`, `insurance-renewal-runner`, `jewelry-onhand-catchup`, `jewelry-onhand-nightly-pull`, `layaway-yield-weekly`, `marketing-ceo-briefing-weekly`, `missed-call-text-report`, `mobilepawn-app-social-monthly`, `mobilepawn-bravo-reply-check`, `monday-bravo-cell-gapfill`, `monday-bravo-combined-compile`, `monday-bravo-combined-run`, `monday-bravo-postcheck`, `monthly-amazon-store-allocation`, `monthly-analytics-report`, `monthly-analytics-watchdog`, `monthly-capability-drift-audit`, `monthly-ebay-ratings-sweep`, `monthly-employee-sales-rankings`, `monthly-eom-recap`, `monthly-gift-card-store-credit`, `monthly-gun-audit-report`, `monthly-mobilepawn-participation`, `monthly-publication-audit`, `monthly-scrap-rankings`, `morning-brief`, `nics-monthly-ranking`, `nics-weekly-mtd-ranking`, `nightly-desktop-cleanup`, `northwest-registered-agent-daily-check`, `precious-metals-settlement-handler`, `preston-ebay-feedback-watch`, `qbo-api-token-refresh`, `quarterly-capex-sweep`, `review-obtained-last-week`, `roster-refresh`, `sales-tax-monthly-update`, `scheduled-task-model-audit-weekly`, `scrap-monthly-bravo-approval-watch`, `scrap-monthly-bravo-manifest-stage`, `sunday-checklist-summary`, `task-hygiene-sweep`, `tuesday-supply-prep`, `tuesday-supply-summary`, `vp-ai-search-health-check`, `vp-ai-visibility-metrics`, `vp-comms-drift-monthly-check`, `vp-creative-refresh-quarterly`, `vp-dashboard-refresh`, `vp-deal-of-week-monday-pick`, `vp-deal-of-week-monday-prompt`, `vp-deal-of-week-monday-reminder`, `vp-follower-growth-monthly-check`, `vp-gusto-signature-chase`, `vp-hr-compliance-quarterly-review`, `vp-hr-policy-monthly-sync`, `vp-new-customer-report`, `vp-presence-audit-weekly`, `vp-publer-analytics-friday`, `vp-staff-video-chase`, `vp-staff-video-prompt`, `vp-thursday-email-watchdog`, `vp-website-shop-nightly`, `vp-website-shop-weekly-report`, `vp-website-trend-daily-refresh`, `weekly-aged-inventory-canvas-refresh`, `weekly-analytics-summary`, `weekly-employee-perf-canvas-refresh`, `weekly-layaway-review-canvas-refresh`, `weekly-loan-review-canvas-refresh`, `weekly-markdown-verification-pull`, `weekly-markdown-verification-review`, `weekly-online-store-audit`, `weekly-returns-summary`, `weekly-store-kpis`, `weekly-store-perf-canvas-refresh`, `weekly-timekeeping-analysis`, `weekly-website-health-audit`, `yield-by-asset-class-monthly`
+`annual-board-review`, `asset-recovery-daily-refresh`, `bald-rock-15-day-contract`, `bald-rock-guest-reviews`, `bald-rock-monday-briefing`, `bonus-month-close`, `bonus-month-close-pull`, `bonus-pace-monday`, `bonus-paid-verify`, `bravo-former-employee-cleanup-oneshot-20261001`, `ceo-mail-brief`, `ceo-monthly-scorecard`, `ceo-weekly-scorecard`, `chekkit-culpeper-sms-ticket-watch`, `chekkit-new-review-alert`, `chekkit-smart-replies-weekly-check`, `chekkit-unanswered-alert`, `chekkit-unanswered-eod-followup`, `connector-health-daily`, `daily-clockin-check`, `daily-cloudcover-check`, `daily-dress-code-check`, `daily-items-to-price`, `daily-store-audit-digest`, `daily-supply-order`, `ebay-campaign-chekkit-monthly`, `ebay-weekly-channel-audit`, `entity-compliance-check`, `eom-bravo-gl-export`, `eom-bravo-gl-export-watchdog`, `fleet-guardian`, `forfeiture-winback-texts-weekly`, `fortis-email-monitor`, `gdrive-cache-refresh`, `google-reviews-post-watchdog`, `gusto-keep-alive`, `health-weekly-digest`, `hiring-inbox-watch`, `insurance-coverage-audit`, `insurance-inbox-watch`, `insurance-renewal-runner`, `jewelry-onhand-catchup`, `jewelry-onhand-nightly-pull`, `jewelry-sourcing-refresh-oneshot-20261004`, `layaway-yield-weekly`, `marketing-ceo-briefing-weekly`, `missed-call-text-report`, `mobilepawn-app-social-monthly`, `mobilepawn-bravo-reply-check`, `monday-bravo-cell-gapfill`, `monday-bravo-combined-compile`, `monday-bravo-combined-run`, `monday-bravo-postcheck`, `monthly-amazon-store-allocation`, `monthly-analytics-report`, `monthly-analytics-watchdog`, `monthly-bravo-user-audit`, `monthly-capability-drift-audit`, `monthly-ebay-ratings-sweep`, `monthly-employee-sales-rankings`, `monthly-eom-recap`, `monthly-gift-card-store-credit`, `monthly-gun-audit-report`, `monthly-loan-layaway-outcomes`, `monthly-mobilepawn-participation`, `monthly-publication-audit`, `monthly-scrap-rankings`, `morning-brief`, `nics-monthly-ranking`, `nics-weekly-mtd-ranking`, `northwest-registered-agent-daily-check`, `precious-metals-settlement-handler`, `qbo-api-token-refresh`, `quarterly-capex-sweep`, `reminders-followup-check-20261001`, `review-obtained-last-week`, `roster-refresh`, `sales-tax-monthly-update`, `scheduled-task-model-audit-weekly`, `scrap-monthly-bravo-approval-watch`, `scrap-monthly-bravo-manifest-stage`, `sunday-checklist-summary`, `task-hygiene-sweep`, `tuesday-supply-prep`, `tuesday-supply-summary`, `vp-ai-search-health-check`, `vp-ai-visibility-metrics`, `vp-comms-drift-monthly-check`, `vp-creative-refresh-quarterly`, `vp-dashboard-refresh`, `vp-deal-of-week-monday-pick`, `vp-deal-of-week-monday-prompt`, `vp-deal-of-week-monday-reminder`, `vp-follower-growth-monthly-check`, `vp-gusto-signature-chase`, `vp-hr-compliance-quarterly-review`, `vp-hr-policy-monthly-sync`, `vp-new-customer-report`, `vp-presence-audit-weekly`, `vp-publer-analytics-friday`, `vp-staff-video-chase`, `vp-staff-video-prompt`, `vp-thursday-email-watchdog`, `vp-website-shop-nightly`, `vp-website-shop-weekly-report`, `vp-website-trend-daily-refresh`, `weekly-aged-inventory-canvas-refresh`, `weekly-analytics-summary`, `weekly-employee-perf-canvas-refresh`, `weekly-layaway-review-canvas-refresh`, `weekly-loan-review-canvas-refresh`, `weekly-markdown-verification-pull`, `weekly-markdown-verification-review`, `weekly-online-store-audit`, `weekly-returns-summary`, `weekly-store-kpis`, `weekly-store-perf-canvas-refresh`, `weekly-timekeeping-analysis`, `weekly-website-health-audit`, `yield-by-asset-class-monthly`
 
 ### On disk but NOT registered (never fire)
 
@@ -33,8 +33,10 @@ below disagrees with this block, THIS BLOCK WINS.
 |---|---|---|
 | `com.valleypawn.backup-health.plist` | installed | YES |
 | `com.valleypawn.bravo-health-watchdog.plist` | installed | YES |
+| `com.valleypawn.bravo-map-oneshot.plist` | installed | YES |
 | `com.valleypawn.bravo-relaunch.plist` | installed | YES |
 | `com.valleypawn.business-os-refresh.plist` | installed | YES |
+| `com.valleypawn.chekkit-ai-responder.plist` | installed | YES |
 | `com.valleypawn.chrome-extension-watchdog.plist` | installed | YES |
 | `com.valleypawn.chrome-tab-hygiene.plist` | installed | YES |
 | `com.valleypawn.claude-keepalive.plist` | installed | YES |
@@ -43,7 +45,9 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.daily-report-discount.plist` | installed | YES |
 | `com.valleypawn.daily-report-pawn.plist` | installed | YES |
 | `com.valleypawn.daily-report-sold.plist` | installed | YES |
+| `com.valleypawn.desktop-cleanup.plist` | installed | YES |
 | `com.valleypawn.disk-health.plist` | installed | YES |
+| `com.valleypawn.docphotos-index.plist` | installed | YES |
 | `com.valleypawn.ebay-customer-campaign.plist` | installed | YES |
 | `com.valleypawn.ebay-daily-listings.plist` | installed | YES |
 | `com.valleypawn.ebay-efficiency-weekly.plist` | installed | YES |
@@ -57,6 +61,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.fleet-doctor.plist` | installed | YES |
 | `com.valleypawn.fleet-health.plist` | installed | YES |
 | `com.valleypawn.forfeiture-winback.plist` | installed | YES |
+| `com.valleypawn.funds-verification.plist` | installed | YES |
 | `com.valleypawn.github-backup.plist` | installed | YES |
 | `com.valleypawn.health-episode.plist` | installed | YES |
 | `com.valleypawn.health-intake.plist` | installed | YES |
@@ -65,6 +70,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.mac-maintenance.plist` | installed | YES |
 | `com.valleypawn.mail-brief.plist` | installed | YES |
 | `com.valleypawn.missed-call-text.plist` | installed | YES |
+| `com.valleypawn.monday-compile.plist` | installed | YES |
 | `com.valleypawn.monday-pull.plist` | installed | YES |
 | `com.valleypawn.monthly-prestage.plist` | installed | YES |
 | `com.valleypawn.morning-pull.plist` | installed | YES |
@@ -75,7 +81,8 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.skill-tool-index.plist` | installed | YES |
 | `com.valleypawn.sms-code-relay.plist` | installed | YES |
 | `com.valleypawn.social-recap.plist` | installed | YES |
-| `com.valleypawn.taskperms-oneshot.plist` | installed | YES |
+| `com.valleypawn.taskperms-oneshot.plist` | installed | no |
+| `com.valleypawn.texting-scorecard.plist` | installed | YES |
 | `com.valleypawn.usearch-refresh.plist` | installed | YES |
 | `com.valleypawn.usearch-verify.plist` | installed | YES |
 | `com.valleypawn.zoom-missed-alert.plist` | installed | YES |
@@ -98,35 +105,37 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-09-30 | Valley Pawn OS | - |
-| 2026-09-30 | Unified Search | - |
+| 2026-10-01 | Valley Pawn OS | - |
+| 2026-10-01 | Unified Search | - |
+| 2026-10-01 | Bravo Data Extraction | STATUS.md |
+| 2026-09-30 | Website | - |
+| 2026-09-30 | Valuation Core | README.md |
+| 2026-09-30 | Valley Pawn Studios | STATUS.md |
+| 2026-09-30 | VP Ops Engine | STATUS.md |
+| 2026-09-30 | Training Program | STATUS.md |
+| 2026-09-30 | Sold Margin Review | STATUS.md |
+| 2026-09-30 | Precious Metals Settlements | - |
+| 2026-09-30 | Pawn Walks | STATUS.md |
+| 2026-09-30 | Loan Rule Change Outreach | STATUS.md |
+| 2026-09-30 | Life OS | - |
+| 2026-09-30 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-09-30 | Human Resources | - |
+| 2026-09-30 | Health Optimization | STATUS.md |
 | 2026-09-30 | Email Refinement | - |
-| 2026-09-30 | Bravo Data Extraction | STATUS.md |
+| 2026-09-30 | Discount Outlier Review | STATUS.md |
+| 2026-09-30 | Daily Funds Verification | - |
+| 2026-09-30 | Compliance | - |
+| 2026-09-30 | Communcations | - |
+| 2026-09-30 | Business Dashboard Website | - |
 | 2026-09-29 | eBay Customer Campaign | - |
 | 2026-09-29 | eBay | - |
-| 2026-09-29 | Website | - |
-| 2026-09-29 | Valuation Core | README.md |
-| 2026-09-29 | Valley Pawn Studios | STATUS.md |
-| 2026-09-29 | Training Program | STATUS.md |
-| 2026-09-29 | Sold Margin Review | STATUS.md |
 | 2026-09-29 | Refine Social Media | - |
 | 2026-09-29 | Quickbooks Set UP | - |
-| 2026-09-29 | Precious Metals Settlements | - |
-| 2026-09-29 | Pawn Walks | STATUS.md |
 | 2026-09-29 | MobilePawn Participation | README.md |
-| 2026-09-29 | Life OS | - |
-| 2026-09-29 | Jewelry Count Reconciliation | STATUS.md |
-| 2026-09-29 | Health Optimization | STATUS.md |
 | 2026-09-29 | Gift Card & Store Credit | README.md |
-| 2026-09-29 | Discount Outlier Review | STATUS.md |
 | 2026-09-29 | Designer Goods Authentication | - |
-| 2026-09-29 | Daily Funds Verification | - |
-| 2026-09-29 | Compliance | - |
-| 2026-09-29 | Communcations | - |
-| 2026-09-29 | Business Dashboard Website | - |
 | 2026-09-29 | Ai Optimized Marketing | - |
 | 2026-09-28 | Zoom Call Pipeline | - |
-| 2026-09-28 | Human Resources | - |
 | 2026-09-28 | Call Analysis | - |
 | 2026-09-21 | Solaterra Site | - |
 | 2026-09-21 | Bonus Program | - |
@@ -136,8 +145,6 @@ below disagrees with this block, THIS BLOCK WINS.
 | 2026-09-16 | Gold and Silver Markeitng | - |
 | 2026-09-10 | Sales Tax | STATUS.md |
 | 2026-09-09 | _scratch | - |
-| 2026-09-07 | Preston Knowledge Base | - |
-| 2026-09-05 | Vertical Integration | STATUS.md |
 
 <!-- LIVE-STATE:END -->
 
@@ -946,6 +953,7 @@ Current build order, subject to Joshua's redirects.
 
 | Date | Change | Reason |
 |---|---|---|
+| 2026-10-01 | Monthly capability drift audit run. LIVE-STATE block (223 task folders / 220 registered / 120 enabled) is current as of today via `business-os-daily-refresh` — that automation now absorbs the task-count tracking. This audit's marginal find: 58 of the 123 currently-enabled scheduled tasks were not named anywhere in the document body outside the auto-generated block (see 2026-10-01 addendum table) — registered additively. `list_skills`/`list_plugins`/`list_connectors` returned empty a 4th consecutive month (now the established pattern for this session type); cross-checked against the session's own visible skill/plugin/connector catalog instead. 19 new individual skill names found (all covered at the `anthropic-skills` bundle level, no table edit needed) incl. a likely rename: `setup-cowork` → `setup-claude`. Plugin catalog this session showed only 3 of the 16 documented marketplaces — flagged as unconfirmed (same unresolved visibility quirk as prior months), nothing removed. One previously-undocumented connector surfaced (a vehicle-search MCP) — flagged, purpose unclear, not added to Section 13.A. No skill delta staged. Posted to Joshua's DM (`#claude-notifications` still doesn't exist, confirmed again). | Scheduled `monthly-capability-drift-audit`, autonomous run. |
 | 2026-09-06 | Root-caused the Monday per-store cell failures (stranded Bravo UI / login-screen drop, no per-cell retry existed) and shipped `monday-bravo-cell-gapfill` + `bin/monday_gapfill_runner.py`. Confirmed the Rule 16/18 side was already closed by Completeness Gate v2 (2026-08-31) — no compile edit made. | Joshua: "fix what you can fix" — partial weekly ops posts found during the publications audit. |
 | 2026-09-05 | Monthly publications audit: `PUBLICATION_CALENDAR.md` created; monthly-analytics-prestage moved to native runner; monthly-employee-sales-rankings rebuilt on new `employee-activity-range` cell; vp-new-customer-report Slack-first; +24 expected_outputs entries; August catch-ups scheduled; `monthly-eom-recap` + `monthly-publication-audit` staged in `pending-tasks/` awaiting Joshua's registration. Full detail: CHANGELOG 2026-09-05 (5). | Joshua: analytics + marketing channels should all have EOM summaries — some do, some don't. |
 | 2026-05-20 | Initial creation | Joshua: "we are building a complete business management workflow... what's the best plan to look at all of this holistically" |
@@ -955,6 +963,7 @@ Current build order, subject to Joshua's redirects.
 | 2026-07-01 | Monthly capability drift audit run. Registered ~30 new scheduled tasks (see 2026-07-01 addendum) that had shipped since 2026-05-20 (58 → 77 tasks live). Flagged 8 previously-active tasks now showing `enabled:false` (incl. `weekly-payroll-to-qbo`, `weekly-valley-pawn-email-campaign`) for Joshua. Plugins (16) + Section-13 connector snapshot in sync. No skill delta required. | Scheduled `monthly-capability-drift-audit`, autonomous run. |
 | 2026-07-23 | **Waynesboro to 6 days/week** (Mon–Sat 10–6, closed Sun; first open Wednesday 2026-07-29). Propagated in one session: **website** (38 pages/posts incl. homepage banner, FAQ, location/landing/spoke pages, footer template part `assembler//footer`, WPCode snippets 738 JSON-LD + 742 llms.txt); **Mac-side facts** (daily-clockin-check, chekkit-unanswered-alert, vp-ai-search-health-check, vp-website-deals-weekly SKILL.mds; vp_social_publisher STORE_FACTS; canonical_nap.json; G&S generate_store_pages + content; AI-GEO faq/city-snippets — backups `*.bak-2026-07-23`); **Brevo** (Template 11 Waynesboro block + footer line, staged campaigns 27–30 & 43 patched, announcement campaign #52 preflight-PASS scheduled Fri 7/24 10 AM to lists 3+10); **GBP** Waynesboro Wednesday 10–6 (edit pending Google review); **Facebook** page Hours field updated + FB (Waynesboro+Brand) & GBP announcement posts via Publer 7/23 4 PM; **Chekkit** one-time text campaign "Waynesboro 6 Days a Week 07/23/26" to 1,263 Waynesboro contacts (1,088 valid, sent 7/23 ~3:15 PM); also corrected 2 same-day hiring posts that said "closed Wednesdays" for Waynesboro. Staged `VALLEY_PAWN_CONTEXT_DELTA_2026-07-23.md` (Joshua applies in Settings → Capabilities). **PENDING:** Bing Places / Apple Business Connect / Nextdoor need one-time manual logins before hours can push; Yelp Waynesboro mid-claim (fold into 7/30 Yelp one-shot); Foursquare/YP/MapQuest skipped (no session/no UI). | Joshua: "we are opening waynesboro 6 days a week starting next week" — full-platform propagation. |
 | 2026-07-27 | **REVERSED the Waynesboro 6-day change** — employee no-show; Waynesboro stays Mon, Tue, Thu, Fri & Sat 10–6 (closed Wed & Sun). Rolled back: website (all 20 pages/posts + footer template part + WPCode snippets 738/742), Mac-side files (13 restored from `*.bak-2026-07-23`), Brevo (Template 11 + campaigns 27–30/43 restored from `brevo_backups_2026-07-23/`; announcement campaign #52 never sent — was suspended — renamed "CANCELLED — DO NOT SEND"), GBP Wednesday → Closed (edit pending), Facebook page Hours Wednesday cleared, all 3 published announcement posts DELETED (Waynesboro FB, Brand FB, GBP), Bing re-syncs from Google automatically. Chekkit correction text "Waynesboro Hours Correction 07/27/26" sent to the same 1,087-contact audience (1,073 valid). Delta file renamed CANCELLED_. Joshua had saved the 6-day skill — an ORIGINAL-hours .skill was sent back for him to re-save. | Joshua 2026-07-27: "we need to reverse all of this, employee never showed so we will be back closed on wed." |
+| 2026-10-01 | **Roanoke to 6 days/week** (Mon–Sat 10–6, closed Sun; first open Wednesday 2026-09-30). Propagated in one session across skills (valley-pawn-context, directory-listing-monitor), Mac-side scripts/configs + scheduled-task prompts (backups `*.bak-pre-roanokewed-20261001`, `fleet/skill_backups/roanokewed-20261001/`), website (`website_backups_roanokewed_2026-10-01/`), Brevo (`brevo_backups_2026-10-01_roanokewed/`, announcement #78), GBP (pending review), Facebook Hours, Zoom queue 812, Chekkit, Publer posts, Chekkit SMS. Open listing logins in OPEN_ITEMS_REGISTER. See CHANGELOG 2026-10-01. | Joshua 2026-10-01: "update the Roanoke hours to be open wednesday just like culpeper ... all listings ... let the customer base know." |
 
 ---
 
@@ -1612,5 +1621,105 @@ Also newly absent (previously registered as enabled in the 2026-07-01 addendum, 
 ### `#claude-notifications` — confirmed (again) not to exist
 
 This task's own configured Slack destination since creation (2026-06-29, Section 11) is `#claude-notifications`. Live `slack_search_channels` returned zero results for both `claude-notifications` and `claude-updates` this run. This was already noted once before, in the unrelated 2026-07-26 VP Ops Engine changelog entry ("failure alerts are DM-to-Joshua only... #claude-notifications channel does not exist") — but the task's own posting target was never updated to reflect that. This month's summary was DMed to Joshua directly instead. Recommend Joshua choose: create the channel, or have a future session repoint this task's destination to an existing ops channel or straight to DM permanently.
+
+**Skill delta staged:** No — nothing this run required an `enterprise-map` or `valley-pawn-context` patch.
+
+---
+
+## 2026-10-01 ADDENDUM — Monthly Capability Drift Audit
+
+_Autonomous run of `monthly-capability-drift-audit`. Additive registration only — no existing rows modified or removed._
+
+**Live counts (2026-10-01, per today's `business-os-daily-refresh` LIVE-STATE block):**
+- **Scheduled tasks:** 223 task folders on disk / 220 registered / 120 enabled / 100 registered-but-disabled / 3 on-disk-never-registered. The LIVE-STATE block tracks this count itself daily (and today's own CHANGELOG entry already logs the day's enable/disable/native-agent deltas), so this audit's marginal job is the same as 2026-09-01: catching scheduled tasks that are *live and enabled* but never got named anywhere in the document body (Section 2 domain tables or a prior addendum table), not re-deriving the count.
+- **Skills/Plugins/Connectors:** `mcp__skills__list_skills`, `mcp__plugins__list_plugins`, and `mcp__mcp-registry__list_connectors` all returned empty again — the 4th consecutive monthly run (07-01, 08-01, 09-01, 10-01) with this result. Now firmly the established behavior for this session type, not a quirk to keep re-flagging as uncertain. Cross-checked against the session's own visible skill catalog and this session's live MCP server/tool set instead, per the same workaround used every prior month.
+
+### NEW scheduled tasks (live + enabled, not named anywhere in the document body) — registered here
+
+| Task | State | Likely domain |
+|---|---|---|
+| `bravo-former-employee-cleanup-oneshot-20261001` | enabled (one-shot) | HR/Bravo security — see CHANGELOG 2026-09-30 |
+| `ceo-mail-brief` | enabled | Ops/CEO briefing |
+| `ceo-monthly-scorecard` | enabled | Ops/CEO (pairs with the `ceo-monthly-scorecard` skill) |
+| `ceo-weekly-scorecard` | enabled | Ops/CEO (pairs with the `ceo-weekly-scorecard` skill) |
+| `chekkit-culpeper-sms-ticket-watch` | enabled | Marketing/Reputation |
+| `chekkit-smart-replies-weekly-check` | enabled | Marketing/Reputation |
+| `chekkit-unanswered-eod-followup` | enabled | Marketing/Reputation |
+| `connector-health-daily` | enabled | Infra |
+| `daily-store-audit-digest` | enabled | Operations |
+| `ebay-campaign-chekkit-monthly` | enabled | Online Sales/Marketing |
+| `ebay-weekly-channel-audit` | enabled | Online Sales |
+| `entity-compliance-check` | enabled | Compliance/Legal |
+| `eom-bravo-gl-export-watchdog` | enabled | Finance (watchdog on `eom-bravo-gl-export`) |
+| `fleet-guardian` | enabled | Infra — failure-ledger recovery/dedup, per this task's own Failure Policy v3 header |
+| `forfeiture-winback-texts-weekly` | enabled | Loans/Marketing |
+| `fortis-email-monitor` | enabled | Finance (payment processing) — purpose not independently confirmed this run |
+| `gdrive-cache-refresh` | enabled | Infra |
+| `google-reviews-post-watchdog` | enabled | Marketing/Reputation |
+| `health-weekly-digest` | enabled | Personal (Domain 3) |
+| `insurance-coverage-audit` | enabled | Insurance |
+| `insurance-inbox-watch` | enabled | Insurance |
+| `insurance-renewal-runner` | enabled | Insurance |
+| `jewelry-onhand-catchup` | enabled | Inventory |
+| `jewelry-onhand-nightly-pull` | enabled | Inventory |
+| `jewelry-sourcing-refresh-oneshot-20261004` | enabled (one-shot) | Inventory |
+| `marketing-ceo-briefing-weekly` | enabled | Marketing |
+| `missed-call-text-report` | enabled | Ops/Marketing |
+| `mobilepawn-app-social-monthly` | enabled | Marketing |
+| `mobilepawn-bravo-reply-check` | enabled | Operations |
+| `monthly-bravo-user-audit` | enabled | HR/Security — see CHANGELOG 2026-09-30 |
+| `monthly-ebay-ratings-sweep` | enabled | Online Sales |
+| `monthly-gift-card-store-credit` | enabled | Finance/Operations |
+| `monthly-loan-layaway-outcomes` | enabled | Loans |
+| `monthly-mobilepawn-participation` | enabled | Marketing |
+| `monthly-scrap-rankings` | enabled | Inventory/Precious Metals — see CHANGELOG 2026-10-01 |
+| `morning-brief` | enabled | Ops (daily brief) |
+| `northwest-registered-agent-daily-check` | enabled | Compliance (registered agent) |
+| `precious-metals-settlement-handler` | enabled | Finance/Inventory (scrap settlements) |
+| `qbo-api-token-refresh` | enabled | Finance/Infra |
+| `quarterly-capex-sweep` | enabled | Finance |
+| `reminders-followup-check-20261001` | enabled (one-shot) | Operations |
+| `roster-refresh` | enabled | HR |
+| `scheduled-task-model-audit-weekly` | enabled | Infra (pairs with `scheduled-task-models` skill) |
+| `scrap-monthly-bravo-approval-watch` | enabled | Finance/Inventory |
+| `scrap-monthly-bravo-manifest-stage` | enabled | Finance/Inventory |
+| `sunday-checklist-summary` | enabled | Operations |
+| `task-hygiene-sweep` | enabled | Infra |
+| `tuesday-supply-prep` | enabled | Inventory/Procurement |
+| `vp-creative-refresh-quarterly` | enabled | Marketing |
+| `vp-follower-growth-monthly-check` | enabled | Marketing |
+| `vp-gusto-signature-chase` | enabled | HR |
+| `vp-presence-audit-weekly` | enabled | Marketing |
+| `vp-staff-video-chase` | enabled | Marketing/HR |
+| `vp-staff-video-prompt` | enabled | Marketing/HR |
+| `vp-thursday-email-watchdog` | enabled | Marketing |
+| `vp-website-shop-weekly-report` | enabled | Marketing/Web |
+| `weekly-online-store-audit` | enabled | Online Sales |
+| `weekly-website-health-audit` | enabled | Marketing/Web |
+| `yield-by-asset-class-monthly` | enabled | Loans/Finance |
+
+58 tasks total — found by grepping every name in the live LIVE-STATE enabled list against the document body (Sections 2–12, excluding the auto-generated LIVE-STATE block itself) and listing misses. Domains above are best-guess from the task name only; not independently verified against each task's SKILL.md this run (out of scope for a documentation-sync pass). None of this is new infrastructure — all 58 were already live and enabled; this just closes the gap between the map and reality per the 2026-07-08 finding ("BUSINESS_OS.md drift is itself a finding").
+
+### NEW individual skills observed, not yet named in Section 3 (bundle already covers them)
+
+Per the precedent set every month since 2026-08-01, Section 13.C already lists `anthropic-skills` as covering all `vp-*`/domain-context/property skills at the bundle level, so these don't need an individual Section 13.C table edit. Named here for visibility:
+
+`ceo-monthly-scorecard`, `ceo-weekly-scorecard`, `client-digital-footprint-setup`, `customer-loyalty-report`, `cypress-crossing-property`, `docs` (new — Claude's native Docs artifact type, distinct from the `docx` file skill), `drive-sync-file-safety`, `enterprise-folder-access`, `google-workspace`, `hardinberry-property`, `hiring-contact-check`, `insurance-context`, `richmond-ave-property`, `setup-claude`, `slack-channel-membership-audit`, `store-sign-set`, `vp-ops-knowledge`, `vp-telecom-carriers`, `woods-walk-property`.
+
+**Likely rename, not a new skill:** `setup-cowork` (named in Section 3 and used through 2026-09-01) no longer appears in the session's skill catalog; `setup-claude` appears in its place and matches the same "onboarding" description. Not treated as a removal (Rule 4) — flagged as a rename for whenever Section 3 is next refreshed.
+
+### Plugin catalog — unconfirmed again
+
+Session's own visible marketplace catalog this run showed only **3** of the 16 marketplaces documented in Section 13.C: `anthropic-skills`, `cowork-plugin-management`, `slack-by-salesforce`. This has never been independently confirmed via a working `list_plugins` call since 2026-07-01 (when it last returned 16 and matched exactly) — every run since has had to infer from whatever the session's own catalog happens to surface, which may itself be session/account-scoped rather than a full account inventory. Not treated as removal of the other 13 (Rule 4 — never delete on unconfirmed evidence); flagged for Joshua only if a future run with a working live query confirms real drift.
+
+### Connector capability note
+
+This session's live deferred-tool registry surfaced native MCP connectors matching Section 13.A almost exactly: Slack, Gmail, Google Calendar, Google Drive, Gusto, DocuSign, Canva, QuickBooks Online (the full expanded surface already documented 2026-09-01), WordPress.com, and a Travel/booking connector (Trivago-branded this run, same family as the documented Kiwi.com/lastminute.com row). eBay and Indeed did not surface as native MCP tools this run — consistent with the already-documented caveat that both run via browser/Chrome rather than a native connector, not new drift.
+
+One connector surfaced that is **not** in Section 13.A: a vehicle-search MCP (`search_vehicles`). Purpose and relevance to Valley Pawn/Bald Rock/personal is unclear and not independently confirmed this run — flagged for awareness only, not added to the table.
+
+### `#claude-notifications` — confirmed (again, 5th time) not to exist
+
+Re-checked via `slack_search_channels` this run — zero results. Posted this month's summary to Joshua's DM instead, same as every run since 2026-07-26. Recommend Joshua finally choose: create the channel, or have a future session permanently repoint this task's destination to DM.
 
 **Skill delta staged:** No — nothing this run required an `enterprise-map` or `valley-pawn-context` patch.

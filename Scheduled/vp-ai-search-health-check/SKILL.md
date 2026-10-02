@@ -57,11 +57,11 @@ For each store, open the public listing and compare Name / Address / Phone / Hou
 - Google: https://www.google.com/maps/search/valley+pawn+<city>+va
 - Bing:   https://www.bing.com/maps?q=valley+pawn+<city>+va
 Canonical NAP:
-  • Culpeper — 571 James Madison Highway, Culpeper, VA 22701 — (540) 445-5510 — Mon–Sat 10am–6pm (ONLY store open Wednesdays)
+  • Culpeper — 571 James Madison Highway, Culpeper, VA 22701 — (540) 445-5510 — Mon–Fri 10am–6pm, Sat 10am–5pm (open Wednesdays)
   • Waynesboro — 1321 West Broad Street, Waynesboro, VA 22980 — (540) 221-6346 — Mon,Tue,Thu,Fri,Sat 10am–6pm (closed Wed & Sun)
   • Harrisonburg — 1790 East Market Street, Harrisonburg, VA 22801 — (540) 574-4500 — closed Wed & Sun
   • Lexington — 125 Walker Street, Lexington, VA 24450 — (540) 461-8349 — closed Wed & Sun
-  • Roanoke — 2362 Peters Creek Road, Suite C, Roanoke, VA 24017 — (540) 562-0776 — closed Wed & Sun
+  • Roanoke — 2362 Peters Creek Road, Suite C, Roanoke, VA 24017 — (540) 562-0776 — Mon–Fri 10am–6pm, Sat 10am–5pm (open Wednesdays; closed Sun)
 
 > 📌 **CANONICAL NAP CORRECTIONS (2026-08-23, confirmed by Joshua — do not revert):**
 > 1. **Harrisonburg has NO suite number.** It is "1790 East Market Street" — full stop. The old
@@ -81,7 +81,7 @@ Then classify into one of three buckets, and NEVER collapse them into one "drift
 Also check the DESCRIPTION field in the Bing Places console for each store. It must name exactly five stores — Waynesboro, Culpeper, Harrisonburg, Roanoke, Lexington — and must be at or under 500 characters, or Bing silently keeps a stale version. A phantom sixth location (e.g. "Salem") is a real defect and AI engines quote this text directly.
 NOTE: Bing listings SYNC FROM Google Business Profile. GBP is the upstream source of truth; a Bing-side edit can be overwritten on the next sync.
 
-Flag as DRIFT: any legacy/wrong name (especially "Dixie Pawn"), wrong street number, missing suite (Roanoke must show "Suite C"), any wrong phone digit, wrong hours (watch the Culpeper-only-Wednesday rule), or a missing / duplicate / "permanently closed" listing. Ignore pure formatting differences (St vs Street, ZIP vs ZIP+4, phone format).
+Flag as DRIFT: any legacy/wrong name (especially "Dixie Pawn"), wrong street number, missing suite (Roanoke must show "Suite C"), any wrong phone digit, wrong hours (watch the Wednesday rule: only Culpeper and Roanoke are open Wednesdays; and the Saturday rule: Culpeper and Roanoke close at 5 PM on Saturday, every other store/day closes at 6 PM), or a missing / duplicate / "permanently closed" listing. Ignore pure formatting differences (St vs Street, ZIP vs ZIP+4, phone format).
 
 POST TO SLACK — channel #ai-marketing (ID C0BCEESUANM; do NOT DM anyone):
 - If everything is clean, post one line: "✅ Valley Pawn AI-search health check — schema 7/7 ✅, llms.txt live ✅, listings 10/10 clean ✅"

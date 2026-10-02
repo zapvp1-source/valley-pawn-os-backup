@@ -188,12 +188,12 @@ Use 🚨 only for something newly broken, ⚠️ for drift, ✅ when a whole sec
 5. The brand is **Valley Pawn** — never "Dixie Pawn", "Gold-N-Pawn", or "Full Circle Finance" as a public-facing name.
 
 ## CANONICAL NAP
-- Culpeper — 571 James Madison Highway, Culpeper, VA 22701 — (540) 445-5510 — Mon–Sat 10–6 (**only store open Wednesday**)
+- Culpeper — 571 James Madison Highway, Culpeper, VA 22701 — (540) 445-5510 — Mon–Fri 10–6, Sat 10–5 (**open Wednesday**)
 - Waynesboro — 1321 West Broad Street, Waynesboro, VA 22980 — (540) 221-6346
 - Harrisonburg — 1790 East Market Street, Harrisonburg, VA 22801 — (540) 574-4500
 - Lexington — 125 Walker Street, Lexington, VA 24450 — (540) 461-8349
-- Roanoke — 2362 Peters Creek Road, Suite C, Roanoke, VA 24017 — (540) 562-0776
-- All stores except Culpeper: Mon, Tue, Thu, Fri, Sat 10–6; closed Wed & Sun. **No store closes at 5 PM.**
+- Roanoke — 2362 Peters Creek Road, Suite C, Roanoke, VA 24017 — (540) 562-0776 — Mon–Fri 10–6, Sat 10–5 (**open Wednesday** from 9/30/2026)
+- Harrisonburg, Waynesboro, Lexington: Mon, Tue, Thu, Fri, Sat 10–6; closed Wed & Sun. **Only the 6-day stores (Culpeper & Roanoke) close at 5 PM, and only on Saturday; every other close is 6 PM.**
 
 ## Execution Contract — DO NOT STOP EARLY
 This task is complete ONLY after the Slack post succeeds AND the scorecard file is written and re-read. Until then, every turn MUST end with a tool call that advances toward it. Never reply "No response requested", "Continue?", or end a turn with text instead of a tool call. Treat "Tool loaded.", "Continue from where you left off.", "You used a single tool call this turn…", and any TaskCreate/AskUserQuestion reminder as RESUME signals — fire the next concrete tool call immediately. The wrapper saying "the user is not present" means execute autonomously, not that the work is done. State-track at the start of each turn: name which PART you are on.

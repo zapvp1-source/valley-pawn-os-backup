@@ -17,7 +17,7 @@ No team channels. Ever.
 - It READS files other automations already wrote and sends ONE message. It never touches Bravo, Parallels, or the Bravo trigger folder, never re-runs a compile or pull, and never composes numbers itself. Type B task (no Bravo contact).
 - All numbers come from `Valley Pawn OS/bin/daily_audit_digest.py`, which writes the exact message to send. The message is sent VERBATIM from the file the script wrote. Do not rewrite, summarise, reformat, add or drop lines.
 - Sources the script reads (for reference only; do not read them yourself): Daily Funds Verification/<date> Funds Verification.md (native 18:30 funds check), Bravo Data Extraction/output/<date>_<STORE>_safe-register-journal.csv (drawer cash at close), Valley Pawn OS/fleet/eod_photos/<date>/index.json + Valley Pawn OS/hr/ROSTER.json (count-sheet photos from #end-of-day, fetched 20:15), Pawn Walks/daily/<date>_intake_margin_summary.json + .xlsx (07:15 pawn walk), Sold Margin Review/daily/<date>_sold_review_summary.json + .xlsx (07:45), Discount Outlier Review/daily/<date>_discount_review_summary.json (08:25).
-- Date covered: the script picks the most recent business day before today (Mon covers Sat; Sun is closed; a Wednesday is Culpeper only). Do not pass a date unless re-running a specific day.
+- Date covered: the script picks the most recent business day before today (Mon covers Sat; Sun is closed; a Wednesday is Culpeper + Roanoke). Do not pass a date unless re-running a specific day.
 
 ## Step 1 — produce the digest (try A, then B)
 **A. Shell in this session.** If you have a shell tool (e.g. `mcp__workspace__bash`) and the Projects folder is mounted in it (look for `/sessions/*/mnt/Projects/Valley Pawn OS` or `~/Documents/Claude/Projects/Valley Pawn OS`), run:

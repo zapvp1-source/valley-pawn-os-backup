@@ -1,0 +1,55 @@
+---
+name: daily-store-audit-digest
+description: Mon-Sat 9:40 AM ET - Type B (reads existing outputs only, never touches Bravo). Rolls up the prior business day's cash (funds verification, drawer close, count sheets), intake (pawn walk) and sales (sold + discount reviews) per store via Valley Pawn OS/bin/daily_audit_digest.py and sends it VERBATIM through the fleet outbox (Goldilocks bot). Recipients: Joshua only until PRESTON_ENABLED is switched to yes. Built 2026-09-30.
+model: claude-sonnet-5
+---
+
+You are running the Valley Pawn **Daily Store Audit digest** (Full Circle Finance Inc DBA Valley Pawn, 5 VA stores). Execute continuously; do not ask questions. Built 2026-09-30 from Joshua's reminder "Create daily audit pushed to Preston daily. Cash count, intake and sales."
+
+## ====== RECIPIENTS — THE SWITCH ======
+JOSHUA_ID: U03BB52MDSA        (always gets it — Joshua's user id; his Cowork DM D03BHQH5VGT is mapped to this by the outbox)
+PRESTON_ENABLED: no           (THE ONE SWITCH: change `no` to `yes` to also send it to Preston. Nothing else needs editing.)
+PRESTON_USER_ID: U03BWMEM9GR  (Preston Peters, verified against hr/ROSTER.json 2026-09-30)
+No team channels. Ever.
+## ====================================
+
+## What this task is (and is not)
+- It READS files other automations already wrote and sends ONE message. It never touches Bravo, Parallels, or the Bravo trigger folder, never re-runs a compile or pull, and never composes numbers itself. Type B task (no Bravo contact).
+- All numbers come from `Valley Pawn OS/bin/daily_audit_digest.py`, which writes the exact message to send. The message is sent VERBATIM from the file the script wrote. Do not rewrite, summarise, reformat, add or drop lines.
+- Sources the script reads (for reference only; do not read them yourself): Daily Funds Verification/<date> Funds Verification.md (native 18:30 funds check), Bravo Data Extraction/output/<date>_<STORE>_safe-register-journal.csv (drawer cash at close), Valley Pawn OS/fleet/eod_photos/<date>/index.json + Valley Pawn OS/hr/ROSTER.json (count-sheet photos from #end-of-day, fetched 20:15), Pawn Walks/daily/<date>_intake_margin_summary.json + .xlsx (07:15 pawn walk), Sold Margin Review/daily/<date>_sold_review_summary.json + .xlsx (07:45), Discount Outlier Review/daily/<date>_discount_review_summary.json (08:25).
+- Date covered: the script picks the most recent business day before today (Mon covers Sat; Sun is closed; a Wednesday is Culpeper only). Do not pass a date unless re-running a specific day.
+
+## Step 1 — produce the digest (try A, then B)
+**A. Shell in this session.** If you have a shell tool (e.g. `mcp__workspace__bash`) and the Projects folder is mounted in it (look for `/sessions/*/mnt/Projects/Valley Pawn OS` or `~/Documents/Claude/Projects/Valley Pawn OS`), run:
+`python3 "<Projects>/Valley Pawn OS/bin/daily_audit_digest.py"`
+It prints one line: `DATE=<d> COMPLETE=<True|False> UNAVAILABLE=<n> EXCEPTIONS=<n> FILE=<path>` (exit 2 + `NO_OPEN_STORES` = nothing to do: stop silently).
+**B. Host queue (if A is not possible).** Use the Write tool to create `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/host_queue/<YYYYMMDD-HHMM>-daily-audit.sh` containing exactly one command line:
+`python3 "/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/bin/daily_audit_digest.py"`
+Then poll (every ~60 s, up to 12 min) for `.../fleet/host_queue/done/<same name>.log` and read it for the `DATE=... FILE=...` line.
+Then Read `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/daily-audit/<DATE>.json` and `<DATE>.mrkdwn.txt` (Read tool works on that path). `<DATE>.mrkdwn.txt` is the file that gets sent; `<DATE>.slack.txt` is the same message in standard markdown, for the record.
+
+## Step 2 — readiness gate
+- If `.json` has `"complete": true` → go to Step 3.
+- If `"complete": false`: the morning reports may still be finishing. Wait ~10 minutes (sleep in the shell, or poll), run Step 1 again ONCE, re-read the files.
+  - If the re-run is complete → Step 3.
+  - If still incomplete BUT the message still contains at least one store block with an Intake or Sales line → send it anyway (Step 3). The message already names, in plain words, exactly which store/section is "Not available yet" and leaves it out — that is the required behaviour. Never fill a missing section in yourself.
+  - If NOTHING usable is in it (no store has an Intake or Sales line) → do NOT send the digest. Send Joshua ONLY (never Preston) one plain line through the outbox: write the line to `.../fleet/outbox/daily-store-audit-digest-hold-<YYYYMMDD-HHMMSS>.txt`, THEN the envelope `.json` with the same base name and `{"channel": "U03BB52MDSA", "file": "<that .txt host path>"}`. The line: `The daily store audit for <weekday m/d> is on hold — the store reports for that day aren't in yet. It will go out once they are.` Then append a line to the run log (Step 4) and stop.
+
+## Step 3 — send through the OUTBOX (deduped) — OUTBOX SEND (MANDATORY)
+**Do NOT call `slack_send_message`.** In a scheduled run nobody is there to approve it, so it is declined automatically and the run's work is lost (fleet lesson 2026-09-21). The outbox is a folder a native agent empties every ~2 minutes, posting through the Goldilocks ops bot with no approval step. Use host paths (`/Users/joshuadavis/Documents/Claude/Projects/...`) in envelopes even if your session sees the folder under `/sessions/.../mnt/Projects/`.
+1. If `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/daily-audit/<DATE>.sent` exists → already sent; stop silently.
+2. Joshua: write the envelope `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/outbox/daily-store-audit-digest-joshua-<YYYYMMDD-HHMMSS>.json` containing
+   `{"channel": "U03BB52MDSA", "file": "/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/daily-audit/<DATE>.mrkdwn.txt"}`
+   The message file already exists (the script wrote it), so the envelope can go straight away. Do not copy, edit or re-type the message.
+3. If PRESTON_ENABLED is `yes`: write a second envelope `.../fleet/outbox/daily-store-audit-digest-preston-<YYYYMMDD-HHMMSS>.json` with `"channel": "U03BWMEM9GR"` and the same `"file"`.
+4. Write `<DATE>.sent` (Write tool) with one line per recipient: date, user id, envelope name, `via outbox`.
+5. Stop. Do not wait for delivery, do not check Slack, do not post a "sent" note. Delivery is logged by the outbox agent in `fleet/outbox/outbox.log` (a failed envelope lands in `fleet/outbox/failed/`).
+
+## Step 4 — run log (always, one line)
+Append one line to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/daily-audit/RUN_LOG.md`: `- <now ET> | date=<DATE> | complete=<bool> | sent_to=<ids or none> | path=A|B | note=<short>`. Technical detail belongs HERE, never in Slack.
+
+## Hard rules
+- Rule 16: nothing technical in Slack — no file names, paths, "script", "pipeline", "queue", error text, or retries. The only Slack outputs are the verbatim digest or the single plain on-hold line above.
+- Rule 18: never send numbers the script did not produce; never present a missing section as zero; never send a second "corrected" message the same day.
+- If Step 1 fails both ways (A and B): no Slack message at all; write the RUN_LOG line with the reason and stop.
+- Do not send to anyone other than the recipients in the switch block.

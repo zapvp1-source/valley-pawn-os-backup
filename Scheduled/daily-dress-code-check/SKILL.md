@@ -1,6 +1,6 @@
 ---
 name: daily-dress-code-check
-description: Weekdays + Saturday at 10 AM — check Google Home cameras at Valley Pawn locations, assess dress code compliance for confirmed employees only, and post report to Slack #general. Wednesdays: Culpeper only. All other days: all 5 locations.
+description: Weekdays + Saturday at 10 AM — check Google Home cameras at Valley Pawn locations, assess dress code compliance for confirmed employees only, and post report to Slack #general. Wednesdays: Culpeper and Roanoke only. All other days: all 5 locations.
 model: claude-sonnet-5
 ---
 
@@ -69,7 +69,7 @@ Exclude these from analysis: Hillary Davis, Joshua Davis, Sandi Cole, Preston Pe
 
 ## Locations to Check
 - **All days except Wednesday:** Check all 5 locations (Harrisonburg, Lexington, Culpeper, Roanoke, Waynesboro)
-- **Wednesdays:** Check Culpeper only
+- **Wednesdays:** Check Culpeper and Roanoke only (Roanoke open Wednesdays from 9/30/2026)
 
 ## Steps
 

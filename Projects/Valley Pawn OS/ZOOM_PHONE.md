@@ -31,6 +31,8 @@ Built 2026-08-07. Reference for anything touching Zoom Phone (missed calls, voic
 
 **Roanoke carrier close-out (2026-09-28, Spectrum/Cox live chat, agent Kirk B.):** confirmed no voice services remain on Cox/Spectrum account 001 5310 002188702 — a port-out of the only voice line closes phone service automatically, no call needed; internet untouched. Verify on the next statement (~10/10). Chat path that works: `myaccount-business.cox.com` login page → chat bubble → type "chat with a live agent" → Account services. Use the built-in browser; the Chrome extension can't render Spectrum pages. Chekkit told to keep hosted SMS on both ported numbers (reply on the 9/23 "Roanoke number porting" thread) — awaiting their confirmation.
 
+**UPDATE 2026-10-01:** 6th US/CA Unlimited calling plan bought for Preston ($15/mo; prorated $10.98 charged 10/1; plan now 6 × $15 = $90/mo). New number **(540) 202-4200** (The Plains, VA exchange; same last 4 as his cell) added to the account, **UNASSIGNED** — no Zoom user created for Preston and nothing sent to him; Joshua talks to him Monday 10/5. Next: create Preston's Zoom user (preston@fcfpawn.com), assign the license + 202-4200, add 202-4200 to `Zoom Call Pipeline/internal_roster.json`. Note: number-level Emergency Address on all 5 store numbers shows the Lexington address (125 Walker St) in Number Management — verify E911 per extension.
+
 **Licenses (2026-08-21):** exactly 5 × US/CA Unlimited Calling Plan seats ($75/mo) on exts 802/803/807/808/809.
 Joshua's ext 800 has NO calling plan (removed 2026-08-21 — admin-only account, not in any call path).
 
@@ -310,10 +312,10 @@ and pointing the caller to text back:
 
 | Store | Asset name | Hours stated |
 |---|---|---|
-| Culpeper | Closed Hours Greeting - Culpeper | Mon–Sat, 10 AM–6 PM |
+| Culpeper | Closed Hours Greeting - Culpeper (superseded 2026-10-01 by "... (Sat 5pm)", see below) | Mon–Sat, 10 AM–6 PM |
 | Harrisonburg | Closed Hours Greeting - Harrisonburg | Mon, Tue, Thu, Fri, Sat, 10 AM–6 PM |
 | Lexington | Closed Hours Greeting - Lexington | Mon, Tue, Thu, Fri, Sat, 10 AM–6 PM |
-| Roanoke | Closed Hours Greeting - Roanoke | Mon, Tue, Thu, Fri, Sat, 10 AM–6 PM |
+| Roanoke | Closed Hours Greeting - Roanoke (superseded 2026-10-01 by "... (Sat 5pm)", see below) | Mon, Tue, Thu, Fri, Sat, 10 AM–6 PM |
 | Waynesboro | Closed Hours Greeting - Waynesboro | Mon, Tue, Thu, Fri, Sat, 10 AM–6 PM |
 
 Overflow routing itself (Leave Voicemail to Current Extension) was left unchanged on all 5 — this
@@ -323,3 +325,27 @@ only adds the greeting that plays before the beep. Verified live: each queue's P
 Blocked earlier in the same session on Zoom requiring the Google sign-in to be linked to the
 account password before granting admin access — Joshua completed that one-time link, unblocking
 this and future Zoom admin automation. See Open Items Register 2026-09-28 entry (now closed).
+
+## 2026-10-01 — Culpeper & Roanoke close 5 PM Saturdays (queues 810 / 812)
+
+Joshua 2026-10-01: Culpeper and Roanoke are now Mon–Fri 10 AM–6 PM, Sat 10 AM–5 PM, closed Sun
+(first affected Saturday 10/3). Harrisonburg/Waynesboro/Lexington queues untouched.
+
+- **Business Hours** on Culpeper Store Queue (810) and Roanoke Store Queue (812): Sat To changed
+  6:00 PM → 5:00 PM (Mon–Fri 10–6 unchanged; Wed stays open on both). Verified after a full page
+  reload on both queues: "Sat 10:00 AM ~ 5:00 PM".
+- "Allow queue members to set their own Business Hours" is ON for both queues; members 808
+  (culpeper@) and 809 (roanoke@) both have their own Business Hours = 24 Hours a Day, 7 Days a
+  Week, so they never close the queue early — the queue's hours govern.
+- **Closed Hours voicemail greeting** replaced on both (Closed Hours > Edit > Voicemail Greeting >
+  Edit > Add Audio > Text to Speech, Matthew-Male, category Voicemail greeting, Personal Audios).
+  Zoom TTS assets can't be edited in place, so NEW assets were created and assigned; the old
+  assets remain in the library unused.
+
+| Queue | New asset | Text |
+|---|---|---|
+| Culpeper (810) | Closed Hours Greeting - Culpeper (Sat 5pm) | "Thank you for calling Valley Pawn in Culpeper. We're closed right now. Our hours are Monday through Friday, 10 to 6, and Saturday, 10 to 5. We're closed Sunday. Please leave a message after the tone, or send us a text at this same number, and our team will get back to you as soon as we open." |
+| Roanoke (812) | Closed Hours Greeting - Roanoke (Sat 5pm) | Same text with "Roanoke". (Also fixes the stale Mon/Tue/Thu/Fri/Sat wording from before Roanoke opened Wednesdays.) |
+
+Both re-opened after save and show the new asset name. Overflow routing (Leave Voicemail to
+Current Extension) unchanged.

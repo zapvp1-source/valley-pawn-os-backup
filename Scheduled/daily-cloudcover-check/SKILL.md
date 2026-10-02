@@ -1,6 +1,6 @@
 ---
 name: daily-cloudcover-check
-description: Weekdays + Saturday at 10 AM — check Pandora Cloud Cover for Valley Pawn locations and post status to Slack #general. Wednesdays: Culpeper only. All other days: all 5 locations.
+description: Weekdays + Saturday at 10 AM — check Pandora Cloud Cover for Valley Pawn locations and post status to Slack #general. Wednesdays: Culpeper and Roanoke only. All other days: all 5 locations.
 model: claude-haiku-4-5
 ---
 
@@ -16,7 +16,7 @@ model: claude-haiku-4-5
 
 Every weekday at 10 AM, check Pandora Cloud Cover music status AND Google Home speaker volumes for Valley Pawn store locations, then post the combined report to the #general Slack channel (C03BETSS669).
 
-**IMPORTANT — Wednesday rule:** On Wednesdays, all stores except Culpeper are closed. Only check and report on Culpeper. Do not include the other 4 locations.
+**IMPORTANT — Wednesday rule:** On Wednesdays, only Culpeper and Roanoke are open (Roanoke open Wednesdays from 9/30/2026). Only check and report on Culpeper and Roanoke. Do not include the other 3 locations.
 
 Check today's day of the week before proceeding, then follow the appropriate instructions below.
 
@@ -115,11 +115,11 @@ IMPORTANT RULES:
 
 ## Step 2 — Extract Cloud Cover Zone Data
 
-**If today is Wednesday**, only extract data for Culpeper (SandiPepper):
+**If today is Wednesday**, only extract data for Culpeper (SandiPepper) and Roanoke (Roanoke1):
 
 ```javascript
-const STORE_LOCATIONS = ['SandiPepper'];
-const FRIENDLY_NAMES = { 'SandiPepper': 'Culpeper' };
+const STORE_LOCATIONS = ['SandiPepper', 'Roanoke1'];
+const FRIENDLY_NAMES = { 'SandiPepper': 'Culpeper', 'Roanoke1': 'Roanoke' };
 
 const rowEls = Array.from(document.querySelectorAll('app-zones-table-row'));
 const knownBrowsers = ['Chrome', 'MS-Edge-Chromium', 'Firefox', 'Safari'];
@@ -192,7 +192,7 @@ Navigate to each store's Google Home devices page, **wait 5 seconds** for it to 
 - Roanoke: `https://home.google.com/u/1/home/1-4dcee6f564dd8273f312795185b5653a829b69f2b13c1df0bd77e73864ab4d42/devices`
 - Waynesboro: `https://home.google.com/u/1/home/1-db0b52f0fc4e4447696f44c382c5ab0664e57f19fee97ebdbb62f664236f85cc/devices`
 
-**If today is Wednesday**, only check Culpeper's URL.
+**If today is Wednesday**, only check Culpeper's and Roanoke's URLs.
 **If today is NOT Wednesday**, check all 5 URLs in sequence.
 
 After navigating to each store's URL and **waiting 5 seconds**, run this JavaScript extractor:
@@ -211,16 +211,17 @@ Record the volume % for each store. If `vol` is null after the 5-second wait, no
 
 Combine the Cloud Cover data from Step 2 with the speaker volumes from Step 3.
 
-**If today is Wednesday (Culpeper only):**
+**If today is Wednesday (Culpeper & Roanoke only):**
 
-- Use 🟢 if Culpeper IS streaming, 🔴 if NOT streaming
+- Use 🟢 for each store that IS streaming, 🔴 for each that is NOT streaming
 - Message format:
 ```
 🎵 *Cloud Cover Music Check — Wednesday, [Date] @ 10:00 AM*
 
-[✅ Culpeper streaming  OR  🚨 Culpeper NOT streaming]
+[✅ Both stores streaming  OR  🚨 X store(s) NOT streaming]
 
 🟢 *Culpeper* — "Song Title" · Artist _(Playlist)_ | 🔊 Speaker 65%
+🟢 *Roanoke* — "Song Title" · Artist _(Playlist)_ | 🔊 Speaker 67%
 ```
 
 **If today is NOT Wednesday (all 5 locations):**

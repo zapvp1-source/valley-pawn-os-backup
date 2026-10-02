@@ -1,6 +1,6 @@
 # Insurance Portfolio — All Domains
 
-**GENERATED 2026-09-30 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
+**GENERATED 2026-10-01 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
 Update the registry, then run `Life OS/Insurance/bin/regen_portfolio.py`.
 Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker history: `BROKER_PIPELINE.md`.
 
@@ -27,7 +27,7 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 
 **VP-PKG — Commercial package**
 
-- PAST-DUE INVOICE $12,523.78 (JM74343 BOP) as of 9/21/2026 - risk of cancellation for nonpayment if not resolved. Joshua told Angie 9/21 he'd "get it set up" but as of 9/23 the IPFS e-sign + $3,757.13 down payment is still not completed - his action, not autonomous.
+- PREMIUM FINANCED, NOT PAST DUE (corrected 2026-10-01): the $12,523.78 JM74343 BOP balance was placed with Imperial PFS - agreement signed 9/22/2026 (submission 36878509, ACH down payment elected), Notice of Acceptance 9/23/2026. Monitor the IPFS installment schedule instead of the JM past-due notice.
 - Non-firearm/jewelry inventory NOT COVERED at Waynesboro, Lexington, Culpeper, Harrisonburg (Bravo 7/12/2026: inventory at cost $113K/$86K/$204K/$161K). ULC needs market-value LIMITS per location to quote.
 - Business income $0 and BPP/tenant improvements Not Covered at the same 4 stores. ULC needs limits.
 - Employee Dishonesty not covered anywhere - complete and return EMPLOYEE DISHONESTY Supp app.pdf; may not qualify due to loss history.
@@ -133,6 +133,8 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - Business-use classification on any vehicle used for store runs.
 - MARKET CHECK 9/22/2026 (3 competing quotes, 4 vehicles, Hillary+Joshua, 6-month terms). Scenario A = match current 50/100/25, UM 50/100 non-stacked, PIP $1K ded, $1,000 comp/coll: GEICO $3,378 (ref 564962U2449652); State Farm $3,396 (agent Brandon Thomas, St Augustine 904-342-3459; includes an un-enrolled Drive Safe & Save intro credit, so real number is higher); Travelers $4,752 (Quote ID 0005721342836). Scenario B = 250/500/100, UM 250/500 STACKED, MedPay $5K, $1K ded: GEICO $5,543; State Farm $7,402; Travelers $7,369 (incl. gap on 3 financed cars). Allstate would not quote online without TCPA marketing consent. CONCLUSION: Progressive is NOT overpriced - at ~$3,220/term it is the cheapest at current limits, and its own 8/22/2026 upgrade quote ($4,413/term for $500K CSL + stacked UM + extended PIP + MedPay + loan payoff x4) is cheaper than every competitor's Scenario B. The 4-EV/Cybertruck household is simply expensive to insure in FL. Recommended action: stay with Progressive and buy the upgrade package before the 11/28/2026 renewal; re-shop only if Howard Baker (JM) comes back with a bundled number that beats $4,413.
 - HOUSEHOLD DRIVER FLAG: State Farm and Travelers prefill both surfaced a 'Madison Davis' associated with 844 Cypress Crossing - excluded from the quotes. If Madison is a licensed resident of the household she must be listed (or excluded in writing) on the Progressive policy; confirm with Joshua.
+- LEASE vs LIMITS (new 2026-10-01): the 2025 Model 3 is a LEASE (Augusta County confirmed 9/21/2026 that all bills go to the leasing company; vehicle removed from the VA personal property tax roll for 2026). Vehicle leases routinely require liability well above 50/100/25 and the lessor named as an additional insured. Pull the Santander lease's insurance clause and compare - the policy may be out of compliance with its own lease contract.
+- 120-day Gmail sweep 2026-10-01 for registrations, titles, lienholder notices, bills of sale, dealer paperwork and auto-loan originations found NO fifth vehicle and none disposed of. The schedule of four matches reality as far as any available source shows.
 
 **GAP-UMBRELLA — Personal umbrella and commercial umbrella/excess**
 
@@ -176,9 +178,9 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - **Mortgagee (Loc 5 building):** Dupont Community Credit Union, C/O Business Services, PO Box 1365, Waynesboro VA 22980
 - **Additional Insured / Loss Payee - Building (Loc 5):** Farming Infinity, LLC
 - **Additional Insured (Loc 3):** IWC Properties - address not yet provided to ULC
-- **Status:** In force; 7/31/2026 location endorsement issued ($1,279 return premium). Coverage-add requests (inventory GM at 4 stores, BI/BPP at 4 stores, employee dishonesty, EPLI, umbrella) OPEN - ULC waiting on Joshua for limits + completed supplementals. **PAST-DUE PREMIUM AS OF 9/21/2026 - $12,523.78** (Angie Fajardo, JM A/R, reminder emails 8/21, 8/24, 9/21/2026 to zapvp1@me.com cc hbaker@jmpartners.com). Joshua replied 9/21 "We typically make payments" and "You'd like a financing?" exchange followed - JM (Angie) sent an IPFS (Imperial PFS) premium finance agreement 9/21/2026 8:32pm requiring e-signature and a down payment of $3,757.13 directly to IPFS (jminspartnersinc.ipfs.com e-sign link, QuoteID 76c0bc52-1955-49ec-b485-9d62e268a39b). Joshua replied 9/21 4:41pm "Thanks. I'll get it set up"; Angie acknowledged 9/22 1:26pm "Sounds good, thank you." **STILL NOT SIGNED OR PAID as of this run (9/23)** - Joshua verbally committed but the e-sign link has not been completed and no down payment confirmation found. Cannot be actioned autonomously (financial commitment + e-signature).
+- **Status:** In force; 7/31/2026 location endorsement issued ($1,279 return premium). Coverage-add requests (inventory GM at 4 stores, BI/BPP at 4 stores, employee dishonesty, EPLI, umbrella) OPEN - ULC waiting on Joshua for limits + completed supplementals. **PAST-DUE PREMIUM AS OF 9/21/2026 - $12,523.78** (Angie Fajardo, JM A/R, reminder emails 8/21, 8/24, 9/21/2026 to zapvp1@me.com cc hbaker@jmpartners.com). Joshua replied 9/21 "We typically make payments" and "You'd like a financing?" exchange followed - JM (Angie) sent an IPFS (Imperial PFS) premium finance agreement 9/21/2026 8:32pm requiring e-signature and a down payment of $3,757.13 directly to IPFS (jminspartnersinc.ipfs.com e-sign link, QuoteID 76c0bc52-1955-49ec-b485-9d62e268a39b). Joshua replied 9/21 4:41pm "Thanks. I'll get it set up"; Angie acknowledged 9/22 1:26pm "Sounds good, thank you." **RESOLVED - SIGNED AND ACCEPTED (corrected by insurance-coverage-audit 2026-10-01).** IPFS submission 36878509 recorded signatures 9/22/2026 2:43pm ("Full Circle Finance, Inc. has selected to pay the Down Payment via ACH and has signed the Premium Finance Agreement", to zapvp1@me.com + afajardo@jmpartners.com), and IPFS issued a Notice of Acceptance 9/23/2026 2:23am referencing policy IK29P109337-05. The $12,523.78 past-due balance is financed through Imperial PFS, not outstanding to JM. Remaining: confirm the IPFS installment schedule is being paid on time.
 - **Documents:** Mail: 109337 VALLEY PAWN CURRENT COVERAGE AS OF 7-31-26.pdf (Howard 8/24/2026, thread 1a035923e7ea0a7e) · Mail: Pages from 109337 VALLEY PCH AMEND LOCS AND CVRG 07-31-26.pdf (endorsement, same thread) · Mail: EMPLOYEE DISHONESTY Supp app.pdf; EPLI Application Over 5 locations - 2026 V1.pdf (same thread, UNCOMPLETED) · Mail: Valley Pawn ~ Quote ~ RN V1 LL 2026 .pdf (Howard 7/1 and 7/13/2026, thread 19f1f86c0b06e1b2) · Mail: Valley Pawn IK29P109337-04.pdf (prior term policy, Howard 7/31/2026) · Drive: General Liability Policy.pdf (id 12S7umI5rWe_yiKkiGxPRmDvaxBTmcTUZ, uploaded 7/29/2026 - not parsed this pass)
-- **Last verified:** 2026-09-23 — source: Howard Baker email 8/24/2026 + attachments; 7/1 and 7/13/2026 renewal quote; IK29P109337-04 dec page; Angie Fajardo (JM A/R) past-due/financing thread 8/21-9/22/2026 (threads 1a0c46799e940068, 1a0c5ab4e5cb2502)
+- **Last verified:** 2026-10-01 — source: Howard Baker email 8/24/2026 + attachments; 7/1 and 7/13/2026 renewal quote; IK29P109337-04 dec page; Angie Fajardo (JM A/R) past-due/financing thread 8/21-9/22/2026 (threads 1a0c46799e940068, 1a0c5ab4e5cb2502)
 
 ### VP-WC — Workers compensation & employers liability
 
@@ -467,7 +469,7 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 
 - **Named insured (entity):** Hillary D. Davis / Joshua C. Davis personally
 - **Named insured (as written on policy):** Hillary D Davis (named insured); Joshua C Davis (driver)
-- **Scope:** 4 vehicles garaged 32095: 2024 Rivian R1S 7PDSGABA0RN033038 (Chase Auto Finance); 2025 Tesla Model 3 5YJ3E1EA8SF981978 (Santander); 2026 Tesla Model Y 7SAYGDEEXTA402172 (Chase); 2026 Tesla Cybertruck 7G2CEHED0TA101127 (no lien) added 8/22/2026
+- **Scope:** 4 vehicles garaged 32095: 2024 Rivian R1S 7PDSGABA0RN033038 (Chase Auto Finance); 2025 Tesla Model 3 5YJ3E1EA8SF981978 (LEASED - Santander Consumer USA is the lessor, not a lienholder; confirmed 2026-09-21 by Augusta County Commissioner of the Revenue, lessee acct 244876); 2026 Tesla Model Y 7SAYGDEEXTA402172 (Chase); 2026 Tesla Cybertruck 7G2CEHED0TA101127 (no lien) added 8/22/2026
 - **Carrier:** Progressive Select Insurance Co (NAIC 10192)
 - **Broker:** Direct (Progressive), 1-800-776-4737; claims 1-800-274-4499
 - **Policy #:** 998062549 · **Term:** 2026-05-28 → 2026-11-28 · **Renews:** 2026-11-28
@@ -487,10 +489,10 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
   - **collision:** $2,000
   - **PIP:** $1,000
 - **Lienholder/Additional interest:** Chase Auto Finance, Ft Worth TX 76101 (Rivian, Model Y)
-- **Lienholder/Additional interest:** Santander Consumer USA, Carmel IN 46082 (Model 3)
+- **Lessor / Additional interest:** Santander Consumer USA, Carmel IN 46082 (2025 Tesla Model 3 - LEASE, lessee acct 244876; verify the lease's required minimum liability limits and whether the lessor must be named as an ADDITIONAL INSURED rather than loss payee)
 - **Status:** In force; ACTIVE DECISION before 11/28/2026 renewal (limits kept low 8/22/2026 to take Cybertruck delivery).
 - **Documents:** Drive: Declarations Page.pdf (Progressive renewal dec dated 4/24/2026, id 1--Ulw0EuDBq7dNTXeoIxFy91zsPriGWv) · Drive: 11 Auto Insurance Declarations CSAA.pdf (misnamed - actually CSAA 2019 homeowners dec for 8018 Hampton Station Ct; historical)
-- **Last verified:** 2026-09-22 — source: Progressive dec 4/24/2026 (Drive); prior portfolio 8/22/2026
+- **Last verified:** 2026-10-01 — source: Progressive dec 4/24/2026 (Drive); prior portfolio 8/22/2026
 
 ### PERS-HEALTH — Health - ACA marketplace plans (VA and FL, 1095-A)
 

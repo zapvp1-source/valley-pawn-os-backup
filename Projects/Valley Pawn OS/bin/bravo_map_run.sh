@@ -51,30 +51,40 @@ bash "$G" acquire "$AGENT" >/dev/null 2>&1
 trap 'bash "'"$G"'" release "'"$AGENT"'" >/dev/null 2>&1; rmdir "'"$VLOG/.lock.$AGENT"'" 2>/dev/null' EXIT
 bravo_close_terminals >/dev/null 2>&1
 D0=$(cat "$MAP/_done.txt" 2>/dev/null | wc -l | tr -d ' ')
-rm -f "$ST"
-T0=$(date +%s)
-"$PRLCTL" exec "$VM" --current-user powershell.exe -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File '\\Mac\Home\Documents\Claude\Projects\Bravo Data Extraction\_run_bravomapper.ps1' -Deadline "$DL" -Mode "$MODE" -Store CUL 2>&1 | tail -1 | while read -r l; do vlog "launch: $l"; done
-
-# ---- monitor
-HARD=$((DLE + 900)); s=""
+# v2 2026-10-01: up to 3 relaunches per window when an abort was recovered (health PASS) and >30 min
+# remain -- the 9/30 run lost the rest of the night to one stranded screen at 22:54.
+RELAUNCH=0; HG=""
 while :; do
-  sleep 60
-  bash "$G" acquire "$AGENT" >/dev/null 2>&1          # refresh ownership (guard treats >45 min as stale)
-  s=$(cat "$ST" 2>/dev/null)
-  case "$s" in *COMPLETE*|*DONE-SMOKE*|*PAUSED-DEADLINE*|*ABORT*) break ;; esac
-  now=$(date +%s); m=$(stat -f %m "$ST" 2>/dev/null || echo 0)
-  if [ -z "$s" ] && [ $((now - T0)) -gt 600 ]; then s="ABORT never-started (see logs/bravomap-*.log)"; kill_mapper >/dev/null; break; fi
-  if [ -n "$s" ] && [ $((now - m)) -gt 900 ]; then s="ABORT stalled: $s"; vlog "kill: $(kill_mapper)"; break; fi
-  if [ "$now" -gt "$HARD" ]; then s="ABORT overran deadline"; vlog "kill: $(kill_mapper)"; break; fi
-done
-vlog "crawler ended: $s"
+  rm -f "$ST"
+  T0=$(date +%s)
+  "$PRLCTL" exec "$VM" --current-user powershell.exe -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File '\\Mac\Home\Documents\Claude\Projects\Bravo Data Extraction\_run_bravomapper.ps1' -Deadline "$DL" -Mode "$MODE" -Store CUL 2>&1 | tail -1 | while read -r l; do vlog "launch: $l"; done
 
-# ---- recovery (any abnormal end): standard health gate puts Bravo back on a Dashboard
-HG=""
-case "$s" in *ABORT*)
+  # ---- monitor
+  HARD=$((DLE + 900)); s=""
+  while :; do
+    sleep 60
+    bash "$G" acquire "$AGENT" >/dev/null 2>&1          # refresh ownership (guard treats >45 min as stale)
+    s=$(cat "$ST" 2>/dev/null)
+    case "$s" in *COMPLETE*|*DONE-SMOKE*|*PAUSED-DEADLINE*|*ABORT*) break ;; esac
+    now=$(date +%s); m=$(stat -f %m "$ST" 2>/dev/null || echo 0)
+    if [ -z "$s" ] && [ $((now - T0)) -gt 600 ]; then s="ABORT never-started (see logs/bravomap-*.log)"; kill_mapper >/dev/null; break; fi
+    if [ -n "$s" ] && [ $((now - m)) -gt 900 ]; then s="ABORT stalled: $s"; vlog "kill: $(kill_mapper)"; break; fi
+    if [ "$now" -gt "$HARD" ]; then s="ABORT overran deadline"; vlog "kill: $(kill_mapper)"; break; fi
+  done
+  vlog "crawler ended: $s"
+
+  # ---- recovery (any abnormal end): standard health gate puts Bravo back on a Dashboard
+  case "$s" in *ABORT*) ;; *) break ;; esac
   HG=$(health_gate 600); vlog "health gate: $HG"
-  case "$HG" in *PASS*) ;; *) ledger "$AGENT" "The overnight Bravo mapping run stopped early and Bravo did not confirm healthy afterwards." "no" ;; esac ;;
-esac
+  case "$HG" in *PASS*) ;; *) ledger "$AGENT" "The overnight Bravo mapping run stopped early and Bravo did not confirm healthy afterwards." "no"; break ;; esac
+  echo "- $(date '+%F %H:%M') recovered from '$s' (health=$HG)" >> "$RUNLOG"
+  case "$s" in *never-started*) break ;; esac
+  RELAUNCH=$((RELAUNCH + 1))
+  [ $RELAUNCH -gt 3 ] && break
+  [ $((DLE - $(date +%s))) -lt 1800 ] && break
+  [ -n "$(busy_reason)" ] && { vlog "pipeline busy after recovery - stop for tonight"; break; }
+  vlog "relaunching crawler ($RELAUNCH/3)"
+done
 
 # ---- progress + compile
 D1=$(cat "$MAP/_done.txt" 2>/dev/null | wc -l | tr -d ' '); F1=$(sort -u "$MAP/_fail.txt" 2>/dev/null | wc -l | tr -d ' ')

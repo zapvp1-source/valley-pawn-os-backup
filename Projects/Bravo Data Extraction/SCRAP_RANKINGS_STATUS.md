@@ -5,6 +5,66 @@ Newest first.
 
 ---
 
+## 2026-10-01 — POSTED (2026-09; on-schedule 4:30 AM ET run)
+
+- **Health gate:** could not run `bravo_ensure_healthy.sh` from this Cowork session (no `prlctl`/host
+  shell access from the Linux sandbox this run executed in — a gap worth noting for future runs of
+  this task from Cowork rather than a native agent). Proceeded straight to trigger-drop pulls per
+  the task's own recipe, since trigger-drop is the lower-risk Type A path.
+- **Pulls:** backed up all 10 `*_scrap-refining-gold.csv` files first (`output/_backups_20261001/`).
+  Window `2026-08..2026-09`, one trigger per store. Bravo was genuinely unstable this morning —
+  **10 consecutive EnsureStore/navigation failures** across 6 drop-rounds before the first store
+  (ROA) succeeded; HAR/LEX/CUL needed 2-4 retries each before landing. No contention found (guard
+  was CLEAR throughout, no other trigger running) — this was Bravo itself (auto-lock loops, store
+  row not rendering, "Scrap Refining Process" not found), not a pull-logic problem, consistent with
+  the task's own note that most failures are navigation, not data. All 5 stores eventually
+  succeeded on a straight re-drop, no manual Bravo recovery was available/needed.
+- **Merge-restore:** `_merge_scrap_weights.py` run after the pull; CUL's partial first pull (19 rows)
+  was topped back up to the backup's 20; HAR/LEX/ROA/WAY all pulled >= backup row counts (net-new
+  rows only, nothing lost). Verified row counts match before continuing.
+- **DEFECT FOUND AND FIXED in `scrap_rankings.py`** (backup `scrap_rankings.py.bak-20261001-stdname-offset`).
+  First build/report for September came back with `"cur": {}` — 0 dwt company-wide — despite HAR,
+  LEX and ROA each having a real CLOSED, posted-in-September bucket on hand (confirmed by reading
+  the raw CSVs directly, not trusting the script's own output). Root cause: the "HOUSE STANDARD
+  FIRST" rule added 2026-08-13 assumed a `YYYY-MM GOLD` bucket name states its OWN period verbatim
+  (name = period, no shift), on the theory that a standard bucket would be created+named+posted
+  within one calendar month. That assumption has not held: by today, 6 CLOSED buckets across 3
+  stores (HAR x2, LEX x2, ROA x2) had gone from created to posted under this naming format, and
+  **every single one** posted exactly one calendar month after its own name (e.g. HAR "2026-08
+  GOLD" created 9/1, posted 9/28) — i.e. stores adopted the new `YYYY-MM` string but kept naming it
+  for the COLLECTION month, same as every legacy convention. Zero of six supported the no-shift
+  assumption. Fixed `resolve_month()` to apply the same "name = collection month, period = name+1"
+  offset to standard-name buckets as to legacy names (full confidence, not LOW-CONF, since the name
+  itself is unambiguous). Verified via diff of `scrap_history.csv` before/after: the ONLY change was
+  those 6 rows moving from period 2026-08 to 2026-09 — nothing else shifted, and none of the 6 were
+  part of the already-published August total (all 6 were still OPEN as of the 9/5 August run, so no
+  retroactive change to a number already in front of the stores).
+- **Quality gate — all passed:** HAR/LEX/ROA have real September buckets (full-confidence
+  `standard-name` source, not LOW-CONF); CUL and WAY verified via raw CSV to genuinely have nothing
+  posted this period (CUL's Aug-named bucket has sat OPEN since 8/4; WAY has not opened a new bucket
+  since its already-reported early-August one) — not a pull gap. Zero missing weights in the
+  reported month. Zero blank-weight YTD rows Jan-Sep either year.
+- **Published September 2026:** Company 308 dwt (vs 472 LY, −35%; vs 608 Aug, −49%).
+  Roanoke 114 · Harrisonburg 105 · Lexington 89. Culpeper and Waynesboro had nothing posted yet —
+  said so plainly in the post rather than showing a false zero or silently dropping them.
+  YTD 5,046 vs 4,092 (+23%): Culpeper 1,779 · Harrisonburg 988 · Roanoke 810 · Waynesboro 755 ·
+  Lexington 715.
+- **Slack:** https://valleypawnworkspace.slack.com/archives/C05EHBH4G67/p1790854661991089 (no footer).
+- **Trend workbook — NOT refreshed in Drive this run.** Rebuilt the workbook locally (20 posted
+  months, matches the fixed history) but the Google Drive connector's `create_file` call to replace
+  `Valley Pawn Drive/Trends/Valley Pawn - Gold Scrap Trend.xlsx` was auto-declined by the platform
+  ("no one was available to approve it during this scheduled run"). This Cowork session has no
+  mounted path to that Drive folder either (only `Documents/Claude/Projects` was connected), so
+  there was no fallback write path. **Needs Joshua:** either approve a Drive-write action for this
+  task going forward, or connect the Google Drive folder to this task's session so the native
+  `scrap_trend_sheet.py` path works directly. The rebuilt workbook is sitting in the session's
+  temp output, not yet delivered anywhere durable — next run should just rebuild fresh rather than
+  trying to recover it from here.
+- **Next run:** 2026-11-01 → report period 2026-10, pull window 2026-09..2026-10. Worth checking
+  whether CUL's long-open bucket (open since 8/4, ~2 months — unusually long) and WAY's bucket gap
+  have resolved by then; if CUL is still open at the next run it may be worth a plain-language nudge
+  to the store rather than letting it run indefinitely.
+
 ## 2026-09-05 — POSTED (catch-up for 2026-08; the 9/1 4:30 AM run posted nothing)
 
 - 16:50 ET: a second run of the catch-up one-shot fired; duplicate guard found the August post already in #scrap-rankings (16:22) → no pull, no post, no file changes.

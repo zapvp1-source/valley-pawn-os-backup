@@ -59,6 +59,10 @@ global DEADLINE  := (A_Args.Length >= 1) ? A_Args[1] : FormatTime(DateAdd(A_Now,
 global MODE      := (A_Args.Length >= 2) ? A_Args[2] : "smoke"
 global RSTORE    := (A_Args.Length >= 3) ? A_Args[3] : "CUL"
 global SMOKE_MAX := 3
+; v2 2026-10-01: level-2 clicks are now an explicit ALLOW-LIST (read-only screens only).
+; The 9/30 run proved a deny-list is not enough: "Schedule Mobile Event" opened an editor whose
+; only exit was Done. Anything not listed here is recorded in lists\notclicked_*.txt, never clicked.
+global SUB_ALLOW_RX := "i)^(custom reports|item history|item detail|details|customer view|web item view|view|find transaction|view auction item|view web order|view related auctions|view ebay errors|estimator|stock management|physical inventory audit|lost stolen or damaged report|item history report)$"
 
 global DONE := Map()
 global FAILS := Map()
@@ -173,6 +177,11 @@ StepModule(label, aid) {
 }
 
 StepSub(label, aid, ctype, cname) {
+    if !RegExMatch(cname, SUB_ALLOW_RX) {
+        AppendLine(LIST_DIR . "\notclicked_" . Slug(label) . ".txt", ctype . "`t" . cname . "`t(not on allow-list)")
+        LogMessage("   not on allow-list, recorded only: " . cname)
+        return true
+    }
     OpenModule(aid)
     el := FindIn(GetBravoRoot(), {Name: cname, Type: ctype})
     if !el
@@ -208,18 +217,16 @@ StepReportTree() {
     DumpScreen("R__tree", "Reports tree (all categories expanded)")
     out := ""
     cats := ""
-    for el in FindAllIn(GetBravoRoot(), "TreeItem") {
-        nm := "", aid := ""
-        try nm := el.Name
-        try aid := el.AutomationId
-        if (nm = "" || !InStr(aid, "ReportTree"))
+    seen := Map()
+    for el in ReportItems() {
+        lbl := ReportLabel(el)
+        if (lbl = "" || seen.Has(lbl))
             continue
-        kids := 0
-        try kids := el.FindElements({Type: "TreeItem"}).Length
-        if (kids > 0)
-            cats .= nm . "`t" . aid . "`r`n"
-        else
-            out .= nm . "`r`n"
+        seen[lbl] := 1
+        kind := ""
+        try kind := el.Name
+        out .= lbl . "`r`n"
+        cats .= lbl . "`t" . (InStr(kind, "Printable") ? "printable" : "configurable") . "`r`n"
     }
     WriteFile(LIST_DIR . "\report_categories.txt", cats)
     WriteFile(LIST_DIR . "\reports.txt", out)
@@ -228,7 +235,13 @@ StepReportTree() {
 
 StepReport(name) {
     OpenReports()
-    el := FindIn(GetBravoRoot(), {Name: name, Type: "TreeItem"})
+    el := 0
+    for it in ReportItems() {
+        if (ReportLabel(it) = name) {
+            el := it
+            break
+        }
+    }
     if !el
         throw Error("report item not found: " . name)
     try el.ScrollItemPattern.ScrollIntoView()
@@ -295,12 +308,50 @@ OpenReports() {
     }
 }
 
+ReportItems() {
+    res := []
+    for el in FindAllIn(GetBravoRoot(), "TreeItem") {
+        nm := ""
+        try nm := el.Name
+        if InStr(nm, "ReportManager.ReportTree") && (InStr(nm, "Configurable") || InStr(nm, "Printable"))
+            res.Push(el)
+    }
+    return res
+}
+
+ReportLabel(el) {
+    lbl := ""
+    try {
+        for t in el.FindElements({Type: "Text"}) {
+            tn := ""
+            try tn := t.Name
+            if (tn != "") {
+                lbl := tn
+                break
+            }
+        }
+    }
+    return lbl
+}
+
 GoDash() {
     ok := false
     try ok := BackToDashboard()
     if ok
         return true
-    LogMessage("   GoDash: BackToDashboard failed - EnsureBravoDashboard")
+    LogMessage("   GoDash: BackToDashboard failed - trying named Cancel / Esc")
+    Loop 3 {
+        try ClickByName("Cancel", 1500)
+        Sleep(1000)
+        DismissPopups()
+        if ExistsByName("Reports")
+            return true
+        Send("{Escape}")
+        Sleep(1200)
+        if ExistsByName("Reports")
+            return true
+    }
+    LogMessage("   GoDash: still not on Dashboard - EnsureBravoDashboard")
     ok := false
     try ok := EnsureBravoDashboard(BRAVO_PASSWORD, RSTORE)
     return ok && ExistsByName("Reports")
@@ -342,6 +393,8 @@ RunStep(key, fn) {
     }
     STEPS_RUN += 1
     if !GoDash() {
+        AppendLine(FAIL_FILE, key)      ; never retry a step that strands Bravo
+        AppendLine(FAIL_FILE, key)
         SetStatus("ABORT no-dashboard after " . key)
         ExitApp(2)
     }

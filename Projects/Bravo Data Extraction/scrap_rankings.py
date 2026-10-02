@@ -185,14 +185,31 @@ def resolve_month(bucket, e):
     if (e.get("status") or "").upper() == "OPEN":
         return None  # still collecting; not yet sent out
 
-    # HOUSE STANDARD FIRST (2026-08-13). A `YYYY-MM ...` name states its own
-    # period; nothing else may override it. Before this existed the parser had
-    # no rule for the format at all, so the correctly-named buckets were the
-    # ones that came back UNRESOLVED -- CUL "2026-08 GOLD" and
-    # "2026-08 GOLD WITH STONES" were both silently dropped from the history.
+    # HOUSE STANDARD NAME (2026-08-13, corrected 2026-10-01). A `YYYY-MM ...`
+    # name is recognized and given priority over the created/posted-date
+    # fallbacks below -- but it is NOT taken as the period verbatim. When this
+    # rule first shipped it assumed "name == period, no shift" on the theory
+    # that stores would create+name+post a standard bucket all within one
+    # calendar month. That theory did not hold up: by 2026-10-01 six buckets
+    # across three stores (HAR x2, LEX x2, ROA x2) had gone from CREATED to
+    # CLOSED under this format, and EVERY SINGLE ONE posted exactly one
+    # calendar month after its own name (e.g. HAR "2026-08 GOLD" created
+    # 9/1/2026, posted 9/28/2026 -- the name states the COLLECTION month, same
+    # as every legacy naming convention, just in YYYY-MM dress). Zero of six
+    # supported the original no-shift assumption. So a standard name gets the
+    # same "name = collection month, period = name + 1" treatment as a legacy
+    # name, just with full (non-LOW-CONF) confidence since the name itself is
+    # unambiguous about which month it is labeling.
+    # Without this fix, a standard-name bucket posted in month P (the correct
+    # reporting period under the master posted-date rule) gets silently filed
+    # under P-1 instead -- for a bucket still OPEN at P-1's own report time,
+    # that means it never counts anywhere until caught.  Found 2026-10-01 when
+    # the September run came back with "cur": {} (zero dwt company-wide) despite
+    # HAR/LEX/ROA each having a real CLOSED, posted-in-September bucket on hand.
     sn = parse_standard_name(bucket)
     if sn:
-        return sn[0], sn[1], "standard-name"
+        y, mo = sn
+        return (y + 1, 1, "standard-name") if mo == 12 else (y, mo + 1, "standard-name")
 
     p = parse_created(e.get("posted", ""))
     if p:

@@ -7,7 +7,7 @@ Bravo Data Extraction/BRAVO_MAP.md. Pure file work: never touches Bravo. Safe to
 """
 import os, re, glob, datetime, collections
 
-BDE = os.path.expanduser("~/Documents/Claude/Projects/Bravo Data Extraction")
+BDE = os.environ.get("BDE_OVERRIDE") or os.path.expanduser("~/Documents/Claude/Projects/Bravo Data Extraction")
 MAP = os.path.join(BDE, "output", "bravo_map")
 OUT = os.path.join(BDE, "BRAVO_MAP.md")
 LINE = re.compile(r"^( *)\[(.*?)\] N=(.*?) \| A=(.*?) \| C=(.*?) \| (\S+)( off)? \| R=([^|]*?)(?: \| V=(.*))?$")
@@ -138,10 +138,24 @@ def main():
             o.append("")
 
     o += ["## Reports", ""]
-    cats = lines(os.path.join(MAP, "lists", "report_categories.txt"))
     reps = lines(os.path.join(MAP, "lists", "reports.txt"))
-    if cats:
-        o.append("Categories: " + "; ".join(c.split("\t")[0] for c in cats))
+    # categories + reports straight from the Reports-tree dump (works even before the per-report pass)
+    tree = read(os.path.join(MAP, "screens", "R__tree.txt")).splitlines()
+    bycat, cat, pend = collections.OrderedDict(), None, []
+    for i, raw in enumerate(tree):
+        if "[tree view item] N=Item: (ZTI.Bravo.ReportManager.ReportTree." in raw and ("Configurable" in raw or "Printable" in raw):
+            if i + 1 < len(tree):
+                m = re.search(r"\[text\] N=(.*?) \|", tree[i + 1])
+                if m and m.group(1).strip():
+                    pend.append(m.group(1).strip())
+        m = re.match(r"^ {8}\[text\] N=(.*?) \|", raw)      # category caption closes its block
+        if m and pend:
+            bycat[m.group(1).strip()] = pend
+            pend = []
+    for c, rs in bycat.items():
+        o.append("- **%s (%d):** %s" % (c, len(rs), "; ".join(rs)))
+    if not reps:
+        reps = [r for rs in bycat.values() for r in rs]
     o.append("All reports (%d): %s" % (len(reps), "; ".join(reps)))
     o.append("")
     for r in reps:

@@ -410,16 +410,81 @@ def load_employee_activity(output_dir, pipeline_date):
     return first, by_name
 
 
+# --- CURRENT EMPLOYEES ONLY (Joshua, 2026-10-01) ------------------------------
+# Bravo reports every login that rang a sale, incl. people who have left and shared/system
+# logins. The team ranking lists ONLY current employees per hr/ROSTER.json (Gusto active,
+# refreshed daily by roster_write.py). Company totals elsewhere are unaffected.
+ROSTER_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "hr", "ROSTER.json")
+ROSTER_MAX_AGE_DAYS = 4
+SERVICE_LOGIN_PREFIXES = ("FREE1", "SYSTEM", "BACKUP", "APPROVAL")
+NAME_ALIASES = {  # Bravo name -> Gusto legal name
+    "BENJIE MOORE": "GEORGE MOORE",
+    "SANDI COLE": "SANDRA COLE",
+    "STEVE BURCH": "STEVEN BURCH",
+}
+
+
+def _norm(s):
+    return re.sub(r"[^A-Z ]", "", (s or "").upper()).split()
+
+
+def load_active_keys():
+    """Set of 'FIRST|LAST' keys (legal + preferred first) for every active Gusto employee.
+    Raises Withhold if the roster is missing or stale — never publish unfiltered."""
+    if not os.path.exists(ROSTER_PATH):
+        raise Withhold(["active roster file not found — cannot filter to current employees"])
+    with open(ROSTER_PATH) as f:
+        d = json.load(f)
+    gen = (d.get("generated_at") or "")[:10]
+    try:
+        age = (dt.date.today() - dt.date.fromisoformat(gen)).days
+    except ValueError:
+        age = 999
+    if age > ROSTER_MAX_AGE_DAYS:
+        raise Withhold(["active roster is %s days old — cannot filter to current employees" % age])
+    keys = set()
+    for e in d.get("employees", []):
+        parts = _norm(e.get("name"))
+        if len(parts) < 2:
+            continue
+        last = " ".join(parts[1:])
+        for first in {parts[0]} | set(_norm(e.get("preferred"))[:1]):
+            keys.add(first + "|" + last)
+            keys.add(first + "|" + parts[-1])
+    if not keys:
+        raise Withhold(["active roster is empty — cannot filter to current employees"])
+    return keys
+
+
+def is_current(upper_name, keys):
+    n = NAME_ALIASES.get(" ".join(_norm(upper_name)), upper_name)
+    parts = _norm(n)
+    if len(parts) < 2:
+        return False
+    return (parts[0] + "|" + " ".join(parts[1:])) in keys or (parts[0] + "|" + parts[-1]) in keys
+
+
 def title_name(upper):
     return " ".join(w.capitalize() for w in upper.lower().split())
 
 
 def render_employee_performance(output_dir, pipeline_date, post_date, notes):
     first, by_name = load_employee_activity(output_dir, pipeline_date)
-    ranked = [(k, v) for k, v in by_name.items() if v["total"] > 0.0]
+    keys = load_active_keys()
+    ranked, dropped = [], []
+    for k, v in by_name.items():
+        if v["total"] <= 0.0:
+            continue
+        if k.startswith(SERVICE_LOGIN_PREFIXES) or not is_current(k, keys):
+            dropped.append(title_name(k))
+            continue
+        ranked.append((k, v))
     ranked.sort(key=lambda kv: -kv[1]["total"])
+    if dropped:
+        notes.append("left off the ranking (not on the current team / shared login): "
+                     + ", ".join(sorted(dropped)))
     if not ranked:
-        raise Withhold(["no employees with sales > $0"])
+        raise Withhold(["no current employees with sales > $0"])
     medals = {1: ":first_place_medal:", 2: ":second_place_medal:", 3: ":third_place_medal:"}
     lines = ["*MTD Employee Sales Rankings — Retail Sales Excluding Fees*",
              ":bar_chart: Period: %s–%s" % (first, pipeline_date), ""]
@@ -427,9 +492,6 @@ def render_employee_performance(output_dir, pipeline_date, post_date, notes):
         rank = medals.get(i, "%dth" % i if i > 3 else "")
         stores = "+".join(sorted(v["stores"], key=lambda c: [s[0] for s in STORES].index(c)))
         lines.append("%s *%s* (%s) — %s" % (rank, title_name(k), stores, usd(v["total"])))
-    if any(k.startswith("FREE1") for k, _ in ranked):
-        notes.append("the shared FREE1 login appears in the employee ranking — sales rung under the "
-                     "shared login are not attributable to a person")
     return "\n".join(lines), {"ranked": ranked}
 
 

@@ -225,7 +225,8 @@ def during_hours(ts_et, s):
     if ts_et.weekday() not in s.get("days", []):
         return False
     o = dt.time.fromisoformat(s.get("open", "10:00"))
-    c = dt.time.fromisoformat(s.get("close", "18:00"))
+    # 2026-10-01: optional per-weekday close (CUL/ROA close 17:00 on Saturday) — config close_by_weekday
+    c = dt.time.fromisoformat(s.get("close_by_weekday", {}).get(str(ts_et.weekday()), s.get("close", "18:00")))
     return o <= ts_et.time() < c
 
 

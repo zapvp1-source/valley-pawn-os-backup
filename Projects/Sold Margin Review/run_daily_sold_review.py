@@ -117,7 +117,7 @@ STORES = ["CUL", "HAR", "LEX", "ROA", "WAY"]
 
 # ── Open-stores gate (Joshua, 2026-08-12 pattern) ──────────────────────────────
 # The scheduled task only ever REQUESTS a Bravo pull for open stores on a given
-# date (Sunday = none, Wednesday = CUL only, else all 5) — see sold-review's
+# date (Sunday = none, Wednesday = CUL + ROA from 2026-09-30 / CUL only before, else all 5) — see sold-review's
 # SKILL.md STEP 0.5. This compile script mirrors that same logic purely for
 # REPORTING clarity: a store with no CSV because it was legitimately closed
 # should not be lumped into "missing_stores" next to a store that was open but
@@ -128,8 +128,8 @@ def open_stores_for(date: datetime.date) -> list[str]:
     wd = date.weekday()  # Monday=0 ... Sunday=6
     if wd == 6:      # Sunday
         return []
-    if wd == 2:       # Wednesday
-        return ["CUL"]
+    if wd == 2:       # Wednesday: CUL + ROA from 2026-09-30 (Joshua 2026-10-01), CUL only before
+        return ["CUL", "ROA"] if date >= datetime.date(2026, 9, 30) else ["CUL"]
     return list(STORES)
 
 
@@ -219,7 +219,7 @@ def _parse_mdy_or_iso(s):
 def load_sold_for_date(date: datetime.date) -> tuple[list[dict], list[str]]:
     """Returns (rows, stores_with_no_file). Only checks stores that were OPEN on
     this date per open_stores_for() — a store closed that day (Sunday, or any
-    non-CUL store on a Wednesday) is correctly excluded entirely, not reported
+    non-CUL/ROA store on a Wednesday) is correctly excluded entirely, not reported
     as missing. Tries each filename candidate per store in order; first match
     wins. A store that WAS open but has no matching file is reported separately
     (not the same as a store with a file but zero rows — that's a legitimate
@@ -228,7 +228,26 @@ def load_sold_for_date(date: datetime.date) -> tuple[list[dict], list[str]]:
     rows: list[dict] = []
     missing_files: list[str] = []
 
-    for store in open_stores_for(date):
+    # 2026-10-01: a normally-closed store (e.g. Roanoke on Wed 9/30) that actually
+    # sold items that day is INCLUDED when its sold CSV has data rows. Such extras
+    # are never reported as missing. Additive; scheduled open stores unchanged.
+    _sched = open_stores_for(date)
+    _extra = []
+    if date.weekday() != 6:
+        for _s in STORES:
+            if _s in _sched:
+                continue
+            for _pat in _FILENAME_CANDIDATES:
+                _c = os.path.join(BRAVO_OUTPUT, _pat.format(d=ds, store=_s))
+                if os.path.exists(_c):
+                    try:
+                        with open(_c, encoding='utf-8-sig') as _fh:
+                            if sum(1 for _ in _fh) > 1:
+                                _extra.append(_s)
+                    except Exception:
+                        pass
+                    break
+    for store in list(_sched) + _extra:
         path = None
         for pat in _FILENAME_CANDIDATES:
             candidate = os.path.join(BRAVO_OUTPUT, pat.format(d=ds, store=store))

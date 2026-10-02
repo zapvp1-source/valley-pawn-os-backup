@@ -50,14 +50,14 @@ THE single local nightly jewelry count task for Valley Pawn (consolidated 2026-0
 ## STEP 0 — OPEN-STORES GATE. Do this before anything else.
 Only run for stores that ACTUALLY TRADED TODAY. Get the real weekday first via `mcp__Control_your_Mac__osascript`: date '+%A %Y-%m-%d'.
 - Sunday -> NOBODY OPEN. Skip the entire run silently. Correct no-op, not a failure.
-- Wednesday -> ["CUL"] only.
+- Wednesday -> ["CUL","ROA"] only (Roanoke open Wednesdays from 2026-09-30, Joshua 2026-10-01).
 - Mon, Tue, Thu, Fri, Sat -> ["CUL","HAR","LEX","ROA","WAY"]
-"COMPLETE" means every OPEN store done — a Wednesday run covering only Culpeper is complete.
+"COMPLETE" means every OPEN store done — a Wednesday run covering only Culpeper and Roanoke is complete.
 
 ═══ RULE 0 — NEVER REQUEST FOLDER ACCESS ═══
 Do NOT call `mcp__cowork__request_cowork_directory`, and do not use Read/Write/Edit for anything under /Users/joshuadavis/Documents/. You run unattended; the approval prompt times out and kills the run (happened 2026-08-10). Reach EVERY file via `mcp__Control_your_Mac__osascript` shell commands (cat, ls, printf, python3). osascript quirks: wrapper dies ~25s — never sleep >18s in one call, poll with repeated short calls; append `|| true` to commands whose last stage may exit non-zero.
 
-WHY THE TIMING MATTERS: Bravo's jewelry report is a LIVE on-hand query (no as-of-date). The manager's sheet is a physical case count at 6 PM close. All 5 stores close 6:00 PM, reopen 10:00 AM — so 6 PM→10 AM is the freeze window. You fire at 8:30 PM inside it; that's what makes the numbers comparable. If you cannot run inside tonight's freeze window, do NOT pull; report the miss and stop.
+WHY THE TIMING MATTERS: Bravo's jewelry report is a LIVE on-hand query (no as-of-date). The manager's sheet is a physical case count at close (6 PM; 5 PM Saturday at Culpeper & Roanoke). All 5 stores close 6:00 PM (Culpeper & Roanoke 5:00 PM on Saturday), reopen 10:00 AM — so close→10 AM is the freeze window. You fire at 8:30 PM inside it; that's what makes the numbers comparable. If you cannot run inside tonight's freeze window, do NOT pull; report the miss and stop.
 
 ## STEP 1 — Contention check + health gate (mandatory, never touch Bravo blind).
 - Via osascript: ls -la "/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/triggers/claimed/" — anything claimed in the last ~30 min means Bravo is in use; wait and re-check up to 3 times at ~10 min intervals, then STOP and DM Joshua one plain line (D03BHQH5VGT).

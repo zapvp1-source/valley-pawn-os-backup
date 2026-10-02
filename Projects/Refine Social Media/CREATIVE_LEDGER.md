@@ -314,3 +314,149 @@ near:
 3. **Did we ever actually reply to a comment?** The number to beat is zero.
 4. **Did `pro_retro_shelf` and `eng_two_week_answer` move followers?** They are the two bets
    against lesson 6 and the follower number is the cleanest scoreboard we have.
+
+---
+
+# 2026-10-01 — Quarterly creative refresh, Q4 2026 (October run)
+
+**Season at run time:** early_fall. **Quarter being provisioned:** peak_fall → early_winter →
+holiday → new_year. **Evidence window:** 2026-07-01 → 2026-09-30.
+
+## The evidence, and a pagination bug that was hiding 80% of it
+
+Pulled from the Publer API, not from manifests: **661 published posts** in the window, and
+**478 posts with per-post insights** across the 9 accounts that actually report metrics (the 5
+GBP accounts return no insights at all and were excluded, not counted as zeros).
+
+Both documented API traps were handled — and a third was found. `/posts` does cap without explicit
+`from`/`to`; insight pagination is zero-indexed as warned. But the real defect was different and
+worse: **`post_insights` returns 10 records per page no matter what `limit` is set to.** Any loop
+that breaks on `len(batch) < limit` — which is what `publer_client.post_insights()` effectively
+does, since it does not paginate at all — sees exactly 10 posts per account and stops. Brand
+returned 10 records that way and 64 when paged to exhaustion. Across all accounts the correct pull
+is **478 records, not ~90**. Every performance conclusion drawn from that client since it was built
+has been drawn from the first 10 posts of each account, sorted by date.
+
+> **For the next run:** page until the batch is *empty* or returns no new ids. Never break on
+> `len(batch) < limit` against this endpoint. `publer_client.post_insights()` still has the old
+> behaviour; this run worked around it rather than editing hardened shared code (Rule 4).
+
+## What the quarter actually says
+
+| Medium | n | median reach | mean reach | engagement/post |
+|---|---|---|---|---|
+| **status (text only, no image)** | **111** | **139** | **188** | **2.05** |
+| photo | 207 | 28 | 35 | 0.85 |
+| video | 160 | 29 | 58 | 0.57 |
+
+**This is the first above-threshold signal the registry has ever had** — n=111 against a
+MIN_POSTS_FOR_SIGNAL of 30. Text-only posts reach roughly **five times** what a photo post reaches
+and about **2.4× the engagement per post**, and the finding survives removing Lexington, the one
+account that could have carried it as an outlier (median 111 excluding it, still ~4×).
+
+That is an uncomfortable result, because the entire studio stack — `vp-hero-image`,
+`vp-asset-compose`, the Midjourney render layer — exists to produce images, and the images are the
+worst-performing thing we publish. The honest reading is not "stop making images." It is that
+**Meta's reach algorithm is not rewarding our image posts, and the writing is carrying the brand.**
+The Q4 slate is weighted accordingly: 6 of 12 new formats are explicitly TEXT ONLY.
+
+### The structural problem did not move
+
+**478 measured posts produced 22 comments and 30 shares.** Nineteen posts in the whole quarter got
+a single comment or more. Total likes across the quarter: 442. Reach is not the constraint —
+37,463 people saw this content. Nobody replies to it.
+
+Where the 22 comments did land is the useful part, and all three patterns are *text*:
+- **A named employee with a specific, recent, verifiable achievement.** The Waynesboro post about
+  Chadd (819 reach, 2 comments) is the single best-engaging non-hiring post of the quarter.
+- **Insider local knowledge offered as a correction to outsiders** — "if you hear somebody say
+  Basic City," "something people from the mountain towns do not realize about Culpeper."
+- **A specific physical detail a local can verify by going and looking** — the mural at Main and
+  Washington, the brick sidewalks.
+
+Shares clustered somewhere else again: **civic utility**. Hiring notices and the Hull's Drive-In
+nonprofit post took 6 of the quarter's 30 shares between them. People share things that are useful
+to someone else; they comment on things they know something about.
+
+### Two defects worth naming
+
+1. **The byte-identical caption floor is being violated.** One giveaway caption ran **12 times**
+   verbatim; three more ran 6, 5 and 4 times. CREATIVE_DRIFT.md §"hard floors" lists byte-identical
+   text as a hard block, not a cooldown. Something in the publishing path is bypassing it.
+2. **Auto-captions are mangling the brand name on video.** "Valley Pound", "Valley Pond of Call
+   Pepper", "Valley Pond in Roanoke" went out publicly. Video is already the weakest medium; it is
+   also the only one shipping with the company's name spelled wrong.
+
+### The Friday loop, again
+
+`weekly-adjustments.json` for week ending 2026-09-11 reads: top type `casual-video`, bottom type
+`casual-video`, action `+5% casual-video`. Identical in shape to the 2026-08-21 warranty output
+that justified building this engine. The loop is still chasing static on n=40. Treated as evidence
+of the loop's state, never as authority. It should be pointed at the medium-level finding above,
+which is the only thing in this system with real statistical standing.
+
+## Retired
+
+**Nothing.** No format has cleared 30 posts, so no format has a measurable performance index, so
+nothing is eligible for the bottom quintile. The highest-count formats sit at n=5. Honesty requires
+retiring nothing — and the retirement rule requires **two consecutive** weak quarters above
+threshold, so the earliest genuine retirement remains **Q2 2027**. The previous run's estimate
+stands unchanged.
+
+## Rested
+
+**Nothing**, for the same reason: a >40% decline from peak is undefined for a format with no peak.
+
+## Invented — 12 candidates, all 12 passed the novelty gate
+
+Weighted deliberately toward text-only and toward formats that ask a question, because that is what
+the quarter's evidence actually supports.
+
+| id | lane | seed reasoning |
+|---|---|---|
+| `com_only_locals_know` | community | Text-only. Comments landed on insider-knowledge posts; this one *asks* for the correction instead of delivering it. |
+| `com_closed_but_remembered` | community | Text-only. "What was in there before" is the one question every town answers unprompted. |
+| `com_civic_utility_note` | community | Text-only, pure service, zero product. Built for the share metric, not the like metric. |
+| `eng_one_local_question` | engagement | The direct attack on 22 comments: a question an outsider literally cannot answer, with a one-hour reply commitment. |
+| `eng_we_were_wrong` | engagement | Untried territory — public correction as content. Highest-risk, highest-ceiling item on the slate. |
+| `eng_counter_bracket` | engagement | Untried territory — bracket as a recurring civic institution, Oct–Nov, results carried forward. |
+| `pro_before_the_storm` | product | peak_fall skin + real Bravo stock: generators, chainsaws, lanterns, heaters. |
+| `pro_layaway_math` | product | early_winter/holiday. Shows the actual weekly payment. The arithmetic is the hook; no urgency language. |
+| `pro_gold_today` | product | holiday/new_year — new year is peak pawn season. Live spot price, real payout math, dies if stale. |
+| `vid_counter_audio` | video | Untried territory — audio only over a static frame, with hand-corrected captions (see defect 2). |
+| `com_two_doors_down` | community | Untried territory — genuine collaboration with a neighbouring non-competing business. |
+| `hum_inventory_confession` | humor | Punches at our own buying decision. Within guardrails: never the customer, never hard times. |
+
+Q4 [C26] anchors available to the community and civic formats: Culpeper Air Fest Oct 10 and Hop N
+Hog Oct 17 · Waynesboro Fall Foliage Art Show Oct 10–11 · Harrisonburg Homecoming Oct 16–18,
+Skeleton Festival Oct 24, Rocktown Turkey Trot Nov 26 · Lexington VMI/W&L home football through
+Nov 21, AQHA Harvest Festival Nov 20–22 · Roanoke GO Fest Oct 16–18, Drumstick Dash Nov 26,
+Dickens of a Christmas four Fridays in December. Foliage timing still differs per town and a single
+fanned "fall is here" post remains banned.
+
+## Annual pass
+
+**Not applicable.** The registry was created 2026-08-22; there is no same-season predecessor one
+year back. First real annual transformation pass is due **August 2027**, and it will be the first
+time the system has to beat itself rather than start from nothing.
+
+## Registry state after this run
+
+59 formats — 27 active, 32 candidate. Every lane carries ≥5 eligible formats in every Q4 season
+skin (peak_fall 56 eligible, early_winter 53, holiday 51, new_year 50). No thin lane; no Step 9
+repair needed. `untried_territory` was consumed by this run and replaced with ten directions the
+brand still has not been near, including handing a store account to one employee for a week and
+publicly naming a number we are trying to beat and then reporting back.
+
+## What the next run must check first
+
+1. **Did text-only actually hold at n>200?** If it does, the studio's image-first premise needs a
+   formal decision from Joshua, not a quiet drift. If it collapses, this quarter's weighting was a
+   false positive and the slate needs rebalancing back toward video.
+2. **Did the comment number move off 22?** `eng_one_local_question` and `eng_we_were_wrong` are the
+   two bets. If 478 posts produce 22 comments again, the problem is not format selection and no
+   amount of inventing will fix it.
+3. **Was the byte-identical caption block ever enforced?** Twelve identical sends is a floor
+   violation, not a content problem.
+4. **Is `publer_client.post_insights()` still returning 10 records per account?** Every automation
+   that reads it is making decisions on a tenth of the data.

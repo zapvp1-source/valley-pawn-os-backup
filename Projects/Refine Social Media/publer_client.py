@@ -301,7 +301,11 @@ class PublerClient:
         return data or []
 
     def delete_post(self, post_id: str) -> None:
-        self.delete(f"/posts/{post_id}")
+        # Fixed 2026-10-01: DELETE /posts/{id} returns 404; Publer's endpoint is
+        # DELETE /posts?post_ids[]=... and returns {"deleted_ids": [...]}.
+        r = self.delete("/posts", params={"post_ids[]": [post_id]})
+        if not (isinstance(r, dict) and post_id in (r.get("deleted_ids") or [])):
+            raise PublerError(f"delete_post({post_id}) not confirmed: {r}")
 
     # --- analytics (replaces direct Meta Graph API reads) ---
     # Endpoint per Publer docs: /analytics/{account_id}/post_insights

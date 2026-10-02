@@ -156,3 +156,46 @@ list had accumulated 37 dead/debris tasks nobody had cleaned up.
      than removed since it never got a chance to prove itself dead.
   Joshua notified via one plain-language Slack DM (D03BHQH5VGT); no jargon, no task IDs in that
   message per Rule 16 — this file is the technical record.
+
+- **2026-10-01 — second monthly sweep.** 220 tasks total: 120 enabled/live (untouched). 0
+  auto-deleted this cycle — nothing met the conservative bar (disabled 60+ days, stale, AND an
+  obvious throwaway-name marker). ~82 disabled-too-recently-to-judge or future one-time
+  (<30 days / fireAt pending, left alone). 18 flagged as REVIEW CANDIDATEs pending Joshua's
+  confirmation before next month's sweep:
+  1. `amazon-return` — disabled ~170 days; possibly superseded by the `amazon-returns` skill.
+  2. `dismiss-employee` — disabled ~170 days; its own description says superseded by
+     `offboard-employee`, kept only for rollback — likely safe to delete.
+  3. `weekly-social-media-content` — disabled ~175 days (carried over from last sweep, still
+     unconfirmed); looks superseded by the vp-content-batch pipeline.
+  4. `wordpress-token-keepalive` — disabled ~63 days (carried over); unclear if any live
+     WordPress task still depends on it.
+  5. `weekly-website-kpi-artifact-refresh` — disabled ~59 days; its own note says not to
+     re-enable and to delete after 2026-12-01 if unneeded — not due yet.
+  6. `preston-ebay-feedback-watch` — disabled ~36 days; its own description says superseded,
+     kept disabled not deleted — likely safe, needs confirmation.
+  7. `monthly-bonus-qualifiers` — disabled ~52 days; explicit rollback hold, due after two
+     clean cycles (Oct + Nov 2026) — not due yet.
+  8. `monthly-bonus-payout` — disabled ~50 days; same rollback-hold note — not due yet.
+  9. `jewelry-onhand-nightly-compare` — disabled ~48 days; real jewelry-variance workflow,
+     possibly superseded by `jewelry-count-reconciliation` — confirm which is current.
+  10. `jewelry-count-reconciliation` — no run history on record (carried over, still never
+      proven dead or alive); flagged again.
+  11. `bald-rock-payout-verification-sep1` — one-time task, fired ~30 days ago; completed —
+      likely safe to delete now.
+  12. `interview-schedule-monday-dm` — one-time task, fired ~38 days ago; completed — likely
+      safe to delete.
+  13. `store-mail-archive-sweep` — disabled ~38 days; exists as a workaround for broken Mail
+      Rules, may still be needed — confirm.
+  14. `ffl-mtd-ranking-verify-20260824` — disabled ~38 days; date-stamped one-off pattern but
+      short of the 60-day safe-delete bar — likely safe next month if still stale.
+  15. `monthly-cloudcover-music-refresh` — disabled ~30 days (right at the boundary); confirm
+      before any action.
+  16. `icloud-forward-verify-check` — one-time task, fired ~35 days ago; completed — likely
+      safe to delete.
+  17. `brevo-stage-next-quarter` — no run history on record; flagged due to missing data, not
+      confirmed dead.
+  18. `monthly-we-buy-gold-silver-email` — disabled exactly at the 30-day boundary; looks like
+      a real recurring monthly campaign with no retired/superseded language — don't assume
+      dead, confirm it's intentionally paused.
+  Joshua notified via one plain-language Slack DM (D03BHQH5VGT); no jargon, no task IDs in that
+  message per Rule 16 — this file is the technical record.

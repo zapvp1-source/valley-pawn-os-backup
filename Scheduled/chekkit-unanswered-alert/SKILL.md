@@ -41,14 +41,14 @@ This task is complete ONLY after the documented final action (the summary post i
    - Read the full email body for the customer's last message.
    - **Skip conversation-enders** that do NOT require a response — "thanks", "thank you", "ok", "okay", "sounds good", "got it", "bye", "have a good day", "appreciate it", "no problem", "will do", "perfect", "cool", "great", "Stop"/"STOP"/"Start", thumbs up, emoji-only, or similar. Only count a genuine question, request, complaint, or something that clearly warranted a reply.
    - **Skip alerts with an empty message body.**
-   - **OPEN-HOURS FILTER.** Message time ≈ the email's received time minus 10 minutes, converted to ET (June–early November EDT = UTC−4; otherwise EST = UTC−5). Skip any alert whose message arrived before 10:00 AM ET, at/after 6:00 PM ET, or on a day THAT store is closed — using the weekday printed in Step 1.
+   - **OPEN-HOURS FILTER.** Message time ≈ the email's received time minus 10 minutes, converted to ET (June–early November EDT = UTC−4; otherwise EST = UTC−5). Skip any alert whose message arrived before 10:00 AM ET, at/after that store's closing time (6:00 PM ET; 5:00 PM ET on Saturday for Culpeper and Roanoke), or on a day THAT store is closed — using the weekday printed in Step 1.
    - Tally remaining (actionable, in-hours) messages per store.
    - Before continuing, write a short table: customer | store | message time ET | counted? | reason. Every "closed day" reason must match the Step 1 weekday and the hours below.
 
 ### Store open hours (Eastern Time)
-- **Culpeper:** Monday–Saturday 10:00 AM – 6:00 PM. Closed **Sunday**.
-- **Waynesboro, Harrisonburg, Lexington, Roanoke:** Monday, Tuesday, Thursday, Friday & Saturday 10:00 AM – 6:00 PM. Closed **Wednesday & Sunday**.
-- Only if the Step 1 weekday is **Wednesday** are the four non-Culpeper stores closed. Only if it is **Sunday** are all stores closed.
+- **Culpeper & Roanoke:** Monday–Friday 10:00 AM – 6:00 PM, Saturday 10:00 AM – 5:00 PM. Closed **Sunday**. (Roanoke open Wednesdays from 9/30/2026.)
+- **Waynesboro, Harrisonburg, Lexington:** Monday, Tuesday, Thursday, Friday & Saturday 10:00 AM – 6:00 PM. Closed **Wednesday & Sunday**.
+- Only if the Step 1 weekday is **Wednesday** are the three stores other than Culpeper and Roanoke closed. Only if it is **Sunday** are all stores closed.
 
 4. **Who gets the store DM — from the shared staff roster, never from a hard-coded list.** For each store with 1+ counted messages:
    a. PRIMARY: run `python3 "<VPOS>/bin/roster_write.py" --check`. If it prints `ok`, read `<VPOS>/hr/ROSTER.json` and take every employee whose `department` equals the store name and whose `slack_id` is not null. (That file is rebuilt every morning at 6:15 from Gusto + Slack by the roster-refresh task.)

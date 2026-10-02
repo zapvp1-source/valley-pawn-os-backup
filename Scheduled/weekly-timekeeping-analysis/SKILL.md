@@ -11,6 +11,8 @@ Retry once, then try the documented alternate path. If still failing: write the 
 
 > ⚠️ **FIELD COMMUNICATION RULE (retained from the 2026-07-22 v2 banner):** anything sent to the field — team channels, store managers, employees — must be plain everyday language: no technical jargon, no error codes, no pipeline/system/tool names, no file paths.
 
+> ⚠️ **STORE STAFF ONLY — NO DAVIS FAMILY (Joshua, 2026-10-01 — binding).** No one with last name Davis (Joshua, Hillary, Audrey, Kennedy, Madison, Savannah, or any future Davis) and no corporate/office staff (Gusto department "Corporate Support", "Marketing", or any non-store department; plus Preston Peters) ever appears in this report — not in a store block, not in the headcount, not in the hours totals, not in the call-outs — EVEN IF THEY TRACKED HOURS. Drop their shifts before any totals are computed.
+
 ## Execution Contract — DO NOT STOP EARLY
 
 This task is complete ONLY after the documented final action (the post / send / write tool call described at the end of the steps below) returns success.
@@ -50,21 +52,22 @@ Pull last week's timekeeping data from Gusto and post a store-by-store summary W
 ### Step 2 — Pull the data (MCP primary)
 - Call Gusto MCP `list_time_records` with `start_date` = Monday, `end_date` = Sunday of the reporting week (YYYY-MM-DD).
 - Expect `source: "native"` with a `shifts` array + `workers` array. Per shift: `durationInMinutes` is the clock-in→clock-out span; `breaks` are recorded separately.
+- **Apply the STORE-STAFF-ONLY filter now** (banner above): resolve each worker's name + department (Gusto `list_employees`), and drop every shift belonging to a Davis, a non-store department, or Preston Peters before computing anything.
 - **Hours method (fixed, keep consistent week to week):** net hours per shift = span − sum of recorded break minutes. Weekly total = sum of net hours. OT = weekly net hours above 40.
-- **Sanity check before posting:** at least 5 employees with shifts AND 150–600 total hours. If the pull looks empty or absurd, do NOT post — fall back to Step 2b.
+- **Sanity check before posting:** at least 5 employees with shifts AND 150–600 total hours (after the filter). If the pull looks empty or absurd, do NOT post — fall back to Step 2b.
 
 ### Step 2b — Fallback ONLY if MCP fails/empty
-- Use claude-in-chrome: Gusto → Time & attendance → Time tracking → "Review" on the most recent pay period → capture the Timesheets table via get_page_text.
-- If BOTH paths fail: no channel post; one plain DM to Joshua per the failure policy; details in run log.
+- Use claude-in-chrome: Gusto → Time & attendance → Time tracking → "Review" on the most recent pay period → capture the Timesheets table via get_page_text. Apply the same store-staff-only filter.
+- If BOTH paths fail: no channel post; follow the failure policy; details in run log.
 
 ### Step 3 — Map employees to stores
-Static map (verify anyone NOT listed here via Gusto MCP `list_employee_work_addresses` — use the `active: true` entry — then ADD them to this map when editing this file is possible, or note the new mapping in the run output):
+Primary source: the employee's Gusto `department` (Culpeper / Harrisonburg / Lexington / Roanoke / Waynesboro). If a department is missing, use Gusto MCP `list_employee_work_addresses` (the `active: true` entry). Reference map as of Oct 2026:
 - **Waynesboro:** Chadd McClintic, Martin Dowden
-- **Culpeper:** Bridgett Grayson, Robert Swagger (Sandi Cole = mgr, salaried, note but don't count hourly)
-- **Roanoke:** Benjie (George) Moore, Joseph Epperly
-- **Harrisonburg:** Walker Tapley, Michael Chambers
+- **Culpeper:** Joshua Burnett, Robert Swagger (Sandi Cole = mgr, salaried, note but don't count hourly)
+- **Roanoke:** Benjie (George) Moore, Joseph Epperly, Jacob Cox
+- **Harrisonburg:** Walker Tapley, Camden Ahern
 - **Lexington:** Uriah Tiglao
-Corporate/salaried (Joshua, Hillary, other Davis family, Lainie) with 0h tracked: omit from per-store totals.
+Never listed, never counted: anyone named Davis, Preston Peters, Lainie, and any Corporate Support / Marketing staff.
 
 ### Step 4 — Flags to compute (replaces the Gusto UI's flag column)
 - **Missed clock-out:** `clockOutPlatform` null or clock-out on an exact :00 minute (admin-entered after the fact)
@@ -80,7 +83,7 @@ Corporate/salaried (Joshua, Hillary, other Davis family, Lainie) with 0h tracked
 a. Header line with date range (e.g. "**Weekly Timekeeping — Mon May 11 – Sun May 17, 2026**") and a one-line subtitle: employee count + total tracked hours across all stores.
 b. One block per store, sorted by total hours desc. Each block: bold store name + total hours + employee count, then per-employee bullets — name, net hours, OT in parens, any flags in plain language (⚠️ for the notable ones).
 c. A "**Heads-up:**" call-outs block at the bottom: break/clock issues and who, OT count, coverage gaps, new hires, anything else worth a manager's eye.
-Keep formatting tight but do NOT collapse the per-employee detail or the call-outs — Joshua wants both every week. Plain everyday language only (field rule above).
+Keep formatting tight but do NOT collapse the per-employee detail or the call-outs — Joshua wants both every week. Plain everyday language only (field rule above). Final check before sending: the message contains no "Davis".
 
 ### Step 6 — Post it
 - If the run is before 9:00 AM Monday: `slack_schedule_message` to C0AN6TNA4ES at 9:00 AM Monday local time.
@@ -89,12 +92,13 @@ Keep formatting tight but do NOT collapse the per-employee detail or the call-ou
 - Do not post elsewhere and do not DM Joshua on success.
 
 ### Step 7 — Self-verify
-After posting/scheduling, confirm the API returned a message link/scheduled id. If posting failed, retry once; if still failing, follow the failure policy (DM Joshua, no channel noise).
+After posting/scheduling, confirm the API returned a message link/scheduled id. If posting failed, retry once; if still failing, follow the failure policy (no channel noise).
 
 Channel: #timekeeping-summary (C0AN6TNA4ES) — NOT #claude-updates (old destination).
 
 <!-- migrated to working model 2026-06-15 -->
 <!-- v3 2026-08-21: MCP-first data path (list_time_records verified working), Chrome demoted to fallback, catch-up self-heal added, deterministic hours method + flag heuristics documented, static store map added. Backfilled Aug 3–9 and Aug 10–16 reports same day. -->
+<!-- 2026-10-01: store-staff-only / no-Davis rule (Joshua); store map refreshed to current roster -->
 
 ## Precondition (MANDATORY) — FLEET PUBLISH GUARD
 

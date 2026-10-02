@@ -264,6 +264,22 @@ skill, not this file.**
     day; needs resolution before relying on that line).
 - **Vehicle Purchase Docs** and **Bank Statements** subfolders exist under `Taxes 2026/` — likely
   relevant to Cypress Crossing conversion or general personal tax prep; not yet indexed here.
+- **Quarterly capex sweep (2026-10-01):** one new item found in Drive since the last pass — a
+  2026-06 pool construction landscape/layout plan ("2026-06 Pool Landscape Plan and Pool Layout -
+  844 Cypress (Lot 71 Palencia).pdf", filed 2026-09-18 into `07 Improvements & Maintenance`). No
+  contract, invoice, or payment found — logged as NEEDS JOSHUA CONFIRMATION in the tracker, no
+  dollar amount. ⚠️ **Tracker duplicate created:** the Google Drive connector in this session could
+  not update or rename the existing `844 CAP GAIN Improvements Log.xlsx` (file id
+  `1oyVMZGeTwlTL7bugUC6Bi8DubZhooBYu`) — both trash and rename were blocked by the session's write
+  classifier. A new file with the same name and the added pool-plan row was created alongside it in
+  the same folder (file id `1AmxHSOsxD5Uf9nMrSku6vbNJBHVx5PNx`, new TOTAL $128,152.23 unchanged —
+  pool row has no dollar amount). **Joshua or a future session needs to manually delete/rename the
+  old (pre-10/1) copy** so only one tracker remains. 817 Richmond, 148 Hardinberry, 14300 Woods
+  Walk, and 282 Bald Rock had no new capital-improvement documents in Drive since the last sweep
+  (trackers untouched, no duplicate risk there). This session had no iCloud Drive or Apple
+  Mail/unified-search access (Cowork cloud session, not the Mac Studio bridge) — only Google Drive
+  was swept; a future local/Mac-Studio run should still do the Apple-ecosystem pass this skill
+  describes, especially for Bald Rock where the authoritative evidence log is built from Mail/iMessage.
 - **My Safe Florida Home (MSFH) grant — researched 2026-08-10.** Cypress Crossing is in Palencia
   (HOA: Palencia Property Owners' Association, managed by Vesta), built 2002–2005 per public
   listings — passes the program's "building permit before Jan 1, 2008" eligibility gate (not yet

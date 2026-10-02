@@ -28,6 +28,12 @@ domain/hosting — never Valley Pawn's.
   account for a stuck step. Facebook linked. Email DNS preservation post-cutover never explicitly
   re-verified. See the contact record for full detail and the access-gap note (no saved password
   for chrismarney@solaterrallc.com blocks direct GBP dashboard access).
+- **Traffic stats (checked 2026-10-01):** Cloudflare Web Analytics is ON for the zone (dash →
+  solaterrallc.com → Analytics → Web analytics; sign in via Google as jdavis@fcfpawn.com).
+  Last 30 days: 160 visits / 200 page views, 100% direct (zero search/social referrals), 150 US /
+  10 India, 150 desktop / 10 mobile, ~80 Linux-Chrome (likely bots/automated checks). Pages fast
+  (LCP 100% good). Read: site gets almost no real customer traffic yet — growth lever is GBP
+  reviews + Google Search Console (not yet confirmed set up).
 
 ### 2. First Coast Tile
 - **Industry:** Custom tile installation, Jacksonville FL

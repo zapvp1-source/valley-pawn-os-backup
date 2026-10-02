@@ -16,7 +16,8 @@ Sources (all written by other automations; this script only reads them):
           Discount Outlier Review/daily/<date>_discount_review_summary.json (daily-report-discount 08:25)
 
 Date: default = the most recent business day before today (ET): skips Sunday (all closed);
-Wednesday = Culpeper only (matches vp_lib.sh open_stores).
+Wednesday = Culpeper + Roanoke from 2026-09-30, Culpeper only before (matches vp_lib.sh open_stores); any other store with real activity
+that day is added automatically (2026-10-01).
 
 Outputs (in --out, default Valley Pawn OS/daily-audit/):
   <date>.slack.txt   the exact message to post via the Slack connector (standard markdown: **bold**;
@@ -62,7 +63,8 @@ def open_stores(day):
     if dow == 7:
         return []
     if dow == 3:
-        return ["CUL"]
+        # Roanoke open Wednesdays from 2026-09-30 (Joshua 2026-10-01); earlier Wednesdays CUL only.
+        return ["CUL", "ROA"] if day >= dt.date(2026, 9, 30) else ["CUL"]
     return [s for s, _ in STORES]
 
 
@@ -275,6 +277,18 @@ def build(root, day):
     sold = read_sold(root, day)
     disc = read_discount(root, day)
     counts = read_count_sheets(root, day)
+    # 2026-10-01: a normally-closed store that actually did business that day (Roanoke on
+    # Wed 9/30 took in 9 items, sold 8 and posted a count sheet) is added to the day's stores
+    # when the source reports show activity for it. Additive; scheduled open stores unchanged.
+    active = set()
+    for src in (intake, sold, disc):
+        for k, v in ((src or {}).get("stores") or {}).items():
+            if isinstance(v, dict) and (v.get("items") or v.get("total_items") or v.get("count") or v.get("n")):
+                active.add(k)
+            elif v and not isinstance(v, dict):
+                active.add(k)
+    active |= set(((counts or {}).get("per_store") or {}).keys())
+    opened = list(opened) + [s for s, _ in STORES if s in active and s not in opened]
     unavailable = []   # (store, section)
     exceptions = []
     per = {}

@@ -40,19 +40,28 @@ PullCustomerLoyalty(store, spec, outputDir) {
     customerName := ""
     reportName := "Claude Forfeiture Winback Comparison"
     since := "2024-01-01"
+    buttonName := "Customer Loyalty Report"
+    urlToken := "Knowledge"
+    tag := "customer-loyalty"
     for part in StrSplit(spec, "|") {
         part := Trim(part)
         if RegExMatch(part, "i)^report=(.+)$", &mr)
             reportName := Trim(mr[1])
         else if RegExMatch(part, "i)^since=(\d{4}-\d{2}-\d{2})$", &ms)
             since := ms[1]
+        else if RegExMatch(part, "i)^button=(.+)$", &mb)
+            buttonName := Trim(mb[1])
+        else if RegExMatch(part, "i)^url=(.+)$", &mu)
+            urlToken := Trim(mu[1])
+        else if RegExMatch(part, "i)^tag=([A-Za-z0-9_-]+)$", &mt)
+            tag := Trim(mt[1])
         else if (part != "" && customerName = "")
             customerName := part
     }
     if (customerName = "")
         return Fail(result, started, "customer name missing (put it in the trigger date field)")
     slug := RegExReplace(StrLower(customerName), "[^a-z0-9]+", "-")
-    outputPath := outputDir . "\" . OutputFilename(FormatTime(, "yyyy-MM-dd"), store, "customer-loyalty-" . slug)
+    outputPath := outputDir . "\" . OutputFilename(FormatTime(, "yyyy-MM-dd"), store, tag . "-" . slug)
     LogMessage("[" . store . "] CustomerLoyalty name='" . customerName . "' via '" . reportName . "' since " . since . " -> " . outputPath)
 
     if !WaitForBravoReady(30)
@@ -254,10 +263,10 @@ PullCustomerLoyalty(store, spec, outputDir) {
         dlDirs := CkDownloadDirs()
         snapBefore := CkSnapshotReportFilesMulti(dlDirs)
         ClCloseStaleLoyaltyWindows()
-        LogMessage("  step 6: click Customer Loyalty Report (real mouse click)")
-        btn := FindByName("Customer Loyalty Report", 8000)
+        LogMessage("  step 6: click '" . buttonName . "' (real mouse click)")
+        btn := FindByName(buttonName, 8000)
         if !btn
-            throw Error("Customer Loyalty Report button not found on the detail view")
+            throw Error("'" . buttonName . "' button not found on the detail view")
         br := 0
         try br := btn.BoundingRectangle
         if (br && br.b > br.t) {
@@ -297,7 +306,7 @@ PullCustomerLoyalty(store, spec, outputDir) {
         }
         deadline := A_TickCount + 90000
         loop {
-            renderedUrl := ClReadLoyaltyUrl()
+            renderedUrl := ClReadLoyaltyUrl(urlToken)
             if (renderedUrl != "" || A_TickCount > deadline)
                 break
             Sleep(3000)
@@ -358,7 +367,7 @@ PullCustomerLoyalty(store, spec, outputDir) {
 }
 
 ; Read a rendered Customer Loyalty SSRS URL from any Chrome/Edge omnibox (needs r= GUID).
-ClReadLoyaltyUrl() {
+ClReadLoyaltyUrl(token := "") {
     for exe in ["chrome.exe", "msedge.exe"] {
         for hwnd in WinGetList("ahk_exe " . exe) {
             try {
@@ -386,7 +395,7 @@ ClReadLoyaltyUrl() {
                 if (v = "")
                     continue
                 LogMessage("    [omnibox] " . exe . " '" . SubStr(v, 1, 160) . "'")
-                if (InStr(v, "bravoapplication.com") && InStr(v, "r=") && !InStr(v, "Company") )
+                if (InStr(v, "bravoapplication.com") && InStr(v, "r=") && !InStr(v, "Company") && (token = "" || InStr(v, token)))
                     return v
             }
         }
@@ -400,7 +409,7 @@ ClCloseStaleLoyaltyWindows() {
         for hwnd in WinGetList("ahk_exe " . exe) {
             t := ""
             try t := WinGetTitle("ahk_id " . hwnd)
-            if (t != "" && InStr(t, "Loyalty")) {
+            if (t != "" && (InStr(t, "Loyalty") || InStr(t, "BRAVO "))) {
                 try {
                     WinClose("ahk_id " . hwnd)
                     closed++

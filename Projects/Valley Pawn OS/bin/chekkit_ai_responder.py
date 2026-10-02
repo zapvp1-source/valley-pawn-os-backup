@@ -155,7 +155,7 @@ def read_alerts(minutes):
     rows = list(c.execute(
         "select m.ROWID, s.subject, m.date_received, coalesce(m.global_message_id, m.message_id, m.ROWID) "
         "from messages m left join subjects s on s.ROWID=m.subject left join addresses a on a.ROWID=m.sender "
-        "where lower(a.address) like '%support@chekkit.io%' and s.subject like '%Unanswered Message Alert%' "
+        "where lower(a.address) like '%support@chekkit.io%' and (s.subject like '%Unanswered Message Alert%' or s.subject like '%: message via %') "
         "and m.date_received >= ? order by m.date_received asc", (cutoff,)))
     base = os.path.dirname(os.path.dirname(env))
     seen, out = set(), []
@@ -176,9 +176,11 @@ def read_alerts(minutes):
         txt = re.sub(r"<[^>]+>", " ", txt)
         txt = re.sub(r"[|]", " ", txt)
         txt = re.sub(r"\s+", " ", txt).replace("&#39;", "'").replace("&amp;", "&").replace("&quot;", '"')
-        a = parse_alert(txt)
+        is_new = ": message via " in (subj or "")
+        a = parse_new(txt) if is_new else parse_alert(txt)
         if a:
-            sn = re.sub(r"^.*Unanswered Message Alert:\s*", "", subj or "").strip()
+            a["kind"] = "new" if is_new else "unanswered"
+            sn = re.sub(r"^.*Unanswered Message Alert:\s*", "", subj or "").strip() if not is_new else re.sub(r":\s*message via .*$", "", subj or "").strip()
             if sn and not re.search(r"\d{3}\D{0,4}\d{3}", sn):
                 a["name"] = sn
             a.update({"id": str(gid), "received": dt.datetime.fromtimestamp(ts, ET).isoformat(), "subject": subj or ""})
@@ -188,6 +190,22 @@ def read_alerts(minutes):
 
 ALERT_RE = re.compile(r"(?:(?P<name>[^,]{1,60}), )?\((?P<a>\d{3})\) (?P<b>\d{3}) - (?P<c>\d{4}) said [^:]{1,40} ago: "
                       r"(?P<msg>.*?) Sent to Valley Pawn ?- ?(?P<store>[A-Za-z]+)", re.S)
+
+
+NEW_RE = re.compile(r"Message via (?P<chan>[A-Za-z ]+?) (?:(?P<name>[^()]{0,60}?) · )?\((?P<a>\d{3})\) (?P<b>\d{3}) - (?P<c>\d{4}) "
+                    r"(?P<msg>.*?) Replying to this email will not respond to your customer\. Sent to Valley Pawn ?- ?(?P<store>[A-Za-z]+)", re.S)
+
+
+def parse_new(txt):
+    """Chekkit per-message email (subject '<name>: message via SMS'), turned on 2026-10-01 for near-instant replies."""
+    m = NEW_RE.search(txt)
+    if not m:
+        return None
+    code = STORE_ALIASES.get(m.group("store").lower())
+    if not code:
+        return None
+    return {"name": (m.group("name") or "").strip(), "phone": m.group("a") + m.group("b") + m.group("c"),
+            "text": m.group("msg").strip(), "store": code, "channel": m.group("chan").strip()}
 
 
 def parse_alert(txt):
@@ -210,7 +228,9 @@ def store_open(code, when, mct):
     s = mct["stores"][code]
     if when.weekday() not in s["days"]:
         return False
-    return s["open"] <= when.strftime("%H:%M") < s["close"]
+    # 2026-10-01: optional per-weekday close (CUL/ROA close 17:00 on Saturday) — config close_by_weekday
+    close = s.get("close_by_weekday", {}).get(str(when.weekday()), s["close"])
+    return s["open"] <= when.strftime("%H:%M") < close
 
 
 def next_open(code, when, mct):
@@ -251,6 +271,7 @@ Hard rules:
 - If it is something we do NOT take, say so kindly.
 - If the message is only a reply to an earlier staff conversation you cannot see (e.g. "yes", "ok I will", "what about the other one", a bare number, a photo caption with no question), or is personal, a complaint, legal, a dispute about a specific loan/ticket, spam, or anything you cannot answer safely: stay silent (action "skip").
 - If they ask to stop being texted in any wording, or say wrong number / who is this: stay silent (action "skip", reason "opt-out" or "wrong number").
+- Answer only what they asked. Do not list things we don't take, or mention firearms, unless their message is about that.
 - End the text with " (Automated reply - a team member will follow up.)"
 - Keep under %(max)d characters total.
 
@@ -271,13 +292,15 @@ def build_user(a, cfg, mct, when):
 
 
 def ask_claude(key, cfg, a, mct, when):
-    body = {"model": cfg["model"], "max_tokens": 400, "system": SYSTEM % {"max": cfg.get("max_reply_chars", 420)},
+    body = {"model": cfg["model"], "max_tokens": 2000, "system": SYSTEM % {"max": cfg.get("max_reply_chars", 420)},
             "messages": [{"role": "user", "content": build_user(a, cfg, mct, when)}]}
     req = urllib.request.Request(API, data=json.dumps(body).encode(), method="POST", headers={
         "content-type": "application/json", "x-api-key": key, "anthropic-version": "2023-06-01"})
     with urllib.request.urlopen(req, timeout=60) as r:
         resp = json.load(r)
     out = "".join(b.get("text", "") for b in resp.get("content", []) if b.get("type") == "text")
+    if not out.strip():
+        return {"action": "skip", "reason": "no answer from Claude (stop_reason=%s)" % resp.get("stop_reason"), "text": ""}
     m = re.search(r"\{.*\}", out, re.S)
     try:
         d = json.loads(m.group(0), strict=False) if m else None
@@ -391,7 +414,12 @@ def main():
             print("no API key — cannot draft")
         return 1
     try:
-        alerts = read_alerts(int((args.hours * 60) if (render and args.hours) else cfg.get("lookback_minutes", 45)))
+        look = cfg.get("lookback_minutes", 45)
+        if not render and when.strftime("%H:%M") < (dt.datetime.strptime(lo, "%H:%M") + dt.timedelta(minutes=45)).strftime("%H:%M"):
+            # first 45 min of the day: also catch texts that arrived overnight after the window closed
+            prev_close = dt.datetime.combine(when.date() - dt.timedelta(days=1), dt.datetime.strptime(hi, "%H:%M").time(), ET)
+            look = max(look, int((when - prev_close).total_seconds() // 60) + 15)
+        alerts = read_alerts(int((args.hours * 60) if (render and args.hours) else look))
     except Exception as e:
         if not render:
             ledger_once(state, "mail", "The AI text responder could not read the Chekkit alert emails (%s)." % type(e).__name__)
@@ -399,15 +427,33 @@ def main():
         else:
             print("mail read error", e)
         return 1
-    staff = staff_numbers(mct)
+    staff = staff_numbers(mct) - {digits(n) for n in cfg.get("test_numbers", [])}
     live = cfg.get("mode") == "live" and not guard_armed()
+    mct_texted = load_json(os.path.expanduser("~/Library/Logs/valleypawn/missed_call_text/state.json"), {}).get("texted", {})
+    state.setdefault("inbound", {})
+    ongoing_h = cfg.get("ongoing_conversation_hours", 3)
     cutoff = when - dt.timedelta(hours=cfg.get("cooldown_hours", 6))
     for a in alerts:
         if a["id"] in state["processed"]:
             continue
         ph = digits(a["phone"]); hk = h(ph)
         reason = None
-        if ph in staff:
+        if a.get("kind") == "new":
+            # Instant path: only the FIRST text of a conversation (or a reply to our missed-call text).
+            # Mid-conversation texts are left to staff; the 10-minute unanswered alert is the backup.
+            prev = state["inbound"].get(hk)
+            state["inbound"][hk] = a["received"]
+            try:
+                import hashlib as _hl
+                mc = mct_texted.get(_hl.sha256(("+1" + ph).encode()).hexdigest()[:24])
+            except Exception:
+                mc = None
+            recent_mc = bool(mc) and dt.datetime.fromisoformat(mc.replace("Z", "+00:00")) > when - dt.timedelta(hours=6)
+            if prev and dt.datetime.fromisoformat(prev) > dt.datetime.fromisoformat(a["received"]) - dt.timedelta(hours=ongoing_h) and not recent_mc:
+                reason = "ongoing conversation - left to staff (10-min alert is the backup)"
+        if reason:
+            pass  # ongoing conversation, decided above
+        elif ph in staff:
             reason = "staff/store number"
         elif is_ender(a["text"]):
             reason = "sign-off/opt-out/empty"

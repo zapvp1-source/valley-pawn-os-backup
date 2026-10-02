@@ -27,7 +27,7 @@ STEPS
    **Slow replies (text promises "within a few minutes")** — any store reply over 15 minutes, with store, employee and time taken. Omit the section if none.
    Last line: opt-outs and failed texts ("No opt-outs, no failed texts." if none).
    Weekly reports also add running totals since 9/24 from the CSV and the change vs the prior week.
-   If zero texts were sent in the period, send one line saying so and that it is expected when stores are closed (Sunday all stores; Wednesday all but Culpeper).
+   If zero texts were sent in the period, send one line saying so and that it is expected when stores are closed (Sunday all stores; Wednesday all but Culpeper and Roanoke).
 This DM to Joshua is pre-approved by him ("send me updates daily for the next week and then weekly"). Send only to Joshua — never to a channel or anyone else.
 
 On the last daily run (Thu 2026-10-01) add one line at the end: "Switching to weekly Monday updates from here."

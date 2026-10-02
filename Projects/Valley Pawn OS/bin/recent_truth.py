@@ -21,7 +21,7 @@ now = dt.datetime.now()
 cache = {}
 print("# Recent reality — last %d days (posting app's own view)\n" % DAYS)
 print("A dot is a day the report landed. A dash is a day it did not. Weekend/Sunday gaps are normal")
-print("for weekday cadences; Wednesdays are Culpeper-only.\n")
+print("for weekday cadences; Wednesdays are Culpeper + Roanoke only.\n")
 print("| Task | " + " ".join((now - dt.timedelta(days=DAYS-1-i)).strftime("%d") for i in range(DAYS)) + " | posted |")
 print("|---|" + "---|"*DAYS + "---:|")
 rows=[]

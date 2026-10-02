@@ -50,7 +50,7 @@ Engines to test (all work with saved logins / no login):
 Queries and the primary local rival to benchmark against (the rival is a SEED — if an engine ranks a DIFFERENT competitor above Valley Pawn, record that competitor's name instead and note it):
   1. best pawn shop near Roanoke VA            → rival: The PawnShop (Roanoke)
   2. where can I sell gold in Harrisonburg VA   → rival: JBS Pawn
-  3. pawn shop open on Wednesday near Culpeper VA → rival: Pawn-Mart (Culpeper is our only Wed-open store)
+  3. pawn shop open on Wednesday near Culpeper VA → rival: Pawn-Mart (Culpeper and Roanoke are our Wed-open stores)
   4. no credit check pawn loan Shenandoah Valley VA → rival: whichever pawn shop the engine names ahead of us (region-wide)
   5. where to sell jewelry in Waynesboro VA     → rival: Tobey's Pawn Shop
   6. pawn shop near Lexington VA                → rival: Rockbridge Pawn and Guns

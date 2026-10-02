@@ -1,7 +1,7 @@
 ---
 name: jewelry-onhand-catchup
-model: claude-sonnet-5
 description: Morning self-heal 7:45 AM (Tue-Sun): if last night's 8:30 PM jewelry pull was missed, rerun it inside the freeze window (before stores open at 10) and post the table — makes the daily jewelry count self-healing.
+model: claude-sonnet-5
 ---
 
 > ## HOST ACCESS — READ FIRST (2026-09-17). The `mcp__Control_your_Mac__osascript` connector is GONE from scheduled sessions; this task died at Step 0 every day since 9/12 waiting for it. Do NOT wait for it, do NOT ledger "osascript missing". Every `do shell script` below is now done through the **host job queue**, which the Projects folder mount gives you:
@@ -45,7 +45,7 @@ When you see any of those messages, immediately fire the next concrete tool call
 **Speed:** prefer batch tools (e.g. `browser_batch`) to combine sequential actions into one call.
 
 ---
-CATCH-UP run for the jewelry-onhand-nightly-pull task. That task runs 8:30 PM Mon-Sat but is silently skipped if the Claude app is closed. You run the next morning and self-heal: Bravo on-hand doesn't change overnight (stores closed 6 PM-10 AM), so a pull before 10 AM still reflects last night's close.
+CATCH-UP run for the jewelry-onhand-nightly-pull task. That task runs 8:30 PM Mon-Sat but is silently skipped if the Claude app is closed. You run the next morning and self-heal: Bravo on-hand doesn't change overnight (stores closed from close — 6 PM, or 5 PM Saturday at Culpeper & Roanoke — until 10 AM), so a pull before 10 AM still reflects last night's close.
 
 STEP 0 — Should you run at all?
 1. Via mcp__Control_your_Mac__osascript get: date '+%Y-%m-%d %A' and yesterday: date -v-1d '+%Y-%m-%d %A'.

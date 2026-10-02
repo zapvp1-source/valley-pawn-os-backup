@@ -11,6 +11,8 @@ Retry once, then try the documented alternate path. If still failing: write the 
 
 > ⚠️ **FIELD COMMUNICATION STANDARD v3 (binding — read in full before posting anything to a team channel or employee DM):** `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/FIELD_COMMUNICATION_STANDARD.md`. Summary: run the routing test (is this something a clerk needs to know/act on today — if no, it's internal, it does not go to the field); plain everyday language only, no tool/system/pipeline names (never say Bravo, Cowork, Chekkit, Gusto, Brevo, QBO, Publer, "pipeline," "handler," "watchdog," "sync," "CSV," "export"); no file paths, doc IDs, task IDs, or spreadsheet cell/column refs in the posted text; no meta-commentary about the automation itself ("verified against," "supersedes," "this is a manual test run," "pulled automatically from"); lead with the one-line takeaway; ~100 words max for a routine post; no signature footers. If anything later in this file conflicts with this standard, this standard wins.
 
+> ⚠️ **CURRENT EMPLOYEES ONLY (Joshua, 2026-10-01 — binding).** The source data lists every login that rang a sale, including people who have left and shared/system logins. The Canvas leaderboard shows ONLY current employees. See the "CURRENT-EMPLOYEES-ONLY FILTER" in Step 1.
+
 You keep the #employee-performance Slack channel's Canvas current so the team always sees this week's MTD sales leaderboard at the top without anyone pinning. Runs Monday 9:24 AM, after the weekly Monday compile runs. Steps:
 
 1. SOURCE NUMBERS. Use the Google Drive connector. Find the most recently modified file whose title begins with "employee-sales-rankings-" ending ".xlsx" (query: title contains 'employee-sales-rankings'). Read it. It lists each employee, their store(s), and Total (Retail Sales Excluding Fees) for the MTD period, plus a Company Total row and the period dates.
@@ -24,11 +26,17 @@ You keep the #employee-performance Slack channel's Canvas current so the team al
      {"id": "employee-perf-refresh-<TODAY>", "requested_at": "<TODAY>T<HH:MM:SS>-04:00", "reports": [{"name": "employee-activity", "stores": ["CUL","HAR","LEX","ROA","WAY"], "date": "<FIRST_OF_MONTH>"}]}
      ```
   c. Poll `triggers/processed/` and `results/employee-perf-refresh-<TODAY>.result.json` in ≤18s increments (osascript calls time out ~25s) for up to ~15 minutes.
-  d. Once all 5 cells succeed, read `output/<FIRST_OF_MONTH>_<STORE>_employee-activity.csv` for each store directly (same osascript file-read path) instead of the Drive spreadsheet. Parse per store: skip `Total Store`, `SYSTEM`, `FREE1 - FREE1 VALLEY PAWN` (a generic/shared-login bucket, not a real employee — historically never appears in this ranking; if its total is unusually large, note that once in the Joshua DM at the end as a data-quality flag, but never in the Canvas), and `Report printed on...`. Parse employee name as everything after the first `' - '`. Capture `Retail Sales Excluding Fees` as the metric. Aggregate by employee name across stores (multi-store employees shown as `STORE1+STORE2+...`), using the Total Store row's Retail Sales Excluding Fees per store summed for the Company Total.
-  e. Proceed to Step 2 below using this freshly-pulled data instead of the Drive file. In your end-of-run Joshua DM, note one line that the source was a direct on-demand pull because the Drive file was stale, and why (in plain terms, e.g. "the usual Monday pull hadn't produced this week's numbers yet").
-  f. Only if the self-heal trigger does NOT complete within ~15 minutes, or the contention check stays BUSY: DM Joshua the standard one-line failure alert per the policy above and stop. Do NOT post stale/malformed data to the Canvas under a current date.
+  d. Once all 5 cells succeed, read `output/<FIRST_OF_MONTH>_<STORE>_employee-activity.csv` for each store directly (same osascript file-read path) instead of the Drive spreadsheet. Parse per store: skip `Total Store`, `SYSTEM`, `FREE1 - FREE1 VALLEY PAWN` (a generic/shared-login bucket, not a real employee — never appears in this ranking), and `Report printed on...`. Parse employee name as everything after the first `' - '`. Capture `Retail Sales Excluding Fees` as the metric. Aggregate by employee name across stores (multi-store employees shown as `STORE1+STORE2+...`), using the Total Store row's Retail Sales Excluding Fees per store summed for the Company Total.
+  e. Proceed using this freshly-pulled data instead of the Drive file. In your end-of-run Joshua note, add one line that the source was a direct on-demand pull because the Drive file was stale (plain terms).
+  f. Only if the self-heal trigger does NOT complete within ~15 minutes, or the contention check stays BUSY: follow the failure policy above and stop. Do NOT post stale/malformed data to the Canvas under a current date.
 
-Build the RANKED view: exclude any employee with $0.00 total and exclude Preston Peters (he is ownership, shown only in the company total). Rank the rest high to low.
+**CURRENT-EMPLOYEES-ONLY FILTER (binding, 2026-10-01).** Before ranking:
+  i. Active roster: Gusto connector `list_employees(terminated=false, per=100)` (page until an empty page). Fallback: `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/hr/ROSTER.json` (Gusto active, refreshed daily). If neither can be read, do NOT update the Canvas this week — follow the failure policy (an unfiltered board is not acceptable).
+  ii. Match each name on last name + (first name OR Gusto `preferred_first_name`), case-insensitive. Aliases: Benjie Moore = George Moore; Sandi = Sandra Cole; Steve = Steven Burch; Chadd Mcclintic = Chadd McClintic.
+  iii. Drop: anyone not matching an ACTIVE employee (former employees), shared/service logins (`Free1 Valley Pawn`, `System`, `BACKUP`, `APPROVAL SANDI`), Preston Peters (ownership — shown only in the company total), and every $0.00 row.
+  iv. Company total stays the FULL unfiltered figure.
+
+Build the RANKED view from the remaining current employees, high to low.
 
 2. OVERWRITE THE CANVAS. Use Slack tool slack_update_canvas with canvas_id "F0BH9UK284S". Read the canvas first with slack_read_canvas to get current section IDs, then submit a `sections` batch replacing each body section (leave the title/heading-only sections like "Ranked Leaderboard" and "Full Details" untouched unless their text needs to change). Rebuild in this locked format, substituting the period end date, the ranked rows, and the company total:
 
@@ -42,7 +50,7 @@ Retail sales excluding fees. Period: <period>.
 |---|---|---|---|
 | :first_place_medal: / :second_place_medal: / :third_place_medal: then 4th,5th,6th... | ... | ... | ... |
 
-_Company total (incl. Preston): **$XX,XXX.XX**_
+_Company total (all store sales): **$XX,XXX.XX**_
 
 # :page_facing_up: Full Details
 :arrow_right: [Employee Sales Rankings — Details (Live) spreadsheet](https://docs.google.com/spreadsheets/d/1--Kn_2ybJCf6_PGnTdyMjCHBDsoEM4iCYPtokjHRIsg/edit)
@@ -51,7 +59,7 @@ _This Canvas is overwritten each week with the latest numbers. Weekly history st
 
 Per the Field Communication Standard, do not include a "Source: Bravo POS..." or similar system-name line in the Canvas — the footer above is complete as shown.
 
-3. Best-effort update the Google Sheet id "1--Kn_2ybJCf6_PGnTdyMjCHBDsoEM4iCYPtokjHRIsg" to match this week's ranked list. If you cannot write it, leave as-is (the Canvas carries the full table). Do not create a new spreadsheet.
+3. Best-effort update the Google Sheet id "1--Kn_2ybJCf6_PGnTdyMjCHBDsoEM4iCYPtokjHRIsg" to match this week's ranked list (current employees only). If you cannot write it, leave as-is (the Canvas carries the full table). Do not create a new spreadsheet.
 
 4. Do NOT post a feed message — the compile pipeline already posts it. Canvas only.
 

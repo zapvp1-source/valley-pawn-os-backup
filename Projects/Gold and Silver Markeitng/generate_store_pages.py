@@ -32,7 +32,7 @@ STORES = [
         "STORE_PHONE_RAW_NO1": "5404455510",
         "STORE_ADDRESS_STREET": "571 James Madison Highway",
         "STORE_ADDRESS_ZIP": "22701",
-        "STORE_HOURS_LINE": "Monday–Saturday, 10:00 AM – 6:00 PM · Closed Sunday",
+        "STORE_HOURS_LINE": "Monday–Friday 10:00 AM – 6:00 PM · Saturday 10:00 AM – 5:00 PM · Closed Sunday",
         "STORE_MAPS_URL": "https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Culpeper+VA",
         "STORE_GBP_URL": "https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Culpeper+VA",
         "STORE_NEARBY_ZIPS": "22701, 22714, 22729, 22735, 22737, 22741, 22727, 22732, 22747, 22942, 22960",
@@ -96,12 +96,12 @@ STORES = [
         "STORE_PHONE_RAW_NO1": "5405620776",
         "STORE_ADDRESS_STREET": "2362 Peters Creek Road, Suite C",
         "STORE_ADDRESS_ZIP": "24017",
-        "STORE_HOURS_LINE": "Mon, Tue, Thu, Fri & Sat 10:00 AM – 6:00 PM · Closed Wednesday & Sunday",
+        "STORE_HOURS_LINE": "Monday–Friday 10:00 AM – 6:00 PM · Saturday 10:00 AM – 5:00 PM · Closed Sunday",
         "STORE_MAPS_URL": "https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Roanoke+VA",
         "STORE_GBP_URL": "https://www.google.com/maps/search/?api=1&query=Valley+Pawn+Roanoke+VA",
         "STORE_NEARBY_ZIPS": "24017, 24012, 24013, 24014, 24015, 24016, 24018, 24019, 24153, 24179, 24083, 24175, 24070, 24090",
         "STORE_NEARBY_TOWNS": "Roanoke, Salem, Vinton, Daleville, Troutville, Hollins, Cave Spring, Catawba, and Cloverdale",
-        "STORE_OPEN_DAYS_SCHEMA": '["Monday","Tuesday","Thursday","Friday","Saturday"]',
+        "STORE_OPEN_DAYS_SCHEMA": '["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]',
     },
 ]
 

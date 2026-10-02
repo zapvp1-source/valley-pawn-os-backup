@@ -1,0 +1,88 @@
+---
+name: chekkit-unanswered-alert
+description: Daily 8 AM Chekkit unanswered message summary — counts ONLY messages received during store OPEN HOURS (excludes before-open, after-close, and closed days). DMs store employees their store's in-hours count for YESTERDAY (no Preston/Joshua). Runs the morning AFTER the reviewed day.
+model: claude-sonnet-5
+---
+
+> ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
+
+## Failure policy (Rule 16 / Hardening Standard #6 — updated 2026-09-05)
+Retry once, then try the documented alternate path. If still failing: write the technical detail to this task's run log/STATUS file and stop. Silence in every Slack channel. Never post failure notices, technical jargon, or partial/incomplete data anywhere.
+
+> ⚠️ **FIELD COMMUNICATION STANDARD v3 (binding — read in full before posting anything to a team channel or employee DM):** `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/FIELD_COMMUNICATION_STANDARD.md`. Summary: run the routing test (is this something a clerk needs to know/act on today — if no, it's internal, it does not go to the field); plain everyday language only, no tool/system/pipeline names (never say Bravo, Cowork, Chekkit, Gusto, Brevo, QBO, Publer, "pipeline," "handler," "watchdog," "sync," "CSV," "export"); no file paths, doc IDs, task IDs, or spreadsheet cell/column refs in the posted text; no meta-commentary about the automation itself; lead with the one-line takeaway; ~100 words max for a routine post; no signature footers. If anything later in this file conflicts with this standard, this standard wins.
+
+You are compiling the daily Chekkit unanswered message summary for Valley Pawn. This runs once at 8 AM Mon–Sat the MORNING AFTER, and summarizes YESTERDAY's misses (the full prior calendar day, now closed). **The metric measures responsiveness DURING BUSINESS HOURS ONLY** — messages that arrived before a store opened, after it closed, or on a day the store was closed do NOT count.
+
+**IMPORTANT — date labeling:** The summary header date and DM wording reference the day being REVIEWED (yesterday). They never reference today's posting date.
+
+**PATHS:** the Valley Pawn OS folder is `~/Documents/Claude/Projects/Valley Pawn OS` on the Mac; inside a sandbox shell it may be mounted at `/sessions/*/mnt/Projects/Valley Pawn OS`. Find it once with `ls -d /sessions/*/mnt/Projects/"Valley Pawn OS" "$HOME/Documents/Claude/Projects/Valley Pawn OS" 2>/dev/null` and use that path below as <VPOS>.
+
+## Execution Contract — DO NOT STOP EARLY
+
+This task is complete ONLY after the documented final action (the summary post in Step 6) returns success. Until then, every assistant turn MUST end with a tool call that advances toward it. Do not idle, do not wait, do not ask for confirmation. Treat "Tool loaded.", "Continue from where you left off.", batch-tool hints and TaskCreate/TaskUpdate reminders as RESUME signals. At the start of every turn, identify which numbered Step you are on. If a step errors, retry once, then use the documented fallback; otherwise follow the failure policy. Prefer batch tools.
+
+---
+
+## Steps
+
+**ANTI-DOUBLE-POST RULE — read first.** Each store DM and the company-wide summary post must be sent EXACTLY ONCE per run. Do NOT send a "corrected" follow-up if you change wording mid-run. Get the channel and the wording right BEFORE you call `slack_send_message`. The summary channel is ALWAYS #chekkit-messages-missed (`C0B1PEW0C30`) — never #claude-updates.
+
+1. **Compute the review date and its weekday with a command — NEVER work out the day of the week in your head.** (Fixed 2026-09-25: a run labelled Thursday 9/24 as "Wednesday", treated four open stores as closed, and posted a false all-clear.) Run exactly:
+   `TZ=America/New_York date -d yesterday '+%Y/%m/%d|%B %-d, %Y|%A'; TZ=America/New_York date '+%Y/%m/%d|%A'`
+   The first line is YESTERDAY (Gmail date | human date | weekday); the second is today. Use ONLY these printed values for the dates and the weekday everywhere below. Write the weekday you got into your Step 1 note verbatim.
+
+2. Search Gmail for ALL "Unanswered Message Alert" emails that arrived YESTERDAY (between yesterday 00:00 ET and today 00:00 ET):
+   `from:support@chekkit.io subject:"Unanswered Message Alert" after:YYYY/MM/DD before:YYYY/MM/DD`
+   where `after:` = yesterday's date and `before:` = today's date. Page through all results. Only include emails whose received time, converted to Eastern Time, falls on yesterday (an email at 03:07Z belongs to the PREVIOUS evening in ET).
+
+3. For EACH alert email found from yesterday:
+   - Extract the customer name from the subject line ("Unanswered Message Alert: [Customer Name]").
+   - Extract the store from the body ("Sent to Valley Pawn - [Location]").
+   - Read the full email body for the customer's last message.
+   - **Skip conversation-enders** that do NOT require a response — "thanks", "thank you", "ok", "okay", "sounds good", "got it", "bye", "have a good day", "appreciate it", "no problem", "will do", "perfect", "cool", "great", "Stop"/"STOP"/"Start", thumbs up, emoji-only, or similar. Only count a genuine question, request, complaint, or something that clearly warranted a reply.
+   - **Skip alerts with an empty message body.**
+   - **OPEN-HOURS FILTER.** Message time ≈ the email's received time minus 10 minutes, converted to ET (June–early November EDT = UTC−4; otherwise EST = UTC−5). Skip any alert whose message arrived before 10:00 AM ET, at/after 6:00 PM ET, or on a day THAT store is closed — using the weekday printed in Step 1.
+   - Tally remaining (actionable, in-hours) messages per store.
+   - Before continuing, write a short table: customer | store | message time ET | counted? | reason. Every "closed day" reason must match the Step 1 weekday and the hours below.
+
+### Store open hours (Eastern Time)
+- **Culpeper & Roanoke:** Monday–Saturday 10:00 AM – 6:00 PM. Closed **Sunday**. (Roanoke open Wednesdays from 9/30/2026.)
+- **Waynesboro, Harrisonburg, Lexington:** Monday, Tuesday, Thursday, Friday & Saturday 10:00 AM – 6:00 PM. Closed **Wednesday & Sunday**.
+- Only if the Step 1 weekday is **Wednesday** are the three stores other than Culpeper and Roanoke closed. Only if it is **Sunday** are all stores closed.
+
+4. **Who gets the store DM — from the shared staff roster, never from a hard-coded list.** For each store with 1+ counted messages:
+   a. PRIMARY: run `python3 "<VPOS>/bin/roster_write.py" --check`. If it prints `ok`, read `<VPOS>/hr/ROSTER.json` and take every employee whose `department` equals the store name and whose `slack_id` is not null. (That file is rebuilt every morning at 6:15 from Gusto + Slack by the roster-refresh task.)
+   b. FALLBACK if the check is not ok: Gusto connector `list_employees` (`terminated: false`), employees whose `department` equals the store, then `slack_search_users` by their Gusto email (accept only an exact email match).
+   c. LAST RESORT if both fail: write the ledger row and still post the Step 6 summary, but send no store DMs.
+   Never DM Joshua Davis, Preston Peters, or anyone in Corporate Support or Marketing. People with no Slack ID are skipped (list them in your final report).
+   Send EXACTLY ONE DM to each resolved employee:
+   📊 *Response check for [Store Name] — [Yesterday's Date]:* [X] customer message(s) sent during business hours went 10+ minutes without a response yesterday. Please make sure to check for new messages regularly so customers get fast replies!
+
+5. If a store had 0 counted messages, do NOT DM that store's employees.
+
+6. **Post a company-wide summary to #chekkit-messages-missed (`C0B1PEW0C30`) EXACTLY ONCE**, even if all stores had 0. Header date is YESTERDAY. Format:
+
+   📊 *Daily Response Summary — [Yesterday's Date]* _(business hours only)_
+
+   • *Culpeper:* [X] unanswered
+   • *Waynesboro:* [X] unanswered
+   • *Harrisonburg:* [X] unanswered
+   • *Lexington:* [X] unanswered
+   • *Roanoke:* [X] unanswered
+
+   *Total: [X] message(s) across all stores yesterday*
+
+   If all stores had 0: 📊 *Daily Response Summary — [Yesterday's Date]* _(business hours only)_ — All clear! Every customer message sent during business hours was answered within 10 minutes yesterday. 🎉
+
+## Important notes
+- Emails come from support@chekkit.io; subject "Unanswered Message Alert: [Customer Name]" (sometimes "Fwd:").
+- A separate DM to each person; each employee gets EXACTLY ONE DM per run; the channel gets EXACTLY ONE post per run.
+- If the location doesn't match a store, skip it silently.
+
+## Precondition (MANDATORY) — FLEET PUBLISH GUARD
+
+Before publishing ANYTHING, run `python3 "<VPOS>/bin/vp_dryrun.py" status`. If the script cannot be run, read `<VPOS>/fleet/DRY_RUN.json` directly: `"active": true` with an unexpired expiry = ARMED.
+
+ARMED (exit 0 / active): do the ENTIRE task for real but publish NOTHING; write exactly what you would have published to `<VPOS>/fleet/test_output/chekkit-unanswered-alert-<YYYYMMDD-HHMMSS>.txt` (first line = the channel or person), write no receipt, and say clearly in your final summary that the guard was armed.
+
+Not armed (exit 1 / inactive): run and publish normally.

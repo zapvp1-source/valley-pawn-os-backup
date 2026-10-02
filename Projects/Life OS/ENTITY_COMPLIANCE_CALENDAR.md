@@ -53,10 +53,19 @@ Required of **foreign LLCs holding a Certificate of Authority**, not just domest
 
 ### Virginia — Full Circle Finance Inc (corporation)
 
-⚠️ **NOT YET VERIFIED — do not assume it matches the LLC rule.** Virginia *corporations* file an
-**annual report** AND pay a registration fee **based on authorized shares** (unlike LLCs, which pay
-a flat $50 and file nothing). Confirm the exact due date and share-based fee for Entity ID
-07794274 in the SCC Clerk's Information System before relying on any date here.
+✅ **VERIFIED 2026-10-01 against the SCC's own receipt** (CIS@scc.virginia.gov, 7/13/2026, Work
+Order 202607137567412): *"This is your receipt for $110.00 for payment of an annual registration
+fee and/or penalty ... The due date for the next annual registration fee is **June 30, 2027**."*
+
+- **Due every year: June 30** (annual report + share-based registration fee, both by June 30).
+- **Filed (2026 cycle):** Registration fee **$110.00 paid 7/13/2026**, Work Order
+  **202607137567412** (amount may include a late penalty — 2026 was paid after the 6/30 due date).
+  Annual report **filed and Approved 7/24/2026 2:09 PM, $0.00** (per the CIS confirmation Joshua
+  forwarded to DCCU's Bill Groseclose 7/24/2026; DCCU had flagged the corp as *Inactive* on the SCC
+  site 7/22 — this filing cured it).
+- **Next due: June 30, 2027.** Set the reminder for early June — 2026 was late, which is what
+  made the corp show Inactive and held up DCCU's annual loan review.
+- Ignore "BBFile / bizfiley.com" emails (Hal Rawlins) — a third-party paid filing service, not the SCC.
 
 ### Registered agent
 
@@ -86,6 +95,20 @@ agent with a physical TN address, and Northwest may or may not be covering that.
 | 817 Richmond Ave | City of Staunton, VA |
 | 148 Hardinberry | **Roane County, TN** (confirmed — see below) |
 | 844 Cypress Crossing | St. Johns County, FL (homestead exemption applies) |
+
+**Due dates — checked 2026-10-01 against each treasurer's published schedule** (web; still
+confirm on each actual bill):
+
+| Authority | Schedule | 2026 dates in play | Notes |
+|---|---|---|---|
+| Augusta County VA (Bald Rock) | 1st half June 5, 2nd half **Dec 5** (weekend → next Monday) | **Mon Dec 7, 2026** | co.augusta.va.us |
+| Chesterfield County VA (Woods Walk) | 1st half June 5, 2nd half **Dec 5** | **Mon Dec 7, 2026** (county confirms the weekend shift) | ⚠️ **Treasurer ended all old recurring/autopay schedules 7/31/2026** (vendor change 8/3/2026, GovDelivery notice 7/29). Any autopay must be re-set up as a "Scheduled Payment" in the Citizen Payment Portal — no evidence in mail that it was. |
+| City of Staunton VA (817 Richmond) | ¾ due June 20, ¼ due **Dec 5** | **Mon Dec 7, 2026** | NNN lease — confirm whether FirstCash pays the bill directly or reimburses. |
+| Roane County TN (Hardinberry) | Bills mailed late Sept/Oct; due **Feb 28**, delinquent Mar 1 (1.5%/mo) | Feb 28, 2027 — outside the 90-day window | roanecountytn.gov/trustee |
+| St. Johns County FL (Cypress Crossing) | Bills mailed by **Nov 1**; 4% off in Nov, 3% Dec, 2% Jan, 1% Feb; due **Mar 31** | Pay by **Nov 30, 2026** for the 4% discount | 2026 homestead exemption approved by SJC Property Appraiser 12/11/2025 (Amber Yevoli). |
+
+Escrow status (whether a lender pays any of these) is not recorded anywhere — confirm per
+property and add it here.
 
 ---
 
@@ -133,9 +156,25 @@ naming the wrong member. Treat it as a watch item at those moments, not a standi
 
 ## Open questions that affect compliance
 
-1. **FCF Inc's VA annual report date and share-based fee** — unverified (above).
-2. **TN registered agent** — who, and is it current.
-3. **BOI/FinCEN** — current requirement status.
+1. ~~**FCF Inc's VA annual report date and share-based fee**~~ — ✅ VERIFIED 2026-10-01: due June 30 each year; 2026 paid/filed (see above).
+2. **TN registered agent** — who, and is it current. Still unconfirmed 2026-10-01 (no TN-RA
+   evidence in mail; Northwest's 8/2/2026 thread was the *Virginia* RA change for FI Tennessee).
+3. **BOI/FinCEN** — current requirement status. Not re-checked 2026-10-01.
+
+---
+
+## Compliance check log
+
+- **2026-10-01 (monthly entity-compliance-check, 90-day window to 12/30/2026).** Sources: Apple
+  Mail index (scc.virginia.gov, tnsos.gov, fisgov.com, northwestregisteredagent.com, county
+  treasurers, Silverline), OPEN_ITEMS_REGISTER, treasurer websites. Found: FCF Inc annual
+  report/fee verified and filed (above). No LLC fee, TN report, or Northwest renewal falls in the
+  window (Northwest service started ~7/2026 → renewals ~7/2027). In window: 2025 personal return
+  due **10/15/2026** (Silverline sent "Full Circle Finance 2025 Tax Return & 8879" for e-signature
+  9/14/2026 — no signed/filed confirmation found in mail; register row says it's unconfirmed
+  whether Silverline prepares the personal 1040); Augusta, Chesterfield and Staunton 2nd-half real
+  estate tax **Mon 12/7/2026**; St. Johns Co. 4% discount window **Nov 2026**; Chesterfield
+  autopay ended 7/31/2026. One DM sent to Joshua.
 
 ---
 

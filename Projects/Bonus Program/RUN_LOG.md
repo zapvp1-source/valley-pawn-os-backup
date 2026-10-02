@@ -132,3 +132,16 @@ Chonn Grinnage $99.99, Steven Burch $379.99, Cris Lopez $625.93) — ineligible 
 employed-at-payday rule. **Not yet resolved from prior entries:** July 2026 ($1,032 at Roanoke)
 still shows unpaid in Gusto as of this run; August is now computed and awaiting Joshua's
 approve/hold reply — nothing loaded into payroll yet.
+
+## 2026-10-01 12:18 ET — bonus-month-close-pull (Sept 2026 close)
+- Trigger dropped bonusclose-2026-09-20261001T153236Z; claimed within ~1 min, scrap-refining-gold for LEX/ROA/WAY took ~70 min to land (queue depth, not a hang) — all 5 stores landed clean before the collect step.
+- `collect --month 2026-09`: no gaps, no holds. All 5 EOM files validated to Reporting Dates 9/1/2026–9/30/2026.
+- Sept actuals vs Sept target (revenue gate): CUL hit (+$2,344), WAY hit (+$4,321), HAR missed (-$862), LEX missed (-$759), ROA missed (-$3,459).
+- `targets --month 2026-09`: exit 0, trailing-12 method. October targets: CUL $76,997 · HAR $54,380 · LEX $28,232 · ROA $46,807 · WAY $50,503.
+- `sheet_sync.py --month 2026-09`: FAILED — FileNotFoundError, Google Drive CloudStorage path not mounted in this session (no Control_your_Mac/osascript tool available this run; used the sandboxed bash + mounted Projects folder instead). Kept the step-6 trailing-12 targets per the documented fallback. Logged to FAILURE_LEDGER.
+- DM drafted to outbox for Joshua (bonus-month-close-pull-joshua-20261001-161830) — nothing posted to #bonus-goals, field_posting still false.
+
+## 2026-10-01 17:25 ET — October targets CORRECTED to the sheet method (interactive, Joshua asked)
+The 12:18 bonus-month-close-pull run fell back to the trailing-12 yield method because sheet_sync could not reach the Drive file. That is the method retired on 2026-09-09 (it penalises asset growth and is seasonally distorted). Re-ran the sheet_sync calculation (same code, `seasonal()` + `open_targets()`) against history.json through 2026-09, annual plan verified via the Drive connector against VP BONUS FINAL Updated.xlsx (unchanged: CUL 726,042 / HAR 599,708 / ROA 585,973 / LEX 335,431 / WAY 448,674), ROA/LEX no-catch-up rule applied.
+**October targets now: CUL $71,664 · HAR $57,850 · ROA $51,419 · LEX $29,159 · WAY $49,889 (company $259,981).** Trailing-12 numbers (CUL 76,997 / HAR 54,380 / ROA 46,807 / LEX 28,232 / WAY 50,503) kept under `superseded` in data/2026-10/targets.json; backup `targets.json.bak-trail12-*`. out/2026-09/slack_targets.txt rewritten; old body kept as slack_targets.trail12-superseded.txt.
+Drive sheet NOT rewritten — the local synced copy is cloud-only and can't be read from the sandbox. Harmless: the 11/1 sheet_sync rebuilds the sheet and reads October's target from targets.json. Rates unchanged (2%/2.5% mgr, 4%/5% assoc, FB qualifier off). Nothing posted to the field (field_posting false).

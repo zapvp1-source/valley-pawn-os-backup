@@ -68,12 +68,12 @@ from publer_client import PublerClient, PublerError
 #
 # Ground-truth store facts, so AI-drafted captions can be checked against
 # reality before they go out (a live post claimed "seven days a week" when
-# no Valley Pawn store is open 7 days -- Culpeper is closed Sunday; all
-# other stores are closed Wednesday AND Sunday). Keep in sync with
+# no Valley Pawn store is open 7 days -- Culpeper & Roanoke are closed Sunday
+# only; the other three stores are closed Wednesday AND Sunday). Keep in sync with
 # valley-pawn-context if hours/addresses ever change.
 STORE_FACTS = {
     "Culpeper": {"address": "571 James Madison Highway, Culpeper, VA 22701",
-                 "hours": "Mon-Sat 10am-6pm, closed Sunday"},
+                 "hours": "Mon-Fri 10am-6pm, Sat 10am-5pm, closed Sunday"},
     "Waynesboro": {"address": "1321 West Broad Street, Waynesboro, VA 22980",
                    "hours": "Mon, Tue, Thu, Fri, Sat 10am-6pm, closed Wed & Sun"},
     "Harrisonburg": {"address": "1790 East Market Street, Harrisonburg, VA 22801",
@@ -81,19 +81,37 @@ STORE_FACTS = {
     "Lexington": {"address": "125 Walker Street, Lexington, VA 24450",
                   "hours": "Mon, Tue, Thu, Fri, Sat 10am-6pm, closed Wed & Sun"},
     "Roanoke": {"address": "2362 Peters Creek Road, Suite C, Roanoke, VA 24017",
-                "hours": "Mon, Tue, Thu, Fri, Sat 10am-6pm, closed Wed & Sun"},
+                "hours": "Mon-Fri 10am-6pm, Sat 10am-5pm, closed Sunday"},
 }
 
 # Phrases that have actually shipped in live posts and are factually wrong or
 # generic-tell-tale. Extend this list whenever a fact-check miss is found.
 _FORBIDDEN_CLAIMS = [
     (re.compile(r"seven days a week|7 days a week", re.I),
-     "no Valley Pawn store is open 7 days/week (Culpeper closed Sun; others closed Wed+Sun)"),
-    (re.compile(r"open until 5\s*pm|closes? at 5\s*pm", re.I),
-     "no Valley Pawn store closes at 5pm -- all close at 6pm"),
+     "no Valley Pawn store is open 7 days/week (Culpeper & Roanoke closed Sun; others closed Wed+Sun)"),
+    # 2026-10-01: "Mon-Sat 10-6" is now wrong for EVERY store (CUL/ROA close 5pm Sat; others closed Wed).
+    (re.compile(r"\bmon(?:day)?\s*(?:-|–|—|through|thru|to)\s*sat(?:urday)?\b[,:]?\s*(?:from\s*)?10(?::00)?\s*(?:am|a\.m\.)?\s*(?:-|–|—|to|until)\s*6", re.I),
+     "stale hours -- Culpeper & Roanoke are Mon-Fri 10-6, Sat 10-5; the other three close Wed"),
     (re.compile(r"dixie pawn", re.I),
      "legacy name -- Harrisonburg is Valley Pawn, never Dixie Pawn"),
 ]
+
+# 2026-10-01 (Joshua): ONLY the 6-day stores (Culpeper & Roanoke) close at 5pm, and ONLY on Saturday.
+# A 5pm close is valid when the claim is about Saturday at Culpeper/Roanoke; anywhere else it is wrong.
+_FIVE_PM_CLOSE = re.compile(r"open (?:until|till|til) 5(?::00)?\s*p\.?m|clos(?:es?|ing) at 5(?::00)?\s*p\.?m|"
+                            r"10(?::00)?\s*(?:am|a\.m\.)?\s*(?:-|–|—|to)\s*5(?::00)?\s*(?:pm|p\.m\.)", re.I)
+_SIX_DAY = re.compile(r"culpeper|roanoke", re.I)
+
+
+def bad_5pm_close(text: str, store_keys=()) -> bool:
+    """True if the text claims a 5pm close anywhere other than Culpeper/Roanoke on Saturday."""
+    keys_six = bool(store_keys) and all(_SIX_DAY.search(k or "") for k in store_keys)
+    for m in _FIVE_PM_CLOSE.finditer(text):
+        win = text[max(0, m.start() - 80): m.end() + 40]
+        sat = re.search(r"\bsat(?:urday)?s?\b", win, re.I)
+        if not (sat and (keys_six or _SIX_DAY.search(win))):
+            return True
+    return False
 
 
 def qa_check_caption(caption: str, store_keys: list[str]) -> list[str]:
@@ -106,6 +124,8 @@ def qa_check_caption(caption: str, store_keys: list[str]) -> list[str]:
     for pattern, reason in _FORBIDDEN_CLAIMS:
         if pattern.search(stripped):
             problems.append(f"factual error: {reason}")
+    if bad_5pm_close(stripped, store_keys):
+        problems.append("factual error: only Culpeper & Roanoke close at 5pm, and only on Saturday -- every other close is 6pm")
     # GBP-style hard rules apply to any Google account key if ever routed here
     if any(k.lower().startswith("gbp") or k.lower() == "google" for k in store_keys):
         if "#" in stripped:

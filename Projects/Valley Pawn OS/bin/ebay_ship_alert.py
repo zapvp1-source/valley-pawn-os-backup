@@ -76,8 +76,8 @@ def open_codes(day):
     wd = day.isoweekday()  # 1=Mon .. 7=Sun
     if wd == 7:
         return set()
-    if wd == 3:
-        return {"CUL"}
+    if wd == 3:  # Roanoke open Wednesdays from 2026-09-30 (Joshua 2026-10-01)
+        return {"CUL", "ROA"} if day >= dt.date(2026, 9, 30) else {"CUL"}
     return {c for c, _ in STORES}
 
 

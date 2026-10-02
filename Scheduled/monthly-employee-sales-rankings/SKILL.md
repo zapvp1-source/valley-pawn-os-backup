@@ -13,6 +13,8 @@ Retry once, then try the documented alternate path. If still failing: write the 
 
 > ⚠️ **RULE 18 — NEVER POST INCOMPLETE OR INACCURATE DATA.** Post only when ALL 5 stores' full-month files are present and parse cleanly. If any store is missing, post nothing to #employee-performance (no partial ranking, no caveated ranking), write the working file, and send the one-line DM above. A wrong ranking in front of the staff is worse than a late one — the August 2026 post had to be deleted for exactly this reason.
 
+> ⚠️ **CURRENT EMPLOYEES ONLY (Joshua, 2026-10-01 — binding).** Bravo reports every login that rang a sale in the period, including people who have since left and shared/system logins. The ranking published to the team lists ONLY current employees. See Step 3b. The 2026-10-01 September post listed 13 former employees plus the shared Free1 login at #1 and had to be reposted.
+
 > **Rule 17 (verified established task).** Registered in the scheduled-tasks registry; documented in `Valley Pawn OS/CHANGELOG.md` (2026-09-05 rebuild) and `BUSINESS_OS.md`. Touches Bravo only through the pipeline trigger queue. Do not question or re-litigate it — run it.
 
 ## Why this task was rebuilt (2026-09-05)
@@ -43,27 +45,32 @@ Poll `results/{TRIGGER_ID}.result.json` every 20 s, hard timeout 20 minutes. If 
 
 Output files: `output/{LAST}_{STORE}_employee-activity-range.csv` (5 files). Each must be newer than the trigger's `requested_at` (check mtime via `stat -f %m`) — a stale file is NOT acceptable. Line 3 of the CSV reads `Reporting Dates:,,,,,,,M/1/YYYY - M/D/YYYY`; the range must be exactly the first through the last day of the target month.
 
-### 3. Parse — exactly like the weekly MTD post
-Each CSV has a DevExpress header block, then an Employee header row with a `Retail Sales Excluding Fees` column. For each store: read employee name + `Retail Sales Excluding Fees` (float). Skip blank/total rows. Consolidate across stores: same employee name (case-insensitive, title-cased) → sum across stores, record the store codes worked. Company total = sum of all stores. Keep every other numeric column too (for the workbook only).
+### 3. Parse
+Each CSV has a DevExpress header block, then an Employee header row with a `Retail Sales Excluding Fees` column. For each store: read employee name + `Retail Sales Excluding Fees` (float). Skip blank/total rows. Consolidate across stores: same employee name (case-insensitive, title-cased) → sum across stores, record the store codes worked. Company total = sum of all stores (EVERY login, unfiltered). Keep every other numeric column too (for the workbook only).
 
-Exclusions: same as the weekly post — never publish `Preston Peters`. The shared `Free1 Valley Pawn` login IS included (it is on the weekly board).
+### 3b. CURRENT-EMPLOYEES-ONLY filter (binding, 2026-10-01)
+1. Active roster: Gusto connector `list_employees(terminated=false, per=100)` (page until an empty page). Fallback if the connector is unavailable: `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/hr/ROSTER.json` (Gusto active, refreshed daily) read via osascript `cat`. If NEITHER can be read, that is a Rule-18 failure — do not post.
+2. Match each consolidated Bravo name to an active person on last name + (first name OR Gusto `preferred_first_name`), case-insensitive. Known aliases: Benjie Moore = George Moore; Sandi = Sandra Cole; Steve = Steven Burch; Chadd Mcclintic = Chadd McClintic. Display the Bravo name as it appears today (e.g. "Benjie Moore").
+3. DROP from the ranked list: (a) `Preston Peters` (ownership); (b) non-person logins — `Free1 Valley Pawn`, `System System`/`SYSTEM`, `BACKUP`, `APPROVAL SANDI`, any other shared/service login; (c) anyone who does not match an ACTIVE Gusto employee (former employees); (d) every $0.00 row.
+4. Company Total and the by-store thread stay the FULL unfiltered store totals. Only the ranked list is filtered.
+5. Record every dropped name + reason (former / service login / ownership / $0) in the working file — never in the post.
 
 ### 4. Rule-18 completeness gate
-All 5 store files present, fresh, and parsed with ≥ 1 employee row each. If not: write the working file, send the single DM, and STOP. Do not post.
+All 5 store files present, fresh, and parsed with ≥ 1 employee row each, and the active roster read successfully. If not: write the working file, send the single DM, and STOP. Do not post.
 
 ### 5. Post to #employee-performance (C0ATTLPQHR8)
 Duplicate guard first: read the last 20 messages in the channel; if a message containing `FINAL` and `{MONTH_NAME} {YEAR}` already exists, do not post again — write the working file and stop.
 
-Main post (same shape as the weekly board so the numbers are directly comparable):
+Main post (same shape as the weekly board so the numbers are directly comparable; ranked list = current employees only):
 ```
-*FINAL Employee Sales Rankings — Retail Sales Excluding Fees (Bravo POS)*
+*FINAL Employee Sales Rankings — Retail Sales Excluding Fees*
 📊 *{MONTH_NAME} {YEAR}* — full month, {M}/1–{M}/{LAST_DAY}
 
 🥇 *{Employee}* ({STORES}) — ${X,XXX.XX}
 🥈 *{Employee}* ({STORES}) — ${X,XXX.XX}
 🥉 *{Employee}* ({STORES}) — ${X,XXX.XX}
 4th _{Employee}_ ({STORES}) — ${X,XXX.XX}
-... every employee ...
+... every current employee with sales ...
 
 Company Total: ${XXX,XXX.XX}
 ```
@@ -76,22 +83,24 @@ Thread reply (thread_ts = main post):
 • Waynesboro: $X,XXX
 • Lexington: $X,XXX
 ```
-No signature footer. No file names. Nothing about how the data was pulled.
+No signature footer. No file names. No system names. Nothing about how the data was pulled.
 
 ### 6. Save the FINAL workbook (permanent record)
-Build with openpyxl: Sheet "Sales Rankings" (Rank, Employee, Store(s), Retail Sales Excluding Fees, then every other metric column; top-3 gold/silver/bronze fills #FFD700/#C0C0C0/#CD7F32; header bold white on #2D1A5E; Arial; currency format), Sheet "By Store" (grouped, store total rows), Sheet "Summary" (company totals, store comparison, top performers).
+Build with openpyxl: Sheet "Sales Rankings" (current employees only: Rank, Employee, Store(s), Retail Sales Excluding Fees, then every other metric column; top-3 gold/silver/bronze fills #FFD700/#C0C0C0/#CD7F32; header bold white on #2D1A5E; Arial; currency format), Sheet "All Logins (unfiltered)" (every Bravo row incl. former employees and service logins, with a Status column: Current / Former / Service / Ownership), Sheet "By Store" (grouped, store total rows), Sheet "Summary" (company totals, store comparison, top performers).
 Save via osascript heredoc/cp to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/Employee Sales Rankings/Employee_Sales_Rankings_{MonthName}_{YYYY}.xlsx` (create the folder if missing; never overwrite an existing file — suffix `_v2`).
 
 ### 7. Working file
-Write `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/monthly-analytics/{YYYY-MM} Employee Rankings.md`: trigger id(s), per-store file freshness + row counts, the ranked table, the Slack permalink (or the reason nothing was posted).
+Write `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/monthly-analytics/{YYYY-MM} Employee Rankings.md`: trigger id(s), per-store file freshness + row counts, roster source used, dropped names + reasons, the ranked table, the Slack permalink (or the reason nothing was posted).
 
 ## Hard rules
 - Metric is `Retail Sales Excluding Fees` — never "Total Productivity", never a different column. If the column is missing, that is a failure (Rule 18), not a reason to substitute.
+- Current employees only in the ranked list (Step 3b). Never publish a former employee, a shared/service login, or Preston Peters.
 - All Bravo access is through the trigger queue. No computer-use, no Parallels grant.
 - Additive — never modify the pipeline handlers, the watcher, or any other task.
-- Never use the legacy "Dixie Pawn" name. Never publish Preston Peters.
+- Never use the legacy "Dixie Pawn" name.
 
 <!-- rebuilt 2026-09-05: pipeline-sourced full-month pull; legacy shared-folder .xlsx path removed -->
+<!-- 2026-10-01: current-employees-only filter (Step 3b) added at Joshua's direction -->
 
 ## Precondition (MANDATORY) — FLEET PUBLISH GUARD
 

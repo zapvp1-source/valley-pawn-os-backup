@@ -168,3 +168,31 @@ sanity check, not a hard rule.
 - First live run of this two-task automation should be watched loosely (not
   per-bucket, just confirm the Slack approval round-trip works) before
   trusting it fully unattended.
+
+## 2026-10-01 amendments (first real month — September — run with Joshua)
+
+Joshua: *"the Elemetal settlements will come in between the 25th and the end of any
+given month, we need to check and make sure they are both there from the email,
+then we need to do what we normally do."*
+
+Gap found on the first scheduled run: Task 1 waited for a REVIEW workbook that the
+daily `precious-metals-settlement-handler` intentionally no longer builds for
+month-end settlements, so nothing staged. Fixed by making Task 1 own Phase A:
+
+- **Task 1 now runs the 1st–5th** (`45 9 1-5 * *`), exits silently once the month
+  is staged/closed, and on each run: (1) confirms BOTH Elemetal settlement emails
+  (Karat = gold, Stone Removal = gold with stones) arrived from the 20th of the
+  month on — missing one = ledger row and retry tomorrow, still missing on the 5th =
+  NEEDS_HUMAN; (2) finds the 10 real bucket names (stores deviate — LEX used
+  `2026-09 GOLD SCRAP` / `2026-09 GOLD STONE SCRAP`); (3) reads live weights with a
+  `readOnly:true` manifest (zero mutation); (4) builds the split with
+  `bin/build_month_split.py` (weight share × net wire, penny-exact largest-remainder
+  rounding — verified to reproduce the Sept 2026 approved split exactly); (5) stages
+  the manifest in `pending-approval/` and sends the one Slack approval request.
+- **Task 2 only posts during store hours** (Mon–Sat 10:15 AM–5:15 PM ET, not Wed).
+  On 2026-10-01 the run went after hours: Bravo had to open every store/till, and
+  Culpeper's till would not open, so both CUL buckets stopped one step before close.
+  Task 2 also now re-runs unverified buckets once with a retry manifest (handler
+  resumes from wherever a bucket stopped; WEIGHT MISMATCH is never retried).
+- A missing bucket name costs ~5 minutes per bucket in the handler (it scrolls the
+  whole list) — normal, not a hang.

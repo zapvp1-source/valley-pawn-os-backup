@@ -86,8 +86,8 @@ numbers, ≤1500 chars, ≤2 emojis · ✅ Facebook: no hashtags · ✅ X ≤270
 fleet-wide · ✅ one photo + one video per item per page per 14 days · ✅ a "reveal tomorrow" post
 requires a scheduled reveal slot.
 
-Not code-enforced, still binding: hours facts (Culpeper Mon–Sat 10–6; others Mon/Tue/Thu/Fri/Sat
-10–6, closed Wed & Sun; nobody closes at 5), one concrete real detail per caption, community posts
+Not code-enforced, still binding: hours facts (Culpeper & Roanoke Mon–Fri 10–6, Sat 10–5; Harrisonburg, Waynesboro & Lexington Mon/Tue/Thu/Fri/Sat
+10–6, closed Wed & Sun; only Culpeper & Roanoke close at 5, and only on Saturday), one concrete real detail per caption, community posts
 carry no CTA/product/price, humor never mocks customers or money trouble, real photo (or `--cref`)
 for any named make/model, no image reused across different stores, and the brand-studio palette,
 type, six styles and forbidden-trope list.

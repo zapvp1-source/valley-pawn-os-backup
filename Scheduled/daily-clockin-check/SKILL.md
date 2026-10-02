@@ -1,6 +1,6 @@
 ---
 name: daily-clockin-check
-description: Check Gusto clock-in status at 10:15 AM Mon-Sat and post summary to Slack #general only (no DMs). MCP-first (Gusto API, headless) with Chrome flow as automatic fallback. Wednesdays: Culpeper only; other days: all stores. 15-min grace after 10 AM open.
+description: Check Gusto clock-in status at 10:15 AM Mon-Sat and post summary to Slack #general only (no DMs). MCP-first (Gusto API, headless) with Chrome flow as automatic fallback. Wednesdays: Culpeper and Roanoke only; other days: all stores. 15-min grace after 10 AM open.
 model: claude-sonnet-5
 ---
 
@@ -11,14 +11,16 @@ Retry once, then try the documented alternate path. If still failing: write the 
 
 > ⚠️ **FIELD COMMUNICATION STANDARD v3 (binding — read in full before posting anything to a team channel or employee DM):** `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/FIELD_COMMUNICATION_STANDARD.md`. Summary: run the routing test (is this something a clerk needs to know/act on today — if no, it's internal, it does not go to the field); plain everyday language only, no tool/system/pipeline names (never say Bravo, Cowork, Chekkit, Gusto, Brevo, QBO, Publer, "pipeline," "handler," "watchdog," "sync," "CSV," "export"); no file paths, doc IDs, task IDs, or spreadsheet cell/column refs in the posted text; no meta-commentary about the automation itself ("verified against," "supersedes," "this is a manual test run," "pulled automatically from"); lead with the one-line takeaway; ~100 words max for a routine post; no signature footers. If anything later in this file conflicts with this standard, this standard wins.
 
+> ⚠️ **STORE STAFF ONLY — NO DAVIS FAMILY (Joshua, 2026-10-01 — binding).** The 10/1 post listed Audrey, Kennedy, Madison and Savannah Davis as "Not Clocked In." Family members and corporate/office staff never appear in this report — not in Clocked In, On Break, or Not Clocked In. See "Who can appear" below.
+
 You are checking the Valley Pawn employee clock-in status in Gusto and posting a summary to the Slack #general channel (channel ID: C03BETSS669). **Post to #general ONLY — do NOT DM Joshua, Preston, or anyone else.** (Per Joshua, 2026-05-05: "preston and I do not need to be DM on this, just post to general and be done.")
 
 **ARCHITECTURE (changed 2026-06-10):** Run **headless via the Gusto MCP** (PATH A below) — no browser, no login, no session expiry. The Gusto time-records API returns clock-in/out events keyed by an internal `companyMemberUuid` with no name, so the **Member Crosswalk** table below supplies the names. The old Chrome/website flow is preserved as **PATH B (fallback)** and is triggered automatically if the MCP returns no usable data, errors twice, or surfaces an unknown member ID. Both paths produce the identical Slack message.
 
 **IMPORTANT — Run timing & day context:**
 - Stores open at 10:00 AM. This runs at 10:15 AM to give a 15-minute grace window before flagging.
-- **Wednesdays:** Culpeper is the ONLY store open. Harrisonburg, Waynesboro, Lexington, Roanoke are closed. On Wednesday, **filter the report to Culpeper employees only** — everyone else is legitimately off; listing them as "Not Clocked In" is misleading noise.
-- Determine the day with `new Date().getDay()` (0=Sun … 3=Wed … 6=Sat). If `3`, apply the Culpeper-only filter.
+- **Wednesdays:** Culpeper and Roanoke are the only stores open (Roanoke open Wednesdays from 9/30/2026, Joshua 2026-10-01). Harrisonburg, Waynesboro, Lexington are closed. On Wednesday, **filter the report to Culpeper and Roanoke employees only** — everyone else is legitimately off; listing them as "Not Clocked In" is misleading noise.
+- Determine the day with `new Date().getDay()` (0=Sun … 3=Wed … 6=Sat). If `3`, apply the Culpeper + Roanoke filter.
 
 ## Execution Contract — DO NOT STOP EARLY
 Complete ONLY after the Slack post succeeds. Until then, every turn MUST end with a tool call that advances toward it. Do not idle, wait, or ask for confirmation.
@@ -29,15 +31,17 @@ Complete ONLY after the Slack post succeeds. Until then, every turn MUST end wit
 
 ---
 
-## Excluded Employees (always remove, every day)
-- Hillary Davis
-- Joshua Davis
-- Sandi Cole
-- Preston Peters
+## Who can appear (STORE STAFF ONLY — applied every day, both paths, all three sections)
+A person may appear in the post ONLY if ALL of these hold:
+1. Active in Gusto (`terminated = false`).
+2. Gusto `department` is one of the five stores: **Culpeper, Harrisonburg, Lexington, Roanoke, Waynesboro**. Anyone in "Corporate Support", "Marketing", or any non-store department is dropped.
+3. Last name is NOT **Davis** (no Davis family member ever appears — Joshua, Hillary, Audrey, Kennedy, Madison, Savannah, or any future Davis — even if they clock in or are assigned to a store).
+4. Not on the named exclusion list: **Preston Peters**, **Sandi (Sandra) Cole** (salaried manager).
+This applies to Clocked In and On Break too — a family member who happens to clock in is still left off.
 
 ## Display Name Overrides (apply when posting)
 - "Bridgett Grayson" → **Bree Grayson**
-- "George B Moore" → **Benjie Moore**
+- "George B Moore" / "George Moore" → **Benjie Moore**
 
 ## Member Crosswalk — Gusto `companyMemberUuid` → employee (AUTHORITATIVE, runtime)
 Cross-validated 2026-06-10 against the Jun 9 & Jun 10 Slack posts (member IDs + clock-in times matched exactly). A reference JSON copy lives beside this file as `gusto_member_crosswalk.json`.
@@ -54,7 +58,10 @@ Cross-validated 2026-06-10 against the Jun 9 & Jun 10 Slack posts (member IDs + 
 | 6a3d6a13-5aef-4d92-8f2b-8bb977c16295 | 1f74c46d-b20d-44f6-a041-db9098f93f23 | Robert Swagger | Robert Swagger |
 | d0d372a6-8512-4c53-8bbf-f7075b2ac3c5 | 4ffc0a65-5743-4a72-9513-8a7e995a9575 | Emma Langford | Emma Langford |
 
+(Crosswalk rows for people who have left are harmless — the roster filter in A3 decides who appears.)
+
 **Culpeper active location_uuid:** `39c172da-7db9-4414-b528-957da38b8aa7`
+**Roanoke active location_uuid:** `dbd3a642-99a5-4c10-a1b7-9a7b179f6246`
 
 ---
 
@@ -76,15 +83,15 @@ Cross-validated 2026-06-10 against the Jun 9 & Jun 10 Slack posts (member IDs + 
 - Resolve each `companyMemberUuid` via the Member Crosswalk. **If a shift's member ID is NOT in the table → run the Unknown-Member subroutine in PATH B, append the new mapping to the table above, then continue.**
 
 ### A3. Build the roster (who can appear)
-- **Wednesday (`dow === 3`):** `list_employees(location_uuid = "39c172da-7db9-4414-b528-957da38b8aa7", terminated = false)` → Culpeper only.
+- **Wednesday (`dow === 3`):** `list_employees(location_uuid = "39c172da-7db9-4414-b528-957da38b8aa7", terminated = false)` + `list_employees(location_uuid = "dbd3a642-99a5-4c10-a1b7-9a7b179f6246", terminated = false)` → Culpeper + Roanoke only.
 - **Other days:** `list_employees(terminated = false)` → all active employees.
-- Remove the four Excluded Employees.
+- Apply **Who can appear** (store department only, no Davis last name, minus Preston and Sandi). Sanity check: the roster after filtering should contain NO one with last name Davis and NO "Corporate Support"/"Marketing" department — verify this explicitly before building the message.
 
 ### A4. Categorize
-Join shifts (A2) to roster (A3) by `employee_uuid` (crosswalk → `employee_uuid`; `list_employees` → `uuid`).
+Join shifts (A2) to the filtered roster (A3) by `employee_uuid` (crosswalk → `employee_uuid`; `list_employees` → `uuid`). A shift whose person is NOT in the filtered roster is dropped (never shown).
 - 🟢 Clocked In — open shift today; show clock-in time.
 - 🟡 On Break — open break; show clock-in time.
-- 🔴 Not Clocked In — roster member with no open shift today.
+- 🔴 Not Clocked In — filtered-roster member with no open shift today.
 Apply Display Name Overrides. Then go to **Build & Send** (shared section below).
 
 ---
@@ -95,7 +102,7 @@ Trigger only if PATH A abandons (empty/non-native data, two errors, or to resolv
 ### B1. Navigate & self-heal login
 - Navigate to `https://app.gusto.com/payroll_admin/time_tracking`.
 - If signed out: credentials are saved in Chrome — click **Continue** on the prefilled login, OR **Sign in with Google** → pick **jdavis@fcfpawn.com** (click it even if "Signed out"; NOT fullcirclepawn@gmail.com) → if a password field appears it autofills, click Next/Sign in → click Continue on any consent page → on a Google 400, restart by re-navigating and clicking Sign in with Google again. **A password prompt is NOT a failure — proceed.**
-- Only alert (#general, NO DM) on: a 2FA challenge you can't supply, a rejected password, or a 3+ redirect loop.
+- Only alert on: a 2FA challenge you can't supply, a rejected password, or a 3+ redirect loop (per the failure policy — never in #general).
 
 ### B2. Open active pay period
 - Click **Review** on the row marked "Active pay period". Wait 3s.
@@ -107,10 +114,10 @@ const employees = Array.from(document.querySelectorAll('[aria-label="Clocked in"
   .map(el => ({ name: el.textContent.trim(), status: el.getAttribute('aria-label') }));
 JSON.stringify(employees);
 ```
-Paginate if a `[aria-label="Navigate to next page"]` button is enabled (wait 3s between pages; if a click yields no new names, you're done). Employees tab only — not Contractors.
+Paginate if a `[aria-label="Navigate to next page"]` button is enabled (wait 3s between pages; if a click yields no new names, you're done). Employees tab only — not Contractors. Then apply **Who can appear** (use `list_employees(terminated=false)` for department; drop any Davis).
 
 ### B4. Clock-in times (and Location on Wednesday)
-For each Clocked In / On Break person, open their timesheet (or use the inline Previous/Next employee buttons), read today's earliest start time; note `_(shift rolled over from previous night)_` if it's 12:00 AM. On Wednesday also read the shift **Location** ("Valley Pawn Culpeper"); for the Wednesday filter, fastest path is the Culpeper roster (Bree Grayson, Robert Swagger, Martin Dowden) — skip anyone not Culpeper-assigned.
+For each Clocked In / On Break person, open their timesheet (or use the inline Previous/Next employee buttons), read today's earliest start time; note `_(shift rolled over from previous night)_` if it's 12:00 AM. On Wednesday also read the shift **Location** ("Valley Pawn Culpeper" or "Valley Pawn Roanoke"); for the Wednesday filter, use the live Culpeper + Roanoke rosters from `list_employees(location_uuid=…)` — skip anyone not Culpeper- or Roanoke-assigned.
 
 **Unknown-Member subroutine (called from A2):** open the unmapped person's timesheet, match their clock-in time to the unknown shift's `clockInTimestamp`, get their `employee_uuid` from `list_employees` (search by name), then append a row to the Member Crosswalk table above and resume PATH A.
 
@@ -118,7 +125,7 @@ For each Clocked In / On Break person, open their timesheet (or use the inline P
 
 # Build & Send (shared by both paths)
 
-**Wednesday filter:** after exclusions, keep ONLY Culpeper employees.
+**Final filter before rendering:** Who can appear (store staff only, no Davis, no Preston/Sandi). **Wednesday:** then keep ONLY Culpeper and Roanoke employees.
 
 Categories: 🟢 Clocked In (with time) · 🟡 On Break (with time) · 🔴 Not Clocked In (no time). Skip empty sections.
 
@@ -136,10 +143,10 @@ Format (standard days — Mon/Tue/Thu/Fri/Sat):
 • [Name]
 ```
 
-Format (Wednesday — Culpeper only):
+Format (Wednesday — Culpeper & Roanoke only):
 ```
-🕙 *Valley Pawn — Daily Clock-In Check (Culpeper Only)* | [Wednesday, Month Day, Year] @ 10:15 AM
-_Only Culpeper is open on Wednesdays — Harrisonburg, Waynesboro, Lexington, and Roanoke are closed._
+🕙 *Valley Pawn — Daily Clock-In Check (Culpeper & Roanoke Only)* | [Wednesday, Month Day, Year] @ 10:15 AM
+_Only Culpeper and Roanoke are open on Wednesdays — Harrisonburg, Waynesboro, and Lexington are closed._
 
 🟢 *Clocked In (N)*
 • [Name] — clocked in at [time]
@@ -150,8 +157,8 @@ _Only Culpeper is open on Wednesdays — Harrisonburg, Waynesboro, Lexington, an
 
 If everyone clocked in (any day):
 ```
-🕙 *Valley Pawn — Daily Clock-In Check[ (Culpeper Only) if Wed]* | [Date] @ 10:15 AM
-✅ All [N] [Culpeper ]employees are clocked in. Great start to the day!
+🕙 *Valley Pawn — Daily Clock-In Check[ (Culpeper & Roanoke Only) if Wed]* | [Date] @ 10:15 AM
+✅ All [N] [Culpeper & Roanoke ]employees are clocked in. Great start to the day!
 
 🟢 *Clocked In (N)*
 • [Name] — clocked in at [time]
@@ -166,9 +173,12 @@ Use the Slack send tool. **No DMs to anyone.** A single post to #general is the 
 ## Important Notes
 - **Headless first.** Normal runs touch only the Gusto MCP (`list_time_records`, `list_employees`) + Slack — no browser, no login, no session expiry. PATH B exists only as a safety net.
 - **#general only — no DMs (per Joshua, 2026-05-05).**
-- Roster size sanity check: ~8 non-excluded employees company-wide (as of June 2026). If PATH A yields far fewer names than the live roster, re-pull or fall to PATH B.
-- **Wednesday = Culpeper only.** Never flag non-Culpeper staff on Wednesday.
-- New hires: the Unknown-Member subroutine auto-appends them to the crosswalk. Store moves need no edit — the Wednesday filter uses live `list_employees(location_uuid=…)`.
+- **Store staff only, never a Davis (per Joshua, 2026-10-01).**
+- Roster size sanity check: ~10–12 store employees company-wide (as of Oct 2026: Burnett, Swagger, Ahern, Tapley, Tiglao, Moore, Cox, Epperly, McClintic, Dowden). If PATH A yields far fewer names than the live store roster, re-pull or fall to PATH B.
+- **Wednesday = Culpeper + Roanoke only** (Roanoke open Wednesdays from 9/30/2026). Never flag Harrisonburg, Waynesboro or Lexington staff on Wednesday.
+- New hires: the Unknown-Member subroutine auto-appends them to the crosswalk. Store moves need no edit — the filter uses live `list_employees` department / location.
+
+<!-- 2026-10-01: store-staff-only + no-Davis rule added at Joshua's direction after the 10/1 post listed four Davis family members as Not Clocked In -->
 
 ## Precondition (MANDATORY) — FLEET PUBLISH GUARD
 

@@ -48,7 +48,7 @@ EXCLUDED_FROM_QUOTA = {"BrandTikTok", "BrandBlog"}
 STORE_FACTS = {
     # Source of truth: valley-pawn-context skill (canonical NAP). Never invent these.
     "Culpeper":     {"address": "571 James Madison Highway, Culpeper, VA 22701",
-                     "hours": "Mon-Sat 10am-6pm, closed Sun", "phone": "(540) 445-5510"},
+                     "hours": "Mon-Fri 10am-6pm, Sat 10am-5pm, closed Sun", "phone": "(540) 445-5510"},
     "Waynesboro":   {"address": "1321 West Broad Street, Waynesboro, VA 22980",
                      "hours": "Mon, Tue, Thu, Fri, Sat 10am-6pm, closed Wed & Sun", "phone": "(540) 221-6346"},
     "Harrisonburg": {"address": "1790 East Market Street, Suite 22, Harrisonburg, VA 22801",
@@ -56,7 +56,7 @@ STORE_FACTS = {
     "Lexington":    {"address": "125 Walker Street, Lexington, VA 24450",
                      "hours": "Mon, Tue, Thu, Fri, Sat 10am-6pm, closed Wed & Sun", "phone": "(540) 461-8349"},
     "Roanoke":      {"address": "2362 Peters Creek Road, Suite C, Roanoke, VA 24017",
-                     "hours": "Mon, Tue, Thu, Fri, Sat 10am-6pm, closed Wed & Sun", "phone": "(540) 562-0776"},
+                     "hours": "Mon-Fri 10am-6pm, Sat 10am-5pm, closed Sun", "phone": "(540) 562-0776"},
 }
 FIVE_STORE_FOOTER = ("📍 125 Walker St, Lexington · 1321 W Broad St, Waynesboro · "
                      "1790 E Market St Ste 22, Harrisonburg · 571 James Madison Hwy, Culpeper · "
