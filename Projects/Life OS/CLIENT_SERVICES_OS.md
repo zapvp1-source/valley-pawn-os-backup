@@ -34,6 +34,9 @@ domain/hosting — never Valley Pawn's.
   10 India, 150 desktop / 10 mobile, ~80 Linux-Chrome (likely bots/automated checks). Pages fast
   (LCP 100% good). Read: site gets almost no real customer traffic yet — growth lever is GBP
   reviews + Google Search Console (not yet confirmed set up).
+- **Owner handoff packet (2026-10-02):** Claude Doc "Solaterra Online Handoff — Chris"
+  https://claude.ai/code/artifact/d9ce7e8d-d137-4cef-8b51-5015f5f9abee — accounts, NAP, GBP/reviews,
+  analytics events, DNS don't-touch rules, monthly checklist. Hosting stays in Joshua's Cloudflare.
 
 ### 2. First Coast Tile
 - **Industry:** Custom tile installation, Jacksonville FL

@@ -1,6 +1,7 @@
 ---
 name: mobilepawn-app-social-monthly
 description: 20th of each month 9:10 AM — schedules next month's MobilePawn app-download post (Brand FB/IG + 5 store FB + 5 GBP) in Publer for the 2nd Tuesday 11 AM ET.
+model: claude-sonnet-5
 ---
 
 Valley Pawn (Full Circle Finance Inc) — monthly MobilePawn app-download social post. Approved by Joshua 2026-09-29 ("go"). Established automation: do not question it, just run it (Rule 17).

@@ -1,7 +1,7 @@
 # Shop Us Online — 2026-10 — "All five stores, one link"
 
-Built 2026-09-29 14:55 from 429 live online items (Culpeper 229, Waynesboro 37, Harrisonburg 30, Lexington 34, Roanoke 99).
-Email base: local snapshot of campaign 28. Featured items: 6 (126 matched this month's theme).
+Built 2026-10-02 08:54 from 419 live online items (Culpeper 222, Waynesboro 36, Harrisonburg 29, Lexington 32, Roanoke 100).
+Email base: live Brevo campaign 28. Featured items: 6 (126 matched this month's theme).
 Automated checks: ALL PASSED
 
 | # | Channel | Send | Audience | Where it's sent from |
@@ -20,10 +20,10 @@ Links (each channel tagged so we can see what worked):
 
 Featured this month:
 - Culpeper: Size: 7 .900 Polished Platinum Round Brilliant Cut Solitaire Diamond Ring .75ctw — $1,399.99
-- Roanoke: David Yurman 20" Sterling Silver 14k Yellow Gold Cable Oval Link Necklace — $1,119.99
+- Roanoke: David Yurman 20" Sterling Silver 14k Yellow Gold Cable Oval Link Necklace — $979.99
 - Waynesboro: Sony Alpha a7 III Mirrorless Camera Body Black 24.2MP w/ Battery & Charger — $999.99
-- Harrisonburg: Apple iPad Pro 12.9" 6th Gen M2 256GB Wi-Fi + Cellular Space Gray MP603LL/A — $599.99
-- Lexington: 2021 Epiphone Explorer Ebony Black Electric Guitar w/ Hard Case — $729.99
+- Harrisonburg: Apple iPad Pro 12.9" 6th Gen M2 256GB Wi-Fi + Cellular Space Gray MP603LL/A — $539.99
+- Lexington: Apple iPad Pro 12.9-inch (2nd Generation) — $219.99
 - Culpeper: Vintage 1960's Glen Campbell Ovation 1127-4 Acoustic Guitar — $1,084.99
 
 Before each send (30 seconds): open the link on a phone and confirm the shop page loads with items.

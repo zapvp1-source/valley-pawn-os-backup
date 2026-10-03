@@ -151,6 +151,15 @@ if [ $RENDER -eq 0 ]; then
     ledger "$AGENT" "The Monday pull could not refresh month-to-date employee activity, so the Employee Sales Rankings post will hold." "no"
   fi
 fi
+# 2026-10-02: month-to-date End-of-Month workbooks for the weekly store rankings (#store-performance).
+# store_rankings.py reads <END>_<STORE>_end-of-month.xlsx; verified to the penny against the 9/28 post.
+if [ $RENDER -eq 0 ]; then
+  EOM_END=$(date +%Y-%m-%d); [ "$(date +%u)" = 1 ] && EOM_END=$(date -v-1d +%Y-%m-%d)   # Monday run -> Sunday
+  EOM_FIRST="${EOM_END:0:8}01"
+  bash "$BIN/bravo_pull.sh" end-of-month "$EOM_FIRST..$EOM_END" CUL,HAR,LEX,ROA,WAY "monday-eom-$(date +%Y%m%d-%H%M)" >>"$VLOG/$AGENT.log" 2>&1 \
+    && vlog "EOM month-to-date pulled through $EOM_END" \
+    || ledger "$AGENT" "The Monday pull could not refresh the store-rankings data, so the rankings will hold." "no"
+fi
 # 2026-09-30: #first-payment-default has not posted since 9/6 — its fpd-cohort CSVs were only ever
 # pulled by the Cowork monday-bravo-combined-run, which stopped producing results after 9/6. Pull them
 # here (registered handler "fpd-cohort"; comms_engine reads <pipeline_date>_<STORE>_fpd-cohort.csv).

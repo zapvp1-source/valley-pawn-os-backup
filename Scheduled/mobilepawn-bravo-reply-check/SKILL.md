@@ -1,6 +1,7 @@
 ---
 name: mobilepawn-bravo-reply-check
 description: One-time 10/22: if Bravo hasn't agreed to a monthly MobilePawn download text, switch our own monthly Chekkit text to carry the app ask.
+model: claude-sonnet-5
 ---
 
 Valley Pawn (Full Circle Finance Inc). Joshua's standing decision 2026-09-29: "we will do monthly if bravo doesnt" — meaning if Bravo won't send their MobilePawn download text every month, our own monthly Chekkit text carries the app ask. Do not question this; just execute it.

@@ -104,6 +104,60 @@ def to_mrkdwn(text):
     return "".join(parts)
 
 
+def _cell(txt):
+    """One table cell as rich_text; **bold** / *bold* markers become a bold style (as the connector does)."""
+    import re
+    t = txt.strip()
+    m = re.fullmatch(r"\*\*(.+)\*\*|\*(.+)\*", t)
+    el = {"type": "text", "text": (m.group(1) or m.group(2)) if m else t}
+    if m:
+        el["style"] = {"bold": True}
+    if not el["text"]:
+        el["text"] = " "
+    return {"type": "rich_text", "elements": [{"type": "rich_text_section", "elements": [el]}]}
+
+
+def to_blocks(text):
+    """If the message (outside code fences) contains a markdown table, return Block Kit blocks that render it
+    as a native Slack table — exactly what Claude's Slack connector produces (verified on the 2026-09-01 FFL
+    post: section + 'table' block of rich_text cells). Returns None when there is no table. Slack allows one
+    table per message; a second table stays as text."""
+    import re
+    lines = text.split("\n")
+    in_code, start = False, None
+    for i, l in enumerate(lines):
+        if l.strip().startswith("```"):
+            in_code = not in_code
+            continue
+        if in_code:
+            continue
+        if (l.strip().startswith("|") and i + 1 < len(lines)
+                and re.fullmatch(r"\s*\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)*\|?\s*", lines[i + 1])):
+            start = i
+            break
+    if start is None:
+        return None
+    end = start + 2
+    while end < len(lines) and lines[end].strip().startswith("|"):
+        end += 1
+    def cells(l):
+        return [c for c in l.strip().strip("|").split("|")]
+    rows = [cells(lines[start])] + [cells(l) for l in lines[start + 2:end]]
+    width = max(len(r) for r in rows)
+    rows = [r + [""] * (width - len(r)) for r in rows]
+    if len(rows) > 100 or width > 20:
+        return None
+    blocks = []
+    before, after = "\n".join(lines[:start]).strip("\n"), "\n".join(lines[end:]).strip("\n")
+    for chunk in (before,):
+        if chunk.strip():
+            blocks.append({"type": "section", "text": {"type": "mrkdwn", "text": to_mrkdwn(chunk)[:3000]}})
+    blocks.append({"type": "table", "rows": [[_cell(c) for c in r] for r in rows]})
+    if after.strip():
+        blocks.append({"type": "section", "text": {"type": "mrkdwn", "text": to_mrkdwn(after)[:3000]}})
+    return blocks
+
+
 def post(channel, text):
     if not text.strip():
         sys.exit("refusing to post empty text")
@@ -112,7 +166,14 @@ def post(channel, text):
     surface = "slack-dm" if channel.startswith("D") else "slack"
     if dryrun_intercept(surface, channel, text):
         return
-    r = call("chat.postMessage", {"channel": channel, "text": text, "unfurl_links": False})
+    payload = {"channel": channel, "text": text, "unfurl_links": False}
+    blocks = None if os.environ.get("VP_SLACK_RAW") == "1" else to_blocks(text)
+    if blocks:
+        payload["blocks"] = blocks          # native Slack table, like the connector; text stays the fallback
+    r = call("chat.postMessage", payload)
+    if not r.get("ok") and blocks:          # a table Slack rejects must never cost the post itself
+        payload.pop("blocks", None)
+        r = call("chat.postMessage", payload)
     if not r.get("ok"):
         receipt("slack", channel, False, len(text.encode()), "chat.postMessage: " + r.get("error", "?"))
         sys.exit("chat.postMessage: " + r.get("error", "?"))

@@ -25,7 +25,7 @@ WHEN=$("$PY" -c "import json,datetime as d;s=json.load(open('$P/brevo_state.json
 PUSHD=$(grep -m1 '| 2 | Push' "$P/PACK.md" | cut -d'|' -f4 | xargs)
 SMSD=$(grep -m1 '| 3 | Text' "$P/PACK.md" | cut -d'|' -f4 | xargs)
 if [ "$BR" = yes ]; then
-  MSG="Shop Us Online for $MONTH is set. Email \"$SUBJ\" goes out $WHEN. Bravo has the push ($PUSHD) and text ($SMSD) request."
+  MSG="Shop Us Online for $MONTH is set. Email \"$SUBJ\" goes out $WHEN. Bravo has the push request for $PUSHD. Texts go out through Chekkit on $SMSD ($TL customers)."
 else
   PT=$(grep -m1 '^TITLE' "$P/push.txt" | sed 's/^TITLE ([0-9]*\/40): //'); PB=$(grep -m1 '^BODY' "$P/push.txt" | sed 's/^BODY ([0-9]*\/120): //'); PL=$(grep -m1 '^LINK' "$P/push.txt" | sed 's/^LINK: //'); TX=$(tail -1 "$P/sms.txt")
   MSG="Shop Us Online for $MONTH is set. Email \"$SUBJ\" goes out $WHEN.

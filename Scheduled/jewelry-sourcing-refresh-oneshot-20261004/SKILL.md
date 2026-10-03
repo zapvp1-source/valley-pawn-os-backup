@@ -1,6 +1,7 @@
 ---
 name: jewelry-sourcing-refresh-oneshot-20261004
 description: One-shot Sun 10/4 10:00 AM ET, Type A (one trigger via bravo_pull.sh, gate first). Pulls the ONE missing store (Waynesboro) of Bravo's Pawn Activity Summary for 7/16/2026-9/29/2026, verifies all 5 stores' date headers, re-runs the jewelry-sourcing refresh scripts, writes the dated HTML, and DMs Joshua the buy-vs-forfeit split via the fleet outbox. Created 2026-09-30 by the jewelry-sourcing refresh session.
+model: claude-sonnet-5
 ---
 
 You are finishing the Valley Pawn jewelry-sourcing refresh that a 2026-09-30 session started. Work autonomously; accuracy is paramount. Never drive Bravo's screen or Parallels yourself (no computer-use, no prlctl) — the only Bravo contact allowed is ONE host-queue job calling the allow-listed bin/bravo_pull.sh, which runs the pipeline's own health gate first.

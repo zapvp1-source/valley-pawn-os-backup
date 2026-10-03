@@ -1,0 +1,4 @@
+#!/bin/bash
+set +e
+BIN="$HOME/Documents/Claude/Projects/Valley Pawn OS/bin"
+bash "$BIN/append_line.sh" "$HOME/Documents/Claude/Projects/Bravo Data Extraction/STATUS.md" "2026-10-02 08:17 ET jewelry-onhand-catchup for Thu 10/1: nightly run was incomplete, LEX never pulled, CUL HAR ROA WAY completed. Pulled LEX this morning inside freeze window, all stores closed since last night before 10 AM reopen. Charms and Brooches errors treated as 0 per empty-category rule, confirmed empty across multiple prior days for HAR Charms, WAY Charms, LEX Charms and Brooches. ROA PM Pendants misread corrected from 176 to 181 via total minus others. Posted Expected Counted Variance table to jewlery-counts for all 5 stores: CUL 1334 over 1334 variance 0, HAR 743 over 755 variance plus12, LEX 471 over 474 variance plus3, ROA 1134 over 1134 variance 0, WAY 581 over 581 variance 0. DMed Joshua about Harrisonburg being over expected in every category, plus12 total, worth a manager check."

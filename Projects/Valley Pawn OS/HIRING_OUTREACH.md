@@ -4090,3 +4090,46 @@ Contact log additions:
 - Texts sent this run: 3 (Christian DeLotta Day-2, Jessica Paling Day-2, Jessica Paling store-clarification reply — all via raw send_imessage fallback, unverified). Emails sent: 3 (Christian DeLotta Day-2, Jessica Paling Day-2, Sean Nolan reassurance reply). Indeed in-app messages sent: 0. Calendar events created: 0.
 - **Failure Ledger rows added:** (1) Indeed `/jobs` blank-canvas outage, 16th+ consecutive occurrence, Gmail fallback found no gap, NEEDS_HUMAN: no. (2) `send_text_verified.py` blocked by the auto-mode classifier again (2nd session in a row after last night's Eddie S block) — now a recurring pattern across sessions, not a one-off; fell back to unverified raw send successfully but flagging that the verified-delivery guarantee is currently not being met for any text this pipeline sends, NEEDS_HUMAN: no (but worth Joshua reviewing a Bash permission rule for this script per the prior row's own suggestion, since it keeps recurring).
 - RUN_LOCK_SUBSTITUTE released at run end.
+
+## 2026-10-02 ~7:50 PM run (vp-hiring-pipeline, continuous process kickoff)
+
+- **Britney Landes** (Harrisonburg) asked "Will being a felon be an issue" (7:40 PM). Replied factually without presuming a disclosure: background checks are required because every role involves firearms, offered Monday 12:35-3 PM if that's not an issue for her. Awaiting her reply — do not book until she confirms, and do not schedule if she discloses a felony (Rule: no felons, period).
+- **Shane Lord** (Waynesboro, new applicant) gave his number (540-225-1432) after agreeing to Monday 11:35 AM (agreed earlier today by a prior run segment, 3:24 PM). Sent confirmation. **No calendar event could be created this run — see Calendar gap below.**
+- **Catherine Branner** (Harrisonburg) confirmed Monday 1:25 PM. Sent confirmation with her number (540-705-1332). **No calendar event created — see gap below.**
+- Verified already-confirmed-but-unconfirmed-on-calendar threads: Brendan Payne (12:40 PM, 540-245-0566), Glen Way (12:35 PM, 309-219-9380), Gabriel Troehler (1:30 PM, 540-416-6135) — all acknowledged by candidate, no reply needed.
+- Tameron Washington (1:20 PM) and Cameron Hughes (12:45 PM) — offers sent by a prior run segment today, both awaiting candidate confirmation; not booked yet, correctly so.
+- Konner Collier — interview already completed this morning (10/2), no action.
+- Angelina Kioroglo — flagged by Joshua's standing note as "status unclear after her 10/2 11:15 call, ask Joshua before contacting." Not contacted this run, per instruction.
+- Cordell Long — had his 11:20 AM call today; no action per standing note.
+
+### CALENDAR GAP — FLAGGED FOR JOSHUA
+`create_event` on jdavis@fcfpawn.com was auto-declined every time this run ("no one was available to approve it during this scheduled run"). As a result the following Monday 10/5 interviews were CONFIRMED WITH CANDIDATES but have **NO calendar event**, and need to be added manually or by a run with calendar-write approved:
+- 11:35 AM — Shane Lord — Waynesboro — 540-225-1432
+- 12:35 PM — Glen Way — Waynesboro — 309-219-9380
+- 12:40 PM — Brendan Payne — Harrisonburg — 540-245-0566
+- 1:00 PM — Marisa Carroll — Waynesboro — 337-372-9242
+- 1:10 PM — Tarius Allen — Harrisonburg — 540-435-4309
+- 1:15 PM — Chelsea Hamrick — Harrisonburg — 540-237-7062
+- 1:25 PM — Catherine Branner — Harrisonburg — 540-705-1332
+- 1:30 PM — Gabriel Troehler — Waynesboro — 540-416-6135
+- 2:00 PM — Andrew Funderburg — Harrisonburg — 540-830-4418
+
+All 9 were confirmed via Indeed message (by this run or an earlier run segment today) but the create_event call never completed. No double-bookings detected — times don't overlap each other or the 3 events that ARE on calendar (Stephanie Chaplin Zoom 11-11:30, Jean Gonzalo Zoom 12-12:30, Kymberlyn Mitchell 12:30-12:35).
+
+### Monday 10/5 full grid as of this run (phone unless noted)
+- 11:00 Stephanie Chaplin (Waynesboro, Zoom, 2nd round)
+- 11:35 Shane Lord (Waynesboro) — NOT on calendar
+- 12:00 Jean Gonzalo (Harrisonburg, Zoom, 2nd round)
+- 12:30 Kymberlyn Mitchell (Waynesboro)
+- 12:35 Glen Way (Waynesboro) — NOT on calendar
+- 12:40 Brendan Payne (Harrisonburg) — NOT on calendar
+- 12:45 Cameron Hughes (Harrisonburg) — offered, awaiting confirmation
+- 1:00 Marisa Carroll (Waynesboro) — NOT on calendar
+- 1:10 Tarius Allen (Harrisonburg) — NOT on calendar
+- 1:15 Chelsea Hamrick (Harrisonburg) — NOT on calendar
+- 1:20 Tameron Washington (Waynesboro) — offered, awaiting confirmation
+- 1:25 Catherine Branner (Harrisonburg) — NOT on calendar
+- 1:30 Gabriel Troehler (Waynesboro) — NOT on calendar
+- 2:00 Andrew Funderburg (Harrisonburg) — NOT on calendar
+
+Michele Campbell and Matthew Reynolds (no-shows from today) offered Monday 12:35-3 PM, awaiting reply.

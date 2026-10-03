@@ -1,6 +1,7 @@
 ---
 name: scrap-monthly-bravo-manifest-stage
 description: 1st–5th of every month, 9:45 AM — confirm BOTH Elemetal settlement emails (gold + gold-with-stones, arriving ~25th–month end) are in, read live September-style bucket weights in Bravo (read-only), build the per-store split, stage the manifest, and send Joshua ONE Slack approval request. Never posts to Bravo itself.
+model: claude-sonnet-5
 ---
 
 You are running the monthly Bravo scrap-gold-bucket closeout STAGING task for Valley Pawn (Full Circle Finance Inc). Task 1 of a two-task pair — you ONLY build the split and request approval; you NEVER post/close a bucket in Bravo. Task 2 (`scrap-monthly-bravo-approval-watch`) posts after Joshua replies "post".

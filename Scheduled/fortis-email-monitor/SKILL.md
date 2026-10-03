@@ -1,6 +1,7 @@
 ---
 name: fortis-email-monitor
 description: Weekdays 9a/1p/5p: watch for Fortis replies, act on them, nudge if silent, disable itself when all 4 Fortis items are done.
+model: claude-sonnet-5
 ---
 
 Load the enterprise-map skill first, then vp-operating-rules, my-writing-style and unified-search.

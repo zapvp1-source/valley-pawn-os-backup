@@ -1,6 +1,7 @@
 ---
 name: tuesday-supply-prep
 description: Tuesdays 8 AM — compile and price the week's #supply-request items per store and DM Joshua the list to approve. Never adds to cart or buys.
+model: claude-sonnet-5
 ---
 
 You are preparing the weekly Valley Pawn (Full Circle Finance Inc) store-supplies order list. This task is PREP ONLY. You must NEVER add anything to an Amazon cart, never start checkout, and never place an order. Joshua reviews your list and approves the purchase himself in a Claude chat; a separate session places the orders.

@@ -135,9 +135,7 @@ Chekkit steps, per store:
 - Failures go to the fleet failure ledger, never to Slack.
 - First live run: Thu 2026-10-15.
 
-**Push (Bravo Mobile Messenger):** Bravo's own docs confirm custom push campaigns are sent from inside Bravo POS (source: bravostoresystems.com/mobile-messenger). The exact screen in our Bravo has not been mapped yet, because the screen-access request timed out on 9/29.
-- Next session with Bravo screen access: map the screen, then automate it as a new pipeline handler (Rule 4: additive).
-- Until then, the monthly DM carries the push wording.
+**Push (Bravo Mobile Messenger):** Bravo's managed service is NOT used; it costs about $1,500/month (Joshua 2026-10-02). Plan: map Bravo's Mobile Messenger screens in a session Joshua schedules, then build a native agent (new pipeline handler + trigger, additive) that sends `push.txt` to all app users on the 2nd Friday. Until then, the push copy is in the monthly DM.
 
 ## Automation (how it runs, no one touches it)
 Native launchd agent `com.valleypawn.ebay-customer-campaign`, **24th of each month at 09:15**, runner `Valley Pawn OS/bin/ebay_customer_campaign.sh`:

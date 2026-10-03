@@ -1,6 +1,7 @@
 ---
 name: nrf-riseup-approval-watch
 description: Hourly on business days: watch jdavis@fcfpawn.com Gmail for the NRF RISE Up / Kaleido Learning account approval and tell Joshua once in Slack DM.
+model: claude-haiku-4-5
 ---
 
 Context: On 2026-10-01 Joshua Davis (CEO, Full Circle Finance Inc DBA Valley Pawn) submitted an organization application to NRF Foundation RISE Up (platform run by Kaleido/Kaleidoscope Learning, riseup.kaleidolearning.com) so three new hires can take the Customer Service & Sales course: Joshua Burnett (Culpeper), Jacob Cox (Roanoke), Camden Ahern (Harrisonburg). NRF reviews the application and emails a welcome / set-password email to jdavis@fcfpawn.com.

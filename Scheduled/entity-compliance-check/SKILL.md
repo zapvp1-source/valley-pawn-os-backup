@@ -1,6 +1,7 @@
 ---
 name: entity-compliance-check
 description: Monthly check of Joshua's entity filing deadlines (VA SCC, TN SOS, registered agent, property tax) with a 90-day lookahead; DMs Joshua only when something needs action.
+model: claude-sonnet-5
 ---
 
 Monthly entity-compliance check for Joshua Davis's business and real-estate entities.

@@ -127,6 +127,15 @@ resolve. Never let Valley Pawn brand voice or business money touch anything here
 
 ## Family
 
+**Premarital agreement (added 2026-10-02):** Joshua & Hillary (then Holmes) signed a Virginia
+premarital agreement 9/30/2020 (Joshua's counsel Jeremy C. Johnson; Hillary pro se; VA law). Executed
+PDF + Florida-move review memo: Drive `03 Personal/Prenup & Marital Agreements (Joshua + Hillary)/`.
+Key effects: FCF Inc, Schedule-A real estate, earnings and all appreciation = Joshua's separate
+property; Hillary waived alimony and all death rights (elective share/homestead/intestate). Jointly
+titled property bought during marriage = 50/50 (§15) — this captures 844 Cypress Crossing (deed OR
+6044/229, both names). 148 Hardinberry = Hillary's separate property despite joint deed (§10).
+Open fixes tracked in OPEN_ITEMS_REGISTER (2026-10-02 prenup row).
+
 *(TODO — thin section.)* Hillary Davis is the only family member documented so far (see People
 above, via Cypress Crossing joint ownership). Add children, other family, or recurring
 family-related tasks (school, events, etc.) here as they surface.

@@ -1173,6 +1173,15 @@ EnsureStoreAndTillOpen(store) {
             LogMessage("  [till] no TILL row found to select - continuing with the default selection")
         }
         uev := FindByName(CLOSEOUT_ELEMENTS["use_expected_values"], 3000)
+        ; 2026-10-02 MULTI-TILL FIX: Culpeper has TWO tills (TL-01, TL-02);
+        ; every other store has one. With one till Bravo pre-selects it and
+        ; 'Use Expected Values' appears. With two, the Till box (AutomationId
+        ; EdtTill) is left blank, no tender grid / UEV button appears, and the
+        ; till never opens (root cause of CUL failing 10/1 + 10/2 while HAR/LEX/
+        ; ROA/WAY opened fine). Open the Till dropdown and pick TL-01 (else the
+        ; first till listed), then look for UEV again.
+        if !uev
+            uev := ScrapSelectTillFromCombo()
         if uev
             uev.Click("left")
         else
@@ -1195,6 +1204,95 @@ EnsureStoreAndTillOpen(store) {
         else
             LogMessage("  [till] till open confirmed ('Open Till' no longer on Dashboard)")
     }
+}
+
+
+; 2026-10-02: pick a till in the Open Till form's Till dropdown (multi-till
+; stores - CUL). Returns the 'Use Expected Values' element once it appears, or 0.
+; v2: logs every list item it can see, saves screenshots (logs\_till_probe*.png),
+; and falls back to keyboard selection if no item is named like a till.
+ScrapTillShot(tag) {
+    try RunWait('powershell.exe -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File "Y:\Documents\Claude\Projects\Bravo Data Extraction\_shot_named.ps1" -Name _till_probe_' . tag, , "Hide")
+}
+ScrapListItemNames() {
+    names := []
+    try {
+        root := GetBravoRoot()
+        for typeName in ["ListItem", "DataItem", "TreeItem"] {
+            try {
+                for el in root.FindElements({Type: typeName}) {
+                    nm := ""
+                    try nm := el.Name
+                    if (nm != "")
+                        names.Push(el)
+                }
+            }
+        }
+    }
+    return names
+}
+ScrapSelectTillFromCombo() {
+    combo := 0
+    try combo := GetBravoRoot().FindElement({AutomationId: "EdtTill"})
+    if !combo {
+        LogMessage("  [till] Till dropdown (EdtTill) not found")
+        return 0
+    }
+    ScrapTillShot("0_before")
+    Loop 2 {
+        try combo.Click("left")
+        Sleep(1200)
+        ScrapTillShot(A_Index . "_open")
+        items := ScrapListItemNames()
+        listing := ""
+        for el in items {
+            nm := ""
+            try nm := el.Name
+            listing .= "'" . nm . "' "
+        }
+        LogMessage("  [till] dropdown pass " . A_Index . ": " . items.Length . " list item(s): " . listing)
+        pick := 0
+        for pat in ["i)(TL|TILL)\D*0*1\b", "i)(TL|TILL)"] {
+            for el in items {
+                nm := ""
+                try nm := el.Name
+                if RegExMatch(nm, pat) {
+                    pick := el
+                    break
+                }
+            }
+            if pick
+                break
+        }
+        if !pick && items.Length >= 1 {
+            ; nothing named like a till - only safe if it is the first entry of the
+            ; Till list itself; use keyboard instead (Down+Enter on the open combo).
+            pick := 0
+        }
+        if pick {
+            nm := ""
+            try nm := pick.Name
+            LogMessage("  [till] selecting '" . nm . "'")
+            try pick.Click("left")
+        } else {
+            LogMessage("  [till] no till-named item - trying keyboard Down+Enter on the Till box")
+            Send("{Down}")
+            Sleep(400)
+            Send("{Enter}")
+        }
+        Sleep(1500)
+        tv := ""
+        try tv := ReadFieldValue("Till")
+        LogMessage("  [till] Till box now reads '" . tv . "'")
+        ScrapTillShot(A_Index . "_after")
+        uev := FindByName(CLOSEOUT_ELEMENTS["use_expected_values"], 3000)
+        if uev
+            return uev
+    }
+    LogMessage("  [till] could not select a till - dumping names")
+    try LogVisibleNames(60)
+    Send("{Escape}")
+    return 0
 }
 
 ; First element whose UIA Name matches the regex (document order).

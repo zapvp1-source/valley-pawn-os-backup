@@ -196,3 +196,10 @@ month-end settlements, so nothing staged. Fixed by making Task 1 own Phase A:
   resumes from wherever a bucket stopped; WEIGHT MISMATCH is never retried).
 - A missing bucket name costs ~5 minutes per bucket in the handler (it scrolls the
   whole list) — normal, not a hang.
+- **Multi-till stores (2026-10-02):** Culpeper has two tills (TILL 01 / TILL 02). Bravo
+  does not pre-select a till there, so the handler's old till-open step failed every
+  time at CUL while working at the other four. Fixed in the handler
+  (`ScrapSelectTillFromCombo`): if no till is preselected it opens the Till dropdown
+  and picks one. Verified live 10/2 — CUL till opened, both buckets closed.
+- **Amounts in manifests carry no trailing zeros** ("4051.1", not "4051.10") — the
+  handler's pre-save check compares the text Bravo shows, and Bravo drops the zero.

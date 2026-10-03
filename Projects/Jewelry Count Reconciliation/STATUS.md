@@ -1589,3 +1589,38 @@ Perfect match across every category — no variance of any size, in either direc
 same-store/same-category drift to flag (nothing to repeat off a zero). No DM to Joshua — no
 anomalous OVER variance, no failure. Posted to #jewlery-counts via outbox
 (jewelry-onhand-nightly-pull-20260930-205600).
+## RUN 2026-10-02 Friday - jewelry-onhand-nightly-pull
+Freeze window: close 6pm, 5pm Sat CUL/ROA, reopen 10am. Bravo pulls ran 20:41 to 22:37. LEX and ROA needed one retry each after a mid-run Bravo stall, retries completed clean, self-heal plus host-queue timeout handled it, no VM restart needed. PM count sheets read from fleet/eod_photos/2026-10-02/.
+Open stores: CUL, HAR, LEX, ROA, WAY, Friday means all 5.
+Store Category Expected Counted Variance
+CUL Rings 672 672 0
+CUL Bracelets 118 118 0
+CUL Earrings 142 142 0
+CUL Pendants 252 252 0
+CUL Necklaces 150 150 0
+CUL Total 1334 1334 0
+HAR Rings 426 n_a sheet not posted
+HAR Bracelets 49 n_a sheet not posted
+HAR Earrings 46 n_a sheet not posted
+HAR Pendants 110 n_a sheet not posted
+HAR Necklaces 111 n_a sheet not posted
+HAR Total 742 n_a sheet not posted, Walker DMd
+LEX Rings 292 295 +3
+LEX Bracelets 37 38 +1
+LEX Earrings 46 46 0
+LEX Pendants 52 51 -1
+LEX Necklaces 44 44 0
+LEX Total 471 474 +3
+ROA Rings 576 576 0
+ROA Bracelets 139 139 0
+ROA Earrings 82 82 0
+ROA Pendants 177 176 -1
+ROA Necklaces 154 155 +1
+ROA Total 1128 1128 0
+WAY Rings 339 339 0
+WAY Bracelets 43 43 0
+WAY Earrings 58 58 0
+WAY Pendants 66 66 0
+WAY Necklaces 73 73 0
+WAY Total 579 579 0
+Notes: LEX +3 Rings and +1 Bracelets over system count flags a possible non-recount issue, not loss. LEX PM sheet has shown identical totals 295/38/44/46/51 every day since 9/29. DMd Joshua. HAR jewelry sheet not posted tonight, only the general EOD sheet and gun count sheet came through. Company post went out for CUL, LEX, ROA, WAY only. Walker DMd for the sheet. Per partial-post rule, this is an employee-side gap, not a pipeline failure. Empty-category CSV rows treated as 0 and matched against prior-day CSV before use: HAR Charms error both nights, LEX Charms error both nights, LEX Brooches error both nights, WAY Charms error both nights, all consistent. No category outside the known Charms and Brooches list came back error.

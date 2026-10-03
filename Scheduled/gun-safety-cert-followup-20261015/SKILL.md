@@ -1,6 +1,7 @@
 ---
 name: gun-safety-cert-followup-20261015
 description: One-time: re-check who still owes a Basic Gun Safety 101 certificate under HR-2026-05 (deadline Oct 24), update the tracker, re-remind the people still missing, DM Joshua a short status.
+model: claude-sonnet-5
 ---
 
 Gun safety certificate follow-up for Full Circle Finance Inc DBA Valley Pawn. Load the enterprise-map skill first, then vp-operating-rules and my-writing-style.

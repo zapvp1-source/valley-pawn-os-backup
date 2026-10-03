@@ -1,6 +1,7 @@
 ---
 name: chekkit-smart-replies-weekly-check
 description: Daily 6:30 PM: did Chekkit Smart Replies (instant FAQ answers, all 5 stores) help customers today or cause friction? One short DM to Joshua.
+model: claude-sonnet-5
 ---
 
 Valley Pawn (Full Circle Finance Inc) — DAILY check on Chekkit Smart Replies ("FAQ Instant Answers" folder, 12 keyword rules per store, live since 2026-09-29 at Culpeper, Waynesboro, Harrisonburg, Lexington, Roanoke). Joshua wants to know FAST if customers are not getting what they need. READ ONLY — never edit any Chekkit setting, never text a customer.

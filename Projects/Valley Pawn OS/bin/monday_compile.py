@@ -12,7 +12,7 @@ is the stdout of the same formatter the Cowork task already pasted "verbatim, by
 Every formatter enforces the all-5-stores completeness gate itself (exit 2 = withhold, post nothing).
 Duplicate guard: comms_engine checks the channel itself; the aged post is skipped if a post with the
 same header line already exists in the channel today (the bot can read posts made by either app).
-NOT yet here: #store-performance store rankings (the Cowork task still does it) — see CHANGELOG.
+#store-performance store rankings: bin/store_rankings.py (verified to the penny against the 9/28 post).
 Also: stashes the chekkit-inactives CSVs for the Tuesday task, and DMs Joshua a plain rollup.
 """
 import datetime as dt
@@ -105,6 +105,18 @@ def main():
         else:
             lines.append("⚠️ %s — did not post" % name)
 
+    # 2b — store rankings (#store-performance), two-message locked format; self-dedupes by report period
+    rc, out, err = run([PY, os.path.join(BIN, "store_rankings.py"), pipeline_date] + (["--render"] if render else []),
+                       env=dict(os.environ, VP_TASK="monday-store-rankings"))
+    if render:
+        print("=== #store-performance (exit %d) ===\n%s%s" % (rc, out[:4000], err.strip()[-300:]))
+    elif rc == 0:
+        lines.append("✅ Store rankings — posted to #store-performance")
+    elif rc == 2:
+        held.append("Store rankings")
+    else:
+        lines.append("⚠️ Store rankings — did not post")
+
     # 3 — chekkit-inactives stash for the Tuesday review-request task
     stash = os.path.expanduser("~/Documents/Claude/Scheduled/_shared-bravo-data/%s/chekkit-inactives" % post_date)
     found = 0
@@ -123,7 +135,6 @@ def main():
     msg = ["✅ Monday reports — %s" % dt.date.fromisoformat(post_date).strftime("%a %b %-d")] + lines
     for h in held:
         msg.append("⏸️ %s — held until every store's data is complete" % h)
-    msg.append("Store rankings — still posted by the Monday Claude task for now.")
     run([PY, os.path.join(BIN, "vp_slack.py"), "post", JOSHUA, "\n".join(msg)], env=dict(os.environ, VP_TASK=AGENT))
     if held:
         with open(LEDGER, "a") as fh:
