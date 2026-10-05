@@ -2,6 +2,40 @@
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
 
+## 2026-10-04 (outage recovery + catch-up agent)
+
+- **Mac was off Sat 10/3 ~12:11 -> Sun 13:03 and Sun 15:36 -> 17:05.** launchd does not run calendar jobs whose time passed while powered off, so the Sun 16:30 Monday pull and Saturday-evening/Sunday jobs were skipped.
+- **Recovered:** Monday pull re-run via queue (`20261004-a-monday-pull.sh`) -> certificate ALL CLEAN 22:08 (loans + layaways clean on retry); MTD employee-activity, EOM month-to-date, FPD cohort and results-json follow it. `20261004-b-recover.sh` re-runs funds verification 10/3 and Saturday pawn/sold/discount reports.
+- **NEW `com.valleypawn.catchup`** (`bin/catchup.py`, RunAtLoad + every 15 min): kickstarts a critical native job whose slot passed today, is still inside its useful window, has no receipt/log/output since the slot, and is not running. Covers monday-pull (to Mon 07:30), daily reports pawn/sold/discount (to 20:00), backup-health/oura/health-episode (to 22:00), funds (to 23:30), and Monday monday-compile + loan-layaway DMs (to 14:00). Jobs keep their own completeness and de-dupe guards.
+- **`bin/store_rankings.py`:** (a) Bravo EOM export stops at the last closed day, so a Sunday pull is stamped Saturday -> uses the newest complete 5-store set dated END..END-2 and labels the period truthfully; (b) the 10/3 export is shifted one column vs 9/27 -> parser now reads values by order within each labelled row. Re-verified 9/27 identical to the posted 9/28 numbers.
+- **Not recoverable:** Saturday 10/3 jewelry run (time-bound).
+- **Found + fixed: native Monday chain depended on the Cowork 08:00 compile for file names.** Monday triggers use a `D..D` range, so Bravo writes `D..D_<STORE>_<report>.csv`; every reader expects `D_<STORE>_<report>.csv`, and only the Cowork compile made those copies (seen 9/28 08:05). Without it results-json failed tonight ("loans-75 CSV not found"). `monday_pull.sh` and `monday_compile.py` now copy (never move) to canonical names when absent. Backups `*.bak-20261004`.
+- **`monday_compile.py` now prefers the Monday 05:30 pull** (pipeline date = post date) when that run's certificate is ALL CLEAN, else the Sunday pull — the freshest data, as monday_pull.sh's header always intended.
+- **Recovery complete 23:21:** funds 10/3 posted (5/5 verified), Saturday pawn walk / sold review / discount review posted; results-json written; `monday_compile.py --render --post-date 2026-10-05` on host shows all 7 Monday posts + chekkit stash ready.
+- Funds 10/3: the outage-recovery pull landed 3/5 (trigger stuck in claimed/); ROA+WAY re-triggered separately, 5/5 on disk.
+
+## 2026-10-04 (monthly-publication-audit, second pass of the September cycle)
+
+- **Newly-due vp-new-customer-report (cadence day 3) confirmed healthy** -- posted on its own 10/3 07:09 ET ("New Customers — September 2026 (ranked)"), no rerun needed. All previously-healthy September monthlies re-confirmed unchanged.
+- **Three items remain unrecovered, same as the 10/2 pass, no change in status:** the October Gold & Silver email send (still no notice), bonus-month-close-pull (still blocked), and eom-bravo-gl-export (still blocked) -- all traced to the same root cause (Bravo stuck posting 9/29 numbers at all 5 stores), already surfaced to Joshua on 10/1 and 10/2. No duplicate alert sent this pass. Full detail: `fleet/publication_audits/2026-10-04.json`.
+
+## 2026-10-03
+
+- Registered scheduled tasks: 225 -> 230
+- Task folders on disk: 228 -> 233
+- ENABLED: roanoke-culpeper-hours-listing-check-oneshot-20261005
+- ENABLED: scrap-bucket-name-check
+- ENABLED: vp-hiring-pipeline
+- DISABLED: monthly-gift-card-store-credit
+- DISABLED: nics-monthly-ranking
+- DISABLED: vp-candidate-reply-loop-oct2
+- Native agent appeared: com.valleypawn.ebay-ratings-pull.plist
+- Native agent appeared: com.valleypawn.gift-credit.plist
+- Native agent appeared: com.valleypawn.nics-monthly.plist
+- Native agent LOADED: com.valleypawn.ebay-ratings-pull
+- Native agent LOADED: com.valleypawn.gift-credit
+- Native agent LOADED: com.valleypawn.nics-monthly
+
 ## 2026-10-02 (scheduled-task model audit — 14 unpinned tasks pinned, weekly audit repaired)
 
 - **All 120 enabled Cowork tasks now carry a valid model pin** (verified on host: 100 `claude-sonnet-5`, 15 `claude-haiku-4-5`, 5 `claude-opus-5`; 0 unpinned, 0 Fable, 0 `opus-4-8`). App log confirms those three IDs resolve and run. **14 enabled tasks were UNPINNED** (running on the app default, which the log shows includes `claude-fable-5-1`): pinned Sonnet — chekkit-smart-replies-weekly-check, entity-compliance-check, fortis-email-monitor, gun-safety-cert-followup-20261015, jewelry-sourcing-refresh-oneshot-20261004, mobilepawn-app-social-monthly, mobilepawn-bravo-reply-check, roanoke-culpeper-hours-listing-check-oneshot-20261005, scrap-bucket-name-check, scrap-monthly-bravo-approval-watch, scrap-monthly-bravo-manifest-stage, tuesday-supply-prep, vp-hiring-pipeline; Haiku — nrf-riseup-approval-watch. Existing tiers left as set by the 8/27, 8/31, 9/7 audits.

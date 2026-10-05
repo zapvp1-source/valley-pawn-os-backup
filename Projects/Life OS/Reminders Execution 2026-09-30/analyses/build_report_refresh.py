@@ -11,7 +11,9 @@ import json, csv, os, collections, html
 HERE = os.path.dirname(os.path.abspath(__file__))
 BASE = '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/output/'
 if not os.path.isdir(BASE):
-    BASE = '/sessions/loving-great-ramanujan/mnt/Projects/Bravo Data Extraction/output/'
+    # Session-portable fallback: Bravo Data Extraction sits alongside "Life OS" under Projects root.
+    _PROJECTS_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(HERE)))
+    BASE = os.path.join(_PROJECTS_ROOT, 'Bravo Data Extraction', 'output') + '/'
 S = ['CUL', 'HAR', 'LEX', 'ROA', 'WAY']
 PAS_END = os.environ.get('PAS_END', '2026-09-29')
 from datetime import date as _d

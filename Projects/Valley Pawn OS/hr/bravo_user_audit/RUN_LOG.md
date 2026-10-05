@@ -2,3 +2,4 @@
 - 2026-09-30T16:38:33 month=2026-09 former_active=1 new_txn_flags=0 stale=False not_in_ledger=3
 - 2026-09-30T16:38:33 month=2099-01 former_active=1 new_txn_flags=1 stale=False not_in_ledger=3
 - NOTE 2026-09-30: the three lines above are build tests (first run before the Gusto dismissed-date file existed; 2099-01 = synthetic test of the new-transaction flag, its two files are test output — safe to delete). No message was sent.
+- 2026-10-03T10:06:06 month=2026-09 former_active=1 new_txn_flags=0 stale=False not_in_ledger=3

@@ -66,9 +66,20 @@ def main():
     render = "--render" in sys.argv
     now = dt.datetime.now(ET)
     post_date = arg("--post-date", now.date().isoformat())
-    pipeline_date = arg("--pipeline-date", (dt.date.fromisoformat(post_date) - dt.timedelta(days=1)).isoformat())
+    # Prefer the Monday 05:30 pull (stamped with the post date) when its certificate is ALL CLEAN —
+    # that is the freshest data and what monday_pull.sh documents the Monday reports read. Otherwise
+    # fall back to the Sunday 16:30 pull (post date - 1). (2026-10-04)
+    cert = os.path.join(BRAVO, "logs", "_monday_pull_status_%s.txt" % post_date)
+    fresh = os.path.exists(cert) and "ALL CLEAN" in open(cert, errors="replace").read()
+    pipeline_date = arg("--pipeline-date", post_date if fresh else
+                        (dt.date.fromisoformat(post_date) - dt.timedelta(days=1)).isoformat())
     since = dt.datetime.combine(dt.date.fromisoformat(post_date), dt.time(0, 0), ET)
     lines, held = [], []
+    # canonical names: copy "D..D_<STORE>_<report>.csv" -> "D_<STORE>_<report>.csv" when absent (2026-10-04)
+    for f in glob.glob(os.path.join(BRAVO, "output", "%s..%s_*.csv" % (pipeline_date, pipeline_date))):
+        c = os.path.join(BRAVO, "output", pipeline_date + "_" + os.path.basename(f).split("_", 1)[1])
+        if not os.path.exists(c) and not render:
+            shutil.copy2(f, c)
 
     # 1 — aged inventory (formatter prints; we post verbatim)
     rc, out, err = run([PY, os.path.join(BRAVO, "bin", "format_aged_inventory.py"),

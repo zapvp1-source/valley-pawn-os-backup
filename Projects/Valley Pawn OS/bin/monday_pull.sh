@@ -172,6 +172,18 @@ fi
 # 2026-09-28: keep loan-layaway-results-latest.json in step with the pull. Nothing had written it since
 # 9/7 (the old combined run did), so weekly-loan-layaway-manager-dms held its store DMs on 9/21 and
 # 9/28 for stale data. comms_engine.py already has the writer; it just was never called.
+# Canonical names (2026-10-04): the Monday triggers use a "D..D" date range, so Bravo writes
+# "D..D_<STORE>_<report>.csv". Every reader (comms_engine, format_aged_inventory, monday_compile,
+# results-json) expects "D_<STORE>_<report>.csv". The Cowork 08:00 compile used to make those copies;
+# the native chain must not depend on it. Copy (never move) when the canonical file is absent.
+if [ $RENDER -eq 0 ]; then
+  for f in "$BRAVO/output/${TODAY}..${TODAY}_"*.csv; do
+    [ -f "$f" ] || continue
+    c="$BRAVO/output/${TODAY}_${f##*/${TODAY}..${TODAY}_}"
+    [ -f "$c" ] || cp -p "$f" "$c"
+  done
+  vlog "canonical copies ensured for ${TODAY}"
+fi
 if [ $RENDER -eq 0 ]; then
   LL_DATE=$(ls "$BRAVO/output" 2>/dev/null | grep -E '^[0-9]{4}-[0-9]{2}-[0-9]{2}_[A-Z]{3}_loans-75-days-past-due\.csv$' | sort | tail -1 | cut -c1-10)
   LL_POST=$(date +%Y-%m-%d); [ "$(date +%u)" = 7 ] && LL_POST=$(date -v+1d +%Y-%m-%d)   # Sunday prep -> Monday

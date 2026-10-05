@@ -17,11 +17,13 @@ Sources (existing Bravo pipeline output only -- never drives Bravo):
 """
 import csv, os, sys, json, collections, re
 
+HERE = os.path.dirname(os.path.abspath(__file__))
 OUTDIR = '/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction'
 if not os.path.isdir(OUTDIR):
-    OUTDIR = '/sessions/loving-great-ramanujan/mnt/Projects/Bravo Data Extraction'
+    # Session-portable fallback: Bravo Data Extraction sits alongside "Life OS" under Projects root.
+    _PROJECTS_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(HERE)))
+    OUTDIR = os.path.join(_PROJECTS_ROOT, 'Bravo Data Extraction')
 OUT = OUTDIR + '/output/'
-HERE = os.path.dirname(os.path.abspath(__file__))
 STORES = ['CUL', 'HAR', 'LEX', 'ROA', 'WAY']
 PAS_END = os.environ.get('PAS_END', '2026-09-29')
 

@@ -53,33 +53,33 @@ def money(v):
 
 
 def parse(path):
+    """Values are read by ORDER within their labelled row, never by fixed column: Bravo shifts the whole
+    sheet by a column between exports (9/27 vs 10/3 files differ by +1 everywhere)."""
     ws = openpyxl.load_workbook(path, data_only=True).active
-    def row(r):
-        return {c: ws.cell(r, c).value for c in range(1, ws.max_column + 1) if ws.cell(r, c).value not in (None, "")}
-    def find(pred, col=None, after=0):
+    def nn(r):
+        return [ws.cell(r, c).value for c in range(1, ws.max_column + 1) if ws.cell(r, c).value not in (None, "")]
+    def find(pred, after=0, right=False):
         for r in range(after + 1, ws.max_row + 1):
-            for c, v in row(r).items():
-                if (col is None or c == col) and isinstance(v, str) and pred(v.strip()):
+            for c in range(1, ws.max_column + 1):
+                v = ws.cell(r, c).value
+                if isinstance(v, str) and pred(v.strip()) and (not right or c > 20):
                     return r
         return 0
-    loan = money(row(find(lambda v: v.startswith("Ending Loan Base"))).get(15))
-    inv = money(row(find(lambda v: v.startswith("Ending Inventory Base"))).get(15))
+    def at(r, i):
+        v = nn(r) if r else []
+        return money(v[i]) if len(v) > abs(i) - (0 if i >= 0 else 1) else 0.0
+    loan = at(find(lambda v: v.startswith("Ending Loan Base")), 2)
+    inv = at(find(lambda v: v.startswith("Ending Inventory Base")), 2)
     sa = find(lambda v: v == "Sales Activity")
-    tx = money(row(find(lambda v: v == "Taxable Sales", col=1, after=sa)).get(42))
-    ntx = money(row(find(lambda v: v == "Nontaxable Sales", col=1, after=sa)).get(42))
-    total_row = row(find(lambda v: v == "Total:", col=1))
-    psc = money(total_row.get(6))
-    profit = money(row(find(lambda v: v.startswith("Sales Revenue (Profit)"))).get(42))
-    ref = row(find(lambda v: v.startswith("Refined (Cost of Sales)")))
-    scrap = abs(money(ref.get(23)))
-    lay = money(row(find(lambda v: v.startswith("Ending Balance"), col=31)).get(40))
-    period = ""
-    for r in range(1, 10):
-        for v in row(r).values():
-            if isinstance(v, str) and "/" in v and " - " in v:
-                period = v.strip()
+    tx = at(find(lambda v: v == "Taxable Sales", after=sa), -1)
+    ntx = at(find(lambda v: v == "Nontaxable Sales", after=sa), -1)
+    psc = at(find(lambda v: v == "Total:"), 2)
+    profit = at(find(lambda v: v.startswith("Sales Revenue (Profit)")), -1)
+    scrap = abs(at(find(lambda v: v.startswith("Refined (Cost of Sales")), -1))
+    lh = find(lambda v: v == "Layaways", right=True)
+    lay = at(find(lambda v: v.startswith("Ending Balance"), after=lh, right=True), 4)
     vals = [loan, inv, loan + inv, tx + ntx, psc, scrap, lay, psc + profit]
-    return [round(x, 2) for x in vals], period
+    return [round(x, 2) for x in vals], ""
 
 
 def usd(v):
@@ -162,6 +162,14 @@ def ledger(sentence):
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     end = args[0] if args else (dt.date.today() - dt.timedelta(days=1)).isoformat()
+    # Bravo's End-of-Month export stops at the last CLOSED day, so a Sunday pull is stamped Saturday
+    # (seen 2026-10-04: requested 10/1..10/4, files written as 2026-10-03_*). Use the newest complete
+    # 5-store set dated END or up to 2 days before it, and label the period with THAT date (truthful).
+    for back in range(0, 3):
+        d = (dt.date.fromisoformat(end) - dt.timedelta(days=back)).isoformat()
+        if all(os.path.exists(os.path.join(BRAVO, "output", "%s_%s_end-of-month.xlsx" % (d, c))) for c, _ in STORES):
+            end = d
+            break
     parent, thread, missing = build(end)
     if missing:
         print("HOLD — missing/undersized EOM files: %s" % ", ".join(missing))
