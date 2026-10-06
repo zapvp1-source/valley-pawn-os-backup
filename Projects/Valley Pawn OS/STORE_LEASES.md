@@ -89,9 +89,15 @@ are documents *within* those chains, plus two live negotiations:
    window (~9/1/2026) has passed, so absent action it rolls month-to-month. **Joshua reported
    9/18/2026 that he is in talks with the landlord** (Roanoke Rental Homes LLC, agent for
    Centerfield Ventures LLC). Log the outcome here when terms land.
-3. 🟡 **Harrisonburg — the 9/18/2026 Leasing Committee** was taking Sifrit's $17.50/SF counter for
-   approval; term length, CAM cap reset and HVAC election were never discussed. Also still owed:
-   Amendments 1–9 and the 2021 Assignment & Eleventh Amendment from the landlord.
+3. 🟡 **Harrisonburg — renewal in active negotiation (updated 2026-10-05 from Gmail).** Current term ends
+   9/30/2027 (signed Twelfth Amendment); the 2021 Eleventh Amendment ¶13 says NO further renewal right
+   after this term, so any extension is purely negotiated. Joshua's 9/24 ask to Sifrit: (1) $17.50/SF
+   (current $15.07), (2) NEW HVAC replaced by landlord, (3) 5 yrs + two 5-yr options at 3%/yr, (4)
+   legislative-out clause. Sifrit said 9/24 he'd present to the Leasing Committee Fri 10/2 and report
+   back — **no response in Gmail as of 10/5.** Landlord emails are non-binding until a signed amendment.
+   Gross-sales reports for 1/2025–8/2026 WERE sent 9/29; Silver Bears confirmed 10/2 their system is
+   updated (percentage-rent exposure now with the landlord — watch for a bill). Still owed: Amendments
+   1–9 from the landlord.
 4. 🟡 **Lexington has no renewal option** — the only store without one. Nothing to diarize, but the
    conversation about post-7/31/2030 needs to start well before then; put it on the calendar for
    mid-2029.

@@ -188,6 +188,56 @@ def read_alerts(minutes):
     return out
 
 
+def read_api(minutes, ongoing_h=3, backup_min=10):
+    """2026-10-05: PRIMARY input — the Chekkit API (one token per store, bin/chekkit_api.py).
+    The alert/notification emails only arrived for some conversations (e.g. a Harrisonburg customer
+    asking about firearm transfers at 1:57 PM got no AI answer and no staff answer for 4+ hours).
+    For every conversation with activity in the window: take the customer's trailing message(s) that
+    nobody has answered yet (no business message after them). 'ongoing' = a real staff member
+    (not an automated text) texted this customer within ongoing_h hours — left to staff."""
+    sys.path.insert(0, BIN)
+    import chekkit_api as ck
+    now = dt.datetime.now(dt.timezone.utc)
+    since = now - dt.timedelta(minutes=minutes)
+    out = []
+    for code in ("CUL", "HAR", "LEX", "ROA", "WAY"):
+        convs = ck.conversations_since(code, since)
+        for phone10, c in convs.items():
+            last = c.get("lastMessage") or {}
+            if last.get("sender") != "customer":
+                continue  # the newest thing in the thread is ours (or an event) — nothing waiting
+            msgs = ck.messages(code, c["id"])
+            trail = []
+            for m in reversed(msgs):
+                if m.get("sender") == "customer":
+                    trail.append(m)
+                elif m.get("sender") == "business":
+                    break
+            trail.reverse()
+            trail = [m for m in trail if (ck.ts(m.get("createdAt")) or now) >= since]
+            if not trail:
+                continue
+            first_t = ck.ts(trail[0].get("createdAt")) or now
+            staff_recent = any(m.get("sender") == "business" and not ck.is_automated(m)
+                               and first_t - dt.timedelta(hours=ongoing_h) <= (ck.ts(m.get("createdAt")) or first_t) < first_t
+                               for m in msgs)
+            # parity with the old email path: a mid-conversation text nobody has answered for
+            # backup_min minutes is no longer "left to staff" — the AI picks it up (Joshua 9/30: answer texts)
+            waited = (now - (ck.ts(trail[-1].get("createdAt")) or now)).total_seconds() / 60
+            if staff_recent and waited >= backup_min:
+                staff_recent = False
+            text = " ".join((m.get("text") or "").strip() for m in trail).strip()
+            if not text and any(m.get("media") for m in trail):
+                text = "[sent photo(s)]"
+            cust = c.get("customer") or {}
+            out.append({"id": "api:" + str(trail[-1].get("id")), "kind": "api", "ongoing": staff_recent,
+                        "name": (cust.get("name") or "").strip(), "phone": phone10, "text": text, "store": code,
+                        "channel": trail[-1].get("channel") or "sms",
+                        "received": (ck.ts(trail[-1].get("createdAt")) or now).astimezone(ET).isoformat()})
+    out.sort(key=lambda a: a["received"])
+    return out
+
+
 ALERT_RE = re.compile(r"(?:(?P<name>[^,]{1,60}), )?\((?P<a>\d{3})\) (?P<b>\d{3}) - (?P<c>\d{4}) said [^:]{1,40} ago: "
                       r"(?P<msg>.*?) Sent to Valley Pawn ?- ?(?P<store>[A-Za-z]+)", re.S)
 
@@ -419,7 +469,15 @@ def main():
             # first 45 min of the day: also catch texts that arrived overnight after the window closed
             prev_close = dt.datetime.combine(when.date() - dt.timedelta(days=1), dt.datetime.strptime(hi, "%H:%M").time(), ET)
             look = max(look, int((when - prev_close).total_seconds() // 60) + 15)
-        alerts = read_alerts(int((args.hours * 60) if (render and args.hours) else look))
+        mins = int((args.hours * 60) if (render and args.hours) else look)
+        try:
+            alerts = read_api(mins, cfg.get("ongoing_conversation_hours", 3), cfg.get("unanswered_backup_minutes", 10))
+            source = "api"
+        except Exception as e:  # API down -> old email path, so replies never stop entirely
+            log("chekkit api read failed (%s) - falling back to alert emails" % type(e).__name__, render)
+            alerts = read_alerts(mins); source = "mail"
+        if render:
+            print("source:", source, "| items:", len(alerts))
     except Exception as e:
         if not render:
             ledger_once(state, "mail", "The AI text responder could not read the Chekkit alert emails (%s)." % type(e).__name__)
@@ -428,7 +486,7 @@ def main():
             print("mail read error", e)
         return 1
     staff = staff_numbers(mct) - {digits(n) for n in cfg.get("test_numbers", [])}
-    live = cfg.get("mode") == "live" and not guard_armed()
+    live = cfg.get("mode") == "live" and not guard_armed() and not render  # 2026-10-05: --render must NEVER send (it did; see CHANGELOG)
     mct_texted = load_json(os.path.expanduser("~/Library/Logs/valleypawn/missed_call_text/state.json"), {}).get("texted", {})
     state.setdefault("inbound", {})
     ongoing_h = cfg.get("ongoing_conversation_hours", 3)
@@ -451,6 +509,8 @@ def main():
             recent_mc = bool(mc) and dt.datetime.fromisoformat(mc.replace("Z", "+00:00")) > when - dt.timedelta(hours=6)
             if prev and dt.datetime.fromisoformat(prev) > dt.datetime.fromisoformat(a["received"]) - dt.timedelta(hours=ongoing_h) and not recent_mc:
                 reason = "ongoing conversation - left to staff (10-min alert is the backup)"
+        if a.get("kind") == "api" and a.get("ongoing"):
+            reason = "ongoing conversation - left to staff (10-min alert is the backup)"
         if reason:
             pass  # ongoing conversation, decided above
         elif ph in staff:

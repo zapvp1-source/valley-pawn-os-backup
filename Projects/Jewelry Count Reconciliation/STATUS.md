@@ -1624,3 +1624,40 @@ WAY Pendants 66 66 0
 WAY Necklaces 73 73 0
 WAY Total 579 579 0
 Notes: LEX +3 Rings and +1 Bracelets over system count flags a possible non-recount issue, not loss. LEX PM sheet has shown identical totals 295/38/44/46/51 every day since 9/29. DMd Joshua. HAR jewelry sheet not posted tonight, only the general EOD sheet and gun count sheet came through. Company post went out for CUL, LEX, ROA, WAY only. Walker DMd for the sheet. Per partial-post rule, this is an employee-side gap, not a pipeline failure. Empty-category CSV rows treated as 0 and matched against prior-day CSV before use: HAR Charms error both nights, LEX Charms error both nights, LEX Brooches error both nights, WAY Charms error both nights, all consistent. No category outside the known Charms and Brooches list came back error.
+
+## RUN RECORD — 2026-10-05 (Monday)
+
+Freeze window: all 5 stores closed 18:00 ET, reopen 10:00 ET next day. Pull executed inside the
+window (triggers dropped ~20:41-22:44 ET). PM count sheets posted by all 5 managers to
+#end-of-day 18:14-18:22 ET, all for today's date — both sides inside the freeze window.
+
+**Bravo on-hand pulls (jewelry-case-counts-v2), per store:**
+- CUL — FAILED both attempts (20:53 and 22:44 ET). Charms and Brooches both read 19 — the v2
+  cell's stale-grid contamination guard refused the count both times. Not an empty-category
+  case (today's prior-day CUL Charms/Brooches were real positive counts, not errors). Watcher
+  was restarted and a stuck LEX trigger was cleared in between the two CUL attempts, so this
+  was not simply queue contention — same failure twice. Needs a session with Bravo screen
+  access to check for a genuinely wedged/duplicated grid state at Culpeper before a third pull.
+- HAR — success. Charms error (as_of 2026-10-05) — matches 2026-10-01 and 2026-10-02 (both also
+  error), treated as 0 per the empty-category rule. All other 7 categories ok.
+- LEX — FAILED once on first attempt (45-min watcher wall timeout — trigger never claimed;
+  cleared with bravo_unwedge + a watcher restart), succeeded on retry. Charms AND Brooches both
+  error — matches 2026-10-01 and 2026-10-02 (both also error for both categories), treated as 0.
+  All other 6 categories ok.
+- ROA — success, all 8 categories ok, no retry needed.
+- WAY — success. Charms error — matches 2026-10-01 and 2026-10-02 (both also error), treated as
+  0. All other 7 categories ok.
+
+**PM count sheets:** all 5 managers' photos present in fleet/eod_photos/2026-10-05/, posted
+18:14-18:22 ET, not yet read against tonight's figures — held because the company-wide post
+cannot run with Culpeper's number unconfirmed (Rule 18: never post incomplete data; the 2026-09-22
+partial-post carve-out only covers an employee-side sheet problem, not a Bravo-side data-integrity
+failure, so it does not apply here).
+
+**Outcome:** no post to #jewlery-counts tonight. No DM sent (Failure Policy v3 — ledger row
+written to fleet/FAILURE_LEDGER.md instead, 2026-10-05 22:44 ET entry).
+
+**Repeats to watch:** LEX Charms+Brooches and HAR/WAY Charms empty are now a 3-night pattern
+(10/1, 10/2, 10/5) — stable, not a new concern. CUL's Charms/Brooches contamination is new
+tonight (not seen 10/1 or 10/2) and reproduced twice — this is the one to track; if it recurs
+tomorrow it is a Culpeper-specific grid/hardware issue, not a one-off.

@@ -204,11 +204,13 @@ def upload(target, path, title):
 
 
 def has(channel, marker, hours):
-    oldest = str(time.time() - hours * 3600)
-    r = call("conversations.history", params={"channel": channel, "oldest": oldest, "limit": 200})
+    # No "oldest" param: on 2026-10-05 the same oldest-bounded call returned the messages once and an
+    # empty list the next second, and the guard missed a duplicate. Read the newest 100 and filter by ts.
+    cutoff = time.time() - hours * 3600
+    r = call("conversations.history", params={"channel": channel, "limit": 100})
     if not r.get("ok"):
         sys.exit("conversations.history: " + r.get("error", "?"))
-    return any(marker in (m.get("text") or "") for m in r.get("messages", []))
+    return any(marker in (m.get("text") or "") for m in r.get("messages", []) if float(m.get("ts", 0)) >= cutoff)
 
 
 def main(a):

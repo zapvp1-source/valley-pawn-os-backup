@@ -1,0 +1,246 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}</style></head><body>
+<title>eBay Channel Pulse</title>
+<style>
+  :root{
+    --bg:#f6f5f2; --panel:#ffffff; --panel-2:#fbfaf7; --border:#e6e2da;
+    --text:#1f2420; --text-dim:#5b6058; --text-faint:#8a8f86;
+    --accent:#0f6a4c; --accent-soft:#e4f2ec;
+    --money:#0f6a4c;
+    --done-bg:#e4f2ec; --done-fg:#0f6a4c; --done-bd:#bfe0d1;
+    --prog-bg:#fdf1de; --prog-fg:#96600a; --prog-bd:#f2d9ab;
+    --todo-bg:#f1f0ec; --todo-fg:#5b6058; --todo-bd:#dbd7cd;
+    --josh-bg:#eef0fb; --josh-fg:#3c4699; --josh-bd:#ccd1f2;
+    --warn-bg:#fbeaea; --warn-fg:#a3312b; --warn-bd:#f0c6c3;
+    --shadow: 0 1px 2px rgba(30,25,10,.04), 0 6px 16px rgba(30,25,10,.05);
+    --radius:14px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#15181a; --panel:#1c2023; --panel-2:#20252a; --border:#2b3136;
+      --text:#e9ece8; --text-dim:#a9b0aa; --text-faint:#767d78;
+      --accent:#43c58a; --accent-soft:#1c3129;
+      --money:#4fd39a;
+      --done-bg:#173226; --done-fg:#54d69a; --done-bd:#26523d;
+      --prog-bg:#332506; --prog-fg:#e3ab4f; --prog-bd:#5a4110;
+      --todo-bg:#25292c; --todo-fg:#a9b0aa; --todo-bd:#343a3e;
+      --josh-bg:#1c2140; --josh-fg:#9aa4f2; --josh-bd:#333c6e;
+      --warn-bg:#3a1c1a; --warn-fg:#f0857c; --warn-bd:#5c2b26;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 22px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#15181a; --panel:#1c2023; --panel-2:#20252a; --border:#2b3136;
+    --text:#e9ece8; --text-dim:#a9b0aa; --text-faint:#767d78;
+    --accent:#43c58a; --accent-soft:#1c3129;
+    --money:#4fd39a;
+    --done-bg:#173226; --done-fg:#54d69a; --done-bd:#26523d;
+    --prog-bg:#332506; --prog-fg:#e3ab4f; --prog-bd:#5a4110;
+    --todo-bg:#25292c; --todo-fg:#a9b0aa; --todo-bd:#343a3e;
+    --josh-bg:#1c2140; --josh-fg:#9aa4f2; --josh-bd:#333c6e;
+    --warn-bg:#3a1c1a; --warn-fg:#f0857c; --warn-bd:#5c2b26;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 22px rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box;}
+  body{background:var(--bg); color:var(--text); margin:0; padding:0;}
+  .wrap{max-width:1080px; margin:0 auto; padding:36px 20px 80px;}
+
+  .top{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:28px;}
+  .eyebrow{font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-faint); font-weight:700; margin:0 0 6px;}
+  h1{font-size:28px; margin:0; letter-spacing:-.01em;}
+  .meta{color:var(--text-dim); font-size:13.5px; margin-top:6px;}
+  .cadence{display:inline-flex; align-items:center; gap:7px; background:var(--panel); border:1px solid var(--border); padding:7px 12px; border-radius:999px; font-size:12.5px; color:var(--text-dim); box-shadow:var(--shadow);}
+  .dot{width:7px; height:7px; border-radius:50%; background:var(--accent);}
+  .dot.warn{background:var(--warn-fg);}
+
+  .cards{display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:12px; margin:22px 0 30px;}
+  .card{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:16px 18px; box-shadow:var(--shadow);}
+  .card .label{font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-faint); font-weight:700;}
+  .card .value{font-size:24px; font-weight:700; margin-top:6px; letter-spacing:-.01em;}
+  .card .sub{font-size:12.5px; color:var(--text-dim); margin-top:3px;}
+  .card.money .value{color:var(--money);}
+  .card.warn .value{color:var(--warn-fg);}
+
+  section{margin-bottom:34px;}
+  .sec-head{display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:14px;}
+  h2{font-size:16.5px; margin:0; letter-spacing:-.005em;}
+  .sec-note{font-size:12.5px; color:var(--text-faint);}
+
+  .finding{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:16px 18px; margin-bottom:10px; box-shadow:var(--shadow); display:flex; gap:14px;}
+  .finding .rank{flex:none; width:26px; height:26px; border-radius:50%; background:var(--accent-soft); color:var(--accent); font-weight:700; font-size:12.5px; display:flex; align-items:center; justify-content:center; margin-top:1px;}
+  .finding.alert .rank{background:var(--warn-bd); color:var(--warn-fg);}
+  .finding .body{flex:1; min-width:0;}
+  .finding .head{display:flex; flex-wrap:wrap; align-items:baseline; gap:8px 12px; margin-bottom:4px;}
+  .finding .title{font-weight:650; font-size:14.5px;}
+  .finding .impact{font-size:13px; font-weight:700; color:var(--money); white-space:nowrap;}
+  .finding .impact.warn{color:var(--warn-fg);}
+  .finding p{margin:0; font-size:13.5px; color:var(--text-dim); line-height:1.5;}
+
+  table{width:100%; border-collapse:collapse; background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow);}
+  th,td{text-align:left; padding:10px 14px; font-size:13px; border-bottom:1px solid var(--border);}
+  th{background:var(--panel-2); color:var(--text-faint); font-weight:700; text-transform:uppercase; font-size:10.5px; letter-spacing:.05em;}
+  tbody tr:last-child td{border-bottom:none;}
+  td.num, th.num{text-align:right; font-variant-numeric:tabular-nums;}
+  .tbl-scroll{overflow-x:auto; border-radius:var(--radius);}
+  tbody tr:hover{background:var(--panel-2);}
+  .flag{color:var(--warn-fg); font-weight:700;}
+  .good{color:var(--money); font-weight:700;}
+
+  .pill{display:inline-block; padding:3px 10px; border-radius:999px; font-size:11px; font-weight:700; border:1px solid; white-space:nowrap;}
+  .pill.done{background:var(--done-bg); color:var(--done-fg); border-color:var(--done-bd);}
+  .pill.prog{background:var(--prog-bg); color:var(--prog-fg); border-color:var(--prog-bd);}
+  .pill.todo{background:var(--todo-bg); color:var(--todo-fg); border-color:var(--todo-bd);}
+  .pill.josh{background:var(--josh-bg); color:var(--josh-fg); border-color:var(--josh-bd);}
+  .pill.warn{background:var(--warn-bg); color:var(--warn-fg); border-color:var(--warn-bd);}
+
+  .action-row td:first-child{font-weight:600;}
+  .owner{font-size:12px; color:var(--text-faint);}
+
+  .incident{background:var(--warn-bg); border:1px solid var(--warn-bd); border-radius:var(--radius); padding:16px 18px;}
+  .incident .title{color:var(--warn-fg); font-weight:700; font-size:13.5px; margin-bottom:6px; display:flex; align-items:center; gap:7px;}
+  .incident p{margin:0 0 8px; font-size:13.5px; color:var(--text); line-height:1.55;}
+  .incident p:last-child{margin-bottom:0;}
+
+  footer{border-top:1px solid var(--border); margin-top:36px; padding-top:18px; font-size:12px; color:var(--text-faint); line-height:1.7;}
+
+  @media (max-width:640px){
+    h1{font-size:23px;}
+    .finding{flex-direction:column;}
+    table{font-size:12px;}
+  }
+</style>
+
+<div class="wrap">
+
+  <div class="top">
+    <div>
+      <p class="eyebrow">Valley Pawn &middot; eBay Channel</p>
+      <h1>eBay Channel Pulse</h1>
+      <p class="meta">Run 2026&#8209;10&#8209;05 &middot; <strong>partial run &mdash; no live pull this week</strong> &middot; listings/fees/sold/messages carried forward from the 2026&#8209;09&#8209;07 live pull (28 days old); feedback &amp; seller standards refreshed from the 2026&#8209;10&#8209;02 ratings sweep (3 days old)</p>
+    </div>
+    <div class="cadence"><span class="dot warn"></span> 2nd consecutive missed live pull (also 9/28) &middot; posts to #ebay-performance</div>
+  </div>
+
+  <div class="cards">
+    <div class="card"><div class="label">Active listings</div><div class="value">446</div><div class="sub">$71,464 listed value &middot; 09&#8209;07 data</div></div>
+    <div class="card money"><div class="label">90d revenue</div><div class="value">$86,762</div><div class="sub">572 orders &middot; 09&#8209;07 data</div></div>
+    <div class="card warn"><div class="label">eBay fees, 90d</div><div class="value">16.7%</div><div class="sub">$14,485 of item revenue</div></div>
+    <div class="card warn"><div class="label">Seller standards</div><div class="value">1 Below</div><div class="sub">Harrisonburg &mdash; new this eval (2 Top Rated, 2 Above)</div></div>
+    <div class="card warn"><div class="label">Aged &gt;90 days</div><div class="value">$20,146</div><div class="sub">199 listings &middot; 72% Culpeper</div></div>
+    <div class="card"><div class="label">Data freshness</div><div class="value">28 days</div><div class="sub">listings/fees/sold &middot; feedback/standards 3 days</div></div>
+  </div>
+
+  <section>
+    <div class="sec-head">
+      <h2>What changed this week, ranked</h2>
+      <span class="sec-note">2026&#8209;10&#8209;05 run &mdash; not a frozen restatement of 8/22</span>
+    </div>
+
+    <div class="finding alert">
+      <div class="rank">!</div>
+      <div class="body">
+        <div class="head"><span class="title">Harrisonburg dropped to Below Standard</span><span class="impact warn">defect rate 5.23%, cases w/o resolution 2.33%</span></div>
+        <p>At the 2026&#8209;09&#8209;21 seller-standards evaluation, Harrisonburg crossed the threshold on transaction defect rate (9/172) and cases closed without seller resolution (4/172). New flag this run &mdash; confirmed via the 10/2 ratings sweep. Next eval ~2026&#8209;10&#8209;20. Logged to the Open Items Register; read-only audit, not fixed here.</p>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="rank">&#10003;</div>
+      <div class="body">
+        <div class="head"><span class="title">Lexington resolved &mdash; back to Above Standard</span><span class="impact">late-shipment issue cleared</span></div>
+        <p>Lexington was Below Standard on late shipments through its known state as of early September (re&#8209;eval window 9/20). The 9/21 evaluation moved it to Above Standard, confirmed via the 10/2 sweep. No action needed.</p>
+      </div>
+    </div>
+
+    <div class="finding alert">
+      <div class="rank">!</div>
+      <div class="body">
+        <div class="head"><span class="title">Second consecutive missed live pull</span><span class="impact warn">trend line going stale</span></div>
+        <p>Both the 9/28 and 10/5 runs hit the same sandbox wall (no bridge to the Mac's local credentials/API access). The listings/fees/sold/messages dataset is now 28 days old. If a live pull isn't restored, this tracker stops being useful for week-over-week trend reads. Needs a host-queue script built so this task can run outside the Cowork sandbox.</p>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="rank">3</div>
+      <div class="body">
+        <div class="head"><span class="title">Culpeper still carries most of the aged inventory</span><span class="impact">$14,562 of $20,146 channel&#8209;wide (72%)</span></div>
+        <p>142 Culpeper listings are past 90 days old (09&#8209;07 data). 101 of the channel's 133 markdown&#8209;capped&#8209;at&#8209;30%&#8209;with&#8209;no&#8209;further&#8209;action listings are Culpeper's. Not re&#8209;verified this run.</p>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="rank">4</div>
+      <div class="body">
+        <div class="head"><span class="title">Top Rated Plus still unclaimed channel&#8209;wide</span><span class="impact">0 of 446 eligible</span></div>
+        <p>Dispatch time 2&ndash;3 days and buyer&#8209;pays returns at every store (09&#8209;07 sample) keep every listing out of Top Rated Plus. Unchanged since prior runs &mdash; Joshua's ops&#8209;policy call, not re&#8209;measured this week.</p>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="rank">5</div>
+      <div class="body">
+        <div class="head"><span class="title">Unread messages still heavy at Roanoke</span><span class="impact">159 of the channel's 382 unread (09&#8209;07 data)</span></div>
+        <p>27 unread return/refund-subject messages and 1 unread case/dispute channel&#8209;wide as of 09&#8209;07. Not re&#8209;verified this run &mdash; could be materially different today.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Store performance (listings/fees/sold = 09&#8209;07 data; standards/feedback = 10&#8209;02 data)</h2></div>
+    <div class="tbl-scroll">
+    <table>
+      <thead><tr>
+        <th>Store</th><th class="num">Active</th><th class="num">Listed value</th>
+        <th class="num">Sold 90d</th><th class="num">Revenue</th><th class="num">Fee %</th>
+        <th class="num">Aged &gt;90d</th><th>Seller standard (9/21)</th><th class="num">Feedback (10/2)</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Culpeper</td><td class="num">258</td><td class="num">$36,859</td><td class="num">243</td><td class="num">$29,495</td><td class="num">16.4%</td><td class="num flag">142 &middot; $14,562</td><td><span class="pill done">TOP_RATED</span></td><td class="num">1,317</td></tr>
+        <tr><td>Waynesboro</td><td class="num">36</td><td class="num">$12,380</td><td class="num">59</td><td class="num">$13,906</td><td class="num">13.2%</td><td class="num good">0 &middot; $0</td><td><span class="pill done">TOP_RATED</span></td><td class="num">632</td></tr>
+        <tr><td>Harrisonburg</td><td class="num">32</td><td class="num">$6,818</td><td class="num">51</td><td class="num">$10,474</td><td class="num">17.6%</td><td class="num">13 &middot; $729</td><td><span class="pill warn">BELOW_STANDARD</span></td><td class="num">629</td></tr>
+        <tr><td>Lexington</td><td class="num">26</td><td class="num">$5,298</td><td class="num">61</td><td class="num">$12,795</td><td class="num">21.2%</td><td class="num">13 &middot; $1,219</td><td><span class="pill prog">ABOVE_STANDARD</span></td><td class="num">1,284</td></tr>
+        <tr><td>Roanoke</td><td class="num">94</td><td class="num">$10,109</td><td class="num">158</td><td class="num">$20,092</td><td class="num">16.2%</td><td class="num">31 &middot; $3,637</td><td><span class="pill prog">ABOVE_STANDARD</span></td><td class="num">5,744</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Action tracker</h2>
+      <span class="sec-note">status based on verifiable output this run</span>
+    </div>
+    <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>Action</th><th>Status</th><th>Owner</th></tr></thead>
+      <tbody>
+        <tr class="action-row"><td>Harrisonburg Below Standard remediation (defect rate, case resolution)</td><td><span class="pill josh">Needs Joshua &mdash; review before ~10/20 re&#8209;eval</span></td><td class="owner">Joshua / store</td></tr>
+        <tr class="action-row"><td>Lexington late&#8209;shipment remediation</td><td><span class="pill done">Done &mdash; Above Standard at 9/21 eval, verified</span></td><td class="owner">&mdash;</td></tr>
+        <tr class="action-row"><td>Restore live Trading API pull for this task (host&#8209;queue script)</td><td><span class="pill josh">Needs a session with host access &mdash; recommended 9/28, still not built</span></td><td class="owner">Claude (native/host session)</td></tr>
+        <tr class="action-row"><td>Markdown terminal action on 133 capped&#8209;at&#8209;30% listings</td><td><span class="pill prog">Last confirmed 09&#8209;07 as a pre&#8209;cleanup snapshot; not re&#8209;verified this run</span></td><td class="owner">Claude (next live pull)</td></tr>
+        <tr class="action-row"><td>Top Rated Plus (1&#8209;day handling + free returns)</td><td><span class="pill josh">Needs your call</span></td><td class="owner">Joshua</td></tr>
+        <tr class="action-row"><td>Promoted Listings ad budget, dark stores</td><td><span class="pill josh">Needs your call</span></td><td class="owner">Joshua</td></tr>
+        <tr class="action-row"><td>eBay Store subscription tier confirmation</td><td><span class="pill todo">Still not retrievable via API (same gap since 8/31)</span></td><td class="owner">Claude</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Data freshness &mdash; read before trusting a number above</h2></div>
+    <div class="incident">
+      <div class="title">&#9888; No live pull this run (2nd in a row)</div>
+      <p>This Cowork sandbox session has no bridge to the Mac's local eBay credentials or API access. Listings, listed value, aging, sold-90d, fees, messages, open Best Offers and markdown-capped figures are carried forward unchanged from the 2026&#8209;09&#8209;07 live pull (28 days old). Feedback score, 12&#8209;month positive %, and Seller Standards are refreshed from the 2026&#8209;10&#8209;02 headless ratings sweep (3 days old) &mdash; the only fresher real data available.</p>
+      <p>Logged to <code>FAILURE_LEDGER.md</code> (2026&#8209;10&#8209;05, <code>NEEDS_HUMAN: no</code>) and the Open Items Register. Full detail: <code>Projects/eBay/audit_weekly/2026&#8209;10&#8209;05/eBay_Channel_Pulse_2026&#8209;10&#8209;05.md</code>.</p>
+    </div>
+  </section>
+
+  <footer>
+    Baseline: full live audit 2026&#8209;08&#8209;22. Last confirmed live pull across all 5 stores: 2026&#8209;09&#8209;07 (Trading API, read&#8209;only: <code>GetMyeBaySelling</code>, <code>GetSellerTransactions</code>, <code>GetAccount</code>, <code>GetStore</code>, <code>GetItem</code>, <code>GetMyMessages</code>, <code>GetFeedback</code>, <code>GetBestOffers</code>). Seller Standards / feedback refreshed 2026&#8209;10&#8209;02 via a headless ratings sweep. Not measured either run: impressions, click&#8209;through, conversion, search placement.<br>
+    This page is meant to refresh weekly from the <code>ebay-weekly-channel-audit</code> scheduled task (Mondays, target 11:45 AM ET) but has missed its live-data refresh twice in a row (9/28, 10/5) due to a sandbox access gap &mdash; see the Data Freshness section above. Full audit history: <code>Projects/eBay/eBay_Channel_Audit_2026-08-22.md</code> &middot; weekly runs: <code>Projects/eBay/audit_weekly/</code>.
+  </footer>
+
+</div>
+
+</body></html>

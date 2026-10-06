@@ -462,3 +462,6 @@ FIXED THIS RUN: none needed — root cause of the silent death traced instead: t
 STILL OPEN (needs Joshua): none new.
 STILL OPEN (queued, no input needed): Master list 3 (Valley Pawn Customers) dropped 14,004 -> 13,226 (-778, ~5.5%) since the 2026-09-08 attribute-sync log entry — not yet root-caused (could be an intentional blacklist/bounce purge or something worth investigating); DMARC still p=none on both domains (long-standing, no urgency, unchanged).
 NEXT RUN SHOULD CHECK: whether list 3's count keeps dropping or stabilizes; confirm the curl-direct credential pattern is now written into this file's Step "Brevo credentials" section so future runs don't re-hit the classifier block; re-verify fcfpawn.com's SPF stays single-record (Brevo has been known to lose domain auth if a DNS record is later touched by mistake).
+
+## 2026-10-05 (brevo-welcome-new-contacts, native)
+Welcomed: 1 new contacts | Skipped (failed): 0 | flag check: 1/1 ok

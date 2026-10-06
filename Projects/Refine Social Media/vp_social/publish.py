@@ -191,8 +191,10 @@ def publish_plan(plan_path: Path, dry_run: bool | None = None, sleep_between: fl
             cap = (s.get("captions") or {}).get(acct) or ""
             min_words = config.RULES["min_words_brand"] if acct.startswith("Brand") and acct != "BrandTwitter" else \
                 (12 if acct == "BrandTwitter" else config.RULES["min_words_store"])
-            if s.get("lane") in ("community",):
+            if s.get("lane") in ("community", "engagement"):   # engagement added 2026-10-05: a question post is short by design
                 min_words = 20
+            if acct == "BrandTikTok":       # 2026-10-05: TikTok captions are 1-2 lines by rule; 40 words made every one fail
+                min_words = 6
             probs = qa_caption(cap, acct, kind, min_words)
             if probs:
                 r.update(status="skipped", reason="; ".join(probs))

@@ -1,6 +1,6 @@
 ---
 name: gusto-keep-alive
-description: Keeps the Gusto admin session (jdavis@fcfpawn.com) warm by loading app.gusto.com every 30 minutes, 24/7, so one login by Joshua lasts. Never uses the passkey, never types credentials or codes. If the session is dead, it leaves the login page ready and sends Joshua at most one plain DM a day.
+description: Keeps the Gusto admin session (jdavis@fcfpawn.com) warm by loading app.gusto.com every 15 minutes, 24/7, so one login by Joshua lasts. Never uses the passkey, never types credentials or codes. If the session is dead, it leaves the login page ready and sends Joshua at most one plain DM a day.
 model: claude-haiku-4-5
 ---
 

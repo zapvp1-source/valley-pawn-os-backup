@@ -55,9 +55,10 @@ def already_posted(channel, header, since):
         tok = vp_slack.token()
         import json, urllib.parse, urllib.request
         req = urllib.request.Request("https://slack.com/api/conversations.history?" + urllib.parse.urlencode(
-            {"channel": channel, "oldest": str(since.timestamp()), "limit": "50"}), headers={"Authorization": "Bearer " + tok})
+            {"channel": channel, "limit": "100"}), headers={"Authorization": "Bearer " + tok})
         r = json.load(urllib.request.urlopen(req, timeout=30))
-        return any((m.get("text") or "").strip().splitlines()[:1] == [header] for m in r.get("messages", []))
+        return any((m.get("text") or "").strip().splitlines()[:1] == [header] for m in r.get("messages", [])
+                   if float(m.get("ts", 0)) >= since.timestamp())
     except Exception:
         return False
 
@@ -104,8 +105,15 @@ def main():
     # 2 — comms_engine publications (they post themselves via the bot and self-dedupe)
     for pub, ch, name in PUBS:
         verb = "render" if render else "post"
+        pdate = pipeline_date
+        if pub == "first-payment-default":   # fpd-cohort is pulled once, stamped with the Sunday date
+            for back in range(0, 3):
+                d = (dt.date.fromisoformat(pipeline_date) - dt.timedelta(days=back)).isoformat()
+                if len(glob.glob(os.path.join(BRAVO, "output", "%s_*_fpd-cohort.csv" % d))) >= 5:
+                    pdate = d
+                    break
         rc, out, err = run([PY, os.path.join(BIN, "comms_engine.py"), verb, "--pub", pub,
-                            "--pipeline-date", pipeline_date, "--post-date", post_date], env=dict(os.environ, VP_TASK=AGENT))
+                            "--pipeline-date", pdate, "--post-date", post_date], env=dict(os.environ, VP_TASK=AGENT))
         if render:
             print("=== %s %s (exit %d) ===\n%s%s" % (name, "would post" if rc == 0 else "WITHHELD", rc, out, err.strip()[-500:]))
             continue
@@ -113,6 +121,8 @@ def main():
             lines.append("✅ %s — posted" % name)
         elif rc == 2:
             held.append(name)
+        elif rc == 4:
+            lines.append("⏭️ %s — already posted today" % name)
         else:
             lines.append("⚠️ %s — did not post" % name)
 

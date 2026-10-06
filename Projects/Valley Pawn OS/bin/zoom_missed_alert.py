@@ -30,6 +30,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import missed_call_text as mct  # noqa: E402  (same-dir module; stdlib only)
+import chekkit_api  # noqa: E402  (2026-10-05: "handled by text" rule — see group_and_check)
 
 AGENT_ALERT = "zoom-voicemail-alert"
 AGENT_EOD = "zoom-voicemail-eod-review"
@@ -105,9 +106,58 @@ def candidates(calls, cfg, now):
     return out
 
 
+def group_and_check(cands, now):
+    """2026-10-05 (Joshua): show each caller ONCE ("we should only show unique numbers"), and drop
+    anyone the store is already texting with in Chekkit ("if we are communicating to them via text,
+    then a call back is not needed"). If Chekkit can't be read, every caller stays on the list —
+    a call back is never lost because of an API hiccup."""
+    groups = {}
+    for r in cands:
+        g = groups.setdefault((r["code"], r["caller"]), dict(r, times=[], ids=[], text=None))
+        g["times"].append(r["start"]); g["ids"].append(r["id"])
+        g["vm"] = g["vm"] or r["vm"]
+        if r["start"] < g["start"]:
+            g["start"] = r["start"]
+    out = list(groups.values())
+    if not out:
+        return out
+    day0 = dt.datetime.combine(now.astimezone(ET).date(), dt.time(0), ET).astimezone(dt.timezone.utc)
+    keep = []
+    by_store = {}
+    for g in out:
+        by_store.setdefault(g["code"], []).append(g)
+    for code, gs in by_store.items():
+        try:
+            convs = chekkit_api.conversations_since(code, day0)
+        except Exception as e:
+            mct.log("chekkit read failed for %s (%s) - keeping all %d caller(s)" % (code, type(e).__name__, len(gs)))
+            keep.extend(gs); continue
+        for g in gs:
+            c = convs.get(chekkit_api.digits10(g["caller"]))
+            if not c:
+                keep.append(g); continue
+            try:
+                status, who = chekkit_api.text_status(chekkit_api.messages(code, c["id"]), g["start"])
+            except Exception as e:
+                mct.log("chekkit messages failed %s (%s)" % (code, type(e).__name__))
+                keep.append(g); continue
+            if status == "handled":
+                mct.log("handled by text: %s %s (%s)" % (code, mct.last4(g["caller"]), who or "staff"))
+                continue
+            g["text"] = status
+            keep.append(g)
+    keep.sort(key=lambda r: r["start"])
+    return keep
+
+
 def line(r):
-    status = "🔴 VM left" if r["vm"] else "missed (no VM)"
-    return "📞 %s — %s, %s — %s, call back ASAP" % (r["store"], fmt_num(r["caller"]), fmt_time(r["start"]), status)
+    n = len(r.get("times") or [1])
+    when = fmt_time(r["start"]) + (" (called %dx)" % n if n > 1 else "")
+    if r.get("text") == "customer_waiting":
+        status = "💬 texted us back, answer their text" + (" (also left VM)" if r["vm"] else "")
+    else:
+        status = ("🔴 VM left" if r["vm"] else "missed (no VM)") + ", call back ASAP"
+    return "📞 %s — %s, %s — %s" % (r["store"], fmt_num(r["caller"]), when, status)
 
 
 def post(agent, text):
@@ -142,11 +192,14 @@ def main():
                             % type(e).__name__, "no")
             mct.save_json(STATE, state)
         return 1
-    cands = candidates(calls, cfg, now)
+    cands = group_and_check(candidates(calls, cfg, now), now)
+    def ckey(r):
+        return "c:%s:%s:%s" % (r["code"], mct.h(r["caller"]), today)
     if mode == "alert":
-        new = [r for r in cands if r["id"] not in state["alerted"]]
+        # one alert per caller per store per day, however many times they rang
+        new = [r for r in cands if ckey(r) not in state["alerted"] and not all(i in state["alerted"] for i in r["ids"])]
     else:
-        new = cands  # EOD: everything still unresolved, alerted before or not
+        new = cands  # EOD: everyone still unresolved (one line per caller), alerted before or not
     print("%s: %d calls today, %d unresolved, %d to publish" % (mode, len(calls), len(cands), len(new)))
     if render:
         print("=== RENDER ONLY ===")
@@ -166,7 +219,9 @@ def main():
     if ok:
         if mode == "alert":
             for r in new:
-                state["alerted"][r["id"]] = r["start"].isoformat()
+                for i in r["ids"]:
+                    state["alerted"][i] = r["start"].isoformat()
+                state["alerted"][ckey(r)] = r["start"].isoformat()
             # keep the state small: drop ids older than 3 days
             cutoff = (now - dt.timedelta(days=3)).isoformat()
             state["alerted"] = {k: v for k, v in state["alerted"].items() if v >= cutoff}

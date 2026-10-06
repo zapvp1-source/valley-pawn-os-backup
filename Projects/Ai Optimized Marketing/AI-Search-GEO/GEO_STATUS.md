@@ -7,7 +7,7 @@
 ## LIVE (verified against the site, not against our own notes)
 | Asset | Since | How it's verified weekly |
 |---|---|---|
-| JSON-LD schema sitewide — Organization + 5× PawnShop + FAQPage (WPCode snippet 738) | 2026-06-19 | health check: 7/7 blocks valid |
+| JSON-LD schema, scoped — WPCode snippet **1529** (PHP): Organization sitewide; 5× PawnShop on / and /locations/ only; FAQPage on the FAQ page only. Snippet 738 (old sitewide version) is **inactive**, kept for rollback | 2026-10-05 (738 since 2026-06-19) | health check: 7/7 blocks valid |
 | `thevalleypawn.com/llms.txt` (WPCode PHP snippet 742) | 2026-06-19 | health check; repo copy `llms.txt` here is a **snapshot of live** (re-taken 2026-09-05) — the site is the source, never regenerate the site from this folder |
 | FAQ page `/frequently-asked-questions/` | 2026-06-19 | health check |
 | robots.txt allows GPTBot, ClaudeBot, PerplexityBot, Google-Extended | 2026-06-19 | health check |
@@ -16,23 +16,28 @@
 | Yoast fields writable via REST (WPCode 1135) — enables all meta/noindex automation | 2026-08-23 | — |
 | Google + Bing NAP clean 10/10 (public listings) | ongoing | health check Mon |
 | "Dixie Pawn" purged from owned content (site, media library, WP) | 2026-08-23 | presence audit `legacy_name_pages = 0` |
+| 5 location pages rebuilt ~75 → ~800 words (quick answer, services, loan steps, hours table, Google rating, areas served, 7-Q local FAQ) + PawnShop/FAQPage JSON-LD with `@id` and aggregateRating | 2026-10-05 | builder `../bin/geo_2026-10-05/build_locations.py` |
+| All 20 city spokes: quick-answer opener + verified aggregateRating in JSON-LD + fake testimonials replaced with real rating/review; selling-gold guide on Harrisonburg + Roanoke gold pages | 2026-10-05 | builder `../bin/geo_2026-10-05/build_spokes.py` |
 
 ## Metrics (latest)
-- **AI Visibility Index 83%** (8/28) — match-or-beat top local rival on 25/30 answers. Trajectory 63% (7/24) → 75% (8/7) → 71% (8/21) → 83% (8/28). **9/4 scorecard MISSED** (task fired, no post) — register `FIX-VISIBILITY-MISS-0904`.
+- **AI Visibility Index 87%** (10/2, 20/23 answers). Google reviews verified in Maps 10/5: CUL 4.9/425, WAY 4.9/375, HAR 4.9/336, LEX 4.8/197, ROA 4.9/292 (chain 1,625). Roanoke gap vs The PawnShop (4.9/725) = −433.
+- Prior: **AI Visibility Index 83%** (8/28) — match-or-beat top local rival on 25/30 answers. Trajectory 63% (7/24) → 75% (8/7) → 71% (8/21) → 83% (8/28). **9/4 scorecard MISSED** (task fired, no post) — register `FIX-VISIBILITY-MISS-0904`.
 - Weak spots: Roanoke (The PawnShop outranks on every engine); Harrisonburg gold query (Coin & Gift Shop, since 8/7).
 - AI referral traffic: 1–4 sessions/week.
 - Presence grades (8/30): Google reviews A−, technical SEO B+, content B, FB/IG C+, directories D, video D−, GunBroker F, on-site commerce F. Every on-site number flat since 8/23; the only mover is the needs-Joshua count.
 
 ## Settled facts (do not "fix")
 - Roanoke occupies Suite C **and** D; ATF "2362-D" is correct; customer-facing canonical is "Suite C".
-- Harrisonburg has **no** suite number — "Ste 22" is a defect wherever it appears (GBP still shows it → `LOGIN-GBP-CONSOLE`).
+- Harrisonburg is **1790 East Market Street, Suite 22** (Joshua, 2026-10-05). "Ste 22" is correct — never flag or remove it (supersedes the 8/23 rule).
 - "Trusted Since 1988" is correct.
 - Bing map renders ("Toni St", missing "Suite C") are TomTom render quirks, console is correct.
-- Max loan amount: live says $100,000, **unconfirmed** (`DEC-MAX-LOAN`). Do not touch until answered.
+- Max loan amount is **$25,000** (Joshua, 2026-10-05). Live everywhere (/loans/, homepage, FAQ, llms.txt). Any $100,000/$100K/$10,000 maximum is a defect.
+- NPA membership claim stays (NPA staff worked Joshua's SB749 request as a member, May 2026).
+- Never publish testimonials that are not real, attributed Google reviews. The 60 invented "Google Review · {city}" cards were removed 2026-10-05.
 
 ## Not done — see the register for owner and age
-Logins: Bing Places · Apple Business Connect · MapQuest + Yext cancel · GBP console · BBB · YellowPages.
-Builds: Wikidata enrichment (spec `wikidata-entity.md`) · aggregateRating schema · Harrisonburg gold page · directory-listing-monitor as a real task · schema scoping per page · location-page depth · NPA claim (restore or drop) · city-answer-snippets (`content/`, drafted 6/19, never published).
+Logins: Bing Places · Apple Business Connect · MapQuest + Yext cancel · BBB · YellowPages · FFLeasy · MasterFFL Culpeper FFL# · GunNook Harrisonburg hours.
+Builds: Wikidata enrichment (spec `wikidata-entity.md`, needs a Wikidata login) · directory-listing-monitor as a real task. (Done 10/5: ratings schema, Harrisonburg gold page, schema scoping, location-page depth, NPA claim kept, city answer snippets published as page openers.)
 
 ## Known defects in this lane's own plumbing (umbrella plan §2)
 - Two site auditors (presence-audit vs weekly-website-health-audit) crawl different sitemaps with different auto-fix authority → consolidate (wk3).

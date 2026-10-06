@@ -78,6 +78,9 @@ for label, task, h, m in [("com.valleypawn.backup-health", "backup-health-watchd
 JOBS.append(("com.valleypawn.funds-verification", "funds_verification.py", at(18, 30), at(23, 30),
              lambda s: os.path.exists(os.path.join(HOME, "Documents/Claude/Projects/Daily Funds Verification/%s Funds Verification.md" % today))
              or file_since(LOGF("daily-funds-verification"), s)))
+if wd == 6:   # Sunday — forfeited-loan win-back list build (feeds Tuesday email + Thursday texts); added 2026-10-05
+    JOBS.append(("com.valleypawn.forfeiture-winback", "forfeiture_winback_weekly.sh", at(12, 30), at(23, 0),
+                 lambda s: os.path.isdir(os.path.join(HOME, "Documents/Claude/Projects/Email Refinement/forfeiture_winback/runs", today.isoformat()))))
 if wd == 0:   # Monday
     JOBS.append(("com.valleypawn.monday-compile", "monday_compile.py", at(8, 45), at(14, 0),
                  lambda s: receipt_since("monday-bravo-combined-compile", s) or file_since(LOGF("monday-compile"), s)))

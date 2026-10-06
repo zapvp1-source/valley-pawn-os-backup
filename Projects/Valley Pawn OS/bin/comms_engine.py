@@ -637,11 +637,12 @@ def already_posted(token, channel, marker, post_date):
     """True if a message carrying the marker exists in channel since local midnight of post_date."""
     start = dt.datetime.strptime(post_date, "%Y-%m-%d")
     oldest = start.timestamp()
-    res = slack_call(token, "conversations.history", params={"channel": channel, "oldest": oldest, "limit": 100})
+    # no "oldest" param (flaky on 2026-10-05 — returned empty a second after returning the posts)
+    res = slack_call(token, "conversations.history", params={"channel": channel, "limit": 100})
     if not res.get("ok"):
         raise RuntimeError("history: " + res.get("error", "?"))
     for m in res.get("messages", []):
-        if marker in (m.get("text") or ""):
+        if float(m.get("ts", 0)) >= oldest and marker in (m.get("text") or ""):
             return True
     return False
 
