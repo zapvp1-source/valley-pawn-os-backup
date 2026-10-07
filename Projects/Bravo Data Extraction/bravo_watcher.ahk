@@ -100,6 +100,7 @@ Persistent
 #Include reports\JewelryCaseAudit.ahk
 #Include reports\JewelryCaseCount.ahk
 #Include reports\JewelryCaseCountV2.ahk
+#Include reports\JewelryCaseCountV3.ahk
 #Include reports\SoldDiscountDetail.ahk
 #Include reports\CoinsOnHand.ahk
 #Include reports\EmployeeActivityRange.ahk
@@ -229,6 +230,8 @@ Main() {
     REPORT_HANDLERS["jewelry-case-necklaces"] := PullJewelryCaseNecklaces
     REPORT_HANDLERS["jewelry-case-counts"]    := PullJewelryCaseCounts
     REPORT_HANDLERS["jewelry-case-counts-v2"] := PullJewelryCaseCountsV2
+    REPORT_HANDLERS["jewelry-case-counts-v3"] := PullJewelryCaseCountsV3
+    REPORT_HANDLERS["jewelry-case-counts-v3-verify"] := PullJewelryCaseCountsV3Verify
     REPORT_HANDLERS["sold-discount-detail"] := PullSoldDiscountDetail
     REPORT_HANDLERS["coins-onhand"]         := PullCoinsOnHand
     REPORT_HANDLERS["employee-activity-range"] := PullEmployeeActivityRange

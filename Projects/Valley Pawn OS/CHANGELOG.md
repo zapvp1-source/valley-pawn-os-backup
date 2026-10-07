@@ -2,6 +2,136 @@
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
 
+## 2026-10-06 (jewelry count fix)
+
+- **Culpeper "same number twice" was real inventory, not a stale grid.** CUL Charms went 20->19 on 9/29 while Brooches was still 18, then Brooches 18->19 on 9/30. Since then v2's duplicate guard (GUARD 3) refused CUL every night (9/30, 10/1, 10/2, 10/5 twice) even though each category was picked, name-verified and read in its own run. The guard cannot tell a coincidence from contamination.
+- **"Combo-select wedge" located.** Truncated nightly logs stop dead inside v2's report picker (cached-GUID expand/collapse, then arrow click + Focus/F4 + Focus/Alt+Down + type-ahead) or in the first grid read after it. Only the last two steps ever select anything. Today's first proving run froze at 16:43 right after "[inv-select] still no item — Alt+Down" and self-healed at 16:56.
+- **Fix (additive): new `reports/JewelryCaseCountV3.ahk`, cells `jewelry-case-counts-v3` (same CSV path as v2) and `jewelry-case-counts-v3-verify` (writes `<date>_<STORE>_jewelry-case-counts-v3verify.csv` for daytime proofs).** (1) When two categories share a count, v3 re-reads each one right after a different-count category (Rings). A stale screen would show that other number, so a match proves the duplicate is real; a mismatch still fails the store with the same error text. (2) Report picking tries one arrow click + type-ahead + ClickByName + BoxReportName check first, and falls back to v2's full picker only if that does not verify. v2/v1 files untouched. `bravo_watcher.ahk` got 3 added lines (backup `bravo_watcher.ahk.bak-pre-jewelry-v3-2026-10-06`). New `_validate_watcher_v3.ps1` + allow-listed `bin/bravo_watcher_validate.sh [--restart]` (AHK /validate before any restart).
+- **Verified live today (verify cell, date 2026-10-06):** CUL success 8/8 (Rings 679, Bracelets 120, Pendants 217, Charms 19, Brooches 19, Earrings 143, Chains 82, Necklaces 71; 19/19 re-read after Rings 679, confirmed genuine; 12.8 min). ROA success 8/8 (572/139/118/58/1/82/92/62; 8.7 min vs ~10.5 min on 10/5). 20 of 20 picks went through the short path, 0 fallbacks.
+- **Nightly routed to v3:** block "# V3 CELL (2026-10-06)" appended to `jewelry-onhand-nightly-pull` SKILL.md via `install_skill_block.py` (block in `fleet/skill_blocks/jewelry-v3-cell-20261006.md`). It also says a v3 duplicate error must not be overridden by hand. **That task shows `enabled: false` in the scheduler as of 17:00 today; not re-enabled here.**
+- **Not changed:** empty categories (HAR Charms, LEX Charms + Brooches, WAY Charms) still show status=error, never 0. The SKILL's prior-day empty rule still decides those. Each costs about 5 min per store, and the empty grid read is still a wedge risk. Nothing in Bravo can prove a zero from that screen yet.
+- FAILURE_LEDGER row 2026-10-05 22:44 marked RESOLVED.
+
+## 2026-10-06 (Smile sign art fixed)
+
+- **6" circle Smile / "Dang… you look fine" sign art replaced** — old file printed as a square with a circle on it. New true-circle art (6.5" w/ bleed → 6" cut) in `Valley Pawn Studios/output/Store_Sign_Set/VP_Dang_You_Look_Fine_6in_CIRCLE_print.pdf`; STORE_SIGN_SET.md row 7 now points to it.
+
+## 2026-10-06 (missed-call weekly report native)
+
+- **`missed-call-text-report` -> native agent `com.valleypawn.missed-call-report` (Mon 08:07)**, `bin/missed_call_report.py` + `.sh`. The Cowork task matched each text to its Chekkit conversation by hand in the website and ran out of time twice (9/28–10/4 report never posted; ledger rows 10/5 08:30 + 10/6 now RESOLVED). Now: receipts -> the agent log's "SENT <STORE> ...<last4>" line -> Chekkit API (GET only) conversations for that store whose phone ends in that last-4 -> the automated "Hi, this is Valley Pawn in ..." message within 3 min (fallback: every conversation active after the text). Replied = customer text within 24 h; store reply = first non-automated staff message (sentBy). Same DM format as the Cowork reports + the SKILL's weekly running totals / change vs prior week. "Conversations" lines use coarse topics (loan/payment, gold/jewelry, firearms, buying/selling, hours, call back) — no customer words quoted. A failed or incomplete API read = nothing posted + one ledger row; a text whose automated message is in no conversation after a complete read is reported as "didn't create a conversation (N of M matched)", as the Cowork reports did. `--render` writes/sends nothing; local sent-state file `~/Library/Logs/valleypawn/missed_call_report_state.json` prevents a second send (the bot has no im:history, so the Slack history check falls back to it).
+- **9/28–10/4 report sent to Joshua once (10/6):** 120 texted, 22 replied (18%), 118 of 120 matched; 2 HAR opt-outs, 23 undelivered, 11 slow store replies (HAR most). 46 rows appended to `fleet/missed_call_text_results.csv` (74 hand rows kept untouched). **3 of the hand rows disagree with the API** (WAY 9/28 11:38 and WAY 9/29 18:45 logged "no conversation found" — the API shows replies; HAR 9/30 16:26 "no conversation" — the API shows a STOP), so the 9/28–9/30 daily DMs undercounted replies; left as-is in the file.
+- Allow-list + `missed_call_report.py/.sh`. Cowork task disabled. First scheduled run Mon 10/12 (covers 10/5–10/11).
+
+## 2026-10-06 (Preston on Zoom Phone)
+
+- Preston's Zoom user (ext 813) given the 6th US/CA Unlimited plan + direct number (540) 202-4200; outbound caller ID set to it. Announced in #general ("Preston has a new work number: (540) 202-4200"). `Zoom Call Pipeline/internal_roster.json` now lists 540-202-4200 for Preston (backup `.bak-pre-preston-zoom-20261006`) so his Zoom calls classify as EMPLOYEE and keep transcripts.
+
+## 2026-10-06 (fleet-doctor quiet-job triage)
+
+- **Ledger row 10/6 02:10 (1 erroring + 20 "quiet") triaged against plist + log + receipts + outputs: 0 dead agents.** 15 healthy but mis-measured, 4 retired/one-off leftovers, 1 real miss (mac-maintenance), 1 error already fixed (spot prices).
+- **Why it cried wolf:** `bin/log_triage.py` judged each FILE alone. Most native agents leave launchd's `.out.log` empty forever and log to `<task>.log`, a `<task>/run.log` sub-folder, or only a receipt. Now a log is stale only if NONE of its agent's evidence is fresh: sibling logs (same stem / same plist / label-named log), `<stem>/run.log`, `fleet/receipts/<stem>.jsonl`, plus extras in the new `fleet/log_triage_expectations.json` (retired one-offs, aliases, extra evidence, per-log gaps, each with its reason). A `.err.log` never counts as proof of health. Also fixed: a list of `Day` entries (monthly-prestage, days 28–31) counted as daily (30h), and the dated one-shot `fwb-catchup-20261005` set forfeiture-winback's allowed gap to 40 days (one-shots are now ignored, and when two plists share a log the more frequent schedule wins). Backup `.bak-pre-quietfix-20261006`.
+- **`fleet_sim.py` +6 scenarios** ("liveness evidence"): empty `.out.log` with a fresh sibling is not stale; an agent with no fresh evidence IS stale; a fresh `.err.log` is not proof of health; a receipt counts; Day-list = monthly; a retired one-off is listed, not judged. Mac: 42/42 green (mutation anchors kept). Backup `.bak-pre-quietfix-20261006`.
+- **Real miss fixed: weekly Mac maintenance skipped Sun 10/4 (Mac off) and nothing would have run it until 10/11.** `catchup.py` now covers `com.valleypawn.mac-maintenance` for the rest of the week after a missed Sunday slot (evidence = `mac_maintenance.log` written since the slot). The 16:16 catch-up tick fired it: done 16:17 (TM snapshots thinned, 61GB free, health DM to Joshua). Backup `.bak-pre-macmaint-20261006`.
+- `jewelry_pull_watchdog.sh` now logs its Monday skip (yesterday = Sunday, stores closed) instead of exiting silently, so a daily agent no longer shows a 41h+ gap every Tuesday 02:10. Backup `.bak-pre-mondaylog-20261006`.
+- Spot prices (`vp-weekly-spot-price-update.log`, the "1 erroring job"): the error was one 10/5 run against a half-edited wrapper ("can't open '/fetch_spot_prices.py'"); the 14:46 and 10/6 07:00 runs were rc=0 and the feed page updated. Now listed as resolved. No change.
+- Retired: chekkitperms-oneshot's leftover logs archived (`retire_agent.sh --archive-logs`); registry-null-fix / relaunch-manual (9/10 one-offs) and bravo-fix-terminal (on-demand tool) are in the expectations file's `retired` list.
+- Verify (Mac, read-only `log_triage.py --days 7`, ~17:00): **stale=0**. Still failing = 1, not one of the 21: `oura-daily-import` (10/6 08:30).
+- **Oura import race fixed:** `com.healthos.oura-import` (HealthOS's own agent) and `com.valleypawn.oura-import-check` both fire at 08:30; ours saw the summary as stale mid-run and started a SECOND `run_daily_v5.sh`. The two raced on `oura.db.gz.new` / `oura_latest.json.tmp` ("mv: No such file", FileNotFoundError on 10/5 and 10/6; data was fine, receipts ok). `bin/oura_import.sh` now waits 20 s, then waits (up to 10 min) for a running `run_daily_v5.sh` before deciding. Backup `.bak-pre-racewait-20261006`. The 10/6 error lines are still at the end of the log, so **tonight's 02:10 doctor will still list oura as 1 erroring job**; the first clean doctor is expected 10/8 02:10 (after the 10/7 08:30 run).
+- New read-only `bin/quiet_triage.py` (agents ↔ schedule ↔ logs ↔ loaded state, log tails). Allow-listed.
+
+## 2026-10-06 (NICS weekly zero-confirmation; Goldilocks app icon)
+
+- **Weekly FFL MTD ranking no longer holds on quiet stores (Joshua: "fix jobs, not put them off"):** Bravo writes no file when a store had no transfers, which looked like a failed read. `bin/nics_weekly_mtd.py` now re-pulls any still-missing store over 1st-of-last-month..end; if that returns rows the report works and the store's MTD figure is the rows inside this month (a confirmed real number, often 0). Only a store whose wide pull is ALSO empty holds. Test 10/1–10/5 on the Mac (--no-post): CUL $160/7, ROA $45/3, WAY $25/1, HAR $0/0, LEX $0/0 confirmed, pending none. Backup `.bak-pre-zeroconfirm-20261006`.
+- **Goldilocks Slack app icon set** (lion-cub face, `fleet/brand/Goldilocks Mascot Kit/08_Goldilocks_slack_icon.png`) via api.slack.com Basic Information, saved. Rest of the mascot kit tabled by Joshua.
+- canvases:read + canvases:write added to the bot by Joshua; the 5 weekly canvases + layaway yield converted (see entry below/above).
+
+## 2026-10-06 (native conversions — weekly canvases + layaway yield)
+
+- **5 Monday canvas refreshes -> native** `bin/weekly_canvases.py <loan|layaway|employee|aged|store>`, agents `com.valleypawn.loan-canvas` (09:20, F0BH6BJ0PK7), `layaway-canvas` (09:22, F0BJ48BMZGQ), `employee-canvas` (09:24, F0BH9UK284S), `aged-canvas` (09:26, F0BHDL6AULU), `store-canvas` (09:28, F0BH6S9U5FX). Numbers come from the Mac files through the existing calculators (comms_engine loan/layaway/employee loaders incl. the current-employees filter, the aged CSV Subtotals row, store_kpis_compile.py) with monday_compile.py's pipeline-date rule — no Drive copies. Locked SKILL layout; all 5 stores or hold + one ledger row; Joshua gets the one-line DM; re-run on same content = no-op.
+- **`layaway-yield-weekly` -> native** `bin/layaway_yield_weekly.py` (agent `com.valleypawn.layaway-yield-weekly`, Mon 11:15): compile OK for all 5 or hold; Canvas section, then the #layaway-review post, then the DM. The layaway canvas has two owners, so each job writes the whole document from `fleet/canvas_state/F0BJ48BMZGQ.json` (keeps the other job's last-published part; seeded 10/6 from the live canvas).
+- **Verified on scratch canvases** (`bin/canvas_selftest.py`, created + deleted; live canvases never edited): same canvases.edit call as the agents, read back with the connector. 10/5 data: aged and layaway (incl. yield) identical to the live canvases section for section; store with 9/27 data identical to the live 9/27 canvas. **Two forced differences:** (1) the API rejects the date-chip markdown (`![](slack_date:..)` -> "Unsupported source for image"), so dates are text ("Oct 5, 2026"); (2) the "📋 … — Current" first line is the canvas title, not content, so it is not written.
+- **Found:** the #loan-review canvas has been stuck on the week of Aug 31 (Cowork found no current Loan_Layaway_Review docx); the #store-performance canvas on 9/27 (store_kpis files didn't exist yet at 09:28); the #employee-performance canvas showed September with former employees (Chambers, Grayson, Clark, Lopez, Camber, Dean) — the native one uses the current-team filter and this month to date, like the channel post.
+- `vp_slack._cell`: a `_x_` table cell is now italic, as the connector posts it (backup `.bak-pre-italiccell-20261006`). `catchup.py` covers the 6 Monday jobs (backup `.bak-pre-canvases-20261006`). Allow-list + weekly_canvases.py, canvas_selftest.py, canvas_*.sh, layaway_yield_weekly.sh. All 6 Cowork tasks disabled. First live run Mon 10/12.
+
+## 2026-10-05 (native conversions — online-store audit, QBO token)
+
+- **`weekly-online-store-audit` -> native agent `com.valleypawn.online-store-audit` (Sun 08:00)**, `bin/online_store_audit.py` + `.sh`. Same pull/metrics/summary as `~/vp_weekly_online_store_audit.py` (that script was never patched with `--no-bestoffer`, so it is no longer run), tokens from `~/.vp_secrets/ebay_store_tokens.py`. Auto-fixes the RETURNS policy only; the file has no Best Offer write path. Video-game listings with Best Offer ON are reported, never switched. Spot-checks 3 fixes via GetItem, posts to #ebay-performance as Goldilocks with a once-per-day guard; a failed store pull = ledger row, no partial post. Delta is labelled "vs <date>" when weeks were missed (no false "WoW"). Render 10/5 (read-only): 388 active, 100 sold/7d, $18,698.03 (+26% vs Sep 6), 88 >180d $7,906.78. **39 listings would be fixed to 30-day returns (Roanoke 38: its template still makes 14-day listings).** **66 video-game listings have Best Offer ON** (CUL 46, WAY 8, HAR 8, ROA 4; 2 re-checked via GetItem) for the stores to switch off. Cowork task disabled. First live run Sun 10/11.
+- **`qbo-api-token-refresh` -> native agent `com.valleypawn.qbo-token-refresh` (Sun 05:00)**, `bin/qbo_token_refresh.py` + `.sh`: `qbo_api.py refresh` then `whoami` must be "Full Circle Finance Inc DBA Valley Pawn" (jdavis books; token refresh + CompanyInfo read only, never writes to QBO). Silent on success; failure = one ledger row (NEEDS_HUMAN yes only when re-authorization is needed). Render 10/5: whoami OK (tokens.json last rolled 9/24, well inside 100 days). Cowork task disabled.
+- Allowlist + `online_store_audit.py/.sh`, `qbo_token_refresh.py/.sh`.
+
+## 2026-10-05 (native conversions — canvases, markdown verification, bonus pace)
+
+- **Markdown verification native:** `bin/markdown_verification.py` (`pull` / `review`), agents `markdown-verification-pull` (Sun 19:00: drops the 5-store trigger, writes the marker, DMs "Markdown-verification pull dispatched — <date>.") and `markdown-verification-review` (Mon 09:35: newest per-store CSV, one retry trigger for missing/errored stores (20 min), SKILL math + jewelry classifier, post to #items-to-markdown, DM Joshua the week-over-week line, history CSV row). All 5 stores or nothing (withhold + ledger row). Render of 10/4 data is byte-identical to the 10/5 post and DM. Cowork `weekly-markdown-verification-pull` / `-review` disabled.
+- **Bonus pace native:** `bin/bonus_pace.py`, agent `bonus-pace` (Mon 09:35, DM to Joshua only). Revenue uses `bonus_engine.parse_eom` on this month's month-to-date EOM file (Reporting Dates checked); gold/email via the engine's readers (dash unless the file covers this month); reviews month-to-date from the Chekkit API. **The Cowork 10/5 DM overstated MTD revenue by the loan principal payments** (CUL $36,242.51 shown vs $28,453.06 by the engine formula = +$7,789.45 principal); the native DM shows the engine figure. Cowork `bonus-pace-monday` disabled.
+- **5 weekly canvas refreshes stay on Cowork:** the ops bot token has no canvas scopes (`canvases.sections.lookup` -> missing_scope, needed `canvases:read`; updating needs `canvases:write`). Joshua: add `canvases:read` + `canvases:write` at api.slack.com -> OAuth & Permissions, reinstall; then they can be ported. Read-only check: `bin/canvas_scope_probe.py`.
+
+## 2026-10-05 (native conversions — items-to-price, NICS weekly, store KPIs, layaway yield)
+
+- **`daily-items-to-price` -> native** `bin/items_to_price.py` (agent com.valleypawn.items-to-price, daily 08:00). Waits up to 75 min for the morning-pull certificate; CLEAN + 5 CSVs -> post. Otherwise up to 2 recovery pulls (`bravo_pull.sh items-to-price`) for the bad stores only, each re-gated on its own log with the morning pull's rule (no GAVE UP, rows >= maxY-1). Still short = post nothing, ledger row + `logs/_itp_incomplete_<DATE>.txt`. Known case kept visible, not papered over: Waynesboro's grid can stall at 241/247 ("Show More") -> TRUNCATED, held (tested on a synthetic 241/247 log). Render of 10/5 matches the 08:14 post line for line (connector italics `_..._`). Dedupes on the title. Cowork task disabled.
+- **`nics-weekly-mtd-ranking` -> native** existing `bin/nics_weekly_mtd.py` (agent com.valleypawn.nics-weekly-mtd, Mon 09:30; backup `.bak-pre-native-20261005`). Changed: all-five-or-nothing like nics_monthly.py (the 10/5 10:07 post went out with WAY/HAR/LEX "pending" — Bravo returned "no data rows rendered, inconclusive" for them, possibly real zeros), en dash in the title, title dedupe, `--end` for renders. Render for 9/1–28 matches the 9/29 table cell for cell. Cowork task disabled.
+- **`weekly-store-kpis` -> native** `bin/store_kpis_weekly.py` (agent com.valleypawn.store-kpis-weekly, Mon 10:30): newest complete EOM set (yesterday..-2, else one `bravo_pull.sh end-of-month` pull), existing `store_kpis_compile.py`, msg1 + msg2 as broadcast thread reply, connector formatting reproduced. Parent text of the 10/4 render is byte-identical to the 10/5 10:37 post. It skips if a "Report Period: <D>" post is already there — normally the 08:45 native Monday compile (store_rankings.py) has posted the same leaderboard, so this is a backstop (10/5 had it three times). Cowork task disabled.
+- **`layaway-yield-weekly` NOT converted** — its Canvas step (F0BJ48BMZGQ) needs `canvases:write`; the bot token has users:read, chat:write, im:write, channels:history, groups:history, incoming-webhook, files:read, chat:write.customize. Render-only `bin/layaway_yield_weekly.py` (post + Canvas section + DM line match the 10/5 post and Canvas exactly). Cowork task left enabled and untouched; it will lose Mac file access when it moves to the cloud.
+- New read-only `bin/slack_msg_cells.py` (prints a past post's table cells). Allow-listed: items_to_price.py/.sh, nics_weekly_mtd.sh, store_kpis_weekly.py/.sh, layaway_yield_weekly.py, slack_msg_cells.py.
+
+## 2026-10-06
+
+- Enabled scheduled tasks: 119 -> 114
+- ENABLED: valley-pawn-blog-publisher
+- DISABLED: ceo-mail-brief
+- DISABLED: forfeiture-winback-texts-weekly
+- DISABLED: google-reviews-post-watchdog
+- DISABLED: review-obtained-last-week
+- DISABLED: roanoke-culpeper-hours-listing-check-oneshot-20261005
+- DISABLED: vp-deal-of-week-monday-pick
+- Native agent appeared: com.valleypawn.blog-announce.plist
+- Native agent appeared: com.valleypawn.bonus-pace.plist
+- Native agent appeared: com.valleypawn.brevo-attr-sync.plist
+- Native agent appeared: com.valleypawn.brevo-draft-guard.plist
+- Native agent appeared: com.valleypawn.brevo-engaged-v2.plist
+- Native agent appeared: com.valleypawn.brevo-watchdog.plist
+- Native agent appeared: com.valleypawn.brevo-welcome.plist
+- Native agent appeared: com.valleypawn.chekkit-review-invites.plist
+- Native agent appeared: com.valleypawn.comedy-weekly.plist
+- Native agent appeared: com.valleypawn.deal-of-week-pick.plist
+- Native agent appeared: com.valleypawn.fwb-catchup-20261005.plist
+- Native agent appeared: com.valleypawn.gold-silver-monthly.plist
+- Native agent appeared: com.valleypawn.items-to-price.plist
+- Native agent appeared: com.valleypawn.markdown-verification-pull.plist
+- Native agent appeared: com.valleypawn.markdown-verification-review.plist
+- Native agent appeared: com.valleypawn.nics-weekly-mtd.plist
+- Native agent appeared: com.valleypawn.online-store-audit.plist
+- Native agent appeared: com.valleypawn.qbo-token-refresh.plist
+- Native agent appeared: com.valleypawn.reviews-weekly.plist
+- Native agent appeared: com.valleypawn.social-weekly.plist
+- Native agent appeared: com.valleypawn.spot-prices.plist
+- Native agent appeared: com.valleypawn.store-kpis-weekly.plist
+- Native agent appeared: com.valleypawn.website-deals.plist
+- Native agent appeared: com.valleypawn.winback-texts.plist
+- Native agent LOADED: com.valleypawn.blog-announce
+- Native agent LOADED: com.valleypawn.bonus-pace
+- Native agent LOADED: com.valleypawn.brevo-attr-sync
+- Native agent LOADED: com.valleypawn.brevo-draft-guard
+- Native agent LOADED: com.valleypawn.brevo-engaged-v2
+- Native agent LOADED: com.valleypawn.brevo-watchdog
+- Native agent LOADED: com.valleypawn.brevo-welcome
+- Native agent LOADED: com.valleypawn.chekkit-review-invites
+- Native agent LOADED: com.valleypawn.comedy-weekly
+- Native agent LOADED: com.valleypawn.deal-of-week-pick
+- Native agent LOADED: com.valleypawn.fwb-catchup-20261005
+- Native agent LOADED: com.valleypawn.gold-silver-monthly
+- Native agent LOADED: com.valleypawn.items-to-price
+- Native agent LOADED: com.valleypawn.markdown-verification-pull
+- Native agent LOADED: com.valleypawn.markdown-verification-review
+- Native agent LOADED: com.valleypawn.nics-weekly-mtd
+- Native agent LOADED: com.valleypawn.online-store-audit
+- Native agent LOADED: com.valleypawn.qbo-token-refresh
+- Native agent LOADED: com.valleypawn.reviews-weekly
+- Native agent LOADED: com.valleypawn.social-weekly
+- Native agent LOADED: com.valleypawn.spot-prices
+- Native agent LOADED: com.valleypawn.store-kpis-weekly
+- Native agent LOADED: com.valleypawn.website-deals
+- Native agent LOADED: com.valleypawn.winback-texts
+
 ## 2026-10-05 evening (missed-call list = unique callers + "texting counts"; AI responder reads the Chekkit API)
 
 - **#voicemails-calls-missed now shows each caller ONCE and drops anyone the store is texting with** (Joshua: "we should only show unique numbers" / "if we are communicating to them via text in Chekkit, then a call back is not needed"). `bin/zoom_missed_alert.py` (agents zoom-missed-alert + zoom-missed-eod; backup `.bak-pre-dedupe-chekkit-20261005`): groups calls by store+caller ("(called 2x)"), alerts once per caller per day, and checks the caller's Chekkit thread via the API — a real staff text after the call = handled (off the list); customer texted back but no staff answer = line says "💬 texted us back, answer their text"; no texting = "call back ASAP" as before. If Chekkit can't be read the caller stays on the list. Render on today's data: EOD 11 lines -> 8 (Harrisonburg 8 -> 4).

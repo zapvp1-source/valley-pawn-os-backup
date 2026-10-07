@@ -28,6 +28,15 @@ if [ $RENDER -eq 1 ]; then
   echo "=== RENDER ONLY ==="; echo "summary fresh today: $(fresh_ok && echo yes || echo no)"; exit 0
 fi
 
+# 2026-10-06: HealthOS's own agent com.healthos.oura-import runs the SAME run_daily_v5.sh at the same
+# 08:30. This check used to see "stale" while that run was still going and start a SECOND importer:
+# the two raced on oura.db.gz.new / oura_latest.json.tmp ("mv: ... No such file", FileNotFoundError on
+# 10/5 and 10/6) and fleet-doctor reported the job as failing. Let the other run start, wait for it to
+# finish (cap 10 min), then decide. Only if the summary is still stale do we run the importer ourselves.
+sleep 20
+W=0; while pgrep -f run_daily_v5.sh >/dev/null && [ $W -lt 600 ]; do sleep 10; W=$((W+10)); done
+[ $W -gt 0 ] && vlog "waited ${W}s for the HealthOS importer already running"
+
 # Step 1/2 — read the summary; if missing/stale/not ok, run the importer once
 if ! fresh_ok; then
   vlog "summary missing or stale — running run_daily_v5.sh"

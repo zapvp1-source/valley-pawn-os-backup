@@ -81,11 +81,29 @@ JOBS.append(("com.valleypawn.funds-verification", "funds_verification.py", at(18
 if wd == 6:   # Sunday — forfeited-loan win-back list build (feeds Tuesday email + Thursday texts); added 2026-10-05
     JOBS.append(("com.valleypawn.forfeiture-winback", "forfeiture_winback_weekly.sh", at(12, 30), at(23, 0),
                  lambda s: os.path.isdir(os.path.join(HOME, "Documents/Claude/Projects/Email Refinement/forfeiture_winback/runs", today.isoformat()))))
+# Weekly Mac maintenance (Sun 04:45). Added 2026-10-06: the Mac was off Sun 10/4, the run was skipped
+# and nothing would have run it until 10/11 (fleet-doctor flagged mac_maintenance.log quiet). Unlike the
+# same-day jobs above, this one stays useful all week, so the window is the rest of the week. Evidence =
+# its own log written since the slot. It only thins TM local snapshots, deletes age-gated temp files and
+# DMs Joshua one health line — nothing customer-facing.
+mm_slot = at(4, 45, sunday)
+JOBS.append(("com.valleypawn.mac-maintenance", "mac_weekly_maintenance.py", mm_slot, at(23, 0, sunday + dt.timedelta(days=6)),
+             lambda s: file_since(LOGF("mac_maintenance"), s)))
 if wd == 0:   # Monday
     JOBS.append(("com.valleypawn.monday-compile", "monday_compile.py", at(8, 45), at(14, 0),
                  lambda s: receipt_since("monday-bravo-combined-compile", s) or file_since(LOGF("monday-compile"), s)))
     JOBS.append(("com.valleypawn.loan-layaway-dms", "loan_layaway_dms.py", at(9, 0), at(14, 0),
                  lambda s: receipt_since("weekly-loan-layaway-manager-dms", s) or file_since(LOGF("weekly-loan-layaway-manager-dms"), s)))
+    # weekly canvases + layaway yield (native 2026-10-06); each run is re-run safe (same content = no-op)
+    for label, kind, task, h, m in [("com.valleypawn.loan-canvas", "loan", "weekly-loan-review-canvas-refresh", 9, 20),
+                                    ("com.valleypawn.layaway-canvas", "layaway", "weekly-layaway-review-canvas-refresh", 9, 22),
+                                    ("com.valleypawn.employee-canvas", "employee", "weekly-employee-perf-canvas-refresh", 9, 24),
+                                    ("com.valleypawn.aged-canvas", "aged", "weekly-aged-inventory-canvas-refresh", 9, 26),
+                                    ("com.valleypawn.store-canvas", "store", "weekly-store-perf-canvas-refresh", 9, 28)]:
+        JOBS.append((label, "weekly_canvases.py " + kind, at(h, m), at(14, 0),
+                     (lambda t: lambda s: receipt_since(t, s) or file_since(LOGF(t), s))(task)))
+    JOBS.append(("com.valleypawn.layaway-yield-weekly", "layaway_yield_weekly.py", at(11, 15), at(16, 0),
+                 lambda s: receipt_since("layaway-yield-weekly", s) or file_since(LOGF("layaway-yield-weekly"), s)))
 
 
 def main():

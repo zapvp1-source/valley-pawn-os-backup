@@ -465,3 +465,6 @@ NEXT RUN SHOULD CHECK: whether list 3's count keeps dropping or stabilizes; conf
 
 ## 2026-10-05 (brevo-welcome-new-contacts, native)
 Welcomed: 1 new contacts | Skipped (failed): 0 | flag check: 1/1 ok
+
+## 2026-10-06 (brevo-welcome-new-contacts, native)
+Welcomed: 9 new contacts | Skipped (failed): 0 | flag check: 5/5 ok

@@ -3,6 +3,7 @@
 One line per run. Technical detail lives here, never in Slack.
 
 - 2026-09-30 13:04 ET | date=2026-09-29 | complete=True | posted_to=D03BHQH5VGT (Joshua, direct, build-session first copy) | path=build | note=verified vs source files all 5 stores; later runs send via outbox
+- 2026-10-06 09:44 ET | date=2026-10-05 | complete=True | sent_to=U03BB52MDSA | path=A | note=13 exceptions flagged; Preston disabled (switch=no); sent via outbox envelope daily-store-audit-digest-joshua-20261006-0944.json
 - 2026-10-05 10:15 ET | date=2026-10-03 | complete=False | sent_to=U03BB52MDSA | path=A | note=rerun after 9min wait still incomplete (count sheets all stores, HAR intake missing); every store had Intake/Sales line so sent per Step 2 partial-send rule; Preston disabled
 - 2026-10-02 15:00 ET | date=2026-10-01 | complete=True | sent_to=U03BB52MDSA | path=A | note=PRESTON_ENABLED=no, Joshua only, via outbox envelope
 - 2026-10-01 10:29 ET | date=2026-09-30 | complete=True | sent_to=U03BB52MDSA | path=A | note=Culpeper only (Wed); Preston switch off; queued via outbox envelope daily-store-audit-digest-joshua-20261001-1029.json

@@ -1661,3 +1661,64 @@ written to fleet/FAILURE_LEDGER.md instead, 2026-10-05 22:44 ET entry).
 (10/1, 10/2, 10/5) — stable, not a new concern. CUL's Charms/Brooches contamination is new
 tonight (not seen 10/1 or 10/2) and reproduced twice — this is the one to track; if it recurs
 tomorrow it is a Culpeper-specific grid/hardware issue, not a one-off.
+
+## RUN RECORD — 2026-10-06 (Tuesday)
+
+Freeze window: all 5 stores closed 18:00 ET, reopen 10:00 ET next day (Wed 10/7). Fleet publish guard checked first: `vp_dryrun.py status` → exit 1, dry run off, publications live, normal publish rules apply. Contention check clean before starting. Open stores (Tue, all 5): CUL, HAR, LEX, ROA, WAY.
+
+Bravo side: dropped one host-queue job per store (`bravo_pull.sh jewelry-case-counts-v3 2026-10-06 <store>`), report name updated to the v3 cell per the 2026-10-06 fix for the v2 duplicate-count false-refusal bug.
+- **CUL**: 8/8 categories ok on the first trigger, no retry needed.
+- **HAR**: 7/8 ok on first trigger — Charms error, matches HAR Charms' error status on the 10/5 CSV → treated as 0 per the empty-category rule. No retry needed.
+- **LEX**: first trigger wedged mid-Charms (log stalled ~21:20 ET), one self-heal fired but didn't unstick it. Did not touch the Bravo screen (hard no-manual-intervention rule), let it run to the 40-min wrapper timeout. One retry after a fresh health-gate pass came back 6/8 — Charms and Brooches both error, matching LEX's 10/5 CSV (both also error) → treated as 0. All other 6 categories ok.
+- **ROA**: first trigger failed cleanly — "EnsureStore failed for ROA" (store-switch error, not a data-read issue). One retry: health-gate pass, 8/8 clean.
+- **WAY**: first trigger wedged (self-heal fired ~21:44 ET, didn't resolve), timed out at the 40-min wrapper limit. One retry: 7/8 ok — Charms error, matching WAY's 10/5 Charms error → treated as 0.
+
+PM count sheets: all 5 managers' photos read directly from `fleet/eod_photos/2026-10-06/`. Store identified from each sheet's own printed header, not the poster — corrected the stale valley-pawn-context roster (no Joey Epperly entry, both Uriah and Martin listed under Lexington): Walker Tapley=Harrisonburg, Martin Dowden=Waynesboro, Uriah Tiglao=Lexington, Sandi Cole=Culpeper, Joey Epperly=Roanoke. All 5 read from the 10/6/26-dated block, PM COUNT column, sum-verified against each sheet's own TOTALS line:
+- CUL (Sandi Cole): Rings 679, Bracelets 119, Necklaces 153, Earrings 143, Pendants 255, Totals 1349. Sum-verified; Rings cross-confirmed against Bravo CUL Rings=679 (corrected an OCR ambiguity on the sheet).
+- HAR (Walker Tapley): Rings 432, Bracelets 49, Necklaces 116, Earrings 53, Pendants 110, Totals 760. Sum-verified.
+- LEX (Uriah Tiglao): today's block was on the manager's 3rd photo (2nd photo was a Daily Gun Count sheet, not jewelry). Rings 302, Bracelets 41, Necklaces 45, Earrings 46, Pendants 51, Totals 485. Sum-verified.
+- ROA (Joey Epperly): Rings 572, Bracelets 139, Necklaces 155 (handwritten correction from 156), Earrings 82, Pendants 176, Totals 1124. Sum-verified.
+- WAY (Martin Dowden): Rings 342, Bracelets 44, Necklaces 73, Earrings 58, Pendants 66, Totals 583. Sum-verified.
+
+All 5 sheets legible and sum-verified clean — full company-wide post, no partial-post needed.
+
+Comparison (Expected = Bravo jewelry-case-counts-v3, Counted = PM sheet):
+
+| Store | Category | Expected | Counted | Variance |
+|-------|----------|----------|---------|----------|
+| CUL | Rings | 679 | 679 | 0 |
+| CUL | Bracelets | 120 | 119 | -1 |
+| CUL | Necklaces | 153 | 153 | 0 |
+| CUL | Earrings | 143 | 143 | 0 |
+| CUL | Pendants | 255 | 255 | 0 |
+| **CUL Total** | | **1350** | **1349** | **-1** |
+| HAR | Rings | 428 | 432 | +4 |
+| HAR | Bracelets | 48 | 49 | +1 |
+| HAR | Necklaces | 113 | 116 | +3 |
+| HAR | Earrings | 50 | 53 | +3 |
+| HAR | Pendants | 109 | 110 | +1 |
+| **HAR Total** | | **748** | **760** | **+12** |
+| LEX | Rings | 299 | 302 | +3 |
+| LEX | Bracelets | 40 | 41 | +1 |
+| LEX | Necklaces | 45 | 45 | 0 |
+| LEX | Earrings | 46 | 46 | 0 |
+| LEX | Pendants | 52 | 51 | -1 |
+| **LEX Total** | | **482** | **485** | **+3** |
+| ROA | Rings | 572 | 572 | 0 |
+| ROA | Bracelets | 139 | 139 | 0 |
+| ROA | Necklaces | 154 | 155 | +1 |
+| ROA | Earrings | 82 | 82 | 0 |
+| ROA | Pendants | 177 | 176 | -1 |
+| **ROA Total** | | **1124** | **1124** | **0** |
+| WAY | Rings | 342 | 342 | 0 |
+| WAY | Bracelets | 44 | 44 | 0 |
+| WAY | Necklaces | 73 | 73 | 0 |
+| WAY | Earrings | 58 | 58 | 0 |
+| WAY | Pendants | 66 | 66 | 0 |
+| **WAY Total** | | **583** | **583** | **0** |
+
+Assessment: WAY perfect match. ROA's +1/-1 Pendants/Necklaces nets to 0 — same offsetting pattern seen 10/2. CUL -1 is ordinary counting noise (not the standing ~-130 scope-noise pattern tonight — case/safe/back-stock/bins vs display-case essentially tied out). HAR's uniformly-positive +12 total matches its own established recurring pattern (9/4 +7, 9/26 +8, 9/29 +11, 10/1 +12) — not a new anomaly. LEX's +3/+1/-1/0/0 shape is identical to 10/2's LEX variance (the one already flagged and DMd to Joshua that night) — same explained, already-known quirk, not new. No anomalous OVER variance under Step 7's definition tonight (nothing exceeds its own established pattern) — no DM to Joshua.
+
+Repeats to watch: HAR Charms empty (10/5, 10/6), LEX Charms+Brooches empty (10/5, 10/6), WAY Charms empty (10/5, 10/6) — all consistent with the longer-running pattern already on record. ROA's "EnsureStore failed" first-attempt error and the LEX/WAY first-attempt wedge-timeouts all resolved cleanly on the documented one-retry policy — no new infrastructure concern, consistent with 10/1's "every store except CUL needed a retry" note (not escalating).
+
+Outcome: posted to #jewlery-counts via outbox (jewelry-onhand-nightly-pull-main-20261006-224932). No DM to Joshua (no anomalous OVER variance, no failure). No FAILURE_LEDGER row — ROA/LEX/WAY first-attempt failures all resolved via the standard one-retry policy, consistent with established precedent (10/1, 10/2, 10/5) of not ledger-logging a resolved single retry.

@@ -230,6 +230,40 @@ def sc_triage(tmp, os_dir):
     return out
 
 
+def sc_triage_evidence(tmp, os_dir):
+    """2026-10-06: 17 of 20 "quiet" findings were healthy agents whose launchd .out.log stays empty
+    because they log elsewhere. Liveness is judged on ALL of an agent's evidence — but a dead agent
+    must still be caught, and a fresh .err.log must never count as proof of health."""
+    every_min = {"StartInterval": 60}
+    agent(tmp, "com.valleypawn.quietout", os.path.join(tmp, "bin/vp-runner"), every_min, "quietout")
+    log(tmp, "quietout.out.log", [""], age_hours=100)
+    log(tmp, "quietout.log", ["%s run ok" % dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
+    agent(tmp, "com.valleypawn.deadout", os.path.join(tmp, "bin/vp-runner"), every_min, "deadout")
+    log(tmp, "deadout.out.log", [""], age_hours=100)
+    log(tmp, "deadout.log", ["2026-09-01 00:00:00 run ok"], age_hours=100)
+    log(tmp, "deadout.err.log", ["something"], age_hours=0)
+    agent(tmp, "com.valleypawn.rcptjob", os.path.join(tmp, "bin/vp-runner"),
+          {"StartCalendarInterval": {"Hour": 5, "Minute": 0}}, "rcptjob")
+    log(tmp, "rcptjob.out.log", [""], age_hours=100)
+    os.makedirs(os.path.join(os_dir, "fleet/receipts"), exist_ok=True)
+    open(os.path.join(os_dir, "fleet/receipts/rcptjob.jsonl"), "w").write('{"ok": true}\n')
+    agent(tmp, "com.valleypawn.monthlist", os.path.join(tmp, "bin/vp-runner"),
+          {"StartCalendarInterval": [{"Day": d, "Hour": 20, "Minute": 0} for d in (28, 29, 30, 31)]}, "monthlist")
+    log(tmp, "monthlist.out.log", [""], age_hours=150)
+    log(tmp, "oneoff-20260910.log", ["done"], age_hours=600)
+    json.dump({"retired": {"oneoff-20260910.log": "sim one-off"}},
+              open(os.path.join(os_dir, "fleet/log_triage_expectations.json"), "w"))
+    rc, out = run(tmp, os.path.join(os_dir, "bin/log_triage.py"), "--days", "7")
+    os.remove(os.path.join(os_dir, "fleet/log_triage_expectations.json"))
+    check("evidence: empty .out.log with a fresh sibling log is NOT stale", "quietout.out.log **STALE**" not in out, out)
+    check("evidence: agent with NO fresh evidence IS still stale", "deadout.out.log **STALE**" in out, out)
+    check("evidence: a fresh .err.log is never proof of health", "deadout.log **STALE**" in out, out)
+    check("evidence: a fresh receipt counts as a run", "rcptjob.out.log **STALE**" not in out, out)
+    check("evidence: a list of Day entries is monthly, not daily", "monthlist.out.log **STALE**" not in out, out)
+    check("evidence: retired one-off listed as not judged, not stale",
+          "oneoff-20260910.log **STALE**" not in out and "- oneoff-20260910.log: sim one-off" in out, out)
+
+
 def sc_agent_doctor(tmp, os_dir):
     """A launchd agent pointing at a deleted script — invisible to launchctl, fatal in practice."""
     agent(tmp, "com.valleypawn.ghost", os.path.join(tmp, "Documents/Claude/Scheduled/gone/collect.sh"),
@@ -422,6 +456,7 @@ def main():
         print("# Fleet simulator — sandbox HOME at %s\n" % tmp)
         print("Real production scripts, symlinked. Faults planted on purpose. Nothing touched in prod.\n")
         print("## Log triage");      sc_triage(tmp, os_dir)
+        print("\n## Log triage — liveness evidence"); sc_triage_evidence(tmp, os_dir)
         print("\n## Agent doctor");  sc_agent_doctor(tmp, os_dir)
         print("\n## Retirement safety"); sc_retire_guard(tmp, os_dir)
         print("\n## Watchdog state integrity"); sc_state_corruption(tmp, os_dir)

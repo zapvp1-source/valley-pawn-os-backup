@@ -73,10 +73,42 @@ def main():
                             ",".join(missing), "nics-mtd-retry-%d" % int(dt.datetime.now().timestamp())],
                            capture_output=True, text=True, timeout=7500)
             missing = [c for c, _ in STORES if not os.path.exists(path(c))]
+    # ZERO-CONFIRMATION (Joshua 10/6: "fix jobs, don't put them off"): Bravo writes no file when a store simply had
+    # no transfers yet, which looks the same as a failed read. For each store still missing, pull a WIDER window
+    # (1st of last month .. end). If that comes back with rows, the store's report works, and its month-to-date
+    # figure is whatever of those rows falls inside this month — a confirmed real number, often 0.
+    confirmed = {}
+    if missing and not render:
+        wstart = (start - dt.timedelta(days=1)).replace(day=1)
+        wpath = lambda code: os.path.join(BRAVO, "output", "%s_to_%s_%s_nics-transfers.csv" % (wstart, end, code))
+        subprocess.run(["/bin/bash", os.path.join(BIN, "bravo_pull.sh"), "nics-transfers", "%s..%s" % (wstart, end),
+                        ",".join(missing), "nics-mtd-confirm-%d" % int(dt.datetime.now().timestamp())],
+                       capture_output=True, text=True, timeout=7500)
+        for code in list(missing):
+            if not os.path.exists(wpath(code)):
+                continue
+            with open(wpath(code), newline="", errors="replace") as fh:
+                wide = [r for r in csv.reader(fh)][1:]
+            wide = [r for r in wide if r and any(c.strip() for c in r)]
+            if not wide:
+                continue
+            mtd = []
+            for r in wide:
+                try:
+                    d = dt.datetime.strptime(r[1].split()[0], "%m/%d/%Y").date()
+                except (ValueError, IndexError):
+                    continue
+                if start <= d <= end:
+                    mtd.append(r)
+            confirmed[code] = mtd
+            missing.remove(code)
     rows = []
     for code, name in STORES:
         if code in missing:
             rows.append((name, None, None))
+            continue
+        if code in confirmed:
+            rows.append((name, sum(money(r[-1]) for r in confirmed[code]), len(confirmed[code])))
             continue
         with open(path(code), newline="", errors="replace") as fh:
             data = [r for r in csv.reader(fh)][1:]
@@ -117,6 +149,8 @@ def main():
         if pending:
             print("=== HOLD — a live run would post NOTHING (all 5 stores required); ledger row instead ===")
         return 0
+    if "--no-post" in sys.argv:   # test: real pulls + zero-confirmation, print instead of posting
+        print(post); print("pending:", pending); return 0
     # 2026-10-05 (native conversion): all-five-or-nothing, matching nics_monthly.py. The 10/5 10:07 post went out
     # with 3 stores "pending"; a store Bravo can't render is withheld, not shown as pending.
     if pending:

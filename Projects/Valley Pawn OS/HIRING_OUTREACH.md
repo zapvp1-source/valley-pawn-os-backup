@@ -4543,3 +4543,505 @@ Still awaiting a reply: Alexanne Ressler (offered Tuesday 11 AM–3 PM).
 - **Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2).
 - **Notifications sent:** DM'd Joshua (D03BHQH5VGT) with the Scot Baumgartner day-change offer. No #employee-prospects post — the Tuesday grid itself didn't change (Scot not yet booked, no confirmed time).
 - Indeed messages sent this run: 1 (Scot Baumgartner Tuesday offer). Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).
+
+## Run — 2026-10-06 ~09:29-09:32 ET (vp-hiring-pipeline scheduled task)
+
+Picked up from the 9:22 AM run (10 min prior). Checked Messages inbox for new/changed threads only.
+
+**Action taken:** Devin Bell (Harrisonburg, new applicant, first-contacted this morning for Wed 10/7) replied "Yea I'll be free and you can give me a call at 11 if that works best for you my number is 5406889229." Confirmed via Indeed message ("You're set for Wednesday 10/7 at 11:00 AM. I'll call you at 540-688-9229 from (804) 930-4221.") and booked calendar event (jdavis@fcfpawn.com, Wed 10/7 11:00-11:05 AM, notificationLevel NONE). Verified send and calendar creation.
+
+**Not touched, per standing instruction (unchanged):** Shaun Snead (do-not-contact list, hard rule 2 — same "Is there a update if I got the job?" message already flagged, not re-flagging an unchanged message). Moeishia Finley (Roanoke — out of scope, no action).
+
+**New development flagged to Joshua, not acted on:** Angelina Kioroglo (Harrisonburg) replied "11 am works" at 9:17 AM — this is a NEW message (different from her prior "I have not received a call from you"), but she remains under Joshua's standing instruction from 10/2 ("ask me first"). DM'd Joshua to flag it; did not reply to her or book anything.
+
+**No reply yet (left open):** Micheal Stamper, Michele Campbell, Matthew Reynolds, Derek Sandlin, Jennifer Stephens, colby solomon (all nudged at 9:22 AM run, no reply since — too soon to re-touch). Trenayce Bridges ("Great looking forward to hearing from you" — closing ack on existing Tue 10/6 11:10 AM booking, no reply needed).
+
+**Sponsorship:** both listings remain unpaid/Paused per 9:22 AM flag to Joshua — not re-sponsored, awaiting his OK.
+
+**Notifications sent:** posted Wed 10/7 grid update (Devin Bell added) to #employee-prospects (C0BQDRXRPEJ); DM'd Joshua with the Devin Bell confirmation and the Angelina Kioroglo flag.
+
+## Run — 2026-10-06 ~09:36 ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Reviewed HIRING_OUTREACH.md tail (through the 9:29-9:32 AM run) and Joshua's Slack DM (through his 9:33 AM Gusto-signout notice — nothing hiring-related after his 9:32 AM Devin Bell/Angelina Kioroglo message) before touching anything.
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 + Wed 10/7 via `list_events`):** Tuesday grid — 9 confirmed, no conflicts: 11:00 Marisa Carroll, 11:05 Colten Turner, 11:10 Trenayce Bridges, 11:30 Frankie Whetzel, 12:30 Catherine Branner, 1:00 Alexanne Ressler, 1:55 Tarius Allen, 2:00 Anthony Servin Reynoso, 2:05 Scot Baumgartner. Wednesday — 1 confirmed: 11:00 Devin Bell.
+
+**Indeed Messages inbox read live (full list):** no new in-scope replies since the 9:29-9:32 AM run. Every thread's last message is already ours, or an already-logged closing acknowledgment: Trenayce Bridges ("Great looking forward to hearing from you"), Tarius Allen ("Okay thank you"), Brendan Payne ("Sounds good!"), Shane Lord ("Ok sounds good"), Cameron Hughes, Glen Way, Gabriel Troehler — none need a reply. Angelina Kioroglo's "11 am works" (9:17 AM) is the same message already flagged to Joshua, not new. Shaun Snead's do-not-contact message unchanged, not re-flagged.
+
+**Candidates → New tab checked (11 total, unchanged):** reyona whorley, Lynasia Dickerson (Roanoke — Sales and Loan Associate, Roanoke listing, not a pipeline listing) and the remaining 9 consistent with every prior run today (Roanoke/Columbia/Salem/Lynchburg or Saint Augustine FL Store Manager). No new Waynesboro/Harrisonburg applicants this run.
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2), Moeishia Finley (Roanoke, out of scope).
+
+**No reply yet (left open, too soon to re-touch):** Micheal Stamper, Michele Campbell, Matthew Reynolds, Derek Sandlin, Jennifer Stephens, colby solomon (nudged ~9:15-9:19 AM), Patrick Franklin (Wed 10/7 offer sent 9:13 AM).
+
+**Sponsorship:** both listings remain unpaid/Paused per 9:22 AM flag to Joshua — unchanged, awaiting his OK, not re-flagged again this run.
+
+**Nothing changed since the 9:29-9:32 AM run** — no new Indeed messages sent, no calendar changes, no Slack/DM post (reporting rule: post nothing if nothing changed).
+
+## Run — 2026-10-06 ~10:06-10:09 ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Reviewed HIRING_OUTREACH.md tail (through the 9:36 AM run) and Joshua's Slack DM (through his 10:05 AM NRF RISE Up note — nothing new on hiring since his 9:32 AM Devin Bell/Angelina Kioroglo message; the recurring 7:34 AM-10:04 AM "Gusto signed out" DMs are unrelated) before touching anything.
+
+**Action taken: Anthony Servin Reynoso (Harrisonburg) interview cancelled by Preston.** Preston Peters messaged Anthony directly on Indeed at 9:53 AM: "Good morning Anthony, I apologize for the mixup. It looks like we do not need to do a second phone interview at this time. We appreciate your patience as we work through the decision making process." This supersedes his Tuesday 10/6 2:00 PM slot. Deleted the calendar event (jdavis@fcfpawn.com, id cp63s8snq3f1fdkf1juu6gshbo) with no notification. No reply needed — Preston already closed the thread himself.
+
+**No action needed:** Devin Bell's "Sounds good" (9:45 AM) is a closing acknowledgment on his confirmed Wed 10/7 11:00 AM booking.
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6) after the cancellation:** 8 confirmed remaining — 11:00 Marisa Carroll, 11:05 Colten Turner, 11:10 Trenayce Bridges, 11:30 Frankie Whetzel, 12:30 Catherine Branner, 1:00 Alexanne Ressler, 1:55 Tarius Allen, 2:05 Scot Baumgartner. Wednesday unchanged: 11:00 Devin Bell.
+
+**Indeed Messages inbox read live (full list):** no new in-scope replies beyond the Anthony Servin Reynoso/Preston message and the Devin Bell ack. Micheal Stamper, Michele Campbell, Matthew Reynolds, Derek Sandlin, Jennifer Stephens, colby solomon (nudged ~9:15-9:19 AM) — still no reply, too soon to re-touch. Angelina Kioroglo's "11 am works" unchanged, still Joshua's standing "ask me first" item from 10/2 — not acted on, not re-flagged (already flagged 9:32 AM). Patrick Franklin (Wed 10/7 offer 9:13 AM) — no reply yet. Trenayce Bridges, Tarius Allen, Brendan Payne, Shane Lord, Cameron Hughes, Glen Way, Gabriel Troehler threads — all closing acknowledgments already logged, no reply needed. Shaun Snead do-not-contact message unchanged, not re-flagged.
+
+**Candidates → New tab checked (11 total, unchanged):** reyona whorley, Lynasia Dickerson, Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson, Anthony White, Maurice Jones (Roanoke/Columbia/Salem/Lynchburg — Sales and Loan Associate but different listings, not Waynesboro/Harrisonburg), Cristina Castaneda-Olsen, Sherron Lemelle (Saint Augustine FL Store Manager, out of scope). No new Waynesboro/Harrisonburg applicants this run.
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2), Moeishia Finley (Roanoke, out of scope).
+
+**Sponsorship:** both listings remain unpaid/Paused per 9:22 AM flag to Joshua — unchanged, awaiting his OK, not re-flagged again this run.
+
+**Notifications sent:** DM'd Joshua (D03BHQH5VGT) with the Anthony Servin Reynoso cancellation/calendar cleanup. Posted updated Tue 10/6 grid (Anthony removed) to #employee-prospects (C0BQDRXRPEJ).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 1 deleted (Anthony Servin Reynoso). Texts sent: 0 (not a 9:30/1:00/6:00 run).
+
+## Run — 2026-10-06 ~10:12-10:15 ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Reviewed HIRING_OUTREACH.md tail (through the 10:06-10:09 AM run) and Joshua's Slack DM (through his 10:08 AM Anthony Servin Reynoso/Devin Bell note — nothing new on hiring since; the repeated 7:49 AM-10:04 AM "Gusto signed out" DMs, the 9:06 AM Fortis verification DM, and the 10:05/8:14/10:08 AM NRF RISE Up DMs are all separate matters, not touched here) before doing anything.
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 + Wed 10/7 via `list_events`) — unchanged from the 10:06-10:09 AM run, 8 confirmed Tuesday + 1 confirmed Wednesday, no gaps, no conflicts:** 11:00 Marisa Carroll, 11:05 Colten Turner, 11:10 Trenayce Bridges, 11:30 Frankie Whetzel, 12:30 Catherine Branner, 1:00 Alexanne Ressler, 1:55 Tarius Allen, 2:05 Scot Joshua Baumgartner (Tue); 11:00 Devin Bell (Wed).
+
+**Indeed Messages inbox read live (full list, newest first):** no new in-scope replies since the 10:06-10:09 AM run. Anthony Servin Reynoso/Preston thread (9:53 AM) and Devin Bell's "Sounds good" (9:45 AM) unchanged — both already actioned/no-action-needed. Micheal Stamper, Michele Campbell, Matthew Reynolds, Derek Sandlin, Jennifer Stephens, colby solomon (nudged ~9:15-9:19 AM) — still no reply, too soon to re-touch. Angelina Kioroglo's "11 am works" (9:17 AM) unchanged — still Joshua's standing "ask me first" item from 10/2, not acted on, not re-flagged. Patrick Franklin (Wed 10/7 offer, 9:13 AM) — no reply yet. Trenayce Bridges, Tarius Allen, Scot Baumgartner, Colten Turner, Catherine Branner, Marisa Carroll, Frankie Whetzel, Cameron Hughes, Shane Lord, Glen Way, Gabriel Troehler, Brendan Payne, Christopher Ross, Michael King, Tameron Washington threads — all closing acknowledgments or standing confirmations already logged, no reply needed. Shaun Snead do-not-contact message (Oct 4) unchanged, not re-flagged. Moeishia Finley (Roanoke) still out of scope.
+
+**Candidates → New tab checked (11 total, unchanged):** reyona whorley, Lynasia Dickerson, Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson, Anthony White, Maurice Jones (Roanoke/Columbia/Salem/Lynchburg — Sales and Loan Associate but different listings, not Waynesboro/Harrisonburg); Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan (Saint Augustine/Palm Coast/Jacksonville FL, Store Manager — separate FL process). No new Waynesboro/Harrisonburg applicants this run.
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2), Moeishia Finley (Roanoke, out of scope).
+
+**Sponsorship:** both listings remain unpaid/Paused per the 9:22 AM flag to Joshua — unchanged, awaiting his OK, not re-flagged again this run.
+
+Nothing changed since the 10:06-10:09 AM run → no new Indeed messages sent, no calendar changes, no Slack/DM post (reporting rule: post nothing if nothing changed). Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).
+
+## Run — 2026-10-06 ~10:39-10:42 ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Reviewed HIRING_OUTREACH.md tail (through the 10:12-10:15 AM run) and Joshua's Slack DM (through his 10:08 AM Anthony Servin Reynoso/Devin Bell note — nothing new on hiring since; the repeated "Gusto signed out" DMs (7:49 AM-10:04 AM), the 10:05/8:14 AM NRF RISE Up DMs, and the 9:06 AM Fortis verification DM are all separate matters outside this pipeline's scope, not touched here) before doing anything.
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 + Wed 10/7 via `list_events`) — unchanged from the 10:12-10:15 AM run, 8 confirmed Tuesday + 1 confirmed Wednesday, no gaps, no conflicts:** 11:00 Marisa Carroll, 11:05 Colten Turner, 11:10 Trenayce Bridges, 11:30 Frankie Whetzel, 12:30 Catherine Branner, 1:00 Alexanne Ressler, 1:55 Tarius Allen, 2:05 Scot Joshua Baumgartner (Tue); 11:00 Devin Bell (Wed).
+
+**Indeed Messages inbox read live (full list, newest first):** no new in-scope replies since the 10:12-10:15 AM run. Anthony Servin Reynoso/Preston thread (9:53 AM) and Devin Bell's "Sounds good" (9:45 AM) unchanged. Micheal Stamper, Michele Campbell, Matthew Reynolds, Derek Sandlin, Jennifer Stephens, colby solomon (nudged ~9:15-9:19 AM) — still no reply, too soon to re-touch. Angelina Kioroglo's "11 am works" (9:17 AM) unchanged — still Joshua's standing "ask me first" item from 10/2, not acted on, not re-flagged (already flagged 9:32 AM). Patrick Franklin (Wed 10/7 offer, 9:13 AM) — no reply yet. Trenayce Bridges, Tarius Allen, Scot Baumgartner, Colten Turner, Catherine Branner, Marisa Carroll, Frankie Whetzel, Cameron Hughes, Shane Lord, Glen Way, Gabriel Troehler, Brendan Payne, Christopher Ross, Michael King, Tameron Washington threads — all closing acknowledgments or standing confirmations already logged, no reply needed. Shaun Snead do-not-contact message (Oct 4) unchanged, not re-flagged. Moeishia Finley (Roanoke) still out of scope. 9 new Waynesboro/Harrisonburg first-contact threads from Oct 5 (Kandi Wade, Stacie Jones, Christian DeLotta, Jessica Paling, Sarah Wheeler, Raquel Montgomery, Kayleigh Miller, Lisbed Hicks, Jay Ridgeway) all show our first-contact message as the last message, no reply yet.
+
+**Candidates → New tab checked (11 total, unchanged):** reyona whorley, Lynasia Dickerson, Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson, Anthony White, Maurice Jones (Roanoke/Columbia/Salem/Lynchburg — Sales and Loan Associate but different listings, not Waynesboro/Harrisonburg); Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan (Saint Augustine/Palm Coast/Jacksonville FL, Store Manager — separate FL process). No new Waynesboro/Harrisonburg applicants this run.
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2), Moeishia Finley (Roanoke, out of scope).
+
+**Sponsorship:** both listings remain unpaid/Paused per the 9:22 AM flag to Joshua — unchanged, awaiting his OK, not re-flagged again this run.
+
+Nothing changed since the 10:12-10:15 AM run → no new Indeed messages sent, no calendar changes, no Slack/DM post (reporting rule: post nothing if nothing changed). Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).
+
+## Run — 2026-10-06 ~10:51-10:54 ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Reviewed HIRING_OUTREACH.md tail (through the 10:39-10:42 AM run) and Joshua's Slack DM (through his 10:49 AM Gusto-signout note — nothing new on hiring since his 10:08 AM Anthony Servin Reynoso/Devin Bell note; the repeated "Gusto signed out" DMs, the 10:05/10:04 AM NRF RISE Up DMs, and the 9:06 AM Fortis verification DM are all separate matters outside this pipeline's scope, not touched here) before doing anything.
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 + Wed 10/7 via `list_events`) — unchanged from the 10:39-10:42 AM run, 8 confirmed Tuesday + 1 confirmed Wednesday, no gaps, no conflicts:** 11:00 Marisa Carroll, 11:05 Colten Turner, 11:10 Trenayce Bridges, 11:30 Frankie Whetzel, 12:30 Catherine Branner, 1:00 Alexanne Ressler, 1:55 Tarius Allen, 2:05 Scot Joshua Baumgartner (Tue); 11:00 Devin Bell (Wed).
+
+**Indeed Messages inbox read live (full list, newest first):** no new in-scope replies since the 10:39-10:42 AM run. Anthony Servin Reynoso/Preston thread (9:53 AM) and Devin Bell's "Sounds good" (9:45 AM) unchanged. Micheal Stamper, Michele Campbell, Matthew Reynolds, Derek Sandlin, Jennifer Stephens, colby solomon (nudged ~9:15-9:19 AM) — still no reply, too soon to re-touch. Angelina Kioroglo's "11 am works" (9:17 AM) unchanged — still Joshua's standing "ask me first" item from 10/2, not acted on, not re-flagged. Patrick Franklin (Wed 10/7 offer, 9:13 AM) — no reply yet. All other threads (Trenayce Bridges, Tarius Allen, Scot Baumgartner, Colten Turner, Catherine Branner, Marisa Carroll, Frankie Whetzel, Cameron Hughes, Shane Lord, Glen Way, Gabriel Troehler, Brendan Payne, Christopher Ross, Michael King, Tameron Washington, Kandi Wade, Stacie Jones, Christian DeLotta, Jessica Paling, Sarah Wheeler, Raquel Montgomery, Kayleigh Miller, Lisbed Hicks, Jay Ridgeway) — closing acknowledgments or standing first-contacts already logged, no reply needed. Shaun Snead do-not-contact message (Oct 4) unchanged, not re-flagged. Moeishia Finley (Roanoke) still out of scope.
+
+**Candidates → New tab checked (11 total, confirmed unchanged by full list):** reyona whorley, Lynasia Dickerson, Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson, Anthony White, Maurice Jones (Roanoke/Columbia/Salem/Lynchburg — Sales and Loan Associate but different listings, not Waynesboro/Harrisonburg); Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan (Saint Augustine/Palm Coast/Jacksonville FL, Store Manager — separate FL process, out of scope). No new Waynesboro/Harrisonburg applicants this run.
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2), Moeishia Finley (Roanoke, out of scope).
+
+**Sponsorship:** both listings remain unpaid/Paused per the 9:22 AM flag to Joshua — unchanged, awaiting his OK, not re-flagged again this run.
+
+Nothing changed since the 10:39-10:42 AM run → no new Indeed messages sent, no calendar changes, no Slack/DM post (reporting rule: post nothing if nothing changed). Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).
+
+## Run — 2026-10-06 ~11:22-11:28 ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Reviewed HIRING_OUTREACH.md tail (through the 10:51-10:54 AM run) before doing anything.
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 + Wed 10/7 via `list_events`) — unchanged, 8 confirmed Tuesday + 1 confirmed Wednesday, no gaps, no conflicts:** 11:00 Marisa Carroll, 11:05 Colten Turner, 11:10 Trenayce Bridges, 11:30 Frankie Whetzel, 12:30 Catherine Branner, 1:00 Alexanne Ressler, 1:55 Tarius Allen, 2:05 Scot Joshua Baumgartner (Tue); 11:00 Devin Bell (Wed).
+
+**Indeed Messages inbox read live (full list, newest first):** one new item — Trenayce Bridges thread, 11:14 AM: Preston Peters messaged her directly ("Hello, we tried reaching out from 540-836-4200 but were unable to get in touch. Is there a better number to reach you at?"), apparently after her 11:10 AM slot went unanswered. This is an outbound message from Preston to the candidate, awaiting HER reply — no action needed from this pipeline; logging only. Anthony Servin Reynoso/Preston thread (9:53 AM) and Devin Bell's "Sounds good" (9:45 AM) unchanged. Micheal Stamper, Michele Campbell, Matthew Reynolds, Derek Sandlin, Jennifer Stephens, colby solomon (nudged ~9:15-9:19 AM) — still no reply, too soon to re-touch. Angelina Kioroglo's "11 am works" (9:17 AM) unchanged — still Joshua's standing "ask me first" item from 10/2, not acted on, not re-flagged. Patrick Franklin (Wed 10/7 offer, 9:13 AM) — no reply yet. All other threads — closing acknowledgments or standing first-contacts already logged, no reply needed. Shaun Snead do-not-contact message (Oct 4) unchanged, not re-flagged. Moeishia Finley (Roanoke) still out of scope.
+
+**Candidates → New tab checked (11 total, confirmed unchanged):** reyona whorley, Lynasia Dickerson, Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson, Anthony White, Maurice Jones (Roanoke/Columbia/Salem/Lynchburg — different listings, not Waynesboro/Harrisonburg); Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan (FL Store Manager, separate process, out of scope). No new Waynesboro/Harrisonburg applicants this run.
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2), Moeishia Finley (Roanoke, out of scope).
+
+**Sponsorship:** both listings remain unpaid/Paused per the 9:22 AM flag to Joshua — unchanged, awaiting his OK, not re-flagged again this run.
+
+No action needed beyond logging the Trenayce Bridges/Preston no-answer note → no new Indeed messages sent, no calendar changes, no Slack/DM post (reporting rule: post nothing if nothing changed — Preston's own message to a candidate isn't this pipeline's action to report). Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).
+
+## Run — 2026-10-06 ~11:36-11:38 ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Reviewed HIRING_OUTREACH.md tail (through the 11:22-11:28 AM run) before doing anything.
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 + Wed 10/7 via `list_events`) — unchanged, 8 confirmed Tuesday + 1 confirmed Wednesday, no gaps, no conflicts:** 11:00 Marisa Carroll, 11:05 Colten Turner, 11:10 Trenayce Bridges, 11:30 Frankie Whetzel, 12:30 Catherine Branner, 1:00 Alexanne Ressler, 1:55 Tarius Allen, 2:05 Scot Joshua Baumgartner (Tue); 11:00 Devin Bell (Wed).
+
+**Indeed Messages inbox read live (full list, newest first):** Trenayce Bridges thread shows 11:20 AM timestamp but same Preston no-answer outreach message already logged at the 11:22-11:28 AM run (11:14 AM) — not a new message, status still "Awaiting response," no action from this pipeline. Anthony Servin Reynoso/Preston thread (9:53 AM), Devin Bell "Sounds good" (9:45 AM), Micheal Stamper/Michele Campbell/Matthew Reynolds nudges (9:17-9:18 AM), Angelina Kioroglo "11 am works" (9:17 AM, still Joshua's standing "ask me first" item from 10/2, not acted on) — all unchanged. No new in-scope replies.
+
+**Candidates → New tab checked (11 total, confirmed unchanged by full list):** reyona whorley, Lynasia Dickerson, Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson, Anthony White, Maurice Jones (Roanoke/Columbia/Salem/Lynchburg — Sales and Loan Associate but different listings, not Waynesboro/Harrisonburg); Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan (Saint Augustine/Palm Coast/Jacksonville FL, Store Manager — separate FL process, out of scope). No new Waynesboro/Harrisonburg applicants this run.
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2), Moeishia Finley (Roanoke, out of scope).
+
+**Sponsorship:** both listings remain unpaid/Paused per the 9:22 AM flag to Joshua — unchanged, awaiting his OK, not re-flagged again this run.
+
+Nothing changed since the 11:22-11:28 AM run → no new Indeed messages sent, no calendar changes, no Slack/DM post (reporting rule: post nothing if nothing changed). Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).
+
+## Run — 2026-10-06 ~11:49-11:52 ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Reviewed HIRING_OUTREACH.md tail (through the 11:36-11:38 AM run) and Joshua's Slack DM (through his 11:23 AM weekly-supply-order note — nothing new on hiring since his 10:08 AM Anthony Servin Reynoso/Devin Bell note; the repeated "Gusto signed out" DMs, NRF RISE Up note, and Fortis verification DM are all separate matters outside this pipeline's scope, not touched here) before doing anything.
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 + Wed 10/7 via `list_events`) — unchanged, 8 confirmed Tuesday + 1 confirmed Wednesday, no gaps, no conflicts:** 11:00 Marisa Carroll, 11:05 Colten Turner, 11:10 Trenayce Bridges, 11:30 Frankie Whetzel, 12:30 Catherine Branner, 1:00 Alexanne Ressler, 1:55 Tarius Allen, 2:05 Scot Joshua Baumgartner (Tue); 11:00 Devin Bell (Wed).
+
+**Indeed Messages inbox read live (full list, newest first):** Trenayce Bridges thread shows Preston's 11:20 AM no-answer outreach (same message already logged at the 11:22-11:28 AM run), status "Awaiting response" — no action from this pipeline. Anthony Servin Reynoso/Preston thread (9:53 AM), Devin Bell "Sounds good" (9:45 AM) unchanged. Micheal Stamper, Michele Campbell, Matthew Reynolds, Derek Sandlin, Jennifer Stephens (nudged ~9:15-9:19 AM) — still no reply, too soon to re-touch. Angelina Kioroglo's "11 am works" (9:17 AM, unread flag) unchanged — still Joshua's standing "ask me first" item from 10/2, not acted on, not re-flagged. No new in-scope replies.
+
+**Candidates → New tab checked (11 total, confirmed unchanged by full list):** reyona whorley, Lynasia Dickerson, Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson, Anthony White, Maurice Jones (Roanoke/Columbia/Salem/Lynchburg — Sales and Loan Associate but different listings, not Waynesboro/Harrisonburg); Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan (Saint Augustine/Palm Coast/Jacksonville FL, Store Manager — separate FL process, out of scope). No new Waynesboro/Harrisonburg applicants this run.
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2), Moeishia Finley (Roanoke, out of scope).
+
+**Sponsorship:** both listings remain unpaid/Paused per the 9:22 AM flag to Joshua — unchanged, awaiting his OK, not re-flagged again this run.
+
+Nothing changed since the 11:36-11:38 AM run → no new Indeed messages sent, no calendar changes, no Slack/DM post (reporting rule: post nothing if nothing changed). Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).
+
+## Run — 2026-10-06 ~12:06-12:19 ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Reviewed HIRING_OUTREACH.md tail (through the 11:49-11:52 AM run) and Joshua's Slack DM (through his 11:49 AM Gusto-signout note -- nothing new on hiring since the 10:08 AM Anthony Servin Reynoso/Devin Bell note and the 9:22 AM schedule/sponsorship note; the repeated "Gusto signed out" DMs, the 11:23 AM weekly supply order auto-approval, the NRF RISE Up note, and the 9:06 AM Fortis verification DM are all separate matters outside this pipeline's scope, not touched here) before doing anything.
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 + Wed 10/7 via `list_events`) -- unchanged, 8 confirmed Tuesday + 1 confirmed Wednesday, no gaps, no conflicts:** 11:00 Marisa Carroll, 11:05 Colten Turner, 11:10 Trenayce Bridges, 11:30 Frankie Whetzel, 12:30 Catherine Branner, 1:00 Alexanne Ressler, 1:55 Tarius Allen, 2:05 Scot Joshua Baumgartner (Tue); 11:00 Devin Bell (Wed).
+
+**Indeed Messages inbox read live -- one new item requiring action: Frankie Whetzel, 12:06 PM.** Her 11:30 AM Tue 10/6 slot (itself a reschedule from a missed Monday 10/5 11:30 AM call) passed with no call again. She wrote: "This makes the second time I set up an over the phone interview and not get a phone call... I mean if yall didn't want to interview me why even set up one." This is the SECOND consecutive missed call from our side for the same candidate (Mon 10/5 and now Tue 10/6), not a candidate no-show -- the inverse of the skill's standard no-show flow. Replied at 12:19 PM: apologized directly ("that's twice on us, not you"), offered an immediate call or a reschedule tomorrow Wed 10/7 11 AM-3 PM, reply with a time. Awaiting her response. Flagging the pattern to Joshua by DM (below) rather than silently sending a third canned reschedule, since two consecutive missed calls to one candidate is a signal worth his attention, not just a message to re-send.
+
+All other threads unchanged from the 11:49-11:52 AM run: Trenayce Bridges (Preston's 11:20 AM no-answer outreach, awaiting her reply, no action from this pipeline), Anthony Servin Reynoso/Preston (9:53 AM), Devin Bell "Sounds good" (9:45 AM), Micheal Stamper/Michele Campbell/Matthew Reynolds/Derek Sandlin/Jennifer Stephens/colby solomon nudges (9:15-9:19 AM, too soon to re-touch), Angelina Kioroglo's "11 am works" (9:17 AM, still Joshua's standing "ask me first" item from 10/2, not acted on), Patrick Franklin (Wed 10/7 offer, 9:13 AM, no reply yet). Shaun Snead do-not-contact message (Oct 4) unchanged, not re-flagged. Moeishia Finley (Roanoke) still out of scope.
+
+**Candidates -> New tab checked (11 total, unchanged by count):** reyona whorley, Lynasia Dickerson (both Roanoke, out of scope) and others previously logged -- no new Waynesboro/Harrisonburg applicants this run.
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2), Moeishia Finley (Roanoke, out of scope).
+
+**Sponsorship:** both listings remain unpaid/Paused per the 9:22 AM flag to Joshua -- unchanged, awaiting his OK, not re-flagged again this run.
+
+**Notifications sent:** DM'd Joshua (D03BHQH5VGT) flagging the Frankie Whetzel two-consecutive-missed-calls pattern, plain language, in case he wants to personally take her next call. No #employee-prospects post -- today's grid is unchanged (no booking added, removed, or moved; her existing 11:30 AM slot already passed and no new slot was booked yet, pending her reply).
+
+Indeed messages sent this run: 1 (Frankie Whetzel). Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).
+
+## Run — 2026-10-06 ~12:33-12:39 ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Reviewed HIRING_OUTREACH.md tail (through the 12:06-12:19 PM run) and Joshua's Slack DM (through his 12:20 PM Frankie Whetzel flag -- the repeated "Gusto signed out" DMs and the auto-approved weekly supply order are separate matters outside this pipeline's scope, not touched here) before doing anything.
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 + Wed 10/7 via `list_events`) -- unchanged, 8 confirmed Tuesday + 1 confirmed Wednesday, no gaps, no conflicts.**
+
+**Indeed Messages inbox read live -- one new item requiring action: Frankie Whetzel, 12:32 PM.** Replied to my 12:19 PM offer: "I'm on a phone call i should be free here in 5 to 10 minutes." This is a live, time-sensitive window after two consecutive missed calls to her. Replied at 12:39 PM confirming: "Got it, thank you for letting me know. I'll call you at 540-478-0380 around 12:40-12:45 PM." Also DM'd Joshua immediately (12:19 PM Slack ts) with her number and the window in case he wants to personally take this call, per his own 12:20 PM flag asking to be looped in on her. Her 11:30 AM slot stays as-is on the calendar; a new event isn't needed unless she doesn't connect and a reschedule is required.
+
+All other threads unchanged from the 12:06-12:19 PM run: Trenayce Bridges (Preston's 11:20 AM no-answer outreach, awaiting her reply, no action from this pipeline), Anthony Servin Reynoso/Preston (9:53 AM), Devin Bell "Sounds good" (9:45 AM), Micheal Stamper/Michele Campbell/Matthew Reynolds/Derek Sandlin/Jennifer Stephens/colby solomon nudges (9:15-9:19 AM, too soon to re-touch), Angelina Kioroglo's "11 am works" (9:17 AM, still Joshua's standing "ask me first" item from 10/2, not acted on). Shaun Snead do-not-contact message (Oct 4) unchanged, not re-flagged. Moeishia Finley (Roanoke) still out of scope.
+
+**Candidates -> New tab checked directly (11 of 11, confirmed by status-filtered view):** reyona whorley, Lynasia Dickerson, Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson, Anthony White, Maurice Jones (Roanoke/Columbia/Salem/Lynchburg -- Sales and Loan Associate but different listings, not Waynesboro/Harrisonburg); Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan (Saint Augustine/Palm Coast/Jacksonville FL, Store Manager -- separate FL process, out of scope). No new Waynesboro/Harrisonburg applicants this run.
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2), Moeishia Finley (Roanoke, out of scope).
+
+**Sponsorship:** both listings remain unpaid/Paused per the 9:22 AM flag to Joshua -- unchanged, awaiting his OK, not re-flagged again this run.
+
+**Notifications sent:** DM'd Joshua (D03BHQH5VGT) with Frankie Whetzel's live callback window and her number, so he can take the call himself if he wants given it's the second miss. No #employee-prospects post -- today's grid is unchanged (no booking added, removed, or moved this run).
+
+Indeed messages sent this run: 1 (Frankie Whetzel). Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).
+
+## Run — 2026-10-06 ~12:43 ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Reviewed HIRING_OUTREACH.md tail (through the 12:33-12:39 PM run) and Joshua's Slack DM (through his 12:39 PM Frankie Whetzel note -- nothing new on hiring since; the repeated "Gusto signed out" DMs and the 11:23 AM auto-approved weekly supply order are separate matters, not touched here) before doing anything.
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 + Wed 10/7 via `list_events`) -- unchanged from the 12:33-12:39 PM run, 8 confirmed Tuesday + 1 confirmed Wednesday, no gaps, no conflicts:** 11:00 Marisa Carroll, 11:05 Colten Turner, 11:10 Trenayce Bridges, 11:30 Frankie Whetzel, 12:30 Catherine Branner, 1:00 Alexanne Ressler, 1:55 Tarius Allen, 2:05 Scot Joshua Baumgartner (Tue); 11:00 Devin Bell (Wed).
+
+**Indeed Messages inbox read live (full list, newest first):** no new in-scope replies since the 12:33-12:39 PM run. Frankie Whetzel's thread last message is still ours (12:39 PM "Got it, thank you for letting me know..."), no further reply from her. Trenayce Bridges (Preston's 11:20 AM no-answer outreach) still "Awaiting response," no action from this pipeline. Anthony Servin Reynoso/Preston (9:53 AM), Devin Bell "Sounds good" (9:45 AM), Micheal Stamper/Michele Campbell nudges (9:18 AM) unchanged. Angelina Kioroglo's "11 am works" (9:17 AM) unchanged -- still Joshua's standing "ask me first" item from 10/2, not acted on, not re-flagged.
+
+**Candidates -> New tab checked live (11 of 11, confirmed unchanged):** reyona whorley, Lynasia Dickerson, Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson, Anthony White, Maurice Jones (Roanoke/Columbia/Salem/Lynchburg -- different listings, not Waynesboro/Harrisonburg); Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan (Saint Augustine/Palm Coast/Jacksonville FL, Store Manager -- separate FL process, out of scope). No new Waynesboro/Harrisonburg applicants this run.
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2), Moeishia Finley (Roanoke, out of scope).
+
+**Sponsorship:** both listings remain unpaid/Paused per the 9:22 AM flag to Joshua -- unchanged, awaiting his OK, not re-flagged again this run.
+
+Nothing changed since the 12:33-12:39 PM run -> no new Indeed messages sent, no calendar changes, no Slack/DM post (reporting rule: post nothing if nothing changed). Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).
+
+## Run — 2026-10-06 ~2:50-2:57 PM ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. This is a scheduled/automated run with no one available to approve interactive tool requests -- `request_cowork_directory` (Projects folder was already mounted, so no impact), `slack_read_channel` (could not read Joshua's DM for anything posted since the 12:43 PM run), and `slack_send_message` (could not DM Joshua this run's findings) were all auto-declined. Flagging for Joshua: these need to be pre-approved for future scheduled runs, or this pipeline's reporting step silently does nothing during unattended runs.
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 + Wed 10/7 via `list_events`) -- unchanged, 8 confirmed Tuesday + 1 confirmed Wednesday:** 11:00 Marisa Carroll, 11:05 Colten Turner, 11:10 Trenayce Bridges, 11:30 Frankie Whetzel, 12:30 Catherine Branner, 1:00 Alexanne Ressler, 1:55 Tarius Allen, 2:05 Scot Joshua Baumgartner (Tue, now past and pending his reschedule -- see below); 11:00 Devin Bell (Wed).
+
+**Indeed Messages inbox read live -- four new items requiring action, all actioned:**
+
+1. **Frankie Whetzel -- THIRD consecutive missed call from our side today** (1:16 PM "Still no call... if you don't want to interview me just tell me", 2:18 PM "Thanks for wasting my time at this point I'm glad I don't go to pawn shops... take the job off indeed"). After the 12:39 PM promised 12:40-12:45 PM callback window also went uncalled. Did NOT send a fourth automated reschedule offer -- that pattern has already failed her three times today and a fourth promise would make it worse. Sent instead: an apology acknowledging the three misses plainly, no new time promised, told her she'll hear directly rather than through another scheduled slot. This needs Joshua's personal, immediate attention -- flagged to him (see Slack note above; DM could not be sent this run due to the auto-decline).
+2. **Scot Joshua Baumgartner** -- his Tuesday 2:05 PM slot passed; at 2:26 PM he asked "Can we do Thursday at 3?" (outside the 11 AM-2:55 PM window). Replied offering Thursday 10/8 between 11 AM and 2:55 PM, asked him to pick a time. Not yet booked -- awaiting his reply. His stale Tuesday 2:05 PM calendar event left as-is pending his answer (consistent with prior-run handling of passed-but-unconfirmed slots).
+3. **Konner Collier** (already interviewed 10/2) asked "Was wondering if yall found a person yet or not." Per hard rule 3 (no discussing decisions), replied with a holding message only -- "still reviewing candidates, will follow up." Flagged to Joshua that Konner is asking (DM not delivered this run, see above).
+4. **Jean Gonzalo** (completed 2nd-round Zoom interview 10/5) asked "Hi how is my application going." Same holding reply, same flag to Joshua.
+
+**Candidates -> New tab checked live (11 of 11, unchanged by count and names):** reyona whorley, Lynasia Dickerson (Roanoke, out of scope) and the same set logged in the 12:43 PM run. No new Waynesboro/Harrisonburg applicants this run.
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first, standing item from 10/2), Shaun Snead (do-not-contact list, hard rule 2), Moeishia Finley (Roanoke, out of scope).
+
+**Sponsorship:** both listings remain unpaid/Paused per the 9:22 AM flag to Joshua -- unchanged, awaiting his OK, not re-flagged again this run (could not re-flag via Slack this run regardless, see above).
+
+**Notifications attempted, not delivered:** tried to DM Joshua (D03BHQH5VGT) about Frankie Whetzel's situation (asking him to personally call her), Scot's reschedule, and Konner/Jean's decision questions -- `slack_send_message` was auto-declined (no approver available during this scheduled run). No #employee-prospects post attempted -- today's grid is unchanged (no booking added, removed, or moved this run; Scot's slot is pending, not yet rebooked).
+
+Indeed messages sent this run: 4 (Frankie Whetzel, Scot Baumgartner, Konner Collier, Jean Gonzalo). Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).
+
+## Run — 2026-10-06 ~2:56-3:00 PM ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Reviewed HIRING_OUTREACH.md tail (through the 2:50-2:57 PM run) before doing anything. Slack tools worked this run (unlike the 2:50-2:57 PM run, which had them auto-declined).
+
+**Joshua's Slack DM reviewed back through the 2:50-2:57 PM run:** nothing new on hiring. His 2:39 PM Frankie Whetzel/Scot reply flag, 2:20 PM Frankie flag, and 2:04 PM Konner/Jean flag are all the same items already logged by the prior run. The repeated "Gusto signed out" DMs, the 2:12 PM yield-update note, and the 11:23 AM auto-approved weekly supply order are separate matters outside this pipeline's scope, not touched here.
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 + Wed 10/7 via `list_events`) -- unchanged, 8 confirmed Tuesday + 1 confirmed Wednesday, no gaps, no conflicts:** 11:00 Marisa Carroll, 11:05 Colten Turner, 11:10 Trenayce Bridges, 11:30 Frankie Whetzel, 12:30 Catherine Branner, 1:00 Alexanne Ressler, 1:55 Tarius Allen, 2:05 Scot Baumgartner (stale/pending his reschedule reply -- left as-is) (Tue); 11:00 Devin Bell (Wed). Note: Anthony Servin Reynoso's 2:00 PM slot is correctly already gone (deleted by the 10:06-10:09 AM run after Preston's cancellation).
+
+**Indeed Messages inbox read live -- one new item, closing acknowledgment only, no action needed: Anthony Servin Reynoso, 1:19 PM** -- replied to Preston's 9:53 AM cancellation message with "Thank you for the update. If you require any additional information from me, please do not hesitate to reach out. I appreciate your consideration." A polite close-out, not a question -- per hard rule 3 (no discussing decisions) and since Preston already closed this thread himself, no reply sent. Logging only.
+
+All other threads unchanged from the 2:50-2:57 PM run: Frankie Whetzel (our 2:54 PM apology after 3 missed calls is the last message, awaiting her reply, flagged to Joshua for his personal attention), Scot Baumgartner (our 2:54 PM Thursday 10/8 11 AM-2:55 PM counter-offer is the last message, awaiting his reply), Konner Collier and Jean Gonzalo (our 2:53 PM holding replies are the last message, both flagged to Joshua as decision questions per rule 3), Trenayce Bridges (Preston's 11:20 AM no-answer outreach, still "Awaiting response," no action from this pipeline), Devin Bell "Sounds good" (9:45 AM), Micheal Stamper/Michele Campbell/Matthew Reynolds/Derek Sandlin/Jennifer Stephens/colby solomon nudges (9:15-9:19 AM, too soon to re-touch), Angelina Kioroglo's "11 am works" (9:17 AM, still Joshua's standing "ask me first" item from 10/2, not acted on), Patrick Franklin (Wed 10/7 offer, 9:13 AM, no reply yet). Shaun Snead do-not-contact message (Oct 4) unchanged, not re-flagged. Moeishia Finley (Roanoke) still out of scope.
+
+**Candidates -> New tab checked live (11 of 11, confirmed unchanged):** reyona whorley, Lynasia Dickerson, Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson, Anthony White, Maurice Jones (Roanoke/Columbia/Salem/Lynchburg -- Sales and Loan Associate but different listings, not Waynesboro/Harrisonburg); Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan (Saint Augustine/Palm Coast/Jacksonville FL, Store Manager -- separate FL process, out of scope). No new Waynesboro/Harrisonburg applicants this run.
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2), Moeishia Finley (Roanoke, out of scope).
+
+**Sponsorship:** both listings remain unpaid/Paused per the 9:22 AM flag to Joshua -- unchanged, awaiting his OK, not re-flagged again this run.
+
+**Notifications sent:** none -- nothing changed that needs Joshua's attention beyond what the 2:50-2:57 PM run already flagged (Frankie, Scot, Konner, Jean). Anthony's closing ack doesn't warrant a DM. No #employee-prospects post -- today's grid is unchanged (no booking added, removed, or moved this run).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).
+
+## Run — 2026-10-06 ~3:06-3:12 PM ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Reviewed HIRING_OUTREACH.md tail (through the 2:56-3:00 PM run) and Joshua's Slack DM (through his 3:04 PM Gusto-signout note -- nothing new on hiring; the repeated "Gusto signed out" DMs and the 2:12 PM yield-update note are separate matters, not touched here) before doing anything.
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 + Wed 10/7 via `list_events`) -- unchanged, 8 confirmed Tuesday + 1 confirmed Wednesday, no gaps, no conflicts:** 11:00 Marisa Carroll, 11:05 Colten Turner, 11:10 Trenayce Bridges, 11:30 Frankie Whetzel, 12:30 Catherine Branner, 1:00 Alexanne Ressler, 1:55 Tarius Allen, 2:05 Scot Joshua Baumgartner (Tue, stale/pending his Thursday-reschedule reply); 11:00 Devin Bell (Wed).
+
+**Indeed Messages inbox read live -- one new item, closing acknowledgment only, no action needed: Konner Collier, 2:58 PM** -- replied "Okay thank you" to our 2:53 PM holding reply. Per hard rule 3 (no discussing decisions, already closed out), no reply sent. All other threads unchanged from the 2:56-3:00 PM run: Frankie Whetzel (our 2:54 PM apology last message, awaiting her reply, flagged to Joshua), Scot Baumgartner (our 2:54 PM Thursday 10/8 counter-offer last message, awaiting reply), Jean Gonzalo (our 2:53 PM holding reply, flagged to Joshua), Anthony Servin Reynoso (1:19 PM closing ack, no action), Trenayce Bridges (Preston's 11:20 AM outreach, still "Awaiting response," no action from this pipeline), Devin Bell "Sounds good" (9:45 AM), Micheal Stamper/Michele Campbell/Matthew Reynolds/Derek Sandlin/Jennifer Stephens/colby solomon nudges (9:15-9:19 AM, too soon to re-touch), Angelina Kioroglo's "11 am works" (9:17 AM, still Joshua's standing "ask me first" item from 10/2, not acted on), Patrick Franklin (Wed 10/7 offer, 9:13 AM, no reply yet). Shaun Snead do-not-contact message (Oct 4) unchanged, not re-flagged. Moeishia Finley (Roanoke) still out of scope.
+
+**Candidates -> New tab checked live (11 of 11, confirmed unchanged by name):** reyona whorley, Lynasia Dickerson, Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson, Anthony White, Maurice Jones (Roanoke/Columbia/Salem/Lynchburg -- Sales and Loan Associate but different listings, not Waynesboro/Harrisonburg); Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan (Saint Augustine/Palm Coast/Jacksonville FL, Store Manager -- separate FL process, out of scope). No new Waynesboro/Harrisonburg applicants this run.
+
+**Reviewing tab spot-checked (first 20 of 48) for any Waynesboro/Harrisonburg candidate with no contact indicator:** only Brad Andrews (Harrisonburg, applied Sep 25) showed no "messaged" line on the card. Per `hiring-contact-check` (the card-activity tag is stale, not a contact record), checked the source of record first: HIRING_OUTREACH.md's 2026-10-05 ~9:09 AM run entry already confirms Brad Andrews was one of the 13 originally-unreplied candidates who "show either a booked interview, a sent nudge, or a closed-out decline/thank-you as their last action" -- already handled, not re-contacted. Scarlet Ledford (also flagged by the card view) is Lexington listing, out of scope.
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2), Moeishia Finley (Roanoke, out of scope).
+
+**Sponsorship:** both listings remain unpaid/Paused per the 9:22 AM flag to Joshua -- unchanged, awaiting his OK, not re-flagged again this run.
+
+**Notifications sent:** none -- Konner's closing ack doesn't warrant a DM, and nothing changed on the interview grid (no booking added, removed, or moved this run). No #employee-prospects post.
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).
+
+## Run — 2026-10-06 ~3:18-3:24 PM ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Reviewed HIRING_OUTREACH.md tail (through the 3:06-3:12 PM run) and Joshua's Slack DM (through his 3:04 PM Gusto-signout note and 2:12 PM yield-update note -- nothing new on hiring; the repeated "Gusto signed out" DMs are a separate matter, not touched here) before doing anything.
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 + Wed 10/7 via `list_events`) -- unchanged, 8 confirmed Tuesday + 1 confirmed Wednesday, no gaps, no conflicts:** 11:00 Marisa Carroll, 11:05 Colten Turner, 11:10 Trenayce Bridges, 11:30 Frankie Whetzel, 12:30 Catherine Branner, 1:00 Alexanne Ressler, 1:55 Tarius Allen, 2:05 Scot Joshua Baumgartner (Tue, stale/pending his Thursday-reschedule reply); 11:00 Devin Bell (Wed).
+
+**Indeed Messages inbox read live (full list):** no new in-scope replies since the 3:06-3:12 PM run. Konner Collier's 2:58 PM "Okay thank you" was already logged by the prior run. Frankie Whetzel (our 2:54 PM apology after 3 missed calls, last message, awaiting her reply, already flagged to Joshua), Scot Baumgartner (our 2:54 PM Thursday 10/8 counter-offer, last message, awaiting reply), Jean Gonzalo (2:53 PM holding reply, already flagged), Anthony Servin Reynoso (1:19 PM closing ack, no action), Trenayce Bridges (Preston's 11:20 AM outreach, still "Awaiting response," no action from this pipeline), Devin Bell "Sounds good" (9:45 AM), Micheal Stamper/Michele Campbell/Matthew Reynolds/Derek Sandlin/Jennifer Stephens/colby solomon nudges (9:15-9:19 AM, too soon to re-touch), Angelina Kioroglo's "11 am works" (9:17 AM, still unread/bold -- still Joshua's standing "ask me first" item from 10/2, not acted on, not re-flagged), Patrick Franklin (Wed 10/7 offer, 9:13 AM, no reply yet). Shaun Snead do-not-contact message (Oct 4) unchanged, not re-flagged. Moeishia Finley (Roanoke) still out of scope.
+
+**Jobs dashboard checked directly (Candidates > New count per listing):** Waynesboro Sales and Loan Associate -- 0 New. Harrisonburg Sales and Loan Associate -- 0 New. No new Waynesboro/Harrisonburg applicants this run. Both listings confirmed still Paused, "Sponsorship ended 15 hours ago" -- unchanged from the 9:22 AM flag to Joshua, not re-flagged again.
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2), Moeishia Finley (Roanoke, out of scope).
+
+**Sponsorship:** both listings remain unpaid/Paused per the 9:22 AM flag to Joshua -- unchanged, awaiting his OK, not re-flagged again this run.
+
+## Run — 2026-10-06 ~3:34-3:38 PM ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Reviewed HIRING_OUTREACH.md tail (through the 3:18-3:24 PM run) and Joshua's Slack DM (through his 3:04 PM Gusto-signout note and 2:12 PM yield-update note -- nothing new on hiring; the repeated "Gusto signed out" DMs are a separate matter, not touched here) before doing anything.
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 + Wed 10/7 via `list_events`) -- unchanged, 8 confirmed Tuesday + 1 confirmed Wednesday, no gaps, no conflicts:** 11:00 Marisa Carroll, 11:05 Colten Turner, 11:10 Trenayce Bridges, 11:30 Frankie Whetzel, 12:30 Catherine Branner, 1:00 Alexanne Ressler, 1:55 Tarius Allen, 2:05 Scot Joshua Baumgartner (Tue, stale/pending his Thursday-reschedule reply); 11:00 Devin Bell (Wed).
+
+**Indeed Messages inbox read live (full list, newest first) -- no new in-scope replies since the 3:18-3:24 PM run.** Top of inbox unchanged: Konner Collier (2:58 PM "Okay thank you," closed), Frankie Whetzel (our 2:54 PM apology after 3 missed calls, last message, awaiting her reply, already flagged to Joshua), Scot Baumgartner (our 2:54 PM Thursday 10/8 counter-offer, last message, awaiting reply), Jean Gonzalo (2:53 PM holding reply, already flagged), Anthony Servin Reynoso (1:19 PM closing ack), Trenayce Bridges (Preston's 11:20 AM no-answer outreach, still "Awaiting response," no action from this pipeline), Devin Bell "Sounds good" (9:45 AM), Micheal Stamper/Michele Campbell/Matthew Reynolds/Derek Sandlin/Jennifer Stephens/colby solomon nudges (9:15-9:19 AM, too soon to re-touch), Angelina Kioroglo's "11 am works" (9:17 AM, still Joshua's standing "ask me first" item from 10/2, not acted on), Patrick Franklin (Wed 10/7 offer, 9:13 AM, no reply yet). Shaun Snead do-not-contact message (Oct 4) unchanged, not re-flagged. Moeishia Finley (Roanoke) still out of scope.
+
+**Candidates -> New tab checked live (11 of 11, confirmed unchanged by name):** reyona whorley, Lynasia Dickerson, Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson, Anthony White, Maurice Jones (Roanoke/Columbia/Salem/Lynchburg -- Sales and Loan Associate but different listings, not Waynesboro/Harrisonburg); Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan (Saint Augustine/Palm Coast/Jacksonville FL, Store Manager -- separate FL process, out of scope). No new Waynesboro/Harrisonburg applicants this run.
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2), Moeishia Finley (Roanoke, out of scope).
+
+**Sponsorship:** both listings remain unpaid/Paused per the 9:22 AM flag to Joshua -- unchanged, awaiting his OK, not re-flagged again this run.
+
+**Notifications sent:** none -- nothing changed that needs Joshua's attention beyond what prior runs already flagged (Frankie, Scot, Konner/Jean decision questions). No #employee-prospects post -- today's grid is unchanged (no booking added, removed, or moved this run).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).
+
+Nothing changed since the 3:06-3:12 PM run -> no new Indeed messages sent, no calendar changes, no Slack/DM post (reporting rule: post nothing if nothing changed). Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).
+
+## Run — 2026-10-06 ~3:49-3:52 PM ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Reviewed HIRING_OUTREACH.md tail (through the 3:34-3:38 PM run) before doing anything.
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 + Wed 10/7 via `list_events`) -- unchanged from prior runs at start of this one, 8 confirmed Tuesday + 1 confirmed Wednesday.**
+
+**Indeed Messages inbox read live -- one new item requiring action: Jay Ridgeway, 3:39 PM.** First-contacted yesterday (Oct 5, 9:11 PM) offering Tue 10/6 11 AM-3 PM; he replied today "Sorry jus saw this I can talk Wednesday at 1 pm 5404316869." Booked: replied "You're set for Wednesday 10/7 at 1:00 PM. I'll call you at 540-431-6869 from (804) 930-4221." (sent 3:50 PM, confirmed in thread), created calendar event 1:00-1:05 PM Wed 10/7 (jdavis@fcfpawn.com, eventId 24doirsek870dae0cl8f6r46fk). Wednesday 10/7 now: 11:00 AM Devin Bell, 1:00 PM Jay Ridgeway.
+
+All other threads unchanged from the 3:34-3:38 PM run: Konner Collier (2:58 PM "Okay thank you," closed), Frankie Whetzel (our 2:54 PM apology after 3 missed calls, last message, awaiting her reply, already flagged to Joshua), Scot Baumgartner (our 2:54 PM Thursday 10/8 counter-offer, last message, awaiting reply), Jean Gonzalo (2:53 PM holding reply, already flagged), Anthony Servin Reynoso (1:19 PM closing ack), Trenayce Bridges (Preston's 11:20 AM outreach, still "Awaiting response," no action from this pipeline), Devin Bell "Sounds good" (9:45 AM), Micheal Stamper/Michele Campbell/Matthew Reynolds/Derek Sandlin/Jennifer Stephens/colby solomon nudges (9:15-9:19 AM, too soon to re-touch), Angelina Kioroglo's "11 am works" (9:17 AM, still Joshua's standing "ask me first" item from 10/2, not acted on), Patrick Franklin (Wed 10/7 offer, 9:13 AM, no reply yet). Shaun Snead do-not-contact message (Oct 4) unchanged, not re-flagged. Moeishia Finley (Roanoke) still out of scope.
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2), Moeishia Finley (Roanoke, out of scope).
+
+**Sponsorship:** both listings remain unpaid/Paused per the 9:22 AM flag to Joshua -- unchanged, awaiting his OK, not re-flagged again this run.
+
+**Notifications sent:** posted the updated Wednesday 10/7 schedule to #employee-prospects and DM'd Joshua (D03BHQH5VGT) that Jay Ridgeway is booked for Wed 1:00 PM.
+
+Indeed messages sent this run: 1 (Jay Ridgeway). Calendar events created/deleted: 1 created. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).
+
+## Run — 2026-10-06 ~4:04-4:08 PM ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Reviewed HIRING_OUTREACH.md tail (through the 3:49-3:52 PM run) and Joshua's Slack DM (through his 4:04 PM Gusto-signout note -- his Jay Ridgeway confirmation at 3:50 PM is the same booking the prior run already made and logged; the recurring "Gusto signed out" DMs and the 2:12 PM yield-update note are separate matters, not touched here) before doing anything.
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 + Wed 10/7 via `list_events`) -- unchanged, 9 confirmed Tuesday/Wednesday, no gaps, no conflicts:** 11:00 Marisa Carroll, 11:05 Colten Turner, 11:10 Trenayce Bridges, 11:30 Frankie Whetzel, 12:30 Catherine Branner, 1:00 Alexanne Ressler, 1:55 Tarius Allen, 2:05 Scot Joshua Baumgartner (Tue, stale/pending his Thursday-reschedule reply); 11:00 Devin Bell, 1:00 Jay Ridgeway (Wed).
+
+**Indeed Messages inbox read live (full list, newest first) -- no new in-scope replies since the 3:49-3:52 PM run.** Top of inbox unchanged: Jay Ridgeway (our 3:50 PM Wednesday 1 PM confirmation, last message), Konner Collier (2:58 PM "Okay thank you," closed), Frankie Whetzel (our 2:54 PM apology after 3 missed calls, last message, awaiting her reply, already flagged to Joshua), Scot Baumgartner (our 2:54 PM Thursday 10/8 counter-offer, last message, awaiting reply), Jean Gonzalo (2:53 PM holding reply, already flagged), Anthony Servin Reynoso (1:19 PM closing ack), Trenayce Bridges (Preston's 11:20 AM outreach, still "Awaiting response," no action from this pipeline). Shaun Snead do-not-contact message (Oct 4) unchanged, not re-flagged. Moeishia Finley (Roanoke) still out of scope.
+
+**Candidates > New tab checked live (11 of 11, confirmed unchanged by name):** reyona whorley, Lynasia Dickerson, Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson, Anthony White, Maurice Jones (Roanoke/Columbia/Salem/Lynchburg -- different listings, not Waynesboro/Harrisonburg); Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan (FL Store Manager, separate process, out of scope). No new Waynesboro/Harrisonburg applicants this run.
+
+**Jobs dashboard checked directly:** Waynesboro Sales and Loan Associate -- 0 New, Paused, "Sponsorship ended 16 hours ago." Harrisonburg Sales and Loan Associate -- 0 New, Paused, "Sponsorship ended 16 hours ago." Unchanged from the 9:22 AM flag to Joshua, not re-flagged again.
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2), Moeishia Finley (Roanoke, out of scope).
+
+**Notifications sent:** none -- nothing changed on the interview grid or in any thread beyond what prior runs already flagged (Frankie, Scot, Konner/Jean). No #employee-prospects post (reporting rule: post nothing if nothing changed).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).
+
+## Run — 2026-10-06 ~4:19-4:23 PM ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Reviewed HIRING_OUTREACH.md tail (through the 4:04-4:08 PM run) and Joshua's Slack DM (through his 4:19 PM Gusto-signout note -- nothing new on hiring beyond what prior runs already logged: his 3:50 PM Jay Ridgeway confirmation, 2:12 PM yield update, and the repeated Gusto-signout/weekly-supply-order DMs are all separate matters or already-logged items, not touched here) before doing anything.
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 + Wed 10/7 via `list_events`) -- unchanged, 9 confirmed Tuesday/Wednesday, no gaps, no conflicts:** 11:00 Marisa Carroll, 11:05 Colten Turner, 11:10 Trenayce Bridges, 11:30 Frankie Whetzel, 12:30 Catherine Branner, 1:00 Alexanne Ressler, 1:55 Tarius Allen, 2:05 Scot Joshua Baumgartner (Tue, stale/pending his Thursday-reschedule reply); 11:00 Devin Bell, 1:00 Jay Ridgeway (Wed).
+
+**Indeed Messages inbox read live (full list, newest first) -- no new in-scope replies since the 4:04-4:08 PM run.** Top of inbox unchanged: Jay Ridgeway (our 3:50 PM Wednesday 1 PM confirmation, last message), Konner Collier (2:58 PM "Okay thank you," closed), Frankie Whetzel (our 2:54 PM apology after 3 missed calls, last message, awaiting her reply, already flagged to Joshua), Scot Baumgartner (our 2:54 PM Thursday 10/8 counter-offer, last message, awaiting reply), Jean Gonzalo (2:53 PM holding reply, already flagged), Anthony Servin Reynoso (1:19 PM closing ack), Trenayce Bridges (Preston's 11:20 AM outreach, still "Awaiting response," no action from this pipeline), Devin Bell "Sounds good" (9:45 AM), Micheal Stamper/Michele Campbell/Matthew Reynolds/Derek Sandlin/Jennifer Stephens/colby solomon nudges (9:15-9:19 AM, too soon to re-touch), Angelina Kioroglo's "11 am works" (9:17 AM, still Joshua's standing "ask me first" item from 10/2, not acted on), Patrick Franklin (Wed 10/7 offer, 9:13 AM, no reply yet). Shaun Snead do-not-contact message (Oct 4) unchanged, not re-flagged. Moeishia Finley (Roanoke) still out of scope.
+
+**Candidates > New tab checked live (11 of 11, confirmed unchanged by name):** reyona whorley, Lynasia Dickerson, Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson, Anthony White, Maurice Jones (Roanoke/Columbia/Salem/Lynchburg -- different listings, not Waynesboro/Harrisonburg); Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan (FL Store Manager, separate process, out of scope). No new Waynesboro/Harrisonburg applicants this run.
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2), Moeishia Finley (Roanoke, out of scope).
+
+**Sponsorship:** both listings remain unpaid/Paused per the 9:22 AM flag to Joshua -- unchanged, awaiting his OK, not re-flagged again this run.
+
+**Notifications sent:** none -- nothing changed on the interview grid or in any thread beyond what prior runs already flagged. No #employee-prospects post (reporting rule: post nothing if nothing changed).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).
+
+## Run — 2026-10-06 ~4:40-4:52 PM ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Reviewed HIRING_OUTREACH.md tail (through the 4:19-4:23 PM run) and Joshua's Slack DM (through his 4:19 PM Gusto-signout note) before doing anything -- nothing new on hiring there (repeated Gusto-signout DMs, a 4:14 PM yield update, and his 3:50 PM Jay Ridgeway confirmation are all separate matters or already-logged, not touched here).
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 + Wed 10/7 via `list_events`) -- unchanged except Scot Baumgartner (see below), 9 confirmed, no gaps, no conflicts:** 11:00 Marisa Carroll, 11:05 Colten Turner, 11:10 Trenayce Bridges, 11:30 Frankie Whetzel, 12:30 Catherine Branner, 1:00 Alexanne Ressler, 1:55 Tarius Allen (Tue); 11:00 Devin Bell, 1:00 Jay Ridgeway (Wed).
+
+**Indeed Messages inbox read live -- one new in-scope reply since the 4:19-4:23 PM run:** Scot Joshua Baumgartner replied 4:34 PM accepting the Thursday 10/8 2 PM counter-offer from the 2:54 PM run ("Sure thing, let's go with 2 PM on Thursday."). Action taken: moved his calendar event (`0if060hc18ttcpph30vn2pjrd4`) from Tue 10/6 2:05 PM to Thu 10/8 2:00-2:05 PM (Thursday verified empty via `list_events` before booking -- no conflicts), notificationLevel NONE, description updated to note the reschedule. Sent Indeed confirmation 4:48 PM: "You're set for Thursday 10/8 at 2:00 PM. I'll call you at 931-494-2488 from (804) 930-4221." -- confirmed sent and visible in thread.
+
+No other new replies: Jay Ridgeway (our 3:50 PM Wed 1 PM confirmation, last message), Konner Collier (2:58 PM, closed), Frankie Whetzel (our 2:54 PM apology, awaiting reply, already flagged to Joshua), Jean Gonzalo (2:53 PM holding reply, already flagged), Anthony Servin Reynoso (1:19 PM closing ack), Trenayce Bridges (Preston's 11:20 AM outreach, no action from this pipeline), Devin Bell, the 9:15-9:19 AM nudges (too soon to re-touch), Angelina Kioroglo (still Joshua's "ask me first" item), Patrick Franklin (Wed 10/7 offer, no reply yet). Shaun Snead do-not-contact message unchanged, not re-flagged. Moeishia Finley (Roanoke) still out of scope.
+
+**Candidates > New tab checked live (11 of 11, confirmed unchanged by name):** reyona whorley, Lynasia Dickerson, Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson, Anthony White, Maurice Jones (other VA listings, not Waynesboro/Harrisonburg); Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan (FL Store Manager, separate process, out of scope). No new Waynesboro/Harrisonburg applicants this run.
+
+**Jobs dashboard:** both listings remain Paused/unsponsored per the 9:22 AM flag to Joshua -- unchanged, not re-flagged again.
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2), Moeishia Finley (Roanoke, out of scope).
+
+### Tuesday 10/6 + Wednesday 10/7 + Thursday 10/8 grid as of this run
+- Tue 10/6: 11:00 Marisa Carroll (Waynesboro), 11:05 Colten Turner (Waynesboro), 11:10 Trenayce Bridges (Waynesboro), 11:30 Frankie Whetzel (Harrisonburg), 12:30 Catherine Branner (Harrisonburg), 1:00 Alexanne Ressler (Harrisonburg), 1:55 Tarius Allen (Harrisonburg)
+- Wed 10/7: 11:00 Devin Bell (Harrisonburg), 1:00 Jay Ridgeway (Waynesboro)
+- Thu 10/8: 2:00 Scot Joshua Baumgartner (Harrisonburg) -- NEW, rescheduled from Tue 2:05 PM
+
+**Notifications sent:** Slack schedule-change post to #employee-prospects and DM to Joshua (reporting rule: post since the grid changed -- Scot moved off Tuesday onto Thursday).
+
+Indeed messages sent this run: 1 (Scot Baumgartner confirmation). Calendar events created/deleted: 0 created, 1 moved (Scot). Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).
+
+## Run — 2026-10-06 ~6:50-6:53 PM ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Google Drive/iCloud folder mounts declined automatically (no one available to approve during this scheduled run) -- continued on the synced `~/Documents/Claude/Projects` mount only, which carries this file and the calendar/Indeed tools, so nothing substantive was blocked by that. **Slack (read and send) was also auto-declined this run -- both `slack_read_channel` and `slack_send_message` returned "no one available to approve."** This is new; prior runs today posted to Slack successfully. Flagging for Joshua: if this keeps happening, the Slack connector may need a standing approval for scheduled runs, same as the folder-mount fallback.
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 through Thu 10/8 via `list_events`) -- unchanged from the 4:40-4:52 PM run, 10 confirmed, no gaps, no conflicts:** 11:00 Marisa Carroll, 11:05 Colten Turner, 11:10 Trenayce Bridges, 11:30 Frankie Whetzel, 12:30 Catherine Branner, 1:00 Alexanne Ressler, 1:55 Tarius Allen (Tue 10/6); 11:00 Devin Bell, 1:00 Jay Ridgeway (Wed 10/7); 2:00 Scot Joshua Baumgartner (Thu 10/8).
+
+**Indeed Messages inbox read live -- 2 unread, both reviewed, neither needed a reply:**
+- **Frankie Whetzel (Harrisonburg)** sent a final venting message at 6:05 PM after three missed-call promises today (12:06, 12:39, 2:54 PM apologies already sent and already flagged in the 2:50-2:57 PM run). She said she has another interview tomorrow and referenced reporting a prior employer to Indeed for the same thing. No scheduling ask in her message, nothing left to offer on the messaging track, so no reply sent (another apology risks making it worse) -- **this needed a plain DM to Joshua flagging the reputational risk and that the missed call was on his line, but the DM could not be sent (Slack declined this run).** Recommend Joshua see this thread directly next time he's in Indeed Messages.
+- **Scot Joshua Baumgartner (Harrisonburg)** replied "Alrighty thank you so much" at 5:08 PM, acknowledging the Thu 10/8 2 PM confirmation sent in the prior run. Acknowledgment only, no reply needed.
+
+**Candidates > New tab checked live (11 of 11, confirmed unchanged by name from the 4:40 PM run):** reyona whorley, Lynasia Dickerson, Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson, Anthony White, Maurice Jones (other VA listings, not Waynesboro/Harrisonburg); Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan (FL Store Manager, separate process, out of scope). No new Waynesboro/Harrisonburg applicants this run.
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2), Trenayce Bridges' 11:20 AM number-request (Preston's outreach, not this pipeline), Moeishia Finley (Roanoke, out of scope).
+
+**Backlog check:** the original 10/2 first-run backlog (no-show offers to Campbell/Reynolds/Troehler, nudges to the 13 non-repliers, first-contacts since 10/1) was fully worked across the many runs between 10/2 and this morning's 9:12-9:18 AM nudge batch -- nothing from that backlog is still open.
+
+### Tuesday 10/6 + Wednesday 10/7 + Thursday 10/8 grid as of this run -- unchanged, 10 confirmed
+- Tue 10/6: 11:00 Marisa Carroll (Waynesboro), 11:05 Colten Turner (Waynesboro), 11:10 Trenayce Bridges (Waynesboro), 11:30 Frankie Whetzel (Harrisonburg), 12:30 Catherine Branner (Harrisonburg), 1:00 Alexanne Ressler (Harrisonburg), 1:55 Tarius Allen (Harrisonburg)
+- Wed 10/7: 11:00 Devin Bell (Harrisonburg), 1:00 Jay Ridgeway (Waynesboro)
+- Thu 10/8: 2:00 Scot Joshua Baumgartner (Harrisonburg)
+
+**Notifications sent:** none -- grid unchanged, and Slack was unavailable this run regardless (see above).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).
+
+## Run — 2026-10-06 ~7:29-7:36 PM ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Reviewed HIRING_OUTREACH.md tail (through the 6:50-6:53 PM run) and Joshua's Slack DM (through his 6:48 PM Gusto-signout note) before doing anything -- nothing new on hiring there (repeated Gusto-signout DMs, the NRF course-license item, and the Fortis deadline note are all separate matters, not touched here).
+
+**Slack worked fine this run** (read and send both succeeded) -- the 6:50-6:53 PM run's connector decline did not recur.
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 through Thu 10/8 via `list_events`) -- unchanged, 10 confirmed, no gaps, no conflicts:** 11:00 Marisa Carroll, 11:05 Colten Turner, 11:10 Trenayce Bridges, 11:30 Frankie Whetzel, 12:30 Catherine Branner, 1:00 Alexanne Ressler, 1:55 Tarius Allen (Tue 10/6); 11:00 Devin Bell, 1:00 Jay Ridgeway (Wed 10/7); 2:00 Scot Joshua Baumgartner (Thu 10/8).
+
+**Indeed Messages inbox read live (full list, newest first) -- no new in-scope replies since the 6:50-6:53 PM run.** Top of inbox unchanged: Frankie Whetzel (her 6:05 PM venting message, still the last one, already flagged), Scot Baumgartner ("Alrighty thank you so much," 5:08 PM, ack only), Jay Ridgeway (our Wed 1 PM confirmation), Konner Collier (closed), Jean Gonzalo (holding reply, already flagged), Anthony Servin Reynoso (closing ack), Trenayce Bridges (Preston's outreach, not this pipeline), Devin Bell "Sounds good," the 9:15-9:19 AM nudges (already nudged once per rule 5, now stop -- not re-touched), Angelina Kioroglo (still Joshua's standing "ask me first" item), Patrick Franklin (Wed 10/7 offer, no reply yet), Shane Lord's long-standing "Ok sounds good" closing ack (unchanged, no reply needed). Shaun Snead do-not-contact message unchanged, not re-flagged. Moeishia Finley (Roanoke) still out of scope.
+
+**Candidates > All applications checked live -- New count 11, same as every run since the 4:40 PM check** (reyona whorley, Lynasia Dickerson and others, all on other VA listings or the FL Store Manager process, none Waynesboro/Harrisonburg). No new applicants this run.
+
+**Overdue item actioned:** the 6:50-6:53 PM run flagged Frankie Whetzel's situation (missed calls, mention of reporting to Indeed) for a Joshua DM, but Slack was unavailable then. Sent that plain-language DM this run now that Slack is back.
+
+**Notifications sent:** one DM to Joshua (Frankie Whetzel flag, carried over from the prior run). No #employee-prospects post -- grid unchanged.
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).
+
+## Run — 2026-10-06 ~7:44-7:48 PM ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Reviewed HIRING_OUTREACH.md tail (through the 7:29-7:36 PM run) and Joshua's Slack DM / #employee-prospects (through his 7:03 PM Gusto-signout note) before doing anything -- nothing new on hiring there (repeated Gusto-signout DMs, FAQ Instant Answers question, and NRF licensing are separate matters, not touched here).
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 through Thu 10/8 via `list_events`) -- unchanged, 10 confirmed, no gaps, no conflicts:** 11:00 Marisa Carroll, 11:05 Colten Turner, 11:10 Trenayce Bridges, 11:30 Frankie Whetzel, 12:30 Catherine Branner, 1:00 Alexanne Ressler, 1:55 Tarius Allen (Tue 10/6); 11:00 Devin Bell, 1:00 Jay Ridgeway (Wed 10/7); 2:00 Scot Joshua Baumgartner (Thu 10/8). Matches the live #employee-prospects grid exactly.
+
+**Indeed Messages inbox read live (full list, newest first) -- no new in-scope replies since the 7:29-7:36 PM run.** Top of inbox unchanged: Frankie Whetzel (6:05 PM venting message, still last, already flagged to Joshua via DM), Scot Baumgartner (ack only), Jay Ridgeway (our Wed 1 PM confirmation), Konner Collier (closed), Jean Gonzalo (holding reply, already flagged), Anthony Servin Reynoso (closing ack), Trenayce Bridges' 11:20 AM "awaiting response" flag opened and confirmed to be Preston's own outreach thread ("Hello, we tried reaching out from 540-836-4200..."), not a candidate reply and not this pipeline's to answer -- she is already confirmed on today's 11:10 AM calendar slot. Devin Bell, the 9:15-9:19 AM nudges (already nudged once per rule 5, not re-touched), Angelina Kioroglo (still Joshua's "ask me first" item), Patrick Franklin (Wed 10/7 offer, no reply yet), Shane Lord's closing ack. Shaun Snead do-not-contact message unchanged, not re-flagged. Moeishia Finley (Roanoke) still out of scope.
+
+**Candidates > New tab checked live -- 11, same 11 names as every run since 4:40 PM** (reyona whorley, Lynasia Dickerson, Tareka Jordan, Michael Boyer and others -- all other VA listings or the FL Store Manager process, none Waynesboro/Harrisonburg). No new applicants this run.
+
+**Jobs dashboard:** hit a Cloudflare verification interstitial on load; not re-tried given status was already confirmed unchanged (Paused/unsponsored) across every run since the 9:22 AM flag to Joshua -- not re-flagged again.
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2), Moeishia Finley (Roanoke, out of scope).
+
+### Tuesday 10/6 + Wednesday 10/7 + Thursday 10/8 grid as of this run -- unchanged, 10 confirmed
+- Tue 10/6: 11:00 Marisa Carroll (Waynesboro), 11:05 Colten Turner (Waynesboro), 11:10 Trenayce Bridges (Waynesboro), 11:30 Frankie Whetzel (Harrisonburg), 12:30 Catherine Branner (Harrisonburg), 1:00 Alexanne Ressler (Harrisonburg), 1:55 Tarius Allen (Harrisonburg)
+- Wed 10/7: 11:00 Devin Bell (Harrisonburg), 1:00 Jay Ridgeway (Waynesboro)
+- Thu 10/8: 2:00 Scot Joshua Baumgartner (Harrisonburg)
+
+**Notifications sent:** none -- grid unchanged, nothing new to flag.
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).
+
+## Run — 2026-10-06 ~7:18-7:23 PM ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, enterprise-folder-access, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Reviewed HIRING_OUTREACH.md tail (through the 7:44-7:48 PM run) and Joshua's Slack DM / #employee-prospects before doing anything -- nothing new on hiring there (repeated Gusto-signout DMs, FAQ Instant Answers question, NRF licensing and Fortis deadline are separate matters, not touched here).
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 through Thu 10/8 via `list_events`) -- unchanged, 10 confirmed, no gaps, no conflicts:** 11:00 Marisa Carroll, 11:05 Colten Turner, 11:10 Trenayce Bridges, 11:30 Frankie Whetzel, 12:30 Catherine Branner, 1:00 Alexanne Ressler, 1:55 Tarius Allen (Tue 10/6); 11:00 Devin Bell, 1:00 Jay Ridgeway (Wed 10/7); 2:00 Scot Joshua Baumgartner (Thu 10/8). Matches #employee-prospects grid exactly.
+
+**Indeed Messages inbox read live -- no new in-scope replies.** Top of inbox unchanged: Frankie Whetzel (6:05 PM venting message, already flagged to Joshua via DM), Scot Baumgartner (ack only), Jay Ridgeway (our Wed 1 PM confirmation), Konner Collier (closed), Jean Gonzalo (holding reply, already flagged), Anthony Servin Reynoso (closing ack), Trenayce Bridges (Preston's own outreach thread, not this pipeline -- she's already confirmed on today's 11:10 AM slot). Shaun Snead do-not-contact message unchanged, not re-flagged. Moeishia Finley (Roanoke) still out of scope.
+
+**Candidates > New tab checked live -- 11, same 11 names as prior runs** (reyona whorley, Lynasia Dickerson, Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson, Anthony White, Maurice Jones, Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan) -- all Roanoke or the FL Store Manager process, none Waynesboro/Harrisonburg. No new applicants this run.
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2), Moeishia Finley (Roanoke, out of scope). Frankie Whetzel's frustration already flagged to Joshua (18:56 DM) -- nothing new to add.
+
+**Notifications sent:** none -- grid unchanged, nothing new to flag.
+
+## Run — 2026-10-06 ~7:54-7:58 PM ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, enterprise-folder-access, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Reviewed HIRING_OUTREACH.md tail (through the 7:44-7:48 PM and 7:18-7:23 PM entries) and Joshua's Slack DM before doing anything -- nothing new on hiring there beyond the repeated Gusto-signout DMs, FAQ Instant Answers question, NRF licensing and Fortis deadline, which are separate matters not touched here.
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 through Thu 10/8 via `list_events`) -- unchanged, 10 confirmed, no gaps, no conflicts:** 11:00 Marisa Carroll, 11:05 Colten Turner, 11:10 Trenayce Bridges, 11:30 Frankie Whetzel, 12:30 Catherine Branner, 1:00 Alexanne Ressler, 1:55 Tarius Allen (Tue 10/6); 11:00 Devin Bell, 1:00 Jay Ridgeway (Wed 10/7); 2:00 Scot Joshua Baumgartner (Thu 10/8).
+
+**Indeed Messages inbox read live -- one new message, no scheduling action needed:** Frankie Whetzel (Harrisonburg) sent a further message at 7:27 PM, on top of her already-flagged 6:05 PM one, now also saying she'll post a Google review calling us liars who don't keep promises (in addition to the Indeed report she'd already mentioned). Nothing new to offer her on the messaging track (consistent with the 7:29 PM and 7:44 PM runs' judgment) -- no reply sent. This is a new, distinct reputational detail (a second public venue, not just Indeed), so sent one additional plain-language DM to Joshua flagging it specifically, rather than assuming the 18:56 DM already covered it. Rest of inbox unchanged: Scot Baumgartner (ack only), Jay Ridgeway (Wed 1 PM confirmation), Konner Collier (closed), Jean Gonzalo (holding reply, already flagged), Anthony Servin Reynoso (closing ack), Trenayce Bridges (Preston's own outreach thread, not this pipeline). Shaun Snead do-not-contact message unchanged, not re-flagged. Moeishia Finley (Roanoke) still out of scope.
+
+**Candidates > New tab checked live -- 11, same 11 names as every run since 4:40 PM** (reyona whorley, Lynasia Dickerson, Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson, Anthony White, Maurice Jones, Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan) -- all Roanoke or the FL Store Manager process, none Waynesboro/Harrisonburg. No new applicants this run. All applications count also unchanged at 265 (New 11 / Reviewing 48 / Contacting 175 / Interviewing 31 / Rejected 194 / Hired 0).
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2), Moeishia Finley (Roanoke, out of scope).
+
+**Notifications sent:** one DM to Joshua (Frankie Whetzel's new Google-review-threat detail). No #employee-prospects post -- grid unchanged.
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).
+
+## Run — 2026-10-06 ~7:49-7:56 PM ET (vp-hiring-pipeline scheduled task)
+
+Loaded enterprise-map, enterprise-folder-access, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Reviewed HIRING_OUTREACH.md tail (through the 7:54-7:58 PM entry) and Joshua's Slack DM / #employee-prospects before doing anything -- nothing new on hiring there: the repeated Gusto-signout DMs, the Frankie Whetzel Google-review flag (already sent, now twice), the NRF course-license item (awaiting Joshua's "go"), and the Fortis deadline note are all separate matters, not touched here.
+
+**Calendar verified (`jdavis@fcfpawn.com`, Tue 10/6 through Thu 10/8 via `list_events`) -- unchanged, 10 confirmed, no gaps, no conflicts:** 11:00 Marisa Carroll, 11:05 Colten Turner, 11:10 Trenayce Bridges, 11:30 Frankie Whetzel, 12:30 Catherine Branner, 1:00 Alexanne Ressler, 1:55 Tarius Allen (Tue 10/6); 11:00 Devin Bell, 1:00 Jay Ridgeway (Wed 10/7); 2:00 Scot Joshua Baumgartner (Thu 10/8). Matches the live #employee-prospects grid exactly.
+
+**Indeed Messages inbox read live (full list, newest first) -- no new in-scope replies since the 7:54-7:58 PM run.** Top of inbox unchanged: Frankie Whetzel (7:27 PM Google-review message, already flagged to Joshua via DM twice), Scot Baumgartner (ack only), Jay Ridgeway (Wed 1 PM confirmation), Konner Collier (closed), Jean Gonzalo (holding reply, already flagged), Anthony Servin Reynoso (closing ack), Trenayce Bridges (Preston's own outreach thread, not this pipeline -- she's confirmed on today's 11:10 AM slot), Devin Bell ("Sounds good"), the 9:12-9:19 AM confirmations/nudges (already actioned, not re-touched), Angelina Kioroglo ("11 am works" at 9:17 AM -- still Joshua's standing "ask me first" item, not re-flagged), Patrick Franklin (Wed 10/7 offer, no reply yet), Shane Lord's closing ack. Shaun Snead do-not-contact message unchanged, not re-flagged. Moeishia Finley (Roanoke) still out of scope.
+
+**Candidates > New tab checked live -- 11, same 11 names as every run since 4:40 PM** (reyona whorley, Lynasia Dickerson, Tareka Jordan, Michael Boyer confirmed by screenshot; remainder per prior runs' names) -- all Roanoke/Columbia or other out-of-scope listings, none Waynesboro/Harrisonburg. No new applicants this run. All applications count unchanged at 265 (New 11 / Reviewing 48 / Contacting 175 / Interviewing 31 / Rejected 194 / Hired 0).
+
+**2-business-day nudge check:** Oct 5 first-contacts (Kandi Wade, Stacie Jones, Christian DeLotta, Jessica Paling, Sarah Wheeler, Raquel Montgomery, Kayleigh Miller, Lisbed Hicks, and the Preston-follow-up batch) are only 1 business day old -- not yet due. The Oct 2-era batch already received its one nudge this morning (9:12-9:19 AM run) -- not re-touched per rule 5 (stop after one nudge).
+
+**Not touched, per standing instruction (unchanged):** Angelina Kioroglo (ask Joshua first), Shaun Snead (do-not-contact list, hard rule 2), Moeishia Finley (Roanoke, out of scope).
+
+**Notifications sent:** none -- grid unchanged, nothing new to flag, today's interview-list post already went out this morning (9:22 AM run).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not requested this run).

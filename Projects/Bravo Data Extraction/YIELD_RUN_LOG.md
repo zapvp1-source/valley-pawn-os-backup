@@ -100,3 +100,32 @@ recovered it in-session:
   access should publish `artifact/yield-by-asset-class.html` to the existing URL, then send the
   normal Step 5 DM with the August figures above. No harness re-run needed — data is already valid
   and will not change unless the source files change first.
+
+---
+
+## 2026-10-06 — Monthly refresh (scheduled) — published successfully
+
+- **Step 0 (channel split trigger):** contention check CLEAR. Dropped trigger `yield-channel-20261006`
+  requesting company-kpis for 2025-01-01..2025-09-30 and 2026-01-01..2026-09-30. Both files landed
+  within ~4 minutes (`2025-09-30_ALL_company-kpis.xlsx`, `2026-09-30_ALL_company-kpis.xlsx`).
+  `channel_growth.py` ran clean against all 5 periods on disk and wrote `output/channel_growth.json`.
+- **Step 1 (regression harness):** `test_yield_by_asset_class.py` → **RESULT: PASS**, 6/6 checks
+  green. 21 months, Jan 2025–Sep 2026, 126 rows.
+- **Step 2 (render artifact):** `render_yield_artifact.py` ran clean.
+  2026 YTD (Jan–Sep): loan 12.20%/mo · inventory 21.71%/mo · blended 16.93%/mo.
+  September 2026 alone (COMPANY, from CSV): loan 11.97%/mo (143.6%/yr), inventory 20.21%/mo
+  (242.5%/yr), blended 16.08%/mo (192.9%/yr).
+  Same-window-last-year (Jan–Sep 2025) blended: 15.61% — up +1.32 points YoY, driven entirely by
+  inventory (19.19% → 21.71%); loan yield essentially flat (12.56% → 12.20%).
+  Growth-by-channel (Jan–Sep, YoY): net revenue $1,480,182 → $2,026,051 (+36.9%). Non-gold retail
+  gross profit +$236,189 (57% of all growth), scrap/gold gross profit +$219,020 (41%, off a much
+  smaller base — +137%), loan revenue +$90,659 (+14.1%, shrinking as a share of the total).
+- **Step 3 (republish):** Read the live artifact first (confirmed it was still on the August 2026
+  refresh), then republished `artifact/yield-by-asset-class.html` to the existing URL
+  (https://claude.ai/code/artifact/a2c1c285-29a3-4c6c-9388-f9b460063239), label "September 2026
+  refresh." Published as version 10 (version id 1791310306-23de).
+- **Step 4 (this entry).**
+- **Step 5 (Joshua DM):** sent — see Slack D03BHQH5VGT.
+- **Sources used:** company-kpis pulled fresh this run for both YoY windows (no fallback needed);
+  all other months read from existing EOM-export-derived yield data already on disk, validated by
+  `eom_validate.py` range/header checks inside the regeneration step.

@@ -33,7 +33,7 @@ def expected_gap_hours():
     trust this week, so staleness is now derived from each agent's OWN schedule, read from its
     plist, instead of assumed."""
     gaps = {}
-    for f in glob.glob(os.path.join(LA, "*.plist")):
+    for f in sorted(glob.glob(os.path.join(LA, "*.plist"))):
         try:
             with open(f, "rb") as fh:
                 d = plistlib.load(fh)
@@ -45,7 +45,15 @@ def expected_gap_hours():
         elif isinstance(sci, list):
             # several fire times: weekly if any entry pins a Weekday, else daily
             gap = 9 * 24.0 if any("Weekday" in e for e in sci if isinstance(e, dict)) else 30.0
+            # 2026-10-06: a list of Day entries (monthly-prestage fires on days 28-31) is MONTHLY,
+            # not daily — it was reported stale every month from the 30h daily guess.
+            if all(isinstance(e, dict) and "Day" in e and "Weekday" not in e for e in sci):
+                gap = 40 * 24.0
         elif isinstance(sci, dict):
+            if "Month" in sci:
+                # a dated one-shot (e.g. fwb-catchup-20261005) shares the real agent's log; letting it
+                # set the gap made forfeiture-winback's weekly log "allowed 40 days". It has no cadence.
+                continue
             if "Weekday" in sci:
                 gap = 9 * 24.0
             elif "Day" in sci:
@@ -56,12 +64,86 @@ def expected_gap_hours():
                 gap = 3.0                  # every hour
         else:
             gap = 48.0
+        # Two plists can name the same log; the MORE FREQUENT schedule is the one that must hold.
+        names = []
         for key in ("StandardOutPath", "StandardErrorPath"):
             v = d.get(key)
             if v:
-                gaps[os.path.basename(v)] = gap
-                gaps[os.path.basename(v).replace(".out.log", ".log").replace(".err.log", ".log")] = gap
+                names += [os.path.basename(v),
+                          os.path.basename(v).replace(".out.log", ".log").replace(".err.log", ".log")]
+        for n in names:
+            gaps[n] = min(gap, gaps.get(n, gap))
+        # the vlog file is often named after the LABEL: evidence only — it must not change the gap
+        # of a log nobody declared (chrome-extension-watchdog.log logs on events, not every 2 min)
+        lab = str(d.get("Label", "")).replace("com.valleypawn.", "")
+        group = names + ([lab + ".log"] if lab else [])
+        if lab:
+            LABEL_LOGS.setdefault(lab, set()).update(group)
+        for n in group:
+            for o in group:
+                SIBLINGS.setdefault(n, set()).add(o)
     return gaps
+
+
+# ---- 2026-10-06: liveness EVIDENCE, not one file's mtime -----------------------------------------
+# The nightly doctor reported 20 "quiet" jobs on 10/6; 17 were running fine. Many native agents write
+# nothing to launchd's stdout file (.out.log stays 0 bytes forever) because they log through vlog to
+# <task>.log, to a run.log in a sub-folder, or only leave a receipt in fleet/receipts/. Judging each
+# FILE alone made a healthy agent look dead. A log is now stale only if NONE of its agent's evidence
+# is fresh: sibling logs (same stem / same plist / label-named vlog), <stem>/run.log, the receipt
+# file, and any extra paths in fleet/log_triage_expectations.json. A .err.log is NEVER evidence of
+# health (it is written only on failure). A genuinely dead agent has no fresh evidence anywhere, so
+# it is still reported.
+SIBLINGS = {}
+LABEL_LOGS = {}
+OS_DIR = os.path.expanduser("~/Documents/Claude/Projects/Valley Pawn OS")
+EXPECT_PATH = os.path.join(OS_DIR, "fleet", "log_triage_expectations.json")
+
+
+def load_expectations():
+    """{"retired": {log: why}, "aliases": {log: label}, "evidence": {log: [glob, ...]},
+    "gap_hours": {log: hours}} — every entry carries its reason; absent file = no expectations."""
+    try:
+        import json
+        d = json.load(open(EXPECT_PATH))
+        return d if isinstance(d, dict) else {}
+    except (OSError, ValueError):
+        return {}
+
+
+def stem_of(name):
+    for suf in (".launchd.log", ".out.log", ".err.log", ".log"):
+        if name.endswith(suf):
+            return name[: -len(suf)]
+    return name
+
+
+def evidence_paths(name, exp):
+    st = stem_of(name)
+    cands = set(SIBLINGS.get(name, set()))
+    cands.update({st + ".log", st + ".out.log", st + ".launchd.log"})
+    alias = (exp.get("aliases") or {}).get(name)
+    if alias:
+        cands.update(LABEL_LOGS.get(alias.replace("com.valleypawn.", ""), set()))
+    paths = [os.path.join(LOG_DIR, c) for c in cands if c != name and not c.endswith(".err.log")]
+    for s in {st} | {stem_of(c) for c in cands}:
+        paths.append(os.path.join(LOG_DIR, s.replace("-", "_"), "run.log"))
+        paths.append(os.path.join(OS_DIR, "fleet", "receipts", s + ".jsonl"))
+    for g in (exp.get("evidence") or {}).get(name, []):
+        paths += glob.glob(os.path.expanduser(g))
+    return paths
+
+
+def freshest(paths):
+    best = None
+    for p in paths:
+        try:
+            mt = os.path.getmtime(p)
+        except OSError:
+            continue
+        if best is None or mt > best[0]:
+            best = (mt, p)
+    return best
 DAYS = int(sys.argv[sys.argv.index("--days") + 1]) if "--days" in sys.argv else 7
 BAD = re.compile(r"CRASH|Traceback|AttributeError|KeyError|TypeError|ValueError|NameError|"
                  r"command not found|No such file|Permission denied|"
@@ -86,8 +168,21 @@ def main():
         return 0
     now = dt.datetime.now()
     gaps = expected_gap_hours()
+    exp = load_expectations()
+    retired = exp.get("retired") or {}
+    for n, lab in (exp.get("aliases") or {}).items():
+        lg = LABEL_LOGS.get(lab.replace("com.valleypawn.", ""), set())
+        g = [gaps[x] for x in lg if x in gaps]
+        if g and n not in gaps:
+            gaps[n] = min(g)
+    for n, h in (exp.get("gap_hours") or {}).items():
+        gaps[n] = float(h)
     rows = []
+    skipped = []
     for p in files:
+        if os.path.basename(p) in retired:
+            skipped.append((os.path.basename(p), retired[os.path.basename(p)]))
+            continue
         try:
             mt = dt.datetime.fromtimestamp(os.path.getmtime(p))
             age_h = (now - mt).total_seconds() / 3600.0
@@ -136,9 +231,16 @@ def main():
         # versions of this tool did) inverts the meaning and manufactures alarms out of good news.
         # Staleness applies to .log / .out.log, which every run writes to.
         is_err = name.endswith(".err.log")
+        stale = (not is_err) and age_h > gap
+        via = ""
+        if stale:
+            fb = freshest(evidence_paths(name, exp))
+            if fb and (now.timestamp() - fb[0]) / 3600.0 <= gap:
+                stale = False
+                via = os.path.relpath(fb[1], os.path.expanduser("~"))
         rows.append({"name": name, "age_h": age_h, "mt": mt, "gap": gap, "is_err": is_err,
-                     "still_failing": still_failing,
-                     "stale": (not is_err) and age_h > gap,
+                     "still_failing": still_failing, "via": via,
+                     "stale": stale,
                      "lines": len(lines), "bad": len(hits),
                      "last_bad": (hits[-1][:150] if hits else "")})
     rows.sort(key=lambda r: (-r["bad"], r["age_h"]))
@@ -149,7 +251,7 @@ def main():
     print("| Log | Last write | Age | Allowed gap | Problem lines | Most recent problem |")
     print("|---|---|---:|---:|---:|---|")
     for r in rows:
-        flag = " **STALE**" if r["stale"] else ""
+        flag = " **STALE**" if r["stale"] else (" (alive: ~/%s)" % r["via"] if r["via"] else "")
         print("| %s%s | %s | %.0fh | %.0fh | %d | %s |"
               % (r["name"], flag, r["mt"].strftime("%m/%d %H:%M"), r["age_h"], r["gap"], r["bad"],
                  (r["last_bad"] or "-").replace("|", "/")))
@@ -167,6 +269,10 @@ def main():
               "no action unless it recurs:")
         for r in fixed:
             print("- %s (%d earlier problem lines)" % (r["name"], r["bad"]))
+    if skipped:
+        print("\nNot judged — retired or one-off logs listed in fleet/log_triage_expectations.json:")
+        for n, why in skipped:
+            print("- %s: %s" % (n, why))
     # Stable machine-readable line. The doctor used to grep this tool's PROSE, so when the
     # wording changed it parsed 0 and reported "clean" while 8 agents were failing. Prose is for
     # humans; this line is the contract.

@@ -31,6 +31,8 @@ Built 2026-08-07. Reference for anything touching Zoom Phone (missed calls, voic
 
 **Roanoke carrier close-out (2026-09-28, Spectrum/Cox live chat, agent Kirk B.):** confirmed no voice services remain on Cox/Spectrum account 001 5310 002188702 — a port-out of the only voice line closes phone service automatically, no call needed; internet untouched. Verify on the next statement (~10/10). Chat path that works: `myaccount-business.cox.com` login page → chat bubble → type "chat with a live agent" → Account services. Use the built-in browser; the Chrome extension can't render Spectrum pages. Chekkit told to keep hosted SMS on both ported numbers (reply on the 9/23 "Roanoke number porting" thread) — awaiting their confirmation.
 
+**UPDATE 2026-10-06:** Preston LIVE on Zoom Phone — user preston@fcfpawn.com, ext 813, US/CA Unlimited, direct number (540) 202-4200, outbound caller ID = that number. Announced in #general 10/6. Added to internal_roster.json.
+
 **UPDATE 2026-10-01:** 6th US/CA Unlimited calling plan bought for Preston ($15/mo; prorated $10.98 charged 10/1; plan now 6 × $15 = $90/mo). New number **(540) 202-4200** (The Plains, VA exchange; same last 4 as his cell) added to the account, **UNASSIGNED** — no Zoom user created for Preston and nothing sent to him; Joshua talks to him Monday 10/5. Next: create Preston's Zoom user (preston@fcfpawn.com), assign the license + 202-4200, add 202-4200 to `Zoom Call Pipeline/internal_roster.json`. Note: number-level Emergency Address on all 5 store numbers shows the Lexington address (125 Walker St) in Number Management — verify E911 per extension.
 
 **Licenses (2026-08-21):** exactly 5 × US/CA Unlimited Calling Plan seats ($75/mo) on exts 802/803/807/808/809.

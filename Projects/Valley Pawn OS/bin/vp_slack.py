@@ -109,9 +109,12 @@ def _cell(txt):
     import re
     t = txt.strip()
     m = re.fullmatch(r"\*\*(.+)\*\*|\*(.+)\*", t)
-    el = {"type": "text", "text": (m.group(1) or m.group(2)) if m else t}
+    mi = None if m else re.fullmatch(r"_(\S(?:.*\S)?)_", t)   # _x_ = italic, as the connector renders it (2026-10-06)
+    el = {"type": "text", "text": (m.group(1) or m.group(2)) if m else (mi.group(1) if mi else t)}
     if m:
         el["style"] = {"bold": True}
+    elif mi:
+        el["style"] = {"italic": True}
     if not el["text"]:
         el["text"] = " "
     return {"type": "rich_text", "elements": [{"type": "rich_text_section", "elements": [el]}]}

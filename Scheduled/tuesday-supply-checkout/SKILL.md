@@ -1,6 +1,6 @@
 ---
 name: tuesday-supply-checkout
-description: Tuesdays 10 AM–6 PM every 15 min — Self-determining checkout. Reads SUPPLY_ORDER_DATA directly, computes the total, and auto-places orders under $500. Multi-address checkout, sets REQUIRED per-store Location tag (accounting), Amex 3001.
+description: DISABLED 2026-10-06 — Self-determining checkout design cannot complete: platform-level "Real-World Transactions" safety control blocks unattended Amazon checkout, confirmed on 5 separate runs today (12:33/13:10/14:51/15:40/16:xx ET). Re-enable only once Amazon Business native Requisitioner + spending-limits policy (per amazon-business-ordering skill) is live, or once this task is redesigned to stop before checkout and hand off to a human/store requisitioner instead.
 model: claude-sonnet-5
 ---
 
