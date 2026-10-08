@@ -1,0 +1,2 @@
+#!/bin/bash
+python3 "$HOME/Documents/Claude/Projects/Valley Pawn OS/bin/skill_channels.py" morning-brief precious-metals-settlement-handler daily-store-audit-digest hiring-inbox-watch bald-rock-guest-reviews northwest-registered-agent-daily-check chekkit-unanswered-alert nrf-riseup-approval-watch fortis-email-monitor jewelry-onhand-catchup vp-dashboard-refresh scrap-monthly-bravo-approval-watch vp-website-trend-daily-refresh

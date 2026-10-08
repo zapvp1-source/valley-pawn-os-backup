@@ -1722,3 +1722,40 @@ Assessment: WAY perfect match. ROA's +1/-1 Pendants/Necklaces nets to 0 — same
 Repeats to watch: HAR Charms empty (10/5, 10/6), LEX Charms+Brooches empty (10/5, 10/6), WAY Charms empty (10/5, 10/6) — all consistent with the longer-running pattern already on record. ROA's "EnsureStore failed" first-attempt error and the LEX/WAY first-attempt wedge-timeouts all resolved cleanly on the documented one-retry policy — no new infrastructure concern, consistent with 10/1's "every store except CUL needed a retry" note (not escalating).
 
 Outcome: posted to #jewlery-counts via outbox (jewelry-onhand-nightly-pull-main-20261006-224932). No DM to Joshua (no anomalous OVER variance, no failure). No FAILURE_LEDGER row — ROA/LEX/WAY first-attempt failures all resolved via the standard one-retry policy, consistent with established precedent (10/1, 10/2, 10/5) of not ledger-logging a resolved single retry.
+
+## RUN RECORD — 2026-10-07 (Wednesday)
+
+Freeze window: Wed open stores only (Culpeper, Roanoke — Roanoke open Wednesdays since 2026-09-30). Both close 18:00 ET, reopen 10:00 ET next day (Thu 10/8). Fleet publish guard checked first: `vp_dryrun.py status` -> exit 1, dry run off, publications live, normal publish rules apply. Contention check clean before starting (no trigger claimed in the prior 30 min).
+
+Bravo side: dropped one host-queue job per store (`bravo_pull.sh jewelry-case-counts-v3 2026-10-07 <store>`), jewelry-case-counts-v3 cell per the 2026-10-06 fix.
+- **CUL**: 8/8 categories ok on the first trigger, no retry needed (~13 min pull).
+- **ROA**: 8/8 categories ok on the first trigger, no retry needed. Queue delayed ~25 min by a concurrent unrelated host-queue job (`pm-loan-growth-full`, a large multi-year loan-growth pull also using Bravo tonight) that was already running when ROA's job was dropped — the host queue serialized correctly, no manual intervention, no Bravo screen touched, result came back clean once it got its turn.
+
+PM count sheets: both managers' photos read directly from `fleet/eod_photos/2026-10-07/` (Read tool, staged from the device). Store identified from each sheet's own printed header:
+- CUL (Sandi Cole): Rings 679, Bracelets 120, Necklaces 153, Earrings 143, Pendants 255, Totals 1350. Sum-verified against the sheet's own TOTALS line (both AM and PM columns identical today).
+- ROA (Benjie Moore): Rings 576, Bracelets 139, Necklaces 155, Earrings 82, Pendants 176, Totals 1128. Sum-verified against the sheet's own TOTALS line.
+
+Both sheets legible and sum-verified clean — full open-store post, no partial-post needed.
+
+Comparison (Expected = Bravo jewelry-case-counts-v3, Counted = PM sheet):
+
+| Store | Category | Expected | Counted | Variance |
+|-------|----------|----------|---------|----------|
+| CUL | Rings | 679 | 679 | 0 |
+| CUL | Bracelets | 120 | 120 | 0 |
+| CUL | Necklaces | 153 | 153 | 0 |
+| CUL | Earrings | 143 | 143 | 0 |
+| CUL | Pendants | 255 | 255 | 0 |
+| **CUL Total** | | **1350** | **1350** | **0** |
+| ROA | Rings | 576 | 576 | 0 |
+| ROA | Bracelets | 139 | 139 | 0 |
+| ROA | Necklaces | 154 | 155 | +1 |
+| ROA | Earrings | 82 | 82 | 0 |
+| ROA | Pendants | 177 | 176 | -1 |
+| **ROA Total** | | **1128** | **1128** | **0** |
+
+Assessment: CUL perfect match across all 5 categories, first perfect CUL night on record in this log. ROA's +1/-1 Necklaces/Pendants nets to 0 — same offsetting pattern seen 10/2 and 10/6 (established quirk, not new). No anomalous OVER variance under Step 7's definition tonight — no DM to Joshua.
+
+Repeats to watch: ROA's offsetting +1/-1 Necklaces/Pendants split continues (10/2, 10/6, 10/7) — consistent, not escalating.
+
+Outcome: posted to #jewlery-counts via outbox (jewelry-onhand-nightly-pull-main-20261007-213937). No DM to Joshua (no anomalous OVER variance, no failure). No FAILURE_LEDGER row — both stores succeeded on the first trigger; ROA's delay was external queue contention from an unrelated task, not a Bravo-side failure or retry.

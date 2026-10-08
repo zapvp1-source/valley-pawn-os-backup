@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-10-06
+# LIVE STATE - auto-refreshed 2026-10-07
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -14,14 +14,14 @@ below disagrees with this block, THIS BLOCK WINS.
 |---|---|
 | Task folders on disk | 233 |
 | Registered with scheduler | 230 |
-| Enabled (will fire) | 114 |
-| Registered but disabled | 116 |
+| Enabled (will fire) | 52 |
+| Registered but disabled | 178 |
 | On disk but never registered | 3 |
-| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 4859 |
+| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 5197 |
 
 ### Enabled tasks
 
-`annual-board-review`, `asset-recovery-daily-refresh`, `bald-rock-15-day-contract`, `bald-rock-guest-reviews`, `bald-rock-monday-briefing`, `bonus-month-close`, `bonus-month-close-pull`, `bonus-pace-monday`, `bonus-paid-verify`, `ceo-monthly-scorecard`, `ceo-weekly-scorecard`, `chekkit-new-review-alert`, `chekkit-smart-replies-weekly-check`, `chekkit-unanswered-alert`, `chekkit-unanswered-eod-followup`, `connector-health-daily`, `daily-clockin-check`, `daily-cloudcover-check`, `daily-dress-code-check`, `daily-items-to-price`, `daily-store-audit-digest`, `daily-supply-order`, `ebay-campaign-chekkit-monthly`, `ebay-weekly-channel-audit`, `entity-compliance-check`, `eom-bravo-gl-export`, `eom-bravo-gl-export-watchdog`, `fleet-guardian`, `fortis-email-monitor`, `gdrive-cache-refresh`, `gun-safety-cert-followup-20261015`, `gusto-keep-alive`, `health-weekly-digest`, `hiring-inbox-watch`, `insurance-coverage-audit`, `insurance-inbox-watch`, `insurance-renewal-runner`, `jewelry-onhand-catchup`, `jewelry-onhand-nightly-pull`, `layaway-yield-weekly`, `marketing-ceo-briefing-weekly`, `missed-call-text-report`, `mobilepawn-app-social-monthly`, `mobilepawn-bravo-reply-check`, `monday-bravo-cell-gapfill`, `monday-bravo-combined-compile`, `monday-bravo-combined-run`, `monday-bravo-postcheck`, `monthly-amazon-store-allocation`, `monthly-analytics-report`, `monthly-analytics-watchdog`, `monthly-bravo-user-audit`, `monthly-capability-drift-audit`, `monthly-ebay-ratings-sweep`, `monthly-employee-sales-rankings`, `monthly-eom-recap`, `monthly-gun-audit-report`, `monthly-loan-layaway-outcomes`, `monthly-mobilepawn-participation`, `monthly-publication-audit`, `monthly-scrap-rankings`, `morning-brief`, `nics-weekly-mtd-ranking`, `northwest-registered-agent-daily-check`, `nrf-riseup-approval-watch`, `precious-metals-settlement-handler`, `qbo-api-token-refresh`, `quarterly-capex-sweep`, `roster-refresh`, `sales-tax-monthly-update`, `scheduled-task-model-audit-weekly`, `scrap-bucket-name-check`, `scrap-monthly-bravo-approval-watch`, `scrap-monthly-bravo-manifest-stage`, `sunday-checklist-summary`, `task-hygiene-sweep`, `tuesday-supply-prep`, `tuesday-supply-summary`, `valley-pawn-blog-publisher`, `vp-ai-search-health-check`, `vp-ai-visibility-metrics`, `vp-comms-drift-monthly-check`, `vp-creative-refresh-quarterly`, `vp-dashboard-refresh`, `vp-deal-of-week-monday-prompt`, `vp-deal-of-week-monday-reminder`, `vp-follower-growth-monthly-check`, `vp-gusto-signature-chase`, `vp-hiring-pipeline`, `vp-hr-compliance-quarterly-review`, `vp-hr-policy-monthly-sync`, `vp-new-customer-report`, `vp-presence-audit-weekly`, `vp-publer-analytics-friday`, `vp-staff-video-chase`, `vp-staff-video-prompt`, `vp-thursday-email-watchdog`, `vp-website-shop-nightly`, `vp-website-shop-weekly-report`, `vp-website-trend-daily-refresh`, `weekly-aged-inventory-canvas-refresh`, `weekly-analytics-summary`, `weekly-employee-perf-canvas-refresh`, `weekly-layaway-review-canvas-refresh`, `weekly-loan-review-canvas-refresh`, `weekly-markdown-verification-pull`, `weekly-markdown-verification-review`, `weekly-online-store-audit`, `weekly-returns-summary`, `weekly-store-kpis`, `weekly-store-perf-canvas-refresh`, `weekly-timekeeping-analysis`, `weekly-website-health-audit`, `yield-by-asset-class-monthly`
+`annual-board-review`, `bald-rock-monday-briefing`, `bonus-month-close`, `bonus-month-close-pull`, `ceo-monthly-scorecard`, `daily-supply-order`, `ebay-campaign-chekkit-monthly`, `entity-compliance-check`, `eom-bravo-gl-export`, `eom-bravo-gl-export-watchdog`, `gun-safety-cert-followup-20261015`, `gusto-keep-alive`, `insurance-coverage-audit`, `mobilepawn-app-social-monthly`, `mobilepawn-bravo-reply-check`, `monthly-amazon-store-allocation`, `monthly-analytics-report`, `monthly-analytics-watchdog`, `monthly-bravo-user-audit`, `monthly-capability-drift-audit`, `monthly-ebay-ratings-sweep`, `monthly-employee-sales-rankings`, `monthly-eom-recap`, `monthly-gun-audit-report`, `monthly-loan-layaway-outcomes`, `monthly-scrap-rankings`, `quarterly-capex-sweep`, `sales-tax-monthly-update`, `scheduled-task-model-audit-weekly`, `scrap-bucket-name-check`, `sunday-checklist-summary`, `task-hygiene-sweep`, `tuesday-supply-prep`, `tuesday-supply-summary`, `valley-pawn-blog-publisher`, `vp-ai-search-health-check`, `vp-ai-visibility-metrics`, `vp-comms-drift-monthly-check`, `vp-creative-refresh-quarterly`, `vp-deal-of-week-monday-prompt`, `vp-deal-of-week-monday-reminder`, `vp-follower-growth-monthly-check`, `vp-gusto-signature-chase`, `vp-hiring-pipeline`, `vp-hr-compliance-quarterly-review`, `vp-hr-policy-monthly-sync`, `vp-new-customer-report`, `vp-presence-audit-weekly`, `vp-staff-video-chase`, `weekly-analytics-summary`, `weekly-timekeeping-analysis`, `yield-by-asset-class-monthly`
 
 ### On disk but NOT registered (never fire)
 
@@ -31,6 +31,7 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Agent | File state | Currently loaded |
 |---|---|---|
+| `com.valleypawn.aged-canvas.plist` | installed | YES |
 | `com.valleypawn.backup-health.plist` | installed | YES |
 | `com.valleypawn.blog-announce.plist` | installed | YES |
 | `com.valleypawn.bonus-pace.plist` | installed | YES |
@@ -67,6 +68,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.ebay-ship-alert.plist` | installed | YES |
 | `com.valleypawn.ebay-weekly-rankings.plist` | installed | YES |
 | `com.valleypawn.email-analytics-weekly.plist` | installed | YES |
+| `com.valleypawn.employee-canvas.plist` | installed | YES |
 | `com.valleypawn.eod-photo-fetch.plist` | installed | YES |
 | `com.valleypawn.ffl-guardian.plist` | installed | YES |
 | `com.valleypawn.field-scorecard.plist` | installed | YES |
@@ -82,11 +84,15 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.health-intake.plist` | installed | YES |
 | `com.valleypawn.items-to-price.plist` | installed | YES |
 | `com.valleypawn.jewelry-pull-watchdog.plist` | installed | YES |
+| `com.valleypawn.layaway-canvas.plist` | installed | YES |
+| `com.valleypawn.layaway-yield-weekly.plist` | installed | YES |
+| `com.valleypawn.loan-canvas.plist` | installed | YES |
 | `com.valleypawn.loan-layaway-dms.plist` | installed | YES |
 | `com.valleypawn.mac-maintenance.plist` | installed | YES |
 | `com.valleypawn.mail-brief.plist` | installed | YES |
 | `com.valleypawn.markdown-verification-pull.plist` | installed | YES |
 | `com.valleypawn.markdown-verification-review.plist` | installed | YES |
+| `com.valleypawn.missed-call-report.plist` | installed | YES |
 | `com.valleypawn.missed-call-text.plist` | installed | YES |
 | `com.valleypawn.monday-compile.plist` | installed | YES |
 | `com.valleypawn.monday-pull.plist` | installed | YES |
@@ -106,6 +112,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.social-recap.plist` | installed | YES |
 | `com.valleypawn.social-weekly.plist` | installed | YES |
 | `com.valleypawn.spot-prices.plist` | installed | YES |
+| `com.valleypawn.store-canvas.plist` | installed | YES |
 | `com.valleypawn.store-kpis-weekly.plist` | installed | YES |
 | `com.valleypawn.taskperms-oneshot.plist` | installed | no |
 | `com.valleypawn.texting-scorecard.plist` | installed | YES |
@@ -133,29 +140,32 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-10-06 | Valley Pawn OS | - |
-| 2026-10-06 | Unified Search | - |
-| 2026-10-06 | Bravo Data Extraction | STATUS.md |
+| 2026-10-07 | Valley Pawn OS | - |
+| 2026-10-07 | Unified Search | - |
+| 2026-10-07 | Bravo Data Extraction | STATUS.md |
+| 2026-10-06 | Zoom Call Pipeline | - |
+| 2026-10-06 | Website | - |
+| 2026-10-06 | Valuation Core | README.md |
+| 2026-10-06 | Valley Pawn Studios | STATUS.md |
+| 2026-10-06 | Taxes 2026 | - |
+| 2026-10-06 | Sold Margin Review | STATUS.md |
+| 2026-10-06 | Short Term Rental Optimization | - |
+| 2026-10-06 | Precious Metals Settlements | - |
+| 2026-10-06 | Pawn Walks | STATUS.md |
+| 2026-10-06 | Life OS | - |
+| 2026-10-06 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-10-06 | Health Optimization | STATUS.md |
+| 2026-10-06 | Email Refinement | - |
+| 2026-10-06 | Discount Outlier Review | STATUS.md |
+| 2026-10-06 | Daily Funds Verification | - |
+| 2026-10-06 | Compliance | - |
+| 2026-10-06 | Business Dashboard Website | - |
 | 2026-10-05 | eBay | - |
-| 2026-10-05 | Website | - |
-| 2026-10-05 | Taxes 2026 | - |
 | 2026-10-05 | Refine Social Media | - |
-| 2026-10-05 | Precious Metals Settlements | - |
-| 2026-10-05 | Life OS | - |
-| 2026-10-05 | Jewelry Count Reconciliation | STATUS.md |
-| 2026-10-05 | Health Optimization | STATUS.md |
 | 2026-10-05 | Gold and Silver Markeitng | - |
-| 2026-10-05 | Email Refinement | - |
-| 2026-10-05 | Daily Funds Verification | - |
-| 2026-10-05 | Compliance | - |
 | 2026-10-05 | Communcations | - |
-| 2026-10-05 | Business Dashboard Website | - |
 | 2026-10-05 | Ai Optimized Marketing | - |
 | 2026-10-04 | _stage | - |
-| 2026-10-04 | Valuation Core | README.md |
-| 2026-10-04 | Sold Margin Review | STATUS.md |
-| 2026-10-04 | Pawn Walks | STATUS.md |
-| 2026-10-04 | Discount Outlier Review | STATUS.md |
 | 2026-10-02 | eBay Customer Campaign | - |
 | 2026-10-02 | MobilePawn Participation | README.md |
 | 2026-10-02 | Human Resources | - |
@@ -163,16 +173,13 @@ below disagrees with this block, THIS BLOCK WINS.
 | 2026-10-01 | Solaterra Site | - |
 | 2026-10-01 | Preston Time Review | STATUS.md |
 | 2026-10-01 | Bonus Program | - |
-| 2026-09-30 | Valley Pawn Studios | STATUS.md |
 | 2026-09-30 | VP Ops Engine | STATUS.md |
 | 2026-09-30 | Training Program | STATUS.md |
 | 2026-09-30 | Loan Rule Change Outreach | STATUS.md |
 | 2026-09-29 | Quickbooks Set UP | - |
 | 2026-09-29 | Designer Goods Authentication | - |
-| 2026-09-28 | Zoom Call Pipeline | - |
 | 2026-09-28 | Call Analysis | - |
 | 2026-09-18 | Landscap Plan | - |
-| 2026-09-18 | Air Quality Monitoring | STATUS.md |
 
 <!-- LIVE-STATE:END -->
 

@@ -6,7 +6,19 @@
 **Login username:** X009686 (password saved in Chrome)
 **Billing cycle:** VSP posts each invoice on the **1st** of the month. We check and pay starting the **5th**.
 
-**⚠️ There is NO automated VSP check.** A task called `vsp-nics-fee-monthly-check` is referenced in
+**🟢 AUTOMATED 2026-10-07:** Cowork scheduled task `vsp-nics-fee-monthly` (5th, 10:15 AM ET) + saved skill
+`vsp-nics-fee-payment`. It logs in, reads all 5 stores' FIRE invoices, stages each payment to the final screen and
+DMs Joshua; **Joshua clicks Pay** (Claude never submits a payment). First live run 11/5/2026.
+**🔴 2026-10-07: the Chrome-saved password was REJECTED** (cert fine — the stored password itself is stale; the
+employee who pays has likely changed it). One attempt made, no retry (locks at 5). Fix = whoever pays signs in
+once on the Mac Studio's Chrome and lets Chrome save the new password.
+**Payment history:** paid by WF debit card ...5075 (WF Checking 2797), descriptor `VIRGINIA STATE POL 804-2785305`,
+one charge per store, usually the 1st–6th. Calendar 2025 = 62 charges, $4,970.00 (QBO FY2025 transaction detail,
+deduped). Books: `1 - Store Level Expenses:Gun Background Checks`.
+**Record corrections DONE 2026-09-30** (VSP A/R confirmed on Gmail thread 1a0ce335a632a7be) — Culpeper name and
+Lexington address; re-check on the portal at the next run.
+
+~~**⚠️ There is NO automated VSP check.**~~ (superseded above) A task called `vsp-nics-fee-monthly-check` is referenced in
 older copies of this runbook and in `BUSINESS_OS.md` — **it has never existed** in the scheduled-task
 registry or on disk (verified 2026-09-06). Do not go looking for it and do not assume the balance was
 checked. The balance check is a **documented manual step on the 5th**, surfaced as a row in

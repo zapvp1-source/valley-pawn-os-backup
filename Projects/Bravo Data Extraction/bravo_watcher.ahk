@@ -108,6 +108,7 @@ Persistent
 #Include reports\Loans75Detail.ahk
 #Include reports\CustomerLoyalty.ahk
 #Include reports\CustomerLoyaltyProbe.ahk
+#Include reports\PmLoanGrowth.ahk
 ; Add #Include for each new report module here.
 
 ; ----- Globals ---------------------------------------------------------------
@@ -242,6 +243,7 @@ Main() {
     REPORT_HANDLERS["loans75-detail"]                := PullLoans75Detail
     REPORT_HANDLERS["customer-loyalty"]              := PullCustomerLoyalty
     REPORT_HANDLERS["customer-loyalty-probe"]        := PullCustomerLoyaltyProbe
+    REPORT_HANDLERS["pm-loan-growth"]                := PullPmLoanGrowth
     ; Add additional registrations here as we build out reports.
 
     pollMs := Integer(CONFIG.Get("watcher.poll_interval_ms", "30000"))
