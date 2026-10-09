@@ -112,7 +112,12 @@ def parse_block(block):
         return None
     if not fields.get("VERBATIM") or not fields.get("SOURCE"):
         return None
-    if "http" not in fields.get("SOURCE", ""):
+    src = fields.get("SOURCE", "")
+    # 2026-10-08 (Ask Valley Pawn, Phase 2 of KB_ARCHITECTURE.md): a recorded employee-to-employee call
+    # has no Slack permalink. Its SOURCE is "zoom-call:<call id> | <date> | <store/participant>" and is
+    # verifiable in Zoom under existing access control. This is the ONE non-URL form accepted; the
+    # permalink requirement stays for everything else.
+    if "http" not in src and not src.startswith("zoom-call:"):
         return None  # a SOURCE without a permalink is not verifiable
 
     fields["TOPIC"] = fields["TOPIC"].strip().strip("*").lower()

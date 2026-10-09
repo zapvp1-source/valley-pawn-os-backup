@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-09-07 13:40 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-10-08 22:14 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -718,6 +718,12 @@ PRESTON SAID: "I will be on vacation all next week. If anyone needs an approval 
 SOURCE: #general | 2025-06-14 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1749917861277259
 id: approval-backup-and-detailed-b3688245
 
+### [HIGH] approval-form-1000-plus
+RULE: Transactions of $1,000 or more require following the approval procedure, which includes filling out a form.
+PRESTON SAID: "And then just following the procedures for approvals on higher transactions. So like the $1,000 plus, you know, form that we fill out."
+SOURCE: zoom-call:2026-10-08_1207_Preston-to-JacobCox_9m48s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
+id: approval-form-1000-plus-3a0d3255
+
 ### [HIGH] approval-form-required-fields
 RULE: Precious-metal approval forms must have the resale/melt fields filled in before Preston will approve; he rejects incomplete forms.
 PRESTON SAID: "Please make sure form is fully filled out Benjie. Missing resale/melt."
@@ -895,6 +901,12 @@ PRESTON SAID: "Smith & Wesson m&p 40 - $275 - Our retail selling price for us on
 SOURCE: #loans-and-buys | 2024-03-09 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1709994600974139
 id: firearm-loan-vs-retail-ratio-e40b5652
 
+### [MEDIUM] loan-buy-risk-factors
+RULE: When deciding on loans and buys, assess risk by the item's condition, whether it will resell quickly, and how fast it sells through on eBay.
+PRESTON SAID: "Making decisions on loans and buys on your own, identifying risk with, you know, condition, if it's going to resell quickly or not, you know, how quick it's selling through on eBay."
+SOURCE: zoom-call:2026-10-08_1207_Preston-to-JacobCox_9m48s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
+id: loan-buy-risk-factors-bb39aa86
+
 ### [MEDIUM] tv-loan-ratio
 RULE: Don't loan retail on a TV — a 40" TCL we'd sell for $110 should be a ~$60 loan (roughly 55%).
 PRESTON SAID: "TCL 40 inch tv - $110 - This is how much we would sell this for. Should be loaning like $60 on this."
@@ -906,6 +918,12 @@ RULE: Example of Preston's vehicle-loan judgment: customer wanted $3,500 on a 20
 PRESTON SAID: "Have someone trying to get a loan on their 2008 Toyota rav4 with just under 150k miles. KBB trade in value in fair condition is $2790 on the very low end. Has good inspection, condition is good overall. No lights on dash. He wanted $3,500 but I'm thinking of just offering around $1,500. Has had some loans with us before but nothing substantial at all."
 SOURCE: DM Joshua<->Preston | 2023-10-24 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1698166027493609
 id: vehicle-loan-judgment-c6a8137c
+
+### [LOW] customer-confidence-introduce-background
+RULE: To build customer comfort when the regular go-to person is out, staff should tell customers about their own experience and that they work together with that person.
+PRESTON SAID: "let them know that you and Sandy work together"
+SOURCE: zoom-call:2026-10-08_1225_Preston-to-JoshuaBurnett_8m57s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
+id: customer-confidence-introduc-8df0b0c9
 
 
 ==============================================================================
@@ -1496,6 +1514,12 @@ PRESTON SAID: "30 minutes before we are opening. How are you using that time? Op
 SOURCE: #general | 2026-02-12 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1770908205375769
 id: pre-open-30-minutes-6a7c6338
 
+### [HIGH] price-tag-visibility
+RULE: When putting items out for sale, the tag must be visible on the shelf and not hidden.
+PRESTON SAID: "So when you put things out for sale, you always want to be able to see the tag when it's on the shelf. So you don't want it hide and things like that."
+SOURCE: zoom-call:2026-10-08_1207_Preston-to-JacobCox_9m48s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
+id: price-tag-visibility-f2ddf434
+
 ### [HIGH] pricing-list-zero-daily
 RULE: The pricing list goal is zero by the end of every day — unpriced items can't be sold because they aren't on the floor. eBay and Facebook Marketplace are the fallback activity when foot traffic is slow.
 PRESTON SAID: "Good morning everyone. Make sure we are sales focused. Lots of cash going out lately not as much coming in. Every action we take should be in the interest of getting cash in the door. Get out from behind the counters and greet the customers. Make sure someone is always available to sell. eBay and Facebook marketplace should be a primary focus when sales foot traffic is slow. Pricing list goal is always 0 by the end of the day, we can't sell it if it's not out on the floor."
@@ -1567,6 +1591,12 @@ Remember that the warranty REQUIRES an account with an EMAIL to be qualified.
 New accounts should be setup for our buying customers as well as our loaning customers!"
 SOURCE: #general | 2025-08-19 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1755622571690899
 id: warranty-requires-account-wi-4db3aad0
+
+### [HIGH] warranty-used-items-no-indefinite
+RULE: Valley Pawn does not give open-ended warranties on used items. Coverage is limited to the stated return/warranty window.
+PRESTON SAID: "I mean, we can't have a warranty that lasts indefinitely on used items."
+SOURCE: zoom-call:2026-08-29_HAR_store-to-Preston_14m42s.txt | 2026-08-29 | store<->Preston (transcribed 2026-10-01)
+id: warranty-used-items-no-indef-c59a6554
 
 ### [HIGH] wclm-four-pitch-points
 RULE: Every customer must be told about all four: Warranty, Clearance, Layaway, Mobile app ("WCLM"). This is Preston's daily standing reminder.
@@ -1642,11 +1672,35 @@ PRESTON SAID: "Has been set to 40% it could probably be less now though since we
 SOURCE: DM Joshua<->Preston | 2026-08-24 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1787574469297889
 id: clearance-markdown-percentag-59d4b2c6
 
+### [MEDIUM] cross-training-staff-help-all-customers
+RULE: Any employee should be able to help any customer, so business doesn't depend on one person (Sandy) being in the store. Preston wants training focused on getting staff comfortable offering stronger values.
+PRESTON SAID: "Sandy's great and all but we want everybody to be able to help everybody."
+SOURCE: zoom-call:2026-10-08_1225_Preston-to-JoshuaBurnett_8m57s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
+id: cross-training-staff-help-al-d14a9c4c
+
+### [MEDIUM] disclosed-defect-sold-as-tested
+RULE: If a known defect is disclosed to the buyer and the item is tested in store at the time of sale, the store treats the sale as final and does not owe a refund or swap later.
+PRESTON SAID: "We still had the product. We sold the product, disclosing all issues with it. You're okay with it."
+SOURCE: zoom-call:2026-08-29_HAR_store-to-Preston_14m42s.txt | 2026-08-29 | store<->Preston (transcribed 2026-10-01)
+id: disclosed-defect-sold-as-tes-beea03ff
+
 ### [MEDIUM] firearm-classification-errors
 RULE: A firearm entered under the wrong type (AR-15 logged as a pistol) or wrong manufacturer must be corrected in both the system and the gun log. A barrel length entered as 12 inches on a rifle would make it illegal and must be verified.
 PRESTON SAID: "Winchester Ranger 30-30 - $250 - No photo of item; Barrel length is listed as 12 inches which would make this illegal. Is this accurate?"
 SOURCE: #loans-and-buys | 2024-03-30 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1711805400000000
 id: firearm-classification-error-2b945000
+
+### [MEDIUM] firearm-no-serial-send-receiver-photos
+RULE: If a firearm has no visible serial number, send Preston pictures of the receiver so he can verify. The loan can be written up and corrected afterward if needed.
+PRESTON SAID: "you send me some pictures of the receiver just so I can verify"
+SOURCE: zoom-call:2026-10-08_1202_staff-x3983-to-Preston_3m54s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
+id: firearm-no-serial-send-recei-d0da70af
+
+### [MEDIUM] firearm-serial-number-pre-1968
+RULE: Firearms made before 1968 were not required to carry serial numbers, so an older gun with no serial number can be legitimate. Check the age first when you can't find one.
+PRESTON SAID: "They weren't required before 1968."
+SOURCE: zoom-call:2026-10-08_1202_staff-x3983-to-Preston_3m54s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
+id: firearm-serial-number-pre-19-5268efd2
 
 ### [MEDIUM] fpd-is-dead-money
 RULE: Items sitting in first payment default are "dead money" that should be expired and put on the sales floor as inventory.
@@ -1672,6 +1726,12 @@ PRESTON SAID: "I'd try and snapshot gold price at time of filing the report?"
 SOURCE: DM Joshua<->Preston (D03C7RBGY56) | 2026-07-29 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1785357517690059
 id: insurance-claim-metals-valua-5e120b35
 
+### [MEDIUM] inventory-prep-factory-reset
+RULE: When preparing inventory for the sales floor, clean it up and reset electronics back to factory settings if they need it.
+PRESTON SAID: "That's going to be resetting it back to factory if it needs it."
+SOURCE: zoom-call:2026-10-08_1207_Preston-to-JacobCox_9m48s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
+id: inventory-prep-factory-reset-c5e30b6f
+
 ### [MEDIUM] known-slow-movers
 RULE: A leaf vac/chipper/mulcher sat over 2 years in Lexington and is treated as a known very-difficult item to move.
 PRESTON SAID: "Troy bilt leaf vac/chipper/mulcher -$120 - Had one of these in Lexington sit for over 2 years. Really, really difficult to sell. Let's move this out asap."
@@ -1684,6 +1744,30 @@ PRESTON SAID: "Can't sell it on eBay since it's a medical device"
 SOURCE: #deal-questions | 2025-12-15 | https://valleypawnworkspace.slack.com/archives/C03BWGT5F5X/p1765827187440699
 id: medical-devices-no-ebay-562985de
 
+### [MEDIUM] new-hire-sales-goals-30-60-90
+RULE: New retail hires ramp through monthly sales goals of $7,000 for the first 30 days, $9,000 for the next 30, and $12,000 for days 60-90.
+PRESTON SAID: "But you go for for like the 30 days is going to be 7000 next 30 days 9000 and then 12,000 that kind of just ramps you into, you know, expected typical"
+SOURCE: zoom-call:2026-10-08_1207_Preston-to-JacobCox_9m48s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
+id: new-hire-sales-goals-30-60-9-2b8ffec8
+
+### [MEDIUM] pawn-reload-amount-change
+RULE: A customer may sometimes want a reload for less or more than usual. Make sure a higher or lower amount makes sense before agreeing.
+PRESTON SAID: "For the customer, there's occasions where they might want less or more and we got to make sure that makes sense to go up or whatever."
+SOURCE: zoom-call:2026-10-08_1207_Preston-to-JacobCox_9m48s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
+id: pawn-reload-amount-change-979a5256
+
+### [MEDIUM] pawn-reload-procedure
+RULE: To process a reload, verify the item is what it is, retest it, then do the reload. The reload amount is generally the same as before.
+PRESTON SAID: "It's just verify the item is what it is retest it. Do the reload generally it's always the same amount."
+SOURCE: zoom-call:2026-10-08_1207_Preston-to-JacobCox_9m48s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
+id: pawn-reload-procedure-2c8afd55
+
+### [MEDIUM] payment-reversal-dont-dispute
+RULE: When a customer payment has to be reversed, reverse it rather than disputing it. Disputes get lost and add fees on top, reportedly hundreds of dollars.
+PRESTON SAID: "It's like hundreds of dollars on top just to lose a dispute."
+SOURCE: zoom-call:2026-09-22_CUL_Preston-to-store_1m57s.txt | 2026-09-22 | store<->Preston (transcribed 2026-10-01)
+id: payment-reversal-dont-disput-b63550d0
+
 ### [MEDIUM] photo-required-every-item
 RULE: Every intake item requires a photo of the actual item, and photos must reflect the actual items and quantities taken in.
 PRESTON SAID: "Aventon Pace 500 - No photo of item - Why are we not getting photos? 2 yesterday and one today."
@@ -1695,6 +1779,36 @@ RULE: Multiple identical new-in-box items from a new customer, or a batch of new
 PRESTON SAID: "3 total NIB Bissel products, 2 being the exact same. -  What was the story on this? New customer seems a bit odd."
 SOURCE: #loans-and-buys | 2024-03-07 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1709821800000000
 id: red-flag-bulk-new-in-box-8daad58d
+
+### [MEDIUM] report-sales-by-associate
+RULE: To see each associate's sales, run the report: go to Reports, choose Sold Inventory, and group by associate. This lets you compare associates over the same time period.
+PRESTON SAID: "I would run the report, you know, where you go to reports, sold inventory and you group by associate."
+SOURCE: zoom-call:2026-10-08_1312_Preston-to-Benjie_4m25s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
+id: report-sales-by-associate-787cbf2f
+
+### [MEDIUM] return-policy-30-day-window
+RULE: The store return/warranty policy covers used items for 30 days from purchase. Problems reported months later fall outside it.
+PRESTON SAID: "It's not within 30 days like our policy covers."
+SOURCE: zoom-call:2026-08-29_HAR_store-to-Preston_14m42s.txt | 2026-08-29 | store<->Preston (transcribed 2026-10-01)
+id: return-policy-30-day-window-6d4b747e
+
+### [MEDIUM] return-policy-30-days-used-items
+RULE: Returns/warranty coverage on used items is limited to 30 days. Issues raised months after the sale fall outside the policy.
+PRESTON SAID: "It's not within 30 days like our policy covers."
+SOURCE: zoom-call:b7985902fd5c481cb3c1de9b038e8437 | 2026-08-29 | HAR Preston Peters
+id: return-policy-30-days-used-i-da6df0c4
+
+### [MEDIUM] sales-goal-measurement-period
+RULE: Training sales goals are measured over 30-day periods from the employee's start date, not by calendar month.
+PRESTON SAID: "we're gonna look at this off your start date 30 days rather than like the month because it doesn't line up perfectly just to let you know."
+SOURCE: zoom-call:2026-10-08_1207_Preston-to-JacobCox_9m48s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
+id: sales-goal-measurement-perio-44a94bf5
+
+### [MEDIUM] salesperson-price-ownership
+RULE: Salespeople should settle on a fair number and close the deal themselves, rather than going back to the manager on price. Handling pricing start to finish builds customer confidence.
+PRESTON SAID: "And the best thing you can do is try to get an idea of what is a fair number to work with and try to close it with that number."
+SOURCE: zoom-call:2026-10-08_1207_Preston-to-JacobCox_9m48s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
+id: salesperson-price-ownership-4959c31c
 
 ### [MEDIUM] scale-recertification
 RULE: Store scales are dropped off for recertification — Preston handles this personally as part of the metals-weighing chain of custody.
@@ -1723,6 +1837,12 @@ PRESTON SAID: "They have been pretty bad for us. Not even considering authentici
 SOURCE: #deal-questions | 2025-10-18 | https://valleypawnworkspace.slack.com/archives/C03BWGT5F5X/p1760808569949109
 id: sunglasses-performance-cffbb564
 
+### [MEDIUM] training-needs-list-process
+RULE: When an employee needs more training (e.g., handbags, antique firearms), they should write up a list of those items so training can be prioritized, and share it with Preston and Sandy.
+PRESTON SAID: "you know make a list of of that so that way we can prioritize"
+SOURCE: zoom-call:2026-10-08_1225_Preston-to-JoshuaBurnett_8m57s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
+id: training-needs-list-process-ea95a6dc
+
 ### [MEDIUM] writeup-quality-standard
 RULE: Items must be written up with real descriptions and correct quantities — vague write-ups fail the police report requirement and leave the customer without detail.
 PRESTON SAID: "Silver bullion - $278 - What are these? This is written up very poorly. Has quantity set to 1. No description of actual coins. These are not bullion. We can't write items up this way. Doesn't fulfill the police report needs and does not have details for the customer."
@@ -1734,6 +1854,67 @@ RULE: The original Xbox One is no longer worth $50 on intake — some are sellin
 PRESTON SAID: "Xbox one original - $50 - This is too much on these now. Some are selling for $50-$60."
 SOURCE: #loans-and-buys | 2025-03-20 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1742496164761469
 id: xbox-one-original-price-drop-9f88f2f8
+
+### [LOW] 30-60-90-plan-acknowledgment
+RULE: The 30/60/90 day action plan is reviewed in person with the employee. The employee then signs an acknowledgment in Gusto confirming they understand it.
+PRESTON SAID: "So I wanted them to go over with you in person and then there's one the sign saying that you acknowledge and understand it"
+SOURCE: zoom-call:2026-10-08_1225_Preston-to-JoshuaBurnett_8m57s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
+id: 30-60-90-plan-acknowledgment-fdaeb780
+
+### [LOW] bank-account-adding-employees
+RULE: When adding employees to the business bank account, book an appointment online and tell the bank it will have to add them manually, because the account already has many people on it.
+PRESTON SAID: "Make sure when you do just tell them that they they're gonna have to manually add them because there's so many people on the account"
+SOURCE: zoom-call:2026-10-08_0949_Preston-to-Sandi_1m55s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
+id: bank-account-adding-employee-34f86c43
+
+### [LOW] firearm-serial-location-receiver
+RULE: The serial number is normally on the receiver of the firearm. The speaker is not identified in the transcript, and it conflicts with the pre-1968 no-serial note, so treat it as a general guide only.
+PRESTON SAID: "the serial numbers always on the receiver of the firearm."
+SOURCE: zoom-call:2026-10-08_1202_staff-x3983-to-Preston_3m54s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
+!! CONFLICT: Preston also says guns made before 1968 weren't required to have serial numbers, so "always on the receiver" does not hold for older guns.
+id: firearm-serial-location-rece-d09203ff
+
+### [LOW] goodwill-buyback-defective-console-as-is-value
+RULE: For an out-of-policy complaint on a console with a known defect, the offer is to buy it back at its as-is/for-parts value with the defect. Make a fairly strong offer, since recovering our money on eBay after fees is acceptable.
+PRESTON SAID: "we would look up What that PS 5 is worth with the damage? HDMI or whatever as is for parts etc. Make him an offer a fairly strong offer because if we get just You know our money back on eBay after fees It's not the end of the world"
+SOURCE: zoom-call:b7985902fd5c481cb3c1de9b038e8437 | 2026-08-29 | HAR Preston Peters
+id: goodwill-buyback-defective-c-6d625826
+
+### [LOW] goodwill-buyback-ebay-breakeven
+RULE: On a goodwill buyback of a defective console, Preston is willing to make a fairly strong offer. His reasoning is that recovering the store's cost on eBay after fees is an acceptable outcome.
+PRESTON SAID: "Because if we get just our money back on eBay after fees, it's not the end of the world."
+SOURCE: zoom-call:2026-08-29_HAR_store-to-Preston_14m42s.txt | 2026-08-29 | store<->Preston (transcribed 2026-10-01)
+id: goodwill-buyback-ebay-breake-b43d1498
+
+### [LOW] goodwill-system-to-system-swap-no-accessories
+RULE: For this goodwill case, handle the swap system to system and leave controllers and accessories out of the deal. Give the customer a fair deal both ways, and he may owe a difference on a replacement.
+PRESTON SAID: "Just do as good as you can both ways for him and See what we can agree on we don't need his controllers. He doesn't need our controllers Just do it system to system or whatever"
+SOURCE: zoom-call:b7985902fd5c481cb3c1de9b038e8437 | 2026-08-29 | HAR Preston Peters
+id: goodwill-system-to-system-sw-c43fbfde
+
+### [LOW] gun-safety-course-reimbursement
+RULE: The company reimburses employees for the gun safety course certification once they submit the certificate. The transcript is fragmentary, so the exact terms are unclear.
+PRESTON SAID: "we pay you right back"
+SOURCE: zoom-call:2026-10-08_1225_Preston-to-JoshuaBurnett_8m57s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
+id: gun-safety-course-reimbursem-c83a6fc6
+
+### [LOW] out-of-policy-defective-buyback-offer
+RULE: When an item is outside the return policy and the store still wants to help, the fallback is to buy it back. Look up the market value of that item with the defect and make an offer, rather than refunding or swapping it.
+PRESTON SAID: "I mean, the very least we can do is look up what one that has that defect has and make an offer and purchase it back."
+SOURCE: zoom-call:2026-08-29_HAR_store-to-Preston_14m42s.txt | 2026-08-29 | store<->Preston (transcribed 2026-10-01)
+id: out-of-policy-defective-buyb-185524bf
+
+### [LOW] partial-refund-on-return-resale-discount
+RULE: When a customer returns an item and the store agrees to sell it back at a lower price, the return can be done in part. Refund part in cash or credit and put the remainder back on the card. The speaker hedged ("maybe") and the speaker's role is not identified, so confirm with Preston before treating this as policy.
+PRESTON SAID: "you can return part of it in cash. or credit and then put the other back on the card, maybe."
+SOURCE: zoom-call:977dbd23cc464aaebf05222ffcc6818f | 2026-10-07 | UNK Sandi Cole
+id: partial-refund-on-return-res-b6a103d4
+
+### [LOW] return-and-resell-partial-refund-method
+RULE: When a customer returns an item and the store resells it to them at a discounted price, the refund can be split. Part goes back as cash or store credit and the rest to the card, or as a gift card. The speaker hedged ("maybe"), so confirm with Preston before relying on it.
+PRESTON SAID: "you can return part of it in cash or store credit and then put the other back on the card maybe"
+SOURCE: zoom-call:2026-10-07_Preston-Zoom_to_Sandi_5m51s.txt | 2026-10-07 | store<->Preston (transcribed 2026-10-01)
+id: return-and-resell-partial-re-20965e6f
 
 ### [LOW] silver-market-slowdown
 RULE: Preston tracks that falling silver slows in-store silver sell-through.
@@ -1747,7 +1928,19 @@ PRESTON SAID: "Police said it was stolen and we had to hold it."
 SOURCE: DM Joshua<->Preston | 2024-01-30 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1706626237916359
 id: stolen-property-police-hold-ab895a94
 
+### [LOW] tracking-sales-in-bravo
+RULE: Employees track their own sales in Bravo using the sales data in the Reports tab. The transcript is garbled, so the exact report name is unclear.
+PRESTON SAID: "Yeah, yeah sports and the sales data there and the report tab"
+SOURCE: zoom-call:2026-10-08_1225_Preston-to-JoshuaBurnett_8m57s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
+id: tracking-sales-in-bravo-0840d260
+
+### [LOW] typical-retail-sales-benchmarks
+RULE: Typical monthly retail sales per employee run about $12-15K, and the higher performers push toward $30K.
+PRESTON SAID: "retail sales. You know, generally, most of our folks are 1215 and then the higher performers are, you know, pushing 30 just to give you an idea where we want you to be."
+SOURCE: zoom-call:2026-10-08_1207_Preston-to-JacobCox_9m48s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
+id: typical-retail-sales-benchma-f03d7d66
+
 
 ==============================================================================
-COVERAGE: 219 entries - 0 verified by Preston, 168 high-confidence rules, 47 medium, 4 low, 0 superseded.
+COVERAGE: 251 entries - 0 verified by Preston, 171 high-confidence rules, 63 medium, 17 low, 0 superseded.
 ==============================================================================

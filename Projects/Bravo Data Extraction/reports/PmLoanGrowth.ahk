@@ -20,6 +20,13 @@
 #Requires AutoHotkey v2.0
 
 PullPmLoanGrowth(store, dateOrRange, outputDir) {
+    ; PAUSE SWITCH (2026-10-08): while  <project>\pm_loan_growth.PAUSED  exists, every pm-loan-growth
+    ; cell returns an error immediately without touching Bravo (keeps the morning report window clear
+    ; and drains stale queued jobs). Delete the file to resume. No watcher restart needed.
+    if FileExist(A_ScriptDir . "\pm_loan_growth.PAUSED") {
+        LogMessage("  [pm-loan-growth] PAUSED flag present - skipping " . store . " " . dateOrRange)
+        return Map("report", "pm-loan-growth", "store", store, "date", dateOrRange, "status", "error", "output_path", "", "row_count", 0, "duration_ms", 0, "error", "paused")
+    }
     ; tokens: walk (FDP layout) | walkdesc | walkplain | jewelry | byamount | portfolio  (probes, 10/7)
     ; PRODUCTION token:  p:YYYY-MM-DD..YYYY-MM-DD  -> saved "Claude Loan Portfolio 2026"
     ;   (Ticket Kind = LOAN, Create Date range overridden to the given range, every disposition)

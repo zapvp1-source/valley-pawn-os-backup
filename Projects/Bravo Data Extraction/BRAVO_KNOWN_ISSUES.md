@@ -3,6 +3,18 @@
 Any session diagnosing Bravo MUST read this index before forming a hypothesis,
 and MUST verify+stamp any OPEN item's next-run outcome before starting new work.
 
+## 2026-10-08 — FwbRun grid walker: ~1 in 3 cells stalls; queued bravo_pull jobs outlive their runner
+- Overnight 10/7–10/8, `pm-loan-growth` (Claude Loan Portfolio 2026, monthly windows, 150–450 rows) — about a third of
+  cells stalled in `FwbWriteGrid` ("targeted fill for N missing rows", or `SetReportDate` hang) → `bravo_run` self-heal
+  restarted the watcher after 12 min silence. Size is NOT the cause (264-row grids stalled; 422-row grids passed).
+  A single-store cell rerun usually succeeds. **Pattern: one job file per store×window, retry the missing ones.**
+- A 5-store / 1-year grid (3,203 rows) stalled at 2,077 rows — keep windows ≈1 month per store.
+- **Host-queue jobs keep running after their log stops.** After a self-heal, `bravo_pull.sh` lines kept dropping
+  triggers for 9+ hours (stale 5-store pm-loan-growth triggers at 2:50, 4:49, 6:49 AM). Moving the job file does not stop
+  them. Fix used: runtime pause switch inside the handler (`pm_loan_growth.PAUSED`) so stale triggers fail in seconds.
+  Any new long-running cell should ship with the same pause-file check.
+- Catalog of what each saved report really filters: `BRAVO_SAVED_REPORTS_CATALOG.md` (new).
+
 ## 2026-09-30 — `pawn-activity-summary`: (a) a "success" cell can carry the WRONG DATE RANGE; (b) export can hang Bravo
 - (a) `PawnActivitySummary.ahk` sets Start/End with ValuePattern and, by design, falls through to Bravo's defaults if the
   value doesn't commit — the cell still reports `success`. Seen 9/30: LEX requested 2026-07-16..2026-09-29, log says

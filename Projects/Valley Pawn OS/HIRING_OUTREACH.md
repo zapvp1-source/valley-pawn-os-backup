@@ -5527,3 +5527,251 @@ Loaded enterprise-map (cloud-only, no `mcp__remote-devices__*` bridge; Chrome ex
 **Notifications sent:** none — nothing changed since the last grid post (6:48-6:53 PM), consistent with the reporting rule (post only on change) and Rule 18 (no noise/duplicate DMs).
 
 Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not available — cloud-only session, no Mac bridge).
+
+## Run — 2026-10-08 ~9:35 AM ET (vp-hiring-pipeline scheduled task, cloud-only session)
+
+Loaded enterprise-map (cloud-only, no `mcp__remote-devices__*` bridge; Chrome extension connected), hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Read this file's tail through the 9:26 AM Slack DM (Kenia Aviles, Rita Allen, Logan Burnett, Patrick Franklin) before touching anything.
+
+**Indeed Messages inbox read live — zero new activity since the 9:22-9:25 AM run.** Newest threads are our own just-sent messages (Kenia Aviles "Thank you" ack, Patrick Franklin's nudge, Logan Burnett's Friday offer, Rita Allen's 2:05 PM offer) — all already logged in the 9:26 AM DM. No candidate replies awaiting action.
+
+**Candidates list re-verified (265 total, New=11, Reviewing=28, Contacting=195) against the actual pipeline-status column (not just the tab count) to guard against the stale-tag trap** — the only two genuinely New-status applicants (reyona whorley, Lynasia Dickerson) are both Roanoke, out of scope. Every Oct-1-or-later Waynesboro/Harrisonburg applicant (Devin Bell, Scot Baumgartner, Colten Turner, Frankie Whetzel, Micheal Stamper, Patrick Franklin, Derek Sandlin, Alexanne Ressler, Andrew Funderburg, Jennifer Stephens, Marisa Carroll, Shane Lord, Colby Solomon, Tarius Allen, Brendan Payne, Kymberlyn Mitchell) already shows Contacting with notes on file. No new Waynesboro/Harrisonburg applicants.
+
+**Calendar re-checked for today (Thu 10/8):** 12 confirmed phone screens 11:00 AM–2:05 PM, matches the 9:26 AM grid exactly, no changes.
+
+**2-business-day nudges:** none newly due (Patrick Franklin's was just sent this run per the 9:26 AM DM).
+
+**Not touched, per standing instruction (unchanged):** Shaun Snead (do-not-contact, hard rule 2), Caitlin Overbey (Rejected status, Joshua's call to make, still open), Frankie Whetzel's review situation, Angelina Kioroglo/Shaun Snead status asks, the "new girl" question, NRF RISE Up course-license question (outside this skill's scope), Derek Sandlin's unconfirmed 2:50 PM Thursday offer (no reply yet, correctly left open).
+
+**Notifications sent:** none — nothing changed since the 9:26 AM DM/grid post, consistent with the reporting rule (post only on change) and Rule 18 (no noise/duplicate DMs).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run at the time of the check; full-screen control not available regardless — cloud-only session, no Mac bridge).
+
+## Run — 2026-10-08 ~12:33-12:40 PM ET (vp-hiring-pipeline scheduled task, cloud-only session)
+
+Loaded enterprise-map (cloud-only, no `mcp__remote-devices__*` bridge confirmed by probe; Chrome extension connected), hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Read this file's tail through the 9:35 AM entry, plus Joshua's Slack DM thread through his 11:56 AM message, before touching anything.
+
+**Indeed Messages inbox read live — one new reply since the 9:35 AM run: Derek Sandlin (Harrisonburg) replied "Sounds good" at 12:29 PM to the 2:50 PM Thursday offer** (sent 10/7 2:38 PM, per hard rule 5 this was already a validly-offered slot awaiting reply, correctly left open per the 9:35 AM run's note). Calendar re-checked for today 2:05 PM-end of day: open. **Booked** — created calendar event (jdavis@fcfpawn.com, 2:50-2:55 PM, location 540-830-2070, notificationLevel NONE) and sent Indeed confirmation: "You're set for Thursday 10/8 at 2:50 PM. I'll call you at 540-830-2070 from (804) 930-4221." Verified sent in-thread.
+
+**Candidates list re-verified (265 total, New=10, Reviewing=29, Contacting=195).** All 10 New-status applicants checked individually: none are Waynesboro/Harrisonburg Sales and Loan Associate (8 Roanoke/other-location SLA + Store Manager FL listings, out of scope per this skill's scope line). All 29 Reviewing-status applicants checked: the Waynesboro/Harrisonburg names among them (Christopher Crammer, Scarlet Ledford, Robert Brandt, Tamara Thompson, Steven Burns, Brianna Cash) were all already resolved per this file's history — grepped and confirmed: Robert Brandt and Tamara Thompson/Steven Burns applied to the Roanoke/Lexington listings (out of scope), Brianna Cash and Christopher Crammer already contacted/interviewed via other channels (line ~5158/~5183), Scarlet Ledford already worked per the 2026-08-15 entries. No new first-contact needed.
+
+**2-business-day nudges:** none newly due.
+
+**Not touched, per standing instruction (unchanged):** Shaun Snead (do-not-contact), Caitlin Overbey (Joshua's call to make, still open per his 11:56 AM DM), Frankie Whetzel's review situation, the two paused-listing reopen question (Joshua's call, still open).
+
+**Notifications sent:** DM to Joshua (D03BHQH5VGT) and post to #employee-prospects (C0BQDRXRPEJ) — Derek Sandlin's 2:50 PM booking plus the rest of today's remaining schedule (1:00 Gabriel Troehler, 1:30 Samantha Holt, 2:00 Scot Baumgartner, 2:50 Derek Sandlin), per the reporting rule (booking change = post).
+
+Indeed messages sent this run: 1 (Derek Sandlin, confirmation). Calendar events created: 1 (Derek Sandlin 2:50 PM). Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not available regardless — cloud-only session, no Mac bridge).
+
+## Run — 2026-10-08 ~1:00 PM ET (vp-hiring-pipeline scheduled task, cloud-only session)
+
+Loaded enterprise-map (cloud-only, no `mcp__remote-devices__*` bridge; Chrome extension connected), hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Read this file's tail through the 12:33-12:40 PM run plus Joshua's Slack DM thread through his 12:38 PM message before touching anything.
+
+**Indeed Messages inbox read live — zero new candidate replies since the 12:38 PM DM.** Newest threads are all our own just-sent messages (Derek Sandlin's 2:50 PM confirmation, Stefanie Holloway's Friday 11 AM confirmation, Kenia Aviles "Thank you" ack, Patrick Franklin's nudge, Logan Burnett's Friday offer, Rita Allen's 2:05 PM offer, Brandon Richardson's 11:30 confirmation, Leila Eutsler, Glen Way, Samantha Holt) — no candidate-authored message awaiting a reply.
+
+**Candidates list re-verified (265 total, New=10, Reviewing=29, Contacting=195) — identical counts to the 12:33 PM run.** All 10 New-status applicants remain out-of-scope locations (Roanoke/other); Lynasia Dickerson and reyona whorley confirmed Roanoke. No new Waynesboro/Harrisonburg applicants.
+
+**Calendar re-checked for today (Thu 10/8, 11:00 AM–2:55 PM) and tomorrow (Fri 10/9):** today's 13 interviews match exactly, including Derek Sandlin's new 2:50 PM slot. Stefanie Holloway's Friday 10/9 11:00 AM rebooking (540-451-0400) is confirmed on calendar, replacing the missed Thursday 11:10 slot — no duplicate, no gap.
+
+**2-business-day nudges:** none newly due.
+
+**Not touched, per standing instruction (unchanged, already flagged to Joshua multiple times today, not re-flagging to avoid noise):** Caitlin Overbey (Joshua's call to make, still open per his 11:56 AM DM), whether to reopen the two paused/unsponsored listings (Joshua's call, still open per his 10:52 AM DM), Frankie Whetzel (Withdrawn status, resolving itself), Shaun Snead (do-not-contact, hard rule 2).
+
+**Notifications sent:** none — nothing changed since the 12:38 PM DM/grid post, consistent with the reporting rule (post only on change) and Rule 18 (no noise/duplicate DMs).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not available regardless — cloud-only session, no Mac bridge).
+
+## Run — 2026-10-08 ~1:17-1:22 PM ET (vp-hiring-pipeline scheduled task, cloud-only session)
+
+Probed `mcp__remote-devices__*` — not present, confirmed cloud-only (no Mac bridge); Chrome extension connected. Loaded enterprise-map (CHANGELOG reviewed — noted the large 10/8 "Mac-first wave 1" migration in progress, confirmed via `list_scheduled_tasks` that `vp-hiring-pipeline` itself is NOT one of the 7 tasks moved to native launchd and remains `enabled:true` on cloud, cron `*/15 9-19`, so this cloud run is correctly the live copy, not a duplicate), hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Read this file's tail through the 1:00 PM run and Joshua's Slack DM thread through his 12:38 PM message before touching anything.
+
+**Indeed Messages inbox read live (employers.indeed.com/messages) — zero new candidate replies since the 12:36 PM Derek Sandlin confirmation (newest thread).** All other threads unchanged: Stefanie Holloway (Friday 11 AM confirmed), Kenia Aviles ("Thank you" ack), Patrick Franklin (nudge), Logan Burnett (Friday offer), Rita Allen (2:05 PM offer), Brandon Richardson (Oct 7, already confirmed). Scot Baumgartner's "Alrighty thank you so much" (1 day ago) and Frankie Whetzel's review comment (21 hours ago) are both pre-existing, already-flagged items, not new this run.
+
+**Candidates list re-verified: New tab (10 total) checked individually** — all 10 remain out-of-scope (Lynasia Dickerson, Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson, Anthony White, Maurice Jones — Roanoke/Columbia/Salem/Lynchburg; Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Saint Augustine/Palm Coast/Jacksonville FL Store Manager). No new Waynesboro/Harrisonburg applicants. All = 265, New = 10, Reviewing = 29, Contacting = 195 — identical to the 1:00 PM run.
+
+**Calendar verified (`jdavis@fcfpawn.com`, Thu 10/8 1:00–3:00 PM via `list_events`) — exact match, no gaps/conflicts:** 1:00 Gabriel Troehler (Waynesboro), 1:30 Samantha Holt (Waynesboro), 2:00 Scot Joshua Baumgartner (Harrisonburg), 2:50 Derek Sandlin (Harrisonburg).
+
+**2-business-day nudges:** none newly due.
+
+**Not touched, per standing instruction (unchanged, already flagged to Joshua multiple times today, not re-flagging to avoid noise):** Caitlin Overbey (Joshua's call, still open per his 11:56 AM DM), whether to reopen the two paused/unsponsored listings (Joshua's call, still open per his 10:52 AM DM), Frankie Whetzel (Withdrawn, review comment is Joshua's to resolve), Shaun Snead (do-not-contact, hard rule 2).
+
+**Notifications sent:** none — nothing changed since the 12:38 PM DM/grid post, consistent with the reporting rule (post only on change) and Rule 18 (no noise/duplicate DMs).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not available regardless — cloud-only session, no Mac bridge).
+
+## Run — 2026-10-08 ~1:3x PM ET (vp-hiring-pipeline scheduled task, cloud-only session) — catch-up/verification
+
+Probed `mcp__remote-devices__*` — not present, cloud-only confirmed (bash sandbox also unavailable this run — "No space left on device" on every attempt — did not block Indeed/Calendar/Slack work, all done via connectors). Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order.
+
+**Found three actions already completed and already reported to Joshua (Slack DM 1:23:24 PM) by a run that fired between the 1:17-1:22 PM log entry above and this one, but whose own log entry was never written — logging it now for the record:**
+- **Desmond Chick (Harrisonburg)** confirmed interest, screener clean on firearms question — booked Friday 10/9 1:00 PM, 641-680-0560. Calendar event `feuhbngjrkvvbqmmicfr2rlr6k` created 1:21:39 PM ET (carries Preston's 9/17 pre-interview note and backup number 240-940-3176). Indeed confirmation sent and verified in-thread.
+- **Alaska Foote (Waynesboro)** — no-show on her 12:00 PM slot today, messaged asking if still on. Apologized, offered Friday 10/9 11 AM–3 PM. Sent 1:22 PM, verified in-thread. Awaiting her reply.
+- **Rita Allen (Waynesboro)** asked "where are you located" — clarified it's a phone call (gave the Waynesboro address for context), re-asked if she can still do today's 2:05 PM plus her number. Sent 1:22 PM, verified in-thread. Awaiting her reply.
+
+**Verified against live sources this run, all consistent, nothing further to do:**
+- Indeed Messages inbox read live (employers.indeed.com/messages) — the three threads above match the Slack DM exactly; no candidate-authored message anywhere in the inbox is awaiting a reply (every other thread's last message is either ours or a closed-loop acknowledgment: "Thank you," "Sounds good," "Ok," etc.).
+- Calendar (`jdavis@fcfpawn.com`, `list_events` 10/8 1 PM–10/9 3 PM) — 6 events, exact match to Indeed commitments: Gabriel Troehler 1:00, Samantha Holt 1:30, Scot Baumgartner 2:00, Derek Sandlin 2:50 (today), Stefanie Holloway 10/9 11:00, Desmond Chick 10/9 1:00. No gaps, no doubles.
+- Candidates list (265 total, New=10, Reviewing=29, Contacting=195) — identical counts to the 1:17-1:22 PM run. All 10 New-status individually re-checked: still all out-of-scope (Roanoke/Columbia/Salem/Lynchburg SLA or Saint Augustine/Palm Coast/Jacksonville FL Store Manager). No new Waynesboro/Harrisonburg applicants.
+
+**2-business-day nudges:** none newly due.
+
+**Not touched, per standing instruction (unchanged, already flagged to Joshua repeatedly today, not re-flagging to avoid noise):** Caitlin Overbey (Joshua's call, open per his 11:56 AM DM), whether to reopen the two paused/unsponsored listings (Joshua's call, open per his 10:52 AM DM), Frankie Whetzel (Withdrawn status), Shaun Snead (do-not-contact, hard rule 2).
+
+**Notifications sent:** none this run — the 1:23:24 PM DM already covers everything found here; sending it again would be a duplicate under the reporting rule and Rule 18.
+
+Indeed messages sent this run: 0 (all 3 already sent by the unlogged prior run). Calendar events created/deleted this run: 0 (already created by the unlogged prior run). Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not available regardless — cloud-only session, no Mac bridge).
+
+## Run — 2026-10-08 ~1:50 PM ET (vp-hiring-pipeline scheduled task, cloud-only session)
+
+Probed `mcp__remote-devices__*` — not present, cloud-only confirmed (no Mac bridge); Chrome extension connected (bash sandbox also down this run — "useradd: No space left on device" — did not block Indeed/Calendar work, done via connectors/Chrome). Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Read this file's tail through the 1:3x PM catch-up entry before touching anything.
+
+**Indeed Messages inbox read live — zero new candidate replies since the 1:22 PM Rita Allen / Alaska Foote messages.** Every thread's last message is either ours or a closed-loop acknowledgment (Kenia Aviles "Thank you", Samantha Holt/Nevel Beverley/Anthony Dovel/Trenayce Bridges/Konner Collier "Sounds good"-type, Robert Wilson "Ok", Anthony Servin Reynoso's "thank you for the update", Devin Bell "Sounds good", Scot Baumgartner's "Alrighty thank you so much", Frankie Whetzel's review comment — all pre-existing, already flagged). **Rita Allen** (re-asked for her number + confirmed 2:05 PM) and **Alaska Foote** (Friday 10/9 reschedule offer) remain correctly unanswered, awaiting their reply per hard rule 5 (interview only after they confirm).
+
+**Candidates list re-verified: 265 total, New=10, Reviewing=29, Contacting=195 — identical to the 1:17 PM and 1:3x PM runs.** No new Waynesboro/Harrisonburg applicants (all 10 New-status remain out-of-scope Roanoke/Columbia/Salem/Lynchburg SLA or FL Store Manager listings, already individually checked twice today).
+
+**Calendar re-verified (`jdavis@fcfpawn.com`, 10/8 1 PM–10/9 4 PM via `list_events`) — exact match, no gaps/doubles:** Gabriel Troehler 1:00, Samantha Holt 1:30, Scot Joshua Baumgartner 2:00, Derek Sandlin 2:50 (today); Stefanie Holloway 10/9 11:00, Desmond Chick 10/9 1:00.
+
+**2-business-day nudges:** none newly due.
+
+**Not touched, per standing instruction (unchanged, flagged to Joshua repeatedly today, not re-flagging to avoid noise):** Caitlin Overbey, the two paused/unsponsored listings reopen question, Frankie Whetzel's review, Shaun Snead (do-not-contact, hard rule 2).
+
+**Notifications sent:** none — nothing changed since the 12:38 PM DM/grid post, consistent with the reporting rule (post only on change) and Rule 18 (no noise/duplicate DMs).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not available regardless — cloud-only session, no Mac bridge).
+
+## Run — 2026-10-08 ~2:05 PM ET (vp-hiring-pipeline scheduled task, cloud-only session)
+
+Probed `mcp__remote-devices__*` — not present, cloud-only confirmed (no Mac bridge); Chrome extension connected. Read Joshua's Slack DM thread through his 1:23:24 PM message and this file's tail (1:50 PM run) before touching anything.
+
+## Run — 2026-10-08 ~2:47 PM ET (vp-hiring-pipeline scheduled task, cloud-only session)
+
+Cloud-only confirmed (no `mcp__remote-devices__*`). Checked Indeed Messages inbox — 2 unread threads since the 2:32 PM run:
+- **Rita Allen (Waynesboro)** — went in person to the Waynesboro address instead of waiting for her 2:05 PM call (she'd asked "where are you located" earlier and was told the address along with "no need to come in, phone only"). Treated as a missed call; sent the standard no-show reschedule offering Friday 10/9, 11 AM–3 PM. No reply yet — not booked.
+- **Brandon Richardson (Harrisonburg)** — his 11:30 AM call today never happened; he said he's free tomorrow. Calendar checked (Fri 10/9: Stefanie Holloway 11:00, Desmond Chick 1:00) — booked him 11:10 AM, confirmed via Indeed with his number 540-466-0902.
+
+No other unread threads. Checked both listings' New/Reviewing candidates directly (both listings show as "Paused" in Indeed but are still receiving messages/replies normally — Paused only affects new-applicant flow, not messaging):
+- Waynesboro: New 0, Reviewing 3 (Robert Wilson — already contacted or confirmed, has active Oct 7 reply thread; Brianna Cash — genuinely never contacted per her live Indeed thread, first-contacted this run offering Friday 10/9; Michele Lester — Withdrawn, no action).
+- Harrisonburg: New 0, Reviewing 1 (Christopher Crammer — noted "interviewed under waynesboro," no action).
+- The 10 Indeed-wide "New" candidates are all Roanoke/Lynchburg/Salem/Columbia VA (Roanoke listing, paused/out of scope) or Saint Augustine/Palm Coast/Jacksonville FL (Store Manager listing, out of scope per this skill's current scope — Waynesboro/Harrisonburg Sales & Loan Associate only). Not contacted. Flagging one out-of-scope item for Joshua: **Sean Nolan** (FL Store Manager) has an unread Indeed message saying he never got his call and is free tomorrow morning — outside this task's scope, needs separate handling if Joshua still wants that listing worked.
+
+Calendar verified before every booking (Fri 10/9 now: Stefanie Holloway 11:00, Brandon Richardson 11:10, Desmond Chick 1:00 — no doubles).
+
+Posted updated Friday 10/9 schedule to Joshua's DM and #employee-prospects since bookings changed this run (Brandon Richardson added).
+
+Indeed messages sent this run: 3 (Rita Allen reschedule offer, Brandon Richardson rebooking confirmation, Brianna Cash first contact). Calendar events created: 1 (Brandon Richardson). Texts sent: 0 (not a 9:30/1:00/6:00 run; cloud-only session regardless, no screen control).
+
+**Indeed Messages inbox read live (employers.indeed.com/messages) — zero new candidate replies since the 1:21-1:22 PM Rita Allen/Alaska Foote/Desmond Chick messages.** Top 6 threads all show our own message as the last one (Rita Allen, Alaska Foote, Desmond Chick, Derek Sandlin, Stefanie Holloway, Kenia Aviles "Thank you" ack) — nothing awaiting a reply.
+
+**Candidates list re-verified: 265 total, New=10, Reviewing=29, Contacting=195 — identical to every run since 1:00 PM.** No new Waynesboro/Harrisonburg applicants.
+
+**Calendar re-verified (`jdavis@fcfpawn.com`, 10/8 1 PM–10/9 2 PM) — exact match, no gaps/doubles:** Gabriel Troehler 1:00, Samantha Holt 1:30, Scot Joshua Baumgartner 2:00, Derek Sandlin 2:50 (today); Stefanie Holloway 10/9 11:00, Desmond Chick 10/9 1:00. Rita Allen's 2:05 PM offer correctly remains unbooked (no reply yet).
+
+**2-business-day nudges:** none newly due.
+
+**Not touched, per standing instruction (unchanged, flagged to Joshua repeatedly today, not re-flagging to avoid noise):** Caitlin Overbey, the two paused/unsponsored listings reopen question, Frankie Whetzel's review, Shaun Snead (do-not-contact, hard rule 2).
+
+**Notifications sent:** none — nothing changed since the 1:23:24 PM DM/grid post, consistent with the reporting rule (post only on change) and Rule 18 (no noise/duplicate DMs).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not available regardless — cloud-only session, no Mac bridge).
+
+## Run — 2026-10-08 ~3:05 PM ET (vp-hiring-pipeline scheduled task, cloud-only session)
+
+Probed `mcp__remote-devices__*` — not present, cloud-only confirmed (bash sandbox also down this run — "useradd: No space left on device" — did not block Indeed/Calendar/Slack work, done via connectors/Chrome). Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Read Joshua's Slack DM thread through his 2:47 PM grid post and this file's tail (2:47 PM run) before touching anything.
+
+**Indeed Messages inbox read live — zero new candidate replies since the 2:41-2:46 PM messages (Rita Allen reschedule offer, Brandon Richardson rebooking, Brianna Cash first contact).** Top threads all show our own message as the last one (Brianna Cash, Brandon Richardson, Rita Allen, Alaska Foote, Desmond Chick, Derek Sandlin, Stefanie Holloway) — nothing awaiting a reply.
+
+**Candidates list re-verified: 265 total, New=10, Reviewing=28, Contacting=196** (Reviewing/Contacting shift consistent with Brianna Cash's first-contact at 2:46 PM moving her to Contacting). No new Waynesboro/Harrisonburg applicants in the New tab.
+
+**Calendar re-verified (`jdavis@fcfpawn.com`, 10/8 1 PM–10/9 4 PM via `list_events`) — exact match, no gaps/doubles:** Gabriel Troehler 1:00, Samantha Holt 1:30, Scot Joshua Baumgartner 2:00, Derek Sandlin 2:50 (today); Stefanie Holloway 10/9 11:00, Brandon Richardson 10/9 11:10, Desmond Chick 10/9 1:00. Rita Allen's Friday offer and Alaska Foote's Friday offer both correctly remain unbooked (no reply yet).
+
+**2-business-day nudges:** none newly due.
+
+**Not touched, per standing instruction (unchanged, flagged to Joshua repeatedly today, not re-flagging to avoid noise):** Caitlin Overbey (his call to make, open since 11:56 AM DM), whether to reopen the two paused/unsponsored listings (his call, open since 10:52 AM DM), Frankie Whetzel's one-star review comment, Shaun Snead (do-not-contact, hard rule 2).
+
+**Notifications sent:** none — nothing changed since the 2:47 PM DM/grid post, consistent with the reporting rule (post only on change) and Rule 18 (no noise/duplicate DMs).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not available regardless — cloud-only session, no Mac bridge).
+
+## Run — 2026-10-08 ~4:00-4:20 PM ET (vp-hiring-pipeline scheduled task, cloud-only session) — logging two prior unlogged runs, already reported to Joshua
+
+**Two runs fired between the 3:05 PM log entry above and this one and were already reported to Joshua/#employee-prospects (DMs 4:05:57 PM and 4:20:47 PM) but never got their own log entry — logging now for the record, per the same gap pattern as the 1:3x PM catch-up above:**
+- **~4:00-4:05 PM run:** Scot Baumgartner (Harrisonburg, today's 2:00 PM slot) messaged asking why he never got called — another missed call on our end. Apologized, offered Friday 10/9 11 AM–3 PM; awaiting his reply. Alaska Foote (Waynesboro) confirmed Friday 10/9 at 12:00 PM (540-471-6675) — booked calendar + Indeed, confirmed. Posted to #employee-prospects.
+- **~4:09-4:20 PM run:** Scot Baumgartner replied he's free Friday "at 3 pm" — our last bookable slot is 2:55, so offered and booked 2:50 PM instead (931-494-2488). Calendar + Indeed confirmed. Posted updated Friday grid to #employee-prospects. New tab (10 candidates) re-checked — all still out of scope.
+
+## Run — 2026-10-08 ~4:35 PM ET (vp-hiring-pipeline scheduled task, cloud-only session)
+
+Probed `mcp__remote-devices__*` — not present, cloud-only confirmed (no Mac bridge; bash sandbox also down this run, "No space left on device" on every attempt — did not block Indeed/Calendar/Slack work, done via connectors/Chrome). Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Read Joshua's Slack DM thread through his 4:20:47 PM message and this file's tail (4:00-4:20 PM runs) before touching anything.
+
+**Indeed Messages inbox read live (full thread list + opened the one non-"You:"-last thread, Kenia Aviles) — zero new candidate replies since the 4:20 PM Baumgartner booking.** Every thread's last message is either ours (including the three most recent: Baumgartner's Friday 2:50 PM confirmation, Alaska Foote's Friday 12:00 PM confirmation, Brianna Cash's first-contact) or a closed-loop acknowledgment already handled in prior runs (Kenia Aviles "Thank you" — ack of her already-completed 11:35 AM interview today, confirmed by opening the thread; Leila Eutsler, Samantha Holt, Trenayce Bridges, Nevel Beverley, Anthony Dovel, Konner Collier, Anthony Servin Reynoso, Devin Bell, Robert Wilson — all pre-existing acks; Frankie Whetzel's review comment, already flagged). Rita Allen (Friday reschedule offer) and Brianna Cash (Friday first-contact) remain correctly unanswered, awaiting their reply per hard rule 5.
+
+**Candidates list re-verified: 265 total, New=10, Reviewing=28, Contacting=196 — identical to the 3:05 PM and 4:20 PM runs.** New tab individually re-confirmed: all 10 out of scope (Lynasia Dickerson, Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson, Anthony White, Maurice Jones — Roanoke/Columbia/Salem/Lynchburg, Sales and Loan Associate — Roanoke listing; Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Saint Augustine/Palm Coast/Jacksonville FL Store Manager listing). No new Waynesboro/Harrisonburg applicants. Sean Nolan's unread FL-listing message remains out of scope, already flagged to Joshua once (2:47 PM run), not re-flagging.
+
+**Calendar re-verified (`jdavis@fcfpawn.com`, 10/8 full day + 10/9 through 3 PM via `list_events`) — exact match, no gaps/doubles:** Thu 10/8 — Trenayce Bridges 11:00, Anthony Dovel 11:05, Stefanie Holloway 11:10 (missed call, see 10/9 rebooking), Nevel Beverley 11:15, Christopher Schehl 11:20, Angelina Kioroglo 11:25, Brandon Richardson 11:30 (missed call, see 10/9 rebooking), Kenia Aviles 11:35, Alaska Foote 12:00 (missed call, see 10/9 rebooking), Leila Eutsler 12:05, Gabriel Troehler 1:00, Samantha Holt 1:30, Scot Baumgartner 2:00 (missed call, see 10/9 rebooking), Derek Sandlin 2:50. Fri 10/9 — Stefanie Holloway 11:00, Brandon Richardson 11:10, Alaska Foote 12:00, Desmond Chick 1:00, Scot Baumgartner 2:50. The four same-day missed-call originals (Stefanie Holloway, Brandon Richardson, Alaska Foote, Scot Baumgartner) are left on the calendar as the historical record of today's slot, per this pipeline's established pattern — not deleted, their time has already passed.
+
+**2-business-day nudges:** none newly due.
+
+**Not touched, per standing instruction (unchanged, flagged to Joshua repeatedly today, not re-flagging to avoid noise):** Caitlin Overbey (his call — rejection vs. book, open since 11:56 AM DM), whether to reopen the two paused/unsponsored listings (his call, open since 10:52 AM DM), Frankie Whetzel's one-star review comment, Shaun Snead (do-not-contact, hard rule 2), Sean Nolan (out of scope, FL Store Manager listing).
+
+**Notifications sent:** none — nothing changed since the 4:20:47 PM DM/grid post, consistent with the reporting rule (post only on change) and Rule 18 (no noise/duplicate DMs).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not available regardless — cloud-only session, no Mac bridge).
+
+## Run — 2026-10-08 ~5:06 PM ET (vp-hiring-pipeline scheduled task, cloud-only session) — logging an unlogged run, already reported to Joshua
+
+**Already reported to Joshua (Slack DM 5:06:36 PM) but never got its own log entry — logging now for the record, same gap pattern as the 1:3x PM and 4:00-4:20 PM catch-ups above:**
+- **Samantha Holt (Waynesboro, today's 1:30 PM slot)** messaged asking what happened — another missed call on our end. Apologized, offered Friday 10/9, 11 AM–3 PM. Sent, verified in-thread. Awaiting her reply with a time.
+- New tab (10 candidates) re-checked — all still out of scope (Roanoke/Columbia/Salem/Lynchburg or FL Store Manager track). No new Waynesboro/Harrisonburg applicants.
+- Nothing else changed since the 4:50 PM note.
+
+## Run — 2026-10-08 ~5:20 PM ET (vp-hiring-pipeline scheduled task, cloud-only session)
+
+Probed `mcp__remote-devices__*` — not present, cloud-only confirmed (no Mac bridge; bash sandbox also down this run — "No space left on device" on every attempt — did not block Indeed/Calendar/Slack work, done via connectors/Chrome). Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Read Joshua's Slack DM thread through his 5:06:36 PM message and this file's tail before touching anything.
+
+**Indeed Messages inbox read live (employers.indeed.com/messages) — zero new candidate replies since the 5:06 PM Samantha Holt message.** Top threads (Samantha Holt, Scot Baumgartner, Alaska Foote, Brianna Cash, Brandon Richardson, Rita Allen, Desmond Chick) all show our own message as the last one — nothing awaiting a reply beyond what's already flagged.
+
+**Candidates list re-verified: 265 total, New=10, Reviewing=28, Contacting=196 — identical to the 3:05 PM–4:35 PM runs.** New tab individually re-confirmed (Lynasia Dickerson, Tareka Jordan, Michael Boyer, Adam Martin, and 6 others) — all out of scope (Roanoke/Columbia/Salem/Lynchburg Sales and Loan Associate — Roanoke listing, or Saint Augustine/Palm Coast/Jacksonville FL Store Manager listing). No new Waynesboro/Harrisonburg applicants.
+
+**Calendar re-verified (`jdavis@fcfpawn.com`, 10/8 full day + 10/9 through 3 PM via `list_events`) — exact match, no gaps/doubles:** Thu 10/8 — Trenayce Bridges 11:00, Anthony Dovel 11:05, Stefanie Holloway 11:10 (missed, see 10/9 rebooking), Nevel Beverley 11:15, Christopher Schehl 11:20, Angelina Kioroglo 11:25, Brandon Richardson 11:30 (missed, see 10/9 rebooking), Kenia Aviles 11:35, Alaska Foote 12:00 (missed, see 10/9 rebooking), Leila Eutsler 12:05, Gabriel Troehler 1:00, Samantha Holt 1:30 (missed, see Friday offer above — not yet rebooked, awaiting her reply), Scot Baumgartner 2:00 (missed, see 10/9 rebooking), Derek Sandlin 2:50. Fri 10/9 — Stefanie Holloway 11:00, Brandon Richardson 11:10, Alaska Foote 12:00, Desmond Chick 1:00, Scot Baumgartner 2:50.
+
+**2-business-day nudges:** none newly due.
+
+**Not touched, per standing instruction (unchanged, flagged to Joshua repeatedly today, not re-flagging to avoid noise):** Caitlin Overbey (resolved per Joshua's 4:50 PM note — she's a decline per Preston's 9/18 call, not re-contacting unless Joshua overrules), whether to reopen the two paused/unsponsored listings (his call, open since 10:52 AM DM), Frankie Whetzel's one-star review comment, Shaun Snead (do-not-contact, hard rule 2), Sean Nolan (out of scope, FL Store Manager listing).
+
+**Notifications sent:** none — nothing changed since the 5:06:36 PM DM, consistent with the reporting rule (post only on change) and Rule 18 (no noise/duplicate DMs).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not available regardless — cloud-only session, no Mac bridge).
+
+## Run — 2026-10-08 ~6:3x PM ET (vp-hiring-pipeline scheduled task, cloud-only session)
+
+Probed `mcp__remote-devices__*` — not present, cloud-only confirmed (no Mac bridge; bash sandbox also down this run — "No space left on device" on every attempt — did not block Indeed/Calendar/Slack work, done via connectors/Chrome). Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Read Joshua's Slack DM thread through his 5:06:36 PM message, the Preston thread (13:24 PM — "Claude is recycling into people we already have talked to," resolved 13:45 PM: going forward read Preston's Indeed notes before contacting anyone and never schedule someone he's already interviewed/rejected without checking Joshua first; Caitlin Overbey and Nikki Sprouse off the list), and this file's tail before touching anything.
+
+**Indeed Messages inbox read live (employers.indeed.com/messages) — one new message since the 5:06 PM log: Scot Joshua Baumgartner replied "Sounds great" at 6:21 PM** — a closed-loop acknowledgment of his already-confirmed Friday 10/9 2:50 PM slot, not a new request. No reply needed. Every other thread's last message is still ours (Samantha Holt, Alaska Foote, Brianna Cash, Brandon Richardson, Rita Allen all correctly awaiting their reply) or a pre-existing ack.
+
+**Candidates list re-verified via the per-job filter (not just the "All jobs" New tab) for precision:** Waynesboro listing — New 0, Reviewing 2 (Robert Wilson, already acked "Ok" in a closed thread; Michele Lester, Withdrawn). Harrisonburg listing — New 0, Reviewing 1 (Christopher Crammer, note "Interviewed under waynesboro" — already interviewed, not re-contacting per the new Preston-notes rule). All-jobs New tab: 9, all out of scope (Roanoke/Columbia/Salem/Lynchburg Sales and Loan Associate — Roanoke listing, or Saint Augustine/Palm Coast/Jacksonville FL Store Manager listing). No new Waynesboro/Harrisonburg applicants.
+
+**Calendar re-verified (`jdavis@fcfpawn.com`, 10/8 full day + 10/9 through 3 PM via `list_events`) — exact match to the 5:20 PM run, no gaps/doubles:** Thu 10/8 — Trenayce Bridges 11:00, Anthony Dovel 11:05, Stefanie Holloway 11:10 (missed, rebooked Fri 11:00), Nevel Beverley 11:15, Christopher Schehl 11:20, Angelina Kioroglo 11:25, Brandon Richardson 11:30 (missed, rebooked Fri 11:10), Kenia Aviles 11:35, Alaska Foote 12:00 (missed, rebooked Fri 12:00), Leila Eutsler 12:05, Gabriel Troehler 1:00, Samantha Holt 1:30 (missed, Friday offered, not yet rebooked — awaiting her reply), Scot Baumgartner 2:00 (missed, rebooked Fri 2:50), Derek Sandlin 2:50. Fri 10/9 — Stefanie Holloway 11:00, Brandon Richardson 11:10, Alaska Foote 12:00, Desmond Chick 1:00, Scot Baumgartner 2:50.
+
+**2-business-day nudges:** none newly due (10/7 first-contacts — Glen Way, Brad Andrews, Darrion Corbin, Hannah Bartel, Ryan Armstrong, Sivahn Lewis, Ashley Bryant, Pauline Woodson, Aveanna Walker, Mary Critzer, Shyanne Turkiewicz, Sam Rainey, Celeste Williams, Kylee Bryant — nudge window is Fri 10/9, not due yet; Nikki Sprouse excluded per Joshua's 13:45 PM instruction).
+
+**Not touched, per standing instruction (unchanged, flagged to Joshua repeatedly today, not re-flagging to avoid noise):** whether to reopen the two paused/unsponsored listings (his call, open since 10:52 AM DM), Frankie Whetzel's one-star review comment, Shaun Snead (do-not-contact, hard rule 2), Sean Nolan (out of scope, FL Store Manager listing). Caitlin Overbey and Nikki Sprouse resolved (off the list per 13:45 PM note) — not re-flagging.
+
+**Notifications sent:** none — nothing changed since the 5:06:36 PM DM/grid post (Baumgartner's "Sounds great" needed no reply and changed no schedule), consistent with the reporting rule (post only on change) and Rule 18 (no noise/duplicate DMs).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not available regardless — cloud-only session, no Mac bridge).
+
+## Run — 2026-10-08 ~7:16 PM ET (vp-hiring-pipeline scheduled task, cloud-only session)
+
+Probed `mcp__remote-devices__*` — not present, cloud-only confirmed (no Mac bridge). Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Read Joshua's Slack DM thread through his 5:06:36 PM message and this file's tail (6:3x PM run, including the Preston pre-interview-notes gate) before touching anything.
+
+**Indeed Messages inbox read live (employers.indeed.com/messages) — zero new candidate replies since the 6:21 PM Baumgartner ack.** Top threads (Baumgartner "Sounds great" — ack of his confirmed Fri 2:50 PM slot, no reply needed; Samantha Holt, Alaska Foote "You're set for Friday 10/9 at 12:00 PM...", Brianna Cash, Brandon Richardson, Rita Allen) all show our own message or a closed-loop ack as the last entry — nothing awaiting a reply beyond what's already flagged.
+
+**Candidates list re-verified: 265 total, New=9, Reviewing=29, Contacting=196.** New tab individually re-checked, all 9 out of scope: Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson, Anthony White, Maurice Jones (Roanoke/Columbia/Salem/Lynchburg — Sales and Loan Associate, Roanoke listing); Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan (Saint Augustine/Palm Coast/Jacksonville FL — Store Manager listing). No new Waynesboro/Harrisonburg applicants.
+
+**Calendar re-verified (`jdavis@fcfpawn.com`, 10/8 full day + 10/9 through 3 PM via `list_events`) — exact match to the 5:20/6:3x PM runs, no gaps/doubles:** Thu 10/8 — Trenayce Bridges 11:00, Anthony Dovel 11:05, Stefanie Holloway 11:10 (missed, rebooked Fri 11:00), Nevel Beverley 11:15, Christopher Schehl 11:20, Angelina Kioroglo 11:25, Brandon Richardson 11:30 (missed, rebooked Fri 11:10), Kenia Aviles 11:35, Alaska Foote 12:00 (missed, rebooked Fri 12:00), Leila Eutsler 12:05, Gabriel Troehler 1:00, Samantha Holt 1:30 (missed, Friday offered, not yet rebooked — awaiting her reply), Scot Baumgartner 2:00 (missed, rebooked Fri 2:50), Derek Sandlin 2:50. Fri 10/9 — Stefanie Holloway 11:00, Brandon Richardson 11:10, Alaska Foote 12:00, Desmond Chick 1:00 (carries Preston's 9/17 pre-interview note), Scot Baumgartner 2:50.
+
+**2-business-day nudges:** none newly due (10/7 first-contacts — Glen Way, Brad Andrews, Darrion Corbin, Hannah Bartel, Ryan Armstrong, Sivahn Lewis, Ashley Bryant, Pauline Woodson, Aveanna Walker, Mary Critzer, Shyanne Turkiewicz, Sam Rainey, Celeste Williams, Kylee Bryant — nudge window is Fri 10/9, not due yet).
+
+**Not touched, per standing instruction (unchanged, flagged to Joshua repeatedly today, not re-flagging to avoid noise):** whether to reopen the two paused/unsponsored listings (his call, open since 10:52 AM DM), Frankie Whetzel's one-star review comment, Shaun Snead (do-not-contact, hard rule 2), Sean Nolan (out of scope, FL Store Manager listing). Caitlin Overbey and Nikki Sprouse resolved (off the list per 13:45 PM note) — not re-flagging.
+
+**Notifications sent:** none — nothing changed since the 5:06:36 PM DM/grid post (Baumgartner's "Sounds great" needed no reply and changed no schedule), consistent with the reporting rule (post only on change) and Rule 18 (no noise/duplicate DMs).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0 (not a 9:30/1:00/6:00 run; full-screen control not available regardless — cloud-only session, no Mac bridge).

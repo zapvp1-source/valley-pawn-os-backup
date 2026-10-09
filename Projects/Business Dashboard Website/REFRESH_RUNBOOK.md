@@ -98,5 +98,32 @@ password in `.cloudflare/site_password`).
 IMPORTANT: `site/_worker.js` is the password gate — never delete it from the deploy folder.
 Credentials live in `.cloudflare/` inside the project folder (api_token, account_id, project_name, site_password).
 
+### Option C — cloud-sandbox deploy when device_bash itself is down (confirmed working 2026-10-08, 2 consecutive runs)
+Distinct from Option A's premise (no Control_your_Mac tool at all) and Option B's premise (Mac
+linked, device_bash works): this is for when the Mac IS linked (`get_device_info` succeeds,
+`device_list_dir`/`device_stage_files`/`device_commit_files` all work) but `device_bash`
+specifically errors on every call, including a trivial `echo hello`. Don't burn more than ~3
+retries on device_bash in that shape — treat it as the Rule 15 "same failure twice" case and
+switch to this path:
+
+1. `device_stage_files` every file under `site/` (root files + every file under `site/artifacts/`,
+   enumerate recursively via `device_list_dir(recursive=true)` first — there is no glob, so list
+   paths explicitly) plus the 4 files under `.cloudflare/`, into the cloud sandbox.
+2. Edit `kpis.json` (Step 1) locally in the sandbox against the staged copy, then overlay it onto
+   the staged `site/data/kpis.json` before deploying — don't deploy the stale staged copy.
+3. `mkdir -p /tmp/npm-global && npm config set prefix /tmp/npm-global && export PATH=/tmp/npm-global/bin:$PATH && npm install -g wrangler --silent`
+   (the default global prefix isn't writable in the sandbox — EACCES without this).
+4. `cd` into the merged local copy, `export CLOUDFLARE_API_TOKEN=$(cat .cloudflare/api_token) CLOUDFLARE_ACCOUNT_ID=$(cat .cloudflare/account_id)`,
+   `wrangler pages deploy site --project-name=vp-dashboard --commit-dirty=true --commit-message="Auto-refresh: $(date +%F)"`.
+   No `.git` dir in the staged copy, so no git-auto-detection hang — no `--branch`/`--commit-hash` needed.
+5. Verify as in Step 4 below. Note: the FIRST curl to the apex domain right after a deploy can
+   return a stale CDN-cached response for a few seconds — if verification looks stale, retry once
+   with a cache-busting query param, or hit the deployment-specific `https://<hash>.vp-dashboard.pages.dev`
+   URL wrangler prints, before concluding the deploy didn't take.
+6. This path does NOT sync `site/artifacts/` from `~/Documents/Claude/Artifacts` (that source folder
+   still needs Control_your_Mac or a connected-folder grant) — it only deploys whatever is already
+   in `site/artifacts/` on the Mac, staged as-is. Run Step 2 first if that folder ever becomes
+   reachable.
+
 ## Step 4 — Confirm
 Post a one-line summary to Slack #general ONLY if something failed. On success, no Slack post needed.

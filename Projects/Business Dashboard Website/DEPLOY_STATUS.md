@@ -1,41 +1,41 @@
 # Dashboard Refresh — Run Status
 
-**Run date:** 2026-09-03 (scheduled task `vp-dashboard-refresh`)
+**Run date:** 2026-10-08 (scheduled task `Vp dashboard refresh`, second run today, ~23:20 UTC / ~19:20 ET)
 
-## Result: SUCCESS — all steps completed
+## Result: PARTIAL SUCCESS — KPI refresh, deploy and verify all passed; artifact sync skipped (same known gap, 4th occurrence)
 
 ### 1. KPI data refresh (site/data/kpis.json) — DONE
-- Checked all 7 feed channels against latest Slack posts.
-- Loan review / layaway review: latest post still Aug 31 (Mon) — matched existing data, unchanged.
-- Company-performance watch: no newer report since Jul 3 — unchanged.
-- Daily Funds Verification: latest post already Sep 2 18:12 ($1,000=$1,000 ALL MATCHED) — matches existing data, unchanged (today's 6 PM run hasn't fired yet).
-- Items to Price: NEW Sep 3 08:05 post — 261 items / $17,540.66 total. Updated `daily.itemsToPrice` and `feeds[]` Last Run -> Sep 3, 2026.
-- Intake Margin (pawn-walks): still no newer legacy combined-format post since Aug 13 (channel continues to post the same-day Buy-vs-Loan split format instead) — held over per never-fabricate rule, unchanged.
-- Chekkit Unanswered: NEW Sep 3 08:06 "Daily Response Summary" post (covering Sep 2) — 1 unanswered (Roanoke). Updated `daily.chekkit` and `feeds[]` Last Run -> Sep 3, 2026.
+- Checked all 7 feed channels against latest Slack posts (via the Slack MCP connector directly — no browser/device shell needed for this step).
+- Loan review / layaway review: latest post still Oct 5 (Mon) — matched existing data exactly, unchanged.
+- Company-performance watch: no newer alarming item since Oct 1 monthly update (Oct 2 gift-card post is informational, not a watch flag) — unchanged.
+- Daily Funds Verification: NEW Oct 8 18:37 ET post — all 5 stores matched (Harrisonburg $2,000/$2,000, Waynesboro $2,000/$2,000, others $0.00/$0.00). Updated `dates.funds`, `funds` block, and `feeds[]` Last Run -> Oct 8, 2026.
+- Items to Price: NEW Oct 08 09:08 ET post. Updated `daily.itemsToPrice` (Culpeper 0/$0, Harrisonburg 39/$4,702, Lexington 0/$0, Roanoke 5/$248, Waynesboro 250/$16,591.80; total 294/$21,541.80) and `feeds[]` Last Run -> Oct 08, 2026.
+- Intake Margin (#pawn-walks): latest post still covers Oct 7 data (posted Oct 08 07:15 ET) — matched existing values exactly via independent recompute from the Buy/Loan tables (Culpeper 15/52%/1 flag, Roanoke 9/56%/0 flags, company 24/53%/1 flag) — unchanged.
+- Chekkit Unanswered: NEW Oct 08 08:34 ET "Daily Response Summary" covering Oct 7 (0 unanswered, all clear). Updated `daily.chekkit` and `feeds[]` Last Run -> Oct 7, 2026.
 - `bravoDaily` section untouched (owned by daily-bravo-kpis task).
-- `asOf` updated to September 3, 2026.
-- JSON validated via live fetch + python3 json.load after deploy — parses clean.
+- `asOf` left at October 8, 2026 (unchanged — still today).
+- Schema verified identical to prior file (same keys/types at every level) before and after edit; validated with `python3 json.load` before commit and after live fetch through the deployed site.
 
-### 2. Artifact sync (site/artifacts/) — DONE
-- Checked source `~/Documents/Claude/Artifacts/` for files newer than the last sync — none found (nothing changed since Sep 2).
-- Ran the `cp -R` + `rm -rf */versions` sync anyway (idempotent) via osascript.
-- No new artifact folders; no `site/data/artifacts.json` manifest changes needed.
+### 2. Artifact sync (site/artifacts/) — SKIPPED (known gap, not re-logged)
+- `~/Documents/Claude/Artifacts` is still not a connected folder for this session (only "Business Dashboard Website" and "Projects" are connected). This exact gap is already logged in FAILURE_LEDGER.md from 2026-10-06, 2026-10-07, and this morning's 2026-10-08 run — all NEEDS_HUMAN: connect the Artifacts folder on the Mac Studio (or symlink its sources under Projects). Did not add a 4th identical ledger row per Rule 15 (same failure twice is a design problem, not a notice to repeat) — nothing has changed since this morning's entry, and Joshua hasn't yet taken the one action that clears it.
+- `site/artifacts/` and `site/data/artifacts.json` carried over byte-identical from the existing deploy (confirmed same mtimes as this morning's run — no artifact changed upstream since the Artifacts source folder still isn't reachable either way).
 
-### 3. Deploy to Cloudflare Pages — DONE (new osascript-quirk notes)
-- Confirmed AGAIN: `npx`/`npm exec` wrangler invocations are not viable; direct binary (`~/Documents/Claude/tools/node/bin/wrangler`) is required.
-- **New finding this run:** invoking the deploy as a single non-backgrounded `do shell script` call reliably triggers a generic `Error executing osascript: Command failed` from the MCP wrapper even though the underlying process sometimes keeps running detached — this produced 2-3 orphaned/duplicate `wrangler`/`node` processes that had to be found via `ps aux | grep wrangler` and killed by explicit PID (never `pkill -f`, to avoid killing an attempt mid-upload).
-- **Reliable pattern found:** launch with `cd DIR && PATH=<node-bin>:... CLOUDFLARE_API_TOKEN=... CLOUDFLARE_ACCOUNT_ID=... nohup <wrangler-binary> ... > /tmp/logfile 2>&1 < /dev/null & disown; echo LAUNCHED` as ONE `do shell script` call (this returns immediately and cleanly), then poll with a separate `do shell script "sleep N; cat /tmp/logfile"` call. `env VAR=val` prefix form is not needed/reliable here — plain `VAR=val` prefix works.
-- Also confirmed: `wrangler pages deployment list` needs to be run with `cd` into the project directory first (its `.wrangler/cache` resolution is relative to cwd) — running it from an unrelated cwd throws "Missing file or directory: /.wrangler/cache".
-- Used explicit `--branch=main --commit-hash=<git rev-parse HEAD> --commit-message=... --commit-dirty=true` to skip wrangler's slow git auto-detection against the giant `~/Documents/Claude` repo, per the 8/31 finding — still necessary and still works.
-- Deployment URL: `https://7964acfe.vp-dashboard.pages.dev` (30 already-cached files, 1 changed file uploaded — kpis.json).
+### 3. Deploy to Cloudflare Pages — DONE (cloud-sandbox path, "Option C")
+- `device_bash` (the Mac shell bridge) failed 3/3 attempts this run with a generic error (`device_bash failed in the device workspace`), including on a trivial `echo hello` — while `device_list_dir`/`device_stage_files`/`device_commit_files` all worked normally. Identical failure shape to this morning's run. Did not keep retrying past the 3rd identical failure (Rule 15).
+- Worked around exactly as this morning: staged all 37 `site/` files (4 root + 33 under `artifacts/`) plus the 4 `.cloudflare/` credential files into the cloud sandbox via `device_stage_files`, merged the freshly-edited `kpis.json` in locally, installed wrangler in the sandbox (`npm config set prefix` to a writable dir first — the default global path isn't writable there), and ran `wrangler pages deploy site --project-name=vp-dashboard --commit-dirty=true` directly against the staged copy.
+- Deployment URL: `https://832892fb.vp-dashboard.pages.dev` (1 asset file changed — kpis.json; 35 already cached; Worker bundle recompiled).
+- No `.git` directory in the staged copy, so no git-auto-detection hang to work around.
 
 ### 4. Verify — DONE
 - `curl https://vp-dashboard.pages.dev/` without auth -> **401** (pass)
-- `curl` with basic auth -> **200** (pass)
-- `data/kpis.json` fetched live (through the deployed site, with auth) -> 200, parses clean, `asOf` = September 3, 2026, itemsToPrice/chekkit reflect the new data.
-- `site/_worker.js` (password gate) confirmed present in the deploy folder, untouched (590 bytes, unmodified since Jun 11).
+- `curl` with basic auth (`valleypawn` / `.cloudflare/site_password`) -> **200** (pass)
+- `data/kpis.json` fetched live through the deployed site (cache-busted, and again via the deployment-specific URL) -> parses clean, `asOf` = October 8, 2026, `dates.funds` = Oct 8 2026, `daily.itemsToPrice.date` = Oct 08 2026, `daily.chekkit.date` = Oct 7 2026 — all match the intended update. (A first fetch immediately post-deploy returned a stale cached copy at the apex domain — expected CDN edge-cache behavior, resolved on retry/cache-bust; not a deploy defect.)
+- `site/_worker.js` (password gate) was part of the staged/deployed set, untouched — gate confirmed working via the 401 check above.
+
+## Step 5 — Slack #general post
+No post made. Nothing failed that needs a Slack notice (per Rule 16, failure/technical status never goes to Slack anyway — this just also had no failure to report: KPI refresh, deploy and verify all succeeded; the artifact-sync skip is a pre-existing, already-logged, non-urgent gap, not a new failure).
 
 ## Context notes for next session
-- No Slack post made — success, and the runbook only requires a post on failure.
-- Fold the new osascript background/poll deploy pattern (Step 3 above) into REFRESH_RUNBOOK.md permanently — it's now proven more reliable than the previous single-call approach and avoids orphaned duplicate deploy processes.
-- Intake Margin (#pawn-walks) has now gone 3+ weeks without a legacy-combined-format post (last: Aug 13/14). Worth flagging to Joshua eventually that this dashboard cell is effectively stale/dead unless the pipeline is updated to consume the new split Buy-vs-Loan format, or the #pawn-walks pipeline is restored to also emit the legacy combined post.
+- The cloud-sandbox wrangler deploy path (stage site/ + .cloudflare/* via device_stage_files, npm prefix to a writable dir, wrangler pages deploy from there) has now succeeded twice in a row (2026-10-08 AM and PM) while `device_bash` was down both times. Recommend folding this into REFRESH_RUNBOOK.md as a permanent documented "Option C" (done this run — see runbook).
+- `device_bash` has now failed its first 3 attempts on 2+ consecutive runs today while every other remote-devices tool (list_dir/stage_files/commit_files/get_device_info) works fine. This is a distinct failure shape from both runbook Option A's premise (Control_your_Mac tool doesn't exist) and Option B's premise (Mac linked, device_bash works) — it's "Mac linked, device_bash specifically broken." Worth a look if it persists into tomorrow's run; two occurrences isn't yet grounds for alarm but a third would be.
+- The `~/Documents/Claude/Artifacts` connected-folder gap is now 4 occurrences across 3 days. Still needs Joshua to connect the folder once via the picker on the Mac Studio (or move/symlink the dashboard's artifact sources under `~/Documents/Claude/Projects`).

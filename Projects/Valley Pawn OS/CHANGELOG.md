@@ -1,6 +1,91 @@
+## 2026-10-08 (Ask Valley Pawn — plan + demo set up)
+
+- **NEW project `Projects/Ask Valley Pawn/` — `ASK_VP_PLAN.md`, `DEMO_PLAN.md`, `STATUS.md`.** Joshua: one real-time, Valley-Pawn-only Q&A agent in a Slack channel for all staff + Preston, built from the training stack, P&P/Handbook, recorded store lines, texts, email and Preston's recorded Zoom line, that also does things for the team; then a real-world team demo. Verified state: #ask-handbook (C0BS11KTYKU) has had ZERO questions since the 8/22 launch and `ask-handbook-responder` has been off since 9/18; the Preston KB responder/capture/verify tasks staged 9/7 were never registered (MODE still SHADOW); Preston's Zoom line ext 813 / 540-202-4200 is in `internal_roster.json` since 10/6 so store↔Preston calls now classify EMPLOYEE; manager cells still NEEDED in the roster. Claude Tag (Anthropic docs, read today) rejected for the floor: Team/Enterprise + credits, grounding is prompt-level only, public-channel memory leaks workspace-wide, no reach to the Mac, beta.
+- **Decision:** native always-on responder `com.valleypawn.ask-vp` on the Mac (polls the channel every 15 s with the Goldilocks bot token; corpus-only answering with a cite-check; six layers — P&P/Handbook via `Ask_Handbook/build_sources.py`, Preston KB via `kb_build.py`, Academy lessons, employee-call/Slack-derived rules, manager-approved customer-answer bank from Chekkit/email/best-calls, store+systems facts). Customer calls stay out of the corpus. SHADOW (answers to Joshua's DM) → LIVE in the same channel (rename to #ask-valley-pawn at launch unless Joshua says keep). Additive: no existing file/task/agent modified; one knowing amendment planned to `kb_build.py` (accept call-id SOURCE), with backup.
+- **Demo:** Tue 10/20 9:30 AM ET Zoom with Preston + 5 managers, whole team in-channel; 14-question dry-run gate; announcement DRAFT (nothing posted) awaiting Joshua. Open Items row added.
+- Nothing built yet; nothing sent; no Slack post. Device shell was unavailable this session (device_bash failed 3×) — code lands via commit + host job queue next session.
+
+## 2026-10-08 (cloud copies switched off — Joshua approved)
+
+- UPDATE (afternoon, Joshua: "turn these off, I give you full permission"): 12 of 13 cloud triggers now `enabled:false` (verified by GET): nrf, northwest cloud copy, dress-code cloud copy (Mac copy stays), monday-bravo-combined-run, monday-bravo-postcheck, chekkit-smart-replies-weekly-check, chekkit-unanswered-eod-followup, chekkit-new-review-alert, daily-store-audit-digest, vp-website-shop-nightly, vp-deal-of-week-monday-prompt, vp-deal-of-week-monday-reminder. Each sent as its own call, one attempt; **chekkit-unanswered-alert (trig_016fRstAx3ySdNen1QUGaNr3) was refused by the safety check and is STILL ON** — its Mac version stays dormant.
+- Mac versions switched LIVE (fleet/state/native_live/<taskId> created): chekkit-unanswered-eod-followup (19:00), chekkit-new-review-alert (hourly :10), daily-store-audit-digest (Mon–Sat 09:40), vp-website-shop-nightly (07:00/15:00), vp-deal-of-week-monday-prompt (Mon 08:10), vp-deal-of-week-monday-reminder (Mon 11:00). First live runs: shop 15:00 today, EOD 19:00 today, review alert next :10, digest Thu 09:40, deal-of-week Mon 10/12.
+- Sidebar titles renamed: RETIRED — / NATIVE — / TURN OFF — prefixes so the state is visible in the app.
+
+- Cloud trigger disabled and verified `enabled:false`: nrf-riseup-approval-watch (trig_0153NrUPEY4Ks41yNjzgEFjT), northwest-registered-agent-daily-check cloud copy (trig_01KpsKHMBUSfTZ4hzZSyNJB9; the local Mac copy keeps running).
+- The remaining 11 approved switch-offs were refused by Claude's safety check (not retried): dress-code cloud copy, monday-bravo-combined-run, monday-bravo-postcheck, chekkit-smart-replies-weekly-check, chekkit-unanswered-alert, chekkit-unanswered-eod-followup, chekkit-new-review-alert, daily-store-audit-digest, vp-website-shop-nightly, vp-deal-of-week-monday-prompt/-reminder. Trigger IDs in fleet/MAC_FIRST_PLAN_2026-10-07.md. Their Mac versions stay dormant until each cloud copy is off.
+
 # Valley Pawn - Enterprise Changelog
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
+
+## 2026-10-08 (Mac-first wave 1 builds)
+
+- **Built native launchd versions of 7 Cowork tasks — all INSTALLED DORMANT.** Each wrapper sources the new `bin/vp_live.sh` and exits silently unless `fleet/state/native_live/<task-id>` exists. No live file was created: the cloud copies (claude.ai routines) of all 7 are still running and only Joshua can switch them off; going live first would double-post. To go live for one task: switch its cloud trigger off, then create the empty file `fleet/state/native_live/<task-id>`. To go back: delete it. `--render` runs call the .py directly and are never gated.
+- **chekkit-unanswered-alert** (`bin/chekkit_unanswered.py morning`, wrapper `chekkit_unanswered_alert.sh`, `com.valleypawn.chekkit-unanswered-alert` Mon-Sat 08:00) and **chekkit-unanswered-eod-followup** (`chekkit_unanswered.py eod`, `chekkit_unanswered_eod.sh`, `com.valleypawn.chekkit-unanswered-eod` Mon-Sat 19:00). Source = Chekkit's own "Unanswered Message Alert" emails, read natively from Apple Mail's Envelope Index (read-only, the AI responder's method) — NOT the API: an API-only rebuild over 9/22-10/7 found ~4x more 10-minute gaps than Chekkit ever alerted on (e.g. HAR 10/5: 10 vs 0), so Chekkit's alert rule can't be reproduced from the message log. Then the SKILL's filters verbatim (sign-offs/tapbacks/emoji/empty skipped, short unclear texts judged once by vp_ai and cached, store hours with Wed = CUL+ROA and CUL/ROA Sat close 17:00, Sunday none), one count per customer text (Chekkit sometimes double-sends; 9/25 LEX). Store DMs from hr/ROSTER.json (roster_write.py --check), never Joshua/Preston. EOD matches each flagged alert to its Chekkit conversation via the API (GET only; text + 6-16 min window) instead of the dashboard; "answered" = a staff-named business text that is not automated (the "Thanks for texting ... we'll text you back shortly" greeting and the closed-hours text don't count, as in the 9/29 live run); replay cutoff 19:00. Mail freshness gate: Mail received nothing in 3 h = ledger row, no false all-clear. **Render parity:** morning summaries for 9/25, 9/28, 9/29, 10/1, 10/5, 10/6, 10/7 = the live posts' numbers exactly; DM text + recipients match the live DMs (CUL Joshua B./Rob/Sandi, WAY Chadd/Martin, HAR Walker/Camden); parity_check on 10/5 format. Morning keeps the connector's _italic_ look of the live post; EOD keeps the outbox *bold*. EOD 10/1, 10/5, 10/7 = live counts; 9/29 = live except the owner-number point below. Known difference: the 9/29 live EOD hand-excluded Joshua's own test texts; the SKILL has no such rule and the 9/30 morning counted them, so native counts them.
+- **chekkit-new-review-alert** (`bin/chekkit_review_alert.py`, `chekkit_review_alert.sh`, `com.valleypawn.chekkit-review-alert` hourly :10, 09-21). Source = the "You got a new review" emails via Apple Mail (GET /v1/reviews exists but omitted the 10/7 stars-only Waynesboro review). Same one-liner, 24 h lookback, duplicate check against #google-reviews (14 d) + state file, 21:00-09:00 -> chat.scheduleMessage 10:00 next day and remembered. Render over 120 h: all 10 review emails = the 10 live posts (store, stars, name), 0 new.
+- **daily-store-audit-digest** (`bin/daily_audit_send.py`, `daily_audit_send.sh`, `com.valleypawn.daily-audit-digest` Mon-Sat 09:40): runs daily_audit_digest.py, the SKILL's readiness gate (10-min wait + one re-run, partial-send rule, on-hold line), sends <DATE>.mrkdwn.txt verbatim by the ops bot to Joshua (+ Preston only if `PRESTON_ENABLED: yes` in the task's SKILL.md — the switch stays there), .sent marker, RUN_LOG line (path=native). Render writes to fleet/test_output/daily_audit_render/ only. Render 10/6 = byte-identical to the sent daily-audit/2026-10-06.mrkdwn.txt.
+- **vp-website-shop-nightly**: the staged `fleet/com.valleypawn.shop-refresh.plist` was replaced (backup `fleet/_backups/com.valleypawn.shop-refresh.plist.bak-pre-w1-20261008`) by a vp-runner plist (07:00 + 15:00) -> `bin/shop_nightly.sh` (gated) -> Website/analytics/bin/shop_refresh.py (unchanged). `bin/shop_render.py` = --dry-run render: body identical to the 10/8 AM real post. Note: the cloud copy runs shop_refresh in a UTC container (result.json ts 11:13 = 07:13 ET); the runner's 3.5 h slot guard still blocks a double run. Runner posts as the bot in its LOCKED format (*bold*); the connector-posted copies show the same text in italics.
+- **vp-deal-of-week-monday-prompt / -reminder** (`bin/deal_of_week_monday.py prompt|reminder`, `deal_of_week_prompt.sh` / `deal_of_week_reminder.sh`, `com.valleypawn.deal-of-week-prompt` Mon 08:10, `com.valleypawn.deal-of-week-reminder` Mon 11:00). Prompt text + Joshua DM render = the 10/5 live post/DM exactly (parity_check identical but the connector's "Sent using Claude" footer). Reminder reads thread replies AND channel messages after today's prompt (managers post in the channel; the compiler counts both), photo + price via deal_of_week_pick.extract, @mentions resolved by users.list; replay 10/5 at 11:00 = all 5 missing, at 11:10 = 4 (Roanoke in). **NOT made live:** the plan called them local-only, but the registry shows the sweep moved BOTH to the cloud on 10/7 (prompt trig_01DnPExs2fxYo5nrXh2WfKMq 15:04 ET, reminder trig_01A1RaJ978tg6rAawAVq5xDS 15:34 ET; local rows already enabled:false). Going live before those triggers are off would double-post Mon 10/12. Registry now shows 95 tasks with migratedToRemote.
+- **bin/catchup.py** (backup `.bak-pre-w1-20261008`): covers the 7 new agents (morning chekkit until 12:00, EOD until 23:00, audit until 18:00, shop AM/PM, Monday prompt until 11:00, reminder until 11:50). Kickstarting a dormant agent is a silent no-op.
+- Host-queue allow-list += w1_probe.py, chekkit_unanswered.py, chekkit_review_alert.py, daily_audit_send.py, deal_of_week_monday.py, shop_render.py (backup `fleet/_backups/host_queue_allowlist.txt.bak-pre-w1-20261008`). Read-only probe `bin/w1_probe.py`.
+- Nothing was posted to any team channel or DM during testing; no Cowork task or cloud trigger was changed.
+
+## 2026-10-08
+
+- **NEW Bravo cell `pm-loan-growth`** (`reports/PmLoanGrowth.ahk`, additive; 2 lines in bravo_watcher.ahk, backup `.bak-pre-pm-loan-growth-2026-10-07`). Runs saved "Claude Loan Portfolio 2026" with the FDP layout by create-date window → every loan with category, weight/karat description, last payment, customer. Runtime pause switch `Bravo Data Extraction/pm_loan_growth.PAUSED`. Built for the jewelry/gold/coin loan-growth campaign (Joshua 10/7: grow paying PM loans to 75% of melt). Older-loan pull runs overnight only (8 PM–5:10 AM), never in the morning cluster.
+- **NEW `Bravo Data Extraction/BRAVO_SAVED_REPORTS_CATALOG.md`** — verified criteria of the Loans/Buys saved reports + layouts + field meanings (Loan Walk = ON LOAN AND one disposition date; "Claude Loan Reviews" is actually a BUY report; ON LOAN Disposition Date = pawn date; jewelry descriptions carry DWT + karat). Read before building any new loan pull.
+- Enabled scheduled tasks: 52 -> 7
+- Registered scheduled tasks: 230 -> 231
+- Task folders on disk: 233 -> 235
+- ENABLED: daily-dress-code-check
+- ENABLED: northwest-registered-agent-daily-check
+- DISABLED: annual-board-review
+- DISABLED: bald-rock-monday-briefing
+- DISABLED: bonus-month-close
+- DISABLED: bonus-month-close-pull
+- DISABLED: ceo-monthly-scorecard
+- DISABLED: daily-supply-order
+- DISABLED: ebay-campaign-chekkit-monthly
+- DISABLED: entity-compliance-check
+- DISABLED: eom-bravo-gl-export
+- DISABLED: eom-bravo-gl-export-watchdog
+- DISABLED: insurance-coverage-audit
+- DISABLED: mobilepawn-app-social-monthly
+- DISABLED: monthly-amazon-store-allocation
+- DISABLED: monthly-analytics-report
+- DISABLED: monthly-analytics-watchdog
+- DISABLED: monthly-bravo-user-audit
+- DISABLED: monthly-capability-drift-audit
+- DISABLED: monthly-ebay-ratings-sweep
+- DISABLED: monthly-employee-sales-rankings
+- DISABLED: monthly-eom-recap
+- DISABLED: monthly-gun-audit-report
+- DISABLED: monthly-loan-layaway-outcomes
+- DISABLED: monthly-scrap-rankings
+- DISABLED: quarterly-capex-sweep
+- DISABLED: sales-tax-monthly-update
+- DISABLED: scheduled-task-model-audit-weekly
+- DISABLED: scrap-bucket-name-check
+- DISABLED: sunday-checklist-summary
+- DISABLED: task-hygiene-sweep
+- DISABLED: tuesday-supply-summary
+- DISABLED: valley-pawn-blog-publisher
+- DISABLED: vp-ai-search-health-check
+- DISABLED: vp-ai-visibility-metrics
+- DISABLED: vp-comms-drift-monthly-check
+- DISABLED: vp-creative-refresh-quarterly
+- DISABLED: vp-deal-of-week-monday-prompt
+- DISABLED: vp-deal-of-week-monday-reminder
+- DISABLED: vp-follower-growth-monthly-check
+- DISABLED: vp-gusto-signature-chase
+- DISABLED: vp-hr-compliance-quarterly-review
+- DISABLED: vp-hr-policy-monthly-sync
+- DISABLED: vp-new-customer-report
+- DISABLED: vp-presence-audit-weekly
+- DISABLED: vp-staff-video-chase
+- DISABLED: weekly-analytics-summary
+- DISABLED: weekly-timekeeping-analysis
+- DISABLED: yield-by-asset-class-monthly
 
 ## 2026-10-07 (Chekkit instant-answers check — 2nd straight day confirming the folder's gone; task edit blocked)
 

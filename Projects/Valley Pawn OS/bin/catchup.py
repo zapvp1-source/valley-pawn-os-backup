@@ -105,6 +105,28 @@ if wd == 0:   # Monday
     JOBS.append(("com.valleypawn.layaway-yield-weekly", "layaway_yield_weekly.py", at(11, 15), at(16, 0),
                  lambda s: receipt_since("layaway-yield-weekly", s) or file_since(LOGF("layaway-yield-weekly"), s)))
 
+# Mac-first wave 1 (2026-10-08): native replacements of Cowork tasks. Each agent is DORMANT until
+# fleet/state/native_live/<task> exists (bin/vp_live.sh), so kickstarting a dormant one is a silent no-op.
+# Evidence = a receipt under the task's own name (vp_slack writes it) or the job's own state/output.
+CU = os.path.join(OS_DIR, "fleet/state/chekkit_unanswered")
+if wd != 6:   # Mon-Sat
+    yday = today - dt.timedelta(days=1)
+    JOBS.append(("com.valleypawn.chekkit-unanswered-alert", "chekkit_unanswered.py morning", at(8, 0), at(12, 0),
+                 lambda s: receipt_since("chekkit-unanswered-alert", s) or os.path.exists(os.path.join(CU, "morning-%s.json" % yday))))
+    JOBS.append(("com.valleypawn.chekkit-unanswered-eod", "chekkit_unanswered.py eod", at(19, 0), at(23, 0),
+                 lambda s: receipt_since("chekkit-unanswered-eod-followup", s) or os.path.exists(os.path.join(CU, "eod-%s.json" % today))))
+    JOBS.append(("com.valleypawn.daily-audit-digest", "daily_audit_send.py", at(9, 40), at(18, 0),
+                 lambda s: receipt_since("daily-store-audit-digest", s) or file_since(os.path.join(OS_DIR, "daily-audit", "*.sent"), s)))
+SHOP_RES = os.path.join(HOME, "Documents/Claude/Projects/Website/analytics/data/shop/result.json")
+for h, until in ((7, at(14, 50)), (15, at(23, 0))):
+    JOBS.append(("com.valleypawn.shop-refresh", "shop_refresh.py", at(h, 0), until,
+                 lambda s: file_since(SHOP_RES, s)))
+if wd == 0:   # Monday deal-of-the-week prompt (useful until the 11:00 reminder) and reminder (until the noon cutoff)
+    JOBS.append(("com.valleypawn.deal-of-week-prompt", "deal_of_week_monday.py prompt", at(8, 10), at(11, 0),
+                 lambda s: receipt_since("vp-deal-of-week-monday-prompt", s) or file_since(LOGF("vp-deal-of-week-monday-prompt"), s)))
+    JOBS.append(("com.valleypawn.deal-of-week-reminder", "deal_of_week_monday.py reminder", at(11, 0), at(11, 50),
+                 lambda s: receipt_since("vp-deal-of-week-monday-reminder", s) or file_since(LOGF("vp-deal-of-week-monday-reminder"), s)))
+
 
 def main():
     render = "--render" in sys.argv

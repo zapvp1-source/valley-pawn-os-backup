@@ -1,0 +1,9 @@
+# Preston assistant — restored 2026-10-08 (interactive session, Joshua)
+
+Merge into CHANGELOG.md.
+
+- Found: the old `preston-interactive-assistant` was off. Its local copy is disabled, and the 10/6 cloud move never created a cloud copy. Preston's 9/17 request (call-out policy for Gusto signature) and 9/25 request (payroll amounts) were never picked up by Claude. The `com.valleypawn.preston-watch` instant acknowledgement has not posted since 9/16 either.
+- Built the new cloud scheduled task **Preston assistant** (`trig_01CjJusgBC2hkcCg5GHziHtC`). It runs hourly from 7 AM to 9 PM ET, approvals are automatic, it is tied to the Mac Studio, and notifications are off. It watches #preston-claude and Preston's "Claude, …" messages in #employee-prospects. It treats a request as handled once a reply follows it, so it needs no state file. It keeps the 9/4 DATA ACCESS RESTRICTION word for word, along with the HR carve-out and the three things that go to Joshua first. A verification run fired at 2:09 PM ET (session cse_012GGJXzUbR4qcCTqR62Yvid).
+- Platform limit: cloud scheduled tasks can't run more often than hourly. Getting a response within a minute needs on-demand firing. preston-watch already checks the channel every 2 minutes, and it can start the task through the task's API the moment Preston posts. That needs a per-task key that only Joshua can create, on the task's page on claude.ai (it is shown once). Once that key is saved on the Mac, preston-watch gets a single change to fire the task. Neither change has been made yet.
+- Not done: the host job queue allow-list was not widened to diagnose preston-watch (blocked this session). The diag job `20261008-pa-diag1.sh` was committed and will be refused by the allow-list (expected, harmless).
+- Old prompt source: Drive file `SKILL.md` id 1uTg8DPZtwNR8ntpOMO64VQZibznPybcJ (preston-interactive-assistant, 9/10 version).
