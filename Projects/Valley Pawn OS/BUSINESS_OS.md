@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-10-08
+# LIVE STATE - auto-refreshed 2026-10-09
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -12,16 +12,16 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Metric | Count |
 |---|---|
-| Task folders on disk | 235 |
-| Registered with scheduler | 231 |
-| Enabled (will fire) | 7 |
+| Task folders on disk | 236 |
+| Registered with scheduler | 232 |
+| Enabled (will fire) | 8 |
 | Registered but disabled | 224 |
 | On disk but never registered | 4 |
-| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 5270 |
+| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 4142 |
 
 ### Enabled tasks
 
-`daily-dress-code-check`, `gun-safety-cert-followup-20261015`, `gusto-keep-alive`, `mobilepawn-bravo-reply-check`, `northwest-registered-agent-daily-check`, `tuesday-supply-prep`, `vp-hiring-pipeline`
+`daily-dress-code-check`, `gun-safety-cert-followup-20261015`, `gusto-keep-alive`, `mobilepawn-bravo-reply-check`, `northwest-registered-agent-daily-check`, `preston-call-load-after-limit-change-20261015`, `tuesday-supply-prep`, `vp-hiring-pipeline`
 
 ### On disk but NOT registered (never fire)
 
@@ -32,6 +32,9 @@ below disagrees with this block, THIS BLOCK WINS.
 | Agent | File state | Currently loaded |
 |---|---|---|
 | `com.valleypawn.aged-canvas.plist` | installed | YES |
+| `com.valleypawn.ask-vp-capture.plist` | installed | YES |
+| `com.valleypawn.ask-vp-verify.plist` | installed | YES |
+| `com.valleypawn.ask-vp.plist` | installed | YES |
 | `com.valleypawn.backup-health.plist` | installed | YES |
 | `com.valleypawn.blog-announce.plist` | installed | YES |
 | `com.valleypawn.bonus-pace.plist` | installed | YES |
@@ -46,17 +49,23 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.business-os-refresh.plist` | installed | YES |
 | `com.valleypawn.catchup.plist` | installed | YES |
 | `com.valleypawn.chekkit-ai-responder.plist` | installed | YES |
+| `com.valleypawn.chekkit-review-alert.plist` | installed | YES |
 | `com.valleypawn.chekkit-review-invites.plist` | installed | YES |
+| `com.valleypawn.chekkit-unanswered-alert.plist` | installed | YES |
+| `com.valleypawn.chekkit-unanswered-eod.plist` | installed | YES |
 | `com.valleypawn.chrome-extension-watchdog.plist` | installed | YES |
 | `com.valleypawn.chrome-tab-hygiene.plist` | installed | YES |
 | `com.valleypawn.claude-keepalive.plist` | installed | YES |
 | `com.valleypawn.comedy-weekly.plist` | installed | YES |
 | `com.valleypawn.commandcenter.plist` | installed | YES |
 | `com.valleypawn.compliance-brief.plist` | installed | YES |
+| `com.valleypawn.daily-audit-digest.plist` | installed | YES |
 | `com.valleypawn.daily-report-discount.plist` | installed | YES |
 | `com.valleypawn.daily-report-pawn.plist` | installed | YES |
 | `com.valleypawn.daily-report-sold.plist` | installed | YES |
 | `com.valleypawn.deal-of-week-pick.plist` | installed | YES |
+| `com.valleypawn.deal-of-week-prompt.plist` | installed | YES |
+| `com.valleypawn.deal-of-week-reminder.plist` | installed | YES |
 | `com.valleypawn.desktop-cleanup.plist` | installed | YES |
 | `com.valleypawn.disk-health.plist` | installed | YES |
 | `com.valleypawn.docphotos-index.plist` | installed | YES |
@@ -107,6 +116,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.qbo-token-refresh.plist` | installed | YES |
 | `com.valleypawn.registry-guard.plist` | installed | YES |
 | `com.valleypawn.reviews-weekly.plist` | installed | YES |
+| `com.valleypawn.shop-refresh.plist` | installed | YES |
 | `com.valleypawn.skill-tool-index.plist` | installed | YES |
 | `com.valleypawn.sms-code-relay.plist` | installed | YES |
 | `com.valleypawn.social-recap.plist` | installed | YES |
@@ -140,28 +150,33 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-10-08 | Valley Pawn OS | - |
-| 2026-10-08 | Unified Search | - |
-| 2026-10-08 | Bravo Data Extraction | STATUS.md |
-| 2026-10-07 | Website | - |
-| 2026-10-07 | Valuation Core | README.md |
-| 2026-10-07 | Taxes 2026 | - |
-| 2026-10-07 | Sold Margin Review | STATUS.md |
+| 2026-10-09 | Valley Pawn OS | - |
+| 2026-10-09 | Unified Search | - |
+| 2026-10-09 | Bravo Data Extraction | STATUS.md |
+| 2026-10-08 | _scratch | - |
+| 2026-10-08 | Zoom Call Pipeline | - |
+| 2026-10-08 | Website | - |
+| 2026-10-08 | Valuation Core | README.md |
+| 2026-10-08 | Taxes 2026 | - |
+| 2026-10-08 | Sold Margin Review | STATUS.md |
+| 2026-10-08 | Preston Time Review | STATUS.md |
+| 2026-10-08 | Preston Knowledge Base | - |
+| 2026-10-08 | Precious Metals Settlements | - |
+| 2026-10-08 | Pawn Walks | STATUS.md |
+| 2026-10-08 | Life OS | - |
+| 2026-10-08 | Human Resources | - |
+| 2026-10-08 | Health Optimization | STATUS.md |
+| 2026-10-08 | Email Refinement | - |
+| 2026-10-08 | Discount Outlier Review | STATUS.md |
+| 2026-10-08 | Daily Funds Verification | - |
+| 2026-10-08 | Compliance | - |
+| 2026-10-08 | Business Dashboard Website | - |
+| 2026-10-08 | Bonus Program | - |
+| 2026-10-08 | Ask Valley Pawn | STATUS.md |
 | 2026-10-07 | Short Term Rental Optimization | - |
 | 2026-10-07 | Refine Social Media | - |
-| 2026-10-07 | Preston Time Review | STATUS.md |
-| 2026-10-07 | Precious Metals Settlements | - |
-| 2026-10-07 | Pawn Walks | STATUS.md |
-| 2026-10-07 | Life OS | - |
 | 2026-10-07 | Jewelry Count Reconciliation | STATUS.md |
-| 2026-10-07 | Health Optimization | STATUS.md |
-| 2026-10-07 | Email Refinement | - |
-| 2026-10-07 | Discount Outlier Review | STATUS.md |
-| 2026-10-07 | Daily Funds Verification | - |
 | 2026-10-07 | Controlio Monitoring | - |
-| 2026-10-07 | Compliance | - |
-| 2026-10-07 | Business Dashboard Website | - |
-| 2026-10-06 | Zoom Call Pipeline | - |
 | 2026-10-06 | Valley Pawn Studios | STATUS.md |
 | 2026-10-05 | eBay | - |
 | 2026-10-05 | Gold and Silver Markeitng | - |
@@ -170,16 +185,11 @@ below disagrees with this block, THIS BLOCK WINS.
 | 2026-10-04 | _stage | - |
 | 2026-10-02 | eBay Customer Campaign | - |
 | 2026-10-02 | MobilePawn Participation | README.md |
-| 2026-10-02 | Human Resources | - |
 | 2026-10-02 | Gift Card & Store Credit | README.md |
 | 2026-10-01 | Solaterra Site | - |
-| 2026-10-01 | Bonus Program | - |
 | 2026-09-30 | VP Ops Engine | STATUS.md |
 | 2026-09-30 | Training Program | STATUS.md |
 | 2026-09-30 | Loan Rule Change Outreach | STATUS.md |
-| 2026-09-29 | Quickbooks Set UP | - |
-| 2026-09-29 | Designer Goods Authentication | - |
-| 2026-09-28 | Call Analysis | - |
 
 <!-- LIVE-STATE:END -->
 

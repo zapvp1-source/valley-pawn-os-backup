@@ -56,6 +56,7 @@ KB_SRC = os.path.join(KB_DIR, "KB_CURRENT.md")
 
 ACADEMY = os.path.join(PROJ, "Training Program", "academy", "lessons")
 FACTS = os.path.join(BASE, "facts")
+INDUSTRY = os.path.join(BASE, "industry")
 
 PY = sys.executable or "/usr/bin/python3"
 
@@ -276,9 +277,29 @@ def parse_facts():
     return chunks
 
 
+# ----------------------------------------------------------------------------- layer 7: industry baseline
+def parse_industry():
+    """General pawn-shop know-how (curated). Lowest precedence: anything Valley Pawn wrote wins."""
+    chunks = []
+    for p in sorted(glob.glob(os.path.join(INDUSTRY, "*.md"))):
+        text = open(p, encoding="utf-8").read()
+        name = os.path.splitext(os.path.basename(p))[0]
+        for i, piece in enumerate(re.split(r"^## ", text, flags=re.M)):
+            piece = piece.strip()
+            if i == 0 or not piece:
+                continue
+            lines = piece.splitlines()
+            title, body = lines[0].strip(), "\n".join(lines[1:]).strip()
+            if len(body) < 40:
+                continue
+            chunks.append({"id": "ind:%s:%d" % (name, i), "layer": "industry", "trust": "INDUSTRY",
+                           "cite": "General pawn know-how — " + title, "title": title, "text": body[:5000]})
+    return chunks
+
+
 # ----------------------------------------------------------------------------- main
 def inputs():
-    files = [HB_SRC, KB_SRC] + glob.glob(os.path.join(ACADEMY, "*", "*.json")) + glob.glob(os.path.join(FACTS, "*.md"))
+    files = [HB_SRC, KB_SRC] + glob.glob(os.path.join(ACADEMY, "*", "*.json")) + glob.glob(os.path.join(FACTS, "*.md")) + glob.glob(os.path.join(INDUSTRY, "*.md"))
     return [f for f in files if os.path.exists(f)]
 
 
@@ -318,6 +339,8 @@ def main():
     n_ac = len(chunks) - n_policy - n_kb
     chunks += parse_facts()
     n_f = len(chunks) - n_policy - n_kb - n_ac
+    chunks += parse_industry()
+    n_i = len(chunks) - n_policy - n_kb - n_ac - n_f
 
     if n_policy < 20 or n_kb < 50:
         log("FATAL: suspiciously small layers (policy=%d, preston=%d) — refusing to publish" % (n_policy, n_kb))
@@ -329,7 +352,7 @@ def main():
             f.write(json.dumps(c, ensure_ascii=False) + "\n")
     os.replace(tmp, OUT)
     status = {"built_at": time.strftime("%Y-%m-%d %H:%M:%S"), "chunks": len(chunks),
-              "policy": n_policy, "preston": n_kb, "academy": n_ac, "facts": n_f}
+              "policy": n_policy, "preston": n_kb, "academy": n_ac, "facts": n_f, "industry": n_i}
     with open(STATUS, "w", encoding="utf-8") as f:
         json.dump(status, f, indent=1)
     print(json.dumps(status))

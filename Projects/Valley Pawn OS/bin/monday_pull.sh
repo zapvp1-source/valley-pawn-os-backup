@@ -84,7 +84,7 @@ pull() {  # pull <report> <timeout_s> ; echoes how many of the 5 stores landed
   # EVERY log line in here goes to stderr. vlog tees to stdout, so a single unredirected vlog
   # makes $(pull ...) return log text instead of a number — which it did on the first live run,
   # turning a genuine 5/5 into '[: integer expression expected' and a pointless retry.
-  local r="$1" tmo="$2" id t0 n healed=0 unclaimed
+  local r="$1" tmo="$2" id t0 n healed=0 unclaimed twait busy
   id="monday-${r}-$(date +%Y-%m-%dT%H-%M-%S)"
   # same trigger envelope bravo_run writes — written directly so completion can be judged by the
   # CSVs rather than by a result.json these handlers do not always emit
@@ -93,14 +93,19 @@ pull() {  # pull <report> <timeout_s> ; echoes how many of the 5 stores landed
     "{\"name\":\"$r\",\"stores\":[$(stores_json "$STORES")],\"date\":\"$TODAY..$TODAY\"}" \
     > "$BRAVO/triggers/$id.json"
   vlog "trigger written: $id" >&2
-  t0=$(date +%s)
+  t0=$(date +%s); twait=$t0
   while [ $(( $(date +%s) - t0 )) -lt "$tmo" ]; do
     n=$(have "$r")
     [ "$n" -eq 5 ] && { vlog "$r complete: 5/5" >&2; echo 5; return 0; }
     sleep 20
     # one self-heal if the watcher never even claimed the trigger (same rule bravo_run uses)
     unclaimed=0; [ -f "$BRAVO/triggers/$id.json" ] && unclaimed=1
-    if [ $healed -eq 0 ] && [ $unclaimed -eq 1 ] && [ $(( $(date +%s) - t0 )) -gt 180 ]; then
+    if [ $healed -eq 0 ] && [ $unclaimed -eq 1 ] && [ $(( $(date +%s) - twait )) -gt 180 ] \
+       && [ "${VP_SELFHEAL_LEGACY:-0}" != 1 ] && busy=$(bravo_active 5 "$id"); then
+      # 2026-10-09: serial watcher mid-run on another trigger = queue wait, not a hang. Never restart under it.
+      vlog "self-heal deferred for $id: watcher busy with $busy" >&2; twait=$(date +%s)
+    fi
+    if [ $healed -eq 0 ] && [ $unclaimed -eq 1 ] && [ $(( $(date +%s) - twait )) -gt 180 ]; then
       vlog "self-heal: $id still unclaimed after 3 min" >&2
       if bravo_procs | grep -q Bravo.exe; then watcher_restart; else bravo_relaunch; fi
       healed=1; sleep 120

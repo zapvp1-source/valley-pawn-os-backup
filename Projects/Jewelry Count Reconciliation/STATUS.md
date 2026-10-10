@@ -1759,3 +1759,63 @@ Assessment: CUL perfect match across all 5 categories, first perfect CUL night o
 Repeats to watch: ROA's offsetting +1/-1 Necklaces/Pendants split continues (10/2, 10/6, 10/7) — consistent, not escalating.
 
 Outcome: posted to #jewlery-counts via outbox (jewelry-onhand-nightly-pull-main-20261007-213937). No DM to Joshua (no anomalous OVER variance, no failure). No FAILURE_LEDGER row — both stores succeeded on the first trigger; ROA's delay was external queue contention from an unrelated task, not a Bravo-side failure or retry.
+
+## RUN RECORD — 2026-10-08 (Thursday)
+
+Freeze window: Thu — all 5 stores open and traded (Culpeper, Harrisonburg, Lexington, Roanoke, Waynesboro), all close 18:00 ET, reopen 10:00 ET next day (Fri 10/9). Fleet publish guard checked: `vp_dryrun.py status` -> exit 1, dry run off, publications live, normal publish rules apply.
+
+Bravo side: this was the roughest night on record for the host-queue pipeline. Overnight into the early morning, HAR and LEX both stalled repeatedly behind single-watcher serialization — wrapper logs showed the self-heal logic correctly deferring with "watcher busy with <job> (unclaimed=1) — not restarting mid-run" rather than firing a competing restart, so the long waits were the watcher doing the right (safe) thing, not an orphaned-claim failure. Final landing times (ET): ROA succeeded on first trigger overnight; WAY landed 08:46:19 (one known-legit partial: Charms empty — see below); CUL landed 09:18:50, 8/8 clean; HAR landed 09:32:02 (one known-legit partial: Charms empty); LEX landed 09:49:55 — the last store in, about 10 minutes of margin before the 10:00 reopen, two known-legit partials: Charms + Brooches empty. All 5 stores' Bravo pulls completed before store reopen, which is the actual hard deadline — satisfied for every store tonight.
+
+Finding to flag for Joshua (not fixed — Bravo-pipeline script changes go through the expert-review-board process, not a unilateral mid-run edit): `bravo_pull.sh` has a cosmetic bash syntax error near line 19 (a broken trailing comment/line) that crashes the wrapper with exit=2 immediately *after* the real result.json has already been written successfully. Confirmed in WAY's wrapper log tonight: "result ready" followed by the syntax error, then exit=2. This does not affect the underlying Bravo pull or the result/CSV data — both remained trustworthy all night — but it does mean wrapper exit codes/logs can no longer be trusted as a completion signal on their own; every store tonight was cross-checked directly against `results/*.result.json` and `output/*.csv` instead of trusting wrapper status.
+
+Empty-category rule applied and verified for all 3 affected store+category pairs by cross-checking each against the 2026-10-07 prior-day CSV (same store, same category, also empty/error both days -> legitimate, not a failure):
+- HAR Charms: empty 10/7 and 10/8 — legitimate.
+- LEX Charms + Brooches: both empty 10/7 and 10/8 — legitimate.
+- WAY Charms: empty 10/7 and 10/8 — legitimate.
+
+Operational gap to flag for Joshua: the PM (Counted) figures for tonight were not left in any durable file — only the raw EOD photos were on disk under `fleet/eod_photos/2026-10-08/`. The actual deadline is the Bravo pull landing before reopen (already satisfied), not the Slack post, so rather than post without real Counted numbers, the photos were re-read directly and sum-verified against each sheet's own printed TOTALS line before trusting any figure — this caught and corrected one transcription slip (HAR Bracelets misread as 99, corrected to 49 once the sum-check failed at 99 and passed at 49). Recommend wiring the PM-count extraction step to a durable intermediate file in future runs so this re-derivation isn't needed.
+
+PM count sheets: all 5 managers' photos read from `fleet/eod_photos/2026-10-08/` (Read tool, staged from the device), each store identified by its own sheet's printed header, not by the Slack poster's name (poster-to-store mapping is not stable — confirmed again tonight: Uriah->LEX, Walker-Tapley->HAR ("DIXIE HBURG" header), Chadd->WAY, Benjie-Moore->ROA, Rob->CUL, with Rob's CUL identity cross-confirmed via the separate EOD-cash sheet signed "Robert Swagger" in the same photo set; the CUL jewelry sheet itself was signed "Sandi Cole"). All 15 photos landed within the post-close freeze window (18:13–18:41 ET). Every store's PM block sum-verified against its own sheet's TOTALS line before use.
+
+All 5 stores open tonight — full post, no partial-post needed.
+
+Comparison (Expected = Bravo on-hand jewelry case count, Counted = PM count sheet):
+
+| Store | Category | Expected | Counted | Variance |
+|-------|----------|----------|---------|----------|
+| CUL | Rings | 679 | 679 | 0 |
+| CUL | Bracelets | 120 | 120 | 0 |
+| CUL | Necklaces | 153 | 153 | 0 |
+| CUL | Earrings | 143 | 143 | 0 |
+| CUL | Pendants | 255 | 255 | 0 |
+| **CUL Total** | | **1350** | **1350** | **0** |
+| HAR | Rings | 430 | 427 | -3 |
+| HAR | Bracelets | 48 | 49 | +1 |
+| HAR | Necklaces | 113 | 115 | +2 |
+| HAR | Earrings | 49 | 52 | +3 |
+| HAR | Pendants | 109 | 110 | +1 |
+| **HAR Total** | | **749** | **753** | **+4** |
+| LEX | Rings | 300 | 303 | +3 |
+| LEX | Bracelets | 41 | 42 | +1 |
+| LEX | Necklaces | 47 | 47 | 0 |
+| LEX | Earrings | 46 | 46 | 0 |
+| LEX | Pendants | 55 | 53 | -2 |
+| **LEX Total** | | **489** | **491** | **+2** |
+| ROA | Rings | 576 | 576 | 0 |
+| ROA | Bracelets | 139 | 139 | 0 |
+| ROA | Necklaces | 154 | 155 | +1 |
+| ROA | Earrings | 82 | 82 | 0 |
+| ROA | Pendants | 177 | 176 | -1 |
+| **ROA Total** | | **1128** | **1128** | **0** |
+| WAY | Rings | 342 | 342 | 0 |
+| WAY | Bracelets | 45 | 45 | 0 |
+| WAY | Necklaces | 72 | 72 | 0 |
+| WAY | Earrings | 58 | 58 | 0 |
+| WAY | Pendants | 64 | 64 | 0 |
+| **WAY Total** | | **581** | **581** | **0** |
+
+Assessment: CUL and WAY both perfect matches across all 5 categories. ROA's +1/-1 Necklaces/Pendants nets to 0 — the same recurring offsetting pattern on record from 10/2, 10/6, and 10/7 (established quirk, not new). HAR's uniformly-positive +4 total is small and consistent with HAR's own established recurring positive-variance pattern (see 9/4, 9/26, 9/29, 10/1 entries). LEX's +3/+1/0/0/-2 shape is the same kind of small mixed variance seen on LEX before (10/2) and well under anything that would read as anomalous. No anomalous OVER variance under the standing definition tonight — no DM to Joshua.
+
+Repeats to watch: HAR Charms empty (10/5, 10/6, 10/7, 10/8), LEX Charms+Brooches empty (10/5, 10/6, 10/7, 10/8), WAY Charms empty (10/5, 10/6, 10/7, 10/8) — all consistent with the longer-running pattern already on record, not escalating. ROA's offsetting +1/-1 Necklaces/Pendants split continues (10/2, 10/6, 10/7, 10/8) — consistent, not escalating. New items to watch: the `bravo_pull.sh` line-19 wrapper syntax bug (flagged above, not fixed) and the missing durable PM-count intermediate file (flagged above, not fixed).
+
+Outcome: posted to #jewlery-counts via outbox (jewelry-onhand-nightly-pull-main-20261009-095557). No DM to Joshua (no anomalous OVER variance, no failure). No FAILURE_LEDGER row — all 5 stores succeeded before the 10:00 reopen deadline; tonight's turbulence was wrapper-log/serialization noise, not an actual Bravo-side failure requiring a ledger entry.

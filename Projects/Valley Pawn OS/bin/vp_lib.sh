@@ -41,6 +41,22 @@ open_stores() {
 # Bravo pipeline busy? (claimed trigger or result written in the last N minutes, default 6)
 bravo_busy() { [ -n "$(find "$BRAVO/triggers/claimed" -type f -mmin -"${1:-6}" 2>/dev/null | head -1)$(find "$BRAVO/results" -name '*.result.json' -mmin -"${1:-6}" 2>/dev/null | head -1)" ]; }
 
+# 2026-10-09: is the watcher ACTIVELY working a trigger right now? = a trigger in triggers/claimed (other than $2)
+# whose OWN log was written in the last $1 minutes (default 5). Echoes that trigger id. Same per-trigger scoping as
+# _watchdog.ps1's 2026-08-04 in-flight fix. bravo_busy (claim-file/result mtime) cannot see a long run: the claim
+# file's mtime is the CLAIM time, so a 10-min jewelry store looks "not busy" after 3 min. Root cause of the 10/8
+# jewelry nightly loss: every waiting bravo_run "self-healed" (watcher restart) after 180 s unclaimed while the
+# serial watcher was mid-run on someone else's trigger, killing it — 60+ restarts 21:17-08:32.
+bravo_active() {
+  local mins="${1:-5}" skip="$2" f b
+  for f in "$BRAVO"/triggers/claimed/*.json; do
+    [ -f "$f" ] || continue
+    b=$(basename "$f" .json); [ "$b" = "$skip" ] && continue
+    [ -n "$(find "$BRAVO/logs" -maxdepth 1 -name "$b.log" -mmin -"$mins" 2>/dev/null)" ] && { echo "$b"; return 0; }
+  done
+  return 1
+}
+
 # Health gate: run bravo_ensure_healthy.sh detached, wait for PASS/FAIL (cap seconds, default 600). Echoes status.
 health_gate() {
   local cap="${1:-600}" t0=$(date +%s) s=""
@@ -79,17 +95,30 @@ bravo_run() {
   local id="$1" reports="$2" cap="${3:-3000}"
   printf '{"id":"%s","requested_at":"%s","reports":[%s]}' "$id" "$(date +%Y-%m-%dT%H:%M:%S%z)" "$reports" > "$BRAVO/triggers/$id.json"
   vlog "trigger written: $id"
-  local t0=$(date +%s) healed=0 last_size=0 last_change=$(date +%s) now size unclaimed
+  local t0=$(date +%s) healed=0 last_size=0 last_change=$(date +%s) now size unclaimed twait=$(date +%s) requeued=0 busy
   while [ $(( $(date +%s) - t0 )) -lt "$cap" ]; do
     [ -f "$BRAVO/results/$id.result.json" ] && { vlog "result ready: $id"; return 0; }
     sleep 20; now=$(date +%s)
     size=$(stat -f %z "$BRAVO/logs/$id.log" 2>/dev/null || echo 0)
     [ "$size" != "$last_size" ] && { last_size=$size; last_change=$now; }
     unclaimed=0; [ -f "$BRAVO/triggers/$id.json" ] && unclaimed=1
-    if [ $healed -eq 0 ] && { { [ $unclaimed -eq 1 ] && [ $((now - t0)) -gt 180 ]; } || { [ $unclaimed -eq 0 ] && [ $((now - last_change)) -gt 720 ]; }; }; then
-      vlog "self-heal for $id: unclaimed=$unclaimed silent=$((now - last_change))s"
-      if bravo_procs | grep -q Bravo.exe; then watcher_restart; else bravo_relaunch; fi
-      healed=1; sleep 120
+    if [ $healed -eq 0 ] && { { [ $unclaimed -eq 1 ] && [ $((now - twait)) -gt 180 ]; } || { [ $unclaimed -eq 0 ] && [ $((now - last_change)) -gt 720 ]; }; }; then
+      # 2026-10-09: never restart a watcher that is demonstrably mid-run on ANOTHER trigger (that kills it).
+      # Waiting in a serial queue is not a hang. VP_SELFHEAL_LEGACY=1 restores the old unconditional restart.
+      if [ "${VP_SELFHEAL_LEGACY:-0}" != 1 ] && busy=$(bravo_active 5 "$id"); then
+        vlog "self-heal deferred for $id: watcher busy with $busy (unclaimed=$unclaimed) — not restarting mid-run"
+        twait=$now; last_change=$now
+        # claimed, silent, and the serial watcher is on someone else's trigger => ours was orphaned by an earlier
+        # restart (claimed orphans are never re-run). Re-queue it ONCE so it gets its turn.
+        if [ $unclaimed -eq 0 ] && [ $requeued -eq 0 ]; then
+          printf '{"id":"%s","requested_at":"%s","reports":[%s]}' "$id" "$(date +%Y-%m-%dT%H:%M:%S%z)" "$reports" > "$BRAVO/triggers/$id.json"
+          requeued=1; vlog "re-queued orphaned trigger $id"
+        fi
+      else
+        vlog "self-heal for $id: unclaimed=$unclaimed silent=$((now - last_change))s"
+        if bravo_procs | grep -q Bravo.exe; then watcher_restart; else bravo_relaunch; fi
+        healed=1; sleep 120
+      fi
     fi
   done
   vlog "TIMEOUT waiting for $id"; return 1

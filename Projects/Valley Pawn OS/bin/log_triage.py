@@ -218,6 +218,25 @@ def main():
         tail = [l for l in recent[-12:] if l.strip()]
         still_failing = bool(hits) and hits[-1] in tail
         name = os.path.basename(p)
+        # 2026-10-09 (additive, opt-in per log via fleet/log_triage_expectations.json):
+        #  run_end {log: regex}  — the line that closes every run. Judge "still failing" on the LAST
+        #    complete run only. oura-daily-import writes 2 lines per clean run, so its 10/06 race
+        #    traceback stayed inside the 12-line tail for days after 3 clean runs (doctor 10/8, 10/9).
+        #  event_quiet_ok_hours {log: h} — an event-only log (written only when something is wrong,
+        #    silent when healthy). Untouched for longer than h while its agent keeps running = recovered.
+        #    chrome-extension-watchdog's last FAILED (10/07 10:39) was followed by a relaunch and 40 h
+        #    of silence, yet stayed "still failing" because nothing healthy is ever appended.
+        rx = (exp.get("run_end") or {}).get(name)
+        if rx and hits:
+            ends = [i for i, l in enumerate(recent) if re.search(rx, l)]
+            if ends:
+                start = ends[-2] + 1 if len(ends) >= 2 else 0
+                block = recent[start:ends[-1] + 1]
+                after = recent[ends[-1] + 1:]
+                still_failing = any(l in hits for l in block + after) if not after else any(l in hits for l in after)
+        qh = (exp.get("event_quiet_ok_hours") or {}).get(name)
+        if qh is not None and still_failing and age_h > float(qh):
+            still_failing = False
         gap = gaps.get(name, 48.0)
         # For a .err.log the tail is ALWAYS the last error, because nothing else is ever written to
         # it — so "the tail shows a problem" is permanently true once anything has failed. What

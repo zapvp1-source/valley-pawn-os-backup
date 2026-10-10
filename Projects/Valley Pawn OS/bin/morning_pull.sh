@@ -39,11 +39,19 @@ if [ -d "$LOCK" ] && [ -n "$(find "$PROJECT/logs" -maxdepth 1 -name .morning_pul
 if ! mkdir "$LOCK" 2>/dev/null; then log "ABORT: another morning pull is running (lock present)"; exit 1; fi
 trap 'rmdir "$LOCK" 2>/dev/null' EXIT
 
+# 2026-10-09: is the watcher mid-run on a trigger (claimed trigger whose own log moved in the last N min)?
+# Same definition as bravo_active in vp_lib.sh. A restart under a live run kills it (10/8-10/9 jewelry loss).
+mp_active() { local f b; for f in "$PROJECT"/triggers/claimed/*.json; do [ -f "$f" ] || continue; b=$(basename "$f" .json); [ "$b" = "$2" ] && continue; [ -n "$(find "$PROJECT/logs" -maxdepth 1 -name "$b.log" -mmin -"${1:-5}" 2>/dev/null)" ] && { echo "$b"; return 0; }; done; return 1; }
+
 # ---- STEP 2: watcher singleton hygiene ----
 if [ $DRY -eq 0 ]; then
   rm -f "$CERT"
+  if ACT=$(mp_active 5) && [ "${VP_SELFHEAL_LEGACY:-0}" != 1 ]; then
+  log "watcher hygiene SKIPPED: watcher mid-run on $ACT (restarting would kill it)"
+  else
   "$PRLCTL" exec "$VM" --current-user powershell -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File '\\Mac\Home\Documents\Claude\Projects\Bravo Data Extraction\_restart_watcher_v2.ps1' > /tmp/mp_watcher.log 2>&1
   log "watcher hygiene rc=$? :: $(tail -3 /tmp/mp_watcher.log | tr '\n' ' ' | cut -c1-200)"
+  fi
   # ---- STEP 3: health gate (backgrounded, poll status file, 10 min cap) ----
   "$PRLCTL" exec "$VM" --current-user powershell.exe -NoProfile -WindowStyle Hidden -Command "Get-Process WindowsTerminal,OpenConsole -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue" >/dev/null 2>&1
   ( cd "$PROJECT" && LC_ALL=C LANG=C nohup ./bravo_ensure_healthy.sh > logs/_mp_health.log 2>&1 < /dev/null & )
@@ -69,7 +77,7 @@ log "trigger written: triggers/$TRIGGER_ID.json"
 
 # ---- STEP 5: poll for the result (cap 50 min); one self-heal if unclaimed >3 min / silent >12 min ----
 wait_result() {  # $1 id  $2 cap-seconds  -> 0 when results/<id>.result.json exists
-  local id="$1" cap="$2" t0=$(date +%s) healed=0 last_size=0 last_change=$(date +%s)
+  local id="$1" cap="$2" t0=$(date +%s) healed=0 last_size=0 last_change=$(date +%s) twait=$(date +%s) busy
   while [ $(( $(date +%s) - t0 )) -lt "$cap" ]; do
     [ -f "$PROJECT/results/$id.result.json" ] && return 0
     sleep 20
@@ -77,7 +85,11 @@ wait_result() {  # $1 id  $2 cap-seconds  -> 0 when results/<id>.result.json exi
     size=$(stat -f %z "$PROJECT/logs/$id.log" 2>/dev/null || echo 0)
     if [ "$size" != "$last_size" ]; then last_size=$size; last_change=$now; fi
     local unclaimed=0; [ -f "$PROJECT/triggers/$id.json" ] && unclaimed=1
-    if [ $healed -eq 0 ] && { { [ $unclaimed -eq 1 ] && [ $((now - t0)) -gt 180 ]; } || { [ $unclaimed -eq 0 ] && [ $((now - last_change)) -gt 720 ]; }; }; then
+    if [ $healed -eq 0 ] && { { [ $unclaimed -eq 1 ] && [ $((now - twait)) -gt 180 ]; } || { [ $unclaimed -eq 0 ] && [ $((now - last_change)) -gt 720 ]; }; } \
+       && [ "${VP_SELFHEAL_LEGACY:-0}" != 1 ] && busy=$(mp_active 5 "$id"); then
+      log "self-heal deferred: watcher busy with $busy (unclaimed=$unclaimed) — not restarting mid-run"; twait=$now; last_change=$now
+    fi
+    if [ $healed -eq 0 ] && { { [ $unclaimed -eq 1 ] && [ $((now - twait)) -gt 180 ]; } || { [ $unclaimed -eq 0 ] && [ $((now - last_change)) -gt 720 ]; }; }; then
       log "self-heal: trigger unclaimed=$unclaimed silent=$((now - last_change))s — restarting watcher once"
       "$PRLCTL" exec "$VM" --current-user powershell -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File '\\Mac\Home\Documents\Claude\Projects\Bravo Data Extraction\_restart_watcher_v2.ps1' > /tmp/mp_watcher2.log 2>&1
       healed=1; sleep 120

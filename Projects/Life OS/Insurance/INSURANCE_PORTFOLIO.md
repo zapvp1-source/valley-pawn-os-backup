@@ -1,6 +1,6 @@
 # Insurance Portfolio — All Domains
 
-**GENERATED 2026-10-01 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
+**GENERATED 2026-10-09 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
 Update the registry, then run `Life OS/Insurance/bin/regen_portfolio.py`.
 Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker history: `BROKER_PIPELINE.md`.
 
@@ -96,6 +96,7 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - DECISION 2026-09-09 (Joshua): RENEW WITH KIN. Market check complete - Allstate does not write new FL homeowners at all; Progressive's full panel declined (KickOutDnq) on the 22-year-old original roof; State Farm FL excludes roofs >15 yrs and would almost certainly decline for the same reason. Kin is the only carrier willing to write this risk today. Policy AUTO-RENEWS 10/15/2026 at $1,354 - NO ACTION REQUIRED to renew. Do not re-shop this property until the roof is replaced.
 - MONEY ON THE TABLE before 10/15: no wind mitigation inspection (OIR-B1-1802) has ever been submitted to Kin, despite the July 2026 whole-house impact window/door/garage package ($56,621.72). In Florida a filed wind-mit form is the single largest premium credit available and Kin will re-rate mid-term on receipt. Order the inspection (~$75-150) and send the form to support@kin.com.
 - ESCROW CHECK before 10/15: renewal is $1,354 but the paper letter Joshua received said $1,288.81 (~$65 low, matches the prior-year figure). If ServiceMac built the escrow analysis off the letter, the escrow account will be short. Confirm ServiceMac has the $1,354 figure and the correct mortgagee clause (ServiceMac ISAOA ATIMA, PO Box 29411, Phoenix AZ 85038-9411, loan ending 7287) so the renewal is paid from escrow on time.
+- 2026-10-09: Kin replied (thread 1a11b772dc71b9b8) to Joshua's 10/8 renewal-change request (liability to $500K, add Hillary Davis as 2nd named insured, update mailing address, confirm flood zone X vs A) saying they must speak DIRECTLY with the policyholder by phone before processing any of it - a reply email is not enough. Renewal is 2026-10-15 (6 days out as of this note). Base policy auto-renews regardless, but none of the 4 requested changes will be in place for the new term unless Joshua calls Kin support (855-717-0022) before then. Not resolved - Joshua's action.
 
 **RE-BALDROCK-HO — Homeowners HO3 written as 'Primary home'**
 
@@ -420,9 +421,9 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
   - **all other perils:** $5,000
   - **wind hail:** $5,000
 - **Mortgagee:** None (Steadily confirmed no mortgagee 8/7/2024)
-- **Status:** CONFIRMED IN FORCE 2026-09-22 - Renewal (Active), term 1/9/2026-1/9/2027, carrier Obsidian Insurance Company, premium $960/yr. A 'Notice of Changes at Renewal' was sent 11/20/2025 and shows as delivered - read the actual PDF next review to see what changed.
-- **Documents:** Life OS/Insurance/documents/hardinberry/ - notice of changes at renewal, policy packet (renewal), declaration (renewal), Value360 valuation - pulled from Steadily portal 2026-09-22 · Gmail: Fwd 'Payment confirmation: 148 Hardinberry St' (Steadily 7/9/2026, thread 19f669f7dc48c088) · Mail: policy packet with declaration.pdf (Safeco OY9071463, 2024-25) · Mail: Update - Joshuan Davis - 148 Hardinberry St - Travelers.pdf · Drive: 0e02a09193de8bee_148 Insurance Declaration.pdf (Erie 2021-22, historical)
-- **Last verified:** 2026-09-26 — source: Steadily portal (app.steadily.com) direct pull 2026-09-22, policy detail page + Documents section; revised quote email 9/23/2026; premium-driver follow-up email 9/25/2026
+- **Status:** CONFIRMED IN FORCE 2026-09-22 - Renewal (Active), term 1/9/2026-1/9/2027, carrier Obsidian Insurance Company, premium $960/yr. A 'Notice of Changes at Renewal' was sent 11/20/2025 and shows as delivered - read the actual PDF next review to see what changed. Payment confirmation received 2026-10-09 ($80 installment) reconfirms policy active, same $960/yr premium, named insured Joshua Davis - no change to limits or the open condo-vs-townhome re-rate decision below.
+- **Documents:** Life OS/Insurance/documents/hardinberry/ - notice of changes at renewal, policy packet (renewal), declaration (renewal), Value360 valuation - pulled from Steadily portal 2026-09-22 · Gmail: Fwd 'Payment confirmation: 148 Hardinberry St' (Steadily 7/9/2026, thread 19f669f7dc48c088) · Mail: policy packet with declaration.pdf (Safeco OY9071463, 2024-25) · Mail: Update - Joshuan Davis - 148 Hardinberry St - Travelers.pdf · Drive: 0e02a09193de8bee_148 Insurance Declaration.pdf (Erie 2021-22, historical) · Gmail: Payment confirmation: 148 Hardinberry St (Steadily/support@steadily.com to zapvp1@me.com, 2026-10-09 05:10 UTC, thread 1a11f11bad4e9f3a) - $80.00 charged to Amex x2003, named insured Joshua Davis, policy OB3-TN-22196824-01 - consistent with the confirmed $960/yr annual premium (12 x $80).
+- **Last verified:** 2026-10-09 — source: Steadily portal (app.steadily.com) direct pull 2026-09-22, policy detail page + Documents section; revised quote email 9/23/2026; premium-driver follow-up email 9/25/2026
 
 ### RE-WOODSWALK-LL — Landlord / rental dwelling
 

@@ -59,16 +59,33 @@ def serial(d):
     return (d.date() - EPOCH).days
 
 
-def categorize(name):
+def categorize(name, sent_at=None):
+    """Map a Brevo campaign name to (category, theme).
+
+    FIX 2026-10-09: the report said "no weekly send since 9/10 (29 days)" while Brevo showed 8 sends since
+    then. Cause: only names starting 'W<n>' or containing 'Spotlight' counted as Weekly, so the newer
+    weekly names ("Layaway — What People Actually Buy — October 8, 2026") landed in 'Other' and
+    weekly_rows() skipped them. The weekly newsletter is the THURSDAY send, so anything not claimed by a
+    more specific bucket and sent on a Thursday is Weekly. One-offs (store hours, win-back, shop-online)
+    get their own buckets so they never pollute the weekly trend.
+    """
     m = re.match(r"\s*(W\d+)\b", name)
     if m:
         return m.group(1), re.sub(r"^\s*W\d+\s*[—-]\s*", "", name).split(" — ")[0].strip()
     if "We Buy Gold" in name or "[Master" in name:
         return "Monthly", re.sub(r"^Valley Pawn\s*[—-]\s*", "", name).strip()
-    if "Spotlight" in name:
-        return "Weekly", "Store Spotlight"
     if "Giveaway" in name:
         return "Giveaway", name.split(" — ")[0].strip()
+    if "Forfeiture" in name or "Win-Back" in name or "Win-back" in name:
+        return "Win-back", name.split(" — ")[0].strip()
+    if "Roanoke Open" in name or "Store Move" in name or "Hours" in name.split(" — ")[0]:
+        return "Store Update", name.split(" — ")[0].strip()
+    if "Shop Online" in name:
+        return "Shop Online", name.split(" — ")[0].strip()
+    if "Spotlight" in name:
+        return "Weekly", "Store Spotlight"
+    if sent_at is not None and sent_at.astimezone().weekday() == 3:   # Thursday = the weekly newsletter slot
+        return "Weekly", name.split(" — ")[0].strip()
     return "Other", name.split(" — ")[0].strip()
 
 
@@ -101,7 +118,10 @@ def build_row(b, c, existing):
     sent_at = parse_sent(c["sentDate"])
     rec = tot.get("sent", 0)
     old = existing.get(cid, {})
-    cat, theme = categorize(c.get("name", ""))
+    cat, theme = categorize(c.get("name", ""), sent_at)
+    # A hand-edited category/theme in the sheet always wins — EXCEPT a stale auto-label of "Other",
+    # which is what the old classifier wrote for every newer weekly name. Re-derive those.
+    keep_old = old.get("category") not in (None, "", "Other")
     row = {
         "campaign_id": cid,
         "send_date": old.get("send_date") or serial(sent_at),
@@ -109,8 +129,8 @@ def build_row(b, c, existing):
         "send_time": old.get("send_time") if old.get("send_time") not in (None, "") else round(
             (sent_at.hour * 3600 + sent_at.minute * 60) / 86400.0, 6),
         "campaign_name": c.get("name", ""),
-        "category": old.get("category") or cat,
-        "theme": old.get("theme") or theme,
+        "category": old.get("category") if keep_old else cat,
+        "theme": (old.get("theme") or theme) if keep_old else theme,
         "recipients": rec,
         "opens": tot.get("uniqueViews", 0), "open_pct": pct(tot.get("uniqueViews", 0), rec),
         "clicks": tot.get("uniqueClicks", 0), "click_pct": pct(tot.get("uniqueClicks", 0), rec),

@@ -9,7 +9,12 @@ REPORT="$1"; DATE="$2"; STORES="$3"; ID="${4:-${REPORT}-$(date +%Y-%m-%dT%H-%M-%
 [ -z "$REPORT" ] || [ -z "$DATE" ] || [ -z "$STORES" ] && { echo "usage: bravo_pull.sh <report> <date> <STORES,CSV> [id]"; exit 2; }
 case "$ID" in --no-gate) ID="${REPORT}-$(date +%Y-%m-%dT%H-%M-%S)";; esac
 for i in 1 2 3; do bravo_busy 3 || break; vlog "pipeline busy — wait 60s ($i/3)"; sleep 60; done
-[ "$5" = "--no-gate" ] || vlog "health gate: $(health_gate 600)"
+# 2026-10-09: if the watcher is mid-run on another trigger, Bravo is demonstrably healthy and the gate's
+# recover-to-dashboard would drive Bravo's screen UNDER that run (seen 10/9 08:27 during CUL jewelry). Skip it.
+if [ "$5" != "--no-gate" ]; then
+  if ACT=$(bravo_active 5 "$ID"); then vlog "health gate skipped: watcher mid-run on $ACT (Bravo is up and working)"
+  else vlog "health gate: $(health_gate 600)"; fi
+fi
 SJ=$(echo "$STORES" | tr ',' '\n' | sed 's/.*/"&"/' | paste -sd, -)
 # 2026-09-29: a flat 2400 s wait could never cover a 5-store jewelry pull (~16-20 min per store as of
 # 9/28: CUL 20:53, HAR 21:09, LEX 21:30, then the host job timed out and ROA/WAY landed next morning).

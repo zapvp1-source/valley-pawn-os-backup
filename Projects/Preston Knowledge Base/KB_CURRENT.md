@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-10-08 22:14 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-10-09 22:14 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -221,6 +221,13 @@ id: gold-coin-buy-decision-2fb830d0
 SECTION: PRECIOUS METALS - TESTING, FRAUD & COUNTERFEITS
 ==============================================================================
 
+### [VERIFIED] testing-equipment-kee-discontinued
+RULE: The Kee gold testers Valley Pawn uses were discontinued; Preston's plan is to stock a couple of pens per store while still available, then find a replacement or fall back to acid only.
+PRESTON SAID: "FYI. The kee gold testers that we use. They were discontinued. We may want to get a couple of pens for each store while they are out there and then we will need to look for another option or just go back to acid only."
+SOURCE: DM Joshua<->Preston (D03C7RBGY56) | 2026-05-28 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1779972778229139
+PRESTON'S CORRECTION (2026-10-09): We still use the Kee tester at the stores. Testing order stays: magnet first, sort by markings, then confirm with the Kee and acid. Coins and bullion: magnet, weight and Sigma (the Kee is not reliable on bars). (Joshua, 2026-10-09)
+id: testing-equipment-kee-discon-9b5b53ce
+
 ### [HIGH] coins-testing-required
 RULE: Preston audits gold coin intakes retrospectively and asks how they were tested.
 PRESTON SAID: "3 gold coins - how did we test? Are we sure they are good?"
@@ -276,12 +283,6 @@ Broken - $1,602.07 ($447 fake gold)
 Missing - $1,928.29 ($483 missing gold)"
 SOURCE: DM Joshua<->Preston (D03C7RBGY56) | 2024-11-15 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1731684118329529
 id: fraud-detection-write-off-fa-a270d13d
-
-### [HIGH] testing-equipment-kee-discontinued
-RULE: The Kee gold testers Valley Pawn uses were discontinued; Preston's plan is to stock a couple of pens per store while still available, then find a replacement or fall back to acid only.
-PRESTON SAID: "FYI. The kee gold testers that we use. They were discontinued. We may want to get a couple of pens for each store while they are out there and then we will need to look for another option or just go back to acid only."
-SOURCE: DM Joshua<->Preston (D03C7RBGY56) | 2026-05-28 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1779972778229139
-id: testing-equipment-kee-discon-9b5b53ce
 
 ### [HIGH] testing-equipment-security
 RULE: Diamond tester, gold tester and bullion tester must be secured in a designated labeled spot when not in use — never left on the counter.
@@ -1418,6 +1419,14 @@ PRESTON SAID: "You can respond with "I really don't like to negotiate with mysel
 SOURCE: #general | 2026-02-07 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1770495557215709
 id: negotiation-script-line-5a62dd77
 
+### [HIGH] never-recommend-competitors
+RULE: Never recommend a competitor to customers, including Facebook Marketplace. If a customer asks where else they could sell an item, say we don't know.
+PRESTON SAID: "There is never a scenario where we should be recommending a competitor of any kind to our customers. *This includes Facebook marketplace.* 
+
+If they ask where they might be able to sell it we tell them we don't know."
+SOURCE: #general (Preston Peters, Operations Manager) | 2026-10-09 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1791580466061079
+id: never-recommend-competitors-9b313c90
+
 ### [HIGH] nicd-reason
 RULE: The stated reason for the NiCd refusal.
 PRESTON SAID: "Just a reminder to everyone, the reason we don't take the NiCd battery items is because it is dated technology and most all of the batteries available are no longer good."
@@ -1640,6 +1649,12 @@ HP printer - $20 - Printers are very hard to sell as well as test. Usually only 
 SOURCE: #loans-and-buys | 2024-04-26 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1714143910033159
 id: xbox-360-console-refuse-3cb1f4c7
 
+### [MEDIUM] acid-test-18k-fade-rate
+RULE: When acid testing 18k gold, the reaction should fade slowly, not quickly. A fast fade means the piece is not holding up as 18k.
+PRESTON SAID: "Test with acid at 18k should fade slow and not fast"
+SOURCE: #deal-questions (Preston Peters, Operations Manager) | 2026-10-09 | https://valleypawnworkspace.slack.com/archives/C03BWGT5F5X/p1791577698262159
+id: acid-test-18k-fade-rate-f8c00124
+
 ### [MEDIUM] aged-over-two-years
 RULE: Preston separately tracks inventory aged over 2 years by store and treats it as must-move: identify, mark down, and get it gone.
 PRESTON SAID: "Aged over 2 years
@@ -1665,6 +1680,12 @@ RULE: Example of Preston's big-toy buy judgment: buy a Polaris 4-wheeler with ti
 PRESTON SAID: "I have a customer from Lexington wanting to sell this 4 wheeler for $2500. He has the title for it. It's a Polaris with just 300 miles on it. It's a regular customer. We would price it at around $4200 and likely get $3800+. I think it would be a good item to pickup and would sell quickly. They are super popular especially in the Lexington area. He was originally wanting 3500 and I have got him to this number but don't think I can get him any lower."
 SOURCE: DM Joshua<->Preston | 2024-03-28 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1711659629959749
 id: big-toy-buy-judgment-73dfd153
+
+### [MEDIUM] cash-sales-during-system-problems
+RULE: When the system is having problems, cash sales can still be made by recording the tag information and cash sale price, then ringing the sale out later.
+PRESTON SAID: "We can do cash sales by recording tag information and cash sale price to ring out later."
+SOURCE: #general (Preston Peters, Operations Manager) | 2026-10-09 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1791573897704449
+id: cash-sales-during-system-pro-4ade7339
 
 ### [MEDIUM] clearance-markdown-percentage
 RULE: The standing clearance markdown is set at 40%, and Preston believes it could go deeper now that clearance markdowns are running.
@@ -1786,6 +1807,12 @@ PRESTON SAID: "I would run the report, you know, where you go to reports, sold i
 SOURCE: zoom-call:2026-10-08_1312_Preston-to-Benjie_4m25s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
 id: report-sales-by-associate-787cbf2f
 
+### [MEDIUM] report-sales-by-associate
+RULE: To see an associate's sales numbers, run the Sold Inventory report (under Reports) and group it by associate. Running it for the same date range lets you compare associates over the same period.
+PRESTON SAID: "I would run the report, you know, where you go to reports, sold inventory. and you group by an associate, you know what I'm saying?"
+SOURCE: zoom-call:6f3dc1bdd04d46ea8e59ab90dc4d217b | 2026-10-08 | UNK Benjie Moore
+id: report-sales-by-associate-a90f9109
+
 ### [MEDIUM] return-policy-30-day-window
 RULE: The store return/warranty policy covers used items for 30 days from purchase. Problems reported months later fall outside it.
 PRESTON SAID: "It's not within 30 days like our policy covers."
@@ -1867,6 +1894,18 @@ PRESTON SAID: "Make sure when you do just tell them that they they're gonna have
 SOURCE: zoom-call:2026-10-08_0949_Preston-to-Sandi_1m55s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
 id: bank-account-adding-employee-34f86c43
 
+### [LOW] bravo-restart-troubleshooting
+RULE: When Bravo acts up, restarting the program may clear the problem. Culpeper had a similar issue and it stopped after a restart, though the source does not say what the issue was.
+PRESTON SAID: "We were having the a simular issue earlier. Restarted Bravo and since, no issue."
+SOURCE: #general (Sandra Cole, Culpeper manager) | 2026-10-09 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1791572618077869
+id: bravo-restart-troubleshootin-b2361800
+
+### [LOW] custom-purity-unlisted-karat
+RULE: When an item's karat (such as 16k) isn't available in Bravo, use the custom purity option to write it up.
+PRESTON SAID: "Should be a custom purity option"
+SOURCE: #deal-questions (Preston Peters, Operations Manager) | 2026-10-09 | https://valleypawnworkspace.slack.com/archives/C03BWGT5F5X/p1791577890719919
+id: custom-purity-unlisted-karat-e5c8e827
+
 ### [LOW] firearm-serial-location-receiver
 RULE: The serial number is normally on the receiver of the firearm. The speaker is not identified in the transcript, and it conflicts with the pre-1968 no-serial note, so treat it as a general guide only.
 PRESTON SAID: "the serial numbers always on the receiver of the firearm."
@@ -1897,6 +1936,18 @@ RULE: The company reimburses employees for the gun safety course certification o
 PRESTON SAID: "we pay you right back"
 SOURCE: zoom-call:2026-10-08_1225_Preston-to-JoshuaBurnett_8m57s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
 id: gun-safety-course-reimbursem-c83a6fc6
+
+### [LOW] job-applicant-interview-inquiries
+RULE: When someone calls asking about an interview, the store tells them it will follow up by phone call if it is interested.
+PRESTON SAID: "Told them if we are interested we will follow up via phone call"
+SOURCE: #boro-funds (Chadd McClintic, Waynesboro manager) | 2026-10-09 | https://valleypawnworkspace.slack.com/archives/C03BLLRN64U/p1791582604693559
+id: job-applicant-interview-inqu-8bbce9dc
+
+### [LOW] new-location-site-selection-roanoke
+RULE: George ruled out the Melrose buildings for a possible new Roanoke location because they were run down and too close to another pawn shop. Distance from competing pawn shops and building condition were factors in his judgment.
+PRESTON SAID: "There are some building on Melrose but they are run down and too close to another pawn shop."
+SOURCE: #roanoke-funds (George Moore, Roanoke manager) | 2026-10-09 | https://valleypawnworkspace.slack.com/archives/C063K8E02TW/p1791570862911939
+id: new-location-site-selection--b7007c38
 
 ### [LOW] out-of-policy-defective-buyback-offer
 RULE: When an item is outside the return policy and the store still wants to help, the fallback is to buy it back. Look up the market value of that item with the defect and make an offer, rather than refunding or swapping it.
@@ -1942,5 +1993,5 @@ id: typical-retail-sales-benchma-f03d7d66
 
 
 ==============================================================================
-COVERAGE: 251 entries - 0 verified by Preston, 171 high-confidence rules, 63 medium, 17 low, 0 superseded.
+COVERAGE: 259 entries - 1 verified by Preston, 171 high-confidence rules, 66 medium, 21 low, 0 superseded.
 ==============================================================================

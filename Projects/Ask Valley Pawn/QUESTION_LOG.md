@@ -14,3 +14,5 @@ Every question asked and how it was handled. NOT-FOUND rows are the interview li
 | 2026-10-08 22:49 | Joshua | Corporate Support | What is a 4473 | ANSWERED ac:L6-02,pp:05.02/firearms-sales-buys-federal-form-requirements |
 | 2026-10-08 22:50 | Joshua | Corporate Support | When can I take vacation | ANSWERED pp:01.11/requesting-pto,pp:01.11/pto-blackout-periods,pp:01.11/pto-eligibility-accrual |
 | 2026-10-08 22:51 | Joshua | Corporate Support | I have a pokeman card.  How do i evaluate | NOT-FOUND (routed) |
+| 2026-10-09 08:22 | Joshua | Corporate Support | I have a pokeman card.  How do i evaluate | ANSWERED ind:pawn_industry_baseline:6 |
+| 2026-10-09 10:35 | Joshua | Corporate Support | how do authenticate a gucci bag that just came in? | ANSWERED ac:L8-06 |

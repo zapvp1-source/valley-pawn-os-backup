@@ -465,7 +465,10 @@ def main():
         return 1
     try:
         look = cfg.get("lookback_minutes", 45)
-        if not render and when.strftime("%H:%M") < (dt.datetime.strptime(lo, "%H:%M") + dt.timedelta(minutes=45)).strftime("%H:%M"):
+        # 2026-10-09: send_window is ["00:00","24:00"] since 10/1 (24/7). strptime("24:00") raised ValueError in
+        # this overnight catch-up branch during 00:00-00:44 every night (ledger "could not read the Chekkit alert
+        # emails (ValueError)" 10/3-10/9). A 24/7 window has no overnight gap to catch up, so skip the branch.
+        if not render and hi < "24:00" and when.strftime("%H:%M") < (dt.datetime.strptime(lo, "%H:%M") + dt.timedelta(minutes=45)).strftime("%H:%M"):
             # first 45 min of the day: also catch texts that arrived overnight after the window closed
             prev_close = dt.datetime.combine(when.date() - dt.timedelta(days=1), dt.datetime.strptime(hi, "%H:%M").time(), ET)
             look = max(look, int((when - prev_close).total_seconds() // 60) + 15)

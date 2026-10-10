@@ -81,7 +81,7 @@ DEFAULT_CONFIG = {
     "poll_limit": 20,
     "max_chunks": 10,
     "min_score_ratio": 0.30,          # keep passages scoring >= ratio * best
-    "answerable_trust": ["POLICY", "VERIFIED", "HIGH", "ACADEMY", "FACT", "LIVE"],
+    "answerable_trust": ["POLICY", "VERIFIED", "HIGH", "ACADEMY", "FACT", "LIVE", "INDUSTRY"],
     "ignore_users": [],               # slack ids never answered (bots are skipped automatically)
 }
 
@@ -122,6 +122,11 @@ SYN = {
     "harassment": ["conduct", "eeo"], "dress": ["attire", "appearance"],
     "sell": ["sale", "sales", "buy"], "price": ["pricing", "sticker"],
     "text": ["texting", "chekkit", "message"], "texting": ["text", "chekkit"],
+    "rolex": ["watch", "luxury", "watches"], "omega": ["watch", "luxury"], "watches": ["watch", "rolex", "luxury"],
+    "pokemon": ["trading", "card", "cards"], "pokeman": ["pokemon", "trading", "card"], "card": ["trading", "cards"],
+    "cards": ["trading", "card"], "psa": ["graded", "card"], "autograph": ["memorabilia", "signed"],
+    "guitar": ["musical", "instrument"], "laptop": ["electronics", "computer"], "console": ["electronics", "game"],
+    "evaluate": ["check", "authenticate", "comp", "value"], "authentic": ["genuine", "fake", "authenticate"],
 }
 
 CANNED = {
@@ -140,6 +145,7 @@ THE ONLY SOURCE OF TRUTH for facts is the PASSAGES block. Each passage has an id
 TRUST LEVELS
 - POLICY, FACT, ACADEMY, VERIFIED, LIVE: answer from them.
 - HIGH: an established Valley Pawn rule. Answer from it as the rule itself — state it plainly. Do NOT quote anyone, do NOT name Preston as the source, do NOT give the date it was said.
+- INDUSTRY: general pawn-shop know-how (how to evaluate, authenticate or comp an item; what pawn shops typically take). Use it to answer "how do I check/evaluate X" and "do we take X" when Valley Pawn's own material is silent. Valley Pawn's own passages ALWAYS win: if one says we don't take something, or sets a different rule, follow ours. INDUSTRY never sets a pay percentage, loan amount or approval.
 - MEDIUM / LOW: a one-off judgment, not a rule. Never the answer. If it's all there is: say there's no set rule and to check with their manager.
 - If two passages disagree, say in one line that the number isn't settled and to check before quoting it (status conflict). Don't list the history. Never pick one, never average. EXCEPTION: FACT passages are the current record for store hours, phone numbers, addresses, store emails and who manages what; where a FACT passage and older manual text disagree on those, answer from FACT and add one short line that the manual is being updated.
 
@@ -375,6 +381,8 @@ def retrieve(bm, cfg, q):
         return []
     best = hits[0][1]
     keep = [(c, s) for c, s in hits if s >= cfg["min_score_ratio"] * best][:cfg["max_chunks"]]
+    ind = [(c, s) for c, s in hits if c.get("trust") == "INDUSTRY" and (c, s) not in keep][:2]
+    keep += ind
     m = melt_chunk(q)
     if m:
         keep.insert(0, (m, best + 1))
@@ -625,6 +633,8 @@ def answer(q, asker="", store="", cfg=None, bm=None, by_id=None, history=None):
                 cite = re.sub(r"^Academy lesson (\S+) — ", r"Academy \1: ", cite)
             elif c.startswith("live:"):
                 cite = "today's spot price"
+            elif c.startswith("ind:"):
+                cite = "general pawn know-how"
             if cite not in srcs:
                 srcs.append(cite)
         out["source_line"] = "_From: " + " · ".join(srcs[:3]) + "_" if srcs else ""

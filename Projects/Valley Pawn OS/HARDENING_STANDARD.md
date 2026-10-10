@@ -78,6 +78,29 @@ process-group kill, output to `fleet/host_queue/done/<name>.log`. Use it for lau
 bootstrap/bootout, registry edits (backup first, never null), reading app logs, plist fixes.
 Rule 16 still applies inside jobs: no Slack chatter; write to files.
 
+**Fleet Guardian registry/Scheduled access via the Host Job Queue (found 2026-10-09 12:45 pass).**
+Every Cowork fleet-guardian pass since 2026-09-17 logged Step 1 (registry) and Step 3 (SKILL.md
+reruns) as structurally blocked — no `request_cowork_directory`, no `Control_your_Mac`/osascript,
+`~/Library/...` and `~/Documents/Claude/Scheduled` outside the connected folders. None of those
+passes tried the Host Job Queue for this, even though it was built for exactly this gap (see above).
+It works: drop a `.sh` in `fleet/host_queue/` that calls an allow-listed **read-only** bin script —
+`bin/reg_shape.py` (registry structure/counts), `bin/inspect_path.py <path> [--lines N]` (list any
+directory or head any text file under `~/Documents/Claude/Scheduled` or anywhere else, built in
+2026-09 specifically for this problem but apparently never used by a guardian pass before now),
+`bin/task_preflight.py` (full enabled/disabled table with cron + predicted failure-wall class per
+task, from the registry directly), and `bin/host_diag.sh [agents|registry|applog|slack-identity|
+scorecard|all]` (launchd status, registry health, Claude app log tail, Slack bot identity, scorecard/
+registry-guard log tails). preston-watch picks up queued jobs within ~2-15 min (observed, not a
+guaranteed SLA — the queue is otherwise idle) and writes `<name>.log` next to the `.sh` in
+`fleet/host_queue/done/`. The allow-list requires one plain command per line, no pipes/chains/
+substitution/redirection, and the invoked script name must already be in
+`fleet/host_queue_allowlist.txt` — `python3 ".../bin/<allowed>.py" <args>` and
+`bash ".../bin/<allowed>.sh" <args>` both pass; raw `find`/`cp`/`ls -la >file`/`while` loops do not.
+This does NOT give Step 3 a way to re-run a Cowork-only task's own logic unless that logic already
+lives in an allow-listed bin script — it only solves *reading* the registry and any SKILL.md/log/
+state file. A guardian pass should try this before logging the registry/Scheduled gap as blocked
+again.
+
 ## Rerun-safety manifest
 `Valley Pawn OS/fleet/rerun_manifest.json`. Default for any task not listed: **verify-only** (safe default). Classification rules:
 - **rerun-safe:** reads files/APIs, posts internal Slack reports/refreshes with duplicate guards. No external humans contacted, no public publishing, no money, no Bravo UI driving.

@@ -45,6 +45,13 @@
 - Selftest 25/25 (incl. 4 follow-up turns, greeting, thanks). Replayed Joshua's 18:33 "do we take role wqcthes?" → answered in-thread from Academy L8-02.
 - Deploy note: device_commit_files can deliver a stale copy when the same staged path is reused — always commit from a fresh path (`outputs/deploy/v<epoch>/`). `fleet/state/ask_vp/replay.txt` (one ts per line) makes the agent re-answer specific messages.
 
+## 2026-10-09 — concise voice + Layer 7 industry knowledge (Joshua: "more concise… don't reference Preston"; "we may want to layer in some base pawn industry knowledge")
+- Voice: answer first, 1–3 sentences, ≤4 steps; no quotes, no "Preston said", no dates; source line plain ("Valley Pawn practice", "P&P §…", "Academy L5-02: …", "general pawn know-how").
+- **Layer 7 `Ask Valley Pawn/industry/pawn_industry_baseline.md`** (12 passages, trust INDUSTRY, lowest precedence): what pawn shops take; Rolex/luxury watch authentication + comping; gold/silver/platinum stamps; trading cards (Pokémon/sports/PSA); autographs; electronics; power tools; instruments; firearms general; deal basics. Never sets pay %/loan/approval; Valley Pawn's own "we don't take" rules win. Retrieval always gives 2 industry passages a seat when they match.
+- `facts/ebay_rules.md`: Joshua's four eBay hard rules (9/17).
+- Parallel answering (up to 6 at once) for busy mornings.
+- Corpus now 546 passages (policy 224, Preston/practice 251 — nightly capture added 32 — Academy 54, facts 5, industry 12). Selftest **35/35** incl. Rolex, Pokémon, autographs, cell phones (correctly "no"), 585 stamp, Gibson, eBay Best Offer. Replayed Joshua's Pokémon question in-thread.
+
 ## Open — only Joshua
 1. DONE 10/8 — Joshua created #ask-goldilocks (C0C809Q2JDS); responder repointed. Staff get added at launch.
 2. Approve the demo announcement (DEMO_PLAN.md) before Fri 10/16.

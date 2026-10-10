@@ -39,3 +39,57 @@ No post made. Nothing failed that needs a Slack notice (per Rule 16, failure/tec
 - The cloud-sandbox wrangler deploy path (stage site/ + .cloudflare/* via device_stage_files, npm prefix to a writable dir, wrangler pages deploy from there) has now succeeded twice in a row (2026-10-08 AM and PM) while `device_bash` was down both times. Recommend folding this into REFRESH_RUNBOOK.md as a permanent documented "Option C" (done this run — see runbook).
 - `device_bash` has now failed its first 3 attempts on 2+ consecutive runs today while every other remote-devices tool (list_dir/stage_files/commit_files/get_device_info) works fine. This is a distinct failure shape from both runbook Option A's premise (Control_your_Mac tool doesn't exist) and Option B's premise (Mac linked, device_bash works) — it's "Mac linked, device_bash specifically broken." Worth a look if it persists into tomorrow's run; two occurrences isn't yet grounds for alarm but a third would be.
 - The `~/Documents/Claude/Artifacts` connected-folder gap is now 4 occurrences across 3 days. Still needs Joshua to connect the folder once via the picker on the Mac Studio (or move/symlink the dashboard's artifact sources under `~/Documents/Claude/Projects`).
+
+
+**Run date:** 2026-10-09 (scheduled task `dashboard-refresh`, ~08:23 ET)
+
+## Result: SUCCESS
+
+### 1. KPI data refresh (site/data/kpis.json) - DONE
+- Checked all 7 feed channels against the latest Slack posts (Slack MCP connector directly).
+- Loan review, layaway review, company-performance watch, daily funds, items-to-price, and
+  chekkit unanswered-messages: no newer standard-format ("Sent using Claude") report since the
+  prior refresh for any of these -- each already matched the latest post exactly, left unchanged.
+- Intake Margin (#pawn-walks): today's and the last several days' posts render as blank-text
+  Block Kit messages again (same known rendering gap noted in the 2026-10-06 entry); could not
+  parse newer data, left unchanged at the existing Oct 7 figures per the no-fabrication rule.
+- `bravoDaily` section untouched (owned by daily-bravo-kpis task).
+- Updated `asOf` -> October 9, 2026. Validated with `python3 json.load` before and after deploy.
+
+### 2. Artifact sync (site/artifacts/) - SKIPPED (known gap, not re-logged)
+- `~/Documents/Claude/Artifacts` is still not a connected folder for this session (only
+  "Business Dashboard Website" and "Projects" are connected). Same standing gap already tracked
+  on the Artifacts-folder HUMAN_QUEUE row (fleet-guardian); not re-logged to FAILURE_LEDGER.md
+  per Rule 15 (same failure twice is a design problem already queued, not a new notice).
+- `site/artifacts/` and `site/data/artifacts.json` carried over byte-identical from the prior
+  deploy -- nothing changed upstream since that source folder is still unreachable either way.
+
+### 3. Deploy to Cloudflare Pages - DONE
+- `device_bash` (Mac shell bridge) worked normally this run (unlike several recent runs where it
+  failed outright) -- confirmed it has its own Linux VM, network egress, and local node/npm, so
+  the edit + deploy ran directly against the mounted `site/` folder with no stage/commit round
+  trip needed.
+- Installed wrangler via `npm config set prefix /tmp/npm-global` (default global path isn't
+  writable there), ran `wrangler pages deploy site --project-name=vp-dashboard --commit-dirty=true`.
+- Deployment URL: `https://ededed89.vp-dashboard.pages.dev` (1 file changed - kpis.json; 35
+  already cached; Worker bundle recompiled).
+
+### 4. Verify - DONE
+- `curl https://vp-dashboard.pages.dev/` without auth -> 401 (pass).
+- `curl` with basic auth (`valleypawn` / `.cloudflare/site_password`) -> 200 (pass).
+- `data/kpis.json` fetched live -> parses clean. First apex fetch returned a stale CDN-cached
+  copy (asOf Oct 8) -- expected edge-cache behavior per the runbook's own note; confirmed correct
+  (asOf Oct 9) via the deployment-specific URL and a cache-busted retry. Not a deploy defect.
+- `site/_worker.js` (password gate) untouched, part of the deployed set -- gate confirmed working.
+
+## Step 5 - Slack #general post
+No post made. Nothing failed: KPI refresh, deploy and verify all succeeded; the artifact-sync
+skip is the same pre-existing, already-tracked gap, not a new failure.
+
+## Context notes for next session
+- `device_bash` is healthy again as of this run -- the "Mac linked, device_bash specifically
+  broken" pattern from 2026-10-08 did not recur.
+- The `~/Documents/Claude/Artifacts` connected-folder gap remains open; still needs Joshua to
+  connect it once via the folder picker on the Mac Studio (or move/symlink the dashboard's
+  artifact sources under `~/Documents/Claude/Projects`). No new action taken on it this run --
+  already on the standing HUMAN_QUEUE row.
