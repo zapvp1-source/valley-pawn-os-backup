@@ -1819,3 +1819,61 @@ Assessment: CUL and WAY both perfect matches across all 5 categories. ROA's +1/-
 Repeats to watch: HAR Charms empty (10/5, 10/6, 10/7, 10/8), LEX Charms+Brooches empty (10/5, 10/6, 10/7, 10/8), WAY Charms empty (10/5, 10/6, 10/7, 10/8) — all consistent with the longer-running pattern already on record, not escalating. ROA's offsetting +1/-1 Necklaces/Pendants split continues (10/2, 10/6, 10/7, 10/8) — consistent, not escalating. New items to watch: the `bravo_pull.sh` line-19 wrapper syntax bug (flagged above, not fixed) and the missing durable PM-count intermediate file (flagged above, not fixed).
 
 Outcome: posted to #jewlery-counts via outbox (jewelry-onhand-nightly-pull-main-20261009-095557). No DM to Joshua (no anomalous OVER variance, no failure). No FAILURE_LEDGER row — all 5 stores succeeded before the 10:00 reopen deadline; tonight's turbulence was wrapper-log/serialization noise, not an actual Bravo-side failure requiring a ledger entry.
+
+## RUN RECORD — 2026-10-09 (Friday)
+
+All 5 stores open tonight (Friday → full fleet per the weekday gate). Full post, no partial-post needed.
+
+PM count sheets: all 5 managers' photos read from `fleet/eod_photos/2026-10-09/` (Read tool, staged from the device), each store identified by its own sheet's printed header/signature, not by the Slack poster's display name. Posts: Walker-Tapley (HAR, "Dixie Hburg" header) 18:07 ET, Uriah (LEX) 18:15 ET, Martin-D (WAY) 18:17 ET, Benjie-Moore (ROA) 18:20 ET, Sandi-Cole (CUL, signed "Sandi Cole") 18:28 ET — all 15 photos landed 18:07-18:28 ET, well inside the post-close freeze window. Every store's PM block sum-verified against its own sheet's printed TOTALS line before use. WAY's printed total's last digit was obscured by photo overlap/ghosting; reconstructed via category sum (340+48+72+58+64=582) rather than trusted as printed — flagging per standing practice of noting sum-reconstructed totals.
+
+Bravo pulls: all 5 triggers (jewelry-case-counts-v3, the current report — v2 was retired 2026-10-06) queued via host_queue at ~20:40 ET, but ran into the known, already-documented `_hold_pmlg_overnight` backlog (57 pm-loan-growth jobs held and released at 20:00, sorting ahead of the jewelry jobs — a pre-flagged, expected delay per tonight's CHANGELOG, not a failure) plus Bravo's own one-store-at-a-time serialization. Actual pulls ran sequentially from ~23:01 ET (CUL) through ~00:07 ET (WAY), all well before the 10:00 AM reopen deadline that bounds freeze-window validity. All 5 completed successfully, confirmed via `results/*.result.json` and `output/2026-10-09_*_jewelry-case-counts.csv` (the host_queue `done/` wrapper logs lacked a final exit= line and were correctly disregarded as an unreliable completion signal, per the Bravo-context pipeline note — the underlying Bravo-side trigger/result files were treated as authoritative).
+
+Empty-category rule applied and verified for all 3 affected store+category pairs by cross-checking each against the 2026-10-08 prior-day CSV (same store, same category, also empty/error both days → legitimate, not a failure):
+- HAR Charms: empty 10/8 and 10/9 — legitimate.
+- LEX Charms + Brooches: both empty 10/8 and 10/9 — legitimate.
+- WAY Charms: empty 10/8 and 10/9 — legitimate.
+
+Comparison (Expected = Bravo on-hand jewelry case count, Counted = PM count sheet):
+
+| Store | Category | Expected | Counted | Variance |
+|-------|----------|----------|---------|----------|
+| CUL | Rings | 678 | 679 | +1 |
+| CUL | Bracelets | 120 | 120 | 0 |
+| CUL | Necklaces | 153 | 153 | 0 |
+| CUL | Earrings | 143 | 143 | 0 |
+| CUL | Pendants | 255 | 255 | 0 |
+| **CUL Total** | | **1349** | **1350** | **+1** |
+| HAR | Rings | 438 | 436 | -2 |
+| HAR | Bracelets | 48 | 49 | +1 |
+| HAR | Necklaces | 114 | 116 | +2 |
+| HAR | Earrings | 49 | 52 | +3 |
+| HAR | Pendants | 110 | 110 | 0 |
+| **HAR Total** | | **759** | **763** | **+4** |
+| LEX | Rings | 300 | 303 | +3 |
+| LEX | Bracelets | 41 | 42 | +1 |
+| LEX | Necklaces | 47 | 47 | 0 |
+| LEX | Earrings | 46 | 46 | 0 |
+| LEX | Pendants | 55 | 53 | -2 |
+| **LEX Total** | | **489** | **491** | **+2** |
+| ROA | Rings | 576 | 576 | 0 |
+| ROA | Bracelets | 139 | 139 | 0 |
+| ROA | Necklaces | 153 | 154 | +1 |
+| ROA | Earrings | 82 | 82 | 0 |
+| ROA | Pendants | 177 | 176 | -1 |
+| **ROA Total** | | **1127** | **1127** | **0** |
+| WAY | Rings | 340 | 340 | 0 |
+| WAY | Bracelets | 45 | 48 | +3 |
+| WAY | Necklaces | 72 | 72 | 0 |
+| WAY | Earrings | 58 | 58 | 0 |
+| WAY | Pendants | 64 | 64 | 0 |
+| **WAY Total** | | **579** | **582** | **+3** |
+
+Assessment: CUL's +1 (Rings) is single-digit noise. HAR's uniformly-positive +4 total (Bracelets +1, Necklaces +2, Earrings +3) is small and consistent with HAR's own long-established recurring positive-variance pattern (9/4, 9/26, 9/29, 10/1, 10/8, etc.) — not new. LEX's +3/+1/0/0/-2 shape is identical in form to its own previously-flagged-and-explained quirk (10/2, 10/6, 10/7, 10/8) — not new. ROA's +1/-1 Necklaces/Pendants nets to 0, the same recurring offsetting split seen since 10/2. WAY's +3 (Bracelets) is a new wrinkle for WAY specifically — WAY has posted perfect or near-perfect matches on recent nights (10/7, 10/8 both 0) — but at +3 it is far below the ~+61 ROA-pendants-as-charms scale that defines an anomalous OVER variance under the standing rule, so it is logged as a one-night item to watch rather than escalated. No anomalous OVER variance under the standing definition tonight — no DM to Joshua.
+
+Repeats to watch: HAR Charms empty (10/5 through 10/9), LEX Charms+Brooches empty (10/5 through 10/9), WAY Charms empty (10/5 through 10/9) — all consistent, not escalating. ROA's offsetting +1/-1 Necklaces/Pendants split continues (10/2, 10/6, 10/7, 10/8, 10/9) — consistent, not escalating. New item to watch: WAY Bracelets +3 tonight, vs 0 on 10/7 and 10/8 — one night only so far, not yet a pattern.
+
+Notable finding — LEX Bravo on-hand values identical to 10/8: every one of LEX's 8 Bravo categories tonight (Rings 300, Bracelets 41, Pendants 55, Charms/Brooches error, Earrings 46, Chains 29, Necklaces 18) read bit-for-bit identical to the 2026-10-08 CSV, and the PM-sheet Counted total (303/42/47/46/53) also matches 10/8's Counted figures exactly. This could be a genuinely quiet night at a smaller store (zero jewelry-category pawn/sale/forfeiture activity across all 8 categories in a full business day) or it could indicate a stale/cached Bravo read or a reused physical count sheet. Flagging for the next session to watch: if LEX reads identical again on 10/10, treat it as a process issue (stale pull or sheet re-use) rather than coincidence, and investigate the Bravo report cell directly.
+
+Pipeline issue discovered (not from tonight's run): checking `fleet/outbox/outbox.log` turned up that the PREVIOUS run's main post — `jewelry-onhand-nightly-pull-main-20261009-095557` (the 2026-10-08 night's report, posted in the early morning of 10/9) — was logged in this file's 10/8 RUN RECORD as "posted to #jewlery-counts via outbox," but the ops bot's own log shows `2026-10-09 09:56:26 jewelry-onhand-nightly-pull-main-20261009-095557: bad envelope (channel=C0BM9NHGTT4 file=jewelry-onhand-nightly-pull-main-20261009-095557.txt)` — its `.json` envelope used a bare filename instead of the full absolute path the ops bot requires, so that night's table never actually reached #jewlery-counts despite being logged as a success. The `.json` and `.txt` are still sitting in `fleet/outbox/` and `fleet/outbox/failed/` respectively. Root cause: the envelope's `file` field must be the full absolute path (`/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/outbox/<name>.txt`), matching every other known-working envelope on file (10/2, 10/6, 10/7) — tonight's envelope was written with the correct absolute path to avoid repeating this. Not re-posting the stale 10/8 data now (a day old, would be confusing out of context) — flagging here for visibility and as a reminder to verify outbox.log (not just STATUS.md's own "Outcome" line) when confirming a post actually landed.
+
+Outcome: posted to #jewlery-counts via outbox (jewelry-onhand-nightly-pull-main-20261010-001854, absolute-path envelope). No DM to Joshua (no anomalous OVER variance, no run failure). No FAILURE_LEDGER row — all 5 stores succeeded well before the 10:00 reopen deadline; tonight's only turbulence was the pre-documented pmlg backlog delay plus Bravo's normal sequential one-store-at-a-time processing, not a Bravo-side failure.

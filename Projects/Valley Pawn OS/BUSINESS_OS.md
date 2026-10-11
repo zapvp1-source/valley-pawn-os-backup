@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-10-09
+# LIVE STATE - auto-refreshed 2026-10-10
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -17,7 +17,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | Enabled (will fire) | 8 |
 | Registered but disabled | 224 |
 | On disk but never registered | 4 |
-| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 4142 |
+| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 3509 |
 
 ### Enabled tasks
 
@@ -48,6 +48,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.brevo-welcome.plist` | installed | YES |
 | `com.valleypawn.business-os-refresh.plist` | installed | YES |
 | `com.valleypawn.catchup.plist` | installed | YES |
+| `com.valleypawn.ceo-week-pull.plist` | installed | YES |
 | `com.valleypawn.chekkit-ai-responder.plist` | installed | YES |
 | `com.valleypawn.chekkit-review-alert.plist` | installed | YES |
 | `com.valleypawn.chekkit-review-invites.plist` | installed | YES |
@@ -150,37 +151,39 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-10-09 | Valley Pawn OS | - |
-| 2026-10-09 | Unified Search | - |
-| 2026-10-09 | Bravo Data Extraction | STATUS.md |
+| 2026-10-10 | Valley Pawn OS | - |
+| 2026-10-10 | Unified Search | - |
+| 2026-10-10 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-10-10 | Bravo Data Extraction | STATUS.md |
+| 2026-10-09 | Zoom Call Pipeline | - |
+| 2026-10-09 | Website | - |
+| 2026-10-09 | Valuation Core | README.md |
+| 2026-10-09 | Training Program | STATUS.md |
+| 2026-10-09 | Short Term Rental Optimization | - |
+| 2026-10-09 | Refine Social Media | - |
+| 2026-10-09 | Preston Knowledge Base | - |
+| 2026-10-09 | Precious Metals Settlements | - |
+| 2026-10-09 | Pawn Walks | STATUS.md |
+| 2026-10-09 | Life OS | - |
+| 2026-10-09 | Jewelry Loan Growth | - |
+| 2026-10-09 | Human Resources | - |
+| 2026-10-09 | Health Optimization | STATUS.md |
+| 2026-10-09 | Discount Outlier Review | STATUS.md |
+| 2026-10-09 | Daily Funds Verification | - |
+| 2026-10-09 | Compliance | - |
+| 2026-10-09 | Communcations | - |
+| 2026-10-09 | Business Dashboard Website | - |
+| 2026-10-09 | Ask Valley Pawn | STATUS.md |
 | 2026-10-08 | _scratch | - |
-| 2026-10-08 | Zoom Call Pipeline | - |
-| 2026-10-08 | Website | - |
-| 2026-10-08 | Valuation Core | README.md |
 | 2026-10-08 | Taxes 2026 | - |
 | 2026-10-08 | Sold Margin Review | STATUS.md |
 | 2026-10-08 | Preston Time Review | STATUS.md |
-| 2026-10-08 | Preston Knowledge Base | - |
-| 2026-10-08 | Precious Metals Settlements | - |
-| 2026-10-08 | Pawn Walks | STATUS.md |
-| 2026-10-08 | Life OS | - |
-| 2026-10-08 | Human Resources | - |
-| 2026-10-08 | Health Optimization | STATUS.md |
 | 2026-10-08 | Email Refinement | - |
-| 2026-10-08 | Discount Outlier Review | STATUS.md |
-| 2026-10-08 | Daily Funds Verification | - |
-| 2026-10-08 | Compliance | - |
-| 2026-10-08 | Business Dashboard Website | - |
 | 2026-10-08 | Bonus Program | - |
-| 2026-10-08 | Ask Valley Pawn | STATUS.md |
-| 2026-10-07 | Short Term Rental Optimization | - |
-| 2026-10-07 | Refine Social Media | - |
-| 2026-10-07 | Jewelry Count Reconciliation | STATUS.md |
 | 2026-10-07 | Controlio Monitoring | - |
 | 2026-10-06 | Valley Pawn Studios | STATUS.md |
 | 2026-10-05 | eBay | - |
 | 2026-10-05 | Gold and Silver Markeitng | - |
-| 2026-10-05 | Communcations | - |
 | 2026-10-05 | Ai Optimized Marketing | - |
 | 2026-10-04 | _stage | - |
 | 2026-10-02 | eBay Customer Campaign | - |
@@ -188,8 +191,6 @@ below disagrees with this block, THIS BLOCK WINS.
 | 2026-10-02 | Gift Card & Store Credit | README.md |
 | 2026-10-01 | Solaterra Site | - |
 | 2026-09-30 | VP Ops Engine | STATUS.md |
-| 2026-09-30 | Training Program | STATUS.md |
-| 2026-09-30 | Loan Rule Change Outreach | STATUS.md |
 
 <!-- LIVE-STATE:END -->
 

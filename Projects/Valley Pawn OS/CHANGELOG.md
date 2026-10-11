@@ -2,6 +2,11 @@
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
 
+## 2026-10-10
+
+- Native agent appeared: com.valleypawn.ceo-week-pull.plist
+- Native agent LOADED: com.valleypawn.ceo-week-pull
+
 ## 2026-10-09 (weekly CEO brief rebuilt: one brief, revenue first, email + DM)
 
 - Joshua: "I only need one brief that includes all sectors... delivered by email and in MY DM as an attachment" and "revenue [is] the single most important measurement."

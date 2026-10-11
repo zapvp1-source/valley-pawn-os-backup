@@ -1108,3 +1108,8 @@ Kin (support@kin.com) replied 10/8 1:40pm to Joshua's renewal-change request (li
   it runs unattended and the job's own guardrail says not to edit the digest script mid-run.
 - Status: OPEN — the DM went out correctly this week via the workaround script, but `report.py`
   itself is still broken for next week's run unless fixed before then.
+
+| 2026-10-10 | PM loan-growth campaign (75% of melt) | FIRST RANKED LIST BUILT: Jewelry Loan Growth/Valley_Pawn_PM_Loan_Growth_List_20261010.xlsx - 798 paid PM loans, 631 below 75%, ~$174K room; coverage 5,265/5,701 items (92%). 3 short windows (HAR p20231227, ROA p20250707, ROA p20260202) redo queued in _hold_pmlg_overnight; release Sun 8 PM ET (trig_01CKBgVbhMdfTiQ44EP2aRs9), re-pause/rebuild Sun 5:10 AM (trig_01DZ6yMKrmE2dfuwywdsCJdk). PAUSED flag is ON now. Nothing sent to customers/staff; awaiting Joshua approval for campaign. | open |
+
+## 2026-10-10 — insurance-inbox-watch: Bald Rock Liberty Mutual plan hit a snag (no decision needed yet)
+Patsy Pernia (JM Partners) replied 10/9 evening: the Safeco HomeSharing endorsement Joshua asked to add to the Bald Rock Liberty Mutual policy isn't available in Virginia, so coverage would be thin while the home is rented out. Liberty is offering their Landlord Program instead — Patsy's already quoting it and expects real numbers Monday 10/12. Nothing to decide today; flagging so Monday's numbers don't land out of nowhere. Separately, Kin (Cypress Crossing) renews 10/15 — 5 days out — still needs Joshua's phone call to 855-717-0022 to lock in the liability/Hillary/address/flood-zone changes before it auto-renews as-is; DM already sent 10/9, unchanged today. Full detail in `Life OS/Insurance/BROKER_PIPELINE.md` under 2026-10-10.

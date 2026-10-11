@@ -5,3 +5,4 @@
 - 2026-10-06 10:32: Camden Ahern: slack_id changed
 - 2026-10-06 10:33: Camden Ahern: slack_id changed
 - 2026-10-09 10:20: added Stephanie Chaplin (Waynesboro)
+- 2026-10-10 10:20: Stephanie Chaplin: slack_id changed; Stephanie Chaplin: phone changed

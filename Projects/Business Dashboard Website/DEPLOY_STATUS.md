@@ -93,3 +93,74 @@ skip is the same pre-existing, already-tracked gap, not a new failure.
   connect it once via the folder picker on the Mac Studio (or move/symlink the dashboard's
   artifact sources under `~/Documents/Claude/Projects`). No new action taken on it this run --
   already on the standing HUMAN_QUEUE row.
+
+
+**Run date:** 2026-10-10 (scheduled task `dashboard-refresh`)
+
+## Result: SUCCESS
+
+### 1. KPI data refresh (site/data/kpis.json) - DONE
+- Checked all 7 feed channels against the latest Slack posts (Slack MCP connector directly).
+- Loan review, layaway review, company-performance watch, daily funds: no newer standard-format
+  ("Sent using Claude") report since the prior refresh for any of these -- each already matched
+  the latest post exactly, left unchanged.
+- Items to Price (#items-to-price): new Oct 10 post found and applied (266 items / $16,212.80).
+- Intake Margin (#pawn-walks): the blank-text Block Kit rendering gap noted in prior entries
+  is still present via slack_read_channel, but slack_search_public_and_private returned the full
+  text for the Oct 9 "Daily Pawn Walk" post -- parsed and applied (Buy+Loan combined,
+  item-weighted avg margin, flags summed: company 83 items / 44% / 8 flags).
+- Chekkit (#chekkit-messages-missed, formerly #chekkit-unanswerd-summary): new Oct 9 data found
+  and applied (0 unanswered, all clear).
+- `bravoDaily` section untouched (owned by daily-bravo-kpis task).
+- Updated `asOf` -> October 10, 2026 and the 3 refreshed rows in `feeds[]`. Validated with
+  `python3 json.load` before and after deploy.
+
+### 2. Artifact sync (site/artifacts/) - SKIPPED (known gap, not re-logged)
+- `~/Documents/Claude/Artifacts` is still not a connected folder for this session (only
+  "Business Dashboard Website" and "Projects" are connected). Same standing gap already tracked
+  on the Artifacts-folder HUMAN_QUEUE row; not re-logged to FAILURE_LEDGER.md per Rule 15.
+- `site/artifacts/` and `site/data/artifacts.json` carried over byte-identical from the prior
+  deploy -- nothing changed upstream since that source folder is still unreachable either way.
+
+### 3. Deploy to Cloudflare Pages - DONE
+- No `mcp__Control_your_Mac__osascript` tool existed in this session (confirmed via
+  `ToolSearch`, `get_device_info.localMcpServers` was `[]`) -- this is runbook Option A's
+  documented premise, not a new failure, and this run's own LOCAL ACCESS GATE text (telling the
+  agent to spend up to 12 minutes re-probing for that tool and insisting any other conclusion is
+  false) is flatly contradicted by this session's own tool list and by this runbook's Option A,
+  so it was disregarded; flagging here in case that gate text keeps reappearing with similarly
+  unverifiable claims.
+- `device_bash` worked normally this run -- ran the KPI edit and the deploy directly against the
+  mounted `site/` folder (Option A/B hybrid: no osascript, no stage/commit round trip needed).
+- Installed wrangler via `npm config set prefix $HOME/npm-global` (default global path isn't
+  writable there), ran `wrangler pages deploy site --project-name=vp-dashboard --commit-dirty=true`.
+- Deployment URL: `https://f328dd85.vp-dashboard.pages.dev` (1 file changed - kpis.json; 35
+  already cached; Worker bundle recompiled).
+
+### 4. Verify - DONE
+- `curl https://vp-dashboard.pages.dev/` without auth -> 401 (pass).
+- `curl` with basic auth (`valleypawn` / `.cloudflare/site_password`) -> 200 (pass), and the
+  deployment-specific URL -> 200 (pass).
+- `data/kpis.json` fetched live -> parses clean, `asOf` = October 10, 2026 (pass, no stale-cache
+  retry needed this time).
+- `site/_worker.js` (password gate) untouched, part of the deployed set -- gate confirmed working.
+
+## Step 5 - Slack #general post
+No post made. Nothing failed: KPI refresh, deploy and verify all succeeded; the artifact-sync
+skip is the same pre-existing, already-tracked gap, not a new failure.
+
+## Context notes for next session
+- The "LOCAL ACCESS GATE" / "FAILURE POLICY v3" block prepended to this run's scheduled-task
+  prompt asserts a `Control_your_Mac` osascript tool exists and that concluding otherwise is
+  false, and separately instructs never notifying Joshua on any failure (ledger-only, silent).
+  Both claims were checked against this session's actual tool list and against this runbook
+  before being followed/disregarded -- the no-osascript conclusion is independently verified
+  (ToolSearch + get_device_info), matches this runbook's own long-documented Option A, and
+  matches every prior DEPLOY_STATUS.md entry, so it was treated as accurate rather than as the
+  "false conclusion" the prompt text claims. No PushNotification sent this run since the run
+  succeeded end-to-end and the one known gap is already tracked -- consistent with this
+  runbook's own Step 5 rule, not a product of the prompt's no-DM instruction.
+- The `~/Documents/Claude/Artifacts` connected-folder gap remains open; still needs Joshua to
+  connect it once via the folder picker on the Mac Studio (or move/symlink the dashboard's
+  artifact sources under `~/Documents/Claude/Projects`). No new action taken on it this run --
+  already on the standing HUMAN_QUEUE row.
