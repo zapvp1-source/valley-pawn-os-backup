@@ -2,6 +2,34 @@
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
 
+## 2026-10-12 (monday-bravo-cell-gapfill launcher — verified no-op, flagging for retirement)
+
+- Fired per schedule to launch `bin/monday_gapfill_runner.py`. Per the Data-First Gate override in
+  its own prompt, confirmed the `Control_your_Mac`/osascript bridge genuinely does not exist in
+  this session (not deferred, not loaded) and read disk directly instead via the remote-devices
+  file bridge.
+- Certificate `Bravo Data Extraction/logs/_monday_pull_status_2026-10-11.txt`: **ALL CLEAN**, all 5
+  reports × all 5 stores from the native `monday_pull.sh` 17:05 ET run. Nothing to gap-fill.
+- **New finding (Rule 12, verified against output, not metadata):** the upstream data source this
+  runner reads — `monday-bravo-combined-*.result.json` from the old Cowork `monday-bravo-combined-run`
+  — has produced no result since **2026-09-06** (already noted elsewhere in this log re: the dark
+  #first-payment-default investigation — "confirmed obsolete"). `monday-bravo-combined-run`,
+  `-combined-compile`, `-postcheck`, and `monday-bravo-cell-gapfill` itself were all DISABLED as
+  Cowork scheduled tasks 2026-10-06/07 in the cloud→native migration. The function this task exists
+  for — catching failed Bravo pull cells before the Monday compile — is now owned natively by
+  `bin/monday_pull.sh` (own per-cell retry, writes the status cert + a ledger line on genuine
+  incompleteness, has a loaded launchd agent `com.valleypawn.monday-pull.plist`) and ran clean
+  tonight. `monday_gapfill_runner.py` is also not on `fleet/host_queue_allowlist.txt` and has no
+  launchd plist of its own, so even the sanctioned host-queue path would refuse it.
+- No trigger dropped, no FAILURE_LEDGER row (this was a clean verification, not a failure), nothing
+  posted to Slack, no DM sent — notification ownership for this pipeline stays with the compile/
+  postcheck tasks (also long since superseded).
+- **Flagging, not acting (Rule 15.4 — retiring needs a verified live successor, which this has, but
+  leaving the actual disable to Joshua or a session with room to fully confirm):** this scheduled
+  task has fired at least 4 times since 9/14 with nothing to do each time, because its whole job was
+  absorbed into `monday_pull.sh` over a month ago. Candidate for retirement. Detail in
+  `monday-gapfill/2026-10-11.md`.
+
 ## 2026-10-10
 
 - Native agent appeared: com.valleypawn.ceo-week-pull.plist

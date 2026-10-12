@@ -1,8 +1,8 @@
 # Bravo POS — Complete Screen & Report Map
 
-_Generated 2026-10-10 22:32 by `bravo_map_compile.py` from BravoMapper's read-only crawl. Do not hand-edit; add human notes to the `bravo-context` skill instead._
+_Generated 2026-10-11 22:41 by `bravo_map_compile.py` from BravoMapper's read-only crawl. Do not hand-edit; add human notes to the `bravo-context` skill instead._
 
-**Status:** IN PROGRESS (resumes nightly) · 54 steps mapped · 0 steps could not be mapped · last crawler state: `2026-10-10 22:31:39 ABORT no-dashboard after R_End_of_Day_Consolidated`
+**Status:** IN PROGRESS (resumes nightly) · 56 steps mapped · 0 steps could not be mapped · last crawler state: `2026-10-11 22:40:47 ABORT no-dashboard after R_Fortis_Alignment`
 
 Raw data: `output/bravo_map/` — `screens/` (full UI tree per screen), `shots/` (screenshots), `lists/` (report lists, Custom Reports criteria / columns / saved reports), `index.tsv`, `RUN_LOG.md`.
 
@@ -518,6 +518,23 @@ Screenshot: `output/bravo_map/shots/R_End_of_Day_Consolidated.png`
 - **Fields:** BravoDateEdit
 - **Buttons:** Cancel; Done `btnDone`; Preview; Print
 
+### Report: End of Month
+_key `R_End_of_Month` · captured 2026-10-11 07:30:41 · Bravo     2026.6.0.79     VALLEY PAWN - WAYNESBORO (WAY)_
+Screenshot: `output/bravo_map/shots/R_End_of_Month.png`
+
+- **Labels:** Reporting Dates; Show Daily Detailed Section; Ok; Cancel; Done; Preview; Print; 8300 Audit; BRAVO Business Dashboard; Deposits and Paid Outs Spreadsheet; Disbursement Journal; End of Day; End of Day - Consolidated; End of Month; Fortis Alignment; General Exception; Inter-Store Cash Transfer; Large Cash In Transactions; Large Cash Out Transactions; Safe Register Journal; Session Journal; Store Register Journal; Till Cash Balance; Till Register Journal; Transfers; Closing Reports; Aged Inventory Summary; Cost Adjustment; Inventory Base; Inventory by Location; Item History; Lost Stolen or Damaged; Vendor Purchase; Vendor Repairs; Inventory Reports; Loan Base; Loan Disposition; Loan History; Loan Journal; Loan Notice … +22 more
+- **Fields:** BravoDateEdit
+- **Checkboxes:** Show Daily Detailed Section
+- **Buttons:** Cancel; Done `btnDone`; Preview; Print
+
+### Report: Fortis Alignment
+_key `R_Fortis_Alignment` · captured 2026-10-11 22:39:41 · Bravo     2026.6.0.79     VALLEY PAWN - WAYNESBORO (WAY)_
+Screenshot: `output/bravo_map/shots/R_Fortis_Alignment.png`
+
+- **Labels:** Date; Ok; Cancel; Done; Preview; 8300 Audit; BRAVO Business Dashboard; Deposits and Paid Outs Spreadsheet; Disbursement Journal; End of Day; End of Day - Consolidated; End of Month; Fortis Alignment; General Exception; Inter-Store Cash Transfer; Large Cash In Transactions; Large Cash Out Transactions; Safe Register Journal; Session Journal; Store Register Journal; Till Cash Balance; Till Register Journal; Transfers; Closing Reports; Aged Inventory Summary; Cost Adjustment; Inventory Base; Inventory by Location; Item History; Lost Stolen or Damaged; Vendor Purchase; Vendor Repairs; Inventory Reports; Loan Base; Loan Disposition; Loan History; Loan Journal; Loan Notice; Loans/Buys by Location; On Hold Listing … +20 more
+- **Fields:** BravoDateEdit
+- **Buttons:** Cancel; Done `btnDone`; Preview
+
 ## Dashboard task tiles
 
 ### Dashboard tile: Layaways Overdue
@@ -642,3 +659,7 @@ Screenshot: `output/bravo_map/shots/T_Web_Offers.png`
 - 2026-10-10 00:21 mode=full end='2026-10-10 00:19:54 ABORT no-dashboard after R_End_of_Day' steps_done_total=53 (+1 this run) failed_keys=7 health=PASS CUL
 - 2026-10-10 22:32 recovered from '2026-10-10 22:31:39 ABORT no-dashboard after R_End_of_Day_Consolidated' (health=PASS CUL)
 - 2026-10-10 22:32 mode=full end='2026-10-10 22:31:39 ABORT no-dashboard after R_End_of_Day_Consolidated' steps_done_total=54 (+1 this run) failed_keys=8 health=PASS CUL
+- 2026-10-11 07:32 recovered from '2026-10-11 07:31:43 ABORT no-dashboard after R_End_of_Month' (health=PASS CUL)
+- 2026-10-11 07:32 mode=full end='2026-10-11 07:31:43 ABORT no-dashboard after R_End_of_Month' steps_done_total=55 (+1 this run) failed_keys=9 health=PASS CUL
+- 2026-10-11 22:41 recovered from '2026-10-11 22:40:47 ABORT no-dashboard after R_Fortis_Alignment' (health=PASS CUL)
+- 2026-10-11 22:41 mode=full end='2026-10-11 22:40:47 ABORT no-dashboard after R_Fortis_Alignment' steps_done_total=56 (+1 this run) failed_keys=10 health=PASS CUL
