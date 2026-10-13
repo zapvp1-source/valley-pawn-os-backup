@@ -45,10 +45,18 @@ def ledger(sentence):
 
 
 def complete_set(end):
+    """2026-10-12: a set counts only if every file also passes store_rankings.validate() (window 1st..D,
+    non-zero Ending Loan/Inventory Base, non-blank Total: row). A degenerate set (10/11) is skipped for the
+    next older valid one, as store_rankings does; reasons go to stderr."""
+    from store_rankings import validate
     for back in range(0, 3):
         d = (end - dt.timedelta(days=back)).isoformat()
         ps = [os.path.join(BRAVO, "output", "%s_%s_end-of-month.xlsx" % (d, s)) for s in STORES]
         if all(os.path.exists(p) and os.path.getsize(p) >= 500 for p in ps):
+            bad = ["%s %s" % (os.path.basename(p), w) for p, w in ((p, validate(p, d)) for p in ps) if w]
+            if bad:
+                print("skipped invalid set %s — %s" % (d, "; ".join(bad)), file=sys.stderr)
+                continue
             return d
     return None
 

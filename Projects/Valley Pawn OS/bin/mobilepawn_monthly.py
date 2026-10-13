@@ -43,6 +43,11 @@ def load(store, y, m, staged_key):
             d = mpp.parse(f)
         except Exception as e:
             reasons.append("%s unreadable (%s)" % (os.path.basename(f), e)); continue
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        from store_rankings import structure          # 2026-10-12: skip degenerate exports ($0 loans, blank Total:)
+        why = structure(f)
+        if why:
+            reasons.append("%s is a degenerate export (%s)" % (os.path.basename(f), why)); continue
         if d["store"] != store:
             reasons.append("%s is for store %s" % (os.path.basename(f), d["store"])); continue
         mo = mpp.month_ok(d["range"])

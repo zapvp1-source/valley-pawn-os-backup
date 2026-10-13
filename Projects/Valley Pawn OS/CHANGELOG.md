@@ -2,6 +2,90 @@
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
 
+## 2026-10-12 (first live run of the consolidated CEO weekly brief)
+
+- **ceo-weekly-brief:** first live run of the new single consolidated weekly CEO brief (replaces
+  the old ceo-weekly-scorecard DM and the separate marketing-ceo-briefing-weekly DM). Built a
+  one-page PDF from `data/REVENUE_2026-10-05.json` plus a Slack harvest across ~25 channels,
+  Gusto headcount, and the real estate register. Delivered by email (both legs confirmed via
+  Gmail thread `1a130fbf7887d3ba`) and by Slack DM to Joshua (`D03BHQH5VGT`, ts
+  `1791823194.419569`).
+- **Host job path bug (self-caught and fixed same run):** the delivery job this run first wrote
+  pointed `BIN` at `.../fleet/bin/ceo_brief_deliver.sh`, which does not exist (exit 127). The
+  real script lives at `"Valley Pawn OS/bin/ceo_brief_deliver.sh"` (no `fleet/` segment) — this
+  matches the two working Oct 9 job scripts. Re-dropped with the corrected path and it ran
+  cleanly. No change was made to `ceo_brief_deliver.sh` itself.
+- **Slack file upload still blocked:** `getUploadURLExternal: missing_scope` again this run,
+  same as Oct 9 — the Slack app needs the `files:write` scope granted. Worked around again via a
+  Google Drive link in the DM; this is the second week in a row needing that workaround and
+  should be fixed at the source (grant the scope) rather than repeated a third time.
+- Full run detail: `Communcations/ceo-scorecard/STATUS-2026-10-12.md`.
+
+
+
+## 2026-10-12 (EOM file validation everywhere)
+
+- **Shared checker:** `store_rankings.py` now exposes `structure(path)`, which is `validate()` without the 1st..END window check (needed for any-range exports). The rules are unchanged: Ending Loan and Inventory Base rows have 4 numbers with day == month and > 0, and the `Total:` row is not blank. `validate()` still adds the window check. All readers import it from there. Backups for every edited file: `fleet/_backups/<file>.bak-pre-eomvalid-20261012`.
+- **ceo_week_pull.py:** `have()` refuses a file with the right header that fails `structure()`, and `pull()` no longer copies a degenerate export into `data/eom/`. New `resolve()` order: (1) exact range; (2) same start ending 1-2 days earlier (valid, labelled with its own end); (3) start after the 1st: derived exactly as (1st..end') minus (1st..start-1). Additive fields are subtracted, balances come from (1st..end'), and the biggest day comes from daily rows on/after start. Otherwise the range is incomplete, never estimated. Fallbacks are recorded in JSON `fallbacks` and per node `effective_range`/`source_note`. **REVENUE_2026-10-05.json rebuilt** (host queue `--no-pull`, 12:13:55, before the 12:15 brief): W and MTD come from the valid 10/10 set, and W is derived (10/1..10/10 minus 10/1..10/4). Company loans **$734,207.88**, inventory **$735,113.45** (W and MTD). This matches the corrected #store-performance post and an independent parse of the 10/10 workbooks. Revenue fields are identical to the 08:03 file, and so are the PW/LY/LYMTD nodes. max_day_sales is now filled. A 12:07 balance hot-patch preceded the rebuild (backup `fleet/_backups/REVENUE_2026-10-05.json.bak-pre-eomvalid-20261012`).
+- **layaway-yield-weekly:** the 11:15 hold WAS the same file. The 10/11 Layaway block was all 0, so the compile wrote zeros and then crashed formatting a None yield (no "OK" -> hold). `freshest()` now requires every file to pass `validate()` and skips to the next older valid set, and a $0 store layaway balance counts as missing. Render on the Mac: data 2026-10-10, company $2,620.99 down + $9,057.49 payments = $11,678.48 / $97,669.36 balance = **11.96%**. The balances match store_rankings' independent parse to the cent. Live run at 12:19 **did not post**: `canvases.edit: restricted_action`, the same error that hit all 5 canvas refreshes at 09:20-09:28 today. By design, nothing posts without the canvas. Ledger row written. The post dedupe ("updated 2026-10-10", 20 h) is intact, so one re-run after canvas access is restored posts exactly once.
+- **Other readers:** `store_kpis_weekly.complete_set()` now uses validate() and skips to the next older set. Today it was saved only by the dedupe against the bad 08:45 "Report Period: 2026-10-11" post. `bonus_pace.month_eom()`, `lo_outcomes_layaway.mtd_file()` and `mobilepawn_monthly.load()` skip structure() failures. `comms_engine.load_loan_balances()` (loan canvas / loan review) adds structure(); its existing `val <= 0` guard already rejected 10/11. Bonus pace revenue was NOT affected today: bonus_engine net revenue is identical on the 10/10 and 10/11 files for all 5 stores. Asset recovery does not read EOM files. `canvas_store` reads store_kpis msg files (covered upstream). `parse_eom.py` is a vendored copy kept identical to its source and is not imported in bin/, so it was left alone.
+- No Bravo pulls were made.
+
+## 2026-10-12 (store-performance bad post fix)
+
+- **What went wrong:** the native 08:45 Monday compile posted #store-performance rankings saying "Loan Balance: all stores at $0.00", with Inventory Balance showing item COUNTS as dollars (CUL $7,536 = 7,536 items; the real figure is $193,735.31). Bad messages: parent `1791809110.099659`, thread reply `1791809110.387019` (C03CGTN3KN1). Joshua needs to delete both (the bot can't).
+- **Root cause (checked against the files, not metadata):** `monday_pull.sh` pulled End of Month for 10/1..10/11 (Sunday) at 06:14. Bravo returned a **degenerate export**: right `Reporting Dates` header, but no daily rows, a blank `Total:` row, every Loan Base cell 0, Layaway block 0, and the Inventory Base day columns collapsed (3 values instead of 4). `store_rankings.py` reads by position, so it took inventory index 2 (= month QTY) as dollars and got $0 loans, $0 service charges and $0 layaway. Its only completeness check was "5 files exist, >=500 bytes", so it posted. ceo_week_pull's 07:44 and 07:56 re-pulls of 10/5..10/11 and 10/1..10/11 came back degenerate the same way, so this is Bravo's output for that window that morning, not a one-off file write. The Saturday-stamped 10/1..10/10 set (written Sun 21:43–22:07) is clean. The 10/1..10/4 Monday pull on 10/5 was also clean, so this failure comes and goes. It was not the canonical-copy logic, and the report window was right.
+- **Fix (backups `fleet/_backups/{store_rankings,monday_compile}.py.bak-pre-sanity-20261012`):** `store_rankings.py` gets `validate()`: window = 1st..END; Ending Loan and Inventory Base rows have 4 numbers with day == month and > 0; `Total:` row not blank. An invalid set is skipped for the next older valid one (labelled with its own date). If none is valid: HOLD, exit 2, ledger row. Then `sanity()` withholds (exit 2 + ledger row) on any store with $0 loans or $0 inventory, $0 company service charges, or a >50% store or company loan/inventory drop vs the prior week's valid set (end-5..9 days). It tests clean on the 10/11 files (would have withheld on 18 counts) and passes on 10/4 and 10/10. New `--prefix TEXT` puts TEXT before the summary. `monday_compile.py` now tells Joshua's rollup DM that a sanity-gate hold was WITHHELD and why, instead of "held until complete".
+- **Corrected post:** rendered on the Mac (identical to sandbox), checked against the 10/10 workbooks (loan, inventory, layaway, Total: row and Sales Revenue (Profit) cells read directly) and against last week (company loans $736,774.98 -> $734,207.88, inventory $724,158.77 -> $735,113.45). Retail, scrap and profit in the 10/10 and 10/11 files are identical, so stores were closed Sunday and 10/10 is the full week. Posted as Goldilocks: `1791821054.326109` ("Corrected: ... Report Period: 2026-10-10"), with the thread broadcast `1791821054.774469`.
+- **10/5 post was NOT affected:** its figures match the 10/4 workbooks to the penny (loans $736,774.98).
+- **#ffl-transfer-performance 09:54:17 (`1791813257.553729`) was NOT empty.** Raw `conversations.history` (new read-only `vp_slack.py raw <ch> <ts>`, backup `vp_slack.py.bak-pre-rawcmd-20261012`) shows a native Slack table block with all 5 stores plus the Total. The `text` fallback has them too. The Slack connector/reader (and clients that don't support table blocks) show only the title and summary line. Every figure checked against the five 10/1..10/12 nics-transfers CSVs: CUL $260/11, ROA $70/4, WAY $50/2, HAR $25/1, LEX $25/1, total $430/19. No repost. Still added an empty-body guard to `nics_weekly_mtd.py` (backup `.bak-pre-emptyguard-20261012`): it withholds and writes a ledger row unless there are 5 store rows plus Total.
+- **Open:** `ceo_week_pull.py` validates only the Reporting Dates header, so it accepted the degenerate files. `Communcations/ceo-scorecard/data/REVENUE_2026-10-05.json` (08:03) has `loan_balance_end` 0 and `inventory_end` = item counts for W and MTD at all 5 stores. Revenue fields look right. It needs the same validate() gate, plus a rebuild before any brief uses balances. layaway-yield-weekly for 10/11 was also held this morning, probably the same files (not investigated).
+
+## 2026-10-12 (insurance-inbox-watch) — Woods Walk (Steadily SP3-VA-33470384-00) registry last_verified bumped to 10/12 after routine $150.30 installment payment confirmation; no coverage/premium change. Howard Baker nudged (draft, not sent) on the 3-week-silent standalone 817 Richmond lessor's-risk ask; Cypress Crossing/Kin renewal (10/15) re-flagged to Joshua via Slack, still needs his call to lock in requested changes.
+
+## 2026-10-12 (vp-ai-search-health-check, weekly)
+
+- **Clean run with one new finding.** Schema: 7/7 valid (Organization + all 5 PawnShop entities + FAQPage, all parse OK). Confirmed live output now comes from the scoped v2 schema (WPCode 1529, replacing 738 per the 10/5 change) — Harrisonburg correctly carries Suite 22, Roanoke correctly carries Suite C. Note: FAQPage no longer appears on the homepage by design (scoped there intentionally 10/5, lives on /frequently-asked-questions/ only) — not a defect, flagging here so a future run doesn't mistake it for one. llms.txt: live, plain text, all 5 cities, Suite 22/Suite C present, loan figure correct at $25,000. Google listings: 5/5 clean (name/address/phone match canonical at all 5 stores). Bing: Culpeper/Waynesboro/Lexington addresses clean; Harrisonburg ("1790 Toni St") and Roanoke (missing Suite C) still show the known 8/3 TomTom/OSM render-mismatch pattern — unchanged, not actionable, suppressed per standing rule. **New finding: Bing Lexington listing's business description names a phantom 6th location ("...Roanoke, Salem & Lexington...")** — the other 4 stores' Bing descriptions correctly list only the 5 real cities. Matches the standing open item `LOGIN-YEXT-CANCEL` (Yext PowerListings feed pushing "Salem/Dixie Pawn/GNP Pawn" onto directories) — looks like that feed has now reached Bing too; touched that register item rather than opening a duplicate. Posted to #ai-marketing via the fleet outbox.
+
+## 2026-10-12 (weekly-website-health-audit)
+
+- Ran the recurring Monday website health audit against thevalleypawn.com using the existing
+  `AUDIT_2026-08-22/bin/weekly_crawl.py` crawler (additive patched copy only to fix the output
+  path for this session's execution environment; the original script on disk is untouched).
+  118 pages in the sitemap (was 115 on 10/5), 104 indexable, 0 broken structured data, 0 pages
+  missing a call/text link, 0 4xx/5xx, 0 PHP fatals. Full numbers appended to
+  `AUDIT_2026-08-22/weekly-history.json`.
+- 3 new pages since 10/5: `/holiday-budgeting-start-now-breathe-easy-in-december/` (was missing
+  a meta description — wrote one via the Yoast REST field (WPCode snippet 1135) and verified it
+  live), `/how-a-pawn-loan-works-step-by-step/` (a 6th entry in the already-flagged "pawn loan
+  explainer" duplicate cluster — left untouched per the standing no-auto-merge rule), and
+  `/spot-prices-feed/` (a machine-generated raw data page, indexable, no description — flagged
+  for Joshua rather than auto-fixed, since it looks like a backend widget feed, not a commercial
+  page).
+- **Confirmed RESOLVED (verified live, not from the register):** the $100K / $10K / $25K max
+  loan amount contradiction flagged since 8/23 is now a consistent $25,000 on both `/loans/` and
+  `llms.txt` — fixed by the 10/5 GEO pass, confirmed still correct today.
+- Duplicate-content consolidation (P1 from the original 8/22 audit) is still open and grew again
+  this run (pawn-loan-explainer cluster now 6 pages) — same item logged 2026-09-28 in the Open
+  Items Register, not re-added, just grown.
+- Digest posted to #website. Row added to `Life OS/OPEN_ITEMS_REGISTER.md` for the new
+  spot-prices-feed question.
+
+## 2026-10-12 (scheduled-task-model-audit-weekly, Cowork scheduled run)
+
+- Host-queue `model_pin_report.py` audited all 236 task folders. Of 8 enabled Cowork scheduled
+  tasks, 7 were already correctly pinned (6 claude-sonnet-5, 1 claude-haiku-4-5). One —
+  `preston-call-load-after-limit-change-20261015` — was UNPINNED (missed its at-creation pin per
+  the New-task rule). Fixed via `pin_task_model.py <task> claude-sonnet-5` (its description is a
+  one-shot Preston call/approval-load comparison — a data-pull/report, standard Sonnet tier).
+  Re-ran the report after the fix: all 8 enabled tasks now pin to a valid, non-Fable model, zero
+  frontmatter/stray-line issues across all 236 folders.
+- `logmodels` (last 3 days of app-log model usage) shows `claude-fable-5-1` used once — an
+  interactive session, not a scheduled task; no enabled task is pinned to Fable. Noted, not
+  acted on (no scheduled-task fix applies).
+- Row logged in Life OS/OPEN_ITEMS_REGISTER.md. No Slack post, no DM (Rule 16) — nothing needed
+  Joshua's attention this run.
+
 ## 2026-10-12 (monday-bravo-cell-gapfill launcher — verified no-op, flagging for retirement)
 
 - Fired per schedule to launch `bin/monday_gapfill_runner.py`. Per the Data-First Gate override in
@@ -6606,3 +6690,30 @@ Newest first. Material changes to the business operating system. Read this BEFOR
   (`_weekly_digest_fixed_20261009.py`) with the fix instead of patching `report.py` live, per the
   task's own "don't edit the digest script mid-run" guardrail. `report.py` itself is still broken
   — needs a real fix next session.
+
+## 2026-10-12 (weekly-timekeeping-analysis, Cowork scheduled run)
+- Self-heal check: last post in #timekeeping-summary was 2026-10-05 (week Sep28-Oct4) -- no missed weeks, single report needed for Mon Oct 5 - Sun Oct 11, 2026.
+- Pulled via Gusto MCP `list_time_records` (native source, start_date=2026-10-05, end_date=2026-10-11) -- complete per-shift data, 11 workers with shifts. Store-staff-only filter applied (no Davis family members had any shifts this week; Sandi Cole carried as salaried/not counted per store map).
+- Computed net hours (span minus recorded break minutes) and flags programmatically (verified arithmetic via a standalone script, not by hand) -- 402.9 total hours, 11 hourly employees, all 5 stores tracked (sanity check passed: 11 employees, 150-600h range).
+- Notable: Benjie Moore (Roanoke) 49.2h/9.2 OT, the week's heaviest by a wide margin; two long breaks (Robert Swagger 10/9 ~3h15m, Joseph Epperly 10/5 ~4h17m) that look like they ran to clock-out without closing; Uriah Tiglao (Lexington) missing a break on 3 of his 5 shifts; new hire Stephanie Chaplin (Waynesboro, started 10/8). First week in a while with zero missed-clock-out flags.
+- Fleet publish guard confirmed OFF (live) before scheduling. Run was before 9 AM Monday local, so per the task's own post-time logic the report was scheduled (not sent immediately) via `slack_schedule_message` to #timekeeping-summary (C0AN6TNA4ES) for 2026-10-12 09:00 ET -- scheduled message id Dr0C9ADSPGG0, confirmed by the tool's own success response (self-verify per Step 7).
+
+## 2026-10-12 (weekly-analytics-summary, Cowork scheduled run)
+- Headless GA4 pull (ga4_pull.py --week) returned NO ACCESS (pending one-time Google API grant, per GOOGLE_API_SETUP.md -- not a failure, documented known-pending state). Fell back to the GA4 UI per the task's STEP 2 (authuser=1, property 353209303), pulled Traffic acquisition, Pages and screens, and Events reports for Oct 5-11, 2026 vs Sep 28-Oct 4, 2026 (previous period, match day of week).
+- Wrote week_latest.json (kpis, leads from phone_click/sms_click/directions_click, 8 channels, top 6 pages). email_click event does not exist on the site this period -- noted in the JSON's notes/Watch block rather than guessed. Search Console block omitted (same pending grant, gsc_pull.py not reachable headless this run).
+- format_weekly_website.py validated the numbers and exited 0 -- posted its stdout verbatim (no edits) via slack_schedule_message to #website (C0ASE9C0GQ0) for 2026-10-12 09:00 ET -- scheduled message id Dr0C8AT1T2ER, confirmed by the tool's own success response.
+
+## 2026-10-12 (weekly-returns-summary, Cowork scheduled run)
+- Computed the 7-day window correctly from today's real date (sanity-checked against a no-oldest read and the trend workbook's prior latest Week_Of 2026-10-05) -- 9 return-form photos found in #returns posted 10/5-10/9, all read via Chrome/Slack web (zoomed each form), none summarized from message metadata alone.
+- Week of Oct 5-12: 9 returns, $2,899.70 total -- Culpeper 3/$2,119.63, Waynesboro 1/$84.23, Harrisonburg 3/$492.15, Lexington 2/$203.69, Roanoke 0. Reason mix: Defect 5, Buyer's Remorse 2, Doesn't Fit/Compatibility 1, Customer Repurchased 1.
+- One policy flag: Waynesboro Wah Pedal return (Justin Favel, $84.23) held 8 days before a cash refund -- falls in the credit-only window per the compliance formula, flagged as the week's manager check-in line.
+- Appended all 9 new rows to Returns Log (rows 93-101) and a new Trends row for Week_Of 2026-10-12 in Valley_Pawn_Returns_Trend.xlsx; deduped against existing rows first (no overlap -- last logged rows were for the prior week). Verified store totals and the policy-compliance flag programmatically against the appended rows before posting (recalc.py helper not reachable from this Mac path, so computed directly from the log rows per the task's own fallback rule).
+- Fleet publish guard confirmed off (live) both at task start and again immediately before posting. No existing post found for this date range in #weekly-returns-summary (idempotency check passed).
+- Scheduled the short-format digest (per the 2026-08-03 rewrite -- no reason breakdown or file/column references in the channel post) to #weekly-returns-summary for 2026-10-12 09:00 ET -- scheduled message id Dr0C8L0DG3T6, confirmed by the tool's own success response.
+
+## 2026-10-12 (weekly-website-performance-check, Cowork scheduled run)
+- Checked Slack DM history (last 5 days) first -- no duplicate weekly website report found, proceeded.
+- WordPress.com statistics.get: week of Oct 5-11 = 741 views / 364 visitors vs prior week (Sep 28-Oct 4) = 767 views / 400 visitors (down ~3% views, ~9% visitors).
+- WooCommerce order totals (all statuses): 0, as expected -- /shop/ sends buyers off-site to eBay for checkout, WooCommerce isn't used for real orders there.
+- Shop page freshness: curl of thevalleypawn.com/shop/ returned 384 vp-card items (below the typical 480-560 range but not 0, and no woocommerce-shop body-class hijack) -- page is live and functioning, likely just a lower active-eBay-listing count this week, not a page defect.
+- Sent Joshua a plain-language Slack DM (ts 1791805359.915999) with the week's traffic trend, shop item count, the WooCommerce 0-orders framing, and a reminder about eBay Seller Hub's Traffic Report for deeper click-through attribution.

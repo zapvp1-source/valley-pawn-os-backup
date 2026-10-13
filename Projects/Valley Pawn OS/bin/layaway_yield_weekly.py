@@ -39,11 +39,25 @@ def usd(v):
     return "${:,.2f}".format(v)
 
 
+REJECTED = []
+
+
 def freshest(end):
-    ok = lambda d: all(os.path.exists(p) and os.path.getsize(p) >= 500 for p in
-                       [os.path.join(BRAVO, "output", "%s_%s_end-of-month.xlsx" % (d, c)) for c, _ in STORES])
-    if ok(end.isoformat()):
-        return end.isoformat()
+    """Newest 5-store month-to-date EOM set dated <= end in which EVERY file passes store_rankings.validate()
+    (window <M>/1 .. <date>, non-zero Ending Loan/Inventory Base, non-blank Total: row). 2026-10-12: the 10/11
+    set Bravo returned at 06:14 was degenerate (Layaway block all 0) and the compile crashed on it -> held.
+    Invalid sets are skipped (reasons kept in REJECTED) for the next older valid one, labelled with its own date."""
+    from store_rankings import validate
+
+    def ok(d):
+        ps = [(c, os.path.join(BRAVO, "output", "%s_%s_end-of-month.xlsx" % (d, c))) for c, _ in STORES]
+        if not all(os.path.exists(p) and os.path.getsize(p) >= 500 for _, p in ps):
+            return False
+        bad = [(c, validate(p, d)) for c, p in ps]
+        bad = ["%s %s" % (c, w) for c, w in bad if w]
+        if bad:
+            REJECTED.append("%s: %s" % (d, "; ".join(bad)))
+        return not bad
     dates = sorted({os.path.basename(p).split("_")[0] for p in glob.glob(os.path.join(BRAVO, "output", "*_end-of-month.xlsx"))
                     if re.match(r"\d{4}-\d{2}-\d{2}_", os.path.basename(p))}, reverse=True)
     return next((d for d in dates if d <= end.isoformat() and ok(d)), None)
@@ -93,10 +107,13 @@ def main():
     if "--end" in sys.argv:
         end = dt.date.fromisoformat(sys.argv[sys.argv.index("--end") + 1])
     d = freshest(end)
+    for r in REJECTED:
+        print("skipped invalid set — " + r, file=sys.stderr)
     if not d:
-        print("HOLD — no complete 5-store month-end set")
+        print("HOLD — no complete, valid 5-store month-end set")
         if not render:
-            ledger("Layaway yield for %s was not published because no store set of month-end figures was complete." % end)
+            ledger("Layaway yield for %s was not published because no valid set of month-end figures was on file%s." % (
+                end, (" (" + " | ".join(REJECTED)[:300] + ")") if REJECTED else ""))
         return 2
     p = subprocess.run(["/usr/bin/python3", COMPILE, d], capture_output=True, text=True, timeout=300)
     if not (p.stdout or "").startswith("OK"):
@@ -105,6 +122,9 @@ def main():
             ledger("Layaway yield for %s was not published because the figures were not complete for all 5 stores." % d)
         return 2
     j = json.load(open(os.path.join(BRAVO, "output", "%s_layaway_yield.json" % d)))
+    if (not j.get("missing") and len(j.get("stores", {})) == 5
+            and any(not (x.get("layaway_balance") or 0) > 0 for x in j["stores"].values())):
+        j["missing"] = [c for c, x in j["stores"].items() if not (x.get("layaway_balance") or 0) > 0]   # $0 balance = not real
     if j.get("missing") or len(j.get("stores", {})) != 5:
         print("HOLD — stores missing:", j.get("missing"))
         if not render:

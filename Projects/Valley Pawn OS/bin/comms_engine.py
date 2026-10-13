@@ -169,6 +169,13 @@ def load_loan_balances(output_dir, post_date):
             p = os.path.join(output_dir, "%s_%s_end-of-month.xlsx" % (d, code))
             if not os.path.exists(p) or os.path.getsize(p) < 5000:
                 break
+            try:   # 2026-10-12: refuse degenerate exports outright (the val<=0 guard below caught 10/11 too)
+                sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+                from store_rankings import structure
+                if structure(p):
+                    break
+            except ImportError:
+                pass
             try:
                 wb = openpyxl.load_workbook(p, data_only=True, read_only=True)
                 ws = wb.active

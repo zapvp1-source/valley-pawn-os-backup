@@ -6273,3 +6273,333 @@ No 2-business-day nudges due this run (last batch sent Fri 10/9; next due window
 **Notifications sent: none** — nothing changed since the 6:20 PM Columbus Day post; both Slack channels already carry the current Monday 10/12 7-slot grid. Consistent with the reporting rule (post only on real change) and Rule 18 (no noise/duplicate posts).
 
 Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0.
+
+## Run — 2026-10-12 ~10:15-10:25 AM ET (vp-hiring-pipeline scheduled task, cloud-only session)
+
+Probed `mcp__remote-devices__*` — absent, cloud-only confirmed; Projects folder directly readable via file tools regardless. Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Read Slack DM (D03BHQH5VGT) and #employee-prospects (C0BQDRXRPEJ) through Joshua's own 9:06 AM run-report post (7-slot grid confirmed clean, Indeed inbox checked with nothing actionable, New-candidates tab 8/8 out of scope) and this file's tail through the 10/11 ~6:34-6:40 PM run log — no hiring-relevant message since 9:06 AM.
+
+**Indeed Messages inbox read live (employers.indeed.com/messages) — unchanged from the 9:06 AM report.** Top thread Samantha Holt (Waynesboro), Oct 11 "Okay thanks" (plain closer, no reply needed). Sam Rainey "10-4," Scot Baumgartner "Sounds good, will be seeing you then," Brandon Richardson "Thank you.," Desmond Chick, Alaska Foote all unchanged, all our message last or closers already actioned. No new threads above Samantha Holt.
+
+**Candidates "New" tab re-checked (8 showing) — all 8 confirmed out of scope** (Tareka Jordan/Michael Boyer/Adam Martin/Kevan Nelson/Anthony White — Roanoke/Columbia/Salem/Lynchburg; Cristina Castaneda-Olsen/Sherron Lemelle/Sean Nolan — FL Store Manager track). None for Waynesboro/Harrisonburg Sales & Loan Associate. Matches 9:06 AM finding exactly.
+
+**Calendar re-verified (`jdavis@fcfpawn.com`, Mon 10/12 8 AM–3 PM via `list_events`) — exact match to the posted grid, no gaps/doubles, all 7 confirmed:** 11:00 Ashley Bryant (Waynesboro), 11:05 Alaska Foote (Waynesboro), 11:10 Desmond Chick (Harrisonburg), 11:15 Brandon Richardson (Harrisonburg), 11:20 Samantha Holt (Waynesboro), 11:25 Sam Rainey (Waynesboro), 12:00 Scot Joshua Baumgartner (Harrisonburg).
+
+No 2-business-day nudges due this run (last batch sent Fri 10/9; next due window Tue 10/13). No felony disqualifications encountered. No one on the do-not-contact list was touched. No texting this run (10:20 AM ET — not a 9:30/1:00/6:00 batch window; no screen control available regardless, cloud-only session). Both Waynesboro/Harrisonburg listings remain Paused per Joshua's standing decision (sponsorship ended) — reopening is a paid call sitting with him, already flagged multiple times, not re-flagging again.
+
+**Not touched, per standing instruction (unchanged, not re-flagging to avoid noise):** Rita Allen (Oct 10, Preston-notes-gate hold, Joshua's go/no-go call), Tameron Washington (Oct 9, awaiting reply to Tue 10/13 2:50 PM offer), Frankie Whetzel (review-comment thread, Joshua's open item), the Waynesboro/Harrisonburg reopen decision, the Columbus Day interview-move question (Joshua already answered via his own 9:06 AM post — default "leave as-is" applied, closed).
+
+**Notifications sent: none** — nothing changed since Joshua's own 9:06 AM run-report post; both Slack channels already carry the current Monday 10/12 7-slot grid. Consistent with the reporting rule (post only on real change) and Rule 18 (no noise/duplicate posts).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0.
+
+## Run — 2026-10-12 ~11:04-11:08 AM ET (vp-hiring-pipeline scheduled task, cloud session with Claude-in-Chrome browser access)
+
+Probed `mcp__remote-devices__*` — absent, cloud-only confirmed; Projects folder directly readable via file tools regardless. Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Read Slack DM (D03BHQH5VGT) and #employee-prospects (C0BQDRXRPEJ) through Joshua's 9:53 AM post (unrelated follower check) and this file's tail through the 10:15-10:25 AM run log — nothing hiring-relevant from Joshua since his 9:06 AM report. Calendar re-verified at run start: exact match to the posted 7-slot grid, no gaps/doubles.
+
+**Indeed Messages inbox read live (employers.indeed.com/messages) — one new thread: Brandon Richardson (Harrisonburg), 11:04 AM today.** The message was from **Preston Peters**, not the candidate (3 participants on the thread) — "Sorry for the mixup on this. We have already interviewed and do not need an additional interview with you at this time." This is the same recycling pattern Preston flagged 10/8 for Desmond Chick: the contact log shows Richardson was phone-screened by Preston back on **9/1**, but the pipeline kept re-offering/rebooking him through 4 reschedule attempts since (most recently today's 11:15 AM slot, booked 10/11 after his 4th missed-call follow-up). Replied in-thread: "Thanks for letting me know, Brandon — appreciate your patience. Best of luck!" (sent 11:05 AM). Deleted the now-redundant 11:15 AM calendar event (`aunkmbr8sfooaicdfg42mo0328`).
+
+**All other threads unchanged:** Samantha Holt "Okay thanks" (Oct 11), Sam Rainey "10-4" (Oct 11), Scot Baumgartner "Sounds good, will be seeing you then" (Oct 11), Desmond Chick (our message last, confirmed), Alaska Foote (our message last, confirmed), Rita Allen (Oct 10, still on the Preston-notes-gate hold — unresolved, and now looking like the same class of issue as Richardson/Chick). No new applicant threads above Richardson.
+
+**Candidates "New" tab not re-checked this run** (checked clean twice already today, 9:06 AM and 10:15-10:25 AM — not re-polling within the hour absent a change signal).
+
+No 2-business-day nudges due (last batch Fri 10/9; next window Tue 10/13). No felony disqualifications. No one on the do-not-contact list touched. No texting this run (11 AM — not a 9:30/1:00/6:00 batch; no screen control available regardless). Both Waynesboro/Harrisonburg listings remain Paused per Joshua's standing decision — reopening sits with him, not re-flagging again.
+
+**Not touched, per standing instruction:** Rita Allen (Preston-notes-gate hold, Joshua's go/no-go call), Tameron Washington (awaiting reply to Tue 10/13 2:50 PM offer, last touched 10/9), Frankie Whetzel (review-comment thread, Joshua's open item), the Waynesboro/Harrisonburg reopen decision.
+
+**Notifications sent:** posted the updated 6-slot grid to #employee-prospects, and DM'd Joshua with the Richardson change plus a flag on the recurring recycling pattern (2nd instance — Desmond Chick 10/8, Richardson 9/1-screened-but-rebooked-since) and a suggestion that a "Preston already has this one" marker the pipeline checks before offering/booking would stop it recurring — his call whether to build that.
+
+## Run — 2026-10-12 ~11:44-11:52 AM ET (vp-hiring-pipeline scheduled task, cloud session with Claude-in-Chrome browser access)
+
+Probed `mcp__remote-devices__*` — absent, cloud-only confirmed; Projects folder directly readable via file tools regardless. Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Read Slack DM (D03BHQH5VGT) and #employee-prospects (C0BQDRXRPEJ) through Joshua's 11:36 AM post (Lisbed Hicks reply, offered Wed 10/14) and this file's tail through the 11:04-11:08 AM run log — the 11:06/11:23/11:36 AM Richardson-removal and Lisbed Hicks entries postdate the last logged run, confirming at least one unlogged concurrent run handled them; not re-doing that work, just reconciling the record. Calendar re-verified (`jdavis@fcfpawn.com`, 10/12 9 AM–1 PM via `list_events`) — matches the 11:23 AM correction exactly, 5 confirmed, no gaps/doubles: 11:00 Ashley Bryant (Waynesboro), 11:05 Alaska Foote (Waynesboro), 11:20 Samantha Holt (Waynesboro), 11:25 Sam Rainey (Waynesboro), 12:00 Scot Joshua Baumgartner (Harrisonburg).
+
+**Indeed Messages inbox read live (employers.indeed.com/messages) — one new message: Sam Rainey (Waynesboro), 11:40 AM, "I had some connection issues at 11:25 but im still available to talk."** His 11:25 AM slot is today's actual booking (unchanged on calendar) — this reads as a dropped/missed call during the scheduled window, not a reschedule request, so no calendar change made. Replied in-thread via the proven composer method (clicked thread, verified empty focused textarea via JS, typed, verified value, clicked Send, confirmed "Sent" + text in thread at 11:51 AM): "No worries, Sam — I'll try you again in a few minutes. Hang tight!" Flagged to Joshua by DM since this may mean the 11:25 call itself didn't connect on his end.
+
+**All other threads unchanged:** Lisbed Hicks (11:35 AM, our Wed 10/14 offer awaiting her time/number — already handled by the 11:36 AM run, not duplicating), Brandon Richardson (11:05 AM "Yes sir, I tried to explain..." — left unanswered per Joshua's 11:23 AM standing instruction, his/Preston's call), Samantha Holt "Okay thanks," Scot Baumgartner "Sounds good," Desmond Chick/Alaska Foote (our message last, confirmed). No new applicant threads above Sam Rainey.
+
+**Candidates "New" tab click did not filter the list this run (showed All-applications/264 instead of New/8)** — same known client-side render glitch logged in multiple prior runs, not a data signal; not relied on. The Messages inbox is the established reliable new-applicant signal and shows nothing new above Sam Rainey.
+
+No 2-business-day nudges due this run (last batch Fri 10/9; next window Tue 10/13). No felony disqualifications encountered. No one on the do-not-contact list was touched. No texting this run (11:45 AM — not a 9:30/1:00/6:00 batch; no screen control available regardless, cloud-only session). Both Waynesboro/Harrisonburg listings remain Paused per Joshua's standing decision — reopening sits with him, not re-flagging again.
+
+**Not touched, per standing instruction:** Rita Allen (Preston-notes-gate hold, Joshua's go/no-go call), Tameron Washington (awaiting reply to Tue 10/13 2:50 PM offer, last touched 10/9), Frankie Whetzel (review-comment thread, Joshua's open item), the Waynesboro/Harrisonburg reopen decision.
+
+**Notifications sent:** DM'd Joshua (D03BHQH5VGT) with the Sam Rainey connection-issue reply and reassurance sent — a real new-reply event, consistent with the reporting rule. Not posted to #employee-prospects since the confirmed-interview grid itself didn't change (Rule 18 — only post the grid on an actual schedule change).
+
+Indeed messages sent this run: 1 (Sam Rainey). Calendar events created/deleted: 0. Texts sent: 0.
+
+Indeed messages sent this run: 1 (Brandon Richardson, decline acknowledgment). Calendar events created/deleted: 0 created, 1 deleted (Brandon Richardson 11:15 AM). Texts sent: 0.
+
+## Run — 2026-10-12 ~12:34-12:36 PM ET (vp-hiring-pipeline scheduled task, cloud session with Claude-in-Chrome browser access)
+
+Probed `mcp__remote-devices__*` — absent, cloud-only confirmed (no bridge tools in this deployment); Projects folder directly readable via file tools regardless. Loaded enterprise-map, enterprise-folder-access, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Read this file's tail through the 11:44-11:52 AM run log, and Joshua's Slack DM (D03BHQH5VGT) through his 12:20:46 PM post (Desmond Chick's missed-call follow-up, offered Tue 10/13 11 AM-3 PM, not yet booked) and #employee-prospects through his 11:23 AM correction — nothing newer from him in either channel before this run started.
+
+**Indeed Messages inbox read live (employers.indeed.com/messages) — one new reply since the 12:20 PM offer: Desmond Chick (Harrisonburg), 12:28 PM, "Yes, I'm free tomorrow, 10/13, at 1 PM."** Checked his thread history: Preston's 10/8 "recycling" flag on him was already resolved that same day (Joshua's 10/8 1:45 PM reply confirms Desmond's Friday 10/9 call carried Preston's 9/17 pre-interview notes) — not a gating issue, clean to book. Checked calendar (`jdavis@fcfpawn.com`, Tue 10/13 8 AM-4 PM via `list_events`) — fully empty, no conflicts. Created calendar event `btl42kctbtigin138js4582uvs`: Tue 10/13 1:00-1:05 PM, "Interview — Desmond Chick — Sales & Loan Associate, Harrisonburg (Phone)," location 240-940-3176, standard description, notificationLevel NONE. Replied via the Indeed composer (clicked thread, verified header showed "Desmond Chick" and empty focused textarea, typed, verified value, clicked Send via `find`+click, confirmed "Sent" + text in thread at 12:35 PM): "You're set for Tuesday 10/13 at 1:00 PM. I'll call you at 240-940-3176 from (804) 930-4221."
+
+**No other new threads above Desmond Chick.** All other top threads unchanged from the 12:20 PM post: Sam Rainey (11:51 AM, our message last, awaiting his reply), Lisbed Hicks (11:35 AM, our Wed 10/14 offer awaiting her time/number), Brandon Richardson (11:05 AM, left unanswered per Joshua's 11:23 AM standing instruction), Samantha Holt "Okay thanks" (Oct 11), Scot Baumgartner "Sounds good" (Oct 11), Alaska Foote (our message last, confirmed), Rita Allen (Oct 10, Preston-notes-gate hold, Joshua's call).
+
+**Today's Monday 10/12 grid unchanged** (not re-verified by direct query this run — no change signal on it; last confirmed clean at 12:20 PM per Joshua's own post): 11:00 Ashley Bryant (Waynesboro), 11:05 Alaska Foote (Waynesboro), 11:20 Samantha Holt (Waynesboro), 11:25 Sam Rainey (Waynesboro), 12:00 Scot Joshua Baumgartner (Harrisonburg).
+
+No 2-business-day nudges due this run (last batch Fri 10/9; next window Tue 10/13). No felony disqualifications encountered. No one on the do-not-contact list was touched. No texting this run (12:35 PM — not a 9:30/1:00/6:00 batch window; no screen control available regardless, cloud-only session). Both Waynesboro/Harrisonburg listings remain Paused per Joshua's standing decision — reopening sits with him, not re-flagging again.
+
+**Not touched, per standing instruction:** Rita Allen (Preston-notes-gate hold, Joshua's go/no-go call), Tameron Washington (awaiting reply to Tue 10/13 2:50 PM offer, last touched 10/9), Frankie Whetzel (review-comment thread, Joshua's open item), the Waynesboro/Harrisonburg reopen decision.
+
+**Notifications sent:** posted the Desmond Chick Tue 10/13 1:00 PM booking to #employee-prospects (a real schedule change — new confirmed slot), and DM'd Joshua (D03BHQH5VGT) with the booking confirmation and the Preston-note-already-resolved note, consistent with the reporting rule.
+
+Indeed messages sent this run: 1 (Desmond Chick, booking confirmation). Calendar events created: 1 (Desmond Chick, Tue 10/13 1:00 PM). Calendar events deleted: 0. Texts sent: 0.
+
+## Run — 2026-10-12 ~12:49-12:53 PM ET (vp-hiring-pipeline scheduled task, cloud session with Claude-in-Chrome browser access)
+
+Probed `mcp__remote-devices__*` — absent, cloud-only confirmed; Projects folder directly readable via file tools. Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Read this file's tail through the 12:34-12:36 PM run (Desmond Chick booked Tue 10/13 1:00 PM), and Joshua's Slack DM (D03BHQH5VGT) + #employee-prospects (C0BQDRXRPEJ) since 12:20 PM — only new Joshua message was the unrelated weekly CEO brief (12:39 PM), nothing hiring-related.
+
+**Indeed Messages inbox read live** — one new message since the prior run: Desmond Chick replied "Ok sir" at 12:36 PM, a plain acknowledgment of his Tue 10/13 1:00 PM booking confirmation — no reply needed, no new info to action. All other threads unchanged from the 12:36 PM read (Sam Rainey, Lisbed Hicks, Brandon Richardson, Samantha Holt, Scot Baumgartner, Alaska Foote — ours last; Rita Allen/Frankie Whetzel/Tameron Washington — standing holds, untouched).
+
+**Candidates "New" tab checked (8 total, unchanged).** All 8 are out of scope for this pipeline: Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson, Anthony White (Roanoke/Salem/Lynchburg/Columbia — not Waynesboro/Harrisonburg) and Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan (Saint Augustine FL Store Manager — separate pipeline). No new Waynesboro/Harrisonburg Sales & Loan Associate applicants.
+
+**No action taken this run** — nothing changed since the 12:36 PM post, so per the reporting rule nothing was posted to Slack. No felony disqualifications, no do-not-contact touches, no nudges due (next window Tue 10/13), no texting (not a 9:30/1:00/6:00 batch window; cloud-only session has no screen control regardless). Both listings remain Paused per Joshua's standing decision.
+
+Indeed messages sent: 0. Calendar events created/deleted: 0/0. Texts sent: 0. Slack posts: 0.
+
+## Run — 2026-10-12 ~1:05-1:10 PM ET (vp-hiring-pipeline scheduled task, cloud session with Claude-in-Chrome browser access)
+
+Probed `mcp__remote-devices__*` — absent, cloud-only confirmed; Projects folder directly readable via file tools regardless. Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Read Slack DM (D03BHQH5VGT) and #employee-prospects (C0BQDRXRPEJ) through Joshua's 12:39 PM post (unrelated weekly CEO brief) and this file's tail through the 12:49-12:53 PM run log — nothing hiring-relevant from Joshua since his 12:36 PM Desmond Chick booking confirmation.
+
+**Indeed Messages inbox read live (employers.indeed.com/messages) — unchanged from the 12:49-12:53 PM run.** Top thread still Desmond Chick (Harrisonburg), 12:36 PM "Ok sir" (plain acknowledgment, already logged, no reply needed). All other top threads unchanged: Sam Rainey (11:51 AM, ours last), Lisbed Hicks (11:35 AM, our Wed 10/14 offer awaiting her time/number), Brandon Richardson (11:05 AM, left unanswered per Joshua's 11:23 AM standing instruction), Samantha Holt "Okay thanks" (Oct 11), Scot Baumgartner "Sounds good" (Oct 11), Alaska Foote (ours last, confirmed), Rita Allen (Oct 10, Preston-notes-gate hold, Joshua's call). No new applicant threads above Desmond Chick.
+
+**Candidates "New" tab did not render text content this load** (same known client-side glitch logged in multiple prior runs today — not a data signal; last reliable count was 8, all confirmed out of scope for Waynesboro/Harrisonburg Sales & Loan Associate). Not relied on per Rule 19 — the Messages inbox is the established reliable new-applicant signal and shows nothing new.
+
+**Calendar re-verified (`jdavis@fcfpawn.com`, 10/12 8 AM–5 PM and 10/13 8 AM–5 PM via `list_events`) — exact match, no gaps/doubles, 6 confirmed:** Mon 10/12 — 11:00 Ashley Bryant (Waynesboro), 11:05 Alaska Foote (Waynesboro), 11:20 Samantha Holt (Waynesboro), 11:25 Sam Rainey (Waynesboro), 12:00 Scot Joshua Baumgartner (Harrisonburg); Tue 10/13 — 1:00 PM Desmond Chick (Harrisonburg).
+
+No 2-business-day nudges due this run (last batch Fri 10/9; next window Tue 10/13). No felony disqualifications encountered. No one on the do-not-contact list was touched. No texting this run (1:05 PM — not a 9:30/1:00/6:00 batch window; cloud-only session has no screen control regardless). Both Waynesboro/Harrisonburg listings remain Paused per Joshua's standing decision — reopening sits with him, not re-flagging again.
+
+**Not touched, per standing instruction (unchanged, not re-flagging to avoid noise):** Rita Allen (Preston-notes-gate hold, Joshua's go/no-go call), Tameron Washington (awaiting reply to Tue 10/13 2:50 PM offer, last touched 10/9), Frankie Whetzel (review-comment thread, Joshua's open item), the Waynesboro/Harrisonburg reopen decision, Lisbed Hicks (awaiting her time/number for Wed 10/14), Sam Rainey (awaiting his reply after the 11:51 AM reassurance), Brandon Richardson (left alone per the 11:23 AM standing instruction).
+
+**Notifications sent: none** — nothing changed since the 12:49-12:53 PM run; both Slack channels already carry the current schedule from Joshua's own posts. Consistent with the reporting rule (post only on real change) and Rule 18 (no noise/duplicate posts).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0.
+
+## Run — 2026-10-12 ~2:04-2:10 PM ET (vp-hiring-pipeline scheduled task, cloud session with Claude-in-Chrome browser access)
+
+Probed `mcp__remote-devices__*` — absent, cloud-only confirmed; Projects folder directly readable via file tools regardless. Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Read Slack DM (D03BHQH5VGT) and #employee-prospects (C0BQDRXRPEJ) through Joshua's 12:39 PM post (unrelated CEO weekly brief) and this file's tail through the 1:05-1:10 PM run log — nothing hiring-relevant from Joshua since his 12:36 PM Desmond Chick booking confirmation.
+
+**Indeed Messages inbox read live (employers.indeed.com/messages) — unchanged from the 1:05-1:10 PM run.** Top thread still Desmond Chick (Harrisonburg), 12:36 PM "Ok sir" (already logged, no reply needed). All other top threads unchanged: Sam Rainey (11:51 AM, ours last), Lisbed Hicks (11:35 AM, our Wed 10/14 offer awaiting her time/number), Brandon Richardson (11:05 AM, left unanswered per Joshua's 11:23 AM standing instruction), Samantha Holt "Okay thanks" (Oct 11), Scot Baumgartner "Sounds good" (Oct 11), Alaska Foote (ours last, confirmed). No new applicant threads above Desmond Chick.
+
+**Candidates "New" tab did not render this load** (same known client-side glitch logged in many prior runs — not a data signal; not relied on per Rule 19). The Messages inbox is the established reliable new-applicant signal and shows nothing new.
+
+**Calendar re-verified (`jdavis@fcfpawn.com`, 10/12 8 AM–5 PM and 10/13 8 AM–5 PM via `list_events`) — exact match, no gaps/doubles, 6 confirmed:** Mon 10/12 — 11:00 Ashley Bryant (Waynesboro), 11:05 Alaska Foote (Waynesboro), 11:20 Samantha Holt (Waynesboro), 11:25 Sam Rainey (Waynesboro), 12:00 Scot Joshua Baumgartner (Harrisonburg); Tue 10/13 — 1:00 PM Desmond Chick (Harrisonburg).
+
+No 2-business-day nudges due this run (last batch Fri 10/9; next window Tue 10/13). No felony disqualifications encountered. No one on the do-not-contact list was touched. No texting this run (2:05 PM — not a 9:30/1:00/6:00 batch window; cloud-only session has no screen control regardless). Both Waynesboro/Harrisonburg listings remain Paused per Joshua's standing decision — reopening sits with him, not re-flagging again.
+
+**Not touched, per standing instruction (unchanged, not re-flagging to avoid noise):** Rita Allen (Preston-notes-gate hold, Joshua's go/no-go call), Tameron Washington (awaiting reply to Tue 10/13 2:50 PM offer, last touched 10/9), Frankie Whetzel (review-comment thread, Joshua's open item), the Waynesboro/Harrisonburg reopen decision, Lisbed Hicks (awaiting her time/number for Wed 10/14), Sam Rainey (awaiting his reply after the 11:51 AM reassurance), Brandon Richardson (left alone per the 11:23 AM standing instruction).
+
+**Notifications sent: none** — nothing changed since the 1:05-1:10 PM run; both Slack channels already carry the current schedule from Joshua's own posts. Consistent with the reporting rule (post only on real change) and Rule 18 (no noise/duplicate posts).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0.
+
+## Run — 2026-10-12 ~2:34-2:40 PM ET (vp-hiring-pipeline scheduled task, cloud session with Claude-in-Chrome browser access)
+
+Probed `mcp__remote-devices__*` — absent, cloud-only confirmed; Projects folder directly readable via file tools regardless. Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Read Slack DM (D03BHQH5VGT) and #employee-prospects (C0BQDRXRPEJ) through Joshua's 12:39 PM post (unrelated CEO weekly brief) — nothing hiring-relevant from Joshua since his 12:36 PM Desmond Chick booking confirmation.
+
+**Indeed Messages inbox read live (employers.indeed.com/messages) — unchanged from the 2:04-2:10 PM run.** Top thread still Desmond Chick (Harrisonburg), 12:36 PM "Ok sir" (already logged, no reply needed). All other top threads unchanged: Sam Rainey (11:51 AM, ours last), Lisbed Hicks (11:35 AM, our Wed 10/14 offer awaiting her time/number), Brandon Richardson (11:05 AM, left unanswered per Joshua's 11:23 AM standing instruction), Samantha Holt "Okay thanks" (Oct 11), Scot Baumgartner "Sounds good" (Oct 11), Alaska Foote (ours last, confirmed). No new applicant threads above Desmond Chick.
+
+**Candidates "New" tab did not render this load** (same known client-side glitch logged in many prior runs — not a data signal; not relied on per Rule 19). The Messages inbox is the established reliable new-applicant signal and shows nothing new.
+
+**Calendar re-verified (`jdavis@fcfpawn.com`, 10/12 8 AM–5 PM and 10/13 8 AM–5 PM via `list_events`) — exact match, no gaps/doubles, 6 confirmed:** Mon 10/12 — 11:00 Ashley Bryant (Waynesboro), 11:05 Alaska Foote (Waynesboro), 11:20 Samantha Holt (Waynesboro), 11:25 Sam Rainey (Waynesboro), 12:00 Scot Joshua Baumgartner (Harrisonburg); Tue 10/13 — 1:00 PM Desmond Chick (Harrisonburg).
+
+No 2-business-day nudges due this run (last batch Fri 10/9; next window Tue 10/13). No felony disqualifications encountered. No one on the do-not-contact list was touched. No texting this run (2:34 PM — not a 9:30/1:00/6:00 batch window; cloud-only session has no screen control regardless). Both Waynesboro/Harrisonburg listings remain Paused per Joshua's standing decision — reopening sits with him, not re-flagging again.
+
+**Not touched, per standing instruction (unchanged, not re-flagging to avoid noise):** Rita Allen (Preston-notes-gate hold, Joshua's go/no-go call), Tameron Washington (awaiting reply to Tue 10/13 2:50 PM offer, last touched 10/9), Frankie Whetzel (review-comment thread, Joshua's open item), the Waynesboro/Harrisonburg reopen decision, Lisbed Hicks (awaiting her time/number for Wed 10/14), Sam Rainey (awaiting his reply after the 11:51 AM reassurance), Brandon Richardson (left alone per the 11:23 AM standing instruction).
+
+**Notifications sent: none** — nothing changed since the 2:04-2:10 PM run; both Slack channels already carry the current schedule from Joshua's own posts. Consistent with the reporting rule (post only on real change) and Rule 18 (no noise/duplicate posts).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0.
+
+## Run — 2026-10-12 ~2:49-2:55 PM ET (vp-hiring-pipeline scheduled task, cloud session with Claude-in-Chrome browser access)
+
+Probed `mcp__remote-devices__*` — absent, cloud-only confirmed; Projects folder directly readable via file tools regardless. Loaded enterprise-map, enterprise-folder-access, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Read Slack DM (D03BHQH5VGT) and #employee-prospects (C0BQDRXRPEJ) through Joshua's 12:39 PM CEO-brief post — nothing hiring-relevant since his own 12:36 PM Desmond Chick booking confirmation (correct epoch filter used this run, confirming no gap in the prior checks).
+
+**Indeed Messages inbox read live (employers.indeed.com/messages, screenshot after a short render wait) — unchanged from the 12:49-12:53 PM run.** Top thread still Desmond Chick (Harrisonburg), 12:36 PM "Ok sir" (already logged, no reply needed). All other top threads unchanged: Sam Rainey (11:51 AM, ours last), Lisbed Hicks (11:35 AM, our Wed 10/14 offer awaiting her time/number), Brandon Richardson (11:05 AM, left unanswered per Joshua's 11:23 AM standing instruction), Samantha Holt "Okay thanks" (Oct 11), Scot Baumgartner "Sounds good" (Oct 11), Alaska Foote (ours last, confirmed). No new applicant threads above Desmond Chick.
+
+**Calendar re-verified (`jdavis@fcfpawn.com`, 10/12 8 AM–5 PM and 10/13 8 AM–5 PM via `list_events`) — exact match, no gaps/doubles, 6 confirmed:** Mon 10/12 — 11:00 Ashley Bryant (Waynesboro), 11:05 Alaska Foote (Waynesboro), 11:20 Samantha Holt (Waynesboro), 11:25 Sam Rainey (Waynesboro), 12:00 Scot Joshua Baumgartner (Harrisonburg); Tue 10/13 — 1:00 PM Desmond Chick (Harrisonburg).
+
+No 2-business-day nudges due this run (last batch Fri 10/9; next window Tue 10/13). No felony disqualifications encountered. No one on the do-not-contact list was touched. No texting this run (2:50 PM — not a 9:30/1:00/6:00 batch window; cloud-only session has no screen control regardless). Both Waynesboro/Harrisonburg listings remain Paused per Joshua's standing decision — reopening sits with him, not re-flagging again.
+
+**Not touched, per standing instruction (unchanged, not re-flagging to avoid noise):** Rita Allen (Preston-notes-gate hold, Joshua's go/no-go call), Tameron Washington (awaiting reply to Tue 10/13 2:50 PM offer, last touched 10/9), Frankie Whetzel (review-comment thread, Joshua's open item), the Waynesboro/Harrisonburg reopen decision, Lisbed Hicks (awaiting her time/number for Wed 10/14), Sam Rainey (awaiting his reply after the 11:51 AM reassurance), Brandon Richardson (left alone per the 11:23 AM standing instruction).
+
+**Notifications sent: none** — nothing changed since the 1:05-1:10/2:04-2:10/2:34-2:40 PM runs; both Slack channels already carry the current schedule from Joshua's own posts. Consistent with the reporting rule (post only on real change) and Rule 18 (no noise/duplicate posts).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0.
+
+## Run — 2026-10-12 ~3:34-3:39 PM ET (vp-hiring-pipeline scheduled task, cloud session with Claude-in-Chrome browser access)
+
+Probed `mcp__remote-devices__*` — absent, cloud-only confirmed; Projects folder directly readable via file tools regardless. Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Read Slack DM (D03BHQH5VGT) and #employee-prospects (C0BQDRXRPEJ) through Joshua's 12:39 PM CEO-brief post — nothing hiring-relevant since his own 12:36 PM Desmond Chick booking confirmation.
+
+**Indeed Messages inbox read live (employers.indeed.com/messages) — unchanged from the 2:49-2:55 PM run.** Top thread still Desmond Chick (Harrisonburg), 12:36 PM "Ok sir" (already logged, no reply needed). All other top threads unchanged: Sam Rainey (11:51 AM, ours last), Lisbed Hicks (11:35 AM, our Wed 10/14 offer awaiting her time/number), Brandon Richardson (11:05 AM, left unanswered per Joshua's 11:23 AM standing instruction), Samantha Holt "Okay thanks" (Oct 11), Scot Baumgartner "Sounds good" (Oct 11), Alaska Foote (ours last, confirmed). No new applicant threads above Desmond Chick.
+
+**Candidates "New" tab read live (8 showing, unchanged)** — all 8 confirmed out of scope for Waynesboro/Harrisonburg Sales & Loan Associate: Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson, Anthony White (Roanoke/Columbia/Salem/Lynchburg) and Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan (Saint Augustine FL Store Manager track).
+
+**Calendar re-verified (`jdavis@fcfpawn.com`, 10/12 8 AM–5 PM and 10/13 8 AM–5 PM via `list_events`) — exact match, no gaps/doubles, 6 confirmed:** Mon 10/12 — 11:00 Ashley Bryant (Waynesboro), 11:05 Alaska Foote (Waynesboro), 11:20 Samantha Holt (Waynesboro), 11:25 Sam Rainey (Waynesboro), 12:00 Scot Joshua Baumgartner (Harrisonburg); Tue 10/13 — 1:00 PM Desmond Chick (Harrisonburg).
+
+No 2-business-day nudges due this run (last batch Fri 10/9; next window Tue 10/13). No felony disqualifications encountered. No one on the do-not-contact list was touched. No texting this run (3:35 PM — not a 9:30/1:00/6:00 batch window; cloud-only session has no screen control regardless). Both Waynesboro/Harrisonburg listings remain Paused per Joshua's standing decision — reopening sits with him, not re-flagging again.
+
+**Not touched, per standing instruction (unchanged, not re-flagging to avoid noise):** Rita Allen (Preston-notes-gate hold, Joshua's go/no-go call), Tameron Washington (awaiting reply to Tue 10/13 2:50 PM offer, last touched 10/9), Frankie Whetzel (review-comment thread, Joshua's open item), the Waynesboro/Harrisonburg reopen decision, Lisbed Hicks (awaiting her time/number for Wed 10/14), Sam Rainey (awaiting his reply after the 11:51 AM reassurance), Brandon Richardson (left alone per the 11:23 AM standing instruction).
+
+**Notifications sent: none** — nothing changed since the 2:49-2:55 PM run; both Slack channels already carry the current schedule from Joshua's own posts. Consistent with the reporting rule (post only on real change) and Rule 18 (no noise/duplicate posts).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0.
+
+## Run — 2026-10-12 ~4:04-4:10 PM ET (vp-hiring-pipeline scheduled task, cloud session with Claude-in-Chrome browser access)
+
+Probed `mcp__remote-devices__*` — absent, cloud-only confirmed; Projects folder directly readable via file tools regardless. Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Read Slack DM (D03BHQH5VGT) through Joshua's 12:39 PM CEO-brief post and #employee-prospects (C0BQDRXRPEJ) through his 12:35 PM Desmond Chick grid update — nothing hiring-relevant from Joshua since his 12:36 PM Desmond Chick booking confirmation.
+
+**Indeed Messages inbox read live (employers.indeed.com/messages) — unchanged from the 3:34-3:39 PM run.** Top thread still Desmond Chick (Harrisonburg), 12:36 PM "Ok sir" (already logged, no reply needed). All other top threads unchanged: Sam Rainey (11:51 AM, ours last), Lisbed Hicks (11:35 AM, our Wed 10/14 offer awaiting her time/number), Brandon Richardson (11:05 AM, left unanswered per Joshua's 11:23 AM standing instruction), Samantha Holt "Okay thanks" (Oct 11), Scot Baumgartner "Sounds good" (Oct 11), Alaska Foote (ours last, confirmed). No new applicant threads above Desmond Chick.
+
+**Candidates "New" tab read live via direct URL (`statusName=New`) — 8 showing, unchanged, all confirmed out of scope** for Waynesboro/Harrisonburg Sales & Loan Associate: Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson, Anthony White (Roanoke/Columbia/Salem/Lynchburg) and Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan (Saint Augustine FL Store Manager track).
+
+**Calendar re-verified (`jdavis@fcfpawn.com`, 10/12 8 AM–5 PM and 10/13 8 AM–5 PM via `list_events`) — exact match, no gaps/doubles, 6 confirmed:** Mon 10/12 — 11:00 Ashley Bryant (Waynesboro), 11:05 Alaska Foote (Waynesboro), 11:20 Samantha Holt (Waynesboro), 11:25 Sam Rainey (Waynesboro), 12:00 Scot Joshua Baumgartner (Harrisonburg); Tue 10/13 — 1:00 PM Desmond Chick (Harrisonburg).
+
+No 2-business-day nudges due this run (last batch Fri 10/9; next window Tue 10/13). No felony disqualifications encountered. No one on the do-not-contact list was touched. No texting this run (4:04 PM — not a 9:30/1:00/6:00 batch window; cloud-only session has no screen control regardless). Both Waynesboro/Harrisonburg listings remain Paused per Joshua's standing decision — reopening sits with him, not re-flagging again.
+
+**Not touched, per standing instruction (unchanged, not re-flagging to avoid noise):** Rita Allen (Preston-notes-gate hold, Joshua's go/no-go call), Tameron Washington (awaiting reply to Tue 10/13 2:50 PM offer, last touched 10/9), Frankie Whetzel (review-comment thread, Joshua's open item), the Waynesboro/Harrisonburg reopen decision, Lisbed Hicks (awaiting her time/number for Wed 10/14), Sam Rainey (awaiting his reply after the 11:51 AM reassurance), Brandon Richardson (left alone per the 11:23 AM standing instruction).
+
+**Notifications sent: none** — nothing changed since the 3:34-3:39 PM run; both Slack channels already carry the current schedule from Joshua's own posts. Consistent with the reporting rule (post only on real change) and Rule 18 (no noise/duplicate posts).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0.
+
+## Run — 2026-10-12 ~4:18-4:22 PM ET (vp-hiring-pipeline scheduled task, cloud session with Claude-in-Chrome browser access)
+
+Probed `mcp__remote-devices__*` — absent, cloud-only confirmed; Projects folder directly readable via file tools regardless. Loaded enterprise-map, enterprise-folder-access, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules per standing order. Confirmed task registration via `list_scheduled_tasks` (enabled, lastRunAt 20:18 UTC). Read Slack DM (D03BHQH5VGT) and #employee-prospects (C0BQDRXRPEJ) back through Joshua's 12:39 PM CEO-brief post and 12:35-12:36 PM Desmond Chick booking posts — nothing hiring-relevant posted by Joshua since then.
+
+**Indeed Messages inbox read live (employers.indeed.com/messages) — unchanged from the 4:04-4:10 PM run.** Top thread still Desmond Chick (Harrisonburg), 12:36 PM "Ok sir" (already logged, no reply needed). All other top threads unchanged: Sam Rainey (11:51 AM, ours last), Lisbed Hicks (11:35 AM, our Wed 10/14 offer awaiting her time/number), Brandon Richardson (11:05 AM, left unanswered per Joshua's 11:23 AM standing instruction), Samantha Holt "Okay thanks" (Oct 11), Scot Baumgartner "Sounds good" (Oct 11), Alaska Foote (ours last, confirmed), Rita Allen (Oct 10, Preston-notes-gate hold, Joshua's call). No new applicant threads above Desmond Chick.
+
+**Candidates "New" tab did not render names this load** (same known client-side glitch logged in many prior runs — not a data signal; not relied on per Rule 19). Count still shows 8, matching the long-standing out-of-scope set. Messages inbox remains the reliable new-applicant signal and shows nothing new.
+
+**Calendar re-verified (`jdavis@fcfpawn.com`, 10/12 8 AM–5 PM and 10/13 8 AM–5 PM via `list_events`) — exact match, no gaps/doubles, 6 confirmed:** Mon 10/12 — 11:00 Ashley Bryant (Waynesboro), 11:05 Alaska Foote (Waynesboro), 11:20 Samantha Holt (Waynesboro), 11:25 Sam Rainey (Waynesboro), 12:00 Scot Joshua Baumgartner (Harrisonburg); Tue 10/13 — 1:00 PM Desmond Chick (Harrisonburg).
+
+No 2-business-day nudges due this run (last batch Fri 10/9; next window Tue 10/13). No felony disqualifications encountered. No one on the do-not-contact list was touched. No texting this run (4:20 PM — not a 9:30/1:00/6:00 batch window; cloud-only session has no screen control regardless). Both Waynesboro/Harrisonburg listings remain Paused per Joshua's standing decision — reopening sits with him, not re-flagging again.
+
+**Not touched, per standing instruction (unchanged, not re-flagging to avoid noise):** Rita Allen (Preston-notes-gate hold, Joshua's go/no-go call), Tameron Washington (awaiting reply to Tue 10/13 2:50 PM offer, last touched 10/9), Frankie Whetzel (review-comment thread, Joshua's open item), the Waynesboro/Harrisonburg reopen decision, Lisbed Hicks (awaiting her time/number for Wed 10/14), Sam Rainey (awaiting his reply after the 11:51 AM reassurance), Brandon Richardson (left alone per the 11:23 AM standing instruction).
+
+**Notifications sent: none** — nothing changed since the 4:04-4:10 PM run; both Slack channels already carry the current schedule from Joshua's own posts. Consistent with the reporting rule (post only on real change) and Rule 18 (no noise/duplicate posts).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0.
+
+## Run — 2026-10-12 ~6:19-6:25 PM ET (vp-hiring-pipeline scheduled task, cloud session with Claude-in-Chrome browser access)
+
+Probed `mcp__remote-devices__*` — absent, cloud-only confirmed; Projects folder directly readable via file tools regardless. Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline per standing order. Read Slack DM (D03BHQH5VGT) and #employee-prospects (C0BQDRXRPEJ) back through Joshua's own 5:52 PM hiring-pipeline update (Samantha Holt missed her 11:20 AM call again, owns it this time, offered Tue 10/13 11 AM-3 PM, not yet booked) and 12:39 PM CEO-brief post — nothing hiring-relevant since.
+
+**Indeed Messages inbox read live (employers.indeed.com/messages) — unchanged from the 5:51 PM offer.** Top thread Samantha Holt, our 5:51 PM Tue 10/13 offer still awaiting her reply (no new message from her). All other top threads unchanged: Desmond Chick "Ok sir" (ack of Tue 1 PM booking, already logged), Sam Rainey (11:51 AM, ours last), Lisbed Hicks (11:35 AM, our Wed 10/14 offer awaiting her time/number), Brandon Richardson (11:05 AM, left unanswered per Joshua's 11:23 AM standing instruction), Scot Baumgartner "Sounds good" (Oct 11), Alaska Foote (ours last, confirmed). No new applicant threads above Samantha Holt.
+
+**Candidates "New" tab did not render (same known client-side glitch logged in many prior runs today) — not relied on per Rule 19.** Messages inbox remains the reliable new-applicant signal and shows nothing new.
+
+**Calendar re-verified (`jdavis@fcfpawn.com`, 10/12 8 AM-5 PM and 10/13 8 AM-5 PM via `list_events`) — exact match, no gaps/doubles, 6 confirmed:** Mon 10/12 — 11:00 Ashley Bryant (Waynesboro), 11:05 Alaska Foote (Waynesboro), 11:20 Samantha Holt (Waynesboro), 11:25 Sam Rainey (Waynesboro), 12:00 Scot Joshua Baumgartner (Harrisonburg); Tue 10/13 — 1:00 PM Desmond Chick (Harrisonburg). Samantha Holt not yet rebooked for Tue — awaiting her reply with a time.
+
+No 2-business-day nudges due this run (last batch Fri 10/9; next window Tue 10/13). No felony disqualifications encountered. No one on the do-not-contact list was touched. No texting this run (6:19 PM — close to but not an exact 9:30/1:00/6:00 batch window; cloud-only session has no screen control regardless). Both Waynesboro/Harrisonburg listings remain Paused per Joshua's standing decision — not re-flagging.
+
+**Not touched, per standing instruction (unchanged, not re-flagging to avoid noise):** Rita Allen (Preston-notes-gate hold, Joshua's go/no-go call), Tameron Washington (awaiting reply to Tue 10/13 2:50 PM offer, last touched 10/9), Frankie Whetzel (review-comment thread, Joshua's open item), the Waynesboro/Harrisonburg reopen decision, Lisbed Hicks (awaiting her time/number for Wed 10/14), Sam Rainey (awaiting his reply after the 11:51 AM reassurance), Brandon Richardson (left alone per the 11:23 AM standing instruction).
+
+**Notifications sent: none** — nothing changed since Joshua's own 5:52 PM update; both Slack channels already carry the current state. Consistent with the reporting rule (post only on real change) and Rule 18 (no noise/duplicate posts).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0.
+
+## Run — 2026-10-12 ~6:34-6:40 PM ET (vp-hiring-pipeline scheduled task, cloud session with Claude-in-Chrome browser access)
+
+Probed `mcp__remote-devices__*` — absent, cloud-only confirmed; Projects folder directly readable via file tools regardless. Loaded enterprise-map, enterprise-folder-access, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules per standing order. Read Slack DM (D03BHQH5VGT) and #employee-prospects (C0BQDRXRPEJ) back through Joshua's own 5:52 PM update (Samantha Holt missed her 11:20 AM call, offered Tue 10/13 11 AM-3 PM, awaiting her reply) — nothing hiring-relevant posted since.
+
+**Indeed Messages inbox read live (employers.indeed.com/messages) — unchanged from the 5:51 PM offer.** Top thread still Samantha Holt, our 5:51 PM Tue 10/13 offer awaiting her reply (no new message from her). All other top threads unchanged: Desmond Chick "Ok sir" (ack, already logged), Sam Rainey (11:51 AM, ours last), Lisbed Hicks (11:35 AM, our Wed 10/14 offer awaiting her time/number), Brandon Richardson (11:05 AM, left unanswered per Joshua's 11:23 AM standing instruction), Scot Baumgartner "Sounds good" (Oct 11), Alaska Foote (ours last, confirmed). No new applicant threads above Samantha Holt.
+
+**Candidates "New" tab read live (screenshot after a short render wait) — 8 showing, unchanged, all confirmed out of scope** for Waynesboro/Harrisonburg Sales & Loan Associate (Tareka Jordan, Michael Boyer, Adam Martin, Kevan Nelson visible; matches the long-standing 8-person out-of-scope set from prior runs today).
+
+**Calendar re-verified (`jdavis@fcfpawn.com`, 10/12 8 AM-6 PM and 10/13 8 AM-6 PM via `list_events`) — exact match, no gaps/doubles, 6 confirmed:** Mon 10/12 — 11:00 Ashley Bryant (Waynesboro), 11:05 Alaska Foote (Waynesboro), 11:20 Samantha Holt (Waynesboro), 11:25 Sam Rainey (Waynesboro), 12:00 Scot Joshua Baumgartner (Harrisonburg); Tue 10/13 — 1:00 PM Desmond Chick (Harrisonburg). Samantha Holt still not rebooked for Tue — awaiting her reply with a time.
+
+No 2-business-day nudges due this run (last batch Fri 10/9; next window Tue 10/13). No felony disqualifications encountered. No one on the do-not-contact list was touched. No texting this run (6:34 PM — not a 9:30/1:00/6:00 batch window; cloud-only session has no screen control regardless). Both Waynesboro/Harrisonburg listings remain Paused per Joshua's standing decision — not re-flagging.
+
+**Not touched, per standing instruction (unchanged, not re-flagging to avoid noise):** Rita Allen (Preston-notes-gate hold, Joshua's go/no-go call), Tameron Washington (last touched 10/9), Frankie Whetzel (review-comment thread, Joshua's open item), the Waynesboro/Harrisonburg reopen decision, Lisbed Hicks (awaiting her time/number for Wed 10/14), Sam Rainey (awaiting his reply after the 11:51 AM reassurance), Brandon Richardson (left alone per the 11:23 AM standing instruction), Samantha Holt (awaiting her Tue 10/13 time).
+
+**Notifications sent: none** — nothing changed since Joshua's own 5:52 PM update; both Slack channels already carry the current state. Consistent with the reporting rule (post only on real change) and Rule 18 (no noise/duplicate posts).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0.
+
+## Run — 2026-10-12 ~6:49-6:54 PM ET (vp-hiring-pipeline scheduled task, cloud session with Claude-in-Chrome browser access)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules per standing order. No remote-devices bridge tools present (cloud-only) but Projects folder directly readable this run.
+
+Checked Slack DM (D03BHQH5VGT) and #employee-prospects back through Joshua's 5:52 PM update, Indeed Messages inbox live, and Google Calendar (jdavis@fcfpawn.com) for 10/12-10/13 — found one change since the 6:34-6:40 PM run.
+
+**Samantha Holt (Waynesboro)** replied at 6:42 PM to our 5:51 PM offer ("No worries at all, Samantha! Are you free tomorrow, Tuesday 10/13 between 11 AM and 3 PM?") with "Yes any time is fine! I'm saving your number now!" Booked her the first open Tuesday slot, 11:00 AM (nearest to her prior usual time, Desmond Chick already holds 1:00 PM) — calendar event created (540-836-4196), confirmed on Indeed: "You're set for Tuesday 10/13 at 11:00 AM. I'll call you at 540-836-4196 from (804) 930-4221." Sent and verified in-thread. Posted to DM + #employee-prospects.
+
+**Everything else unchanged:** Desmond Chick Tue 1:00 PM booking stands (Ok sir, ack only). Lisbed Hicks (Wed 10/14 offer, still awaiting her time/number) and Sam Rainey (11:51 AM reassurance, no further reply) unchanged. Brandon Richardson left alone per the 11:23 AM standing instruction. New Waynesboro/Harrisonburg applicants: none — New tab still showing 8, all confirmed out of scope (other store locations / FL Store Manager track) on the all-candidates view. No felony disqualifications. No one on the do-not-contact list touched. No 2-business-day nudges due (last batch Fri 10/9, next window Tue 10/13). No texting this run (not a 9:30/1:00/6:00 batch window; also cloud-only re: screen control regardless). Both Waynesboro/Harrisonburg listings remain Paused per Joshua's standing decision — not re-flagging.
+
+**Not touched, per standing instruction:** Rita Allen (Preston-notes-gate hold), Tameron Washington (last touched 10/9), Frankie Whetzel (Joshua's open item), the Waynesboro/Harrisonburg reopen decision.
+
+Indeed messages sent: 1 (Samantha Holt booking confirmation). Calendar events created: 1 (Samantha Holt, Tue 10/13 11:00 AM). Texts sent: 0.
+
+## Run — 2026-10-12 ~7:04-7:10 PM ET (vp-hiring-pipeline scheduled task, cloud session with Claude-in-Chrome browser access)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules per standing order. No remote-devices bridge tools present (cloud-only); Projects folder directly readable this run.
+
+Checked Slack DM (D03BHQH5VGT) and #employee-prospects (C0BQDRXRPEJ) back through Joshua's own 6:51 PM update (Samantha Holt booked Tue 10/13 11:00 AM) — nothing hiring-relevant posted since. Indeed Messages inbox read live (employers.indeed.com/messages) — unchanged: top thread Samantha Holt (6:51 PM, our Tue 11 AM confirmation), then Desmond Chick "Ok sir" (12:36 PM, ack), Sam Rainey (11:51 AM, ours last), Lisbed Hicks (11:35 AM, our Wed 10/14 offer still awaiting her time/number), Brandon Richardson (11:05 AM, left unanswered per Joshua's 11:23 AM standing instruction), Scot Baumgartner and Alaska Foote (Oct 11, both confirmed). No new applicant threads above Samantha Holt.
+
+Candidates "New" tab did not render (same known client-side glitch logged in prior runs today) — not relied on per Rule 19; Messages inbox is the reliable new-applicant signal and shows nothing new.
+
+Calendar re-verified (`jdavis@fcfpawn.com`, 10/13 8 AM–6 PM via `list_events`) — exact match, no gaps/doubles, 2 confirmed for Tue 10/13: 11:00 AM Samantha Holt (Waynesboro, 540-836-4196), 1:00 PM Desmond Chick (Harrisonburg, 240-940-3176).
+
+No 2-business-day nudges due this run (last batch Fri 10/9; next window Tue 10/13). No felony disqualifications encountered. No one on the do-not-contact list was touched. No texting this run (7:04 PM — not a 9:30/1:00/6:00 batch window; cloud-only session has no screen control regardless). Both Waynesboro/Harrisonburg listings remain Paused per Joshua's standing decision — not re-flagging.
+
+**Not touched, per standing instruction (unchanged, not re-flagging to avoid noise):** Rita Allen (Preston-notes-gate hold, Joshua's go/no-go call), Tameron Washington (last touched 10/9), Frankie Whetzel (Joshua's open item), the Waynesboro/Harrisonburg reopen decision, Lisbed Hicks (awaiting her time/number for Wed 10/14), Sam Rainey (awaiting his reply), Brandon Richardson (left alone per the 11:23 AM standing instruction).
+
+**Notifications sent: none** — nothing changed since Joshua's own 6:51 PM update; both Slack channels already carry the current schedule. Consistent with the reporting rule (post only on real change) and Rule 18 (no noise/duplicate posts).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0.
+
+## Run — 2026-10-12 ~7:19-7:24 PM ET (vp-hiring-pipeline scheduled task, cloud session with Claude-in-Chrome browser access)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules per standing order. No remote-devices bridge tools present (cloud-only); Projects folder directly readable this run.
+
+Checked Slack DM (D03BHQH5VGT) and #employee-prospects (C0BQDRXRPEJ) back through the 7:04-7:10 PM run — nothing hiring-relevant posted since (Joshua's 6:51 PM Samantha Holt update remains the latest). Indeed Messages inbox read live — unchanged top thread: Samantha Holt (6:51 PM, our Tue 11 AM confirmation), then Desmond Chick "Ok sir" (12:36 PM), Sam Rainey (11:51 AM, ours last), Lisbed Hicks (11:35 AM, still awaiting her time/number for Wed 10/14), Brandon Richardson (11:05 AM, left unanswered per standing instruction). No new applicant threads.
+
+Candidates "New" tab still shows the count (8) but the list itself does not render (same known client-side glitch) — not relied on per Rule 19; Messages inbox is the reliable new-applicant signal and shows nothing new.
+
+Calendar re-verified (`jdavis@fcfpawn.com`, 10/13 8 AM–6 PM) — exact match, no gaps/doubles: 11:00 AM Samantha Holt (Waynesboro, 540-836-4196), 1:00 PM Desmond Chick (Harrisonburg, 240-940-3176).
+
+No 2-business-day nudges due (last batch Fri 10/9; next window Tue 10/13). No felony disqualifications encountered. No one on the do-not-contact list was touched. No texting this run (7:19 PM — not a 9:30/1:00/6:00 batch window; cloud-only session has no screen control regardless). Both Waynesboro/Harrisonburg listings remain Paused per Joshua's standing decision — not re-flagging.
+
+**Not touched, per standing instruction (unchanged, not re-flagging to avoid noise):** Rita Allen, Tameron Washington, Frankie Whetzel, the Waynesboro/Harrisonburg reopen decision, Lisbed Hicks (awaiting her time/number), Sam Rainey (awaiting his reply), Brandon Richardson (left alone per the 11:23 AM standing instruction).
+
+**Notifications sent: none** — nothing changed since the prior run. Consistent with the reporting rule (post only on real change) and Rule 18.
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0.
+
+## Run — 2026-10-12 ~7:34-7:38 PM ET (vp-hiring-pipeline scheduled task, cloud session with Claude-in-Chrome browser access)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules per standing order. No remote-devices bridge tools present (cloud-only); Projects folder directly readable this run.
+
+Checked Slack DM (D03BHQH5VGT) and #employee-prospects (C0BQDRXRPEJ) — nothing new since Joshua's 6:51 PM Samantha Holt update/schedule post. Indeed Messages inbox read live (fully rendered this time) — top thread unchanged: Samantha Holt (6:51 PM, our Tue 11 AM confirmation), then Desmond Chick "Ok sir" (12:36 PM), Sam Rainey (11:51 AM, ours last), Lisbed Hicks (11:35 AM, still awaiting her time/number for Wed 10/14), Brandon Richardson (11:05 AM, left unanswered per standing instruction). No new applicant threads on either listing.
+
+Calendar re-verified (`jdavis@fcfpawn.com`, 10/13 8 AM–6 PM) via direct Calendar tool — exact match, no gaps/doubles: 11:00 AM Samantha Holt (Waynesboro, 540-836-4196), 1:00 PM Desmond Chick (Harrisonburg, 240-940-3176).
+
+No 2-business-day nudges due (last batch Fri 10/9; next window Tue 10/13). No felony disqualifications encountered. No one on the do-not-contact list was touched. No texting this run (7:34 PM — not a 9:30/1:00/6:00 batch window; cloud-only session has no screen control regardless). Both Waynesboro/Harrisonburg listings remain Paused per Joshua's standing decision — not re-flagging.
+
+**Not touched, per standing instruction (unchanged, not re-flagging to avoid noise):** Rita Allen, Tameron Washington, Frankie Whetzel, the Waynesboro/Harrisonburg reopen decision, Lisbed Hicks (awaiting her time/number), Sam Rainey (resolved, call handled earlier today), Brandon Richardson (left alone per the 11:23 AM standing instruction).
+
+**Notifications sent: none** — nothing changed since the prior run (7:19-7:24 PM). Consistent with the reporting rule (post only on real change) and Rule 18.
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0.
+
+## Run — 2026-10-12 ~7:49-7:53 PM ET (vp-hiring-pipeline scheduled task, cloud session with Claude-in-Chrome browser access)
+
+Probed `mcp__remote-devices__*` — absent, cloud-only confirmed. Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules per standing order. Projects folder directly readable via file tools.
+
+Checked Slack DM (D03BHQH5VGT) and #employee-prospects (C0BQDRXRPEJ) back through Joshua's 6:51 PM Samantha Holt update/schedule post — nothing hiring-relevant posted since (his later posts were the CEO brief, website/follower checks, Fortis form reminder — not hiring).
+
+**Indeed Messages inbox read live (employers.indeed.com/messages) — unchanged from the 6:51 PM confirmation.** Top thread still Samantha Holt (6:51 PM, our Tue 11 AM confirmation), then Desmond Chick "Ok sir" (12:36 PM, ack), Sam Rainey (11:51 AM, ours last), Lisbed Hicks (11:35 AM, our Wed 10/14 offer still awaiting her time/number), Brandon Richardson (11:05 AM, left unanswered per the 11:23 AM standing instruction), Scot Baumgartner (Oct 11, confirmed), Alaska Foote (Oct 11, confirmed), Rita Allen (Oct 10, Preston-notes-gate hold), Tameron Washington (Oct 9, last touched then). No new applicant threads above Samantha Holt.
+
+**Candidates "New" tab read live and fully rendered — 8 showing, unchanged, all confirmed out of scope** for Waynesboro/Harrisonburg Sales & Loan Associate: Tareka Jordan (Roanoke), Michael Boyer (Columbia), Adam Martin (Salem), Kevan Nelson (Lynchburg), Anthony White (Roanoke) — all other-store locations — plus Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan (all Store Manager track, FL). No in-scope new applicants.
+
+**Calendar re-verified (`jdavis@fcfpawn.com`, 10/13 8 AM–6 PM via `list_events`) — exact match, no gaps/doubles, 2 confirmed:** 11:00 AM Samantha Holt (Waynesboro, 540-836-4196), 1:00 PM Desmond Chick (Harrisonburg, 240-940-3176).
+
+No 2-business-day nudges due this run (last batch Fri 10/9; next window Tue 10/13). No felony disqualifications encountered — no new applicants seen. No one on the do-not-contact list was touched. No texting this run (7:49 PM — not a 9:30/1:00/6:00 batch window; cloud-only session has no screen control regardless). Both Waynesboro/Harrisonburg listings remain Paused per Joshua's standing decision — not re-flagging.
+
+**Not touched, per standing instruction (unchanged, not re-flagging to avoid noise):** Rita Allen (Preston-notes-gate hold, Joshua's go/no-go call), Tameron Washington (last touched 10/9), Frankie Whetzel (Joshua's open item), the Waynesboro/Harrisonburg reopen decision, Lisbed Hicks (awaiting her time/number for Wed 10/14), Sam Rainey (resolved earlier today), Brandon Richardson (left alone per the 11:23 AM standing instruction).
+
+**Notifications sent: none** — nothing changed since the 6:51 PM update; both Slack channels already carry the current state. Consistent with the reporting rule (post only on real change) and Rule 18 (no noise/duplicate posts).
+
+Indeed messages sent this run: 0. Calendar events created/deleted: 0. Texts sent: 0.

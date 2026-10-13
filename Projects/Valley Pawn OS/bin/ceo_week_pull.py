@@ -27,6 +27,8 @@ NAMES = {'CUL': 'Culpeper', 'HAR': 'Harrisonburg', 'LEX': 'Lexington', 'ROA': 'R
 sys.path.insert(0, BRAVO)
 import eom_validate as ev  # noqa: E402
 import openpyxl  # noqa: E402
+sys.path.insert(0, BIN)
+from store_rankings import structure  # noqa: E402  (2026-10-12: shared EOM structural checker - fail closed if absent)
 
 def log(*a): print(dt.datetime.now().strftime('%F %T'), *a, flush=True)
 
@@ -40,13 +42,65 @@ def ranges(week_mon):
     f = lambda a, b: (a.isoformat(), b.isoformat())
     return {'W': f(m, s), 'PW': f(pm, ps), 'LY': f(lm, ls), 'MTD': f(mtd0, s), 'LYMTD': f(lymtd0, lys)}
 
+REJECTED = {}   # (rng, st) -> reason a file with the right window was refused (2026-10-12)
+
+def ok(p, rng):
+    """Right window (its own Reporting Dates header) AND structurally sound (store_rankings.structure: non-zero
+    Ending Loan/Inventory Base with day == month, non-blank Total: row). 2026-10-12: the 10/5..10/11 and
+    10/1..10/11 exports Bravo returned that morning had the right header but $0 loans and item COUNTS in the
+    inventory $ column, and the old header-only check let them into REVENUE_2026-10-05.json."""
+    if not (os.path.exists(p) and ev.read_range(p) == tuple(rng)): return False
+    why = structure(p)
+    if why: REJECTED[(tuple(rng), st_of(p))] = why
+    return not why
+
+def st_of(p):
+    return next((s for s in STORES if f'_{s}' in os.path.basename(p)), '?')
+
 def have(rng, st):
+    rng = tuple(rng)
     p = os.path.join(EOMDIR, f'{rng[0]}_{rng[1]}_{st}.xlsx')
-    if os.path.exists(p) and ev.read_range(p) == rng: return p
+    if ok(p, rng): return p
     a = os.path.join(BRAVO, 'eom_archive', f'{rng[0]}_{rng[1]}_{st}.xlsx')
-    if os.path.exists(a) and ev.read_range(a) == rng:
+    if ok(a, rng):
         shutil.copy2(a, p); return p
+    o = os.path.join(BRAVO, 'output', f'{rng[1]}_{st}_end-of-month.xlsx')   # the Monday pipeline's own MTD file
+    if rng[0][8:] == '01' and ok(o, rng):
+        shutil.copy2(o, p); return p
     return None
+
+def resolve(rng, st):
+    """(data, effective_range, how) for (range, store), or (None, None, reason). 2026-10-12 fallback order:
+      1. the exact range, valid
+      2. the same start ending 1-2 days earlier (Bravo stamps/ends a Sunday pull at the last open day; stores are
+         closed Sunday), valid - labelled with its OWN end date
+      3. start after the 1st: derive it exactly from two valid same-month month-to-date files,
+         (1st..end') minus (1st..start-1) for every additive field; balances from (1st..end'); biggest day from
+         (1st..end')'s daily rows on/after start. Never estimated: any missing piece -> None."""
+    a, b = dt.date.fromisoformat(rng[0]), dt.date.fromisoformat(rng[1])
+    for back in range(0, 3):
+        e = b - dt.timedelta(days=back)
+        if e < a: break
+        p = have((rng[0], e.isoformat()), st)
+        if p: return parse(p), (rng[0], e.isoformat()), ('exact' if back == 0 else 'valid set through %s (%s export invalid)' % (e, rng[1]))
+    if a.day > 1:
+        first = a.replace(day=1); prev = (a - dt.timedelta(days=1)).isoformat()
+        head = have((first.isoformat(), prev), st)
+        for back in range(0, 3):
+            e = b - dt.timedelta(days=back)
+            if e < a or e.month != a.month: break
+            tail = have((first.isoformat(), e.isoformat()), st)
+            if head and tail:
+                h, t = parse(head), parse(tail, since=a.isoformat())
+                d = {}
+                for f, v in t.items():
+                    if f in ('loan_balance_end', 'inventory_end', 'max_day_sales', 'max_day_date', 'gross_margin_pct'): d[f] = v
+                    elif isinstance(v, int) and not isinstance(v, bool): d[f] = v - int(h[f])
+                    elif isinstance(v, float): d[f] = round(v - h[f], 2)
+                    else: d[f] = v
+                d['gross_margin_pct'] = round(100 * d['gross_profit'] / d['retail_sales'], 1) if d['retail_sales'] else None
+                return d, (rng[0], e.isoformat()), 'derived: (%s..%s) minus (%s..%s), both valid' % (first, e, first, prev)
+    return None, None, REJECTED.get((tuple(rng), st), 'no file')
 
 def pull(rng, stores):
     end = rng[1]; bk = {}
@@ -60,8 +114,10 @@ def pull(rng, stores):
     log('bravo_pull', rng, stores, 'rc=%d' % rc.returncode)
     for st in stores:
         o = os.path.join(BRAVO, 'output', f'{end}_{st}_end-of-month.xlsx')
-        if os.path.exists(o) and ev.read_range(o) == rng:
+        if os.path.exists(o) and ev.read_range(o) == rng and not structure(o):
             shutil.copy2(o, os.path.join(EOMDIR, f'{rng[0]}_{rng[1]}_{st}.xlsx'))
+        elif os.path.exists(o) and ev.read_range(o) == rng:
+            log('  REJECTED degenerate export for', st, rng, '-', structure(o))
         else:
             log('  no valid file for', st, rng, 'got', ev.read_range(o) if os.path.exists(o) else None)
         if st in bk:  # put the pipeline's own file back exactly as it was
@@ -74,7 +130,7 @@ def N(v):
     try: return -float(s) if neg else float(s)
     except ValueError: return None
 
-def parse(p):
+def parse(p, since=None):
     """Column positions DRIFT between exports (seen: same row, 1-2 columns apart on two ranges), so every value is
     read by its position among the row's NON-EMPTY cells - the method store_kpis_compile.py verified to the penny."""
     ws = openpyxl.load_workbook(p, data_only=True).active
@@ -132,7 +188,7 @@ def parse(p):
     best = (0.0, None)
     for r in range(hdr + 1, (row('Total:') or hdr + 1)):
         v = ws.cell(r, 1).value
-        if hasattr(v, 'date') and tc and nc:
+        if hasattr(v, 'date') and tc and nc and (since is None or v.date().isoformat() >= since):
             day = (N(ws.cell(r, tc).value) or 0) + (N(ws.cell(r, nc).value) or 0)
             if day > best[0]: best = (day, v.date().isoformat())
     d['max_day_sales'] = round(best[0], 2); d['max_day_date'] = best[1]
@@ -156,7 +212,7 @@ def main():
     R = ranges(wk); log('week', wk, R)
     if '--no-pull' not in args:
         for k, rng in R.items():
-            need = [s for s in STORES if not have(rng, s)]
+            need = [s for s in STORES if not have(rng, s)]   # have() now also refuses degenerate exports
             if need: pull(rng, need)
             again = [s for s in STORES if not have(rng, s)]   # self-heal: one retry for stores that failed (e.g. a store switch miss)
             if again: log('retrying', rng, again); pull(rng, again)
@@ -166,9 +222,14 @@ def main():
     for k, rng in R.items():
         tot = {}
         for s in STORES:
-            p = have(rng, s)
-            if not p: out['incomplete'].append(f'{k}:{s}'); continue
-            d = parse(p); out['stores'].setdefault(s, {'name': NAMES[s]})[k] = d
+            d, eff, how = resolve(rng, s)
+            if d is None:
+                out['incomplete'].append(f'{k}:{s}'); out.setdefault('rejected', {})[f'{k}:{s}'] = how; continue
+            if how != 'exact':
+                d['effective_range'] = list(eff); d['source_note'] = how
+                out.setdefault('fallbacks', {})[f'{k}:{s}'] = {'effective_range': list(eff), 'how': how,
+                                                               'rejected': REJECTED.get((tuple(rng), s))}
+            out['stores'].setdefault(s, {'name': NAMES[s]})[k] = d
             for f, v in d.items():
                 if isinstance(v, (int, float)) and not f.endswith('_pct'): tot[f] = round(tot.get(f, 0) + v, 2)
         if tot and all(f'{k}:{s}' not in out['incomplete'] for s in STORES):

@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-10-09 22:14 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-10-12 22:13 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -216,6 +216,12 @@ PRESTON SAID: "He was looking for a better offer than $10,000 for the 5. Melt is
 SOURCE: #general (C03BETSS669) | 2026-09-05 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1788645423935689
 id: gold-coin-buy-decision-2fb830d0
 
+### [LOW] melt-large-stone-rings
+RULE: Don't pay melt value on the full weight of a ring with a large stone, because the stone's weight is unknown and inflates the figure. Offer to have the stone popped out so the metal can be weighed and paid on separately. The speaker is not identified as Preston or a manager, so treat this as one person's call on one deal.
+PRESTON SAID: "I can't do that on these stone deals. I mean, unless they want to pop the stone out and then we can weigh it and pay on that, but there's no way to know."
+SOURCE: zoom-call:1f8cdc6567324a809215c80a260fd5fc | 2026-10-12 | UNK Walker Tapley
+id: melt-large-stone-rings-e6d660b7
+
 
 ==============================================================================
 SECTION: PRECIOUS METALS - TESTING, FRAUD & COUNTERFEITS
@@ -390,6 +396,12 @@ RULE: Silver JEWELRY lots yield materially below full melt because of stones and
 PRESTON SAID: "Sending the last of the silver. I don't think it will be a big haul, this is all the jewelry stuff rather than the flatware like I've been sending. Not a full load either. Full melt based on their pay rate is around $10,700 but there is lots of stones and stuff so hopefully it will be over 8k by the time everything is said and done."
 SOURCE: DM Joshua<->Preston (D03C7RBGY56) | 2026-06-17 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1781719609512879
 id: silver-jewelry-vs-flatware-y-03de64bc
+
+### [MEDIUM] employee-jewelry-policy
+RULE: Employees must not wear company (inventory) jewelry. Personal jewelry limits under the handbook are still open for discussion at the November 4th meeting, and the handbook applies until changed.
+PRESTON SAID: "I think the main thing is make sure you're not wearing the company's jewelry and there's no reason to wear that."
+SOURCE: zoom-call:38fd73720bb342aeb12f016ed0618017 | 2026-10-12 | UNK Sandi Cole
+id: employee-jewelry-policy-9813e249
 
 ### [MEDIUM] gold-case-watch-valuation
 RULE: For a solid-gold-cased watch of unknown gold content, Preston estimates 15% of the entire watch weight is gold, uses that to compute melt, and loans off that. If the customer wants more, the watch has to be broken apart and the gold weighed alone.
@@ -926,6 +938,18 @@ PRESTON SAID: "let them know that you and Sandy work together"
 SOURCE: zoom-call:2026-10-08_1225_Preston-to-JoshuaBurnett_8m57s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
 id: customer-confidence-introduc-8df0b0c9
 
+### [LOW] large-loan-secure-then-rewrite-workaround
+RULE: On a large multi-item jewelry loan where the full amount can't be paid out today, write a partial loan to secure the goods. Screenshot the correct per-item costs first. The next day, redeem it with fees waived and rewrite it for the full amount so the item costs come out right. Securing the loan matters more than how the cost splits later.
+PRESTON SAID: "write the loan and then you could do a redemption, wave all the fees tomorrow and then rewrite it for the full amount or something"
+SOURCE: zoom-call:fe6c7f1f83114f2681c7d3048ecee956 | 2026-10-12 | UNK Sandi Cole
+id: large-loan-secure-then-rewri-5f9c1115
+
+### [LOW] loan-add-money-cost-allocation
+RULE: When more money is added to an existing loan ticket, the system spreads the added cost evenly across all items on the ticket. It does not adjust each item's cost to where it should be.
+PRESTON SAID: "No. It just like spreads it evenly across the ticket, which is really frustrating"
+SOURCE: zoom-call:fe6c7f1f83114f2681c7d3048ecee956 | 2026-10-12 | UNK Sandi Cole
+id: loan-add-money-cost-allocati-7ecdcded
+
 
 ==============================================================================
 SECTION: BUYER & VENDOR NETWORK
@@ -1044,6 +1068,12 @@ PRESTON SAID: "Still can't pay full value on a C good item. Make a $10 offer and
 SOURCE: #loans-and-buys | 2023-12-16 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1702738077350329
 id: c-grade-goods-ten-dollar-off-8065cb7e
 
+### [HIGH] call-out-procedure
+RULE: Anyone calling out must phone Preston at 540-202-4200 at least 2 hours before their shift starts. If something prevents that, they must call as soon as they are able.
+PRESTON SAID: "Everyone, if you are calling out, you need to physically call me at <tel:540-202-4200|540-202-4200> and tell me you will be out at least 2 hours before you are expected to be at work. If there is a situation that prevents that then you need to call me as soon as you are able to."
+SOURCE: #general (Preston Peters, Operations Manager) | 2026-10-12 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1791814597546529
+id: call-out-procedure-289787c3
+
 ### [HIGH] cant-test-dont-take
 RULE: Hard policy — if we can't test an item, we don't take it. If you want the item, find a way to test it.
 PRESTON SAID: "Our policy is if we can't test it then we don't take it. If you want to take it then find a way to test it."
@@ -1096,6 +1126,24 @@ RULE: When comping value, only use sold listings that received at least one bid 
 PRESTON SAID: "$600 would have to be brand new with the hard case kit. Make sure you are looking at sold listings that received at least one bid and are used condition."
 SOURCE: #loans-and-buys | 2024-03-21 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1711027800248029
 id: comp-methodology-sold-with-b-1233613d
+
+### [HIGH] consistent-rules-across-stores
+RULE: All stores should operate under the same set of rules, so a customer gets the same answer on what is or isn't taken at every location.
+PRESTON SAID: "I still want to have everybody operating under the same set of rules, essentially."
+SOURCE: zoom-call:38fd73720bb342aeb12f016ed0618017 | 2026-10-12 | UNK Sandi Cole
+id: consistent-rules-across-stor-606a77b8
+
+### [HIGH] contacting-preston-by-message
+RULE: Message Preston through Slack, not by text.
+PRESTON SAID: "go through slack. Not text."
+SOURCE: #general (Preston Peters, Operations Manager) | 2026-10-12 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1791814597546529
+id: contacting-preston-by-messag-df7cd1b2
+
+### [HIGH] contacting-preston-by-phone
+RULE: To reach Preston by phone, call 540-202-4200. He will not answer calls from any other number.
+PRESTON SAID: "the phone number to CALL me is <tel:540-202-4200|540-202-4200>. I will not answer if it is not that number."
+SOURCE: #general (Preston Peters, Operations Manager) | 2026-10-12 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1791814597546529
+id: contacting-preston-by-phone-a32f5389
 
 ### [HIGH] custom-mods-dont-add-value
 RULE: Custom/aftermarket parts are hard to value and may mean nothing to the next buyer — price a modified item off the base model.
@@ -1681,6 +1729,18 @@ PRESTON SAID: "I have a customer from Lexington wanting to sell this 4 wheeler f
 SOURCE: DM Joshua<->Preston | 2024-03-28 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1711659629959749
 id: big-toy-buy-judgment-73dfd153
 
+### [MEDIUM] call-out-notice-two-hours
+RULE: An employee calling out must physically call the manager/Preston at least two hours before their shift starts. The policy is written in the handbook.
+PRESTON SAID: "you're supposed to call me two hours before shift starts. Physically call me"
+SOURCE: zoom-call:aebe1af2b4a541ddbf5669fe7f782d67 | 2026-10-12 | UNK Walker Tapley
+id: call-out-notice-two-hours-789173d1
+
+### [MEDIUM] call-out-verbal-notice-required
+RULE: Calling out requires verbally telling Preston or a manager. Telling a coworker or sending a text is not enough, and a no-call/no-show is unacceptable.
+PRESTON SAID: "I need you to verbally say, you won't be in or calling out."
+SOURCE: zoom-call:aebe1af2b4a541ddbf5669fe7f782d67 | 2026-10-12 | UNK Walker Tapley
+id: call-out-verbal-notice-requi-e3db6993
+
 ### [MEDIUM] cash-sales-during-system-problems
 RULE: When the system is having problems, cash sales can still be made by recording the tag information and cash sale price, then ringing the sale out later.
 PRESTON SAID: "We can do cash sales by recording tag information and cash sale price to ring out later."
@@ -1692,6 +1752,12 @@ RULE: The standing clearance markdown is set at 40%, and Preston believes it cou
 PRESTON SAID: "Has been set to 40% it could probably be less now though since we are doing clearance markdowns."
 SOURCE: DM Joshua<->Preston | 2026-08-24 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1787574469297889
 id: clearance-markdown-percentag-59d4b2c6
+
+### [MEDIUM] credit-card-reconciliation
+RULE: Credit card transactions run through Bravo and sync automatically, so daily reconciliation is normally a non-issue. Only weird transactions need a manual look, usually reviewed together with the manager.
+PRESTON SAID: "now if you have a weird transaction you should be looking at that stuff which we usually do kind of go over it together I feel like but beyond your daily daily stuff it's it's all transacted through Bravo should all automatically sync up"
+SOURCE: zoom-call:38fd73720bb342aeb12f016ed0618017 | 2026-10-12 | UNK Sandi Cole
+id: credit-card-reconciliation-15183478
 
 ### [MEDIUM] cross-training-staff-help-all-customers
 RULE: Any employee should be able to help any customer, so business doesn't depend on one person (Sandy) being in the store. Preston wants training focused on getting staff comfortable offering stronger values.
@@ -1764,6 +1830,12 @@ RULE: Medical devices can't be sold on eBay, which makes them a no for intake.
 PRESTON SAID: "Can't sell it on eBay since it's a medical device"
 SOURCE: #deal-questions | 2025-12-15 | https://valleypawnworkspace.slack.com/archives/C03BWGT5F5X/p1765827187440699
 id: medical-devices-no-ebay-562985de
+
+### [MEDIUM] neat-clean-checklist-standard
+RULE: The neat/clean/orderly checklist (part of the qualifiers) means keeping the area behind the counter clean and putting pawns away. No extra work is expected beyond the normal standard.
+PRESTON SAID: "Behind the counter should be clean pawns should be put up."
+SOURCE: zoom-call:38fd73720bb342aeb12f016ed0618017 | 2026-10-12 | UNK Sandi Cole
+id: neat-clean-checklist-standar-5408e7f4
 
 ### [MEDIUM] new-hire-sales-goals-30-60-90
 RULE: New retail hires ramp through monthly sales goals of $7,000 for the first 30 days, $9,000 for the next 30, and $12,000 for days 60-90.
@@ -1888,6 +1960,18 @@ PRESTON SAID: "So I wanted them to go over with you in person and then there's o
 SOURCE: zoom-call:2026-10-08_1225_Preston-to-JoshuaBurnett_8m57s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
 id: 30-60-90-plan-acknowledgment-fdaeb780
 
+### [LOW] atf-police-department-transfer-account
+RULE: For a transfer coming from a police department, receive it from the department itself, creating an account for the department in the system if possible.
+PRESTON SAID: "I would receive it from the police department if you can make an account for the police department or receive it from them."
+SOURCE: zoom-call:ec8e499beb574de68d5c45ff0b59dbbe | 2026-10-12 | UNK Chadd McClintic
+id: atf-police-department-transf-3d563507
+
+### [LOW] atf-police-department-transfer-receiving
+RULE: When receiving a firearm from a police department, the working approach is to log it under the officer's name on behalf of the department and fill out as much of the record as possible. The speaker was unsure and was going to look into it further.
+PRESTON SAID: "I'm pretty sure you receive it under the officer's name on behalf of the police department and just fill out as much as you can."
+SOURCE: zoom-call:ec8e499beb574de68d5c45ff0b59dbbe | 2026-10-12 | UNK Chadd McClintic
+id: atf-police-department-transf-5695452f
+
 ### [LOW] bank-account-adding-employees
 RULE: When adding employees to the business bank account, book an appointment online and tell the bank it will have to add them manually, because the account already has many people on it.
 PRESTON SAID: "Make sure when you do just tell them that they they're gonna have to manually add them because there's so many people on the account"
@@ -1905,6 +1989,18 @@ RULE: When an item's karat (such as 16k) isn't available in Bravo, use the custo
 PRESTON SAID: "Should be a custom purity option"
 SOURCE: #deal-questions (Preston Peters, Operations Manager) | 2026-10-09 | https://valleypawnworkspace.slack.com/archives/C03BWGT5F5X/p1791577890719919
 id: custom-purity-unlisted-karat-e5c8e827
+
+### [LOW] employee-purchase-window-handbook-error
+RULE: The handbook's "90 days" employee purchase window is wrong. It likely came from an earlier draft policy and will be corrected. The correct number was not stated.
+PRESTON SAID: "Yeah, that's not accurate. That might have got pulled from Josh's original policy that he wanted, so we'll have to update that."
+SOURCE: zoom-call:38fd73720bb342aeb12f016ed0618017 | 2026-10-12 | UNK Sandi Cole
+id: employee-purchase-window-han-88e19cdf
+
+### [LOW] estimator-buy-price
+RULE: The estimator's number is a reasonably good guide for buy prices. If the item can be bought cheaper, take the cheaper deal. This was said about a specific set of deals.
+PRESTON SAID: "The estimator's at a pretty reasonable number. Obviously, if we get it cheaper, get the deal done, it's great."
+SOURCE: zoom-call:38fd73720bb342aeb12f016ed0618017 | 2026-10-12 | UNK Sandi Cole
+id: estimator-buy-price-ded8587d
 
 ### [LOW] firearm-serial-location-receiver
 RULE: The serial number is normally on the receiver of the firearm. The speaker is not identified in the transcript, and it conflicts with the pre-1968 no-serial note, so treat it as a general guide only.
@@ -1930,6 +2026,12 @@ RULE: For this goodwill case, handle the swap system to system and leave control
 PRESTON SAID: "Just do as good as you can both ways for him and See what we can agree on we don't need his controllers. He doesn't need our controllers Just do it system to system or whatever"
 SOURCE: zoom-call:b7985902fd5c481cb3c1de9b038e8437 | 2026-08-29 | HAR Preston Peters
 id: goodwill-system-to-system-sw-c43fbfde
+
+### [LOW] gun-log-printing
+RULE: The daily gun log backs up to the computer automatically, so printing it every day is probably not needed. The handbook's daily print requirement is questionable and was not formally changed in this call.
+PRESTON SAID: "So our gun log should be automatically back it up to the computer."
+SOURCE: zoom-call:38fd73720bb342aeb12f016ed0618017 | 2026-10-12 | UNK Sandi Cole
+id: gun-log-printing-b19f1795
 
 ### [LOW] gun-safety-course-reimbursement
 RULE: The company reimburses employees for the gun safety course certification once they submit the certificate. The transcript is fragmentary, so the exact terms are unclear.
@@ -1973,6 +2075,12 @@ PRESTON SAID: "With silver going down recently it has been moving slower in stor
 SOURCE: #harrisonburg-funds (C03BWRKEDUZ) | 2026-07-13 | https://valleypawnworkspace.slack.com/archives/C03BWRKEDUZ/p1783950468561689
 id: silver-market-slowdown-becee973
 
+### [LOW] software-support-chat-agent-first
+RULE: When stuck in the system and a support ticket is going unanswered, use the support chat agent to see if it can give the answer. If it cannot, it may help open another ticket.
+PRESTON SAID: "do the chat with the agent see if it can tell you what to do Okay If not, it might help you open another ticket."
+SOURCE: zoom-call:ec8e499beb574de68d5c45ff0b59dbbe | 2026-10-12 | UNK Chadd McClintic
+id: software-support-chat-agent--bc6406c9
+
 ### [LOW] stolen-property-police-hold
 RULE: When police identify a pawned item as stolen, the store holds it.
 PRESTON SAID: "Police said it was stolen and we had to hold it."
@@ -1993,5 +2101,5 @@ id: typical-retail-sales-benchma-f03d7d66
 
 
 ==============================================================================
-COVERAGE: 259 entries - 1 verified by Preston, 171 high-confidence rules, 66 medium, 21 low, 0 superseded.
+COVERAGE: 277 entries - 1 verified by Preston, 175 high-confidence rules, 71 medium, 30 low, 0 superseded.
 ==============================================================================

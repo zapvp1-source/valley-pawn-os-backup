@@ -17,6 +17,10 @@ numeric metrics) on 2026-10-02:
 Ranking: highest = #1; ties keep store order CUL, HAR, LEX, ROA, WAY (reproduces the posted averages);
 a category where every store is equal counts in averages but awards no win; "out of 8" on every line.
 Completeness: all 5 files present and >= 500 bytes, or nothing is posted (Rule 18).
+2026-10-12 (bad 10/12 post fix): every file must also pass validate() (window = 1st..END, non-zero loan and
+inventory base with day == month, non-blank Total: row) or the set is skipped for the next older valid one;
+then sanity() withholds (exit 2 + ledger) on any $0 store loan/inventory, $0 company service charges, or a
+>50% store/company balance drop vs the prior week's valid set. --prefix TEXT prepends TEXT to the summary.
 """
 import datetime as dt
 import json
@@ -80,6 +84,90 @@ def parse(path):
     lay = at(find(lambda v: v.startswith("Ending Balance"), after=lh, right=True), 4)
     vals = [loan, inv, loan + inv, tx + ntx, psc, scrap, lay, psc + profit]
     return [round(x, 2) for x in vals], ""
+
+
+def _rows(path):
+    ws = openpyxl.load_workbook(path, data_only=True).active
+    rows = {}
+    for r in range(1, ws.max_row + 1):
+        v = [ws.cell(r, c).value for c in range(1, ws.max_column + 1) if ws.cell(r, c).value not in (None, "")]
+        if v and isinstance(v[0], str):
+            for k in ("Reporting Dates", "Ending Loan Base", "Ending Inventory Base", "Total:"):
+                if v[0].strip().startswith(k) and k not in rows:
+                    rows[k] = v[1:]
+    return rows
+
+
+def validate(path, end):
+    """Structural check of one EOM workbook (2026-10-12). Returns "" if usable, else the reason.
+    Bravo can return a DEGENERATE export (seen 10/12 06:14 for 10/1..10/11, a closed Sunday): no daily rows,
+    blank "Total:" row, every Loan Base cell 0, Inventory Base day columns collapsed. parse() then read the
+    inventory QTY as dollars and $0 loans, and that went to #store-performance. Never again.
+    `end` = the month-to-date end the file must cover (window must be <M>/1/<Y> - <end>)."""
+    try:
+        rows = _rows(path)
+    except Exception as e:  # noqa: BLE001
+        return "unreadable (%s)" % e
+    rd = " ".join(str(x) for x in rows.get("Reporting Dates", []))
+    want_end = dt.date.fromisoformat(end)
+    if ("%d/%d/%d" % (want_end.month, want_end.day, want_end.year)) not in rd or not rd.startswith("%d/1/%d" % (want_end.month, want_end.year)):
+        return "report window is '%s', expected %d/1/%d - %d/%d/%d" % (rd, want_end.month, want_end.year,
+                                                                        want_end.month, want_end.day, want_end.year)
+    return _structure(rows)
+
+
+def structure(path):
+    """validate() without the window check — for ANY-range EOM exports (e.g. ceo_week_pull's Mon..Sun weeks,
+    whose window is checked separately by eom_validate.read_range). Returns "" if usable, else the reason.
+    Shared by ceo_week_pull, layaway_yield_weekly, store_kpis_weekly, bonus_pace, lo_outcomes_layaway,
+    mobilepawn_monthly, comms_engine (2026-10-12, EOM file validation everywhere)."""
+    try:
+        return _structure(_rows(path))
+    except Exception as e:  # noqa: BLE001
+        return "unreadable (%s)" % e
+
+
+def _structure(rows):
+    for k in ("Ending Loan Base", "Ending Inventory Base"):
+        nums = [x for x in rows.get(k, []) if isinstance(x, (int, float))]
+        if len(nums) != 4 or nums[1] <= 0 or abs(nums[1] - nums[3]) > 0.005:
+            return "%s row malformed or zero %s" % (k, rows.get(k))
+    if len([x for x in rows.get("Total:", []) if isinstance(x, (int, float))]) < 2:
+        return "daily-summary Total: row is blank (degenerate export)"
+    return ""
+
+
+def sanity(end, data):
+    """Plausibility gate vs the prior week's set (2026-10-12). Returns a list of problems (empty = OK).
+    Balances (loan, inventory) are point-in-time, so they compare across a month boundary; MTD flows do not."""
+    probs = []
+    for code, name in STORES:
+        if data[code][0] <= 0:
+            probs.append("%s loan balance is $0" % name)
+        if data[code][1] <= 0:
+            probs.append("%s inventory balance is $0" % name)
+    if sum(data[c][4] for c, _ in STORES) <= 0:
+        probs.append("pawn service charges are $0 at every store")
+    prior = None
+    for back in range(5, 10):
+        d = (dt.date.fromisoformat(end) - dt.timedelta(days=back)).isoformat()
+        ps = [os.path.join(BRAVO, "output", "%s_%s_end-of-month.xlsx" % (d, c)) for c, _ in STORES]
+        if all(os.path.exists(p) for p in ps) and not any(validate(p, d) for p in ps):
+            prior = (d, {c: parse(p)[0] for (c, _), p in zip(STORES, ps)})
+            break
+    if prior is None:
+        probs.append("no valid prior-week set (%s minus 5..9 days) to compare against" % end)
+        return probs
+    pd_, pdata = prior
+    for i, label in ((0, "loan"), (1, "inventory")):
+        for code, name in STORES:
+            a, b = pdata[code][i], data[code][i]
+            if a > 0 and b < 0.5 * a:
+                probs.append("%s %s balance fell >50%% vs %s (%s -> %s)" % (name, label, pd_, usd(a), usd(b)))
+        ta, tb = sum(pdata[c][i] for c, _ in STORES), sum(data[c][i] for c, _ in STORES)
+        if ta > 0 and tb < 0.5 * ta:
+            probs.append("company %s balance fell >50%% vs %s (%s -> %s)" % (label, pd_, usd(ta), usd(tb)))
+    return probs
 
 
 def usd(v):
@@ -160,21 +248,49 @@ def ledger(sentence):
 
 
 def main():
-    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    argv = sys.argv[1:]
+    if "--prefix" in argv:
+        i = argv.index("--prefix"); argv = argv[:i] + argv[i + 2:]
+    args = [a for a in argv if not a.startswith("--")]
     end = args[0] if args else (dt.date.today() - dt.timedelta(days=1)).isoformat()
     # Bravo's End-of-Month export stops at the last CLOSED day, so a Sunday pull is stamped Saturday
     # (seen 2026-10-04: requested 10/1..10/4, files written as 2026-10-03_*). Use the newest complete
     # 5-store set dated END or up to 2 days before it, and label the period with THAT date (truthful).
+    # 2026-10-12: a set only counts if every file passes validate() — a present-but-degenerate export (10/11)
+    # is skipped and the next older VALID set is used, labelled with its own date. Rejections are reported.
+    rejected = []
     for back in range(0, 3):
         d = (dt.date.fromisoformat(end) - dt.timedelta(days=back)).isoformat()
-        if all(os.path.exists(os.path.join(BRAVO, "output", "%s_%s_end-of-month.xlsx" % (d, c))) for c, _ in STORES):
-            end = d
-            break
+        ps = [(c, os.path.join(BRAVO, "output", "%s_%s_end-of-month.xlsx" % (d, c))) for c, _ in STORES]
+        if not all(os.path.exists(p) for _, p in ps):
+            continue
+        bad = [(c, validate(p, d)) for c, p in ps]
+        bad = [(c, why) for c, why in bad if why]
+        if bad:
+            rejected.append("%s: %s" % (d, "; ".join("%s %s" % b for b in bad)))
+            continue
+        end = d
+        break
+    else:
+        print("HOLD — no complete, valid 5-store EOM set within 2 days of %s. %s" % (end, " | ".join(rejected)))
+        if "--render" not in sys.argv:
+            ledger("Store rankings for %s held — no valid month-end set (%s)." % (end, " | ".join(rejected)[:400]))
+        return 2
+    for r in rejected:
+        print("skipped invalid set — " + r, file=sys.stderr)
     parent, thread, missing = build(end)
+    if parent and "--prefix" in sys.argv:   # e.g. --prefix "Corrected:" for a manual re-post (2026-10-12)
+        parent = sys.argv[sys.argv.index("--prefix") + 1].strip() + " " + parent
     if missing:
         print("HOLD — missing/undersized EOM files: %s" % ", ".join(missing))
         if "--render" not in sys.argv:
             ledger("Store rankings for %s held — month-end data missing for %s." % (end, ", ".join(missing)))
+        return 2
+    probs = sanity(end, {c: parse(os.path.join(BRAVO, "output", "%s_%s_end-of-month.xlsx" % (end, c)))[0] for c, _ in STORES})
+    if probs and "--force-sanity" not in sys.argv:
+        print("HOLD — sanity gate failed for %s: %s" % (end, "; ".join(probs)))
+        if "--render" not in sys.argv:
+            ledger("Store rankings for %s WITHHELD by the sanity gate — %s." % (end, "; ".join(probs)[:400]))
         return 2
     if "--render" in sys.argv:
         print("=== PARENT ===\n%s\n\n=== THREAD REPLY ===\n%s" % (parent, thread))

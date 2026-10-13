@@ -156,6 +156,14 @@ def main():
     if pending:
         ledger("Weekly MTD FFL ranking for %s held — %s data missing after one retry." % (start.strftime("%B %Y"), ", ".join(pending)))
         return 1
+    # EMPTY-BODY GUARD (2026-10-12): never post a header-only/blank ranking. The body must carry all 5 store rows
+    # and the Total row, and every revenue/count must be a real number. (The 10/12 09:54 post was reported
+    # "empty" — it was not: the table rides in a native Slack table block, which the Slack connector/reader and
+    # some clients don't show; the fallback text carries it too. This guard is the belt for a truly empty body.)
+    body_rows = [l for l in post.splitlines() if l.startswith("| ") and not l.startswith("| Rank")]
+    if len(done) != 5 or len(body_rows) != 6 or any(r[1] is None or r[2] is None for r in done):
+        ledger("Weekly MTD FFL ranking for %s WITHHELD — body incomplete (%d store rows)." % (start.strftime("%B %Y"), len(body_rows) - 1))
+        return 1
     sys.path.insert(0, BIN)
     import vp_slack
     if vp_slack.has(CH, title, 20):

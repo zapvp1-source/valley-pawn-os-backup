@@ -125,6 +125,10 @@ def mtd_file(store, ym):
     for p in glob.glob(os.path.join(BASE, 'output', f'{ym}-*_{store}_end-of-month.xlsx')):
         r = ev.read_range(p)
         if r and r[0] == start and r[1] <= end and (best is None or r[1] > best['range'][1]):
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            from store_rankings import structure      # 2026-10-12: skip degenerate exports
+            if structure(p):
+                continue
             best = {'path': p, 'source': 'month-to-date', 'range': r}
     return best
 

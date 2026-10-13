@@ -233,6 +233,10 @@ def main(a):
         for m in r.get("messages", []):
             print("---", m.get("ts"), m.get("user") or m.get("bot_id"), "subtype=", m.get("subtype"), "len=", len(m.get("text") or ""))
             print((m.get("text") or "")[:300])
+    elif cmd == "raw":    # raw <channel_id> <ts> — full JSON (text + blocks) of one message (debug, read-only; 2026-10-12)
+        import json as _j
+        r = call("conversations.history", params={"channel": a[1], "latest": a[2], "oldest": a[2], "inclusive": "true", "limit": 1})
+        print(_j.dumps(r.get("messages", []) or r, indent=1)[:12000])
     elif cmd == "has":
         sys.exit(0 if has(a[1], a[2], float(a[3]) if len(a) > 3 else 24) else 1)
     else:

@@ -1,6 +1,6 @@
 # Insurance Portfolio — All Domains
 
-**GENERATED 2026-10-09 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
+**GENERATED 2026-10-12 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
 Update the registry, then run `Life OS/Insurance/bin/regen_portfolio.py`.
 Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker history: `BROKER_PIPELINE.md`.
 
@@ -461,8 +461,8 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
   - **water backup:** $250
 - **Mortgagee:** NONE listed on the 2026-27 declarations (consistent with prior Travelers policy)
 - **Status:** CONFIRMED IN FORCE 2026-09-22 - policy SP3-VA-33470384-00 shows status 'New (Active)' in the Steadily portal (not voided), term 9/11/2026-9/11/2027, premium $1,904.92. Full document set (property inspection report, policy packet, declaration, underwriting attestation, quote, Value360 valuation) pulled from the portal and filed to Life OS/Insurance/documents/woods-walk/. 9/25: Steadily reopened the thread asking Joshua to confirm coverage status during the 4/12-9/11 gap - see open_issues.
-- **Documents:** Gmail: Fwd 'Property Insurance Renewal Notice' (Steadily 3/19/2024 + 8/7/2024 chain, thread 19f669dff812fafc) with RENEWAL OFFER_6116141556531.pdf, EVIDENCE OF INSURANCE.pdf · Mail: Insurance_Application_for_611614155-653-1.pdf · Gmail: 'Finish your insurance quote for 14300 Woods Walk Ln' (Steadily 9/10/2026 22:39 ET, thread 1a08d79bf6a98d6c) · Gmail: 'Insurance coverage on 14300 Woods Walk Ln has been issued' (Steadily 9/10/2026 22:44 ET, thread 1a08d7eddf6f599e) · Gmail: 'Payment confirmation: 14300 Woods Walk Ln' (Steadily 9/10/2026 22:45 ET, thread 1a08d7fcba9e57e2 - policy SP3-VA-33470384-00, $251.62, Amex x3001) · Gmail: 'Policy documents are ready: 14300 Woods Walk Ln' (Steadily 9/11/2026 04:01 ET, thread 1a08ea1180b9a06c)
-- **Last verified:** 2026-09-22 — source: Steadily portal (app.steadily.com) direct pull 2026-09-22, policy detail page + Documents section; supersedes 9/10-9/11/2026 email-only capture
+- **Documents:** Gmail: Fwd 'Property Insurance Renewal Notice' (Steadily 3/19/2024 + 8/7/2024 chain, thread 19f669dff812fafc) with RENEWAL OFFER_6116141556531.pdf, EVIDENCE OF INSURANCE.pdf · Mail: Insurance_Application_for_611614155-653-1.pdf · Gmail: 'Finish your insurance quote for 14300 Woods Walk Ln' (Steadily 9/10/2026 22:39 ET, thread 1a08d79bf6a98d6c) · Gmail: 'Insurance coverage on 14300 Woods Walk Ln has been issued' (Steadily 9/10/2026 22:44 ET, thread 1a08d7eddf6f599e) · Gmail: 'Payment confirmation: 14300 Woods Walk Ln' (Steadily 9/10/2026 22:45 ET, thread 1a08d7fcba9e57e2 - policy SP3-VA-33470384-00, $251.62, Amex x3001) · Gmail: 'Policy documents are ready: 14300 Woods Walk Ln' (Steadily 9/11/2026 04:01 ET, thread 1a08ea1180b9a06c) · Gmail: 'Payment confirmation: 14300 Woods Walk Ln' (Steadily 10/11/2026 00:46 ET, thread 1a12949268de49af - policy SP3-VA-33470384-00, $150.30 installment, Amex x3001) - routine installment payment, consistent with installment plan noted 9/10/2026; no change to annual premium $1,904.92 or coverage terms
+- **Last verified:** 2026-10-12 — source: Steadily portal (app.steadily.com) direct pull 2026-09-22, policy detail page + Documents section; supersedes 9/10-9/11/2026 email-only capture
 
 ## DOMAIN 3 — Personal
 

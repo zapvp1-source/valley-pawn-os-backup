@@ -57,6 +57,9 @@ def month_eom(store, month):
             continue
         if s != dt.date(y, m, 1) or (e.year, e.month) != (y, m):
             continue                      # trailing-12 / YTD / prior-month file under a month name — the trap
+        from store_rankings import structure      # 2026-10-12: skip degenerate exports ($0 loans, blank Total:)
+        if structure(p):
+            continue
         k = (e, os.path.getmtime(p))
         if best is None or k > best[0]:
             best = (k, p, rd, e)

@@ -1,6 +1,7 @@
 ---
 name: preston-call-load-after-limit-change-20261015
 description: One-shot Thu 10/15: compare Preston's call/approval load the week after manager transaction limits were raised vs the week before; DM Joshua.
+model: claude-sonnet-5
 ---
 
 Load the enterprise-map skill first (Domain 1, Valley Pawn). Then read `~/Documents/Claude/Projects/Preston Time Review/STATUS.md` and the Preston review doc https://claude.ai/code/artifact/6e7cf7ad-5c1e-428e-b882-9827d9d1db37 for context.

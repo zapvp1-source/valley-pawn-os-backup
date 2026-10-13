@@ -133,8 +133,12 @@ def main():
         print("=== #store-performance (exit %d) ===\n%s%s" % (rc, out[:4000], err.strip()[-300:]))
     elif rc == 0:
         lines.append("✅ Store rankings — posted to #store-performance")
-    elif rc == 2:
-        held.append("Store rankings")
+    elif rc == 2:   # missing files OR the 2026-10-12 validity/sanity gate — say which, never post
+        why = next((l for l in out.splitlines() if l.startswith("HOLD")), "")
+        if "sanity" in why or "valid" in why:
+            lines.append("⏸️ Store rankings — WITHHELD, numbers failed the sanity check (%s)" % why[:200])
+        else:
+            held.append("Store rankings")
     else:
         lines.append("⚠️ Store rankings — did not post")
 
