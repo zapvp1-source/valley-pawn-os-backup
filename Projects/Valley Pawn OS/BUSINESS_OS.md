@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-10-12
+# LIVE STATE - auto-refreshed 2026-10-13
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -17,7 +17,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | Enabled (will fire) | 8 |
 | Registered but disabled | 224 |
 | On disk but never registered | 4 |
-| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 1520 |
+| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 968 |
 
 ### Enabled tasks
 
@@ -151,33 +151,33 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
+| 2026-10-13 | Valley Pawn OS | - |
+| 2026-10-13 | Unified Search | - |
+| 2026-10-13 | Short Term Rental Optimization | - |
+| 2026-10-13 | Bravo Data Extraction | STATUS.md |
+| 2026-10-12 | Zoom Call Pipeline | - |
 | 2026-10-12 | Website | - |
-| 2026-10-12 | Valley Pawn OS | - |
-| 2026-10-12 | Unified Search | - |
-| 2026-10-12 | Bravo Data Extraction | STATUS.md |
+| 2026-10-12 | Refine Social Media | - |
+| 2026-10-12 | Preston Knowledge Base | - |
+| 2026-10-12 | Precious Metals Settlements | - |
+| 2026-10-12 | Life OS | - |
+| 2026-10-12 | Jewelry Loan Growth | - |
+| 2026-10-12 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-10-12 | Health Optimization | STATUS.md |
+| 2026-10-12 | Email Refinement | - |
+| 2026-10-12 | Daily Funds Verification | - |
+| 2026-10-12 | Compliance | - |
+| 2026-10-12 | Communcations | - |
+| 2026-10-12 | Business Dashboard Website | - |
+| 2026-10-12 | Ask Valley Pawn | STATUS.md |
+| 2026-10-12 | Ai Optimized Marketing | - |
 | 2026-10-11 | eBay | - |
-| 2026-10-11 | Zoom Call Pipeline | - |
 | 2026-10-11 | Valuation Core | README.md |
 | 2026-10-11 | Sold Margin Review | STATUS.md |
-| 2026-10-11 | Short Term Rental Optimization | - |
-| 2026-10-11 | Precious Metals Settlements | - |
 | 2026-10-11 | Pawn Walks | STATUS.md |
-| 2026-10-11 | Life OS | - |
-| 2026-10-11 | Health Optimization | STATUS.md |
-| 2026-10-11 | Email Refinement | - |
 | 2026-10-11 | Discount Outlier Review | STATUS.md |
-| 2026-10-11 | Daily Funds Verification | - |
-| 2026-10-11 | Compliance | - |
-| 2026-10-11 | Communcations | - |
-| 2026-10-11 | Business Dashboard Website | - |
-| 2026-10-11 | Ai Optimized Marketing | - |
-| 2026-10-10 | Jewelry Loan Growth | - |
-| 2026-10-10 | Jewelry Count Reconciliation | STATUS.md |
 | 2026-10-09 | Training Program | STATUS.md |
-| 2026-10-09 | Refine Social Media | - |
-| 2026-10-09 | Preston Knowledge Base | - |
 | 2026-10-09 | Human Resources | - |
-| 2026-10-09 | Ask Valley Pawn | STATUS.md |
 | 2026-10-08 | _scratch | - |
 | 2026-10-08 | Taxes 2026 | - |
 | 2026-10-08 | Preston Time Review | STATUS.md |

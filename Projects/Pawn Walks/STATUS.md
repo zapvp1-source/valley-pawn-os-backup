@@ -215,3 +215,12 @@ Result: CUL SUCCEEDED cleanly on attempt 1 (7 rows, correct item-detail columns 
 This is the SAME recurring regression documented repeatedly in this file (6/16, 6/20, 7/10, 7/11, 7/27, 8/3 stale-data variant) -- now also 8/12/8/13 as a hard error variant. Fix recommended 5+ times, still not actioned: per store, in Bravo go Loans/Buys -> Custom Reports -> open 'Claude Pawn Walks' -> re-save criteria as Transaction Date range (not Age=), confirm columns Ticket Number/Category/Full Description/Loan Amount/Associate, confirm list-view Saved Layout is the correct item-detail layout. Needs doing for HAR, LEX, ROA, WAY specifically (CUL's saved report is fine).
 
 SEPARATE NEW FINDING: run_daily_intake.py compile step succeeded (EXIT:0, 7 items from CUL, 1 flagged <30%) but could NOT auto-post to Slack -- log shows 'WARNING: SLACK_BOT_TOKEN not found -- Slack post skipped.' JSON had slack_posted=false, slack_skipped=true, slack_error='token_not_found'. Claude posted the pre-built message to #pawn-walks manually this run so the store wasn't left without a report, and DMed Joshua the flag + partial-coverage note per policy. NEXT SESSION should locate/restore SLACK_BOT_TOKEN (env var or slack_config.json per the script's own hint) so future runs can auto-post without manual intervention.
+
+## 2026-10-13 — Store feedback loop (Preston's walk notes → valuations)
+Built `feedback/` (see `feedback/README.md`): ingest of #pawn-walks annotations → ledger →
+manager comps / cleared items / calibration → applied in `run_daily_intake.py` before flags are
+counted. Reloans tagged **RL** from serial history. Flag accuracy tracked per category; categories
+we keep getting wrong self-tune to a severe-only threshold. First feedback (10/13, 10 lines) is
+ledgered: 4 real overpays, 6 not. Known limit: Bravo's intake export has no quantity / accessory /
+reloan column — those come only from feedback or description text. Next: watch the 10/14 walk
+footer; decide whether guns should carry a 25% flag threshold (Preston accepted a 25% Glock).

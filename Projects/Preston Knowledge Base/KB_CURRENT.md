@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-10-12 22:13 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-10-13 22:12 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -1741,6 +1741,18 @@ PRESTON SAID: "I need you to verbally say, you won't be in or calling out."
 SOURCE: zoom-call:aebe1af2b4a541ddbf5669fe7f782d67 | 2026-10-12 | UNK Walker Tapley
 id: call-out-verbal-notice-requi-e3db6993
 
+### [MEDIUM] card-reader-errors-open-ticket
+RULE: Don't just push transactions through a faulty card reader. Treat it as a problem to fix by opening a support ticket, and capture the error details for it.
+PRESTON SAID: "But it sounds like we're just trying to push stuff through. That's not like fixing it rather. So we got a probably open a ticket or something."
+SOURCE: zoom-call:0bbb0b7d746c4bee8ca7d05b93d81eea | 2026-10-13 | UNK Chadd McClintic
+id: card-reader-errors-open-tick-971e7820
+
+### [MEDIUM] card-reader-failure-use-backup-reader
+RULE: When a card reader is throwing errors, switch to the store's other card reader rather than continuing on the failing one.
+PRESTON SAID: "Okay, so you can select the other one and use that."
+SOURCE: zoom-call:0bbb0b7d746c4bee8ca7d05b93d81eea | 2026-10-13 | UNK Chadd McClintic
+id: card-reader-failure-use-back-06447c69
+
 ### [MEDIUM] cash-sales-during-system-problems
 RULE: When the system is having problems, cash sales can still be made by recording the tag information and cash sale price, then ringing the sale out later.
 PRESTON SAID: "We can do cash sales by recording tag information and cash sale price to ring out later."
@@ -1770,6 +1782,12 @@ RULE: If a known defect is disclosed to the buyer and the item is tested in stor
 PRESTON SAID: "We still had the product. We sold the product, disclosing all issues with it. You're okay with it."
 SOURCE: zoom-call:2026-08-29_HAR_store-to-Preston_14m42s.txt | 2026-08-29 | store<->Preston (transcribed 2026-10-01)
 id: disclosed-defect-sold-as-tes-beea03ff
+
+### [MEDIUM] escalate-urgent-issues-to-preston
+RULE: Store staff should always loop Preston in when an urgent or emergency issue comes up, such as a payment system problem, so he can step in early.
+PRESTON SAID: "Yeah, I mean, at least always loop me in."
+SOURCE: zoom-call:0bbb0b7d746c4bee8ca7d05b93d81eea | 2026-10-13 | UNK Chadd McClintic
+id: escalate-urgent-issues-to-pr-ded598a5
 
 ### [MEDIUM] firearm-classification-errors
 RULE: A firearm entered under the wrong type (AR-15 logged as a pistol) or wrong manufacturer must be corrected in both the system and the gun log. A barrel length entered as 12 inches on a rifle would make it illegal and must be verified.
@@ -1942,6 +1960,12 @@ PRESTON SAID: "you know make a list of of that so that way we can prioritize"
 SOURCE: zoom-call:2026-10-08_1225_Preston-to-JoshuaBurnett_8m57s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
 id: training-needs-list-process-ea95a6dc
 
+### [MEDIUM] verify-source-clearout-company-buys
+RULE: When someone sells a large lot said to come from an estate or home clear-out company, ask which company it is and get the seller to name it. Ask casually, as if out of interest.
+PRESTON SAID: "You still probably asked what company it is at some level"
+SOURCE: zoom-call:779a2c14718a4ac89f6d5b7b0c5ad067 | 2026-10-13 | UNK Sandi Cole
+id: verify-source-clearout-compa-852ae503
+
 ### [MEDIUM] writeup-quality-standard
 RULE: Items must be written up with real descriptions and correct quantities — vague write-ups fail the police report requirement and leave the customer without detail.
 PRESTON SAID: "Silver bullion - $278 - What are these? This is written up very poorly. Has quantity set to 1. No description of actual coins. These are not bullion. We can't write items up this way. Doesn't fulfill the police report needs and does not have details for the customer."
@@ -1984,6 +2008,12 @@ PRESTON SAID: "We were having the a simular issue earlier. Restarted Bravo and s
 SOURCE: #general (Sandra Cole, Culpeper manager) | 2026-10-09 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1791572618077869
 id: bravo-restart-troubleshootin-b2361800
 
+### [LOW] clearout-seller-company-documentation
+RULE: For clear-out company sellers, ask whether they have anything showing the company's name, such as paperwork or a card. This helps confirm the story behind the items.
+PRESTON SAID: "just get who it is and then you'd also be like so Do you need anything that says for the company's name on it or?"
+SOURCE: zoom-call:779a2c14718a4ac89f6d5b7b0c5ad067 | 2026-10-13 | UNK Sandi Cole
+id: clearout-seller-company-docu-9f698906
+
 ### [LOW] custom-purity-unlisted-karat
 RULE: When an item's karat (such as 16k) isn't available in Bravo, use the custom purity option to write it up.
 PRESTON SAID: "Should be a custom purity option"
@@ -2002,12 +2032,24 @@ PRESTON SAID: "The estimator's at a pretty reasonable number. Obviously, if we g
 SOURCE: zoom-call:38fd73720bb342aeb12f016ed0618017 | 2026-10-12 | UNK Sandi Cole
 id: estimator-buy-price-ded8587d
 
+### [LOW] feel-out-seller-story-in-conversation
+RULE: A seller's story can't be verified on paper. Judge it by talking with them while you work the deal.
+PRESTON SAID: "It's one of those things you kind of got to do in conversation while you're doing"
+SOURCE: zoom-call:779a2c14718a4ac89f6d5b7b0c5ad067 | 2026-10-13 | UNK Sandi Cole
+id: feel-out-seller-story-in-con-b165e8cd
+
 ### [LOW] firearm-serial-location-receiver
 RULE: The serial number is normally on the receiver of the firearm. The speaker is not identified in the transcript, and it conflicts with the pre-1968 no-serial note, so treat it as a general guide only.
 PRESTON SAID: "the serial numbers always on the receiver of the firearm."
 SOURCE: zoom-call:2026-10-08_1202_staff-x3983-to-Preston_3m54s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
 !! CONFLICT: Preston also says guns made before 1968 weren't required to have serial numbers, so "always on the receiver" does not hold for older guns.
 id: firearm-serial-location-rece-d09203ff
+
+### [LOW] firearm-trade-nics-denial-refund
+RULE: If a customer is denied on a firearm that was part of a trade, the best-case handling is a full refund of the whole deal, not just the remainder he paid. This came from one case and the speaker on the call isn't identified.
+PRESTON SAID: "So the best case scenario is the full refund."
+SOURCE: zoom-call:ab47ea2963e049ba9c8bfb3457265572 | 2026-10-13 | UNK Uriah Tiglao
+id: firearm-trade-nics-denial-re-40eafb8e
 
 ### [LOW] goodwill-buyback-defective-console-as-is-value
 RULE: For an out-of-policy complaint on a console with a known defect, the offer is to buy it back at its as-is/for-parts value with the defect. Make a fairly strong offer, since recovering our money on eBay after fees is acceptable.
@@ -2069,6 +2111,12 @@ PRESTON SAID: "you can return part of it in cash or store credit and then put th
 SOURCE: zoom-call:2026-10-07_Preston-Zoom_to_Sandi_5m51s.txt | 2026-10-07 | store<->Preston (transcribed 2026-10-01)
 id: return-and-resell-partial-re-20965e6f
 
+### [LOW] return-traded-firearm-after-denial
+RULE: Before giving a customer back a firearm he traded in after he was denied on a purchase, call to confirm it is legally allowed. A denial means he may not be allowed to possess a firearm, so returning one risks trouble for the store.
+PRESTON SAID: "We've got to make some phone calls to make sure we're legally allowed to do so"
+SOURCE: zoom-call:ab47ea2963e049ba9c8bfb3457265572 | 2026-10-13 | UNK Uriah Tiglao
+id: return-traded-firearm-after--74d6a3d8
+
 ### [LOW] silver-market-slowdown
 RULE: Preston tracks that falling silver slows in-store silver sell-through.
 PRESTON SAID: "With silver going down recently it has been moving slower in store."
@@ -2101,5 +2149,5 @@ id: typical-retail-sales-benchma-f03d7d66
 
 
 ==============================================================================
-COVERAGE: 277 entries - 1 verified by Preston, 175 high-confidence rules, 71 medium, 30 low, 0 superseded.
+COVERAGE: 285 entries - 1 verified by Preston, 175 high-confidence rules, 75 medium, 34 low, 0 superseded.
 ==============================================================================

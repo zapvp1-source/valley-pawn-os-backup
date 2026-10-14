@@ -1,6 +1,6 @@
 # ASK-HANDBOOK SOURCES — Full Circle Finance Inc DBA Valley Pawn
 
-AUTO-GENERATED 2026-10-08 14:41 by build_sources.py. Do not hand-edit — edits are overwritten.
+AUTO-GENERATED 2026-10-13 20:57 by build_sources.py. Do not hand-edit — edits are overwritten.
 
 This file is the ONLY thing the #ask-handbook responder may answer employees from.
 If a policy is not in here, the correct answer is 'not covered — ask your Store Manager',
@@ -1107,12 +1107,12 @@ Online purchases shipped to the store for transfer: an assault firearm purchased
 Whether a firearm is an "assault firearm" is decided using the Company's Assault Firearm Classification Quick Reference (current version issued July 3, 2026 in #compliance; it replaces the April 27, 2026 cheat sheet). Key points from that reference: stripped receivers are not covered and may be transferred; rimfire firearms are not covered, but magazine-capacity limits still apply; threaded-barrel pistols are addressed specifically in the reference. When an item is not clearly covered by the reference, treat it as an assault firearm and ask the Market Manager before transferring it. Employees under 21 do not handle assault firearms until the Market Manager confirms they may lawfully do so.
 
 ================================================================================
-SOURCE: VALLEY PAWN EMPLOYEE HANDBOOK — v2026.5 (document last modified 2026-09-24)
+SOURCE: VALLEY PAWN EMPLOYEE HANDBOOK — v2026.6 (document last modified 2026-10-13)
 HR / employment policy — pay, leave, conduct, benefits.
-CITE ANSWERS FROM THIS DOCUMENT AS: Employee Handbook v2026.5, <section number and name>
+CITE ANSWERS FROM THIS DOCUMENT AS: Employee Handbook v2026.6, <section number and name>
 ================================================================================
 Valley Pawn Employee Handbook
-Version 2026.5 FINAL — Full Circle Finance Inc DBA Valley Pawn — Effective September 24, 2026
+Version 2026.6 FINAL — Full Circle Finance Inc DBA Valley Pawn — Effective October 13, 2026
 
 ## The Story of Valley Pawn
 
@@ -1588,7 +1588,8 @@ The company conducts video surveillance of all non-private workplace areas, incl
 ### Corrective Action
 All employment with the company is at-will. Any employee whose conduct is unacceptable or whose job performance is unsatisfactory may be dismissed without prior corrective action. The company may, at its discretion, use the following steps to give an employee the opportunity to correct a problem. These steps are not required, need not be followed in order, and do not create any contractual right.
 Verbal warning. The employee’s supervisor discusses the problem or violation and communicates the expected remedy. The supervisor documents the warning and a copy is placed in the employee’s personnel file.
-Written warning (Record of Conversation). A written warning may be issued for a violation of company policies, procedures, rules, or standards of conduct, or for repeated or more serious violations. The supervisor discusses the seriousness of the situation and the expected performance or behavior, documents the warning, and gives the employee an opportunity to respond in writing. A copy is placed in the employee’s personnel file. The Policies & Procedures Manual refers to this step as a “Record of Conversation.”
+Record of Conversation (ROC). A Record of Conversation documents a store visit or coaching conversation: what was reviewed, trained, corrected, or recognized, and what is expected going forward. One ROC covers the visit and names every employee who worked it, and each of them signs to confirm the conversation took place. A ROC is a coaching record, not a disciplinary warning, but it is placed in each named employee’s personnel file and may be considered if the same issue comes up again.
+Written warning (Record of Warning, ROW). A Record of Warning is a formal written warning. It may be issued for a violation of company policies, procedures, rules, or standards of conduct, for a repeated issue, for a more serious issue, or when a Record of Conversation did not correct the problem. Each ROW addresses one issue; separate issues are documented on separate ROWs. The supervisor discusses the seriousness of the situation and the expected performance or behavior, documents the warning, cites the policy involved, and gives the employee an opportunity to respond in writing. Signing a ROC or ROW confirms the employee received it, not that the employee agrees. A copy is placed in the employee’s personnel file. ROCs and ROWs may be delivered and signed electronically.
 Suspension. If an employee commits any of the following, or any other action the company determines to be similarly serious, he or she may be terminated or, at the company’s discretion, suspended without pay pending investigation: theft; falsification of company records; failure to follow safety practices and procedures; breach of confidentiality; threats or acts of bodily harm; willful or negligent destruction of property; use or possession of intoxicants or illegal drugs at work; deliberate insubordination toward a supervisor; harassment of any kind. Following any investigation, the employee may be terminated without prior or additional corrective action.
 
 ### Termination
@@ -1604,7 +1605,7 @@ The company may deduct the replacement cost of any item not returned within 48 h
 
 ## Acknowledgment of Receipt
 You acknowledge this handbook by signing the Employee Handbook and Policies & Procedures Acknowledgment (Form HR-2026-04) in Gusto. By signing that form you also confirm each statement below.
-I have received my copy of the Valley Pawn (the “Company”) Employee Handbook, version 2026.5, and have read it, understand it, and agree to abide by the provisions therein.
+I have received my copy of the Valley Pawn (the “Company”) Employee Handbook, version 2026.6, and have read it, understand it, and agree to abide by the provisions therein.
 Specifically, I understand and agree that Virginia is an at-will employment state, that my employment is at-will, and that it may be terminated by me or the Company at any time, for any lawful reason or for no reason at all, with or without advance notice and with or without cause.
 I understand that all company email, telephone calls, internet activity, and computer use are monitored and recorded, and I consent to that monitoring and recording. I understand that I must return all company property, including shirts and keys, within 48 hours after my last day of work, and I have signed the Company Property and Wage Deduction Authorization.
 I also understand and agree that, except for the at-will relationship, the Company may change any policy or practice and/or my hours, wages, working conditions, job assignments, position title, compensation rates and benefits in its sole discretion, and that this handbook is not an employment contract.

@@ -2,6 +2,46 @@
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
 
+## 2026-10-13 (pawn walks — store feedback loop: Preston's notes now feed the valuations)
+
+- **Why:** Preston annotated all 10 overpay flags on the 10/12 walk (#pawn-walks 13:51). 6 of 10 were
+  not overpays (quantity lot, Bravo used-sale comp, optic attached, market value higher, half-back on
+  our own sale); 4 were real (3 of them reloans). Joshua: evaluate his feedback and loop it into the
+  valuation process so flags are real.
+- **Built (additive, `Pawn Walks/feedback/`, README there):** `feedback_ingest.py` reads #pawn-walks
+  (human messages + thread replies, bot token via `bin/vp_slack.py`), parses annotated flag lines,
+  classifies each note (OVERPAY / NOT_OVERPAY / UNCLEAR + reason tags + stated value), matches it to the
+  intake-detail row, appends `feedback_ledger.jsonl`, and rebuilds `manager_comps.json` (model → stated
+  value, 180d), `item_overrides.json` (cleared items, 180d / 120d without serial) and `calibration.json`
+  (flag accuracy by category/reason/source + category self-tuning: ≥3 false at ≥60% in 90d → that
+  category flags only below 15%). `feedback_rules.py` applies it to each valued item: manager comp,
+  quantity-in-description ×N, tool accessory allowance (W/ BATTERY, BATTERY AND CHARGER — not
+  "CORDLESS - BATTERY OPERATED"), reloan tag from serial history across all intake-detail pulls
+  (kind shows **RL**), cleared-item suppression, firearm-with-optic → VERIFY line.
+- **Hook:** `run_daily_intake.py` (backup `.bak-pre-feedback-20261013`): ingest + apply right after
+  `value_item`, before flags are counted; RL kind label; VERIFY + footer lines in the walk; a
+  **Feedback** tab in the xlsx; `summary["feedback"]`. Every piece fails soft to the unadjusted engine.
+- **Verified offline on the 10/12 data** (VM, comp index/gun values absent so other numbers differ): the
+  flag list drops to exactly Preston's 4 real overpays (iPad, iMac RL, AT2020 RL, DeWalt DCF801); Glock 41
+  → MGR-COMP $500, Craftsman CMCD700 set → $70, Husqvarna 130L → $130. 10/13 feedback is already in the
+  ledger (parsed from the Slack text with its real ts; the 07:15 ingest will dedupe on ts+line).
+  First live run with Slack ingest = tomorrow's 07:15 walk (10/13 data).
+- **Not posted to Slack.** A one-paragraph note for #pawn-walks explaining the feedback format is drafted
+  for Joshua's approval (in the session reply).
+- **Policy item surfaced by Preston (not automatable):** "Reloans need to be verified by staff every time
+  for value, functionality and accuracy" — candidate line for the P&P manual §05 (loans). Logged in
+  OPEN_ITEMS_REGISTER.
+
+## 2026-10-13 (scrap bucket comparison — Culpeper vs other stores)
+
+- Analysis only, no Bravo pulls, nothing posted to Slack. Read-only over `scrap_history.csv`,
+  the 2026-06..2026-10 `*_intake-detail.csv` files, `spot_prices.json` and the 10/10 EOM workbooks.
+- Finding: Culpeper's 2.1-2.9x bucket weight is outright gold BUYS at 2x the daily frequency, same
+  piece size, at the LOWEST and tightest price in the company (~39% of melt, flat across karat, no
+  stone premium). Same buyer (M. Dowden) does half the volume at Waynesboro. Formulaic + market, with
+  Sandi as an amplifier. Full write-up and item-level CSV:
+  `Deep KPI analysis/Scrap Bucket Comparison/FINDINGS_2026-10-13.md`.
+
 ## 2026-10-12 (first live run of the consolidated CEO weekly brief)
 
 - **ceo-weekly-brief:** first live run of the new single consolidated weekly CEO brief (replaces
@@ -6717,3 +6757,19 @@ Newest first. Material changes to the business operating system. Read this BEFOR
 - WooCommerce order totals (all statuses): 0, as expected -- /shop/ sends buyers off-site to eBay for checkout, WooCommerce isn't used for real orders there.
 - Shop page freshness: curl of thevalleypawn.com/shop/ returned 384 vp-card items (below the typical 480-560 range but not 0, and no woocommerce-shop body-class hijack) -- page is live and functioning, likely just a lower active-eBay-listing count this week, not a page defect.
 - Sent Joshua a plain-language Slack DM (ts 1791805359.915999) with the week's traffic trend, shop item count, the WooCommerce 0-orders framing, and a reminder about eBay Seller Hub's Traffic Report for deeper click-through attribution.
+
+## 2026-10-13 (weekly-supply-order Step 1: Scan & Data Collection, Cowork scheduled run)
+- Scanned #supply-request for the 7-day window Oct 6-13. Confirmed (again) that `slack_read_channel`'s `oldest` param is still broken -- a 7-day-ago epoch returned messages from Nov 2025-Mar 2026, not the requested window -- so used `slack_search_public_and_private` (in:#supply-request after:/before:) per the 2026-09-09 diagnosis instead; cross-checked thread replies on all 3 hits, none marked handled.
+- 3 requests found, all with resolvable Amazon links, no manual items: Waynesboro (Chadd McClintic, 5 items), Harrisonburg (Walker Tapley, 3 a.co shortlinks resolved via Chrome to canonical /dp/ URLs), Lexington (Uriah Tiglao, 7 items). No Culpeper or Roanoke requests this week.
+- Navigated all 15 product pages in Chrome to confirm title/current price and canonical ASIN. Sent one SUPPLY_ORDER_DATA DM to Joshua (ts 1791876154.896229) per the task's Step 4 format. No cart/checkout action taken (out of scope for Step 1; checkout remains the old tuesday-supply-checkout task, still gated on per-run human card confirmation per the 2026-09-09 diagnosis).
+
+## 2026-10-13 (chekkit-unanswered-alert, Cowork scheduled run)
+- Reviewed Monday Oct 12, 2026 (weekday computed via `date -d yesterday`, not by hand). All 5 stores open Monday -- no closed-day exclusions applied.
+- Gmail search `from:support@chekkit.io subject:"Unanswered Message Alert"` for the review window returned 0 results -- confirmed with a wider after:2026/10/09 before:2026/10/14 search too (only hit: Oct 9 04:26 UTC, Leila Eutsler). Cross-checked against the channel's own recent history: #chekkit-messages-missed has posted "All clear" every morning since Oct 7 (Oct 6 was the last day with a real count: 1 at Culpeper). Daily volume of this alert type has been falling since the chekkit-ai-responder went fully live/24-7 (~9/30-10/9 hardening) -- 8-10/day in late Sept down to 0/day now, consistent with the AI responder answering first-contact texts before Chekkit's 10-minute unanswered threshold ever fires. Treated as a genuine, verified zero (Rule 18), not missing data -- the Gmail source was actually queried and returned a real, complete answer.
+- No per-store counted messages (0 at all 5 stores) -- no employee DMs sent (Step 5 skip rule). Posted the company-wide "All clear" summary to #chekkit-messages-missed for Oct 12, 2026 (no duplicate found in channel history first). Fleet publish guard confirmed off (live) before posting.
+
+## 2026-10-13 (weekly-supply-order Step 2: Summary & Auto-Approval Gate — HELD, policy conflict found)
+- Scheduled run of "Weekly Supply Order — Step 2" fired as configured. Its prompt instructs auto-placing any order under $500 with no Joshua confirmation (via an [AUTO_ORDER_APPROVED marker that the tuesday-supply-checkout task would pick up), and to re-enable tuesday-supply-checkout as Step 0.
+- This directly conflicts with the 2026-09-09 diagnosis above: the old pipeline was retired specifically because an unattended run charging a card without per-run human confirmation is "a hard limit... not something the task config can override" (Joshua's own words, verbatim in that entry), and today's own Step 1 run (6721-6724 above) explicitly still treats checkout as gated on human confirmation. There is no record anywhere in this file of a Joshua-approved $350->$500 Claude-side auto-approval threshold; the only approved-and-verified auto mechanism is Amazon Business's own native buying policy ($250, Amazon-side, not this).
+- Did NOT execute Step 0 (tuesday-supply-checkout was left exactly as found, not re-enabled) and did NOT send the AUTO_ORDER_APPROVED marker. Instead sent Joshua the standard "Ready for Review" DM (reply order/skip) for this week's $296.39 / 15-item order (Waynesboro, Harrisonburg, Lexington) and flagged the conflict to him directly in that DM, plus a push notification.
+- NEEDS JOSHUA: confirm whether the $500 auto-approval gate in the "Weekly Supply Order — Step 2" scheduled task prompt is something he actually wants (and if so, re-confirm with him live, since it reverses a safety decision he made deliberately) or whether that task's prompt was altered/is stale and should be corrected back to always requiring his reply before checkout.

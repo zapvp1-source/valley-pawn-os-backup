@@ -105,7 +105,8 @@ def load_config(require_key=False):
     return {"api_key": key,
             "voice_id": str(cfg.get("voice_id") or (rot[0] if rot else "") or DEFAULT_VOICE).strip(),
             "model_id": str(cfg.get("model_id") or DEFAULT_MODEL).strip(),
-            "voice_rotation": rot}
+            "voice_rotation": rot,
+            "joshua_voice": cfg.get("joshua_voice") or None}
 
 
 def level_order(lesson_id):
@@ -121,23 +122,32 @@ def lesson_cfg(cfg, lesson_id):
     (consistent within a lesson); the voice is chosen from level+order so adding a lesson never
     changes another lesson's narrator (which would re-bill it)."""
     rot = cfg.get("voice_rotation") or []
+    lv, od = level_order(lesson_id)
+    jv = cfg.get("joshua_voice")
+    if jv and od == 0:
+        # Joshua 2026-10-13: level intro lessons (order 0, e.g. L3-00) are voiced in his cloned voice,
+        # variant A (natural and loose). Every other lesson keeps the stock rotation untouched.
+        c = dict(cfg)
+        c["voice_id"] = jv["voice_id"]
+        c["model_id"] = jv.get("model_id") or cfg["model_id"]
+        c["settings"] = jv.get("settings") or None
+        return c
     if not rot:
         return cfg
-    lv, od = level_order(lesson_id)
     c = dict(cfg)
     c["voice_id"] = rot[(lv + od) % len(rot)]
     return c
 
 
-def cache_key(sent_text, voice_id, model_id):
-    settings = json.dumps(VOICE_SETTINGS, sort_keys=True) + "|" + OUTPUT_FORMAT
+def cache_key(sent_text, voice_id, model_id, settings_override=None):
+    settings = json.dumps(settings_override or VOICE_SETTINGS, sort_keys=True) + "|" + OUTPUT_FORMAT
     return hashlib.sha1((voice_id + "|" + model_id + "|" + settings + "|" + sent_text).encode("utf-8")).hexdigest()
 
 
 def cache_path(display_text, cfg=None):
     """Where the MP3 for this (display) text lives, for the configured voice/model."""
     cfg = cfg or load_config()
-    return os.path.join(VOICE_DIR, cache_key(tts_text(display_text), cfg["voice_id"], cfg["model_id"]) + ".mp3")
+    return os.path.join(VOICE_DIR, cache_key(tts_text(display_text), cfg["voice_id"], cfg["model_id"], cfg.get("settings")) + ".mp3")
 
 
 def is_mp3(data):
@@ -261,7 +271,7 @@ def synthesize(sent_text, cfg):
     url = (f"{API_BASE}/v1/text-to-speech/{urllib.parse.quote(cfg['voice_id'])}"
            f"?output_format={OUTPUT_FORMAT}")
     audio = _request("POST", url, cfg["api_key"], {
-        "text": sent_text, "model_id": cfg["model_id"], "voice_settings": VOICE_SETTINGS}, accept="audio/mpeg")
+        "text": sent_text, "model_id": cfg["model_id"], "voice_settings": cfg.get("settings") or VOICE_SETTINGS}, accept="audio/mpeg")
     if not is_mp3(audio):
         raise RuntimeError("ElevenLabs returned something that is not MP3 audio")
     return audio
@@ -289,7 +299,7 @@ def plan(paths, cfg):
         lcfg = lesson_cfg(cfg, lesson["id"])
         for key, display in narration_items(payload):
             sent = tts_text(display)
-            f = os.path.join(VOICE_DIR, cache_key(sent, lcfg["voice_id"], lcfg["model_id"]) + ".mp3")
+            f = os.path.join(VOICE_DIR, cache_key(sent, lcfg["voice_id"], lcfg["model_id"], lcfg.get("settings")) + ".mp3")
             rows.append((key, display, sent, f, os.path.isfile(f) and os.path.getsize(f) > 0))
         out.append((lesson["id"], rows))
     return out

@@ -88,6 +88,19 @@ def resolve_date(arg: str | None) -> datetime.date:
 
 
 # ── Slack token resolution ─────────────────────────────────────────────────────
+# ── Store feedback loop (added 2026-10-13, additive; see feedback/README.md) ──
+# Preston's #pawn-walks notes -> feedback/feedback_ingest.py (ledger, manager comps, cleared
+# items, calibration) -> feedback/feedback_rules.py adjusts today's valuations. Fail-soft:
+# if the folder is missing or anything raises, the engine output is used unchanged.
+_fb_rules = _fb_ingest = None
+try:
+    sys.path.insert(0, os.path.join(HERE, "feedback"))
+    import feedback_rules as _fb_rules
+    import feedback_ingest as _fb_ingest
+except Exception as _e:
+    print(f"WARNING: feedback loop unavailable ({_e}) — valuations unadjusted.", file=sys.stderr)
+
+
 def _get_slack_token() -> str | None:
     """Try env var → Bravo config JSON → shell profile. Returns xoxb-... or None."""
     # 1. Environment variable (preferred, set in launchd plist or shell)
@@ -554,11 +567,18 @@ def build_slack_message(valued: list[dict], date: datetime.date) -> str | None:
             desc = (r.get('desc') or r.get('category') or 'item').strip()
             if len(desc) > 42:
                 desc = desc[:41] + "…"
-            kind = "L" if (r.get('ticket_kind') == 'LOAN') else "B"
+            kind = _fb_rules.kind_label(r) if _fb_rules else ("L" if (r.get('ticket_kind') == 'LOAN') else "B")
             lines.append(f"• {kind} · ${r.get('cost', 0):,.0f} · {mstr} · {desc}")
             shown += 1
         if len(flagged) > shown:
             lines.append(f"…and {len(flagged) - shown} more — full detail in the spreadsheet")
+
+    if _fb_rules is not None:
+        try:
+            lines += _fb_rules.verify_lines(valued)
+            lines += _fb_rules.footer_lines(valued, date)
+        except Exception:
+            pass
 
     return "\n".join(lines)
 
@@ -841,6 +861,21 @@ def main():
     print(f"Valuing {len(intake)} items (T1/T2{'+ T3 (cached)' if USE_TIER3 else ''})...")
     valued = [value_item(it, by_cat, cat_prices) for it in intake]
 
+    # ── Store feedback loop: ingest new #pawn-walks notes, then apply learned rules ──
+    fb_result = None
+    if _fb_ingest is not None:
+        try:
+            fb_result = _fb_ingest.run(days=14, quiet=True)
+            print(f"  Feedback ingest: {fb_result.get('new_lines', 0)} new notes "
+                  f"({'ok' if fb_result.get('ok') else fb_result.get('error')})")
+        except Exception as e:
+            print(f"  Feedback ingest skipped: {e}", file=sys.stderr)
+    if _fb_rules is not None:
+        valued = _fb_rules.apply(valued, date)
+        _touched = sum(1 for r in valued if r.get('fb_notes'))
+        print(f"  Feedback rules: {_touched} item(s) adjusted/tagged, "
+              f"{sum(1 for r in valued if r.get('verify'))} moved to VERIFY")
+
     trusted_all = [r for r in valued  if r.get('trusted')]
     flags_all   = [r for r in trusted_all if r.get('flag') or r.get('overpay')]
     src_mix     = dict(collections.Counter(r['source'] for r in valued))
@@ -904,6 +939,14 @@ def main():
     xl_ok = write_excel(valued, date, xlsx_path)
     if xl_ok:
         print(f"Excel → {xlsx_path}")
+        if _fb_rules is not None:
+            _fb_rules.excel_sheet(xlsx_path, valued)
+    summary["feedback"] = {
+        "ingest": {k: v for k, v in (fb_result or {}).items() if k != "entries"},
+        "adjusted": sum(1 for r in valued if r.get('fb_notes')),
+        "verify": sum(1 for r in valued if r.get('verify')),
+        "reloans_flagged": sum(1 for r in valued if r.get('reloan') and (r.get('flag') or r.get('overpay'))),
+    }
     summary["excel_path"] = xlsx_path if xl_ok else None
 
     # ── Slack ─────────────────────────────────────────────────────────────────

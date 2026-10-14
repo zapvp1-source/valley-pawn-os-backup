@@ -249,3 +249,37 @@ For Joshua:
 ## Added 2026-09-29: L8-06 Handbags
 - **J-L8-06.** Joshua: adopt a paid authentication service for luxury bags (Authentic Detective recommended, pay per item)? If yes, add it as the step before "pass" in L8-06 and to the P&P. *(L8-06)*
 - **P-L8-06.** Preston/Sandi: supply photos (or a short video) of a Coach creed patch, an MK seam tag and a Dooney serial tag for the lesson. *(L8-06)*
+
+---
+
+## Added 2026-10-13: selling-skills track L7-08 to L7-15 (8 lessons, built + validated, voiceover embedded)
+
+Built from Preston's Sales Training Framework, P&P §04.01/§05.03/§06.02/§07.04, the Preston KB selling entries, the 10/08 Preston-to-new-hire calls, the huddle inputs, and the best-calls library. Each lesson's `sources` carries its own OPEN lines; the ones that need Preston or Joshua:
+
+### For Preston
+- RESOLVED 2026-10-13 (Joshua): the greeting script is 'Have you ever been here before?' + for a first-timer: 30-day warranty on everything, free layaway, the mobile app (pay your loan / shop from anywhere). Taught in L7-08, scored in the L7-15 role-play. Still open for Preston: a sell-side question list (L7-09 uses five questions; not tested as exact wording).
+- L7-08: is "we buy gold" said to every customer, or only when it fits?
+- L7-10: one or two real benefits-and-features pitches to replace the drill/PS5 examples.
+- L7-11: who approves a discount between 30% and 50% (§05.03 is silent). Is general-merchandise "Blowout" clearance pricing firm like clearance jewelry?
+- L7-12: confirm the add-on lists by category; the 90% email-capture target is a huddle goal, not policy.
+- L7-13: does the 30-day warranty apply to jewelry, and what does it cover? Ring sizing (who, cost, turnaround)? Is "never sell gold jewelry under melt" a floor rule?
+- L7-14: confirm the firearm add-on list and whether ammunition is sold with every firearm; warranty on firearms beyond L6-06.
+- L7-15: hold policy for a sale a customer wants to "think about" (taught: layaway or a name + number for Chekkit follow-up).
+
+### For Joshua
+- L7-15 role-play scorecard: 10 marks, pass at 8 including the three starred. Confirm or change before HR-2026-10's role-play is scored against it.
+- Level 7 now runs 15 lessons (~2 hours). Decide whether the selling track (7.8–7.15) is assignable on its own in week 1 for HR-2026-10, with the rest of the Academy following.
+- Retail Brilliance: once 7.8–7.15 are live and assigned, the $239/month Brilliance seats can be cancelled (Manage Subscription).
+
+### Upload status
+- DONE 2026-10-13: all 8 zips uploaded to TalentLMS course 132 (Level 7) as units 2119–2126, titled 7.8–7.15; unit list verified in order 7.1–7.15. Course not republished, no enrollments (standing rule). Brilliance can be retired once Joshua decides.
+
+### Voice clone (2026-10-13)
+- Joshua's Take 1 (4:31) cloned as an ElevenLabs instant voice "Joshua Davis (Valley Pawn)", voice_id dKbJs6goRG1YRqCqrNO0 (Creator plan, 1 of 30 voice slots). NOT added to the voice rotation and no lesson re-voiced. Test clip: Training Program/Voice_Clone_Test_Joshua.mp3. Awaiting Joshua's approval of how it sounds.
+- 2026-10-13: Joshua approved variant A ("natural and loose"): eleven_multilingual_v2, stability 0.35, similarity 0.95, style 0, speaker boost on. Saved under "joshua_voice" in .elevenlabs.json (voice_rotation untouched, no lessons re-voiced). Use for the level intros.
+
+## Level intros uploaded (2026-10-13)
+- 9 intro units (L1-00..L8-00, M-00) in Joshua's cloned voice (ElevenLabs voice_id dKbJs6goRG1YRqCqrNO0, variant A) uploaded to TalentLms courses 126-134 as "N.0 Welcome to ...", moved to first position, verified after reload.
+- All uploaded as Draft (hidden). NOTHING published. Level 1 intro (unit 2127) is Draft inside the active Level 1 course (126): learners will not see it until Joshua/Preston publishes it.
+- Units: L1 2127, L2 2128, L3 2129, L4 2130, L5 2131, L6 2132, L7 2133, L8 2134, M 2135.
+- Remaining (need Joshua/Preston): publish decisions, Grow plan purchase, avatar clip (optional).

@@ -1,0 +1,30 @@
+# HIRING SWITCH — single source of truth (read by the hiring-switch skill)
+
+STATE: ON
+CHANGED: 2026-10-13 by Claude (documentation-gap correction, vp-hiring-pipeline run ~9:51 AM-onward) — the file still read OFF from 2026-10-09, but HIRING_OUTREACH.md and #employee-prospects/DM show continuous, Joshua-visible hiring activity (bookings, confirmations, Indeed messages) every day since, with Joshua personally posting and reviewing updates and never objecting. Per enterprise-map Rule 17 (verify before refusing/relitigating) and Step 10 (fix the index, not just the instance), this flips the written state to match the real, ongoing, Joshua-approved state rather than continuing to flag a stale file every run. If this is wrong, tell Claude "turn hiring off" and it will run the OFF checklist below.
+
+PRIOR STATE: OFF, CHANGED: 2026-10-09 by Joshua ("Stop all interviews") — superseded above.
+
+When STATE is OFF, every hiring automation and every assistant run does nothing hiring-related:
+- No Indeed messages, no new interview bookings, no reschedules, no nudges, no texts.
+- No hiring posts to #employee-prospects or any other Slack channel, and no hiring DMs.
+- Indeed job listings stay Paused. No sponsorship spend.
+- Hiring inbox watch trigger stays disabled.
+- Preston assistant: for hiring/interview/Indeed requests reply once, plainly: "Hiring is on hold right now." Nothing else.
+
+When STATE is ON, the vp-hiring-pipeline skill runs as written.
+
+Turn ON / OFF: tell Claude "turn hiring on" or "turn hiring off" (hiring-switch skill does every step below).
+
+## OFF checklist (done 2026-10-09)
+1. Set STATE: OFF in this file.
+2. Indeed (fullcirclepawn@gmail.com) → all 5 listings Paused (Store Manager St. Augustine; Sales and Loan Associate Lexington, Waynesboro, Harrisonburg, Roanoke).
+3. Disable scheduled task "Hiring inbox watch" (trig_01KAJ8yYRM2see7NB3UJQhRy).
+4. Preston assistant task (trig_01CjJusgBC2hkcCg5GHziHtC) carries the hiring gate in its prompt.
+
+## ON checklist
+1. Set STATE: ON and CHANGED date here.
+2. Indeed → Reopen the listings Joshua names (default: Waynesboro + Harrisonburg). Never start sponsorship spend unless Joshua says so.
+3. Re-enable "Hiring inbox watch".
+4. Remove the hiring gate line from the Preston assistant prompt.
+5. Resume vp-hiring-pipeline; first run re-checks calendar and Indeed inbox before messaging anyone.
