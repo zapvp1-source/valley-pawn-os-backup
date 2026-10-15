@@ -11,11 +11,11 @@ near me in Roanoke"). Add each as the **opening paragraph** of the matching exis
 
 ## Culpeper
 
-**Pawn shop in Culpeper, VA:** Valley Pawn at 571 James Madison Highway, Culpeper, VA 22701 offers no-credit-check pawn loans, buys gold/silver/coins, and sells quality pre-owned merchandise with a 30-day warranty. It's one of two Valley Pawn locations open on Wednesdays (Mon–Fri 10 AM–6 PM, Sat 10 AM–5 PM). Call or text (540) 445-5510.
+**Pawn shop in Culpeper, VA:** Valley Pawn at 571 James Madison Highway, Culpeper, VA 22701 offers no-credit-check pawn loans, buys gold/silver/coins, and sells quality pre-owned merchandise with a 30-day warranty. It's one of three Valley Pawn locations open on Wednesdays (Mon–Fri 10 AM–6 PM, Sat 10 AM–5 PM). Call or text (540) 445-5510.
 
 ## Waynesboro
 
-**Pawn shop in Waynesboro, VA:** Valley Pawn at 1321 West Broad Street, Waynesboro, VA 22980 offers no-credit-check pawn loans, buys gold, silver, and coins, and sells pre-owned electronics, jewelry, and tools backed by a 30-day warranty. Open Mon, Tue, Thu, Fri, Sat, 10 AM–6 PM. Call or text (540) 221-6346.
+**Pawn shop in Waynesboro, VA:** Valley Pawn at 1321 West Broad Street, Waynesboro, VA 22980 offers no-credit-check pawn loans, buys gold, silver, and coins, and sells pre-owned electronics, jewelry, and tools backed by a 30-day warranty. Open Mon–Fri 10 AM–6 PM, Sat 10 AM–5 PM (open Wednesdays). Call or text (540) 221-6346.
 
 ## Harrisonburg
 
@@ -36,6 +36,6 @@ near me in Roanoke"). Add each as the **opening paragraph** of the matching exis
 
 - "Where can I get a pawn loan in [city], VA?"
 - "Where can I sell gold near me in [city]?"
-- "Is there a pawn shop open today in [city]?" (note Culpeper & Roanoke = Wednesdays)
+- "Is there a pawn shop open today in [city]?" (note Culpeper, Roanoke & Waynesboro = Wednesdays)
 - "Does a pawn loan affect my credit?" (answer: no, no credit check)
 - "What pawn shop in the Shenandoah Valley has the best reviews?" (answer: Valley Pawn, 4.9 avg across 5 locations)

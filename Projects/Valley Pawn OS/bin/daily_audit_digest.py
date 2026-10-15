@@ -16,7 +16,7 @@ Sources (all written by other automations; this script only reads them):
           Discount Outlier Review/daily/<date>_discount_review_summary.json (daily-report-discount 08:25)
 
 Date: default = the most recent business day before today (ET): skips Sunday (all closed);
-Wednesday = Culpeper + Roanoke from 2026-09-30, Culpeper only before (matches vp_lib.sh open_stores); any other store with real activity
+Wednesday = Culpeper + Roanoke + Waynesboro from 2026-10-14, Culpeper + Roanoke from 2026-09-30, Culpeper only before (matches vp_lib.sh open_stores); any other store with real activity
 that day is added automatically (2026-10-01).
 
 Outputs (in --out, default Valley Pawn OS/daily-audit/):
@@ -63,7 +63,10 @@ def open_stores(day):
     if dow == 7:
         return []
     if dow == 3:
-        # Roanoke open Wednesdays from 2026-09-30 (Joshua 2026-10-01); earlier Wednesdays CUL only.
+        # Roanoke open Wednesdays from 2026-09-30 (Joshua 2026-10-01); Waynesboro from 2026-10-14 (Joshua 2026-10-14,
+        # 6-day week); earlier Wednesdays CUL only.
+        if day >= dt.date(2026, 10, 14):
+            return ["CUL", "ROA", "WAY"]
         return ["CUL", "ROA"] if day >= dt.date(2026, 9, 30) else ["CUL"]
     return [s for s, _ in STORES]
 

@@ -97,7 +97,13 @@ grep -q "RESULT: .* 0 failed" "$R" || MSG="The self-test of the monitoring itsel
 [ -n "$TOOLFAIL" ] && vlog "TOOL FAILURES:$TOOLFAIL"
 [ -n "$TOOLFAIL" ] && ledger "$AGENT" "A diagnostic errored during the nightly check:$TOOLFAIL — the all-clear is not trustworthy." "no"
 
-if [ -n "$MSG" ]; then
+# 2026-10-14: folded into the ONE morning fleet scorecard DM (bin/fleet_scorecard.py, 07:15), which reads
+# this report's SUMMARY lines. The ledger row below still gets written. Remove owns_dms from
+# fleet/state/fleet_scorecard.json to restore the separate 02:10 DM.
+if [ -n "$MSG" ] && grep -q '"owns_dms": true' "$OS_DIR/fleet/state/fleet_scorecard.json" 2>/dev/null; then
+  vlog "DM folded into the morning fleet scorecard (not sent): $MSG"
+  ledger "$AGENT" "Nightly check found: $MSG" "no"
+elif [ -n "$MSG" ]; then
   slack dm "Overnight system check — ${MSG}Details are in the fleet doctor report for $DATE. Nothing was changed automatically." >/dev/null \
     && vlog "DM sent" || vlog "DM failed"
   ledger "$AGENT" "Nightly check found: $MSG" "no"

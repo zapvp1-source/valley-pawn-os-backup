@@ -33,6 +33,11 @@ COMPILE = os.environ.get("VP_LY_COMPILE") or os.path.join(BRAVO, "layaway_yield_
 STORES = [("CUL", "Culpeper"), ("HAR", "Harrisonburg"), ("LEX", "Lexington"), ("ROA", "Roanoke"), ("WAY", "Waynesboro")]
 CH = "C04N24STDP1"          # #layaway-review
 CANVAS = "F0BJ48BMZGQ"
+try:   # 2026-10-14: bot-owned replacement canvas (see weekly_canvases.py / bin/canvas_migrate.py)
+    CANVAS = (json.load(open(os.path.expanduser("~/Documents/Claude/Projects/Valley Pawn OS/fleet/canvas_state/canvas_ids.json")))
+              .get("canvases", {}).get("layaway", {}).get("id")) or CANVAS
+except (OSError, ValueError):
+    pass
 
 
 def usd(v):
@@ -158,7 +163,7 @@ def main():
     if ok is True:
         st.update({"layaway": lay_md, "yield": section, "updated": dt.datetime.now(ET).isoformat()})
         wc.save_state(CANVAS, st)
-    if "--force" not in sys.argv and vp_slack.has(CH, "Layaway Yield % (MTD)_ — updated %s" % d, 20):
+    if "--force" not in sys.argv and vp_slack.has(CH, "Layaway Yield %% (MTD)_ — updated %s" % d, 20):   # 2026-10-14: was a bare "%" -> ValueError, first reached today
         print("post for %s already in the channel — canvas refreshed, nothing posted" % d)
         return 0
     vp_slack.post(CH, post)

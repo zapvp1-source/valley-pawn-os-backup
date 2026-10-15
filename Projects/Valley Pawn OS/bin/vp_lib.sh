@@ -31,11 +31,12 @@ vp_lock() {
   trap 'rmdir "'"$d"'" 2>/dev/null' EXIT
 }
 
-# Store calendar: stores open on a given date (YYYY-MM-DD). Sunday: none. Wednesday: CUL + ROA
-# (Roanoke open Wednesdays from 2026-09-30, Joshua 2026-10-01; earlier Wednesdays were CUL only).
+# Store calendar: stores open on a given date (YYYY-MM-DD). Sunday: none. Wednesday: CUL + ROA + WAY
+# (Roanoke open Wednesdays from 2026-09-30, Joshua 2026-10-01; Waynesboro from 2026-10-14, Joshua 2026-10-14;
+# earlier Wednesdays were CUL only).
 open_stores() {
   local dow; dow=$(date -j -f %Y-%m-%d "$1" +%u)   # 1=Mon .. 7=Sun
-  case "$dow" in 7) echo "" ;; 3) if [[ "$1" < "2026-09-30" ]]; then echo "CUL"; else echo "CUL ROA"; fi ;; *) echo "CUL HAR LEX ROA WAY" ;; esac
+  case "$dow" in 7) echo "" ;; 3) if [[ "$1" < "2026-09-30" ]]; then echo "CUL"; elif [[ "$1" < "2026-10-14" ]]; then echo "CUL ROA"; else echo "CUL ROA WAY"; fi ;; *) echo "CUL HAR LEX ROA WAY" ;; esac
 }
 
 # Bravo pipeline busy? (claimed trigger or result written in the last N minutes, default 6)

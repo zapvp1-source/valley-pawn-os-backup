@@ -5,4 +5,6 @@ AGENT=jewelry-pull-watchdog; . "$HOME/Documents/Claude/Projects/Valley Pawn OS/b
 # fleet doctor saw a 41h+ gap on a daily agent and called it "gone quiet" (stores closed Sunday = no pull).
 Y=$(date -v-1d +%Y-%m-%d); [ "$(date -v-1d +%u)" = "7" ] && { vlog "skip: $Y was a Sunday (stores closed, no pull to check)"; exit 0; }
 ls "$BRAVO/output/" | grep -q "^${Y}_.*jewelry-case-counts" && { vlog "ok: $Y counts on disk"; exit 0; }
+# 2026-10-14: folded into the morning fleet scorecard (it reports a missing jewelry count the same morning).
+grep -q '"owns_dms": true' "$OS_DIR/fleet/state/fleet_scorecard.json" 2>/dev/null && { vlog "no counts for $Y — DM folded into the morning fleet scorecard"; exit 0; }
 slack dm "Heads up — last night's jewelry count pull didn't run (no data for $Y). It will try again at the next 8:30 PM run." && vlog "DM sent"

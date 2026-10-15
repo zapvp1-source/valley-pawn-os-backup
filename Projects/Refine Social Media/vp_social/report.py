@@ -149,6 +149,13 @@ def month(yyyy_mm: str) -> str:
 
 # --- Friday digest (counts from ledger + engagement from Publer insights) ---------------
 
+def _aval(analytics: dict, name: str):
+    v = (analytics or {}).get(name)
+    if isinstance(v, dict):
+        v = v.get("value")
+    return v if isinstance(v, (int, float)) else 0
+
+
 def digest(days: int = 7) -> str:
     _fresh_or_sync()
     d_from, d_to = reader.date_range(days - 1)
@@ -164,9 +171,13 @@ def digest(days: int = 7) -> str:
             continue
         try:
             for it in p.post_insights(pid, since=d_from, until=d_to, limit=100):
-                eng = it.get("engagement") or (it.get("likes", 0) + it.get("comments", 0) + it.get("shares", 0) + it.get("saves", 0))
+                # 2026-10-14: Publer nests metrics under it["analytics"][<field>]["value"]; top-level "comments" is the
+                # post's comment THREAD (a list) -> the old sum crashed with int + list on every account. Same
+                # extraction as the 10/9 one-off _weekly_digest_fixed_20261009.py (which produced that week's DM).
+                an = it.get("analytics") or {}
+                eng = _aval(an, "engagement") or (_aval(an, "likes") + _aval(an, "comments") + _aval(an, "shares") + _aval(an, "post_clicks"))
                 scored.append({"key": key, "text": (it.get("text") or it.get("caption") or "")[:90].replace("\n", " "),
-                               "reach": it.get("reach") or 0, "eng": eng or 0, "type": it.get("type") or it.get("postType")})
+                               "reach": _aval(an, "reach"), "eng": eng or 0, "type": it.get("type") or it.get("postType")})
         except Exception as e:  # noqa: BLE001
             failures.append(f"{key}: {e}")
     if failures and len(failures) > 3:

@@ -386,7 +386,7 @@ def build_dm(start, texts, failed, rows_all):
     n = len(texts)
     if n == 0 and not sum(failed.values()):
         return ("**Missed-call texts — %s: 0 texted.** No missed-call texts went out this week — expected only when "
-                "stores are closed (Sunday all stores; Wednesday all but Culpeper and Roanoke)." % label)
+                "stores are closed (Sunday all stores; Wednesday Harrisonburg and Lexington)." % label)
     rep = [x for x in texts if x["replied"]]
     L = ["**Missed-call texts — %s: %d texted, %d replied (%s).**" % (label, n, len(rep), pct(len(rep), n))]
     none = []

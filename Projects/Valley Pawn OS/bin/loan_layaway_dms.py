@@ -59,35 +59,23 @@ def ledger(sentence):
 
 
 def store_block(name, s):
-    pct = s.get("loan_pct")
-    if pct is None:
-        pct_line = "• % of loan balance: not available this week"
-    else:
-        flag = "✅ Within threshold" if pct <= POLICY_PCT else "🚨 Above 5% — needs attention"
-        pct_line = "• %% of loan balance: %.1f%% %s" % (pct, flag)
+    # 2026-10-14: the 75-day loan block was RETIRED (Joshua: "we no longer hold loans past 75 days").
+    # The DM is now the layaway snapshot only.
     locate = int(s.get("layaway_locate") or 0)
     lines = [
-        "📊 *%s — Loan Health*" % name,
-        "• Items past 75 days: %s" % s.get("loan_count", 0),
-        "• $ past 75 days: %s" % usd(s.get("loan_dollar")),
-        pct_line,
-        "",
         "🏷️ *%s — Layaways*" % name,
         "• Overdue layaways: %s" % s.get("layaway_overdue", 0),
         "• Items needing location: %s%s" % (locate, " 🔴 ACTION NEEDED" if locate > 0 else ""),
         "• No payment in 30 days: %s" % s.get("layaway_no_pmt_30d", 0),
     ]
     actions = []
-    if pct is not None and pct > POLICY_PCT:
-        actions.append("Your 75-day loans are above 5%% of your loan balance (%.1f%%). Please review and pull tickets." % pct)
     if locate > 0:
         actions.append("You have %d layaway%s that need to be physically located in Bravo — please resolve ASAP." % (locate, "" if locate == 1 else "s"))
     return "\n".join(lines), actions
 
 
 def flagged(s):
-    pct = s.get("loan_pct")
-    return (pct is not None and pct > POLICY_PCT) or int(s.get("layaway_locate") or 0) > 0
+    return int(s.get("layaway_locate") or 0) > 0
 
 
 def send(user, text):
@@ -128,7 +116,7 @@ def main():
         if not s:
             continue
         block, actions = store_block(name, s)
-        text = "Good morning! Here's your store's weekly loan & layaway snapshot for %s:\n\n%s" % (when, block)
+        text = "Good morning! Here's your store's weekly layaway snapshot for %s:\n\n%s" % (when, block)
         if actions:
             text += "\n\n⚠️ *Action needed:* " + " ".join(actions)
         text += "\n\nHave a great week!"
@@ -147,7 +135,7 @@ def main():
         parts.append(block)
         if flagged(s):
             flags.append(name)
-    summary = "Weekly loan & layaway results — all stores, %s\n\n%s" % (when, "\n\n".join(parts))
+    summary = "Weekly layaway results — all stores, %s\n\n%s" % (when, "\n\n".join(parts))
     summary += "\n\n" + ("⚠️ Flagged for attention: " + ", ".join(flags) if flags else "✅ No store flagged this week.")
     outbox.append((PRESTON, "ALL", summary))
     if render:
@@ -165,7 +153,7 @@ def main():
             print("send failed %s: %s" % (uid, err))
     if failed:
         ledger("The weekly loan and layaway DMs went to %d of %d people; these did not go through: %s." % (sent, len(outbox), ", ".join(failed)))
-    ok, _ = send(JOSHUA, "✅ Weekly loan & layaway results delivered to all store teams. %d store%s flagged for attention."
+    ok, _ = send(JOSHUA, "✅ Weekly layaway results delivered to all store teams. %d store%s flagged for attention."
                  % (len(flags), "" if len(flags) == 1 else "s"))
     print("sent %d/%d" % (sent, len(outbox)))
     return 0 if not failed else 1

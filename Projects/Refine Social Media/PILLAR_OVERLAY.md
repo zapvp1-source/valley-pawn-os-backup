@@ -127,7 +127,8 @@ record) found the real cause was worse than generic tone:
    hours, addresses, and warranty terms must match `valley-pawn-context`
    exactly. `STORE_FACTS` in `vp_social_publisher.py` now hard-blocks known
    bad claims ("seven days a week," "closes at 5pm" for any store/day other than
-   Culpeper & Roanoke on Saturday, "Dixie Pawn") and should
+   Culpeper, Roanoke & Waynesboro on Saturday, stale Waynesboro "closed Wed" /
+   "Sat 10–6", "Dixie Pawn") and should
    grow every time a new fact-check miss is found.
 4. **Every caption needs at least one concrete, specific, real detail** — an
    actual price + item description, a real employee name + tenure, a real

@@ -19,8 +19,8 @@ stops with a ledger row instead of posting a false all-clear. Then the SKILL's o
   * message time = email received - 10 min (ET); skip conversation-enders (fixed list + tapbacks/emoji-only;
     anything short and unclear is asked of Claude once via vp_ai and cached) and empty-body alerts;
     a location that is not one of the five stores is skipped
-  * OPEN-HOURS filter: CUL/ROA Mon-Fri 10-18, Sat 10-17; WAY/HAR/LEX Mon, Tue, Thu, Fri, Sat 10-18;
-    Wednesday = CUL + ROA only (ROA from 2026-09-30); Sunday = none
+  * OPEN-HOURS filter: CUL/ROA/WAY Mon-Fri 10-18, Sat 10-17 (WAY Sat 17:00 from 2026-10-17); HAR/LEX Mon, Tue, Thu, Fri, Sat 10-18;
+    Wednesday = CUL + ROA + WAY only (ROA from 2026-09-30, WAY from 2026-10-14); Sunday = none
   * morning: DM recipients from hr/ROSTER.json (roster_write.py --check must say ok), department == store,
     slack_id set, never Joshua/Preston/Corporate Support/Marketing. Roster not ok = ledger row, no DMs,
     summary still posts.
@@ -79,10 +79,12 @@ def hours(code, day):
     if wd == 6:
         return None
     if wd == 2:
-        if code == "CUL" or (code == "ROA" and day >= dt.date(2026, 9, 30)):
+        # ROA open Wednesdays from 2026-09-30; WAY from 2026-10-14 (Joshua 2026-10-14, 6-day week)
+        if code == "CUL" or (code == "ROA" and day >= dt.date(2026, 9, 30)) or (code == "WAY" and day >= dt.date(2026, 10, 14)):
             return (dt.time(10), dt.time(18))
         return None
-    if wd == 5 and code in ("CUL", "ROA"):
+    if wd == 5 and (code in ("CUL", "ROA") or (code == "WAY" and day >= dt.date(2026, 10, 17))):
+        # 6-day stores close 17:00 Saturday (Joshua 2026-10-01); WAY joins from its first 6-day Saturday 10/17 (Joshua 2026-10-14)
         return (dt.time(10), dt.time(17))
     return (dt.time(10), dt.time(18))
 

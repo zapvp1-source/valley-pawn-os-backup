@@ -30,21 +30,39 @@ _FORBIDDEN = [
     (re.compile(r"seven days a week|7 days a week", re.I), "no store is open 7 days/week"),
     # 2026-10-01: 5pm close is checked by _bad_5pm_close() below (valid only for Culpeper/Roanoke on Saturday).
     (re.compile(r"\bmon(?:day)?\s*(?:-|–|—|through|thru|to)\s*sat(?:urday)?\b[,:]?\s*(?:from\s*)?10(?::00)?\s*(?:am|a\.m\.)?\s*(?:-|–|—|to|until)\s*6", re.I),
-     "stale hours: Culpeper & Roanoke are Mon-Fri 10-6, Sat 10-5; the other three close Wed"),
+     "stale hours: Culpeper, Roanoke & Waynesboro are Mon-Fri 10-6, Sat 10-5; Harrisonburg & Lexington close Wed"),
     (re.compile(r"dixie pawn", re.I), "never 'Dixie Pawn'"),
     (re.compile(r"full circle finance", re.I), "never the legal entity name customer-facing"),
     (re.compile(r"\b(gun|guns|firearm|firearms|rifle|pistol|handgun|shotgun|ammo|ammunition)\b", re.I), "no firearms on social"),
     (re.compile(r"\b(fast cash|instant cash|no credit check|quick cash)\b", re.I), "predatory phrasing"),
 ]
 _PHONE = re.compile(r"\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}")
-# 2026-10-01 (Joshua): ONLY the 6-day stores (Culpeper & Roanoke) close at 5pm, and ONLY on Saturday.
+# 2026-10-01 (Joshua): ONLY the 6-day stores close at 5pm, and ONLY on Saturday (Culpeper & Roanoke; Waynesboro from 2026-10-14).
 _FIVE_PM_CLOSE = re.compile(r"open (?:until|till|til) 5(?::00)?\s*p\.?m|clos(?:es?|ing) at 5(?::00)?\s*p\.?m|"
                             r"10(?::00)?\s*(?:am|a\.m\.)?\s*(?:-|–|—|to)\s*5(?::00)?\s*(?:pm|p\.m\.)", re.I)
-_SIX_DAY = re.compile(r"culpeper|roanoke", re.I)
+_SIX_DAY = re.compile(r"culpeper|roanoke|waynesboro", re.I)
+
+# 2026-10-14 (Joshua): Waynesboro is a 6-day store (Mon-Fri 10-6, Sat 10-5, closed Sun). Block its OLD hours:
+# "closed Wed", the 5-day "Mon, Tue, Thu..." list, or "Sat 10-6" in a clause that names Waynesboro
+# (clause = text since the last . ; | · or newline), plus the old "Harrisonburg, Waynesboro & Lexington" grouping.
+_WAY_STALE = re.compile(r"clos(?:ed|es)\s+(?:on\s+)?wed|\bmon(?:day)?s?,?\s*tue(?:s|sday)?s?,?\s*thu|"
+                        r"\bsat(?:urday)?s?\s*(?:from\s*)?10(?::00)?\s*(?:am|a\.m\.)?\s*(?:-|–|—|to|until)\s*6", re.I)
+_WAY_OLD_GROUP = re.compile(r"harrisonburg,\s*waynesboro,?\s*(?:&|and)\s*lexington", re.I)
+
+
+def _way_stale_hours(text: str) -> bool:
+    """True if the text states Waynesboro's pre-2026-10-14 hours."""
+    if _WAY_OLD_GROUP.search(text):
+        return True
+    for m in _WAY_STALE.finditer(text):
+        seg = re.split(r"[.;|·\n]", text[max(0, m.start() - 160): m.start()])[-1]
+        if re.search(r"waynesboro", seg, re.I):
+            return True
+    return False
 
 
 def _bad_5pm_close(text: str, account_key: str = "") -> bool:
-    """True if the text claims a 5pm close anywhere other than Culpeper/Roanoke on Saturday."""
+    """True if the text claims a 5pm close anywhere other than Culpeper/Roanoke/Waynesboro on Saturday."""
     for m in _FIVE_PM_CLOSE.finditer(text):
         win = text[max(0, m.start() - 80): m.end() + 40]
         sat = re.search(r"\bsat(?:urday)?s?\b", win, re.I)
@@ -102,7 +120,9 @@ def qa_caption(text: str, account_key: str, kind: str, min_words: int) -> list[s
         if pat.search(t):
             problems.append(f"forbidden: {why}")
     if _bad_5pm_close(t, account_key):
-        problems.append("forbidden: only Culpeper & Roanoke close at 5pm, and only on Saturday")
+        problems.append("forbidden: only Culpeper, Roanoke & Waynesboro close at 5pm, and only on Saturday")
+    if _way_stale_hours(t):
+        problems.append("forbidden: stale Waynesboro hours -- Waynesboro is Mon-Fri 10-6, Sat 10-5, closed Sun (open Wed from 10/14)")
     if account_key.startswith("GBP_"):
         if "#" in t:
             problems.append("GBP: hashtags")

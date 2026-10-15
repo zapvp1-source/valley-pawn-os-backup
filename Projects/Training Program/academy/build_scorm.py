@@ -83,10 +83,16 @@ def lint_lesson(lesson, path):
             w.append("call_clip caption starts with 'TODO' (TODO text is hidden from learners)")
     quiz = lesson.get("quiz") or {}
     qs = quiz.get("questions") or []
-    if not (6 <= len(qs) <= 8):
-        w.append(f"quiz has {len(qs)} questions (spec: 6-8)")
+    is_intro = lesson.get("order") == 0
+    if is_intro:
+        if not (2 <= len(qs) <= 5):
+            w.append(f"intro lesson quiz has {len(qs)} questions (spec for level intros: 2-5, ungraded)")
+        if int(quiz.get("pass_percent", 80) or 0) > 0:
+            w.append("intro lesson quiz is graded (spec for level intros: pass_percent 0)")
+    elif not (6 <= len(qs) <= 9):
+        w.append(f"quiz has {len(qs)} questions (spec: 6-8, plus one optional Goldilocks tie-in)")
     n_scen = sum(1 for q in qs if q.get("type") == "scenario")
-    if n_scen < 4:
+    if n_scen < 4 and not is_intro:
         w.append(f"only {n_scen} scenario questions (spec: at least 4)")
     for k, default in (("pass_percent", 80), ("max_attempts", 2), ("shuffle", True)):
         if k not in quiz:
@@ -256,7 +262,8 @@ INTERNAL_ATOM = re.compile(
     r"Master\s*Plan|\bKB\b|POLICY_GAPS|\bOPEN\b|\bTODO\b|[Pp]roduction|\b[Cc]all\s?\d{2,3}\b|"
     r"TRAINING_PROGRAM|\.md\b|SKILL|_Audit\b|CONDUCT_REVIEW|FINDINGS|\b[A-Za-z]+_\w+\b|"
     r"^\s*[a-z0-9]+(?:-[a-z0-9]+){2,}\s*$|\bsee sources\b|\brun records\b|^\s*library:|build brief|\bqueue #\d|Hard Rule \d|\bSTATUS\b|\bcorrected in\b|"
-    r"\b[a-z0-9]+(?:-[a-z0-9]+)+-[0-9a-f]{8}\b|^\s*[0-9a-f]{8}(?:\s*,\s*[0-9a-f]{8})*\s*$|\bv\d\b")
+    r"\b[a-z0-9]+(?:-[a-z0-9]+)+-[0-9a-f]{8}\b|^\s*[0-9a-f]{8}(?:\s*,\s*[0-9a-f]{8})*\s*$|\bv\d\b|"
+    r"zoom-call|\b[A-Z]\w+-to-[A-Z]\w+\b|[Hh]uddle\s+\d{4}|^\s*(?:[A-Z][a-z]+(?:\s[A-Z][a-z]+)?,?\s+)?\d{4}-\d{2}-\d{2}\s*$|HUDDLE_INPUTS")
 MEMO_ATOM = re.compile(r"\b(?:HR|OB)-\d{4}-\d{2}\b")
 POLICY_ATOM = re.compile(r"§|P&P|Handbook|Va\. Code|U\.S\.C\.|\bCFR\b|Google UGC policy|^\s*L\d-\d\d\s*$")
 CALL_REWRITES = [
@@ -271,6 +278,9 @@ CALL_REWRITES = [
     (re.compile(r"\bin Call \d{2,3}\b"), "on a real call"),
     (re.compile(r"\bCall \d{2,3}'s\b"), "a real call's"),
     (re.compile(r"\b[Cc]all ?(?!911\b)\d{2,3}\b"), "a real call"),
+    # dated attributions read as clutter to learners: "Preston 2025-11-24:" -> "Preston:"
+    (re.compile(r"\b(Preston|Joshua|Joshua Davis) \d{4}-\d{2}-\d{2}:"), r"\1:"),
+    (re.compile(r"(\b(?:Preston|Joshua|Joshua Davis)),\s*\d{4}-\d{2}-\d{2}\b"), r"\1"),
 ]
 # whole sentences that only make sense to the people building the course
 DROP_SENTENCE = re.compile(r"[^.!?]*\b(?:OPEN|TODO|see sources)\b[^.!?]*[.!?]?")
@@ -291,6 +301,7 @@ FORBIDDEN_PATTERNS = [
                                 r"BEST_CALLS|coaching_pack|\brun records\b|\(library:|see sources|production_notes|"
                                 r"queue #\d|Hard Rule \d|\bSTATUS\b|corrected in\)")),
     ("coming soon", re.compile(r"coming soon", re.I)),
+    ("coaching-call ref", re.compile(r"zoom-call|Preston-to-|[Hh]uddle \d{4}|HUDDLE_INPUTS|\b(?:Preston|Joshua|Davis),? \d{4}-\d{2}-\d{2}")),
     ("sources key", re.compile(r"\bsources\b")),
 ]
 
@@ -891,6 +902,63 @@ PLAYER_JS = r"""
     return el('span', { cls: 'vo-ind', role: 'status' }, [el('span', { cls: 'eq', 'aria-hidden': 'true' }, [el('i'), el('i'), el('i'), el('i')]), 'Speaking']);
   }
 
+  // ---------------- sound effects: ding (right), buzzer (wrong), applause (passed the test).
+  // Synthesized with Web Audio (no files), through the same AudioContext as the narration.
+  // Follows the lesson's sound toggle: when sound is off, nothing plays.
+  var noiseBuf = null;
+  function getNoise(c) {
+    if (noiseBuf) return noiseBuf;
+    var len = Math.floor(c.sampleRate * 1.5), b = c.createBuffer(1, len, c.sampleRate), d = b.getChannelData(0);
+    for (var i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+    noiseBuf = b; return b;
+  }
+  function tone(c, out, type, freq, t0, dur, peak, freqEnd) {
+    var o = c.createOscillator(), g = c.createGain();
+    o.type = type; o.frequency.setValueAtTime(freq, t0);
+    if (freqEnd) o.frequency.exponentialRampToValueAtTime(freqEnd, t0 + dur);
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(peak, t0 + 0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    o.connect(g); g.connect(out); o.start(t0); o.stop(t0 + dur + 0.05);
+  }
+  function sfx(kind) {
+    if (!ttsOn) return;
+    var c = getCtx(); if (!c) return;
+    try {
+      if (c.state === 'suspended') c.resume();
+      var t = c.currentTime + 0.02, out = c.createGain();
+      out.gain.value = 0.9; out.connect(c.destination);
+      if (kind === 'ding') {
+        tone(c, out, 'sine', 1046.5, t, 0.9, 0.22);
+        tone(c, out, 'sine', 2093, t, 0.5, 0.05);
+        tone(c, out, 'sine', 1318.5, t + 0.12, 1.1, 0.22);
+        tone(c, out, 'sine', 2637, t + 0.12, 0.6, 0.05);
+      } else if (kind === 'buzz') {
+        var lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1100; lp.connect(out);
+        tone(c, lp, 'sawtooth', 146, t, 0.62, 0.20, 130);
+        tone(c, lp, 'square', 152, t, 0.62, 0.10, 136);
+      } else if (kind === 'applause') {
+        var nb = getNoise(c), total = 3.6, claps = 230;
+        var bed = c.createBufferSource(), bf = c.createBiquadFilter(), bg = c.createGain();
+        bed.buffer = nb; bed.loop = true; bf.type = 'bandpass'; bf.frequency.value = 1400; bf.Q.value = 0.6;
+        bg.gain.setValueAtTime(0.0001, t); bg.gain.exponentialRampToValueAtTime(0.06, t + 0.4);
+        bg.gain.setValueAtTime(0.06, t + total - 1.2); bg.gain.exponentialRampToValueAtTime(0.0001, t + total);
+        bed.connect(bf); bf.connect(bg); bg.connect(out); bed.start(t); bed.stop(t + total + 0.1);
+        for (var i = 0; i < claps; i++) {
+          var u = Math.random(), at = t + (u < 0.15 ? u / 0.15 * 0.5 : 0.5 + Math.pow((u - 0.15) / 0.85, 1.6) * (total - 0.7));
+          var src = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
+          src.buffer = nb; f.type = 'bandpass'; f.frequency.value = 900 + Math.random() * 1800; f.Q.value = 1.2 + Math.random();
+          var fade = at > t + total - 1.2 ? Math.max(0.15, (t + total - at) / 1.2) : 1;
+          var pk = (0.10 + Math.random() * 0.16) * fade, dec = 0.03 + Math.random() * 0.05;
+          g.gain.setValueAtTime(0.0001, at); g.gain.exponentialRampToValueAtTime(pk, at + 0.003);
+          g.gain.exponentialRampToValueAtTime(0.0001, at + dec);
+          src.connect(f); f.connect(g); g.connect(out);
+          src.start(at, Math.random() * 1.3, dec + 0.02);
+        }
+      }
+    } catch (e) {}
+  }
+
   function stopSpeech() { stopVoice(); try { if (hasTTS) synth.cancel(); } catch (e) {} try { if (window.__vpStopCall) window.__vpStopCall(); } catch (e) {} }
   function speak(t) {
     if (!hasTTS || !t) return;
@@ -1036,18 +1104,19 @@ PLAYER_JS = r"""
   function rTitle() {
     var pills = [
       el('span', { cls: 'pill' }, [icon('clock'), 'About ' + (LESSON.minutes || '?') + ' minutes']),
-      el('span', { cls: 'pill' }, [icon('clipboard'), quiz.items.length + ' test questions']),
-      el('span', { cls: 'pill' }, [icon('check'), quiz.passPercent + '% to pass'])
+      el('span', { cls: 'pill' }, [icon('clipboard'), quiz.items.length + (quiz.passPercent > 0 ? ' test questions' : ' quick questions')]),
+      el('span', { cls: 'pill' }, [icon('check'), quiz.passPercent > 0 ? quiz.passPercent + '% to pass' : 'Not graded'])
     ];
     var parts = [];
     if (hasVideo) parts.push('watch a short video'); else if (slides.length) parts.push('go through ' + slides.length + ' short slides');
     if (hasClip) parts.push('listen to a real call');
     parts.push('review the key points');
-    var intro = 'You\'ll ' + parts.join(', ') + ', then take a short test. You can go back at any point before the test.';
+    var intro = 'You\'ll ' + parts.join(', ') + (quiz.passPercent > 0 ? ', then take a short test. You can go back at any point before the test.' : ', then answer a few quick questions. They aren\'t graded; they just show you what to watch for.');
     var text = el('div', {}, [
       el('div', { cls: 'kicker', text: 'Valley Pawn Academy · ' + (LESSON.level_label || '') }),
       el('h1', { text: LESSON.title }),
       el('div', { cls: 'meta' }, pills),
+      LESSON.objectives ? el('div', { cls: 'note purple' }, [el('b', { text: "By the end you'll be able to: " }), LESSON.objectives]) : null,
       LESSON.gate ? el('div', { cls: 'note purple' }, [el('b', { text: 'Deadline: ' }), LESSON.gate]) : null,
       state.p ? el('div', { cls: 'note blue', text: 'You have already passed this lesson. You can go through it again any time.' }) : null,
       el('p', { text: intro }),
@@ -1276,6 +1345,7 @@ PLAYER_JS = r"""
 
     function choose(i) {
       var r = quiz.answer(i); if (!r) return;
+      sfx(r.correct ? 'ding' : 'buzz');
       btns.forEach(function (b, bi) {
         b.disabled = true;
         var lt = b.firstChild;
@@ -1383,7 +1453,7 @@ PLAYER_JS = r"""
       back: function () { slideIdx = 0; go(1, -1); }, backLabel: 'Review lesson',
       next: function () { quiz.reset(); lastResult = null; go(stepOf('test'), 1); }, nextLabel: r.passed ? 'Take it again' : 'Retake the test'
     });
-    if (r.passed) confetti();
+    if (r.passed) { confetti(); sfx('applause'); }
   }
 
   // ---------------- keyboard: left/right move, Enter continues, 1-4 or A-D answer
@@ -1475,6 +1545,7 @@ def learner_payload(lesson, media):
         "title": T(lesson.get("title", "")),
         "level_label": level_label(lesson.get("level")),
         "minutes": lesson.get("minutes"),
+        "objectives": T(lesson.get("objectives") or "") or None,
         "gate": T(lesson.get("gate") or "") or None,
         "icon": pick_icon(lesson.get("title", ""), [s["heading"] for s in slides]),
         "slides": slides,
@@ -1691,7 +1762,9 @@ if (JSON.parse(a.api.store['cmi.suspend_data']).a !== 1) throw new Error('attemp
 if (!a.api.calls.includes('finish') || !a.api.calls.includes('commit')) throw new Error('commit/finish not called');
 out.allCorrect = { score: a.res.score, status: a.status };
 let b = run('wrong');
-if (b.res.score !== 0 || b.status !== 'failed' || b.api.store['cmi.core.lesson_status'] !== 'failed' || b.api.store['cmi.core.score.raw'] !== '0') throw new Error('all-wrong did not fail: ' + JSON.stringify(b.api.store));
+const ungraded = !((lesson.quiz && lesson.quiz.pass_percent) > 0);  // level intros: pass_percent 0 = an ungraded preview, all-wrong still completes
+const wantStatus = ungraded ? 'passed' : 'failed';
+if (b.res.score !== 0 || b.status !== wantStatus || b.api.store['cmi.core.lesson_status'] !== wantStatus || b.api.store['cmi.core.score.raw'] !== '0') throw new Error('all-wrong did not ' + (ungraded ? 'complete' : 'fail') + ': ' + JSON.stringify(b.api.store));
 out.allWrong = { score: b.res.score, status: b.status };
 let c = run('wrong', { 'cmi.suspend_data': JSON.stringify({ a: 2, b: 50, p: false }) });
 if (JSON.parse(c.api.store['cmi.suspend_data']).a !== 3) throw new Error('attempts did not accumulate');
@@ -1709,7 +1782,7 @@ console.log(JSON.stringify(out));
 
 
 LEARNER_KEYS = {"id", "title", "level_label", "minutes", "gate", "icon", "slides", "call_clip",
-                "key_points", "floor_check", "quiz", "media"}
+                "key_points", "floor_check", "quiz", "media", "objectives"}
 
 
 def validate(zips):

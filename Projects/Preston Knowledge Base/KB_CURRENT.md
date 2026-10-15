@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-10-13 22:12 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-10-14 22:11 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -1389,6 +1389,24 @@ PRESTON SAID: "PS3 games - disney infinity, skylanders, madden 25 - these games 
 SOURCE: #loans-and-buys | 2023-11-27 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1701095400610139
 id: kids-licensed-and-sports-gam-a2c1ee35
 
+### [HIGH] layaway-cancellation-in-store-only
+RULE: Use layaway cancellation only when the customer requests it in the store. It immediately gives store credit for the amount paid, which can be used in the current transaction or put on a gift card for later.
+PRESTON SAID: "Layaway cancellation is only used when the customer request the cancellation in the store. Layaway cancellation will immediately give Store credit in the amount that was paid towards the layaway that can be used in the current transaction or placed on a gift card for later use. This option is only to be used when the customer is in the store."
+SOURCE: #preston-claude (Preston Peters, Operations Manager) | 2026-10-14 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1791995450477079?thread_ts=1791995450.477079&cid=C0BGXSTT4TY
+id: layaway-cancellation-in-stor-92e4b879
+
+### [HIGH] layaway-expiration-60-days
+RULE: Expire any layaway with no payment for 60 days. Expiration automatically issues store credit equal to the amount paid, and the customer should be notified so they can use it later.
+PRESTON SAID: "Any layaway without payment for 60 days is to be expired. Upon expiration Store credit is automatically issued to the customers account in the amount that was paid towards the layaway. Customers should be notified about the Store credit so that they can use it at a later time."
+SOURCE: #preston-claude (Preston Peters, Operations Manager) | 2026-10-14 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1791995450477079?thread_ts=1791995450.477079&cid=C0BGXSTT4TY
+id: layaway-expiration-60-days-254db36d
+
+### [HIGH] layaway-refund-store-credit-only
+RULE: Layaway cancellations and expirations are refunded only as store credit. Any other form of refund needs Preston Peters' approval.
+PRESTON SAID: "All cancellations and expirations are only issued in the form of Store credit unless otherwise approved by Preston Peters."
+SOURCE: #preston-claude (Preston Peters, Operations Manager) | 2026-10-14 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1791995450477079?thread_ts=1791995450.477079&cid=C0BGXSTT4TY
+id: layaway-refund-store-credit--6396ddd7
+
 ### [HIGH] layaway-store-credit-on-expiration
 RULE: Layaway policy was updated in the system to issue store credit on expiration. Employee permissions were also loosened to include renewals for everyone plus higher amount limits and multiple firearm transactions.
 PRESTON SAID: "I have revised permissions to include renewals for everyone. I have also loosened up some things that should help lessen the amount of approvals that will need to be requested. Some of things include amount limits, and multiple firearm transactions. 
@@ -2149,5 +2167,5 @@ id: typical-retail-sales-benchma-f03d7d66
 
 
 ==============================================================================
-COVERAGE: 285 entries - 1 verified by Preston, 175 high-confidence rules, 75 medium, 34 low, 0 superseded.
+COVERAGE: 288 entries - 1 verified by Preston, 178 high-confidence rules, 75 medium, 34 low, 0 superseded.
 ==============================================================================

@@ -6922,3 +6922,74 @@ Indeed messages sent this run: 7 (Anthony White confirmation, Austin Passarelli 
 - **Calendar verified clean** (jdavis@fcfpawn.com, 10/14-10/15, full `list_events` pull) — matches Joshua's 6:22 PM Wed grid and 5:19 PM/6:51 PM Thu grid exactly: Wed 10/14 11:00 Robert Wilson, 11:05 Robert Brandt, 12:55 Diaundre Wright, 1:00 Lisbed Hicks, 1:05 Samantha Shafer, 1:10 Caroline Dean, 1:15 Ashley Lam (number still pending), 1:20 Austin Passarelli. Thu 10/15: 11:00 Casey Barrett, 11:05 Amanda Brogan, 11:10 Shaun Reeves, 11:15 Washae Otey, 11:20 Reyona Whorley, 11:30 Maurice Jones, 12:50 Allen Muse, 1:00 Zeeza Miller Avis, 2:30 Anthony White, 2:35 Brendon Thomas, 2:40 Lynn Gilley (now 540-519-5359, confirmed), 3:00 Michael Boyer. No gaps/doubles.
 - **Notifications sent: none** — nothing changed since Joshua's own 6:51 PM post and the bot's 6:51 PM DM/channel update (reporting rule: post only on real change). Run is near the day's 7:59 PM contact-window close.
 - Indeed messages sent this run: 0. Calendar events created: 0. Texts sent: 0. Slack posts: 0.
+
+## Run — 2026-10-14 ~10:19-10:25 AM ET (vp-hiring-pipeline scheduled task, cloud-only session, no Mac bridge)
+- **Scope reconfirmed from HIRING_SWITCH.md (authoritative):** Waynesboro ON, Harrisonburg ON, Roanoke ON, Culpeper/Lexington/Saint Augustine FL OFF. No change since 10/13.
+- **Indeed Messages inbox checked in full (back through Oct 9, newest first):** no new candidate replies beyond what the 10:04-10:09 AM run already logged/reported. Alexis Byram's 9:25 AM "Thank you" is an ack of her 9:16 AM decline reply — closed, no action. Desmond Chick's and Brandon Richardson's threads re-checked — both already closed by Preston/prior-run replies, nothing new, left with Joshua (Brandon Richardson's babysitter/rehire dispute is still his call).
+- **Candidates → New tab (3, unchanged):** Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — all Store Manager, Saint Augustine FL — out of scope (OFF).
+- **Reviewing tab (17, unchanged):** re-verified Tamara Thompson and Steven Burns are both Lexington (OFF) — matches the 10/13 5:04 PM run's finding; left alone. No new Waynesboro/Harrisonburg/Roanoke candidates sitting in Reviewing.
+- **No felony disqualifications. No one on the do-not-contact list touched. No no-show reports from Joshua this run. No 2-business-day nudges due.**
+- **Calendar verified clean** (jdavis@fcfpawn.com, 10/14-10/15 full list_events pull) — matches Joshua's 10:06 AM Wed grid and 9:37 AM Thu grid exactly, no gaps/doubles.
+- **Texts: 0 — computer-use/full-screen control not available (cloud-only session).**
+- **Notifications sent: none — nothing changed since the 10:04-10:09 AM run (reporting rule: post only on real change).**
+- Indeed messages sent this run: 0. Calendar events created: 0. Texts sent: 0. Slack posts: 0.
+
+## Run — 2026-10-14 ~11:15-11:21 AM ET (vp-hiring-pipeline scheduled task, cloud-only session, no Mac bridge, Claude-in-Chrome browser access)
+- **Scope reconfirmed from HIRING_SWITCH.md (authoritative):** Waynesboro ON, Harrisonburg ON, Roanoke ON, Culpeper/Lexington/Saint Augustine FL OFF. No change since 10/13.
+- **Booked: Preston Haylock (Roanoke)** replied to his 11:05 AM first-contact with "12pm is perfect" and his number 912-257-5810. Thu 10/15 12:00 PM was open — booked, calendar event created (`i9nk9v87u1a44e7cohsdm25d0o`), confirmed on Indeed at 11:20 AM: "You're set for Thursday 10/15 at 12:00 PM. I'll call you at 912-257-5810 from (804) 930-4221."
+- **New applicant: Derrick Wise (Roanoke)** — applied ~11:09 AM, screened clean (Yes on firearms screener, not on do-not-contact list) — first-contacted 11:21 AM offering Thu 10/15 11 AM–3 PM. Awaiting reply.
+- **Checked, no action:** Katelyn Newcomb still awaiting reply to her 9:36 AM first-contact. Tiffany Pittman's and Ashley Byram's prior acks remain closed. Candidates → New tab otherwise unchanged (3 out-of-scope Saint Augustine FL Store Manager applicants).
+- **No felony disqualifications. No one on the do-not-contact list touched. No no-show reports from Joshua this run. No 2-business-day nudges due.**
+- **Calendar verified clean** (jdavis@fcfpawn.com, 10/14–10/15 full list_events pull) before and after the new Preston Haylock booking — no gaps/doubles.
+- **Texts: 0 — computer-use/full-screen control not available (cloud-only session).**
+- **Notifications sent:** #employee-prospects and Joshua DM — Preston Haylock's Thu 12:00 PM booking and Derrick Wise's new first-contact.
+- Indeed messages sent this run: 2 (Preston Haylock confirmation, Derrick Wise first-contact). Calendar events created: 1. Texts sent: 0. Slack posts: 1 (combined DM+channel note).
+
+## Run — 2026-10-14 ~11:34-11:36 AM ET (vp-hiring-pipeline scheduled task, cloud-only session, no Mac bridge, Claude-in-Chrome browser access)
+- **Scope reconfirmed from HIRING_SWITCH.md (authoritative):** Waynesboro ON, Harrisonburg ON, Roanoke ON, Culpeper/Lexington/Saint Augustine FL OFF. No change since 10/13.
+- **Booked: Gary DePriest (Harrisonburg)** replied to his 9:09 AM first-contact with "Thanks my number is 5407783318 and 11 am would be fine on thursday." Thu 10/15 11:00 AM was already taken (Casey Barrett) — booked nearest open slot 11:40 AM (calendar event `6f5n6l2sv9jr5ecpvfk4mp0j7o`), confirmed on Indeed at 11:35 AM: "You're set for Thursday 10/15 at 11:40 AM. I'll call you at 540-778-3318 from (804) 930-4221."
+- **Checked, no action:** Preston Haylock's 11:26 AM reply ("Yessir, thank you for the opportunity") is a closed ack of his existing Thu 12:00 PM booking — no reply needed. Full Indeed Messages inbox re-checked back through Oct 9, no other new replies beyond the 11:15-11:21 AM run.
+- **Candidates → New tab (3, unchanged):** Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Store Manager, Saint Augustine FL — out of scope (OFF).
+- **Reviewing tab (17, unchanged):** re-verified — Christopher Crammer (Waynesboro, Sales & Loan Associate) already interviewed per note ("Interviewed under waynesboro"), no action; Tamara Thompson and Steven Burns confirmed Lexington (OFF); Scarlet Ledford has existing Preston-style manual notes/undecided status (already being handled outside the pipeline) — left alone; all other Reviewing entries are Store Manager / Saint Augustine FL (OFF).
+- **No felony disqualifications. No one on the do-not-contact list touched. No no-show reports from Joshua this run. No 2-business-day nudges due.**
+- **Calendar verified clean** (jdavis@fcfpawn.com, 10/14-10/15 full list_events pull) before and after the Gary DePriest booking — no gaps/doubles.
+- **Texts: 0 — computer-use/full-screen control not available (cloud-only session).**
+- **Notifications sent:** #employee-prospects and Joshua DM — Gary DePriest's Thu 11:40 AM booking.
+- Indeed messages sent this run: 1 (Gary DePriest confirmation). Calendar events created: 1. Texts sent: 0. Slack posts: 2 (DM + channel).
+
+## Run — 2026-10-14 ~12:18-12:22 PM ET (vp-hiring-pipeline scheduled task, cloud-only session, no Mac bridge, Claude-in-Chrome browser access)
+- **Scope reconfirmed from HIRING_SWITCH.md (authoritative):** Waynesboro ON, Harrisonburg ON, Roanoke ON, Culpeper/Lexington/Saint Augustine FL OFF. No change since 10/13.
+- **Indeed Messages inbox checked (newest first, back through the 12:06 PM run):** no new candidate replies. Preston Haylock's unread "Yessir, thank you for the opportunity" (11:26 AM) remains a closed ack of his existing Thu 10/15 12:00 PM booking — already actioned/logged by the 11:34-11:36 AM run, no reply needed. Emily Ciccarello's decline (handled 12:00-12:06 PM run) is the most recent actioned thread.
+- **Candidates → New tab checked (3, unchanged):** Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — all Store Manager, Saint Augustine FL — out of scope (OFF).
+- **Reviewing tab badge unchanged at 17** — consistent with the last full check (no new in-scope Waynesboro/Harrisonburg/Roanoke candidate sitting there); not re-opened this run since nothing in Slack/Indeed indicated a new one.
+- **No felony disqualifications. No one on the do-not-contact list touched. No no-show reports from Joshua this run. No 2-business-day nudges due.**
+- **Calendar verified clean** (jdavis@fcfpawn.com, 10/14-10/15 full list_events pull) — matches the 11:52 AM Slack grid exactly (Wed 10/14: 11:00 Robert Wilson, 11:05 Robert Brandt, 12:55 Diaundre Wright, 1:00 Lisbed Hicks, 1:05 Samantha Shafer, 1:10 Caroline Dean, 1:15 Ashley Lam, 1:20 Austin Passarelli, 2:30 Dustin Crawford; Thu 10/15: 11:00 Casey Barrett, 11:05 Amanda Brogan, 11:10 Shaun Reeves, 11:15 Washae Otey, 11:20 Reyona Whorley, 11:25 Jyllian Stewart, 11:30 Maurice Jones, 11:35 Kevan Nelson, 11:40 Gary DePriest, 11:45 Kameron Altizer, 12:00 Preston Haylock, 12:50 Allen Muse, 1:00 Zeeza Miller Avis, 1:05 Tiffany Pittman, 2:30 Anthony White, 2:35 Brendon Thomas, 2:40 Lynn Gilley, 3:00 Michael Boyer). No gaps/doubles.
+- **Texts: 0 — computer-use/full-screen control not available (cloud-only session).**
+- **Notifications sent: none — nothing changed since the 12:00-12:06 PM run (reporting rule: post only on real change).**
+- Indeed messages sent this run: 0. Calendar events created: 0. Texts sent: 0. Slack posts: 0.
+
+## Run — 2026-10-14 ~1:04-1:08 PM ET (vp-hiring-pipeline scheduled task, cloud-only session, no Mac bridge, Claude-in-Chrome browser access)
+- **Scope reconfirmed from HIRING_SWITCH.md (authoritative):** Waynesboro ON, Harrisonburg ON, Roanoke ON, Culpeper/Lexington/Saint Augustine FL OFF. No change since 10/13.
+- **Read Slack DM back through Joshua's 12:51 PM post** (~12:49 PM run: nothing new) — picks up right after it.
+- **Calendar verified** (jdavis@fcfpawn.com, 10/14-10/15 full list_events pull) — matched the 12:51 PM run's state exactly, no gaps/doubles, before any change this run (none made).
+- **Indeed Messages inbox checked (newest first, back through the 12:49 PM run):** one new since then — **Casey Barrett (Harrisonburg)** "Thank you so much!" (12:56 PM) is a closed ack of her existing confirmed Thu 10/15 11:00 AM booking — no reply needed. Kameron Altizer's 12:36 PM "Thank you!" was already actioned/logged by the 12:51 PM run. No other new threads.
+- **Candidates → New tab checked (3, unchanged):** Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — all Store Manager, Saint Augustine FL — out of scope (OFF).
+- **Reviewing tab badge unchanged at 17** — consistent with the last full check; not re-opened this run (nothing in Slack/Indeed indicated a new in-scope candidate).
+- **No felony disqualifications. No one on the do-not-contact list touched. No no-show reports from Joshua this run. No 2-business-day nudges due.** Derrick Wise and Katelyn Newcomb still inside their nudge windows.
+- **Texts: 0 — computer-use/full-screen control not available (cloud-only session)**, including the 1:00 PM text-batch slot — skipped per the rule (texting requires full-screen control, which this session doesn't have).
+- **Notifications sent: none — nothing changed since the 12:51 PM post (reporting rule: post only on real change).**
+- Still open, unactioned (unchanged, not re-flagging): Brandon Richardson's rehire dispute, Scarlet Ledford's pay question, Frankie Whetzel's review comment.
+- Indeed messages sent this run: 0. Calendar events created: 0. Texts sent: 0. Slack posts: 0.
+
+## Run — 2026-10-14 ~1:35-1:40 PM ET (vp-hiring-pipeline scheduled task, cloud-only session, no Mac bridge, Claude-in-Chrome browser access)
+- **Scope reconfirmed from HIRING_SWITCH.md (authoritative):** Waynesboro ON, Harrisonburg ON, Roanoke ON, Culpeper/Lexington/Saint Augustine FL OFF. No change since 10/13.
+- **Read Slack DM back through Joshua's 1:19 PM post** (~1:14-1:17 PM run: nothing new) — picks up right after it.
+- **Calendar verified** (jdavis@fcfpawn.com, 10/14-10/15 full list_events pull) — clean, confirmed, no gaps/doubles, matches the last-posted grid exactly before any change this run.
+- **Indeed Messages inbox checked (newest first, back through the 1:14 PM run):** **Lisbed Hicks (Waynesboro)** wrote 1:21 PM: "Hey it went to my spam I'm just realizing can I call back" — her existing Wed 10/14 1:00 PM slot had already passed by run time. Treated as a missed-connection/no-show equivalent from the candidate's side; sent one reschedule offer for the next business day: "No worries at all! Are you free tomorrow, Thursday 10/15, between 11 AM and 3 PM? Reply with a time and I'll call you." (sent 1:35 PM, verified in-thread). Not yet booked — awaiting her reply. Her Wed 1:00 PM calendar event left as-is (historical, not deleted). gary DePriest's "ok" (1:22 PM) is a closed ack of his existing Thu 10/15 11:40 AM booking — no reply needed. Casey Barrett's and Kameron Altizer's "thank you"s already actioned by prior runs.
+- **Candidates → New tab checked (3, unchanged):** Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — all Store Manager, Saint Augustine FL — out of scope (OFF).
+- **Reviewing tab:** UI filter click again did not switch away from "All" (same recurring quirk noted in the 10/13 5:19 PM run) — relying on the last several runs' confirmed count (17, no new in-scope/unworked Waynesboro/Harrisonburg/Roanoke candidate) since nothing in Slack or Indeed this run indicated a new one. Flagging the UI issue again, not treating it as a clean check of its own.
+- **No felony disqualifications made. No one on the do-not-contact list touched. No no-show reports from Joshua this run (Lisbed Hicks's spam-filter miss was self-reported by her, not by Joshua). No 2-business-day nudges due** (Derrick Wise and Katelyn Newcomb both still inside their nudge windows).
+- **Texts: 0 — computer-use/full-screen control not available (cloud-only session).**
+- **Notifications sent:** Joshua DM (D03BHQH5VGT, ts 1791999402.485779) — Lisbed Hicks's reschedule offer. No #employee-prospects post (no interview-grid change this run — offer made, not yet booked).
+- Indeed messages sent this run: 1 (Lisbed Hicks reschedule offer). Calendar events created/deleted: 0. Texts sent: 0. Slack posts: 1 (DM only).
+- Still open, unactioned (unchanged): Brandon Richardson's rehire dispute, Scarlet Ledford's pay question, Frankie Whetzel's review comment.

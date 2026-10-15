@@ -128,7 +128,9 @@ def open_stores_for(date: datetime.date) -> list[str]:
     wd = date.weekday()  # Monday=0 ... Sunday=6
     if wd == 6:      # Sunday
         return []
-    if wd == 2:       # Wednesday: CUL + ROA from 2026-09-30 (Joshua 2026-10-01), CUL only before
+    if wd == 2:       # Wednesday: CUL + ROA from 2026-09-30 (Joshua 2026-10-01), + WAY from 2026-10-14 (Joshua 2026-10-14), CUL only before
+        if date >= datetime.date(2026, 10, 14):
+            return ["CUL", "ROA", "WAY"]
         return ["CUL", "ROA"] if date >= datetime.date(2026, 9, 30) else ["CUL"]
     return list(STORES)
 

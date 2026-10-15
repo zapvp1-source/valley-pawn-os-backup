@@ -286,6 +286,13 @@ def main():
         ledger("Thursday %s email was filled with %d deals but the pre-send check failed; left as a draft for a fix." % (label, n))
         vp_slack.post(JOSHUA, "Thursday's deal email (%s) is built with %d store deals but didn't pass the pre-send check, so it is NOT scheduled yet. I'm on it." % (label, n))
         return 1
+    if "--send-now" in sys.argv:
+        # 2026-10-14 (Mac-first wave 2): used ONLY by thursday_email_watchdog.py when Thursday 10:00 has already passed
+        # and the campaign is still a draft. Sends now instead of scheduling; the watchdog posts its own one-line note.
+        brevo("/emailCampaigns/%d/sendNow" % camp["id"], {}, "POST")
+        c2 = brevo("/emailCampaigns/%d" % camp["id"])
+        print("SENDNOW #%d status=%s deals=%d" % (camp["id"], c2.get("status"), n))
+        return 0 if c2.get("status") in ("sent", "queued", "inProcess", "in_process") else 1
     brevo("/emailCampaigns/%d" % camp["id"], {"scheduledAt": when.isoformat()}, "PUT")
     c2 = brevo("/emailCampaigns/%d" % camp["id"])
     if c2.get("status") == "draft" or PLACEHOLDER in (c2.get("htmlContent") or ""):

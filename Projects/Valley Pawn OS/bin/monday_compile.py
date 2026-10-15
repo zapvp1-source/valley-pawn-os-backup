@@ -5,7 +5,7 @@ Native counterpart of the Cowork task `monday-bravo-combined-compile` (2026-09-3
 reports keep publishing whatever happens to Cowork on 10/6. FORMAT PARITY IS BY CONSTRUCTION: every post
 is the stdout of the same formatter the Cowork task already pasted "verbatim, byte for byte":
   #aged-inventory-review   Bravo Data Extraction/bin/format_aged_inventory.py  (posted as-is)
-  #loan-review             comms_engine.py post --pub loan-review              (posts itself, bot)
+  #loan-review             RETIRED 2026-10-14 (75-day rule ended; Joshua) — no longer posted
   #layaway-review          comms_engine.py post --pub layaway-review
   #employee-performance    comms_engine.py post --pub employee-performance
   #first-payment-default   comms_engine.py post --pub first-payment-default
@@ -34,7 +34,8 @@ BRAVO = os.path.expanduser("~/Documents/Claude/Projects/Bravo Data Extraction")
 LEDGER = os.path.join(OS_DIR, "fleet", "FAILURE_LEDGER.md")
 AGED_CH = "C04NGH4FF35"
 JOSHUA = "U03BB52MDSA"
-PUBS = [("loan-review", "C0B08RS2BMK", "#loan-review"), ("layaway-review", "C04N24STDP1", "#layaway-review"),
+# loan-review RETIRED 2026-10-14 (Joshua: "that loan review needs to go away, we no longer hold loans past 75 days").
+PUBS = [("layaway-review", "C04N24STDP1", "#layaway-review"),
         ("employee-performance", "C0ATTLPQHR8", "#employee-performance"),
         ("first-payment-default", "C0B17894S2Y", "#first-payment-default")]
 PY = "/usr/bin/python3"

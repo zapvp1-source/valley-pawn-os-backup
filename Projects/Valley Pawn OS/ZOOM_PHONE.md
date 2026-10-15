@@ -318,7 +318,7 @@ and pointing the caller to text back:
 | Harrisonburg | Closed Hours Greeting - Harrisonburg | Mon, Tue, Thu, Fri, Sat, 10 AM–6 PM |
 | Lexington | Closed Hours Greeting - Lexington | Mon, Tue, Thu, Fri, Sat, 10 AM–6 PM |
 | Roanoke | Closed Hours Greeting - Roanoke (superseded 2026-10-01 by "... (Sat 5pm)", see below) | Mon, Tue, Thu, Fri, Sat, 10 AM–6 PM |
-| Waynesboro | Closed Hours Greeting - Waynesboro | Mon, Tue, Thu, Fri, Sat, 10 AM–6 PM |
+| Waynesboro | Closed Hours Greeting - Waynesboro (superseded 2026-10-14 by "... (6-day, Sat 5pm)", see below) | Mon, Tue, Thu, Fri, Sat, 10 AM–6 PM |
 
 Overflow routing itself (Leave Voicemail to Current Extension) was left unchanged on all 5 — this
 only adds the greeting that plays before the beep. Verified live: each queue's Profile tab showed
@@ -351,3 +351,22 @@ Joshua 2026-10-01: Culpeper and Roanoke are now Mon–Fri 10 AM–6 PM, Sat 10 A
 
 Both re-opened after save and show the new asset name. Overflow routing (Leave Voicemail to
 Current Extension) unchanged.
+
+## 2026-10-14 — Waynesboro open Wednesdays + closes 5 PM Saturdays (queue 806)
+
+Joshua 2026-10-14: Waynesboro is a 6-day store from 10/14 — Mon–Fri 10 AM–6 PM, Sat 10 AM–5 PM, closed Sun
+(6-day stores close 5 PM Saturday, same as Culpeper/Roanoke on 10/1). Done in Joshua's signed-in Chrome.
+
+- **Business Hours** on Waynesboro Store Queue (806): Custom Hours now Mon–Fri 10:00 AM–6:00 PM (Wednesday
+  added) and Sat 10:00 AM–5:00 PM (was 6:00 PM); Sun off. "Updated business hours successfully"; verified after a
+  full page reload: "Wed 10:00 AM ~ 6:00 PM … Sat 10:00 AM ~ 5:00 PM".
+- Member 803 (waynesboro@) own Business Hours = 24 Hours a Day, 7 Days a Week (User Settings tab), so the
+  queue's hours govern.
+- **Closed Hours voicemail greeting**: new TTS asset **"Closed Hours Greeting - Waynesboro (6-day, Sat 5pm)"**
+  (Matthew-Male, category Voicemail greeting, Personal Audios) assigned; text: "Thank you for calling Valley Pawn
+  in Waynesboro. We're closed right now. Our hours are Monday through Friday, 10 to 6, and Saturday, 10 to 5.
+  We're closed Sunday. Please leave a message after the tone, or send us a text at this same number, and our team
+  will get back to you as soon as we open." "Updated Call Queue successfully"; re-opened after reload and shows
+  the new asset. Old asset left unused in the library. Overflow routing (Leave Voicemail to Current Extension)
+  unchanged. No queue greeting added (ring-immediately rule).
+

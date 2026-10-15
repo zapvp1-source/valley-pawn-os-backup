@@ -95,8 +95,8 @@ if wd == 0:   # Monday
     JOBS.append(("com.valleypawn.loan-layaway-dms", "loan_layaway_dms.py", at(9, 0), at(14, 0),
                  lambda s: receipt_since("weekly-loan-layaway-manager-dms", s) or file_since(LOGF("weekly-loan-layaway-manager-dms"), s)))
     # weekly canvases + layaway yield (native 2026-10-06); each run is re-run safe (same content = no-op)
-    for label, kind, task, h, m in [("com.valleypawn.loan-canvas", "loan", "weekly-loan-review-canvas-refresh", 9, 20),
-                                    ("com.valleypawn.layaway-canvas", "layaway", "weekly-layaway-review-canvas-refresh", 9, 22),
+    # loan canvas RETIRED 2026-10-14 (Joshua: the 75-day loan review goes away)
+    for label, kind, task, h, m in [("com.valleypawn.layaway-canvas", "layaway", "weekly-layaway-review-canvas-refresh", 9, 22),
                                     ("com.valleypawn.employee-canvas", "employee", "weekly-employee-perf-canvas-refresh", 9, 24),
                                     ("com.valleypawn.aged-canvas", "aged", "weekly-aged-inventory-canvas-refresh", 9, 26),
                                     ("com.valleypawn.store-canvas", "store", "weekly-store-perf-canvas-refresh", 9, 28)]:
@@ -126,6 +126,39 @@ if wd == 0:   # Monday deal-of-the-week prompt (useful until the 11:00 reminder)
                  lambda s: receipt_since("vp-deal-of-week-monday-prompt", s) or file_since(LOGF("vp-deal-of-week-monday-prompt"), s)))
     JOBS.append(("com.valleypawn.deal-of-week-reminder", "deal_of_week_monday.py reminder", at(11, 0), at(11, 50),
                  lambda s: receipt_since("vp-deal-of-week-monday-reminder", s) or file_since(LOGF("vp-deal-of-week-monday-reminder"), s)))
+
+# Mac-first wave 2 (2026-10-14): weekly native replacements, DORMANT until fleet/state/native_live/<task> exists.
+# Evidence = a receipt under the task name or the agent's own log written since the slot (the dormant gate
+# exits before writing either, so a dormant agent is simply re-kicked as a silent no-op).
+W2 = [(1, "com.valleypawn.staff-video-prompt", "staff_video_prompt.py", "vp-staff-video-prompt", (9, 10), (13, 0)),
+      (3, "com.valleypawn.thursday-email-watchdog", "thursday_email_watchdog.py", "vp-thursday-email-watchdog", (10, 30), (14, 0)),
+      (4, "com.valleypawn.publer-friday", "publer_friday.py", "vp-publer-analytics-friday", (16, 0), (23, 0)),
+      (6, "com.valleypawn.health-weekly-digest", "health_weekly_digest.py", "health-weekly-digest", (9, 0), (21, 0)),
+      (0, "com.valleypawn.website-health-audit", "website_health_audit.py", "weekly-website-health-audit", (5, 15), (14, 0)),
+      (0, "com.valleypawn.model-audit-weekly", "model_audit_weekly.py", "scheduled-task-model-audit-weekly", (5, 0), (23, 0))]
+for _wd, _label, _pat, _task, (_h, _m), (_eh, _em) in W2:
+    if wd == _wd:
+        JOBS.append((_label, _pat, at(_h, _m), at(_eh, _em),
+                     (lambda t: lambda s: receipt_since(t, s) or file_since(LOGF(t), s))(_task)))
+
+# 2026-10-14 (native cloudcover + eBay audit): DORMANT until fleet/state/native_live/<task> exists, same evidence rule.
+# cloudcover's own cutoff is 13:25 (it never posts a stale "10:00 AM" snapshot later), so the window ends there.
+if wd != 6:   # Mon-Sat
+    JOBS.append(("com.valleypawn.cloudcover-check", "cloudcover_check.py", at(10, 25), at(13, 20),
+                 lambda s: receipt_since("daily-cloudcover-check", s) or file_since(LOGF("daily-cloudcover-check"), s)))
+if wd == 0:   # Monday
+    JOBS.append(("com.valleypawn.ebay-channel-audit", "ebay_channel_audit.py", at(11, 45), at(18, 0),
+                 lambda s: receipt_since("ebay-weekly-channel-audit", s) or file_since(LOGF("ebay-weekly-channel-audit"), s)))
+
+# 2026-10-14 (jewelry nightly native): DORMANT until fleet/state/native_live/jewelry-onhand-nightly-pull (resp. -catchup)
+# exists. Nightly Mon-Sat 20:30, useful until 23:30 (the morning catch-up covers the rest of the freeze window);
+# catch-up Tue-Sun 07:45, never starts a pull after 09:30. Evidence = receipt under the task name or its own log.
+if wd != 6:   # Mon-Sat
+    JOBS.append(("com.valleypawn.jewelry-nightly", "jewelry_nightly.py nightly", at(20, 30), at(23, 30),
+                 lambda s: receipt_since("jewelry-onhand-nightly-pull", s) or file_since(LOGF("jewelry-onhand-nightly-pull"), s)))
+if wd != 0:   # Tue-Sun
+    JOBS.append(("com.valleypawn.jewelry-catchup", "jewelry_nightly.py catchup", at(7, 45), at(9, 30),
+                 lambda s: receipt_since("jewelry-onhand-catchup", s) or file_since(LOGF("jewelry-onhand-catchup"), s)))
 
 
 def main():

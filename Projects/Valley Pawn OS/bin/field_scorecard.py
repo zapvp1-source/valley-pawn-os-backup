@@ -406,7 +406,23 @@ def post_delay_notice(entry):
 
 
 # ---------------------------------------------------------------- Slack DM
+SCORECARD_STATE = os.path.join(OS_DIR, "fleet/state/fleet_scorecard.json")
+
+
+def scorecard_owns_dms():
+    """2026-10-14: the ONE morning fleet scorecard DM (bin/fleet_scorecard.py, 07:15) replaces this
+    script's 'didn't post on time' / fleet-event DMs. Its logic still runs (report, history, ledger
+    row); only the separate DM is folded in. Delete owns_dms from the state file to restore it."""
+    try:
+        return bool(json.load(open(SCORECARD_STATE)).get("owns_dms"))
+    except Exception:
+        return False
+
+
 def dm_joshua(text):
+    if scorecard_owns_dms() and not (DRY or SIMULATE or SIM):
+        hb("DM folded into the morning fleet scorecard (not sent): " + text)
+        return
     if DRY or SIMULATE or SIM:
         hb(("SIMULATED DM (not sent): " if SIMULATE else "DRY DM: ") + text)
         return
@@ -533,7 +549,8 @@ def main():
     # as INFRA rather than nagging for a manifest entry that can never be verified in Slack.
     infra = set(tier1_doc.get("tier1", {}).get("infrastructure", []))
     outputs = load_json(OUTPUTS_PATH, {})
-    entries = [e for e in outputs.get("entries", []) if e.get("task") in tier1]
+    # 2026-10-14: entries marked scorecard_only belong to the daily fleet scorecard (fleet_scorecard.py)
+    entries = [e for e in outputs.get("entries", []) if e.get("task") in tier1 and not e.get("scorecard_only")]
     covered = {e["task"] for e in entries}
     uncovered = sorted(tier1 - covered)
 

@@ -160,11 +160,16 @@ def _sentence(t):
     return t if not t or t[-1] in ".!?" else t + "."
 
 
-def intro_line(title, minutes):
+def intro_line(title, minutes, objectives=None, graded=True):
     m = f"about {minutes} minutes" if minutes else "a few minutes"
     title = str(title or "").strip().rstrip(".")
     lead = f"{title}." if re.match(r"welcome\b", title, re.I) else f"Welcome to {title}."  # "Welcome to Valley Pawn"
-    return f"{lead} This takes {m}, and there's a short test at the end."
+    obj = re.sub(r"^by the end[^,]*,?\s*you(?:'ll| will) be able to\s*", "", str(objectives or "").strip(), flags=re.I).rstrip(".")
+    if obj:
+        obj = obj[0].lower() + obj[1:] if obj[:1].isupper() and not obj.startswith("I ") else obj
+        lead += f" By the end, you'll be able to {obj}."
+    tail = "and there's a short test at the end." if graded else "and there's a quick check at the end. It isn't graded."
+    return f"{lead} This takes {m}, {tail}"
 
 
 def narration_items(payload):
@@ -172,7 +177,9 @@ def narration_items(payload):
     Returns an ordered list of (key, display_text): "intro", slide indexes "0".."n-1", "keypoints".
     Slide keys index the slides the player shows (slides with a heading or bullets).
     Slides are skipped when the lesson plays a video instead. The result screen is silent."""
-    items = [("intro", intro_line(payload.get("title") or payload.get("id"), payload.get("minutes")))]
+    graded = int((payload.get("quiz") or {}).get("pass_percent", 80) or 0) > 0
+    items = [("intro", intro_line(payload.get("title") or payload.get("id"), payload.get("minutes"),
+                                  payload.get("objectives"), graded))]
     if not (payload.get("media") or {}).get("video"):
         shown = [s for s in payload.get("slides") or [] if s and (s.get("heading") or s.get("bullets"))]
         for i, s in enumerate(shown):

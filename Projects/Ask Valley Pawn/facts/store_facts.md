@@ -3,10 +3,10 @@
 # cites these as "Store facts". Sources: valley-pawn-context skill, ZOOM_PHONE.md, hr/ROSTER.json (2026-10-08).
 
 ## Store hours
-Culpeper and Roanoke (the two six-day stores): Monday–Friday 10:00 AM–6:00 PM, Saturday 10:00 AM–5:00 PM, closed Sunday. Roanoke has been open on Wednesdays since 9/30/2026.
-Harrisonburg, Waynesboro and Lexington: Monday, Tuesday, Thursday, Friday and Saturday 10:00 AM–6:00 PM. Closed Wednesday and Sunday.
-Rule (Joshua, 10/1/2026): any store open six days a week closes at 5:00 PM on Saturday. Today that is Culpeper and Roanoke only. Every other store closes at 6:00 PM on every day it is open.
-Only Culpeper and Roanoke are open on Wednesday.
+Culpeper, Roanoke and Waynesboro (the three six-day stores): Monday–Friday 10:00 AM–6:00 PM, Saturday 10:00 AM–5:00 PM, closed Sunday. Roanoke has been open on Wednesdays since 9/30/2026 and Waynesboro since 10/14/2026.
+Harrisonburg and Lexington: Monday, Tuesday, Thursday, Friday and Saturday 10:00 AM–6:00 PM. Closed Wednesday and Sunday.
+Rule (Joshua, 10/1/2026): any store open six days a week closes at 5:00 PM on Saturday. Today that is Culpeper, Roanoke and Waynesboro (Waynesboro from 10/14/2026). Every other store closes at 6:00 PM on every day it is open.
+Only Culpeper, Roanoke and Waynesboro are open on Wednesday.
 
 ## Store addresses and phone numbers
 Culpeper — 571 James Madison Highway, Culpeper, VA 22701 — (540) 445-5510 — culpeper@fcfpawn.com

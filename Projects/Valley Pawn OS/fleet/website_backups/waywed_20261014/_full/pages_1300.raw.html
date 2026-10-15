@@ -1,0 +1,23 @@
+<!-- wp:html -->
+<div id="vp-app" style="max-width:560px;margin:32px auto;padding:0 16px;text-align:center;font-family:inherit">
+  <h1 style="font-size:1.9rem;margin:0 0 8px">Get the MobilePawn app</h1>
+  <p style="font-size:1.1rem;margin:0 0 20px">Pay or extend your Valley Pawn loan, make layaway payments, and check due dates from your phone. It's free.</p>
+  <p style="margin:0 0 24px;font-size:.95rem">Download it, open it, and choose <strong>Valley Pawn</strong> (your store) to connect your account.</p>
+  <div style="display:flex;flex-direction:column;gap:12px;align-items:center">
+    <a id="vp-ios" href="https://apps.apple.com/us/app/mobilepawn/id1141399930" style="display:block;width:100%;max-width:320px;padding:14px 18px;border-radius:10px;background:#0b2545;color:#fff;font-weight:700;text-decoration:none">Download for iPhone</a>
+    <a id="vp-and" href="https://play.google.com/store/apps/details?id=com.bravorevolution.instapawn" style="display:block;width:100%;max-width:320px;padding:14px 18px;border-radius:10px;background:#c9a227;color:#0b2545;font-weight:700;text-decoration:none">Download for Android</a>
+  </div>
+  <p style="margin:28px 0 0;font-size:.9rem">Need help getting set up? Call or text your store:<br>
+  Culpeper <a href="tel:+15404455510">(540) 445-5510</a> · Waynesboro <a href="tel:+15402216346">(540) 221-6346</a> · Harrisonburg <a href="tel:+15405744500">(540) 574-4500</a> · Lexington <a href="tel:+15404618349">(540) 461-8349</a> · Roanoke <a href="tel:+15405620776">(540) 562-0776</a></p>
+</div>
+<script>
+(function(){
+  var ua = navigator.userAgent || "";
+  var dest = /iPhone|iPad|iPod/i.test(ua) ? document.getElementById("vp-ios").href
+           : /Android/i.test(ua) ? document.getElementById("vp-and").href : null;
+  if (!dest) return;                 // desktop: show both buttons, no redirect
+  // Short delay so the analytics tag records the visit + utm_source before leaving.
+  setTimeout(function(){ window.location.href = dest; }, 1200);
+})();
+</script>
+<!-- /wp:html -->

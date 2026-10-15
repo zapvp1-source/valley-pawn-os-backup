@@ -283,3 +283,48 @@ Built from Preston's Sales Training Framework, P&P §04.01/§05.03/§06.02/§07.
 - All uploaded as Draft (hidden). NOTHING published. Level 1 intro (unit 2127) is Draft inside the active Level 1 course (126): learners will not see it until Joshua/Preston publishes it.
 - Units: L1 2127, L2 2128, L3 2129, L4 2130, L5 2131, L6 2132, L7 2133, L8 2134, M 2135.
 - Remaining (need Joshua/Preston): publish decisions, Grow plan purchase, avatar clip (optional).
+
+## Nov 4 launch demo + citation leak fix (2026-10-14)
+- Demo deck (Claude Slides artifact "Valley Pawn Academy — Nov 4 Launch Demo", 10 slides, 15-min run of show) and Demo Player artifact (plays 7.0, 7.8, 7.15 standalone, no sign-in; files in demo_player/).
+- TalentLMS can't play units for admins without activating courses / learner enrollment, so the player is the demo path. Course activation stays Joshua's call.
+- FIXED: quiz feedback in 7.8-7.15 (plus 7.1, 7.4, 5.2) showed internal citations, incl. coaching calls naming employees ("zoom-call ... Preston-to-JoshuaBurnett/Benjie/JacobCox", "Huddle 2026-..", "Joshua Davis, 2026-10-13", "Preston 2025-11-24:"). build_scorm.py learner-text filter + validator extended (backup build_scorm.py.bak-20261014-huddlefilter). 11 lessons rebuilt, all 71 ALL GREEN, and replaced in TalentLMS (units 2119-2126, 2067, 2075, 2086). Lesson JSONs untouched.
+- Level 1 intro (unit 2127) is the only intro hidden as a draft; other intros are visible inside their (inactive) courses.
+
+## Sound effects + rollout (2026-10-14, in progress)
+- build_scorm.py: synthesized ding (right), buzzer (wrong), applause (passed test); follows the lesson sound toggle. Backup build_scorm.py.bak-20261014-sfx. All 71 rebuilt, ALL GREEN; headless test confirmed all three sounds fire.
+- Demo Player artifact updated with the sound versions. Deck: removed mentions of the cloned voice; lesson slide mentions ding/buzzer/applause.
+- TalentLMS: Level 1 (course 126, active) all 8 units replaced with sound builds, but "Publish changes" NOT clicked (needs Joshua's OK); learners still see the old versions. Courses 127-134 (63 units) NOT yet replaced. Then: activate courses + enroll Joshua as learner (needs Joshua's OK).
+- UPDATE 2026-10-14 (Joshua approved go-live for himself as first learner): all 71 TalentLMS units replaced with the sound builds; Level 1 changes published; Level 1 intro (2127) published; courses 127-134 activated; TalentLMS sample "What is TalentLibrary?" (course 125) deactivated to stay inside the Free plan's active-course limit (10). Joshua's role in all 9 courses changed Instructor -> Learner (0%, not started). Verified learner view: Level 1 opens and 1.0 loads. No other users enrolled. Joshua's account view left on Learner.
+
+## Hillary voice clone (2026-10-14)
+- Source: Hillary's 3:52 read of the L1-01 welcome script (Training Program/Hillary_Voice_Sample.mp3). ElevenLabs instant clone "Hillary Davis - VPA", voice_id Uruw1KTSW5RkXaLagJzW, eleven_multilingual_v2.
+- Samples sent to Joshua: Voice_Tests/Hillary_A_natural (stab 0.35/sim 0.95), B_steady (0.55/0.9), C_warm (0.25/0.9/style 0.25). ~1k chars billed. Not wired into any lesson yet; waiting on Joshua's pick and where to use it.
+- 2026-10-14: Joshua picked Hillary variant A (natural). Saved as hillary_voice in .elevenlabs.json (backup .bak-20261014-hillary). Not yet assigned to lessons.
+- 2026-10-14 voice checks: all 9 Joshua intros transcribe to their scripts. Speaker match (resemblyzer cosine; same person real-vs-real 0.985-0.99, different people 0.58-0.70): Joshua clone 0.95, Hillary clone A 0.94 / B 0.94 / C 0.93.
+- 2026-10-14 SPEED: joshua_voice + hillary_voice speed 0.92 in .elevenlabs.json (backup .bak-20261014-speed). Samples Voice_Tests/*_slower_92.mp3 sent for approval. WARNING: dist/*-00_*.zip were rebuilt WITHOUT narration (new settings = cache miss; run voice.py for the 9 intros, then rebuild) - do NOT upload them until re-voiced. TalentLMS still has the previous voiced intros.
+- 2026-10-14: 9 intros re-voiced at speed 0.92 (~6.8k chars), rebuilt ALL GREEN with voiceover, uploaded + published in TalentLMS (2127-2135); Joshua's course roles flipped to Instructor for the upload and back to Learner in all 9 (TalentLMS limits admin edits in courses where you're a learner). Demo player intro updated.
+
+## Added 2026-10-14: Goldilocks tie-ins (Joshua chose "tie-ins where it matters")
+- Built + validated ALL GREEN (voiceover embedded). Facts used are only those taught in L1-07; each addition is marked `"goldilocks": true` in the lesson JSON.
+  - L2-04 funds: the 6 PM check is named as Goldilocks; +1 question (a Slack reply doesn't clear the flag; record BANK to SAFE same day).
+  - L2-05 jewelry count: the overnight check is named as Goldilocks; +1 question (the post isn't the escalation; Preston tonight).
+  - L3-06 past-due call: new slide (weekly past-due review, first-payment default ranking); +1 question.
+  - L4-03 making the offer: new slide (7:15 Daily Pawn Walk, flag under 30%); +1 key point, +1 question.
+  - L4-04 pricing: new slide (7:45 Sold Review, 8:25 Discount Review age lines; limits unchanged); +1 question.
+  - L7-02 layaway: new slide (the weekly layaway review is a Goldilocks post). No new question; Q2 already tests it.
+  - L7-03 phone: new slide (#voicemails-calls-missed, auto-text isn't the callback); +1 key point, +1 question.
+  - L7-04 texting: new slide (Chekkit inbox replies, 10-minute flag, 7 PM follow-up); +1 key point; replaced the large-deal approval question, which duplicated L4-03 Q8.
+  - L7-15 selling: new slide (weekly month-to-date sales rankings, retail without fees, vs. start-date goals); +1 question.
+- Spec change: a quiz may hold 9 questions when the 9th is the Goldilocks tie-in (LESSON_SPEC.md, validator). With 9 questions, passing at 80% takes 8 right.
+- Distractors balanced so the right answer isn't the longest option.
+- RESOLVED 2026-10-14 (Joshua): the weekly loan review "needs to go away, we no longer hold loans past 75 days." L1-07 no longer teaches it (weekly scoreboards = layaways, first-payment defaults, sales rankings); L3-06's Goldilocks slide now points at the first-payment-default ranking. The #loan-review post itself was retired in Valley Pawn OS (see CHANGELOG 2026-10-14). Rebuilt ALL GREEN. Upload list now 11 units: L1-07, L2-04, L2-05, L3-06, L4-03, L4-04, L7-02, L7-03, L7-04, L7-15 (course L1=126 added).
+- TalentLMS upload PENDING: the Academy session expired (login page). Zips are in dist/ and staged. Courses affected: L2=127, L3=128, L4=129, L7=132. Steps: flip Joshua to Instructor in those 4, Change → upload → Publish changes per unit, then flip back to Learner.
+
+## Added 2026-10-14 (evening): full program review and revision — ALL 71 lessons rebuilt
+- Joshua: "Review the entire Valley Pawn Academy and make sure it feels and looks and sounds like a top notch program written by professionals using the most up to date learning strategies... relevant content for our company not just trivial facts, the pawn business which is the most important."
+- Ten independent reviews (one per level, instructional design + pawn operator lens), then ten edit passes. Report for Joshua/Preston: `ACADEMY_REVIEW_2026-10-14.md` (76 numbered decisions, defaults already in the lessons). Per-level findings and change logs: `review_2026-10-14/`. Pre-edit lesson copies: `backups/20261014-review-pre/`.
+- Spec/builder changes: `objectives` field on every lesson (spoken on the Start card after "By the end, you'll be able to…" and shown in a box); level intros (N.0) are ungraded previews with 3 questions (`pass_percent: 0`; validator and quiz self-test accept it; Start card shows "Not graded" / "quick questions"); `objectives` added to the learner-field allow-list; LESSON_SPEC.md updated (company voice, no attributions/dates, option-length rule).
+- Every lesson re-voiced where lines changed (any edited line re-records in full). ElevenLabs meter ~104k of 131k used; resets 2026-10-28. Deferred length-only slide splits (section 4 of the report) wait for the reset.
+- Built `--all`: ALL GREEN, voiceover 100% embedded on all 71. Demo Player artifact updated (7.0, 7.8, 7.15 = v4).
+- TalentLMS upload PENDING for ALL 71 units (session expired). After Joshua signs in: for each course 126–134, flip Joshua to Instructor, Change → upload → Publish changes per unit, flip back to Learner. Zips in dist/.
+- 2026-10-15: UPLOADED. All 71 revised units replaced in TalentLMS (courses 126-134), each course published ("Content updated successfully" x9). Unit M.1 renamed "M.1 The weekly layaway review and the loan timeline". Joshua flipped to Instructor for the upload and back to Learner in all 9 courses (verified after reload). The Free-plan sample course "[Edit me] Guide for Learners" still lists Joshua as Instructor (untouched).

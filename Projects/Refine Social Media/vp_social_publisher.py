@@ -68,14 +68,14 @@ from publer_client import PublerClient, PublerError
 #
 # Ground-truth store facts, so AI-drafted captions can be checked against
 # reality before they go out (a live post claimed "seven days a week" when
-# no Valley Pawn store is open 7 days -- Culpeper & Roanoke are closed Sunday
-# only; the other three stores are closed Wednesday AND Sunday). Keep in sync with
+# no Valley Pawn store is open 7 days -- Culpeper, Roanoke & Waynesboro (6-day stores, Sat 10-5) are closed Sunday
+# only (Waynesboro from 2026-10-14); Harrisonburg & Lexington are closed Wednesday AND Sunday). Keep in sync with
 # valley-pawn-context if hours/addresses ever change.
 STORE_FACTS = {
     "Culpeper": {"address": "571 James Madison Highway, Culpeper, VA 22701",
                  "hours": "Mon-Fri 10am-6pm, Sat 10am-5pm, closed Sunday"},
     "Waynesboro": {"address": "1321 West Broad Street, Waynesboro, VA 22980",
-                   "hours": "Mon, Tue, Thu, Fri, Sat 10am-6pm, closed Wed & Sun"},
+                   "hours": "Mon-Fri 10am-6pm, Sat 10am-5pm, closed Sunday"},  # open Wednesdays from 2026-10-14; Sat 5pm close (Joshua 2026-10-14)
     "Harrisonburg": {"address": "1790 East Market Street, Harrisonburg, VA 22801",
                      "hours": "Mon, Tue, Thu, Fri, Sat 10am-6pm, closed Wed & Sun"},
     "Lexington": {"address": "125 Walker Street, Lexington, VA 24450",
@@ -88,23 +88,41 @@ STORE_FACTS = {
 # generic-tell-tale. Extend this list whenever a fact-check miss is found.
 _FORBIDDEN_CLAIMS = [
     (re.compile(r"seven days a week|7 days a week", re.I),
-     "no Valley Pawn store is open 7 days/week (Culpeper & Roanoke closed Sun; others closed Wed+Sun)"),
+     "no Valley Pawn store is open 7 days/week (Culpeper, Roanoke & Waynesboro closed Sun; Harrisonburg & Lexington closed Wed+Sun)"),
     # 2026-10-01: "Mon-Sat 10-6" is now wrong for EVERY store (CUL/ROA close 5pm Sat; others closed Wed).
     (re.compile(r"\bmon(?:day)?\s*(?:-|–|—|through|thru|to)\s*sat(?:urday)?\b[,:]?\s*(?:from\s*)?10(?::00)?\s*(?:am|a\.m\.)?\s*(?:-|–|—|to|until)\s*6", re.I),
-     "stale hours -- Culpeper & Roanoke are Mon-Fri 10-6, Sat 10-5; the other three close Wed"),
+     "stale hours -- Culpeper, Roanoke & Waynesboro are Mon-Fri 10-6, Sat 10-5; Harrisonburg & Lexington close Wed"),
     (re.compile(r"dixie pawn", re.I),
      "legacy name -- Harrisonburg is Valley Pawn, never Dixie Pawn"),
 ]
 
-# 2026-10-01 (Joshua): ONLY the 6-day stores (Culpeper & Roanoke) close at 5pm, and ONLY on Saturday.
-# A 5pm close is valid when the claim is about Saturday at Culpeper/Roanoke; anywhere else it is wrong.
+# 2026-10-01 (Joshua): ONLY the 6-day stores close at 5pm, and ONLY on Saturday (Culpeper & Roanoke; Waynesboro from 2026-10-14).
+# A 5pm close is valid when the claim is about Saturday at Culpeper/Roanoke/Waynesboro; anywhere else it is wrong.
 _FIVE_PM_CLOSE = re.compile(r"open (?:until|till|til) 5(?::00)?\s*p\.?m|clos(?:es?|ing) at 5(?::00)?\s*p\.?m|"
                             r"10(?::00)?\s*(?:am|a\.m\.)?\s*(?:-|–|—|to)\s*5(?::00)?\s*(?:pm|p\.m\.)", re.I)
-_SIX_DAY = re.compile(r"culpeper|roanoke", re.I)
+_SIX_DAY = re.compile(r"culpeper|roanoke|waynesboro", re.I)
+
+# 2026-10-14 (Joshua): Waynesboro is a 6-day store (Mon-Fri 10-6, Sat 10-5, closed Sun). Block its OLD hours:
+# "closed Wed", the 5-day "Mon, Tue, Thu..." list, or "Sat 10-6" in a clause that names Waynesboro
+# (clause = text since the last . ; | · or newline), plus the old "Harrisonburg, Waynesboro & Lexington" grouping.
+_WAY_STALE = re.compile(r"clos(?:ed|es)\s+(?:on\s+)?wed|\bmon(?:day)?s?,?\s*tue(?:s|sday)?s?,?\s*thu|"
+                        r"\bsat(?:urday)?s?\s*(?:from\s*)?10(?::00)?\s*(?:am|a\.m\.)?\s*(?:-|–|—|to|until)\s*6", re.I)
+_WAY_OLD_GROUP = re.compile(r"harrisonburg,\s*waynesboro,?\s*(?:&|and)\s*lexington", re.I)
+
+
+def way_stale_hours(text: str) -> bool:
+    """True if the text states Waynesboro's pre-2026-10-14 hours."""
+    if _WAY_OLD_GROUP.search(text):
+        return True
+    for m in _WAY_STALE.finditer(text):
+        seg = re.split(r"[.;|·\n]", text[max(0, m.start() - 160): m.start()])[-1]
+        if re.search(r"waynesboro", seg, re.I):
+            return True
+    return False
 
 
 def bad_5pm_close(text: str, store_keys=()) -> bool:
-    """True if the text claims a 5pm close anywhere other than Culpeper/Roanoke on Saturday."""
+    """True if the text claims a 5pm close anywhere other than Culpeper/Roanoke/Waynesboro on Saturday."""
     keys_six = bool(store_keys) and all(_SIX_DAY.search(k or "") for k in store_keys)
     for m in _FIVE_PM_CLOSE.finditer(text):
         win = text[max(0, m.start() - 80): m.end() + 40]
@@ -125,7 +143,9 @@ def qa_check_caption(caption: str, store_keys: list[str]) -> list[str]:
         if pattern.search(stripped):
             problems.append(f"factual error: {reason}")
     if bad_5pm_close(stripped, store_keys):
-        problems.append("factual error: only Culpeper & Roanoke close at 5pm, and only on Saturday -- every other close is 6pm")
+        problems.append("factual error: only Culpeper, Roanoke & Waynesboro close at 5pm, and only on Saturday -- every other close is 6pm")
+    if way_stale_hours(stripped):
+        problems.append("factual error: stale Waynesboro hours -- Waynesboro is Mon-Fri 10-6, Sat 10-5, closed Sun (open Wed from 10/14)")
     # GBP-style hard rules apply to any Google account key if ever routed here
     if any(k.lower().startswith("gbp") or k.lower() == "google" for k in store_keys):
         if "#" in stripped:

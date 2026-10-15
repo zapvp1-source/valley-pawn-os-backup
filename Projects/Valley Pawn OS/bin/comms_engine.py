@@ -738,6 +738,11 @@ def cmd_check(args):
 
 
 def cmd_post(args):
+    if args.pub == "loan-review" and not args.dry_run:
+        # RETIRED 2026-10-14 — Joshua: "that loan review needs to go away, we no longer hold loans past 75 days".
+        sys.stderr.write("loan-review is retired (2026-10-14) — nothing posted\n")
+        log_run(args.pub, ["retired 2026-10-14; nothing posted"])
+        return 0
     notes = []
     code, body, extra = do_render(args, notes)
     if code:

@@ -64,8 +64,11 @@ EXCLUDE = re.compile(
 
 # 2026-10-01: Roanoke now open Wednesdays (Joshua) — canonical hours line updated.
 # 2026-10-01 (later): any store open 6 days a week closes 5 PM Saturdays (Joshua) — Culpeper & Roanoke Sat 10am-5pm.
-HOURS = ("Culpeper &amp; Roanoke: Mon&ndash;Fri 10am&ndash;6pm, Sat 10am&ndash;5pm. Harrisonburg, Waynesboro &amp; Lexington: "
+# 2026-10-14: Waynesboro open 6 days (Joshua) — Mon-Fri 10-6, Sat 10-5, joins the 6-day line.
+HOURS = ("Culpeper, Roanoke &amp; Waynesboro: Mon&ndash;Fri 10am&ndash;6pm, Sat 10am&ndash;5pm. Harrisonburg &amp; Lexington: "
          "Mon, Tue, Thu, Fri &amp; Sat 10am&ndash;6pm (closed Wed &amp; Sun).")
+HOURS_PRE_WAYWED = ("Culpeper &amp; Roanoke: Mon&ndash;Fri 10am&ndash;6pm, Sat 10am&ndash;5pm. Harrisonburg, Waynesboro &amp; Lexington: "
+                    "Mon, Tue, Thu, Fri &amp; Sat 10am&ndash;6pm (closed Wed &amp; Sun).")
 SIX_DAY_BLOCK = "Mon\u2013Fri 10am\u20136pm, Sat 10am\u20135pm"
 # The base shell (sent campaign 28) still carries the pre-10/1 hours in its LOCKED footer + YOUR STORE block;
 # build_email() swaps these exact strings so every new build ships the current hours.
@@ -76,6 +79,9 @@ OLD_HOURS_FIXES = [
     ("Roanoke &middot; Mon, Tue, Thu, Fri & Sat 10am\u20136pm", "Roanoke &middot; " + SIX_DAY_BLOCK),
     ("Roanoke &middot; Mon\u2013Sat 10am\u20136pm", "Roanoke &middot; " + SIX_DAY_BLOCK),
     ("Culpeper &middot; Mon\u2013Sat 10am\u20136pm", "Culpeper &middot; " + SIX_DAY_BLOCK),
+    (HOURS_PRE_WAYWED, HOURS),                                                    # 2026-10-14 Waynesboro 6-day
+    ("Waynesboro &middot; Mon, Tue, Thu, Fri & Sat 10am\u20136pm", "Waynesboro &middot; " + SIX_DAY_BLOCK),
+    ("Waynesboro &middot; Mon, Tue, Thu, Fri &amp; Sat 10am\u20136pm", "Waynesboro &middot; " + SIX_DAY_BLOCK),
 ]
 
 

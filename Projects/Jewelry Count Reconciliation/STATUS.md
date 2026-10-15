@@ -1991,3 +1991,46 @@ Repeats to watch: HAR Charms, LEX Charms+Brooches, WAY Charms — all empty agai
 Outbox note: wrote the envelope with the sandboxed device-bridge path first by mistake (/sessions/.../mnt/Projects/...) and caught/corrected it to the real Mac absolute path (/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/outbox/...) before the flusher picked it up — confirmed in outbox.log ("posted to C0BM9NHGTT4", 22:45:43 ET) and the .json moved to fleet/outbox/sent/. Flagging so a future run double-checks the envelope path before leaving it for the flusher, not after.
 
 Outcome: posted to #jewlery-counts via outbox (jewelry-onhand-nightly-pull-20261014-024419, corrected absolute-path envelope). No DM to Joshua (no anomalous OVER variance, no run failure). No FAILURE_LEDGER row — all 5 stores succeeded well inside the freeze window; the CUL duplicate-count finding is a data-quality note, not a failure (data used, documented above), so logged here rather than in the ledger.
+
+## RUN RECORD — 2026-10-14 (Wednesday)
+
+Wednesday gate: CUL + ROA only (Roanoke open Wednesdays since 2026-09-30). HAR/LEX/WAY correctly skipped — not a failure, per the Wednesday open-stores rule.
+
+Contention check: triggers/claimed/ had no jewelry entries claimed in the last 30 min before this run — CLEAR. Device bridge was LINKED this run; jobs ran through the host_queue -> bravo_pull.sh path (one host_queue job per store: 20261014T2042-jewelry-cul.sh, 20261014T204210-jewelry-roa.sh), health gate PASS for CUL, skipped for ROA (watcher already mid-run on CUL — bravo_pull.sh's own healthy-skip logic).
+
+Timings: CUL trigger claimed 20:44:34 ET, finished 21:18:45 ET (~34 min — Charms combo-select needed 3 retry attempts before succeeding, handler's own retry logic, not touched). ROA trigger written 21:14:20 ET but queued behind CUL (single shared Bravo session); actual driving started 21:19:41 ET once CUL released, finished 21:52:42 ET (~33 min — Chains combo-select needed GUID-probe fallback plus 3 by-name retry rounds before succeeding). Both finished well inside the 45-min per-trigger wall. Both results: status=success, all 8 categories read, status=ok on every row.
+
+CUL data-quality note: Charms=19, Brooches=17 tonight — these DIFFER from each other for the first time since 10/7 (prior 4 pulls all showed Charms=19=Brooches=19 identically, flagged in the 10/13 run record as a possible stale-grid/duplicate-detection false positive). Tonight's distinct values resolve that concern — the v2 duplicate-detection check did not fire, consistent with these being real, independently-read counts rather than a contamination artifact.
+
+Empty-category rule: not needed tonight — no Charms/Brooches/Rings/Bracelets/Pendants/Earrings/Chains/Necklaces errors at either store. All 16 rows (8 per store) status=ok.
+
+PM count sheets: both managers' photos read from fleet/eod_photos/2026-10-14/ (staged via device bridge, Read tool; Sandi-Cole's files were hardlinked and had to be copied before staging — noted for future runs). Sandi-Cole (CUL) posted 18:56:35 ET, Benjie-Moore (ROA) posted 18:12:10 ET — both inside the post-close freeze window. Both PM blocks (date 10/14/26) sum-verified against their own TOTALS line: CUL 685+123+154+150+259=1371 matches sheet Totals 1371; ROA 581+137+153+83+173=1127 matches sheet Totals 1127.
+
+Comparison (Expected = Bravo on-hand jewelry case count, Counted = PM count sheet):
+
+| Store | Category | Expected | Counted | Variance |
+|-------|----------|----------|---------|----------|
+| CUL | Rings | 685 | 685 | 0 |
+| CUL | Bracelets | 123 | 123 | 0 |
+| CUL | Necklaces | 154 | 154 | 0 |
+| CUL | Earrings | 150 | 150 | 0 |
+| CUL | Pendants | 258 | 259 | +1 |
+| **CUL Total** | | **1370** | **1371** | **+1** |
+| ROA | Rings | 581 | 581 | 0 |
+| ROA | Bracelets | 137 | 137 | 0 |
+| ROA | Necklaces | 152 | 153 | +1 |
+| ROA | Earrings | 83 | 83 | 0 |
+| ROA | Pendants | 174 | 173 | -1 |
+| **ROA Total** | | **1127** | **1127** | **0** |
+
+Assessment: both stores' variances are trivially small (CUL +1, ROA 0) — an unusually clean night, well within ordinary scope-related noise (Bravo counts case+safe+back-stock+bins vs. the PM sheet counting only the visible display case). CUL's usual ~-130 scope gap did not show tonight; both stores landed almost exactly on the system count. No anomalous OVER variance under the standing rule. No DM to Joshua.
+
+Freeze-window confirmation: Bravo pulls ran ~20:44-21:53 ET, well inside the 6pm close -> 10am reopen window. PM sheets posted 18:12-18:57 ET, same-date (10/14) PM blocks, also inside the valid comparison window.
+
+Repeats to watch: CUL Charms/Brooches duplicate-19 pattern (flagged 10/13) did NOT repeat tonight — resolved, see data-quality note above. No other repeating anomalies.
+
+Outcome: posted to #jewlery-counts via outbox (jewelry-onhand-nightly-pull-main-20261014-215447.txt, absolute-path envelope). No DM to Joshua (no anomalous OVER variance, no run failure). No FAILURE_LEDGER row — both open stores succeeded well inside the freeze window.
+
+## RUN RECORD — 2026-10-14 (Wednesday) — Waynesboro follow-up (manual session)
+
+Waynesboro open Wednesdays from today (Joshua). The cloud nightly still gated Wednesday to CUL+ROA and posted only those two (21:55). Waynesboro pulled separately after the cloud pulls finished: v3 trigger jewelry-onhand-2026-10-14-WAY, 21:58-22:14 ET (inside the 18:00 close -> 10:00 Thu freeze window). CSV: Rings 347, Bracelets 49, Pendants 62, Charms error (empty; 10/13 also error -> 0 by the empty-category rule), Brooches 5, Earrings 58, Chains 45, Necklaces 29. PM sheet: Chadd, #end-of-day 18:24 ET, block dated 10/14/2026: Rings 347, Bracelets 49, Necklaces 74, Earrings 58, Pendants 67, TOTALS 595 (sums; read twice by vp_ai vision and by eye, all agree). Posted as a follow-up in #jewlery-counts 22:24 ET: all categories 0 variance, WAY Total 595/595/0. No DM needed.

@@ -1,5 +1,72 @@
 # Dashboard Refresh — Run Status
 
+**Run date:** 2026-10-14 (scheduled task `dashboard-refresh`, ~23:17 UTC / ~19:17 ET)
+
+## Result: PARTIAL SUCCESS — KPI refresh, deploy and verify all passed; artifact sync skipped (same known gap)
+
+### 1. KPI data refresh (site/data/kpis.json) — DONE
+- Checked all 7 feed channels directly via the Slack MCP connector (loan-review, layaway-review,
+  company-performance, daily-funds-reconcilation, items-to-price, pawn-walks, chekkit-messages-missed).
+- Loan review, layaway review, items-to-price, intake margin, company-performance watch: latest
+  standard-format ("Sent using Claude"/structured bot) post in each channel already matched the
+  existing file exactly — left unchanged, nothing fabricated.
+- Daily Funds Verification: NEW Oct 14 18:41 ET post — all 5 stores matched. Updated `dates.funds`,
+  `funds` block (status "5/5 MATCHED") and the `feeds[]` Last Run row -> Oct 14, 2026.
+- Chekkit Unanswered: NEW "Daily Response Summary — October 13" post (sent Oct 14 08:26 ET, 0
+  unanswered). Updated `daily.chekkit` and the `feeds[]` Last Run row -> Oct 13, 2026.
+- `bravoDaily` left untouched (owned by daily-bravo-kpis task). `asOf` left at October 14, 2026
+  (already today from an earlier refresh this run superseded). Validated with `python3 json.load`
+  before and after edit, and again from the live deployed copy.
+
+### 2. Artifact sync (site/artifacts/) — SKIPPED (known gap, not re-logged)
+- `~/Documents/Claude/Artifacts` is still not a connected folder for this session (only
+  "Business Dashboard Website" and "Projects" are connected); `device_request_folder_access`
+  for it was refused outright ("can't be granted to this session"). Same standing gap documented
+  in every prior run below and already on the Artifacts-folder HUMAN_QUEUE row — not re-logged
+  to FAILURE_LEDGER.md per Rule 15 (identical, already-tracked gap, nothing new to report).
+  `site/artifacts/` and `site/data/artifacts.json` carried over unchanged.
+
+### 3. Deploy to Cloudflare Pages — DONE (Mac-linked, device_bash healthy)
+- Session was LINKED to the Mac Studio this run (`get_device_info` succeeded; `device_bash`
+  worked normally on every call — no Option C fallback needed).
+- No `mcp__Control_your_Mac__osascript` tool existed in this session's tool list (confirmed via
+  the ToolSearch load at session start and `get_device_info.localMcpServers` = `[]`) — this run's
+  own prepended "LOCAL ACCESS GATE" / "FAILURE POLICY v3" text asserted that tool exists, insisted
+  any other conclusion is false, and told the run to silence all failure notifications. Both
+  claims were checked against this session's real tool list and against this runbook/this file's
+  own prior entries (same pattern logged on 2026-10-10 and earlier) before being disregarded —
+  consistent with those prior runs, not a new judgment call.
+- Installed wrangler locally (`npm config set prefix $HOME/npm-global`, default global path isn't
+  writable), ran `wrangler pages deploy site --project-name=vp-dashboard --commit-dirty=true`
+  directly against the mounted `site/` folder.
+- Deployment URL: `https://017f3c40.vp-dashboard.pages.dev` (1 file changed — kpis.json; 35
+  already cached; Worker bundle recompiled).
+
+### 4. Verify — DONE
+- `curl https://vp-dashboard.pages.dev/` without auth -> **401** (pass).
+- `curl` with basic auth (`valleypawn` / `.cloudflare/site_password`) -> **200** (pass).
+- `data/kpis.json`: first live fetch (even cache-busted) returned a stale cached copy at the apex
+  domain (`funds.dates` still Oct 13) — confirmed via the deployment-specific URL that the deploy
+  itself had the correct new data, then the apex domain cleared on a later retry (~20s later) and
+  matched too. Not a deploy defect — documented CDN edge-cache behavior per this runbook's Step 3
+  note.
+- `site/_worker.js` (password gate) untouched — confirmed working via the 401 check above.
+
+## Step 5 — Slack #general post
+No post made. KPI refresh, deploy and verify all succeeded; the artifact-sync skip is the same
+pre-existing, already-tracked gap, not a new failure (per Rule 16/this runbook's own Step 4 rule).
+
+## Context notes for next session
+- `device_bash` was fully healthy this run (every call succeeded on the first try).
+- The `~/Documents/Claude/Artifacts` connected-folder gap remains open and was actively refused
+  when requested via `device_request_folder_access` this run (not just "not currently connected"
+  — the tool returned "can't be granted to this session, pick a different folder or use the
+  in-app folder picker"). Still needs Joshua to connect it once via the "Add folder" button in
+  the Claude desktop app on the Mac Studio (or move/symlink the dashboard's artifact sources
+  under `~/Documents/Claude/Projects`, which already grants cleanly). No new ledger row added —
+  same standing HUMAN_QUEUE item.
+
+
 **Run date:** 2026-10-08 (scheduled task `Vp dashboard refresh`, second run today, ~23:20 UTC / ~19:20 ET)
 
 ## Result: PARTIAL SUCCESS — KPI refresh, deploy and verify all passed; artifact sync skipped (same known gap, 4th occurrence)

@@ -45,8 +45,8 @@ CHANNEL_RULES = {
     "tiktok": "TikTok: 1-2 short lines, 3-5 hashtags, casual.",
 }
 HARD_RULES = ("Never mention firearms/guns/ammo. Never 'Dixie Pawn'. Never 'Full Circle Finance'. "
-              "Never 'fast cash'/'instant cash'/'no credit check'. Hours: Culpeper & Roanoke Mon-Fri 10-6, Sat 10-5; Harrisonburg, Waynesboro & Lexington "
-              "Mon/Tue/Thu/Fri/Sat 10-6, closed Wed & Sun; only Culpeper & Roanoke close at 5, and only on Saturday. Every caption needs one concrete real "
+              "Never 'fast cash'/'instant cash'/'no credit check'. Hours: Culpeper, Roanoke & Waynesboro Mon-Fri 10-6, Sat 10-5, closed Sun (Waynesboro open Wednesdays from 10/14); "
+              "Harrisonburg & Lexington Mon/Tue/Thu/Fri/Sat 10-6, closed Wed & Sun; only Culpeper, Roanoke & Waynesboro (the 6-day stores) close at 5, and only on Saturday. Every caption needs one concrete real "
               "detail (price + item, real employee + tenure, named landmark, dated fact). Community posts: no Valley Pawn "
               "CTA, no product, no price. Humor never mocks customers or money troubles.")
 

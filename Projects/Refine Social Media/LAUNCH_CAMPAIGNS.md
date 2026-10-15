@@ -119,7 +119,7 @@ thevalleypawn.com/follow. New giveaway every month. Reply STOP to opt out.
     </div>
 
     <p style="font-size:12px;color:#666;margin-top:12px;">
-      Culpeper & Roanoke: Mon–Fri 10am–6pm, Sat 10am–5pm. Harrisonburg, Waynesboro & Lexington: Mon, Tue, Thu, Fri & Sat 10am–6pm (closed Wed & Sun).
+      Culpeper, Roanoke & Waynesboro: Mon–Fri 10am–6pm, Sat 10am–5pm. Harrisonburg & Lexington: Mon, Tue, Thu, Fri & Sat 10am–6pm (closed Wed & Sun).
     </p>
   </div>
 

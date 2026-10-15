@@ -1,8 +1,8 @@
 # Bravo POS — Complete Screen & Report Map
 
-_Generated 2026-10-13 22:53 by `bravo_map_compile.py` from BravoMapper's read-only crawl. Do not hand-edit; add human notes to the `bravo-context` skill instead._
+_Generated 2026-10-14 22:33 by `bravo_map_compile.py` from BravoMapper's read-only crawl. Do not hand-edit; add human notes to the `bravo-context` skill instead._
 
-**Status:** IN PROGRESS (resumes nightly) · 58 steps mapped · 0 steps could not be mapped · last crawler state: `2026-10-13 22:52:53 ABORT no-dashboard after R_Inter_Store_Cash_Transfer`
+**Status:** IN PROGRESS (resumes nightly) · 59 steps mapped · 0 steps could not be mapped · last crawler state: `2026-10-14 22:32:21 ABORT no-dashboard after R_Large_Cash_In_Transactions`
 
 Raw data: `output/bravo_map/` — `screens/` (full UI tree per screen), `shots/` (screenshots), `lists/` (report lists, Custom Reports criteria / columns / saved reports), `index.tsv`, `RUN_LOG.md`.
 
@@ -551,6 +551,15 @@ Screenshot: `output/bravo_map/shots/R_Inter_Store_Cash_Transfer.png`
 - **Fields:** BravoDateEdit; BravoComboBox
 - **Buttons:** Cancel; Done `btnDone`; Preview; Print
 
+### Report: Large Cash In Transactions
+_key `R_Large_Cash_In_Transactions` · captured 2026-10-14 22:30:50 · Bravo     2026.6.0.79     VALLEY PAWN - WAYNESBORO (WAY)_
+Screenshot: `output/bravo_map/shots/R_Large_Cash_In_Transactions.png`
+
+- **Labels:** Amount; Reporting Dates; Show summary; Group by Customer; Show Only Transactions Over the Threshold Amount; Ok; Cancel; Done; Preview; Print; 8300 Audit; BRAVO Business Dashboard; Deposits and Paid Outs Spreadsheet; Disbursement Journal; End of Day; End of Day - Consolidated; End of Month; Fortis Alignment; General Exception; Inter-Store Cash Transfer; Large Cash In Transactions; Large Cash Out Transactions; Safe Register Journal; Session Journal; Store Register Journal; Till Cash Balance; Till Register Journal; Transfers; Closing Reports; Aged Inventory Summary; Cost Adjustment; Inventory Base; Inventory by Location; Item History; Lost Stolen or Damaged; Vendor Purchase; Vendor Repairs; Inventory Reports; Loan Base; Loan Disposition … +25 more
+- **Fields:** BravoSpinEdit; BravoSpinEdit `PART_Editor`; BravoDateEdit
+- **Buttons:** (no label) `PART_SpinUpButton`; (no label) `PART_SpinDownButton`; Cancel; Done `btnDone`; Preview; Print
+- **Checkboxes:** Show summary; Group by Customer; Show Only Transactions Over the Threshold Amount
+
 ## Dashboard task tiles
 
 ### Dashboard tile: Layaways Overdue
@@ -683,3 +692,5 @@ Screenshot: `output/bravo_map/shots/T_Web_Offers.png`
 - 2026-10-12 22:42 mode=full end='2026-10-12 22:40:48 ABORT no-dashboard after R_General_Exception' steps_done_total=57 (+1 this run) failed_keys=11 health=PASS CUL
 - 2026-10-13 22:53 recovered from '2026-10-13 22:52:53 ABORT no-dashboard after R_Inter_Store_Cash_Transfer' (health=PASS CUL)
 - 2026-10-13 22:53 mode=full end='2026-10-13 22:52:53 ABORT no-dashboard after R_Inter_Store_Cash_Transfer' steps_done_total=58 (+1 this run) failed_keys=12 health=PASS CUL
+- 2026-10-14 22:33 recovered from '2026-10-14 22:32:21 ABORT no-dashboard after R_Large_Cash_In_Transactions' (health=PASS CUL)
+- 2026-10-14 22:33 mode=full end='2026-10-14 22:32:21 ABORT no-dashboard after R_Large_Cash_In_Transactions' steps_done_total=59 (+1 this run) failed_keys=13 health=PASS CUL

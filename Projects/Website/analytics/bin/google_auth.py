@@ -39,10 +39,20 @@ def _token_blob() -> dict:
 
 
 def scopes() -> list[str]:
+    """Scopes the refresh token REALLY holds, read from Google's refresh response.
+    2026-10-14: Scheduled/_shared/sheets_helper.py rewrites this token file with only its own
+    `spreadsheets` scope listed whenever it refreshes, which made the file's "scopes" field lie
+    (the refresh token itself still carries analytics + search). Never trust the file field."""
     try:
-        return list(_token_blob().get("scopes", []))
+        _refresh()
+        return list(_cache.get("scopes") or [])
     except NeedsGrant:
         return []
+    except Exception:
+        try:
+            return list(_token_blob().get("scopes", []))
+        except NeedsGrant:
+            return []
 
 
 def has_scope(scope: str) -> bool:
@@ -50,9 +60,14 @@ def has_scope(scope: str) -> bool:
 
 
 def access_token(require: str | None = None) -> str:
+    tok = _refresh()
+    if require and require not in (_cache.get("scopes") or []):
+        raise NeedsGrant(f"refresh token lacks scope {require}. {GOOGLE_SETUP_HINT}")
+    return tok
+
+
+def _refresh() -> str:
     blob = _token_blob()
-    if require and require not in blob.get("scopes", []):
-        raise NeedsGrant(f"cached token lacks scope {require}. {GOOGLE_SETUP_HINT}")
     if _cache.get("tok") and _cache.get("exp", 0) > time.time() + 60:
         return _cache["tok"]
     data = urllib.parse.urlencode({
@@ -67,6 +82,7 @@ def access_token(require: str | None = None) -> str:
         j = json.loads(r.read().decode())
     _cache["tok"] = j["access_token"]
     _cache["exp"] = time.time() + int(j.get("expires_in", 3000))
+    _cache["scopes"] = (j.get("scope") or "").split()
     return _cache["tok"]
 
 

@@ -50,7 +50,7 @@ STORE_FACTS = {
     "Culpeper":     {"address": "571 James Madison Highway, Culpeper, VA 22701",
                      "hours": "Mon-Fri 10am-6pm, Sat 10am-5pm, closed Sun", "phone": "(540) 445-5510"},
     "Waynesboro":   {"address": "1321 West Broad Street, Waynesboro, VA 22980",
-                     "hours": "Mon, Tue, Thu, Fri, Sat 10am-6pm, closed Wed & Sun", "phone": "(540) 221-6346"},
+                     "hours": "Mon-Fri 10am-6pm, Sat 10am-5pm, closed Sun", "phone": "(540) 221-6346"},
     "Harrisonburg": {"address": "1790 East Market Street, Suite 22, Harrisonburg, VA 22801",
                      "hours": "Mon, Tue, Thu, Fri, Sat 10am-6pm, closed Wed & Sun", "phone": "(540) 574-4500"},
     "Lexington":    {"address": "125 Walker Street, Lexington, VA 24450",

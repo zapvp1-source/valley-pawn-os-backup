@@ -98,7 +98,7 @@ def block(deals):
             '<p>Hand-picked markdowns from our five stores. New deals drop every week — while they last.</p>'
             '<div style="display:flex;flex-wrap:wrap;gap:20px;">' + "".join(card(d) for d in deals) + '</div>'
             '<p style="margin-top:20px;font-size:14px;color:#555;">Prefer email? Our subscribers get these deals first every Thursday. '
-            'Culpeper &amp; Roanoke: Mon–Fri 10 AM–6 PM, Sat 10 AM–5 PM. Harrisonburg, Waynesboro &amp; Lexington: Mon, Tue, Thu, Fri &amp; Sat 10 AM–6 PM '
+            'Culpeper, Roanoke &amp; Waynesboro: Mon–Fri 10 AM–6 PM, Sat 10 AM–5 PM. Harrisonburg &amp; Lexington: Mon, Tue, Thu, Fri &amp; Sat 10 AM–6 PM '
             '(closed Wed &amp; Sun). What’s Right Is Right.</p></div>\n<!-- /wp:html -->\n' + END)
 
 

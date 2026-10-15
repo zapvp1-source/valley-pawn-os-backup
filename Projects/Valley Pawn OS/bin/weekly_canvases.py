@@ -69,6 +69,17 @@ TASK = {"loan": ("weekly-loan-review-canvas-refresh", "F0BH6BJ0PK7"),
         "aged": ("weekly-aged-inventory-canvas-refresh", "F0BHDL6AULU"),
         "store": ("weekly-store-perf-canvas-refresh", "F0BH6S9U5FX")}
 LAYAWAY_CANVAS = "F0BJ48BMZGQ"
+# 2026-10-14 (canvas restricted_action fix): the original 5 canvases are Joshua-owned (created by the Cowork
+# connector) and the bot only has READ on them, so canvases.edit -> restricted_action. Bot-owned replacements
+# made by bin/canvas_migrate.py are recorded in fleet/canvas_state/canvas_ids.json; when present they win.
+try:
+    _IDS = json.load(open(os.path.join(STATE_DIR, "canvas_ids.json")))
+    for _k, _v in (_IDS.get("canvases") or {}).items():
+        if _k in TASK and (_v or {}).get("id"):
+            TASK[_k] = (TASK[_k][0], _v["id"])
+    LAYAWAY_CANVAS = TASK["layaway"][1]
+except (OSError, ValueError):
+    pass
 
 
 class Hold(Exception):

@@ -96,7 +96,7 @@ We've been the people who say yes when the bank says no for over a decade, with 
 **[Button: Find your nearest store →]** *(links to /locations)*
 
 *Five Valley Pawn stores: Culpeper · Waynesboro · Harrisonburg · Lexington · Roanoke.*
-*Culpeper & Roanoke: Mon–Fri 10am–6pm, Sat 10am–5pm. Harrisonburg, Waynesboro & Lexington: Mon, Tue, Thu, Fri & Sat 10am–6pm (closed Wed & Sun).*
+*Culpeper, Roanoke & Waynesboro: Mon–Fri 10am–6pm, Sat 10am–5pm. Harrisonburg & Lexington: Mon, Tue, Thu, Fri & Sat 10am–6pm (closed Wed & Sun).*
 
 **What's Right Is Right.**
 

@@ -177,6 +177,17 @@ def _slack_call(token, method, payload):
 
 
 def slack_dm(text):
+    # 2026-10-14: folded into the ONE morning fleet scorecard DM (bin/fleet_scorecard.py, 07:15), which
+    # reads FLEET_HEALTH.md. Report + state still written. Remove owns_dms from
+    # fleet/state/fleet_scorecard.json to restore the separate DM.
+    try:
+        _sc = json.load(open(os.path.join(os.path.expanduser("~/Documents/Claude/Projects/Valley Pawn OS"),
+                                          "fleet/state/fleet_scorecard.json")))
+        if _sc.get("owns_dms") and not DRY:
+            print("DM folded into the morning fleet scorecard (not sent):\n" + text)
+            return True
+    except Exception:
+        pass
     if DRY:
         print("[dry-run] would DM:\n" + text)
         return True

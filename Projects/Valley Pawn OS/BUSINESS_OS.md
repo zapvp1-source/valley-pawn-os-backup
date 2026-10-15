@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-10-13
+# LIVE STATE - auto-refreshed 2026-10-14
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -14,14 +14,14 @@ below disagrees with this block, THIS BLOCK WINS.
 |---|---|
 | Task folders on disk | 236 |
 | Registered with scheduler | 232 |
-| Enabled (will fire) | 8 |
-| Registered but disabled | 224 |
+| Enabled (will fire) | 7 |
+| Registered but disabled | 225 |
 | On disk but never registered | 4 |
-| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 968 |
+| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 391 |
 
 ### Enabled tasks
 
-`daily-dress-code-check`, `gun-safety-cert-followup-20261015`, `gusto-keep-alive`, `mobilepawn-bravo-reply-check`, `northwest-registered-agent-daily-check`, `preston-call-load-after-limit-change-20261015`, `tuesday-supply-prep`, `vp-hiring-pipeline`
+`daily-dress-code-check`, `gun-safety-cert-followup-20261015`, `mobilepawn-bravo-reply-check`, `northwest-registered-agent-daily-check`, `preston-call-load-after-limit-change-20261015`, `tuesday-supply-prep`, `vp-hiring-pipeline`
 
 ### On disk but NOT registered (never fire)
 
@@ -151,35 +151,37 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-10-13 | Valley Pawn OS | - |
-| 2026-10-13 | Unified Search | - |
+| 2026-10-14 | Valley Pawn OS | - |
+| 2026-10-14 | Unified Search | - |
+| 2026-10-14 | Bravo Data Extraction | STATUS.md |
+| 2026-10-13 | Zoom Call Pipeline | - |
+| 2026-10-13 | Website | - |
+| 2026-10-13 | Valuation Core | README.md |
+| 2026-10-13 | Training Program | STATUS.md |
+| 2026-10-13 | Taxes 2026 | - |
+| 2026-10-13 | Sold Margin Review | STATUS.md |
 | 2026-10-13 | Short Term Rental Optimization | - |
-| 2026-10-13 | Bravo Data Extraction | STATUS.md |
-| 2026-10-12 | Zoom Call Pipeline | - |
-| 2026-10-12 | Website | - |
+| 2026-10-13 | Preston Knowledge Base | - |
+| 2026-10-13 | Precious Metals Settlements | - |
+| 2026-10-13 | Pawn Walks | STATUS.md |
+| 2026-10-13 | Life OS | - |
+| 2026-10-13 | Jewelry Loan Growth | - |
+| 2026-10-13 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-10-13 | Human Resources | - |
+| 2026-10-13 | Health Optimization | STATUS.md |
+| 2026-10-13 | Discount Outlier Review | STATUS.md |
+| 2026-10-13 | Deep KPI analysis | - |
+| 2026-10-13 | Daily Funds Verification | - |
+| 2026-10-13 | Compliance | - |
+| 2026-10-13 | Claude outputs | - |
+| 2026-10-13 | Business Dashboard Website | - |
 | 2026-10-12 | Refine Social Media | - |
-| 2026-10-12 | Preston Knowledge Base | - |
-| 2026-10-12 | Precious Metals Settlements | - |
-| 2026-10-12 | Life OS | - |
-| 2026-10-12 | Jewelry Loan Growth | - |
-| 2026-10-12 | Jewelry Count Reconciliation | STATUS.md |
-| 2026-10-12 | Health Optimization | STATUS.md |
 | 2026-10-12 | Email Refinement | - |
-| 2026-10-12 | Daily Funds Verification | - |
-| 2026-10-12 | Compliance | - |
 | 2026-10-12 | Communcations | - |
-| 2026-10-12 | Business Dashboard Website | - |
 | 2026-10-12 | Ask Valley Pawn | STATUS.md |
 | 2026-10-12 | Ai Optimized Marketing | - |
 | 2026-10-11 | eBay | - |
-| 2026-10-11 | Valuation Core | README.md |
-| 2026-10-11 | Sold Margin Review | STATUS.md |
-| 2026-10-11 | Pawn Walks | STATUS.md |
-| 2026-10-11 | Discount Outlier Review | STATUS.md |
-| 2026-10-09 | Training Program | STATUS.md |
-| 2026-10-09 | Human Resources | - |
 | 2026-10-08 | _scratch | - |
-| 2026-10-08 | Taxes 2026 | - |
 | 2026-10-08 | Preston Time Review | STATUS.md |
 | 2026-10-08 | Bonus Program | - |
 | 2026-10-07 | Controlio Monitoring | - |
@@ -189,8 +191,6 @@ below disagrees with this block, THIS BLOCK WINS.
 | 2026-10-02 | eBay Customer Campaign | - |
 | 2026-10-02 | MobilePawn Participation | README.md |
 | 2026-10-02 | Gift Card & Store Credit | README.md |
-| 2026-10-01 | Solaterra Site | - |
-| 2026-09-30 | VP Ops Engine | STATUS.md |
 
 <!-- LIVE-STATE:END -->
 
@@ -1010,6 +1010,8 @@ Current build order, subject to Joshua's redirects.
 | 2026-07-23 | **Waynesboro to 6 days/week** (Mon–Sat 10–6, closed Sun; first open Wednesday 2026-07-29). Propagated in one session: **website** (38 pages/posts incl. homepage banner, FAQ, location/landing/spoke pages, footer template part `assembler//footer`, WPCode snippets 738 JSON-LD + 742 llms.txt); **Mac-side facts** (daily-clockin-check, chekkit-unanswered-alert, vp-ai-search-health-check, vp-website-deals-weekly SKILL.mds; vp_social_publisher STORE_FACTS; canonical_nap.json; G&S generate_store_pages + content; AI-GEO faq/city-snippets — backups `*.bak-2026-07-23`); **Brevo** (Template 11 Waynesboro block + footer line, staged campaigns 27–30 & 43 patched, announcement campaign #52 preflight-PASS scheduled Fri 7/24 10 AM to lists 3+10); **GBP** Waynesboro Wednesday 10–6 (edit pending Google review); **Facebook** page Hours field updated + FB (Waynesboro+Brand) & GBP announcement posts via Publer 7/23 4 PM; **Chekkit** one-time text campaign "Waynesboro 6 Days a Week 07/23/26" to 1,263 Waynesboro contacts (1,088 valid, sent 7/23 ~3:15 PM); also corrected 2 same-day hiring posts that said "closed Wednesdays" for Waynesboro. Staged `VALLEY_PAWN_CONTEXT_DELTA_2026-07-23.md` (Joshua applies in Settings → Capabilities). **PENDING:** Bing Places / Apple Business Connect / Nextdoor need one-time manual logins before hours can push; Yelp Waynesboro mid-claim (fold into 7/30 Yelp one-shot); Foursquare/YP/MapQuest skipped (no session/no UI). | Joshua: "we are opening waynesboro 6 days a week starting next week" — full-platform propagation. |
 | 2026-07-27 | **REVERSED the Waynesboro 6-day change** — employee no-show; Waynesboro stays Mon, Tue, Thu, Fri & Sat 10–6 (closed Wed & Sun). Rolled back: website (all 20 pages/posts + footer template part + WPCode snippets 738/742), Mac-side files (13 restored from `*.bak-2026-07-23`), Brevo (Template 11 + campaigns 27–30/43 restored from `brevo_backups_2026-07-23/`; announcement campaign #52 never sent — was suspended — renamed "CANCELLED — DO NOT SEND"), GBP Wednesday → Closed (edit pending), Facebook page Hours Wednesday cleared, all 3 published announcement posts DELETED (Waynesboro FB, Brand FB, GBP), Bing re-syncs from Google automatically. Chekkit correction text "Waynesboro Hours Correction 07/27/26" sent to the same 1,087-contact audience (1,073 valid). Delta file renamed CANCELLED_. Joshua had saved the 6-day skill — an ORIGINAL-hours .skill was sent back for him to re-save. | Joshua 2026-07-27: "we need to reverse all of this, employee never showed so we will be back closed on wed." |
 | 2026-10-01 | **Roanoke to 6 days/week** (Mon–Sat 10–6, closed Sun; first open Wednesday 2026-09-30). Propagated in one session across skills (valley-pawn-context, directory-listing-monitor), Mac-side scripts/configs + scheduled-task prompts (backups `*.bak-pre-roanokewed-20261001`, `fleet/skill_backups/roanokewed-20261001/`), website (`website_backups_roanokewed_2026-10-01/`), Brevo (`brevo_backups_2026-10-01_roanokewed/`, announcement #78), GBP (pending review), Facebook Hours, Zoom queue 812, Chekkit, Publer posts, Chekkit SMS. Open listing logins in OPEN_ITEMS_REGISTER. See CHANGELOG 2026-10-01. | Joshua 2026-10-01: "update the Roanoke hours to be open wednesday just like culpeper ... all listings ... let the customer base know." |
+| 2026-10-14 | **Waynesboro to 6 days/week** (Mon–Sat 10–6, closed Sun; first open Wednesday 2026-10-14). Joshua: "Wednesday should be included in everything." Wednesday = Culpeper + Roanoke + Waynesboro; Harrisonburg & Lexington stay closed Wed & Sun. Native gates + config + social facts updated (CHANGELOG 2026-10-14 "Waynesboro open Wednesdays — all gates"). Website, Brevo, GBP/BrightLocal, Zoom queue hours and cloud task prompts: see the follow-up entry below. |
+| 2026-10-14 | **Waynesboro closes 5 PM Saturdays** (Joshua 2026-10-14: the 6-day-store rule applies) — Waynesboro now Mon–Fri 10–6, Sat 10–5, closed Sun, same as Culpeper & Roanoke; first affected Saturday 10/17. Done: native config/code + social validators, website (92 items + WPCode 1529/742/738), Zoom queue 806 hours + closed-hours greeting, eBay campaign builder, hiring caption, AI-search local copies. Not done: BrightLocal/listings (sign-in), Brevo templates (new script not on host allow-list), cloud task prompts, account skills. See CHANGELOG 2026-10-14 "Waynesboro hours public + Sat 5 PM". | Joshua 2026-10-14: "fix all this without me." |
 
 ---
 
