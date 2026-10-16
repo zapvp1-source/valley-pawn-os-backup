@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-10-14 22:11 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-10-15 22:14 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -317,6 +317,12 @@ RULE: Preston challenges implausible purity write-ups — e.g. a chain written u
 PRESTON SAID: "Chain S999 1.7 dwt - $1 - Written up as pure silver. Is this accurate?"
 SOURCE: #loans-and-buys (C03GBDKSLRE) | 2023-10-30 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1698672601910159
 id: fraud-detection-purity-claim-4c2b2dd0
+
+### [MEDIUM] ram-testing-before-buying
+RULE: Only buy RAM in if you can install it in a gaming PC at the store and test it. If you can't test it, don't take it in.
+PRESTON SAID: "If you have a gaming pc there you should be able to install them and test. Otherwise I wouldn't take them in."
+SOURCE: #deal-questions (Preston Peters, Operations Manager) | 2026-10-15 | https://valleypawnworkspace.slack.com/archives/C03BWGT5F5X/p1792101122579589
+id: ram-testing-before-buying-00ee62d3
 
 
 ==============================================================================
@@ -907,6 +913,12 @@ RULE: As of Nov 2025 the Bravo gold estimator was set at 50% for loan and 55% fo
 PRESTON SAID: "Right now loan is set to 50% and buy 55%"
 SOURCE: DM Joshua<->Preston | 2025-11-11 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1762886525533149
 id: estimator-loan-vs-buy-rates-255653b7
+
+### [MEDIUM] firearm-denied-customer-return-of-gun
+RULE: If a customer is denied on a firearm transfer, do not hand a gun back to him on your own. Explain the situation to him, and make calls to confirm it is legal before returning any firearm.
+PRESTON SAID: "Yeah, and just make sure he understands what's going on and why. And if he wants to try to get his gun back, we've got to make some phone calls to make sure we're legally allowed to do so."
+SOURCE: zoom-call:2026-10-13_1126_uriah-tiglao_0435.txt | 2026-10-13 | store<->Preston (transcribed 2026-10-01)
+id: firearm-denied-customer-retu-b5db8000
 
 ### [MEDIUM] firearm-loan-vs-retail-ratio
 RULE: A firearm loan should sit well below our own retail price — on a pistol we retail at $299.99, the loan should be around $200 (~67%), not $275.
@@ -1753,6 +1765,12 @@ PRESTON SAID: "you're supposed to call me two hours before shift starts. Physica
 SOURCE: zoom-call:aebe1af2b4a541ddbf5669fe7f782d67 | 2026-10-12 | UNK Walker Tapley
 id: call-out-notice-two-hours-789173d1
 
+### [MEDIUM] call-out-policy-notice
+RULE: Employees who will miss a shift must physically call Preston at least two hours before the shift starts, as soon as they know. The policy is written in the handbook.
+PRESTON SAID: "you're supposed to call me two hours before shift starts. Physically call me"
+SOURCE: zoom-call:2026-10-12_0956_walker-tapley_0302.txt | 2026-10-12 | store<->Preston (transcribed 2026-10-01)
+id: call-out-policy-notice-0eddd12a
+
 ### [MEDIUM] call-out-verbal-notice-required
 RULE: Calling out requires verbally telling Preston or a manager. Telling a coworker or sending a text is not enough, and a no-call/no-show is unacceptable.
 PRESTON SAID: "I need you to verbally say, you won't be in or calling out."
@@ -1873,11 +1891,23 @@ PRESTON SAID: "Behind the counter should be clean pawns should be put up."
 SOURCE: zoom-call:38fd73720bb342aeb12f016ed0618017 | 2026-10-12 | UNK Sandi Cole
 id: neat-clean-checklist-standar-5408e7f4
 
+### [MEDIUM] new-hire-offer-authority-90-days
+RULE: New employees shouldn't make offers on items until they are trained. Offer-making should be introduced gradually, around the 90-day mark.
+PRESTON SAID: "He's not trained for it. We gotta ease him into that, which is again, 90 days is where this should be getting into that stuff and we're not there by any means."
+SOURCE: zoom-call:de979520433c4c1da7628d74f4251685 | 2026-10-15 | UNK Walker Tapley
+id: new-hire-offer-authority-90--7257aa38
+
 ### [MEDIUM] new-hire-sales-goals-30-60-90
 RULE: New retail hires ramp through monthly sales goals of $7,000 for the first 30 days, $9,000 for the next 30, and $12,000 for days 60-90.
 PRESTON SAID: "But you go for for like the 30 days is going to be 7000 next 30 days 9000 and then 12,000 that kind of just ramps you into, you know, expected typical"
 SOURCE: zoom-call:2026-10-08_1207_Preston-to-JacobCox_9m48s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
 id: new-hire-sales-goals-30-60-9-2b8ffec8
+
+### [MEDIUM] no-guaranteed-offers-over-phone
+RULE: Don't guarantee a price over the phone. The offer depends on the item in hand, and if what the customer describes or looked up doesn't match what they bring in, the phone estimate doesn't hold.
+PRESTON SAID: "If what he looked up does not match what he physically has brought in the store, you know, that's why we can't guarantee any offer over the phone"
+SOURCE: zoom-call:de979520433c4c1da7628d74f4251685 | 2026-10-15 | UNK Walker Tapley
+id: no-guaranteed-offers-over-ph-7a28f468
 
 ### [MEDIUM] pawn-reload-amount-change
 RULE: A customer may sometimes want a reload for less or more than usual. Make sure a higher or lower amount makes sense before agreeing.
@@ -1902,6 +1932,12 @@ RULE: Every intake item requires a photo of the actual item, and photos must ref
 PRESTON SAID: "Aventon Pace 500 - No photo of item - Why are we not getting photos? 2 yesterday and one today."
 SOURCE: #loans-and-buys | 2024-03-15 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1710509400000000
 id: photo-required-every-item-cb8ff861
+
+### [MEDIUM] ram-untested-ebay-comps
+RULE: For RAM that isn't new or sealed and can't be tested in-store, check eBay prices for "UNTESTED RAM" first. This shows whether there is any worthwhile margin before making an offer.
+PRESTON SAID: "Anything like this, if they are not new, still sealed, and I have no way of testing them, I first check to see with the market is like on Ebay for UNTESTED RAM to see if we can even make anything worth while."
+SOURCE: #deal-questions (Uriah Tiglao, Lexington manager) | 2026-10-15 | https://valleypawnworkspace.slack.com/archives/C03BWGT5F5X/p1792101005062159
+id: ram-untested-ebay-comps-4becf83a
 
 ### [MEDIUM] red-flag-bulk-new-in-box
 RULE: Multiple identical new-in-box items from a new customer, or a batch of new-in-box items from someone out of state, is a pattern Preston flags and asks for the story behind.
@@ -1932,6 +1968,12 @@ RULE: Returns/warranty coverage on used items is limited to 30 days. Issues rais
 PRESTON SAID: "It's not within 30 days like our policy covers."
 SOURCE: zoom-call:b7985902fd5c481cb3c1de9b038e8437 | 2026-08-29 | HAR Preston Peters
 id: return-policy-30-days-used-i-da6df0c4
+
+### [MEDIUM] sales-by-associate-report
+RULE: To see an associate's sales numbers, run the Reports > Sold Inventory report and group it by associate. This lets a new hire compare their numbers with others over the same period.
+PRESTON SAID: "I would run the report, you know, where you go to reports, sold inventory and then you group by associate."
+SOURCE: zoom-call:2026-10-08_1312_benjie-moore_0424.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
+id: sales-by-associate-report-3788ba52
 
 ### [MEDIUM] sales-goal-measurement-period
 RULE: Training sales goals are measured over 30-day periods from the employee's start date, not by calendar month.
@@ -2014,17 +2056,41 @@ PRESTON SAID: "I'm pretty sure you receive it under the officer's name on behalf
 SOURCE: zoom-call:ec8e499beb574de68d5c45ff0b59dbbe | 2026-10-12 | UNK Chadd McClintic
 id: atf-police-department-transf-5695452f
 
+### [LOW] atf-police-dept-firearm-transfer-receiving
+RULE: When a police department buys a firearm and the transfer paperwork can't be entered the usual way, receive it in the system from the police department. Create an account for the department if possible. Preston was unsure of the exact procedure.
+PRESTON SAID: "I would receive it from the police department. If you can make an account for the police department or receive it from them."
+SOURCE: zoom-call:2026-10-12_0959_chadd-mcclintic_0857.txt | 2026-10-12 | store<->Preston (transcribed 2026-10-01)
+id: atf-police-dept-firearm-tran-e38d090f
+
+### [LOW] atf-police-dept-transfer-treat-as-private-transfer
+RULE: A firearm transfer to or from a police department can be handled much like a private transfer. List the police department on it, and add notes to the ATF record.
+PRESTON SAID: "I would treat it like through like, like a, like a private transfer essentially to a degree, but you're going to have the police department in, in, in there like, and you can make notes probably on the ATF record as well."
+SOURCE: zoom-call:2026-10-12_0959_chadd-mcclintic_0857.txt | 2026-10-12 | store<->Preston (transcribed 2026-10-01)
+id: atf-police-dept-transfer-tre-b6431f56
+
 ### [LOW] bank-account-adding-employees
 RULE: When adding employees to the business bank account, book an appointment online and tell the bank it will have to add them manually, because the account already has many people on it.
 PRESTON SAID: "Make sure when you do just tell them that they they're gonna have to manually add them because there's so many people on the account"
 SOURCE: zoom-call:2026-10-08_0949_Preston-to-Sandi_1m55s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
 id: bank-account-adding-employee-34f86c43
 
+### [LOW] bravo-issue-connectivity-not-card-reader
+RULE: The Bravo issue the store was seeing was described as a connectivity problem, not a card reader problem. Check connectivity first when Bravo acts up, and keep an eye on the card reader while using it.
+PRESTON SAID: "the Bravo issue is a connectivity issue."
+SOURCE: zoom-call:2a87d005551d47f5b7651e275779ae25 | 2026-10-15 | UNK Walker Tapley
+id: bravo-issue-connectivity-not-f4d86511
+
 ### [LOW] bravo-restart-troubleshooting
 RULE: When Bravo acts up, restarting the program may clear the problem. Culpeper had a similar issue and it stopped after a restart, though the source does not say what the issue was.
 PRESTON SAID: "We were having the a simular issue earlier. Restarted Bravo and since, no issue."
 SOURCE: #general (Sandra Cole, Culpeper manager) | 2026-10-09 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1791572618077869
 id: bravo-restart-troubleshootin-b2361800
+
+### [LOW] card-machine-issue-escalation
+RULE: When a credit card machine problem can't be fixed locally, such as an update that freezes on install, message the details to Preston and Josh in the chat. They forward it to the tech for help.
+PRESTON SAID: "Key message to that information to me and Josh in the chat and we'll forward it to the tech and see if they can give us any info on that."
+SOURCE: zoom-call:2026-10-08_1312_benjie-moore_0424.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
+id: card-machine-issue-escalatio-cd07339b
 
 ### [LOW] clearout-seller-company-documentation
 RULE: For clear-out company sellers, ask whether they have anything showing the company's name, such as paperwork or a card. This helps confirm the story behind the items.
@@ -2050,6 +2116,12 @@ PRESTON SAID: "The estimator's at a pretty reasonable number. Obviously, if we g
 SOURCE: zoom-call:38fd73720bb342aeb12f016ed0618017 | 2026-10-12 | UNK Sandi Cole
 id: estimator-buy-price-ded8587d
 
+### [LOW] exit-sign-battery-backup
+RULE: An exit sign is supposed to run on its backup battery during a power outage and light up. It was explained in the context of a fire marshal inspection item on a non-functioning exit sign.
+PRESTON SAID: "So it gets emergency power from the battery and it lights up."
+SOURCE: zoom-call:2a87d005551d47f5b7651e275779ae25 | 2026-10-15 | UNK Walker Tapley
+id: exit-sign-battery-backup-670a8e6a
+
 ### [LOW] feel-out-seller-story-in-conversation
 RULE: A seller's story can't be verified on paper. Judge it by talking with them while you work the deal.
 PRESTON SAID: "It's one of those things you kind of got to do in conversation while you're doing"
@@ -2062,6 +2134,12 @@ PRESTON SAID: "the serial numbers always on the receiver of the firearm."
 SOURCE: zoom-call:2026-10-08_1202_staff-x3983-to-Preston_3m54s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
 !! CONFLICT: Preston also says guns made before 1968 weren't required to have serial numbers, so "always on the receiver" does not hold for older guns.
 id: firearm-serial-location-rece-d09203ff
+
+### [LOW] firearm-trade-denied-refund
+RULE: When a firearm trade is denied at transfer, the system reverses it as if we bought the customer's traded gun and sold him the difference, so the refund can come back as the full amount. Preston treated the full refund as the way to process it.
+PRESTON SAID: "The money is, it'd be potentially a full amount."
+SOURCE: zoom-call:2026-10-13_1126_uriah-tiglao_0435.txt | 2026-10-13 | store<->Preston (transcribed 2026-10-01)
+id: firearm-trade-denied-refund-da6e4079
 
 ### [LOW] firearm-trade-nics-denial-refund
 RULE: If a customer is denied on a firearm that was part of a trade, the best-case handling is a full refund of the whole deal, not just the remainder he paid. This came from one case and the speaker on the call isn't identified.
@@ -2110,6 +2188,12 @@ RULE: George ruled out the Melrose buildings for a possible new Roanoke location
 PRESTON SAID: "There are some building on Melrose but they are run down and too close to another pawn shop."
 SOURCE: #roanoke-funds (George Moore, Roanoke manager) | 2026-10-09 | https://valleypawnworkspace.slack.com/archives/C063K8E02TW/p1791570862911939
 id: new-location-site-selection--b7007c38
+
+### [LOW] no-fee-police-dept-transfer
+RULE: Do not charge the officer or police department a fee for this firearm transfer, since the delay was the store's fault. Preston said this about one deal.
+PRESTON SAID: "just don't charge them. You know, make it, make it, you know, it's not a big deal, but don't charge them."
+SOURCE: zoom-call:2026-10-12_0959_chadd-mcclintic_0857.txt | 2026-10-12 | store<->Preston (transcribed 2026-10-01)
+id: no-fee-police-dept-transfer-1d65b5b0
 
 ### [LOW] out-of-policy-defective-buyback-offer
 RULE: When an item is outside the return policy and the store still wants to help, the fallback is to buy it back. Look up the market value of that item with the defect and make an offer, rather than refunding or swapping it.
@@ -2165,7 +2249,13 @@ PRESTON SAID: "retail sales. You know, generally, most of our folks are 1215 and
 SOURCE: zoom-call:2026-10-08_1207_Preston-to-JacobCox_9m48s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
 id: typical-retail-sales-benchma-f03d7d66
 
+### [LOW] weekly-hours-cap-40
+RULE: Staff should not be scheduled for more than 40 hours in a week, even when the store is covered six days. Stagger shifts so no one goes over.
+PRESTON SAID: "If you're, if you're working six days, there's no reason that they should have more than 40 hours."
+SOURCE: zoom-call:2026-10-12_0959_chadd-mcclintic_0857.txt | 2026-10-12 | store<->Preston (transcribed 2026-10-01)
+id: weekly-hours-cap-40-c36f366b
+
 
 ==============================================================================
-COVERAGE: 288 entries - 1 verified by Preston, 178 high-confidence rules, 75 medium, 34 low, 0 superseded.
+COVERAGE: 303 entries - 1 verified by Preston, 178 high-confidence rules, 82 medium, 42 low, 0 superseded.
 ==============================================================================

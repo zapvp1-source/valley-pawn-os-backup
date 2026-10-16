@@ -91,6 +91,17 @@ step is skipped via the flags above. If a call still needs backgrounding, nohup 
 to /tmp/vp_deploy.log and poll the log — but check the log for progress before killing a running
 attempt; use a narrow `kill -9 <pid>`, not a broad `pkill -f`, so you don't kill an attempt that's
 about to succeed.)
+3. (Added 2026-10-15, confirmed on device_bash too, not just osascript.) The wrangler binary can
+   print "Deployment complete!" and then hang afterward with no further output (telemetry/cleanup?),
+   well past a 150s call limit, so a plain foreground run looks like a failure when the deploy
+   itself already succeeded in under 10s. A background `nohup wrangler ... & disown` does NOT
+   reliably survive past the end of its own device_bash call either (the process was gone on the
+   next poll with no further log output). The reliable pattern: redirect to a log file and wrap in
+   `timeout N` (N comfortably above ~10s, e.g. 170), e.g.
+   `timeout 170 wrangler pages deploy site --project-name=... --commit-dirty=true > /path/log 2>&1`,
+   then ALWAYS read the log afterward even if the shell reports a nonzero/timeout (124) exit --
+   look for "Deployment complete!" and the deployment URL in the log before concluding the deploy
+   failed, and verify independently via curl (Step 4) either way.
 NOTE: in scheduled-task sessions the project folder is NOT mounted in the sandbox —
 do ALL file edits there via osascript `do shell script` (printf/python3 heredoc), never the Write tool.
 Live URL: https://vp-dashboard.pages.dev (HTTP Basic Auth: user `valleypawn`,

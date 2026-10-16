@@ -45,18 +45,45 @@ _SIX_DAY = re.compile(r"culpeper|roanoke|waynesboro", re.I)
 # 2026-10-14 (Joshua): Waynesboro is a 6-day store (Mon-Fri 10-6, Sat 10-5, closed Sun). Block its OLD hours:
 # "closed Wed", the 5-day "Mon, Tue, Thu..." list, or "Sat 10-6" in a clause that names Waynesboro
 # (clause = text since the last . ; | · or newline), plus the old "Harrisonburg, Waynesboro & Lexington" grouping.
+# 2026-10-15: ALSO blocked when the post targets a Waynesboro account/page (GBP_Waynesboro, Waynesboro FB) and the
+# clause names no other 5-day store (Harrisonburg/Lexington) -- the 10/15 GBP Alienware caption said
+# "Open Mon, Tue, Thu, Fri and Sat from 10am to 6pm, closed Wed and Sun." with Waynesboro only in an earlier sentence.
+# Also catches a Saturday 6pm close ("Saturday until 6", "Waynesboro ... close at 6" on a Saturday).
 _WAY_STALE = re.compile(r"clos(?:ed|es)\s+(?:on\s+)?wed|\bmon(?:day)?s?,?\s*tue(?:s|sday)?s?,?\s*thu|"
-                        r"\bsat(?:urday)?s?\s*(?:from\s*)?10(?::00)?\s*(?:am|a\.m\.)?\s*(?:-|–|—|to|until)\s*6", re.I)
+                        r"\bsat(?:urday)?s?[:\s]*(?:from\s*)?10(?::00)?\s*(?:am|a\.m\.)?\s*(?:-|–|—|to|until)\s*6", re.I)
+_WAY_SAT6 = re.compile(r"(?:clos(?:e|es|ing)\s+at|open\s+(?:until|till|til)|\buntil|\btill|\btil)\s*6(?![\d:])(?!\s*(?:am|a\.m))", re.I)
+_DAY_WORD = re.compile(r"\b(mon|tue|wed|thu|fri|sat|sun)[a-z]*\b", re.I)
 _WAY_OLD_GROUP = re.compile(r"harrisonburg,\s*waynesboro,?\s*(?:&|and)\s*lexington", re.I)
+_FIVE_DAY_STORE = re.compile(r"harrisonburg|lexington", re.I)
+_WAYNESBORO = re.compile(r"waynesboro", re.I)
 
 
-def _way_stale_hours(text: str) -> bool:
-    """True if the text states Waynesboro's pre-2026-10-14 hours."""
+def _targets_waynesboro(account_keys) -> bool:
+    if isinstance(account_keys, str):
+        account_keys = [account_keys]
+    return any(_WAYNESBORO.search(k or "") for k in (account_keys or ()))
+
+
+def _way_stale_hours(text: str, account_keys=()) -> bool:
+    """True if the text states Waynesboro's pre-2026-10-14 hours.
+
+    account_keys: the account key(s) the post goes to (str or list). When any is a Waynesboro account,
+    an old-hours clause counts even if it doesn't name Waynesboro, unless it names Harrisonburg/Lexington."""
     if _WAY_OLD_GROUP.search(text):
         return True
+    way_acct = _targets_waynesboro(account_keys)
     for m in _WAY_STALE.finditer(text):
         seg = re.split(r"[.;|·\n]", text[max(0, m.start() - 160): m.start()])[-1]
-        if re.search(r"waynesboro", seg, re.I):
+        if _WAYNESBORO.search(seg) or (way_acct and not _FIVE_DAY_STORE.search(seg)):
+            return True
+    for m in _WAY_SAT6.finditer(text):
+        sent = re.split(r"[.;|·\n]", text[max(0, m.start() - 160): m.start()])[-1]
+        days = _DAY_WORD.findall(sent)
+        if not days or days[-1].lower() != "sat":
+            continue  # a 6pm close is right Mon-Fri; only a Saturday 6pm close is stale
+        clause = re.split(r"[,(]|\bclos\w*\s+at\s+\d", sent)[-1]
+        if _WAYNESBORO.search(clause) or (way_acct and not _FIVE_DAY_STORE.search(clause)
+                                         and not re.search(r"culpeper|roanoke", clause, re.I)):
             return True
     return False
 
@@ -121,7 +148,7 @@ def qa_caption(text: str, account_key: str, kind: str, min_words: int) -> list[s
             problems.append(f"forbidden: {why}")
     if _bad_5pm_close(t, account_key):
         problems.append("forbidden: only Culpeper, Roanoke & Waynesboro close at 5pm, and only on Saturday")
-    if _way_stale_hours(t):
+    if _way_stale_hours(t, account_key):
         problems.append("forbidden: stale Waynesboro hours -- Waynesboro is Mon-Fri 10-6, Sat 10-5, closed Sun (open Wed from 10/14)")
     if account_key.startswith("GBP_"):
         if "#" in t:

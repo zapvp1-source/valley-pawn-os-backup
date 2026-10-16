@@ -2,11 +2,11 @@
 
 Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guard`, every 5 min, zero Claude usage). Newest first, last 40 event entries kept. Heartbeats go to ~/Library/Logs/valleypawn/registry-guard.log.
 
-## 2026-10-14 19:54 — GREEN
+## 2026-10-15 19:57 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 431658 bytes, mtime 2026-10-14 19:50:44
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 19:52:21
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -22,16 +22,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 3 min ago; app up 397 min
+- Registry last written 4 min ago; app up 400 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-195414.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-195707.json
 
-## 2026-10-14 19:49 — GREEN
+## 2026-10-15 19:52 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 431658 bytes, mtime 2026-10-14 19:48:41
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 19:48:45
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -47,16 +47,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 392 min
+- Registry last written 3 min ago; app up 395 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-194913.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-195207.json
 
-## 2026-10-14 19:39 — GREEN
+## 2026-10-15 19:37 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 431658 bytes, mtime 2026-10-14 19:35:56
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 19:36:53
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -72,16 +72,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 3 min ago; app up 382 min
+- Registry last written 0 min ago; app up 380 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-193912.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-193705.json
 
-## 2026-10-14 19:34 — GREEN
+## 2026-10-15 19:27 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 431658 bytes, mtime 2026-10-14 19:33:41
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 19:22:33
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -97,16 +97,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 377 min
+- Registry last written 4 min ago; app up 370 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-193412.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-192704.json
 
-## 2026-10-14 19:24 — GREEN
+## 2026-10-15 19:22 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 431658 bytes, mtime 2026-10-14 19:22:02
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 19:18:46
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -122,16 +122,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 2 min ago; app up 367 min
+- Registry last written 3 min ago; app up 365 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-192411.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-192203.json
 
-## 2026-10-14 19:19 — GREEN
+## 2026-10-15 19:12 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 431658 bytes, mtime 2026-10-14 19:18:41
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 19:08:35
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -147,16 +147,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 362 min
+- Registry last written 3 min ago; app up 355 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-191910.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-191154.json
 
-## 2026-10-14 19:09 — GREEN
+## 2026-10-15 19:06 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 431739 bytes, mtime 2026-10-14 19:06:13
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 19:03:45
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -172,16 +172,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 2 min ago; app up 352 min
+- Registry last written 3 min ago; app up 350 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-190909.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-190650.json
 
-## 2026-10-14 19:04 — GREEN
+## 2026-10-15 18:51 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 431739 bytes, mtime 2026-10-14 19:03:41
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 18:51:33
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -197,16 +197,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 347 min
+- Registry last written 0 min ago; app up 335 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-190409.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-185148.json
 
-## 2026-10-14 18:54 — GREEN
+## 2026-10-15 18:41 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 431739 bytes, mtime 2026-10-14 18:50:46
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 18:38:09
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -222,16 +222,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 3 min ago; app up 337 min
+- Registry last written 3 min ago; app up 325 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-185408.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-184148.json
 
-## 2026-10-14 18:49 — GREEN
+## 2026-10-15 18:36 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 431739 bytes, mtime 2026-10-14 18:48:42
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 18:33:45
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -247,16 +247,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 332 min
+- Registry last written 3 min ago; app up 320 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-184907.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-183647.json
 
-## 2026-10-14 18:39 — GREEN
+## 2026-10-15 18:26 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 431739 bytes, mtime 2026-10-14 18:36:13
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 18:23:55
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -272,16 +272,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 2 min ago; app up 322 min
+- Registry last written 2 min ago; app up 310 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-183906.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-182646.json
 
-## 2026-10-14 18:34 — GREEN
+## 2026-10-15 18:21 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 431739 bytes, mtime 2026-10-14 18:33:42
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 18:18:45
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -297,16 +297,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 317 min
+- Registry last written 3 min ago; app up 305 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-183406.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-182146.json
 
-## 2026-10-14 18:24 — GREEN
+## 2026-10-15 18:06 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 431739 bytes, mtime 2026-10-14 18:21:56
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 18:06:11
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -322,16 +322,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 2 min ago; app up 307 min
+- Registry last written 0 min ago; app up 290 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-182405.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-180645.json
 
-## 2026-10-14 18:19 — GREEN
+## 2026-10-15 17:51 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 431739 bytes, mtime 2026-10-14 18:18:41
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 17:51:35
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -347,16 +347,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 302 min
+- Registry last written 0 min ago; app up 275 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-181905.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-175144.json
 
-## 2026-10-14 18:14 — GREEN
+## 2026-10-15 17:41 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 431739 bytes, mtime 2026-10-14 18:09:09
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 17:36:57
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -372,16 +372,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 4 min ago; app up 297 min
+- Registry last written 4 min ago; app up 265 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-181404.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-174143.json
 
-## 2026-10-14 18:04 — GREEN
+## 2026-10-15 17:36 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 431739 bytes, mtime 2026-10-14 18:03:41
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 17:33:46
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -397,16 +397,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 287 min
+- Registry last written 2 min ago; app up 260 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-180404.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-173642.json
 
-## 2026-10-14 17:54 — GREEN
+## 2026-10-15 17:26 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 431739 bytes, mtime 2026-10-14 17:52:26
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 17:22:35
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -422,16 +422,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 1 min ago; app up 277 min
+- Registry last written 4 min ago; app up 250 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-175403.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-172641.json
 
-## 2026-10-14 17:49 — GREEN
+## 2026-10-15 17:21 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 431820 bytes, mtime 2026-10-14 17:48:40
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 17:18:45
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -447,16 +447,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 272 min
+- Registry last written 2 min ago; app up 245 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-174902.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-172140.json
 
-## 2026-10-14 17:44 — GREEN
+## 2026-10-15 17:11 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 432225 bytes, mtime 2026-10-14 17:40:35
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 17:06:57
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -472,16 +472,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 3 min ago; app up 267 min
+- Registry last written 4 min ago; app up 235 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-174401.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-171138.json
 
-## 2026-10-14 17:33 — GREEN
+## 2026-10-15 17:06 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 432954 bytes, mtime 2026-10-14 17:31:53
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 17:03:45
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -497,16 +497,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 2 min ago; app up 257 min
+- Registry last written 2 min ago; app up 230 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-173355.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-170637.json
 
-## 2026-10-14 17:28 — GREEN
+## 2026-10-15 16:56 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 432954 bytes, mtime 2026-10-14 17:27:54
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 16:52:15
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -522,16 +522,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 1 min ago; app up 252 min
+- Registry last written 4 min ago; app up 220 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-172854.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-165637.json
 
-## 2026-10-14 17:23 — GREEN
+## 2026-10-15 16:51 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 432711 bytes, mtime 2026-10-14 17:23:51
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 16:48:45
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -547,16 +547,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 247 min
+- Registry last written 2 min ago; app up 215 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-172354.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-165136.json
 
-## 2026-10-14 17:18 — GREEN
+## 2026-10-15 16:41 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 432306 bytes, mtime 2026-10-14 17:18:51
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 16:37:11
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -572,16 +572,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 242 min
+- Registry last written 4 min ago; app up 205 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-171853.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-164135.json
 
-## 2026-10-14 17:13 — GREEN
+## 2026-10-15 16:36 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 431901 bytes, mtime 2026-10-14 17:13:51
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 16:33:45
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -597,16 +597,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 237 min
+- Registry last written 2 min ago; app up 200 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-171353.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-163635.json
 
-## 2026-10-14 17:08 — GREEN
+## 2026-10-15 16:26 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 431496 bytes, mtime 2026-10-14 17:08:51
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 16:22:31
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -622,16 +622,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 232 min
+- Registry last written 4 min ago; app up 190 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-170853.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-162634.json
 
-## 2026-10-14 17:03 — GREEN
+## 2026-10-15 16:21 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 431091 bytes, mtime 2026-10-14 17:03:51
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 16:18:45
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -647,16 +647,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 227 min
+- Registry last written 2 min ago; app up 185 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-170352.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-162134.json
 
-## 2026-10-14 16:58 — GREEN
+## 2026-10-15 16:16 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 430686 bytes, mtime 2026-10-14 16:58:51
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 16:11:33
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -672,16 +672,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 222 min
+- Registry last written 5 min ago; app up 180 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-165852.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-161633.json
 
-## 2026-10-14 16:53 — GREEN
+## 2026-10-15 16:11 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 430281 bytes, mtime 2026-10-14 16:53:51
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 16:03:44
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -697,16 +697,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 217 min
+- Registry last written 7 min ago; app up 175 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-165351.json
+- snapshot failed: [Errno 11] Resource deadlock avoided
 
-## 2026-10-14 16:48 — GREEN
+## 2026-10-15 16:06 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 429795 bytes, mtime 2026-10-14 16:47:51
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 16:03:44
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -722,16 +722,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 212 min
+- Registry last written 2 min ago; app up 170 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-164851.json
+- snapshot failed: [Errno 11] Resource deadlock avoided
 
-## 2026-10-14 16:43 — GREEN
+## 2026-10-15 16:01 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 429390 bytes, mtime 2026-10-14 16:42:51
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 15:51:25
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -747,16 +747,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 207 min
+- Registry last written 10 min ago; app up 165 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-164350.json
+- snapshot failed: [Errno 11] Resource deadlock avoided
 
-## 2026-10-14 16:38 — GREEN
+## 2026-10-15 15:51 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 428985 bytes, mtime 2026-10-14 16:37:51
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 15:51:25
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -772,16 +772,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 202 min
+- Registry last written 0 min ago; app up 155 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-163850.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-155130.json
 
-## 2026-10-14 16:33 — GREEN
+## 2026-10-15 15:41 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 428580 bytes, mtime 2026-10-14 16:32:51
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 15:38:20
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -797,16 +797,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 197 min
+- Registry last written 3 min ago; app up 145 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-163350.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-154129.json
 
-## 2026-10-14 16:28 — GREEN
+## 2026-10-15 15:36 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 428175 bytes, mtime 2026-10-14 16:27:51
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 15:33:45
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -822,16 +822,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 192 min
+- Registry last written 2 min ago; app up 140 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-162849.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-153629.json
 
-## 2026-10-14 16:23 — GREEN
+## 2026-10-15 15:26 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 427770 bytes, mtime 2026-10-14 16:22:51
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 15:22:29
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -847,16 +847,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 187 min
+- Registry last written 3 min ago; app up 130 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-162349.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-152628.json
 
-## 2026-10-14 16:18 — GREEN
+## 2026-10-15 15:21 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 427365 bytes, mtime 2026-10-14 16:17:51
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 15:18:45
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -872,16 +872,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 182 min
+- Registry last written 2 min ago; app up 125 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-161848.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-152127.json
 
-## 2026-10-14 16:13 — GREEN
+## 2026-10-15 15:11 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 426960 bytes, mtime 2026-10-14 16:12:51
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 15:07:53
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -897,16 +897,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 177 min
+- Registry last written 3 min ago; app up 115 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-161347.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-151127.json
 
-## 2026-10-14 16:08 — GREEN
+## 2026-10-15 15:06 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 426555 bytes, mtime 2026-10-14 16:07:51
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 15:03:44
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -922,16 +922,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 172 min
+- Registry last written 2 min ago; app up 110 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-160846.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-150626.json
 
-## 2026-10-14 16:03 — GREEN
+## 2026-10-15 14:56 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 426150 bytes, mtime 2026-10-14 16:02:51
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 14:52:49
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -947,16 +947,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 167 min
+- Registry last written 3 min ago; app up 100 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-160346.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-145625.json
 
-## 2026-10-14 15:58 — GREEN
+## 2026-10-15 14:51 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 425745 bytes, mtime 2026-10-14 15:57:51
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 430998 bytes, mtime 2026-10-15 14:48:44
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -972,16 +972,16 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 162 min
+- Registry last written 2 min ago; app up 95 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-155845.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-145125.json
 
-## 2026-10-14 15:53 — GREEN
+## 2026-10-15 14:41 — GREEN
 
-- App running: True (pid 80591, started 2026-10-14 13:16:20)
+- App running: True (pid 82948, started 2026-10-15 13:16:24)
 - Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 7 enabled, 0 null value(s), 425340 bytes, mtime 2026-10-14 15:52:51
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 5 enabled, 0 null value(s), 431322 bytes, mtime 2026-10-15 14:37:19
 - ZodError lines in app logs: 0 (since app start: None)
 - Scheduler-related log lines (last 12):
     - `main1.log`:     "name": "scheduled-tasks",
@@ -997,7 +997,7 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
     - `main1.log`:     "name": "scheduled-tasks",
     - `main1.log`:       "name": "scheduled-tasks",
 - Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 157 min
+- Registry last written 4 min ago; app up 85 min
 
 **Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261014-155345.json
+- snapshot saved (232 tasks) -> scheduled-tasks-20261015-144124.json

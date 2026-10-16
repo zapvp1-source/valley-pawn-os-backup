@@ -2034,3 +2034,43 @@ Outcome: posted to #jewlery-counts via outbox (jewelry-onhand-nightly-pull-main-
 ## RUN RECORD — 2026-10-14 (Wednesday) — Waynesboro follow-up (manual session)
 
 Waynesboro open Wednesdays from today (Joshua). The cloud nightly still gated Wednesday to CUL+ROA and posted only those two (21:55). Waynesboro pulled separately after the cloud pulls finished: v3 trigger jewelry-onhand-2026-10-14-WAY, 21:58-22:14 ET (inside the 18:00 close -> 10:00 Thu freeze window). CSV: Rings 347, Bracelets 49, Pendants 62, Charms error (empty; 10/13 also error -> 0 by the empty-category rule), Brooches 5, Earrings 58, Chains 45, Necklaces 29. PM sheet: Chadd, #end-of-day 18:24 ET, block dated 10/14/2026: Rings 347, Bracelets 49, Necklaces 74, Earrings 58, Pendants 67, TOTALS 595 (sums; read twice by vp_ai vision and by eye, all agree). Posted as a follow-up in #jewlery-counts 22:24 ET: all categories 0 variance, WAY Total 595/595/0. No DM needed.
+
+## RUN RECORD — 2026-10-15 (Thursday) — native jewelry-onhand-nightly-pull
+
+Open: CUL HAR LEX ROA WAY. Bravo freeze-window CSVs: all open stores. Sheets: CUL ok (Rob, 18:13); HAR ok (Walker-Tapley, 18:16); LEX ok (Uriah, 18:12); ROA ok (Benjie-Moore, 18:41); WAY ok (Martin-D, 18:31).
+
+Jewelry Count — Thursday 10/15 (expected = system on-hand, counted = PM count sheet)
+
+| Store | Category | Expected | Counted | Variance |
+|---|---|---|---|---|
+| CUL | Rings | 683 | 685 | +2 |
+| CUL | Bracelets | 123 | 123 | 0 |
+| CUL | Earrings | 150 | 150 | 0 |
+| CUL | Pendants | 258 | 259 | +1 |
+| CUL | Necklaces | 154 | 154 | 0 |
+| **CUL Total** | | **1368** | **1371** | **+3** |
+| HAR | Rings | 436 | 434 | -2 |
+| HAR | Bracelets | 48 | 48 | 0 |
+| HAR | Earrings | 52 | 52 | 0 |
+| HAR | Pendants | 109 | 108 | -1 |
+| HAR | Necklaces | 115 | 115 | 0 |
+| **HAR Total** | | **760** | **757** | **-3** |
+| LEX | Rings | 300 | 303 | +3 |
+| LEX | Bracelets | 41 | 42 | +1 |
+| LEX | Earrings | 46 | 46 | 0 |
+| LEX | Pendants | 53 | 52 | -1 |
+| LEX | Necklaces | 46 | 46 | 0 |
+| **LEX Total** | | **486** | **489** | **+3** |
+| ROA | Rings | 581 | 581 | 0 |
+| ROA | Bracelets | 137 | 137 | 0 |
+| ROA | Earrings | 83 | 83 | 0 |
+| ROA | Pendants | 174 | 173 | -1 |
+| ROA | Necklaces | 152 | 153 | +1 |
+| **ROA Total** | | **1127** | **1127** | **0** |
+| WAY | Rings | 345 | 347 | +2 |
+| WAY | Bracelets | 49 | 49 | 0 |
+| WAY | Earrings | 58 | 58 | 0 |
+| WAY | Pendants | 66 | 67 | +1 |
+| WAY | Necklaces | 74 | 74 | 0 |
+| **WAY Total** | | **592** | **595** | **+3** |
+

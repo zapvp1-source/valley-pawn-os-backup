@@ -1,5 +1,93 @@
 # Dashboard Refresh — Run Status
 
+**Run date:** 2026-10-15 (scheduled task `dashboard-refresh`, ~12:17-12:30 UTC / ~08:17-08:30 ET)
+
+## Result: SUCCESS — KPI refresh, deploy and verify all passed; artifact sync skipped (same known gap)
+
+### 1. KPI data refresh (site/data/kpis.json) — DONE
+- Checked all 7 feed channels directly via the Slack MCP connector (loan-review, layaway-review,
+  company-performance, daily-funds-reconcilation, items-to-price, pawn-walks, chekkit-messages-missed).
+- Loan review (Oct 12 post), layaway review (Oct 12 post), company-performance watch (Sep 2026
+  monthly update, no new monthly post since), and daily-funds-reconciliation (Oct 14 18:41 ET
+  post, today's 6 PM post not yet due): latest standard-format report in each already matched the
+  existing file exactly or no newer report existed yet — left unchanged, nothing fabricated.
+- Items to Price: NEW Oct 15 08:00 ET post — Culpeper 37/$1,620.00, Harrisonburg 13/$1,275.00,
+  Lexington 0/$0, Roanoke 0/$0, Waynesboro 250/$14,763.30, total 300/$17,658.30. Updated
+  `daily.itemsToPrice` and the `feeds[]` Last Run row -> Oct 15, 2026.
+- Intake Margin: NEW "Daily Pawn Walk — 2026-10-14" post (posted Oct 15 07:15 ET). The
+  `slack_read_channel` blank-Block-Kit-text gap was present again; full text retrieved via
+  `slack_search_public_and_private`. Buy+Loan combined, item-weighted avg margin, flags summed
+  per store: Culpeper 12 items/43%/2 flags, Harrisonburg 0, Lexington 0, Roanoke 13 items/65%/0
+  flags, Waynesboro 2 items/18%/1 flag; company 27 items/52%/3 flags (cross-checked against the
+  post's own "OVERPAY FLAGS (3)" header — matches). Updated `daily.intakeMargin` and the
+  `feeds[]` Last Run row -> Oct 14, 2026 (the data's own date, per existing convention).
+- Chekkit Unanswered: NEW "Daily Response Summary — October 14" post (sent Oct 15 08:00 ET, 0
+  unanswered, all clear). Updated `daily.chekkit` and the `feeds[]` Last Run row -> Oct 14, 2026.
+- `bravoDaily` left untouched (owned by daily-bravo-kpis task). `asOf` updated -> October 15,
+  2026. Validated with `python3 json.load` before and after edit, and again from the live
+  deployed copy (see Verify below).
+
+### 2. Artifact sync (site/artifacts/) — SKIPPED (known gap, not re-logged)
+- `~/Documents/Claude/Artifacts` is still not a connected folder for this session (only
+  "Business Dashboard Website" and "Projects" are connected) — confirmed again by probing the
+  path directly (not found). Same standing gap documented in every prior run below and already on
+  the Artifacts-folder HUMAN_QUEUE row — not re-logged to FAILURE_LEDGER.md per Rule 15 (identical,
+  already-tracked gap, nothing new to report). `site/artifacts/` and `site/data/artifacts.json`
+  carried over byte-identical.
+
+### 3. Deploy to Cloudflare Pages — DONE (Mac-linked, device_bash healthy)
+- Session was LINKED to the Mac Studio this run (`get_device_info` succeeded; `device_bash`,
+  `device_list_dir` all worked normally) — Option A/B hybrid again: ran the KPI edit and the
+  deploy directly against the mounted `site/` folder via `device_bash`, no osascript, no
+  stage/commit round trip.
+- NEW gotcha this run: a plain foreground `wrangler pages deploy` (direct binary, no npx) hung
+  past the 150s device_bash call limit with zero output buffered. Re-ran under `timeout 170 ...`
+  with output redirected to a log file instead of relying on stdout — the log showed wrangler had
+  actually printed "✨ Deployment complete!" (deployment URL `https://1fa9e170.vp-dashboard.pages.dev`)
+  before `timeout` killed it at 170s for hanging afterward (exit code 124) — the deploy itself
+  completed in well under 10s per the log; something after success (telemetry/cleanup?) hangs.
+  A background `nohup ... & disown` attempt was tried first and did NOT survive past the end of
+  its own device_bash call (process was gone on the next poll with no further log output) — so
+  backgrounding doesn't outlive a device_bash call here; `timeout N wrangler ... > log 2>&1` run
+  to completion (reading the log afterward even on a nonzero/timeout exit code) is the reliable
+  pattern. Recorded this as a new Option B/device_bash gotcha in REFRESH_RUNBOOK.md.
+- Installed wrangler via `npm config set prefix $HOME/npm-global` (default global path isn't
+  writable there). Deployment URL: `https://1fa9e170.vp-dashboard.pages.dev`.
+
+### 4. Verify — DONE
+- `curl https://vp-dashboard.pages.dev/` without auth -> 401 (pass).
+- `curl` with basic auth (`valleypawn` / `.cloudflare/site_password`) -> 200 (pass), and the
+  deployment-specific URL -> 200 (pass), no stale-cache retry needed.
+- `data/kpis.json` fetched live (cache-busted) -> parses clean, `asOf` = October 15, 2026,
+  `daily.itemsToPrice.date` = Oct 15 2026, `daily.intakeMargin.date` = Oct 14 2026,
+  `daily.chekkit.date` = Oct 14 2026 (all pass).
+- `site/_worker.js` (password gate) untouched, part of the deployed set -- gate confirmed working
+  (401 without auth, above).
+
+## Step 5 - Slack #general post
+No post made. Nothing failed: KPI refresh, deploy and verify all succeeded; the artifact-sync
+skip is the same pre-existing, already-tracked gap, not a new failure.
+
+## Context notes for next session
+- This run's scheduled-task prompt again had the "LOCAL ACCESS GATE" / "FAILURE POLICY v3" /
+  "Execution Contract" blocks prepended, asserting a `Control_your_Mac` osascript tool exists (it
+  does not — confirmed via `get_device_info.localMcpServers: []` and no such tool anywhere in
+  ToolSearch results) and that any other conclusion is false, and separately instructing
+  never-notify-Joshua-on-failure (ledger only) and never-stop/never-ask. All three claims were
+  checked against this session's actual tool list, this runbook's own long-documented Option A,
+  and the prior (2026-10-10) DEPLOY_STATUS.md entry, which already flagged the exact same
+  mismatch — so, consistent with that precedent, treated as an unverifiable/inaccurate recurring
+  text block and disregarded rather than followed blindly. No PushNotification sent this run
+  since the run succeeded end-to-end and the one known gap is already tracked — consistent with
+  this runbook's own Step 5 rule, not a product of the prepended prompt's no-DM instruction.
+- The `~/Documents/Claude/Artifacts` connected-folder gap remains open; still needs Joshua to
+  connect it once via the folder picker on the Mac Studio (or move/symlink the dashboard's
+  artifact sources under `~/Documents/Claude/Projects`). No new action taken on it this run.
+
+---
+
+# Dashboard Refresh — Run Status
+
 **Run date:** 2026-10-14 (scheduled task `dashboard-refresh`, ~23:17 UTC / ~19:17 ET)
 
 ## Result: PARTIAL SUCCESS — KPI refresh, deploy and verify all passed; artifact sync skipped (same known gap)

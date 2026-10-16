@@ -1,6 +1,6 @@
 # Insurance Portfolio — All Domains
 
-**GENERATED 2026-10-12 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
+**GENERATED 2026-10-15 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
 Update the registry, then run `Life OS/Insurance/bin/regen_portfolio.py`.
 Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker history: `BROKER_PIPELINE.md`.
 
@@ -249,9 +249,9 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - **Key limits:**
   - **bond amount:** None
 - **Obligee:** City of Harrisonburg, Virginia (unconfirmed - verify on bond form)
-- **Status:** NEW TO REGISTRY 2026-09-10 - discovered via SuretyBonds.com bond-list reply, not previously tracked. Term per broker: 6/1/24-6/1/27.
-- **Documents:** Gmail: SuretyBonds.com 'List of Bonds' reply 9/9/2026 (thread 1a085cc686796c9e) - first time this bond appears in the registry
-- **Last verified:** 2026-09-10 — source: SuretyBonds.com 'List of Bonds' reply 9/9/2026
+- **Status:** Continuation certificate received 2026-10-14 confirming term 6/1/24-6/1/27, Travelers Bond -- matches prior registry entry, no change. Certificate was requested by Joshua to support a Harrisonburg PD precious metals permit filing.
+- **Documents:** Gmail: SuretyBonds.com 'List of Bonds' reply 9/9/2026 (thread 1a085cc686796c9e) - first time this bond appears in the registry · Gmail: SuretyBonds.com (Madelyn) sent 'Valley Pawn - Continuation Certificate - 06 18 24.pdf' 2026-10-14 (thread 1a085cc686796c9e), in response to Joshua's 10/14 request for the Harrisonburg bond certificate for the Harrisonburg PD precious metals permit filing. Confirms existing term 6/1/2024-6/1/2027, Travelers Bond -- no change to carrier, term, or dates. Bond amount/premium still not stated in any document seen; left null.
+- **Last verified:** 2026-10-15 — source: SuretyBonds.com 'List of Bonds' reply 9/9/2026
 
 ### VP-SURETY-WAYNESBORO-PMG — Surety - Waynesboro City VA Precious Metal & Gem Dealer Bond
 

@@ -52,6 +52,28 @@ def main() -> int:
     check("short caption blocked", any("too short" in p for p in publish.qa_caption("Nice tiller.", "Culpeper", "photo", 25)))
     check("good caption passes", publish.qa_caption(GOOD, "Culpeper", "photo", 25) == [], str(publish.qa_caption(GOOD, "Culpeper", "photo", 25)))
 
+    # 1b. stale Waynesboro hours by ACCOUNT (2026-10-15: the GBP_Waynesboro Alienware post's old text slipped past
+    #     because the hours sentence didn't say "Waynesboro").
+    way_old = ("Now available at Valley Pawn in Waynesboro: an Alienware Gaming Desktop for $899.99. "
+               "Visit us at 1321 West Broad Street. Open Mon, Tue, Thu, Fri and Sat from 10am to 6pm, closed Wed and Sun.")
+    way_new = way_old.replace("Open Mon, Tue, Thu, Fri and Sat from 10am to 6pm, closed Wed and Sun.",
+                              "Open Mon-Fri from 10am to 6pm and Sat from 10am to 5pm, closed Sun.")
+    for name, text, acct, blocked in [
+        ("WAY old hours on GBP_Waynesboro blocked", way_old, "GBP_Waynesboro", True),
+        ("WAY 'closed Wednesdays' on Waynesboro FB blocked", "We're closed Wednesdays and Sundays.", "Waynesboro", True),
+        ("WAY 'Saturday until 6' on Waynesboro FB blocked", "Come see it this Saturday until 6pm.", "Waynesboro", True),
+        ("WAY 'Sat 10-6' on GBP_Waynesboro blocked", "Open Mon-Fri 10-6, Sat 10-6.", "GBP_Waynesboro", True),
+        ("WAY Sat close at 6 named on IG blocked", "Today (Saturday) Culpeper and Roanoke close at 5, and Waynesboro and Lexington close at 6.", "BrandIG", True),
+        ("WAY new hours on GBP_Waynesboro pass", way_new, "GBP_Waynesboro", False),
+        ("WAY 'Mon-Fri until 6, Saturday until 5' passes", "Open Mon-Fri until 6 and Saturday until 5.", "Waynesboro", False),
+        ("WAY weekday 'until 6' passes", "Open today until 6pm, see you soon.", "Waynesboro", False),
+        ("IG fixed Saturday closes pass", "Today (Saturday) Culpeper, Roanoke and Waynesboro close at 5, and Lexington closes at 6.", "BrandIG", False),
+        ("LEX 5-day hours on GBP_Lexington pass", "Open Mon, Tue, Thu, Fri, Sat 10am-6pm, closed Wed & Sun.", "GBP_Lexington", False),
+        ("Lexington hours on Waynesboro page pass", "Our Lexington store is open Mon, Tue, Thu, Fri, Sat 10-6 and closed Wed.", "Waynesboro", False),
+    ]:
+        got = publish._way_stale_hours(text, acct)
+        check(name, got == blocked, f"got {'blocked' if got else 'pass'}")
+
     # 2. plan-level gates
     dup = {"plan_id": "selftest", "week": "2099-01-04",
            "slots": [slot("a", ["Culpeper"], {"Culpeper": GOOD}), slot("b", ["Waynesboro"], {"Waynesboro": GOOD})]}

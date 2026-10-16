@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-10-14
+# LIVE STATE - auto-refreshed 2026-10-15
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -32,6 +32,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | Agent | File state | Currently loaded |
 |---|---|---|
 | `com.valleypawn.aged-canvas.plist` | installed | YES |
+| `com.valleypawn.analytics-api-pull.plist` | installed | YES |
 | `com.valleypawn.ask-vp-capture.plist` | installed | YES |
 | `com.valleypawn.ask-vp-verify.plist` | installed | YES |
 | `com.valleypawn.ask-vp.plist` | installed | YES |
@@ -57,6 +58,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.chrome-extension-watchdog.plist` | installed | YES |
 | `com.valleypawn.chrome-tab-hygiene.plist` | installed | YES |
 | `com.valleypawn.claude-keepalive.plist` | installed | YES |
+| `com.valleypawn.cloudcover-check.plist` | installed | YES |
 | `com.valleypawn.comedy-weekly.plist` | installed | YES |
 | `com.valleypawn.commandcenter.plist` | installed | YES |
 | `com.valleypawn.compliance-brief.plist` | installed | YES |
@@ -70,6 +72,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.desktop-cleanup.plist` | installed | YES |
 | `com.valleypawn.disk-health.plist` | installed | YES |
 | `com.valleypawn.docphotos-index.plist` | installed | YES |
+| `com.valleypawn.ebay-channel-audit.plist` | installed | YES |
 | `com.valleypawn.ebay-customer-campaign.plist` | installed | YES |
 | `com.valleypawn.ebay-daily-listings.plist` | installed | YES |
 | `com.valleypawn.ebay-efficiency-weekly.plist` | installed | YES |
@@ -84,15 +87,20 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.field-scorecard.plist` | installed | YES |
 | `com.valleypawn.fleet-doctor.plist` | installed | YES |
 | `com.valleypawn.fleet-health.plist` | installed | YES |
+| `com.valleypawn.fleet-scorecard.plist` | installed | YES |
 | `com.valleypawn.forfeiture-winback.plist` | installed | YES |
 | `com.valleypawn.funds-verification.plist` | installed | YES |
 | `com.valleypawn.fwb-catchup-20261005.plist` | installed | YES |
 | `com.valleypawn.gift-credit.plist` | installed | YES |
 | `com.valleypawn.github-backup.plist` | installed | YES |
 | `com.valleypawn.gold-silver-monthly.plist` | installed | YES |
+| `com.valleypawn.guesty-pull.plist` | installed | YES |
 | `com.valleypawn.health-episode.plist` | installed | YES |
 | `com.valleypawn.health-intake.plist` | installed | YES |
+| `com.valleypawn.health-weekly-digest.plist` | installed | YES |
 | `com.valleypawn.items-to-price.plist` | installed | YES |
+| `com.valleypawn.jewelry-catchup.plist` | installed | YES |
+| `com.valleypawn.jewelry-nightly.plist` | installed | YES |
 | `com.valleypawn.jewelry-pull-watchdog.plist` | installed | YES |
 | `com.valleypawn.layaway-canvas.plist` | installed | YES |
 | `com.valleypawn.layaway-yield-weekly.plist` | installed | YES |
@@ -104,6 +112,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.markdown-verification-review.plist` | installed | YES |
 | `com.valleypawn.missed-call-report.plist` | installed | YES |
 | `com.valleypawn.missed-call-text.plist` | installed | YES |
+| `com.valleypawn.model-audit-weekly.plist` | installed | YES |
 | `com.valleypawn.monday-compile.plist` | installed | YES |
 | `com.valleypawn.monday-pull.plist` | installed | YES |
 | `com.valleypawn.monthly-prestage.plist` | installed | YES |
@@ -114,22 +123,30 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.oura-import-check.plist` | installed | YES |
 | `com.valleypawn.perf-guard.plist` | installed | YES |
 | `com.valleypawn.preston-watch.plist` | installed | YES |
+| `com.valleypawn.publer-friday.plist` | installed | YES |
 | `com.valleypawn.qbo-token-refresh.plist` | installed | YES |
 | `com.valleypawn.registry-guard.plist` | installed | YES |
 | `com.valleypawn.reviews-weekly.plist` | installed | YES |
 | `com.valleypawn.shop-refresh.plist` | installed | YES |
+| `com.valleypawn.shop-weekly-report.plist` | installed | YES |
 | `com.valleypawn.skill-tool-index.plist` | installed | YES |
 | `com.valleypawn.sms-code-relay.plist` | installed | YES |
 | `com.valleypawn.social-recap.plist` | installed | YES |
 | `com.valleypawn.social-weekly.plist` | installed | YES |
 | `com.valleypawn.spot-prices.plist` | installed | YES |
+| `com.valleypawn.staff-video-prompt.plist` | installed | YES |
 | `com.valleypawn.store-canvas.plist` | installed | YES |
 | `com.valleypawn.store-kpis-weekly.plist` | installed | YES |
 | `com.valleypawn.taskperms-oneshot.plist` | installed | no |
 | `com.valleypawn.texting-scorecard.plist` | installed | YES |
+| `com.valleypawn.thursday-email-watchdog.plist` | installed | YES |
+| `com.valleypawn.usearch-msgs.plist` | installed | YES |
 | `com.valleypawn.usearch-refresh.plist` | installed | YES |
 | `com.valleypawn.usearch-verify.plist` | installed | YES |
 | `com.valleypawn.website-deals.plist` | installed | YES |
+| `com.valleypawn.website-health-audit.plist` | installed | YES |
+| `com.valleypawn.website-trend-refresh.plist` | installed | YES |
+| `com.valleypawn.weekly-analytics-summary.plist` | installed | YES |
 | `com.valleypawn.winback-texts.plist` | installed | YES |
 | `com.valleypawn.zoom-missed-alert.plist` | installed | YES |
 | `com.valleypawn.zoom-missed-eod.plist` | installed | YES |
@@ -151,44 +168,44 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-10-14 | Valley Pawn OS | - |
-| 2026-10-14 | Unified Search | - |
-| 2026-10-14 | Bravo Data Extraction | STATUS.md |
-| 2026-10-13 | Zoom Call Pipeline | - |
-| 2026-10-13 | Website | - |
-| 2026-10-13 | Valuation Core | README.md |
-| 2026-10-13 | Training Program | STATUS.md |
+| 2026-10-15 | Valley Pawn OS | - |
+| 2026-10-15 | Unified Search | - |
+| 2026-10-15 | Short Term Rental Optimization | - |
+| 2026-10-15 | Bravo Data Extraction | STATUS.md |
+| 2026-10-14 | eBay Customer Campaign | - |
+| 2026-10-14 | Zoom Call Pipeline | - |
+| 2026-10-14 | Website | - |
+| 2026-10-14 | Valuation Core | README.md |
+| 2026-10-14 | Training Program | STATUS.md |
+| 2026-10-14 | Sold Margin Review | STATUS.md |
+| 2026-10-14 | Refine Social Media | - |
+| 2026-10-14 | Preston Knowledge Base | - |
+| 2026-10-14 | Precious Metals Settlements | - |
+| 2026-10-14 | Pawn Walks | STATUS.md |
+| 2026-10-14 | Life OS | - |
+| 2026-10-14 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-10-14 | Human Resources | - |
+| 2026-10-14 | Health Optimization | STATUS.md |
+| 2026-10-14 | Gold and Silver Markeitng | - |
+| 2026-10-14 | Email Refinement | - |
+| 2026-10-14 | Discount Outlier Review | STATUS.md |
+| 2026-10-14 | Daily Funds Verification | - |
+| 2026-10-14 | Compliance | - |
+| 2026-10-14 | Claude outputs | - |
+| 2026-10-14 | Business Dashboard Website | - |
+| 2026-10-14 | Ask Valley Pawn | STATUS.md |
+| 2026-10-14 | Ai Optimized Marketing | - |
 | 2026-10-13 | Taxes 2026 | - |
-| 2026-10-13 | Sold Margin Review | STATUS.md |
-| 2026-10-13 | Short Term Rental Optimization | - |
-| 2026-10-13 | Preston Knowledge Base | - |
-| 2026-10-13 | Precious Metals Settlements | - |
-| 2026-10-13 | Pawn Walks | STATUS.md |
-| 2026-10-13 | Life OS | - |
 | 2026-10-13 | Jewelry Loan Growth | - |
-| 2026-10-13 | Jewelry Count Reconciliation | STATUS.md |
-| 2026-10-13 | Human Resources | - |
-| 2026-10-13 | Health Optimization | STATUS.md |
-| 2026-10-13 | Discount Outlier Review | STATUS.md |
 | 2026-10-13 | Deep KPI analysis | - |
-| 2026-10-13 | Daily Funds Verification | - |
-| 2026-10-13 | Compliance | - |
-| 2026-10-13 | Claude outputs | - |
-| 2026-10-13 | Business Dashboard Website | - |
-| 2026-10-12 | Refine Social Media | - |
-| 2026-10-12 | Email Refinement | - |
 | 2026-10-12 | Communcations | - |
-| 2026-10-12 | Ask Valley Pawn | STATUS.md |
-| 2026-10-12 | Ai Optimized Marketing | - |
 | 2026-10-11 | eBay | - |
 | 2026-10-08 | _scratch | - |
 | 2026-10-08 | Preston Time Review | STATUS.md |
 | 2026-10-08 | Bonus Program | - |
 | 2026-10-07 | Controlio Monitoring | - |
 | 2026-10-06 | Valley Pawn Studios | STATUS.md |
-| 2026-10-05 | Gold and Silver Markeitng | - |
 | 2026-10-04 | _stage | - |
-| 2026-10-02 | eBay Customer Campaign | - |
 | 2026-10-02 | MobilePawn Participation | README.md |
 | 2026-10-02 | Gift Card & Store Credit | README.md |
 

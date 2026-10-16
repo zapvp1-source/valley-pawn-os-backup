@@ -1,6 +1,87 @@
-## 2026-10-15 (Academy: revised lessons live)
+# Valley Pawn - Enterprise Changelog
 
-- All 71 revised Academy units uploaded to TalentLMS and published in all 9 courses (126–134); M.1 unit renamed to "The weekly layaway review and the loan timeline". Joshua is Learner in all 9 again (verified).
+Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
+
+## 2026-10-15 (Waynesboro hours pushed to directories)
+
+- **Goal:** Waynesboro Mon–Fri 10–6, Sat 10–5, closed Sun (open Wed from 10/14) on the public listings, per Joshua 10/14 and the 10/1 Culpeper/Roanoke playbook. Canonical already updated 10/14 (`Refine Social Media/audit_2026-06-22/canonical_nap.json` WAY hours correct; there is no `fleet/canonical_nap.json` and no directory log in that file. Note: that file is not valid JSON, line 11 `forbidden_names`, in every backup too. Not touched).
+- **BrightLocal: BLOCKED, sign-in required.** `tools.brightlocal.com/.../location/2805421/edit` redirected to the BrightLocal login page (Chrome had autofilled jdavis@fcfpawn.com). Stopped there: no password typed, Login not clicked, nothing in BrightLocal read or changed. Joshua's earlier sign-in did not survive into this Chrome session. **Risk:** BrightLocal's Waynesboro record still has the old hours. A future Save and Sync from it would push Wed-closed / Sat-6 back out, so fix the BrightLocal record first (or accept the Location Change Alerts from GBP/Facebook) before any Waynesboro save.
+- **GBP direct (business.google.com, fullcirclepawn@gmail.com already signed in as authuser=1; no sign-in):** Waynesboro (1321 W Broad Street) → Hours: Wednesday Closed → 10:00 AM–6:00 PM, Saturday close 6:00 → 5:00 PM. Mon/Tue/Thu/Fri 10–6, Sun closed unchanged. Saved. Google shows "Your edit is pending. It usually takes up to 10 minutes to be reviewed" (CURRENT old / PENDING new, Wed + Sat highlighted). Before the edit, public Maps showed Wed Closed, Sat 10–6.
+  - **Special hours on the Waynesboro GBP (reported, not changed):** Nov 25 (Wed) 10–6, Nov 26 Thanksgiving Closed, Dec 23 (Wed) 10–6, Dec 25 Christmas Closed. None conflicts with the new hours: the two Wednesday entries match the new regular Wednesday, and no Saturday special hours exist. The Wed entries are now redundant; they were probably set as open exceptions for the old closed-Wednesday schedule. Leaving them in place does no harm.
+- **Facebook Valley Pawn-Waynesboro (303444680270846 / profile 100026420539296):** switched into the Page (Joshua's session, no sign-in). About → Details → Hours: Wednesday empty → 10:00 AM–6:00 PM, Saturday close 6:00 → 5:00 PM. Saved, reloaded, re-read the inputs: Mon–Fri 10–6, Sat 10–5, Sun blank. Switched back to Joshua Davis afterwards. The address field's price-range editor was opened by mistake and cancelled with no change.
+- **Public check 10/15 (Thu):** Google Maps: old (pending review above). Bing: old (Wed Closed, Sat 10–6). Bing Places has no working login (10/2), so this needs BrightLocal. Yelp `/biz/valley-pawn-waynesboro` → redirects to `/biz/valley-pawn-waynesboro-2` (Claimed): old (Wed Closed, Sat 10–6); needs BrightLocal. MapQuest (Google snippet): old (Wed Closed, Sat 10–6). Aggregator-fed, and aggregators are Inactive in BrightLocal (paid renewal = Joshua's call). Apple Maps: not checked (no Apple Business Connect session tried). thevalleypawn.com live pages (/locations/waynesboro/, /sell-gold*/, /sell-jewelry-waynesboro/) are correct. Google's web snippets still quote the pre-10/14 copy (cache lag only).
+- **Long tail (YellowPages, Superpages, Chamber of Commerce, Loc8NearMe, Wheree, Foursquare):** none has a Valley Pawn login on file. Per the skill these get a manual push only on a move, rebrand or closure, so nothing was changed there.
+- **Needs Joshua:** sign in to BrightLocal once (jdavis@fcfpawn.com) in this Chrome. Then Waynesboro 2805421 → Opening Hours Mon–Fri 10–6, Sat 10–5, Sun closed → Save and Sync → confirm. That fixes Bing, Yelp and Apple and keeps BrightLocal from reverting GBP/Facebook. Re-check Google once its review clears.
+- Nothing posted, texted, emailed or purchased. Open Items Register row 2026-10-14 (Waynesboro 6-day) updated. Backups: `CHANGELOG.md.bak-pre-waydir-20261015`, `Life OS/OPEN_ITEMS_REGISTER.md.bak-pre-waydir-20261015`.
+- **BrightLocal follow-up (after Joshua signed in, no password typed): DONE.** Waynesboro 2805421 Opening Hours set to Mon–Fri 10:00–18:00, Sat 10:00–17:00, Sun closed (Wed was Closed, Sat 18:00); special hours (11/25, 11/26, 12/23, 12/25) untouched. Save and Sync → "Save and Sync Updated Data" to GBP, Facebook, Bing, Apple, Yelp; the confirm showed opening hours as the only change. Reloaded: hours persisted, Location Change Alerts 1 → 0 (the Facebook alert matched the new hours and was cleared by the save). BrightLocal shows no per-directory sync result here (Location Summary is not on the plan, upsell page, nothing bought). Public check right after: Google Maps now Mon–Fri 10–6, Sat 10–5, Sun closed (the earlier pending edit cleared); Yelp still old (propagation lag, re-check); Bing panel showed no hours and BrightLocal still says the Bing claim is in progress (~2 weeks), so Bing may lag until that finishes; Apple not checked. Address (1321 W Broad Street, 22980) and phone (540) 221-6346 match the website; not changed: BrightLocal website URL is the homepage https://thevalleypawn.com/ rather than /locations/waynesboro/, name is "Valley Pawn". Aggregators now show Active (skill note says Inactive). Backup `CHANGELOG.md.bak-pre-blway-20261015`.
+
+## 2026-10-15 (store hours templates + stale-hours check)
+
+- **Hours verified before editing:** thevalleypawn.com/locations (live, read in Chrome) and the BUSINESS_OS decision log (10/1 Roanoke, 10/14 Waynesboro 6-day + Sat 5 PM) agree with `vp_social_publisher.STORE_FACTS`: Culpeper, Roanoke, Waynesboro Mon–Fri 10–6, Sat 10–5, closed Sun; Harrisonburg & Lexington Mon, Tue, Thu, Fri, Sat 10–6, closed Wed & Sun. BUSINESS_OS has no separate hours table. Note: fcfpawn.com is a GoDaddy parked page; the site is thevalleypawn.com.
+- **Chekkit staff quick-reply templates** (Joshua's signed-in Chrome, Message Templates page, per-location switcher; no sign-in, no password). Every SMS template at each store was read; only FAQ 01 and FAQ 02 state hours. Group Chat templates: none at Culpeper.
+  - **Culpeper (30 templates):** FAQ 02 "Closed Today" and FAQ 01 "Hours and Location" said "Monday through Saturday, 10am to 6pm (closed Sunday)". Both now say "Monday through Friday 10am to 6pm and Saturday 10am to 5pm (closed Sunday)". Address and maps link unchanged.
+  - **Roanoke (17 templates):** FAQ 02 and FAQ 01 said "Monday, Tuesday, Thursday, Friday and Saturday, 10am to 6pm (closed Wednesday and Sunday)" (pre-10/1). Both now carry the same new wording. Address and maps link unchanged.
+  - **Harrisonburg (26) and Lexington (29):** FAQ 01/02 already say "Monday, Tuesday, Thursday, Friday and Saturday, 10am to 6pm (closed Wednesday and Sunday)". Correct, not edited.
+  - Each edit was saved with Update, then the page was reloaded and re-read: new text present, template counts unchanged. Waynesboro (edited earlier today) re-checked, still correct. Dashboard left on Waynesboro, as found.
+  - Not touched: "Job Opening"/"Job opening" (Harrisonburg, Lexington; "Wednesday and Sundays off" is a staff-schedule claim). Found, not changed: Harrisonburg FAQ 01 address has no "Suite 22", which the website and Chekkit location record both show. That's Joshua's call.
+- **Social engine stale-hours check** (`Refine Social Media/vp_social/publish.py::_way_stale_hours` and its twin `vp_social_publisher.py::way_stale_hours`). Backups: `*.bak-pre-waystaleacct-20261015` (publish.py, vp_social_publisher.py, selftest.py).
+  - New optional `account_keys` argument. If the post targets a Waynesboro account (`GBP_Waynesboro`, `Waynesboro`), an old-hours clause ("closed Wed", "Mon, Tue, Thu…", "Sat 10–6") is blocked even when it doesn't name Waynesboro, unless the clause names Harrisonburg/Lexington. Callers pass it: `qa_caption(…, account_key)` and `qa_check_caption(…, store_keys)`.
+  - Also new: Saturday 6 PM closes are blocked ("Saturday until 6", "…Waynesboro and Lexington close at 6" on a Saturday) when the clause names Waynesboro or the account is Waynesboro. A weekday "until 6" is still allowed. "Sat: 10am-6pm" (with a colon) is now caught too. Without an account the old behaviour is unchanged.
+  - Tests: 11 cases were added to `vp_social/selftest.py` (section 1b), and an 18-case harness was run against both copies and both QA wrappers. All pass. Blocked: the 10/15 GBP Alienware original on GBP_Waynesboro, plus the 10/17 IG original. Allowed: both fixed texts, plus Lexington/Harrisonburg 5-day hours. The full `python3 -m vp_social.selftest` stops at the ledger step in the sandbox (`sqlite3 disk I/O error` on the mounted folder). That is a sandbox limit, not this change. Sections 1–1b passed before that point.
+- Nothing was sent or posted. No Publer or customer messages.
+- **Follow-up, Harrisonburg Suite 22 (Joshua's rule: official address includes Suite 22):** Chekkit Harrisonburg FAQ 01 "Hours and Location" now reads "1790 East Market Street, Suite 22, Harrisonburg, VA 22801". Nothing else changed (hours and maps link as they were; 269 → 279 chars). All 26 Harrisonburg SMS templates were re-read: FAQ 01 is the only one that states the street address (FAQ 02 states hours only). Saved, reloaded, re-read; dashboard returned to Waynesboro.
+
+## 2026-10-15 (Waynesboro hours — Chekkit + Publer)
+
+- **Joshua approved: Waynesboro 6-day store from 10/14 — Mon–Fri 10–6, Sat 10–5, closed Sun — in Chekkit and Publer.** 10/1 Culpeper/Roanoke playbook copied. Nothing was texted, sent or posted, and no new posts were made.
+- **Chekkit API checked first:** the public API (api.chekkit.io, per-store token) has no hours or auto-reply settings. `GET /v1/locations` returns only id/name/address/timezone (w1_probe 10/8), so the edits were made in Joshua's signed-in Chrome. No sign-in was needed and no password was typed.
+- **Chekkit Waynesboro — Settings → Details → Business Hours** (the modal also holds the out-of-office text): Wednesday changed from Closed to 10:00–18:00, Saturday close changed from 18:00 to 17:00. Mon/Tue/Thu/Fri are 10–18, Sun closed. Out-of-office text was "…Our hours are Monday, Tuesday, Thursday, Friday & Saturday 10 AM – 6 PM. We're closed Wednesday & Sunday…" and is now the CUL/ROA 10/1 wording: "Thanks for reaching out to Valley Pawn! We're currently closed. Our hours are Monday through Friday 10 AM – 6 PM and Saturday 10 AM – 5 PM. We're closed Sunday. We'll get back to you first thing when we reopen. Thanks for your patience!" Saved ("Updated hours"), page reloaded, modal re-read: Mon–Sat open, Sat 10:00–17:00, Sun closed, new text. It also shows on Auto-Reply & Media. Chekkit's own Automatic/Out-of-Office/Missed-Call replies stay OFF (unchanged since 10/1). The Chekkit missed-call message has no hours.
+- **Chekkit Waynesboro message templates (staff quick replies, not in the 10/1 playbook):** "FAQ 02 - Closed Today" and "FAQ 01 - Hours and Location" said "Monday, Tuesday, Thursday, Friday and Saturday, 10am to 6pm (closed Wednesday and Sunday)". Both now say "Monday through Friday 10am to 6pm and Saturday 10am to 5pm (closed Sunday)". The rest of each text is unchanged (address, maps link). Re-read after reload, template count still 27. Not touched: "Job Opening" ("Wednesday and Sundays off" is a staff-schedule claim that is now probably wrong for Waynesboro hires; Joshua's call). The other stores' FAQ 01/02 templates were not checked or edited, so CUL/ROA may still carry pre-10/1 hours text.
+- **Chekkit, checked and nothing to change:** Smart Replies (empty since 10/1), AI Settings (Chekkit AI not subscribed, only the $99 upsell page), Textchat / Review / Workflows settings (no hours text), scheduled campaigns (only "Gold Boro" 12/1, which has no hours; opened read-only and left without saving, still Scheduled). Missed-call automation sends `((text))` from `fleet/missed_call_text_config.json` (already WAY "Mon-Fri 10am-6pm, Sat 10am-5pm" from 10/14).
+- **Publer:** listed all 37 scheduled posts (`/posts?state=scheduled` paginates inconsistently and gives 33 unique; querying per account gave all 37). Drafts/failed: 0. Two carried stale Waynesboro hours and were fixed with `PUT /posts/{id} {"post":{"text":…}}`, text only. Re-GET: text matches and scheduled_at/account/type/state/media/title/url are identical:
+  - `6acd28d8e22c90929b124610` GBP Waynesboro, Thu 10/15 11:30 ET (Alienware, fixed about 50 min before publish): "Open Mon, Tue, Thu, Fri and Sat from 10am to 6pm, closed Wed and Sun." → "Open Mon-Fri from 10am to 6pm and Sat from 10am to 5pm, closed Sun."
+  - `6acd295b810f4de3b4129c95` IG @valley_pawn, Sat 10/17 16:00 (weekly deals): "Today (Saturday) Culpeper and Roanoke close at 5, and Waynesboro and Lexington close at 6." → "Today (Saturday) Culpeper, Roanoke and Waynesboro close at 5, and Lexington closes at 6."
+  - Originals: `fleet/_backups/publer_waysat5_20261015.json`; results: `…_results.json`. Lexington posts ("Mon, Tue, Thu, Fri, Sat 10am-6pm, closed Wed & Sun") are correct and were not touched. Roanoke posts already say Sat 10–5. Published posts not touched.
+  - **GBP templates in the social engine:** none queued outside Publer. `Refine Social Media/state/plans/plan_2026-10-12.json` (already pushed to Publer) still carries the old Waynesboro hours in `store_facts`/hard_rules. Left as a historical record; next week's plan uses the 10/14 config.
+- **Validator gap (report only):** `vp_social_publisher.way_stale_hours()` returned False on the stale GBP caption ("Open Mon, Tue, Thu, Fri and Sat … closed Wed and Sun" with "Waynesboro" earlier in the text and no Waynesboro word in the hours clause), so captions like this can still pass QA.
+- Host queue not used (Publer API reachable from the sandbox; Chekkit via Chrome). Allow-list unchanged.
+
+## 2026-10-15
+
+- Native agent appeared: com.valleypawn.analytics-api-pull.plist
+- Native agent appeared: com.valleypawn.cloudcover-check.plist
+- Native agent appeared: com.valleypawn.ebay-channel-audit.plist
+- Native agent appeared: com.valleypawn.fleet-scorecard.plist
+- Native agent appeared: com.valleypawn.guesty-pull.plist
+- Native agent appeared: com.valleypawn.health-weekly-digest.plist
+- Native agent appeared: com.valleypawn.jewelry-catchup.plist
+- Native agent appeared: com.valleypawn.jewelry-nightly.plist
+- Native agent appeared: com.valleypawn.model-audit-weekly.plist
+- Native agent appeared: com.valleypawn.publer-friday.plist
+- Native agent appeared: com.valleypawn.shop-weekly-report.plist
+- Native agent appeared: com.valleypawn.staff-video-prompt.plist
+- Native agent appeared: com.valleypawn.thursday-email-watchdog.plist
+- Native agent appeared: com.valleypawn.usearch-msgs.plist
+- Native agent appeared: com.valleypawn.website-health-audit.plist
+- Native agent appeared: com.valleypawn.website-trend-refresh.plist
+- Native agent appeared: com.valleypawn.weekly-analytics-summary.plist
+- Native agent LOADED: com.valleypawn.analytics-api-pull
+- Native agent LOADED: com.valleypawn.cloudcover-check
+- Native agent LOADED: com.valleypawn.ebay-channel-audit
+- Native agent LOADED: com.valleypawn.fleet-scorecard
+- Native agent LOADED: com.valleypawn.guesty-pull
+- Native agent LOADED: com.valleypawn.health-weekly-digest
+- Native agent LOADED: com.valleypawn.jewelry-catchup
+- Native agent LOADED: com.valleypawn.jewelry-nightly
+- Native agent LOADED: com.valleypawn.model-audit-weekly
+- Native agent LOADED: com.valleypawn.publer-friday
+- Native agent LOADED: com.valleypawn.shop-weekly-report
+- Native agent LOADED: com.valleypawn.staff-video-prompt
+- Native agent LOADED: com.valleypawn.thursday-email-watchdog
+- Native agent LOADED: com.valleypawn.usearch-msgs
+- Native agent LOADED: com.valleypawn.website-health-audit
+- Native agent LOADED: com.valleypawn.website-trend-refresh
+- Native agent LOADED: com.valleypawn.weekly-analytics-summary
 
 ## 2026-10-14 (Waynesboro hours public + Sat 5 PM)
 
@@ -6900,3 +6981,58 @@ Newest first. Material changes to the business operating system. Read this BEFOR
 - This directly conflicts with the 2026-09-09 diagnosis above: the old pipeline was retired specifically because an unattended run charging a card without per-run human confirmation is "a hard limit... not something the task config can override" (Joshua's own words, verbatim in that entry), and today's own Step 1 run (6721-6724 above) explicitly still treats checkout as gated on human confirmation. There is no record anywhere in this file of a Joshua-approved $350->$500 Claude-side auto-approval threshold; the only approved-and-verified auto mechanism is Amazon Business's own native buying policy ($250, Amazon-side, not this).
 - Did NOT execute Step 0 (tuesday-supply-checkout was left exactly as found, not re-enabled) and did NOT send the AUTO_ORDER_APPROVED marker. Instead sent Joshua the standard "Ready for Review" DM (reply order/skip) for this week's $296.39 / 15-item order (Waynesboro, Harrisonburg, Lexington) and flagged the conflict to him directly in that DM, plus a push notification.
 - NEEDS JOSHUA: confirm whether the $500 auto-approval gate in the "Weekly Supply Order — Step 2" scheduled task prompt is something he actually wants (and if so, re-confirm with him live, since it reverses a safety decision he made deliberately) or whether that task's prompt was altered/is stale and should be corrected back to always requiring his reply before checkout.
+
+## 2026-10-15 (insurance-inbox-watch, Cowork scheduled run)
+- Harrisonburg precious metal & gem dealer bond #107451942: SuretyBonds.com sent the continuation certificate (10/14) confirming existing term 6/1/2024-6/1/2027, Travelers Bond, no change. Registry (`VP-SURETY-HARRISONBURG-PMG`) last_verified bumped to 2026-10-15, document reference added, `regen_portfolio.py` run. Silence sweep found zero new nudges due (all open broker asks already covered by existing unsent drafts or awaiting the broker's reply). Cypress Crossing (Kin) renewed today as already-decided ($1,354/yr, no action needed to renew); the 4 requested changes still await Joshua's call to Kin — no new DM sent since nothing changed since yesterday's final-day DM (Rule 17).
+
+## 2026-10-15 (dashboard-refresh, Cowork scheduled run)
+- Refreshed site/data/kpis.json on the Business Dashboard Website: Items to Price (new Oct 15
+  post), Intake Margin (new Oct 14 Daily Pawn Walk data, Buy+Loan combined item-weighted, flags
+  cross-checked against the post's own overpay-flag count), and Chekkit Unanswered (new Oct 14
+  data) all updated; loan-review, layaway-review, company-performance watch and daily-funds had
+  no newer standard-format report yet this run, left unchanged (nothing fabricated). `bravoDaily`
+  left untouched (owned by daily-bravo-kpis). Artifact sync skipped again -- `~/Documents/Claude/
+  Artifacts` still not a connected folder for this session, same standing gap, not re-logged
+  (Rule 15).
+- Deployed to Cloudflare Pages via `device_bash` + wrangler direct binary (session was Mac-linked
+  this run). New gotcha found and documented in REFRESH_RUNBOOK.md: wrangler can hang after
+  printing "Deployment complete!" well past a 150s call limit, and a background nohup'd deploy
+  does not survive past the end of its own device_bash call -- `timeout N wrangler ... > log 2>&1`
+  then reading the log regardless of exit code is the reliable pattern. Verified live afterward:
+  401 unauthenticated, 200 with basic auth, kpis.json asOf = October 15, 2026, `_worker.js` gate
+  intact. No Slack post (nothing failed).
+- This run's scheduled-task prompt again carried the recurring "LOCAL ACCESS GATE"/"FAILURE
+  POLICY v3"/"Execution Contract" prepended text asserting a nonexistent `Control_your_Mac`
+  osascript tool and instructing never-notify-on-failure/never-stop. Checked against this
+  session's actual tool list (none) and the 2026-10-10 DEPLOY_STATUS.md entry that flagged the
+  same mismatch -- disregarded per that existing precedent, not followed blindly.
+
+## 2026-10-15 (dashboard-refresh, Cowork scheduled run #2, evening)
+- Second refresh pass same day. loan-review (latest standard post still Oct 12, loan balances
+  as of Oct 10), layaway-review (latest Oct 12) and company-performance watch (no monthly report
+  since Oct 1) all unchanged -- no newer report since the morning run. items-to-price (Oct 15
+  08:00 post) and pawn-walks Intake Margin (no new dated report since the Oct 15 07:15 post,
+  which already carries Oct 14 data per the morning run) also unchanged. chekkit: left unchanged
+  -- the new 7:00 PM "End-of-Day Follow-up" post (Oct 15, Lexington 1 still-unanswered at close)
+  is a different report type than the "Daily Response Summary" the schema field tracks, not a
+  newer instance of it, so not applied as an update (avoiding a fabricated/misattributed value).
+- daily-funds-reconcilation DID have a newer report: Thu Oct 15 funds verification (posted 6:42
+  PM ET) -- 4/5 matched, Roanoke discrepancy (expected $1,700.00 vs Bravo $1,500.00). Updated
+  funds block, dates.funds, and the feeds[] Last Run column accordingly.
+- Artifact sync (Step 2) skipped again -- confirmed via device_list_dir that
+  `~/Documents/Claude/Artifacts` is still not a connected folder for this session; same standing
+  gap as every prior run (Rule 15, not re-escalated).
+- Deploy: this session's device_bash is a sandboxed Linux VM (not the real Mac shell / no
+  Control_your_Mac tool reachable, confirmed via ToolSearch), so used the npm-global-prefix +
+  fresh `npm install -g wrangler` pattern (Option A direct binary) from the mounted "Business
+  Dashboard Website" folder. `wrangler pages deploy` hit the known "hangs after success, before
+  or after printing the final line" gotcha -- the device_bash call timed out (exit 124) while
+  wrangler was still printing "Deploying..." with no error, so per the runbook's own guidance the
+  deploy was verified independently via curl rather than trusted/distrusted from the exit code
+  alone: live kpis.json confirmed updated (asOf Oct 15, funds block matches what was written).
+  401 without auth, 200 with auth confirmed; `_worker.js` gate intact. No Slack post (nothing
+  failed).
+- This run's scheduled-task prompt again carried the "LOCAL ACCESS GATE"/"FAILURE POLICY
+  v3"/"Execution Contract" prepended text (nonexistent `Control_your_Mac` tool claim,
+  never-notify-on-failure, never-stop framing). Disregarded per the 2026-10-15 morning entry's
+  existing precedent and the actual (empty) tool list -- not re-litigated, not followed.

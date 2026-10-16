@@ -392,7 +392,20 @@ def stage_close(ctx):
                     'basis': preston_count, 'rate': reg['market_manager_per_bridge1_store'],
                     'bonus': round(preston_count * reg['market_manager_per_bridge1_store'], 2),
                     'note': f'{preston_count}/5 stores hit target x {fmt0(reg["market_manager_per_bridge1_store"])}'})
-    total = round(sum(p['bonus'] for p in pay if p.get('uuid')) , 2)
+    gb = R.get('market_manager_gold_bonus')
+    if preston and gb and month >= gb.get('applies_from', '0000-00'):
+        gs = read_json(ctx, 'gold_settlements.json')
+        if gs is None:
+            ctx.gaps.append('gold_settlements.json missing — Market Manager gold bonus not evaluated')
+        else:
+            g = float(gs.get('total_gold_usd') or 0)
+            if g > gb['threshold_usd']:
+                pay.append({'store': 'ALL', 'employee': preston['display'], 'uuid': preston['uuid'], 'role': 'Market Manager (gold bonus)',
+                            'basis': round(g, 2), 'rate': None, 'bonus': gb['amount'],
+                            'note': f'gold scrap settled {fmt(g)} > {fmt0(gb["threshold_usd"])} — gold bonus'})
+            else:
+                ctx.notes.append(f'Market Manager gold bonus not earned: gold settled {fmt(g)} (bar {fmt0(gb["threshold_usd"])})')
+    total = round(sum(p['bonus'] + p.get('top_store_share', 0) for p in pay if p.get('uuid')), 2)  # 2026-10-15: include top-store pool shares (were omitted from the total)
     held_any = any(p.get('held') for p in pay)
 
     result = {'month': month, 'regime': reg['name'], 'payday': payday(month).isoformat(), 'stores': stores,
@@ -472,6 +485,8 @@ def write_close_outputs(ctx, res):
         d.append('')
     pr = next((p for p in res['payouts'] if p['role'] == 'Market Manager'), None)
     if pr: d.append(f"*{pr['employee']}* (Market Manager): {pr['note']} = *{fmt(pr['bonus'])}*")
+    pg = next((p for p in res['payouts'] if p['role'] == 'Market Manager (gold bonus)'), None)
+    if pg: d.append(f"*{pg['employee']}* (gold bonus): {pg['note']} = *{fmt(pg['bonus'])}*")
     d.append(f"\n*TOTAL {fmt(res['total_payout'])}*" + (' — contains HELD lines, not final' if res['held'] else ''))
     if res['notes']: d += ['', '_Notes_'] + [f"• {n}" for n in res['notes']]
     if res['gaps']: d += ['', '_Gaps (need attention)_'] + [f"• {g}" for g in res['gaps']]
