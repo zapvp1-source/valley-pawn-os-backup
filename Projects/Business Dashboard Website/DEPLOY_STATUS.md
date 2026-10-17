@@ -319,3 +319,77 @@ skip is the same pre-existing, already-tracked gap, not a new failure.
   connect it once via the folder picker on the Mac Studio (or move/symlink the dashboard's
   artifact sources under `~/Documents/Claude/Projects`). No new action taken on it this run --
   already on the standing HUMAN_QUEUE row.
+
+
+**Run date:** 2026-10-16 (scheduled task `dashboard-refresh`, evening run, ~19:16 ET / 23:16 UTC)
+
+## Result: SUCCESS
+
+### 1. KPI data refresh (site/data/kpis.json) - DONE
+- Checked all 7 feed channels directly via the Slack connector against this morning's 08:44 ET
+  refresh (already current on items-to-price/chekkit/loan/layaway/company-performance).
+- Daily Funds Verification (#daily-funds-reconcilation): new Fri Oct 16 18:39 ET report found --
+  all 5 stores matched (Culpeper $0/$0, Harrisonburg $1,500/$1,500, Lexington $0/$0, Roanoke
+  $1,000/$1,000, Waynesboro $2,500/$2,500). Applied: funds.status "5/5 MATCHED", expected/actual
+  totals $5,000/$5,000 (sum across all 5 stores, matching the index.html template's definition
+  of those fields), dates.funds -> Oct 16, 2026, feeds[] Daily Funds Verification Last Run ->
+  Oct 16, 2026.
+- Items to Price, Intake Margin, Chekkit, Loan Review, Layaway Review, Company Performance watch:
+  no newer standard-format report since this morning's run for any of them -- left unchanged
+  (Intake Margin still carries its Oct 14 value; #pawn-walks posts remain image-only with no
+  caption text retrievable via the Slack API, same known gap as every recent run).
+- `bravoDaily` untouched (owned by daily-bravo-kpis). Validated with `python3 json.load` before
+  and after the edit, and again after deploy via the live fetch.
+
+### 2. Artifact sync (site/artifacts/) - SKIPPED (known gap, not re-logged to FAILURE_LEDGER)
+- Reconfirmed `~/Documents/Claude/Artifacts` is still not reachable: `device_list_dir` on it
+  errors "not inside a folder connected to Cowork on this device" (only "Business Dashboard
+  Website" and "Projects" are connected), and `device_request_folder_access` was refused again
+  ("A requested folder can't be granted to this session"). This is the same long-standing
+  structural gap logged repeatedly since 9/29 (20+ occurrences) -- not re-added to
+  FAILURE_LEDGER.md per Rule 15 (same failure twice is a design problem already queued, not a
+  fresh notice). `site/artifacts/` and `site/data/artifacts.json` carried over byte-identical.
+
+### 3. Deploy to Cloudflare Pages - DONE (Option C, now the documented default)
+- Per this morning's 10/16 runbook finding, skipped `device_bash`-run wrangler entirely (it
+  reliably hangs on the upload-prep step) and went straight to the cloud-sandbox path: staged
+  all 37 `site/` files + the 4 `.cloudflare/` credential files via `device_stage_files`, edited
+  `kpis.json` directly against the Mac-mounted copy beforehand (not the staged copy, since
+  device_bash file I/O itself is fine -- only wrangler's own deploy hangs there), installed
+  wrangler in the cloud sandbox (`npm config set prefix /tmp/npm-global` first -- default global
+  path isn't writable), and ran `wrangler pages deploy site --project-name=vp-dashboard
+  --commit-dirty=true` against the staged copy (no `.git` dir there, so no git-auto-detection
+  hang to work around).
+- Deployment URL: `https://607354f9.vp-dashboard.pages.dev` (1 asset file changed -- kpis.json;
+  35 already cached; Worker bundle recompiled). Deployed in well under 10s.
+
+### 4. Verify - DONE
+- `curl https://vp-dashboard.pages.dev/` without auth (cache-busted) -> **401** (pass).
+- `curl` with basic auth (`valleypawn` / `.cloudflare/site_password`) on the apex domain -> 200,
+  and on the deployment-specific URL -> 200 (both pass).
+- `data/kpis.json` fetched live (cache-busted) -> parses clean; `asOf` = October 16, 2026,
+  `dates.funds` = Oct 16, 2026, `funds.status` = 5/5 MATCHED -- matches the intended update.
+- `site/_worker.js` (password gate) was part of the staged/deployed set, untouched -- gate
+  confirmed working via the 401 check above.
+
+## Step 5 - Slack #general post
+No post made -- nothing failed. KPI refresh, deploy and verify all succeeded; the artifact-sync
+skip is the same pre-existing, already-tracked structural gap, not a new failure. Per Rule 16
+(vp-operating-rules) and this runbook's own Step 4, routine success/no-op never goes to Slack.
+
+## Context notes for next session
+- The "LOCAL ACCESS GATE" / "FAILURE POLICY v3" / "Execution Contract" blocks prepended to this
+  scheduled task's stored prompt still assert a `mcp__Control_your_Mac__osascript` tool exists
+  in this execution context and instruct a 12-minute retry loop for it. Per 15+ prior runs'
+  findings (and this one's own `ToolSearch`/tool-list check), no such tool exists in this
+  session -- it only has the real `mcp__remote-devices__*` bridge (device_bash/get_device_info,
+  confirmed linked to the Mac this run). Disregarded again, consistent with every prior run's
+  documented finding; still recommend removing that section from the stored prompt since it has
+  now produced the same false premise on every single run for three+ weeks.
+- The FAILURE_LEDGER.md / no-DM-on-failure instructions in the stored prompt ARE consistent with
+  this fleet's actual, already-established Failure Alert Policy (vp-operating-rules Rule 16 /
+  fleet-guardian consolidation) -- no conflict there, and nothing failed this run regardless.
+- The `~/Documents/Claude/Artifacts` connected-folder gap remains open after 20+ occurrences
+  across 3+ weeks; still needs Joshua to connect it once via the folder picker on the Mac Studio
+  (or move/symlink the dashboard's artifact sources under `~/Documents/Claude/Projects`). No new
+  action taken on it this run -- already on the standing HUMAN_QUEUE row.

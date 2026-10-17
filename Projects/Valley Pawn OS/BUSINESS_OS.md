@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-10-15
+# LIVE STATE - auto-refreshed 2026-10-16
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -14,14 +14,14 @@ below disagrees with this block, THIS BLOCK WINS.
 |---|---|
 | Task folders on disk | 236 |
 | Registered with scheduler | 232 |
-| Enabled (will fire) | 7 |
-| Registered but disabled | 225 |
+| Enabled (will fire) | 5 |
+| Registered but disabled | 227 |
 | On disk but never registered | 4 |
-| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 391 |
+| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 374 |
 
 ### Enabled tasks
 
-`daily-dress-code-check`, `gun-safety-cert-followup-20261015`, `mobilepawn-bravo-reply-check`, `northwest-registered-agent-daily-check`, `preston-call-load-after-limit-change-20261015`, `tuesday-supply-prep`, `vp-hiring-pipeline`
+`daily-dress-code-check`, `mobilepawn-bravo-reply-check`, `northwest-registered-agent-daily-check`, `tuesday-supply-prep`, `vp-hiring-pipeline`
 
 ### On disk but NOT registered (never fire)
 
@@ -168,31 +168,33 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-10-15 | Valley Pawn OS | - |
-| 2026-10-15 | Unified Search | - |
+| 2026-10-16 | Valley Pawn OS | - |
+| 2026-10-16 | Unified Search | - |
+| 2026-10-16 | Business Dashboard Website | - |
+| 2026-10-16 | Bravo Data Extraction | STATUS.md |
+| 2026-10-15 | Zoom Call Pipeline | - |
+| 2026-10-15 | Website | - |
+| 2026-10-15 | Valuation Core | README.md |
+| 2026-10-15 | Sold Margin Review | STATUS.md |
 | 2026-10-15 | Short Term Rental Optimization | - |
-| 2026-10-15 | Bravo Data Extraction | STATUS.md |
+| 2026-10-15 | Refine Social Media | - |
+| 2026-10-15 | Preston Time Review | STATUS.md |
+| 2026-10-15 | Preston Knowledge Base | - |
+| 2026-10-15 | Precious Metals Settlements | - |
+| 2026-10-15 | Pawn Walks | STATUS.md |
+| 2026-10-15 | Life OS | - |
+| 2026-10-15 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-10-15 | Health Optimization | STATUS.md |
+| 2026-10-15 | Email Refinement | - |
+| 2026-10-15 | Discount Outlier Review | STATUS.md |
+| 2026-10-15 | Daily Funds Verification | - |
+| 2026-10-15 | Compliance | - |
+| 2026-10-15 | Claude outputs | - |
+| 2026-10-15 | Bonus Program | - |
 | 2026-10-14 | eBay Customer Campaign | - |
-| 2026-10-14 | Zoom Call Pipeline | - |
-| 2026-10-14 | Website | - |
-| 2026-10-14 | Valuation Core | README.md |
 | 2026-10-14 | Training Program | STATUS.md |
-| 2026-10-14 | Sold Margin Review | STATUS.md |
-| 2026-10-14 | Refine Social Media | - |
-| 2026-10-14 | Preston Knowledge Base | - |
-| 2026-10-14 | Precious Metals Settlements | - |
-| 2026-10-14 | Pawn Walks | STATUS.md |
-| 2026-10-14 | Life OS | - |
-| 2026-10-14 | Jewelry Count Reconciliation | STATUS.md |
 | 2026-10-14 | Human Resources | - |
-| 2026-10-14 | Health Optimization | STATUS.md |
 | 2026-10-14 | Gold and Silver Markeitng | - |
-| 2026-10-14 | Email Refinement | - |
-| 2026-10-14 | Discount Outlier Review | STATUS.md |
-| 2026-10-14 | Daily Funds Verification | - |
-| 2026-10-14 | Compliance | - |
-| 2026-10-14 | Claude outputs | - |
-| 2026-10-14 | Business Dashboard Website | - |
 | 2026-10-14 | Ask Valley Pawn | STATUS.md |
 | 2026-10-14 | Ai Optimized Marketing | - |
 | 2026-10-13 | Taxes 2026 | - |
@@ -201,8 +203,6 @@ below disagrees with this block, THIS BLOCK WINS.
 | 2026-10-12 | Communcations | - |
 | 2026-10-11 | eBay | - |
 | 2026-10-08 | _scratch | - |
-| 2026-10-08 | Preston Time Review | STATUS.md |
-| 2026-10-08 | Bonus Program | - |
 | 2026-10-07 | Controlio Monitoring | - |
 | 2026-10-06 | Valley Pawn Studios | STATUS.md |
 | 2026-10-04 | _stage | - |

@@ -179,6 +179,9 @@ def read_live(day, stores):
     with sync_playwright() as p:
         try:
             ctx = p.chromium.launch_persistent_context(PROFILE, channel="chrome", headless=True,
+                                                       # real macOS keychain: the sign-in was saved by normal Chrome,
+                                                       # whose cookies Playwright's default mock keychain can't decrypt
+                                                       ignore_default_args=["--use-mock-keychain"],
                                                        args=["--no-first-run", "--no-default-browser-check"])
         except Exception as e:
             log("launch failed:", str(e)[:300])
@@ -192,12 +195,19 @@ def read_live(day, stores):
             except Exception:
                 pass
             page.wait_for_timeout(3000)
+            if "--diag" in sys.argv:
+                log("diag pre-check url:", page.url.split("?")[0], "| pw field:", bool(page.query_selector("input[type=password]")),
+                    "| cookie domains:", sorted({c["domain"] for c in ctx.cookies()})[:20])
             if "/login" in page.url or page.query_selector("input[type=password]"):
                 if once_per_day("signin-cloudcover"):
                     ledger("CloudCover needs a one-time sign-in in the automation browser",
                            "yes, run bin/cloudcover_signin.sh and sign in to CloudCover once")
                 sys.exit(4)
             ck = {c["name"]: c["value"] for c in ctx.cookies("https://tune.cloudcovermusic.com")}
+            if "--diag" in sys.argv:   # names only, never values
+                log("diag url:", page.url.split("?")[0], "| pw field:", bool(page.query_selector("input[type=password]")),
+                    "| tune cookies:", sorted(ck), "| all cookie domains:",
+                    sorted({c["domain"] for c in ctx.cookies()})[:15])
             auth, tok = ck.get("Authorization"), ck.get("Token")
             if auth:
                 auth = urllib.parse.unquote(auth)

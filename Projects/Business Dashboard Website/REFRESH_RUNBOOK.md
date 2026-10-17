@@ -36,6 +36,10 @@ Update `updated` dates for changed artifacts.
 
 ## Step 3 — Deploy to Cloudflare Pages
 
+**2026-10-16 finding: prefer Option C by default.** When this session IS linked to the Mac (device_bash works fine for file I/O, `get_device_info`/`device_list_dir` all succeed), running `wrangler pages deploy` itself *through device_bash* still reliably hangs forever with zero output past the 2nd `GET .../pages/projects/<project>` API call (confirmed via `WRANGLER_LOG=debug`; reproduced 5x with --no-bundle / CI=true / WRANGLER_SEND_METRICS=false / stdin redirected / `timeout -k` kill-after -- all identical). Plain `curl` to the Cloudflare REST API and all other device_bash file operations work fine in the same shell, so this is specific to wrangler's own upload-prep step inside that VM, not the bridge or egress generally. Don't burn more than one retry on device_bash-run wrangler -- go straight to Option C below (stage `site/` + `.cloudflare/` via `device_stage_files`, run wrangler in the cloud sandbox instead). It deployed cleanly in ~5s on the first try. This supersedes Option C's old framing as a "device_bash is down" fallback -- treat it as the default deploy path whenever a plain device_bash wrangler attempt doesn't finish within ~60s.
+
+
+
 ### Option A (use this FIRST if the session has no Control_your_Mac/osascript tool —
 confirmed working 2026-09-30): sandbox-direct wrangler deploy
 In Cowork sessions where `~/Documents/Claude/Artifacts` isn't mountable and

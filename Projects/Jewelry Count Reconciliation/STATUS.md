@@ -2074,3 +2074,24 @@ Jewelry Count — Thursday 10/15 (expected = system on-hand, counted = PM count 
 | WAY | Necklaces | 74 | 74 | 0 |
 | **WAY Total** | | **592** | **595** | **+3** |
 
+
+## RUN RECORD — 2026-10-16 (Friday) — native jewelry-onhand-nightly-pull
+
+Open: CUL HAR LEX ROA WAY. Bravo freeze-window CSVs: all open stores. Sheets: CUL NOT USED — count sheet totals don't match; HAR NOT USED — count sheet not readable; LEX ok (Uriah, 18:16); ROA NOT USED — count sheet not readable.
+
+Jewelry Count — Friday 10/16 (expected = system on-hand, counted = PM count sheet)
+
+| Store | Category | Expected | Counted | Variance |
+|---|---|---|---|---|
+| LEX | Rings | 300 | 303 | +3 |
+| LEX | Bracelets | 41 | 42 | +1 |
+| LEX | Earrings | 46 | 46 | 0 |
+| LEX | Pendants | 53 | 51 | -2 |
+| LEX | Necklaces | 46 | 46 | 0 |
+| **LEX Total** | | **486** | **488** | **+2** |
+
+Culpeper — count sheet totals don't match.
+Harrisonburg — count sheet not readable.
+Roanoke — count sheet not readable.
+Waynesboro — count sheet not posted tonight.
+
