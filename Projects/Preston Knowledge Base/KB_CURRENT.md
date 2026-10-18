@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-10-15 22:14 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-10-17 22:09 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -1381,6 +1381,12 @@ PRESTON SAID: "Hilti DXE72 - $100 - Should have got this for less. They are almo
 SOURCE: #loans-and-buys | 2024-02-26 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1708957801822929
 id: hard-to-sell-in-store-means--197743db
 
+### [HIGH] high-end-watch-caution-ask-preston
+RULE: Be very careful with high-end watches. If unsure about any higher-end brand, contact Preston for his opinion before buying.
+PRESTON SAID: "The solution is to be very careful when you deal with high-end watches and make sure that we don't make that mistake in the future. And if you have to reach out and ask my opinion from me on any kind of higher-end brand, then I encourage that."
+SOURCE: zoom-call:9cdd3d517430447eb25c621de7e7a115 | 2026-10-17 | UNK Walker Tapley
+id: high-end-watch-caution-ask-p-a5fec63a
+
 ### [HIGH] icloud-account-removal
 RULE: Standing daily check on every Apple item (iPad, iPhone-adjacent, MacBook, iMac, Apple Watch, AirPods Max) — iCloud, password, and "Find My" must be removed before intake; Apple Watches must be synced to the phone to verify. Same rule applies to DJI drones (must be unlinked from the previous owner's DJI account).
 PRESTON SAID: "Apple ipad - did we remove icloud and password?
@@ -1542,6 +1548,12 @@ RULE: Never take phone cases of any sort — they sit and age out almost always.
 PRESTON SAID: "Otterbox case for iphone 6 - Definitely don't want to take in phone cases of any sort. They sit and age out almost always. This is for an obsolete device as well."
 SOURCE: #loans-and-buys | 2024-07-09 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1720535400878619
 id: no-phone-cases-8390cf37
+
+### [HIGH] no-splitting-items-to-recover-cost
+RULE: Do not split an item into parts (e.g., separating loose cases) to recover cost on a bad buy. Manipulating an item's cost is not acceptable.
+PRESTON SAID: "We don't ever want to manipulate an items cost that just it's not good"
+SOURCE: zoom-call:9cdd3d517430447eb25c621de7e7a115 | 2026-10-17 | UNK Walker Tapley
+id: no-splitting-items-to-recove-bc269d48
 
 ### [HIGH] no-sunglasses
 RULE: Preston does not want sunglasses as a category — they have performed badly for the company independent of authenticity concerns.
@@ -2026,6 +2038,12 @@ PRESTON SAID: "You still probably asked what company it is at some level"
 SOURCE: zoom-call:779a2c14718a4ac89f6d5b7b0c5ad067 | 2026-10-13 | UNK Sandi Cole
 id: verify-source-clearout-compa-852ae503
 
+### [MEDIUM] watch-authentication-inspect-movement
+RULE: To check a watch's authenticity, open the case back and look at the movement. A good-looking exterior can hide a plastic or battery-driven interior on a watch that should be mechanical. Preston plans to order case-back removal tools, which are inexpensive.
+PRESTON SAID: "Look at the movement tells you a lot. I mean, you can have the outside look pretty good and then the open inside that's like plastic and battery and you know when they're supposed to be mechanics or something."
+SOURCE: zoom-call:9cdd3d517430447eb25c621de7e7a115 | 2026-10-17 | UNK Walker Tapley
+id: watch-authentication-inspect-371d176e
+
 ### [MEDIUM] writeup-quality-standard
 RULE: Items must be written up with real descriptions and correct quantities — vague write-ups fail the police report requirement and leave the customer without detail.
 PRESTON SAID: "Silver bullion - $278 - What are these? This is written up very poorly. Has quantity set to 1. No description of actual coins. These are not bullion. We can't write items up this way. Doesn't fulfill the police report needs and does not have details for the customer."
@@ -2097,6 +2115,12 @@ RULE: For clear-out company sellers, ask whether they have anything showing the 
 PRESTON SAID: "just get who it is and then you'd also be like so Do you need anything that says for the company's name on it or?"
 SOURCE: zoom-call:779a2c14718a4ac89f6d5b7b0c5ad067 | 2026-10-13 | UNK Sandi Cole
 id: clearout-seller-company-docu-9f698906
+
+### [LOW] counterfeit-watch-resale-label-as-replica
+RULE: A counterfeit watch may be sold cheaply, but it must be clearly labeled as a replica.
+PRESTON SAID: "just clearly label it as a as a replica"
+SOURCE: zoom-call:9cdd3d517430447eb25c621de7e7a115 | 2026-10-17 | UNK Walker Tapley
+id: counterfeit-watch-resale-lab-b93b1b47
 
 ### [LOW] custom-purity-unlisted-karat
 RULE: When an item's karat (such as 16k) isn't available in Bravo, use the custom purity option to write it up.
@@ -2219,6 +2243,12 @@ PRESTON SAID: "We've got to make some phone calls to make sure we're legally all
 SOURCE: zoom-call:ab47ea2963e049ba9c8bfb3457265572 | 2026-10-13 | UNK Uriah Tiglao
 id: return-traded-firearm-after--74d6a3d8
 
+### [LOW] saturday-closing-time-six-day-stores
+RULE: Stores that are open six days a week close at 5 PM on Saturday. The speaker's authority is unclear, so confirm with Preston before relying on it.
+PRESTON SAID: "If we're open six days a week you close at five on Saturday"
+SOURCE: zoom-call:882c5853d40e45bfbe179b04b6d83b73 | 2026-10-17 | UNK Walker Tapley
+id: saturday-closing-time-six-da-6c784087
+
 ### [LOW] silver-market-slowdown
 RULE: Preston tracks that falling silver slows in-store silver sell-through.
 PRESTON SAID: "With silver going down recently it has been moving slower in store."
@@ -2257,5 +2287,5 @@ id: weekly-hours-cap-40-c36f366b
 
 
 ==============================================================================
-COVERAGE: 303 entries - 1 verified by Preston, 178 high-confidence rules, 82 medium, 42 low, 0 superseded.
+COVERAGE: 308 entries - 1 verified by Preston, 180 high-confidence rules, 83 medium, 44 low, 0 superseded.
 ==============================================================================

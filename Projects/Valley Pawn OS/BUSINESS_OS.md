@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-10-16
+# LIVE STATE - auto-refreshed 2026-10-17
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -17,7 +17,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | Enabled (will fire) | 5 |
 | Registered but disabled | 227 |
 | On disk but never registered | 4 |
-| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 374 |
+| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 258 |
 
 ### Enabled tasks
 
@@ -168,27 +168,27 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-10-16 | Valley Pawn OS | - |
-| 2026-10-16 | Unified Search | - |
+| 2026-10-17 | Valley Pawn OS | - |
+| 2026-10-17 | Unified Search | - |
+| 2026-10-16 | Zoom Call Pipeline | - |
+| 2026-10-16 | Valuation Core | README.md |
+| 2026-10-16 | Sold Margin Review | STATUS.md |
+| 2026-10-16 | Short Term Rental Optimization | - |
+| 2026-10-16 | Life OS | - |
+| 2026-10-16 | Health Optimization | STATUS.md |
+| 2026-10-16 | Daily Funds Verification | - |
+| 2026-10-16 | Compliance | - |
 | 2026-10-16 | Business Dashboard Website | - |
 | 2026-10-16 | Bravo Data Extraction | STATUS.md |
-| 2026-10-15 | Zoom Call Pipeline | - |
 | 2026-10-15 | Website | - |
-| 2026-10-15 | Valuation Core | README.md |
-| 2026-10-15 | Sold Margin Review | STATUS.md |
-| 2026-10-15 | Short Term Rental Optimization | - |
 | 2026-10-15 | Refine Social Media | - |
 | 2026-10-15 | Preston Time Review | STATUS.md |
 | 2026-10-15 | Preston Knowledge Base | - |
 | 2026-10-15 | Precious Metals Settlements | - |
 | 2026-10-15 | Pawn Walks | STATUS.md |
-| 2026-10-15 | Life OS | - |
 | 2026-10-15 | Jewelry Count Reconciliation | STATUS.md |
-| 2026-10-15 | Health Optimization | STATUS.md |
 | 2026-10-15 | Email Refinement | - |
 | 2026-10-15 | Discount Outlier Review | STATUS.md |
-| 2026-10-15 | Daily Funds Verification | - |
-| 2026-10-15 | Compliance | - |
 | 2026-10-15 | Claude outputs | - |
 | 2026-10-15 | Bonus Program | - |
 | 2026-10-14 | eBay Customer Campaign | - |
