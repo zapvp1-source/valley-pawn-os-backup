@@ -69,6 +69,44 @@ def parse(subj, txt):
     return city, stars, name
 
 
+def mail_ready():
+    """2026-10-18: the 3-hour freshness gate (cu.mail_fresh) read a quiet Sunday mailbox as "not syncing" and
+    wrote the same ledger row every hour from 09:10 (nothing arrives for hours on a Sunday morning). The gate
+    now asks the real question - is Apple Mail running and keeping its index? - before giving up:
+      fresh within 3 h                      -> ready
+      Mail running + anything within 12 h   -> ready (quiet mailbox, index is live)
+      Mail not running                      -> launch it in the background (open -gj), wait, re-check once;
+                                               still nothing = not ready
+    Returns (ready, note). Never raises on the pgrep/open calls themselves."""
+    import subprocess
+    try:
+        if cu.mail_fresh():
+            return True, "fresh"
+        running = subprocess.run(["/usr/bin/pgrep", "-x", "Mail"], capture_output=True).returncode == 0
+        if running:
+            return (cu.mail_fresh(hours=12), "quiet mailbox, Mail running" if cu.mail_fresh(hours=12)
+                    else "Mail running but nothing received in 12 h")
+        subprocess.run(["/usr/bin/open", "-gja", "Mail"], capture_output=True, timeout=30)
+        time.sleep(45)
+        if cu.mail_fresh(hours=12):
+            return True, "Mail was not running - launched it in the background"
+        return False, "Mail was not running; launched it, index still has nothing within 12 h"
+    except Exception as e:  # noqa: BLE001
+        return False, "gate error %s: %s" % (type(e).__name__, str(e)[:100])
+
+
+def ledger_once(sentence):
+    """One row per day for the same sentence (the hourly schedule otherwise repeats it 13 times)."""
+    today = dt.datetime.now(ET).strftime("%Y-%m-%d")
+    try:
+        for l in open(LEDGER, errors="replace").read().splitlines()[-400:]:
+            if l.startswith("| " + today) and TASK in l and sentence[:60] in l:
+                return
+    except OSError:
+        pass
+    ledger(sentence)
+
+
 def slack_history(days=14):
     import vp_slack
     cutoff = time.time() - days * 86400
@@ -112,14 +150,16 @@ def main(a):
         api_probe()
     now = dt.datetime.now(ET)
     try:
-        if not cu.mail_fresh():
-            raise RuntimeError("Apple Mail has received nothing in 3 hours (not syncing)")
+        ready, note = mail_ready()
+        print("mail gate:", note)
+        if not ready:
+            raise RuntimeError("Apple Mail is not receiving (%s)" % note)
         mails = cu.mail_bodies("%new review%", now - dt.timedelta(hours=hours), now + dt.timedelta(minutes=1))
         hist = slack_history()
     except Exception as e:  # noqa: BLE001
         print("READ FAILED", type(e).__name__, str(e)[:160])
         if send:
-            ledger("The new-review check could not read the review emails or #google-reviews this hour, so nothing was posted.")
+            ledger_once("The new-review check could not read the review emails or #google-reviews this hour, so nothing was posted.")
         return 1
     st = load_state()
     business = 9 <= now.hour < 21

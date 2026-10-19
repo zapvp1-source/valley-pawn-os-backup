@@ -150,6 +150,26 @@ if wd == 0:   # Monday
     JOBS.append(("com.valleypawn.ebay-channel-audit", "ebay_channel_audit.py", at(11, 45), at(18, 0),
                  lambda s: receipt_since("ebay-weekly-channel-audit", s) or file_since(LOGF("ebay-weekly-channel-audit"), s)))
 
+# 2026-10-18 (native registered agent check): DORMANT until fleet/state/native_live/northwest-registered-agent-daily-check
+# exists. Daily 08:49; useful until 12:00 (the SMS relay only watches Messages 08:35-09:40, so a late kick that needs
+# a code just writes one ledger row). Evidence = receipt under the task name or the agent's own log.
+JOBS.append(("com.valleypawn.northwest-check", "northwest_check.py", at(8, 49), at(12, 0),
+             lambda s: receipt_since("northwest-registered-agent-daily-check", s) or file_since(LOGF("northwest-registered-agent-daily-check"), s)))
+
+# 2026-10-18 (native clock-in check): DORMANT until fleet/state/native_live/daily-clockin-check exists. Mon-Sat 10:15;
+# useful until 12:30 (the script itself refuses to post a "10:15 AM" snapshot after 12:30 ET and writes one ledger row
+# instead, so a later kick is a silent no-op). Evidence = receipt under the task name or the agent's own log.
+if wd != 6:   # Mon-Sat
+    JOBS.append(("com.valleypawn.clockin-check", "clockin_check.py", at(10, 15), at(12, 30),
+                 lambda s: receipt_since("daily-clockin-check", s) or file_since(LOGF("daily-clockin-check"), s)))
+
+# 2026-10-18 (native dress code check): DORMANT until fleet/state/native_live/daily-dress-code-check exists.
+# Mon-Sat 10:30; useful until 14:25 (the script's own cutoff is 14:30 - it never posts a stale check later).
+# Evidence = receipt under the task name or the agent's own log.
+if wd != 6:   # Mon-Sat
+    JOBS.append(("com.valleypawn.dress-code-check", "dress_code_check.py", at(10, 30), at(14, 25),
+                 lambda s: receipt_since("daily-dress-code-check", s) or file_since(LOGF("daily-dress-code-check"), s)))
+
 # 2026-10-14 (jewelry nightly native): DORMANT until fleet/state/native_live/jewelry-onhand-nightly-pull (resp. -catchup)
 # exists. Nightly Mon-Sat 20:30, useful until 23:30 (the morning catch-up covers the rest of the freeze window);
 # catch-up Tue-Sun 07:45, never starts a pull after 09:30. Evidence = receipt under the task name or its own log.

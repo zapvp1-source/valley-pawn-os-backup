@@ -16,3 +16,5 @@ Employee: Jacob W. Cox, Sales and Loan Associate, Roanoke. Hired 2026-09-17.
 | 2026-10-08 | HR-2026-12 Provider Information Request — SENT via Gusto, due back 10/22 (provider returns directly to Joshua) | Gusto |
 | 2026-10-08 | Absence Impact Log (maintained by Joshua) — 3 absences pre-entered; 2 dates still to fill | ./Jacob_Cox_Absence_Impact_Log.xlsx |
 | 2026-10-08 | HR-2026-11 Confirmation of Approved Accommodation — SIGNED by Jacob 10/8 | Sent via Gusto (template 8261497), individual doc, Jacob only — verified in Team artifacts: 1 row, Needs signing |
+| 2026-10-15 | Jacob called Preston (Zoom ext. 813, 4:31 PM, 1:33, recorded) to set return date after sister's service "today". Preston offered more time; Jacob chose **Saturday 10/17** ("Let's go ahead and aim for Saturday… Saturday works great for me"). | ./2026-10-15_Preston_Call_Recording/ (mp3 + machine transcript) |
+| 2026-10-17 | **No-call/no-show** on the agreed return date — Preston, Slack DM 10/17 11:38 AM. No call or SMS from Jacob's cell to any Zoom line 10/16–10/18 (Zoom call log checked 10/18). | Slack DM D03C7RBGY56 |

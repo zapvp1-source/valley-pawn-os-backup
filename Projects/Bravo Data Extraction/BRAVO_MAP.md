@@ -1,8 +1,8 @@
 # Bravo POS — Complete Screen & Report Map
 
-_Generated 2026-10-17 22:32 by `bravo_map_compile.py` from BravoMapper's read-only crawl. Do not hand-edit; add human notes to the `bravo-context` skill instead._
+_Generated 2026-10-18 22:50 by `bravo_map_compile.py` from BravoMapper's read-only crawl. Do not hand-edit; add human notes to the `bravo-context` skill instead._
 
-**Status:** IN PROGRESS (resumes nightly) · 62 steps mapped · 0 steps could not be mapped · last crawler state: `2026-10-17 22:31:36 ABORT no-dashboard after R_Session_Journal`
+**Status:** IN PROGRESS (resumes nightly) · 65 steps mapped · 0 steps could not be mapped · last crawler state: `2026-10-18 22:50:13 ABORT no-dashboard after R_Till_Register_Journal`
 
 Raw data: `output/bravo_map/` — `screens/` (full UI tree per screen), `shots/` (screenshots), `lists/` (report lists, Custom Reports criteria / columns / saved reports), `index.tsv`, `RUN_LOG.md`.
 
@@ -585,6 +585,33 @@ Screenshot: `output/bravo_map/shots/R_Session_Journal.png`
 - **Fields:** BravoDateEdit; BravoComboBox
 - **Buttons:** Cancel; Done `btnDone`; Preview; Print
 
+### Report: Store Register Journal
+_key `R_Store_Register_Journal` · captured 2026-10-18 07:27:35 · Bravo     2026.6.0.79     VALLEY PAWN - WAYNESBORO (WAY)_
+Screenshot: `output/bravo_map/shots/R_Store_Register_Journal.png`
+
+- **Labels:** Business Date; Workstation; Employee; Till Session; Ok; Cancel; Done; Preview; Print; 8300 Audit; BRAVO Business Dashboard; Deposits and Paid Outs Spreadsheet; Disbursement Journal; End of Day; End of Day - Consolidated; End of Month; Fortis Alignment; General Exception; Inter-Store Cash Transfer; Large Cash In Transactions; Large Cash Out Transactions; Safe Register Journal; Session Journal; Store Register Journal; Till Cash Balance; Till Register Journal; Transfers; Closing Reports; Aged Inventory Summary; Cost Adjustment; Inventory Base; Inventory by Location; Item History; Lost Stolen or Damaged; Vendor Purchase; Vendor Repairs; Inventory Reports; Loan Base; Loan Disposition; Loan History … +24 more
+- **Fields:** BravoDateEdit; BravoComboBox
+- **Buttons:** Cancel; Done `btnDone`; Preview; Print
+
+### Report: Till Cash Balance
+_key `R_Till_Cash_Balance` · captured 2026-10-18 22:48:36 · Bravo     2026.6.0.79     VALLEY PAWN - LEXINGTON (LEX)_
+Screenshot: `output/bravo_map/shots/R_Till_Cash_Balance.png`
+
+- **Buttons:** Done `btnDone`; Open `BarButtonItemLinkbOpen`; Save `BarButtonItemLink0bSave`; Print... `BarButtonItemLink0bPrint`; Quick Print `BarButtonItemLink1bPrintDirect`; Page Setup... `BarButtonItemLink2bPageSetup`; Scale `BarButtonItemLink3bScale`; First Page `BarButtonItemLink4bFirstPage`; Previous Page `BarButtonItemLink5bPreviousPage`; Next Page `BarButtonItemLink6bNextPage`; Last Page `BarButtonItemLink0bLastPage`; Zoom Out `BarButtonItemLink1bZoomOut`; Zoom In `BarButtonItemLink2bZoomIn`; Watermark `BarButtonItemLink0bWatermark`; Show in Separate Window `BarButtonItemLink1`; Menu `PART_ApplicationButton`; Minimize Ribbon `PART_MinimizationButton`; 160% `BarEditItemLinkzoomFactor`; (no label) `PART_LeftStepButton`; 0; 2; (no label) `left`; (no label) `right`; (no label) `PART_RightStepButton`; (no label) `PART_Thumb`; Page: `BarEditItemLink0pageNumberEdit`
+- **Labels:** Done; FREE1@WAY; Till Cash Balance `PageContentAutomationItems`; LEX `PageContentAutomationItems`; Reporting Date 10/18/2026 `PageContentAutomationItems`; Repository `PageContentAutomationItems`; Cash Balance `PageContentAutomationItems`; CUL `PageContentAutomationItems`; $3346.92 `PageContentAutomationItems`; TILL 02 `PageContentAutomationItems`; $1250.97 `PageContentAutomationItems`; TILL 01 `PageContentAutomationItems`; $2095.95 `PageContentAutomationItems`; Store Safe `PageContentAutomationItems`; $0.00 `PageContentAutomationItems`; HAR `PageContentAutomationItems`; $187.24 `PageContentAutomationItems`; $106.37 `PageContentAutomationItems`; ONLINE `PageContentAutomationItems`; ROA `PageContentAutomationItems`; $714.01 `PageContentAutomationItems`
+- **Tabs:** Preview
+- **Checkboxes:** Navigation Pane `BarCheckItemLinkbNavigationPane`; Enable Continuous Scrolling `BarCheckItemLink0bContinuousScrolling`
+- **Menu items:** Zoom `BarSubItemLinkbZoom`; Page Layout `BarSubItemLink0bPageLayoutSplit`; Export... `BarSplitButtonItemLinkbExport`; Send... `BarSplitButtonItemLink0bSend`
+- **Fields:** TextEdit; TextEdit `PART_Editor`
+
+### Report: Till Register Journal
+_key `R_Till_Register_Journal` · captured 2026-10-18 22:49:14 · Bravo     2026.6.0.79     VALLEY PAWN - LEXINGTON (LEX)_
+Screenshot: `output/bravo_map/shots/R_Till_Register_Journal.png`
+
+- **Labels:** Date; Till Opening Time; Ok; Cancel; Done; Preview; Print; 8300 Audit; BRAVO Business Dashboard; Deposits and Paid Outs Spreadsheet; Disbursement Journal; End of Day; End of Day - Consolidated; End of Month; Fortis Alignment; General Exception; Inter-Store Cash Transfer; Large Cash In Transactions; Large Cash Out Transactions; Safe Register Journal; Session Journal; Store Register Journal; Till Cash Balance; Till Register Journal; Transfers; Closing Reports; Aged Inventory Summary; Cost Adjustment; Inventory Base; Inventory by Location; Item History; Lost Stolen or Damaged; Vendor Purchase; Vendor Repairs; Inventory Reports; Loan Base; Loan Disposition; Loan History; Loan Journal; Loan Notice … +23 more
+- **Fields:** BravoDateEdit; BravoComboBox
+- **Buttons:** Cancel; Done `btnDone`; Preview; Print
+
 ## Dashboard task tiles
 
 ### Dashboard tile: Layaways Overdue
@@ -725,3 +752,7 @@ Screenshot: `output/bravo_map/shots/T_Web_Offers.png`
 - 2026-10-16 22:32 mode=full end='2026-10-16 22:32:07 ABORT no-dashboard after R_Safe_Register_Journal' steps_done_total=61 (+1 this run) failed_keys=15 health=PASS CUL
 - 2026-10-17 22:32 recovered from '2026-10-17 22:31:36 ABORT no-dashboard after R_Session_Journal' (health=PASS CUL)
 - 2026-10-17 22:32 mode=full end='2026-10-17 22:31:36 ABORT no-dashboard after R_Session_Journal' steps_done_total=62 (+1 this run) failed_keys=16 health=PASS CUL
+- 2026-10-18 07:29 recovered from '2026-10-18 07:28:35 ABORT no-dashboard after R_Store_Register_Journal' (health=PASS CUL)
+- 2026-10-18 07:29 mode=full end='2026-10-18 07:28:35 ABORT no-dashboard after R_Store_Register_Journal' steps_done_total=63 (+1 this run) failed_keys=17 health=PASS CUL
+- 2026-10-18 22:50 recovered from '2026-10-18 22:50:13 ABORT no-dashboard after R_Till_Register_Journal' (health=PASS CUL)
+- 2026-10-18 22:50 mode=full end='2026-10-18 22:50:13 ABORT no-dashboard after R_Till_Register_Journal' steps_done_total=65 (+2 this run) failed_keys=18 health=PASS CUL

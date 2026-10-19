@@ -259,8 +259,17 @@ def sanity(data: dict) -> list[str]:
             bad.append(f"{h}: zero sessions")
         # GA4 counts a session once per hour/day it touches and applies thresholds, so a series never
         # sums exactly to the total; only a gross mismatch (wrong window / wrong metric) withholds.
+        # 2026-10-18: the daily block is yesterday's data pulled at 02:40 ET, before GA4 has finished
+        # processing it (24-48 h latency); the per-hour rows lag the total and are thresholded, so on a
+        # quiet day the gap breaks the old 25%/15 rule (10/17: series 29 vs sessions 45 -> page withheld
+        # for the whole day). A lagging hour series is not a wrong window: warn, keep the page. The
+        # other horizons (7/30/90/365 days, per-day series) keep the strict check.
         if r["series_sum"] and abs(r["series_sum"] - r["sessions"]) > max(15, 0.25 * r["sessions"]):
-            bad.append(f"{h}: series sum {r['series_sum']} vs sessions {int(r['sessions'])}")
+            if h == "daily":
+                print(f"WARN daily: hour series {r['series_sum']} vs sessions {int(r['sessions'])} "
+                      "(GA4 still processing yesterday) - page kept", file=sys.stderr)
+            else:
+                bad.append(f"{h}: series sum {r['series_sum']} vs sessions {int(r['sessions'])}")
         if len(d["topPages"]) < 3:
             bad.append(f"{h}: fewer than 3 top pages")
     return bad
