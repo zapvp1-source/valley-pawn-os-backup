@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-10-17 22:09 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-10-19 22:13 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -426,6 +426,12 @@ RULE: Preston flags silver jewelry buys that are too expensive per dwt to plausi
 PRESTON SAID: "10.4dwt silver bracelet - $55- Does this have gold as well? Very high amount for just silver."
 SOURCE: #loans-and-buys (C03GBDKSLRE) | 2023-10-12 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1697117400541019
 id: silver-jewelry-price-sanity--b60ded50
+
+### [LOW] jewelry-count-discrepancy-recount-first
+RULE: When the jewelry count comes up short, recount first and then widen to a full audit. The transcript is garbled, so the exact wording ("don't check" vs. "do a recount") is uncertain.
+PRESTON SAID: "Just don't check your counts first and then we can expand from there"
+SOURCE: zoom-call:7264764ec053483c8e050dd3398fdd16 | 2026-10-19 | UNK Walker Tapley
+id: jewelry-count-discrepancy-re-9c583679
 
 
 ==============================================================================
@@ -902,6 +908,12 @@ SOURCE: DM Joshua<->Preston | 2025-11-11 | https://valleypawnworkspace.slack.com
 !! CONFLICT: Joshua overrode this on 2025-11-11 — "loan can stay, lower buy" and "they can be equal."
 id: buy-should-not-be-below-loan-f52cc7e7
 
+### [MEDIUM] customer-messaging-unable-to-take-items
+RULE: When the store can't take in new items, tell customers it is unable to process new items at the moment. Don't explain why.
+PRESTON SAID: "I wouldn't go into detail why I'm just saying stuff, tell them where stuff's down or unable to process new stuff at the moment."
+SOURCE: zoom-call:0be5295f1e7646aba4f0763590cc732f | 2026-10-19 | UNK Chadd McClintic
+id: customer-messaging-unable-to-fa7c3430
+
 ### [MEDIUM] designer-handbag-loan-judgment
 RULE: Example of Preston's designer handbag LTV: $600-700 loan against ~$1,300 used resale with box, papers and original receipt (~46-54%), against a customer asking $1,000.
 PRESTON SAID: "Have the lady with the LV handbag looking to come in and do a loan. I have her an estimate of $600-700 on it. She's wanting the $700 ideally (was looking for $1000 originally). Bag sells used with what she has for around $1300. Has box, papers, original receipt. We will have to do another look over of everything when it comes in but want to make sure we have cash to do the loan."
@@ -926,11 +938,23 @@ PRESTON SAID: "Smith & Wesson m&p 40 - $275 - Our retail selling price for us on
 SOURCE: #loans-and-buys | 2024-03-09 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1709994600974139
 id: firearm-loan-vs-retail-ratio-e40b5652
 
+### [MEDIUM] firearm-reloan-requires-transfer
+RULE: A firearm that is paid off (even with a balance as small as one cent) must be transferred to the customer through the paperwork before it can be re-loaned on. There is no workaround to re-loan it without the transfer.
+PRESTON SAID: "Yeah, you can't. I mean, we have to transfer it to him before we can loan on it."
+SOURCE: zoom-call:79a4d017e2a24fd9805aeb3ad1cd8ffc | 2026-10-19 | UNK Walker Tapley
+id: firearm-reloan-requires-tran-640431de
+
 ### [MEDIUM] loan-buy-risk-factors
 RULE: When deciding on loans and buys, assess risk by the item's condition, whether it will resell quickly, and how fast it sells through on eBay.
 PRESTON SAID: "Making decisions on loans and buys on your own, identifying risk with, you know, condition, if it's going to resell quickly or not, you know, how quick it's selling through on eBay."
 SOURCE: zoom-call:2026-10-08_1207_Preston-to-JacobCox_9m48s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
 id: loan-buy-risk-factors-bb39aa86
+
+### [MEDIUM] loan-increase-interest-coverage
+RULE: When a loan is bumped up after the original loan date, interest must be covered for the whole gap. There can be no days with no interest.
+PRESTON SAID: "I'm just making sure you can't go through days with no interest."
+SOURCE: zoom-call:00229642e5be482e8734c08511338585 | 2026-10-19 | UNK Walker Tapley
+id: loan-increase-interest-cover-d5b12224
 
 ### [MEDIUM] tv-loan-ratio
 RULE: Don't loan retail on a TV — a 40" TCL we'd sell for $110 should be a ~$60 loan (roughly 55%).
@@ -1945,6 +1969,12 @@ PRESTON SAID: "Aventon Pace 500 - No photo of item - Why are we not getting phot
 SOURCE: #loans-and-buys | 2024-03-15 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1710509400000000
 id: photo-required-every-item-cb8ff861
 
+### [MEDIUM] pull-list-priority
+RULE: Work the pull list with higher-dollar items first, then jewelry.
+PRESTON SAID: "As far as the pull list goes We should try to prioritize the higher dollar stuff first and get that knocked out and then the jewelry"
+SOURCE: zoom-call:0be5295f1e7646aba4f0763590cc732f | 2026-10-19 | UNK Chadd McClintic
+id: pull-list-priority-3c7b1794
+
 ### [MEDIUM] ram-untested-ebay-comps
 RULE: For RAM that isn't new or sealed and can't be tested in-store, check eBay prices for "UNTESTED RAM" first. This shows whether there is any worthwhile margin before making an offer.
 PRESTON SAID: "Anything like this, if they are not new, still sealed, and I have no way of testing them, I first check to see with the market is like on Ebay for UNTESTED RAM to see if we can even make anything worth while."
@@ -2152,6 +2182,12 @@ PRESTON SAID: "It's one of those things you kind of got to do in conversation wh
 SOURCE: zoom-call:779a2c14718a4ac89f6d5b7b0c5ad067 | 2026-10-13 | UNK Sandi Cole
 id: feel-out-seller-story-in-con-b165e8cd
 
+### [LOW] firearm-sale-then-layaway-preferred
+RULE: When a customer wants cash against a gun he is already buying out, the preferred route is to finalize the sale with the paperwork and then set up the layaway. That way the store earns again, rather than doing a layaway with cash back.
+PRESTON SAID: "it's best for us if he just does the paperwork we finalize the sale and then we do the layaway because then we make money again"
+SOURCE: zoom-call:79a4d017e2a24fd9805aeb3ad1cd8ffc | 2026-10-19 | UNK Walker Tapley
+id: firearm-sale-then-layaway-pr-317843c7
+
 ### [LOW] firearm-serial-location-receiver
 RULE: The serial number is normally on the receiver of the firearm. The speaker is not identified in the transcript, and it conflicts with the pre-1968 no-serial note, so treat it as a general guide only.
 PRESTON SAID: "the serial numbers always on the receiver of the firearm."
@@ -2200,6 +2236,18 @@ RULE: The company reimburses employees for the gun safety course certification o
 PRESTON SAID: "we pay you right back"
 SOURCE: zoom-call:2026-10-08_1225_Preston-to-JoshuaBurnett_8m57s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
 id: gun-safety-course-reimbursem-c83a6fc6
+
+### [LOW] id-missing-fields-passport
+RULE: A passport doesn't carry every field the computer asks for, such as address and eye color. Get the missing details from the customer or from another ID.
+PRESTON SAID: "The computer's going to ask, but you just have to get that from like address, eye color and all that good stuff."
+SOURCE: zoom-call:46fe9514b68a4617ae4faa100b20a8ab | 2026-10-19 | UNK Benjie Moore
+id: id-missing-fields-passport-6c033356
+
+### [LOW] id-passport-military-id-firearm-purchase
+RULE: A customer with no driver's license or state ID can be bought from using a passport, and probably a military ID. If both are offered, use whichever shows the most information.
+PRESTON SAID: "You can use the passport and probably military ID."
+SOURCE: zoom-call:46fe9514b68a4617ae4faa100b20a8ab | 2026-10-19 | UNK Benjie Moore
+id: id-passport-military-id-fire-1de0b39e
 
 ### [LOW] job-applicant-interview-inquiries
 RULE: When someone calls asking about an interview, the store tells them it will follow up by phone call if it is interested.
@@ -2267,6 +2315,12 @@ PRESTON SAID: "Police said it was stolen and we had to hold it."
 SOURCE: DM Joshua<->Preston | 2024-01-30 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1706626237916359
 id: stolen-property-police-hold-ab895a94
 
+### [LOW] tag-printer-failure-fallback
+RULE: If a store's main tag printer can't be fixed, swap the jewelry printer over to serve as the main printer, then order a replacement jewelry printer.
+PRESTON SAID: "Worst case scenario, I'll switch your jewelry printer over to the main one so that way you have a working one and then I'll get you a new jewelry printer."
+SOURCE: zoom-call:0be5295f1e7646aba4f0763590cc732f | 2026-10-19 | UNK Chadd McClintic
+id: tag-printer-failure-fallback-e1530a08
+
 ### [LOW] tracking-sales-in-bravo
 RULE: Employees track their own sales in Bravo using the sales data in the Reports tab. The transcript is garbled, so the exact report name is unclear.
 PRESTON SAID: "Yeah, yeah sports and the sales data there and the report tab"
@@ -2287,5 +2341,5 @@ id: weekly-hours-cap-40-c36f366b
 
 
 ==============================================================================
-COVERAGE: 308 entries - 1 verified by Preston, 180 high-confidence rules, 83 medium, 44 low, 0 superseded.
+COVERAGE: 317 entries - 1 verified by Preston, 180 high-confidence rules, 87 medium, 49 low, 0 superseded.
 ==============================================================================

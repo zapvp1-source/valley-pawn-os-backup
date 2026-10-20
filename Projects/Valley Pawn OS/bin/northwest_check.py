@@ -8,10 +8,10 @@ out by that.
 HOW (Playwright on the installed Google Chrome — a real window parked off-screen, because headless Chrome
 is stopped by Cloudflare's bot check on Northwest's site (found 2026-10-18); never types a password; never a
 screenshot of anything but its own automation window):
-  1 Opens the DEDICATED automation profile ~/Library/Application Support/valleypawn/pw-northwest
-    (separate from Joshua's everyday Chrome; signed in ONCE by Joshua with bin/northwest_signin_front.sh,
-    "remember this device" if offered). The profile's Preferences get session.restore_on_startup=1 so
-    session cookies survive restarts (the cloudcover_profile_prefs.py pattern).
+  1 Opens the ONE shared automation profile ~/Library/Application Support/valleypawn/pw-vp through
+    bin/vp_browser.py (2026-10-19; separate from Joshua's everyday Chrome; signed in ONCE by Joshua with
+    bin/vp_signin_front.sh, "Remember me" ticked). vp_browser.prefs() sets session.restore_on_startup=1 +
+    exit_type Normal before every launch so session cookies survive restarts (proof in vp_browser.py).
     - Login form shown (password field) -> the saved session is gone: ONE ledger row a day
       ("Northwest needs a one-time sign-in in the automation browser"), nothing posted, stop. NO
       credential is ever typed by this script.
@@ -62,7 +62,8 @@ LEDGER = os.path.join(OS_DIR, "fleet", "FAILURE_LEDGER.md")
 STATE = os.path.join(OS_DIR, "fleet", "state", "northwest")
 TEST_OUT = os.path.join(OS_DIR, "fleet", "test_output", "northwest")
 RELAY = os.path.join(OS_DIR, "fleet", "sms_codes", "northwest.json")
-PROFILE = os.path.join(HOME, "Library/Application Support/valleypawn/pw-northwest")
+import vp_browser  # the one automation profile + launch recipe (2026-10-19)
+PROFILE = vp_browser.PROFILE
 DRIVE_DIR = os.environ.get("NW_DRIVE_DIR") or os.path.join(HOME, "Desktop", "Registered Agent")
 DRIVE_FOLDER_URL = "https://drive.google.com/drive/folders/1WAYRYy2OXJXaVBYagpTrBys4ZYExUVn0"
 CH = "C0BMN275FD4"
@@ -111,23 +112,8 @@ def once_per_day(key):
 
 # ---------- profile preferences (session cookies survive restarts) ----------
 def ensure_prefs():
-    """session.restore_on_startup = 1 on the automation profile, only while that Chrome is closed. Idempotent."""
-    p = os.path.join(PROFILE, "Default", "Preferences")
-    if not os.path.exists(p):
-        return "no Preferences yet (profile not created / never signed in)"
-    if subprocess.run(["pgrep", "-f", "--user-data-dir=" + PROFILE], capture_output=True).stdout.strip():
-        return "automation Chrome is open - prefs left alone"
-    try:
-        d = json.load(open(p))
-    except Exception as e:
-        return "Preferences unreadable: %s" % type(e).__name__
-    if d.get("session", {}).get("restore_on_startup") == 1 and d.get("profile", {}).get("exit_type") == "Normal":
-        return "restore_on_startup already 1"
-    shutil.copy(p, p + ".bak-" + dt.datetime.now(ET).strftime("%Y%m%d"))
-    d.setdefault("session", {})["restore_on_startup"] = 1
-    d.setdefault("profile", {})["exit_type"] = "Normal"
-    json.dump(d, open(p, "w"))
-    return "restore_on_startup set to 1"
+    """session.restore_on_startup = 1 + exit_type Normal on the shared profile (vp_browser.prefs; also run by launch())."""
+    return vp_browser.prefs()
 
 
 # ---------- Drive folder (local synced copy) ----------
@@ -383,18 +369,13 @@ def read_live():
             # on both northwestregisteredagent.com hosts. So: a real (headed) Chrome window, parked off-screen, with
             # the automation flag hidden, and Playwright's own mock keychain off (real macOS keychain = Joshua's
             # saved sign-in cookies decrypt). NW_HEADLESS=1 forces headless for experiments.
-            headless = os.environ.get("NW_HEADLESS") == "1"
-            ctx = p.chromium.launch_persistent_context(PROFILE, channel="chrome", headless=headless, accept_downloads=True,
-                                                       ignore_default_args=["--use-mock-keychain", "--enable-automation"],
-                                                       args=["--no-first-run", "--no-default-browser-check",
-                                                             "--disable-blink-features=AutomationControlled",
-                                                             "--window-position=-2400,-2400", "--window-size=1280,900"])
+            ctx = vp_browser.launch(p, headless=vp_browser.headless_from_env("NW_HEADLESS"), accept_downloads=True)
         except Exception as e:
             log("launch failed:", str(e)[:300])
             ledger("The registered agent check could not open its automation browser (it may be open for sign-in), so nothing was posted.")
             sys.exit(3)
         try:
-            page = ctx.pages[0] if ctx.pages else ctx.new_page()
+            page = vp_browser.first_page(ctx)
             page.goto(DOCS_URL, wait_until="domcontentloaded", timeout=60000)
             try:
                 page.wait_for_selector("table, [role=row], input[type=password], input[autocomplete=one-time-code]", timeout=30000)
@@ -422,12 +403,12 @@ def read_live():
             if kind == "cloudflare":
                 if once_per_day("cloudflare"):
                     ledger("Northwest's website put a bot check in front of the automation browser, so the registered agent check could not sign in.",
-                           "yes, run bin/northwest_signin_front.sh and open the Northwest portal once in that window (and sign in if asked)")
+                           "yes, run bin/vp_signin_front.sh and open the Northwest portal once in that window (and sign in if asked)")
                 sys.exit(8)
             if kind == "login":
                 if once_per_day("signin"):
                     ledger("Northwest needs a one-time sign-in in the automation browser",
-                           "yes, run bin/northwest_signin_front.sh, sign in to Northwest once (tick remember this device if offered), then quit that window")
+                           "yes, run bin/vp_signin_front.sh, sign in to Northwest once (tick remember this device if offered), then quit that window")
                 sys.exit(4)
             if kind == "sms":
                 if not handle_sms(page):
@@ -485,7 +466,7 @@ def read_live():
                 d["filed_as"] = name
                 new.append(d)
         finally:
-            ctx.close()
+            vp_browser.close(ctx)
     return docs, new, files, notes
 
 

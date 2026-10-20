@@ -181,6 +181,31 @@ if wd != 0:   # Tue-Sun
                  lambda s: receipt_since("jewelry-onhand-catchup", s) or file_since(LOGF("jewelry-onhand-catchup"), s)))
 
 
+# Mac-first wave 3 (2026-10-19): native replacements of the MONTHLY Cowork tasks, DORMANT until
+# fleet/state/native_live/<task> exists. (day-of-month, label, pgrep pattern, task, slot, window end). Evidence = a
+# receipt under the task name or the agent's own log written since the slot. Each job re-checks its own
+# "already posted / already sent" markers, so a re-kick is always safe.
+W3 = [(1, "com.valleypawn.monthly-analytics-report", "monthly_analytics_report.py", "monthly-analytics-report", (1, 45), (6, 45)),
+      (1, "com.valleypawn.monthly-employee-rankings", "monthly_employee_rankings.py", "monthly-employee-sales-rankings", (2, 0), (12, 0)),
+      (1, "com.valleypawn.scrap-rankings-monthly", "scrap_rankings_monthly.py", "monthly-scrap-rankings", (4, 30), (7, 0)),
+      (1, "com.valleypawn.eom-gl-export", "eom_gl_export.py", "eom-bravo-gl-export", (6, 0), (16, 0)),
+      (1, "com.valleypawn.monthly-analytics-watchdog", "monthly_analytics_watchdog.py", "monthly-analytics-watchdog", (7, 0), (12, 0)),
+      (1, "com.valleypawn.sales-tax-monthly", "sales_tax_monthly.py", "sales-tax-monthly-update", (8, 0), (17, 0)),
+      (1, "com.valleypawn.ebay-ratings-sweep", "ebay_ratings_post.py", "monthly-ebay-ratings-sweep", (10, 0), (17, 0)),
+      (1, "com.valleypawn.bonus-close-pull", "bonus_close_pull.py", "bonus-month-close-pull", (11, 30), (17, 30)),
+      (2, "com.valleypawn.eom-gl-watchdog", "eom_gl_watchdog.py", "eom-bravo-gl-export-watchdog", (8, 0), (12, 0)),
+      (2, "com.valleypawn.loan-layaway-outcomes", "loan_layaway_outcomes.py", "monthly-loan-layaway-outcomes", (10, 30), (17, 0)),
+      (3, "com.valleypawn.bravo-user-audit", "bravo_user_audit.py", "monthly-bravo-user-audit", (10, 0), (17, 0)),
+      (20, "com.valleypawn.mobilepawn-app-social", "monthly_post.py", "mobilepawn-app-social-monthly", (9, 10), (17, 0))]
+for _dom, _label, _pat, _task, (_h, _m), (_eh, _em) in W3:
+    if today.day == _dom:
+        JOBS.append((_label, _pat, at(_h, _m), at(_eh, _em),
+                     (lambda t: lambda s: receipt_since(t, s) or file_since(LOGF(t), s))(_task)))
+if today.day in (1, 2, 3):   # MobilePawn participation fires 1st-3rd 09:15 and posts once (POSTED.txt)
+    JOBS.append(("com.valleypawn.mobilepawn-participation", "mobilepawn_participation.py", at(9, 15), at(17, 0),
+                 lambda s: receipt_since("monthly-mobilepawn-participation", s) or file_since(LOGF("monthly-mobilepawn-participation"), s)))
+
+
 def main():
     render = "--render" in sys.argv
     uid = os.getuid()

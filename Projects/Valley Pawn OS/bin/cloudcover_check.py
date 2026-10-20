@@ -5,10 +5,12 @@
 WHY: the cloud copy (trig_017ef3AnQBKcnqSdKUztYWLA) has no Chrome on the Mac, so it posted 5 h late on
 10/13 and nothing on 10/14. This reads the same data on the Mac.
 
-HOW (headless; no screen, never types a password):
-  1 Opens the DEDICATED automation profile ~/Library/Application Support/valleypawn/pw-cloudcover in the
-    installed Google Chrome (Playwright, channel="chrome", headless). That profile is signed in ONCE by
-    Joshua with bin/cloudcover_signin.sh. Not signed in -> ONE ledger row, nothing posted, stop.
+HOW (no screen, never types a password):
+  1 Opens the ONE shared automation profile ~/Library/Application Support/valleypawn/pw-vp in the installed
+    Google Chrome through bin/vp_browser.py (2026-10-19: a real window parked off-screen, real keychain; the
+    recipe whose sign-in persistence is proven in vp_browser.py's docstring). That profile is signed in ONCE
+    by Joshua with bin/vp_signin_front.sh. Not signed in -> ONE ledger row, nothing posted, stop.
+    CC_HEADLESS=1 forces headless for experiments.
   2 CloudCover status from CloudCover's own JSON API — the same two calls the zones dashboard makes
     (found 2026-10-14 from the dashboard's network calls): GET api.cloudcovermusic.com/streams/enhanced
     (zones, header Authorization = the session's "Authorization" cookie) and
@@ -46,7 +48,8 @@ OS_DIR = os.path.join(HOME, "Documents/Claude/Projects/Valley Pawn OS")
 BIN = os.path.join(OS_DIR, "bin")
 LEDGER = os.path.join(OS_DIR, "fleet", "FAILURE_LEDGER.md")
 STATE = os.path.join(OS_DIR, "fleet", "state", "cloudcover")
-PROFILE = os.path.join(HOME, "Library/Application Support/valleypawn/pw-cloudcover")
+import vp_browser  # the one automation profile + launch recipe (2026-10-19)
+PROFILE = vp_browser.PROFILE
 CH = "C03BETSS669"
 API = "https://api.cloudcovermusic.com"
 ZONES_URL = "https://tune.cloudcovermusic.com/#/admin/zones"
@@ -178,17 +181,13 @@ def read_live(day, stores):
     notes, vols, dom = [], {}, []
     with sync_playwright() as p:
         try:
-            ctx = p.chromium.launch_persistent_context(PROFILE, channel="chrome", headless=True,
-                                                       # real macOS keychain: the sign-in was saved by normal Chrome,
-                                                       # whose cookies Playwright's default mock keychain can't decrypt
-                                                       ignore_default_args=["--use-mock-keychain"],
-                                                       args=["--no-first-run", "--no-default-browser-check"])
+            ctx = vp_browser.launch(p, headless=vp_browser.headless_from_env("CC_HEADLESS"))
         except Exception as e:
             log("launch failed:", str(e)[:300])
             ledger("The Cloud Cover music check could not open its automation browser (it may be open for sign-in), so nothing was posted.")
             sys.exit(3)
         try:
-            page = ctx.pages[0] if ctx.pages else ctx.new_page()
+            page = vp_browser.first_page(ctx)
             page.goto(ZONES_URL, wait_until="domcontentloaded", timeout=60000)
             try:
                 page.wait_for_selector("app-zones-table-row, input[type=password]", timeout=30000)
@@ -201,7 +200,7 @@ def read_live(day, stores):
             if "/login" in page.url or page.query_selector("input[type=password]"):
                 if once_per_day("signin-cloudcover"):
                     ledger("CloudCover needs a one-time sign-in in the automation browser",
-                           "yes, run bin/cloudcover_signin.sh and sign in to CloudCover once")
+                           "yes, run bin/vp_signin_front.sh and sign in to CloudCover once in that window, then quit it")
                 sys.exit(4)
             ck = {c["name"]: c["value"] for c in ctx.cookies("https://tune.cloudcovermusic.com")}
             if "--diag" in sys.argv:   # names only, never values
@@ -214,7 +213,7 @@ def read_live(day, stores):
             if not auth or not tok:
                 if once_per_day("signin-cloudcover"):
                     ledger("CloudCover needs a one-time sign-in in the automation browser",
-                           "yes, run bin/cloudcover_signin.sh and sign in to CloudCover once")
+                           "yes, run bin/vp_signin_front.sh and sign in to CloudCover once in that window, then quit it")
                 sys.exit(4)
             try:
                 dom = page.evaluate(DOM_JS)
@@ -245,9 +244,9 @@ def read_live(day, stores):
                 vols[name] = v
             if google_out >= 2 * len(stores) and once_per_day("signin-google"):
                 ledger("The Cloud Cover music check posted without speaker volumes because Google Home needs a one-time sign-in in the automation browser",
-                       "yes, run bin/cloudcover_signin.sh and sign in as fullcirclepawn@gmail.com once")
+                       "yes, run bin/vp_signin_front.sh and sign in to Google as fullcirclepawn@gmail.com once in that window, then quit it")
         finally:
-            ctx.close()
+            vp_browser.close(ctx)
     return zones, vols, dom, notes
 
 

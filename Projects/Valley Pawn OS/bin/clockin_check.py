@@ -8,10 +8,11 @@ out by that. Authoritative instructions + exact post format: fleet/task_prompts/
 HOW (Playwright on the installed Google Chrome — a real window parked off-screen, the northwest_check.py
 pattern; NO Gusto API token exists on this Mac and this script never looks for credentials or types a
 password; never a screenshot of anything but its own automation window):
-  1 Opens the DEDICATED automation profile ~/Library/Application Support/valleypawn/pw-gusto (separate
-    from Joshua's everyday Chrome; signed in ONCE by Joshua with bin/gusto_signin_front.sh, ticking
-    "Remember this device for 30 days"). Preferences get session.restore_on_startup=1 (gusto_profile_prefs.py)
-    so session cookies survive restarts.
+  1 Opens the ONE shared automation profile ~/Library/Application Support/valleypawn/pw-vp through
+    bin/vp_browser.py (2026-10-19; separate from Joshua's everyday Chrome; signed in ONCE by Joshua with
+    bin/vp_signin_front.sh, ticking "Remember this device for 30 days"). vp_browser.prefs() sets
+    session.restore_on_startup=1 + exit_type Normal before every launch so session cookies survive restarts
+    (proof in vp_browser.py).
     - Sign-in / verification screen shown -> ONE ledger row a day ("Gusto needs a one-time sign-in in the
       automation browser — tick Remember this device for 30 days"), nothing posted, stop.
   2 https://app.gusto.com/payroll_admin/time_tracking -> the active pay period's Review -> reads the
@@ -56,7 +57,8 @@ LEDGER = os.path.join(OS_DIR, "fleet", "FAILURE_LEDGER.md")
 STATE = os.path.join(OS_DIR, "fleet", "state", "clockin")
 ROSTER = os.path.join(STATE, "roster.json")
 TEST_OUT = os.path.join(OS_DIR, "fleet", "test_output", "clockin")
-PROFILE = os.path.join(HOME, "Library/Application Support/valleypawn/pw-gusto")
+import vp_browser  # the one automation profile + launch recipe (2026-10-19)
+PROFILE = vp_browser.PROFILE
 CH = "C03BETSS669"
 MARKER = "Daily Clock-In Check"
 TT_URL = "https://app.gusto.com/payroll_admin/time_tracking"
@@ -70,7 +72,7 @@ NEVER = {"preston peters", "sandi cole", "sandra cole"}
 OVERRIDES = {"bridgett grayson": "Bree Grayson", "george b moore": "Benjie Moore", "george moore": "Benjie Moore"}
 STATUS_LABELS = {"Clocked in": "in", "On Break": "break", "Clocked out": "out"}
 TIME_RX = re.compile(r"\b(\d{1,2}):(\d{2})\s*([AaPp])\.?[Mm]\.?")
-SIGNIN_HINT = "yes, run bin/gusto_signin_front.sh, sign in to Gusto once in that window (tick Remember this device for 30 days), then quit that window"
+SIGNIN_HINT = "yes, run bin/vp_signin_front.sh, sign in to Gusto once in that window (tick Remember this device for 30 days), then quit that window"
 LATEST_SEND = dt.time(12, 30)
 
 RENDER = "--render" in sys.argv
@@ -108,21 +110,8 @@ def once_per_day(key):
 
 # ---------- profile preferences (session cookies survive restarts) ----------
 def ensure_prefs():
-    p = os.path.join(PROFILE, "Default", "Preferences")
-    if not os.path.exists(p):
-        return "no Preferences yet (profile not created / never signed in)"
-    if subprocess.run(["pgrep", "-f", "--user-data-dir=" + PROFILE], capture_output=True).stdout.strip():
-        return "automation Chrome is open - prefs left alone"
-    try:
-        d = json.load(open(p))
-    except Exception as e:
-        return "Preferences unreadable: %s" % type(e).__name__
-    if d.get("session", {}).get("restore_on_startup") == 1 and d.get("profile", {}).get("exit_type") == "Normal":
-        return "restore_on_startup already 1"
-    shutil.copy(p, p + ".bak-" + dt.datetime.now(ET).strftime("%Y%m%d"))
-    d.setdefault("session", {})["restore_on_startup"] = 1
-    d.setdefault("profile", {})["exit_type"] = "Normal"
-    json.dump(d, open(p, "w"))
+    """session.restore_on_startup = 1 + exit_type Normal on the shared profile (vp_browser.prefs; also run by launch())."""
+    return vp_browser.prefs()
     return "restore_on_startup set to 1"
 
 
@@ -460,18 +449,13 @@ def read_live(today):
     statuses, roster, notes = [], None, []
     with sync_playwright() as p:
         try:
-            headless = os.environ.get("GUSTO_HEADLESS") == "1"
-            ctx = p.chromium.launch_persistent_context(PROFILE, channel="chrome", headless=headless,
-                                                       ignore_default_args=["--use-mock-keychain", "--enable-automation"],
-                                                       args=["--no-first-run", "--no-default-browser-check",
-                                                             "--disable-blink-features=AutomationControlled",
-                                                             "--window-position=-2400,-2400", "--window-size=1280,900"])
+            ctx = vp_browser.launch(p, headless=vp_browser.headless_from_env("GUSTO_HEADLESS"))
         except Exception as e:
             log("launch failed:", str(e)[:300])
             ledger("The clock-in check could not open its automation browser (it may be open for sign-in), so nothing was posted.")
             sys.exit(3)
         try:
-            page = ctx.pages[0] if ctx.pages else ctx.new_page()
+            page = vp_browser.first_page(ctx)
             page.goto(TT_URL, wait_until="domcontentloaded", timeout=60000)
             try:
                 page.wait_for_selector("input[type=password], input[type=email], [aria-label='Clocked in'], [aria-label='Clocked out'], [aria-label='On Break'], table", timeout=30000)
@@ -522,7 +506,7 @@ def read_live(today):
                             pass
             roster = read_roster(page)
         finally:
-            ctx.close()
+            vp_browser.close(ctx)
     return statuses, roster, notes
 
 

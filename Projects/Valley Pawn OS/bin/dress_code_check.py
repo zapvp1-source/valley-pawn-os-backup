@@ -8,11 +8,10 @@ before that it depended on the Claude-in-Chrome extension + a Google passkey pro
 
 HOW (Playwright on the installed Google Chrome; never types a password; never a screenshot of anything but
 its own automation window):
-  1 Opens the SAME dedicated automation profile the Cloud Cover check uses
-    (~/Library/Application Support/valleypawn/pw-cloudcover), where Joshua signed in ONCE as
-    fullcirclepawn@gmail.com (the camera account) with bin/cloudcover_signin.sh. A real Chrome window parked
-    off-screen (the northwest_check.py pattern — headless Chrome is blocked on some Google surfaces and
-    may not paint <video>); DC_HEADLESS=1 forces headless for experiments.
+  1 Opens the ONE shared automation profile ~/Library/Application Support/valleypawn/pw-vp through
+    bin/vp_browser.py (2026-10-19), where Joshua signed in ONCE as fullcirclepawn@gmail.com (the camera
+    account) with bin/vp_signin_front.sh. A real Chrome window parked off-screen (headless Chrome is blocked
+    on some Google surfaces and may not paint <video>); DC_HEADLESS=1 forces headless for experiments.
     - Google sign-in page instead of the home -> ONE ledger row a day
       ("Google Home needs a one-time sign-in in the automation browser"), nothing posted, stop.
   2 For each open store (bin/vp_lib.sh open_stores: Sun none, Wed CUL+ROA+WAY, else all 5): the store's
@@ -56,7 +55,8 @@ sys.path.insert(0, BIN)
 LEDGER = os.path.join(OS_DIR, "fleet", "FAILURE_LEDGER.md")
 STATE = os.path.join(OS_DIR, "fleet", "state", "dress_code")
 TEST_OUT = os.path.join(OS_DIR, "fleet", "test_output", "dress_code")
-PROFILE = os.path.join(HOME, "Library/Application Support/valleypawn/pw-cloudcover")
+import vp_browser  # the one automation profile + launch recipe (2026-10-19)
+PROFILE = vp_browser.PROFILE
 CH = "C03BETSS669"
 POST_CUTOFF = (14, 30)
 TILE_WAIT_S = 15          # let the live streams start before the screenshot
@@ -263,19 +263,14 @@ def read_live(day, stores):
     caps, notes = {}, []
     with sync_playwright() as p:
         try:
-            headless = os.environ.get("DC_HEADLESS") == "1"
-            ctx = p.chromium.launch_persistent_context(
-                PROFILE, channel="chrome", headless=headless,
-                ignore_default_args=["--use-mock-keychain", "--enable-automation"],
-                args=["--no-first-run", "--no-default-browser-check", "--disable-blink-features=AutomationControlled",
-                      "--window-position=-2400,-2400", "--window-size=1400,1000", "--autoplay-policy=no-user-gesture-required"],
-                viewport={"width": 1400, "height": 1000})
+            ctx = vp_browser.launch(p, headless=vp_browser.headless_from_env("DC_HEADLESS"), window_size=(1400, 1000),
+                                    args=["--autoplay-policy=no-user-gesture-required"], viewport={"width": 1400, "height": 1000})
         except Exception as e:
             log("launch failed:", str(e)[:300])
             ledger("The dress code check could not open its automation browser (it may be open for sign-in), so nothing was posted.")
             sys.exit(3)
         try:
-            page = ctx.pages[0] if ctx.pages else ctx.new_page()
+            page = vp_browser.first_page(ctx)
             if DIAG:   # cookie DOMAINS + names only, never values: is this profile signed in to Google at all?
                 try:
                     g = [c for c in ctx.cookies() if "google.com" in c["domain"]]
@@ -325,12 +320,12 @@ def read_live(day, stores):
                         page.screenshot(path=os.path.join(TEST_OUT, "%s-%s-%s.png" % (day, name, st)))
                     if once_per_day("signin-google"):
                         ledger("Google Home needs a one-time sign-in in the automation browser",
-                               "yes, run bin/cloudcover_signin.sh and sign in to Google Home as fullcirclepawn@gmail.com once, then quit that window")
+                               "yes, run bin/vp_signin_front.sh and sign in to Google Home as fullcirclepawn@gmail.com once, then quit that window")
                     return None, notes
                 else:
                     caps[name] = None
         finally:
-            ctx.close()
+            vp_browser.close(ctx)
     return caps, notes
 
 

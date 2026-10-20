@@ -164,3 +164,15 @@ Joshua, verbatim: "gold bonus contuimues but its 500 for 60k, and 300per store t
 
 ## 2026-10-15 (cont'd) — gold bonus threshold set to $65,000; past payouts left alone
 Joshua: "its 500 for gold over 65k and 300 per hit, we wil leave it alone for past payouts." bonus_rules.json market_manager_gold_bonus.threshold_usd = 65000. September gold $146,380.44 still qualifies, so Preston stays at $1,100 and the total stays at $5,391.96. The Jan-Aug 2026 overpayment (about $2,000) is closed with no action.
+
+## 2026-10-19 09:16 ET — bonus-paid-verify (scheduled, September 2026 / payday 2026-10-16)
+Checked September close ($5,391.96 owed, 6 people, out/2026-09/close.json + gusto_lines.csv) against the
+2026-10-16 Gusto payroll (list_payrolls check_date=2026-10-16, include=totals; get_employee_earnings_summary
+2026-10-01..2026-10-16). Gusto's payroll-wide bonus total was $5,387.53, and the per-employee breakdown shows
+why: Sandi Cole $1,739.59, Joshua Burnett $467.67, Robert Swagger $438.87, Chadd McClintic $1,141.40, and
+Preston Peters $1,100.00 all paid exactly right. Martin Dowden ($504.43 owed — $5.48 CUL + $498.95 WAY) got
+$0. Instead, Walker Tapley (Harrisonburg manager, not in this month's bonus at all) was paid a $500.00 bonus
+on the same check — looks like Dowden's line was keyed to the wrong employee. Confirmed both are real,
+distinct, active Gusto employees (not a name variant). DM sent to Joshua (D03BHQH5VGT) with the plain finding.
+Trend tab Paid Verify Note updated for 2026-09. Fleet publish guard checked first (vp_dryrun.py status — not
+armed, exit 1), published for real.
