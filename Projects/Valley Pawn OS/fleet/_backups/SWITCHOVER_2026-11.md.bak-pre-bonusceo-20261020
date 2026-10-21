@@ -1,0 +1,42 @@
+# Switchover list — wave 3 monthlies (for the 11/1 cycle)
+
+Written 2026-10-20. Nothing on this list is live yet. No cloud trigger has been changed and no `native_live` file has been created.
+
+**How to switch one task (do them one at a time):**
+1. Turn its cloud copy OFF in the Claude app (Scheduled list, the name in column 4). Proven call: `POST /v1/code/triggers/<trigger id>` with `{"enabled": false}`, then check that `GET` shows `enabled:false` (MAC_FIRST_PLAN §2.4).
+2. `touch "Valley Pawn OS/fleet/state/native_live/<task>"`.
+3. On the first run date, run the go-live check in the last column.
+
+To go back: delete the `native_live` file and turn the cloud copy back on.
+
+**Column 4 (cloud copy name):** this is the name the Claude app task list shows (the registry `displayName`; when a task has no display name, the app shows the task id). The titles were set when the copies moved to the cloud on 10/6–10/7. If a title in the app doesn't match, go by the trigger id.
+
+| # | Task | Mac agent | First run | Cloud copy name (Claude app) | Trigger id | Go-live check | Status |
+|---|---|---|---|---|---|---|---|
+| 1 | monthly-analytics-report | com.valleypawn.monthly-analytics-report | Sun 11/1 01:45 | monthly-analytics-report | trig_01ELsfGJH6ECmhomucX99hKf | "Monthly Business Update — October" in #company-performance by 08:30 with all 5 stores; sheet in My Drive | ready |
+| 2 | monthly-employee-sales-rankings | com.valleypawn.monthly-employee-rankings | Sun 11/1 02:00 | Monthly employee sales rankings (FINAL) | trig_013eUiM3p32rqLmJsjN3Xsgo | #employee-performance post + by-store thread reply; current staff only | ready |
+| 3 | monthly-scrap-rankings | com.valleypawn.scrap-rankings-monthly | Sun 11/1 04:30 | monthly-scrap-rankings | trig_019RbHiMJ3njWu5x2qXN4uQr | #scrap-rankings post; no store "missing" unless its pull succeeded; YTD in line with October's | ready (CUL March 2025 weight question still open) |
+| 4 | eom-bravo-gl-export | com.valleypawn.eom-gl-export | Sun 11/1 06:00 | eom-bravo-gl-export | trig_01NrKaxYD775Cc7trkrpRh1s | `output/2026-10 Consolidated GL.xlsx` written + Joshua DM; nothing posted to QBO | ready (Sept post-to-accounting still never completed; Accounting Exports folder not synced, so the file stays local) |
+| 5 | monthly-analytics-watchdog | com.valleypawn.monthly-analytics-watchdog | Sun 11/1 07:00 | monthly-analytics-watchdog | trig_01316sgr61gDXPihZyMnWGyk | silent when #1 posted; one DM if not | ready (switch together with #1) |
+| 6 | sales-tax-monthly-update | com.valleypawn.sales-tax-monthly | Sun 11/1 08:00 | sales-tax-monthly-update | trig_01ToCwimcusFyjgedcuzvdR2 | OCT row filled in `Sales Tax/Sales Tax.xlsx` (backup in `_backups/`) + DM, or the plain blocked DM | ready (depends on #4) |
+| 7 | vp-hr-policy-monthly-sync | com.valleypawn.hr-policy-sync | Sun 11/1 08:35 | vp-hr-policy-monthly-sync | trig_019k6oTX3YRLYA9LaD2zajH6 | one DM to Joshua; any drafts in `Human Resources/POLICY_SYNC_PENDING_2026-11.md` | ready (drafts go to a review file, not into the manual — no Docs access) |
+| 8 | entity-compliance-check | com.valleypawn.entity-compliance | Sun 11/1 09:00 | Entity compliance check (monthly) | trig_01VX8BfF4x6er3yh2X4Lk5PC | DM only if something is due in 90 days; check the log `entity-compliance-check.log` ran | ready |
+| 9 | monthly-mobilepawn-participation | com.valleypawn.mobilepawn-participation | Sun 11/1 09:15 | Monthly MobilePawn participation by store | trig_01EpKGukgYQGjQtr9RbWi2Tm | one post (POSTED.txt written), retries 11/2–11/3 if data is held | ready |
+| 10 | monthly-ebay-ratings-sweep | com.valleypawn.ebay-ratings-sweep | Sun 11/1 10:00 | monthly-ebay-ratings-sweep | trig_01EpZ3kMuUcQn9ffYKAeUPcy | #ebay-performance digest after the 09:45 ratings pull | ready |
+| 11 | monthly-eom-recap | com.valleypawn.eom-recap | Sun 11/1 10:30 | Month in Review — analytics + marketing channels | trig_0135CnkAXzKmou87gBG3aKZC | "October 2026 — Month in Review" in each channel that passes the gate; run log `monthly-analytics/2026-10 Month in Review.md` | ready (see note A) |
+| 12 | bonus-month-close-pull | com.valleypawn.bonus-close-pull | Sun 11/1 11:30 | Bonus — month-close pull + targets draft (1st) | trig_01TPBvdRwk2XPWo7QmtWJvmh | DM with November targets (sheet method); nothing to #bonus-goals | ready |
+| 13 | eom-bravo-gl-export-watchdog | com.valleypawn.eom-gl-watchdog | Mon 11/2 08:00 | eom-bravo-gl-export-watchdog | trig_01JwaM7zURPB4Le4n2uWaFmb | silent when #4's state file + workbook exist | ready (switch together with #4) |
+| 14 | monthly-loan-layaway-outcomes | com.valleypawn.loan-layaway-outcomes | Mon 11/2 10:30 | Monthly Loan & Layaway Outcomes | trig_019Vz39EpCXyGdydss6cwDiX | DM to Joshua + `.sent` marker, or the one on-hold line | ready |
+| 15 | vp-new-customer-report | com.valleypawn.new-customer-report | Tue 11/3 07:00 | Monthly new customer report | trig_018rDcAJT31gjVbfvtxD1Hm1 | "New Customers — October 2026 (ranked)" in #new-customers; rollup has 5 new rows | ready (the old dashboard artifact refresh is skipped — no Mac path) |
+| 16 | vp-comms-drift-monthly-check | com.valleypawn.comms-drift-monthly | Tue 11/3 08:00 | vp-comms-drift-monthly-check | trig_01XLUh1S4jUpeFv52MWTx572 | one DM: "Comms standard check — November 2026 …" | ready |
+| 17 | monthly-bravo-user-audit | com.valleypawn.bravo-user-audit | Tue 11/3 10:00 | Monthly Bravo logins vs Gusto roster check (3rd, 10:00) | trig_01HnBYSP9KX7UUGezN5jEK96 | DM to Joshua | ready (uses the dismissed-staff file on disk; refreshing it from Gusto is not native) |
+| 18 | ceo-monthly-scorecard | com.valleypawn.ceo-monthly-scorecard | Tue 11/3 12:00 | CEO Monthly Scorecard (3rd of the month) | trig_016V513wSgD6rxsRZGCF55a1 | "VALLEY PAWN — OCTOBER 2026" in #ceo-briefs + STATUS-2026-10.md | **not ready**: (1) the ops bot is not in #ceo-briefs (`/invite @Goldilocks` there); (2) hire/separation counts need Gusto (Gate C); (3) the DM contradiction check (Gate D) can't run from the bot. Keep the cloud copy |
+| 19 | bonus-month-close | com.valleypawn.bonus-month-close | Tue 11/10 09:00 | Bonus — qualifiers + payout close (10th) | trig_01T87bLf7WsfTEAWo9ipkbke | payout DM matching `out/2026-10/dm_payout.txt` | **not ready**: the close needs the Gusto roster, including former staff, which is essential and not native. The agent holds without it. Keep the cloud copy, or put `data/2026-10/roster.json` in place before 11/10 |
+| 20 | monthly-gun-audit-report | com.valleypawn.gun-audit-monthly | Mon 11/16 02:30 | monthly-gun-audit-report | trig_0185QmePGw5CdydjPMpjjqSr | "Monthly Gun Audit Summary — October 2026" in #monthly-gun-audit; the Trends sheet updated | **not ready (sheet only)**: the post matches; the Trends sheet returns "no access" for jdavis@fcfpawn.com. Share the sheet with that account as Editor, render once, then create `fleet/state/gun_audit/SHEET_WRITE_OK` |
+| 21 | mobilepawn-app-social-monthly | com.valleypawn.mobilepawn-app-social | Fri 11/20 09:10 | MobilePawn app post — schedule next month | trig_0175s4aamgZUBvpajaR947AE | December items scheduled in Publer, sent log updated | ready (the cloud copy fired 10/20) |
+
+**Not converted, still cloud:** scrap-bucket-name-check (trig_01Es3fBCcpjYmKBqg9i5okfR, 5th/15th/25th). This task only lists buckets and does not write any year file, so it never caused the 10/15 truncation (see the CHANGELOG 2026-10-20 entry). Leave it as it is.
+
+**Already native, nothing to switch:** nics-monthly-ranking, monthly-gift-card-store-credit. The new **scrap-year-guard** (com.valleypawn.scrap-year-guard, every 10 min) is live by design. It protects the scrap year files, replaces no cloud task, and posts nothing.
+
+**Note A (eom recap):** the gate is the same as the cloud run's: 3 weeks of the channel's own recap, or 60% of days. A self-check removes any figure that isn't in the channel's posts. The September render made the same skip decisions as the cloud run, with one exception: #pawn-walks. The cloud run read the bot's posts as empty and skipped it; the native agent can read them, so it posts there. The native drafts are worded slightly differently from the cloud posts.

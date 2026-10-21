@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-10-19
+# LIVE STATE - auto-refreshed 2026-10-20
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -38,10 +38,12 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.ask-vp.plist` | installed | YES |
 | `com.valleypawn.backup-health.plist` | installed | YES |
 | `com.valleypawn.blog-announce.plist` | installed | YES |
+| `com.valleypawn.bonus-close-pull.plist` | installed | YES |
 | `com.valleypawn.bonus-pace.plist` | installed | YES |
 | `com.valleypawn.bravo-health-watchdog.plist` | installed | YES |
 | `com.valleypawn.bravo-map-oneshot.plist` | installed | YES |
 | `com.valleypawn.bravo-relaunch.plist` | installed | YES |
+| `com.valleypawn.bravo-user-audit.plist` | installed | YES |
 | `com.valleypawn.brevo-attr-sync.plist` | installed | YES |
 | `com.valleypawn.brevo-draft-guard.plist` | installed | YES |
 | `com.valleypawn.brevo-engaged-v2.plist` | installed | YES |
@@ -80,11 +82,14 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.ebay-efficiency-weekly.plist` | installed | YES |
 | `com.valleypawn.ebay-markdown-monthly.plist` | installed | YES |
 | `com.valleypawn.ebay-ratings-pull.plist` | installed | YES |
+| `com.valleypawn.ebay-ratings-sweep.plist` | installed | YES |
 | `com.valleypawn.ebay-ship-alert.plist` | installed | YES |
 | `com.valleypawn.ebay-weekly-rankings.plist` | installed | YES |
 | `com.valleypawn.email-analytics-weekly.plist` | installed | YES |
 | `com.valleypawn.employee-canvas.plist` | installed | YES |
 | `com.valleypawn.eod-photo-fetch.plist` | installed | YES |
+| `com.valleypawn.eom-gl-export.plist` | installed | YES |
+| `com.valleypawn.eom-gl-watchdog.plist` | installed | YES |
 | `com.valleypawn.ffl-guardian.plist` | installed | YES |
 | `com.valleypawn.field-scorecard.plist` | installed | YES |
 | `com.valleypawn.fleet-doctor.plist` | installed | YES |
@@ -108,15 +113,21 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.layaway-yield-weekly.plist` | installed | YES |
 | `com.valleypawn.loan-canvas.plist` | installed | YES |
 | `com.valleypawn.loan-layaway-dms.plist` | installed | YES |
+| `com.valleypawn.loan-layaway-outcomes.plist` | installed | YES |
 | `com.valleypawn.mac-maintenance.plist` | installed | YES |
 | `com.valleypawn.mail-brief.plist` | installed | YES |
 | `com.valleypawn.markdown-verification-pull.plist` | installed | YES |
 | `com.valleypawn.markdown-verification-review.plist` | installed | YES |
 | `com.valleypawn.missed-call-report.plist` | installed | YES |
 | `com.valleypawn.missed-call-text.plist` | installed | YES |
+| `com.valleypawn.mobilepawn-app-social.plist` | installed | YES |
+| `com.valleypawn.mobilepawn-participation.plist` | installed | YES |
 | `com.valleypawn.model-audit-weekly.plist` | installed | YES |
 | `com.valleypawn.monday-compile.plist` | installed | YES |
 | `com.valleypawn.monday-pull.plist` | installed | YES |
+| `com.valleypawn.monthly-analytics-report.plist` | installed | YES |
+| `com.valleypawn.monthly-analytics-watchdog.plist` | installed | YES |
+| `com.valleypawn.monthly-employee-rankings.plist` | installed | YES |
 | `com.valleypawn.monthly-prestage.plist` | installed | YES |
 | `com.valleypawn.morning-pull.plist` | installed | YES |
 | `com.valleypawn.nics-monthly.plist` | installed | YES |
@@ -130,6 +141,8 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.qbo-token-refresh.plist` | installed | YES |
 | `com.valleypawn.registry-guard.plist` | installed | YES |
 | `com.valleypawn.reviews-weekly.plist` | installed | YES |
+| `com.valleypawn.sales-tax-monthly.plist` | installed | YES |
+| `com.valleypawn.scrap-rankings-monthly.plist` | installed | YES |
 | `com.valleypawn.shop-refresh.plist` | installed | YES |
 | `com.valleypawn.shop-weekly-report.plist` | installed | YES |
 | `com.valleypawn.skill-tool-index.plist` | installed | YES |
@@ -171,38 +184,39 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-10-19 | Valley Pawn OS | - |
-| 2026-10-19 | Unified Search | - |
-| 2026-10-19 | Business Dashboard Website | - |
-| 2026-10-19 | Bravo Data Extraction | STATUS.md |
+| 2026-10-20 | Valley Pawn OS | - |
+| 2026-10-20 | Unified Search | - |
+| 2026-10-20 | Business Dashboard Website | - |
+| 2026-10-20 | Bravo Data Extraction | STATUS.md |
+| 2026-10-19 | Zoom Call Pipeline | - |
+| 2026-10-19 | Website | - |
+| 2026-10-19 | Short Term Rental Optimization | - |
+| 2026-10-19 | Refine Social Media | - |
+| 2026-10-19 | Preston Knowledge Base | - |
+| 2026-10-19 | Precious Metals Settlements | - |
+| 2026-10-19 | MobilePawn Participation | README.md |
+| 2026-10-19 | Life OS | - |
+| 2026-10-19 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-10-19 | Health Optimization | STATUS.md |
+| 2026-10-19 | Gold and Silver Markeitng | - |
+| 2026-10-19 | Email Refinement | - |
+| 2026-10-19 | Daily Funds Verification | - |
+| 2026-10-19 | Compliance | - |
+| 2026-10-19 | Communcations | - |
+| 2026-10-19 | Bonus Program | - |
+| 2026-10-19 | Ask Valley Pawn | STATUS.md |
+| 2026-10-19 | Ai Optimized Marketing | - |
 | 2026-10-18 | eBay | - |
-| 2026-10-18 | Zoom Call Pipeline | - |
-| 2026-10-18 | Website | - |
 | 2026-10-18 | Valuation Core | README.md |
 | 2026-10-18 | Sold Margin Review | STATUS.md |
 | 2026-10-18 | Pawn Walks | STATUS.md |
-| 2026-10-18 | Life OS | - |
 | 2026-10-18 | Human Resources | - |
-| 2026-10-18 | Health Optimization | STATUS.md |
-| 2026-10-18 | Email Refinement | - |
 | 2026-10-18 | Discount Outlier Review | STATUS.md |
-| 2026-10-18 | Daily Funds Verification | - |
-| 2026-10-18 | Compliance | - |
-| 2026-10-18 | Communcations | - |
 | 2026-10-18 | Call Analysis | - |
-| 2026-10-18 | Ai Optimized Marketing | - |
-| 2026-10-17 | Short Term Rental Optimization | - |
-| 2026-10-17 | Refine Social Media | - |
-| 2026-10-17 | Preston Knowledge Base | - |
-| 2026-10-17 | Precious Metals Settlements | - |
-| 2026-10-17 | Jewelry Count Reconciliation | STATUS.md |
 | 2026-10-15 | Preston Time Review | STATUS.md |
 | 2026-10-15 | Claude outputs | - |
-| 2026-10-15 | Bonus Program | - |
 | 2026-10-14 | eBay Customer Campaign | - |
 | 2026-10-14 | Training Program | STATUS.md |
-| 2026-10-14 | Gold and Silver Markeitng | - |
-| 2026-10-14 | Ask Valley Pawn | STATUS.md |
 | 2026-10-13 | Taxes 2026 | - |
 | 2026-10-13 | Jewelry Loan Growth | - |
 | 2026-10-13 | Deep KPI analysis | - |
@@ -210,7 +224,6 @@ below disagrees with this block, THIS BLOCK WINS.
 | 2026-10-07 | Controlio Monitoring | - |
 | 2026-10-06 | Valley Pawn Studios | STATUS.md |
 | 2026-10-04 | _stage | - |
-| 2026-10-02 | MobilePawn Participation | README.md |
 
 <!-- LIVE-STATE:END -->
 

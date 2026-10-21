@@ -126,12 +126,26 @@ def unanswered(day, mcfg):
         alerts = air.read_alerts(max(minutes, 60))
     except Exception:
         return None
+    seen = []
     for a in alerts:
+        # 2026-10-20 (comms review): read_alerts() also returns Chekkit's per-message ": message via" notification
+        # emails (kind "new") since the 10/5 API-first change — those are NOT 10-minute misses. Count only the
+        # "Unanswered Message Alert" emails, once per customer message (Chekkit can send the same alert twice a
+        # minute apart; chekkit_unanswered.py dedupes the same way). Before this the table overstated misses
+        # (10/19: WAY 12 here vs 0 in the morning summary).
+        if a.get("kind", "unanswered") != "unanswered":
+            continue
         rec = dt.datetime.fromisoformat(a["received"])
         if rec.date() != day:
             continue
+        key = (a.get("store"), (a.get("phone") or a.get("name") or ""), " ".join((a.get("text") or "").lower().split()))
+        if any(k == key and abs((rec - r).total_seconds()) <= 900 for k, r in seen):
+            continue
+        seen.append((key, rec))
         msg_t = rec - dt.timedelta(minutes=10)
-        o = out[a["store"]]
+        o = out.get(a.get("store"))
+        if o is None:
+            continue
         if air.is_ender(a["text"]):
             o["enders"] += 1
         elif mct.during_hours(msg_t, mcfg["stores"][a["store"]]):
@@ -139,6 +153,21 @@ def unanswered(day, mcfg):
         else:
             o["closed"] += 1
     return out
+
+
+def ai_audit_line(day):
+    """2026-10-20: one line from fleet/ai_reply_audit/<day>.json (the nightly read-back of what the AI actually sent).
+    The audit runs at 21:45 for the same day, so the 19:20 scorecard usually shows the PREVIOUS day's audit."""
+    for d in (day, day - dt.timedelta(days=1)):
+        try:
+            j = json.load(open(os.path.join(FLEET, "ai_reply_audit", d.isoformat() + ".json")))
+        except OSError:
+            continue
+        s = "%s: %d AI replies read back, %d wrong" % (d.strftime("%a %m/%d"), j.get("checked", 0), j.get("wrong", 0))
+        if j.get("stale_facts"):
+            s += " · %d stale fact(s) in the AI config" % len(j["stale_facts"])
+        return s
+    return ""
 
 
 def ai_events(day):
@@ -206,6 +235,9 @@ def build(day):
             L.append("| %s | 0 | — | — | — | — |" % s); continue
         m = sorted(a["store_min"]); med = m[len(m) // 2] if m else "—"
         L.append("| %s | %d | %d (%s) | %d | %d | %s |" % (s, a["texts"], a["replied"], pct(a["replied"], a["texts"]), a["optout"], a["no_convo"], med))
+    aud = ai_audit_line(day)
+    if aud:
+        L += ["", "## Automated replies checked (ai_reply_audit)", aud]
     L += ["", "## Customer texts nobody answered in 10 min (Chekkit alerts)", "| Store | During open hours | While closed | Sign-offs (ignored) |", "|---|---|---|---|"]
     for s in STORES:
         u = (ua or {}).get(s, {})

@@ -12,9 +12,16 @@ screenshot of anything but its own automation window):
     bin/vp_browser.py (2026-10-19; separate from Joshua's everyday Chrome; signed in ONCE by Joshua with
     bin/vp_signin_front.sh, "Remember me" ticked). vp_browser.prefs() sets session.restore_on_startup=1 +
     exit_type Normal before every launch so session cookies survive restarts (proof in vp_browser.py).
-    - Login form shown (password field) -> the saved session is gone: ONE ledger row a day
-      ("Northwest needs a one-time sign-in in the automation browser"), nothing posted, stop. NO
-      credential is ever typed by this script.
+    - Login form shown (password field) -> the saved session is gone. 2026-10-20: this is the NORMAL
+      daily case (Northwest/Keycloak gives a session-only login that its SSO drops; see CHANGELOG 10/20),
+      so the check now signs in the way the proven Cowork SKILL did — through CHROME'S OWN SAVED PASSWORD:
+      it waits for Chrome's password manager to fill the e-mail + password fields (a saved login must exist
+      in the profile's Login Data; the script only checks THAT one exists and that the fields report
+      filled — it never reads, logs or types a credential), makes sure "Remember me" is ticked, clicks
+      Sign in, then handles the SMS step below. No saved login / Chrome did not fill -> ONE ledger row a
+      day ("Northwest needs a one-time sign-in in the automation browser …"), nothing posted, stop.
+      The click only happens INSIDE the SMS relay window (fleet/sms_code_relay.json, 08:35-09:40 ET) —
+      outside it the check stops with a ledger row instead of burning a code nobody can read.
     - SMS-code screen shown ("You're almost there!") while the session is otherwise valid -> read the
       code from fleet/sms_codes/northwest.json, written by the native sms-code-relay agent (Messages,
       window 08:35-09:40 ET, see fleet/sms_code_relay.json). Rules from the SKILL: use it only if age_s
@@ -62,6 +69,7 @@ LEDGER = os.path.join(OS_DIR, "fleet", "FAILURE_LEDGER.md")
 STATE = os.path.join(OS_DIR, "fleet", "state", "northwest")
 TEST_OUT = os.path.join(OS_DIR, "fleet", "test_output", "northwest")
 RELAY = os.path.join(OS_DIR, "fleet", "sms_codes", "northwest.json")
+RELAY_CFG = os.path.join(OS_DIR, "fleet", "sms_code_relay.json")
 import vp_browser  # the one automation profile + launch recipe (2026-10-19)
 PROFILE = vp_browser.PROFILE
 DRIVE_DIR = os.environ.get("NW_DRIVE_DIR") or os.path.join(HOME, "Desktop", "Registered Agent")
@@ -183,6 +191,148 @@ def relay_code(requested_at):
     if rec < requested_at - dt.timedelta(seconds=5):
         return None
     return str(r["code"])
+
+
+def relay_window():
+    """(start, end) ET times the native sms-code-relay polls Messages for the Northwest code (fleet/sms_code_relay.json)."""
+    try:
+        w = json.load(open(RELAY_CFG))["relays"]["northwest"]["window"]
+        return dt.time.fromisoformat(w[0]), dt.time.fromisoformat(w[1])
+    except Exception:
+        return dt.time(8, 35), dt.time(9, 40)
+
+
+def in_relay_window(now=None):
+    a, b = relay_window()
+    t = (now or dt.datetime.now(ET)).time()
+    return a <= t <= b
+
+
+# ---------- Chrome saved password (presence only) ----------
+def saved_logins(site="northwestregisteredagent.com"):
+    """How many saved logins the automation profile holds for the site — from a COPY of Default/Login Data,
+    origin_url only (the password column is never selected, the username is never logged). -1 = unreadable."""
+    import sqlite3
+    src = os.path.join(PROFILE, "Default", "Login Data")
+    if not os.path.exists(src):
+        return 0
+    tmp = src + ".vpread"
+    try:
+        shutil.copy(src, tmp)
+        con = sqlite3.connect("file:%s?mode=ro" % tmp, uri=True)
+        n = con.execute("SELECT count(*) FROM logins WHERE (origin_url LIKE ? OR action_url LIKE ?) AND blacklisted_by_user = 0",
+                        ("%" + site + "%", "%" + site + "%")).fetchone()[0]
+        con.close()
+        return int(n)
+    except Exception as e:
+        log("saved-login check failed:", type(e).__name__, str(e)[:80])
+        return -1
+    finally:
+        try:
+            os.remove(tmp)
+        except OSError:
+            pass
+
+
+# ---------- autofill sign-in (never reads or types a credential) ----------
+FORM_JS = """() => {
+  const q = s => Array.from(document.querySelectorAll(s));
+  const user = q('input[type=email], input[name=username], input[id=username], input[autocomplete=username], input[type=text]')[0] || null;
+  const pass = q('input[type=password]')[0] || null;
+  const af = el => !!el && (el.matches(':-webkit-autofill') || el.matches(':autofill'));
+  const btn = q('button, input[type=submit]').find(b => /sign in|log in|login|continue/i.test((b.innerText || b.value || '').trim())) || null;
+  const rem = q('input[type=checkbox]').find(c => /remember/i.test((c.id || '') + ' ' + (c.name || '') + ' ' + ((c.labels && c.labels[0]) ? c.labels[0].innerText : ''))) || null;
+  const attrs = el => el ? {tag: el.tagName, type: el.type, id: el.id, name: el.name, autocomplete: el.autocomplete} : null;
+  return {
+    user: attrs(user), pass: attrs(pass),
+    user_filled: !!(user && user.value.length), pass_filled: !!(pass && pass.value.length),
+    user_autofill: af(user), pass_autofill: af(pass),
+    button: btn ? (btn.innerText || btn.value || '').trim() : null, button_enabled: !!(btn && !btn.disabled),
+    remember: rem ? rem.checked : null, remember_id: rem ? rem.id : null
+  };
+}"""
+
+
+def form_state(page):
+    try:
+        return page.evaluate(FORM_JS)
+    except Exception as e:
+        return {"error": str(e)[:80]}
+
+
+def _flags(st):
+    return {k: st.get(k) for k in ("user_filled", "pass_filled", "user_autofill", "pass_autofill", "button", "button_enabled", "remember")}
+
+
+def wait_autofill(page, seconds=20):
+    """Wait for Chrome's password manager to fill the login form. Chrome keeps an autofilled password invisible
+    to the page until a user gesture, so after the first wait one click on the page heading (not a field,
+    not a button) is sent and the fields are polled again. Returns the final form state (booleans only)."""
+    st = form_state(page)
+    for _ in range(seconds):
+        if st.get("pass_filled") or st.get("pass_autofill"):
+            break
+        page.wait_for_timeout(1000)
+        st = form_state(page)
+    # the user-gesture that lets the page see the filled values (and lets the form enable its button)
+    try:
+        h = page.query_selector("h1, h2, .card-title, form")
+        if h:
+            h.click(timeout=3000, position={"x": 5, "y": 5})
+        else:
+            page.mouse.click(5, 5)
+    except Exception:
+        try:
+            page.mouse.click(5, 5)
+        except Exception:
+            pass
+    for _ in range(8):
+        page.wait_for_timeout(1000)
+        st = form_state(page)
+        if st.get("pass_filled") and st.get("user_filled"):
+            break
+    if st.get("pass_filled") and st.get("user_filled") and not st.get("button_enabled"):
+        # a framework form that enables its button on input events: fire them without changing any value
+        try:
+            page.evaluate("""() => { for (const el of document.querySelectorAll('input[type=password], input[type=email], input[type=text]')) {
+                el.dispatchEvent(new Event('input', {bubbles: true})); el.dispatchEvent(new Event('change', {bubbles: true})); } }""")
+            page.wait_for_timeout(1500)
+            st = form_state(page)
+        except Exception:
+            pass
+    return st
+
+
+def click_sign_in(page):
+    """Tick Remember me if it is not, click the Sign in button. Returns the UTC time of the click (= when the
+    SMS code was requested) or None when nothing could be clicked."""
+    st = form_state(page)
+    if st.get("remember") is False and st.get("remember_id"):
+        try:
+            page.click("#" + st["remember_id"], timeout=3000)
+            page.wait_for_timeout(500)
+            log("ticked Remember me")
+        except Exception as e:
+            log("could not tick Remember me:", str(e)[:80])
+    btn = None
+    for sel in ("#kc-login", "button[type=submit]:has-text('Sign in')", "button:has-text('Sign in')", "button:has-text('Sign In')",
+                "input[type=submit]", "button[type=submit]"):
+        try:
+            b = page.query_selector(sel)
+            if b and b.is_visible():
+                btn = b
+                break
+        except Exception:
+            continue
+    if btn is None:
+        return None
+    for _ in range(5):
+        if btn.is_enabled():
+            break
+        page.wait_for_timeout(1000)
+    requested = dt.datetime.now(dt.timezone.utc)
+    btn.click(timeout=10000)
+    return requested
 
 
 # ---------- page helpers ----------
@@ -309,10 +459,14 @@ def download_doc(page, ctx, doc, dest_dir):
 
 
 # ---------- SMS step ----------
-def handle_sms(page):
-    """Type the relayed code. Returns True when past the SMS screen."""
+def handle_sms(page, requested=None):
+    """Type the relayed code. `requested` = UTC time the code was requested (the Sign in click), so a code
+    that arrived before it is never used. Returns True when past the SMS screen."""
     for attempt in (1, 2):
-        requested = dt.datetime.now(dt.timezone.utc)
+        if attempt == 1:
+            requested = requested or dt.datetime.now(dt.timezone.utc)
+        else:
+            requested = dt.datetime.now(dt.timezone.utc)
         if attempt == 2:
             # ask for a fresh code: the SKILL's path is Sign In again on the login form
             btn = page.query_selector("button:has-text('Resend'), a:has-text('Resend'), button:has-text('Send again'), button:has-text('Sign in'), button:has-text('Sign In')")
@@ -376,6 +530,12 @@ def read_live():
             sys.exit(3)
         try:
             page = vp_browser.first_page(ctx)
+            if DIAG:   # 2026-10-20: which Northwest cookies the shared profile holds — NAMES only, never values
+                try:
+                    nw = [(c["domain"], c["name"]) for c in ctx.cookies() if "northwest" in c["domain"]]
+                    log("diag: northwest cookies (domain:name):", sorted("%s:%s" % x for x in nw)[:30] or "none")
+                except Exception as e:
+                    log("diag: cookies unreadable:", str(e)[:80])
             page.goto(DOCS_URL, wait_until="domcontentloaded", timeout=60000)
             try:
                 page.wait_for_selector("table, [role=row], input[type=password], input[autocomplete=one-time-code]", timeout=30000)
@@ -405,13 +565,55 @@ def read_live():
                     ledger("Northwest's website put a bot check in front of the automation browser, so the registered agent check could not sign in.",
                            "yes, run bin/vp_signin_front.sh and open the Northwest portal once in that window (and sign in if asked)")
                 sys.exit(8)
+            requested = None
             if kind == "login":
-                if once_per_day("signin"):
-                    ledger("Northwest needs a one-time sign-in in the automation browser",
-                           "yes, run bin/vp_signin_front.sh, sign in to Northwest once (tick remember this device if offered), then quit that window")
-                sys.exit(4)
+                # 2026-10-20: sign in through Chrome's own saved password (the proven Cowork path), never by typing.
+                n = saved_logins()
+                log("login form | saved Northwest logins in the profile: %d" % n)
+                if DIAG:
+                    st0 = form_state(page)
+                    log("diag: form fields:", json.dumps({"user": st0.get("user"), "pass": st0.get("pass"), "button": st0.get("button"), "remember_id": st0.get("remember_id")}))
+                if n <= 0:
+                    if once_per_day("signin"):
+                        ledger("Northwest needs a one-time sign-in in the automation browser (no saved Northwest password in that browser yet)",
+                               "yes, run bin/vp_signin_front.sh, sign in to Northwest once, let Chrome SAVE the password when it offers, then quit that window")
+                    sys.exit(4)
+                st = wait_autofill(page)
+                log("autofill:", json.dumps(_flags(st)))
+                if DIAG:
+                    page.screenshot(path=os.path.join(TEST_OUT, "state-login-autofill.png"), full_page=True)
+                if not (st.get("user_filled") and st.get("pass_filled")):
+                    if once_per_day("signin"):
+                        ledger("Northwest needs a one-time sign-in in the automation browser (Chrome did not fill the saved login; %d saved)" % n,
+                               "yes, run bin/vp_signin_front.sh, sign in to Northwest once, let Chrome save/update the password, then quit that window")
+                    sys.exit(4)
+                if not in_relay_window():
+                    a, b = relay_window()
+                    msg = ("Northwest is signed out; the check did not sign in because it is outside its text-code window (%s-%s ET), "
+                           "when the code relay is reading Messages. The 08:49 run signs in by itself." % (a.strftime("%H:%M"), b.strftime("%H:%M")))
+                    log("autofill OK but outside the relay window — NOT clicking Sign in (nothing typed)")
+                    if once_per_day("outside-window"):
+                        ledger(msg, "no")
+                    sys.exit(9)
+                requested = click_sign_in(page)
+                if requested is None:
+                    ledger("The registered agent check could not find Northwest's Sign in button, so it did not sign in.")
+                    sys.exit(4)
+                log("clicked Sign in (credentials supplied by Chrome's password manager; nothing typed)")
+                try:
+                    page.wait_for_url(re.compile(r"#/(dashpanel|documents)|almost|otp|sms|code"), timeout=30000)
+                except Exception:
+                    page.wait_for_timeout(5000)
+                kind, body = classify(page)
+                log("after Sign in: page state:", kind, "|", page.url.split("?")[0])
+                if DIAG:
+                    page.screenshot(path=os.path.join(TEST_OUT, "state-after-signin-%s.png" % kind), full_page=True)
+                if kind == "login":
+                    ledger("Northwest did not accept the saved sign-in in the automation browser (the login form came back)",
+                           "yes, run bin/vp_signin_front.sh, sign in to Northwest once, let Chrome update the saved password, then quit that window")
+                    sys.exit(4)
             if kind == "sms":
-                if not handle_sms(page):
+                if not handle_sms(page, requested):
                     ledger("The registered agent check stopped at Northwest's text-message code because the relay did not see a fresh code.")
                     sys.exit(5)
                 page.goto(DOCS_URL, wait_until="domcontentloaded", timeout=60000)
@@ -527,6 +729,9 @@ def probe():
         print("relay file:", {**r, "code": "******" if r.get("code") else None})
     except Exception as e:
         print("relay file unreadable:", type(e).__name__)
+    a, b = relay_window()
+    print("relay window: %s-%s ET | in window now: %s" % (a.strftime("%H:%M"), b.strftime("%H:%M"), in_relay_window()))
+    print("saved Northwest logins in the profile (Login Data, count only):", saved_logins())
     print("native_live:", os.path.exists(os.path.join(OS_DIR, "fleet/state/native_live", AGENT)))
 
 

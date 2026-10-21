@@ -92,11 +92,15 @@ def top_pages(start: str, end: str, limit: int = 12) -> list[dict]:
 def leads(start: str, end: str) -> dict:
     """Lead events, total and per store. Falls back to totals-only if the store param is absent."""
     out: dict = {}
+    # 2026-10-20: form_submit is GA4's automatic form tracking, which also fires on the WooCommerce
+    # login / lost-password forms (bot noise: no customer accounts exist). Count only real lead forms.
     r = run_report({
         "dateRanges": _rng(start, end),
         "dimensions": [{"name": "eventName"}],
         "metrics": [{"name": "eventCount"}],
         "limit": 200,
+        "dimensionFilter": {"notExpression": {"filter": {"fieldName": "pagePath",
+                            "stringFilter": {"matchType": "BEGINS_WITH", "value": "/my-account"}}}},
     })
     for row in r.get("rows", []):
         name = row["dimensionValues"][0]["value"]

@@ -1,36 +1,36 @@
 # eBay Ratings Sweep — October 2026
 
-Headless pull (no browser), all 5 store accounts, run 2026-10-02.
+Headless pull (no browser), all 5 store accounts, run 2026-10-20.
 
 | Rank | Store | Username | Feedback Score | 12-mo Positive % | Top Rated Seller |
 |---|---|---|---|---|---|
-| 1 | Roanoke | valley_pawn_roanoke | 5744 | 99.68% | No |
-| 2 | Waynesboro | valley_pawn_waynesboro | 632 | 99.58% | Yes (US) |
-| 3 | Culpeper | valley_pawn_culpeper | 1317 | 99.09% | Yes (US) |
-| 4 | Lexington | valley_pawn_lexington | 1284 | 98.92% | No |
-| 5 | Harrisonburg | valley_pawn_harrisonburg | 629 | 98.62% | No |
+| 1 | Waynesboro | valley_pawn_waynesboro | 637 | 99.58% | Yes (US) |
+| 2 | Roanoke | valley_pawn_roanoke | 5781 | 99.42% | No |
+| 3 | Culpeper | valley_pawn_culpeper | 1348 | 99.11% | Yes (US) |
+| 4 | Lexington | valley_pawn_lexington | 1307 | 99.01% | No |
+| 5 | Harrisonburg | valley_pawn_harrisonburg | 633 | 98.62% | No |
 
 ## Feedback detail by store
 
-### Roanoke — valley_pawn_roanoke
-- Feedback score: 5744 | lifetime positive: 100.0% | member since 2010-08-20
-- Positive/Neutral/Negative — 1-mo: 63/0/0 · 6-mo: 195/1/0 · 12-mo: 314/1/0
-
 ### Waynesboro — valley_pawn_waynesboro
-- Feedback score: 632 | lifetime positive: 99.6% | member since 2019-07-04
-- Positive/Neutral/Negative — 1-mo: 9/0/0 · 6-mo: 86/0/0 · 12-mo: 237/0/1
+- Feedback score: 637 | lifetime positive: 99.6% | member since 2019-07-04
+- Positive/Neutral/Negative — 1-mo: 9/0/0 · 6-mo: 89/0/0 · 12-mo: 238/0/1
+
+### Roanoke — valley_pawn_roanoke
+- Feedback score: 5781 | lifetime positive: 100.0% | member since 2010-08-20
+- Positive/Neutral/Negative — 1-mo: 64/1/0 · 6-mo: 223/2/0 · 12-mo: 340/2/0
 
 ### Culpeper — valley_pawn_culpeper
-- Feedback score: 1317 | lifetime positive: 99.8% | member since 2020-10-14
-- Positive/Neutral/Negative — 1-mo: 99/1/0 · 6-mo: 363/3/0 · 12-mo: 652/5/1
+- Feedback score: 1348 | lifetime positive: 99.8% | member since 2020-10-14
+- Positive/Neutral/Negative — 1-mo: 86/0/0 · 6-mo: 375/3/0 · 12-mo: 671/5/1
 
 ### Lexington — valley_pawn_lexington
-- Feedback score: 1284 | lifetime positive: 99.4% | member since 2015-07-27
-- Positive/Neutral/Negative — 1-mo: 12/0/0 · 6-mo: 84/0/1 · 12-mo: 183/1/1
+- Feedback score: 1307 | lifetime positive: 99.5% | member since 2015-07-27
+- Positive/Neutral/Negative — 1-mo: 27/0/0 · 6-mo: 100/0/0 · 12-mo: 200/1/1
 
 ### Harrisonburg — valley_pawn_harrisonburg
-- Feedback score: 629 | lifetime positive: 100.0% | member since 2021-09-18
-- Positive/Neutral/Negative — 1-mo: 7/0/0 · 6-mo: 69/1/0 · 12-mo: 143/2/0
+- Feedback score: 633 | lifetime positive: 100.0% | member since 2021-09-18
+- Positive/Neutral/Negative — 1-mo: 10/0/0 · 6-mo: 65/1/0 · 12-mo: 143/2/0
 
 
 ## Seller Standards

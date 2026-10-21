@@ -20,6 +20,11 @@ password; never a screenshot of anything but its own automation window):
     paginating, plus each clocked-in / on-break person's earliest clock-in time today (row text, else that
     person's timesheet page). A 12:00 AM clock-in = a rollover: use the next real clock-in and append
     _(shift rolled over from previous night)_.
+    2026-10-20 (first signed-in render) fixes: the Legend above the table carries the same aria-labels and
+    was read as three people — only elements inside a table row count now; the Review table shows 10 rows
+    a page — "Items per page" is set to 50 before reading (and a one-page read of a paginated table with
+    roster people missing = ledger row, no post); the Review row holds only pay-period totals, so the
+    clock-in time comes from the person's timesheet page (name link -> today's date block -> earliest time).
   3 Store filter ("Who can appear"): each person's Gusto DEPARTMENT from the People list (same profile),
     cached daily in fleet/state/clockin/roster.json (yesterday's cache is used if today's read fails).
     Department must be Culpeper / Harrisonburg / Lexington / Roanoke / Waynesboro; last name Davis,
@@ -186,22 +191,103 @@ def time_key(t):
 
 # ---------- page helpers ----------
 STATUS_JS = """(labels) => {
+  // 2026-10-20 (first signed-in render): the Legend above the table ("Clocked in / On Break / Clocked out")
+  // carries the same aria-labels as the row dots and was read as three people. Only elements INSIDE a
+  // table row count now; the legend has no row.
   const txt = e => (e.innerText || e.textContent || '').replace(/\\s+/g, ' ').trim();
   const out = [];
   for (const label of labels) {
     for (const el of document.querySelectorAll('[aria-label="' + label + '"]')) {
-      let row = el.closest('tr, [role=row], li, [data-testid*=row i]') || el.parentElement;
-      // climb until the container holds something that looks like a person's name (2+ words) or we hit a table
-      let hops = 0, node = row;
-      while (node && hops < 6 && !/[A-Za-z]+ [A-Za-z]/.test(txt(node))) { node = node.parentElement; hops++; }
-      row = node || row;
+      const row = el.closest('tbody tr, tr, [role=row]');
+      if (!row) continue;                                   // legend / anything outside the table
       const cells = Array.from(row.querySelectorAll('td, th, [role=cell], [role=gridcell]')).map(txt).filter(Boolean);
+      // the person's name is the row's link/button whose text has 2+ words (Gusto renders it as a link)
+      let nameEl = null;
+      for (const c of row.querySelectorAll('a, button, [role=link], [role=button]')) {
+        const t = txt(c); if (/[A-Za-z]{2,} [A-Za-z]/.test(t) && !/^(Clocked|On Break|Approved|Approve)/i.test(t)) { nameEl = c; break; }
+      }
       const a = row.querySelector('a[href]');
-      out.push({label, text: txt(row), cells, href: a ? a.href : null, self: txt(el)});
+      out.push({label, text: txt(row), cells, href: a ? a.href : null, self: txt(el),
+                name_el: nameEl ? txt(nameEl) : null, name_tag: nameEl ? nameEl.tagName.toLowerCase() : null});
     }
   }
   return out;
 }"""
+
+PAGE_SIZE_RX = re.compile(r"Items per page", re.I)
+
+
+def set_page_size(page, size="50"):
+    """The Review table shows 10 rows a page (10 / 25 / 50 'Items per page'); pick 50 so one read holds everyone.
+    Returns a short note of what worked (or None)."""
+    if not PAGE_SIZE_RX.search(body_text(page, 20000)):
+        return None
+    for kind in ("radio", "button", "option", "link", "tab", "menuitemradio"):
+        try:
+            el = page.get_by_role(kind, name=re.compile(r"^\s*%s\s*$" % size)).first
+            if el.count() and el.is_visible():
+                el.click(timeout=4000)
+                page.wait_for_timeout(2500)
+                return "%s '%s'" % (kind, size)
+        except Exception:
+            pass
+    try:
+        sel = page.query_selector("select")
+        if sel and sel.is_visible():
+            sel.select_option(size)
+            page.wait_for_timeout(2500)
+            return "select '%s'" % size
+    except Exception:
+        pass
+    try:
+        el = page.get_by_text(size, exact=True).first
+        if el.count() and el.is_visible():
+            el.click(timeout=4000)
+            page.wait_for_timeout(2500)
+            return "text '%s'" % size
+    except Exception:
+        pass
+    return None
+
+
+# the Legend above the table matches the bare aria-label selector, so waits/checks use the ROW version
+STATUS_SEL = "tbody tr [aria-label='Clocked in'], tbody tr [aria-label='Clocked out'], tbody tr [aria-label='On Break']"
+
+
+def on_review(page):
+    """True only on the Review TABLE: a person's timesheet page (…/timesheets/<id>) also shows a status dot
+    (10/20 render 4), so the URL is checked too."""
+    try:
+        url = page.url or ""
+        if "/timesheets/" in url or "time_tracking" not in url:
+            return False
+        return page.query_selector(STATUS_SEL) is not None
+    except Exception:
+        return False
+
+
+def open_review(page, review_url):
+    """Back to the Review table (direct URL), with the 50-per-page setting re-applied (it resets on reload).
+    10/20 render 3: Gusto took > 20 s to paint the table once and three timesheets were skipped — so wait
+    longer, and fall back to the Time tracking page -> 'Review' click. Returns True when the table is up."""
+    for attempt in range(2):
+        try:
+            page.goto(review_url, wait_until="domcontentloaded", timeout=60000)
+            page.wait_for_selector(STATUS_SEL, timeout=45000)
+        except Exception:
+            try:
+                page.goto(TT_URL, wait_until="domcontentloaded", timeout=60000)
+                page.wait_for_timeout(3000)
+                if click_text(page, ["Review", "Review hours", "Review time", "Review timesheets"]):
+                    page.wait_for_selector(STATUS_SEL, timeout=45000)
+            except Exception:
+                pass
+        page.wait_for_timeout(1500)
+        if on_review(page):
+            set_page_size(page)
+            return True
+        log("review table not up after attempt %d (url %s)" % (attempt + 1, page.url.split("?")[0][:100]))
+    return False
 
 TABLE_JS = """() => {
   const txt = e => (e.innerText || '').replace(/\\s+/g, ' ').trim();
@@ -308,55 +394,159 @@ def next_page(page):
 def read_statuses(page):
     """All status rows on the Review page, across pages. [{name, status, time, href, text}]"""
     out, seen = [], set()
-    for _ in range(25):
+    note = set_page_size(page)
+    if note:
+        log("review table: items per page ->", note)
+    for pg in range(25):
         rows = page.evaluate(STATUS_JS, list(STATUS_LABELS))
+        if DIAG:
+            log("review page %d: %d status rows" % (pg + 1, len(rows)))
         for r in rows:
             cells = r.get("cells") or []
-            raw = cells[0] if cells else r.get("text", "")
-            # the name is the first thing in the row that isn't a status word / a number
-            cand = None
-            for c in (cells or [r.get("text", "")]):
-                c2 = re.sub(r"\b(Clocked in|On Break|Clocked out)\b", " ", c, flags=re.I).strip()
-                c2 = clean_name(c2)
-                if c2 and re.search(r"[A-Za-z]{2,} [A-Za-z]", c2) and not TIME_RX.search(c2) and not re.search(r"\d", c2):
-                    cand = c2
-                    break
-            name = cand or clean_name(raw)
-            name = re.split(r"\s{2,}", name)[0][:60]
+            # the name: the row's link/button text first, else the first cell that reads like a name
+            cand = clean_name(r.get("name_el") or "")
+            if not (cand and re.search(r"[A-Za-z]{2,} [A-Za-z]", cand)):
+                cand = None
+                for c in (cells or [r.get("text", "")]):
+                    c2 = re.sub(r"\b(Clocked in|On Break|Clocked out)\b", " ", c, flags=re.I).strip()
+                    c2 = clean_name(c2)
+                    if c2 and re.search(r"[A-Za-z]{2,} [A-Za-z]", c2) and not TIME_RX.search(c2) and not re.search(r"\d", c2):
+                        cand = c2
+                        break
+            if not cand:
+                continue                      # a row with no person's name in it (never a status word as a name)
+            name = re.split(r"\s{2,}", cand)[0][:60]
             key = (norm(name), r["label"])
-            if not name or key in seen:
+            if key in seen:
                 continue
             seen.add(key)
             times = [fmt_time(m.group(0)) for m in TIME_RX.finditer(r.get("text", ""))]
             out.append({"name": name, "status": STATUS_LABELS[r["label"]], "times_in_row": times,
-                        "href": r.get("href"), "text": r.get("text", "")[:200]})
+                        "href": r.get("href"), "name_tag": r.get("name_tag"), "text": r.get("text", "")[:200]})
         if not next_page(page):
             break
     return out
 
 
-def earliest_today(page, person, today):
-    """Earliest clock-in today for one person: from the Review row text, else from their timesheet page.
-    Returns (time_str or None, rolled_over bool)."""
-    times = list(person.get("times_in_row") or [])
-    if not times and person.get("href"):
+DATE_LABEL_RX = re.compile(
+    r"(?:(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)[a-z]*,?\s+)?(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)[a-z]*\.?\s+(\d{1,2})(?!\d)"
+    r"|(?<![\d/])(\d{1,2})/(\d{1,2})(?:/\d{2,4})?(?![\d/])")
+MONTHS = {m: i + 1 for i, m in enumerate(["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"])}
+
+
+def today_segment(body, today):
+    """The slice of a timesheet page's text that belongs to today: from today's date label to the next
+    different date label. Pay-period range labels ("Oct 19 - Oct 25") are skipped. None if no label."""
+    marks = []
+    for m in DATE_LABEL_RX.finditer(body):
+        if m.group(1):
+            mo, d = MONTHS.get(m.group(1).lower()[:3]), int(m.group(2))
+        else:
+            mo, d = int(m.group(3)), int(m.group(4))
+        if not mo or not (1 <= d <= 31):
+            continue
+        before, after = body[max(0, m.start() - 3):m.start()], body[m.end():m.end() + 3]
+        if before.strip().endswith("-") or after.strip().startswith("-"):
+            continue                                  # half of a "Oct 19 - Oct 25" range
+        marks.append((m.start(), m.end(), (mo, d)))
+    want = (today.month, today.day)
+    for i, (s, e, md) in enumerate(marks):
+        if md != want:
+            continue
+        end = len(body)
+        for s2, e2, md2 in marks[i + 1:]:
+            if md2 != want:
+                end = s2
+                break
+        seg = body[e:end]
+        if TIME_RX.search(seg):
+            return seg[:4000]
+    return None
+
+
+def open_timesheet(page, person, review_url=None):
+    """Open one person's timesheet from the Review table (name link/button). True if the page changed."""
+    before = page.url
+    name = person["name"]
+    rx = re.compile(r"^\s*%s\s*$" % re.escape(name), re.I)
+    if person.get("href"):
         try:
             page.goto(person["href"], wait_until="domcontentloaded", timeout=45000)
             page.wait_for_timeout(2500)
-            if DIAG:
-                save_diag(page, "timesheet-%s" % norm(person["name"]).replace(" ", "_"))
-            body = body_text(page, 20000)
-            # today's block: from today's date label to the next date label
-            labels = [today.strftime("%b %-d"), today.strftime("%B %-d"), today.strftime("%-m/%-d"), today.strftime("%a, %b %-d"), today.strftime("%A")]
-            seg = None
-            for lab in labels:
-                i = body.find(lab)
-                if i >= 0:
-                    seg = body[i:i + 1500]
-                    break
-            if seg is None:
-                seg = body[:3000]
-            times = [fmt_time(m.group(0)) for m in TIME_RX.finditer(seg)]
+            return page.url != before
+        except Exception:
+            pass
+    def visible_name():
+        for kind in ("link", "button"):
+            try:
+                el = page.get_by_role(kind, name=rx).first
+                if el.count() and el.is_visible():
+                    return el
+            except Exception:
+                pass
+        try:
+            el = page.get_by_text(name, exact=True).first
+            if el.count() and el.is_visible():
+                return el
+        except Exception:
+            pass
+        return None
+
+    el = visible_name()
+    if el is None:
+        # 10/20 render: the table paginates (10 rows) — the person may be on another page. Filter with the
+        # table's own "Search team members" box first (poll up to 12 s: render 5 showed 2.5 s is too short),
+        # else reload the table at page 1 and page forward until the name shows.
+        try:
+            box = page.get_by_placeholder(re.compile(r"search team members", re.I)).first
+            if box.count() and box.is_visible():
+                box.fill(name)
+                for _ in range(12):
+                    page.wait_for_timeout(1000)
+                    el = visible_name()
+                    if el is not None:
+                        break
+        except Exception:
+            pass
+    if el is None and review_url:
+        try:
+            open_review(page, review_url)
+        except Exception:
+            pass
+        el = visible_name()
+        for _ in range(10):
+            if el is not None or not next_page(page):
+                break
+            el = visible_name()
+    if el is None:
+        return False
+    try:
+        el.click(timeout=5000)
+        page.wait_for_timeout(3500)
+        return page.url != before
+    except Exception:
+        return False
+
+
+def earliest_today(page, person, today, review_url=None):
+    """Earliest clock-in today for one person: from the Review row text, else from their timesheet page.
+    Returns (time_str or None, rolled_over bool)."""
+    times = list(person.get("times_in_row") or [])
+    if not times:
+        # the Review row carries only pay-period totals (10/20 render) — the time is on the timesheet page
+        try:
+            if open_timesheet(page, person, review_url):
+                if DIAG:
+                    save_diag(page, "timesheet-%s" % norm(person["name"]).replace(" ", "_"))
+                body = body_text(page, 30000)
+                seg = today_segment(body, today)
+                if seg is None:
+                    log("timesheet for %s: no block for today's date found (url %s)" % (person["name"], page.url.split("?")[0][:100]))
+                else:
+                    times = [fmt_time(m.group(0)) for m in TIME_RX.finditer(seg)]
+                    log("timesheet for %s: today's times %s" % (person["name"], times))
+            else:
+                log("timesheet for %s: could not open it from the Review table" % person["name"])
         except Exception as e:
             log("timesheet read failed for %s: %s" % (person["name"], str(e)[:80]))
     times = [t for t in times if t]
@@ -374,14 +564,23 @@ def read_roster(page):
     found = {}
     for url in PEOPLE_URLS:
         try:
-            page.goto(url, wait_until="domcontentloaded", timeout=45000)
-            page.wait_for_timeout(3000)
+            page.goto(url, wait_until="domcontentloaded", timeout=60000)
+            # 10/20 render 3: a 3 s wait read an EMPTY table on a slow load and the run fell through to the
+            # Departments page, which produced a one-name garbage roster. Wait for real rows first.
+            try:
+                page.wait_for_selector("table tbody tr td", timeout=45000)
+            except Exception:
+                pass
+            page.wait_for_timeout(2000)
         except Exception:
             continue
         if "login" in (page.url or "").lower():
             return None
         for _ in range(15):
             d = page.evaluate(TABLE_JS)
+            if not any(t.get("rows") for t in d.get("tables", [])):
+                page.wait_for_timeout(5000)              # one more chance for a slow paint
+                d = page.evaluate(TABLE_JS)
             if DIAG:
                 save_diag(page, "people-%d" % _)
             for t in d.get("tables", []):
@@ -420,6 +619,26 @@ def read_roster(page):
         log("roster: %d people from the Departments page" % len(found))
         return found
     return None
+
+
+MIN_ROSTER_STORE_PEOPLE = 5
+
+
+def roster_sane(roster, statuses):
+    """A roster is trusted (and cached) only if it names at least MIN_ROSTER_STORE_PEOPLE store people AND
+    covers most of the people the Review table listed. Render 3 (10/20) produced {'Social Media': 'Roanoke'}."""
+    if not roster:
+        return False
+    store_people = sum(1 for nm, d in roster.items() if store_of(d))
+    if store_people < MIN_ROSTER_STORE_PEOPLE:
+        return False
+    keys = {nkey(k) for k in roster}
+    names = [s["name"] for s in statuses]
+    if names:
+        covered = sum(1 for n in names if nkey(n) in keys)
+        if covered < 0.6 * len(names):
+            return False
+    return True
 
 
 def load_cache(today):
@@ -495,15 +714,19 @@ def read_live(today):
                 ledger("The clock-in check opened the time tracking page but found no clock-in status entries on it, so nothing was posted.")
                 sys.exit(7)
             review_url = page.url
+            # pagination guard (Rule 18): if the table paginates and the read stopped at one page's worth,
+            # the people on later pages were never read — say so instead of listing them as not clocked in
+            paginated = bool(PAGE_SIZE_RX.search(body_text(page, 20000)))
+            if paginated and len(statuses) in (10, 25):
+                notes.append("WARNING: review table paginates and exactly %d rows were read — later pages may be unread" % len(statuses))
             for s in statuses:
                 if s["status"] in ("in", "break"):
-                    s["time"], s["rolled"] = earliest_today(page, s, today)
-                    if page.url != review_url:
+                    if not on_review(page):
                         try:
-                            page.goto(review_url, wait_until="domcontentloaded", timeout=45000)
-                            page.wait_for_timeout(2000)
-                        except Exception:
-                            pass
+                            open_review(page, review_url)
+                        except Exception as e:
+                            log("open_review failed:", str(e)[:80])
+                    s["time"], s["rolled"] = earliest_today(page, s, today, review_url)
             roster = read_roster(page)
         finally:
             vp_browser.close(ctx)
@@ -537,7 +760,7 @@ def build(today, statuses, roster, wed, supplement_only=False):
                 dropped.append((s["name"], "not in the roster read (no department)"))
             continue
         by_name[k] = s
-    cin, brk, out = [], [], []
+    cin, brk, out, unread = [], [], [], []
     for k, (nm, st) in sorted(allowed.items(), key=lambda kv: kv[1][0].split()[-1] + kv[1][0]):
         s = by_name.get(k)
         disp = display_name(nm)
@@ -546,6 +769,8 @@ def build(today, statuses, roster, wed, supplement_only=False):
         elif s and s["status"] == "break":
             brk.append((disp, s.get("time"), s.get("rolled")))
         else:
+            if s is None:
+                unread.append(disp)       # on the roster but no status row read for them (not on time tracking, or an unread page)
             out.append(disp)
 
     def line(d, t, rolled):
@@ -577,7 +802,7 @@ def build(today, statuses, roster, wed, supplement_only=False):
         parts.append("")
         parts.append("🔴 *Not Clocked In (%d)*" % len(out))
         parts.extend("• %s" % d for d in out)
-    return "\n".join(parts), {"in": cin, "break": brk, "out": out, "dropped": dropped}
+    return "\n".join(parts), {"in": cin, "break": brk, "out": out, "dropped": dropped, "unread": unread}
 
 
 def slack_has(marker, hours=14):
@@ -638,10 +863,16 @@ def main():
     log("status entries read: %d (in %d, break %d, out %d)" % (len(statuses), sum(s["status"] == "in" for s in statuses),
                                                                   sum(s["status"] == "break" for s in statuses), sum(s["status"] == "out" for s in statuses)))
     cache_note = ""
+    if roster and not roster_sane(roster, statuses):
+        log("roster: live read looks wrong (%d entries: %s) — not trusted, not cached" % (len(roster), ", ".join(list(roster)[:5])))
+        roster = None
     if roster:
         save_cache(today, roster)
     else:
         roster, d = load_cache(today)
+        if roster and not roster_sane(roster, statuses):
+            log("roster: cache dated %s looks wrong too — ignored" % d)
+            roster = None
         if roster:
             cache_note = "roster from cache dated %s" % d
             log("roster: live read failed —", cache_note)
@@ -651,6 +882,12 @@ def main():
     post, rows = build(today, statuses, roster, wed, supplement_only=supplement)
     for nm, why in rows["dropped"]:
         log("  dropped:", nm, "—", why)
+    if rows["unread"]:
+        log("  no status row read for (listed as not clocked in):", ", ".join(rows["unread"]))
+        if any(n.startswith("WARNING") for n in notes):
+            # Rule 18: a paginated table read one page's worth and people are missing — their status was never seen
+            ledger("The clock-in check could only read the first page of the time tracking table, so some employees' status was not seen and nothing was posted.")
+            return 2
     for s in statuses:
         if s["status"] in ("in", "break") and not s.get("time"):
             log("  no clock-in time read for", s["name"])

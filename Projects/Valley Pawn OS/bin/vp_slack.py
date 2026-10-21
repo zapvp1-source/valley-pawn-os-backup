@@ -237,6 +237,11 @@ def main(a):
         import json as _j
         r = call("conversations.history", params={"channel": a[1], "latest": a[2], "oldest": a[2], "inclusive": "true", "limit": 1})
         print(_j.dumps(r.get("messages", []) or r, indent=1)[:12000])
+    elif cmd == "info":   # info <channel_id> — conversations.info (read-only, 2026-10-20): name, is_member, archived, error
+        r = call("conversations.info", params={"channel": a[1]})
+        c = r.get("channel") or {}
+        print("ok=%s error=%s name=%s is_member=%s is_private=%s is_archived=%s" % (r.get("ok"), r.get("error"), c.get("name"),
+              c.get("is_member"), c.get("is_private"), c.get("is_archived")))
     elif cmd == "has":
         sys.exit(0 if has(a[1], a[2], float(a[3]) if len(a) > 3 else 24) else 1)
     else:

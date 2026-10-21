@@ -27,7 +27,8 @@ MECHANICS
    `DEAL OF THE WEEK — POPULATED MONDAY` placeholder (or --base <id>). Only the comment-delimited
    variable regions are touched: HERO BAND, BODY CONTENT SLOT prose (placeholder kept), PRIMARY CTA
    label, preheader, <title>, utm_campaign. Every LOCKED region is untouched.
- - Recipients = [7 engaged, 10 seeds] + two wave lists (14–18), rotating on from the last staged draft.
+ - Recipients = [7 engaged, 10 seeds, 13 new store-collected contacts] (email audit 2026-10-20: dormant
+   waves 14–18 no longer ride the weekly; a calendar row may still name "waves" explicitly).
  - Collision-safe: a Thursday whose date string already appears in a draft name is skipped.
  - Every created draft is GET-verified: name, lists, placeholder present, zero [[MARKER]], /c/ + /t/
    links present, primary_cta present. Failures are printed as FAIL and counted in the exit code.
@@ -39,7 +40,7 @@ BASE = "https://api.brevo.com/v3"
 KEY = open(os.path.expanduser("~/.config/valley-pawn/brevo_api_key")).read().strip()
 SENDER = {"name": "Valley Pawn", "email": "hello@thevalleypawn.com"}
 REPLY_TO = "jdavis@fcfpawn.com"
-ENGAGED, SEEDS = 7, 10
+ENGAGED, SEEDS, NEW_CONTACTS = 7, 10, 13
 WAVES = [14, 15, 16, 17, 18]
 PLACEHOLDER = "DEAL OF THE WEEK — POPULATED MONDAY"
 CITIES = ["Culpeper", "Waynesboro", "Harrisonburg", "Lexington", "Roanoke"]
@@ -199,7 +200,7 @@ def main():
         name = f"{it['theme']} — {it['date']}"
         if any(it["date"] in n for n in names):
             skipped.append(name); continue
-        waves = it.get("waves") or [WAVES[idx % 5], WAVES[(idx + 1) % 5]]
+        waves = it.get("waves") or []   # 2026-10-20: no automatic wave rotation (was [WAVES[idx % 5], WAVES[(idx + 1) % 5]])
         idx += 2
         html = build(base_html, it)
         errs = checks(html)
@@ -207,7 +208,7 @@ def main():
             print("FAIL build", name, errs); fails += 1; continue
         payload = {"name": name, "subject": it["subject"], "previewText": it["subline"],
                    "sender": SENDER, "replyTo": REPLY_TO, "htmlContent": html,
-                   "recipients": {"listIds": [ENGAGED, SEEDS] + waves},
+                   "recipients": {"listIds": [ENGAGED, SEEDS, NEW_CONTACTS] + waves},
                    "inlineImageActivation": False, "mirrorActive": True}
         if not a.apply:
             created.append(f"[dry] {name} | {it['subject']} | lists {payload['recipients']['listIds']}"); continue

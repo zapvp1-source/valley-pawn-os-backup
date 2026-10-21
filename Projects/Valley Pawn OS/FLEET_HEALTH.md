@@ -2,11 +2,28 @@
 
 Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). Newest first, last 30 runs kept. DM alerts go to Joshua only when an issue is first detected.
 
+## 2026-10-20 22:30 — ISSUES FOUND
+
+- launchd agent com.valleypawn.health-weekly-digest last exited with status 1
+- launchd agent com.valleypawn.cloudcover-check last exited with status 3
+- launchd agent com.valleypawn.ebay-channel-audit last exited with status 1
+- launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+## 2026-10-20 13:30 — ISSUES FOUND
+
+- launchd agent com.valleypawn.health-weekly-digest last exited with status 1
+- launchd agent com.valleypawn.cloudcover-check last exited with status 3
+- launchd agent com.valleypawn.ebay-channel-audit last exited with status 1
+- launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 ## 2026-10-19 22:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.health-weekly-digest last exited with status 1
 - launchd agent com.valleypawn.ebay-channel-audit last exited with status 1
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 
 ## 2026-10-19 13:30 — ISSUES FOUND
 
@@ -15,10 +32,14 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
 
 
+
+
 ## 2026-10-18 22:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.health-weekly-digest last exited with status 1
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 
 
 
@@ -30,9 +51,13 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
 ## 2026-10-17 22:30 — ALL GREEN
 
 Nothing to report.
+
+
 
 
 
@@ -56,6 +81,8 @@ Nothing to report.
 
 
 
+
+
 ## 2026-10-16 22:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.layaway-canvas last exited with status 1
@@ -67,6 +94,8 @@ Nothing to report.
 - launchd agent com.valleypawn.aged-canvas last exited with status 1
 - launchd agent com.valleypawn.layaway-yield-weekly last exited with status 2
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 
 
 
@@ -93,6 +122,8 @@ Nothing to report.
 
 
 
+
+
 ## 2026-10-15 22:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.layaway-canvas last exited with status 1
@@ -104,6 +135,8 @@ Nothing to report.
 - launchd agent com.valleypawn.aged-canvas last exited with status 1
 - launchd agent com.valleypawn.layaway-yield-weekly last exited with status 2
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 
 
 
@@ -134,6 +167,8 @@ Nothing to report.
 
 
 
+
+
 ## 2026-10-14 22:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.chrome-tab-hygiene last exited with status 1
@@ -145,6 +180,8 @@ Nothing to report.
 - launchd agent com.valleypawn.aged-canvas last exited with status 1
 - launchd agent com.valleypawn.layaway-yield-weekly last exited with status 2
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 
 
 
@@ -179,6 +216,8 @@ Nothing to report.
 
 
 
+
+
 ## 2026-10-13 22:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.chrome-tab-hygiene last exited with status 1
@@ -190,6 +229,8 @@ Nothing to report.
 - launchd agent com.valleypawn.aged-canvas last exited with status 1
 - launchd agent com.valleypawn.layaway-yield-weekly last exited with status 2
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 
 
 
@@ -228,6 +269,8 @@ Nothing to report.
 
 
 
+
+
 ## 2026-10-12 22:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.chrome-tab-hygiene last exited with status 1
@@ -239,6 +282,8 @@ Nothing to report.
 - launchd agent com.valleypawn.aged-canvas last exited with status 1
 - launchd agent com.valleypawn.layaway-yield-weekly last exited with status 2
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 
 
 
@@ -281,6 +326,8 @@ Nothing to report.
 
 
 
+
+
 ## 2026-10-11 22:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.chrome-tab-hygiene last exited with status 1
@@ -304,11 +351,15 @@ Nothing to report.
 
 
 
+
+
 ## 2026-10-11 13:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.chrome-tab-hygiene last exited with status 1
 - launchd agent com.valleypawn.comedy-weekly last exited with status 1
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 
 
 
@@ -351,11 +402,15 @@ Nothing to report.
 
 
 
+
+
 ## 2026-10-10 13:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.chrome-tab-hygiene last exited with status 1
 - launchd agent com.valleypawn.comedy-weekly last exited with status 1
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 
 
 
@@ -403,12 +458,16 @@ Nothing to report.
 
 
 
+
+
 ## 2026-10-09 13:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.chrome-tab-hygiene last exited with status 1
 - launchd agent com.valleypawn.comedy-weekly last exited with status 1
 - launchd agent com.valleypawn.daily-report-sold last exited with status 1
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 
 
 
@@ -459,11 +518,15 @@ Nothing to report.
 
 
 
+
+
 ## 2026-10-08 13:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.chrome-tab-hygiene last exited with status 1
 - launchd agent com.valleypawn.comedy-weekly last exited with status 1
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 
 
 
@@ -518,11 +581,15 @@ Nothing to report.
 
 
 
+
+
 ## 2026-10-07 13:30 — ISSUES FOUND
 
 - 'valley-pawn-blog-publisher' (cron 30 1 * * 1,4) missed its Mon Oct 5 1:30 AM run — last started Mon Sep 14 3:14 AM
 - launchd agent com.valleypawn.chrome-tab-hygiene last exited with status 1
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 
 
 
@@ -580,78 +647,10 @@ Nothing to report.
 
 
 
+
+
 ## 2026-10-06 13:30 — ISSUES FOUND
 
-- 'valley-pawn-blog-publisher' (cron 30 1 * * 1,4) missed its Mon Oct 5 1:30 AM run — last started Mon Sep 14 3:14 AM
-- launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## 2026-10-05 22:30 — ISSUES FOUND
-
-- 'daily-supply-order' (cron 15 3 * * 2) missed its Tue Sep 29 3:15 AM run — last started Tue Sep 15 7:04 AM
-- 'tuesday-supply-summary' (cron 45 10 * * 2) missed its Tue Sep 29 10:45 AM run — last started Tue Sep 15 11:03 AM
-- 'valley-pawn-blog-publisher' (cron 30 1 * * 1,4) missed its Mon Oct 5 1:30 AM run — last started Mon Sep 14 3:14 AM
-- usage-cap skips climbing: +393 since Mon 1:30 PM (~44/hr) — tasks are being throttled right now
-- launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## 2026-10-05 13:30 — ISSUES FOUND
-
-- 'daily-supply-order' (cron 15 3 * * 2) missed its Tue Sep 29 3:15 AM run — last started Tue Sep 15 7:04 AM
-- 'tuesday-supply-summary' (cron 45 10 * * 2) missed its Tue Sep 29 10:45 AM run — last started Tue Sep 15 11:03 AM
 - 'valley-pawn-blog-publisher' (cron 30 1 * * 1,4) missed its Mon Oct 5 1:30 AM run — last started Mon Sep 14 3:14 AM
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
 

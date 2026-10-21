@@ -13,9 +13,15 @@ HOW (no screen, never types a password):
     CC_HEADLESS=1 forces headless for experiments.
   2 CloudCover status from CloudCover's own JSON API — the same two calls the zones dashboard makes
     (found 2026-10-14 from the dashboard's network calls): GET api.cloudcovermusic.com/streams/enhanced
-    (zones, header Authorization = the session's "Authorization" cookie) and
-    GET /device-state/device/list?ids=<deviceids> (now playing; header Authorization = "Token" cookie).
-    The cookies are read from the profile in memory only — never logged, never written anywhere.
+    (zones) and GET /device-state/device/list?ids=<deviceids> (now playing).
+    2026-10-20 FIX: replaying those calls from Python with the cookie values as the Authorization header
+    got HTTP 403 on the first signed-in run (the SPA sends more than that header). So the script now
+    (a) CAPTURES the SPA's own responses to those two endpoints while the zones page loads (Playwright
+    response events — the browser sends exactly what the SPA sends), (b) if one is missing, REPLAYS it
+    with fetch() INSIDE the page context using the request headers the SPA used (header values stay in
+    the browser; only header NAMES are ever logged), and (c) if the API still gives nothing, falls back
+    to the dashboard DOM (the SKILL's own extractor, DOM_JS), which carries streaming + now playing.
+    Nothing about the session is written anywhere.
     Streaming = state "playing" AND the player reported within the last 20 min (the dashboard shows a
     zone whose last report is stale as not streaming: 10/14 Harrisonburg "playing" since 01:20 UTC =
     dashboard grey). The dashboard DOM is also read with the SKILL's own extractor as a cross-check;
@@ -119,9 +125,88 @@ def stores_for(day):
 
 
 def api_get(path, auth):
+    """Legacy direct replay (kept for --from-capture era tooling; NOT used by the live read since 2026-10-20: 403)."""
     req = urllib.request.Request(API + path, headers={"Authorization": auth, "Accept": "application/json"})
     with urllib.request.urlopen(req, timeout=30) as r:
         return json.loads(r.read().decode())
+
+
+STREAMS_PATH = "/streams/enhanced"
+STATE_PATH = "/device-state/device/list"
+FETCH_JS = """async ([u, h]) => {
+  try {
+    const r = await fetch(u, {method: 'GET', headers: h, credentials: 'include'});
+    const t = await r.text();
+    return {status: r.status, body: t};
+  } catch (e) { return {status: 0, body: '', error: String(e)}; }
+}"""
+
+
+class ApiCapture:
+    """Collects the SPA's own calls to the two API endpoints (responses + the request headers it sent)."""
+
+    def __init__(self):
+        self.responses = {STREAMS_PATH: [], STATE_PATH: []}
+        self.headers = {STREAMS_PATH: None, STATE_PATH: None}
+
+    def on_response(self, resp):
+        try:
+            url = resp.url
+            if "api.cloudcovermusic.com" not in url:
+                return
+            for key in (STREAMS_PATH, STATE_PATH):
+                if key in url:
+                    self.responses[key].append(resp)
+                    if self.headers[key] is None:
+                        self.headers[key] = dict(resp.request.headers)
+        except Exception:
+            pass
+
+    def header_names(self, key):
+        h = self.headers.get(key) or {}
+        # names only, plus the auth scheme word if the value has one (never the value itself)
+        out = []
+        for k, v in h.items():
+            if k.lower() == "authorization":
+                out.append("authorization(%s)" % (v.split(" ", 1)[0] if " " in v else "raw"))
+            else:
+                out.append(k.lower())
+        return sorted(out)
+
+    def body(self, key):
+        """Latest OK response body as JSON, or None."""
+        for resp in reversed(self.responses.get(key) or []):
+            try:
+                if resp.ok:
+                    return resp.json()
+            except Exception:
+                continue
+        return None
+
+
+def fetch_in_page(page, url, headers):
+    """GET `url` from inside the page (the browser adds Origin/Referer/UA/cookies itself). -> (status, json|None)."""
+    h = {k: v for k, v in (headers or {}).items() if k.lower() in ("authorization", "accept", "x-requested-with")}
+    h.setdefault("Accept", "application/json, text/plain, */*")
+    r = page.evaluate(FETCH_JS, [url, h])
+    try:
+        return r.get("status"), json.loads(r.get("body") or "")
+    except Exception:
+        return r.get("status"), None
+
+
+def zones_from_dom(dom):
+    """Fallback: the dashboard DOM alone (streaming + now playing; the DOM_JS 'playlist' is already
+    '<playlist> Rotation <On|Off>'). Used only when the API gave nothing."""
+    out = {}
+    for d in dom or []:
+        if not d.get("location"):
+            continue
+        out[d["location"]] = {"streaming": bool(d.get("streaming")), "song": d.get("song") if d.get("streaming") else None,
+                              "artist": d.get("artist") if d.get("streaming") else None,
+                              "playlist": d.get("playlist") if d.get("streaming") else None,
+                              "last_update": None, "state": "dom"}
+    return out
 
 
 def parse_ts(s):
@@ -188,12 +273,19 @@ def read_live(day, stores):
             sys.exit(3)
         try:
             page = vp_browser.first_page(ctx)
+            cap = ApiCapture()
+            page.on("response", cap.on_response)
             page.goto(ZONES_URL, wait_until="domcontentloaded", timeout=60000)
             try:
                 page.wait_for_selector("app-zones-table-row, input[type=password]", timeout=30000)
             except Exception:
                 pass
             page.wait_for_timeout(3000)
+            # give the dashboard's device-state poll a moment to happen (it follows the streams call)
+            for _ in range(10):
+                if cap.body(STREAMS_PATH) is not None and cap.body(STATE_PATH) is not None:
+                    break
+                page.wait_for_timeout(1000)
             if "--diag" in sys.argv:
                 log("diag pre-check url:", page.url.split("?")[0], "| pw field:", bool(page.query_selector("input[type=password]")),
                     "| cookie domains:", sorted({c["domain"] for c in ctx.cookies()})[:20])
@@ -219,10 +311,42 @@ def read_live(day, stores):
                 dom = page.evaluate(DOM_JS)
             except Exception as e:
                 notes.append("dom read failed: %s" % str(e)[:120])
-            streams = api_get("/streams/enhanced?page=1", auth).get("streams") or []
-            ids = [str(s["deviceid"]) for s in streams if s.get("deviceid")]
-            states = api_get("/device-state/device/list?ids=" + ",".join(ids), urllib.parse.unquote(tok)).get("DeviceState") or []
-            zones = zones_from_api(streams, states, dt.datetime.now(dt.timezone.utc))
+            if "--diag" in sys.argv:
+                log("diag api capture: streams responses=%d state responses=%d | streams req headers=%s | state req headers=%s | dom rows=%d"
+                    % (len(cap.responses[STREAMS_PATH]), len(cap.responses[STATE_PATH]),
+                       cap.header_names(STREAMS_PATH), cap.header_names(STATE_PATH), len(dom or [])))
+            # (a) the SPA's own responses
+            streams_doc = cap.body(STREAMS_PATH)
+            states_doc = cap.body(STATE_PATH)
+            source = "api-captured"
+            # (b) replay inside the page with the SPA's own request headers
+            if streams_doc is None:
+                hdr = cap.headers.get(STREAMS_PATH) or {"Authorization": auth}
+                st, streams_doc = fetch_in_page(page, API + STREAMS_PATH + "?page=1", hdr)
+                notes.append("streams replayed in page: HTTP %s %s" % (st, "ok" if streams_doc else "no body"))
+                source = "api-replayed"
+            streams = (streams_doc or {}).get("streams") or []
+            if streams and states_doc is None:
+                ids = [str(s["deviceid"]) for s in streams if s.get("deviceid")]
+                hdr = cap.headers.get(STATE_PATH)
+                tries = [hdr] if hdr else [{"Authorization": urllib.parse.unquote(tok)}, {"Authorization": "Bearer " + urllib.parse.unquote(tok)}]
+                for h in tries:
+                    st, states_doc = fetch_in_page(page, API + STATE_PATH + "?ids=" + ",".join(ids), h)
+                    notes.append("device-state replayed in page: HTTP %s %s" % (st, "ok" if states_doc else "no body"))
+                    if states_doc:
+                        break
+                source = "api-replayed"
+            states = (states_doc or {}).get("DeviceState") or []
+            if streams and states:
+                zones = zones_from_api(streams, states, dt.datetime.now(dt.timezone.utc))
+            elif dom:
+                # (c) the dashboard itself — the SKILL's own read; cross-check becomes moot
+                zones = zones_from_dom(dom)
+                source = "dom"
+                notes.append("API unavailable (streams=%d, states=%d) — zones read from the dashboard DOM" % (len(streams), len(states)))
+            else:
+                zones = {}
+            log("zones source:", source, "| zones:", len(zones))
             # Google Home speaker volumes (no clicks — the SKILL's rule)
             google_out = 0
             for _key, name in stores:
@@ -242,6 +366,16 @@ def read_live(day, stores):
                     except Exception as e:
                         notes.append("home %s u/%s: %s" % (name, u, str(e)[:80]))
                 vols[name] = v
+                if "--diag" in sys.argv:
+                    log("diag home %s: volume=%s url=%s" % (name, v, page.url.split("?")[0][:110]))
+                    if v is None:
+                        try:
+                            os.makedirs(os.path.join(OS_DIR, "fleet", "test_output", "cloudcover_render"), exist_ok=True)
+                            with open(os.path.join(OS_DIR, "fleet", "test_output", "cloudcover_render", "home-%s.txt" % name), "w") as f:
+                                f.write(page.url + "\n\n" + page.inner_text("body")[:8000])
+                        except Exception:
+                            pass
+            log("speaker volumes:", vols)
             if google_out >= 2 * len(stores) and once_per_day("signin-google"):
                 ledger("The Cloud Cover music check posted without speaker volumes because Google Home needs a one-time sign-in in the automation browser",
                        "yes, run bin/vp_signin_front.sh and sign in to Google as fullcirclepawn@gmail.com once in that window, then quit it")

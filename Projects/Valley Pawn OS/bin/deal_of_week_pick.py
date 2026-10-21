@@ -185,7 +185,7 @@ def block(d, slug, first):
   <p style="margin: 0 0 16px 0; font-size: 16px; line-height: 1.5; color: #444;">%s</p>
   <p style="margin: 0 0 20px 0; font-size: 32px; line-height: 1; color: #1a1a1a; font-weight: bold;">$%s</p>
   <img src="%s" alt="%s" style="width: 100%%; max-width: 540px; height: auto; display: block; margin: 0 0 16px 0;" />
-  <a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+%s+VA&utm_source=brevo&utm_medium=email&utm_campaign=%s&utm_content=deal_of_week_%s" style="display: inline-block; padding: 14px 28px; background: #c97b3a; color: #fff; text-decoration: none; font-weight: bold; font-size: 16px; border-radius: 4px;">See it at our %s store</a>
+  <a href="https://www.google.com/maps/search/?api=1&query=Valley+Pawn+%s+VA&utm_source=brevo&utm_medium=email&utm_campaign=%s&utm_content=deal_of_week_%s_map" style="display: inline-block; padding: 14px 28px; background: #c97b3a; color: #fff; text-decoration: none; font-weight: bold; font-size: 16px; border-radius: 4px;">See it at our %s store</a>
   <p style="margin: 12px 0 0 0; font-size: 13px; color: #777;">Submitted by %s. While supplies last — usually one of a kind.</p>
 </div>
 """ % (store.upper(), e(d["item"]), e(d["pitch"]), d["price"], d["img"], e(d["item"]), store, slug, sl, store, e(d["manager"] or "the " + store + " team"))

@@ -60,7 +60,7 @@ def main():
             if not render:
                 b("/emailCampaigns", {"name": "Weekly — %s" % label, "subject": src.get("subject") or "This week at Valley Pawn",
                                       "sender": {"name": "Valley Pawn", "email": "hello@thevalleypawn.com"}, "replyTo": "jdavis@fcfpawn.com",
-                                      "htmlContent": h, "recipients": {"listIds": [7, 10]}})
+                                      "htmlContent": h, "recipients": {"listIds": [7, 10, 13]}})  # 2026-10-20 email audit: + list 13 new store contacts
             notes.append("Weekly email for %s: draft was missing, created and ready for the noon picker." % label)
     else:
         c = b("/emailCampaigns/%d" % hits[0]["id"]); h = c.get("htmlContent") or ""

@@ -201,6 +201,19 @@ for _dom, _label, _pat, _task, (_h, _m), (_eh, _em) in W3:
     if today.day == _dom:
         JOBS.append((_label, _pat, at(_h, _m), at(_eh, _em),
                      (lambda t: lambda s: receipt_since(t, s) or file_since(LOGF(t), s))(_task)))
+# Wave 3 second pass (2026-10-20): same rule — the agent's day, evidence = receipt or the agent's own log since the slot.
+W3B = [(1, "com.valleypawn.hr-policy-sync", "hr_policy_sync_monthly.py", "vp-hr-policy-monthly-sync", (8, 35), (14, 0)),
+       (1, "com.valleypawn.entity-compliance", "entity_compliance_monthly.py", "entity-compliance-check", (9, 0), (17, 0)),
+       (1, "com.valleypawn.eom-recap", "monthly_eom_recap.py", "monthly-eom-recap", (10, 30), (17, 30)),
+       (3, "com.valleypawn.new-customer-report", "vp_new_customer_report.py", "vp-new-customer-report", (7, 0), (17, 0)),
+       (3, "com.valleypawn.comms-drift-monthly", "comms_drift_monthly.py", "vp-comms-drift-monthly-check", (8, 0), (14, 0)),
+       (3, "com.valleypawn.ceo-monthly-scorecard", "ceo_monthly_scorecard.py", "ceo-monthly-scorecard", (12, 0), (18, 0)),
+       (10, "com.valleypawn.bonus-month-close", "bonus_month_close.py", "bonus-month-close", (9, 0), (17, 0)),
+       (16, "com.valleypawn.gun-audit-monthly", "gun_audit_monthly.py", "monthly-gun-audit-report", (2, 30), (14, 0))]
+for _dom, _label, _pat, _task, (_h, _m), (_eh, _em) in W3B:
+    if today.day == _dom:
+        JOBS.append((_label, _pat, at(_h, _m), at(_eh, _em),
+                     (lambda t: lambda s: receipt_since(t, s) or file_since(LOGF(t), s))(_task)))
 if today.day in (1, 2, 3):   # MobilePawn participation fires 1st-3rd 09:15 and posts once (POSTED.txt)
     JOBS.append(("com.valleypawn.mobilepawn-participation", "mobilepawn_participation.py", at(9, 15), at(17, 0),
                  lambda s: receipt_since("monthly-mobilepawn-participation", s) or file_since(LOGF("monthly-mobilepawn-participation"), s)))

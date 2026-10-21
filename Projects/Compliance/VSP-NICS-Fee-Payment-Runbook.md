@@ -6,6 +6,19 @@
 **Login username:** X009686 (password saved in Chrome)
 **Billing cycle:** VSP posts each invoice on the **1st** of the month. We check and pay starting the **5th**.
 
+**🗺️ FULLY MAPPED 2026-10-20 — read `Compliance/vsp/PORTAL_MAP.md` for every screen, element id and the pop-up workaround.**
+Key facts learned: (1) the 10/7 "rejected password" was Oracle's scheduled password EXPIRY — login succeeds and lands on a
+"Change Password" page (Joshua sets it; automations DM him, never reset). (2) MAKE PAYMENT opens the vendor in a pop-up that
+Chrome blocks — the URL `vsppayments.virginiainteractive.org/Checkout?token=…` is embedded in the page; open it directly.
+(3) Vendor = Virginia Interactive → NIC secure checkout; pay by **Electronic Check** (routing + account, "business account"),
+nothing is stored by VSP/NIC. (4) Native script `Valley Pawn OS/bin/vsp_fee_pay.py` + agent `com.valleypawn.vsp-fee-pay`
+(5th 10:15) reads balances and can pay unattended once Joshua stores the ACH details in Keychain
+(`vp-vsp-ach-routing` / `vp-vsp-ach-account` / `vp-vsp-ach-name`) and flips `MODE="--pay"` in `vsp_fee_pay.sh`; needs the VSP
+password saved in the `pw-vp` automation profile (`bin/vp_signin_front.sh`). Guard rails: one FIRE invoice per store dated this
+month, ≤$300/store, ≤$900 total, no overdue, no payment already this month; otherwise report, don't pay.
+**October 2026 staged 10/20:** ROA FIRE-53140 $84 · CUL FIRE-53694 $122 · HAR FIRE-53284 $102 · WAY FIRE-53214 $62 · LEX FIRE-53700 $62 = $432, due 10/31.
+**2025 per store (portal):** ROA $824 · WAY $946 · HAR $907 · CUL $1,307 · LEX $932 = $4,916 (+$54 Salem = $4,970 bank).
+
 **🟢 AUTOMATED 2026-10-07:** Cowork scheduled task `vsp-nics-fee-monthly` (5th, 10:15 AM ET) + saved skill
 `vsp-nics-fee-payment`. It logs in, reads all 5 stores' FIRE invoices, stages each payment to the final screen and
 DMs Joshua; **Joshua clicks Pay** (Claude never submits a payment). First live run 11/5/2026.
@@ -49,8 +62,8 @@ Pulled by clicking **Go** on the Customers/Search page **with no boxes checked**
 | Roanoke | VALLEY PAWN | 15848 | 2362 Peters Creek Rd ✓ |
 | Waynesboro | VALLEY PAWN 2/FULL CIRCLE FINANCE, INC. | 16284 | 1321 W Broad St ✓ |
 | Harrisonburg | VALLEY PAWN 2/FULL CIRCLE FINANCE, INC. | 16627 | 1790 E Market St ✓ |
-| Culpeper | **JOSHUA CHRISTIAN DAVIS** | 280758 | 571 James Madison Hwy ✓ (account under personal name — pending correction) |
-| Lexington | VALLEY PAWN -4 LEXINGTON | 283759 | **439 East Nelson St** ✗ (old address — should be 125 Walker St — pending correction) |
+| Culpeper | VALLEY PAWN - 1 (FULL CIRCLE FINANCE INC) | 280758 | 571 James Madison Hwy Unit C ✓ (corrected by VSP 9/30/26) |
+| Lexington | VALLEY PAWN -4 LEXINGTON | 283759 | 125 Walker St ✓ (corrected by VSP 9/30/26) |
 
 ---
 

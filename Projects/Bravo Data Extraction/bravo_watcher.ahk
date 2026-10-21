@@ -92,6 +92,7 @@ Persistent
 #Include reports\Loans75GridRead.ahk
 #Include reports\PostToAccountingGL.ahk
 #Include reports\PostToAccountingPost.ahk
+#Include reports\PostToAccountingPostV2.ahk   ; 2026-10-20 additive: scroll-band fix (top-row Post click)
 #Include reports\ScrapRefiningGold.ahk
 #Include reports\SalesDetail.ahk
 #Include reports\AgedJewelrySales.ahk
@@ -109,6 +110,7 @@ Persistent
 #Include reports\CustomerLoyalty.ahk
 #Include reports\CustomerLoyaltyProbe.ahk
 #Include reports\PmLoanGrowth.ahk
+#Include reports\StoreConfigAdmin.ahk   ; 2026-10-20 employee-status + store-hours (System Configuration writes)
 ; Add #Include for each new report module here.
 
 ; ----- Globals ---------------------------------------------------------------
@@ -219,6 +221,7 @@ Main() {
     REPORT_HANDLERS["items-to-price"]               := PullItemsToPrice
     REPORT_HANDLERS["post-to-accounting-gl"]        := PullPostToAccountingGL
     REPORT_HANDLERS["post-to-accounting-post"]      := PullPostToAccountingPost
+    REPORT_HANDLERS["post-to-accounting-post-v2"]   := PullPostToAccountingPostV2   ; 2026-10-20 PostToAccountingPostV2.ahk
     REPORT_HANDLERS["scrap-refining-gold"]          := PullScrapRefiningGold
     REPORT_HANDLERS["sales-detail"]               := PullSalesDetail
     REPORT_HANDLERS["aged-jewelry-sales"]         := PullAgedJewelrySales
@@ -244,6 +247,8 @@ Main() {
     REPORT_HANDLERS["customer-loyalty"]              := PullCustomerLoyalty
     REPORT_HANDLERS["customer-loyalty-probe"]        := PullCustomerLoyaltyProbe
     REPORT_HANDLERS["pm-loan-growth"]                := PullPmLoanGrowth
+    REPORT_HANDLERS["employee-status"]               := PullEmployeeStatus      ; 2026-10-20 StoreConfigAdmin.ahk
+    REPORT_HANDLERS["store-hours"]                   := PullStoreHours          ; 2026-10-20 StoreConfigAdmin.ahk
     ; Add additional registrations here as we build out reports.
 
     pollMs := Integer(CONFIG.Get("watcher.poll_interval_ms", "30000"))

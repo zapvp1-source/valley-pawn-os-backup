@@ -87,7 +87,9 @@ def pull(report, start, end, stores, tag):
 
 
 def read_post_txt(s, end):
-    p = os.path.join(OUT, "%s_%s_post-to-accounting-post.txt" % (end, s))
+    p = os.path.join(OUT, "%s_%s_post-to-accounting-post-v2.txt" % (end, s))   # v2 cell (2026-10-20)
+    if not os.path.exists(p):
+        p = os.path.join(OUT, "%s_%s_post-to-accounting-post.txt" % (end, s))
     d = {"posted": None, "skipped": None, "errors": None}
     try:
         t = open(p, encoding="utf-8-sig", errors="replace").read()
@@ -152,7 +154,7 @@ def main():
         for attempt in range(3):
             if not todo:
                 break
-            tid, cells = pull("post-to-accounting-post", start, end, todo, "eom-gl-post" if attempt == 0 else "eom-gl-post-retry%d" % attempt)
+            tid, cells = pull("post-to-accounting-post-v2", start, end, todo, "eom-gl-post" if attempt == 0 else "eom-gl-post-retry%d" % attempt)
             st["triggers"].append(tid)
             for s in list(todo):
                 c = cells.get(s, {})

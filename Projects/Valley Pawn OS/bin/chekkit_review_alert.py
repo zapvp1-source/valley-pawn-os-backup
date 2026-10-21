@@ -69,6 +69,34 @@ def parse(subj, txt):
     return city, stars, name
 
 
+def alert_text(city, stars, name):
+    """2026-10-20 (comms review): the one-liner used to celebrate EVERY rating ("Nice job Team Culpeper! You just got
+    a new 1 star review from ..." posted 10/16). 4-5 stars keep the SKILL's exact line; 1-3 stars get a plain
+    heads-up so the store reads and answers it. The review body is DM'd to Joshua separately (low_star_dm)."""
+    if stars >= 4:
+        return "Nice job Team %s! You just got a new %d star review from %s! :star:" % (city, stars, name)
+    return (":warning: Team %s — a new %d star review from %s just came in. Please read it in Chekkit today and "
+            "make it right with the customer if you can; a manager will reply to the review." % (city, stars, name))
+
+
+def review_body(txt):
+    """Best-effort review text from the notification email (the sentence(s) after the star row)."""
+    m = re.search(r"(?:★{1,5}|star review from .+?\.)\s*(.{10,700}?)(?:\s*(?:Respond|Reply|View|Log in|Unsubscribe|Chekkit)|$)", txt, re.S)
+    return (m.group(1).strip() if m else "")[:700]
+
+
+def low_star_dm(city, stars, name, txt, send):
+    """One plain DM to Joshua for a 1-3 star review, with the review text. Business content, not a failure ping."""
+    body = review_body(txt)
+    msg = ("A %d-star Google review came in for %s from %s.%s\nReply is owed — the reply drafter will DM you a draft; "
+           "the store has been asked in #google-reviews to make it right." % (stars, city, name, ("\n> " + body) if body else ""))
+    if not send:
+        print("=== DM Joshua (low star)\n" + msg.replace(name, initials(name)))
+        return
+    import vp_slack
+    vp_slack.post(vp_slack.dm_channel(vp_slack.JOSHUA), msg)
+
+
 def mail_ready():
     """2026-10-18: the 3-hour freshness gate (cu.mail_fresh) read a quiet Sunday mailbox as "not syncing" and
     wrote the same ledger row every hour from 09:10 (nothing arrives for hours on a Sunday morning). The gate
@@ -169,11 +197,15 @@ def main(a):
         if not (city and stars and name):
             bad += 1
             continue
-        text = "Nice job Team %s! You just got a new %d star review from %s! :star:" % (city, stars, name)
-        dup = gid in st["done"] or any(("review from %s!" % name) in h for h in hist)
+        text = alert_text(city, stars, name)
+        dup = gid in st["done"] or any(("review from %s" % name) in h for h in hist)
         if dup and not (dry and "--all" in a):
             continue
         todo.append((rec, gid, name, ("[already posted] " if dup else "") + text, dup))
+        if stars <= 3 and not dup and gid not in st.setdefault("low_star_dm", {}):
+            low_star_dm(city, stars, name, txt, send and not dry)
+            if send and not dry:
+                st["low_star_dm"][gid] = now.isoformat(); save_state(st)
     if bad:
         print("WARN %d review email(s) could not be parsed" % bad, file=sys.stderr)
     if dry:

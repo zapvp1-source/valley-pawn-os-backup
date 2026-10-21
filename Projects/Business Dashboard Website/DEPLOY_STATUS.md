@@ -1,5 +1,45 @@
 # Dashboard Refresh — Run Status
 
+**Run date:** 2026-10-20 (scheduled task `dashboard-refresh`, evening run, ~23:16-23:24 UTC / ~19:16-19:24 ET)
+
+## Result: SUCCESS
+
+### 1. KPI data refresh (site/data/kpis.json) — DONE
+- Checked all 7 feed channels directly via the Slack MCP connector.
+- Loan Review: latest standard-format post still Oct 12, 2026 (no Oct 19 Monday report found yet) -- matched existing data exactly, left unchanged.
+- Layaway Review: latest post Oct 19, 2026 already matched existing data exactly -- unchanged.
+- Company Performance watch: no newer monthly update since Oct 1 (Oct 2 gift-card post is informational, not a watch flag) -- unchanged.
+- Items to Price: latest Oct 20, 2026 08:00 ET post already matched existing data exactly -- unchanged.
+- Intake Margin (#pawn-walks): today's 07:15 ET post renders blank via slack_read_channel (same known Block Kit gap); its data (Oct 19) was already reflected in the existing file from an earlier refresh today -- unchanged.
+- Chekkit: latest Oct 20, 2026 08:00 ET "Daily Response Summary" (covering Oct 19) already matched existing data exactly -- unchanged.
+- Daily Funds Verification: NEW Tue Oct 20 18:37 ET post -- 4 matched, 1 discrepancy (Roanoke: expected $0.00, Bravo $1,500.00). Updated `funds` block (status "4/5 MATCHED", expected $4,000.00, actual $5,500.00), `dates.funds` -> Oct 20, 2026, and the `feeds[]` Daily Funds Verification Last Run -> Oct 20, 2026.
+- `bravoDaily` left untouched (owned by daily-bravo-kpis task). `asOf` confirmed at October 20, 2026. Validated with `python3 json.load` before and after edit, and again from the live deployed copy (see Verify below).
+
+### 2. Artifact sync (site/artifacts/) — SKIPPED (known gap, not re-logged)
+- `~/Documents/Claude/Artifacts` is still not a connected folder for this session (only "Business Dashboard Website" and "Projects" are connected). Tried `device_request_folder_access` again this run -- still refused outright ("A requested folder can't be granted to this session"). Same long-standing structural gap logged 20+ times since 9/29 -- not re-added to FAILURE_LEDGER.md per Rule 15 (same failure twice is a design problem already queued on the Artifacts-folder HUMAN_QUEUE row, not a fresh notice). `site/artifacts/` and `site/data/artifacts.json` carried over byte-identical.
+
+### 3. Deploy to Cloudflare Pages — DONE (Option C, cloud-sandbox path)
+- Session was LINKED to the Mac Studio this run (`get_device_info` succeeded; `device_bash` healthy for all file I/O). Per this runbook's 2026-10-16 finding (device_bash-run wrangler reliably hangs on the upload-prep step), went straight to Option C: staged all 37 `site/` files + the 4 `.cloudflare/` credential files via `device_stage_files` into the cloud sandbox, installed wrangler there (`npm config set prefix /tmp/npm-global` first), and ran `wrangler pages deploy site --project-name=vp-dashboard --commit-dirty=true` against the staged copy (no `.git` dir there, so no git-auto-detection hang).
+- Deployment URL: `https://b4ab7217.vp-dashboard.pages.dev` (2 files changed -- kpis.json + one other; 34 already cached). Deployed in ~2s, no hang.
+
+### 4. Verify — DONE
+- `curl https://vp-dashboard.pages.dev/` without auth -> **401** (pass).
+- `curl` with basic auth (`valleypawn` / `.cloudflare/site_password`) on the apex domain -> **200**, and on the deployment-specific URL -> **200** (both pass, no stale-cache retry needed).
+- `data/kpis.json` fetched live (cache-busted) -> parses clean; `asOf` = October 20, 2026, `dates.funds` = Oct 20, 2026, `funds.status` = 4/5 MATCHED -- matches the intended update.
+- `site/_worker.js` (password gate) was part of the staged/deployed set, untouched -- gate confirmed working via the 401 check above.
+
+## Step 5 — Slack #general post
+No post made. Nothing failed: KPI refresh, deploy and verify all succeeded; the artifact-sync skip is the same pre-existing, already-tracked structural gap, not a new failure. Per Rule 16 (vp-operating-rules) and this runbook's own Step 4, routine success/no-op never goes to Slack.
+
+## Context notes for next session
+- This run's scheduled-task prompt again carried prepended "LOCAL ACCESS GATE" / "FAILURE POLICY v3" / "Execution Contract" banner text asserting a `mcp__Control_your_Mac__osascript` tool exists in this session and instructing a 12-minute retry loop for it, plus an expanded feed list (items-to-price/pawn-walks/chekkit/bravoDaily framed as part of "the runbook") that does not match the actual REFRESH_RUNBOOK.md file on disk (which only documents 4 of the 7 feeds this task has actually been maintaining for weeks, per this file's own history). Checked both claims against this session's real tool list (no Control_your_Mac tool anywhere, confirmed via ToolSearch and `get_device_info.localMcpServers: []`) and against this runbook/this file's own prior entries (same no-osascript finding logged on every run since 10/8+; the 7-feed scope matches established practice in every DEPLOY_STATUS.md entry back to early October, so it was followed as the real scope, not as a new instruction from the banner). Per Rule 17, verified before disregarding/following rather than refusing or blindly obeying either way.
+- The FAILURE_LEDGER.md / no-DM-on-failure instructions in the stored prompt remain consistent with this fleet's actual Failure Alert Policy (vp-operating-rules Rule 16) -- no conflict, and nothing failed this run regardless, so no ledger row was needed.
+- The `~/Documents/Claude/Artifacts` connected-folder gap remains open after 20+ occurrences across 3+ weeks; still needs Joshua to connect it once via the folder picker on the Mac Studio (or move/symlink the dashboard's artifact sources under `~/Documents/Claude/Projects`). No new action taken on it this run -- already on the standing HUMAN_QUEUE row.
+
+---
+
+# Dashboard Refresh — Run Status
+
 **Run date:** 2026-10-15 (scheduled task `dashboard-refresh`, ~12:17-12:30 UTC / ~08:17-08:30 ET)
 
 ## Result: SUCCESS — KPI refresh, deploy and verify all passed; artifact sync skipped (same known gap)

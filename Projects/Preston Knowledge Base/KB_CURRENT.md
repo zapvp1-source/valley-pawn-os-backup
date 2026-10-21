@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-10-19 22:13 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-10-20 22:11 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -358,6 +358,12 @@ RULE: Clasps and other non-gold hardware must be weighed out too.
 PRESTON SAID: "Did we weigh with the magnetic clasps? Account for stones?"
 SOURCE: #roanoke-funds (C063K8E02TW) | 2025-07-10 | https://valleypawnworkspace.slack.com/archives/C063K8E02TW/p1752161271308959
 id: stones-excluded-from-gold-we-e0ba5537
+
+### [MEDIUM] return-verify-stone-not-swapped
+RULE: Before accepting a returned ring for a refund or exchange, confirm the stone is still the original stone and that nothing was switched or altered.
+PRESTON SAID: "We also need to make sure that the stones still the right stone Nothing got switched or altered or anything like that"
+SOURCE: zoom-call:7c3ee07fd0d14649a7f242b8fe7599b0 | 2026-10-20 | UNK Chadd McClintic
+id: return-verify-stone-not-swap-a2ed3b98
 
 
 ==============================================================================
@@ -908,6 +914,12 @@ SOURCE: DM Joshua<->Preston | 2025-11-11 | https://valleypawnworkspace.slack.com
 !! CONFLICT: Joshua overrode this on 2025-11-11 — "loan can stay, lower buy" and "they can be equal."
 id: buy-should-not-be-below-loan-f52cc7e7
 
+### [MEDIUM] customer-issue-escalation-to-preston
+RULE: When a store has a customer problem like an unhappy buyer or a payment dispute, the manager should give Preston a heads up. He doesn't have to be involved in resolving it, but he wants to know so he can decide whether to step in.
+PRESTON SAID: "if you ever I don't have issues like that. Just kind of loop me in. I don't necessarily have to be involved unless you need me to be but give me a heads up. It helps just so I know if I need to step in or not."
+SOURCE: zoom-call:a9bdc82fcc804d3ea7d0abe3007abe87 | 2026-10-20 | UNK Benjie Moore
+id: customer-issue-escalation-to-76b5e768
+
 ### [MEDIUM] customer-messaging-unable-to-take-items
 RULE: When the store can't take in new items, tell customers it is unable to process new items at the moment. Don't explain why.
 PRESTON SAID: "I wouldn't go into detail why I'm just saying stuff, tell them where stuff's down or unable to process new stuff at the moment."
@@ -973,6 +985,18 @@ RULE: To build customer comfort when the regular go-to person is out, staff shou
 PRESTON SAID: "let them know that you and Sandy work together"
 SOURCE: zoom-call:2026-10-08_1225_Preston-to-JoshuaBurnett_8m57s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
 id: customer-confidence-introduc-8df0b0c9
+
+### [LOW] customer-loan-status-communication
+RULE: Staff should tell customers accurately whether their collateral is still there, and should not tell them it is there and later reverse that. The goal is that customers know how to check their loan status and the store does not give them false hope.
+PRESTON SAID: "I want them to know how to look at the loan and make sure it's there without giving them false open and then hitting them with up."
+SOURCE: zoom-call:fa7bf71c53e84e369251149633ae9205 | 2026-10-20 | UNK Sandi Cole
+id: customer-loan-status-communi-41fae0a7
+
+### [LOW] expired-loan-reactivation-vs-scrap
+RULE: When a customer with an expired loan has the money and is ready to reactivate it, try to reactivate rather than scrap the item. The speaker's reasoning is that the store earns more from ongoing loan payments, whereas an item can only be scrapped once.
+PRESTON SAID: "if they but if they got money, they're ready to act and reactivate it. I feel like we should try to do that."
+SOURCE: zoom-call:fa7bf71c53e84e369251149633ae9205 | 2026-10-20 | UNK Sandi Cole
+id: expired-loan-reactivation-vs-1bda7a80
 
 ### [LOW] large-loan-secure-then-rewrite-workaround
 RULE: On a large multi-item jewelry loan where the full amount can't be paid out today, write a partial loan to secure the goods. Screenshot the correct per-item costs first. The next day, redeem it with fees waived and rewrite it for the full amount so the item costs come out right. Securing the loan matters more than how the cost splits later.
@@ -2285,6 +2309,12 @@ PRESTON SAID: "you can return part of it in cash or store credit and then put th
 SOURCE: zoom-call:2026-10-07_Preston-Zoom_to_Sandi_5m51s.txt | 2026-10-07 | store<->Preston (transcribed 2026-10-01)
 id: return-and-resell-partial-re-20965e6f
 
+### [LOW] return-outside-30-days-resize-option
+RULE: When a customer wants to return a ring after the 30-day window because it doesn't fit, a free resize can be offered as an alternative to a refund. The speaker judged a sub-$100 repair cost acceptable for this.
+PRESTON SAID: "it's sub $100, you know for us to probably get fixed. I'd be willing to do that on that room"
+SOURCE: zoom-call:dbe9070d3c42458bac80f9bc70b328ea | 2026-10-20 | UNK Chadd McClintic
+id: return-outside-30-days-resiz-79f96827
+
 ### [LOW] return-traded-firearm-after-denial
 RULE: Before giving a customer back a firearm he traded in after he was denied on a purchase, call to confirm it is legally allowed. A denial means he may not be allowed to possess a firearm, so returning one risks trouble for the store.
 PRESTON SAID: "We've got to make some phone calls to make sure we're legally allowed to do so"
@@ -2341,5 +2371,5 @@ id: weekly-hours-cap-40-c36f366b
 
 
 ==============================================================================
-COVERAGE: 317 entries - 1 verified by Preston, 180 high-confidence rules, 87 medium, 49 low, 0 superseded.
+COVERAGE: 322 entries - 1 verified by Preston, 180 high-confidence rules, 89 medium, 52 low, 0 superseded.
 ==============================================================================

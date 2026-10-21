@@ -113,7 +113,9 @@ def build_row(b, c, existing):
     buckets = b.utm_content_bucketed_clicks(cid) or {}
     calls = sum(v for k, v in buckets.items() if k.endswith("_call"))
     texts = sum(v for k, v in buckets.items() if k.endswith("_text"))
-    dirs = sum(v for k, v in buckets.items() if k.endswith("_map"))
+    # 2026-10-20: deal-of-week Maps buttons were tagged deal_of_week_<city> (no _map suffix) and fell out of
+    # directions. New sends carry deal_of_week_<city>_map; older ones are still counted here.
+    dirs = sum(v for k, v in buckets.items() if k.endswith("_map") or k.startswith("deal_of_week_"))
     cta = int(buckets.get("primary_cta", 0))
     sent_at = parse_sent(c["sentDate"])
     rec = tot.get("sent", 0)
@@ -185,7 +187,13 @@ def compose(rows, today):
     if not wk:
         return None, "no weekly rows"
     d0, r0 = wk[0]
-    trail = [r for _, r in wk[1:5]]
+    # 2026-10-20 (email audit): compare like with like. A 4,500-recipient send was being judged against
+    # 175-recipient engaged-list sends (scanner-inflated), which made every recommendation point back at them.
+    size = fnum(r0.get("recipients"))
+    def comparable(r):
+        n = fnum(r.get("recipients"))
+        return size > 0 and n > 0 and 0.5 <= n / size <= 2.0
+    trail = [r for _, r in wk[1:] if comparable(r)][:4]
     def avg(k):
         vals = [fnum(r.get(k)) for r in trail]
         return sum(vals) / len(vals) if vals else 0.0
@@ -197,6 +205,9 @@ def compose(rows, today):
     lines = [head]
     if age > 8:
         lines.append("Lead movement: no weekly send since %s (%d days) — the cadence is the story this week." % (d0.isoformat(), age))
+    elif not trail:
+        lines.append("Lead movement: first weekly to this audience size (%d recipients) — this send is the new baseline (%s, %s)." % (
+            int(size), r0.get("theme") or r0.get("category"), d0.isoformat()))
     else:
         deltas = [("calls+texts per 1,000", ct, ct_avg, True), ("directions clicks", di, di_avg, True),
                   ("unsubscribe rate", un, un_avg, False)]
@@ -211,7 +222,7 @@ def compose(rows, today):
     else:
         lines.append("Directions clicks: %s (avg %s) %s" % (fmt(di), fmt(di_avg), arrow(di, di_avg)))
     # recommendation: the best-performing theme over the trailing 8 weekly sends, tied to numbers
-    pool = [(fnum(r.get("calls_texts_per_1k")), r.get("theme") or r.get("category")) for _, r in wk[:8]]
+    pool = [(fnum(r.get("calls_texts_per_1k")), r.get("theme") or r.get("category")) for _, r in wk[:8] if r is r0 or comparable(r)]
     if age > 8:
         best = max(pool) if pool else (0, "Store Spotlight")
         rec = "Resume the weekly send — %s has been the strongest theme (%s calls+texts per 1,000)." % (best[1], fmt(best[0]))

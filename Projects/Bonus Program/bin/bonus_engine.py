@@ -363,7 +363,7 @@ def stage_close(ctx):
                 if code in R['bravo_ignore_codes']: continue
                 e = map_bravo_to_roster(ctx, code, a['name'], roster)
                 if e is None:
-                    if a['retail_gp'] > 0: ctx.gaps.append(f'{name}: Bravo user {code} ({a["name"]}) not in Gusto roster — GP {fmt(a["retail_gp"])} unpaid')
+                    if a['retail_gp'] > 0: ctx.gaps.append(f'{name}: Bravo user {code} ({a["name"]}) is not on the current staff roster (a former employee, or a name that does not match) — GP {fmt(a["retail_gp"])} not paid')
                     continue
                 if e.get('terminated'):
                     if a['retail_gp'] > 0: ctx.notes.append(f'{name}: {e["display"]} earned GP {fmt(a["retail_gp"])} but is no longer employed — ineligible at payout')

@@ -84,7 +84,19 @@ CLI
                                real-quit test sets through the `open -na` sign-in window). Prints PASS/FAIL.
   vp_browser.py persist-get --crashed   experiment only: forces exit_type Crashed first (crash-recovery rule)
   vp_browser.py exit-type      prints (profile.exit_type, Secure Preferences restore_on_startup)
+  vp_browser.py cdp-close      2026-10-20: close the SIGN-IN window the way Cmd-Q does — Playwright connect_over_cdp
+                               to the window's --remote-debugging-port (DEBUG_PORT, set by vp_signin_front.sh) and
+                               send CDP Browser.close = Chrome's own graceful quit -> exit_type "Normal". Prints
+                               CLOSED / NOT_RUNNING / NO_CDP (caller falls back to SIGTERM = "SessionEnded").
 Failure policy v3: these helpers never post to Slack; they only print.
+
+EXIT-TYPE NOTE (2026-10-20): a SIGTERM to Chrome's main process runs chrome::ExitIgnoreUnloadHandlers(), which
+Chrome records as exit_type "SessionEnded" (its "the OS is ending the session" path). It is NOT treated as a
+crash and NOT as a sign-out: on the next launch Chrome restores session cookies whenever either the last exit was
+"Crashed" or the startup pref is "Continue where you left off" (ProfileImpl::ShouldRestoreOldSessionCookies) — the
+10/19 proof 2a/2b showed exactly that (httpbin/postman-echo session cookies survived a SessionEnded quit). So
+"SessionEnded" never dropped a login. The Northwest loss of 10/20 was not the quit path (see CHANGELOG 10/20).
+Still, the closer now prefers CDP Browser.close so the record reads "Normal" like a Cmd-Q.
 """
 import datetime as dt
 import json
@@ -110,8 +122,10 @@ SIGNIN_TABS = [
     "https://tune.cloudcovermusic.com/#/admin/zones",      # CloudCover (zones dashboard)
     "https://home.google.com/",                            # Google Home — fullcirclepawn@gmail.com (cameras + speakers)
     "https://app.gusto.com/",                              # Gusto — jdavis@fcfpawn.com, tick "Remember this device for 30 days"
-    "https://app.northwestregisteredagent.com/",           # Northwest Registered Agent
+    "https://www.northwestregisteredagent.com/login",      # Northwest Registered Agent (the SKILL's URL; app.* "came up bad" 10/20)
 ]
+# the sign-in window's DevTools port (localhost only) — lets vp_signin_close.sh quit it via CDP Browser.close
+DEBUG_PORT = 9333
 
 
 # ---------- process helpers ----------
@@ -281,6 +295,43 @@ def close(ctx, timeout=25):
     except Exception:
         pass
     return wait_closed(timeout=timeout)
+
+
+def cdp_close(port=DEBUG_PORT, timeout=30):
+    """Quit the SIGN-IN window gracefully through its DevTools port (CDP Browser.close = the same shutdown as
+    Cmd-Q -> exit_type "Normal"). Returns 'NOT_RUNNING' | 'NO_CDP' (port closed: fall back to SIGTERM) |
+    'CLOSED' | 'STILL_RUNNING'. Never SIGKILLs; never touches any Chrome but the one on PROFILE."""
+    if not is_running():
+        return "NOT_RUNNING"
+    import socket
+    try:
+        with socket.create_connection(("127.0.0.1", port), timeout=2):
+            pass
+    except OSError:
+        return "NO_CDP"
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError:
+        return "NO_CDP"
+    try:
+        with sync_playwright() as p:
+            browser = p.chromium.connect_over_cdp("http://127.0.0.1:%d" % port, timeout=10000)
+            try:
+                s = browser.new_browser_cdp_session()
+                try:
+                    s.send("Browser.close")
+                except Exception:
+                    pass            # the socket drops as Chrome exits — expected
+            finally:
+                try:
+                    browser.close()
+                except Exception:
+                    pass
+    except Exception as e:
+        print("cdp-close:", type(e).__name__, str(e)[:120])
+        if is_running():
+            return "NO_CDP"
+    return "CLOSED" if wait_closed(timeout=timeout) else "STILL_RUNNING"
 
 
 # ---------- CLI ----------
@@ -483,6 +534,10 @@ def main(argv):
     if cmd == "exit-type":
         print("exit_type/restore:", exit_type())
         return 0
+    if cmd == "cdp-close":
+        r = cdp_close()
+        print(r)
+        return 0 if r in ("CLOSED", "NOT_RUNNING") else 1
     print(__doc__)
     return 2
 
