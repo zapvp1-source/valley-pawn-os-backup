@@ -1,0 +1,97 @@
+# Best Offer switched OFF — 2026-10-21 12:52 (run 20261021-124259-bestoffer-off)
+
+Applied 93, failed 0. Per store: {'Culpeper': 84, 'Harrisonburg': 3, 'Lexington': 2, 'Roanoke': 1, 'Waynesboro': 3}. Skipped: {'not_active': 101, 'already_off': 5, 'pending_offer': 21, 'not_game': 0, 'err': 1}. Spot-check: [('Culpeper', '397403152609', 'Active', 'OFF'), ('Culpeper', '397981169008', 'Active', 'OFF'), ('Culpeper', '397919080682', 'Active', 'OFF')]
+
+- Culpeper 397053101300 august-remediation-revert — Wii Tony Hawk: Ride Skateboard (PARTS ONLY) For Wii Console NO DONGLE
+- Culpeper 397218116316 august-remediation-revert — Nintendo DS 3-Slot Video Game Hard Plastic Case
+- Culpeper 397388758738 august-remediation-revert — Stockton 422203 Chain Alignment Tool
+- Culpeper 397403152609 august-remediation-revert — Corair 220T RGB Airflow Tempered Glass Mid-Tower Case (Sealed)
+- Culpeper 397423115048 august-remediation-revert — Infinity 2.0 - Microsoft Xbox 360 Video Game, Disc Only
+- Culpeper 397433112272 video-game — Microsoft Xbox Game Lot SpongeBob Shark Tale Road Rage & More! (Read)
+- Culpeper 397488276732 august-remediation-revert — Vintage Rafaelian Red White Blue Gemstone Patriotic 1 3/4" Flag Brooch
+- Culpeper 397521435918 august-remediation-revert — Vintage Mattel Pink Barbie High Heels & Camera
+- Culpeper 397524227390 august-remediation-revert — Vintage Mattel 1968 Barbie "PJ" Doll Head (Head Only)
+- Culpeper 397579051749 august-remediation-revert — Jimmy Choo Posie/S P4AJ6 6016 135 Sunglasses Brown Gradient Italy
+- Culpeper 397661224731 august-remediation-revert — 1958ca Vintage Sterling "Diamond" by Reed & Barton 9" Modern Hollow
+- Culpeper 397661227725 august-remediation-revert — Vintage 1958ca "Diamond" by Reed & Barton Sterling 9" Modern Hollow
+- Culpeper 397661241532 august-remediation-revert — Vintage Sterling 1958ca "Diamond" by Reed & Barton 9" Modern Hollow
+- Culpeper 397661250437 august-remediation-revert — Vintage Sterling "Diamond" by Reed & Barton 9" Modern Hollow Butter
+- Culpeper 397661254315 august-remediation-revert — Vintage 1958ca Sterling "Diamond" by Reed & Barton 9" Modern Hollow
+- Culpeper 397661256304 august-remediation-revert — Vintage Sterling 1958ca "Diamond" by Reed & Barton Modern Hollow Butter Knife 9'
+- Culpeper 397668289749 august-remediation-revert — Star Trek The Experience Las Vegas Hilton Shot Glass Smokey Chrome
+- Culpeper 397668437298 august-remediation-revert — Vinage Star Trek Coffee Mugs Lot Of 5
+- Culpeper 397686923313 august-remediation-revert — Western Cutlery W49 Bowie Knife 9" Fixed Blade, Version 3 Collectible
+- Culpeper 397721753698 august-remediation-revert — Wii Game Lot Def Jam RockBand Dance Boogie Deal or No Deal Brunswick
+- Culpeper 397721759837 august-remediation-revert — XBOX 360 Kinect Games (2) Dance Central 2 & Kinect Adventures
+- Culpeper 397722328390 august-remediation-revert — 1994 U.S.S. Enterprise NCC-1701-D Star Trek Plate by The Hamilton Co
+- Culpeper 397722334043 august-remediation-revert — 1997 Star Trek "Ships in Motion" Full Impulse by The Hamilton Collect
+- Culpeper 397722362316 august-remediation-revert — 1997 Star Trek "Ships in Motion" Set A Course Warp 5 Plate by Hamilt
+- Culpeper 397722367862 august-remediation-revert — Franklin Mint In Winter Woods Collector Plate, Decorative Collectible
+- Culpeper 397722447761 august-remediation-revert — 1994 Start Trek Romulan Warbird Plate by The Hamilton Collection w/C
+- Culpeper 397722461537 august-remediation-revert — 1994 Star Trek "Klingon Battlecrusier" by The Hamilton Collection Plate With COA
+- Culpeper 397722841097 august-remediation-revert — 1994 Star Trek Ferengi Marauder Plate by The Hamilton Collection w/C
+- Culpeper 397722897593 august-remediation-revert — 1994 Star Trek U.S.S. Excelsior Plate w/COA by The Hamilton Collection
+- Culpeper 397722900405 august-remediation-revert — 1994 Triple Nacelled U.S.S Enterprise Star Trek Plate by The Hamilton
+- Culpeper 397722904696 august-remediation-revert — 1994 Star Trek Klingon Bird of Prey Plate by The Hamilton Collection
+- Culpeper 397850739550 august-remediation-revert — Hannah Montana Rock Out the Show – PlayStation Portable PSP
+- Culpeper 397893285340 august-remediation-revert — W. Britain 10081 U.S. General Dwight D. Eisenhower WWII Figure
+- Culpeper 397893306508 august-remediation-revert — W. Britain 10067 George H.W. Bush USN 1944 Figure w/Box
+- Culpeper 397919080682 august-remediation-revert — Monster Trux Arena - Nintendo Wii Video Game, Off-Road Racing
+- Culpeper 397919112644 august-remediation-revert — Jeep Thrills - Nintendo Wii Video Game, Off-Road Driving Racing
+- Culpeper 397919195952 august-remediation-revert — W. Britain 17589 U.S. Infantry 3pc Soldier Figures w/Box
+- Culpeper 397919781706 august-remediation-revert — Minute to Win It - Nintendo Wii Video Game, Party Family Game
+- Culpeper 397974561369 august-remediation-revert — Luna Home Cam V3 2K White Indoor Pan & Tilt Camera (Sealed) NIB
+- Culpeper 397974581222 august-remediation-revert — Luna Home Cam V3 2K Indoor Pan & Tilt Camera White (Sealed) NIB
+- Culpeper 397981169008 august-remediation-revert — "The Seasoned Veterans" Leaders of Confederacy Bradford Exchange Plate
+- Culpeper 397981363773 august-remediation-revert — "Pride of the South" Leaders of Confederacy Bradford Exchange Plate
+- Culpeper 397981369592 august-remediation-revert — "The Glory in Gray" Leaders of Confederacy Bradford Exchange Plate
+- Culpeper 397996067535 august-remediation-revert — Avatar: The Game - Sony PSP Video Game, Action Adventure
+- Culpeper 398008264828 video-game — Pay Day 3 & Rainbow Six Extraction Bundle Playstation 5 Game Ps5
+- Culpeper 398018831767 august-remediation-revert — Onrush, Super Street,Gearshifters& Gas Guzzler Playstion 4 Game Lot 4
+- Culpeper 398019045707 august-remediation-revert — Pro Fishing Simulator,Legendary Fishing Playstation 4 Game Ps4
+- Culpeper 398023656780 august-remediation-revert — Monster Hunter Freedom& Monster Hunter 2 Psp Game Lot Of 2 Psp
+- Culpeper 398023663587 august-remediation-revert — Starwar Force,Battlefort&Battlefort II Psp Game Lot Of 3 Psp
+- Culpeper 398053731895 august-remediation-revert — Spider-Man: Friend or Foe - Sony PSP Video Game, Action Adventure
+- Culpeper 398053745610 august-remediation-revert — Super Monkey Ball Adventure - Sony PSP Video Game, Platformer
+- Culpeper 398053801966 august-remediation-revert — Metal Gear Solid - Sony PSP Video Game, Stealth Action
+- Culpeper 398053808504 august-remediation-revert — Untold Legends: Warrior's Code / Brotherhood - Sony PSP Video Game, Action RPG
+- Culpeper 398088372663 august-remediation-revert — Friday the 13th: The Game - Sony PlayStation 4 PS4 Video Game, Horror
+- Culpeper 398106361719 august-remediation-revert — Need for Speed Heat - Sony PlayStation 4 PS4 Video Game, Racing
+- Culpeper 398106368839 august-remediation-revert — The Grinch Christmas Adventures - PlayStation 4 Game Ps4
+- Culpeper 398113989362 august-remediation-revert — W. Britain 17444 "MAD" Anthony Wayne Metal Soldier w/Box
+- Culpeper 398113994328 august-remediation-revert — W. Britain 13003 U.S. Marine in Green Winter Service Dress WWII Figure w/Box
+- Culpeper 398113998339 august-remediation-revert — W. Britain 13015 U.S. Marine Drill Instructor Figure w/Box
+- Culpeper 398114113669 august-remediation-revert — W. Britain 10038 United States Marine Corps U.S. Marine 1833 Soldier w/Box
+- Culpeper 398136378192 august-remediation-revert — Battlefield HardLine,Battlefield 1 Playstation 4 Game Lot Of 2 Ps4
+- Culpeper 398136394053 august-remediation-revert — Ghost Recon Wildlands & Rainbow Six Siege Tom Clancy PS4 Game Lot of 2
+- Culpeper 398136410699 august-remediation-revert — Infamous Second Son, Raid WWII, Payday 2 Crimewave PS4 Game Lot of 3
+- Culpeper 398140138561 august-remediation-revert — Dragon Age Inquisition, Immortals Fenyx Rising Playstation 4 Game Lot Of 2
+- Culpeper 398140170621 august-remediation-revert — Motorcycle Club & MX vs ATV Legends PlayStation 4 PS4 Game Lot of 2
+- Culpeper 398147130076 august-remediation-revert — Poker,Board Game, Puzzle World, Midway Arcade Playstation Psp Game Lot Of 10
+- Culpeper 398155046400 august-remediation-revert — Cyberton Computer Clx Ryzen 5 5600gb w/Radeon Graphics 3.90GHZ Ram
+- Culpeper 398155104790 video-game — PlayStation Psp Game Case Lot Of 3
+- Culpeper 398188748220 august-remediation-revert — W. Britain 13014 U.S. Navy Pilot 1941-45 Metal Soldier Figure w/Box
+- Culpeper 398189378398 august-remediation-revert — W. Britain 10017 U.S. Marine Corps Continental Marine 1779-1783 Soldier Figure
+- Culpeper 398200084919 august-remediation-revert — Cornwell Tools CTGT120 Diagnostic Thermal Imaging Camera - Automotive Tool
+- Culpeper 398204587150 august-remediation-revert — Paul Reed Smith PRS SE Swamp Ash Special Iri Blue Electric Guitar w/ Gig Bag
+- Culpeper 398207623933 august-remediation-revert — Sony PlayStation 5 PS5 NBA 2K25 Video Game Complete w/ Case - Tested
+- Culpeper 398212166248 august-remediation-revert — W. Britain 43083 Private US Infantry 1825 Metal Soldier Figure w/Box
+- Culpeper 398212187085 august-remediation-revert — W. Britain 00288 Ertl Omar Bradley WWII Soldier Figure w/Box
+- Culpeper 398212226603 august-remediation-revert — W. Britain 17233 Ertl Chester W. Nimitz WWII Soldier Figure w/Box
+- Culpeper 398212230662 august-remediation-revert — W. Britain 17232 Ertl William F. "Bull" Hasley Soldier Figure w/Box
+- Culpeper 398212259290 august-remediation-revert — W. Britain 10038 United States Marine Corps U.S. Marine 1859 Soldier Figure
+- Culpeper 398239491542 august-remediation-revert — Vintage Dooney & Bourke Wonder Duck Red/Blue Zip Pouch Bag
+- Culpeper 398263385921 august-remediation-revert — Just Dance Disney Part 2 Xbox One Video Game w/Case
+- Culpeper 398264522352 august-remediation-revert — Coach C8992 Black Kit Leather Sandal/Heels US Size 9B
+- Culpeper 398271595759 august-remediation-revert — Nike DZ5485-401 Air Jordan 1 Retro High OG Midnight Navy/Black-White SZ5.5 Shoes
+- Culpeper 398370757701 video-game — Dead Island 2 PS5 PlayStation 5 Video Game Disc and Cover/Case
+- Culpeper 920027093411 video-game — Nintendo Mario Pinball Land Gameboy Advance Video Game Complete-in-Box
+- Harrisonburg 387902916408 video-game — Microsoft Xbox One - Console - 500GB - 1540
+- Harrisonburg 800055373631 video-game — Sony Playstation 3 - System - 80GB - CECH-4001B
+- Harrisonburg 800232060996 video-game — Nintendo Switch OLED Handheld HAC-016 VA5019380 w/ Dock, Grip & Case
+- Lexington 960038568231 video-game — Nintendo Switch OLED 64GB White Console 4 Joy Cons Dock 119GB SD Card Bundle
+- Lexington 960038702510 video-game — Nintendo Switch Joy-Con Pastel Pink Pastel Yellow L/R Controllers w/ Straps
+- Roanoke 900011561600 video-game — NINTENDO SWITCH 2 JOY-CON 2 (L / R) LIGHT BLUE LIGHT RED NEW (ROA012479)
+- Waynesboro 800287928140 video-game — Story of Seasons - Nintendo 3DS Video Game, Farming Sim
+- Waynesboro 800508951378 video-game — Nintendo DS Kirby Mass Attack Game Cartridge - Good Condition, Tested
+- Waynesboro 800818312931 video-game — MICROSOFT XBOX SERIES S - CONSOLE - 1883 - 512GB CONSOLE and Power c (VAP033536)

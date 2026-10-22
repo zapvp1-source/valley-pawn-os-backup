@@ -124,7 +124,9 @@ WARRANTY_PROMISE2_RE = re.compile(r"(make it right|no exceptions|30 days)", re.I
 
 TYPE_PATTERNS = [
     ("humor", r"guess the year|bingo|still runs|ask your parents|well[, ]+that's a first|it just needs a battery|drop your guess"),
-    ("community", r"parade|farmers market|greenway|skyline drive|blue ridge|mill mountain|\bjmu\b|\bvmi\b|dukes|friendly city|national park|first friday|apple season"),
+    ("community", r"parade|farmers market|greenway|skyline drive|blue ridge|mill mountain|\bjmu\b|\bvmi\b|dukes|friendly city|national park|first friday|apple season|"
+                  r"first frost|frost|foliage|fall colou?r|leaves turn|friday night|high school|football|festival|block party|mural|"
+                  r"\btrail\b|\bpark\b|downtown|built in 1\d{3}|since 1\d{3}|drive-in|depot|cold morning|weekend in"),
     ("holiday", r"memorial day|4th of july|fourth of july|independence day|labor day|black friday|christmas|new year|thanksgiving|veterans day"),
     ("hiring", r"we'?re hiring|now hiring|retail sales associate|join our team|apply (?:today|now)|we'?re growing"),
     ("giveaway", r"giveaway|giving away|enter free|drop your email|one customer wins|\$100 (?:each|every) month"),
@@ -209,10 +211,44 @@ def load_manifest_types() -> dict[str, str]:
     return out
 
 
+PLANS_DIR = Path(__file__).resolve().parent / "state" / "plans"
+_BRAND_PILLAR_TYPE = {"how_it_works": "how-it-works", "value_warranty": "warranty", "story_team": "team"}
+_LANE_TYPE = {"community": "community", "deal_photo": "deal", "deal_video": "deal", "engagement": "engagement",
+              "reveal": "engagement", "humor": "humor", "hiring": "hiring"}
+
+
+def load_plan_lanes(weeks: int = 6) -> dict[str, str]:
+    """2026-10-21: caption -> content type from the engine's own plan files (state/plans/*.json). Every post the
+    vp_social engine published carries its lane there, so the digest no longer has to guess from keywords --
+    community posts were landing in 'other' (22 of 48 posts the week of 10/16) and the mix could never steer."""
+    out: dict[str, str] = {}
+    files = sorted(PLANS_DIR.glob("*.json"), key=lambda f: f.stat().st_mtime, reverse=True)
+    for f in [x for x in files if not x.name.endswith("_results.json")][: weeks * 3]:
+        try:
+            plan = json.loads(f.read_text())
+        except Exception:
+            continue
+        for slot in plan.get("slots", []):
+            lane = slot.get("lane") or ""
+            ctype = _LANE_TYPE.get(lane)
+            if lane == "brand":
+                ctype = _BRAND_PILLAR_TYPE.get((slot.get("contract") or {}).get("pillar"), "brand")
+            if not ctype:
+                continue
+            for cap in (slot.get("captions") or {}).values():
+                if cap:
+                    out[cap.strip().split("\n")[0][:60].lower()] = ctype
+    return out
+
+
 def collect(p: PublerClient, days: int) -> list[dict]:
     since = (datetime.now(timezone.utc) - timedelta(days=days)).strftime("%Y-%m-%d")
     until = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     manifest_types = load_manifest_types()
+    try:
+        manifest_types.update(load_plan_lanes())   # engine plans win over the legacy batch manifests
+    except Exception as e:  # noqa: BLE001
+        print(json.dumps({"warn": f"plan lanes unavailable: {str(e)[:120]}"}))
     rows = []
     for key, cfg in p.accounts.items():
         try:
@@ -271,6 +307,14 @@ def signal_accounts(rows: list[dict]) -> tuple[list[dict], dict[str, int], list[
     for r in rows:
         per_account[r["account"]] = per_account.get(r["account"], 0) + 1
     eligible = [a for a, n in per_account.items() if n >= MIN_POSTS_FOR_SIGNAL]
+    if not eligible:
+        # 2026-10-21 (social audit): at the 7-posts/week store cadence no single account ever reached the
+        # threshold, so every digest since August said "hold current mix". The five store Facebook pages run the
+        # same lanes and formats, so pool them as ONE signal when no single account qualifies on its own.
+        stores = {"Culpeper", "Waynesboro", "Harrisonburg", "Lexington", "Roanoke"}
+        pooled = [r for r in rows if r["account"] in stores]
+        if len(pooled) >= MIN_POSTS_FOR_SIGNAL:
+            return pooled, per_account, ["Store Facebook pages (pooled)"]
     return [r for r in rows if r["account"] in eligible], per_account, sorted(eligible)
 
 
@@ -309,7 +353,7 @@ def main() -> None:
 
     # FIXED 2026-08-22: only accounts with enough volume may steer the mix.
     steer_rows, per_account, eligible = signal_accounts(rows)
-    thin = sorted(a for a in per_account if a not in eligible)
+    thin = sorted(a for a in per_account if a not in eligible and not (eligible == ['Store Facebook pages (pooled)'] and a in {'Culpeper','Waynesboro','Harrisonburg','Lexington','Roanoke'}))
 
     if not steer_rows:
         ranked = sorted(rows, key=lambda r: r["score"], reverse=True)

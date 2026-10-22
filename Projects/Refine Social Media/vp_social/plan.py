@@ -24,13 +24,18 @@ from creative_drift import DriftEngine, season_for  # noqa: E402
 from . import config, ledger
 
 # per-account weekly cadence targets (placements/week)
+# 2026-10-21 (Joshua): "why stop on a platform, it can only improve, it doesn't cost anything" -- every channel stays on.
+# X and Brand IG keep their full targets; the audit change that survives is the 1-3 PM timing below.
 TARGETS = {"Brand": 7, "BrandIG": 10, "BrandTwitter": 3, "BrandTikTok": 3,
            **{s: 7 for s in config.STORES}, **{f"GBP_{s}": 7 for s in config.STORES}}
 
 STORE_DAY = {"Culpeper": 1, "Waynesboro": 2, "Harrisonburg": 3, "Lexington": 4, "Roanoke": 5}  # Tue..Sat
-DEAL_PHOTO_TIMES = {"Culpeper": "10:00", "Waynesboro": "11:30", "Harrisonburg": "13:00",
-                    "Lexington": "14:30", "Roanoke": "15:30"}
-COMMUNITY_TIMES = ["08:30", "12:15", "17:45", "10:45"]
+# 2026-10-21 (audit): measured FB reach peaks 1-3 PM (203-262 avg) and Sundays; 4 PM and Saturday are the worst.
+# Minutes are staggered so no two lanes ever share one account-minute (Publer silently drops the second post);
+# hiring_autopost.py uses :50.
+DEAL_PHOTO_TIMES = {"Culpeper": "13:00", "Waynesboro": "13:15", "Harrisonburg": "13:45",
+                    "Lexington": "14:15", "Roanoke": "14:45"}
+COMMUNITY_TIMES = ["13:30", "14:30", "13:05", "15:00"]
 BRAND_PILLARS = [("how_it_works", "How pawn loans / buying / layaway actually work at Valley Pawn — plain, honest, one concrete detail"),
                  ("value_warranty", "A real value angle: 30-day warranty, price vs new, or a category we buy — one concrete number"),
                  ("story_team", "A people or heritage story — a real employee (name + tenure), a store, family-owned since 2014")]
@@ -128,13 +133,13 @@ def build(week: str, deals_path: Path | None, seed: int | None = None) -> dict:
         accts = accounts_ok([store, "BrandIG"])
         if accts:
             slots.append(_slot(f"deal-video-{store}", "deal_video", item_key, accts, "video",
-                               _at(monday, STORE_DAY[store], "10:30"), week, media_path=video,
+                               _at(monday, STORE_DAY[store], "15:10"), week, media_path=video,
                                contract=dict(base, note="15-30s vertical reel of the actual item; caption must name item + price")))
     if len(deals) >= 3:
         accts = accounts_ok(["Brand", "BrandIG", "BrandTikTok"])
         if accts:
             slots.append(_slot("deal-compilation", "deal_video", f"deal:{week}:compilation", accts, "video",
-                               _at(monday, 5, "16:00"), week, media_path=str(config.REELS_DIR / f"deal_compilation_{week}.mp4"),
+                               _at(monday, 5, "13:20"), week, media_path=str(config.REELS_DIR / f"deal_compilation_{week}.mp4"),
                                contract={"pillar": "deal", "deals": [{"store": x["store"], "product": x["product"], "price": x.get("price")} for x in deals],
                                          "note": "compilation of this week's five deals; Brand caption lists all five with prices",
                                          "min_words": {"fb": 40, "ig": 40, "tiktok": 8}}))
@@ -144,7 +149,7 @@ def build(week: str, deals_path: Path | None, seed: int | None = None) -> dict:
         accts = accounts_ok(["Brand", "BrandIG", "BrandTwitter"])
         if accts:
             slots.append(_slot(f"brand-{pid}", "brand", f"brand:{week}:{pid}", accts, "photo",
-                               _at(monday, [0, 2, 4][i], "18:00"), week, media_path=None,
+                               _at(monday, [0, 2, 4][i], "14:00"), week, media_path=None,
                                contract={"pillar": pid, "brief": brief, "season": season,
                                          "media_contract": "pick one hero from Valley Pawn Studios/asset-library/heroes not used in 30 days "
                                                            "matching the pillar; set media_path; never a firearm; never a named make/model without a real photo",
@@ -170,7 +175,13 @@ def build(week: str, deals_path: Path | None, seed: int | None = None) -> dict:
                                          "format": {"id": f.id, "title": f.title, "template": f.template, "hook_key": f.hook_key},
                                          "kb": str(config.COMMUNITY_KB), "season": season,
                                          "rule": "text only; real named place/event from CITY_COMMUNITY_KB with its [C26]/[PATTERN] tag; "
-                                                 "no CTA, no product, no price; FB and GBP captions must differ", "min_words": {"fb": 30, "gbp": 25}}))
+                                                 "no CTA, no product, no price; FB and GBP captions must differ. "
+                                                 "TIME-SENSITIVE + SPECIFIC (Joshua 2026-10-21: 'authenticity sells, we truly want to inform the "
+                                                 "community'): when the post names a game, festival, market or event, give the real specifics for "
+                                                 "THIS week (opponent, home/away, time, date, place) and only facts you verified from the "
+                                                 "school/organizer's own current page; if you cannot verify it, write about something you can. "
+                                                 "Never wish luck for a game you have not confirmed is on. The daily social-fact-check re-verifies "
+                                                 "every dated claim the morning before it posts.", "min_words": {"fb": 30, "gbp": 25}}))
 
     # ---- Engagement (Lane D): 2 brand + 1 rotating store; reveal for any guess format ----
     picks = engine.select("engagement", 3, account="Brand", today=monday, seed=seed)
@@ -178,10 +189,10 @@ def build(week: str, deals_path: Path | None, seed: int | None = None) -> dict:
     for j, f in enumerate(picks):
         if j < 2:
             accts = accounts_ok(["Brand", "BrandIG", "BrandTwitter"])
-            day, tm = [1, 3][j], "17:30"
+            day, tm = [1, 3][j], "14:20"
         else:
             accts = accounts_ok([rot_store])
-            day, tm = 2, "17:45"
+            day, tm = 2, "14:40"
         if not accts:
             continue
         sid = f"engagement-{j+1}"
@@ -192,7 +203,7 @@ def build(week: str, deals_path: Path | None, seed: int | None = None) -> dict:
                                      "min_words": {"fb": 20, "ig": 20, "x": 8}}))
         if "guess" in f.id or "answer" in f.id:
             slots.append(_slot(f"{sid}-reveal", "reveal", f"{f.id}:{week}:{j}:reveal", list(accts), "status",
-                               _at(monday, day + 1, "18:00"), week, media_path=None, format_id=f.id,
+                               _at(monday, day + 1, "14:25"), week, media_path=None, format_id=f.id,
                                contract={"pillar": "engagement", "note": "the promised answer/reveal for the previous day's post — must include the real number",
                                          "min_words": {"fb": 12, "ig": 12, "x": 6}}))
 
@@ -203,7 +214,7 @@ def build(week: str, deals_path: Path | None, seed: int | None = None) -> dict:
         accts = accounts_ok(["Brand", "BrandIG", "BrandTikTok"])
         if accts:
             slots.append(_slot("humor-1", "humor", f"{f.id}:{week}", accts, "video",
-                               _at(monday, 3, "18:30"), week, media_path=str(config.REELS_DIR / f"comedy_{week}_1.mp4"),
+                               _at(monday, 3, "14:35"), week, media_path=str(config.REELS_DIR / f"comedy_{week}_1.mp4"),
                                format_id=f.id, deferred=True,
                                contract={"pillar": "humor", "format": {"id": f.id, "title": f.title, "template": f.template},
                                          "note": "rendered by vp_comedy_reel.py in the midweek run; caption 1-2 lines", "min_words": {"fb": 8, "ig": 8, "tiktok": 4}}))

@@ -81,9 +81,10 @@ def main():
         p = subprocess.run([sys.executable, os.path.join(HERE, "vp_slack.py"), "dm", dm], capture_output=True, text=True, timeout=60,
                            env=dict(os.environ, VP_TASK=AGENT))
         os.makedirs(os.path.dirname(marker), exist_ok=True)
-        if p.returncode == 0:
+        real = p.returncode == 0 and "DRY RUN" not in p.stdout   # a guard-diverted DM must not set the once-a-month marker
+        if real:
             open(marker, "w").write(now.isoformat())
-        L.append("\nDM %s" % ("sent" if p.returncode == 0 else "failed: %s" % p.stderr.strip()[:200]))
+        L.append("\nDM %s" % ("sent" if real else "DRY RUN — diverted, not sent" if p.returncode == 0 else "failed: %s" % p.stderr.strip()[:200]))
     open(wf, "w").write("\n".join(L) + "\n")
     print("POST MISSING — diagnostics in %s" % wf)
     return 0

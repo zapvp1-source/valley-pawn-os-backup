@@ -42,7 +42,8 @@ import sys
 
 STORE_ORDER = ["Culpeper", "Waynesboro", "Harrisonburg", "Lexington", "Roanoke"]
 LEAD_LABELS = [("phone_click", "Calls"), ("sms_click", "Texts"), ("directions_click", "Directions"),
-               ("email_click", "Email clicks"), ("form_submit", "Form submits")]
+               ("email_click", "Email clicks"), ("form_submit", "Form submits"),
+               ("Textchat Message", "Website chat messages")]
 REQUIRED_KPIS = ["sessions", "users", "engaged_sessions", "engagement_rate",
                  "avg_engagement_seconds", "page_views", "key_events"]
 

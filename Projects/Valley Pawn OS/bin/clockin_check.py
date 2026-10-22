@@ -62,6 +62,8 @@ LEDGER = os.path.join(OS_DIR, "fleet", "FAILURE_LEDGER.md")
 STATE = os.path.join(OS_DIR, "fleet", "state", "clockin")
 ROSTER = os.path.join(STATE, "roster.json")
 TEST_OUT = os.path.join(OS_DIR, "fleet", "test_output", "clockin")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import vp_people  # fleet-wide current-staff / no-Davis filter (2026-10-21)
 import vp_browser  # the one automation profile + launch recipe (2026-10-19)
 PROFILE = vp_browser.PROFILE
 CH = "C03BETSS669"
@@ -164,6 +166,16 @@ def excluded(name):
     if n in NEVER or any(n.startswith(x) for x in NEVER):
         return "never-listed (salaried manager / Preston)"
     return None
+
+
+def _vp_reason(name):
+    """Fleet-wide rule (Joshua 2026-10-21): current Gusto staff only, never a Davis — shared bin/vp_people.py,
+    an ADDITIONAL filter on top of excluded(). Stale/missing roster = nobody passes -> the existing
+    'no store employee matched' ledger path, nothing posted."""
+    try:
+        return vp_people.reason(name)
+    except vp_people.RosterHold as e:
+        return "roster hold: %s" % e
 
 
 def store_of(dept):
@@ -742,7 +754,7 @@ def build(today, statuses, roster, wed, supplement_only=False):
     rmap = {nkey(k): v for k, v in roster.items()}
     allowed, dropped = {}, []
     for nm, dept in roster.items():
-        why = excluded(nm)
+        why = excluded(nm) or _vp_reason(nm)
         st = store_of(dept)
         if why:
             dropped.append((nm, why))

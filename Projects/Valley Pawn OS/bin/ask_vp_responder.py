@@ -592,6 +592,9 @@ def answer(q, asker="", store="", cfg=None, bm=None, by_id=None, history=None):
         elif OFFER_LANG.search(reply):
             out["checks"].append("approved-offer language -> not_covered")
             status = "not_covered"
+        elif staff_rule_breach(reply):
+            out["checks"].append("names a former employee / lists a Davis as staff -> not_covered: %s" % staff_rule_breach(reply))
+            status = "not_covered"
         elif status == "answer" and HEDGE.search(reply):
             out["checks"].append("hedged answer (%s) -> unclear" % HEDGE.search(reply).group(0))
             status = "unclear"
@@ -641,6 +644,59 @@ def answer(q, asker="", store="", cfg=None, bm=None, by_id=None, history=None):
         reply = reply.rstrip() + ("\n\n" + out["source_line"] if out["source_line"] else "")
     out.update({"status": status, "reply": reply, "cites": cites, "latency": time.time() - t0})
     return out
+
+
+# ----------------------------------------------------------------------------- staff-naming rule
+# Fleet-wide rule (Joshua 2026-10-21): name only current Gusto staff, never list a Davis as staff.
+# A prose mention of Joshua as the owner ("ask Joshua") is fine; what is blocked is (a) any former employee
+# by full name (Bravo logins seen TERMINATED + people Gusto removed, per hr/), and (b) a staff list / ranking
+# (2+ bullet or numbered lines) that names a Davis. Shared filter: bin/vp_people.py.
+_FORMER = None
+
+
+def _former_names():
+    global _FORMER
+    if _FORMER is None:
+        names = set()
+        hr = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "hr")
+        try:
+            for u in json.load(open(os.path.join(hr, "BRAVO_USERS.json"))).get("users", []):
+                if (u.get("status") or "").upper() == "TERMINATED" and len((u.get("name") or "").split()) >= 2:
+                    names.add(u["name"].strip().lower())
+        except (OSError, ValueError):
+            pass
+        try:
+            for m in re.finditer(r"removed ([A-Z][\w'-]+ [A-Z][\w' -]+?) \(", open(os.path.join(hr, "ROSTER_CHANGES.md")).read()):
+                names.add(m.group(1).strip().lower())
+        except OSError:
+            pass
+        # former staff seen in Bravo employee-activity Sept/Oct 2026 (not on the Gusto active roster)
+        names |= {"bridgett grayson", "bree grayson", "michael chambers", "nelson troche", "cris lopez",
+                  "emma langford", "nadiushka rios cardona", "chonn grinnage", "steve burch", "steven burch",
+                  "lottie obst", "timothy thompson", "lee cornelison"}
+        try:
+            import vp_people
+            names = {n for n in names if not vp_people.is_reportable(n)}   # rehired = current again
+        except Exception:
+            pass
+        _FORMER = names
+    return _FORMER
+
+
+def staff_rule_breach(reply):
+    low = (reply or "").lower()
+    for n in _former_names():
+        if re.search(r"\b%s\b" % re.escape(n), low):
+            return "former employee"
+    listy = len(re.findall(r"(?m)^\s*(?:[-*\u2022]|\d+[.)]|\d+(?:st|nd|rd|th)\b|:\w+_medal:)", reply or "")) >= 2
+    if listy:
+        try:
+            import vp_people
+            if vp_people.mentions_davis(reply):
+                return "Davis in a staff list"
+        except Exception:
+            pass
+    return ""
 
 
 # ----------------------------------------------------------------------------- slack loop (conversational)

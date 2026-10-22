@@ -1,6 +1,6 @@
 # September 2026 Employee Sales Rankings — Working File (native)
 
-Run: 2026-10-19 09:58 ET (render)
+Run: 2026-10-21 14:03 ET (render)
 Metric: Retail Sales Excluding Fees | Source files: 2026-09-30_<STORE>_employee-activity-range.csv (reused full-month files already on disk)
 Roster: hr/ROSTER.json
 
@@ -13,6 +13,7 @@ Roster: hr/ROSTER.json
 - Davon Camber — not on the current team
 - Emma Langford — not on the current team
 - Free1 Valley Pawn — shared / service login
+- Jacob Cox — not on the current team
 - Logan Dean — not on the current team
 - Lottie Obst — not on the current team
 - Michael Chambers — not on the current team
@@ -37,7 +38,6 @@ Roster: hr/ROSTER.json
 | 8 | Robert Swagger | CUL | $13,217.24 |
 | 9 | Joseph Epperly | ROA | $8,289.97 |
 | 10 | Camden Ahern | HAR | $3,213.77 |
-| 11 | Jacob Cox | ROA | $1,110.18 |
 
 Company Total (all logins): $266,459.60
 
@@ -49,4 +49,4 @@ Company Total (all logins): $266,459.60
 - Waynesboro: $59,759.99
 - Lexington: $33,038.82
 
-Workbook: /Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/test_output/monthly_employee_rankings/Employee Sales Rankings/Employee_Sales_Rankings_September_2026_v2.xlsx
+Workbook: /sessions/awesome-intelligent-goldberg/mnt/Projects/Valley Pawn OS/fleet/test_output/monthly_employee_rankings/Employee Sales Rankings/Employee_Sales_Rankings_September_2026_v2.xlsx

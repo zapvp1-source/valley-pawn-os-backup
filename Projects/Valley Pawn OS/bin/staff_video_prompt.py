@@ -120,6 +120,12 @@ def mentions():
     try:
         for e in json.load(open(ROSTER)).get("employees", []):
             if e.get("title") == "Manager" and e.get("department") in ids and e.get("slack_id"):
+                try:   # fleet-wide rule 2026-10-21: current Gusto staff only, never a Davis (bin/vp_people.py)
+                    import vp_people
+                    if not vp_people.is_reportable(e.get("name")):
+                        continue
+                except Exception:
+                    pass
                 ids[e["department"]] = e["slack_id"]
     except (OSError, ValueError):
         pass

@@ -88,6 +88,24 @@ def keychain(svc):
     return v or None
 
 
+GUARD = os.path.join(OS_DIR, "fleet", "state", "vsp_login_guard.json")
+
+
+def load_guard():
+    try:
+        return json.load(open(GUARD))
+    except Exception:
+        return {}
+
+
+def save_guard(g):
+    try:
+        os.makedirs(os.path.dirname(GUARD), exist_ok=True)
+        json.dump(g, open(GUARD, "w"), indent=1)
+    except OSError:
+        pass
+
+
 def money(s):
     return float(re.sub(r"[^\d.\-]", "", s or "") or 0)
 
@@ -104,10 +122,66 @@ def login(page):
     if btn.count() == 0:
         raise RuntimeError("no login button on %s" % title)
     pw = page.locator("input[type=password]").first
-    if pw.count() and not pw.input_value():
-        time.sleep(3)  # give Chrome autofill a moment
-    if pw.count() and not pw.input_value():
-        raise RuntimeError("password not autofilled")
+    if pw.count() == 0:
+        raise RuntimeError("no password field on %s" % title)
+    # Two login pages exist: the portal home box, and AppsLocalLogin.jsp where #usernameField is READONLY and
+    # already carries X009686 ("Not X009686? Log Out"). Only type the name into an editable, empty box.
+    user = page.locator("#usernameField, input[name=usernameField], input[type=text]:visible").first
+    def set_user():
+        try:
+            if user.count() and user.is_editable() and not user.input_value():
+                user.fill("X009686")  # the login name is not a secret
+        except Exception:
+            pass
+    set_user()
+    # Chrome autofills the saved password but HIDES its value from page scripts until a real user gesture
+    # (2026-10-21: input_value() read '' on a correctly autofilled field -> false "not autofilled").
+    # A Playwright click is a trusted gesture; then accept either a readable value or the :autofill state.
+    def filled():
+        try:
+            return bool(pw.input_value()) or pw.evaluate(
+                "e => { try { return e.matches(':autofill') } catch (x) { return e.matches(':-webkit-autofill') } }")
+        except Exception:
+            return False
+    # 2026-10-21: two LOGIN_FAILED on AppsLocalLogin.jsp — its read-only username box SHOWS X009686 as a placeholder
+    # but carries an EMPTY value, so the form posts no user name. Never submit unless the box really holds X009686:
+    # take the page's own "Not X009686? Log Out" link (no login attempt) to get the clean form, then type the name.
+    try:
+        if user.count() and user.input_value().strip().upper() != "X009686":
+            lo = page.locator("a:has-text('Log Out')").first
+            if lo.count():
+                lo.click()
+                page.wait_for_load_state("domcontentloaded", timeout=60000)
+                time.sleep(3)
+                if PORTAL not in page.url:
+                    page.goto(PORTAL, wait_until="domcontentloaded", timeout=60000)
+                    time.sleep(2)
+                user = page.locator("#usernameField, input[name=usernameField], input[type=text]:visible").first
+                pw = page.locator("input[type=password]").first
+                btn = page.locator("button:has-text('Login'), button:has-text('Log In'), input[type=submit]").first
+            if user.count() and user.is_editable():
+                user.fill("X009686")
+    except Exception:
+        pass
+    if not (user.count() and user.input_value().strip().upper() == "X009686"):
+        raise RuntimeError("username box not filled; no login attempted")
+    kp = keychain("vp-vsp-portal-password")  # PRIMARY (2026-10-21): stored by Joshua via setup_autopay.sh --password
+    if kp:
+        set_user()
+        pw.fill(kp)
+    else:
+        for _ in range(3):
+            if filled():
+                break
+            try:
+                if user.count():
+                    user.click()
+                pw.click()
+            except Exception:
+                pass
+            time.sleep(2)
+        if not filled():
+            raise RuntimeError("password not autofilled")
     btn.click()
     page.wait_for_load_state("domcontentloaded", timeout=60000)
     time.sleep(3)
@@ -115,6 +189,12 @@ def login(page):
     if "Change Password" in t:
         raise RuntimeError("CHANGE_PASSWORD")
     if "Login failed" in page.inner_text("body"):
+        try:
+            d = os.path.join(OUT, dt.datetime.now(ET).strftime("%Y-%m"))
+            os.makedirs(d, exist_ok=True)
+            page.screenshot(path=os.path.join(d, "login-failed-%s.png" % dt.datetime.now(ET).strftime("%d%H%M")))
+        except Exception:
+            pass
         raise RuntimeError("LOGIN_FAILED")
     if "Logged In As" not in page.inner_text("body"):
         raise RuntimeError("unexpected page after login: %s" % t)
@@ -271,6 +351,17 @@ def main():
     month_file = os.path.join(OUT, ym + ".json")
     result = {"run_at": now.isoformat(), "mode": "pay" if pay else ("read" if read_only else "stage"),
               "dry_run": dry, "stores": {}, "total_open": 0.0}
+    # 2026-10-22 LOGIN GUARD: 10/21 logged LOGIN_FAILED three times (09:26, 09:56, 10:18) — three separate
+    # invocations, each "one try", but VSP locks the account after repeated failures. Once a login has failed
+    # today, every later run today exits BEFORE opening the browser: no login attempt, no DM, no new ledger row.
+    # Cleared automatically tomorrow, or by deleting fleet/state/vsp_login_guard.json after re-saving the password.
+    guard = load_guard()
+    if guard.get("date") == now.strftime("%Y-%m-%d"):
+        guard["skipped"] = guard.get("skipped", 0) + 1
+        save_guard(guard)
+        log("LOGIN GUARD: a VSP login already failed today (%s at %s) — not attempting another; skipped %d run(s) today"
+            % (guard.get("reason"), guard.get("at"), guard["skipped"]))
+        return 0
     import vp_browser
     from playwright.sync_api import sync_playwright
     with sync_playwright() as p:
@@ -281,14 +372,17 @@ def main():
                 login(page)
             except RuntimeError as e:
                 msg = str(e)
+                save_guard({"date": now.strftime("%Y-%m-%d"), "at": dt.datetime.now(ET).strftime("%H:%M ET"),
+                            "reason": msg, "skipped": 0})
                 if msg == "CHANGE_PASSWORD":
-                    dm("The State Police billing site is asking for a new password before it will let anyone in. "
-                       "Please open ebilling.vsp.virginia.gov in the automation Chrome (vp_signin_front.sh), set the new "
-                       "password and let Chrome save it. I'll pick the gun-check fees up on the next run.")
+                    dm("The State Police billing site wants a new password before it will let anyone in. Sign in at "
+                       "ebilling.vsp.virginia.gov in your Chrome and set a new one, then paste this in Terminal so the "
+                       "monthly payment knows it: bash ~/Documents/Claude/Projects/Compliance/vsp/setup_autopay.sh --password")
                     ledger("VSP portal forced a password change; waiting on Joshua", "yes, set new VSP password")
                 else:
-                    dm("I couldn't get into the State Police billing site this month (one try only, so the account "
-                       "doesn't lock). Please sign in once on the automation Chrome so the saved password is current.")
+                    dm("I couldn't sign in to the State Police billing site (one try only, so the account doesn't lock). "
+                       "If the password changed, paste this in Terminal with the current one: "
+                       "bash ~/Documents/Claude/Projects/Compliance/vsp/setup_autopay.sh --password")
                     ledger("VSP login failed: %s" % msg, "yes, re-save VSP password")
                 result["error"] = msg
                 json.dump(result, open(month_file, "w"), indent=1)

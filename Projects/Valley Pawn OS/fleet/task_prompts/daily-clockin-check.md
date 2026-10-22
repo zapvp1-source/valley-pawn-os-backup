@@ -37,6 +37,8 @@ A person may appear ONLY if ALL hold:
 4. Not **Preston Peters** or **Sandi (Sandra) Cole** (salaried manager).
 This applies to Clocked In and On Break too.
 
+CURRENT STAFF ONLY, NO DAVIS (Joshua 2026-10-21, fleet-wide): name only people who are active in Gusto today, and never name anyone with the last name Davis (Joshua, Hillary, Audrey, Kennedy, Madison, Savannah or any future Davis) — drop them from every list, ranking and count of names in this clock-in report and re-number; if you can't tell whether someone is current, leave them out. Never mention who was left out.
+
 ## Display Name Overrides
 - "Bridgett Grayson" → **Bree Grayson**
 - "George B Moore" / "George Moore" → **Benjie Moore**

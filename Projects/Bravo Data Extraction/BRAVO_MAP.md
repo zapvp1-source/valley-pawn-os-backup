@@ -1,8 +1,8 @@
 # Bravo POS — Complete Screen & Report Map
 
-_Generated 2026-10-20 22:32 by `bravo_map_compile.py` from BravoMapper's read-only crawl. Do not hand-edit; add human notes to the `bravo-context` skill instead._
+_Generated 2026-10-21 22:32 by `bravo_map_compile.py` from BravoMapper's read-only crawl. Do not hand-edit; add human notes to the `bravo-context` skill instead._
 
-**Status:** IN PROGRESS (resumes nightly) · 67 steps mapped · 0 steps could not be mapped · last crawler state: `2026-10-20 22:31:40 ABORT no-dashboard after R_Aged_Inventory_Summary`
+**Status:** IN PROGRESS (resumes nightly) · 68 steps mapped · 0 steps could not be mapped · last crawler state: `2026-10-21 22:31:44 ABORT no-dashboard after R_Cost_Adjustment`
 
 Raw data: `output/bravo_map/` — `screens/` (full UI tree per screen), `shots/` (screenshots), `lists/` (report lists, Custom Reports criteria / columns / saved reports), `index.tsv`, `RUN_LOG.md`.
 
@@ -629,6 +629,15 @@ Screenshot: `output/bravo_map/shots/R_Aged_Inventory_Summary.png`
 - **Fields:** BravoDateEdit
 - **Buttons:** Cancel; Done `btnDone`; Preview; Print
 
+### Report: Cost Adjustment
+_key `R_Cost_Adjustment` · captured 2026-10-21 22:30:40 · Bravo     2026.6.0.79     VALLEY PAWN - WAYNESBORO (WAY)_
+Screenshot: `output/bravo_map/shots/R_Cost_Adjustment.png`
+
+- **Labels:** Reporting Dates; Group By; Include Detail; Ok; Cancel; Done; Preview; Print; 8300 Audit; BRAVO Business Dashboard; Deposits and Paid Outs Spreadsheet; Disbursement Journal; End of Day; End of Day - Consolidated; End of Month; Fortis Alignment; General Exception; Inter-Store Cash Transfer; Large Cash In Transactions; Large Cash Out Transactions; Safe Register Journal; Session Journal; Store Register Journal; Till Cash Balance; Till Register Journal; Transfers; Closing Reports; Aged Inventory Summary; Cost Adjustment; Inventory Base; Inventory by Location; Item History; Lost Stolen or Damaged; Vendor Purchase; Vendor Repairs; Inventory Reports; Loan Base; Loan Disposition; Loan History; Loan Journal … +23 more
+- **Fields:** BravoDateEdit; BravoComboBox
+- **Checkboxes:** Include Detail
+- **Buttons:** Cancel; Done `btnDone`; Preview; Print
+
 ## Dashboard task tiles
 
 ### Dashboard tile: Layaways Overdue
@@ -777,3 +786,5 @@ Screenshot: `output/bravo_map/shots/T_Web_Offers.png`
 - 2026-10-19 22:32 mode=full end='2026-10-19 22:31:40 ABORT no-dashboard after R_Transfers' steps_done_total=66 (+1 this run) failed_keys=19 health=PASS CUL
 - 2026-10-20 22:32 recovered from '2026-10-20 22:31:40 ABORT no-dashboard after R_Aged_Inventory_Summary' (health=PASS CUL)
 - 2026-10-20 22:32 mode=full end='2026-10-20 22:31:40 ABORT no-dashboard after R_Aged_Inventory_Summary' steps_done_total=67 (+1 this run) failed_keys=20 health=PASS CUL
+- 2026-10-21 22:32 recovered from '2026-10-21 22:31:44 ABORT no-dashboard after R_Cost_Adjustment' (health=PASS CUL)
+- 2026-10-21 22:32 mode=full end='2026-10-21 22:31:44 ABORT no-dashboard after R_Cost_Adjustment' steps_done_total=68 (+1 this run) failed_keys=21 health=PASS CUL

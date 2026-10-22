@@ -89,7 +89,9 @@ def main():
         items.append({"id": f"mp-{month}-{s.lower()}-gbp", "routing_tier": "store-local", "store_keys": [f"GBP_{s}"],
                       "caption": GBP[v].format(store=s, link=link(f"gbp_{s.lower()}", month).replace("https://", "")),
                       "media_ids": [ids[s.lower()]], "scheduled_at": iso, "status": "approved"})
-    man = HERE / "manifests" / f"manifest_{month}.json"
+    # 2026-10-21 (Nov 1 rehearsal): a --dry-run used to OVERWRITE the real manifest_<month>.json with "DRY" media ids
+    # (it did so for 2026-11 after November was already scheduled). Dry runs now write their own file.
+    man = HERE / "manifests" / (f"manifest_{month}_dryrun.json" if a.dry_run else f"manifest_{month}.json")
     man.parent.mkdir(exist_ok=True)
     man.write_text(json.dumps({"batch_id": f"mobilepawn-{month}", "items": items}, indent=2))
     cmd = [sys.executable, str(SOCIAL / "vp_social_publisher.py"), str(man)] + (["--dry-run"] if a.dry_run else [])

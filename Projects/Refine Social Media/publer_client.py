@@ -355,22 +355,36 @@ class PublerClient:
         # and logged as a "warn", not retried). Retry is scoped to THIS read-only
         # GET only -- never applied to schedule_post/_request generally, so a
         # retried call can never cause a duplicate publish.
-        last_err: PublerError | None = None
-        for attempt in range(3):
-            try:
-                data = self.get(f"/analytics/{account_id}/post_insights", params=params)
-                break
-            except PublerError as e:
-                last_err = e
-                if attempt < 2:
-                    time.sleep(3 * (attempt + 1))
-        else:
+        # 2026-10-21: the endpoint returns 10 posts per page and ignores `limit`; it DOES honour `page`
+        # (verified live: page=0 -> newest 10, page=1 -> next 10, ... until an empty/repeat page; `total`
+        # matched the walked count on all 10 accounts over 90 days). Before this, every caller saw only the
+        # newest 10 posts per account. Walk every page; stop on empty/repeat or when `total` is reached.
+        def _one(pg: int):
+            last_err: PublerError | None = None
+            for attempt in range(3):
+                try:
+                    return self.get(f"/analytics/{account_id}/post_insights", params=dict(params, page=str(pg)))
+                except PublerError as e:
+                    last_err = e
+                    if attempt < 2:
+                        time.sleep(3 * (attempt + 1))
             raise last_err  # type: ignore[misc]
 
-        if isinstance(data, dict):
-            # Publer typically wraps as {posts: [...], total: N}
-            return data.get("posts") or data.get("data") or []
-        return data or []
+        out: list[dict] = []
+        seen: set = set()
+        for pg in range(0, 200):   # page 0 = newest 10, page 1 = next 10 (0 and 1 are DIFFERENT pages)
+            data = _one(pg)
+            rows = (data.get("posts") or data.get("data") or []) if isinstance(data, dict) else (data or [])
+            new = [r for r in rows if r.get("id") not in seen]
+            if not new:
+                break
+            for r in new:
+                seen.add(r.get("id"))
+            out.extend(new)
+            total = data.get("total") if isinstance(data, dict) else None
+            if isinstance(total, int) and len(out) >= total:
+                break
+        return out
 
     # --- convenience batch publish ---
 

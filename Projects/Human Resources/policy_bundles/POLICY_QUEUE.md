@@ -1,0 +1,33 @@
+# Policy Queue — items waiting for the next Policy Day
+
+Scope: ALL company policies and guidelines, every department (see POLICY_CADENCE.md). Status: draft → approved → update YYYY-MM → sent PU-YYYY-MM → closed. `held` = Joshua said wait.
+
+| Added | Item | Area | Status | Packet | Notes |
+|---|---|---|---|---|---|
+| 2026-10-21 | P&P Manual v2026.9 + Employee Handbook v2026.8 (hours, greeting, account details, police calls, discounts, warranty/returns, counterfeits, past-due day 1, under-21, straw purchases) | Operations / HR | approved-pending | 2026-11 (Thu 11/5) | Rides with acknowledgment HR-2026-04 Rev2, which also covers every standalone policy already sent in Gusto (clears the unsigned backlog) |
+| 2026-10-21 | Firearm Sales — Stop the Wrong Sale | Firearms | approved-pending | 2026-11 (Thu 11/5) | VP-CP-03 (HB21 reasonable controls) |
+| 2026-09-28 | Account Details by Phone & Text (revised to match P&P v2026.9) | Customers & phones | approved-pending | 2026-11 (Thu 11/5) | Original 10/5 start never went out |
+| 2026-09-17 | eBay Listing-Age Standard (revised: 90 / 120 / 150) | eBay | approved-pending | 2026-11 (Thu 11/5) | Joshua's 9/17 rule; replaces the 30/60/90 version all staff signed 8/5 |
+| 2026-10-13 | Reloans — Check It Like a New Loan | Loans | draft — needs Joshua yes | 2026-11 | Preston's ask from the pawn-walk feedback loop |
+| 2026-09-29 | Our Mission & The Valley Pawn Code | Culture | approved (adopted 2026-09) | 2026-11 | Read-only page; posters separate |
+| 2026-09-28 | Phone & text scripts counter card | Customers & phones | draft | — | Counter card, not signed; hand out with the packet if approved |
+| 2026-10-21 | Bonuses — Standards First (standard-KPI earning condition, CEO approval, store suspension by written notice for future months; Handbook Bonus Pay + P&P 01.08 revised in place) | Pay | approved (Joshua 10/21) | 2026-11 (Thu 11/5) | First bonus month governed: Dec 2026. Source of truth bonus_rules.json management_rights; engine applies Bonus Program/management_actions.json. Separate from the held full program policy (Jan 2027) |
+| 2026-09-06 | Bonus Program policy | Pay | held | 2027-01 | Joshua 9/17: new program launches in January. Policy file BONUS_POLICY_2026-08.md regenerated 10/21 (miss rates now 2%/4%, management-rights section added); regenerate again from bonus_rules.json for the January regime |
+| 2026-09-02 | Drug-Free Workplace & Firearms Safety Testing | HR / Firearms | held | — | Joshua 9/2: "do not send anything to field yet"; Checkr panel still excludes THC |
+| 2026-09-28 | Age-based discount ladder (≤30d 10% … 1yr+ 50%) | Pricing | draft | — | Waiting on Preston to confirm numbers |
+| 2026-09-29 | Store internet-outage "Crash Package" | Operations | plan only | — | Nothing drafted yet |
+| 2026-10-21 | Training Happens at the Store (paid, on the clock; no home training) | HR / Training | approved (decision 10/21, newest policy wins) | 2026-12 | Replaces at-home wording in HR-2026-10 and OB-2026-01 |
+| 2026-10-21 | Sales Training — Week One (Academy 7.2, 7.3, 7.8–7.13, 7.15 + day-7 role-play) — rewrite of HR-2026-10 | Training | draft | 2026-12 | NRF version is stale |
+| 2026-10-21 | New Hire Onboarding Checklist OB-2026-01 Rev3 (Academy, store training) | HR | draft | 2026-12 | Managers' form; not a staff signature |
+| 2026-10-21 | Valley Pawn Academy launch — all staff enrolled by level | Training | approved | 2026-12 | Needs TalentLMS Grow plan before staff launch |
+| 2026-10-08 | Manager transaction limits (raised 10/8, told verbally) — write into P&P | Operations | approved (in practice) | 2026-12 | Get the numbers from Preston at preview |
+| 2026-10-21 | VP-CP-07 Monthly Store Compliance Checklist (store managers, due the 15th) | Compliance (managers) | approved-pending | 2026-12 | Goes in the managers' section; first due 12/15 |
+| 2026-10-21 | Virginia accommodation-rights notice — store poster + new-hire notice (Va. Code § 2.2-3905.1) | HR / legal | draft | 2026-12 | Handbook already covers the policy itself |
+| 2026-10-21 | Customer Privacy Notice handout (VP-CP-05A, GLBA) — "hand with every first pawn" | Compliance | draft — counsel review | 2026-12 or 2027-01 | Printed stock per store |
+| 2026-10-21 | AML red-flag training (VP-CP-02 §8) as an Academy lesson | Compliance / Training | not built | 2027-01 | After AML program signed |
+| 2026-10-21 | 4473 / straw-purchase refusal training + store refusal log (VP-CP-03 §6) | Compliance / Firearms | not built | 2027-01 | After firearms program signed |
+| 2026-10-21 | MLA covered-borrower check + disclosure script (VP-CP-04) | Compliance / Loans | not built | 2027-01 | Bravo MLA lookup to verify first |
+| 2026-10-21 | Annual compliance training day (4473, pawn/PM records, AML, MLA, privacy) | Compliance | not built | 2027-02 | — |
+| 2026-10-21 | #ask-goldilocks open to all staff (replaces #ask-handbook) | Operations | approved | before 2026-11-05 | Add members; the update and the ack point staff there |
+| 2026-10-21 | Mutual Arbitration Agreement | HR / legal | held — counsel | — | Not releasable |
+| 2026-10-21 | Compliance programs VP-CP-01…07 | Compliance (management) | approved | not a staff packet item | Management documents; staff see them through the one-pagers and the monthly checklist |

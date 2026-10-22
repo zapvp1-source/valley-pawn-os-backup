@@ -35,6 +35,8 @@ _FORBIDDEN = [
     (re.compile(r"full circle finance", re.I), "never the legal entity name customer-facing"),
     (re.compile(r"\b(gun|guns|firearm|firearms|rifle|pistol|handgun|shotgun|ammo|ammunition)\b", re.I), "no firearms on social"),
     (re.compile(r"\b(fast cash|instant cash|no credit check|quick cash)\b", re.I), "predatory phrasing"),
+    # 2026-10-21 (Joshua): the $100/month giveaway is PAUSED -- no social post may promote it until he restarts it.
+    (re.compile(r"giveaway|win \$?100|\$100 every month|sweepstakes", re.I), "giveaway is paused (Joshua 2026-10-21)"),
 ]
 _PHONE = re.compile(r"\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}")
 # 2026-10-01 (Joshua): ONLY the 6-day stores close at 5pm, and ONLY on Saturday (Culpeper & Roanoke; Waynesboro from 2026-10-14).

@@ -27,6 +27,9 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import w3b_lib as L  # noqa: E402
+import re  # noqa: E402
+import vp_people  # noqa: E402  fleet-wide rule 2026-10-21: current staff only, never a Davis
+from ceo_monthly_scorecard import scrub_people, former_named, _METRIC_WORDS  # noqa: E402  (same line scrub as the CEO monthly)
 
 TASK = "monthly-eom-recap"
 REF = os.path.join(L.OS_DIR, "fleet", "state", "w3b_reference", "eom_recap_2026-09.json")
@@ -52,7 +55,7 @@ CHANNELS = {
 SYSTEM = ("You write Valley Pawn's monthly 'Month in Review' Slack posts from ONE channel's own posts. Use only "
           "numbers that appear in the posts given; never estimate, never fill a gap. Plain everyday language. Never "
           "name software, systems, tools, files, reports, automations, Slack channels or 'pulled automatically'. "
-          "No signature footer.")
+          "No signature footer. Name only current employees, and never name anyone with the last name Davis.")
 
 EXTRACT = """Channel #{name}. Below are every message posted in it during {label} (oldest first; each starts with its ET date).
 List the REPORT posts — the recurring automated summaries the channel exists for (weekly/daily reports, published blog posts,
@@ -123,6 +126,43 @@ def gate(cadence, reports, first, last):
     return len(weeks) >= 3, "%d weekly posts" % len(weeks)
 
 
+_PAIR = re.compile(r"\b([A-Z][a-z'.-]+) ([A-Z][a-zA-Z'.-]+)\b")
+_CAL = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November",
+        "December", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Month", "Review",
+        "Black", "Labor", "Memorial", "Day", "Valley", "Virginia", "Facebook", "Instagram", "Google", "Best", "Offer"}
+
+
+def drop_people_lines(text, source):
+    """2026-10-21: drop any line of a written recap that names a Davis, or a 'First Last' pair that looks like a person
+    (first name is a known staff/former first name) and is not current staff. Log-only (vp_people dropped.log)."""
+    firsts = {vp_people._tokens(e["name"])[0].capitalize() for e in vp_people.current_staff()}
+    firsts |= {(vp_people._tokens(n)[:1] or [""])[0].capitalize() for n in _known_people()}
+    out, dropped = [], []
+    for ln in text.split("\n"):
+        if vp_people.mentions_davis(ln):
+            dropped.append((ln[:60], "Davis family")); continue
+        bad = former_named(ln)
+        for a, b in ([] if bad else _PAIR.findall(ln)):
+            if a in _CAL or b in _CAL or a in _METRIC_WORDS or b in _METRIC_WORDS or a in L.NAMES.values() or b in L.NAMES.values():
+                continue
+            if a in firsts and not vp_people.is_reportable("%s %s" % (a, b)):
+                bad = "%s %s" % (a, b); break
+        if bad:
+            dropped.append((bad, vp_people.reason(bad) or "not current")); continue
+        out.append(ln)
+    vp_people._log(source, dropped)
+    return "\n".join(out)
+
+
+def _known_people():
+    """First names of everyone Bravo has ever listed (incl. TERMINATED) — the former-staff side of the line check."""
+    try:
+        d = json.load(open(vp_people.BRAVO_USERS_PATH))
+        return [u.get("name") or "" for u in d.get("users", [])]
+    except (OSError, ValueError):
+        return []
+
+
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     render = "--render" in sys.argv
@@ -152,7 +192,13 @@ def main():
         prev_first = (first - dt.timedelta(days=1)).replace(day=1)
         prior = [L.text_of(m) for m in L.history(ch, L.ts_of(first), L.ts_of(first + dt.timedelta(days=12), end=True))
                  if "Month in Review" in L.text_of(m) and prev_first.strftime("%B") in L.text_of(m)]
-        blob = "\n\n".join("[%s] %s" % (et_date(m["ts"]).isoformat(), L.text_of(m)[:1800]) for m in msgs if L.text_of(m).strip())
+        try:
+            blob = "\n\n".join("[%s] %s" % (et_date(m["ts"]).isoformat(), scrub_people(L.text_of(m)[:1800], TASK))
+                                for m in msgs if L.text_of(m).strip())
+        except vp_people.RosterHold as e:
+            rows.append((name, "skipped-roster", str(e)))
+            L.ledger(TASK, "#%s Month in Review for %s was held: the current-staff list could not be read" % (name, label)) if not render else None
+            continue
         blob = blob[-90000:]
         if not blob:
             rows.append((name, "skipped-gate", "0 posts"))
@@ -195,12 +241,13 @@ def main():
                     rows.append((name, "skipped-verify", "; ".join(v.get("problems") or [])[:200]))
                     L.ledger(TASK, "#%s Month in Review for %s was held (figures did not check out)" % (name, label)) if not render else None
                     continue
+        text = drop_people_lines(text, TASK)   # never a Davis / former employee (2026-10-21)
         if bad or not text.startswith(":date:"):
             rows.append((name, "skipped-rule16", ",".join(bad) or "shape"))
             L.ledger(TASK, "#%s Month in Review for %s was held (wording check)" % (name, label)) if not render else None
             continue
         sent = L.post(TASK, ch, text, render, label=name)
-        rows.append((name, ("RENDERED" if render else "POSTED") if sent else "send-failed", cnt + ("; duplicate exists (render ignores)" if dup else "")))
+        rows.append((name, ("RENDERED" if render else ("POSTED" if sent is True else "DRY-RUN (diverted, not posted)")) if sent else "send-failed", cnt + ("; duplicate exists (render ignores)" if dup else "")))
     table = "\n".join("| #%s | %s | %s |" % r for r in rows)
     print(table)
     if not render:

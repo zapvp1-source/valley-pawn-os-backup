@@ -103,6 +103,11 @@ def main():
     active = set()
     try:
         active = {e.get("slack_id") for e in json.load(open(ROSTER))["employees"] if e.get("slack_id")}
+        # fleet-wide rule 2026-10-21 (bin/vp_people.py): current non-Davis staff only; stale roster (>2 d) = hold
+        sys.path.insert(0, BIN)
+        import vp_people
+        active = {e.get("slack_id") for e in vp_people.current_staff()
+                  if e.get("slack_id") in active and vp_people.is_reportable(e.get("name"))}
     except Exception as e:
         print("roster unreadable (%s) — refusing to guess who is employed" % e)
         if not render:

@@ -13,17 +13,17 @@ What runs natively (no Gusto):
   7  DM = out/<M>/dm_payout.txt + the qualifier table in a code block + the SKILL's closing line
   8  RUN_LOG.md entry
   4  the roster (changed 2026-10-20, Joshua's rule: people no longer employed get no bonus, so eligibility = the
-     CURRENTLY employed staff and no former-staff history is needed). WHO is employed + their store = the active roster
-     the Mac writes daily, fleet/state/clockin/roster.json (bin/clockin_check.py, Gusto time-tracking Departments page).
-     Older than 2 days at run time (its "date", else its mtime) = HOLD: one ledger row, no DM, no payout. The engine
-     also needs a title (Manager / associate / Market Manager / excluded) and the Gusto uuid for the payroll lines;
-     those are joined by name from hr/ROSTER.json (Gusto active roster, roster-refresh). A titled Manager's hire date
-     (manager full-month rule, unchanged) comes from the earlier Gusto pulls in Bonus Program/data/*/roster.json.
-     HOLD (one ledger row) if: a store person on the clock-in roster has no title/uuid in hr/ROSTER.json; hr/ROSTER.json
-     is older than 7 days; a Manager has no known hire date; or (after collect) a Bravo seller with gross profit matches
+     CURRENTLY employed staff and no former-staff history is needed). Source changed 2026-10-21 (the Mac clock-in that
+     wrote fleet/state/clockin/roster.json was retired): WHO is employed, their store, title and Gusto uuid all come from
+     hr/ROSTER.json = Gusto list_employees(terminated=false), rewritten daily 06:15 by the cloud "Staff roster refresh
+     (Gusto -> Slack)" task. Gusto active = employed. Older than 2 days at run time (its "generated_at", else its
+     mtime) = HOLD: one ledger row, no DM, no payout. A titled Manager's hire date (manager full-month rule,
+     unchanged) comes from the earlier Gusto pulls in Bonus Program/data/*/roster.json.
+     HOLD (one ledger row) if: hr/ROSTER.json is unreadable, stale or lists too few store people; a store person has
+     no Gusto uuid; a Manager has no known hire date; or (after collect) a Bravo seller with gross profit matches
      a current employee by LAST NAME ONLY — without former staff in the roster the engine's last-name fallback could
      otherwise pay a current employee for a former employee's sales. Sellers not on the current roster are not paid
-     (the engine lists them under Gaps as "not in Gusto roster").
+     (the engine lists them under Gaps as "not on the current staff roster").
      The written file is data/<M>/roster.json (any earlier one is kept as roster.json.bak-<stamp>).
 --render: runs `close` (not collect) on a COPY of Bonus Program (fleet/test_output/bonus_close_render_<M>/), so the real
 out/<M> is never touched; prints the DM. For 2026-09 that reproduces the 10/15 close.
@@ -64,13 +64,9 @@ def reviews(month, ddir, render):
     return "reviews %s" % {k: v for k, v in out.items() if k != "_source"}
 
 
-CLOCKIN_ROSTER = os.path.join(L.OS_DIR, "fleet", "state", "clockin", "roster.json")
-HR_ROSTER = os.path.join(L.OS_DIR, "hr", "ROSTER.json")
+HR_ROSTER = os.path.join(L.OS_DIR, "hr", "ROSTER.json")   # Gusto ACTIVE roster (cloud roster refresh, daily 06:15)
+ROSTER_MAX_DAYS = 2
 STORE_DEPTS = set(L.NAMES.values())
-
-
-def _n(s):
-    return "".join(c for c in (s or "").lower() if c.isalpha())
 
 
 def _engine():
@@ -80,29 +76,25 @@ def _engine():
 
 
 def build_roster(ddir, rules):
-    """Engine roster from the CURRENT staff only. Returns (problem or None, note)."""
-    today = L.now().date()
-    try:
-        ck = json.load(open(CLOCKIN_ROSTER))
-        people = ck.get("people") or {}
-    except Exception as e:
-        return "the clock-in staff roster could not be read (%s)" % type(e).__name__, ""
-    try:
-        asof = dt.date.fromisoformat(ck.get("date"))
-    except Exception:
-        asof = dt.date.fromtimestamp(os.path.getmtime(CLOCKIN_ROSTER))
-    age = (today - asof).days
-    if age > 2:
-        return "the clock-in staff roster is from %s (%d days old, limit 2), so it held rather than guess who is employed" % (asof, age), ""
-    if sum(1 for d in people.values() if d in STORE_DEPTS) < 5:
-        return "the clock-in staff roster lists too few store people to trust", ""
+    """Engine roster from the CURRENT staff only (Gusto active = employed). Returns (problem or None, note)."""
+    now = L.now()
     try:
         hr = json.load(open(HR_ROSTER))
-        hr_age = (dt.datetime.now(dt.timezone.utc) - dt.datetime.fromisoformat(hr["generated_at"])).days
+        emps = hr.get("employees") or []
     except Exception as e:
-        return "the staff titles file could not be read (%s)" % type(e).__name__, ""
-    if hr_age > 7:
-        return "the staff titles file is %d days old (limit 7)" % hr_age, ""
+        return "the Gusto staff roster could not be read (%s)" % type(e).__name__, ""
+    try:
+        gen = dt.datetime.fromisoformat(hr["generated_at"])
+        if gen.tzinfo is None:
+            gen = gen.replace(tzinfo=dt.timezone.utc)
+        asof = gen.astimezone(now.tzinfo).date() if now.tzinfo else gen.date()
+    except Exception:
+        asof = dt.date.fromtimestamp(os.path.getmtime(HR_ROSTER))
+    age = (now.date() - asof).days
+    if age > ROSTER_MAX_DAYS:
+        return "the Gusto staff roster is from %s (%d days old, limit %d), so it held rather than guess who is employed" % (asof, age, ROSTER_MAX_DAYS), ""
+    if sum(1 for e in emps if e.get("department") in STORE_DEPTS) < 5:
+        return "the Gusto staff roster lists too few store people to trust", ""
     hire = {}
     for m in sorted(os.listdir(os.path.join(BONUS, "data"))):
         p = os.path.join(BONUS, "data", m, "roster.json")
@@ -113,40 +105,34 @@ def build_roster(ddir, rules):
                         hire[e["uuid"]] = e["hire_date"]
             except Exception:
                 pass
-    idx = {}
-    for e in hr.get("employees", []):
-        parts = e["name"].split()
-        first, last = parts[0], " ".join(parts[1:])
-        for k in {_n(e["name"]), _n((e.get("preferred") or first) + last)}:
-            idx[k] = (e, first, last)
-    out, missing, nohire, notes = [], [], [], []
-    for name, dept in sorted(people.items()):
-        hit = idx.get(_n(name))
-        if not hit:
-            if dept in STORE_DEPTS:
-                missing.append("%s (%s)" % (name, dept))
-            else:
-                notes.append("%s (%s) not in the titles file — skipped" % (name, dept))
+    out, nouuid, nohire = [], [], []
+    for e in sorted(emps, key=lambda x: x.get("name") or ""):
+        parts = (e.get("name") or "").split()
+        if not parts:
             continue
-        e, first, last = hit
-        if e.get("department") != dept:
-            notes.append("%s: clock-in store %s, titles file %s — clock-in used" % (name, dept, e.get("department")))
+        first, last = parts[0], " ".join(parts[1:])
+        dept = e.get("department") or ""
+        display = "%s %s" % (e.get("preferred") or first, last)
+        if not e.get("gusto_uuid"):
+            if dept in STORE_DEPTS:
+                nouuid.append("%s (%s)" % (display, dept))
+            continue
         hd = hire.get(e["gusto_uuid"])
         if dept in STORE_DEPTS and e.get("title") in rules["eligibility"]["manager_titles"] and not hd:
-            nohire.append(name)
+            nohire.append(display)
         out.append({"uuid": e["gusto_uuid"], "first_name": first, "last_name": last,
-                    "preferred_first_name": e.get("preferred") or "", "display": name, "department": dept,
+                    "preferred_first_name": e.get("preferred") or "", "display": display, "department": dept,
                     "title": e.get("title") or "", "hire_date": hd, "terminated": False,
-                    "termination_date": None, "_source": "clock-in roster %s + hr/ROSTER.json title" % asof})
-    if missing:
-        return "store staff on the clock-in roster have no title in the staff titles file: %s" % ", ".join(missing), ""
+                    "termination_date": None, "_source": "hr/ROSTER.json (Gusto active) %s" % asof})
+    if nouuid:
+        return "store staff in the Gusto staff roster have no Gusto id: %s" % ", ".join(nouuid), ""
     if nohire:
         return "no hire date on file for manager(s) %s, so the full-month manager rule cannot be checked" % ", ".join(nohire), ""
     p = os.path.join(ddir, "roster.json")
     if os.path.exists(p):
-        shutil.copy2(p, p + ".bak-" + L.now().strftime("%Y%m%d-%H%M%S"))
+        shutil.copy2(p, p + ".bak-" + now.strftime("%Y%m%d-%H%M%S"))
     json.dump(out, open(p, "w"), indent=1)
-    return None, "roster: %d current staff from the clock-in roster dated %s%s" % (len(out), asof, ("; " + "; ".join(notes)) if notes else "")
+    return None, "roster: %d current staff from the Gusto active roster dated %s" % (len(out), asof)
 
 
 def lastname_only(ddir, rules):
@@ -173,6 +159,30 @@ def lastname_only(ddir, rules):
             if not exact and any(E.norm(e["last_name"]) == last for e in roster):
                 bad.append("%s %s (%s)" % (s, a["name"], code))
     return bad
+
+
+def payout_people_check(dm, gusto_csv):
+    """Fleet-wide rule 2026-10-21 (bin/vp_people.py): every PAYEE named in the payout DM / Gusto lines must be a
+    current, non-Davis employee. Returns the offending names (empty = fine). Gap lines (unpaid former sellers) are
+    not payees and are left as the engine writes them. RosterHold -> reported as a problem (= hold)."""
+    import re
+    import vp_people
+    names = []
+    for line in dm.splitlines():
+        m = re.match(r"\s*[•\-]\s*(.+?)\s*\([^)]*\):\s*\$", line)
+        if m and "×" in line:
+            names.append(m.group(1))
+    if os.path.exists(gusto_csv):
+        import csv
+        for r in csv.DictReader(open(gusto_csv, newline="", encoding="utf-8-sig")):
+            n = " ".join(x for x in (r.get("first_name") or r.get("First Name") or "", r.get("last_name") or r.get("Last Name") or "") if x).strip() \
+                or (r.get("name") or r.get("Name") or r.get("employee") or "").strip()
+            if n:
+                names.append(n)
+    try:
+        return sorted({n for n in names if not vp_people.is_reportable(n)})
+    except vp_people.RosterHold as e:
+        return ["(roster: %s)" % e]
 
 
 def run(stage, month, root):
@@ -239,12 +249,18 @@ def main():
         return 1
     odir = os.path.join(root, "out", month)
     dm = open(os.path.join(odir, "dm_payout.txt")).read().strip()
+    bad = payout_people_check(dm, os.path.join(odir, "gusto_lines.csv"))
+    if bad:
+        # fleet-wide rule (Joshua 2026-10-21): never drop money silently — a Davis / non-current payee = HOLD
+        L.ledger(TASK, "the %s bonus close held: payout line(s) for %s are not current non-Davis staff per vp_people" % (label, "; ".join(bad)), "yes") if not render else None
+        print("HOLD (payee not reportable):", bad)
+        return 3
     q = open(os.path.join(odir, "slack_qualifiers.txt")).read().strip()
     if "```" not in q:
         q = "```\n%s\n```" % q
     text = "%s\n\n%s\n\n%s" % (dm, q, CLOSING)
     ok = L.post(TASK, L.JOSHUA, text, render, label="joshua")
-    if ok and not render:
+    if ok is True and not render:   # 'DRYRUN' = diverted by the publish guard, nothing logged as sent
         with open(os.path.join(BONUS, "RUN_LOG.md"), "a") as f:
             f.write("\n## %s — %s close (native bonus-month-close)\n%s\nDM sent to Joshua; nothing posted to the field.\n"
                     % (L.now().strftime("%Y-%m-%d %H:%M ET"), label, "\n".join("- " + n for n in notes)))

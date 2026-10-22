@@ -24,6 +24,7 @@ complete list is skipped entirely rather than partially evaluated.
 Usage: ebay_rules.py [--json]
 """
 import json, os, sys
+import re
 from datetime import datetime, timedelta, timezone
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from ebay_common import DATA_DIR, STORE_ORDER, CODE_RE
@@ -71,13 +72,20 @@ NO_OFFER_TITLE_HINTS = ("video game", "videogame", "playstation", " ps2", " ps3"
                         "gamecube", "sega", "n64", "wii ", "wii u", "steam deck")
 
 
+NO_OFFER_TITLE_RE = re.compile(
+    r"\b(?:video ?games?|playstation|ps[1-5]|psp|ps vita|xbox|nintendo|switch games?|game ?boy|"
+    r"gamecube|sega|n64|wii(?: u)?|steam deck)\b")
+
+
 def is_no_offer_item(it):
     """True when the item must never have Best Offer enabled (video games)."""
     cat = str(it.get("category_id") or it.get("PrimaryCategoryID") or "")
     if cat in NO_OFFER_CATEGORY_IDS:
         return True
     t = (it.get("Title") or "").lower()
-    return any(h in t for h in NO_OFFER_TITLE_HINTS)
+    # Word-boundary match (2026-10-21): the old substring test matched "wii " inside "WWII", so
+    # W. Britain WWII soldier figures and a WWII bayonet were treated as video games.
+    return bool(NO_OFFER_TITLE_RE.search(t))
 
 
 def load(name):

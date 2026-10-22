@@ -78,6 +78,10 @@ Script: `Valley Pawn OS/bin/ffl_guardian.py` · wrapper `ffl_guardian_run.sh` (v
 State: `Compliance/.ffl_guardian_state.json` (dedupe — every relay/reply keyed by message id)
 Log: `~/Library/Logs/valleypawn/ffl-guardian.log`
 
+| `com.valleypawn.ffl-drift` (added 2026-10-21) | Sun 2:40 AM ET | READ-ONLY: MasterFFL x5, GunNook, GunMade, FFLeasy vs `ffl_vendors.json` (hours/phone/fee/license/legacy name) -> `Compliance/FFL_DRIFT.md`. Script `bin/ffl_drift_check.py`. Sessions: read FFL_DRIFT.md before any FFL listing work. |
+
+**Any hours/phone/address change must also hit the FFL layer the same day** (directory-listing-push Step 4b): `ffl_vendors.json`, MasterFFL About text (all 5), MidwayUSA portal, Brownells email, then re-run the drift check.
+
 ### Cowork scheduled tasks (do not modify — hardened)
 | Task | When | Channel |
 |---|---|---|
@@ -109,7 +113,7 @@ Log: `~/Library/Logs/valleypawn/ffl-guardian.log`
 ## Other recurring FFL obligations
 
 - **Monthly gun audit** — each store submits its 4473 audit form by the **15th**; the task compiles
-  on the 16th. Trend sheet: `1sLid9zjLUkH-B8MOE5Fr_aemw35bxyAbtuUz4BTVA6s`.
+  on the 16th. Trend sheet: `16Tzy6C-JlmJ-XIo-IrVwUOqSmOekIQ46K1b3t2nggWo` (jdavis@fcfpawn.com, moved 2026-10-21; the old fullcirclepawn@gmail.com copy `1sLid9zjLUkH-B8MOE5Fr_aemw35bxyAbtuUz4BTVA6s` is retired).
 - **VSP NICS fee** — invoices post the 1st, pay from the 5th at https://ebilling.vsp.virginia.gov
   (user X009686). Full flow in `VSP-NICS-Fee-Payment-Runbook.md`. Two record corrections still
   pending with VSP: Culpeper billed under "Joshua Christian Davis" (should be the corporation);

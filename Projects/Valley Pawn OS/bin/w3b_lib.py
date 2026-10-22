@@ -156,6 +156,18 @@ def post(task, ch, text, render, label="main"):
         return True
     os.environ["VP_TASK"] = task
     vs = _slack()
+    # 2026-10-21 (Nov 1 rehearsal): a send the publish guard DIVERTS returns "DRYRUN" (truthy, so callers do not
+    # log a failure) instead of True. Callers advance state / write "sent" logs only on `ok is True`, so an
+    # isolation test can never move hr-policy-sync's since-date, overwrite the CEO carry-forward, or log a DM.
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import vp_dryrun
+        diverted = vp_dryrun.active_for(task)
+    except Exception:   # noqa: BLE001  (guard unreadable = live, same fail-open rule as vp_slack)
+        diverted = False
+    if diverted:
+        vs.post(ch, text)          # vp_slack diverts to fleet/test_output (no conversations.open needed)
+        return "DRYRUN"
     target = vs.dm_channel(ch) if ch.startswith("U") else ch
     try:
         vs.post(target, text)

@@ -481,8 +481,15 @@ def recipients(code):
     if not ok:
         return None
     emps = json.load(open(ROSTER)).get("employees") or []
-    return [e for e in emps if e.get("department") == NAMES[code] and e.get("slack_id")
-            and e["slack_id"] not in NEVER_DM]
+    rc = [e for e in emps if e.get("department") == NAMES[code] and e.get("slack_id")
+          and e["slack_id"] not in NEVER_DM]
+    # fleet-wide rule (Joshua 2026-10-21, bin/vp_people.py): current staff only, never a Davis
+    import vp_people
+    try:
+        rc, _dropped = vp_people.filter_rows(rc, "name", source="chekkit-unanswered-alert")
+    except vp_people.RosterHold:
+        return None   # existing path: roster not ok -> no store DMs + one ledger row
+    return rc
 
 
 def state(name):

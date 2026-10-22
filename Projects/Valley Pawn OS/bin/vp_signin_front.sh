@@ -44,11 +44,12 @@ if [ "$1" = "--test" ]; then
   exit 0
 fi
 # --only <name>: open just that site's tab (cloudcover|google|gusto|northwest) — e.g. a single re-sign-in
-TABS=("https://tune.cloudcovermusic.com/#/admin/zones" "https://home.google.com/" "https://app.gusto.com/" "https://www.northwestregisteredagent.com/login" "https://dashboard.chekkit.io/reviews" "https://ebilling.vsp.virginia.gov/")
+TABS=("https://tune.cloudcovermusic.com/#/admin/zones" "https://home.google.com/" "https://app.gusto.com/" "https://www.northwestregisteredagent.com/login" "https://dashboard.chekkit.io/reviews" "https://ebilling.vsp.virginia.gov/" "https://www.amazon.com/gp/css/order-history")
+# 2026-10-21: 7th tab = Amazon Business (Fullcirclepawn@gmail.com, tick "Keep me signed in") for bin/supply_order.py
 # 2026-10-20: 6th tab = VSP eReceivables (X009686) for the native gun-check fee payer (bin/vsp_fee_pay.py)
 # 2026-10-20 (comms review): 5th tab = Chekkit (jdavis@fcfpawn.com) for the native review-reply agent (bin/review_reply.py)
 if [ "$1" = "--only" ]; then
-  case "$2" in cloudcover) TABS=("${TABS[0]}");; google) TABS=("${TABS[1]}");; gusto) TABS=("${TABS[2]}");; northwest) TABS=("${TABS[3]}");; chekkit) TABS=("${TABS[4]}");; vsp) TABS=("${TABS[5]}");; esac
+  case "$2" in cloudcover) TABS=("${TABS[0]}");; google) TABS=("${TABS[1]}");; gusto) TABS=("${TABS[2]}");; northwest) TABS=("${TABS[3]}");; chekkit) TABS=("${TABS[4]}");; vsp) TABS=("${TABS[5]}");; amazon) TABS=("${TABS[6]}");; esac
 fi
 open -na "Google Chrome" --args --user-data-dir="$PROFILE" --no-first-run --no-default-browser-check --remote-debugging-port=$PORT --new-window "${TABS[@]}"
 sleep 3

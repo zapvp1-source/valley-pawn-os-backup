@@ -10,6 +10,11 @@ Usage:
     python3 build_scorm.py --all                           # every lessons/*/*.json (L1-L8 and M)
     python3 build_scorm.py --all --skip-validate           # build without the checks
     python3 build_scorm.py --validate-only                 # re-check what's in dist/
+    python3 build_scorm.py --all --allow-silent            # report (not fail) packages with missing narration
+
+--all runs validate_lessons.py (LESSON_SPEC checks) first and stops on violations unless --skip-validate.
+A package whose embedded narration has fewer lines than the player expects FAILS validation (2026-10-20);
+manifest_index.json carries narration_lines "n/m" and narration_complete per package.
 
 Outputs (all under academy/dist/):
     <id>_<slug>.zip          SCORM 1.2 package (upload this to TalentLMS)
@@ -42,12 +47,9 @@ DIST = os.path.join(ACADEMY, "dist")
 PREVIEW = os.path.join(DIST, "preview")
 INDEX_PATH = os.path.join(DIST, "manifest_index.json")
 
-# Logo: academy/assets/tlms_logo.png (checked in next to the builder); brand folder as fallback.
-LOGO_CANDIDATES = [
-    os.path.join(ACADEMY, "assets", "tlms_logo.png"),
-    os.path.join(os.path.dirname(ACADEMY), "..", "..", "outputs", "brand", "tlms_logo.png"),
-    "/sessions/sleepy-awesome-knuth/mnt/outputs/brand/tlms_logo.png",
-]
+# Logo: academy/assets/tlms_logo.png (checked in next to the builder). Missing logo = hard error (2026-10-20).
+LOGO_PATH = os.path.join(ACADEMY, "assets", "tlms_logo.png")
+LOGO_CANDIDATES = [LOGO_PATH]
 
 VALID_TYPES = {"scenario", "mc", "truefalse"}
 
@@ -263,7 +265,10 @@ INTERNAL_ATOM = re.compile(
     r"TRAINING_PROGRAM|\.md\b|SKILL|_Audit\b|CONDUCT_REVIEW|FINDINGS|\b[A-Za-z]+_\w+\b|"
     r"^\s*[a-z0-9]+(?:-[a-z0-9]+){2,}\s*$|\bsee sources\b|\brun records\b|^\s*library:|build brief|\bqueue #\d|Hard Rule \d|\bSTATUS\b|\bcorrected in\b|"
     r"\b[a-z0-9]+(?:-[a-z0-9]+)+-[0-9a-f]{8}\b|^\s*[0-9a-f]{8}(?:\s*,\s*[0-9a-f]{8})*\s*$|\bv\d\b|"
-    r"zoom-call|\b[A-Z]\w+-to-[A-Z]\w+\b|[Hh]uddle\s+\d{4}|^\s*(?:[A-Z][a-z]+(?:\s[A-Z][a-z]+)?,?\s+)?\d{4}-\d{2}-\d{2}\s*$|HUDDLE_INPUTS")
+    r"zoom-call|\b[A-Z]\w+-to-[A-Z]\w+\b|[Hh]uddle\s+\d{4}|^\s*(?:[A-Z][a-z]+(?:\s[A-Z][a-z]+)?,?\s+)?\d{4}-\d{2}-\d{2}\s*$|HUDDLE_INPUTS|"
+    # 2026-10-20 board review: an ISO date anywhere in an atom ("CEO greeting script 2026-10-13") and huddle
+    # attributions ("9/28 huddle", "the huddles were specific"). "2026-08 GOLD" bucket names (no day) stay.
+    r"\b20\d\d-\d\d-\d\d\b|\d{1,2}/\d{1,2} [Hh]uddle|[Hh]uddles? (?:were|was|said|decided|agreed)")
 MEMO_ATOM = re.compile(r"\b(?:HR|OB)-\d{4}-\d{2}\b")
 POLICY_ATOM = re.compile(r"§|P&P|Handbook|Va\. Code|U\.S\.C\.|\bCFR\b|Google UGC policy|^\s*L\d-\d\d\s*$")
 CALL_REWRITES = [
@@ -303,6 +308,9 @@ FORBIDDEN_PATTERNS = [
     ("coming soon", re.compile(r"coming soon", re.I)),
     ("coaching-call ref", re.compile(r"zoom-call|Preston-to-|[Hh]uddle \d{4}|HUDDLE_INPUTS|\b(?:Preston|Joshua|Davis),? \d{4}-\d{2}-\d{2}")),
     ("sources key", re.compile(r"\bsources\b")),
+    # 2026-10-20 board review (B1). YYYY-MM bucket names such as "2026-08 GOLD" are not matched (no day part).
+    ("ISO date", re.compile(r"\b20\d\d-\d\d-\d\d\b")),
+    ("huddle ref", re.compile(r"\d{1,2}/\d{1,2} huddle|[Hh]uddles? (?:were|was|said)")),
 ]
 
 
@@ -488,7 +496,7 @@ PLAYER_CSS = r"""
 .cpbar{flex:1;height:10px;background:#dcd4ea;border-radius:6px;cursor:pointer;position:relative;overflow:hidden}
 .cpfill{height:100%;width:0;background:#508DCE;border-radius:6px}
 .cptime{flex:none;font-variant-numeric:tabular-nums;color:#4B2F74;font-weight:600;min-width:92px;text-align:right}
-:root{--purple:#4B2F74;--purple2:#6a4a9c;--blue:#508DCE;--coral:#DB7971;--white:#fff;--ink:#231733;--muted:#62587a;--bg:#f4f1f8;--line:#e3ddee;--ok:#23845a;--okbg:#e7f6ee;--bad:#b8423a;--badbg:#fcecea;--acc:#DB7971;--shadow:0 2px 14px rgba(75,47,116,.09)}
+:root{--purple:#4B2F74;--purple2:#6a4a9c;--blue:#508DCE;--blue2:#3f74ae;--coral:#DB7971;--white:#fff;--ink:#231733;--muted:#62587a;--bg:#f4f1f8;--line:#e3ddee;--ok:#23845a;--okbg:#e7f6ee;--bad:#b8423a;--badbg:#fcecea;--acc:#DB7971;--shadow:0 2px 14px rgba(75,47,116,.09)}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 html,body{margin:0;padding:0;height:auto;min-height:100%}
@@ -512,7 +520,7 @@ main{max-width:960px;margin:0 auto;padding:16px 16px 0}
 h1{color:var(--purple);font-size:32px;line-height:1.2;margin:4px 0 12px}
 h2{color:var(--purple);font-size:28px;line-height:1.25;margin:0 0 14px}
 h2:focus{outline:none}
-.kicker{color:var(--blue);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:14px}
+.kicker{color:var(--blue2);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:14px}
 .meta{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
 .pill{display:inline-flex;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:5px 14px;font-size:16px;font-weight:600;color:var(--ink)}
 .pill .ic{width:18px;height:18px;stroke-width:2}
@@ -531,11 +539,11 @@ h2:focus{outline:none}
 /* slides */
 .slidetop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}
 .slidecount{color:var(--muted);font-size:15px;font-weight:600}
-.tts{display:inline-flex;align-items:center;gap:8px;background:var(--white);color:var(--blue);border:2px solid var(--blue);border-radius:999px;padding:7px 16px;min-height:44px;font-size:16px;font-weight:700;cursor:pointer}
+.tts{display:inline-flex;align-items:center;gap:8px;background:var(--white);color:var(--blue2);border:2px solid var(--blue2);border-radius:999px;padding:7px 16px;min-height:44px;font-size:16px;font-weight:700;cursor:pointer}
 .tts .ic{width:22px;height:22px;stroke-width:2;--acc:currentColor}
-.tts.on{background:var(--blue);color:var(--white)}
+.tts.on{background:var(--blue2);color:var(--white)}
 /* voiceover: "speaking" bars while the narration plays, then a gentle nudge on the Next button */
-.vo-ind{display:none;align-items:center;gap:8px;color:var(--blue);font-size:14px;font-weight:700}
+.vo-ind{display:none;align-items:center;gap:8px;color:var(--blue2);font-size:14px;font-weight:700}
 .vo-ind.on{display:inline-flex}
 .vo-ind .eq{display:inline-flex;align-items:flex-end;gap:3px;height:18px}
 .vo-ind .eq i{display:block;width:4px;height:100%;border-radius:2px;background:var(--blue);transform-origin:bottom;animation:eq 1s ease-in-out infinite}
@@ -550,6 +558,15 @@ ul.pts{padding-left:24px;margin:6px 0 0}
 ul.pts li{margin:10px 0;font-size:20px}
 ul.pts li::marker{color:var(--coral)}
 .dots{display:flex;justify-content:center;gap:8px;margin-top:22px;flex-wrap:wrap}
+/* transcript of the narration: collapsed by default, remembered per device, open when voiceover is off */
+.transcript{margin-top:18px;border-top:1px solid var(--line);padding-top:10px}
+.transcript summary{cursor:pointer;font-size:16px;font-weight:700;color:var(--purple);list-style:none;display:inline-flex;align-items:center;gap:8px;min-height:44px}
+.transcript summary::-webkit-details-marker{display:none}
+.transcript summary::before{content:"";width:0;height:0;border-left:7px solid currentColor;border-top:5px solid transparent;border-bottom:5px solid transparent;transition:transform .2s}
+.transcript[open] summary::before{transform:rotate(90deg)}
+.transcript p{margin:8px 0 0;font-size:18px;line-height:1.6;color:var(--ink);background:#faf8fd;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.vo-fail{font-size:16px;color:var(--bad);font-weight:600;margin-top:10px}
+ol.fsteps{padding-left:26px;margin:10px 0 0}ol.fsteps li{margin:8px 0}
 .dots i{width:10px;height:10px;border-radius:50%;background:var(--line);transition:all .3s}
 .dots i.seen{background:#b9a8d3}
 .dots i.on{background:var(--purple);width:28px;border-radius:6px}
@@ -820,6 +837,25 @@ PLAYER_JS = r"""
   var hasTTS = !!(synth && root.SpeechSynthesisUtterance);
   var ttsOn = true;
   try { if (root.localStorage.getItem('vpa_tts') === '0') ttsOn = false; } catch (e) {}
+  // transcript of the narration: collapsed by default, remembered per device, auto-open when voiceover is off
+  var transcriptOpen = false;
+  try { if (root.localStorage.getItem('vpa_transcript') === '1') transcriptOpen = true; } catch (e) {}
+  var transcriptForced = false;  // set when narration failed to decode on this device
+  function transcriptBlock(say) {
+    if (!say) return null;
+    var d = el('details', { cls: 'transcript' }, [el('summary', { text: 'Show transcript' }), el('p', { text: say })]);
+    var auto = !ttsOn || transcriptForced;
+    if (transcriptOpen || auto) d.setAttribute('open', '');
+    // only a click on the summary is remembered; programmatic opens (voiceover off, decode failure) are not
+    d.querySelector('summary').addEventListener('click', function () {
+      transcriptOpen = !d.open;  // the click toggles after this handler
+      try { root.localStorage.setItem('vpa_transcript', transcriptOpen ? '1' : '0'); } catch (e) {}
+    });
+    return d;
+  }
+  function openTranscript() {
+    var d = stage && stage.querySelector('details.transcript'); if (d) d.setAttribute('open', '');
+  }
   var voice = null;
   var VOICE_PREFS = [/samantha/i, /google us english/i, /microsoft aria/i, /microsoft jenny/i, /microsoft guy/i];
   function pickVoice() {
@@ -885,7 +921,18 @@ PLAYER_JS = r"""
     if (!c) return false;
     if (c.state === 'suspended') { try { c.resume(); } catch (e) {} }
     voiceBuffer(key, function (buf) {
-      if (!buf || my !== voiceToken || !ttsOn) return;
+      if (my !== voiceToken || !ttsOn) return;
+      if (!buf) {
+        // the MP3 did not decode on this device: say so, open the transcript, fall back to browser speech
+        transcriptForced = true;
+        var card = stage && stage.querySelector('.card');
+        if (card && !card.querySelector('.vo-fail')) card.appendChild(el('p', { cls: 'vo-fail', role: 'status', text: 'Narration didn\'t load on this device — read the transcript below.' }));
+        openTranscript();
+        var k = steps[stepIdx].k;
+        if (k === 'watch' && slides[slideIdx]) speak(slides[slideIdx].say || '');
+        else if (k === 'recap') speak('Here are the key points. ' + (LESSON.key_points || []).join('. '));
+        return;
+      }
       try {
         var n = c.createBufferSource(); n.buffer = buf; n.connect(c.destination);
         n.onended = function () {
@@ -1094,6 +1141,7 @@ PLAYER_JS = r"""
       audioUnlocked = true; unlockAudio();
       try { root.localStorage.setItem('vpa_tts', ttsOn ? '1' : '0'); } catch (e) {}
       paint();
+      if (!ttsOn) openTranscript();
       if (onToggle) onToggle(); else if (!ttsOn) stopSpeech();
     });
     paint();
@@ -1117,7 +1165,7 @@ PLAYER_JS = r"""
       el('h1', { text: LESSON.title }),
       el('div', { cls: 'meta' }, pills),
       LESSON.objectives ? el('div', { cls: 'note purple' }, [el('b', { text: "By the end you'll be able to: " }), LESSON.objectives]) : null,
-      LESSON.gate ? el('div', { cls: 'note purple' }, [el('b', { text: 'Deadline: ' }), LESSON.gate]) : null,
+      LESSON.gate ? el('div', { cls: 'note purple' }, [el('b', { text: 'Before you start: ' }), LESSON.gate]) : null,
       state.p ? el('div', { cls: 'note blue', text: 'You have already passed this lesson. You can go through it again any time.' }) : null,
       el('p', { text: intro }),
       ((hasTTS || hasVoice) && !hasVideo && slides.length) ? el('div', { cls: 'ttsrow' }, [
@@ -1165,6 +1213,7 @@ PLAYER_JS = r"""
       bigIcon(s.icon, slideIdx % 2 === 1),
       el('div', { cls: 'slidetext' }, [el('h2', { text: s.heading || '' }), el('ul', { cls: 'pts' }, (s.bullets || []).map(function (b) { return el('li', { text: b }); }))])
     ]));
+    c.appendChild(transcriptBlock(s.say));
     c.appendChild(dots);
     stage.appendChild(c);
     var last = slideIdx >= slides.length - 1;
@@ -1278,10 +1327,30 @@ PLAYER_JS = r"""
     ui.keys = { left: function () { go(stepIdx - 1, -1); } };
   }
 
+  // "1. … 2. …" or ";"-separated floor checks render as an ordered list; anything else stays a sentence
+  function topSplit(t) {
+    var out = [], cur = '', depth = 0;
+    for (var i = 0; i < t.length; i++) { var ch = t.charAt(i); if (ch === '(') depth++; else if (ch === ')' && depth) depth--; if (ch === ';' && !depth) { out.push(cur); cur = ''; } else cur += ch; }
+    out.push(cur); return out;
+  }
+  function floorSteps(t) {
+    var parts = null, lead = '';
+    if (/(^|\s)1\.\s/.test(t) && /\s2\.\s/.test(t)) {
+      var i = t.search(/(^|\s)1\.\s/); lead = t.slice(0, i).trim();
+      parts = t.slice(i).split(/\s*(?:^|\s)\d{1,2}\.\s+/).map(function (x) { return x.trim(); }).filter(Boolean);
+    } else if (topSplit(t).length >= 3) {  // ";" outside parentheses only
+      var m = t.match(/^([^:;]{0,80}):\s*/); if (m) { lead = m[1].trim() + ':'; t = t.slice(m[0].length); }
+      var tail = ''; var mm = t.match(/\.\s+([^;.]*\.)\s*$/); if (mm && mm[1].length < 80) { tail = mm[1]; t = t.slice(0, t.length - mm[0].length) + '.'; }
+      parts = topSplit(t).map(function (x) { return x.replace(/\.$/, '').trim(); }).filter(Boolean);
+      if (tail) parts.push(tail.replace(/\.$/, ''));
+    }
+    if (!parts || parts.length < 2) return [t];
+    return [lead ? document.createTextNode(lead) : null, el('ol', { cls: 'fsteps' }, parts.map(function (x) { return el('li', { text: x }); }))];
+  }
   function rFloor() {
     stage.appendChild(el('div', { cls: 'card' }, [
       el('div', { cls: 'lhead' }, [bigIcon('clipboard'), el('h2', { text: 'Floor Check' })]),
-      el('div', { cls: 'note' }, [el('b', { text: 'Your manager will verify this on the floor: ' }), String(LESSON.floor_check)]),
+      el('div', { cls: 'note' }, [el('b', { text: 'Your manager will verify this on the floor: ' })].concat(floorSteps(String(LESSON.floor_check)))),
       el('p', { cls: 'small', text: 'Passing the test plus your manager\'s Floor Check means you\'ve mastered this skill.' })]));
     navbar({ back: function () { go(stepIdx - 1, -1); }, next: function () { go(stepIdx + 1, 1); }, nextLabel: 'Start the test' });
     ui.keys = { left: function () { go(stepIdx - 1, -1); } };
@@ -1422,25 +1491,31 @@ PLAYER_JS = r"""
   function rResult() {
     var r = lastResult;
     if (!r) { go(stepOf('test'), -1); return; }
-    var c = el('div', { cls: 'card result' }, [
+    var ungraded = quiz.passPercent === 0;  // level intros: a preview, never a gate
+    var c = el('div', { cls: 'card result' }, ungraded ? [
+      el('div', { cls: 'kicker', text: 'Preview done' }),
+      el('h1', { text: 'You\'re ready for the lessons' }),
+      el('p', { text: r.total + ' quick question' + (r.total === 1 ? '' : 's') + ' · not graded' })
+    ] : [
       scoreRing(r.score, r.passed),
       el('div', { cls: 'kicker', text: r.passed ? 'You passed' : 'Not yet' }),
       el('h1', { text: r.passed ? 'Lesson complete' : 'Almost there' }),
       el('p', { text: r.right + ' of ' + r.total + ' correct · ' + quiz.passPercent + '% needed to pass' })
     ]);
-    if (r.passed) {
-      c.appendChild(el('div', {}, [el('span', { cls: 'points' }, [icon('star'), 'You earned points toward the leaderboard'])]));
+    if (ungraded) {
+      if (r.missed.length) c.appendChild(el('p', { cls: 'small', text: 'A few are worth a second look below.' }));
+    } else if (r.passed) {
       if (LESSON.floor_check) c.appendChild(el('p', { text: 'Screen test done. Next: your manager\'s Floor Check on the floor.' }));
       else c.appendChild(el('p', { text: 'Nice work. You\'re ready for the next lesson.' }));
       if (r.missed.length) c.appendChild(el('p', { cls: 'small', text: 'You missed ' + r.missed.length + '. ' + (r.missed.length === 1 ? 'It\'s' : 'They\'re') + ' below so you know the right answer.' }));
     } else {
       c.appendChild(el('p', { text: 'Go over what you missed below, then take it again. The questions come back in a new order.' }));
-      if (state.a >= quiz.maxAttempts) c.appendChild(el('div', { cls: 'note', style: 'text-align:left' }, [el('b', { text: 'Ask your manager to go through this lesson with you. ' }), 'You can still retake the test any time.']));
+      if (state.a >= quiz.maxAttempts && !state.p) c.appendChild(el('div', { cls: 'note', style: 'text-align:left' }, [el('b', { text: 'Ask your manager to go through this lesson with you. ' }), 'You can still retake the test any time.']));
     }
     c.appendChild(el('p', { cls: 'small', text: 'Attempts so far: ' + state.a + (scorm.active ? ' · Your result has been saved.' : ' · Preview mode: nothing is recorded.') }));
     stage.appendChild(c);
     if (r.missed.length) {
-      var m = el('div', { cls: 'card' }, [el('h2', { text: r.passed ? 'Worth a second look' : 'What you missed' })]);
+      var m = el('div', { cls: 'card' }, [el('h2', { text: (r.passed || ungraded) ? 'Worth a second look' : 'What you missed' })]);
       r.missed.forEach(function (a) {
         var box = el('div', { cls: 'missed' }, [el('p', { cls: 'q', text: a.q.prompt })]);
         if (a.chosen) box.appendChild(el('div', { cls: 'fb no' }, [el('span', { cls: 'h', text: 'You answered: ' + a.chosen.text }), a.chosen.why ? el('p', { text: a.chosen.why }) : null]));
@@ -1453,7 +1528,7 @@ PLAYER_JS = r"""
       back: function () { slideIdx = 0; go(1, -1); }, backLabel: 'Review lesson',
       next: function () { quiz.reset(); lastResult = null; go(stepOf('test'), 1); }, nextLabel: r.passed ? 'Take it again' : 'Retake the test'
     });
-    if (r.passed) { confetti(); sfx('applause'); }
+    if (r.passed && !ungraded) { confetti(); sfx('applause'); }
   }
 
   // ---------------- keyboard: left/right move, Enter continues, 1-4 or A-D answer
@@ -1634,7 +1709,7 @@ def build_one(path):
     info, copy, notes = resolve_media(lesson)
     logo = find_logo()
     if not logo:
-        notes.append("logo not found - header shows alt text")
+        raise FileNotFoundError(f"logo not found: {LOGO_PATH} (every package needs it as logo.png)")
     lid = lesson["id"]
     name = f"{lid}_{slug_for(path)}"
     os.makedirs(DIST, exist_ok=True)
@@ -1688,7 +1763,8 @@ def build_one(path):
         "has_video": bool(info["video"]), "has_call_clip": bool(info["clip"]), "call_clip": info["clip"],
         "call_clip_seconds": info["clip_seconds"], "floor_check": bool(lesson.get("floor_check")),
         "voiceover_lines": (info.get("voice_stats") or {}).get("embedded", 0),
-        "narration_lines": (info.get("voice_stats") or {}).get("lines", 0),
+        "narration_lines": f"{(info.get('voice_stats') or {}).get('embedded', 0)}/{(info.get('voice_stats') or {}).get('lines', 0)}",
+        "narration_complete": (info.get("voice_stats") or {}).get("embedded", 0) >= (info.get("voice_stats") or {}).get("lines", 0) > 0,
         "package_bytes": os.path.getsize(zpath),
         "media_notes": notes, "spec_warnings": warnings,
     }
@@ -1785,7 +1861,17 @@ LEARNER_KEYS = {"id", "title", "level_label", "minutes", "gate", "icon", "slides
                 "key_points", "floor_check", "quiz", "media", "objectives"}
 
 
-def validate(zips):
+def expected_narration_lines(lesson_payload):
+    """How many narration lines the player expects for this (learner) payload, per voice.py's plan."""
+    try:
+        sys.path.insert(0, ACADEMY)
+        import voice as V
+        return len(V.narration_items(lesson_payload))
+    except Exception:  # noqa - voice.py missing/broken: cannot know, so do not fail on it
+        return None
+
+
+def validate(zips, allow_silent=False):
     node = shutil.which("node")
     results, all_ok = [], True
     ns = {"i": "http://www.imsproject.org/xsd/imscp_rootv1p1p2", "a": "http://www.adlnet.org/xsd/adlcp_rootv1p2"}
@@ -1884,11 +1970,22 @@ def validate(zips):
                             if not (raw[:3] == b"ID3" or (len(raw) > 1 and raw[0] == 0xFF and (raw[1] & 0xE0) == 0xE0)):
                                 errs.append(f"voice-b64[{k}] is not MP3 audio")
                         info["voice_lines"] = len(vmap)
+                        # 2026-10-20 (B4): every narration line the player will ask for must be embedded.
+                        exp = expected_narration_lines(lesson)
+                        info["voice_expected"] = exp
+                        if exp is not None and len(vmap) < exp:
+                            msg = f"NARRATION INCOMPLETE: {len(vmap)}/{exp} lines embedded - run voice.py generate, then rebuild"
+                            if allow_silent:
+                                info["narration_warning"] = msg
+                            else:
+                                errs.append(msg)
                     else:
                         info["voice_lines"] = "no voice-b64 block (older build)"
                     # learner-facing text: no internal references, no build data, no "coming soon"
                     scan = re.sub(r'<script type="text/plain" id="clip-b64">[A-Za-z0-9+/=\s]*', '', html)
                     scan = re.sub(r'<script type="application/json" id="voice-b64">.*?</script>', '', scan, flags=re.S)
+                    # the player script is fixed code (its comments carry dates); learner text lives in lesson-data + markup
+                    scan = re.sub(r'<script id="player">.*?</script>', '', scan, flags=re.S)
                     for pname, hit in forbidden_hits(scan):
                         errs.append(f"forbidden text in index.html [{pname}]: {hit!r}")
                     for key in ("sources", "production_notes", "_build"):
@@ -1933,11 +2030,29 @@ def main():
     ap.add_argument("--all", action="store_true", help="build every lessons/*/*.json (L1-L8 and M)")
     ap.add_argument("--skip-validate", action="store_true")
     ap.add_argument("--validate-only", action="store_true", help="validate the zips already in dist/")
+    ap.add_argument("--allow-silent", action="store_true", help="do not fail a package whose narration is incomplete (report it instead)")
     a = ap.parse_args()
 
+    n_lessons = len(glob.glob(os.path.join(LESSONS_DIR, "*", "*.json")))
     if a.validate_only:
         zips = sorted(glob.glob(os.path.join(DIST, "*.zip")))
+        if not zips:
+            print(f"nothing to validate: no zips in {DIST}")
+            return 1
+        if len(zips) != n_lessons:
+            print(f"WARNING: {len(zips)} zips in dist/ but {n_lessons} lesson files under lessons/")
     else:
+        if a.all and not a.skip_validate:
+            # 2026-10-20: lesson JSONs are checked against LESSON_SPEC before anything is built
+            vl = os.path.join(ACADEMY, "validate_lessons.py")
+            if os.path.isfile(vl):
+                p = subprocess.run([sys.executable, "-I", vl, "--quiet"], capture_output=True, text=True)
+                print(p.stdout.strip())
+                if p.returncode:
+                    print(f"lesson validation FAILED - fix the violations (python3 -I {os.path.basename(vl)}) or build with --skip-validate")
+                    return 1
+            else:
+                print("WARNING: validate_lessons.py not found next to the builder; lesson JSONs not checked")
         paths = sorted(glob.glob(os.path.join(LESSONS_DIR, "*", "*.json"))) if a.all else a.lesson
         if not paths:
             ap.error("give a lesson JSON path or --all")
@@ -1967,19 +2082,30 @@ def main():
         if a.skip_validate:
             return 1 if failed else 0
 
-    ok, results = validate(zips)
+    ok, results = validate(zips, allow_silent=a.allow_silent)
+    RED, END = ("\033[31m", "\033[0m") if sys.stdout.isatty() else ("", "")
+    silent = []
     print("\nValidation:")
     for r in results:
         if r["ok"]:
             qt = r.get("quiz_test")
             qs = f"all-correct {qt['allCorrect']['status']} {qt['allCorrect']['score']} / all-wrong {qt['allWrong']['status']} {qt['allWrong']['score']}" if isinstance(qt, dict) else qt
-            vl = r.get("voice_lines")
-            vs = f", voiceover {vl} lines" if isinstance(vl, int) and vl else ""
+            vl, ve = r.get("voice_lines"), r.get("voice_expected")
+            vs = f", voiceover {vl}/{ve} lines" if isinstance(vl, int) and ve else (f", voiceover {vl} lines" if isinstance(vl, int) and vl else "")
             print(f"  PASS  {r['package']}  manifest ok, files ok, syntax {r.get('syntax')}, {qs}{vs}")
+            if r.get("narration_warning"):
+                silent.append(r["package"])
+                print(f"        {RED}{r['narration_warning']}{END}")
         else:
             print(f"  FAIL  {r['package']}")
             for e in r["errors"]:
-                print(f"        - {e}")
+                if e.startswith("NARRATION INCOMPLETE"):
+                    silent.append(r["package"])
+                    print(f"        - {RED}{e}{END}")
+                else:
+                    print(f"        - {e}")
+    if silent:
+        print(f"{RED}NARRATION INCOMPLETE in {len(silent)} package(s): {', '.join(silent)} - do not upload these{END}")
     print("ALL GREEN" if ok else "VALIDATION FAILED")
     return 0 if ok else 1
 

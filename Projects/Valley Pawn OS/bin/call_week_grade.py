@@ -597,6 +597,60 @@ def deliver(since, until, nar, pdf, drive_dst, d, partial_note, render):
             dt.datetime.now(ET).strftime("%Y-%m-%d"), since, until, os.path.basename(pdf), (" — " + partial_note) if partial_note else "", body))
 
 
+
+# ---------------------------------------------------------------- current staff only, never a Davis (Joshua 2026-10-21)
+_NICK = {"JOEY": "JOSEPH", "JOE": "JOSEPH", "SANDY": "SANDI", "CHAD": "CHADD", "BENJI": "BENJIE", "BENJY": "BENJIE", "BEN": "BENJIE"}
+
+
+def _staff_ok(first, store):
+    """A transcript first name (or nickname) is kept only if it is ONE current, non-Davis roster person in that
+    store's department (any department for PRE/unknown). Unknown/ambiguous = dropped (bin/vp_people.py rule)."""
+    import vp_people
+    t = re.sub(r"[^A-Z]", "", (first or "").upper())
+    if not t:
+        return False
+    t = _NICK.get(t, t)
+    dept = NAMES.get(store) if store in STORES else None
+
+    def hits(pool):
+        h = []
+        for e in pool:
+            for f in {e["_first"], e["_pref"]}:
+                if t == f or (len(t) >= 3 and (f.startswith(t) or (len(f) >= 4 and t.startswith(f[:4])))):
+                    h.append(e); break
+        return h
+    staff = vp_people.current_staff()
+    local = hits([e for e in staff if dept and (e.get("department") or "") == dept])
+    if len(local) == 1:
+        return vp_people.is_reportable(local[0]["name"])
+    every = hits(staff)   # e.g. Preston on a store call: must be ONE person fleet-wide, and not a Davis
+    return len(every) == 1 and vp_people.is_reportable(every[0]["name"])
+
+
+def _people_scrub(rows):
+    """Drop non-current / Davis staff names from graded rows before anything is aggregated or written: the
+    staff_name goes blank and that name is replaced by 'a staff member' in summary/quote. Call counts stay."""
+    import vp_people
+    dropped = []
+    out = []
+    fam = sorted({f for e in vp_people.current_staff() if vp_people.is_davis(e["name"]) for f in (e["_first"], e["_pref"])})
+    davis_rx = re.compile(r"(?i)\b(?:%s)\s+davis\b" % "|".join(map(re.escape, fam))) if fam else None
+    for r in rows:
+        r = dict(r)
+        for k in ("summary", "quote"):   # Davis FAMILY names only (roster) — a customer named Davis stays
+            if r.get(k) and davis_rx and davis_rx.search(r[k]):
+                r[k] = davis_rx.sub("a team member", r[k])
+        n = (r.get("staff_name") or "").strip()
+        if n and not _staff_ok(n, r.get("store")):
+            dropped.append((n, "not current staff / Davis / unmatched (%s)" % r.get("store")))
+            r["staff_name"] = ""
+            for k in ("summary", "quote"):
+                if r.get(k):
+                    r[k] = re.sub(r"\b%s\b" % re.escape(n), "a staff member", r[k])
+        out.append(r)
+    vp_people._log("weekly-phone-text-review", dropped)
+    return out
+
 # ---------------------------------------------------------------- main
 def main():
     ap = argparse.ArgumentParser()
@@ -632,6 +686,13 @@ def main():
     c = cfg()
     st = stats(d, c)
     json.dump(st, open(os.path.join(d, "stats_native.json"), "w"), indent=1, default=str)
+    try:
+        rows = _people_scrub(rows)
+    except Exception as e:   # vp_people.RosterHold -> no DM (Rule 18), one ledger row
+        if type(e).__name__ != "RosterHold":
+            raise
+        ledger("The weekly phone review was not sent: %s." % e)
+        print("roster hold: %s" % e); return 2
     agg = aggregate(rows)
     txs = {} if a.no_texts else texts(since, until)
     json.dump(txs, open(os.path.join(d, "texts_native.json"), "w"), indent=1)

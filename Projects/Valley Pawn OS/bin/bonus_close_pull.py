@@ -155,7 +155,7 @@ def main():
     if render:
         print("=== RENDER ONLY (no pull, no engine run) ===\n" + dm); return 0
     p = subprocess.run([PY, os.path.join(HERE, "vp_slack.py"), "dm", dm], capture_output=True, text=True, timeout=60, env=dict(os.environ, VP_TASK=AGENT))
-    open(os.path.join(BONUS, "RUN_LOG.md"), "a").write("\n## %s — bonus-month-close-pull (native)\n%s; DM %s\n" % (now.strftime("%Y-%m-%d %H:%M"), "; ".join(log), "sent" if p.returncode == 0 else "FAILED"))
+    open(os.path.join(BONUS, "RUN_LOG.md"), "a").write("\n## %s — bonus-month-close-pull (native)\n%s; DM %s\n" % (now.strftime("%Y-%m-%d %H:%M"), "; ".join(log), ("DRY RUN — diverted, not sent" if "DRY RUN" in p.stdout else "sent") if p.returncode == 0 else "FAILED"))
     if p.returncode != 0:
         ledger("Bonus targets draft for %s was built but the DM did not send." % month); return 1
     print("done", month)

@@ -387,7 +387,10 @@ def main():
 
     active = set()
     try:
-        active = {e.get("slack_id") for e in json.load(open(ROSTER))["employees"] if e.get("slack_id")}
+        # fleet-wide rule (Joshua 2026-10-21, bin/vp_people.py): never a Davis among store recipients
+        import vp_people
+        active = {e.get("slack_id") for e in json.load(open(ROSTER))["employees"]
+                  if e.get("slack_id") and not vp_people.is_davis(e.get("name")) and not vp_people.is_davis(e.get("email"))}
     except Exception as e:
         print("roster unreadable (%s) — refusing to guess who is employed" % e)
         if not render:

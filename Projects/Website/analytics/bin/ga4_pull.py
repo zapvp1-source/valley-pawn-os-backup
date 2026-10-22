@@ -34,7 +34,8 @@ from google_auth import ANALYTICS_SCOPE, GOOGLE_SETUP_HINT, NeedsGrant, api_post
 PROPERTY = "353209303"
 BASE = f"https://analyticsdata.googleapis.com/v1beta/properties/{PROPERTY}"
 STORE_ORDER = ["Culpeper", "Waynesboro", "Harrisonburg", "Lexington", "Roanoke"]
-LEAD_EVENTS = ["phone_click", "sms_click", "directions_click", "email_click", "form_submit"]
+LEAD_EVENTS = ["phone_click", "sms_click", "directions_click", "email_click", "form_submit",
+               "Textchat Message"]  # 2026-10-21: Chekkit web-chat messages are leads (193 in 90 d, previously uncounted)
 # Custom event params are exposed as customEvent:<name>; the contact bar sends `store`.
 STORE_DIM = "customEvent:store"
 

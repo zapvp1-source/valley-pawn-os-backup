@@ -65,7 +65,7 @@ def conversations_since(code, since_utc, max_pages=15):
     """{phone10: conversation} for every conversation with activity since since_utc (newest first)."""
     out, before = {}, None
     for _ in range(max_pages):
-        b = get(code, "/v1/conversations" + ("?before=" + before if before else ""))
+        b = get(code, "/v1/conversations?limit=50" + ("&before=" + before if before else ""))  # 2026-10-21: API max page is 50 (default 20)
         convs = b.get("conversations") or []
         stop = False
         for c in convs:

@@ -1,5 +1,7 @@
 # FFL LISTINGS — STATUS
 
+> **2026-10-21 — FULL AUDIT + EXPERT PANEL: read `FFL_AUDIT_2026-10-21.md` first.** Supersedes the 9/29 notes where they conflict: MasterFFL CUL now shows 9J + 540-445-5510 (resolved); all 5 MasterFFL profiles optimized and correct (an earlier 'LEX/ROA not live' reading was a stale cached fetch); CUL/ROA/WAY hours (Mon-Fri 10-6, Sat 10-5) FIXED same day on MasterFFL + MidwayUSA + roster, still stale on GunNook (account needed); Sportsman's/Buds/KYGUNCO/Brownells sent 10/21; weekly drift check -> FFL_DRIFT.md; Salem closed out with ATF (10/7); Brownells WAY/LEX/ROA confirmed 9/29.
+
 > **2026-09-29 EVENING — "everything that doesn't need anyone" pass.** Per-vendor detail in `ffl_vendors.json`.
 > - **MasterFFL Culpeper:** support fixed the verify phone to 540-445-5510 within 30 min; claim staged in Chrome
 >   (culpeper@, verify by phone) — waiting on Joshua's CAPTCHA click + someone at Culpeper to take the call.

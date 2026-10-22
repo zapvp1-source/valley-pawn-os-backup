@@ -1,0 +1,35 @@
+# Monthly Policy Update — the only way policies reach employees
+
+Set by Joshua 2026-10-21: "we don't want to continuously blast them with updates, we need a cadence like monthly where they can sign one ack for all new policies and guidelines."
+
+## The rule
+- **Scope: EVERY new or changed company policy, guideline, standard or script from every department** — operations, loans, eBay, firearms, HR and pay, customer service, culture, compliance. Not just compliance (Joshua 2026-10-21: "policy day should include ALL new policies not just compliance policies"). Before each packet, sweep the Open Items Register, the CHANGELOG, #policy-announcements and the Human Resources folder for anything approved but never signed.
+- **Nothing goes to staff the day it is approved.** Every new or changed policy, guideline, script or manual revision is added to `POLICY_QUEUE.md` and waits for the next Policy Day.
+- **Policy Day = the first business day of each month.** Employees get ONE Gusto Team document (the packet) and sign ONCE.
+- **Packet** (`build_bundle.py manifests/<YYYY-MM>.json`): page 1 "Policy Update — <Month>" (what changed, plain words, ≤10 lines) → one page per new one-page policy (house format, no separate signature block) → the acknowledgment (the standard monthly ack, or HR-2026-04 when the Handbook or P&P version changes).
+- **Manuals** (Handbook, P&P) are revised in place as items are approved, but the new version is published only on Policy Day — at most one version bump per month. The current versions sit in Gusto under Documents.
+- **One #policy-announcements post** on Policy Day, same plain summary as page 1. No other policy posts during the month.
+
+## Calendar (every month)
+| When | What | Who |
+|---|---|---|
+| All month | Approved items land in POLICY_QUEUE.md (status `approved`) | Claude |
+| 25th | Cutoff. Anything approved after this waits a month | — |
+| 26th–28th | Claude builds the packet + the Slack text and sends Joshua ONE preview (PDF + post text) | Claude |
+| Before Policy Day | Joshua replies "approve" (or edits). One approval covers the Gusto send and the Slack post | Joshua |
+| Policy Day (1st business day) | Gusto Team document to all current + future hires; one #policy-announcements post | Claude |
+| 10th | Signatures due | Employees |
+| Mondays | One reminder to anyone unsigned (vp-gusto-signature-chase) | Automated |
+| 15th | Names still unsigned go to Preston | Claude |
+| Empty queue | Nothing is sent that month | — |
+
+## Exceptions (go out the same day, then fold into the next packet)
+A change that cannot wait a month: a law or court order taking effect before the next Policy Day (e.g. the assault-firearm injunction lifting), a safety or security incident, or a regulator's instruction. Preston tells the stores directly that day; the written policy rides in the next packet for signature.
+
+## New hires
+Onboarding gets the current Handbook + P&P + the current acknowledgment only — never back packets.
+
+## Files
+- `POLICY_QUEUE.md` — the queue (one row per item; status draft → approved → in packet YYYY-MM → signed)
+- `manifests/<YYYY-MM>.json` — the packet definition
+- `out/<YYYY-MM>_Policy_Update.pdf` — the packet sent to Gusto (proof copy kept)

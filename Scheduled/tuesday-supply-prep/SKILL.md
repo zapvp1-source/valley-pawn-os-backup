@@ -1,6 +1,6 @@
 ---
 name: tuesday-supply-prep
-description: Tuesdays 8 AM — compile and price the week's #supply-request items per store and DM Joshua the list to approve. Never adds to cart or buys.
+description: DISABLED 2026-10-21 — replaced by native com.valleypawn.supply-run (bin/supply_order.py, Tue 09:00), which orders under Joshua's rules. Kept as a manual fallback only.
 model: claude-sonnet-5
 ---
 

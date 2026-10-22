@@ -37,6 +37,7 @@ Persistent
 #Include reports\ChekkitInvitesRange.ahk
 #Include reports\Loans75DaysPastDue.ahk
 #Include reports\Layaways.ahk
+#Include reports\LayawayDetail.ahk   ; ADDED 2026-10-21 full row-level layaway pull
 #Include reports\FpdCohort.ahk
 #Include reports\FpdLookback12Mo.ahk
 #Include reports\SalesByVendor.ahk
@@ -247,6 +248,7 @@ Main() {
     REPORT_HANDLERS["customer-loyalty"]              := PullCustomerLoyalty
     REPORT_HANDLERS["customer-loyalty-probe"]        := PullCustomerLoyaltyProbe
     REPORT_HANDLERS["pm-loan-growth"]                := PullPmLoanGrowth
+    REPORT_HANDLERS["layaway-detail"]                := PullLayawayDetail   ; ADDED 2026-10-21
     REPORT_HANDLERS["employee-status"]               := PullEmployeeStatus      ; 2026-10-20 StoreConfigAdmin.ahk
     REPORT_HANDLERS["store-hours"]                   := PullStoreHours          ; 2026-10-20 StoreConfigAdmin.ahk
     ; Add additional registrations here as we build out reports.

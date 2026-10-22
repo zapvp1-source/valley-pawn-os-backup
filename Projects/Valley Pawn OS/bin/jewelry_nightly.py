@@ -522,7 +522,7 @@ def run(d, mode, send, do_pull=True, render=False, wait_min=30):
         open(p, "w").write("(would post to #jewlery-counts C0BM9NHGTT4)\n" + text)
         print(text)
         if left:
-            print("manager DMs that would go out:", ", ".join(MANAGERS[s][1] for s, _ in left))
+            print("manager DMs that would go out:", ", ".join(MANAGERS[s][1] for s, _ in left if _reportable_uid(MANAGERS[s][0])))
         return 0
     if len(left) == len(stores):
         # no store has a usable sheet: nothing to compare. The post would be only "not posted" lines.
@@ -539,6 +539,9 @@ def run(d, mode, send, do_pull=True, render=False, wait_min=30):
         sh = sheets.get(s)
         problem = (sh or {}).get("mgr") or "tonight's jewelry daily count sheet wasn't in your end-of-day photos"
         uid, first = MANAGERS[s]
+        if not _reportable_uid(uid):   # fleet-wide rule 2026-10-21 (vp_people): current, non-Davis staff only
+            log("manager DM for %s skipped: %s is not a current non-Davis employee on hr/ROSTER.json" % (s, uid))
+            continue
         msg = ("Hey %s — %s (%s). Tonight's company jewelry count post went out without %s. Can you post a clear photo "
                "of tonight's Jewelry Daily Count sheet when you get a chance?" % (first, problem, d.strftime("%-m/%-d"), NAMES[s]))
         _dm(uid, msg)
@@ -551,6 +554,19 @@ def run(d, mode, send, do_pull=True, render=False, wait_min=30):
         _dm(JOSHUA, "Jewelry count %s — %s." % (d.strftime("%-m/%-d"), "; ".join(bits)))
     append(status_path(catchup), "\n## RUN RECORD — %s (%s) — native %s\n\n%s\n\n%s\n" % (d, d.strftime("%A"), task, notes, text))
     return 0
+
+
+def _reportable_uid(uid):
+    """True only if this Slack id is a current (Gusto active), non-Davis employee per bin/vp_people.py."""
+    try:
+        sys.path.insert(0, BIN)
+        import vp_people
+        for e in vp_people.current_staff():
+            if e.get("slack_id") == uid:
+                return vp_people.is_reportable(e.get("name"))
+    except Exception as e:   # RosterHold / unreadable roster = do not message anyone by name
+        log("roster check failed (%s)" % e)
+    return False
 
 
 def _dm(uid, text):

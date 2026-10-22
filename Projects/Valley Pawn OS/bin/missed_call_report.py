@@ -380,7 +380,23 @@ def answer_text(x):
     return dur(x["store_min"])
 
 
+def _people_filter(texts):
+    """Fleet-wide rule (Joshua 2026-10-21, bin/vp_people.py): a replier who is not current staff or is a Davis is
+    shown as plain "staff" — the conversation and every store count stay; the dropped name goes to the log only."""
+    import vp_people
+    out = []
+    named = [x for x in texts if (x.get("employee") or "").strip()]
+    _, dropped = vp_people.filter_rows(named, "employee", "store", source="missed-call-text-report")
+    bad = {n for n, _r in dropped}
+    for x in texts:
+        if (x.get("employee") or "").strip() in bad:
+            x = dict(x, employee="")
+        out.append(x)
+    return out
+
+
 def build_dm(start, texts, failed, rows_all):
+    texts = _people_filter(texts)   # RosterHold propagates -> main's existing no-post path
     end_d = (start + dt.timedelta(days=6)).date()
     label = "Mon %s–Sun %s" % (md(start), md(end_d))
     n = len(texts)
@@ -550,7 +566,16 @@ def main():
 
     # totals: this period from the API (source of record), earlier weeks from the results file
     p0, p1 = start.date().isoformat(), (end.date() - dt.timedelta(days=1)).isoformat()
-    text = build_dm(start, texts, failed, [r for r in existing if not (p0 <= r["date"] <= p1)] + [to_row(x) for x in texts])
+    try:
+        text = build_dm(start, texts, failed, [r for r in existing if not (p0 <= r["date"] <= p1)] + [to_row(x) for x in texts])
+    except Exception as e:   # vp_people.RosterHold: roster missing/stale -> no post (Rule 18), one ledger row
+        if type(e).__name__ != "RosterHold":
+            raise
+        msg = "Weekly missed-call texts report for %s not sent: %s. Nothing posted; the next run retries." % (label, e)
+        print("WITHHELD: " + msg)
+        if not a.render:
+            ledger(msg)
+        return 2
     print("\n----- DM -----\n" + text + "\n--------------")
     if a.render:
         return 0

@@ -1,6 +1,6 @@
 # September 2026 Monthly Analytics (native)
 
-Generated: 2026-10-19 10:00 ET | RENDER
+Generated: 2026-10-21 12:39 ET | RENDER
 
 ## Date windows
 
@@ -116,10 +116,6 @@ Generated: 2026-10-19 10:00 ET | RENDER
 | Service Charges | $963,338.20 | $852,690.28 | $110,647.92 | +13.0% | :white_check_mark: |
 | Net Revenue | $2,643,333.98 | $1,984,119.39 | $659,214.59 | +33.2% | :fire: |
 
-## Google Sheet
-
-Created: https://docs.google.com/spreadsheets/d/1KUNwnYKzlTdzBYndDEP-yFEi6v7i1kpSKYXlD4v2Plg/edit?ouid=111820777601504496035
-
 ## Slack post (same-month view only)
 
 ```
@@ -136,5 +132,5 @@ Company net revenue: $230,722.19 (+30.5% vs September 2025)
 | Service Charges | $85,148.84 | $76,021.57 | +12.0% |
 | Net Revenue | $230,722.19 | $176,802.26 | +30.5% |
 
-Full breakdown → [Monthly Analytics - September 2026 spreadsheet](https://docs.google.com/spreadsheets/d/1KUNwnYKzlTdzBYndDEP-yFEi6v7i1kpSKYXlD4v2Plg/edit?ouid=111820777601504496035)
+Full breakdown → [Monthly Analytics - September 2026 spreadsheet](https://docs.google.com/spreadsheets/)
 ```

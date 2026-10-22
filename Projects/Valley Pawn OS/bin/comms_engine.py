@@ -91,6 +91,9 @@ SHADOW_CHANNEL_ID = "C0BLQSABGGY"   # private; conversations.list needs groups:r
 # ---------------------------------------------------------------------------
 # helpers
 # ---------------------------------------------------------------------------
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import vp_people  # noqa: E402  fleet-wide current-staff / no-Davis filter (2026-10-21)
+
 def money(raw):
     if raw is None:
         return 0.0
@@ -422,7 +425,7 @@ def load_employee_activity(output_dir, pipeline_date):
 # logins. The team ranking lists ONLY current employees per hr/ROSTER.json (Gusto active,
 # refreshed daily by roster_write.py). Company totals elsewhere are unaffected.
 ROSTER_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "hr", "ROSTER.json")
-ROSTER_MAX_AGE_DAYS = 4
+ROSTER_MAX_AGE_DAYS = 2   # was 4; fleet-wide rule 2026-10-21 = hold if the Gusto roster is >2 days old
 SERVICE_LOGIN_PREFIXES = ("FREE1", "SYSTEM", "BACKUP", "APPROVAL")
 NAME_ALIASES = {  # Bravo name -> Gusto legal name
     "BENJIE MOORE": "GEORGE MOORE",
@@ -468,7 +471,13 @@ def is_current(upper_name, keys):
     parts = _norm(n)
     if len(parts) < 2:
         return False
-    return (parts[0] + "|" + " ".join(parts[1:])) in keys or (parts[0] + "|" + parts[-1]) in keys
+    if not ((parts[0] + "|" + " ".join(parts[1:])) in keys or (parts[0] + "|" + parts[-1]) in keys):
+        return False
+    # fleet-wide rule (Joshua 2026-10-21): current staff only AND never a Davis — shared filter bin/vp_people.py
+    try:
+        return vp_people.is_reportable(upper_name)
+    except vp_people.RosterHold as e:
+        raise Withhold([str(e)])
 
 
 def title_name(upper):

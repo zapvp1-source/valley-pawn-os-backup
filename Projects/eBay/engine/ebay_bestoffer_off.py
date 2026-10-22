@@ -52,9 +52,35 @@ def live_state(tok, iid):
     return status, bo, title, cat, pending, None
 
 
+VP_FIX_STATE = os.path.expanduser("~/vp_ebay_fix_state.json")
+
+
+def august_targets_vpfix():
+    """2026-10-21: the 8/23 remediation that actually switched Best Offer ON was
+    audit_2026-08-22/vp_ebay_fix.py, and it recorded its work in ~/vp_ebay_fix_state.json
+    (keys "C|Culpeper|<ItemID>", value {"before": {"best_offer": ...}, "label": "BestOffer ON ..."}),
+    not ~/ebay_policy_fix_state.json. Fix "C" was only ever applied where best_offer != "true"."""
+    if not os.path.exists(VP_FIX_STATE):
+        print("NOTE: %s not found" % VP_FIX_STATE)
+        return {}
+    out = {}
+    for key, rec in json.load(open(VP_FIX_STATE)).items():
+        parts = key.split("|")
+        if len(parts) != 3 or parts[0] != "C":
+            continue
+        before = (rec or {}).get("before") or {}
+        prior_off = str(before.get("best_offer")).lower() != "true"
+        out[parts[2]] = (parts[1], prior_off, "C")
+    print("vp_ebay_fix_state.json Best-Offer-ON records: %d" % len(out))
+    return out
+
+
 def august_targets():
     """ItemIDs from ebay_policy_fix_state.json whose BESTOFFER prior value was OFF."""
+    found = august_targets_vpfix()
     if not os.path.exists(POLICY_STATE):
+        if found:
+            return found
         print("NOTE: %s not found — --august skipped" % POLICY_STATE)
         return {}
     st = json.load(open(POLICY_STATE))
@@ -76,7 +102,8 @@ def august_targets():
                 else:
                     walk(v, store_hint=k if isinstance(v, dict) and not k.isdigit() else store_hint)
     walk(st)
-    return out
+    found.update(out)
+    return found
 
 
 def main():

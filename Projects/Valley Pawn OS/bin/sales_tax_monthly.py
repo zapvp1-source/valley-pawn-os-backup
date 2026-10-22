@@ -69,7 +69,21 @@ def gl_path(s, end):
 
 def have(s, end):
     p = gl_path(s, end)
-    return os.path.exists(p) and os.path.getsize(p) > 300
+    return os.path.exists(p) and os.path.getsize(p) > 300 and full_month_header(p, end)
+
+
+def full_month_header(p, end):
+    """2026-10-21 (Nov 1 rehearsal): the file must SAY it covers the whole month. bravo-daily-gl (live 10/21) pulls
+    the last day of the month into this very file name (<END>_<STORE>_post-to-accounting-gl.csv) at 00:45 on the
+    1st before moving it to output/daily_gl/; a one-day file left behind (pull timed out, watcher wrote late) must
+    never be taken as the month. Reads the 'Reporting Dates:' header row (latin-1)."""
+    want = "%d/1/%d - %d/%d/%d" % (end.month, end.year, end.month, end.day, end.year)
+    try:
+        with open(p, encoding="latin-1", newline="") as f:
+            head = [next(f, "") for _ in range(5)]
+    except OSError:
+        return False
+    return any("Reporting Dates" in l and want in l for l in head)
 
 
 def figures(s, end):
@@ -98,6 +112,17 @@ def find_row(ws, y, m):
     if not (isinstance(lab, str) and ALIASES.get(lab.strip().upper()) == m):
         raise SystemExit("sheet layout drift: row %d label %r is not %s" % (r, lab, LABELS[m]))
     return r, ws.cell(r, 3).value is not None
+
+
+def guard_on(task):
+    """2026-10-21 (Nov 1 rehearsal): True while the fleet publish guard (bin/vp_dryrun.py) covers this task. Used to keep
+    a rehearsal from making REAL non-Slack writes the guard cannot divert. Fails open (False) like vp_slack."""
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import vp_dryrun
+        return vp_dryrun.active_for(task)
+    except Exception:   # noqa: BLE001
+        return False
 
 
 def main():
@@ -167,6 +192,10 @@ def main():
         print("=== RENDER ONLY ===\nrow %s (%s)\n%s" % (row, "already filled" if existing else "empty", text)); return 0
     if existing:
         print("row %d for %s already filled — nothing written" % (row, month)); return 0
+    if guard_on(AGENT):   # rehearsal: the workbook is a real write the publish guard cannot divert
+        print("DRY RUN — row %d for %s NOT written; would write %s" % (row, month, {s: figs[s] for s in STORES}))
+        subprocess.run([sys.executable, os.path.join(HERE, "vp_slack.py"), "dm", text], capture_output=True, text=True, timeout=60, env=dict(os.environ, VP_TASK=AGENT))
+        return 0
     bk = os.path.join(os.path.dirname(WB), "_backups"); os.makedirs(bk, exist_ok=True)
     shutil.copy2(WB, os.path.join(bk, "Sales Tax.xlsx.bak-pre-%s-%s" % (start.strftime("%Y%m"), dt.datetime.now(ET).strftime("%Y%m%d-%H%M%S"))))
     note = "Source: Bravo POS Consolidated GL (post-to-accounting-gl), %s, %s %s." % (month, source, dt.datetime.now(ET).strftime("%Y-%m-%d"))

@@ -31,7 +31,7 @@ CHANNELS = {
     "social-media": "C0BMRC2LN3D", "email-campiagns": "C0APR5WUL2Z", "website": "C0ASE9C0GQ0", "ai-marketing": "C0BCEESUANM",
     "ebay-performance": "C0ANVN5KX4Y", "blog-posts": "C0APY6TE604", "scrap-rankings": "C05EHBH4G67",
 }
-TRENDS = "1sLid9zjLUkH-B8MOE5Fr_aemw35bxyAbtuUz4BTVA6s"
+TRENDS = "16Tzy6C-JlmJ-XIo-IrVwUOqSmOekIQ46K1b3t2nggWo"  # 2026-10-21: jdavis@fcfpawn.com copy (old fullcirclepawn@gmail.com sheet 1sLid9zjLUkH-B8MOE5Fr_aemw35bxyAbtuUz4BTVA6s retired)
 
 
 def slack():

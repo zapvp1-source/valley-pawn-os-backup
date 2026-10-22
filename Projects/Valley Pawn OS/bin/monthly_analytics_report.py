@@ -162,6 +162,17 @@ def create_sheet(title, rows):
     return j.get("spreadsheetUrl"), j.get("spreadsheetId")
 
 
+def guard_on(task):
+    """2026-10-21 (Nov 1 rehearsal): True while the fleet publish guard (bin/vp_dryrun.py) covers this task. Used to keep
+    a rehearsal from making REAL non-Slack writes the guard cannot divert. Fails open (False) like vp_slack."""
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import vp_dryrun
+        return vp_dryrun.active_for(task)
+    except Exception:   # noqa: BLE001
+        return False
+
+
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     render = "--render" in sys.argv
@@ -201,7 +212,10 @@ def main():
         print("HOLD — %d/30 usable; %s" % (n_ok, "; ".join(problems)[:400]))
         return 2
     sheet_url = None
-    if (not render and "--no-sheet" not in sys.argv) or "--sheet-too" in sys.argv:
+    if not render and guard_on(AGENT) and "--sheet-too" not in sys.argv:   # rehearsal: a Sheet is a real Drive write
+        sheet_url = "https://docs.google.com/spreadsheets/(dry-run: sheet not created)"
+        W += ["", "## Google Sheet", "", "DRY RUN — not created (publish guard on)"]
+    elif (not render and "--no-sheet" not in sys.argv) or "--sheet-too" in sys.argv:
         try:
             sheet_url, sid = create_sheet(("TEST (render) " if render else "") + "Monthly Analytics - %s" % month, sheet_rows(ym, data))
             W += ["", "## Google Sheet", "", "Created: %s" % sheet_url]
@@ -227,7 +241,7 @@ def main():
     open(tmp, "w").write(post)
     p = subprocess.run([sys.executable, os.path.join(HERE, "vp_slack.py"), "post", CH, "--file", tmp], capture_output=True, text=True,
                        timeout=60, env=dict(os.environ, VP_TASK=AGENT))
-    W += ["", "## Result: %s" % ("POSTED ts %s" % p.stdout.strip() if p.returncode == 0 else "post failed: %s" % p.stderr.strip()[:200])]
+    W += ["", "## Result: %s" % ("DRY RUN — diverted, not posted" if p.returncode == 0 and "DRY RUN" in p.stdout else "POSTED ts %s" % p.stdout.strip() if p.returncode == 0 else "post failed: %s" % p.stderr.strip()[:200])]
     open(wf, "w").write("\n".join(W) + "\n")
     if p.returncode != 0:
         ledger("The %s company performance report was built but did not post." % month)

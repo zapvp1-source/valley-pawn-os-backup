@@ -1,6 +1,6 @@
 ---
 name: vsp-nics-fee-monthly
-description: Monthly (5th, 10:15 AM ET): log into VSP eReceivables, read all 5 stores' open FIRE invoices, stage each payment to the final Pay screen, DM Joshua one line. Type: browser only (no Bravo contact). model: claude-sonnet-5
+description: DISABLED 2026-10-21 — replaced by native agent com.valleypawn.vsp-fee-pay (bin/vsp_fee_pay.py, 5th 10:15). Kept only as a manual fallback.
 ---
 
 model: claude-sonnet-5

@@ -244,6 +244,27 @@ def map_bravo_to_roster(ctx, code, bname, roster):
 
 # ----------------------------------------------------------------------------- close
 
+def load_management_actions(ctx):
+    """2026-10-21. Returns (store_actions{store: entry}, person_actions[list]) for ctx.month.
+    Only for months >= management_rights.effective_from. Incomplete or back-dated entries HOLD the run."""
+    mr = ctx.rules.get('management_rights') or {}
+    month = ctx.month; mact = {}; mperson = []
+    if not mr or month < mr.get('effective_from', '9999-99'): return mact, mperson
+    f = os.path.join(ctx.root, 'management_actions.json')
+    acts = (json.load(open(f)).get('actions') or []) if os.path.exists(f) else []
+    for a in acts:
+        fm = a.get('from_month')
+        tm = a.get('through_month') or ('9999-12' if a.get('action') == 'suspend' else fm)
+        if not fm or not (fm <= month <= tm): continue
+        miss = [k for k in ('store', 'action', 'kpi', 'reason', 'notice_date', 'approved_by') if not a.get(k)]
+        if miss or a['action'] not in ('withhold', 'suspend'):
+            ctx.holds.append(f'management action {a} is incomplete ({miss}) — fix management_actions.json'); continue
+        if a['action'] == 'suspend' and a['notice_date'] >= fm + '-01':
+            ctx.holds.append(f'suspension for {a["store"]} from {fm} has notice date {a["notice_date"]} — a suspension may only start with a month that begins AFTER written notice'); continue
+        if a.get('employee'): mperson.append(a)
+        else: mact[a['store']] = a
+    return mact, mperson
+
 def stage_close(ctx):
     R = ctx.rules; reg = ctx.regime(); month = ctx.month; ld = last_day(month)
     tq = reg['task_qualifiers']
@@ -297,6 +318,16 @@ def stage_close(ctx):
     if ctx.holds:
         return hold(ctx)
 
+    # 2026-10-21 management rights: standard-KPI withhold / prospective suspension (bonus_rules.json management_rights)
+    mact, mperson = load_management_actions(ctx)
+    if ctx.holds:
+        return hold(ctx)
+    def pblock(e, store):
+        for a in mperson:
+            if a['store'] in (store, 'ALL') and norm(a['employee']) == norm(e.get('display')): return a
+        return None
+    def pnote(a): return f'Bonus {a["action"]} by management — standard KPI missed: {a["kpi"]} ({a["reason"]}); written notice {a["notice_date"]}, approved by {a["approved_by"]}'
+
     # category wins + top store
     cats = {'email_pct': 'Email %', 'gold_dwt': 'Gold dwt', 'reviews': 'Reviews'}
     if tq.get('fb_follower_gain_min') is not None: cats['fb_gain'] = 'FB gain'
@@ -327,6 +358,11 @@ def stage_close(ctx):
             pay.append({'store': s, 'employee': '(store)', 'role': '—', 'basis': None, 'rate': 0, 'bonus': 0.0,
                         'note': f'Bridge 1 not met ({fmt(st["net_revenue"])} vs target {fmt(st["target"])}) — $0 for the store'})
             continue
+        if s in mact:
+            a = mact[s]
+            pay.append({'store': s, 'employee': '(store)', 'role': '—', 'basis': None, 'rate': 0, 'bonus': 0.0, 'note': pnote(a) + ' — $0 for the store'})
+            ctx.notes.append(f'{name}: {pnote(a)}')
+            continue
         tier2 = st['tier2']; held = tier2 is None
         mrate = reg['rates']['manager']['hit' if tier2 else 'miss']
         arate = reg['rates']['associate']['hit' if tier2 else 'miss']
@@ -353,6 +389,10 @@ def stage_close(ctx):
             else:
                 ctx.gaps.append(f'{name}: no Manager and no de facto lead found — manager-tier payout not computed')
         for e in elig_mgrs:
+            pa = pblock(e, s)
+            if pa:
+                pay.append({'store': s, 'employee': e['display'], 'role': 'Manager', 'basis': st['net_revenue'], 'rate': 0, 'bonus': 0.0, 'note': pnote(pa)})
+                ctx.notes.append(f'{name}: {e["display"]} — {pnote(pa)}'); continue
             b = st['net_revenue'] * mrate
             pay.append({'store': s, 'employee': e['display'], 'uuid': e['uuid'], 'role': 'Manager' + ('' if e['title'] == 'Manager' else ' (de facto)'),
                         'basis': st['net_revenue'], 'rate': mrate, 'bonus': round(b, 2), 'held': held,
@@ -370,12 +410,16 @@ def stage_close(ctx):
                     continue
                 if e in elig_mgrs or e['title'] not in R['eligibility']['associate_titles']: continue
                 if a['retail_gp'] <= 0: continue
+                pa = pblock(e, s)
+                if pa:
+                    pay.append({'store': s, 'employee': e['display'], 'role': e['title'], 'basis': a['retail_gp'], 'rate': 0, 'bonus': 0.0, 'note': pnote(pa)})
+                    ctx.notes.append(f'{name}: {e["display"]} — {pnote(pa)}'); continue
                 b = a['retail_gp'] * arate
                 pay.append({'store': s, 'employee': e['display'], 'uuid': e['uuid'], 'role': e['title'],
                             'basis': a['retail_gp'], 'rate': arate, 'bonus': round(b, 2), 'held': held,
                             'note': ('home store ' + e['department'] + '; ' if e['department'] != name else '') + 'Tier 2 ' + ('HELD' if held else ('hit' if tier2 else 'missed'))})
     # top store pool
-    if top_store and stores[top_store]['bridge1']:
+    if top_store and stores[top_store]['bridge1'] and top_store not in mact:
         home = R['stores'][top_store]
         members = [p for p in pay if p['store'] == top_store and p.get('uuid')
                    and next((e for e in active if e['uuid'] == p['uuid']), {}).get('department') == home]
@@ -387,6 +431,8 @@ def stage_close(ctx):
     elif top_store:
         ctx.notes.append(f'Top performer {R["stores"][top_store]} did not pass Bridge 1 — $300 pool not paid')
     preston = next((e for e in active if e['title'] == 'Market Manager'), None)
+    if preston and pblock(preston, 'ALL'):
+        ctx.notes.append(f'Market Manager: {pnote(pblock(preston, "ALL"))}'); preston = None
     if preston:
         pay.append({'store': 'ALL', 'employee': preston['display'], 'uuid': preston['uuid'], 'role': 'Market Manager',
                     'basis': preston_count, 'rate': reg['market_manager_per_bridge1_store'],

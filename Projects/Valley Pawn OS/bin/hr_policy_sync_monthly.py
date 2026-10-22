@@ -96,7 +96,7 @@ def main():
     facts = json.dumps([{k: p.get(k) for k in ("title", "announced", "captured", "where", "kind")} for p in found])
     text = L.ask(DM.format(month=month, since=since, ver=ver or "current", upd=upd or "?", found=facts or "none"), max_tokens=3000).strip()
     ok = L.post(TASK, L.JOSHUA, text, render, label="joshua")
-    if ok and not render:
+    if ok is True and not render:   # 'DRYRUN' (publish guard) never advances the since-date
         json.dump({"last_run": L.now().date().isoformat()}, open(STATE, "w"))
     return 0 if ok else 1
 

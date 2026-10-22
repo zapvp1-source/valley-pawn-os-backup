@@ -31,6 +31,7 @@ Tree Removal, Stump Removal, Tree Stump Grinding, Tree Planting, Tree Pruning/Tr
 | Facebook | Linked as social profile |
 
 ## Infrastructure
+- **UPDATE 2026-10-21 (supersedes Cloudflare lines below):** site now on Netlify (`vocal-piroshki-7e2d4c.netlify.app`), apex A 75.2.60.5, nameservers back to Squarespace (nsb1–4.squarespacedns.com). Email DNS verified intact: MX smtp.google.com, SPF -all, DKIM google._domainkey, DMARC p=reject. Live site mis-spells the domain as solaterralcc.com — fix pending Chris. GBP CID 8845981966345912061 (review link https://www.google.com/maps?cid=8845981966345912061).
 - **Website hosting:** Cloudflare Pages — project `solaterra-llc`
 - **Domain registrar:** Squarespace Domains (login: chrismarney@solaterrallc.com)
 - **DNS:** Cloudflare cutover complete (nameservers `jay.ns.cloudflare.com` / `nora.ns.cloudflare.com`) — confirmed active via Cloudflare's 2026-09-04 activation email and a live site check 2026-09-21. Email DNS (MX/DKIM/SPF/DMARC) preservation was never explicitly re-verified post-cutover — worth a quick "is email still working" check with Chris.

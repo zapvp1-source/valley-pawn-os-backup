@@ -1,5 +1,5 @@
 # Bonus close — September 2026
-Generated 2026-10-20T21:11:52 · regime: Aug-2026 regime (announced 2026-07-21) · payday 2026-10-16 · field posting OFF
+Generated 2026-10-21T13:17:20 · regime: Aug-2026 regime (announced 2026-07-21) · payday 2026-10-16 · field posting OFF
 
 ## Stores
 | Store | Net rev | Target | Hit | 2025 | YoY | Reviews | Email | Gold | FB | Task | Assets | Txns |

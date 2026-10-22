@@ -357,7 +357,9 @@ def pull(out_dir):
         rec["offers"] = offers(tok, keys)
         raw[name] = rec
         ids = [a["id"] for a in rec["active"] if a.get("id")]
-        pick = ids if len(ids) <= 40 else rnd.sample(ids, 60)
+        # 2026-10-21: was "<= 40 else sample(ids, 60)" — a store with 41-59 listings (Waynesboro 41 on 10/19)
+        # crashed the whole run with ValueError. Take every listing up to 60, else a random 60.
+        pick = ids if len(ids) <= 60 else rnd.sample(ids, 60)
         got, bad = [], 0
         for iid in pick:
             try:

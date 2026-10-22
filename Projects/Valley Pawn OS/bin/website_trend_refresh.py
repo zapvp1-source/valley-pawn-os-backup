@@ -339,7 +339,34 @@ def main() -> int:
                                  "summary": summary}, indent=1, ensure_ascii=False))
     print(f"LIVE refreshed {stamp}: " + ", ".join(written))
     print(json.dumps(summary, ensure_ascii=False))
+    write_receipt(written)
     return 0
+
+
+RECEIPT = OS_DIR / "fleet/receipts" / f"{TASK}.jsonl"
+
+
+def write_receipt(written: list) -> None:
+    """2026-10-21: ONE receipt per ET day (the first successful refresh) — the fleet scorecard's evidence.
+    The page is rewritten in place (02:40 + 12:40), so its mtime can never prove an earlier day."""
+    try:
+        today = now_et().date().isoformat()
+        if RECEIPT.exists():
+            for line in RECEIPT.read_text(errors="replace").splitlines():
+                try:
+                    r = json.loads(line)
+                except ValueError:
+                    continue
+                if r.get("ok") and str(r.get("ts", ""))[:10] == today:
+                    return
+        RECEIPT.parent.mkdir(parents=True, exist_ok=True)
+        rec = {"task": TASK, "ts": now_et().isoformat(timespec="seconds"), "surface": "file",
+               "target": str(LIVE_PAGE), "ok": True, "bytes": 0,
+               "note": f"trend page refreshed ({len(written)} copies)"}
+        with open(RECEIPT, "a") as f:
+            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+    except Exception as e:  # a receipt must never fail the refresh
+        print(f"WARN receipt not written: {e}", file=sys.stderr)
 
 
 if __name__ == "__main__":

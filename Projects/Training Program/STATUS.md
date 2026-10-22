@@ -61,3 +61,6 @@
 - 2026-09-23 firearm cert policy (built, not sent; audit incomplete)
 - 2026-09-23 P&P v2026.5+ layaway figure → acknowledgment send
 - 2026-09-08 weekly-training-pipeline double-fire / rubric definitions
+
+## 2026-10-20/21 — FINAL PRE-LAUNCH REVIEW done (Joshua: "complete in depth review… 3 person expert board… Final Review before Launch")
+- See academy/FINAL_PRELAUNCH_REVIEW_2026-10-20.md and the 10/20 section at the end of academy/OPEN_ITEMS.md. 64 lessons fixed, builder hardened, phase-1 voice done, 71 packages ALL GREEN in academy/dist/. DONE 10/21: all 71 units uploaded + published in TalentLMS; P&P v2026.9 + Handbook v2026.8 built (not sent). NEXT: Joshua walkthrough; phase-2 re-voice after 10/28 (scheduled); Gusto re-sign + announcement on Joshua's OK.

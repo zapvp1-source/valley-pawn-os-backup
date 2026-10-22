@@ -264,6 +264,8 @@ def main():
     if p.returncode != 0:
         ledger("Scrap rankings for %s were built but did not post." % period)
         print("post failed:", p.stderr.strip()[:200]); return 1
+    if "DRY RUN" in p.stdout:   # publish guard diverted the post: never record it as POSTED
+        print(p.stdout.strip()); return 0
     open(STATUS, "a").write("\n## %s — POSTED (%s, native agent)\n\n- Window %s, one trigger per store: %s\n- Company %s dwt; stores with nothing posted: %s\n- Trend workbook rewritten (scrap_trend_sheet.py)\n- Slack ts %s\n"
                             % (stamp, period, window, "; ".join(notes) or "no pull (files on disk)", format(r["total"], ",.0f"), ", ".join(NAMES[s] for s in zero) or "none", p.stdout.strip()))
     print("posted", period)

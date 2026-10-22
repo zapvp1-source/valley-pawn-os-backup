@@ -37,6 +37,9 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import vp_people  # noqa: E402  fleet-wide current-staff / no-Davis filter (2026-10-21)
+
 try:
     from zoneinfo import ZoneInfo
     ET = ZoneInfo("America/New_York")
@@ -364,7 +367,15 @@ def build(root, day):
                     n, rec["disc"]["flags"], "" if rec["disc"]["flags"] == 1 else "s", usd(rec["disc"].get("total_discount_dollars") or 0)))
         per[s] = rec
     if counts and counts.get("unattributed"):
-        exceptions.append("Count-sheet photos posted by someone not on a store roster: %s" % ", ".join(counts["unattributed"]))
+        # fleet-wide rule (Joshua 2026-10-21): name only current Gusto staff, never a Davis (bin/vp_people.py)
+        try:
+            named, _dropped = vp_people.filter_names(counts["unattributed"], source="daily_audit_digest")
+        except vp_people.RosterHold:
+            named = []
+        if named:
+            exceptions.append("Count-sheet photos posted by someone not on a store roster: %s" % ", ".join(named))
+        else:
+            exceptions.append("Count-sheet photos were posted by someone not on a store roster.")
     return opened, per, exceptions, unavailable, sold
 
 

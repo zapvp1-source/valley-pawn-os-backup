@@ -54,3 +54,14 @@ ROA $824 · WAY $946 · HAR $907 · CUL $1,307 · LEX $932 = **$4,916**; bank 20
 - Review shows `Electronic Check ****<last4>`, Name on Account, Terms, and ONE visible checkbox "Yes, I authorize this transaction." (must be ticked; its label is not exposed to get_by_label — use the only visible checkbox) → **Submit Payment**.
 - The bank form after "Electronic Check → Next" can take 20–45 s to render; wait for "Name on Account" to be visible, re-click Next if needed.
 - Multiple hidden "Next" buttons exist in the DOM — always click the `:visible` one.
+
+## Credentials for the native payer (2026-10-21)
+- VSP portal password: Keychain `vp-vsp-portal-password` (PRIMARY; Chrome autofill on the automation profile proved unreliable — it hides the value until a user gesture and the pw-vp profile held a stale password → one LOGIN_FAILED on 10/21 09:26).
+- ACH: Keychain `vp-vsp-ach-name`, `vp-vsp-ach-routing`, `vp-vsp-ach-account` (WF ...2797).
+- Joshua updates either with `bash ~/Documents/Claude/Projects/Compliance/vsp/setup_autopay.sh` (bank) or `... --password` (portal). When VSP forces a password change the run DMs him exactly that line.
+- Login failures save `vsp/<YYYY-MM>/login-failed-<ddHHMM>.png`.
+
+## October 2026 payments
+- ROA FIRE-53140 $84.00 — NIC Transaction ID 104494590 (10/20 5:14 PM, native run)
+- LEX FIRE-53700 $62.00 — NIC Transaction ID 104496024 (10/20, native run)
+- WAY $62 / HAR $102 / CUL $122 — pending (checkout link slow on 10/20; login fix 10/21)

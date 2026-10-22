@@ -30,6 +30,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import w3b_lib as L  # noqa: E402
+import vp_people  # noqa: E402  fleet-wide rule 2026-10-21: current staff only, never a Davis
 
 TASK = "ceo-monthly-scorecard"
 CH = "C0C06PWLQCR"
@@ -103,7 +104,8 @@ def header(period, t, prev):
 SYSTEM = ("You write Joshua Davis's one-page monthly CEO scorecard for Valley Pawn. You use ONLY the facts and posts given. "
           "Never estimate. Never harden a range into a precise number. A dollar figure and a percentage in one sentence must "
           "come from the SAME dated post. Never present a mid-month figure as month-end — label it 'at <date>'. Never name "
-          "software, systems, files, channels, tasks or automations. Withhold rather than caveat.")
+          "software, systems, files, channels, tasks or automations. Withhold rather than caveat. Name only current employees, "
+          "and never name anyone with the last name Davis.")
 PROMPT = """Write the sections AFTER the BY STORE block of the {label} scorecard, in exactly this layout and with these caps
 (reference = last month's real page; match its tone, density and caps, not its numbers):
 :chart_with_upwards_trend: THE TREND (3 bullets) · :moneybag: FINANCIAL (3) · :gear: OPERATIONS (3) · :busts_in_silhouette: PEOPLE (3)
@@ -131,6 +133,83 @@ MONTH-END POSTS (channel, date, text):
 Return ONLY the sections, starting with ':chart_with_upwards_trend: THE TREND'."""
 
 
+_NAME_RX = re.compile(r"[*_]([A-Z][a-zA-Z'.-]+(?: [A-Z][a-zA-Z'.-]+){1,2})[*_]\s*\(|\b([A-Z][a-zA-Z'.-]+ [A-Z][a-zA-Z'.-]+) \((?:CUL|HAR|LEX|ROA|WAY)")
+_METRIC_WORDS = {"Revenue", "Sales", "Total", "Net", "Retail", "Loans", "Loan", "Inventory", "Store", "Stores", "Company",
+                 "Gold", "Silver", "Scrap", "Service", "Charges", "Pawn", "Layaway", "Layaways", "Review", "Month", "Week",
+                 "Average", "Gross", "Profit", "Buys", "Fees", "Past", "Due", "Aged", "Email", "Reviews", "Google"}
+_NOT_NAMES = {"Valley Pawn", "Retail Sales", "Company Total", "Store Performance", "Employee Sales", "Month In Review"}
+
+
+_KNOWN = {}
+
+
+def known_people():
+    """Everyone Bravo has ever listed (BRAVO_USERS incl. TERMINATED + every employee-activity CSV label on disk)
+    -> {lowercase full name: name}. The former-staff side of the line checks (2026-10-21)."""
+    if _KNOWN:
+        return _KNOWN
+    import glob
+    names = []
+    try:
+        names += [u.get("name") or "" for u in json.load(open(vp_people.BRAVO_USERS_PATH)).get("users", [])]
+    except (OSError, ValueError):
+        pass
+    out_dir = os.path.join(L.PROJ, "Bravo Data Extraction", "output")
+    for f in glob.glob(os.path.join(out_dir, "*employee-activity*.csv")):
+        try:
+            for ln in open(f, encoding="latin-1"):
+                m = re.match(r"^[A-Z0-9]+ - ([^,]+)", ln)
+                if m:
+                    names.append(m.group(1).strip())
+        except OSError:
+            pass
+    for n in names:
+        if len(n.split()) >= 2:
+            _KNOWN[" ".join(n.lower().split())] = n
+    return _KNOWN
+
+
+def former_named(ln):
+    """A known person (ever in Bravo) named in this line who is not reportable now, else None."""
+    low = " ".join(ln.lower().split())
+    for k, n in known_people().items():
+        if k in low and not vp_people.is_reportable(n):
+            return n
+    return None
+
+
+def scrub_people(text, source):
+    """2026-10-21 fleet-wide rule: drop any line that names a Davis or a person who is not current staff
+    (bin/vp_people.py). Dropped names go to vp_people's local log only, never into the page."""
+    out, dropped = [], []
+    for ln in text.split("\n"):
+        if vp_people.mentions_davis(ln):
+            dropped.append((ln[:60], "Davis family")); continue
+        if re.search(r"(?i)[*_]\s*(free1|system system|backup backup|approval sandi)", ln):
+            dropped.append((ln[:60], "shared / service login")); continue
+        bad = former_named(ln)
+        for n in ([] if bad else [a or b for a, b in _NAME_RX.findall(ln)]):
+            if n.upper().startswith(vp_people.SERVICE_PREFIXES):
+                bad = n; break
+            if n in _NOT_NAMES or n.split()[0] in L.NAMES.values() or n.split()[-1] in L.NAMES.values():
+                continue
+            if vp_people.resolve(n) is None and vp_people.is_davis(n) is False and _looks_person(n):
+                bad = n; break
+        if bad:
+            dropped.append((bad, vp_people.reason(bad) or "not current")); continue
+        out.append(ln)
+    vp_people._log(source, dropped)
+    return "\n".join(out)
+
+
+def _looks_person(n):
+    """Only treat 'First Last' as a person when it is shaped like the ranked lines (2-3 words, no digits/$)."""
+    w = n.split()
+    if set(w) & _METRIC_WORDS:
+        return False
+    return 2 <= len(w) <= 3 and not any(c.isdigit() for c in n) and all(x[:1].isupper() for x in w)
+
+
 def harvest(period):
     _, first, last, label = L.months(period)
     month = label.split()[0]
@@ -145,7 +224,7 @@ def harvest(period):
         if name in ("loan-review", "layaway-review", "aged-inventory-review", "daily-funds-reconcilation", "google-reviews") and not keep:
             keep = msgs[-2:]
         for m in keep:
-            t = L.text_of(m).strip()
+            t = scrub_people(L.text_of(m).strip(), TASK).strip()
             if t:
                 posts.append("[#%s %s] %s" % (name, dt.datetime.fromtimestamp(float(m["ts"]), L.ET).date(), t[:3500]))
                 seen.append(name)
@@ -204,18 +283,24 @@ def main():
     lm = os.path.join(CEO, "LAST_MONTH.json")
     lmj = json.load(open(lm)) if os.path.exists(lm) else {}
     decisions = lmj.get("decisions") if lmj.get("month") == pm else lmj.get("prior_month_decisions") or lmj.get("decisions")
-    posts, sources = harvest(period)
+    try:
+        posts, sources = harvest(period)
+    except vp_people.RosterHold as e:
+        L.ledger(TASK, "the %s CEO scorecard was held: the current-staff list could not be read (%s)" % (label, e)) if not render else None
+        print("HOLD: roster", e)
+        return 3
     body = L.ask(PROMPT.format(label=label, ref=open(REF).read(), head=head, facts=json.dumps(facts), people=people_txt,
                                decisions=json.dumps(decisions), posts="\n\n".join(posts)[:110000]), system=SYSTEM, max_tokens=9000).strip()
     if not people:
         body = people_not_tracked(body)
+    body = "\n".join(ln for ln in body.split("\n") if not vp_people.mentions_davis(ln))   # never a Davis (2026-10-21)
     text = head + "\n\n" + body
     bad = [b for b in L.field_clean(text) if b not in ("sync",)]
     if bad:
         print("Rule 16 terms in draft:", bad)
     ok = L.post(TASK, CH, text, render)
     status = ["# STATUS — CEO Monthly Scorecard, %s (native%s)" % (label, " render" if render else ""),
-              "Run: %s · %s" % (L.now().strftime("%Y-%m-%d %H:%M ET"), "rendered to fleet/test_output" if render else ("posted to #ceo-briefs" if ok else "post FAILED")),
+              "Run: %s · %s" % (L.now().strftime("%Y-%m-%d %H:%M ET"), "rendered to fleet/test_output" if render else ("posted to #ceo-briefs" if ok is True else ("DRY RUN — diverted, not posted" if ok else "post FAILED"))),
               "", "## Sources harvested", ", ".join("#" + s for s in sources), "Working file: %s" % os.path.basename(wf),
               "MoM base: Bonus Program/data/history.json %s" % pm, "", "## Gates",
               "- A: weekly scorecard not read. B: enforced in the prompt. E: all five stores present in the working file.",
@@ -227,7 +312,7 @@ def main():
            "body{font:11px/1.35 -apple-system,Helvetica,Arial,sans-serif;color:#111;white-space:pre-wrap}</style></head><body>%s</body></html>" % (
                html.escape(label), html.escape(re.sub(r":[a-z_]+: ?", "", text)))
     open(os.path.join(out_dir, "MONTH-%s%s.html" % (period, "-native-render" if render else "")), "w").write(page)
-    if ok and not render:
+    if ok is True and not render:   # a guard-diverted post never overwrites the carry-forward
         json.dump({"month": period, "generated": L.now().date().isoformat(), "note": "native carry-forward", "company": facts["company"],
                    "stores": [{"rank": i + 1, "store": L.NAMES[s], "net_revenue": facts["stores"][s]["net"]} for i, s in enumerate(ranked)],
                    "decisions": [], "prior_month_decisions": decisions, "page_text": text}, open(lm, "w"), indent=1)

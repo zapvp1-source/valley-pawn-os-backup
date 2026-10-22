@@ -176,3 +176,6 @@ on the same check — looks like Dowden's line was keyed to the wrong employee. 
 distinct, active Gusto employees (not a name variant). DM sent to Joshua (D03BHQH5VGT) with the plain finding.
 Trend tab Paid Verify Note updated for 2026-09. Fleet publish guard checked first (vp_dryrun.py status — not
 armed, exit 1), published for real.
+
+## 2026-10-21 — management rights added (interactive, Joshua asked)
+bonus_rules.json management_rights (effective earning month 2026-12) + management_actions.json + engine load_management_actions(). Sept 2026 close re-run in a scratch copy: $5,391.96, identical. Synthetic tests (effective_from forced to 2026-09 in the copy only): WAY suspend → $0 store line, pool excluded; CUL per-employee withhold → $0 line, pool split among the rest; back-dated suspension → HELD. Live out/ and ledger untouched. Policy + handbook section re-rendered.

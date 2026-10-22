@@ -235,6 +235,8 @@ def build(day):
             L.append("| %s | 0 | — | — | — | — |" % s); continue
         m = sorted(a["store_min"]); med = m[len(m) // 2] if m else "—"
         L.append("| %s | %d | %d (%s) | %d | %d | %s |" % (s, a["texts"], a["replied"], pct(a["replied"], a["texts"]), a["optout"], a["no_convo"], med))
+    for l_ in chekkit_ops_lines(day):
+        L += ["", l_]
     aud = ai_audit_line(day)
     if aud:
         L += ["", "## Automated replies checked (ai_reply_audit)", aud]
@@ -266,7 +268,30 @@ def dm_text(day, tot, ua, ai, rday, rep, hb_ok):
         t = sum(v["texts"] for v in rep.values()); r = sum(v["replied"] for v in rep.values())
         lines.append("Replies to missed-call texts (%s): %d of %d (%s)." % (rday, r, t, pct(r, t)))
     lines.append("AI drafts: %d would reply, %d silent%s.%s" % (ai["reply"], ai["silent"], ", %d opt-out requests to unsubscribe" % ai["optout"] if ai["optout"] else "", "" if hb_ok else " AI responder not running."))
+    lines += chekkit_ops_lines(day)
     return "\n".join(lines)
+
+
+def chekkit_ops_lines(day):
+    """2026-10-21: two Chekkit API figures from bin/chekkit_ops.py (fleet/state/chekkit_ops/).
+    Reviews still owed a reply (only shown when > 0) and texts auto-assigned to a manager today."""
+    out = []
+    st = os.path.join(FLEET, "state", "chekkit_ops")
+    try:
+        r = json.load(open(os.path.join(st, "reviews_owed.json")))
+        if r.get("total_owed"):
+            per = ", ".join("%s %d" % (k, v["owed"]) for k, v in r["stores"].items() if v.get("owed"))
+            low = sum(v.get("low_star", 0) for v in r["stores"].values())
+            out.append("Reviews still owed a reply: %d (%s)%s." % (r["total_owed"], per, ", %d of them 3 stars or less" % low if low else ""))
+    except (OSError, ValueError, KeyError):
+        pass
+    try:
+        a = json.load(open(os.path.join(st, "assigned_daily.json"))).get(day.isoformat(), {})
+        if a:
+            out.append("Texts waiting 10+ min that were handed to the store manager: %d (%s)." % (sum(a.values()), ", ".join("%s %d" % kv for kv in sorted(a.items()))))
+    except (OSError, ValueError):
+        pass
+    return out
 
 
 def main():

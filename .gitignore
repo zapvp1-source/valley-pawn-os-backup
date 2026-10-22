@@ -73,3 +73,7 @@ Projects/Quickbooks Set UP/
 tools/
 Projects/Business Dashboard Website/site/artifacts/
 Artifacts/
+
+# 2026-10-22: Amazon checkout page dumps/screenshots from bin/supply_order.py — debug artifacts,
+# never backup material (addresses, order totals, page tokens). Run JSON stays local too.
+/Projects/Valley Pawn OS/purchasing/runs/

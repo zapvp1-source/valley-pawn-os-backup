@@ -332,15 +332,15 @@ def main():
 
     push_link = f"{SHOP}?utm_source=bravo_push&utm_medium=push&utm_campaign={tag}"
     sms_link = f"thevalleypawn.com/shop/?utm_source=sms&utm_campaign={tag}"
-    sms = f"{cfg['sms']} {sms_link} Reply STOP to opt out"
+    sms = f"{cfg['sms']} {sms_link} Text STOP to unsubscribe"
     if len(sms) > 160 or not gsm_ok(sms):
-        sms = f"Valley Pawn: shop all 5 stores online. {sms_link} Reply STOP to opt out"
+        sms = f"Valley Pawn: shop all 5 stores online. {sms_link} Text STOP to unsubscribe"
     if APP_SMS:
         # One text a month, both asks. Short links keep it inside one 160-char GSM segment.
         app_link = f"thevalleypawn.com/app/?utm_source=sms&utm_campaign={tag}"
-        sms = f"Valley Pawn: pay your loan from your phone w/ our free app thevalleypawn.com/app/?utm_source=sms Shop online thevalleypawn.com/shop Reply STOP to opt out"
+        sms = f"Valley Pawn: pay your loan from your phone w/ our free app thevalleypawn.com/app/?utm_source=sms Shop online thevalleypawn.com/shop Text STOP to unsubscribe"
         if len(sms) > 160:
-            sms = f"Valley Pawn: pay your loan from your phone w/ our free app {app_link} Reply STOP to opt out"
+            sms = f"Valley Pawn: pay your loan from your phone w/ our free app {app_link} Text STOP to unsubscribe"
 
     base, base_src = load_base()
     email = build_email(base, cfg, featured, camp)

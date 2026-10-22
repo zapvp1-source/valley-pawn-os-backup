@@ -67,7 +67,22 @@ def gl_path(s, end):
 
 def gl_ok(s, end):
     p = gl_path(s, end)
-    return os.path.exists(p) and os.path.getsize(p) > 300 and dt.datetime.fromtimestamp(os.path.getmtime(p)).date() > end
+    return (os.path.exists(p) and os.path.getsize(p) > 300 and dt.datetime.fromtimestamp(os.path.getmtime(p)).date() > end
+            and full_month_header(p, end))
+
+
+def full_month_header(p, end):
+    """2026-10-21 (Nov 1 rehearsal): the file must SAY it covers the whole month. bravo-daily-gl (live 10/21) pulls
+    the last day of the month into this very file name (<END>_<STORE>_post-to-accounting-gl.csv) at 00:45 on the
+    1st before moving it to output/daily_gl/; a one-day file left behind (pull timed out, watcher wrote late) must
+    never be taken as the month. Reads the 'Reporting Dates:' header row (latin-1)."""
+    want = "%d/1/%d - %d/%d/%d" % (end.month, end.year, end.month, end.day, end.year)
+    try:
+        with open(p, encoding="latin-1", newline="") as f:
+            head = [next(f, "") for _ in range(5)]
+    except OSError:
+        return False
+    return any("Reporting Dates" in l and want in l for l in head)
 
 
 def result(tid):
@@ -220,7 +235,7 @@ def main():
         return 2
     p = subprocess.run([sys.executable, os.path.join(HERE, "vp_slack.py"), "dm", dm], capture_output=True, text=True, timeout=60,
                        env=dict(os.environ, VP_TASK=AGENT))
-    st["dm_sent"] = p.returncode == 0
+    st["dm_sent"] = p.returncode == 0 and "DRY RUN" not in p.stdout   # diverted by the publish guard = not sent
     json.dump(st, open(os.path.join(STATE_DIR, "%s.json" % ym), "w"), indent=1)
     if p.returncode != 0:
         ledger("Month-end GL export for %s completed but the summary DM did not send." % month)

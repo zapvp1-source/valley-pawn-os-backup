@@ -2215,3 +2215,31 @@ Jewelry Count — Tuesday 10/20 (expected = system on-hand, counted = PM count s
 | WAY | Necklaces | 72 | 72 | 0 |
 | **WAY Total** | | **579** | **579** | **0** |
 
+
+## RUN RECORD — 2026-10-21 (Wednesday) — native jewelry-onhand-nightly-pull
+
+Open: CUL ROA WAY. Bravo freeze-window CSVs: all open stores. Sheets: CUL ok (Sandi-Cole, 18:28); ROA ok (Benjie-Moore, 18:19); WAY ok (Martin-D, 18:22).
+
+Jewelry Count — Wednesday 10/21 (expected = system on-hand, counted = PM count sheet)
+
+| Store | Category | Expected | Counted | Variance |
+|---|---|---|---|---|
+| CUL | Rings | 669 | 669 | 0 |
+| CUL | Bracelets | 123 | 123 | 0 |
+| CUL | Earrings | 151 | 151 | 0 |
+| CUL | Pendants | 256 | 256 | 0 |
+| CUL | Necklaces | 154 | 154 | 0 |
+| **CUL Total** | | **1353** | **1353** | **0** |
+| ROA | Rings | 578 | 578 | 0 |
+| ROA | Bracelets | 137 | 137 | 0 |
+| ROA | Earrings | 78 | 78 | 0 |
+| ROA | Pendants | 170 | 170 | 0 |
+| ROA | Necklaces | 150 | 150 | 0 |
+| **ROA Total** | | **1113** | **1113** | **0** |
+| WAY | Rings | 334 | 334 | 0 |
+| WAY | Bracelets | 48 | 48 | 0 |
+| WAY | Earrings | 56 | 56 | 0 |
+| WAY | Pendants | 67 | 67 | 0 |
+| WAY | Necklaces | 72 | 72 | 0 |
+| **WAY Total** | | **577** | **577** | **0** |
+

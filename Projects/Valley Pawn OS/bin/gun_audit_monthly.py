@@ -27,13 +27,14 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import w3b_lib as L  # noqa: E402
+import vp_people     # noqa: E402  fleet-wide rule 2026-10-21: current staff only, never a Davis
 
 TASK = "monthly-gun-audit-report"
 CH = "C07CPN020G0"
 FORMATTER = os.path.join(L.PROJ, "Compliance", "bin", "gun_audit_format.py")
 STATE = os.path.join(L.OS_DIR, "fleet", "state", "gun_audit")
 ROSTER = os.path.join(L.OS_DIR, "hr", "ROSTER.json")
-TRENDS = "1sLid9zjLUkH-B8MOE5Fr_aemw35bxyAbtuUz4BTVA6s"
+TRENDS = "16Tzy6C-JlmJ-XIo-IrVwUOqSmOekIQ46K1b3t2nggWo"  # 2026-10-21: jdavis@fcfpawn.com copy (old fullcirclepawn@gmail.com sheet 1sLid9zjLUkH-B8MOE5Fr_aemw35bxyAbtuUz4BTVA6s retired)
 ORDER = ["Culpeper", "Waynesboro", "Harrisonburg", "Lexington", "Roanoke"]
 DEFAULT_PERSON = {"Waynesboro": "Chad", "Harrisonburg": "Andrew Clark", "Culpeper": "Martin D. / Bree Grayson",
                   "Roanoke": "Benjie Moore", "Lexington": "Uriah"}
@@ -69,7 +70,8 @@ def store_of_user(uid):
 
 def manager_of(store):
     for e in roster():
-        if e.get("department") == store and "manager" in (e.get("title") or "").lower() and e.get("slack_id"):
+        if e.get("department") == store and "manager" in (e.get("title") or "").lower() and e.get("slack_id") \
+                and not vp_people.is_davis(e.get("name")):
             return e["slack_id"], e.get("preferred") or (e.get("name") or "").split()[0]
     return PRESTON, None
 
@@ -138,14 +140,57 @@ def person(r):
     return p or a or DEFAULT_PERSON.get(r.get("store"), "")
 
 
+def _current_match(part, store):
+    """The current-roster person a short name ("Martin D.", "Uriah", "Chad", "Benjie") refers to, or None.
+    vp_people.resolve first; then a unique first-name (+ last initial) match, store department first, then everyone."""
+    e = vp_people.resolve(part, store)
+    if e:
+        return e
+    toks = [t for t in "".join(c if c.isalpha() or c == " " else " " for c in part).upper().split()]
+    if not toks or len(toks) > 2:
+        return None
+    first, init = toks[0], (toks[1] if len(toks) == 2 else "")
+    if len(init) > 1:
+        return None
+    staff = vp_people.current_staff()
+    for pool in ([e for e in staff if e.get("department") == store], staff):
+        c = [e for e in pool if (e["_first"].startswith(first) or e["_pref"].startswith(first) or first.startswith(e["_pref"]))
+             and len(first) >= 3 and (not init or e["_last"].startswith(init))]
+        if len(c) == 1:
+            return c[0]
+    return None
+
+
+def reportable_person(store, text):
+    """Fleet-wide rule (Joshua 2026-10-21): the post names only CURRENT staff and never a Davis. Each name in `text`
+    ("A / B") is kept as written only if it is a current, non-Davis employee; former / unknown names are dropped
+    (logged to fleet/state/vp_people/dropped.log, never posted). Nothing left -> the store's current manager (roster),
+    else no name. Raises vp_people.RosterHold if the roster is stale."""
+    parts = [p.strip() for p in (text or "").replace("&", "/").split("/") if p.strip()]
+    keep, dropped = [], []
+    for p in parts:
+        e = None if vp_people.is_davis(p) else _current_match(p, store)
+        if e and vp_people.is_reportable(e["name"]):
+            keep.append(p)
+        else:
+            dropped.append((p, "Davis family" if vp_people.is_davis(p) else "not current / unmatched"))
+    vp_people._log(TASK, dropped)
+    if keep:
+        return " / ".join(keep)
+    for e in vp_people.current_staff():
+        if e.get("department") == store and "manager" in (e.get("title") or "").lower() and vp_people.is_reportable(e["name"]):
+            return e.get("preferred") or e["_first"].capitalize()
+    return ""
+
+
 def fmt_input(period, by_store, label, rm):
     stores = []
     for s in ORDER:
         r = by_store.get(s)
         if not r:
-            stores.append({"store": s, "person": DEFAULT_PERSON[s], "submitted": None})
+            stores.append({"store": s, "person": reportable_person(s, DEFAULT_PERSON[s]), "submitted": None})
         else:
-            stores.append({"store": s, "person": person(r), "submitted": r["posted"], "forms_checked": r.get("forms_checked"),
+            stores.append({"store": s, "person": reportable_person(s, person(r)), "submitted": r["posted"], "forms_checked": r.get("forms_checked"),
                            "errors_found": r.get("errors_found"), "errors_corrected": r.get("errors_corrected")})
     return {"period": label, "deadline": rm.replace(day=15).isoformat(), "stores": stores}
 
@@ -166,7 +211,12 @@ def main():
         print("already posted:", marker)
         return 0
     by_store, label, rm = collect(period, render)
-    inp = fmt_input(period, by_store, label, rm)
+    try:
+        inp = fmt_input(period, by_store, label, rm)
+    except vp_people.RosterHold as e:
+        L.ledger(TASK, "the %s gun audit summary was held: %s" % (label, e)) if not render else None
+        print("HELD (roster):", e)
+        return 3
     print("FORMS:", json.dumps({s: {k: by_store[s].get(k) for k in ("posted", "auditor", "poster", "forms_checked",
                                                                          "errors_found", "errors_corrected", "audit_month", "confidence")}
                                 for s in by_store}, indent=1))

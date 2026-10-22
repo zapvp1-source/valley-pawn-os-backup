@@ -12,7 +12,8 @@ Setup: academy/.elevenlabs.json (never commit or share it; see BUILD_README.md)
 
 Commands:
     python3 voice.py voices                                  # list voices on the account
-    python3 voice.py estimate                                # billable (uncached) characters per lesson
+    python3 voice.py estimate                                # billable (uncached) characters per lesson (+ account balance)
+    python3 voice.py verify                                  # lessons with missing cache lines (bills nothing, no key needed)
     python3 voice.py sample --text "..." --out media/voice/sample.mp3
     python3 voice.py generate --lesson L1-01                 # one lesson
     python3 voice.py generate --all                          # everything not yet cached
@@ -312,6 +313,37 @@ def plan(paths, cfg):
     return out
 
 
+def account_balance(cfg):
+    """(remaining_chars, limit, reset_unix) from GET /v1/user/subscription, or None when there is no key / on any error."""
+    if not cfg.get("api_key"):
+        return None
+    try:
+        d = json.loads(_request("GET", f"{API_BASE}/v1/user/subscription", cfg["api_key"], tries=2))
+        used, limit = int(d.get("character_count") or 0), int(d.get("character_limit") or 0)
+        return max(0, limit - used), limit, d.get("next_character_count_reset_unix")
+    except Exception as e:  # noqa - the balance is a convenience, never a blocker
+        print(f"(could not read the account balance: {e})")
+        return None
+
+
+def cmd_verify(a):
+    """Which lessons would build WITHOUT full narration right now. Reads the cache only; never calls ElevenLabs."""
+    cfg = load_config()
+    paths = [find_lesson(a.lesson)] if a.lesson else all_lesson_paths()
+    missing_total = 0
+    rows = plan(paths, cfg)
+    for lid, lines in rows:
+        miss = [r for r in lines if not r[4]]
+        if miss:
+            missing_total += len(miss)
+            print(f"{lid:<8} MISSING {len(miss)}/{len(lines)} lines ({sum(len(r[2]) for r in miss):,} chars): {', '.join(r[0] for r in miss)}")
+    if missing_total:
+        print(f"\n{missing_total} line(s) not cached. These lessons would ship silent slides: run voice.py generate for them first.")
+        return 1
+    print(f"All {sum(len(l) for _, l in rows)} narration lines cached for {len(rows)} lesson(s).")
+    return 0
+
+
 def cmd_estimate(a):
     cfg = load_config()
     paths = [find_lesson(a.lesson)] if a.lesson else all_lesson_paths()
@@ -328,6 +360,15 @@ def cmd_estimate(a):
         print(f"{lid:<8} {len(rows):>5} {len(new):>8} {c_new:>15,} {c_all:>10,}")
     print(f"{'TOTAL':<8} {'':>5} {lines_new:>8} {total_new:>15,} {total_all:>10,}")
     print(f"\nBillable now (uncached only): {total_new:,} characters. Cached lines cost nothing to rebuild.")
+    bal = account_balance(cfg)
+    if bal:
+        remaining, limit, reset = bal
+        when = time.strftime("%Y-%m-%d", time.localtime(reset)) if reset else "?"
+        print(f"Account: {remaining:,} of {limit:,} characters remaining this period (resets {when}).")
+        if total_new > remaining:
+            print(f"WARNING: billable ({total_new:,}) exceeds what is left ({remaining:,}). generate would stop part-way.")
+    else:
+        print("Account balance: not checked (no API key configured).")
     return 0
 
 
@@ -409,6 +450,8 @@ def main():
     sp = ap.add_subparsers(dest="cmd", required=True)
     e = sp.add_parser("estimate", help="billable (uncached) characters per lesson")
     e.add_argument("--lesson", help="one lesson id, e.g. L1-01")
+    vf = sp.add_parser("verify", help="list lessons with missing cached narration (bills nothing)")
+    vf.add_argument("--lesson", help="one lesson id, e.g. L1-01")
     s = sp.add_parser("sample", help="speak one line to a file (billed)")
     s.add_argument("--text", required=True)
     s.add_argument("--out", default=os.path.join(VOICE_DIR, "sample.mp3"))
@@ -418,7 +461,7 @@ def main():
     v = sp.add_parser("voices", help="list voices on the account")
     v.add_argument("--search", help="filter by name/labels")
     a = ap.parse_args()
-    return {"estimate": cmd_estimate, "sample": cmd_sample, "generate": cmd_generate, "voices": cmd_voices}[a.cmd](a)
+    return {"estimate": cmd_estimate, "verify": cmd_verify, "sample": cmd_sample, "generate": cmd_generate, "voices": cmd_voices}[a.cmd](a)
 
 
 if __name__ == "__main__":

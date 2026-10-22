@@ -18,7 +18,8 @@ domain/hosting — never Valley Pawn's.
 ### 1. Solaterra LLC
 - **Owner:** Chris Marney
 - **Industry:** Stump grinding, forestry mulching (East Tennessee)
-- **Site:** https://solaterrallc.com (Cloudflare Pages project `solaterra-llc`)
+- **Site:** https://solaterrallc.com — **AS OF 2026-10-21: hosted on NETLIFY (site `vocal-piroshki-7e2d4c`, account not ours — likely Chris), DNS back on Squarespace nameservers.** Chris rebuilt/moved it ~Oct 1–3 (Harriman/Roane, stump grinding only). Old Cloudflare Pages project `solaterra-llc` still serves the outdated site at solaterra-llc.pages.dev.
+- **Audit 2026-10-21:** Claude Doc "Solaterra Digital Audit — Oct 2026" https://claude.ai/artifact/3d3dWmnjLYRfSq5UNwgvvn . Live site has typo domain `solaterralcc.com` (unregistered) in 21 places (email links, canonical, sitemap, schema). Fixed package: `Solaterra Site/solaterra-site-fixed_2026-10-21.zip`. GBP now 8 reviews / 5.0, hours still 7–9 daily. Yelp still not live. Bing ZIP 37840 mismatch, Facebook street "1". Blocked on Chris: Netlify access or drag-deploy, GBP manager invite, hours/scope confirm.
 - **Contact record:** `Solaterra Site/public/Contacts/Solaterra_LLC_Contact.md`
 - **Status (updated 2026-09-21):** Site live, DNS cutover to Cloudflare confirmed complete. GBP
   live but had wrong hours (7am-9pm daily instead of Mon-Sat 7-7/Sun closed) — submitted a Google
