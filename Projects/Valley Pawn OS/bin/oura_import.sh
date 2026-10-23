@@ -40,7 +40,26 @@ W=0; while pgrep -f run_daily_v5.sh >/dev/null && [ $W -lt 600 ]; do sleep 10; W
 # Step 1/2 — read the summary; if missing/stale/not ok, run the importer once
 if ! fresh_ok; then
   vlog "summary missing or stale — running run_daily_v5.sh"
-  /bin/bash "$H/bin/run_daily_v5.sh" >> "$VLOG/$AGENT.log" 2>&1
+  # 2026-10-22: importer output goes to a scratch file first so a "ring hasn't synced" day can be told apart
+  # from a real fault (bad token, crash). 10/17-10/22: the API answered every call (personal_info /
+  # ring_configuration rows came back, "=== Done." printed) but the ring itself had not synced, so the
+  # sanity assert "readiness latest ... is N days old" failed and this job ledgered + was re-run twice a day.
+  # A ring that hasn't synced is not a fleet fault: ONE quiet NEEDS_HUMAN ledger row per day, exit 0.
+  OUT_TMP="$VLOG/.oura_import_run.txt"
+  /bin/bash "$H/bin/run_daily_v5.sh" > "$OUT_TMP" 2>&1
+  RING=$("$PY" "$BIN/oura_sync_check.py" "$OUT_TMP" "$H/oura_latest.json")
+  if [ "${RING%% *}" = "RING_NOT_SYNCED" ]; then
+    grep -v -E "Traceback|AssertionError|File \"<stdin>\"|WARN: sanity check failed|^\{\"status\"" "$OUT_TMP" >> "$VLOG/$AGENT.log"
+    vlog "ring not synced: ${RING#* } (Oura API reachable, token OK) — not a fleet fault"
+    MARK="$VLOG/.oura_ring_unsynced_$TODAY"
+    if [ ! -f "$MARK" ]; then
+      : > "$MARK"
+      ledger "$AGENT" "Oura ring has not synced to the Oura cloud since ${RING#* } (the Oura API itself answers fine, so nothing in the fleet is broken). Health data waits until the ring syncs." "yes, open the Oura app to sync the ring"
+    fi
+    vlog "=== oura import done ==="
+    exit 0
+  fi
+  cat "$OUT_TMP" >> "$VLOG/$AGENT.log"
   if ! fresh_ok; then
     ERR=$(tail -3 "$H/logs/oura-import.err.log" 2>/dev/null | tr '\n' ' ' | cut -c1-200)
     ledger "$AGENT" "Today's Oura import did not produce a good summary after one rerun. Last error: ${ERR:-none recorded}." "no"

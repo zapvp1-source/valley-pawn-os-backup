@@ -323,7 +323,8 @@ def check_entry(entry, instance):
         p = entry.get("path", "")
         # placeholders are expanded from the EXPECTED instance date, so a dated artifact
         # (guardian_runs/2026-09-16-*.json, monday-gapfill/2026-09-13.md) is looked up exactly
-        p = (p.replace("{YYYY-MM-DD}", instance.strftime("%Y-%m-%d"))
+        prev = (instance.replace(day=1) - dt.timedelta(days=1)).strftime("%Y-%m")   # 2026-10-22: month-end files are named for the closed month
+        p = (p.replace("{PREV-YYYY-MM}", prev).replace("{YYYY-MM-DD}", instance.strftime("%Y-%m-%d"))
               .replace("{YYYY-MM}", instance.strftime("%Y-%m")))
         matches = glob.glob(p) if "*" in p else ([p] if os.path.exists(p) else [])
         if not matches:

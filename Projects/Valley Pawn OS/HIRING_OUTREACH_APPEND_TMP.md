@@ -1,0 +1,1 @@
+(Stray scratch file created by mistake during the 2026-10-22 ~7:49 PM vp-hiring-pipeline run — a shell heredoc was accidentally pointed at this connected folder instead of a scratchpad. Not load-bearing; safe to delete whenever convenient. The actual run-log entry was appended to HIRING_OUTREACH.md instead.)

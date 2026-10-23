@@ -87,11 +87,50 @@ DEFAULT_CONFIG = {
 
 ANSWERABLE = set(DEFAULT_CONFIG["answerable_trust"])
 MACHINERY = re.compile(
-    r"(cowork|claude|anthropic|knowledge[- ]base|corpus|entry id|scheduled task|launchd|pipeline|"
+    r"(\bcowork\b|claude|anthropic|knowledge[- ]base|corpus|entry id|scheduled task|launchd|pipeline|"
     r"\bkb:|\bpp:|\bhb:|\bac:|\bfact:|/users/|\.md\b|\.json\b|\.py\b|retriev|passage|chunk)", re.I)
 HEDGE = re.compile(r"\b(likely|probably|presumably|i think|i believe|may have changed|might have changed|not on record|isn't on record|is not on record|unclear whether)\b", re.I)
 OFFER_LANG = re.compile(r"(offer (them|him|her|the customer)?\s*\$\d|we can (pay|offer) (them|him|her)?\s*\$\d|"
                         r"approved (offer|amount|price)|go ahead and (pay|offer) \$)", re.I)
+
+# ---- SCOPE GUARD (Joshua 2026-10-22): Goldilocks stays inside the pawn-shop knowledge base. Financials, legal
+# matters and HR matters are answered ONLY when the P&P Manual or Employee Handbook already states it (POLICY
+# passages, pp:/hb:). Enforced in code before AND after the model — never left to the prompt.
+SCOPE_HR = re.compile(
+    r"\b(my pay|pay rate|pay raise|raise|raises|salary|salaries|wages?|paycheck|payday|pay period|payroll|get paid|"
+    r"overtime|pto|paid time off|vacation|sick (day|days|leave|time)|time off|day off|call(ing)? out|call-?out|"
+    r"my schedule|work schedule|schedule me|shift swap|swap (a )?shift|cover (my|a) shift|write[- ]?up|written up|"
+    r"disciplin\w*|fired|firing|terminat\w*|quit|quitting|resign\w*|harass\w*|discriminat\w*|hostile|retaliat\w*|"
+    r"complain\w* about|grievance|accommodat\w*|benefits?|health insurance|401k|retirement|bonus(es)?|commission|"
+    r"hiring|hire|interview\w*|drug test\w*|dress code|employee (discount|purchase)s?|at-will|i-?9|w-?4|w-?2|"
+    r"direct deposit|promotion|performance review|coworker|co-worker|my manager|my boss|employment|human resources|\bhr\b)\b", re.I)
+SCOPE_FIN = re.compile(
+    r"\b(revenue|profits?|p ?& ?l|p and l|net income|gross profit|earnings|financials?|finances|budget|expenses?|"
+    r"cash flow|debt|bank (balance|account|statement)s?|books|bookkeeping|quickbooks|qbo|accounting|tax(es)? return|"
+    r"company (money|numbers|finances)|how much (did|does|do) (we|the store|the company|valley pawn) (make|made|earn|bring)|"
+    r"sales (numbers|figures|totals?)|store (numbers|totals)|owner'?s? (pay|salary|draw)|investor|loan to the company)\b", re.I)
+SCOPE_LEGAL = re.compile(
+    r"\b(legal|legally|illegal|laws?|lawsuit|sue|sued|suing|attorney|lawyer|counsel|court|subpoena|liable|liability|"
+    r"lien|small claims|warrant|statute|regulation|regulations|compliance|atf ruling|ruling|code of virginia|va\.? code|"
+    r"cfr|u\.?s\.?c|federal law|state law|prosecut\w*|criminal|charges? pressed|press charges)\b", re.I)
+SCOPE_REPLY = re.compile(
+    r"\b(revenue|net income|gross profit|p ?& ?l|bank balance|payroll|salary|salaries|lawsuit|attorney|lawyer|"
+    r"legal advice|liable|liability|va\.? code|cfr|u\.?s\.?c|statute)\b", re.I)
+POLICY_TRUST = {"POLICY"}
+
+
+def scope_of(text):
+    """Restricted categories a message touches: subset of {'hr', 'financial', 'legal'}."""
+    t = text or ""
+    out = set()
+    if SCOPE_HR.search(t):
+        out.add("hr")
+    if SCOPE_FIN.search(t):
+        out.add("financial")
+    if SCOPE_LEGAL.search(t):
+        out.add("legal")
+    return out
+
 
 STOP = set("""a an the and or of to in on for with at by from is are was were be been it this that these those
 as if then than so do does did can could would should will may might i you we they he she our your their my me
@@ -131,7 +170,7 @@ SYN = {
 
 CANNED = {
     "not_covered": "That one's not written down yet — check with {mgr}. I've flagged it.",
-    "out_of_scope": "That's one for {mgr_short} — I don't handle pay, schedules, time off, discipline or company numbers.",
+    "out_of_scope": "That's outside what I cover — I stick to how we run the stores. For pay, schedules, HR, legal or money questions, check with {mgr_short}.",
     "unclear": "That number isn't settled right now — check with Preston before you quote it.",
     "error": None,   # on an internal error we say nothing at all (Rule 16)
 }
@@ -156,6 +195,7 @@ WHAT YOU CAN SAY WITHOUT A PASSAGE (status chat or clarify) — and only this:
 NEVER
 - compute or state a specific dollar offer for a live deal as approved. You may show melt math (LIVE passage) and the percentage band Preston set; the approval is a human's — say so.
 - answer anything about someone's own pay, schedule, time-off balance, discipline, a dispute, company financials or books, real estate or personal matters -> status out_of_scope.
+- discuss company finances, legal matters or HR matters (pay, benefits, time off, discipline, hiring, complaints, accommodations) beyond what a POLICY passage (the P&P Manual or Employee Handbook) states word for word. On those topics: restate the policy exactly, add no interpretation, advice or opinion; if no POLICY passage covers it -> status out_of_scope. Never give legal advice or say what the law allows.
 - name internal systems, files, ids, "the knowledge base", "passages", "sources" or how you work. Don't say who a rule came from or when — just give the rule. Mentioning the P&P manual or handbook section is fine when it helps.
 - hedge. No "likely", "probably", or guessing what a setting is now. If the latest value on record may have changed, that's status conflict.
 - invent anything in a chat or clarify reply — no numbers, rules or names there.
@@ -521,6 +561,12 @@ def answer(q, asker="", store="", cfg=None, bm=None, by_id=None, history=None):
         m0 = melt_chunk(q) or melt_chunk(ctx + " " + q)
         if m0 and not any(c["id"] == "live:melt" for c, _ in passages):
             passages.insert(0, (m0, 99))
+    user_ctx = " ".join(t for w, t in (history or [])[-4:] if w != "Goldilocks")
+    scope = scope_of(" ".join([q, q_search, user_ctx]))
+    if scope:
+        # restricted topic: POLICY passages only (P&P Manual / Employee Handbook), searched wider so policy isn't crowded out
+        wide = [(c, s) for c, s in bm.search(q_search + (" " + user_ctx if user_ctx else ""), k=60)] if bm is not None else passages
+        passages = [(c, s) for c, s in wide if c.get("trust") in POLICY_TRUST][:cfg["max_chunks"]]
     retrieved = {c["id"]: c for c, s in passages}
     _, managers = roster()
     mgr = managers.get(store) or "your Store Manager"
@@ -529,7 +575,15 @@ def answer(q, asker="", store="", cfg=None, bm=None, by_id=None, history=None):
              "preston": " — and if it's a deal or pricing question, Preston"}
     out = {"status": "not_covered", "reply": CANNED["not_covered"].format(**fills), "cites": [], "topic": "",
            "checks": [], "latency": 0.0, "source_line": "", "retrieved": list(retrieved.keys())}
+    if scope:
+        out["checks"].append("scope guard: %s -> policy passages only (%d)" % ("/".join(sorted(scope)), len(passages)))
+        if not passages:
+            out.update({"status": "out_of_scope", "reply": CANNED["out_of_scope"].format(**fills), "latency": time.time() - t0})
+            return out
     prompt = build_prompt(q if q_search == q else "%s  (they mean: %s)" % (q, q_search), asker, store, passages, history)
+    if scope:
+        prompt += ("\n\nRESTRICTED TOPIC (%s): answer ONLY by restating what the P&P Manual / Employee Handbook passages "
+                   "above say. No interpretation, advice, opinion or legal reading. If they don't cover it, status out_of_scope." % "/".join(sorted(scope)))
     has_answerable = any(c.get("trust") in ANSWERABLE for c, _ in passages)
     j = {}
     for attempt in (1, 2):
@@ -618,6 +672,17 @@ def answer(q, asker="", store="", cfg=None, bm=None, by_id=None, history=None):
             out["checks"].append("unknown status %r -> not_covered" % status)
         status = "not_covered"
 
+    if status in ("answer", "conflict"):
+        policy_only = all(retrieved[c]["trust"] in POLICY_TRUST for c in cites) and bool(cites)
+        if scope and not policy_only:
+            out["checks"].append("scope guard: restricted topic answered from non-policy cites -> out_of_scope")
+            status = "out_of_scope"
+        elif not policy_only and SCOPE_REPLY.search(reply):
+            out["checks"].append("scope guard: reply strays into %r without a policy cite -> out_of_scope" % SCOPE_REPLY.search(reply).group(0))
+            status = "out_of_scope"
+        if status == "out_of_scope":
+            reply = CANNED["out_of_scope"].format(**fills)
+            cites = []
     if status == "unclear":
         reply = CANNED["unclear"].format(**fills)
         cites = []

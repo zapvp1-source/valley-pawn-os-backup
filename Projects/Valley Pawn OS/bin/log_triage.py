@@ -102,7 +102,8 @@ EXPECT_PATH = os.path.join(OS_DIR, "fleet", "log_triage_expectations.json")
 
 def load_expectations():
     """{"retired": {log: why}, "aliases": {log: label}, "evidence": {log: [glob, ...]},
-    "gap_hours": {log: hours}} — every entry carries its reason; absent file = no expectations."""
+    "gap_hours": {log: hours}, "run_end": {log: regex}, "event_quiet_ok_hours": {log: h},
+    "benign_lines": {log: regex}} — every entry carries its reason; absent file = no expectations."""
     try:
         import json
         d = json.load(open(EXPECT_PATH))
@@ -196,10 +197,15 @@ def main():
         cutoff = (now - dt.timedelta(days=DAYS)).strftime("%Y-%m-%d")
         recent = lines[-4000:]
         hits = []
+        # 2026-10-22 (additive, opt-in): benign_lines {log: regex} — lines that are REPORT CONTENT, not a fault of
+        # the agent (vp-comms-drift-monthly-check quotes the team posts it found, e.g. '"...deploy step failed —"').
+        _blx = (exp.get("benign_lines") or {}).get(os.path.basename(p))
         for l in recent:
             if not (BAD.search(l) or BAD_EXTRA.search(l)):
                 continue
             if BENIGN.search(l):
+                continue
+            if _blx and re.search(_blx, l):
                 continue
             m = re.match(r"(\d{4}-\d{2}-\d{2})", l.strip())
             if m:

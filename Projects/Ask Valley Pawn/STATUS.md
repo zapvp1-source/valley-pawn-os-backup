@@ -57,3 +57,15 @@
 2. Approve the demo announcement (DEMO_PLAN.md) before Fri 10/16.
 3. Say the word and the Monday batch to Preston goes live (`verify_enabled: true`) — it is one Slack message a week to him, ≤10 items.
 4. Flip to LIVE after the shadow period (`mode: LIVE`).
+
+## 2026-10-22 — monthly knowledge harvest feeds Goldilocks
+- NEW native monthly harvest (see Valley Pawn OS CHANGELOG 10/22) writes `harvest/GAPS_<YYYY-MM>.md` (questions the floor needed that are not written down) and `answer_bank/CANDIDATES_<YYYY-MM>.md` (Layer 5 seed — pending approval, NOT in the corpus; approved answers go to `answer_bank/APPROVED.md`, corpus wiring is the next step).
+- store_facts fixed: every store has its own FFL (was "Roanoke"); Harrisonburg Suite 22.
+- Still SHADOW; zero staff questions since 10/9 (staff not yet in #ask-goldilocks). verify_enabled still false — three batches (10/12, 10/19) sit unsent in verify/.
+
+## 2026-10-22 (evening) — LIVE (Joshua: "yes")
+- mode LIVE, verify_enabled true. #ask-goldilocks has 13 members: all 12 floor staff + Preston + Joshua. First Preston batch Mon 10/26 09:05 in #preston-claude.
+- New hires: add to #ask-goldilocks at onboarding (bot lacks channels:manage; bin/ask_vp_invite_staff.py ready if the scope is added).
+
+## 2026-10-22 (night) — scope guard (Joshua)
+- Pawn-shop knowledge only. Financial, legal and HR questions are answered only from the P&P Manual / Employee Handbook text (POLICY passages), restated with no advice; otherwise routed to the store manager. Enforced in code before and after the model. Selftest 42/43.

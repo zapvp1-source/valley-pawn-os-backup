@@ -44,3 +44,5 @@ To go back: delete the `native_live` file and turn the cloud copy back on.
 **Updated 2026-10-21:** #20 — sheet moved to jdavis@fcfpawn.com; the post is ready; the sheet write stays held (writer month-label bug found by the render).
 
 **Note A (eom recap):** the gate is the same as the cloud run's: 3 weeks of the channel's own recap, or 60% of days. A self-check removes any figure that isn't in the channel's posts. The September render made the same skip decisions as the cloud run, with one exception: #pawn-walks. The cloud run read the bot's posts as empty and skipped it; the native agent can read them, so it posts there. The native drafts are worded slightly differently from the cloud posts.
+
+**Updated 2026-10-22 (pre-flight):** all 21 switched (cloud copies verified off, no duplicates). Scorecard fixed so #4 (GL export), #14 (loan & layaway) and #17 (Bravo user audit) are graded on the closed month's file; #1 has a DST guard for the repeated 1 AM hour on 11/1. Verification checks are scheduled 11/1 noon, 11/2 11:30, 11/3 1:30 PM.

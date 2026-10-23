@@ -75,11 +75,12 @@ def build(manifest_path):
     st = doc.styles['Normal']; st.font.name = 'Calibri'; st.font.size = Pt(12)
 
     # ---- cover
+    cf = float(m.get('cover_font', 11.5))  # optional manifest key; default unchanged
     header(doc, f"Policy Update — {m['month']}", f"Policy Day {m['policy_day']}   ·   All stores   ·   Sign in Gusto by {m['sign_by']}")
     navy_box(doc, 'One signature covers everything in this packet.', 16)
     para(doc, "What's new this month", 13, NAVY, True, 4)
     for b in m['whats_new']:
-        p = doc.add_paragraph(); r = p.add_run('→  ' + b); r.font.size = Pt(11.5); p.paragraph_format.space_after = Pt(4)
+        p = doc.add_paragraph(); r = p.add_run('→  ' + b); r.font.size = Pt(cf); p.paragraph_format.space_after = Pt(4)
     pol = m.get('policies', [])
     mdp = m.get('md_pages', [])
     att = m.get('attachments', [])
@@ -88,7 +89,7 @@ def build(manifest_path):
         para(doc, 'In this packet, in order', 13, NAVY, True, 4).paragraph_format.space_before = Pt(8)
         for t, area, starts in items:
             tail = (f" — {area}" if area else '') + (f" · starts {starts}" if starts else '')
-            p = doc.add_paragraph(); r = p.add_run(f"→  {t}{tail}"); r.font.size = Pt(11.5)
+            p = doc.add_paragraph(); r = p.add_run(f"→  {t}{tail}"); r.font.size = Pt(cf)
             p.paragraph_format.space_after = Pt(3)
     p = para(doc, f"Current manuals: Employee Handbook v{m['handbook']} and Policies & Procedures Manual v{m['pp']} — in Gusto under Documents. "
                   "Questions: your Store Manager, Preston, or #ask-goldilocks.", 10, GREY, False, 4)

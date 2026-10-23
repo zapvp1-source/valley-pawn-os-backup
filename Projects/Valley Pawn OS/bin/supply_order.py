@@ -140,6 +140,22 @@ def new_requests(rules, st):
         cursor = (r.get("response_metadata") or {}).get("next_cursor")
         if not cursor:
             break
+    # posts we asked to re-send links (cut-off paste): staff often answer IN THE THREAD, so read those replies too
+    for pts, why in list(st.get("processed", {}).items()):
+        if why != "unreadable":
+            continue
+        try:
+            rr = slack("conversations.replies", channel=ch, ts=pts, limit=100)
+        except Exception:
+            continue
+        parent = (rr.get("messages") or [{}])[0]
+        for m in rr.get("messages", [])[1:]:
+            if m.get("bot_id") or m["ts"] in st.get("processed", {}) or not LINK_RE.findall(m.get("text", "")):
+                continue
+            m = dict(m)
+            # carry the parent's store word so store_for() can still tell which store it is
+            m["text"] = (parent.get("text", "").split("\n")[0] + "\n" + m.get("text", ""))
+            msgs.append(m)
     out = []
     for m in sorted(msgs, key=lambda m: float(m["ts"])):
         if m.get("subtype") in ("channel_join", "bot_message") or m.get("bot_id"):
@@ -758,6 +774,9 @@ def cmd_run(dry):
                              "I couldn't open %s of the links in this post — they look cut off. Please repost the full "
                              "Amazon links (use Share > Copy Link in the Amazon app) and I'll order them next run."
                              % ("all %d" % nall if nbad == nall else "%d of %d" % (nbad, nall)))
+            for req, nbad, nall in unreadable:
+                if nbad == nall:
+                    st["processed"][req["ts"]] = "unreadable"  # keep watching its thread for re-posted links
             for r in reqs:
                 st["processed"].setdefault(r["ts"], "read")
             st["last_ts"] = reqs[-1]["ts"]
@@ -1070,6 +1089,52 @@ def main():
         finally:
             vb.close(ctx)
             p.stop()
+        return 0
+    if cmd == "firstweek":  # one-time Tue 10/27 11:00 check Joshua asked for (native; Cowork task creation is gone)
+        if NOW.date() != dt.date(2026, 10, 27) and "--force" not in sys.argv:
+            return 0  # the plist fires every 10/27; only this year's run does anything
+        rules = load(RULES, None)
+        st = load(STATE, {})
+        runs = os.path.join(P, "runs")
+        problems, good = [], []
+        tue = sorted(f for f in os.listdir(runs) if re.fullmatch(r"20261027-0\d{3}\.json", f))
+        if not tue:
+            problems.append("the Tuesday 9 AM supply run didn't leave a record (was the Mac on?)")
+        else:
+            run = load(os.path.join(runs, tue[-1]), {})
+            for store, items in (run.get("planned") or {}).items():
+                if not items:
+                    continue
+                res = (run.get("orders") or {}).get(store, {})
+                if not str(res.get("status", "")).startswith("placed"):
+                    problems.append("%s wasn't ordered (%s)" % (store, res.get("note") or res.get("status") or "no result"))
+        new = [o for o in st.get("orders", []) if o.get("placed") == "2026-10-27"]
+        if any(o["order"] == "?" for o in new):
+            problems.append("an order number wasn't captured")
+        # ship-to + status straight from Amazon for every pipeline order
+        p, ctx, page, vb = browser()
+        try:
+            for o in st.get("orders", []):
+                if o["order"] == "?":
+                    continue
+                info = read_order(page, o["order"])
+                if store_of_address(info["ship_to"], rules) != o["store"]:
+                    problems.append("order %s for %s is shipping to: %s" % (o["order"], o["store"], info["ship_to"][:60]))
+                elif o.get("placed") == "2026-10-27":
+                    good.append("%s $%.2f" % (o["store"], o.get("total") or 0))
+                if o.get("placed") in ("2026-10-21", "2026-10-22") and classify(info["statuses"]) != "delivered":
+                    problems.append("last week's %s order %s still shows: %s" % (o["store"], o["order"], "; ".join(info["statuses"])[:80]))
+        finally:
+            vb.close(ctx)
+            p.stop()
+        if not any(f.startswith("20261026-07") and f.endswith("-watch.json") for f in os.listdir(runs)):
+            problems.append("Monday's spending report didn't run")
+        if problems:
+            dm("Supply check (first automatic week) — needs a look: " + "; ".join(problems[:6]))
+            ledger("first-week supply check: " + "; ".join(problems[:6]), "yes, see DM")
+        else:
+            dm("First automatic supply week checked: %s — all shipped to the right stores; last week's orders delivered; "
+               "Monday's report ran." % (", ".join(good) or "no new requests this week"))
         return 0
     if cmd == "approve" and len(a) > 1:  # Joshua approved in chat: supply_order.py approve <ASIN> [<ASIN>...]
         st = load(STATE, {})

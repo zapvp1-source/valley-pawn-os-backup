@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-10-20 22:11 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-10-22 22:11 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -1879,6 +1879,12 @@ PRESTON SAID: "We still had the product. We sold the product, disclosing all iss
 SOURCE: zoom-call:2026-08-29_HAR_store-to-Preston_14m42s.txt | 2026-08-29 | store<->Preston (transcribed 2026-10-01)
 id: disclosed-defect-sold-as-tes-beea03ff
 
+### [MEDIUM] ebay-opened-case-handling
+RULE: Any opened eBay case needs immediate attention, and the Operations Manager (Preston) must be told about it as well.
+PRESTON SAID: "I have advised Walker on the correct handling of any opened eBay case and that it needs immediate attention and to let me know as well."
+SOURCE: #harrisonburg-funds (Preston Peters, Operations Manager) | 2026-10-22 | https://valleypawnworkspace.slack.com/archives/C03BWRKEDUZ/p1792690005574209
+id: ebay-opened-case-handling-808505fe
+
 ### [MEDIUM] escalate-urgent-issues-to-preston
 RULE: Store staff should always loop Preston in when an urgent or emergency issue comes up, such as a payment system problem, so he can step in early.
 PRESTON SAID: "Yeah, I mean, at least always loop me in."
@@ -2182,6 +2188,12 @@ PRESTON SAID: "Should be a custom purity option"
 SOURCE: #deal-questions (Preston Peters, Operations Manager) | 2026-10-09 | https://valleypawnworkspace.slack.com/archives/C03BWGT5F5X/p1791577890719919
 id: custom-purity-unlisted-karat-e5c8e827
 
+### [LOW] ebay-account-recovery-options
+RULE: For an eBay account with bad seller-metric instances, a new account may be the best option. Boosting transaction count with many low-cost sales is costly, and bad instances take a year to drop off.
+PRESTON SAID: "We have a couple options, new eBay account might be the best option. Second option would be lots of low cost sales to boost the transaction count but the math on that is quite high. Takes a year for bad instances to drop off."
+SOURCE: #harrisonburg-funds (Preston Peters, Operations Manager) | 2026-10-22 | https://valleypawnworkspace.slack.com/archives/C03BWRKEDUZ/p1792690005574209
+id: ebay-account-recovery-option-81af2c51
+
 ### [LOW] employee-purchase-window-handbook-error
 RULE: The handbook's "90 days" employee purchase window is wrong. It likely came from an earlier draft policy and will be corrected. The correct number was not stated.
 PRESTON SAID: "Yeah, that's not accurate. That might have got pulled from Josh's original policy that he wanted, so we'll have to update that."
@@ -2369,7 +2381,19 @@ PRESTON SAID: "If you're, if you're working six days, there's no reason that the
 SOURCE: zoom-call:2026-10-12_0959_chadd-mcclintic_0857.txt | 2026-10-12 | store<->Preston (transcribed 2026-10-01)
 id: weekly-hours-cap-40-c36f366b
 
+### [LOW] windows-11-pro-upgrade-account-name-fields
+RULE: When the Windows 11 Pro upgrade account asks for a name, enter "Valley pawn" as first and last name. For the birthday, use any date, since it likely doesn't matter.
+PRESTON SAID: "And then it's gonna ask for first and last name just put in Valley pawn and then I'll ask for a birthday, you just use your birthday, I don't think it matters."
+SOURCE: zoom-call:2a1f2bdf8dca44c68755acfecbd38591 | 2026-10-22 | UNK Chadd McClintic
+id: windows-11-pro-upgrade-accou-57b851c9
+
+### [LOW] windows-11-pro-upgrade-store-account
+RULE: To download and upgrade to Windows 11 Pro, create a Microsoft account using the store's email information, as was done at the other stores.
+PRESTON SAID: "You need to create an account using the store emails information"
+SOURCE: zoom-call:2a1f2bdf8dca44c68755acfecbd38591 | 2026-10-22 | UNK Chadd McClintic
+id: windows-11-pro-upgrade-store-428d028c
+
 
 ==============================================================================
-COVERAGE: 322 entries - 1 verified by Preston, 180 high-confidence rules, 89 medium, 52 low, 0 superseded.
+COVERAGE: 326 entries - 1 verified by Preston, 180 high-confidence rules, 90 medium, 55 low, 0 superseded.
 ==============================================================================

@@ -1,0 +1,1 @@
+- 2026-10-22 16:03 — 2026-10: 10 policy, 11 training, 15 goldilocks, 13 faq, 10 contradictions, 5 marketing; dropped 0 ungrounded

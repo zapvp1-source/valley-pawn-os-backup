@@ -161,8 +161,7 @@ def scored_entries(man):
             if not ch.startswith("C"):
                 continue      # a DM channel: the bot cannot read it — DM reports are scored by receipt entries
         elif o == "file":
-            if "{PREV" in e.get("path", ""):
-                continue
+            pass          # 2026-10-22: {PREV-YYYY-MM} is now expanded (prior month of the instance) — no longer skipped
         elif o != "receipt":
             continue
         out.append(e)
@@ -264,7 +263,9 @@ def receipt_hits(e, ws, we):
 
 
 def file_hits(e, inst, ws, we):
-    p = e.get("path", "").replace("{YYYY-MM-DD}", inst.strftime("%Y-%m-%d")).replace("{YYYY-MM}", inst.strftime("%Y-%m"))
+    prev = (inst.replace(day=1) - dt.timedelta(days=1)).strftime("%Y-%m")   # month-end jobs name files for the month they closed
+    p = (e.get("path", "").replace("{PREV-YYYY-MM}", prev)
+         .replace("{YYYY-MM-DD}", inst.strftime("%Y-%m-%d")).replace("{YYYY-MM}", inst.strftime("%Y-%m")))
     ms = glob.glob(p) if "*" in p else ([p] if os.path.exists(p) else [])
     if not ms:
         if not os.access(os.path.dirname(p) or "/", os.R_OK):

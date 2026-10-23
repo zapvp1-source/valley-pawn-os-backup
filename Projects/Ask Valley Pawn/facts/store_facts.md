@@ -11,11 +11,11 @@ Only Culpeper, Roanoke and Waynesboro are open on Wednesday.
 ## Store addresses and phone numbers
 Culpeper — 571 James Madison Highway, Culpeper, VA 22701 — (540) 445-5510 — culpeper@fcfpawn.com
 Waynesboro — 1321 West Broad Street, Waynesboro, VA 22980 — (540) 221-6346 — waynesboro@fcfpawn.com
-Harrisonburg — 1790 East Market Street, Harrisonburg, VA 22801 — (540) 574-4500 — harrisonburg@fcfpawn.com
+Harrisonburg — 1790 East Market Street, Suite 22, Harrisonburg, VA 22801 — (540) 574-4500 — harrisonburg@fcfpawn.com
 Lexington — 125 Walker Street, Lexington, VA 24450 — (540) 461-8349 — lexington@fcfpawn.com
 Roanoke — 2362 Peters Creek Road, Suite C, Roanoke, VA 24017 — (540) 562-0776 — roanoke@fcfpawn.com
 Customers can call or text any store at its store number (store lines are text-enabled).
-The company is Full Circle Finance Inc, doing business as Valley Pawn. Five Virginia stores. The FFL (firearms) licence is at Roanoke; firearms procedure is in the P&P manual and Academy Level 6.
+The company is Full Circle Finance Inc, doing business as Valley Pawn. Five Virginia stores. Every store holds its own federal firearms licence (Type 02 pawnbroker FFL) — Culpeper, Waynesboro, Harrisonburg, Lexington and Roanoke all buy, pawn, sell and receive firearm transfers. Firearms procedure is in the P&P manual and Academy Level 6.
 
 ## Who manages each store and who to escalate to
 Culpeper — Store Manager Sandi Cole

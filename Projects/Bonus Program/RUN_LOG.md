@@ -179,3 +179,7 @@ armed, exit 1), published for real.
 
 ## 2026-10-21 — management rights added (interactive, Joshua asked)
 bonus_rules.json management_rights (effective earning month 2026-12) + management_actions.json + engine load_management_actions(). Sept 2026 close re-run in a scratch copy: $5,391.96, identical. Synthetic tests (effective_from forced to 2026-09 in the copy only): WAY suspend → $0 store line, pool excluded; CUL per-employee withhold → $0 line, pool split among the rest; back-dated suspension → HELD. Live out/ and ledger untouched. Policy + handbook section re-rendered.
+
+## 2026-10-22 — September Martin Dowden bonus corrected (interactive)
+Gusto payroll check date 2026-10-23 (processed 10/22) pays Martin Dowden $604.43 bonus = $504.43 Sept bonus + $100 one-off (breaker errand). Verified via get_employee_earnings_summary. Martin notified in Slack DM at Joshua's approval. Still open: Walker Tapley's $500 overpayment on the 10/16 check.
+Update 2026-10-22: Walker Tapley's $500 bonus on the 10/16 check was INTENTIONAL — Joshua paid it as a discretionary effort bonus, outside the bonus program. Not an error; do not flag or recover. September 2026 is fully closed and paid.

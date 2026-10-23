@@ -2,6 +2,8 @@
 
 Why: the 2026-10-20 board review fixed 64 lessons. Phase 1 (10/21) voiced every narration change that corrected something wrong (24,928 chars). The remaining narration polish (~10.9k chars) waits for the monthly reset. Full target text: `lessons_target_20261028/` (already includes every phase-1 change; M-01 clip = call070 anxious_pastdue).
 
+Step 0 (added 2026-10-22): before step 1, apply the items in `HARVEST_EDITS_2026-10.md` (monthly knowledge harvest — what calls, texts and staff questions showed) to `lessons_target_20261028/` — key points, scenario questions and floor checks first; change voiced "say" lines only if `voice.py estimate` stays inside the remaining credits. Skip any item that depends on a decision still open in the Policy Queue HARVEST:2026-10 block (default/pull day, firearm returns/denied trades/police transfers/no-serial, 18-20 long guns, low-cash approvals) — those wait for the Policy Day answer. Validate as usual.
+
 Steps (run on the Mac, in this folder):
 1. `python3 voice.py estimate` after copying the target into a scratch check is NOT needed — just do:
    - `cp -a lessons backups/20261028-phase2-pre/` (backup)

@@ -1,6 +1,6 @@
 # ASK-HANDBOOK SOURCES — Full Circle Finance Inc DBA Valley Pawn
 
-AUTO-GENERATED 2026-10-21 14:07 by build_sources.py. Do not hand-edit — edits are overwritten.
+AUTO-GENERATED 2026-10-22 19:07 by build_sources.py. Do not hand-edit — edits are overwritten.
 
 This file is the ONLY thing the #ask-handbook responder may answer employees from.
 If a policy is not in here, the correct answer is 'not covered — ask your Store Manager',
@@ -40,6 +40,7 @@ Customer service (07.04) — greeting is "Welcome to Valley Pawn! Have you ever 
 Discounts (05.03) — 31% to 50% needs the Store Manager's approval on the ticket; never past 50%.
 Returns and warranty (05.08) — the warranty needs an account with an email; returns need the receipt and original condition; a firearm that fails within 30 days goes to the Store Manager and Market Manager.
 Counterfeit bills (02.04) — UV light and watermark on every $50 and $100; a suspected counterfeit is never handed back.
+Monthly bonus (01.08) — from the December 2026 bonus month, a bonus is earned only when the store meets every standard KPI in force on the 1st (not just the NCO checklist) plus the bonus goals; one employee's own violation affects only that employee; the CEO approves every bonus; a store's program can be suspended for future months by written notice. Earned bonuses are still always paid.
 End of day (02.07) — Bravo step names now match Section 02.13: Close Till, count total funds, Close Store.
 Title pawns (04.04) — the vehicle is held by the store for the life of the pawn; Valley Pawn does not make motor-vehicle title loans.
 Telephone (07.03) — a caller who says they are police is verified by calling back through the department's main number; background-check results are given only as "finished, you can come in".
@@ -291,8 +292,8 @@ All customer complaints must be addressed immediately. If a complaint cannot be 
 ### 01.08 Monthly Bonus Program
 Valley Pawn operates a monthly employee bonus program. THE CURRENT PUBLISHED BONUS RULES CONTROL — not this section. The operative targets, rates, qualifiers and payout dates are the ones most recently published by the Company, communicated in the #bonus-goals Slack channel and distributed to employees for signature. Where anything in this manual differs from the current published bonus rules, the published rules govern.
 This section is deliberately a pointer rather than a formula, so that the bonus program can be updated without this manual becoming inaccurate. Earlier editions of this manual set out specific percentages; those figures are superseded and are no longer in force.
-Standing conditions that apply to every bonus period unless the published rules say otherwise: a manager must have managed the branch for the full period to be eligible; an employee must be employed on the payout date; and the store must pass the current NCO (Neat, Clean, Organized) checklist published by the Market Manager — the checklist in force at the start of the bonus period is the standard, so the condition is known in advance. These are conditions of EARNING a bonus.
-Once a bonus has been earned under the published rules for a completed period, it is paid. The Company does not reduce, withhold or offset an earned bonus after the fact. The Company may change the bonus program prospectively at any time, with notice, for future periods.
+Standing conditions that apply to every bonus period unless the published rules say otherwise: a manager must have managed the branch for the full period to be eligible; an employee must be employed on the payout date; and the store must pass the current NCO (Neat, Clean, Organized, Professional) checklist published by the Market Manager. Starting with the December 2026 bonus month, the store must also meet every standard KPI in force on the 1st of the bonus month — every measurable store standard published in this manual, the Employee Handbook, the store scorecard, or a signed Monthly Policy Update (for example drawer balancing and cash variances, the monthly gun audit, the Monthly Store Compliance Checklist, the nightly police report, and loan delinquency and the default timeline). If the miss is caused by one employee's own documented policy violation, only that employee's bonus is affected. Because the standards in force on the 1st are the ones that apply, every condition is known in advance. These are conditions of EARNING a bonus.
+Every bonus is approved by the CEO before payroll; approval confirms the published conditions were met and is not a second, unpublished test. Once a bonus has been earned under the published rules for a completed period, it is paid. The Company does not reduce, withhold or offset an earned bonus after the fact. The Company may suspend, change or end the bonus program for any store, any position or the whole company, for a legitimate business reason, by written notice to the affected employees; a suspension or change applies to bonus periods that begin after the notice date and stays in place until lifted in writing. For hourly employees, bonuses are included in the regular rate used for overtime.
 Questions about a bonus calculation go to Preston Peters (Market Manager) or Joshua Davis (CEO).
 
 ### 01.09 Training Bonus Program
@@ -1142,6 +1143,7 @@ Version 2026.8 FINAL — Full Circle Finance Inc DBA Valley Pawn — Effective O
 Hours of Business — Culpeper, Roanoke and Waynesboro are open Monday–Saturday and close at 5:00 p.m. on Saturday; Harrisonburg and Lexington stay closed Wednesday.
 Communication — a complaint about your supervisor goes to the next person in the chain of command (the Market Manager, then the CEO); "or Human Resources" is removed because Valley Pawn has no HR department.
 Reporting Harassment — harassment of an employee by a customer or vendor is reported the same way, and management decides whether that person is welcome back.
+Bonus Pay — starting with the December 2026 bonus month, a bonus is earned only when the store meets every standard KPI as well as the bonus goals; management approves every bonus and may suspend the program for a store with written notice for future months. Earned bonuses are always paid.
 
 ## The Story of Valley Pawn
 
@@ -1502,7 +1504,8 @@ Wage earners are required by law to contribute a set percentage of their wages t
 All non-exempt employees are eligible to receive pay of one-and-one-half times their regular rate for hours worked over forty (40) in one workweek. The employee’s supervisor must approve all overtime in advance; unapproved overtime will be paid but may result in corrective action. If an employee is absent due to a job-related injury, a holiday closure, jury duty, or PTO, the hours not worked will not be counted as hours worked for the purpose of computing overtime.
 
 ### Bonus Pay
-Bonus pay is determined by the company for each category and type of employee, and is governed by the Monthly Bonus Program as published in the Policies & Procedures Manual and announced in Slack. The company may modify the program at any time.
+Bonus pay is governed by the Monthly Bonus Program — the current published bonus rules and Section 01.08 of the Policies & Procedures Manual. Starting with the December 2026 bonus month, a bonus is earned only if the store meets every standard KPI in force on the 1st of the month, in addition to the published bonus goals. Standard KPIs are every measurable store standard published in this handbook, the Policies & Procedures Manual, the store scorecard, or a signed Monthly Policy Update. If the miss is caused by one employee's own documented policy violation, only that employee's bonus for that month is affected.
+Every bonus is approved by management before payroll; approval confirms the published conditions were met. The Company may suspend, change or end the bonus program for any store, any position or the whole company, for a legitimate business reason, by written notice; a suspension or change applies to bonus months that begin after the notice. Once a bonus is earned for a completed month it is paid on the published payday — the Company does not reduce or withhold an earned bonus after the fact. For hourly employees, bonuses are included in the regular rate used to calculate overtime. Nothing in this section is a contract or changes at-will employment.
 
 ### Performance Reviews
 The company wants each employee to grow and to succeed in their position with the company; therefore, formal performance reviews are normally conducted once per year on each employee. An employee’s performance may also be reviewed near the end of their introductory period, or in the event of a promotion or a change in duties and/or responsibilities.
