@@ -111,7 +111,7 @@ How the baseline was measured: taken from the 9/1/2026 Bravo Monthly KPI emails 
 **Text (Chekkit):** `build_text_lists.py` builds one upload list per store every month into `packs/<m>/chekkit_<Store>.csv`.
 - Source: Bravo's "Chekkit Invites" exports (phone numbers by store).
 - Customers first seen in the last 18 months.
-- **Opt-in and opt-out are handled in Chekkit, not Bravo** (Joshua 2026-09-29: "do not filter in bravo"). Bravo's DNT flag is deliberately ignored; Chekkit suppresses anyone who has replied STOP.
+- **Carrier safety (Joshua 2026-10-23, replaces the 9/29 "do not filter in bravo" rule):** anyone Bravo marks DNT is left out, anyone who got one of our marketing texts in the last 14 days is left out, and each store list is capped at 2,000 (most recent customers first). Chekkit still suppresses anyone who replied STOP. Shared rules: `Valley Pawn OS/bin/vp_textable.py`. The send task holds any store whose 30-day opt-out rate is 1.8% or higher (Step 0b).
 - Staff numbers are excluded.
 - Each phone goes to one store only.
 

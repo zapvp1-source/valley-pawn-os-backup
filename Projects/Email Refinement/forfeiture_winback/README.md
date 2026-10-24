@@ -51,4 +51,4 @@ Pipeline cell options (in the `date` field): `<date|saved>|rows=N|stamp=YYYY-MM-
   - It lands ahead of the Friday payday. Pawn demand peaks at the start of the month (rent), and the first send, Thu 10/1, falls on the 1st.
   - Phones already texted are logged in `runs/*/chekkit_sent_<Store>.txt` and are never texted twice.
 - Email and text never go out on the same day.
-- Approved text: "Hi from Valley Pawn in {TOWN}! Pawn loans are different: your credit is always good with us, and you're always approved for another loan. Just bring in something of value. Gold & silver get the most! Stop by anytime or text us right here."
+- Approved text (revised 2026-10-23, Joshua): "Hi from Valley Pawn in {TOWN}! Pawn loans are different: no credit check, and your credit is always good with us. Just bring in something of value. Gold & silver get the most! Stop by anytime or text us right here."

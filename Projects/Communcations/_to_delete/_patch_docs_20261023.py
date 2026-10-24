@@ -1,0 +1,14 @@
+import sys
+base=sys.argv[1]
+reps_map=[('| Look up, create, tag customers | Not used |', '| Look up, create, tag customers | `chekkit_tags.py` (nightly 01:10, since 2026-10-23) |'), ('| Active Chekkit users and their access level | Not used |', '| Active Chekkit users and their access level | `chekkit_ops.py` (manager lookup), `chekkit_roster_check.py` (monthly, since 2026-10-23) |'), ('every 5 min).\n\n1. **Daily', 'every 5 min).\n**Built and live 2026-10-23:** #3 (`chekkit-roster-check`, 3rd of the month 10:10; first run found 4 staff not set up, 0 leftover logins) and #4 (`chekkit-customer-tags`, nightly 01:10; tags `bravo-customer-2yr`, `bravo-visited-60d`, `bravo-borrower`, `bravo-do-not-text`, `bravo-winback`; lookup + PATCH only, never creates a customer). Update a customer is `PATCH /v1/customers/{id}` with `addTags` / `removeTags`, and tags added by hand in Chekkit are kept.\n\n1. **Daily')]
+reps_rev=[('- **Harrisonburg Facebook review link** now points at the brand page (795439020329931). All five reminder texts verified clean', '- **Harrisonburg Facebook review link:** checked again on 10/23 and set to the live store page (474248069342834). The 10/21 change to 795439020329931 was wrong because that page no longer exists. All five reminder texts verified clean')]
+sec8='\n## 8. Follow-up 2026-10-23 (Joshua: "go")\n- **Review replies now run on their own.** Joshua signed in once. The test run reached all 5 stores and drafted 5 new 4–5★ replies (Waynesboro 2, Roanoke 3). From tonight, 4–5★ replies post at 7:30 PM every night; 1–3★ reviews still come to Joshua as drafts.\n- **Monthly Chekkit logins check** (3rd of the month) compares the Gusto staff list with Chekkit users. First run: nobody who left still has access. 4 staff were never set up: Joshua Burnett (Culpeper), Camden Ahern (Harrisonburg), Brendon Thomas (Roanoke), Stephanie Chaplin (Waynesboro). Those 4 are on the human list because Chekkit\'s API cannot add users.\n- **Customer tags from Bravo** (nightly): `bravo-customer-2yr` (about 15,400 customers), `bravo-visited-60d` (about 3,800), `bravo-borrower`, `bravo-do-not-text`, `bravo-winback`. The tags are on customers who are already in Chekkit; nobody is added. With them, a text campaign can go to people who have actually been in recently instead of the whole list, which is the lever on opt-outs. The first full pass finishes in about two nights.\n- **Joshua\'s call:** whether the monthly "Shop Us Online" text should go only to `bravo-customer-2yr` and skip `bravo-do-not-text`.\n'
+p=base+"/CHEKKIT_API_CAPABILITY_MAP.md"; s=open(p).read()
+for a,b in reps_map:
+    print("map", a[:40], a in s); s=s.replace(a,b)
+open(p,"w").write(s)
+p=base+"/COMMS_REVIEW_2026-10-20.md"; s=open(p).read()
+for a,b in reps_rev:
+    print("rev", a[:40], a in s); s=s.replace(a,b)
+if "## 8. Follow-up 2026-10-23" not in s: s=s.rstrip("\n")+"\n"+sec8
+open(p,"w").write(s)

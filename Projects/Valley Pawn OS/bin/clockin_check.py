@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """clockin_check.py — native replacement for the Cowork/cloud `daily-clockin-check`
-(Mon–Sat 10:15 ET -> #general C03BETSS669). Built 2026-10-18 (Mac-first). WHY: the cloud copy posts through
+(Mon–Sat 10:15 ET -> #basics C0CCH89BUNL). Built 2026-10-18 (Mac-first). WHY: the cloud copy posts through
 the Claude account and died Sat 10/17 on the account's weekly usage limit; a native agent cannot be taken
 out by that. Authoritative instructions + exact post format: fleet/task_prompts/daily-clockin-check.md
 (v2 2026-10-15: Wednesday = Culpeper + Roanoke + Waynesboro; store staff only; crosswalk; three formats).
@@ -30,9 +30,9 @@ password; never a screenshot of anything but its own automation window):
     Department must be Culpeper / Harrisonburg / Lexington / Roanoke / Waynesboro; last name Davis,
     Preston Peters and Sandi (Sandra) Cole never appear. Wednesday: Culpeper, Roanoke, Waynesboro only.
     Display overrides: Bridgett Grayson -> Bree Grayson; George (B) Moore -> Benjie Moore.
-  4 Step 0 duplicate guard: a "Daily Clock-In Check" already in #general today -> post nothing (Wednesday:
+  4 Step 0 duplicate guard: a "Daily Clock-In Check" already in #basics today -> post nothing (Wednesday:
     post only the Waynesboro supplement if the existing post covers Culpeper & Roanoke only).
-  5 Posts the task file's exact format to #general as the ops bot (vp_slack.py: fleet publish guard +
+  5 Posts the task file's exact format to #basics as the ops bot (vp_slack.py: fleet publish guard +
     receipt are inside it). Never after 12:30 ET (a "10:15 AM" snapshot posted at lunch is wrong).
 
   clockin_check.py --render [--diag]   full read, prints the would-be post, NEVER posts; --diag also saves
@@ -66,7 +66,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import vp_people  # fleet-wide current-staff / no-Davis filter (2026-10-21)
 import vp_browser  # the one automation profile + launch recipe (2026-10-19)
 PROFILE = vp_browser.PROFILE
-CH = "C03BETSS669"
+CH = "C0CCH89BUNL"  # #basics (Joshua 10/23: nothing posts to #general)
 MARKER = "Daily Clock-In Check"
 TT_URL = "https://app.gusto.com/payroll_admin/time_tracking"
 PEOPLE_URLS = ["https://app.gusto.com/payroll_admin/people",
@@ -916,7 +916,7 @@ def main():
     env = dict(os.environ, VP_TASK=AGENT)
     r = subprocess.run(["/usr/bin/python3", os.path.join(BIN, "vp_slack.py"), "post", CH, post], capture_output=True, text=True, env=env)
     if r.returncode != 0:
-        ledger("The clock-in check ran but its #general post did not go through.")
+        ledger("The clock-in check ran but its #basics post did not go through.")
         log("FAIL post:", (r.stderr or r.stdout).strip()[:200])
         return 1
     log("posted", r.stdout.strip())

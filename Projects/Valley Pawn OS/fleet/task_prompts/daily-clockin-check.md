@@ -9,7 +9,7 @@ Change log: 2026-10-15 — Waynesboro open Wednesdays (from 10/14, Joshua): Wedn
 
 > ⚠️ **STORE STAFF ONLY — NO DAVIS FAMILY (Joshua, 2026-10-01 — binding).** Family members and corporate/office staff never appear in this report.
 
-You are checking Valley Pawn employee clock-in status in Gusto and posting a summary to Slack **#general (channel ID C03BETSS669) ONLY — do NOT DM anyone.**
+You are checking Valley Pawn employee clock-in status in Gusto and posting a summary to Slack **#basics (channel ID C0CCH89BUNL) ONLY — do NOT DM anyone.**
 
 **Architecture:** headless via the Gusto connector (PATH A). The Chrome/website flow is PATH B (fallback) only if PATH A returns no usable data, errors twice, or surfaces an unknown member ID. Both produce the identical Slack message.
 
@@ -20,7 +20,7 @@ You are checking Valley Pawn employee clock-in status in Gusto and posting a sum
 - Mon/Tue/Thu/Fri/Sat: all five stores.
 
 ## Step 0 — Duplicate guard (do this FIRST)
-Read today's messages in #general (C03BETSS669) with the Slack read tool. Look for a message posted today containing "Daily Clock-In Check".
+Read today's messages in #basics (C0CCH89BUNL) with the Slack read tool. Look for a message posted today containing "Daily Clock-In Check".
 - **None found** → do the full report below.
 - **Found, and today is NOT Wednesday** → stop; post nothing (the report already went out).
 - **Found, today IS Wednesday, and it already lists Waynesboro employees or says Waynesboro** → stop; post nothing.
@@ -106,7 +106,7 @@ Everyone clocked in (any day):
 🟢 *Clocked In (N)*
 • [Name] — clocked in at [time]
 ```
-No source-system footer. Send to #general (C03BETSS669) only. If single-asterisk bold renders italic, use `**bold**`; keep layout identical.
+No source-system footer. Send to #basics (C0CCH89BUNL) only. If single-asterisk bold renders italic, use `**bold**`; keep layout identical.
 
 ## Precondition — FLEET PUBLISH GUARD
 Before publishing, run `python3 "$HOME/Documents/Claude/Projects/Valley Pawn OS/bin/vp_dryrun.py" status`. Exit 0 = ARMED: do everything but publish nothing; write the would-be post to `Valley Pawn OS/fleet/test_output/daily-clockin-check-<YYYYMMDD-HHMMSS>.txt` (first line = channel). Exit 1 = publish normally. If you cannot run the command (no shell), publish normally.

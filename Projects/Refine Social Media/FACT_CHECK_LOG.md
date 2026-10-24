@@ -25,3 +25,23 @@ Posts edited (all APPLIED, verified in Publer queue):
 - 6ad66488af47a3248fca6124 GBP_Harrisonburg 10/23: added verified specifics — lows near 34, festival 1-5 p.m. downtown, sensory hour at the Shops at Agora
 
 Unverifiable: none left in posts. Published-wrong: none.
+
+## 2026-10-23 07:50 ET — daily fact-check (window: next 36h)
+Posts checked: 18 (11 with dated/time-sensitive claims; 7 brand/product posts skipped as evergreen/product — Roanoke Sat "open until 5" matches store hours).
+Claims verified:
+- Northside @ William Fleming, Fri 10/23 7 PM — https://www.maxpreps.com/va/roanoke/northside-vikings/football/schedule/ (Roanoke FB, GBP_Roanoke)
+- Patrick Henry no game 10/23; hosts Pulaski County Fri 10/30 7 PM — https://www.maxpreps.com/va/roanoke/patrick-henry-patriots/football/schedule/
+- Waynesboro hosts Buffalo Gap Fri 10/23 7 PM, region game, no forfeit — https://www.maxpreps.com/va/waynesboro/waynesboro-little-giants/football/schedule/ (Waynesboro FB, GBP_Waynesboro)
+- Culpeper County @ James Monroe Fri 10/23 7 PM — https://www.maxpreps.com/va/fredericksburg/james-monroe-yellow-jackets/football/schedule/
+- Culpeper won 7-0 at King George Sat 10/17 — https://www.maxpreps.com/va/king-george/king-george-foxes/football/schedule/ and MaxPreps recap
+- Eastern View hosts King George Fri 10/23 7 PM — https://www.maxpreps.com/va/culpeper/eastern-view-cyclones/football/schedule/ (Culpeper FB, GBP_Culpeper)
+- VMI Family Weekend Oct 23-25, 2026 — https://www.vmi.edu/cadet-life/events-and-traditions/family-weekend/
+- Lexington lows 35/34/35 Fri-Sun nights — NWS https://forecast.weather.gov/zipcity.php?inputstring=Lexington%2CVA (issued 7:30 AM 10/23)
+- Lexington 50% first-frost date Oct 23 — https://garden.org/apps/frost-dates/Lexington%2C+VA/ (NOAA NCEI data)
+- Lexington Farmers Market Wednesdays 8-12:30, McCrum's lot S Jefferson St, year-round rain or shine — https://lexvafm.com/
+- Skeleton Festival Sat 10/24 1-5 PM downtown; sensory-friendly trick-or-treat 12-1 PM at Shops at Agora — https://www.downtownharrisonburg.org/skeleton-fest/
+- Harrisonburg lows: Fri ~34, Sat ~31, Sun ~34 — NWS https://forecast.weather.gov/zipcity.php?inputstring=Harrisonburg%2CVA (6:13 AM 10/23)
+Posts edited (APPLIED):
+- 6ad6647f739ecf58fa8ed1ec Harrisonburg FB: "lows around 34 degrees forecast Friday and Saturday nights" → "lows around 34 Friday night and near 31 Saturday night, so Sunday could start below freezing"
+- 6ad66488af47a3248fca6124 GBP_Harrisonburg: "lows near 34 degrees this weekend" → "lows near 34 Friday night and near 31 Saturday night"
+Unverifiable: none. Published-wrong: none.

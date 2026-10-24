@@ -42,7 +42,13 @@ STORES = [("CUL", "Culpeper", "C03BLHFJ3KN", "#pepper-funds"), ("HAR", "Harrison
           ("WAY", "Waynesboro", "C03BLLRN64U", "#boro-funds")]
 SENT_RX = re.compile(r"\bsent\b", re.I)
 # amounts: "2k", "1.5k", "$2,000", "1500", "800" — but never a bare 6-digit code
-AMT_RX = re.compile(r"\$?\s*(\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)\s*(k|K)?\b")
+# 2026-10-23: a number glued to letters/@/./_ (e.g. the "118" in pcenroll@FullCircleFinanceInc118.onmicrosoft.com)
+# is never money — require a clean boundary on both sides.
+AMT_RX = re.compile(r"(?<![\w@./-])\$?\s*(\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)\s*(k|K)?(?![\w@/]|\.\w)")
+# Claude-authored posts carry a "Sent using Claude" footer; that "sent" is not a cash send. Strip the footer,
+# and treat any message that carried it as instructions, never a send (2026-10-23 Windows-rollout false alarm).
+CLAUDE_FOOTER_RX = re.compile(r"[*_]*\s*sent\s+using\s*[*_]*\s*(?:<[^|>]*\|)?\s*[*_]*claude\b[*_>]*", re.I)
+LINK_RX = re.compile(r"<[^>]+>|https?://\S+|\S+@\S+")
 CANCEL_RX = re.compile(r"don'?t need|do not need|no longer need|not needed|cancel|never mind|nevermind|didn'?t need", re.I)
 
 
@@ -80,8 +86,10 @@ def slack_ledger(tok, day):
         for m in sorted(r.get("messages", []), key=lambda m: float(m.get("ts", 0))):
             text = (m.get("text") or "").strip()
             t = dt.datetime.fromtimestamp(float(m["ts"]), ET).strftime("%-I:%M %p")
-            if m.get("user") == JOSHUA and SENT_RX.search(text):
-                a = parse_amount(text)
+            claude_authored = bool(CLAUDE_FOOTER_RX.search(text))
+            text = CLAUDE_FOOTER_RX.sub("", text).strip()
+            if m.get("user") == JOSHUA and not claude_authored and SENT_RX.search(text):
+                a = parse_amount(LINK_RX.sub(" ", text))
                 if a is None:
                     unparsed.append((t, text[:80]))
                 else:

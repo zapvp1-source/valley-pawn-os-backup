@@ -3,9 +3,10 @@
 
 Source: Bravo "Chekkit Invites" range exports (Bravo Data Extraction/output/*_<ST>_chekkit-invites-range.csv),
 (phones by store and first-visit month). Rules:
-  - Text opt-in / opt-out is managed IN CHEKKIT (Joshua 2026-09-29: "the text opt in and out is through
-    chekkit, do not filter in bravo"). Bravo's dnt column is deliberately IGNORED; Chekkit suppresses
-    anyone who replied STOP.
+  - Carrier safety (Joshua 2026-10-23, replacing the 9/29 "do not filter in bravo" rule): anyone Bravo marks DNT
+    (told a store not to text them) is LEFT OUT; anyone who got one of our marketing texts in the last 14 days is
+    left out; each store list is capped at 2,000 (most recently seen first). Chekkit still suppresses anyone who
+    replied STOP. Rules live in Valley Pawn OS/bin/vp_textable.py (shared with the win-back texts).
   - Customers first seen within the last 18 months (handbook §07.06 relationship window).
   - Staff phones excluded (Valley Pawn OS/hr/ROSTER.json).
   - Valid 10-digit US numbers only; one row per phone; a phone is assigned to the store it was most
@@ -13,6 +14,8 @@ Source: Bravo "Chekkit Invites" range exports (Bravo Data Extraction/output/*_<S
 Output: packs/<m>/chekkit_<Store>.csv  (First Name,Last Name,Phone,Email — Joshua appended as confirmation row)  + packs/<m>/text_lists.json summary.
 """
 import csv, datetime as dt, glob, json, os, re, sys
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Valley Pawn OS", "bin"))
+import vp_textable  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PROJ = os.path.dirname(HERE)
@@ -67,8 +70,9 @@ def main():
                                "last_name": (row.get("last_name") or "").strip().title()}
     out = os.path.join(HERE, "packs", m)
     os.makedirs(out, exist_ok=True)
-    summary = {"month": m, "cutoff_first_seen": cutoff, "consent_source": "Chekkit (opt-in/opt-out managed there)", "staff_excluded": 0,
-               "source_files": len(files), "stores": {}}
+    dnt_set, recent = vp_textable.dnt_phones(), vp_textable.recent_marketing()
+    summary = {"month": m, "cutoff_first_seen": cutoff, "consent_source": "Chekkit STOP + Bravo DNT left out (vp_textable)", "staff_excluded": 0,
+               "dnt_excluded": 0, "recent_text_excluded": 0, "over_cap_dropped": 0, "source_files": len(files), "stores": {}}
     for st, name in STORES.items():
         rows = []
         for p, v in best.items():
@@ -76,8 +80,19 @@ def main():
                 continue
             if p in staff:
                 summary["staff_excluded"] += 1; continue
-            rows.append({"First Name": (v["first_name"] + " " + v["last_name"]).strip(), "Last Name": "",
-                         "Phone": p, "Email": ""})
+            if p in dnt_set:
+                summary["dnt_excluded"] += 1; continue
+            if p in recent:
+                summary["recent_text_excluded"] += 1; continue
+            nm = " ".join(w for w in (v["first_name"] + " " + v["last_name"]).split() if w.lower() != "none")
+            rows.append({"First Name": nm, "Last Name": "",
+                         "Phone": p, "Email": "", "_d": v["date"]})
+        rows.sort(key=lambda r: r["_d"], reverse=True)
+        if len(rows) > vp_textable.MAX_PER_STORE_MONTH:
+            summary["over_cap_dropped"] += len(rows) - vp_textable.MAX_PER_STORE_MONTH
+            rows = rows[:vp_textable.MAX_PER_STORE_MONTH]
+        for r in rows:
+            r.pop("_d", None)
         rows.sort(key=lambda r: r["Phone"])
         # Proven Chekkit upload format (chekkit-weekly-review-requests runbook, 2026-07-22): Joshua is the
         # last row of every store's file so he receives each campaign as its confirmation copy.

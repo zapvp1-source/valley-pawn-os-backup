@@ -1,5 +1,8 @@
 # Hiring Outreach — Indeed Applicant Triple-Contact Process
 
+> **UPDATE 2026-10-23 (Joshua): INTERVIEWER = PRESTON PETERS, CALLING FROM ZOOM (540) 202-4200.** Every candidate-facing message (first contact, confirmation, no-show reschedule, texts) names Preston and (540) 202-4200. Never give candidates (540) 836-4200 (Preston's personal cell) or (804) 930-4221. Older templates below that show 836-4200 or 930-4221 are SUPERSEDED. Source of truth: the `vp-hiring-pipeline` skill.
+
+
 **Created:** 2026-08-15 · **Owner:** Joshua (execution: Claude scheduled task `indeed-applicant-outreach`)
 
 ## 🔑 STANDING SCOPE RULE — 2026-10-13 (Joshua) — READ FIRST, OVERRIDES EVERY OLDER SCOPE SECTION AND THE SKILL'S LISTING LIST
@@ -14,6 +17,145 @@ Preston: "I have opened up the indeed ads for Roanoke and Harrisonburg again. Ca
 - New contacts from Roanoke/Harrisonburg are offered **Thu 10/15 or later** (not Wed 10/14).
 - Live scope table: HIRING_SWITCH.md → ACTIVE SCOPE (authoritative; read it every run).
 - Roanoke first contacts sent 2026-10-13 1:26–1:31 PM: Anthony White, Kevan Nelson, Adam Martin. Still to contact (screened clean): Michael Boyer, Tareka Jordan, Diaundre Wright.
+
+### Run log — 2026-10-23 ~7:05 PM ET (vp-hiring-pipeline, cloud/scheduled run)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Roanoke ON; Culpeper, Lexington, Saint Augustine FL OFF.
+- Slack checked (DM D03BHQH5VGT + #employee-prospects C0BQDRXRPEJ): no new hiring instructions from Joshua or Preston since the 9:06 AM interview-list post / 11:51 AM Ryan Armstrong DM. Joshua's 4:09/6:09/6:09 PM store-PC-rollout DMs and Fortis/Bald Rock items are unrelated to hiring.
+- Indeed Messages inbox checked live top to bottom: newest still Ryan Armstrong 12:07 PM "Sounds good thank you" — closing acknowledgment, no action needed. Dustin Crawford 8:53 AM still Preston talking to him directly ("Awaiting response" tag on Preston's own thread), not a candidate reply. All other threads unchanged.
+- Candidates checked live (double-navigated past the SPA stale-zero quirk, confirmed via the New tab): All applications 276, New 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Store Manager, Saint Augustine FL, out of scope), Reviewing 17, Contacting 225, Interviewing 31, Rejected 212, Hired 0 — unchanged from the 6:34 PM run. No new in-scope Waynesboro/Harrisonburg/Roanoke applicant.
+- Calendar (jdavis@fcfpawn.com) checked 10/24–10/28: no hiring interviews booked; only Joshua's travel block (flights 10/26, dinner/winery reservations 10/26–10/28) — no conflicts.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due, no candidate questions needing Joshua.
+- Texts: 0 — cloud-only session, no computer-use/full-screen control; not a 9:30/1:00/6:00 batch window.
+- Nothing changed since the 6:34 PM run, so no #employee-prospects post and no Joshua DM this run (QUIET RULE).
+
+### Run log — 2026-10-23 ~7:19 PM ET (vp-hiring-pipeline, cloud/scheduled run)
+Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Roanoke ON; Culpeper, Lexington, Saint Augustine FL OFF.
+- Slack checked (DM D03BHQH5VGT + #employee-prospects C0BQDRXRPEJ): no new hiring instructions since the 7:05 PM run. Joshua's 6:09 PM store-PC-rollout DM is unrelated to hiring.
+- Indeed Messages inbox checked live top to bottom: identical to the 7:05 PM run — newest Ryan Armstrong 12:07 PM "Sounds good thank you," Dustin Crawford 8:53 AM still Preston's own thread. No new candidate-initiated reply.
+- Candidates checked live (double-navigated past the SPA stale-zero quirk, confirmed via the New tab): All applications 276, New 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Store Manager, Saint Augustine FL, out of scope, unchanged), Reviewing 17, Contacting 225, Interviewing 31, Rejected 212, Hired 0 — unchanged from the 7:05 PM run. No new in-scope Waynesboro/Harrisonburg/Roanoke applicant.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due, no candidate questions needing Joshua.
+- Texts: 0 — cloud-only session, no computer-use/full-screen control; not a 9:30/1:00/6:00 batch window.
+- Nothing changed since the 7:05 PM run, so no #employee-prospects post and no Joshua DM this run (QUIET RULE).
+- Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0.
+
+### Run log — 2026-10-23 ~6:34 PM ET (vp-hiring-pipeline, cloud/scheduled run)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Roanoke ON; Culpeper, Lexington, Saint Augustine FL OFF.
+- Slack checked (DM D03BHQH5VGT + #employee-prospects C0BQDRXRPEJ): no new hiring instructions from Joshua or Preston since the 9:06 AM interview-list post / 11:51 AM Ryan Armstrong DM. Joshua's 4:09/6:09 PM store-PC-rollout DMs are unrelated to hiring.
+- Indeed Messages inbox checked live top to bottom: newest still Ryan Armstrong 12:07 PM "Sounds good thank you" — closing acknowledgment, no action needed. Dustin Crawford 8:53 AM still Preston talking to him directly ("Awaiting response" tag on Preston's own thread), not a candidate reply. All other threads unchanged.
+- Candidates checked live (double-navigated past the SPA stale-zero quirk, confirmed via the New tab): All applications 276, New 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Store Manager, Saint Augustine FL, out of scope), Reviewing 17, Contacting 225, Interviewing 31, Rejected 212, Hired 0 — unchanged from the 6:05 PM run. No new in-scope Waynesboro/Harrisonburg/Roanoke applicant.
+- Calendar (jdavis@fcfpawn.com) checked 10/23–10/28: Ryan Armstrong Fri 10/23 11:00 AM (Waynesboro) unchanged — slot has passed. No conflicts/doubles.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due, no candidate questions needing Joshua.
+- Texts: 0 — cloud-only session, no computer-use/full-screen control; not a 9:30/1:00/6:00 batch window.
+- Nothing changed since the 6:05 PM run, so no #employee-prospects post and no Joshua DM this run (QUIET RULE).
+- Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0.
+
+### Run log — 2026-10-23 ~6:05 PM ET (vp-hiring-pipeline, cloud/scheduled run)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Roanoke ON; Culpeper, Lexington, Saint Augustine FL OFF.
+- Slack checked (DM D03BHQH5VGT + #employee-prospects C0BQDRXRPEJ): no new hiring instructions from Joshua or Preston since the 11:51 AM DM. Joshua's 4:09 PM DM (store PC rollout — Lexington replace decision, Authenticator app) is unrelated to hiring.
+- Indeed Messages inbox checked live: newest still Ryan Armstrong 12:07 PM "Sounds good thank you" — closing acknowledgment, no action needed. Dustin Crawford 8:53 AM still Preston talking to him directly ("Awaiting response" tag on Preston's own thread), not a candidate reply. All other threads unchanged.
+- Candidates checked live: All applications 276, New 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Store Manager, Saint Augustine FL, out of scope; confirmed by opening the New tab), Reviewing 17, Contacting 225, Interviewing 31, Rejected 212, Hired 0 — identical to the 5:40 PM run. No new in-scope Waynesboro/Harrisonburg/Roanoke applicant.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due, no candidate questions needing Joshua.
+- Texts: 0 — cloud-only session, no computer-use/full-screen control; not a 9:30/1:00/6:00 batch window.
+- Nothing changed since the 5:40 PM run, so no #employee-prospects post and no Joshua DM this run (QUIET RULE).
+- Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0.
+
+### Run log — 2026-10-23 ~4:51 PM ET (vp-hiring-pipeline, cloud/scheduled run)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Roanoke ON; Culpeper, Lexington, Saint Augustine FL OFF.
+- New tab (3) confirmed all Store Manager/Saint Augustine FL, out of scope — Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan. Reviewing tab (17) walked in full — all Store Manager FL or already-handled Sales & Loan Associate rows (Christopher Crammer interviewed, Scarlet Ledford flagged already, Tamara Thompson/Steven Burns Lexington-OFF). No untouched in-scope Waynesboro/Harrisonburg/Roanoke applicant.
+- Indeed Messages inbox checked top to bottom: newest Ryan Armstrong 12:07 PM "Sounds good thank you" (closing ack after his 11 AM interview call, no reply needed); Dustin Crawford 8:53 AM still awaiting his reply to our own outbound. All other threads unchanged from prior runs.
+- No felony disqualifications, no do-not-contact touches, no no-show reports, no nudges newly due, no candidate questions needing Joshua.
+- Texts: 0 — cloud-only session, no full-screen control.
+- Nothing changed, so no #employee-prospects post and no Joshua DM this run (QUIET RULE).
+- Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0.
+
+### Run log — 2026-10-23 ~5:40 PM ET (vp-hiring-pipeline, cloud/scheduled run)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Roanoke ON; Culpeper, Lexington, Saint Augustine FL OFF.
+- Slack checked (DM D03BHQH5VGT + #employee-prospects C0BQDRXRPEJ): no new hiring instructions from Joshua or Preston since the 11:51 AM DM. Joshua's 4:09 PM DM (store PC rollout — Lexington replace decision, Authenticator app) is unrelated to hiring.
+- Indeed Messages inbox checked live top to bottom: newest still Ryan Armstrong 12:07 PM "Sounds good thank you" — closing acknowledgment, no action needed. Dustin Crawford 8:53 AM still Preston talking to him directly, not a candidate reply. All other threads unchanged.
+- Candidates checked live: All applications 276, New 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Store Manager, Saint Augustine FL, out of scope; confirmed by opening the New tab directly), Reviewing 17, Contacting 225, Interviewing 31, Rejected 212, Hired 0 — unchanged from the 4:38 PM run. No new in-scope Waynesboro/Harrisonburg/Roanoke applicant.
+- Calendar (jdavis@fcfpawn.com) checked 10/23–10/28: Ryan Armstrong Fri 10/23 11:00 AM (Waynesboro) unchanged — slot has passed. No hiring events booked Mon 10/26 (Joshua's travel week) or after. Joshua's travel block (flights + dinner reservations) 10/26–10/28 unchanged. No conflicts/doubles.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due.
+- Texts: 0 — cloud-only session, no computer-use/full-screen control; not a 9:30/1:00/6:00 batch window.
+- Note: HIRING_SWITCH.md's ACTIVE SCOPE table "Interviewer" column still reads "Joshua Davis (804) 930-4221" for every row — not yet updated for the 10/23 Preston/540-202-4200 change documented in this file's banner and in the vp-hiring-pipeline skill. Not edited this run (file-safety — leaving the authoritative scope/switch file to Joshua or the Preston assistant); flagging so a future run doesn't get confused by the mismatch. The banner note already makes clear which number wins.
+- Nothing changed since the 4:38 PM run, so no #employee-prospects post and no Joshua DM this run (QUIET RULE).
+- Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0 (channel), 0 (DM).
+
+### Run log — 2026-10-23 ~4:38 PM ET (vp-hiring-pipeline, cloud/scheduled run)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Roanoke ON; Culpeper, Lexington, Saint Augustine FL OFF.
+- Slack checked (DM D03BHQH5VGT + #employee-prospects C0BQDRXRPEJ): no new hiring instructions from Joshua or Preston since the 11:51 AM DM. Joshua's other DMs since (Fortis, Bald Rock, fleet note, store computer setup) are unrelated to hiring.
+- Indeed Messages inbox checked live: newest still Ryan Armstrong 12:07 PM "Sounds good thank you" — closing acknowledgment, no action needed. Dustin Crawford 8:53 AM still Preston talking to him directly, not a candidate reply (Awaiting response tag is on Preston's own thread, not ours). All other threads unchanged.
+- Candidates checked live (double-navigated past the SPA stale-zero quirk, confirmed via the New tab): All applications 276, New 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Store Manager, Saint Augustine FL, out of scope, unchanged), Reviewing 17, Contacting 225, Interviewing 31, Rejected 212, Hired 0 — unchanged from the 2:49 PM run. No new in-scope Waynesboro/Harrisonburg/Roanoke applicant.
+- Calendar (jdavis@fcfpawn.com) checked 10/23–10/28: Ryan Armstrong Fri 10/23 11:00 AM (Waynesboro) unchanged — slot has passed. Joshua's travel block (flights + dinner reservations) 10/26–10/27 unchanged. No conflicts/doubles.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due.
+- Texts: 0 — cloud-only session, no computer-use/full-screen control; not a 9:30/1:00/6:00 batch window.
+- Nothing changed since the 2:49 PM run, so no #employee-prospects post and no Joshua DM this run (QUIET RULE).
+- Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0 (channel), 0 (DM).
+
+### Run log — 2026-10-23 ~2:49 PM ET (vp-hiring-pipeline, cloud/scheduled run)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Roanoke ON; Culpeper, Lexington, Saint Augustine FL OFF.
+- Slack checked (DM D03BHQH5VGT + #employee-prospects C0BQDRXRPEJ): no new hiring instructions from Joshua or Preston since the 11:51 AM DM. Joshua's other DMs since (Fortis, Bald Rock contracts, fleet note) are unrelated to hiring.
+- Indeed Messages inbox checked live top to bottom: newest still Ryan Armstrong 12:07 PM "Sounds good thank you" — closing acknowledgment, no action needed. Dustin Crawford 8:53 AM still Preston talking to him directly, not a candidate reply. All other threads unchanged.
+- Candidates checked live (double-navigated past the SPA stale-zero quirk): All applications 276, New 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Store Manager, Saint Augustine FL, out of scope, unchanged — confirmed by opening the New tab), Reviewing 17, Contacting 225, Interviewing 31, Rejected 212, Hired 0 — unchanged from the 2:21 PM run. No new in-scope Waynesboro/Harrisonburg/Roanoke applicant.
+- Calendar (jdavis@fcfpawn.com) checked 10/23–10/28: Ryan Armstrong Fri 10/23 11:00 AM (Waynesboro) unchanged — slot has passed. Joshua's travel block (flights + dinner reservations) 10/26–10/27 unchanged. No conflicts/doubles.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due.
+- Texts: 0 — cloud-only session, no computer-use/full-screen control; not a 9:30/1:00/6:00 batch window.
+- Nothing changed since the 2:21 PM run, so no #employee-prospects post and no Joshua DM this run (QUIET RULE).
+- Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0 (channel), 0 (DM).
+
+### Run log — 2026-10-23 ~2:21 PM ET (vp-hiring-pipeline, cloud/scheduled run)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Roanoke ON; Culpeper, Lexington, Saint Augustine FL OFF.
+- Slack checked (DM D03BHQH5VGT + #employee-prospects C0BQDRXRPEJ): no new hiring instructions from Joshua or Preston since the 11:51 AM DM. Joshua's other DMs since (Fortis, Bald Rock contracts, fleet note, store computer setup) are unrelated to hiring.
+- Indeed Messages inbox checked live top to bottom: newest still Ryan Armstrong 12:07 PM "Sounds good thank you" — closing acknowledgment, no action needed. Dustin Crawford 8:53 AM still Preston talking to him directly, not a candidate reply. All other threads unchanged.
+- Candidates checked live (double-navigated past the SPA stale-zero quirk): All applications 276, New 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Store Manager, Saint Augustine FL, out of scope, unchanged — confirmed by opening the New tab), Reviewing 17, Contacting 225, Interviewing 31, Rejected 212, Hired 0 — unchanged from the 2:02 PM run. No new in-scope Waynesboro/Harrisonburg/Roanoke applicant.
+- Calendar (jdavis@fcfpawn.com) checked 10/23–10/28: Ryan Armstrong Fri 10/23 11:00 AM (Waynesboro) unchanged — slot has passed. Joshua's travel block (flights + dinner reservations) 10/26–10/27 unchanged. No conflicts/doubles.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due.
+- Texts: 0 — cloud-only session, no computer-use/full-screen control; not a 9:30/1:00/6:00 batch window.
+- Nothing changed since the 2:02 PM run, so no #employee-prospects post and no Joshua DM this run (QUIET RULE).
+- Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0 (channel), 0 (DM).
+
+### Run log — 2026-10-23 ~2:02 PM ET (vp-hiring-pipeline, cloud/scheduled run)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome. Scheduled-tasks registry re-checked: vp-hiring-pipeline enabled, description matches, lastRunAt 17:48:42Z — corroborated (Rule 17).
+Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Roanoke ON; Culpeper, Lexington, Saint Augustine FL OFF.
+- Slack checked (DM D03BHQH5VGT + #employee-prospects C0BQDRXRPEJ): no new hiring instructions from Joshua or Preston since the 11:51 AM DM. Joshua's other DMs since (Fortis signature reminder, Bald Rock items) are unrelated to hiring.
+- Indeed Messages inbox checked live top to bottom: newest still Ryan Armstrong 12:07 PM "Sounds good thank you" — closing acknowledgment, no action needed. Dustin Crawford 8:53 AM still Preston talking to him directly, not a candidate reply. All other threads unchanged.
+- Candidates checked live (double-navigated past the SPA stale-zero quirk): All applications 276, New 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Store Manager, Saint Augustine FL, out of scope, unchanged — confirmed by opening the New tab), Reviewing 17, Contacting 225, Interviewing 31, Rejected 212, Hired 0 — unchanged from the 1:05 PM run. No new in-scope Waynesboro/Harrisonburg/Roanoke applicant.
+- Calendar (jdavis@fcfpawn.com) checked 10/23–10/27: Ryan Armstrong Fri 10/23 11:00 AM (Waynesboro) unchanged — slot has passed. Joshua's travel block (flights + dinner reservations) 10/26–10/27 unchanged. No conflicts/doubles.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due.
+- Texts: 0 — cloud-only session, no computer-use/full-screen control; not a 9:30/1:00/6:00 batch window.
+- Nothing changed since the 1:05 PM run, so no #employee-prospects post and no Joshua DM this run (QUIET RULE).
+- Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0 (channel), 0 (DM).
+
+### Run log — 2026-10-23 ~1:05 PM ET (vp-hiring-pipeline, cloud/scheduled run)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome. Scheduled-tasks registry re-checked: vp-hiring-pipeline enabled, description matches, lastRunAt 17:03:42Z — corroborated (Rule 17).
+Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Roanoke ON; Culpeper, Lexington, Saint Augustine FL OFF.
+- Slack checked (DM D03BHQH5VGT + #employee-prospects C0BQDRXRPEJ): newest hiring item is the 11:51 AM DM (Ryan Armstrong's 11:00 AM slot passed, he messaged at 11:13 ready whenever, told him Joshua would call shortly). Nothing hiring-related since. Joshua's 9:20 AM Fortis DM is unrelated.
+- Indeed Messages inbox checked live top to bottom: newest is Ryan Armstrong 12:07 PM "Sounds good thank you" — closing acknowledgment to our 11:51 AM reply, no action needed (the actual call is Joshua's own next step, not a pipeline action). Dustin Crawford 8:53 AM confirmed still Preston talking to him directly, not a candidate reply to us. All other threads unchanged.
+- Candidates checked live (double-navigated past the SPA stale-zero quirk): All applications 276, New 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Store Manager, Saint Augustine FL, out of scope, unchanged), Reviewing 17, Contacting 225, Interviewing 31, Rejected 212, Hired 0 — unchanged from the 11:51 AM run. No new in-scope Waynesboro/Harrisonburg/Roanoke applicant.
+- Calendar (jdavis@fcfpawn.com) checked 10/23–10/28: Ryan Armstrong Fri 10/23 11:00 AM (Waynesboro) unchanged, no conflicts/doubles. Joshua's travel block (flights + dinner reservations) 10/26–10/27 unchanged.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due.
+- Texts: 0 — cloud-only session, no computer-use/full-screen control; not a 9:30/1:00/6:00 batch window.
+- Nothing changed since the 11:51 AM run, so no #employee-prospects post and no Joshua DM this run (QUIET RULE).
+- Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0 (channel), 0 (DM).
+
+### Run log — 2026-10-23 ~10:21 AM ET (vp-hiring-pipeline, cloud/scheduled run)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Roanoke ON; Culpeper, Lexington, Saint Augustine FL OFF.
+- Slack checked (DM D03BHQH5VGT + #employee-prospects C0BQDRXRPEJ): no new hiring instructions from Joshua or Preston since the 9:06 AM "nothing new to action" DM and today's interview-list post. Joshua's 9:20 AM DM (Fortis signature) and his two Bald Rock items (4:11–4:12 AM) are unrelated to hiring.
+- Calendar (jdavis@fcfpawn.com) re-checked 10/23–10/27: Ryan Armstrong Fri 10/23 11:00 AM (Waynesboro) unchanged, no conflicts/doubles. Joshua travels 10/26 (flights to Charlotte/SF/Denver/Portland) — no interviews booked that day, nothing to reconcile.
+- Indeed Messages inbox checked live top to bottom: newest is Dustin Crawford's thread, 8:53 AM — confirmed by opening the thread that the 8:53 AM message ("Are you available to stop by the location today and meet?") is Preston Peters talking to Dustin directly, not a candidate reply; no action from the pipeline. Ryan Armstrong, Glen Way, Jay Ridgeway, Patrick Franklin, gary DePriest (do-not-contact), Derrick Wise all unchanged from the 9:06 AM run.
+- Candidates checked live (double-navigated past the SPA stale-zero quirk): All applications 276, New 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Store Manager, Saint Augustine FL, out of scope, unchanged — confirmed by opening the New tab), Reviewing 17, Contacting 225, Interviewing 31, Rejected 212, Hired 0 — unchanged from the 9:06 AM run. No new in-scope Waynesboro/Harrisonburg/Roanoke applicant.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due.
+- Texts: 0 — cloud-only session, no computer-use/full-screen control; not a 9:30/1:00/6:00 batch window.
+- Nothing changed since the 9:06 AM run, so no #employee-prospects post and no Joshua DM this run (QUIET RULE).
+- Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0 (channel), 0 (DM).
 
 ### Run log — 2026-10-22 ~7:49 PM ET (vp-hiring-pipeline, cloud/scheduled run)
 Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
@@ -729,13 +871,13 @@ Ad volume is up, so ownership of the day-to-day loop moves from Joshua to **Pres
 - **Interview grid, this coming week:** Monday 2026-08-31 starting **8:00 AM ET**, and Tuesday 2026-09-01, **15-minute slots** (8:00, 8:15, 8:30, …), phone only, no same-day. Assign candidates who are ready to book into this grid in order (Monday fills first, then Tuesday) rather than ad hoc times — still subject to the pre-booking validator (phone-only, not today, 7AM–9PM ET window, no conflict, dialable number in hand). Location field on the calendar event stays the candidate's number (so Preston can tap to dial); event should note **Preston Peters** as interviewer in the description.
 
 ## Message template (FIRST CONTACT ONLY — all channels, keep it this simple) — UPDATED 2026-08-29, sent as Preston
-> Hi {first name}, this is Preston Peters, Operations Manager at Valley Pawn. We saw your resume for the {role} position at our {store} store and would like to talk by phone. You name the day and time, and I'll call you — my number is (540) 836-4200 if you'd rather reach out directly.
+> Hi {first name}, this is Preston Peters, Operations Manager at Valley Pawn. We saw your resume for the {role} position at our {store} store and would like to talk by phone. You name the day and time, and I'll call you — my number is (540) 202-4200 if you'd rather reach out directly.
 
 - `{role}` = "Sales and Loan Associate" or "Store Manager" depending on the listing.
 - No Mon–Wed limitation — candidates can pick ANY time (per Joshua 2026-08-15), but see the Mon 8/31 + Tue 9/1 15-min grid above for actually assigning slots this week.
 - Email subject: `Valley Pawn — let's talk about your application`
 - Sign emails: `Preston Peters, Operations Manager, Valley Pawn` (changed from Joshua Davis 2026-08-29)
-- Confirmation text once booked: *"You're set — {day}, {date} at {time}. Preston will call you at this number from (540) 836-4200. Talk then!"* — always include Preston's number in the confirmation so the candidate isn't surprised by an unrecognized caller.
+- Confirmation text once booked: *"You're set — {day}, {date} at {time}. Preston will call you at this number from (540) 202-4200. Talk then!"* — always include Preston's number in the confirmation so the candidate isn't surprised by an unrecognized caller.
 - **No "Reply STOP to opt out" language** — removed by Joshua 2026-08-15: candidates contacted us first by applying, so the opt-out line reads like spam and misframes the relationship. The message is identical across all three channels. (Opt-out handling below still applies if someone asks to stop — we just don't advertise it.)
 - **TCPA risk acknowledged and accepted, 2026-09-09 (Joshua, via chat):** flagged that automated, scheduled texting to applicant cell numbers with no consent/opt-out disclosure carries TCPA exposure (statutory damages $500–$1,500/text, class-action-friendly; not covered by standard CGL/EPLI, which generally exclude TCPA claims). Recommended adding a minimal "Msg & data rates may apply. Reply STOP to opt out" line to the first-contact template. **Joshua's decision: leave the template as-is, no opt-out line.** Logged here as a deliberate, informed risk acceptance, not an oversight — do not re-raise this in every run; only re-surface if volume/cadence materially changes (e.g., a new listing type, a different follow-up cadence, or a complaint from a candidate).
 
@@ -8138,3 +8280,75 @@ Loaded enterprise-map, enterprise-folder-access, valley-pawn-context, hiring-con
 - Nothing changed since the prior run, so no #employee-prospects post and no Joshua DM this run (QUIET RULE).
 - Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0 (channel), 0 (DM).
 - Still open, unactioned (Joshua's to decide, unchanged): Matayah Buckland and Preston Haylock's hiring decisions, Diaundre Wright wants text/call instead of Indeed, Waynesboro/Harrisonburg/Roanoke sponsorship re-enable decision, Scarlet Ledford's pay question, Frankie Whetzel's review comment, the September bonus payroll discrepancy, the weekly supply order, this week's CEO brief items, and whether Glen Way's 11 AM call connected (no report yet from Joshua).
+
+### Run log — 2026-10-23 ~9:38 AM ET (vp-hiring-pipeline, cloud/scheduled run)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Roanoke ON; Culpeper, Lexington, Saint Augustine FL OFF.
+- Slack checked (DM D03BHQH5VGT + #employee-prospects C0BQDRXRPEJ): Joshua's 9:06 AM pipeline-run post already covers this morning — nothing new to action, Dustin Crawford's 8:53 AM message is Preston talking to him directly (no pipeline reply needed), today's interview list (11:00 AM Ryan Armstrong, Waynesboro) already posted. No new hiring instructions since.
+- Calendar (jdavis@fcfpawn.com) re-checked 10/23–10/27: only event is Ryan Armstrong Fri 10/23 11:00 AM, confirmed, no conflicts/doubles.
+- Indeed Messages inbox checked live top to bottom: newest is Dustin Crawford 8:53 AM "Are you available to stop by the location today and meet?" — already identified (Joshua's 9:06 AM note) as Preston handling directly, no pipeline reply. Ryan Armstrong (Oct 22 closing ack), Glen Way, Jay Ridgeway, Patrick Franklin, gary DePriest (do-not-contact), Derrick Wise all unchanged.
+- Candidates checked live: All applications 276, New 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Store Manager, Saint Augustine FL, out of scope, unchanged), Reviewing 17, Contacting 225, Interviewing 31, Rejected 212, Hired 0 — unchanged. No new in-scope Waynesboro/Harrisonburg/Roanoke applicant.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due.
+- Texts: 0 — cloud-only session, no computer-use/full-screen control; not a 9:30/1:00/6:00 batch window.
+- Nothing changed since the prior (9:06 AM) run, so no #employee-prospects post and no Joshua DM this run (QUIET RULE).
+- Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0 (channel), 0 (DM).
+- Still open, unactioned (Joshua's to decide, unchanged): Matayah Buckland and Preston Haylock's hiring decisions, Diaundre Wright wants text/call instead of Indeed, Waynesboro/Harrisonburg/Roanoke sponsorship re-enable decision.
+
+### Run log — 2026-10-23 ~12:04 PM ET (vp-hiring-pipeline, cloud/scheduled run)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Roanoke ON; Culpeper, Lexington, Saint Augustine FL OFF.
+- Slack checked (DM D03BHQH5VGT + #employee-prospects C0BQDRXRPEJ): prior run (~11:51 AM) already handled Ryan Armstrong's 11:13 AM "ready whenever" message with a holding reply ("Joshua will be calling you shortly"), noting Indeed was unreachable at that time. No other new hiring instructions from Joshua or Preston since. Joshua's other DMs today (Fortis signature, Bald Rock contracts/guest request, fleet note) are unrelated to hiring.
+- Indeed now reachable. Messages inbox checked live top to bottom: newest is Ryan Armstrong's thread — our 11:51 AM holding reply is still the last message, no new reply from him since. Dustin Crawford's 8:53 AM thread remains Preston talking to him directly, no action needed. All other threads unchanged.
+- Candidates checked live (double-navigated past the SPA stale-zero quirk): All applications 276, New 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — all Store Manager, Saint Augustine FL, out of scope, confirmed unchanged by opening the New tab), Reviewing 17, Contacting 225, Interviewing 31, Rejected 212, Hired 0 — unchanged from the 10:21 AM run. No new in-scope Waynesboro/Harrisonburg/Roanoke applicant.
+- Calendar (jdavis@fcfpawn.com) re-checked 10/23–10/27: Ryan Armstrong's Fri 10/23 11:00 AM event unchanged, no conflicts/doubles. Joshua's 10/26 travel and 10/26–10/27 dinner reservations unrelated, no interviews booked those days.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports (Ryan's slot passing without a confirmed call is already being handled per the 11:51 AM reply, not a reportable no-show yet), no 2-business-day nudges newly due.
+- Texts: 0 — cloud-only session, no computer-use/full-screen control; not a 9:30/1:00/6:00 batch window.
+- Nothing changed since the 11:51 AM run, so no #employee-prospects post and no Joshua DM this run (QUIET RULE).
+- Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0 (channel), 0 (DM).
+
+### Run log — 2026-10-23 ~12:34 PM ET (vp-hiring-pipeline, cloud/scheduled run)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Roanoke ON; Culpeper, Lexington, Saint Augustine FL OFF.
+- Slack checked (DM D03BHQH5VGT + #employee-prospects C0BQDRXRPEJ): prior run (~12:04 PM) already current. No new hiring instructions from Joshua or Preston since. Calendar (jdavis@fcfpawn.com) re-checked 10/23–10/27: only hiring event is Ryan Armstrong Fri 10/23 11:00 AM, unchanged, no conflicts/doubles.
+- Indeed Messages inbox checked live: newest is Ryan Armstrong 12:07 PM "Sounds good thank you" — a plain acknowledgment of our 11:51 AM holding reply ("Joshua will be calling you shortly"), no reply or action needed, not a new question. Dustin Crawford's 8:53 AM thread remains Preston talking to him directly, no pipeline action. All other threads unchanged from the 12:04 PM run.
+- Candidates checked live: All applications 276, New 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Store Manager, Saint Augustine FL, out of scope, confirmed via New tab), Reviewing 17 (walked list again — Christopher Crammer/Scarlet Ledford/Tamara Thompson/Steven Burns already-handled/off-listing per prior resolution, rest out-of-scope Store Manager FL apps, Michele Lester still Withdrawn), Contacting 225, Interviewing 31, Rejected 212, Hired 0 — all unchanged. No new in-scope Waynesboro/Harrisonburg/Roanoke applicant to screen or first-contact.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports from Joshua, no 2-business-day nudges newly due.
+- Texts: 0 — cloud-only session, no computer-use/full-screen control; not a 9:30/1:00/6:00 batch window.
+- Nothing changed since the 12:04 PM run, so no #employee-prospects post and no Joshua DM this run (QUIET RULE).
+- Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0 (channel), 0 (DM).
+
+### Run log — 2026-10-23 ~2:34 PM ET (vp-hiring-pipeline, cloud/scheduled run)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Roanoke ON; Culpeper, Lexington, Saint Augustine FL OFF.
+- Slack checked (DM D03BHQH5VGT + #employee-prospects C0BQDRXRPEJ): no new hiring instructions from Joshua or Preston since the 11:51 AM DM. Joshua's other DMs since (Fortis, Bald Rock contracts/guest film-crew request, fleet note) are unrelated to hiring.
+- Indeed Messages inbox checked live top to bottom: newest still Ryan Armstrong 12:07 PM "Sounds good thank you" — closing acknowledgment, no action needed. Dustin Crawford 8:53 AM still Preston talking to him directly, not a candidate reply. All other threads unchanged.
+- Candidates checked live (double-navigated past the SPA stale-zero quirk): All applications 276, New 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Store Manager, Saint Augustine FL, out of scope, confirmed by opening the New tab), Reviewing 17, Contacting 225, Interviewing 31, Rejected 212, Hired 0 — unchanged from the 2:21 PM run. No new in-scope Waynesboro/Harrisonburg/Roanoke applicant.
+- Calendar (jdavis@fcfpawn.com) checked 10/23–10/28: Ryan Armstrong Fri 10/23 11:00 AM (Waynesboro) unchanged — slot has passed. Joshua's travel block (flights + dinner reservations) 10/26–10/27 unchanged. No conflicts/doubles.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due.
+- Texts: 0 — cloud-only session, no computer-use/full-screen control; not a 9:30/1:00/6:00 batch window.
+- Nothing changed since the 2:21 PM run, so no #employee-prospects post and no Joshua DM this run (QUIET RULE).
+- Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0 (channel), 0 (DM).
+
+### Run log — 2026-10-23 ~3:19 PM ET (vp-hiring-pipeline, cloud/scheduled run)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Roanoke ON; Culpeper, Lexington, Saint Augustine FL OFF.
+- Slack checked (DM D03BHQH5VGT + #employee-prospects C0BQDRXRPEJ): no new hiring instructions from Joshua or Preston since the 11:51 AM DM/9:06 AM interview-list post. Joshua's other DMs since (Fortis, Bald Rock contracts/guest film-crew request, fleet note) unrelated to hiring.
+- Indeed Messages inbox checked live top to bottom, all in-scope (Waynesboro/Harrisonburg/Roanoke) threads reviewed: Ryan Armstrong 12:07 PM "Sounds good thank you" — closing ack on the 11:51 AM holding reply, no action. Dustin Crawford 8:53 AM still Preston talking to him directly in person ("stop by the location"), not a pipeline reply — thread correctly shows Awaiting-response on OUR message, no candidate reply pending. gary DePriest (do-not-contact, rejected) — his "wasteing my time" complaint remains unanswered by design, not actionable by template. Glen Way, Jay Ridgeway, Patrick Franklin, Derrick Wise, preston haylock, Matayah Buckland, Katelyn Newcomb, Joe Gilley, Michael Boyer, Robert Brandt, Shaun Reeves, Robert nuckols, Angela Showalter, Crystal Robertson, Gabriel-Alyssa Williams, BROOKE MANIER, BRENDON THOMAS, Rebecca Conner, Shad Taha, dariel negron, Tameron Washington, Diaundre Wright (open item, Joshua's to decide) — all unchanged from the 2:34 PM run, last message ours or a plain closing acknowledgment, no reply needed.
+- Candidates checked live: New 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Store Manager, Saint Augustine FL, out of scope), Reviewing 17 (full walk — Christopher Crammer Waynesboro already interviewed/decision queue, Scarlet Ledford pay question flagged to Joshua, Tamara Thompson/Steven Burns on the OFF Lexington listing, Michele Lester withdrawn, rest Store Manager FL) — no uncontacted in-scope Waynesboro/Harrisonburg/Roanoke applicant.
+- Calendar (jdavis@fcfpawn.com) re-checked 10/23–10/28: only hiring event is Ryan Armstrong Fri 10/23 11:00 AM (Waynesboro), unchanged, slot passed, no conflicts/doubles.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due.
+- Texts: 0 — cloud-only session, no computer-use/full-screen control; not a 9:30/1:00/6:00 batch window.
+- Nothing changed since the 2:34 PM run, so no #employee-prospects post and no Joshua DM this run (QUIET RULE).
+- Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0 (channel), 0 (DM).
+
+### Run log — 2026-10-23 ~4:50 PM ET (vp-hiring-pipeline, cloud/scheduled run)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Roanoke ON; Culpeper, Lexington, Saint Augustine FL OFF.
+- Slack checked (DM D03BHQH5VGT + #employee-prospects C0BQDRXRPEJ): no new hiring instructions from Joshua or Preston since the 9:06 AM interview-list post / 11:51 AM holding reply. Joshua's DMs since (store PC rollout status 12:09 PM–6:09 PM, Fortis signature deadline, Bald Rock contracts/film-crew request) are all non-hiring.
+- Calendar (jdavis@fcfpawn.com) re-checked 10/23–10/28: only hiring event is Ryan Armstrong Fri 10/23 11:00 AM (Waynesboro, booked 10/22 before the Preston-Zoom-line change — description still "Joshua … (804) 930-4221", left as-is per the skill's "pre-10/23 bookings stand" rule), slot passed, no conflicts/doubles. Rest of grid is Joshua's 10/26–10/27 travel/dinner reservations, non-hiring.
+- Indeed Messages inbox checked live top to bottom: newest still Ryan Armstrong 12:07 PM "Sounds good thank you" (closing ack, no action) and Dustin Crawford 8:53 AM (Preston talking to him directly in person, Awaiting-response on our side only, not a pipeline reply). All other threads unchanged from the 3:19 PM run.
+- Candidates checked live (Manage candidates, New tab opened directly): All applications 276, New 3 (reconfirmed: Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — all Store Manager, Saint Augustine FL, out of scope), Reviewing 17, Contacting 225, Interviewing 31, Rejected 212, Hired 0 — unchanged. No new in-scope Waynesboro/Harrisonburg applicant to screen or first-contact.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due.
+- Texts: 0 — cloud-only session, no computer-use/full-screen control; not a 9:30/1:00/6:00 batch window.
+- Nothing changed since the 3:19 PM run, so no #employee-prospects post and no Joshua DM this run (QUIET RULE).
+- Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0 (channel), 0 (DM).

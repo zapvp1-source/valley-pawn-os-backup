@@ -6,46 +6,6 @@
 - 3 installer file(s) >100MB, >14d old in ~/Downloads (Joshua-only to delete): 116M install_backblaze.dmg, 177M Intuit Meeting.dmg, 116M install_backblaze_005_b1f03755763e4dc02e48d27ec2fde9d55651aac6.dmg
 - **ESCALATE**: 248 scheduled-task file(s) under ~/Documents/Claude/Scheduled are iCloud-evicted (dataless) right now — this breaks automation silently. Last successful Time Machine backup was 239h ago (> 72h threshold).
 
-## 2026-09-12 06:00 — CRITICAL
-- / : 460Gi used / 17Gi avail (40%)
-- /System/Volumes/Data : 460Gi used / 393Gi avail (94%)
-- Time Machine last success: unknown
-- Dataless (iCloud-evicted) files under Scheduled: 0
-- 3 installer file(s) >100MB, >14d old in ~/Downloads (Joshua-only to delete): 116M install_backblaze.dmg, 177M Intuit Meeting.dmg, 116M install_backblaze_005_b1f03755763e4dc02e48d27ec2fde9d55651aac6.dmg
-- **ESCALATE**: Could not determine last successful Time Machine backup time.
-
-## 2026-09-12 10:00 — CRITICAL
-- / : 460Gi used / 17Gi avail (41%)
-- /System/Volumes/Data : 460Gi used / 394Gi avail (95%)
-- Time Machine last success: unknown
-- Dataless (iCloud-evicted) files under Scheduled: 0
-- 3 installer file(s) >100MB, >14d old in ~/Downloads (Joshua-only to delete): 116M install_backblaze.dmg, 177M Intuit Meeting.dmg, 116M install_backblaze_005_b1f03755763e4dc02e48d27ec2fde9d55651aac6.dmg
-- **ESCALATE**: Could not determine last successful Time Machine backup time.
-
-## 2026-09-12 14:00 — CRITICAL
-- / : 460Gi used / 17Gi avail (34%)
-- /System/Volumes/Data : 460Gi used / 386Gi avail (93%)
-- Time Machine last success: unknown
-- Dataless (iCloud-evicted) files under Scheduled: 0
-- 3 installer file(s) >100MB, >14d old in ~/Downloads (Joshua-only to delete): 116M install_backblaze.dmg, 177M Intuit Meeting.dmg, 116M install_backblaze_005_b1f03755763e4dc02e48d27ec2fde9d55651aac6.dmg
-- **ESCALATE**: Could not determine last successful Time Machine backup time.
-
-## 2026-09-12 18:00 — CRITICAL
-- / : 460Gi used / 17Gi avail (33%)
-- /System/Volumes/Data : 460Gi used / 383Gi avail (92%)
-- Time Machine last success: unknown
-- Dataless (iCloud-evicted) files under Scheduled: 0
-- 3 installer file(s) >100MB, >14d old in ~/Downloads (Joshua-only to delete): 116M install_backblaze.dmg, 177M Intuit Meeting.dmg, 116M install_backblaze_005_b1f03755763e4dc02e48d27ec2fde9d55651aac6.dmg
-- **ESCALATE**: Could not determine last successful Time Machine backup time.
-
-## 2026-09-12 22:00 — CRITICAL
-- / : 460Gi used / 17Gi avail (31%)
-- /System/Volumes/Data : 460Gi used / 380Gi avail (91%)
-- Time Machine last success: unknown
-- Dataless (iCloud-evicted) files under Scheduled: 0
-- 3 installer file(s) >100MB, >14d old in ~/Downloads (Joshua-only to delete): 116M install_backblaze.dmg, 177M Intuit Meeting.dmg, 116M install_backblaze_005_b1f03755763e4dc02e48d27ec2fde9d55651aac6.dmg
-- **ESCALATE**: Could not determine last successful Time Machine backup time.
-
 ## 2026-09-13 06:00 — CRITICAL
 - / : 460Gi used / 17Gi avail (19%)
 - /System/Volumes/Data : 460Gi used / 344Gi avail (83%)
@@ -2125,6 +2085,59 @@ com.apple.TimeMachine.2026-10-22-163957.local
 - Local snapshot thinning ran (backup <24h old): Thinned local snapshots:
 com.apple.TimeMachine.2026-10-22-184005.local
 com.apple.TimeMachine.2026-10-22-204132.local
+- Dataless (iCloud-evicted) files under Scheduled: 0
+- 4 installer file(s) >100MB, >14d old in ~/Downloads (Joshua-only to delete): 116M install_backblaze.dmg, 177M Intuit Meeting.dmg, 353M Claude.dmg, 116M install_backblaze_005_b1f03755763e4dc02e48d27ec2fde9d55651aac6.dmg
+
+## 2026-10-23 06:00 — OK
+- / : 460Gi used / 12Gi avail (19%)
+- /System/Volumes/Data : 460Gi used / 373Gi avail (88%)
+- Time Machine last success: 1.0h ago
+- Local snapshot thinning ran (backup <24h old): Thinned local snapshots:
+com.apple.TimeMachine.2026-10-22-224212.local
+com.apple.TimeMachine.2026-10-23-004235.local
+com.apple.TimeMachine.2026-10-23-014306.local
+com.apple.TimeMachine.2026-10-23-0243
+- Dataless (iCloud-evicted) files under Scheduled: 0
+- 4 installer file(s) >100MB, >14d old in ~/Downloads (Joshua-only to delete): 116M install_backblaze.dmg, 177M Intuit Meeting.dmg, 353M Claude.dmg, 116M install_backblaze_005_b1f03755763e4dc02e48d27ec2fde9d55651aac6.dmg
+
+## 2026-10-23 10:00 — OK
+- / : 460Gi used / 12Gi avail (17%)
+- /System/Volumes/Data : 460Gi used / 364Gi avail (86%)
+- Time Machine last success: 0.7h ago
+- Local snapshot thinning ran (backup <24h old): ERROR: Command 'tmutil thinlocalsnapshots / 20000000000 4 2>&1' timed out after 120 seconds
+- Dataless (iCloud-evicted) files under Scheduled: 0
+- 4 installer file(s) >100MB, >14d old in ~/Downloads (Joshua-only to delete): 116M install_backblaze.dmg, 177M Intuit Meeting.dmg, 353M Claude.dmg, 116M install_backblaze_005_b1f03755763e4dc02e48d27ec2fde9d55651aac6.dmg
+
+## 2026-10-23 14:00 — OK
+- / : 460Gi used / 12Gi avail (16%)
+- /System/Volumes/Data : 460Gi used / 363Gi avail (86%)
+- Time Machine last success: 0.5h ago
+- Local snapshot thinning ran (backup <24h old): Thinned local snapshots:
+com.apple.TimeMachine.2026-10-23-104634.local
+com.apple.TimeMachine.2026-10-23-124652.local
+com.apple.TimeMachine.2026-10-23-134702.local
+- Dataless (iCloud-evicted) files under Scheduled: 0
+- 4 installer file(s) >100MB, >14d old in ~/Downloads (Joshua-only to delete): 116M install_backblaze.dmg, 177M Intuit Meeting.dmg, 353M Claude.dmg, 116M install_backblaze_005_b1f03755763e4dc02e48d27ec2fde9d55651aac6.dmg
+
+## 2026-10-23 18:00 — OK
+- / : 460Gi used / 12Gi avail (17%)
+- /System/Volumes/Data : 460Gi used / 363Gi avail (87%)
+- Time Machine last success: 0.2h ago
+- Local snapshot thinning ran (backup <24h old): Thinned local snapshots:
+com.apple.TimeMachine.2026-10-23-144746.local
+com.apple.TimeMachine.2026-10-23-164911.local
+- Dataless (iCloud-evicted) files under Scheduled: 0
+- 4 installer file(s) >100MB, >14d old in ~/Downloads (Joshua-only to delete): 116M install_backblaze.dmg, 177M Intuit Meeting.dmg, 353M Claude.dmg, 116M install_backblaze_005_b1f03755763e4dc02e48d27ec2fde9d55651aac6.dmg
+
+## 2026-10-23 22:00 — OK
+- / : 460Gi used / 12Gi avail (18%)
+- /System/Volumes/Data : 460Gi used / 364Gi avail (87%)
+- Time Machine last success: 0.5h ago
+- Local snapshot thinning ran (backup <24h old): Thinned local snapshots:
+com.apple.TimeMachine.2026-10-23-184908.local
+com.apple.TimeMachine.2026-10-23-194949.local
+com.apple.TimeMachine.2026-10-23-205008.local
+com.apple.TimeMachine.2026-10-23-2150
 - Dataless (iCloud-evicted) files under Scheduled: 0
 - 4 installer file(s) >100MB, >14d old in ~/Downloads (Joshua-only to delete): 116M install_backblaze.dmg, 177M Intuit Meeting.dmg, 353M Claude.dmg, 116M install_backblaze_005_b1f03755763e4dc02e48d27ec2fde9d55651aac6.dmg
 

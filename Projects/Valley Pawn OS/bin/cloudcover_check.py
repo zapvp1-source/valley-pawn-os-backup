@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """cloudcover_check.py — native replacement for Cowork `daily-cloudcover-check` (Mon-Sat 10:25 ET ->
-#general C03BETSS669; Wednesday = Culpeper + Roanoke only). Built 2026-10-14 (Mac-first).
+#basics C0CCH89BUNL; Wednesday = Culpeper + Roanoke only). Built 2026-10-14 (Mac-first).
 
 WHY: the cloud copy (trig_017ef3AnQBKcnqSdKUztYWLA) has no Chrome on the Mac, so it posted 5 h late on
 10/13 and nothing on 10/14. This reads the same data on the Mac.
@@ -30,12 +30,12 @@ HOW (no screen, never types a password):
     5 s wait, the SKILL's regex `Volume (\\d+)%`, no clicks. Missing -> "🔊 —" (the SKILL's rule). If
     Google is not signed in at all, the post still goes out with dashes and ONE ledger row asks for the
     one-time Google sign-in.
-  4 Post the SKILL's exact format to #general (dedupe: today's header already there = no repost).
+  4 Post the SKILL's exact format to #basics (dedupe: today's header already there = no repost).
     After 13:25 ET (the scorecard's grace) it does NOT post a stale "10:00 AM" snapshot: ledger row.
 
   cloudcover_check.py --render [--date D] [--from-capture FILE]   prints the post, writes/posts nothing
   cloudcover_check.py --send                                       (launchd wrapper; gated by vp_live.sh)
-Failure policy v3: one FAILURE_LEDGER row, never a DM, never a failure note in #general.
+Failure policy v3: one FAILURE_LEDGER row, never a DM, never a failure note in any channel.
 """
 import datetime as dt
 import json
@@ -56,7 +56,7 @@ LEDGER = os.path.join(OS_DIR, "fleet", "FAILURE_LEDGER.md")
 STATE = os.path.join(OS_DIR, "fleet", "state", "cloudcover")
 import vp_browser  # the one automation profile + launch recipe (2026-10-19)
 PROFILE = vp_browser.PROFILE
-CH = "C03BETSS669"
+CH = "C0CCH89BUNL"  # #basics (Joshua 10/23: nothing posts to #general)
 API = "https://api.cloudcovermusic.com"
 ZONES_URL = "https://tune.cloudcovermusic.com/#/admin/zones"
 STALE_MIN = 20
@@ -441,7 +441,7 @@ def main():
     p = subprocess.run(["/usr/bin/python3", os.path.join(BIN, "vp_slack.py"), "post", CH, post],
                        capture_output=True, text=True, env=env)
     if p.returncode != 0:
-        ledger("The Cloud Cover music check ran but its #general post did not go through.")
+        ledger("The Cloud Cover music check ran but its #basics post did not go through.")
         log("FAIL post:", (p.stderr or p.stdout).strip()[:200])
         return 1
     log("posted", p.stdout.strip())

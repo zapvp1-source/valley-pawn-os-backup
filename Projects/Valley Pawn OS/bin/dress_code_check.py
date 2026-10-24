@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """dress_code_check.py — native replacement for Cowork `daily-dress-code-check` (Mon-Sat 10:30 ET ->
-#general C03BETSS669; Wednesday = Culpeper + Roanoke + Waynesboro). Built 2026-10-18 (Mac-first).
+#basics C0CCH89BUNL; Wednesday = Culpeper + Roanoke + Waynesboro). Built 2026-10-18 (Mac-first).
 
 WHY: the Cowork copy died Sat 10/17 on the account's weekly usage limit before its first tool call, and
 before that it depended on the Claude-in-Chrome extension + a Google passkey prompt it could not clear
@@ -23,7 +23,7 @@ its own automation window):
     jacket in ANY colour is compliant; outerwear over the shirt is compliant; unclear = compliant; nobody
     visible = compliant; flag only at >= 90 % confidence. The model is also asked whether it actually
     saw a live feed — a black, offline or loading tile never becomes "All in dress code".
-  4 Posts the SKILL's exact format to #general (dedupe: today's header already there = no repost):
+  4 Posts the SKILL's exact format to #basics (dedupe: today's header already there = no repost):
       :camera: Dress Code Check — Monday, October 19, 2026 @ 10:31 AM
       • Harrisonburg — :white_check_mark: All in dress code
       • Roanoke — :red_circle: <specific violation>
@@ -35,7 +35,7 @@ its own automation window):
                                                      posts nothing (snapshots are still saved)
   dress_code_check.py --probe                        NO browser: playwright, profile, key, native_live
   dress_code_check.py --send                         (launchd wrapper; gated by vp_live.sh)
-Failure policy v3: one FAILURE_LEDGER row, never a DM, never a failure note in #general.
+Failure policy v3: one FAILURE_LEDGER row, never a DM, never a failure note in any channel.
 """
 import base64
 import datetime as dt
@@ -57,7 +57,7 @@ STATE = os.path.join(OS_DIR, "fleet", "state", "dress_code")
 TEST_OUT = os.path.join(OS_DIR, "fleet", "test_output", "dress_code")
 import vp_browser  # the one automation profile + launch recipe (2026-10-19)
 PROFILE = vp_browser.PROFILE
-CH = "C03BETSS669"
+CH = "C0CCH89BUNL"  # #basics (Joshua 10/23: nothing posts to #general)
 POST_CUTOFF = (14, 30)
 TILE_WAIT_S = 15          # let the live streams start before the screenshot
 MODEL = "claude-sonnet-5-5"
@@ -463,7 +463,7 @@ def main():
     p = subprocess.run(["/usr/bin/python3", os.path.join(BIN, "vp_slack.py"), "post", CH, post],
                        capture_output=True, text=True, env=env)
     if p.returncode != 0:
-        ledger("The dress code check ran but its #general post did not go through.")
+        ledger("The dress code check ran but its #basics post did not go through.")
         log("FAIL post:", (p.stderr or p.stdout).strip()[:200])
         return 1
     log("posted", p.stdout.strip())

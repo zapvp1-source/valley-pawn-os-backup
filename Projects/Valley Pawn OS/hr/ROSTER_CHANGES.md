@@ -7,3 +7,4 @@
 - 2026-10-09 10:20: added Stephanie Chaplin (Waynesboro)
 - 2026-10-10 10:20: Stephanie Chaplin: slack_id changed; Stephanie Chaplin: phone changed
 - 2026-10-21 10:18: removed Jacob Cox (Roanoke)
+- 2026-10-23 10:19: added Brendon Thomas (Roanoke)

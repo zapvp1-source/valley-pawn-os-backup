@@ -138,14 +138,24 @@ JS_PENDING = """
 
 
 def switch_store(page, code):
-    """Top-left 'Select account' combobox -> option whose text starts with 'Valley Pawn - <City>'."""
-    page.get_by_role("combobox", name=re.compile("Select account", re.I)).first.click(timeout=15000)
-    page.get_by_role("option", name=re.compile(r"^Valley Pawn - %s" % NAMES[code], re.I)).first.click(timeout=15000)
+    """Top-left account switcher -> menu item 'Valley Pawn - <City>' (Lexington is spelled 'Valley Pawn-Lexington').
+    2026-10-23: the switcher is a plain button (headless) or a 'Select account' combobox (older layout) — try both."""
+    city = re.compile(r"Valley Pawn\s*-\s*%s" % NAMES[code], re.I)
+    combo = page.get_by_role("combobox", name=re.compile("Select account", re.I))
+    if combo.count():
+        combo.first.click(timeout=15000)
+    else:
+        page.locator("button", has_text=re.compile(r"Valley Pawn\s*-")).first.click(timeout=15000)
+    page.wait_for_timeout(1200)
+    item = page.get_by_role("menuitem", name=city)
+    if not item.count():
+        item = page.get_by_role("option", name=city)
+    item.first.click(timeout=15000)
     page.wait_for_timeout(2500)
     page.goto(URL, wait_until="domcontentloaded", timeout=60000)
     page.wait_for_timeout(4000)
     head = page.locator("body").inner_text(timeout=15000)
-    if "Valley Pawn - %s" % NAMES[code] not in head[:400]:
+    if not city.search(head[:400]):
         raise RuntimeError("store switch did not land on %s" % NAMES[code])
     return head
 

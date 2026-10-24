@@ -24,7 +24,9 @@ RULES (from the cloud SKILL.md, reproduced):
          prior-day CSV. Any other error = that store is not complete. A v3 duplicate error is never overridden.
   STEP 5 PM count sheets: fleet/eod_photos/<date>/ (com.valleypawn.eod-photo-fetch 20:15), read with the Claude API
          (bin/vp_ai.py vision). Store = the sheet's own printed header (END OF DAY: <STORE>), roster as fallback.
-         A sheet that is unreadable or whose 5 categories do not add up to its own TOTALS is not used (never guessed).
+         A sheet that is unreadable or whose 5 categories do not add up to its own TOTALS is not used (never guessed),
+         EXCEPT one confusable-digit misread in a single category (2/3, 5/8...) that a focused re-read of that cell
+         (or the same-day AM value) confirms - digit_repair(), added 2026-10-23 after LEX 10/22 was wrongly left out.
   STEP 6 table: RINGS=Rings, BRACELETS=Bracelets, EARRINGS=Earrings, PENDANTS=Pendants+Charms+Brooches,
          NECKLACES=Chains+Necklaces. Store rows in CUL, HAR, LEX, ROA, WAY order; a store with no sheet gets the line
          "<Store> — count sheet not posted tonight." under the table.
@@ -265,6 +267,74 @@ def _confirm_total(d, folder, items, total):
     return {"error": err}
 
 
+# 2026-10-23: one misread digit must not drop a store. LEX 10/22: rings read 302 (Uriah's 3 looks like a 2), the
+# other four agreed, TOTALS 487 -> the sheet "didn't add up" and Lexington was left out although it was fine.
+# Repair rule (still never a guess): exactly ONE category can be changed, only by swapping visually confusable
+# digits (at most 2 digits, same length), to make the five lines equal the written TOTALS; then a focused look at
+# that one cell must pick the repaired value, or (if that look is unclear) the same-day AM value must equal it.
+CONFUSABLE = {frozenset(p) for p in ("23", "35", "38", "58", "68", "06", "08", "17", "71", "49", "14", "57", "69")}
+
+
+def _confusable_variant(old, new):
+    a, b = str(old), str(new)
+    if old < 0 or new < 0 or len(a) != len(b) or a == b:
+        return False
+    diffs = [(x, y) for x, y in zip(a, b) if x != y]
+    return len(diffs) <= 2 and all(frozenset((x, y)) in CONFUSABLE for x, y in diffs)
+
+
+def digit_repair(vals, written_total):
+    """-> (index, repaired value) when exactly one category can be fixed by a confusable-digit swap, else None."""
+    if not isinstance(written_total, int) or any(not isinstance(v, int) for v in vals):
+        return None
+    tot = sum(vals)
+    cands = []
+    for i, v in enumerate(vals):
+        need = written_total - (tot - v)
+        if _confusable_variant(v, need):
+            cands.append((i, need))
+    return cands[0] if len(cands) == 1 else None
+
+
+CELL_Q = """This is the same jewelry count sheet. In the block dated %(mdy)s look ONLY at the %(cat)s line.
+Read the PM COUNT value digit by digit, and also the AM COUNT value on the same line. Handwritten 2/3, 5/8, 1/7, 4/9 can
+look alike. Is the PM %(cat)s value %(a)d or %(b)d?
+Answer JSON only: {"pm_value": <the number you read>, "choice": %(a)d|%(b)d|"unclear", "am_value": <number or null>}"""
+
+
+def _confirm_cell(d, folder, items, cat, a, b):
+    import vp_ai
+    content = [_img_block(os.path.join(folder, it["file"])) for it in items[:4]]
+    content.append({"type": "text", "text": CELL_Q % {"mdy": "%d/%d/%d" % (d.month, d.day, d.year), "cat": cat.upper(),
+                                                      "a": a, "b": b}})
+    err = None
+    for _ in range(3):
+        try:
+            return vp_ai.ask_json("", SHEET_SYS, max_tokens=400, content=content)
+        except Exception as e:  # noqa: BLE001
+            err = str(e)[:200]
+    return {"error": err}
+
+
+def _as_int(x):
+    try:
+        return int(re.sub(r"[^\d]", "", str(x))) if re.search(r"\d", str(x)) else None
+    except ValueError:
+        return None
+
+
+def repair_accepted(ans, old, new):
+    """Decide from a _confirm_cell answer whether the repaired value stands."""
+    if not ans or ans.get("error"):
+        return False
+    ch = _as_int(ans.get("choice"))
+    if ch == new or _as_int(ans.get("pm_value")) == new:
+        return True
+    if ch == old or _as_int(ans.get("pm_value")) == old:
+        return False
+    return _as_int(ans.get("am_value")) == new
+
+
 def judge(ans):
     """-> (ok, short reason for the post line, plain reason for the manager)"""
     pm = ans.get("pm") or {}
@@ -366,6 +436,20 @@ def read_sheets(d, want=None, cache=True):
                     wt = prev[ck].get("written_total") or a1["pm"].get("totals")
                     ok, why, mgr = False, "count sheet totals don't match", (
                         "tonight's PM jewelry count doesn't add up — the categories come to %d but the TOTALS line says %s" % (tot, wt))
+                    w = _as_int(wt)
+                    fix = digit_repair(list(vals), w) if w is not None and w == _as_int(a1["pm"].get("totals")) else None
+                    if fix:
+                        i, nv = fix
+                        rk = key + "|cell|%s|%d" % (PM_KEYS[i], nv)
+                        if rk not in prev or prev[rk].get("error"):
+                            prev[rk] = _confirm_cell(d, folder, items, PM_KEYS[i], vals[i], nv)
+                            json.dump(prev, open(cpath, "w"), indent=1)
+                        if repair_accepted(prev[rk], vals[i], nv):
+                            a1 = dict(a1, notes=(a1.get("notes") or "") + " | %s read %d, corrected to %d (TOTALS %d; focused re-read%s)" % (
+                                CATS[i], vals[i], nv, w, " + AM" if _as_int(prev[rk].get("am_value")) == nv else ""))
+                            vals = tuple(nv if j == i else v for j, v in enumerate(vals))
+                            tot = sum(vals)
+                            ok, why, mgr = True, "", None
                 else:
                     ok, why, mgr = False, "count sheet not readable", "the TOTALS line on tonight's PM jewelry count couldn't be read clearly from the photo"
             total = tot if ok else a1["pm"].get("totals")
@@ -399,8 +483,29 @@ def heading(d, catchup=False, only=None):
     return "Jewelry Count — %s %s (expected = system on-hand, counted = PM count sheet)" % (wd, md)
 
 
+def rescue_total_slip(exp, sheets):
+    """2026-10-23 (LEX 10/22): a sheet whose five PM categories were read identically by two independent reads, and
+    EVERY category equals Bravo's on-hand exactly, is a correct count with an arithmetic slip on the handwritten TOTALS
+    line (Uriah wrote 487; 302+41+46+51+46 = 486 = Bravo). Use it, with a note. Any category off by even one item ->
+    unchanged (the store stays left out and the manager is asked for the sheet)."""
+    for s, sh in sheets.items():
+        if not sh or sh.get("ok") or sh.get("why") != "count sheet totals don't match" or s not in exp:
+            continue
+        pm = sh.get("pm") or {}
+        if not all(isinstance(pm.get(c), int) for c in CATS):
+            continue
+        if all(pm[c] == exp[s][c] for c in CATS):
+            written = pm.get("Total")
+            sh.update(ok=True, why="", mgr=None,
+                      notes=(sh.get("notes") or "") + " | TOTALS line said %s; categories add to %d and match Bravo" % (written, sum(pm[c] for c in CATS)))
+            sh["pm"] = dict(pm, Total=sum(pm[c] for c in CATS))
+            log(s, "count sheet TOTALS slip (%s) — categories match Bravo exactly; used" % written)
+    return sheets
+
+
 def build(d, stores, exp, sheets, catchup=False, only=None):
     rows, left, overs = [], [], []
+    rescue_total_slip(exp, sheets)
     for s in stores:
         sh = sheets.get(s)
         if not sh or not sh["ok"]:

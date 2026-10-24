@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-10-22 22:11 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-10-23 22:11 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -438,6 +438,12 @@ RULE: When the jewelry count comes up short, recount first and then widen to a f
 PRESTON SAID: "Just don't check your counts first and then we can expand from there"
 SOURCE: zoom-call:7264764ec053483c8e050dd3398fdd16 | 2026-10-19 | UNK Walker Tapley
 id: jewelry-count-discrepancy-re-9c583679
+
+### [LOW] jewelry-pricing-after-count-notify
+RULE: If jewelry is priced after the jewelry count, the speaker wants to be told how many pieces were priced so it can be noted. The nightly inventory snapshot may otherwise throw off the count, though the speaker is unsure when the snapshot is pulled.
+PRESTON SAID: "Just let me know how many pieces you do."
+SOURCE: zoom-call:7cf59b4a50e542019ce9cfe411bac905 | 2026-10-23 | UNK Sandi Cole
+id: jewelry-pricing-after-count--3a069305
 
 
 ==============================================================================
@@ -2194,6 +2200,12 @@ PRESTON SAID: "We have a couple options, new eBay account might be the best opti
 SOURCE: #harrisonburg-funds (Preston Peters, Operations Manager) | 2026-10-22 | https://valleypawnworkspace.slack.com/archives/C03BWRKEDUZ/p1792690005574209
 id: ebay-account-recovery-option-81af2c51
 
+### [LOW] ebay-ringout-omni-channel
+RULE: When ringing out an eBay sale in Bravo, check that it posts to omni channel rather than web/PayPal. The routing was changed in Bravo and should now be automatic.
+PRESTON SAID: "you go to ring it out just see where omni channel it's putting it in."
+SOURCE: zoom-call:8f5e64407b104b87bc4c190dc7a56412 | 2026-10-23 | UNK Benjie Moore
+id: ebay-ringout-omni-channel-80046df7
+
 ### [LOW] employee-purchase-window-handbook-error
 RULE: The handbook's "90 days" employee purchase window is wrong. It likely came from an earlier draft policy and will be corrected. The correct number was not stated.
 PRESTON SAID: "Yeah, that's not accurate. That might have got pulled from Josh's original policy that he wanted, so we'll have to update that."
@@ -2395,5 +2407,5 @@ id: windows-11-pro-upgrade-store-428d028c
 
 
 ==============================================================================
-COVERAGE: 326 entries - 1 verified by Preston, 180 high-confidence rules, 90 medium, 55 low, 0 superseded.
+COVERAGE: 328 entries - 1 verified by Preston, 180 high-confidence rules, 90 medium, 57 low, 0 superseded.
 ==============================================================================

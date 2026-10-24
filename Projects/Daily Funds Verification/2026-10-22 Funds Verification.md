@@ -1,15 +1,15 @@
 # Daily Funds Verification — 2026-10-22
 
-**5 store(s) need a look — 0 matched, 5 discrepancy, 0 to check.**
+**No funds activity today — all clear.**
 
 | Store | Sent (Slack) | Expected | In Bravo | Status |
 |---|---|---|---|---|
-| Culpeper | 9:17 AM $99.00, 10:18 AM $118.00 | $217.00 | $0.00 | ⚠ Discrepancy |
-| Harrisonburg | 9:17 AM $99.00, 10:18 AM $118.00 | $217.00 | $0.00 | ⚠ Discrepancy |
-| Lexington | 9:17 AM $99.00, 10:18 AM $118.00 | $217.00 | $0.00 | ⚠ Discrepancy |
-| Roanoke | 9:17 AM $99.00, 10:18 AM $118.00 | $217.00 | $0.00 | ⚠ Discrepancy |
-| Waynesboro | 9:17 AM $99.00, 10:18 AM $118.00 | $217.00 | $0.00 | ⚠ Discrepancy |
-| **Total** | | **$1,085.00** | | **0/5 verified** |
+| Culpeper | none | $0.00 | $0.00 | ✓ Matched |
+| Harrisonburg | none | $0.00 | $0.00 | ✓ Matched |
+| Lexington | none | $0.00 | $0.00 | ✓ Matched |
+| Roanoke | none | $0.00 | $0.00 | ✓ Matched |
+| Waynesboro | none | $0.00 | $0.00 | ✓ Matched |
+| **Total** | | **$0.00** | | **5/5 verified** |
 
 
-_Native run (bin/funds_verification.py)._
+_Native run (bin/funds_verification.py). Corrected 2026-10-23: the original run read Windows-setup instructions (the "118" in the sign-in address and "$99 upgrade") as cash sends; no cash was sent that day._

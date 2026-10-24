@@ -367,6 +367,10 @@ def ask_claude(key, cfg, a, mct, when):
             return {"action": "skip", "reason": "reply empty/too long", "text": t}
         if re.search(r"\$\s?\d", re.sub(r"\$25 per firearm", "", t)):
             return {"action": "skip", "reason": "contained a dollar figure", "text": t}
+        # carrier safety 2026-10-23: firearm words are restricted (SHAFT) content for business texting and can get
+        # a store's number filtered — an automated text never carries them; the store answers those by hand.
+        if re.search(r"\b(guns?|firearms?|rifles?|pistols?|handguns?|shotguns?|revolvers?|ammo|ammunition|ar-?15s?|suppressors?)\b", t, re.I):
+            return {"action": "skip", "reason": "firearm wording (carrier-restricted) - left for staff", "text": t}
         if "(Automated reply" not in t:
             t += " (Automated reply - a team member will follow up.)"
         d["text"] = t

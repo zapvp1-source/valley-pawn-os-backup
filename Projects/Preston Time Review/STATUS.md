@@ -41,3 +41,11 @@ New transcripts: `transcripts/2026-10-08_1312_benjie-moore_0424.txt`,
 `transcripts/2026-10-12_0956_walker-tapley_0302.txt`,
 `transcripts/2026-10-12_0959_chadd-mcclintic_0857.txt`,
 `transcripts/2026-10-13_1126_uriah-tiglao_0435.txt`.
+
+## 2026-10-23 — T-Mobile cell pulled (bill _111 Sep17–Oct16 + current cycle)
+Week Mon 10/12–Sat 10/17, cell (540) 836-4200: 81 calls / 487 min. Staff+stores only 6 calls / 6 min
+(was 17–51 calls/wk Sep 21–Oct 10) → managers moved to the Zoom line. Hiring candidates 43 calls / 252 min
+(Indeed interviews still placed from his cell — hiring confirmation template still says "from (540) 836-4200").
+Fortis (card processor) 1 call / 28 min. Unidentified 28 calls / 198 min (incl. recurring x9687, likely personal).
+Zoom line same week: 49 calls / 132 min (Walker 17, Chadd 10, Sandi 8). Combined ≈ 619 min ≈ 103 min/workday.
+Weekly cell calls: 9/21 100c/559m · 9/28 49c/276m · 10/5 56c/372m · 10/12 81c/487m.

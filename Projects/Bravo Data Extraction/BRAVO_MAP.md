@@ -1,8 +1,8 @@
 # Bravo POS — Complete Screen & Report Map
 
-_Generated 2026-10-22 22:33 by `bravo_map_compile.py` from BravoMapper's read-only crawl. Do not hand-edit; add human notes to the `bravo-context` skill instead._
+_Generated 2026-10-23 22:33 by `bravo_map_compile.py` from BravoMapper's read-only crawl. Do not hand-edit; add human notes to the `bravo-context` skill instead._
 
-**Status:** IN PROGRESS (resumes nightly) · 69 steps mapped · 0 steps could not be mapped · last crawler state: `2026-10-22 22:31:50 ABORT no-dashboard after R_Inventory_Base`
+**Status:** IN PROGRESS (resumes nightly) · 70 steps mapped · 0 steps could not be mapped · last crawler state: `2026-10-23 22:31:59 ABORT no-dashboard after R_Inventory_by_Location`
 
 Raw data: `output/bravo_map/` — `screens/` (full UI tree per screen), `shots/` (screenshots), `lists/` (report lists, Custom Reports criteria / columns / saved reports), `index.tsv`, `RUN_LOG.md`.
 
@@ -646,6 +646,15 @@ Screenshot: `output/bravo_map/shots/R_Inventory_Base.png`
 - **Fields:** BravoDateEdit
 - **Buttons:** Cancel; Done `btnDone`; Preview; Print
 
+### Report: Inventory by Location
+_key `R_Inventory_by_Location` · captured 2026-10-23 22:30:42 · Bravo     2026.6.0.79     VALLEY PAWN - WAYNESBORO (WAY)_
+Screenshot: `output/bravo_map/shots/R_Inventory_by_Location.png`
+
+- **Labels:** Location; Show Items; Ok; Cancel; Done; Preview; Print; 8300 Audit; BRAVO Business Dashboard; Deposits and Paid Outs Spreadsheet; Disbursement Journal; End of Day; End of Day - Consolidated; End of Month; Fortis Alignment; General Exception; Inter-Store Cash Transfer; Large Cash In Transactions; Large Cash Out Transactions; Safe Register Journal; Session Journal; Store Register Journal; Till Cash Balance; Till Register Journal; Transfers; Closing Reports; Aged Inventory Summary; Cost Adjustment; Inventory Base; Inventory by Location; Item History; Lost Stolen or Damaged; Vendor Purchase; Vendor Repairs; Inventory Reports; Loan Base; Loan Disposition; Loan History; Loan Journal; Loan Notice … +22 more
+- **Fields:** BravoComboBox
+- **Checkboxes:** Show Items
+- **Buttons:** Cancel; Done `btnDone`; Preview; Print
+
 ## Dashboard task tiles
 
 ### Dashboard tile: Layaways Overdue
@@ -798,3 +807,5 @@ Screenshot: `output/bravo_map/shots/T_Web_Offers.png`
 - 2026-10-21 22:32 mode=full end='2026-10-21 22:31:44 ABORT no-dashboard after R_Cost_Adjustment' steps_done_total=68 (+1 this run) failed_keys=21 health=PASS CUL
 - 2026-10-22 22:33 recovered from '2026-10-22 22:31:50 ABORT no-dashboard after R_Inventory_Base' (health=PASS CUL)
 - 2026-10-22 22:33 mode=full end='2026-10-22 22:31:50 ABORT no-dashboard after R_Inventory_Base' steps_done_total=69 (+1 this run) failed_keys=22 health=PASS CUL
+- 2026-10-23 22:33 recovered from '2026-10-23 22:31:59 ABORT no-dashboard after R_Inventory_by_Location' (health=PASS CUL)
+- 2026-10-23 22:33 mode=full end='2026-10-23 22:31:59 ABORT no-dashboard after R_Inventory_by_Location' steps_done_total=70 (+1 this run) failed_keys=23 health=PASS CUL

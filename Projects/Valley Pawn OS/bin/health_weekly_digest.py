@@ -183,6 +183,30 @@ def changelog(line):
     open(p, "w").write(head + "\n\n" + line + "\n\n" + rest)
 
 
+
+
+def _dm_already(dm, marker, hours, key):
+    """2026-10-23: the ops bot has no im:history scope, so vp_slack.has() on Joshua's DM exits with
+    'missing_scope' and killed the run BEFORE the DM was sent (Publer 10/16, health digest 10/18 — no receipts).
+    Dedupe on a local sent-marker instead; the Slack read is tried only as a bonus and never fatal."""
+    import time
+    f = os.path.join(HERE, "..", "fleet", "state", "dm_sent", key)
+    try:
+        if os.path.exists(f) and time.time() - os.path.getmtime(f) < hours * 3600:
+            return True
+    except OSError:
+        pass
+    try:
+        return bool(vp_slack.has(dm, marker, hours))
+    except SystemExit:
+        return False
+
+
+def _dm_mark(key):
+    d = os.path.join(HERE, "..", "fleet", "state", "dm_sent")
+    os.makedirs(d, exist_ok=True)
+    open(os.path.join(d, key), "w").write(dt.datetime.now().isoformat(timespec="seconds") + "\n")
+
 def main():
     render = "--render" in sys.argv
     send = "--send" in sys.argv and not render
@@ -208,11 +232,12 @@ def main():
         return 0
     write_unfolded(files, day)
     dm = vp_slack.dm_channel(JOSHUA)
-    if vp_slack.has(dm, "This week's sleep", 12):
+    if _dm_already(dm, "This week's sleep", 12, "health-weekly-digest"):
         print("digest already sent today")
         return 0
     os.environ["VP_TASK"] = TASK
     vp_slack.post(dm, text)
+    _dm_mark("health-weekly-digest")
     s = facts["sleep"]
     changelog("## %s — Weekly digest sent (native). Ledger refresh %s. Signature nights %d of last 7; %s%% last 30 vs %s%% prior 30. "
               "Episodes logged this week: %d (last logged %s). Open items over 30 days: %d. Index drift: %s."

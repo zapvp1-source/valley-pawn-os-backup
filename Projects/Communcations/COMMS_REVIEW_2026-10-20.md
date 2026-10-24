@@ -60,10 +60,23 @@ Missed-call → text (60 s, deduped, hours-aware); Chekkit unanswered morning/EO
 1. **Chekkit sign-in on the automation profile** (Joshua, once, ~1 min: `bin/vp_signin_front.sh --only chekkit`, then quit) → then one `review_reply.py --render` and `touch fleet/state/native_live/nightly-chekkit-review-responses`. Until then Waynesboro's 19 (and the rest) stay unanswered.
 2. **Harrisonburg phones** — 21% missed while open, 44 never reached in 3 weeks. Not a software problem: staffing/ring-group. Weekly review will show whether it moves.
 3. **SMS blast frequency rule** — the 9/5 plan's Phase 4 ledger (2 touches / 7 days, consent flag) is still unbuilt; HAR opt-out rate 2.71%.
-4. **Facebook review site at Harrisonburg** still points at legacy page 474248069342834 (should be 795439020329931) — one field in Chekkit → Settings → Review (classifier blocked the edit from this session).
+4. ~~Facebook review site at Harrisonburg~~ — resolved 10/23: points at the live store page 474248069342834 (see §7).
 5. **Other 4 stores' drip templates** not yet read (Culpeper known correct); check LEX/ROA/WAY for the old name the same way.
 6. Brevo weekly cadence and the Store Spotlight segments (precision beats volume 100×) — marketing lane, separate plan.
 7. \#emails-missed: archive with a pinned pointer to the mail brief (Joshua's call — Phase 5).
 
 ## 6. Evidence read
 `fleet/texting_scorecard/2026-10-13…19.json`, `fleet/ai_responder/events-*.jsonl`, `fleet/chekkit_ai_config.json`, `Call Analysis/week_2026-09-28/{stats.json,review_*.json,chekkit_texts.md}`, Slack #general / #google-reviews / #chekkit-messages-missed / #voicemails-calls-missed / #store-performance / #email-campiagns / #website / #social-media / #emails-missed, Chekkit dashboard (Waynesboro reviews, Harrisonburg settings/compliance), DNS (SPF/DMARC/MX via DoH), `Life OS/HUMAN_QUEUE.md`, `fleet/FAILURE_LEDGER.md`, CHANGELOG 10/18–10/20.
+
+## 7. Follow-up 2026-10-21 (Joshua: "fix all this")
+- **No overlap:** no native agent or cloud scheduled task (50 active checked) replies to reviews, audits AI texts, or runs the call review, other than the three built here.
+- **Review backlog cleared:** 70 public replies to 4–5★ reviews (WAY 16, CUL 20, ROA 12, LEX 8, HAR 14); every store at 0 except three lower-rated Waynesboro reviews left for Joshua.
+- **Harrisonburg Facebook review link:** checked again on 10/23 and set to the live store page (474248069342834). The 10/21 change to 795439020329931 was wrong because that page no longer exists. All five reminder texts verified clean (CUL correct; LEX/ROA/WAY reminders off; HAR fixed 10/20).
+- **Text opt-out rates (30-day):** ROA 14.29%, LEX 4.17%, CUL 3.02%, HAR 2.71%, WAY 1.97%. The monthly "Shop Us Online" text now checks each store first and holds any store at 1.8%+. Its wording now uses "Text STOP to unsubscribe" (what blocked the 10/15 send), and campaign copy no longer advertises phones.
+- **Still needs Joshua once:** the Chekkit sign-in in the automation browser so future 4–5★ replies post nightly on their own.
+
+## 8. Follow-up 2026-10-23 (Joshua: "go")
+- **Review replies now run on their own.** Joshua signed in once. The test run reached all 5 stores and drafted 5 new 4–5★ replies (Waynesboro 2, Roanoke 3). From tonight, 4–5★ replies post at 7:30 PM every night; 1–3★ reviews still come to Joshua as drafts.
+- **Monthly Chekkit logins check** (3rd of the month) compares the Gusto staff list with Chekkit users. First run: nobody who left still has access. 4 staff were never set up: Joshua Burnett (Culpeper), Camden Ahern (Harrisonburg), Brendon Thomas (Roanoke), Stephanie Chaplin (Waynesboro). Those 4 are on the human list because Chekkit's API cannot add users.
+- **Customer tags from Bravo** (nightly): `bravo-customer-2yr` (about 15,400 customers), `bravo-visited-60d` (about 3,800), `bravo-borrower`, `bravo-do-not-text`, `bravo-winback`. The tags are on customers who are already in Chekkit; nobody is added. With them, a text campaign can go to people who have actually been in recently instead of the whole list, which is the lever on opt-outs. The first full pass finishes in about two nights.
+- **Carrier safety (Joshua: yes, 10/23).** Each store's monthly text list now leaves out anyone Bravo marks do-not-text and anyone we texted marketing in the last 14 days, and is capped at 2,000. For November that's 568 fewer numbers, with 5,703 left across the five stores. The win-back texts skip do-not-text customers too. The AI text responder no longer sends any reply that mentions guns, firearms or ammo, because carriers restrict that content; staff answer those instead. The send still holds any store whose opt-out rate is 1.8% or higher.

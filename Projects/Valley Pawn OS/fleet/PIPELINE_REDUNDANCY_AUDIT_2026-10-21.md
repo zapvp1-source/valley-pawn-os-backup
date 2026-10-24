@@ -27,3 +27,6 @@ Companion: Admin Assitant/RECORDS_ADMIN_AUDIT_2026-10-21.md (same day; items the
 4. Joshua's "never post to #general" vs clock-in, dress code, Cloud Cover (and dashboard failures) posting there — needs Joshua's ruling.
 5. Current-staff rule vs cloud clock-in (named Jacob Cox 10/20).
 6. Mislabels: gap-fill "RUN NOW ONCE" runs weekly; supply order cron 3:15 vs text 6 AM; Fortis monitor self-disables by local ID; returns summary carries an unrelated Bravo block; dashboard refresh reads #chekkit-unanswered-summary which nothing posts to now.
+
+## Resolution 2026-10-23 (Joshua's calls)
+See CHANGELOG 2026-10-23 "pipeline cleanup". Clock-in: cloud copy is live (native dormant). VSP, supply, Monday compile/gap-fill cloud copies OFF. #basics created; nothing posts to #general. AI checks de-duplicated and store facts corrected. Capex rebuilt for the cloud. Preston verified healthy (unchanged). Northwest: native not yet signed in — local task stays the driver until that one sign-in.
