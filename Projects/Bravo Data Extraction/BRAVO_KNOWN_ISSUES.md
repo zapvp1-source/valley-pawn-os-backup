@@ -719,3 +719,7 @@ Also affects: `sales-tax-monthly-update` (same dependency, will fail the same wa
 **Correction (same day):** a first write-up of this entry claimed a second "false-empty store-switch" defect because a manual 9/16 pull returned rows for CUL only. **9/16 was a Wednesday — Culpeper is the only store open Wednesdays.** Those zeros are correct; the handler's empty-day path worked exactly as designed. That claim is withdrawn, the files were restored to `output/`, and the pipeline's store-switch is NOT suspect. (Lesson logged: check the store calendar before calling any zero a defect.)
 
 **Fix (2026-09-17):** the trigger drop is moved off Cowork onto a native launchd agent (`com.valleypawn.morning-pull-trigger`, `bin/morning_pull_trigger.sh`) that writes the identical JSON at 06:50 daily; the Cowork `bravo-morning-pull` task is disabled so the two cannot double-pull. A trigger file cannot die silently.
+
+
+## 2026-10-24 — atf-ad-count reports ERROR on a good export
+ATFADCount.ahk's min-size guard flags the CSV 'too small (423 bytes)' but the ATF A & D Count is a one-page summary — the file is complete and correct. Treat the CSV as valid when it contains a 'Total,' row; the handler's guard needs a lower floor for this cell (not edited — additive rule).

@@ -2315,3 +2315,39 @@ Jewelry Count — Friday 10/23 (expected = system on-hand, counted = PM count sh
 
 Harrisonburg — count sheet totals don't match.
 
+
+## RUN RECORD — 2026-10-24 (Saturday) — native jewelry-onhand-nightly-pull
+
+Open: CUL HAR LEX ROA WAY. Bravo freeze-window CSVs: all open stores. Sheets: CUL NOT USED — count sheet not readable; HAR ok (Walker-Tapley, 18:18); LEX ok (Uriah, 18:18); ROA ok (Benjie-Moore, 17:43); WAY ok (Chadd, 17:17).
+
+Jewelry Count — Saturday 10/24 (expected = system on-hand, counted = PM count sheet)
+
+| Store | Category | Expected | Counted | Variance |
+|---|---|---|---|---|
+| HAR | Rings | 443 | 443 | 0 |
+| HAR | Bracelets | 53 | 53 | 0 |
+| HAR | Earrings | 53 | 53 | 0 |
+| HAR | Pendants | 113 | 111 | -2 |
+| HAR | Necklaces | 121 | 122 | +1 |
+| **HAR Total** | | **783** | **782** | **-1** |
+| LEX | Rings | 301 | 301 | 0 |
+| LEX | Bracelets | 41 | 41 | 0 |
+| LEX | Earrings | 45 | 45 | 0 |
+| LEX | Pendants | 49 | 49 | 0 |
+| LEX | Necklaces | 44 | 44 | 0 |
+| **LEX Total** | | **480** | **480** | **0** |
+| ROA | Rings | 590 | 591 | +1 |
+| ROA | Bracelets | 137 | 137 | 0 |
+| ROA | Earrings | 78 | 78 | 0 |
+| ROA | Pendants | 170 | 170 | 0 |
+| ROA | Necklaces | 151 | 151 | 0 |
+| **ROA Total** | | **1126** | **1127** | **+1** |
+| WAY | Rings | 339 | 339 | 0 |
+| WAY | Bracelets | 48 | 48 | 0 |
+| WAY | Earrings | 57 | 57 | 0 |
+| WAY | Pendants | 68 | 68 | 0 |
+| WAY | Necklaces | 78 | 78 | 0 |
+| **WAY Total** | | **590** | **590** | **0** |
+
+Culpeper — count sheet not readable.
+

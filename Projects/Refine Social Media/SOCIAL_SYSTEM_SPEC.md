@@ -138,3 +138,23 @@ it duplicates something, whether it published, and every number reported afterwa
   comments — all need Joshua's login.
 - Staff-video lane produced 4 videos on 9/1 after 61 empty days; `#casual-video` still doesn't exist.
 - Community formats run dry mid-November at current cooldowns — top up `creative_state.json`.
+
+## 9. 2026-10-24 changes (Joshua-approved growth plan, from the 10/20 audit)
+
+- **Lexington formats on every store page.** `community_topics.json` = verified topic bank (Culpeper, Waynesboro,
+  Harrisonburg, Roanoke: 3 friendly debates, 3 deep-cut history/landmarks, dated HS football games each).
+  `plan.py` puts one proven topic on Monday 13:30 (debate odd ISO weeks / history even) and the verified game on
+  Friday 13:05 when that Friday has one; Wed/Sun stay with the drift engine. 45-day per-page topic cooldown read
+  from past plan files. Formats: `com_only_locals_know`, `com_then_now`, NEW `com_hs_game_week` (novelty gate
+  passed). Bank runs dry ~Dec 7 — the plan notes say "topic bank is resting"; add topics before then.
+- **Single deal stills retired on store Facebook pages.** Intake = one photo per store, so no honest 3+ photo
+  album; the deal reaches store FB as its reel (deal_video). The still runs on the store's Google profile only.
+  The freed FB placement = 5th community post, Thursday 13:30. `DEAL_PHOTO_FB_RETIRED` in `plan.py` reverts it.
+  Publer album support was not built: nothing to put in an album, and the publisher's multi-image path is
+  unproven (one media id per post today).
+- **Friday digest** adds per-store reach as % of followers vs the 90-day mark and trailing 4 weeks
+  (`publer_weekly_digest.py` → `friday_digests/store_reach_latest.json`; `report.digest()` appends it when fresh and
+  complete). Followers from `state/store_followers.json` (Publer's API returns none).
+- **Chekkit review invitations** (all 5 stores) now end "Follow Valley Pawn <Store> on Facebook: <page link>".
+- **Counter signs:** v3 art advertises the paused giveaway; `generate_acrylic_sign_v4.py` → `acrylic_signs_v4/`
+  ("Follow us on Facebook", QR straight to each store page). Not ordered.

@@ -967,6 +967,7 @@ def cmd_deliveries():
     st = load(STATE, {})
     open_orders = [o for o in st.get("orders", []) if o.get("status") not in ("delivered", "closed") and o["order"] != "?"]
     if not open_orders:
+        log("deliveries: no open orders to track")   # 2026-10-24 heartbeat so fleet-doctor sees the daily run
         return 0
     p, ctx, page, vb = browser()
     alerts, delivered = [], []

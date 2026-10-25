@@ -334,14 +334,96 @@ def build_adjustment(top_type: str, bottom_type: str) -> str:
     return "; ".join(parts) if parts else "hold current mix"
 
 
+# ---------------------------------------------------------------------------
+# 2026-10-24 (social growth plan): reach per follower, per store Facebook page.
+# The 90-day audit found the gap that matters is not post count but how much of each page's own audience a post
+# reaches: Lexington community posts reach ~28% of followers, Harrisonburg ~11%. This block reports, per store page,
+# this week's median reach (all posts and community posts) as a % of that page's followers, against the 90-day
+# baseline (7/22-10/20, SOCIAL_AUDIT_2026-10-20.md) and the trailing 4 weeks of this report. Followers come from
+# state/store_followers.json (Publer's API returns no follower counts). Saved as friday_digests/store_reach_<date>.json
+# and store_reach_latest.json; vp_social/report.py digest() appends it to Friday's DM when it is fresh and complete.
+# ---------------------------------------------------------------------------
+STORE_PAGES = ["Culpeper", "Waynesboro", "Harrisonburg", "Lexington", "Roanoke"]
+FOLLOWERS_FILE = ROOT / "state" / "store_followers.json"
+BASELINE_90D = {  # median community-post reach and followers, 90 days to 2026-10-20 (audit + Joshua's plan brief)
+    "Lexington": {"median_community": 458, "followers": 1620},
+    "Culpeper": {"median_community": 149, "followers": 880},
+    "Waynesboro": {"median_community": 145, "followers": 1240},
+    "Harrisonburg": {"median_community": 84, "followers": 760},
+    "Roanoke": {"median_community": 11, "followers": 37},
+}
+
+
+def _median(xs):
+    xs = sorted(xs)
+    if not xs:
+        return None
+    m = len(xs) // 2
+    return xs[m] if len(xs) % 2 else (xs[m - 1] + xs[m]) / 2
+
+
+def store_reach(rows: list[dict], today: str) -> dict:
+    fol = json.loads(FOLLOWERS_FILE.read_text())
+    counts = fol.get("followers") or {}
+    hist = []
+    for f in sorted(DIGEST_DIR.glob("store_reach_20*.json"))[-4:]:
+        if f.stem.endswith(today):
+            continue
+        try:
+            hist.append(json.loads(f.read_text()))
+        except Exception:
+            pass
+    stores = {}
+    for s in STORE_PAGES:
+        rs = [r for r in rows if r["account"] == s]
+        com = [r["reach"] for r in rs if r["content_type"] == "community"]
+        n_fol = counts.get(s)
+        med_all, med_com = _median([r["reach"] for r in rs]), _median(com)
+        pct = round(100.0 * med_com / n_fol, 1) if (med_com is not None and n_fol) else None
+        b = BASELINE_90D[s]
+        base_pct = round(100.0 * b["median_community"] / b["followers"], 1)
+        trail = [h["stores"][s]["pct_community"] for h in hist if (h.get("stores", {}).get(s) or {}).get("pct_community") is not None]
+        stores[s] = {"posts": len(rs), "community_posts": len(com), "median_reach_all": med_all,
+                     "median_reach_community": med_com, "followers": n_fol, "pct_community": pct,
+                     "baseline_pct": base_pct, "baseline_median_community": b["median_community"],
+                     "trailing_4wk_pct": round(sum(trail) / len(trail), 1) if trail else None}
+    return {"date": today, "followers_as_of": fol.get("as_of"), "complete": all(counts.get(s) for s in STORE_PAGES),
+            "stores": stores}
+
+
+def store_reach_lines(sr: dict) -> list[str]:
+    """Plain-language lines (no jargon) -- used in the markdown digest and appended to Friday's DM."""
+    out = [f"*Store pages — how much of each page's own followers a typical community post reached* "
+           f"(followers as of {sr['followers_as_of']}; compared with each page's 90-day mark)"]
+    for s in STORE_PAGES:
+        d = sr["stores"][s]
+        if not d["posts"]:
+            out.append(f"• {s}: no posts measured this week")
+            continue
+        if d["pct_community"] is None:
+            out.append(f"• {s}: {d['posts']} posts, typical reach {int(d['median_reach_all'])} — no community posts measured "
+                       f"this week (90-day mark {d['baseline_pct']}%)")
+            continue
+        delta = d["pct_community"] - d["baseline_pct"]
+        arrow = "up" if delta > 0.5 else ("down" if delta < -0.5 else "even")
+        trail = f", last 4 weeks {d['trailing_4wk_pct']}%" if d["trailing_4wk_pct"] is not None else ""
+        out.append(f"• {s}: {d['pct_community']}% of {d['followers']:,} followers (typical community post "
+                   f"{int(d['median_reach_community'])}) — {arrow} vs {d['baseline_pct']}%{trail}")
+    return out
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--days", type=int, default=7)
+    ap.add_argument("--dry", action="store_true", help="2026-10-24: print the store-page block only; write nothing")
     args = ap.parse_args()
 
     p = PublerClient()
     rows = collect(p, args.days)
     today = datetime.now().strftime("%Y-%m-%d")
+    if args.dry:
+        print("\n".join(store_reach_lines(store_reach(rows, today))))
+        return
     DIGEST_DIR.mkdir(exist_ok=True)
     out_md = DIGEST_DIR / f"friday_digest_{today}.md"
 
@@ -396,6 +478,13 @@ def main() -> None:
     for t, rs in sorted(by_type.items(), key=lambda kv: -sum(x["engagement"] for x in kv[1])):
         lines.append(f"| {t} | {len(rs)} | {sum(x['reach'] for x in rs)//len(rs)} | "
                      f"{sum(x['engagement'] for x in rs)//len(rs)} |")
+    try:   # 2026-10-24 store-page reach per follower -- never allowed to break the digest
+        sr = store_reach(rows, today)
+        (DIGEST_DIR / f"store_reach_{today}.json").write_text(json.dumps(sr, indent=1))
+        (DIGEST_DIR / "store_reach_latest.json").write_text(json.dumps(sr, indent=1))
+        lines += ["\n## Store pages — reach as % of followers\n"] + [x.replace("*", "**") for x in store_reach_lines(sr)]
+    except Exception as e:  # noqa: BLE001
+        print(json.dumps({"warn": f"store reach block skipped: {str(e)[:160]}"}))
     out_md.write_text("\n".join(lines) + "\n")
 
     adj = {"week_ending": today, "generated_at": datetime.now().isoformat(),

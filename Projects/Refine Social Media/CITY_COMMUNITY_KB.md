@@ -379,3 +379,70 @@ substituted verified ongoing/seasonal facts already in this KB (market season da
 status, drive-in season, etc.) framed as "worth knowing this week" rather than actual breaking news —
 safe under Hard Rule 3, but not what the format was designed for. If a future session adds a real
 local-news search step, note it here and remove this gap notice.
+
+## Verified additions — 2026-10-24 (Lexington formats rolled out to Culpeper, Waynesboro, Harrisonburg, Roanoke)
+
+**Why.** 90-day Publer data (7/22–10/20): Lexington community posts reach ~28% of the page's followers per post
+(median 458) vs Culpeper ~17%, Waynesboro ~12%, Harrisonburg ~11%. Lexington's winners were a **friendly local
+debate** (Goshen Pass, 1,066), **deep-cut history/landmarks** (Hull's Drive-In 811, Chessie 627, mural 588, brick
+sidewalks 572) and **specific high-school football** (RCHS 564). The other four stores now get the same three
+formats from a verified topic bank: **`community_topics.json`** (machine-readable; the planner reads it — Monday =
+debate on odd ISO weeks / history on even, Friday = that Friday's verified game; 45-day per-page topic cooldown).
+Formats: debate = `com_only_locals_know`, history = `com_then_now`, sports = NEW `com_hs_game_week`.
+
+**CULPEPER**
+- Town established by the House of Burgesses **Feb 22, 1759 as "the Town of Fairfax"** (for Thomas, 6th Lord
+  Fairfax); later "Culpeper Courthouse". `[C26 verified 2026-10-24]` *(en.wikipedia.org/wiki/Culpeper,_Virginia —
+  do not state a rename year; sources disagree)*
+- **Mount Pony bunker**: Federal Reserve, finished **1969**, 400 ft long, 140,000 sq ft, foot-thick concrete,
+  shelter for 400; ran the "Culpeper Switch" (Fedwire) and reportedly held ~$4 billion in cash. Library of Congress
+  took it **July 26, 2007** — now the Packard Campus, ~6.3 million items. `[C26 verified 2026-10-24]` *(virginiaplaces.org)*
+- **State Theatre**: 1938 Art Deco, restored with historic tax credits, **reopened 2013**, 560 seats. `[C26 verified
+  2026-10-24]` *(virginiamainstreet.com 2013-05-21)*
+- The depot houses the **Museum of Culpeper History since 2014** and is still the Amtrak stop. `[C26 verified 2026-10-24]`
+- Football: **Fri Oct 30 7 PM Blue Devils host Courtland** (7-1, 5-0 Battlefield District, 1st, five straight wins);
+  Eastern View at Chancellor 7 PM. **Fri Nov 6** Blue Devils at Caroline, Eastern View at Spotsylvania, 7 PM.
+  `[C26 verified 2026-10-24]` *(MaxPreps team schedules)*
+- ⚠️ **Do not use "Lake Pelham vs Lake Culpeper" as a debate** — the 2021 rename removed a Confederate officer's
+  name; it is political, not a friendly debate.
+
+**WAYNESBORO**
+- **Basic City + Waynesboro consolidation vote Aug 7, 1923** — Waynesboro 259-92, Basic City 157-93; Basic City was
+  larger (~2,700 vs 1,750) and most of its residents opposed losing the "Basic" name. `[C26 verified 2026-10-24]`
+  *(waynesboroheritagefoundation.com)*
+- **Wayne Theatre opened Jan 18, 1926** (650 seats; 450 after 1949), closed and given to the City 1999, reopened
+  restored by 2017 — **2026 is its 100th year**. `[C26 verified 2026-10-24]` *(cinematreasures.org/theaters/5374)*
+- **Fishburne Military School founded 1879** by Prof. James A. Fishburne; "Virginia's Oldest Private Military
+  School"; brick barracks west wing finished 1921. `[C26 verified 2026-10-24]` *(fishburne.org/about/history)*
+- Football: **Fri Oct 30** Little Giants at Wilson Memorial 7 PM; **Fri Nov 6** host Riverheads 7 PM. Never mention
+  the season record. `[C26 verified 2026-10-24]`
+
+**HARRISONBURG**
+- **1779**: Thomas Harrison deeded 2.5 acres for public use — the city's start; independent city **1916**.
+  `[C26 verified 2026-10-24]` *(harrisonburgva.gov/history)*
+- **"Rocktown"**: Bishop Francis Asbury often called it Rocktown; an 1853 article by Gen. Samuel H. Lewis said
+  country people frequently did. *(The origin of the name itself is not documented — don't invent one.)*
+  `[C26 verified 2026-10-24]` *(rocktownhistory.org)*
+- **Turkey statues on Route 11** at the county lines, put up in the **1950s** when Rockingham took the name
+  "Turkey Capital of the World"; the industry traces to Charles Wampler Sr.'s 1920s experiments.
+  `[C26 verified 2026-10-24]` *(vaco.org)*
+- Football: **Fri Oct 30** Blue Streaks at William Monroe 7 PM; **Fri Nov 6** host Broadway 7 PM. HHS forfeited a
+  game in October — confirm the game is on the morning of. JMU hosts Troy **Thu Oct 29**. `[C26 verified 2026-10-24]`
+
+**ROANOKE**
+- **Big Lick → Roanoke**: town of Big Lick chartered 1874 (named for salt licks); became the Shenandoah Valley RR /
+  N&W junction in 1882; residents voted for "Kimball", Frederick J. Kimball declined, and it became **Roanoke on
+  Feb 3, 1882**; a city **Jan 31, 1884**; "the Magic City" for growing from <700 (1880) to >16,000 (1890).
+  `[C26 verified 2026-10-24]` *(en.wikipedia.org/wiki/Roanoke,_Virginia)*
+- **Mill Mountain Star first lit Nov 23, 1949, 8:22 PM** (Thanksgiving Eve), Mayor A.R. Minton; 88.5 ft, 10,000 lb,
+  2,000 ft of neon, $28,000, built by Roy C. Kinsey (Kinsey Sign Co.) and sons; white except red-white-blue on
+  Memorial Day, Flag Day, July 4, Sept 11, Veterans Day. **77th anniversary Mon Nov 23, 2026** (the planner holds
+  this topic for that week). `[C26 verified 2026-10-24]` *(roanokeva.gov/1329/Roanoke-Star)*
+- **Grandin Theatre** opened 1932 with "Arrowsmith"; closed 1976, 1985 and Nov 11, 2001; the Grandin Theatre
+  Foundation reopened it **Oct 20, 2002** with "Mostly Martha". `[C26 verified 2026-10-24]` *(visitroanokeva.com)*
+- Football: **Fri Oct 30** Northside (nearest our Peters Creek Rd store) hosts Staunton River, Patrick Henry hosts
+  Pulaski County, 7 PM; **Fri Nov 6** Northside hosts Lord Botetourt, Patrick Henry hosts Blacksburg, 7 PM. Northside
+  lost 20-17 at Fleming 10/23. `[C26 verified 2026-10-24]` *(MaxPreps)*
+
+**Topic bank runs dry ~Dec 7** (3 debates + 3 history per store, one used per week, 45-day cooldown). Add 2+
+verified topics per store per type before then; the plan's notes say "topic bank is resting" when it happens.

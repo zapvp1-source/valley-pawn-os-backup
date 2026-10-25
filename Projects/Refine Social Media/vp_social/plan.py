@@ -56,6 +56,98 @@ HARD_RULES = ("Never mention firearms/guns/ammo. Never 'Dixie Pawn'. Never 'Full
               "CTA, no product, no price. Humor never mocks customers or money troubles.")
 
 
+# ---- 2026-10-24 (Joshua-approved social growth plan, see SOCIAL_AUDIT_2026-10-20.md) -------------------------
+# (1) Lexington's proven community formats for the other stores. 90-day Publer data: Lexington community posts
+#     reach ~28% of followers vs 11-17% elsewhere; its winners were a friendly local debate (Goshen Pass), deep-cut
+#     local history/landmarks and specific high-school football. community_topics.json holds verified topics per
+#     store; this planner puts one on Monday (debate on odd ISO weeks, history on even) and this Friday's verified
+#     game on Friday (else the other type). Wednesday/Sunday stay with the drift engine. 45-day per-page topic cooldown.
+# (2) Single deal stills retired on store Facebook pages (avg ~43 reach, lowest of any lane). The Monday intake
+#     carries ONE photo per store (checked #deal-of-the-week 10/12 + 10/19), so a 3+ photo album can't be built
+#     honestly. Store FB already gets every deal as its reel (deal_video lane, same photo); the still keeps running on
+#     the store's Google profile (one image per GBP post is that platform's norm). The freed Facebook placement
+#     becomes a 5th community post: Thursday 13:30 (no account-minute collision with GBP deal stills or hiring :50).
+TOPICS_PATH = config.RSM / "community_topics.json"
+PROVEN_TOPIC_COOLDOWN_DAYS = 45
+DEAL_PHOTO_FB_RETIRED = True
+COMMUNITY_DAYS = [0, 2, 4, 6, 3]
+COMMUNITY_TIMES5 = COMMUNITY_TIMES + ["13:30"]
+_SPORTS_DUPES = ("com_friday_lights", "com_school_colors")   # generic 'good luck' formats a verified game post replaces
+PROVEN_RULE = ("PROVEN FORMAT (Lexington's best performers): write THIS post from contract.topic only -- its facts are "
+               "verified against the cited source; do not add facts beyond it. debate = state both sides in a friendly "
+               "neighborly way and end with the topic's close line; history = one true deep-cut detail told like a "
+               "neighbor would, end with the close question; sports = this Friday's real game (opponent, home/away, "
+               "7 PM kickoff if listed), wish them well, never mock either team. FB and GBP captions must differ.")
+
+
+def _load_topics() -> dict:
+    try:
+        return json.loads(TOPICS_PATH.read_text())
+    except Exception:
+        return {}
+
+
+def _recent_topic_ids(store: str, monday: dt.date) -> set:
+    """Topic ids this store's page already used in the last 45 days (read from past plan files)."""
+    used, lo = set(), monday - dt.timedelta(days=PROVEN_TOPIC_COOLDOWN_DAYS)
+    for f in config.PLANS_DIR.glob("plan_*.json"):
+        if f.name.endswith("_results.json"):
+            continue
+        try:
+            p = json.loads(f.read_text())
+            wk = dt.date.fromisoformat(p.get("week", ""))
+        except Exception:
+            continue
+        if not (lo <= wk < monday):
+            continue
+        for s in p.get("slots", []):
+            c = s.get("contract") or {}
+            if s.get("lane") == "community" and c.get("store") == store and (c.get("topic") or {}).get("id"):
+                used.add(c["topic"]["id"])
+    return used
+
+
+def _proven_community(store: str, monday: dt.date, formats_by_id: dict) -> dict:
+    """{slot_index: (Format, topic)} -- index 0 = Monday, 2 = Friday. {} when the store has no topic bank."""
+    bank = _load_topics()
+    st = (bank.get("stores") or {}).get(store)
+    fids = bank.get("format_ids") or {}
+    if not st:
+        return {}
+    used, wk, mon = _recent_topic_ids(store, monday), monday.isocalendar()[1], monday.isoformat()
+
+    def pick(kind):
+        items = [t for t in st.get(kind, []) if not t.get("retired") and t.get("id") not in used
+                 and (not t.get("prefer_week") or t["prefer_week"] <= mon)]
+        pref = [t for t in items if t.get("prefer_week") == mon]
+        return pref[0] if pref else (items[wk % len(items)] if items else None)
+
+    def fmt(kind):
+        return formats_by_id.get(fids.get(kind, ""))
+    lead, other = ("debate", "history") if wk % 2 else ("history", "debate")
+    out = {}
+    for kind in (lead, other):            # Monday: this week's type, or the other one if its topics are all resting
+        t = pick(kind)
+        if t and fmt(kind):
+            out[0] = (fmt(kind), dict(t, kind=kind))
+            break
+    friday = (monday + dt.timedelta(days=4)).isoformat()
+    game = next((g for g in st.get("sports", []) if g.get("date") == friday and not g.get("retired")), None)
+    if game and fmt("sports"):            # Friday: only a verified game for THAT Friday (one proven post/week otherwise,
+        out[2] = (fmt("sports"), dict(game, kind="sports"))   # so 3+3 topics outlast the 45-day cooldown)
+    return out
+
+
+COMMUNITY_RULE = ("text only; real named place/event from CITY_COMMUNITY_KB with its [C26]/[PATTERN] tag; "
+                                                 "no CTA, no product, no price; FB and GBP captions must differ. "
+                                                 "TIME-SENSITIVE + SPECIFIC (Joshua 2026-10-21: 'authenticity sells, we truly want to inform the "
+                                                 "community'): when the post names a game, festival, market or event, give the real specifics for "
+                                                 "THIS week (opponent, home/away, time, date, place) and only facts you verified from the "
+                                                 "school/organizer's own current page; if you cannot verify it, write about something you can. "
+                                                 "Never wish luck for a game you have not confirmed is on. The daily social-fact-check re-verifies "
+                                                 "every dated claim the morning before it posts.")
+
+
 def _week_monday(week: str) -> dt.date:
     d = dt.date.fromisoformat(week)
     return d - dt.timedelta(days=d.weekday())
@@ -125,7 +217,7 @@ def build(week: str, deals_path: Path | None, seed: int | None = None) -> dict:
         base = {"store": store, "store_facts": config.STORE_FACTS[store], "product": d["product"],
                 "price": d.get("price"), "retail": d.get("retail"), "hook": d.get("hook"), "pillar": "deal",
                 "min_words": {"fb": 25, "gbp": 20}}
-        accts = accounts_ok([store, f"GBP_{store}"])
+        accts = accounts_ok([f"GBP_{store}"] if DEAL_PHOTO_FB_RETIRED else [store, f"GBP_{store}"])
         if accts:
             slots.append(_slot(f"deal-photo-{store}", "deal_photo", item_key, accts, "photo",
                                _at(monday, 3, DEAL_PHOTO_TIMES[store]), week, media_path=d.get("photo"), contract=base))
@@ -157,31 +249,43 @@ def build(week: str, deals_path: Path | None, seed: int | None = None) -> dict:
 
     # ---- Community (Lane C): fill each store FB + GBP to target with drift picks ----
     engine = DriftEngine()
+    fmap = {f.id: f for f in engine.state["formats"]}
     for store in config.STORES:
-        need = min(4, max(remaining.get(store, 0), remaining.get(f"GBP_{store}", 0)))
+        need = min(5 if DEAL_PHOTO_FB_RETIRED else 4, max(remaining.get(store, 0), remaining.get(f"GBP_{store}", 0)))
         if need <= 0:
             continue
-        picks = engine.select("community", need, account=store, today=monday, seed=seed)
+        proven = {i: v for i, v in _proven_community(store, monday, fmap).items() if i < need}
+        bank = _load_topics()
+        skip = {v[0].id for v in proven.values()} | {(bank.get("format_ids") or {}).get("sports", "com_hs_game_week")}
+        if store in (bank.get("stores") or {}):   # topic-bank store: proven formats run ONLY with a verified topic
+            skip |= set((bank.get("format_ids") or {}).values())
+            if not proven:
+                notes.append(f"community: {store} topic bank is resting (all topics used in the last 45 days) — add verified topics to community_topics.json")
+        if any(v[1].get("kind") == "sports" for v in proven.values()):
+            skip |= set(_SPORTS_DUPES)
+        drift = [f for f in engine.select("community", need + len(skip), account=store, today=monday, seed=seed)
+                 if f.id not in skip]
+        picks = []                                   # (slot index, Format, topic or None) -- index fixes the day
+        for j in range(need):
+            if j in proven:
+                picks.append((j, proven[j][0], proven[j][1]))
+            elif drift:
+                picks.append((j, drift.pop(0), None))
         if len(picks) < need:
             notes.append(f"community: only {len(picks)}/{need} eligible formats for {store} (cooldowns) — top up creative_state")
-        for j, f in enumerate(picks):
+        for j, f, topic in picks:
             accts = accounts_ok([store, f"GBP_{store}"])
             if not accts:
                 break
-            day = [0, 2, 4, 6][j % 4] if store != "Culpeper" else [0, 2, 4, 6][j % 4]
+            day, tm = COMMUNITY_DAYS[j % len(COMMUNITY_DAYS)], COMMUNITY_TIMES5[j % len(COMMUNITY_TIMES5)]
+            contract = {"store": store, "store_facts": config.STORE_FACTS[store], "pillar": "community",
+                        "format": {"id": f.id, "title": f.title, "template": f.template, "hook_key": f.hook_key},
+                        "kb": str(config.COMMUNITY_KB), "season": season,
+                        "rule": COMMUNITY_RULE, "min_words": {"fb": 30, "gbp": 25}}
+            if topic:
+                contract.update(topic=topic, topic_rule=PROVEN_RULE)
             slots.append(_slot(f"community-{store}-{j+1}", "community", f"{f.id}:{store}:{week}", accts, "status",
-                               _at(monday, day, COMMUNITY_TIMES[j % 4]), week, media_path=None, format_id=f.id,
-                               contract={"store": store, "store_facts": config.STORE_FACTS[store], "pillar": "community",
-                                         "format": {"id": f.id, "title": f.title, "template": f.template, "hook_key": f.hook_key},
-                                         "kb": str(config.COMMUNITY_KB), "season": season,
-                                         "rule": "text only; real named place/event from CITY_COMMUNITY_KB with its [C26]/[PATTERN] tag; "
-                                                 "no CTA, no product, no price; FB and GBP captions must differ. "
-                                                 "TIME-SENSITIVE + SPECIFIC (Joshua 2026-10-21: 'authenticity sells, we truly want to inform the "
-                                                 "community'): when the post names a game, festival, market or event, give the real specifics for "
-                                                 "THIS week (opponent, home/away, time, date, place) and only facts you verified from the "
-                                                 "school/organizer's own current page; if you cannot verify it, write about something you can. "
-                                                 "Never wish luck for a game you have not confirmed is on. The daily social-fact-check re-verifies "
-                                                 "every dated claim the morning before it posts.", "min_words": {"fb": 30, "gbp": 25}}))
+                               _at(monday, day, tm), week, media_path=None, format_id=f.id, contract=contract))
 
     # ---- Engagement (Lane D): 2 brand + 1 rotating store; reveal for any guess format ----
     picks = engine.select("engagement", 3, account="Brand", today=monday, seed=seed)

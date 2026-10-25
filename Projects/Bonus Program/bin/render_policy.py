@@ -18,6 +18,19 @@ q = reg['task_qualifiers']
 m, a = reg['rates']['manager'], reg['rates']['associate']
 pct = lambda v: f"{v*100:g}%"
 
+# Store of the Month: omitted entirely when the pool is 0 (discontinued 2026-10-24 per Joshua)
+_pool = reg.get('top_store_pool') or 0
+som_section = (f"""## Store of the Month
+
+**${_pool:,.0f}**, split among the employees of the one store that wins the most
+categories that month ({', '.join(['Email %', 'Gold dwt', 'Reviews'] + (['Facebook follower gain'] if q.get('fb_follower_gain_min') else []))}).
+Ties go to the store with the most gold. The store still has to have hit its revenue goal.
+
+""" if _pool else '')
+som_handbook = (f"""- **Store of the Month:** ${_pool:,.0f} split among the employees of the store winning the most
+  categories, tie broken by gold weight.
+""" if _pool else '')
+
 goals = [f"- **Google reviews** — at least **{q['reviews_min']} new reviews** for the store that month. Ask for the review, use the signs.",
          f"- **Email capture** — at least **{q['email_pct_min']*100:g}%** of customers leave an email address. Ask for the email every time.",
          f"- **Gold scrap** — at least **{q['gold_dwt_min']:g} dwt** collected, in buckets closed during the month. Ask for the gold."]
@@ -72,13 +85,7 @@ one of them and your rate goes down. Same swing either way.
 
 {chr(10).join(goals)}
 
-## Store of the Month
-
-**${reg['top_store_pool']:,.0f}**, split among the employees of the one store that wins the most
-categories that month ({', '.join(['Email %', 'Gold dwt', 'Reviews'] + (['Facebook follower gain'] if q.get('fb_follower_gain_min') else []))}).
-Ties go to the store with the most gold. The store still has to have hit its revenue goal.
-
-## The rules that decide who gets paid
+{som_section}## The rules that decide who gets paid
 
 - A manager must have run the store for the **full month** to be paid on the manager rate.
 - You must be **employed on the day the bonus is paid**, not just the month you earned it.
@@ -109,9 +116,7 @@ paid the following Friday.
   the store hits its revenue goal and all task goals; {pct(a['miss'])} when it hits the revenue goal but misses a
   task goal.
 - **Task goals:** {'; '.join([g.split('** — ')[0].replace('- **', '') + ' ' + g.split('** — ')[1].split('.')[0] for g in goals])}.
-- **Store of the Month:** ${reg['top_store_pool']:,.0f} split among the employees of the store winning the most
-  categories, tie broken by gold weight.
-- **Eligibility:** a manager must have managed the branch for the full month; all employees must be
+{som_handbook}- **Eligibility:** a manager must have managed the branch for the full month; all employees must be
   employed at the time of payout, not merely when the bonus was earned.
 {rights_handbook}
 """

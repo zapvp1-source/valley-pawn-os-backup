@@ -45,3 +45,22 @@ Posts edited (APPLIED):
 - 6ad6647f739ecf58fa8ed1ec Harrisonburg FB: "lows around 34 degrees forecast Friday and Saturday nights" → "lows around 34 Friday night and near 31 Saturday night, so Sunday could start below freezing"
 - 6ad66488af47a3248fca6124 GBP_Harrisonburg: "lows near 34 degrees this weekend" → "lows near 34 Friday night and near 31 Saturday night"
 Unverifiable: none. Published-wrong: none.
+
+## 2026-10-24 07:50 ET — daily run (window to 2026-10-25 19:40 ET)
+Posts checked: 15 (5 product/deal posts skipped as product/price; 10 Sunday town/seasonal posts checked).
+Claims verified:
+- Roanoke Kobalt post "open today until 5" (Sat) — matches standing hours Sat 10-5.
+- Lexington FB "Family Weekend at the Institute wraps up today" (Sun 10/25) — VMI: "currently scheduled for Oct. 23-25" 2026 — https://www.vmi.edu/cadet-life/events-and-traditions/family-weekend/
+- Culpeper FB farmers market final day Sat Oct 31 — "every Saturday May 2 through October 31 from 7:30am-12pm ... 318 S. West Street" (2026 season) — https://culpeperdowntown.com/events/farmers-market/
+- Culpeper Sunday cold morning — NWS: low 33, patchy frost before 9am, fog before 10am, high 66 (5:27 AM 10/24) — https://forecast.weather.gov/zipcity.php?inputstring=Culpeper%2CVA&Go2=Go
+- Waynesboro FB cold morning / fog over the Gap — NWS: low ~32, patchy fog Sun before 10am — https://forecast.weather.gov/zipcity.php?inputstring=Waynesboro%2CVA&Go2=Go
+- Harrisonburg — NWS low 32, fog Sun AM — https://forecast.weather.gov/zipcity.php?inputstring=Harrisonburg%2CVA&Go2=Go
+- Lexington — NWS low 36, sunny 62 — https://forecast.weather.gov/zipcity.php?inputstring=Lexington%2CVA&Go2=Go
+- Roanoke — NWS Sat night low ~42, Sun high ~60, Sun night 37, patchy frost Mon 7-8am only (7:30 AM 10/24) — https://forecast.weather.gov/zipcity.php?inputstring=Roanoke%2CVA&Go2=Go
+- Waynesboro farmers market: regular season May 9-Oct 31, Sat 9-1, Constitution Park — https://augustafreepress.com/news/waynesboro-farmers-market-kicks-off-may-9-vendor-deadline-announced/ ; November Harvest Markets Nov 7/14/21 9-1 at 215 W Main St — https://www.visitwaynesboro.com/events/november-harvest-market-november-7/ (Marketspread lists season to Nov 21: https://marketspread.com/market/34687/waynesboro-farmers-market/)
+Posts edited (APPLIED):
+- 6ad664f6739ecf58fa8ed26c Roanoke FB: "If you woke up to frost on the windshield this morning" (false — Roanoke low ~42 Sun AM) → "Sunday starts in the low 40s ... climbs to about 60 ... patchy frost possible early Monday"
+- 6ad66466739ecf58fa8ed0ec GBP_Waynesboro: "farmers market's final day of the year is Saturday, Oct. 31" (wrong — November Harvest Markets continue) → "regular Saturday season at Constitution Park runs through Oct. 31, 9-1; November Harvest Markets Nov. 7, 14 and 21 at 215 W. Main St."
+- 6ad6642b61948b67551b9ee0 Culpeper FB: vague cold/market lines → added "low 30s with patchy frost and fog ... mid 60s" and "Culpeper Downtown Farmers Market ... Oct 31, 7:30 AM to noon, Culpeper Baptist Church lot, 318 S. West Street"
+Left as-is (verified or evergreen/climatological): GBP_Roanoke, Harrisonburg FB, GBP_Harrisonburg, GBP_Culpeper, Lexington FB, GBP_Lexington, Waynesboro FB.
+Unverifiable: none. Published-wrong: none.

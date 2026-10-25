@@ -310,7 +310,7 @@ def _confirm_cell(d, folder, items, cat, a, b):
     err = None
     for _ in range(3):
         try:
-            return vp_ai.ask_json("", SHEET_SYS, max_tokens=400, content=content)
+            return vp_ai.ask_json("", SHEET_SYS, max_tokens=1500, content=content)   # 400 returned blank answers (HAR 10/23)
         except Exception as e:  # noqa: BLE001
             err = str(e)[:200]
     return {"error": err}
@@ -494,12 +494,23 @@ def rescue_total_slip(exp, sheets):
         pm = sh.get("pm") or {}
         if not all(isinstance(pm.get(c), int) for c in CATS):
             continue
+        written = pm.get("Total")
+        vals = [pm[c] for c in CATS]
+        why = None
         if all(pm[c] == exp[s][c] for c in CATS):
-            written = pm.get("Total")
+            why = "categories match Bravo exactly"
+        else:
+            # 2026-10-24 (HAR 10/23): earrings crossed out and rewritten 53, TOTALS 766 added up before the fix.
+            # The only cell that could reconcile the total (53->52) was read the same by both reads AND equals Bravo,
+            # so the system corroborates the read and the TOTALS line is the stale part.
+            fix = digit_repair(vals, written) if isinstance(written, int) else None
+            if fix and vals[fix[0]] == exp[s][CATS[fix[0]]]:
+                why = "%s %d matches Bravo (TOTALS assumed %d)" % (CATS[fix[0]], vals[fix[0]], fix[1])
+        if why:
             sh.update(ok=True, why="", mgr=None,
-                      notes=(sh.get("notes") or "") + " | TOTALS line said %s; categories add to %d and match Bravo" % (written, sum(pm[c] for c in CATS)))
-            sh["pm"] = dict(pm, Total=sum(pm[c] for c in CATS))
-            log(s, "count sheet TOTALS slip (%s) — categories match Bravo exactly; used" % written)
+                      notes=(sh.get("notes") or "") + " | TOTALS line said %s; categories add to %d; %s" % (written, sum(vals), why))
+            sh["pm"] = dict(pm, Total=sum(vals))
+            log(s, "count sheet TOTALS slip (%s) — %s; used" % (written, why))
     return sheets
 
 

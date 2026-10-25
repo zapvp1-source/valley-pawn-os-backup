@@ -1,6 +1,80 @@
-## 2026-10-23 (review replies, native)
+## 2026-10-24 (review replies, native)
 
-- nightly-chekkit-review-responses (native review_reply.py): 11 replies posted (CUL 3, WAY 3, HAR 1, LEX 0, ROA 4); 0 low-star review(s) sent to Joshua as drafts.
+- nightly-chekkit-review-responses (native review_reply.py): 7 replies posted (CUL 4, WAY 0, HAR 2, LEX 0, ROA 1); 0 low-star review(s) sent to Joshua as drafts.
+
+# Valley Pawn - Enterprise Changelog
+
+Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
+
+## 2026-10-24 (Joshua: "no on signs for now, lets execute and measure the new campaigns")
+
+- Signs: NOT ordered (Joshua, for now). v4 files stay in `Refine Social Media/acrylic_signs_v4/`.
+- NEW scheduled task `Social campaign scorecard` (trig_01MSfQtbd8d2vVUzCJcXKKvT, Mondays 8:35 AM ET, bound to the Mac, auto): measures the new community formats per store vs the 90-day baseline, refreshes `state/store_followers.json` + `follower_growth_by_store.csv` from the page headers, tunes format rotation after 6+ posts of signal, tops up `community_topics.json` before any store runs short (fixes the ~Dec 7 run-out), writes `Refine Social Media/CAMPAIGN_SCORECARD.md`. DM to Joshua only 11/9, 11/23, then first Monday monthly. Campaign itself executes via the existing native `social-weekly` agent (Mon 14:30) starting 10/26.
+
+## 2026-10-24 (verification: #basics first live morning)
+- Verified Sat 10/24: Cloud Cover Music Check (10:25), Daily Clock-In Check (10:17) and Dress Code Check (10:32) all posted to #basics (C0CCH89BUNL). #general got none of them (only Joshua/Preston human posts). No fix needed.
+
+## 2026-10-24 (Joshua: "we need a slide on this" / "refile all calls into good and bad in each category")
+
+- **Deck:** new slide 12 "When the answer is no, the call isn't over" added to `Desktop/November Meeting/Every Call Counts - Phone & App Training.pptx` (after "Do you have…?"): Ask what else / Name the big four (gold, silver, jewelry, firearms) / Offer the loan, with the 5-of-171 stat. Style cloned from slide 10. Backup: `Call Analysis/november_clips/Every Call Counts - backup-pre-slide12-20261024.pptx`. Deck is now 15 slides.
+- **Call Examples refiled** into six folders: `1 - Great Calls`, `2 - Bad Calls`, `3 - Sales - Great`, `4 - Sales - Bad`, `5 - Loans - Great`, `6 - Loans - Bad` (10 each). The merged `3 - Sales & Loans` folder moved to `Desktop/_superseded/`. Play List rebuilt against the new paths.
+
+## 2026-10-24 (social growth plan — Joshua: "send another agent to do the rest")
+
+- **Lexington's winning formats rolled out to Culpeper, Waynesboro, Harrisonburg, Roanoke.** NEW `Refine Social Media/community_topics.json` (verified topic bank: 3 friendly debates, 3 deep-cut history/landmarks, dated HS football games per store, each with primary source + [C26]/[PATTERN] tag; Lake Pelham rename rejected as political). Same facts appended to `CITY_COMMUNITY_KB.md`. `vp_social/plan.py` (additive `_proven_community`): Monday 13:30 = debate (odd ISO wk) / history (even), Friday 13:05 = that Friday's verified game; Wed/Sun stay drift; 45-day per-page topic cooldown read from past plans; proven formats never run without a topic; Roanoke Star topic held for its 77th anniversary week (11/23). Formats: `com_only_locals_know`, `com_then_now`, NEW `com_hs_game_week` (registered in `creative_state.json` through the novelty gate). Lexington unchanged.
+- **Single deal stills retired on store Facebook pages.** #deal-of-the-week intake is one photo per store (checked 10/12 + 10/19 submissions), so no honest 3+ photo album; the deal reaches store FB as its reel (deal_video, same photo) and the still runs on the store's Google profile only. Freed FB placement = 5th community post, Thursday 13:30. Switch: `DEAL_PHOTO_FB_RETIRED` in plan.py. Publer album path not built (nothing to put in it; publisher sends one media id).
+- **Test builds (copy of ledger + plans, real planner): weeks 10/26 → 12/21, 0 collisions** in-plan and vs already-scheduled posts, 0 deal stills on store FB, topics rotate with no repeats inside 45 days; bank rests the week of 12/7 (plan note says so).
+- **Friday digest: reach as % of followers per store page** vs the 90-day mark and trailing 4 weeks (`publer_weekly_digest.py` → `friday_digests/store_reach_latest.json`; `vp_social/report.py` digest() appends it only when fresh + all 5 stores have follower counts). Followers from NEW `state/store_followers.json` (Publer API returns none; read from the FB page headers today: CUL 881, WAY ~1,240, HAR 760, LEX ~1,620, ROA 38). Rendered on a copy, NOT sent: LEX 37.0% (up vs 28.3%), HAR 12.8% (up), CUL 6.6%, WAY 6.7%, ROA 2.6% (down). `--dry` flag added. First live: Fri 10/30 16:00.
+- **Chekkit review invitation text (all 5 stores, Settings → Review)** now ends "Follow Valley Pawn <Store> on Facebook: https://www.facebook.com/<page id>". Saved, reloaded and re-read at each store. Nothing sent; recipients unchanged.
+- **Signs:** v3 acrylic signs + counter cards advertise the paused $100 giveaway. v3 QR codes are correct (thevalleypawn.com/<store> pages link the right FB pages; Roanoke → 188243497698836). NEW `generate_acrylic_sign_v4.py` → `acrylic_signs_v4/` ("Follow us on Facebook", QR straight to each FB page, decoded and verified). Not ordered.
+- Backups: `fleet/_backups/{plan.py,creative_state.json,CITY_COMMUNITY_KB.md,publer_weekly_digest.py,vp_social_report.py,SOCIAL_SYSTEM_SPEC.md,CHANGELOG.md}.bak-pre-socialgrowth-20261024`. Spec: `SOCIAL_SYSTEM_SPEC.md` §9. No messages sent, no money spent, nothing posted.
+
+## 2026-10-24 (Joshua: "10 examples of each, so 40 calls all in")
+
+- **`3 - Sales & Loans/` now 40 clips** (10 great selling, 10 bad selling, 10 great loan, 10 bad loan) — 16 added, incl. montages "The right way to say no" (the only four turn-away calls that asked for more and named gold/guns), "Sent to the competition" (JBS Pawn, Crutchfield, Tractor Supply, Old Dominion, Clark Brothers, Liberty Arms) and "We can't say anything over the phone". Play List rebuilt; 60 clips total on the page.
+- **Turn-away finding (for the deck):** of 171 customer calls Aug 21–Oct 23 where staff declined an item, 5 asked "anything else?" and 3 steered to what pays most (gold/silver/guns). Proposed added line for slides 10/11: when the item is a no, always ask what else they have and say gold, silver, jewelry and firearms pay the most and we loan on all of it.
+
+## 2026-10-24 (Joshua: "can you dleete the tasks")
+- Deleted all 8 retired cloud scheduled tasks (already disabled): old plaintext-password GL export, Precious Metals Settlement Handler, Quarterly Capex Sweep, monthly-scrap-rankings, Monthly eBay Ratings Sweep, hiring-inbox-watch, Bravo Pre-Flight Relaunch, nightly-bravo-restart. Live replacements (native agents / current cloud tasks) untouched.
+
+## 2026-10-24 (Joshua: "any great sales calls? poor sales calls? same with loans" — "be thorough")
+
+- **Added `3 - Sales & Loans/` (24 clips) to `Desktop/November Meeting/Call Examples/`** and four new sections on the Play List: 6 great selling calls, 6 bad selling calls (incl. a "seven calls, seven no's" montage and two same-day bounced-buyer pairs), 6 great loan calls, 6 bad loan calls (incl. a "pick a rule" montage of two-months/75-days/60-days). Second full scouting pass over all ~3,200 customer transcripts with a sales/loan-specific brief (16 readers); 62 more recordings downloaded and audio-verified; customer full names, phone numbers bleeped. Same rebuild path (`november_clips/picks.json` + `build_playlist.py`).
+- **Policy correction for future call grading:** the Oct 23 "Every Call Counts" deck (slide 7) defines Days 1–5 as a grace period with no late fee, late fee from day 6, days 16–75 expirable by a manager, day 76+ expired. So "five-day grace period" statements are CORRECT and must not be flagged as made-up policy (the Sep 28–Oct 18 review treated them as made-up). `call_week_grade.py` prompt corrected today (backup `fleet/_backups/call_week_grade.py.bak-pre-gracefix-20261024`) — takes effect Monday's run. Still wrong: "two months," "75 days and you're fine," "60 days," any hold/date not read from Bravo, blaming the boss.
+- Data note: recording f41b7614 (LEX Sep 4) has the "Sept 31st" transcript attached but the audio is a different call — the Aug 21–Sep 8 transcript/recording mismatch again; audio check caught it.
+
+## 2026-10-24 (Joshua: November meeting call examples — "dig deep", laugh and gasp)
+
+- **Built `Desktop/November Meeting/Call Examples/`:** 10 great + 10 bad real calls as MP3s (`1 - Great Calls/`, `2 - Bad Calls/`) plus `Call Examples - Play List.html` (one-click play, what to listen for, the right way — tied to the "Every Call Counts" deck). Picked from every recorded call Aug 21–Oct 23 (~4,000): 16 read-every-transcript scouting passes, 75 candidates downloaded and re-transcribed from the actual audio to confirm content. Long holds cut, home addresses / customer names / phone and ID numbers bleeped. Source + rebuild: `Call Analysis/november_clips/` (`picks.json`, `build_playlist.py`, `raw/`, `vt/`).
+- **NEW `bin/call_clip_export.py`** (allow-listed, backup `fleet/_backups/host_queue_allowlist.txt.bak-pre-callclips-20261024`): read-only Zoom S2S download of named recordings from a manifest, for training clips. Audio is kept only for the picked clips.
+- **Transcribed the gaps:** Sep 9–20 (417 recordings) and Oct 19–23 (583) via `call_week_review.py`; Oct 19–23 also graded (`--render`, no DM). Monday's native weekly review reuses the cache.
+- **Data-integrity finding:** the Aug 21–Sep 8 transcript set has ~108 groups where one transcript is attached to two different recording ids (different stores/durations) — early-pipeline bug; reviews built on those weeks may mis-attribute some calls. Audio-verified before any clip was used.
+- **Security finding (HUMAN_QUEUE):** a full company card number, expiry, CVV and billing address were read aloud on recorded Zoom calls on 10/21 and 10/23 (Windows-upgrade purchases). Not used in the playlist.
+- Host-queue note: a second runner left `.lock` behind at 10:18 after finishing; moved to `_cancelled/.lock-released-20261024-1027` so queued jobs could run.
+
+## 2026-10-24 (Joshua: "approve the morning brief change", "delete them")
+
+- **Morning brief now delivered:** trig_01J21WFoeW4GUr3joWt5kbjB prompt updated — one email jdavis@ → jdavis@ "Morning Brief — <day>" each weekday 8:00 (deduped), copy saved to Life OS/Morning Briefs/. First send Mon 10/26.
+- **Plaintext Bravo password removed:** disabled trig_01NrKaxYD775Cc7trkrpRh1s prompt replaced with a no-op note (native eom-gl-export does the job). Deletion itself was refused by the session safety check, so it and 7 old disabled duplicates are renamed "RETIRED — safe to delete (…)" for one-click removal in the app: trig_01K8pTE3CfdC7jkiK5LD6sBV, trig_01CWgPEVG6ezu4W1U6PakhZM, trig_018QzLdSAVTub3nfUhp7ExU9, trig_01Ge62kohfd7cRDr1X25k83W, trig_012TbuwabkcJuFj5roSMvvmc, trig_01SEuBhZ5hcRU3jcpKReQW71, trig_015Agizpztzn4UwwTtcvfrFg (each has a live replacement).
+- Bravo password change: HUMAN_QUEUE row added (only Joshua can change it in Bravo; Claude then runs rotate-bravo-password).
+
+## 2026-10-24 (morning check after the cleanup)
+
+- Connector health (rebuilt 10/23) ran 05:40 and wrote `fleet/connector_health.json`: all 8 connectors ok.
+- fleet-doctor's "6 jobs gone quiet" (02:10) were all false alarms: loan canvas retired 10/14; preston-local-runner only logs on requests; supply order/deliveries and the eBay channel audit are weekly/event jobs (eBay crash already fixed 10/21). `fleet/log_triage_expectations.json` += 2 retired logs + 4 gap_hours (backup `fleet/_backups/log_triage_expectations.json.bak-pre-stale6-20261024`); `bin/supply_order.py` deliveries now logs a heartbeat when no orders are open (backup `.bak-pre-heartbeat-20261024`). Ledger row resolved.
+
+## 2026-10-24 (jewelry count — HAR dropped 10/23 for a stale TOTALS line)
+
+- `bin/jewelry_nightly.py` (backup `fleet/_backups/jewelry_nightly.py.bak-pre-staletotal-20261024`): HAR sheet 435/51/116/53/112 = 767, earrings crossed out and rewritten 53, TOTALS 766 (added before the correction). Digit repair proposed earrings 53→52; its focused re-read returned blank 3x (max_tokens 400) → store dropped. Fixes: (1) `_confirm_cell` max_tokens 400→1500; (2) `rescue_total_slip()` now also accepts the sheet when the ONE cell that could reconcile the total was read identically by both reads AND equals Bravo exactly — the system corroborates the read, the TOTALS line is the stale part. If that cell disagrees with Bravo the store is still left out. Tests: HAR 10/23 → used (767 vs Bravo 789, -22); Bravo 52 case → left out; LEX 10/22 → still used. Render replay 10/23: all 5 stores. No correction posted (Joshua 10/23: never post corrections).
+
+## 2026-10-24
+
+- Native agent appeared: com.valleypawn.chekkit-customer-tags.plist
+- Native agent appeared: com.valleypawn.chekkit-roster-check.plist
+- Native agent appeared: com.valleypawn.open-items-groom.plist
+- Native agent LOADED: com.valleypawn.chekkit-customer-tags
+- Native agent LOADED: com.valleypawn.chekkit-roster-check
+- Native agent LOADED: com.valleypawn.open-items-groom
 
 ## 2026-10-23 (Hiring interviews moved to Preston's Zoom line)
 

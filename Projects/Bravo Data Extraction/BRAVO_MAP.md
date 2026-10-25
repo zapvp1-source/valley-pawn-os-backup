@@ -1,8 +1,8 @@
 # Bravo POS — Complete Screen & Report Map
 
-_Generated 2026-10-23 22:33 by `bravo_map_compile.py` from BravoMapper's read-only crawl. Do not hand-edit; add human notes to the `bravo-context` skill instead._
+_Generated 2026-10-24 23:17 by `bravo_map_compile.py` from BravoMapper's read-only crawl. Do not hand-edit; add human notes to the `bravo-context` skill instead._
 
-**Status:** IN PROGRESS (resumes nightly) · 70 steps mapped · 0 steps could not be mapped · last crawler state: `2026-10-23 22:31:59 ABORT no-dashboard after R_Inventory_by_Location`
+**Status:** IN PROGRESS (resumes nightly) · 70 steps mapped · 0 steps could not be mapped · last crawler state: `2026-10-24 23:16:58 ABORT no-dashboard-at-start`
 
 Raw data: `output/bravo_map/` — `screens/` (full UI tree per screen), `shots/` (screenshots), `lists/` (report lists, Custom Reports criteria / columns / saved reports), `index.tsv`, `RUN_LOG.md`.
 
@@ -809,3 +809,5 @@ Screenshot: `output/bravo_map/shots/T_Web_Offers.png`
 - 2026-10-22 22:33 mode=full end='2026-10-22 22:31:50 ABORT no-dashboard after R_Inventory_Base' steps_done_total=69 (+1 this run) failed_keys=22 health=PASS CUL
 - 2026-10-23 22:33 recovered from '2026-10-23 22:31:59 ABORT no-dashboard after R_Inventory_by_Location' (health=PASS CUL)
 - 2026-10-23 22:33 mode=full end='2026-10-23 22:31:59 ABORT no-dashboard after R_Inventory_by_Location' steps_done_total=70 (+1 this run) failed_keys=23 health=PASS CUL
+- 2026-10-24 23:17 recovered from '2026-10-24 23:16:58 ABORT no-dashboard-at-start' (health=PASS CUL)
+- 2026-10-24 23:17 mode=full end='2026-10-24 23:16:58 ABORT no-dashboard-at-start' steps_done_total=70 (+0 this run) failed_keys=23 health=PASS CUL

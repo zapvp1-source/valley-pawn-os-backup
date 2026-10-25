@@ -8,7 +8,7 @@ import chekkit_api as ck
 UTC = dt.timezone.utc
 since_s = sys.argv[sys.argv.index("--since") + 1] if "--since" in sys.argv else "2026-01-01"
 SINCE = dt.datetime.fromisoformat(since_s).replace(tzinfo=UTC)
-OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "fleet", "state", "chekkit_text_census.json")
+OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "fleet", "state", ("chekkit_text_census_%s.json" % since_s) if "--monthly" in sys.argv else "chekkit_text_census.json")
 
 def kind(m):
     s = m.get("sender"); t = (m.get("text") or "").strip().lower()
@@ -20,7 +20,7 @@ def kind(m):
     if t.startswith("hi from valley pawn in"): return "auto_winback"
     if "review" in t and ("google" in t or "leave" in t or "http" in t) and s == "event": return "review_invite"
     if s == "event": return "event_other"
-    if s == "business": return "staff_text"
+    if s == "business": return "owner_or_campaign" if (m.get("sentBy") or "") in ("Joshua Davis", "") else "staff_text"
     return "other_" + str(s)
 
 res = {}
@@ -52,7 +52,7 @@ def store(code):
             for m in msgs:
                 t = ck.ts(m.get("createdAt"))
                 if not t or t < SINCE: continue
-                k = kind(m); r["kinds"][k] += 1; r["months"][t.strftime("%Y-%m") + ":" + ("in" if k == "inbound_customer" else "out")] += 1
+                k = kind(m); r["kinds"][k] += 1; r["months"][t.strftime("%Y-%m") + ":" + k] += 1
                 d = t.date().isoformat(); r["first"] = min(r["first"] or d, d); r["last"] = max(r["last"] or d, d)
             time.sleep(0.15)
         nb = b.get("nextBefore")

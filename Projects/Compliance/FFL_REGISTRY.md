@@ -190,3 +190,10 @@ open action list.
 2. **Re-scan and replace the copies in `ffl-files/` the day a renewed license arrives**, and
    push the new copy to every vendor holding one.
 3. Update this file the same day anything changes. It is the index other work reads.
+
+
+## 2026-10-24 — Roanoke renewal (1-54-770-02-7A-27330)
+- Fee $90 paid via Pay.gov 10/24/2026 8:19 AM ET, tracking 28768JOH / agency 77551070768.
+- Form 8 Part II Q7a acquired = 1,776; Q7b disposed = 1,508 (Bravo ATF A & D Count, ROA, 10/24/2023–10/23/2026; CSV output/2026-10-23_ROA_atf-ad-count.csv). Since 1/1/2024: 1,538 / 1,496.
+- Mail packet + Pay.gov receipt to ATF FFLC, 244 Needy Rd, Martinsburg WV 25405 (Portland lockbox retired per ATF 10/14/2026). Postmark before 1/1/2027.
+- 2026-10-24: signed Form 8 Part II + Pay.gov receipt MAILED (Joshua). Next: confirm new license on eZ Check (expect new expiry 2030-01-01); ATF processing typically several weeks. Mailed before expiration = timely; store may keep operating under the pending renewal.

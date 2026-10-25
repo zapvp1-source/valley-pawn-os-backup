@@ -195,7 +195,25 @@ def digest(days: int = 7) -> str:
     lines += ["", "*Volume by page:* " + " · ".join(f"{k} {by_acct[k]}" for k in ORDER if by_acct.get(k))]
     if failures:
         lines += ["", "_Analytics not returned for: " + ", ".join(f.split(":")[0] for f in failures) + "._"]
+    lines += _store_reach_block()
     return "\n".join(lines)
+
+
+def _store_reach_block() -> list[str]:
+    """2026-10-24: per-store reach as % of followers, written by publer_weekly_digest.py (step 1 of the Friday run).
+    Appended only when it was built in the last 2 days and every store page has a follower count (Rule 18: whole
+    or not at all). Never fatal -- the digest goes out without it rather than not at all."""
+    try:
+        import json
+        f = config.RSM / "friday_digests" / "store_reach_latest.json"
+        sr = json.loads(f.read_text())
+        if not sr.get("complete") or (dt.date.today() - dt.date.fromisoformat(sr["date"])).days > 2:
+            return []
+        sys.path.insert(0, str(config.RSM))
+        from publer_weekly_digest import store_reach_lines
+        return [""] + store_reach_lines(sr)
+    except Exception:  # noqa: BLE001
+        return []
 
 
 def emit(fn, *a, **kw) -> int:

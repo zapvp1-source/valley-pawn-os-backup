@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-10-23
+# LIVE STATE - auto-refreshed 2026-10-24
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -60,9 +60,11 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.ceo-week-pull.plist` | installed | YES |
 | `com.valleypawn.chekkit-ai-responder.plist` | installed | YES |
 | `com.valleypawn.chekkit-assign-stale.plist` | installed | YES |
+| `com.valleypawn.chekkit-customer-tags.plist` | installed | YES |
 | `com.valleypawn.chekkit-review-alert.plist` | installed | YES |
 | `com.valleypawn.chekkit-review-invites.plist` | installed | YES |
 | `com.valleypawn.chekkit-reviews-owed.plist` | installed | YES |
+| `com.valleypawn.chekkit-roster-check.plist` | installed | YES |
 | `com.valleypawn.chekkit-unanswered-alert.plist` | installed | YES |
 | `com.valleypawn.chekkit-unanswered-eod.plist` | installed | YES |
 | `com.valleypawn.chrome-extension-watchdog.plist` | installed | YES |
@@ -152,6 +154,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.nics-weekly-mtd.plist` | installed | YES |
 | `com.valleypawn.northwest-check.plist` | installed | YES |
 | `com.valleypawn.online-store-audit.plist` | installed | YES |
+| `com.valleypawn.open-items-groom.plist` | installed | YES |
 | `com.valleypawn.oura-import-check.plist` | installed | YES |
 | `com.valleypawn.perf-guard.plist` | installed | YES |
 | `com.valleypawn.preston-watch.plist` | installed | YES |
@@ -210,30 +213,33 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-10-23 | Valley Pawn OS | - |
-| 2026-10-23 | Unified Search | - |
+| 2026-10-24 | Valley Pawn OS | - |
+| 2026-10-24 | Unified Search | - |
+| 2026-10-24 | Business Dashboard Website | - |
+| 2026-10-24 | Bravo Data Extraction | STATUS.md |
+| 2026-10-23 | eBay Customer Campaign | - |
+| 2026-10-23 | Zoom Call Pipeline | - |
+| 2026-10-23 | Website | - |
+| 2026-10-23 | Valuation Core | README.md |
+| 2026-10-23 | Training Program | STATUS.md |
+| 2026-10-23 | Taxes 2026 | - |
+| 2026-10-23 | Sold Margin Review | STATUS.md |
+| 2026-10-23 | Refine Social Media | - |
+| 2026-10-23 | Quickbooks Set UP | - |
+| 2026-10-23 | Preston Time Review | STATUS.md |
+| 2026-10-23 | Preston Knowledge Base | - |
+| 2026-10-23 | Precious Metals Settlements | - |
+| 2026-10-23 | Pawn Walks | STATUS.md |
 | 2026-10-23 | Life OS | - |
-| 2026-10-23 | Business Dashboard Website | - |
-| 2026-10-23 | Bravo Data Extraction | STATUS.md |
-| 2026-10-22 | eBay Customer Campaign | - |
-| 2026-10-22 | Zoom Call Pipeline | - |
-| 2026-10-22 | Website | - |
-| 2026-10-22 | Valuation Core | README.md |
-| 2026-10-22 | Training Program | STATUS.md |
-| 2026-10-22 | Sold Margin Review | STATUS.md |
-| 2026-10-22 | Refine Social Media | - |
-| 2026-10-22 | Quickbooks Set UP | - |
-| 2026-10-22 | Preston Knowledge Base | - |
-| 2026-10-22 | Precious Metals Settlements | - |
-| 2026-10-22 | Pawn Walks | STATUS.md |
+| 2026-10-23 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-10-23 | Human Resources | - |
+| 2026-10-23 | Health Optimization | STATUS.md |
+| 2026-10-23 | Email Refinement | - |
+| 2026-10-23 | Discount Outlier Review | STATUS.md |
+| 2026-10-23 | Daily Funds Verification | - |
+| 2026-10-23 | Compliance | - |
+| 2026-10-23 | Communcations | - |
 | 2026-10-22 | Knowledge Harvest | - |
-| 2026-10-22 | Jewelry Count Reconciliation | STATUS.md |
-| 2026-10-22 | Human Resources | - |
-| 2026-10-22 | Health Optimization | STATUS.md |
-| 2026-10-22 | Email Refinement | - |
-| 2026-10-22 | Discount Outlier Review | STATUS.md |
-| 2026-10-22 | Daily Funds Verification | - |
-| 2026-10-22 | Compliance | - |
 | 2026-10-22 | Bonus Program | - |
 | 2026-10-22 | Ask Valley Pawn | STATUS.md |
 | 2026-10-22 | Ai Optimized Marketing | - |
@@ -244,12 +250,9 @@ below disagrees with this block, THIS BLOCK WINS.
 | 2026-10-21 | Solaterra Site | - |
 | 2026-10-21 | Short Term Rental Optimization | - |
 | 2026-10-21 | MobilePawn Participation | README.md |
-| 2026-10-21 | Communcations | - |
 | 2026-10-21 | Admin Assitant | STATUS.md |
 | 2026-10-20 | Sales Tax | STATUS.md |
 | 2026-10-20 | Listing Management | STATUS.md |
-| 2026-10-20 | Call Analysis | - |
-| 2026-10-19 | Gold and Silver Markeitng | - |
 
 <!-- LIVE-STATE:END -->
 

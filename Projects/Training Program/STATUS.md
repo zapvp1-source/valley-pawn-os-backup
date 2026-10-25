@@ -2,6 +2,10 @@
 
 **Read `TRAINING_PROGRAM_MASTER_PLAN.md` first.** Resume from the build order there; never restart.
 
+## 2026-10-24 — LAUNCH DATE SET: Wednesday, November 4, 2026 (the in-person team meeting)
+- Joshua 10/24: "academy launch date will be the meeting date." Announced on the Academy slide of the Nov 4 deck: launches that day; current staff included, everyone gets a login that week and starts at Level 1.
+- Before 11/4: activate courses 127–134 in TalentLMS, create learners for all current floor staff (12) + managers, confirm Grow plan/API key so academy-sync and the Monday scorecard run. Logged in OPEN_ITEMS_REGISTER.
+
 ## 2026-09-30 — L1-07 "Meet Goldilocks, our reports bot" added (Joshua: "we renamed the slack bot goldilocks… put this in our training, what it does and what reports and updates it accomplished")
 - NEW lesson `lessons/L1/07_goldilocks_reports_bot.json` (7 slides, 8 Qs: 5 scenario / 2 mc / 1 T/F). Every report named was verified against a live Goldilocks post in Slack on 9/30 (bot U0BLQTHLUTA): Daily Pawn Walk 7:15, Sold Review 7:45, Discount Review 8:25 (age-based limits), #voicemails-calls-missed + missed-call auto-text → store Chekkit, #chekkit-messages-missed 7 PM follow-up, funds verification, nightly jewelry count (P&P §02.14 same-day escalation), #deal-of-the-week video ask (Wed 2 PM), weekly loan/layaway/FPD/employee rankings; "what it took off our plate" slide.
 - Voiceover 9 lines (4,582 chars) generated + embedded; build ALL GREEN; answer bias 17.6%.
