@@ -18,21 +18,21 @@
 ## Roadmap — what goes out when
 | Update | Policy Day | Sign by | Contents | Gate |
 |---|---|---|---|---|
-| **November 2026** | **Thu 11/5** (day after the 11/4 managers meeting; managers walk through it there) | Fri 11/13 | Handbook v2026.8 + P&P v2026.9 (hours, greeting, account holder only, police/background-check calls, discounts 30/50, warranty/returns, counterfeits, day-1 past due + 15-day grace, under-21, straw purchases/gifts) · Stop the Wrong Sale (VP-CP-03 / HB21) · Account Details by Phone & Text · eBay 90/120/150 · Reloans · Mission & Code | Joshua's one "approve" (preview arrives 10/26). Stop the Wrong Sale rides on the firearms program sign-off. Reloans rides on his yes |
-| **December 2026** | Tue 12/1 | Thu 12/10 | Training Happens at the Store (paid, on the clock) · Sales Training — Week One rewritten for the Academy (replaces HR-2026-10 NRF version) · New Hire Onboarding Checklist Rev3 · Valley Pawn Academy launch for all staff · Manager transaction limits written into P&P · For store managers: Monthly Store Compliance Checklist (VP-CP-07, first due 12/15) · Virginia accommodation-rights notice (poster + new-hire notice) · Customer privacy notice handout (VP-CP-05A) if counsel has cleared it · Age-based discount ladder and Bravo item-description rule if Preston has confirmed them | Grow plan bought before Academy launch; Preston's numbers |
+| **November 2026** | **Wed 11/4** (Valley Pawn Academy launch day — CEO 2026-10-25) | Wed 11/4 (unsigned list to the Market Manager Fri 11/6) | Handbook v2026.8 + P&P v2026.9 revised in place 10/25 (hours, greeting, account details = name + DOB + phone on file or POA, never confirm a gun by phone, police/background-check calls, discount age ladder + 30/50 bands, returns need an email, counterfeits, late fee day 6 + 15-day legal hold + "Your loan is due on its due date.", under-21, straw purchases/gifts, call-outs by voice call, training at the store, gun-safety certificate 10.06, roles not names) + HR-2026-04 Rev2 ack naming the gun-safety certificate · Stop the Wrong Sale (VP-CP-03 / HB21) · Account Details by Phone & Text · Discounts by age · eBay 90/120/150 · eBay tender · Reloans · Bonuses — Standards First · Training Happens at the Store · Mission & Code · Academy launch · SEPARATE Gusto Team document the same day: Name, Image, Likeness & Voice Release (team, HR-2026-09) | The CEO's one "approve" (preview arrives 10/26). Stop the Wrong Sale rides on the firearms program sign-off. Reloans rides on his yes |
+| **December 2026** | Tue 12/1 | Thu 12/10 | Sales Training — Week One rewritten for the Academy (replaces HR-2026-10 NRF version) · New Hire Onboarding Checklist Rev3 · Manager transaction limits written into P&P · For Managers: Monthly Store Compliance Checklist (VP-CP-07, first due 12/15) · Virginia accommodation-rights notice (poster + new-hire notice) · Customer privacy notice handout (VP-CP-05A) if counsel has cleared it · Bravo item-description rule if confirmed | Transaction-limit numbers from the Market Manager |
 | **January 2027** | Mon 1/4 | Mon 1/11 | Bonus Program (regenerated from the live rules) · AML red-flag training (Academy lesson) · 4473 / straw-purchase refusal training + store refusal log · MLA covered-borrower check + script · Annual recerts due 1/31 (Academy 8.3–8.5 + gun safety) | Compliance programs signed (AML, Firearms, Lending) |
 | **February 2027** | Mon 2/1 | Wed 2/10 | Store internet-outage "Crash Package" · annual compliance training day schedule | Draft not started |
 | **Held (not scheduled)** | — | — | Drug-Free Workplace / THC testing (Checkr panel conflict) · Mutual Arbitration Agreement (counsel) | Joshua |
 
 ## Decisions made (defaults — tell Claude only if you disagree)
 1. **Signatures stay in Gusto** (Joshua 10/21, once Google sign-in fixed the login): everything signed lives in each employee's Gusto file.
-2. **November Policy Day is Thu 11/5**, so acknowledgments come after the 11/4 meeting (your 10/14 instruction) and managers can walk their teams through it. From December it's the first business day.
-3. **Training happens at the store, on the clock** (the newest policy and the Academy's floor checks). The at-home documents get rewritten for December.
+2. **November Policy Day is Wed 11/4** (CEO 2026-10-25): the Academy launches that day and every new manual, the acknowledgment and the voice release are signed that day; unsigned names go to the Market Manager Fri 11/6. From December it's the first business day.
+3. **Training happens at the store, on the clock** — in the November packet (replaces the at-home wording in HR-2026-10 and OB-2026-01).
 4. **THC/drug testing stays held** until you decide the Checkr panel.
 5. **Policy reminders count as policy:** "clock in every time", call-out rules and similar reminders go in the update, not ad-hoc posts.
 6. **Individual HR documents** (Record of Warning, Action Plan, one person's acknowledgment) keep going out on demand — they're not policy changes.
 
-## Before 11/5 (Claude)
+## Before 11/4 (Claude)
 - Add all staff to #ask-goldilocks (the update tells them to ask there) and confirm it answers.
-- 10/26 preview to Joshua; apply edits; send on 11/5 after "approve".
+- 10/26 preview to the CEO; apply edits; send on Wed 11/4 after "approve" (update + the separate voice-release Team document).
 - Fix any Academy lesson that conflicts with the November update (none known after the 10/21 board review; re-checked at preview).

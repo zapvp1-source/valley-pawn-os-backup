@@ -31,3 +31,24 @@ Anything about your own pay, schedule, PTO balance, discipline or a dispute goes
 ## Where to ask things and how the channel works
 The question channel answers from the P&P manual, the Employee Handbook, Preston's rules and the Academy lessons. Answers say where they came from. If something is not written down, the answer says so and points to the Store Manager or Preston; nobody should act on a guess.
 The channel cannot approve an exception to a policy. Only a Store Manager or Preston can.
+
+## Loan due dates, late fee and past-due timeline (CEO decision 2026-10-25)
+A loan is due on its due date. We never tell any customer about a "grace period" — not "five-day grace", not "fifteen-day grace", not "you have a few extra days". Never say it on the phone, by text or at the counter.
+A late fee applies on the 6th day past due.
+Internal timeline — staff only, always read from Bravo, never quoted to a customer as a promise: the loan is held through 30 days past due, it is eligible to pull on day 31, and the pull is done by day 61. A first-payment default (the customer never made a single payment) is marked expired at once.
+When a customer asks how long we will hold it or how much time they have, say: "Your loan is due on its due date." Never promise a hold, never give a date or a fee you did not read from Bravo, and never say "two months", "60 days" or "75 days".
+
+## Loan payments, paydowns and the app (CEO decision 2026-10-25)
+The minimum payment on a loan is the extension: the current charges, which start a new 30-day term. We do not take a payment smaller than the extension.
+A customer may pay more than the extension. The extra goes toward principal, so the loan gets smaller and so does the next charge. Paying extra toward principal is done in the store. Never promise the new balance until Bravo shows it.
+The payoff redeems the loan and the item goes home with the customer.
+The MobilePawn app takes extensions only (debit card, $1.99 per payment). Payoffs and paying extra toward principal are in the store. Never take a card number by phone.
+
+## Who can get account details (CEO decision 2026-10-25)
+Account details (balance, payoff, items, due date, whether a loan exists) go only to the verified account holder — ALL THREE must match what is on file in Bravo: full name, date of birth, and the phone number on file — or to a person with a signed power of attorney on file. A ticket number or the last four of a phone is not enough on its own.
+Never to a spouse, relative, parent, friend or anyone "calling for" the account holder unless that person's signed power of attorney is on file. If they can't verify, say: "I can't go over account details on the phone, but come in with your ID and we'll take care of it."
+Never confirm a firearm by phone — not whether we have it, whether it's on a loan, or whose it is — even to a verified caller.
+A caller who says they're police or ATF: be friendly and helpful, get their name, badge number and department, then call back through the department's main number (not a number they give you) before sharing anything about a customer, a loan or an item, and tell the Manager. (Market Manager, 2026-10-23; P&P 07.03)
+There is no want-list. If a customer wants something we don't have, check the other four stores, take their name and number, and call them when one comes in. (Market Manager, 2026-10-23)
+Phone greeting: "Thank you for calling Valley Pawn in [town], this is [name]. How can I help?" (Market Manager, 2026-10-23)
+

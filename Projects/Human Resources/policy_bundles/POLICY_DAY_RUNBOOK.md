@@ -15,7 +15,7 @@ Rules in `POLICY_CADENCE.md` govern. This file is the HOW. Unattended: act, don'
    request_count, signers:[{name,status,signed_at}], slack_posted_at, preston_list_sent_at, manuals_published, closed_at, notes[]}
 - Business day = Mon–Fri excluding New Year's Day, Memorial Day, July 4, Labor Day, Thanksgiving, Christmas.
   Policy Day = 1st business day of the month. Sign-by = the 10th (next business day if not one). Preston day = the 15th (same rule).
-  The manifest's own `policy_day` / `sign_by` override (November 2026: Thu 11/5, sign by Fri 11/13).
+  The manifest's own `policy_day` / `sign_by` / `preston_day` override (November 2026: Wed 11/4 — Academy launch day — sign by Wed 11/4, unsigned list to the Market Manager Fri 11/6).
 
 ## Each run: figure out the phase, do only that, write the state file, end
 Let NEXT = the update for next month (built on/after the 26th), CUR = the update whose Policy Day is this month.
@@ -55,6 +55,11 @@ Let NEXT = the update for next month (built on/after the 26th), CUR = the update
 3. Verify (Rule #12): template `processing_state` "approved", `approved_at` set, requests count = active roster (Gusto connector list_employees,
    terminated=false). Record gusto_template_id + request_count. Mismatch → FAILURE_LEDGER row; never resend.
 4. #policy-announcements: the approved text, via the outbox. Exactly once (slack_posted_at).
+4b. Second documents (manifest `second_documents`, state `second_documents`): each is its OWN Gusto Team document with signature,
+   sent the same run, after the update, with the same method as step 2 (Signature on the employee signature line + Full name + Signing date;
+   current team + future hires) and the same duplicate guard by name. **November 2026:** "Name, Image, Likeness & Voice Release — November 2026"
+   = `Valley_Pawn_Name_Image_Likeness_Voice_Release_HR-2026-09_Team.pdf` (HR root). Record its template id / request count in state
+   `second_documents[0]`. Its status rides phases D and E with the update (one Market Manager list naming both documents).
 5. Manuals: if handbook_new/pp_new — upload the new Handbook and P&P PDFs as view-only Team documents (no signature; current + future hires),
    then archive the superseded versions in Gusto. Set manuals_published.
 6. POLICY_QUEUE.md rows → `sent PU-<slug>`. OBLIGATIONS.json `monthly-policy-update`: last_verified today, evidence = state file,

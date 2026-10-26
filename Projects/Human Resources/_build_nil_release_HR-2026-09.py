@@ -1,5 +1,10 @@
 """Builds HR-2026-09 Name, Image, Likeness & Voice Release in the HR-2026-07 house style.
-Outputs a blank template and a Preston Peters pre-filled copy (docx + pdf)."""
+Outputs a blank template and a Market Manager pre-filled copy (docx + pdf).
+
+--team (added 2026-10-25, CEO decision): builds the generic TEAM version signed by everyone on Policy Day
+(Nov 4, 2026) as a SEPARATE Gusto Team document with signature — the employee name comes from Gusto's
+full-name field; internal training/operations use only (public marketing needs an individual YES).
+Output: Valley_Pawn_Name_Image_Likeness_Voice_Release_HR-2026-09_Team.docx/.pdf"""
 import copy, os, subprocess, sys
 import docx
 from docx.shared import Pt, RGBColor, Emu
@@ -8,7 +13,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE = os.path.join(HERE, "Valley_Pawn_Confidentiality_Customer_Information_Agreement_HR-2026-07.docx")
 BLUE, GREY, NAVY = RGBColor(0x00, 0x99, 0xDD), RGBColor(0x59, 0x59, 0x59), RGBColor(0x2D, 0x1A, 0x5E)
 
-def build(employee_name, employee_title, out_base):
+def build(employee_name, employee_title, out_base, team=False):
     d = docx.Document(TEMPLATE)
     body = d.element.body
     sig_tbl_proto = copy.deepcopy(d.tables[0]._tbl)
@@ -59,9 +64,15 @@ def build(employee_name, employee_title, out_base):
     para("VALLEY PAWN", size=9, bold=True, color=BLUE, after=0)
     para("Full Circle Finance Inc DBA Valley Pawn", size=9, color=GREY, after=6)
     para("Name, Image, Likeness and Voice Release", size=17, bold=True, color=NAVY, after=2)
-    para("Form No. HR-2026-09 · Effective October 1, 2026 · Applies to: employees who appear in Company "
-         "training or marketing content · Owner: Chief Executive Officer", size=9, color=GREY, after=6)
-    rich([("Employee: ", True), (employee_name, False), ("     Position: ", True), (employee_title, False)], after=10)
+    if team:
+        para("Form No. HR-2026-09 (Team) · Effective November 4, 2026 · Applies to: all employees · "
+             "Owner: Chief Executive Officer", size=9, color=GREY, after=6)
+        rich([("Employee: ", True), ("the employee whose full name and signature appear on the signature page "
+              "(entered through Gusto)", False)], after=10)
+    else:
+        para("Form No. HR-2026-09 · Effective October 1, 2026 · Applies to: employees who appear in Company "
+             "training or marketing content · Owner: Chief Executive Officer", size=9, color=GREY, after=6)
+        rich([("Employee: ", True), (employee_name, False), ("     Position: ", True), (employee_title, False)], after=10)
 
     h("1. Why this release exists")
     para("Valley Pawn is building the Valley Pawn Academy and other training materials — lessons, videos, "
@@ -96,7 +107,7 @@ def build(employee_name, employee_title, out_base):
         ("Internal use: ", "training, onboarding, testing, coaching, policies, and store operations at Valley Pawn "
          "(for example the Academy on TalentLMS, Slack, Gusto, the operations knowledge base, and in-store use). "
          "This right continues after your employment ends, so the training program keeps working."),
-        ("Public marketing: ", "only if you choose YES in Section 8."),
+        ("Public marketing: ", "only with a separate written YES (Section 8)." if team else "only if you choose YES in Section 8."),
     ])
     para("The Company may edit the Materials for length, clarity, and accuracy, and you do not need to approve the "
          "final version. The Company will ask you to review lessons that feature you for accuracy before they are "
@@ -150,31 +161,51 @@ def build(employee_name, employee_title, out_base):
         "(Va. Code § 59.1-485).",
     ])
 
-    h("8. Public marketing use — choose one")
-    para("☐  YES — the Company may also use Your Likeness (not a Digital Replica) in public marketing, such as social "
+    if team:
+        h("8. Public marketing use")
+        para("This team release covers internal training and operations use only (Section 3). The Company will not "
+             "use Your Likeness in public marketing — social media, the website, advertising or signage — unless you "
+             "also sign a separate written YES for public marketing.", after=8)
+    else:
+     h("8. Public marketing use — choose one")
+     para("☐  YES — the Company may also use Your Likeness (not a Digital Replica) in public marketing, such as social "
          "media, the website, advertising, and signage. After my employment ends, the Company will not publish new "
          "marketing featuring me and will remove me from paid advertising within 30 days of my written request; "
          "content already posted may otherwise remain.", after=4)
-    para("☐  NO — internal training and operations use only.", after=4)
-    para("Employee initials: ____________", after=8)
+     para("☐  NO — internal training and operations use only.", after=4)
+     para("Employee initials: ____________", after=8)
 
     d.add_paragraph().add_run().add_break(docx.enum.text.WD_BREAK.PAGE)
     h("9. Signatures")
     para("I have read this release, I understand it, and I agree to it. I understand it is signed electronically "
          "through Gusto, kept in my personnel file, and that I may view and download it but cannot alter or "
          "delete it.")
-    sig_table([("Employee signature (via Gusto)", "Date"), ("Employee printed name", "Position")])
-    para("", after=4)
-    sig_table([("Company signature — Joshua Davis", "Date"),
-               ("Printed name and title", "Full Circle Finance Inc DBA Valley Pawn")])
+    if team:
+        sig_table([("Employee signature (via Gusto)", "Date signed (via Gusto)"),
+                   ("Employee full name (via Gusto)", "Full Circle Finance Inc DBA Valley Pawn")])
+        para("", after=4)
+        para("Issued by Full Circle Finance Inc DBA Valley Pawn, by its Chief Executive Officer, November 4, 2026.",
+             size=9.5, color=GREY)
+    else:
+        sig_table([("Employee signature (via Gusto)", "Date"), ("Employee printed name", "Position")])
+        para("", after=4)
+        sig_table([("Company signature — Chief Executive Officer", "Date"),
+                   ("Printed name and title", "Full Circle Finance Inc DBA Valley Pawn")])
 
     out_docx = os.path.join(HERE, out_base + ".docx")
     d.save(out_docx)
-    subprocess.run(["soffice", "--headless", "--convert-to", "pdf", "--outdir", HERE, out_docx],
-                   check=True, capture_output=True)
+    import tempfile, shutil
+    tmp = tempfile.mkdtemp(prefix="nil_")
+    subprocess.run(["soffice", "-env:UserInstallation=file://" + os.path.join(tmp, "lo"), "--headless",
+                    "--convert-to", "pdf", "--outdir", tmp, out_docx], check=True, capture_output=True)
+    shutil.copyfile(os.path.join(tmp, out_base + ".pdf"), os.path.join(HERE, out_base + ".pdf"))
+    shutil.rmtree(tmp, ignore_errors=True)
     return out_docx
 
-if __name__ == "__main__":
+if __name__ == "__main__" and "--team" in sys.argv:
+    build("", "", "Valley_Pawn_Name_Image_Likeness_Voice_Release_HR-2026-09_Team", team=True)
+    print("ok team")
+elif __name__ == "__main__":
     build("Preston Peters", "Market Manager", "Valley_Pawn_Name_Image_Likeness_Voice_Release_HR-2026-09_Preston_Peters")
     build("______________________", "______________________", "Valley_Pawn_Name_Image_Likeness_Voice_Release_HR-2026-09")
     print("ok")

@@ -17,12 +17,12 @@ OUT = os.path.dirname(os.path.abspath(__file__))
 DOCX = os.path.join(OUT, "Training_At_The_Store_Policy_2026-10.docx")
 
 TITLE = "Training Happens at the Store"
-STARTS = "Starts October 5, 2026   ·   All stores"
+STARTS = "Starts Wednesday, November 4, 2026   ·   All stores"  # moved to the November Policy Update (CEO 2026-10-25)
 BOX = ["Do all required training at the store,", "on the clock, at your normal rate."]
 LINES = [
-    "Train during slow time on your shift, during business hours.",
+    "Train during slow time on your shift, during business hours — Academy lessons too.",
     "No training at home or off the clock.",
-    "Running behind your due date? Tell your manager that day.",
+    "Running behind your due date? Tell your Manager that day.",
 ]
 RATE_NOTE = None
 LEGAL = ("I received, understand, and will follow this policy. The company may change or end it at any time "

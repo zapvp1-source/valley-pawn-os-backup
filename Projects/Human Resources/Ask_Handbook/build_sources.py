@@ -162,7 +162,7 @@ def main():
         % datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
         "",
         "This file is the ONLY thing the #ask-handbook responder may answer employees from.",
-        "If a policy is not in here, the correct answer is 'not covered — ask your Store Manager',",
+        "If a policy is not in here, the correct answer is 'not covered — ask your Manager',",
         "never a guess and never an answer from general knowledge.",
         "",
     ]

@@ -1,13 +1,13 @@
 # ASK-HANDBOOK SOURCES — Full Circle Finance Inc DBA Valley Pawn
 
-AUTO-GENERATED 2026-10-22 19:07 by build_sources.py. Do not hand-edit — edits are overwritten.
+AUTO-GENERATED 2026-10-25 16:05 by build_sources.py. Do not hand-edit — edits are overwritten.
 
 This file is the ONLY thing the #ask-handbook responder may answer employees from.
-If a policy is not in here, the correct answer is 'not covered — ask your Store Manager',
+If a policy is not in here, the correct answer is 'not covered — ask your Manager',
 never a guess and never an answer from general knowledge.
 
 ================================================================================
-SOURCE: VALLEY PAWN POLICIES & PROCEDURES MANUAL — v2026.9 (document last modified 2026-10-21)
+SOURCE: VALLEY PAWN POLICIES & PROCEDURES MANUAL — v2026.9 (document last modified 2026-10-25)
 Operational policy — how the stores run.
 CITE ANSWERS FROM THIS DOCUMENT AS: P&P Manual v2026.9, <section number and name>
 ================================================================================
@@ -17,8 +17,8 @@ POLICIES & PROCEDURES MANUAL
 Version 2026.9 — FINAL
 Locations: Culpeper · Waynesboro · Harrisonburg · Lexington · Roanoke — each a federally licensed (Type 02 Pawnbroker FFL) location
 Version 2026.9 FINAL — supersedes all prior versions of this manual and all standalone Slack and Gusto policy documents consolidated into it. There are no open or unconfirmed items in this version.
-Prepared: July 8, 2026  ·  Updated: October 21, 2026 (v2026.9)
-Approved by: Joshua Davis (CEO) · Preston Peters (Market Manager)
+Prepared: July 8, 2026  ·  Updated: October 25, 2026 (v2026.9)  ·  Effective November 4, 2026
+Approved by: CEO · Market Manager
 This manual consolidates the legacy Valley Pawn Policies & Procedures manual with every operational policy issued since, so that there is one document. Where a policy was also issued as a separately signed one-page document through Gusto, this manual states the same rule and the two are read together; where they differ, this manual controls.
 
 #### PROTECTED RIGHTS — THIS APPLIES TO EVERY POLICY IN THIS MANUAL
@@ -31,21 +31,31 @@ This manual consolidates the legacy Valley Pawn Policies & Procedures manual wit
 
 #### What's New in Version 2026.9 (October 21, 2026) — aligned to the Valley Pawn Academy final review
 Store hours (01.01, 12.02) — Culpeper, Roanoke and Waynesboro are open Monday–Saturday and close at 5:00 PM on Saturday; Harrisonburg and Lexington stay closed Wednesday; the sentence "No Valley Pawn store ever closes at 5:00 PM" is removed.
-Default timeline (06.01) — Day 1 past due is the day after the due date; a first-payment default is marked expired at once, but nothing is pulled, priced or sold before the 15-day grace period ends (day 45 of the loan).
+Default timeline (06.01) — Day 1 past due is the day after the due date; a first-payment default is marked expired at once, but nothing is pulled, priced or sold before the 15-day legal hold (Va. Code § 54.1-4005) ends (day 45 of the loan). The late fee applies on the 6th day past due. Customers hear: "Your loan is due on its due date."
 Customer ID (05.00A) — for a Form 4473 the second address document must be government-issued (27 CFR 478.124(c)(3)(i)); a utility bill or lease does not qualify; a customer photo is taken on every intake.
-Account details (08.02) — adopts the account-holder-only rule: account details go only to the verified account holder (name plus ticket number, date of birth or last four of the phone on file); a spouse or attorney is no longer an exception.
-Multiple handguns and straw purchases (05.02, 03.08) — the Store Manager files Form 3310.4 the same day and copies the CEO; the 3310.4 log line now says handguns and business days; the genuine-gift rule is added to the straw-purchase text.
+Account details (08.02) — adopts the account-holder-only rule: account details go only to the verified account holder (full name, date of birth and the phone number on file — all three) or to someone with a signed power of attorney on file; no spouse, relative, friend or attorney exception; a firearm is never confirmed by phone (also 03.09).
+Multiple handguns and straw purchases (05.02, 03.08) — the Manager files Form 3310.4 the same day and copies the CEO; the 3310.4 log line now says handguns and business days; the genuine-gift rule is added to the straw-purchase text.
 Under-21 (05.02, 12.05) — the rule rests on federal law (18 U.S.C. § 922(b)(1)) and Va. Code § 18.2-308.7(C) (HB 1525), which is in force and separate from the enjoined HB 217 / SB 749 ban.
 Customer service (07.04) — greeting is "Welcome to Valley Pawn! Have you ever been here before?"; first-timers hear the three things; every customer hears the four things, including clearance, before leaving.
-Discounts (05.03) — 31% to 50% needs the Store Manager's approval on the ticket; never past 50%.
-Returns and warranty (05.08) — the warranty needs an account with an email; returns need the receipt and original condition; a firearm that fails within 30 days goes to the Store Manager and Market Manager.
+Discounts (05.03) — one rule: the age ladder (10% up to 30 days … 50% over a year) sets the most off; associates up to 30%; 31% to 50% needs the Manager's approval on the ticket; never past 50%.
+Returns and warranty (05.08) — the warranty needs an account with an email; a return needs that same account with an email on file (no email, no return), the receipt and original condition; a firearm that fails within 30 days goes to the Manager and Market Manager.
 Counterfeit bills (02.04) — UV light and watermark on every $50 and $100; a suspected counterfeit is never handed back.
-Monthly bonus (01.08) — from the December 2026 bonus month, a bonus is earned only when the store meets every standard KPI in force on the 1st (not just the NCO checklist) plus the bonus goals; one employee's own violation affects only that employee; the CEO approves every bonus; a store's program can be suspended for future months by written notice. Earned bonuses are still always paid.
+Monthly bonus (01.08) — from the December 2026 bonus month, a bonus is earned only when the store meets every standard KPI in force on the 1st (not just the NCO checklist) plus the bonus goals; one employee's own violation affects only that employee; management approves every bonus; a store's program can be suspended for future months by written notice. Earned bonuses are still always paid.
 End of day (02.07) — Bravo step names now match Section 02.13: Close Till, count total funds, Close Store.
 Title pawns (04.04) — the vehicle is held by the store for the life of the pawn; Valley Pawn does not make motor-vehicle title loans.
 Telephone (07.03) — a caller who says they are police is verified by calling back through the department's main number; background-check results are given only as "finished, you can come in".
 Assault-firearm classification (12.06) — the statement that magazine-capacity limits apply is removed; the 2026 Virginia assault-firearm and magazine sales ban (HB 217 / SB 749) is blocked by a court order and is not in force, and the under-21 rule in 12.05 is separate and in force.
 Because this revision changes existing rules, a new signed Employee Handbook & P&P Acknowledgment (HR-2026-04) is issued with this version, per Acknowledgment Section 5.
+
+#### Revised October 25, 2026 (CEO decisions) — effective November 4, 2026 with the November Policy Update
+Loans (05.0, 05.01, 06.01, glossary) — the late fee applies on the 6th day past due; the statutory window is called the 15-day legal hold (Va. Code § 54.1-4005); customers hear "Your loan is due on its due date."
+Account details (03.09, 08.02) — full name, date of birth and phone number on file (all three), or a signed power of attorney on file; never confirm a firearm by phone.
+Payments (05.04) — the minimum payment is the refinance (extension); a customer may pay more, in the store, and the extra goes toward principal; a payment smaller than the refinance is not accepted; the app takes extensions only.
+Discounts (05.03) — the age ladder is policy, combined with the 30% / 31–50% Manager / 50% cap bands.
+Returns (05.08) — a return needs an account with an email on file; no email, no return.
+Call-outs, Market Manager contact and training at the store (01.02); job titles per Gusto (01.03).
+Gun Safety Certificate Requirement (10.06) — HR-2026-05 written into this manual, including the reimbursement rule.
+Bonuses (01.08) — management approves every bonus. Weekly team huddle in Slack (12.01). Personal names replaced by roles throughout.
 
 ### What’s New in Version 2026.3 (August 21, 2026)
 
@@ -78,7 +88,7 @@ Because this revision adds a new section and corrects a factual statement (Secti
 
 #### Every store holds its own Type 02 FFL — title page and glossary corrected; the per-store firearms procedures were already right.
 
-#### Defaulted loans (05.01, 06.01, 08.03) — one timeline; the 15-day grace period is the legal floor, not a pull date; the 75-day tolerance ends October 1, 2026 per the CEO; reminder calls capped at one per day and reframed as redemption reminders on a non-recourse loan; one approver for extensions.
+#### Defaulted loans (05.01, 06.01, 08.03) — one timeline; the 15-day legal hold is the legal floor, not a pull date; the 75-day tolerance ends October 1, 2026 per the CEO; reminder calls capped at one per day and reframed as redemption reminders on a non-recourse loan; one approver for extensions.
 
 #### eBay (5A) — the ladder is 90 / 120 / 150, not 30 / 60 / 90, and four binding rules are added: Best Offer is never switched on and video games never take offers; precious metal is never repriced online; model numbers are never stripped from titles; delisting goes through Bravo.
 
@@ -88,7 +98,7 @@ Because this revision adds a new section and corrects a factual statement (Secti
 
 #### All editorial notes and drafting-history brackets removed; every previously 'unretrievable' policy is either stated or incorporated by reference to its signed document. The document is ready for signature.
 
-#### The layaway down payment and term — the one item v2026.5 left open — are now confirmed and written in. Three tiers: jewelry 10% down over up to 10 months at any price; everything else under $500 takes 20% down over up to 3 months; everything else $500 and over takes 10% down over up to 6 months. A payment is due every month, and the 60-day no-payment expiry rule runs alongside the term limits rather than replacing them — whichever comes first governs. Confirmed by Joshua Davis (CEO), 2026-09-23.
+#### The layaway down payment and term — the one item v2026.5 left open — are now confirmed and written in. Three tiers: jewelry 10% down over up to 10 months at any price; everything else under $500 takes 20% down over up to 3 months; everything else $500 and over takes 10% down over up to 6 months. A payment is due every month, and the 60-day no-payment expiry rule runs alongside the term limits rather than replacing them — whichever comes first governs. Confirmed by the CEO, 2026-09-23.
 
 #### This closes the last open item in the manual. No other section changed in this version.
 
@@ -104,7 +114,7 @@ Because this revision adds a new section and corrects a factual statement (Secti
 
 #### Visitors (01.06) — REWRITTEN and split. Law enforcement, ATF and government inspectors are admitted IMMEDIATELY and cooperated with, with management notified in parallel; the 'no comment' handling now applies only to press and other visitors. Reason: Va. Code § 54.1-4011 requires admitting law enforcement and permitting record examination, and the prior text directed staff to delay them.
 
-#### NEW Section 05.0 (Charges, Rates and Disclosure) — sets out the only four charges Virginia permits, with their caps and statutory basis, plus the lost-ticket and late-fee disclosure conditions and the Truth-in-Lending disclosure duty. The flat '12.5% of principal' grace-period charge is WITHDRAWN. The lost-ticket fee is corrected from $2 to the $5 the statute permits.
+#### NEW Section 05.0 (Charges, Rates and Disclosure) — sets out the only four charges Virginia permits, with their caps and statutory basis, plus the lost-ticket and late-fee disclosure conditions and the Truth-in-Lending disclosure duty. The flat '12.5% of principal' legal-hold charge is WITHDRAWN. The lost-ticket fee is corrected from $2 to the $5 the statute permits.
 
 #### NEW Section 05.00A (Required Transaction Record — Virginia) — lists the fields Va. Code § 54.1-4009 requires on every loan and purchase, the military-ID rule, the statement-of-ownership gate, and the noon-next-day police report deadline.
 
@@ -132,11 +142,11 @@ Because this revision adds a new section and corrects a factual statement (Secti
 
 #### Protected Rights statement added to the front matter, applying to every policy in the manual.
 
-#### Roles and systems — references to Division Managers, Region Managers, Home Office, a Human Resources department, a Director of Operations and a Chief Operating Officer are replaced with the actual chain: Store Manager to Preston Peters (Market Manager) to Joshua Davis (CEO).
+#### Roles and systems — references to roles the Company does not have are replaced with the actual chain: Manager to Market Manager to CEO.
 
 #### Previously empty sections filled or closed out: Scheduling, Dress Code, Training Bonus, Bump Loans, Voided Checks, Stop Payments, Floor Audits, Bi-Weekly Audits, Credit Card Payments, and Section 9 (Legal Information).
 
-#### Numeric conflicts resolved: drawer balancing is twice daily; the grace period is 15 days; the employee-purchase floor is 90 days. (The layaway terms adopted in this version were later found to be wrong and were replaced in v2026.5 and v2026.6 — see those entries.)
+#### Numeric conflicts resolved: drawer balancing is twice daily; the legal hold is 15 days (Va. Code § 54.1-4005); the employee-purchase floor is 90 days. (The layaway terms adopted in this version were later found to be wrong and were replaced in v2026.5 and v2026.6 — see those entries.)
 
 #### NOT changed by this version: the firearms handling procedures in 04.02, the jewelry loss-prevention controls in 02.14, 04.03 and 05.11, the Employee Purchase Policy in 05.10, and the ATF form requirements in 05.02 — all reviewed and found sound.
 Version 2026.3 folds in the five policies formally announced in Slack #policy-announcements and distributed for Gusto e-signature after the 2026.2 release was finalized on August 3, 2026:
@@ -239,7 +249,7 @@ Sec. 1.04
 1/22/2026 & 2/5/2026
 Slack #policy-announcements
 Full - verbatim
-Employee / Family-Member Transaction Approval (Joshua Davis)
+Employee / Family-Member Transaction Approval (CEO)
 Sec. 1.10
 1/13/2026
 Slack #policy-announcements
@@ -254,47 +264,51 @@ STORE HOURS. Culpeper, Roanoke and Waynesboro: Monday through Saturday — 10:00
 Scheduled office-personnel hours should coincide with the activities and daily volume of the office (for example, it is better to schedule a doctor's appointment for a slower day such as Tuesday rather than a high-volume day such as Monday or Friday).
 Employees are required to take a thirty (30) minute lunch break each day. Where more than one employee is on duty, lunch breaks must be staggered so the store remains open, and the employee is fully relieved of duty for the full thirty minutes — that break is unpaid.
 SOLO COVERAGE — THE LUNCH BREAK IS PAID. Where only one employee is on duty, that employee remains responsible for the store, the safe, the firearms and the inventory throughout the lunch period and is therefore NOT relieved of duty. That thirty minutes is PAID TIME WORKED — do not clock out for it. The employee eats at the store and remains available to customers; the front door stays open during published hours unless the Market Manager has authorised a posted closure window for that store on solo-coverage days. Where coverage allows an employee to be genuinely relieved and to leave the premises, the break is unpaid in the normal way.
-ALL BREAKS ARE COMPLETED BY 2:00 PM (or by 3:00 PM if coordinated in advance with Preston Peters), so that the store is fully staffed through the afternoon peak. Use the break button in the timekeeping app for every break.
+ALL BREAKS ARE COMPLETED BY 2:00 PM (or by 3:00 PM if coordinated in advance with the Market Manager), so that the store is fully staffed through the afternoon peak. Use the break button in the timekeeping app for every break.
 Prior Market Manager approval is required if an employee needs to be out of the office for longer than one hour. If an office is not meeting company standards for growth and/or delinquency, the Market Manager may schedule additional night and weekend hours. No employee may work overtime without prior Market Manager approval.
 
 ### 01.02 Scheduling
 Scheduling follows the hours-of-operation and staffing framework in Sections 01.01 and 01.03 above.
-Schedules are set by the Store Manager to match store volume and are published in advance. Employees receive their schedule before the week begins. Shift swaps and schedule changes require Store Manager approval in advance. Time-off requests follow Section 01.11. No employee works overtime without prior Market Manager approval — but where overtime IS worked, whether approved or not, it is always paid at the correct overtime rate; unapproved overtime is addressed through the corrective-action process, never by withholding pay.
+Schedules are set by the Manager to match store volume and are published in advance. Employees receive their schedule before the week begins. Shift swaps and schedule changes require Manager approval in advance. Time-off requests follow Section 01.11. No employee works overtime without prior Market Manager approval — but where overtime IS worked, whether approved or not, it is always paid at the correct overtime rate; unapproved overtime is addressed through the corrective-action process, never by withholding pay.
+CALL-OUTS. An employee who cannot work a scheduled shift, or will be late, calls the Market Manager by VOICE CALL at the Market Manager's Zoom number, 540-202-4200, at least two (2) hours before the shift starts. Only a voice call counts: a text, a Slack message, an email or a message passed through a co-worker is not a call-out. The full attendance rules are in the Employee Handbook (Attendance and Punctuality).
+CONTACTING THE MARKET MANAGER. Messages to the Market Manager go through Slack. Calls go to the Market Manager's Zoom number, 540-202-4200.
+TRAINING HAPPENS AT THE STORE. All required training — Valley Pawn Academy lessons, the gun-safety course (Section 10.06) and any other assigned training — is done at the store, during business hours, on the clock, at the employee's normal rate of pay. No training is done at home or off the clock. An employee running behind a training due date tells their Manager that day.
 
 ### 01.03 Employee Staffing
-Each pawnshop is staffed with one full-time Manager and a Pawnbroker, allowing the store to focus on different parts of the business (collections, marketing, etc.) without disruption. Employee lunch breaks must be staggered so the store stays open at all times.
+Each pawnshop is staffed with one full-time Manager and a Sales and Loan Associate or Sales and Loan Representative, allowing the store to focus on different parts of the business (collections, marketing, etc.) without disruption. Employee lunch breaks must be staggered so the store stays open at all times.
+Job titles are the ones in Gusto: Sales and Loan Associate, Sales and Loan Representative, Manager (one per store), Market Manager (all five stores) and CEO. There are no assistant managers.
 
 ### 01.04 Time Sheet Policy
-Clock in and out using the GEOFENCE in the timekeeping app, at the store, every time — never from any other location, unless attending a meeting or covering a store outside your normal commute. Use the BREAK BUTTON for every break. If the geofence fails, call Preston Peters (Market Manager) immediately so the punch can be recorded — do not wait until the end of the day. Be honest and accurate with time records.
+Clock in and out using the GEOFENCE in the timekeeping app, at the store, every time — never from any other location, unless attending a meeting or covering a store outside your normal commute. Use the BREAK BUTTON for every break. If the geofence fails, call the Market Manager immediately so the punch can be recorded — do not wait until the end of the day. Be honest and accurate with time records.
 Timecards must accurately reflect all time actually worked. Where a timecard needs correction (for example a missed clock-in or clock-out), the correction is applied to the CURRENT payroll whenever it reaches payroll before that payroll is processed. If a correction is identified after processing has already run, it is paid on the next payroll and no later. This is a processing limitation, not a penalty: the Company does not withhold, delay or forfeit pay for any time actually worked, and no employee is ever docked for a timekeeping error.
-If any employee believes they have been underpaid for any reason, they should raise it with Preston Peters or Joshua Davis immediately. The Company will investigate and pay any shortfall within fourteen (14) days of receiving notice. Repeated failure to clock in or out is addressed as a performance matter through the normal corrective-action process, never by adjusting, delaying or withholding pay.
-Report a missed punch to Preston Peters (Market Manager) — or, if he cannot be reached, to Joshua Davis (CEO) — as soon as it is noticed. The Company is responsible for paying all time worked whether or not the punch was recorded correctly.
+If any employee believes they have been underpaid for any reason, they should raise it with the Market Manager or the CEO immediately. The Company will investigate and pay any shortfall within fourteen (14) days of receiving notice. Repeated failure to clock in or out is addressed as a performance matter through the normal corrective-action process, never by adjusting, delaying or withholding pay.
+Report a missed punch to the Market Manager — or, if the Market Manager cannot be reached, to the CEO — as soon as it is noticed. The Company is responsible for paying all time worked whether or not the punch was recorded correctly.
 
 ### 01.05 Dress Code
-DRESS CODE. Employees wear the BRANDED VALLEY PAWN UNIFORM in the store — nothing else. Coats, hoodies and all other outerwear are removed and stored before any customer interaction. Clothing is clean and in good repair. Closed-toe shoes are required. Do not wear store merchandise, and do not wear personal jewelry that could be confused with inventory. New uniforms are ordered for new staff at hire; report a missing or damaged uniform to the Store Manager. Store Managers address dress-code issues directly and discreetly; repeated issues go to the Market Manager.
+DRESS CODE. Employees wear the BRANDED VALLEY PAWN UNIFORM in the store — nothing else. Coats, hoodies and all other outerwear are removed and stored before any customer interaction. Clothing is clean and in good repair. Closed-toe shoes are required. Do not wear store merchandise, and do not wear personal jewelry that could be confused with inventory. New uniforms are ordered for new staff at hire; report a missing or damaged uniform to the Manager. Managers address dress-code issues directly and discreetly; repeated issues go to the Market Manager.
 
 ### 01.06 Branch Visitors
 Anyone entering the store who is not a customer and not an employee is a visitor. Visitors fall into two groups and they are handled DIFFERENTLY. Group 1 — law enforcement and government inspectors: police and sheriff's officers, ATF, state and federal law-enforcement officials, state examiners, and fire, building and health inspectors. Group 2 — everyone else, including news media, press, salespeople and solicitors. Read the correct group below before doing anything.
 GROUP 1 — LAW ENFORCEMENT AND GOVERNMENT INSPECTORS: ADMIT THEM IMMEDIATELY.
 Ask to see credentials and record the officer's name, agency and badge or ID number. Verifying identity is the only step that comes before access.
 Admit them and cooperate fully and promptly. Virginia law (Va. Code § 54.1-4011) REQUIRES every pawnbroker and every employee to admit any duly authorized law-enforcement officer of the jurisdiction, and any law-enforcement official of the state or federal government, during business hours, and to permit examination of all records required by the pawnbroker statutes and of any article believed to be missing or stolen. As a federal firearms licensee the Company is separately subject to ATF inspection of its firearms records and inventory during business hours.
-Do NOT delay an officer or inspector, do not refuse or restrict access to records or inventory, and do not make access conditional on reaching a manager first. Notify Preston Peters (Market Manager) and Joshua Davis (CEO) at the same time you are cooperating — notification happens IN PARALLEL with cooperation, never before it.
+Do NOT delay an officer or inspector, do not refuse or restrict access to records or inventory, and do not make access conditional on reaching a manager first. Notify the Market Manager and the CEO at the same time you are cooperating — notification happens IN PARALLEL with cooperation, never before it.
 If an officer takes possession of any article, the officer must provide a receipt for it (Va. Code § 54.1-4011). Obtain that receipt, keep it with the transaction records, and photograph it.
-Be courteous and answer questions about records and inventory truthfully. If asked a question you do not know the answer to, say so and offer to connect them with Preston Peters or Joshua Davis — do not guess.
+Be courteous and answer questions about records and inventory truthfully. If asked a question you do not know the answer to, say so and offer to connect them with the Market Manager or the CEO — do not guess.
 GROUP 2 — MEDIA, PRESS AND ALL OTHER VISITORS.
-If the visitor is a member of the press or media: smile, say 'no comment,' and politely ask them to leave. Refer them to Joshua Davis (CEO) and notify Preston Peters immediately.
+If the visitor is a member of the press or media: smile, say 'no comment,' and politely ask them to leave. Refer them to the CEO and notify the Market Manager immediately.
 Do not allow anyone in this group behind the workstation. Do not allow photographs to be taken, do not allow customers to be interviewed inside the store, and do not discuss any Company matter with a press or media visitor. Violations may result in disciplinary action.
 Nothing in this section restricts any employee's right to speak with a government agency, to file a charge or complaint, or to discuss wages, hours or working conditions. See the Protected Rights statement in the front of this manual.
 
 ### 01.07 Customer Complaints
-All customer complaints must be addressed immediately. If a complaint cannot be resolved positively, contact your Market Manager for assistance; if unreachable, follow the chain of command. It is best for the company to find an internal resolution. Any threat of legal action or lawsuit must be immediately communicated to the Market Manager (Preston Peters).
+All customer complaints must be addressed immediately. If a complaint cannot be resolved positively, contact your Market Manager for assistance; if unreachable, follow the chain of command. It is best for the company to find an internal resolution. Any threat of legal action or lawsuit must be immediately communicated to the Market Manager.
 
 ### 01.08 Monthly Bonus Program
 Valley Pawn operates a monthly employee bonus program. THE CURRENT PUBLISHED BONUS RULES CONTROL — not this section. The operative targets, rates, qualifiers and payout dates are the ones most recently published by the Company, communicated in the #bonus-goals Slack channel and distributed to employees for signature. Where anything in this manual differs from the current published bonus rules, the published rules govern.
 This section is deliberately a pointer rather than a formula, so that the bonus program can be updated without this manual becoming inaccurate. Earlier editions of this manual set out specific percentages; those figures are superseded and are no longer in force.
 Standing conditions that apply to every bonus period unless the published rules say otherwise: a manager must have managed the branch for the full period to be eligible; an employee must be employed on the payout date; and the store must pass the current NCO (Neat, Clean, Organized, Professional) checklist published by the Market Manager. Starting with the December 2026 bonus month, the store must also meet every standard KPI in force on the 1st of the bonus month — every measurable store standard published in this manual, the Employee Handbook, the store scorecard, or a signed Monthly Policy Update (for example drawer balancing and cash variances, the monthly gun audit, the Monthly Store Compliance Checklist, the nightly police report, and loan delinquency and the default timeline). If the miss is caused by one employee's own documented policy violation, only that employee's bonus is affected. Because the standards in force on the 1st are the ones that apply, every condition is known in advance. These are conditions of EARNING a bonus.
-Every bonus is approved by the CEO before payroll; approval confirms the published conditions were met and is not a second, unpublished test. Once a bonus has been earned under the published rules for a completed period, it is paid. The Company does not reduce, withhold or offset an earned bonus after the fact. The Company may suspend, change or end the bonus program for any store, any position or the whole company, for a legitimate business reason, by written notice to the affected employees; a suspension or change applies to bonus periods that begin after the notice date and stays in place until lifted in writing. For hourly employees, bonuses are included in the regular rate used for overtime.
-Questions about a bonus calculation go to Preston Peters (Market Manager) or Joshua Davis (CEO).
+Every bonus is approved by management before payroll; approval confirms the published conditions were met and is not a second, unpublished test. Once a bonus has been earned under the published rules for a completed period, it is paid. The Company does not reduce, withhold or offset an earned bonus after the fact. The Company may suspend, change or end the bonus program for any store, any position or the whole company, for a legitimate business reason, by written notice to the affected employees; a suspension or change applies to bonus periods that begin after the notice date and stays in place until lifted in writing. For hourly employees, bonuses are included in the regular rate used for overtime.
+Questions about a bonus calculation go to the Market Manager or the CEO.
 
 ### 01.09 Training Bonus Program
 Any training-related incentive is part of the Company's current published bonus program. See Section 01.08 — the current published bonus rules control, and no separate training bonus operates outside them.
@@ -302,8 +316,7 @@ Any training-related incentive is part of the Company's current published bonus 
 ### 01.10 Prohibited Lending / Conflicts of Interest
 It is strictly against company policy to conduct a loan transaction that would cause a conflict of interest during the collections process. This includes, but is not limited to, transactions with a spouse, other household members (including roommates), child, parent, parent-in-law, grandparent, grandchild, stepparent, sibling, or the child of the employee's spouse.
 It is also against policy to conduct a transaction with an individual under the age of 18, a person who is intoxicated, or an individual known to be a thief or convicted of larceny, burglary, or robbery. As a general rule, if you have to question whether a situation is a conflict of interest, discuss it with your Market Manager for guidance before conducting the loan.
-"Reminder, All employee/Family transactions must be approved by me." — Joshua Davis, Slack #policy-announcements, 1/13/2026
-All transactions involving an employee or an employee's family member must be approved by Joshua Davis in advance, without exception, before the transaction is processed.
+All transactions involving an employee or an employee's family member must be approved by the CEO in advance, without exception, before the transaction is processed.
 A Large Loan/Buy Worksheet must be completed and confirmed before finalizing any loan or buy transaction of $1,000 or more, including reloans. See Sections 5.01, 5.02, and 5.04 for the transactional procedure and further detail.
 The Large Loan/Buy Worksheet applies to ALL loans and buys of $1,000 or more, including reloans, without exception.
 The legacy manual previously stated that employees may purchase goods at 15% above company cost, limited to once per quarter (four times annually), with all purchases approved by the owner. This clause has been REPLACED by the full Employee Purchase Policy in Section 5.10 below — see that section for the current, controlling policy.
@@ -333,7 +346,7 @@ PTO requests will not be approved during the following periods:
 Unused PTO does not roll over and is forfeited at year-end. PTO is never paid out if the employee is not currently working for the company, was terminated, and/or resigned.
 
 #### Exceptions
-Exceptions. The blackout restrictions do not apply to any absence protected by law. This includes reasonable accommodation under the Americans with Disabilities Act and the Virginia Human Rights Act, military leave under USERRA, jury duty, voting leave, leave required by Virginia law, and any other legally protected absence. Requests of this kind are not treated as PTO requests and are directed to Preston Peters (Market Manager).
+Exceptions. The blackout restrictions do not apply to any absence protected by law. This includes reasonable accommodation under the Americans with Disabilities Act and the Virginia Human Rights Act, military leave under USERRA, jury duty, voting leave, leave required by Virginia law, and any other legally protected absence. Requests of this kind are not treated as PTO requests and are directed to the Market Manager.
 Employees are responsible for understanding and complying with this policy. Questions should be directed to management.
 
 ## Section 2: Funds Control
@@ -342,26 +355,26 @@ Employees are responsible for understanding and complying with this policy. Ques
 Company funds are not to be used for personal or unauthorized purposes. Company funds include petty cash, change fund, customer payments, and check stock. All cash disbursements must be properly documented and within company guidelines. Personal or unauthorized use of company funds is grounds for immediate termination.
 
 ### 02.02 Safe Policies
-The store safe holds the day's operating cash, jewelry inventory and firearms when they are not on the floor. The safe is opened only by the Store Manager or a designated employee, is kept closed and locked between uses, and is never opened in view of a customer. Combinations and keys are never shared outside the Store Manager and the Market Manager.
+The store safe holds the day's operating cash, jewelry inventory and firearms when they are not on the floor. The safe is opened only by the Manager or a designated employee, is kept closed and locked between uses, and is never opened in view of a customer. Combinations and keys are never shared outside the Manager and the Market Manager.
 
 ### 02.03 Bank Withdrawals
-Each morning the Store Manager requests any necessary funds from the Company's bank. Before leaving the bank, manually verify the money at the teller's window and confirm the teller has properly validated the withdrawal slip with the correct business date, account number and amount.
+Each morning the Manager requests any necessary funds from the Company's bank. Before leaving the bank, manually verify the money at the teller's window and confirm the teller has properly validated the withdrawal slip with the correct business date, account number and amount.
 Upon returning to the office, enter the full amount of cash into Bravo. Place enough cash in the cash drawers to start the day (approximately $275.00 per drawer to make change for customers); secure the remainder in an envelope elsewhere in the office.
 Opening the till: select "Open Till," mouse over "Main Drawer," select "Remove/Add Cash," then "Add" to add cash, enter the amount, and select "add cash from bank account."
-High-volume days may require additional withdrawals; contact your Market Manager, who will make the request to the owner. On days when the bank is closed but the office is open (federal holidays, Saturdays), requests for funds should be made in advance.
+High-volume days may require additional withdrawals; contact your Market Manager, who will make the request to the CEO. On days when the bank is closed but the office is open (federal holidays, Saturdays), requests for funds should be made in advance.
 
 ### 02.04 Cash Drawers
 Each employee in an office is assigned a separate, locking cash drawer and is solely responsible for its contents. Cash drawers are to be kept locked whenever out of the employee's line of sight. Under no circumstances is an employee to work from another employee's cash drawer.
-Each employee is responsible for his or her own key and must report a lost key to the Store Manager immediately so the lock can be changed promptly. The cost of re-keying is borne by the Company. The Company does not deduct the cost of lost keys, lock changes, damaged property or business losses from any employee's pay. Repeated loss is addressed through the normal corrective-action process.
+Each employee is responsible for his or her own key and must report a lost key to the Manager immediately so the lock can be changed promptly. The cost of re-keying is borne by the Company. The Company does not deduct the cost of lost keys, lock changes, damaged property or business losses from any employee's pay. Repeated loss is addressed through the normal corrective-action process.
 Spare keys for the cash drawer, night drop, and office front door must be kept in a sealed, signed, and dated envelope in a secured filing cabinet in the 'A-Z' Files. These envelopes may be opened only on instruction of the Market Manager, with at least two employees present.
 Since employees are responsible for the contents of their cash drawers, all software passwords must be kept confidential. There is never a reason to conduct transactions under another employee's login; passwords should be changed whenever an employee feels it necessary.
-"Cash Drawer Policy: Cash drawers must remain locked at all times when not actively in use. Keys may not be left in the lock of any cash drawer under any circumstances. All employees are responsible for the security of the drawer during the shift. Any loss, discrepancy, or security issue must be reported to management immediately. We have new cash drawers that we will be installing that have keys and an 'auto open' feature that will be connected to the primary workstation which will open the drawer when a transaction is completed." — Preston Peters, Slack #policy-announcements, 2/24/2026
+"Cash Drawer Policy: Cash drawers must remain locked at all times when not actively in use. Keys may not be left in the lock of any cash drawer under any circumstances. All employees are responsible for the security of the drawer during the shift. Any loss, discrepancy, or security issue must be reported to management immediately. We have new cash drawers that we will be installing that have keys and an 'auto open' feature that will be connected to the primary workstation which will open the drawer when a transaction is completed." — the Market Manager, Slack #policy-announcements, 2/24/2026
 - Cash drawers must remain locked at all times when not actively in use.
 - Keys may never be left in the lock of any cash drawer, under any circumstances.
 - Each employee is responsible for the security of their drawer for the duration of their shift.
 - Any loss, discrepancy, or security issue must be reported to management immediately.
 - New drawer hardware includes an 'auto-open' feature tied to the primary workstation, which opens the drawer automatically when a transaction is completed.
-COUNTERFEIT CHECK. Check every $50 and $100 with the UV light and watermark; the pen is a backup. A suspected counterfeit is never handed back to the customer — give it to the Store Manager, who calls the police.
+COUNTERFEIT CHECK. Check every $50 and $100 with the UV light and watermark; the pen is a backup. A suspected counterfeit is never handed back to the customer — give it to the Manager, who calls the police.
 
 ### 02.05 Transferring Cash Between Drawers
 If one employee becomes low on funds, it may be necessary to transfer money between cash drawers. Both employees must count the money being transferred to ensure the correct amount changes hands. In Bravo, select "Transfer Tender," choose the "Source" drawer and the "Destination" drawer, select the bills/amount, and click "save."
@@ -377,21 +390,21 @@ The final drawer balance is conducted at the end of the day: follow the Bravo cl
 If a cash drawer is out of balance, the responsible employee must first recount the drawer to confirm the ending balance was entered correctly, then research the discrepancy. Common causes include:
 - Overages: payment not posted; deposit entered twice; cash transfer entered incorrectly; deposit entered incorrectly; wrong account paid out; checks not deposited in system.
 - Shortages: payment posted twice; deposit not entered; cash transfer entered incorrectly; deposit entered incorrectly; not enough cash collected; too much cash given back.
-If the discrepancy cannot be located, contact the Market Manager (Preston Peters) immediately; end-of-day reports are not run until the Market Manager approves. The overage or shortage must be thoroughly documented in Bravo, including: that the Market Manager was contacted; the scenario that caused the discrepancy; the instruction given; and the date it will be reconciled. No employee's pay is affected by an overage or shortage (Section 02.08).
+If the discrepancy cannot be located, contact the Market Manager immediately; end-of-day reports are not run until the Market Manager approves. The overage or shortage must be thoroughly documented in Bravo, including: that the Market Manager was contacted; the scenario that caused the discrepancy; the instruction given; and the date it will be reconciled. No employee's pay is affected by an overage or shortage (Section 02.08).
 No employee's pay is ever reduced, docked or deducted because of a cash overage or shortage. Discrepancies are investigated and documented so they can be understood and prevented. Where a shortage reflects a failure to follow procedure, that is addressed through the corrective-action process, not through pay.
 To pull an over/short report: select "Reports" from the home screen, select the "End of Day" report, confirm the date range, and click "Ok."
 
 ### 02.09 Interim Deposits / Cash Disbursements
 Items needed in the daily course of business are to be paid out through cash disbursements. Purchases of candy, chips, beverages, or any other personal-reason purchase are not acceptable.
 To conduct a cash disbursement in Bravo: select the "Tender Transfer" option, select the "source" drawer, the "type" of disbursement, and the amount, with a detailed description; click "save" to finish.
-Each cash disbursement must be printed, and the employee conducting it must sign the cash disbursement journal. An itemized receipt for the exact amount and correct date must be attached to the journal. Supplies are ordered through Preston Peters per Section 03.01 and are not normally paid via cash disbursement; an emergency supply purchase via cash disbursement requires documented Market Manager approval.
-All cash disbursement journals, with itemized receipts and necessary signatures, must be filed in the 'A-Z File,' with a separate file created each month. The Store Manager must review the week's cash disbursements weekly and verify all journals/receipts are accounted for.
+Each cash disbursement must be printed, and the employee conducting it must sign the cash disbursement journal. An itemized receipt for the exact amount and correct date must be attached to the journal. Supplies are ordered through the Market Manager per Section 03.01 and are not normally paid via cash disbursement; an emergency supply purchase via cash disbursement requires documented Market Manager approval.
+All cash disbursement journals, with itemized receipts and necessary signatures, must be filed in the 'A-Z File,' with a separate file created each month. The Manager must review the week's cash disbursements weekly and verify all journals/receipts are accounted for.
 
 ### 02.10 Voided Checks
-Stores do not issue or void Company checks. Any Company check requiring void or stop-payment is handled by Joshua Davis (CEO). If a store receives a Company check in error, do not alter or destroy it — mark nothing on it, notify Preston Peters the same day, and hold it for pickup.
+Stores do not issue or void Company checks. Any Company check requiring void or stop-payment is handled by the CEO. If a store receives a Company check in error, do not alter or destroy it — mark nothing on it, notify the Market Manager the same day, and hold it for pickup.
 
 ### 02.11 Stop Payments
-Stop payments on Company checks are placed only by Joshua Davis (CEO). Stores do not contact the bank directly. If a customer reports a problem with a Company check, take the details and notify Preston Peters the same day.
+Stop payments on Company checks are placed only by the CEO. Stores do not contact the bank directly. If a customer reports a problem with a Company check, take the details and notify the Market Manager the same day.
 
 ### 02.12 Cash Disbursements
 See Section 02.09 above, which covers the cash disbursement procedure in full as captured in the legacy manual (the legacy document presents Interim Deposits and Cash Disbursements together).
@@ -415,51 +428,51 @@ See Section 02.09 above, which covers the cash disbursement procedure in full as
 - Count total funds, including the amount transferred from the drawer to the store safe and all funds already in the safe, entered correctly by denomination. Click Save, then Close Store.
 - Enter total funds again (all cash, credit card, and other monetary instruments, including funds transferred from the cash drawer and those in the store safe). Click Next.
 - Verify the entered numbers are correct (use Back to fix errors), then click Save. The store is now closed.
-If an overage or shortage is displayed during the count, immediately contact your Market Manager (Preston Peters) or the CEO (Joshua Davis) to discuss the error. No end-of-day process is complete with an unresolved cash error; this must be resolved with a supervisor prior to leaving for the day.
+If an overage or shortage is displayed during the count, immediately contact your Market Manager or the CEO (CEO) to discuss the error. No end-of-day process is complete with an unresolved cash error; this must be resolved with a supervisor prior to leaving for the day.
 
 ### 02.14 Daily Jewelry Count
 - Jewelry is counted every day at every store — once at open and once at close.
-- The Store Manager and a designated teammate alternate performing the count, switching off every other day. This rotation is a control practice, not a statement of trust.
+- The Manager and a designated teammate alternate performing the count, switching off every other day. This rotation is a control practice, not a statement of trust.
 - Each closing count must be checked against that day’s Bravo activity (sales, pawns, redemptions, layaway movements).
-- Any discrepancy is escalated to the Market Manager (Preston Peters) the same day for joint resolution.
+- Any discrepancy is escalated to the Market Manager the same day for joint resolution.
 This count is in addition to — not a replacement for — the rotating Weekly Category Inventory audits in Section 03.11.
 
 ## Section 3: Administrative Office Duties
 
 ### 03.01 Ordering Supplies
-SUPPLIES. Store supplies are ordered through the Company's Amazon Business account. Send supply requests to Preston Peters (Market Manager), who places the order. Orders of $250 or more require approval before they are placed. Do not purchase supplies out of the cash drawer (Section 02.09), and do not order on a personal account for reimbursement.
+SUPPLIES. Store supplies are ordered through the Company's Amazon Business account. Send supply requests to the Market Manager, who places the order. Orders of $250 or more require approval before they are placed. Do not purchase supplies out of the cash drawer (Section 02.09), and do not order on a personal account for reimbursement.
 
 ### 03.02 Office Mail
-Occasionally an office receives mail that must be forwarded to Joshua Davis (CEO), such as mail of a legal nature, or documents from financial institutions, consumer affairs, or any federal/state/local government body. Do not open this mail — hold it for the owner to pick up.
-If an invoice or bill from a merchant is accidentally mailed to the office instead of Joshua Davis (CEO), it must be forwarded immediately, with the office number and your signature noted to avoid confusion. Notify your Market Manager that the item was received. Firearm invoices, once received, are held for owner pickup.
-Bills paid by Joshua Davis (CEO) for fixed expenses (rent, utilities, phones, etc.) require accurate names, addresses, and phone numbers; notify your Market Manager immediately of any changes so Joshua Davis (CEO) can be informed.
+Occasionally an office receives mail that must be forwarded to the CEO, such as mail of a legal nature, or documents from financial institutions, consumer affairs, or any federal/state/local government body. Do not open this mail — hold it for the owner to pick up.
+If an invoice or bill from a merchant is accidentally mailed to the office instead of the CEO, it must be forwarded immediately, with the office number and your signature noted to avoid confusion. Notify your Market Manager that the item was received. Firearm invoices, once received, are held for owner pickup.
+Bills paid by the CEO for fixed expenses (rent, utilities, phones, etc.) require accurate names, addresses, and phone numbers; notify your Market Manager immediately of any changes so the CEO can be informed.
 
 ### 03.03 Accounts Payable
 See Section 03.02 above — the legacy manual addresses invoice/bill handling for accounts payable together with office mail procedures.
 
 ### 03.04 Equipment / Facilities
 Company equipment must be in working order at all times, including but not limited to: computers, monitors, phone lines, internet connections, printers, copier, telephones, security cameras and alarm systems, refrigerator and microwave, plumbing, air conditioning and heat.
-If any of these items are not working, immediately contact your Market Manager and be prepared to explain the problem in detail. Facility issues should also go through your Market Manager, who will advise on next steps for repair or replacement; do not contact the landlord directly unless directed to do so by your Market Manager or Joshua Davis (CEO).
+If any of these items are not working, immediately contact your Market Manager and be prepared to explain the problem in detail. Facility issues should also go through your Market Manager, who will advise on next steps for repair or replacement; do not contact the landlord directly unless directed to do so by your Market Manager or the CEO.
 
 ### 03.05 Licenses
 Applicable federal, state, and local licenses must be prominently displayed in the lobby area and periodically verified as current. If a license is not current, immediately contact your Market Manager and document all communication until a current license is received.
 
 ### 03.06 Telephone Usage
 Office telephone equipment is limited to business purposes only. Personal calls must be limited; excessive personal phone usage will result in disciplinary action.
-PERSONAL PHONES. No personal phone scrolling, texting or social media on the sales floor during work hours. Personal phones are used on breaks, away from the counter. The only exception is a call to Preston Peters or Joshua Davis about store business.
+PERSONAL PHONES. No personal phone scrolling, texting or social media on the sales floor during work hours. Personal phones are used on breaks, away from the counter. The only exception is a call to the Market Manager or the CEO about store business.
 LANGUAGE AND PRESENCE. No cursing in the store — respectful language at all times, with customers and with co-workers. Stand up and greet every customer when they enter (see Section 04.01 and 07.04).
 
 ### 03.07 Computer / Internet Usage
 Company computers and their components are to be used for business purposes only. Personal use — including internet browsing unrelated to business, personal email, social media, or transmitting information of a personal nature — is strictly prohibited. Personal devices should never be connected to store internet service. Computers and their components are company property to be used only for daily business activities; personal use will result in disciplinary action.
 
 ### 03.08 Company Records
-RECORD RETENTION. Records are kept for the periods below. Two principles: firearms records are kept far longer than most people assume and must NEVER be destroyed on a calendar rule, while customer identity material is not kept forever, because holding it longer than required only increases the harm if it is ever exposed. Nothing is destroyed without Joshua Davis's (CEO) approval.
+RECORD RETENTION. Records are kept for the periods below. Two principles: firearms records are kept far longer than most people assume and must NEVER be destroyed on a calendar rule, while customer identity material is not kept forever, because holding it longer than required only increases the harm if it is ever exposed. Nothing is destroyed without the CEO's approval.
 FIREARMS RECORDS — KEEP UNTIL THE BUSINESS IS DISCONTINUED. ATF Form 4473 and the Acquisition and Disposition record (the bound book) are retained until the Company discontinues business or licensed activity, and are then surrendered to ATF (27 CFR 478.129). THE COMMONLY REPEATED '20 YEARS' FIGURE IS NOT A DESTRUCTION DATE — it is only the age at which paper forms may be moved into separate storage. Never destroy a 4473 or an A&D record.
 Multiple Handgun Sales records (ATF Form 3310.4 and the Company's MHG Acknowledgement Form): minimum five years, and in practice retained with the firearms records.
 Form 8300 cash-reporting filings and the related customer statements: five years.
 Pawn and purchase transaction records, including the identity record required by Section 05.00A: Virginia requires electronic records be retained at least one year (Va. Code § 54.1-4009(B)). The Company retains them for five years and then destroys them securely.
 Pawn licences, end-of-day reports, cash disbursement records, deposit and withdrawal slips and validations, and Company policy memoranda: seven years.
-Legal and bankruptcy notices, and anything relating to an actual or threatened claim: retained until Joshua Davis confirms in writing that the matter is closed. IF A CLAIM, LAWSUIT, AUDIT OR INVESTIGATION IS PENDING OR REASONABLY ANTICIPATED, ALL DESTRUCTION STOPS IMMEDIATELY for anything that could relate to it, regardless of the schedule above.
+Legal and bankruptcy notices, and anything relating to an actual or threatened claim: retained until the CEO confirms in writing that the matter is closed. IF A CLAIM, LAWSUIT, AUDIT OR INVESTIGATION IS PENDING OR REASONABLY ANTICIPATED, ALL DESTRUCTION STOPS IMMEDIATELY for anything that could relate to it, regardless of the schedule above.
 Employee personnel records: retained per the Employee Handbook, in a locked cabinet (Section 03.09).
 DESTRUCTION METHOD. Anything containing customer or employee personal information — identity documents, ID images, transaction paperwork — is shredded, never binned intact, never recycled loose.
 
@@ -467,7 +480,7 @@ DESTRUCTION METHOD. Anything containing customer or employee personal informatio
 Each store maintains a series of binders to keep organized, accurate records regarding firearms purchases and inventory, and related activity:
 - Daily Gun Log — a daily printout of all gun activity, including sells, buys, transfers, new inventory, acquisitions, and dispositions.
 - Weekly Category Inventory — each week a category (Guns, Jewelry, or B-items) is selected for an inventory audit, rotated throughout the month and assigned by the Market Manager; each category must be inventoried across the whole store.
-- Daily Pawn Walks — store managers complete a Daily Pawn Walk each day, verifying and recording all purchases and pawns for that day.
+- Daily Pawn Walks — Managers complete a Daily Pawn Walk each day, verifying and recording all purchases and pawns for that day.
 - Transfer Log — staff keep an inventory of transfers out of the store.
 - Firearm Transactions (4473) Log — used to track all firearm transactions and the 4473 forms customers complete upon purchase.
 - Multiple Gun Sales (3310.4) Log — used when two or more handguns are sold or transferred to the same customer within five consecutive business days (Section 05.02).
@@ -475,12 +488,13 @@ Each store maintains a series of binders to keep organized, accurate records reg
 
 ### 03.09 Confidentiality
 Due to the confidential nature of customer information, customer information may not be released to any person, business or entity EXCEPT as required by law or by this manual — the daily law-enforcement report (Section 03.15), examination by law enforcement and ATF (Section 01.06), and the transaction records required by Section 05.00A. All customer information, documents and disclosures must be filed at the time of the transaction to avoid exposure of confidential information.
-DRUG AND ALCOHOL POLICY — SEE THE EMPLOYEE HANDBOOK. The Company's Drug-Free Workplace and Cannabis Testing policy is an employment policy and lives in the Employee Handbook, not in this manual. Questions about drug or alcohol testing, cannabis, or what happens after a positive test are directed to Preston Peters (Market Manager) and are answered from the Handbook.
+ACCOUNT DETAILS — VERIFIED ACCOUNT HOLDER ONLY. Account details (balance, payoff, items, due date, or whether a loan exists) go only to the verified account holder — full name, date of birth AND the phone number on file, all three matching Bravo — or to a person whose signed power of attorney for the customer is on file. There is no exception for a spouse, relative, friend or attorney without a power of attorney on file. Never confirm a firearm by phone — whether we have it, whether it is on a loan, or whose it is — even to a verified caller. See Section 08.02.
+DRUG AND ALCOHOL POLICY — SEE THE EMPLOYEE HANDBOOK. The Company's Drug-Free Workplace and Cannabis Testing policy is an employment policy and lives in the Employee Handbook, not in this manual. Questions about drug or alcohol testing, cannabis, or what happens after a positive test are directed to the Market Manager and are answered from the Handbook.
 IF CUSTOMER OR EMPLOYEE INFORMATION IS LOST, STOLEN OR EXPOSED — REPORT IT THE SAME HOUR.
 This covers more than a computer intrusion. It includes a lost or stolen laptop, phone or backup drive; paperwork or identity documents missing from the store; a store email or system account accessed by someone who should not have it; a password shared or compromised; or files sent to the wrong person. Store email accounts are the login identity for eBay, GunBroker, Chekkit and the Company's directory listings (Section 03.17), so a compromised store email is treated as a potential exposure of customer data.
-WHAT TO DO. Tell your Store Manager and Preston Peters (Market Manager) immediately; Preston notifies Joshua Davis (CEO) the same day. PRESERVE, DO NOT FIX: do not delete anything, do not wipe or reset a device, and do not attempt your own investigation — that can destroy the record of what happened. Write down what you know, when you noticed it, and who else is aware.
-Do not discuss the incident with anyone outside the Company, and do not notify customers yourself. All external communication is handled by Joshua Davis.
-WHY THE SPEED MATTERS. Virginia law (Va. Code § 18.2-186.6) requires notice without unreasonable delay to affected Virginia residents AND to the Office of the Attorney General following discovery of a breach of unencrypted personal information. The Attorney General notice has NO minimum size — it is required for every covered breach, however small. Where more than 1,000 people are affected, the nationwide consumer reporting agencies must also be notified. Joshua Davis engages counsel immediately on any suspected breach, and the clock starts when the Company discovers it, not when it is confirmed.
+WHAT TO DO. Tell your Manager and the Market Manager immediately; the Market Manager notifies the CEO the same day. PRESERVE, DO NOT FIX: do not delete anything, do not wipe or reset a device, and do not attempt your own investigation — that can destroy the record of what happened. Write down what you know, when you noticed it, and who else is aware.
+Do not discuss the incident with anyone outside the Company, and do not notify customers yourself. All external communication is handled by the CEO.
+WHY THE SPEED MATTERS. Virginia law (Va. Code § 18.2-186.6) requires notice without unreasonable delay to affected Virginia residents AND to the Office of the Attorney General following discovery of a breach of unencrypted personal information. The Attorney General notice has NO minimum size — it is required for every covered breach, however small. Where more than 1,000 people are affected, the nationwide consumer reporting agencies must also be notified. The CEO engages counsel immediately on any suspected breach, and the clock starts when the Company discovers it, not when it is confirmed.
 
 ### 03.10 Floor Audits
 Floor audits are covered by the Daily Pawn Walk and the rotating Weekly Category Inventory in Sections 03.08, 03.11 and 03.12, together with the Daily Jewelry Count in Section 02.14. No separate floor-audit procedure operates outside those.
@@ -489,7 +503,7 @@ Floor audits are covered by the Daily Pawn Walk and the rotating Weekly Category
 Random inventory checks are conducted through the Weekly Category Inventory process described in Section 03.08 (Pawn Store Binders) — a rotating category (Guns, Jewelry, B-items) is audited each week, assigned by the Market Manager.
 
 ### 03.12 Weekly Audits
-The Daily Pawn Walk (Section 03.08) is performed by the Store Manager every day the office is open; if the manager did not close the office the prior evening, the walk is performed the following morning. All purchases and pawns for the day must be verified by the store manager and recorded in the Daily Pawn Walk Binder.
+The Daily Pawn Walk (Section 03.08) is performed by the Manager every day the office is open; if the manager did not close the office the prior evening, the walk is performed the following morning. All purchases and pawns for the day must be verified by the Manager and recorded in the Daily Pawn Walk Binder.
 
 ### 03.13 Bi-Weekly Audits
 The Company operates daily, weekly and monthly audit cadences (Sections 02.14, 03.08, 03.11, 03.12 and 10.06). There is no separate bi-weekly audit. This heading is retained only so the numbering matches earlier editions.
@@ -506,7 +520,7 @@ To make a deposit, select "Tender Transfer," select the location as source and t
 Police reports must be conducted every evening and sent to the police department. Clicking the "Police Report" option on the Bravo home screen automatically sends all of that day's transactions to the appropriate police department.
 
 ### 03.16 Neat, Clean, and Orderly Checklist
-On the 15th of each month, offices must complete a Neat, Clean, and Orderly (NCO) checklist, accessed via the company's allowed websites under 'NCO Checklist.' This ensures Joshua Davis (CEO) is aware of any deficiencies that need to be addressed so office fronts remain attractive to customers.
+On the 15th of each month, offices must complete a Neat, Clean, and Orderly (NCO) checklist, accessed via the company's allowed websites under 'NCO Checklist.' This ensures the CEO is aware of any deficiencies that need to be addressed so office fronts remain attractive to customers.
 An 'NCO Expectations' policy document was circulated to reinforce these standards, with real teeth behind it: monthly bonus payouts are conditioned on the store being NCO-ready.
 "We are applying a qualifier to monthly bonuses starting immediately. The store who qualified for a bonus must have the store NCO ready in order to receive a pay out. NCO means neat clean and organized." — internal Slack communication, 12/7/2023
 "Going forward no bonus money will be paid out to you or a manager until the stores are neat clean and organized." — internal Slack DM, 12/6/2023
@@ -514,10 +528,10 @@ The standard was later expanded internally to 'NCOM' (adding Merchandised, 9/202
 The current NCO checklist is published by the Market Manager and is the single standard a store is measured against; the checklist in force at the start of a bonus period is the one that applies to it.
 
 ### 03.17 Store Email Password Policy
-Effective August 14, 2026, all stores. Only Joshua Davis or Preston Peters set or change store email passwords.
+Effective August 14, 2026, all stores. Only the CEO or the Market Manager set or change store email passwords.
 - Employees must never change their store’s email password themselves.
-- If a password change is needed, text Preston Peters — changes are turned around the same day.
-- If a password was already changed outside this process, tell Preston the same day — there is no penalty for self-reporting.
+- If a password change is needed, text the Market Manager — changes are turned around the same day.
+- If a password was already changed outside this process, tell the Market Manager the same day — there is no penalty for self-reporting.
 Store email accounts are the login identity for company platforms (eBay, GunBroker, Chekkit, directory listings), so uncontrolled password changes break store operations beyond email itself.
 
 ## Section 4: Screening & Qualifying
@@ -552,12 +566,12 @@ ONE SEQUENCE, EVERY TIME. (1) Greet the customer away from the counter and ask w
 
 #### Multiple Handgun Sales Protocol
 - VIRGINIA ONE-HANDGUN-PER-30-DAYS — THE GATE COMES FIRST. Under Va. Code § 18.2-308.2:2(R) it is unlawful for any person who is not a licensed dealer to purchase more than one handgun in any 30-day period. BEFORE a second handgun is sold to the same customer within 30 days, the store must verify and record one of the statutory exceptions, or REFUSE THE SALE. The exceptions the counter will actually meet are: (a) the customer holds a valid Virginia concealed handgun permit — record the permit number; (b) the customer presents a Virginia State Police multiple-handgun purchase certificate — it is valid for seven days, must be surrendered to the store before the sale and kept on file for at least two years; (c) a trade-in of a handgun as part of the same transaction, limited to one such transaction per day; (d) replacement of a handgun stolen or lost within the last 30 days, with a copy of the police report attached to the transaction record; (e) a law-enforcement officer or agency. 'Purchase' does not include a same-seller exchange or replacement within 30 days. A sale that fails this gate is not made, however it is papered afterwards.
-- Once the Virginia gate is satisfied, the FEDERAL reporting steps below apply. Two or more pistols or revolvers sold or transferred to the same unlicensed customer within five consecutive BUSINESS days triggers the ATF multiple-sale report (Form 3310.4), filed no later than close of business on the day of the multiple sale. The Store Manager is notified immediately when a second handgun sale to the same customer is identified.
-- The store manager must be notified immediately when a second handgun sale to the same customer is identified.
+- Once the Virginia gate is satisfied, the FEDERAL reporting steps below apply. Two or more pistols or revolvers sold or transferred to the same unlicensed customer within five consecutive BUSINESS days triggers the ATF multiple-sale report (Form 3310.4), filed no later than close of business on the day of the multiple sale. The Manager is notified immediately when a second handgun sale to the same customer is identified.
+- The Manager must be notified immediately when a second handgun sale to the same customer is identified.
 - The ATF form must be completed and submitted within the required regulatory timeframe.
 - Documentation is retained in the store compliance file for a minimum of five years.
 - Employees may not structure sales to avoid reporting thresholds — doing so is a federal violation and a terminable offense.
-- A Multiple Handgun Sales (MHG) Acknowledgement Form is signed by the customer at the time of the second handgun purchase, documenting their acknowledgement of the reporting requirement. It is retained with the transaction records for a minimum of five years and is in addition to — never a replacement for — the Virginia gate above and ATF Form 3310.4. Customer refusal to sign is noted and the Store Manager notified.
+- A Multiple Handgun Sales (MHG) Acknowledgement Form is signed by the customer at the time of the second handgun purchase, documenting their acknowledgement of the reporting requirement. It is retained with the transaction records for a minimum of five years and is in addition to — never a replacement for — the Virginia gate above and ATF Form 3310.4. Customer refusal to sign is noted and the Manager notified.
 
 #### Person-to-Person Firearm Transfer — Clarification
 - Valley Pawn may facilitate person-to-person firearm transfers as an FFL holder; all transfers require a full ATF Form 4473 and NICS background check, with no exceptions.
@@ -575,7 +589,6 @@ Diamond quality is assessed as Fair (blemishes, small inclusions, somewhat uncle
 
 #### Precious Metals Melt Calculation Policy
 A formal Precious Metals Melt Calculation Policy was issued for Gusto e-signature on 2/26/2026, described internally as putting existing practice onto paper.
-"I sent out another policy that needs a signature on gusto for precious metals melt calculations. Please sign that as soon as you can. These policies are to make sure we are all on the same page for operations." — Preston Peters, Slack #policy-announcements, 2/26/2026
 The Precious Metals Melt Calculation Policy (issued February 2026 and signed by every employee through Gusto) is a separately signed document incorporated into this manual by reference. The melt formula and payout tiers in force are those most recently published by the Market Manager; staff do not compute melt by any other method.
 
 #### Gold Scrap Process
@@ -587,7 +600,7 @@ Effective August 1, 2026, every gold scrap bucket at every store is named in exa
 - 2026-08 GOLD WITH STONES
 - Use the month the bucket collects, not the month it closes. Open the bucket on the 1st of the collection month and post it the following month per the existing Gold Scrap Process above.
 - Two buckets every month — nothing else in the name.
-- Named one wrong? Tell Preston Peters the same day.
+- Named one wrong? Tell the Market Manager the same day.
 Uniform naming enables accurate month-over-month and store-over-store scrap comparison and monthly scrap rankings by store.
 
 #### Jewelry Category Standard (Bravo Write-Ups)
@@ -598,17 +611,17 @@ Effective August 14, 2026, every jewelry item written up in Bravo must use one o
 - Earrings
 - Bracelets
 - Scrap is used only for pieces that are not going out for sale.
-- Never use "Miscellaneous Jewelry." If unsure of the correct category, ask Preston Peters the same day.
+- Never use "Miscellaneous Jewelry." If unsure of the correct category, ask the Market Manager the same day.
 
 ### 04.04 Vehicles
 When conducting a pawn/pledge loan on a vehicle, staff screen both the item and the customer. Questions to answer before entering the loan: How long has the customer lived at their current address? Is the customer currently employed, and for how long? Do they have any additional outstanding title pawns? Can they supply a current utility bill?
 The vehicle is held by the store for the life of the pawn; a loan where the customer keeps the vehicle is a motor-vehicle title loan, which Valley Pawn does not make.
 The vehicle must be thoroughly inspected: the customer must bring an original vehicle title (motorcycle/boat/recreational-vehicle titles require Market Manager approval where state law allows); there can be no liens against the vehicle; the name on the ID must match the title with no writing on the back of the title; if a title lists two owners joined by 'and,' both must be present, while 'or' requires only one; the customer must bring a spare key that both unlocks the doors and starts the engine; proof of residence (utility bill, lease, or mortgage papers) and a current pay stub (or documented employment verification) are required.
 A full Vehicle Inspection Form is completed and signed by both staff and the customer, and filed with the customer's folder along with a copy of the title, utility bill, copy of ID, and the Virginia DMV lien recordation paperwork required under Va. Code § 46.2-637. The inspection should confirm the VIN on the vehicle matches the VIN on the title (typically on the windshield, driver's side), that the vehicle starts and shifts normally, and should assess the interior and exterior (valid, non-expired tags and inspection sticker — never a rejection sticker; visible damage such as peeling paint, rust, pre-existing body damage, mismatched panels, or mismatched/balding tires are red flags requiring Market Manager involvement or likely denial).
-Advance limits: the loan amount must not exceed 50% of the vehicle's value as determined from the valuation source designated by the Market Manager, and the standard working target is 40% of that value. The customer's monthly renewal payment should not exceed 30% of net monthly income. Every title pawn, at any amount, requires Joshua Davis's (CEO) approval before funding and a completed Large Loan/Buy Worksheet at $1,000 and above.
+Advance limits: the loan amount must not exceed 50% of the vehicle's value as determined from the valuation source designated by the Market Manager, and the standard working target is 40% of that value. The customer's monthly renewal payment should not exceed 30% of net monthly income. Every title pawn, at any amount, requires the CEO's approval before funding and a completed Large Loan/Buy Worksheet at $1,000 and above.
 TITLE, PERFECTION AND DEFAULT — VIRGINIA REQUIREMENTS. A title pawn is not complete when the underwriting is done. Virginia law (Va. Code § 54.1-4005) requires that where a motor vehicle is pawned, the owner complies with Va. Code § 46.2-637, and that on default the Company complies with Va. Code § 46.2-633 and the lien provisions of Va. Code § 46.2-636 et seq.
 In practice this means: the Company's security interest must be properly recorded against the title at origination, and the statutory default and sale process must be followed before any pawned vehicle is sold. A vehicle whose lien was never properly perfected cannot be lawfully sold on default, however sound the original underwriting was.
-Because the perfection and default steps carry legal consequence, EVERY title pawn — at any dollar amount — requires Joshua Davis's (CEO) approval before funding, and any default on a title pawn is referred to him before any repossession or sale step is taken. No store may begin a default or sale process on a vehicle on its own.
+Because the perfection and default steps carry legal consequence, EVERY title pawn — at any dollar amount — requires the CEO's approval before funding, and any default on a title pawn is referred to the CEO before any repossession or sale step is taken. No store may begin a default or sale process on a vehicle on its own.
 
 ### 04.05 Items We Don't Accept
 The following are not accepted for pawn or sale: cell phones; anything alive (pets, etc.); rent-to-own items; firearms that do not function at intake (a firearm that fails AFTER intake is handled under the Broken / Non-Functioning Firearm Storage Protocol in Section 04.02); items with altered serial numbers; pornography; adult toys; drug paraphernalia; anything leaking fluids; full-size refrigerators; dishwashers; microwaves; washers/dryers. Contact the Market Manager for any questionable item.
@@ -633,11 +646,11 @@ After successfully screening and qualifying both the customer and their item, th
 
 #### 3. SERVICE FEE (Va. Code § 54.1-4009(C)(1)). Covers the daily law-enforcement reporting, the electronic record, and investigating title to the property. Capped at the LESSER of 5% or $3, computed on the amount loaned on the item or the amount the Company paid for it — so it applies to outright buys as well as loans.
 
-#### 4. LATE FEE (Va. Code § 54.1-4009(C)(2)). Up to 10% of the amount loaned, for each item not claimed by the pledged date. This fee is lawful ONLY if the customer was notified of it on the pawn ticket. Confirm the fee appears on the printed ticket before it is charged.
+#### 4. LATE FEE (Va. Code § 54.1-4009(C)(2)). Up to 10% of the amount loaned on the item. The late fee applies on the 6TH DAY PAST DUE (day 1 past due is the day after the due date). This fee is lawful ONLY if the customer was notified of it on the pawn ticket. Confirm the fee appears on the printed ticket before it is charged.
 
 #### LOST TICKET FEE (Va. Code § 54.1-4004). A lost or stolen pawn ticket carries a $5.00 fee, and this fee is lawful only if the customer was notified of it on the ticket. (This replaces the $2.00 figure in earlier editions of this manual.)
 
-#### REDEEMING DURING THE GRACE PERIOD. A customer redeeming during the grace period pays the interest, storage and service charges actually accrued under the caps above, plus the late fee if one applies and was disclosed on the ticket. Bravo computes this figure. Earlier editions of this manual stated a flat 'minimum charge of 12.5% of the principal balance'; that figure is WITHDRAWN and must not be used, because it was not tied to any charge Virginia authorises. If Bravo's computed figure ever looks wrong, stop and call Preston Peters — do not substitute a percentage.
+#### REDEEMING DURING THE 15-DAY LEGAL HOLD. A customer redeeming during the 15-day legal hold pays the interest, storage and service charges actually accrued under the caps above, plus the late fee if one applies and was disclosed on the ticket. Bravo computes this figure. Earlier editions of this manual stated a flat 'minimum charge of 12.5% of the principal balance'; that figure is WITHDRAWN and must not be used, because it was not tied to any charge Virginia authorises. If Bravo's computed figure ever looks wrong, stop and call the Market Manager — do not substitute a percentage.
 
 #### TRUTH IN LENDING — DISCLOSURE BEFORE SIGNING. A pawn loan is closed-end consumer credit and is subject to the federal Truth in Lending Act and Regulation Z. Before the customer signs, the pawn ticket must disclose the amount financed, the finance charge, the annual percentage rate (APR) and the total of payments. The finance charge and the APR include the storage and service fees — not only the interest line. Va. Code § 54.1-4008(B) confirms that an APR computed and disclosed under the federal Truth-in-Lending Act is not a violation of Virginia's rate caps.
 
@@ -647,7 +660,7 @@ After successfully screening and qualifying both the customer and their item, th
 
 #### 05.00A Required Transaction Record — Virginia
 
-#### Bravo captures these fields. NO TRANSACTION IS COMPLETED WITH A REQUIRED FIELD LEFT BLANK — not for a long-time customer, not when the store is busy, not ever. If Bravo will not accept an entry, stop and call Preston Peters rather than working around it.
+#### Bravo captures these fields. NO TRANSACTION IS COMPLETED WITH A REQUIRED FIELD LEFT BLANK — not for a long-time customer, not when the store is busy, not ever. If Bravo will not accept an entry, stop and call the Market Manager rather than working around it.
 
 #### ABOUT THE ITEM: a description of the item, its serial number, and a STATEMENT OF OWNERSHIP from the customer.
 
@@ -663,7 +676,7 @@ After successfully screening and qualifying both the customer and their item, th
 
 #### ALTERED SERIAL NUMBERS. Va. Code § 54.1-4009(D) prohibits taking any item in pawn, on purchase, or as collateral if its original serial number has been removed, defaced or altered. See also Section 04.05.
 
-#### DAILY LAW-ENFORCEMENT REPORT. Va. Code § 54.1-4010 requires the daily report of everything pawned or purchased to be filed with the designated local law-enforcement officer BY NOON THE FOLLOWING DAY. Bravo transmits this from the 'Police Report' option (see Section 03.15). Failure to file is a Class 4 misdemeanor, so if the transmission fails, report it to Preston Peters the same day — do not leave it until the next business day.
+#### DAILY LAW-ENFORCEMENT REPORT. Va. Code § 54.1-4010 requires the daily report of everything pawned or purchased to be filed with the designated local law-enforcement officer BY NOON THE FOLLOWING DAY. Bravo transmits this from the 'Police Report' option (see Section 03.15). Failure to file is a Class 4 misdemeanor, so if the transmission fails, report it to the Market Manager the same day — do not leave it until the next business day.
 
 #### RECORD RETENTION. See Section 03.08 for how long each category of record is kept.
 
@@ -671,12 +684,12 @@ After successfully screening and qualifying both the customer and their item, th
 After selecting "Transactions" and finding the customer, search for the item by manufacturer/model or UPC code. The next screen asks item-specific questions used to determine the proper loan amount. Add the item, edit as needed, then click "next." Choose cash or check payment and click "save" to print the pawn ticket contract.
 Jewelry Pawn: select the "Jewelry" option, enter weight/karat/color/category and any gem information (plus brand/photo tabs), choose "To Buy" or "To Pawn," and proceed as above.
 Title Pawn: select "Transactions," search for the vehicle (or add via "General Merchandise" > "Add Item - New Model" if new to Bravo), enter the additional information Bravo requires to calculate the loan amount, then proceed as above.
-All pawn transactions are thirty (30) day loans. Explain the loan length, the due date, and the customer's options — pay to redeem, or pay the finance charge and enter a new 30-day loan. If the customer does not pay the finance fee, the item enters the grace period before it may be placed for sale. Charges for redeeming during the grace period are computed by Bravo under the caps in Section 05.0; the flat 12.5% figure used in earlier editions is withdrawn.
-The 15-day grace period is the STATUTORY FLOOR (Va. Code § 54.1-4005): the law does not permit a pawned item to be sold before the loan term plus 15 days has run. Company practice is more conservative — no item is pulled from loan status until it is 31 days past due, on the single timeline in Section 06.01. Staff never pull on day 16.
-Each item on pawn may only have one loan on it at a time. A lost or stolen pawn ticket carries a $5 fee, disclosed on the ticket (Section 05.0). Whoever holds the ticket may redeem the item, subject to the third-party limits in Section 05.04. A late fee of up to 10% of the amount loaned applies to an item not claimed by the pledged date, and only where that fee was disclosed on the ticket. The contract must be initialled (confirming it was explained to the customer), signed, dated and fingerprinted.
+All pawn transactions are thirty (30) day loans. Explain the loan length, the due date, and the customer's options — pay to redeem, or pay the finance charge and enter a new 30-day loan. If the customer does not pay the finance fee, the item enters the 15-day legal hold (Va. Code § 54.1-4005) before it may be placed for sale. Charges for redeeming during the 15-day legal hold are computed by Bravo under the caps in Section 05.0; the flat 12.5% figure used in earlier editions is withdrawn. If a customer asks how long the Company will hold the item, the answer is: "Your loan is due on its due date." (Section 06.01).
+The 15-day legal hold is the STATUTORY FLOOR (Va. Code § 54.1-4005): the law does not permit a pawned item to be sold before the loan term plus 15 days has run. Company practice is more conservative — no item is pulled from loan status until it is 31 days past due, on the single timeline in Section 06.01. Staff never pull on day 16.
+Each item on pawn may only have one loan on it at a time. A lost or stolen pawn ticket carries a $5 fee, disclosed on the ticket (Section 05.0). Whoever holds the ticket may redeem the item, subject to the third-party limits in Section 05.04. A late fee of up to 10% of the amount loaned applies on the 6th day past due, and only where that fee was disclosed on the ticket. The contract must be initialled (confirming it was explained to the customer), signed, dated and fingerprinted.
 PAWNED FIREARMS — REDEMPTION IS A TRANSFER. Redeeming a pawned firearm is a transfer to a non-licensee and is handled exactly like a sale: the customer completes ATF Form 4473 AND the Virginia State Police consent form, and the store obtains a Virginia State Police background check BEFORE the firearm is handed back. There is NO permit that exempts anyone from this check in Virginia — a Virginia concealed handgun permit does NOT waive it. Virginia is a point-of-contact state: the check goes to the Virginia State Police Firearms Transaction Center (VCheck), NOT to ATF and NOT directly to FBI NICS. Record the VSP approval/reference number on the paperwork.
 If the State Police respond 'delayed', the firearm is held. Under Va. Code § 18.2-308.2:2(B)(2), if the State Police tell the dealer a response will not be available by the end of the dealer's FIFTH BUSINESS DAY, the transfer may then be completed — count business days from the request and note December 25 does not count. If the response is 'denied', the firearm is NOT released to that person, in any circumstance, and the denial is noted on the loan. Tell the customer they may contest the denial with the State Police within 30 days; do not speculate about the reason. Any firearm redeemed must be supplied with a gun lock.
-IF THE PLEDGOR IS DENIED. The loan continues on its normal terms — a denial does not cancel the loan. The pledgor may not receive the firearm. The pledgor may, in writing, designate another person to redeem the firearm on their behalf; that person must complete their own Form 4473 and Virginia State Police check and pay the loan in full, and the transfer is recorded as a transfer to that person. This is the ONE exception to the rule in Section 05.04 that a third party may never redeem a firearm, and it requires Preston Peters (Market Manager) approval on each occasion. If no lawful transferee redeems the firearm, the loan runs to default under Section 06.01 and the firearm becomes Company inventory.
+IF THE PLEDGOR IS DENIED. The loan continues on its normal terms — a denial does not cancel the loan. The pledgor may not receive the firearm. The pledgor may, in writing, designate another person to redeem the firearm on their behalf; that person must complete their own Form 4473 and Virginia State Police check and pay the loan in full, and the transfer is recorded as a transfer to that person. This is the ONE exception to the rule in Section 05.04 that a third party may never redeem a firearm, and it requires the Market Manager approval on each occasion. If no lawful transferee redeems the firearm, the loan runs to default under Section 06.01 and the firearm becomes Company inventory.
 
 #### Care of Items in Pawn
 All items taken in on pawn must be well cared for and protected during storage. Items should be wrapped in shrink wrap with all accessories present, helping keep multiple pieces together and preventing scuffs and dings.
@@ -691,12 +704,12 @@ STRAW PURCHASES AND GIFTS. The person who completes Form 4473 must be the actual
 AGE — 21 IS THE FLOOR FOR HANDGUNS IN VIRGINIA, AND THAT HAS NOT CHANGED.
 In September 2026 the U.S. Department of Justice issued a legal opinion concluding that the federal provisions barring licensed dealers from selling handguns to 18-to-20 year olds should not be criminally enforced. STAFF MUST NOT ACT ON NEWS COVERAGE OF THAT OPINION. Nothing about Valley Pawn's practice changes.
 The reasons: a Department of Justice opinion binds federal prosecutors, not the courts, and does not repeal the statute (18 U.S.C. § 922(b)(1)), which remains in the U.S. Code. Separately and independently, Virginia law (Va. Code § 18.2-308.7(C), HB 1525 of 2026, signed April 22, 2026) makes it unlawful for any person younger than 21 to knowingly and intentionally purchase a handgun or an "assault firearm" anywhere in the Commonwealth — a Class 1 misdemeanor — and that state prohibition is unaffected. It is in force: it is being challenged in Boyer v. Katz (Lynchburg Circuit Court, filed October 6, 2026), with no injunction as of this writing. It is a separate law from the 2026 assault-firearm sales ban (HB 217 / SB 749), which is enjoined and is not treated as law. All five stores are in Virginia. ATF Form 4473 also still asks the question, so the Company's own record would document any such sale.
-Accordingly: no handgun or handgun ammunition is sold or transferred to anyone under 21, no assault firearm to anyone under 21 (Section 12.05), and no long gun to anyone under 18. Not sure if something counts as an assault firearm? Ask the Market Manager (Section 12.06). If a customer raises the news coverage, tell them federal and Virginia law set the age at 21 and refer any further questions to Preston Peters (Market Manager). This position is reviewed only if Virginia law changes.
-ATF Form 3310.4 (Multiple Sales) is completed when two or more pistols or revolvers are sold or transferred to the same unlicensed customer within five consecutive BUSINESS days, reported no later than close of business the day the multiple sale occurs. It is not required for a customer redeeming multiple pawned firearms — sales and transfers only (27 CFR 478.126a(a)). The Store Manager files it the same day and copies Joshua Davis (CEO). Remember that the Virginia one-handgun-per-30-days gate in Section 04.02 must be satisfied BEFORE the second sale is made at all.
+Accordingly: no handgun or handgun ammunition is sold or transferred to anyone under 21, no assault firearm to anyone under 21 (Section 12.05), and no long gun to anyone under 18. Not sure if something counts as an assault firearm? Ask the Market Manager (Section 12.06). If a customer raises the news coverage, tell them federal and Virginia law set the age at 21 and refer any further questions to the Market Manager. This position is reviewed only if Virginia law changes.
+ATF Form 3310.4 (Multiple Sales) is completed when two or more pistols or revolvers are sold or transferred to the same unlicensed customer within five consecutive BUSINESS days, reported no later than close of business the day the multiple sale occurs. It is not required for a customer redeeming multiple pawned firearms — sales and transfers only (27 CFR 478.126a(a)). The Manager files it the same day and copies the CEO. Remember that the Virginia one-handgun-per-30-days gate in Section 04.02 must be satisfied BEFORE the second sale is made at all.
 The Acquisition and Disposition Record (the bound book) has two deadlines and both are federal law: every ACQUISITION — a firearm taken in pawn, bought, traded in, transferred in, or returned — is entered no later than the close of the NEXT BUSINESS DAY after receipt (27 CFR 478.125). Every DISPOSITION — a sale, transfer, redemption or return to a customer — is entered within SEVEN days. Firearms taken in pawn are the store's most common acquisition; log them the day they come in. IRS Form 8300 must be filed whenever more than $10,000 in cash is received from a customer in a lump sum, in a series of payments within 24 hours, or in related payments within 12 months; Bravo generates the form, which is filed within 15 days, and the customer receives a written statement by January 31 of the following year. Any firearm sold to a customer must be supplied with a gun lock.
 
 ### 05.03 Sell Transactions
-Items purchased from customers or pulled from inventory (PFI) are sold in-store or online (see Section 5A, Online Sales). Associates may discount up to 30% of the listed price (10% is the normal give). A discount of 31% to 50% needs the Store Manager's approval on the ticket. No item is ever sold at more than a 50% discount. Add-on selling (suggesting complementary accessories) is every employee's responsibility.
+Items purchased from customers or pulled from inventory (PFI) are sold in-store or online (see Section 5A, Online Sales). DISCOUNTS — ONE RULE, BY THE ITEM'S AGE AND YOUR ROLE. The most any item may be discounted is set by its age in Bravo: up to 30 days old, 10%; 31–60 days, 15%; 61–90 days, 20%; 91–180 days, 30%; 181 days to one year, 40%; over one year, 50%. Within that ladder, a Sales and Loan Associate or Sales and Loan Representative may give up to 30% (10% is the normal give). A discount of 31% to 50% needs the Manager's approval on the ticket. No item is ever sold at more than a 50% discount. A discount deeper than the ladder allows for the item's age needs the Manager's approval and the reason on the ticket, and it is reviewed on the daily discount review. Add-on selling (suggesting complementary accessories) is every employee's responsibility.
 To process: select "Transactions," search by inventory number, select "Sale," adjust price on the Sale Detail screen, review, select payment type, and "Save." Any item sold must have an inventory number — miscellaneous, un-numbered sales are against policy; assign a number from inventory (or add the item to inventory) before selling if one is missing.
 
 ### 05.04 Refinances / Redemptions
@@ -707,6 +720,7 @@ Locate the account, select "Renewal," find the item on the Current Loans screen,
 #### Redemption
 Locate the account, select "Redemption," find the item, edit/note a lost ticket as needed, select items, choose payment, and "save." Two redemption tickets print — one to the customer, one filed in the redemption ticket box. All redeemed items must be scanned before the customer leaves the shop. A third party may redeem with a valid photo ID and the pawn ticket, EXCEPT that a third party may never redeem a firearm or a vehicle title.
 Firearm redemption requires a 4473 (see Section 05.01 for the full ATF-clearance procedure); a gun lock must accompany any redeemed firearm. Employees should always offer the refinance option so the customer knows they can pay only the current charges rather than the full redemption amount if they cannot comfortably afford it.
+PAYMENTS AND PRINCIPAL. The minimum payment on a loan is the refinance (the extension): the current charges, which start a new 30-day term. A customer may pay more than the refinance amount; the extra is applied to principal, which lowers the loan amount and the next month's charges. Payments toward principal are taken in the store, and the new balance is quoted only once Bravo shows it. A payment smaller than the refinance amount is not accepted. Redemption (the payoff) pays the loan in full and the item goes home with the customer. The MobilePawn app takes refinance (extension) payments only, by debit card ($1.99 per payment); payoffs and payments toward principal are taken in the store. A card number is never taken by phone.
 
 ### 05.05 Layaway Transactions
 To process: select 'Transactions,' search by inventory number, select 'Layaway,' set the price, term and payment schedule on the Layaway Detail screen — entering the agreed final payment date correctly — review, choose payment type, and Save. Two receipts print and are signed; the original goes to the customer and the copy is filed in the daily transaction folder.
@@ -722,12 +736,12 @@ A PAYMENT IS DUE EVERY MONTH. The customer makes a payment each month for the li
 What that means in practice, and this is the part to explain to customers up front: miss ONE month and the layaway is past due — that customer goes on the call list and gets contacted. Miss TWO months in a row — 60 days with no payment — and the layaway EXPIRES under the rule below. The 60-day expiry can and does arrive before the outer term does; a customer who stops paying in month two of a 10-month jewelry layaway loses it in month four, not month ten.
 EXPIRY — THE CONTROLLING RULE. A layaway with NO PAYMENT FOR 60 OR MORE DAYS is expired and must be processed as expired. This is the operative trigger the Company enforces and reports on weekly. It runs alongside the term limits above and is independent of them — whichever comes first governs. A customer who keeps paying monthly keeps the layaway alive for the full term.
 On expiry the customer is issued STORE CREDIT for what they have paid. Valley Pawn does not simply keep the money. Store credit may be applied to another item and may be converted to a gift card. Where a customer changes their mind and asks to cancel, handle it the same way — cancel the layaway and issue the credit so the customer can put it toward something else.
-Before an item is returned to sellable inventory, its layaway tag is removed in Bravo and the item is re-merchandised. Notify Preston Peters the same day if an expired layaway cannot be located.
+Before an item is returned to sellable inventory, its layaway tag is removed in Bravo and the item is re-merchandised. Notify the Market Manager the same day if an expired layaway cannot be located.
 THE FOUR NUMBERS REVIEWED EVERY WEEK. These are pulled from Bravo and published in the weekly layaway review, and each store is accountable for them:
 Overdue — past the agreed final payment date. Work these first; they are the ones already out of time.
 No payment in 30 days — the early-warning list. Call these customers before they become 60-day expiries. Getting layaways to pay is a store performance expectation, not an optional courtesy.
 No payment in 60+ days — must be expired per policy (see above).
-Locate — items the system cannot account for physically. This number must be ZERO. Any Locate layaway is found and resolved immediately and is escalated to Preston Peters the same day if it cannot be.
+Locate — items the system cannot account for physically. This number must be ZERO. Any Locate layaway is found and resolved immediately and is escalated to the Market Manager the same day if it cannot be.
 Note for anyone reading Bravo directly: the red bubble badges in the sidebar can lag and do not always show items that hit a list the same day, and the 'Past Payment Due Date' filter is known to be unreliable — use the Custom Layaway Report and the count at the top of the screen after selecting a category.
 PAPERWORK AND HANDLING. Every layaway is documented in Bravo with a customer-signed printed agreement. Two receipts print and are signed — the original to the customer, the copy filed in the daily transaction folder. Items on layaway are tagged and segregated from active retail inventory so they cannot be sold out from under the customer.
 Firearms on layaway: the firearm is NOT transferred until it is paid in full, and the full Form 4473 and NICS process happens at pickup, not at layaway initiation. See Sections 04.02 and 05.02.
@@ -746,10 +760,10 @@ Closing a transaction consists of the signature, fingerprint, and ticket-printin
 
 ### 05.08 Refunds
 
-#### Return Policy (RESOLVED 2026-07-14 by Preston Peters, Market Manager, and confirmed by ongoing #weekly-returns-summary enforcement)
-- 30-day return window from date of purchase for most retail items: a return needs the receipt and the item in original condition. No returns on firearms, ammunition, or consumables.
-- 30-day warranty: everything we sell carries a 30-day warranty except firearms, ammunition and consumables. The warranty needs a customer account with an email address on file — no email, no warranty. A return does not depend on an email; it depends on the receipt and the item's condition.
-- Firearms: no returns. A firearm that stops working within 30 days of purchase comes in, and the Store Manager and the Market Manager decide what happens.
+#### Return Policy (RESOLVED 2026-07-14 by the Market Manager, and confirmed by ongoing #weekly-returns-summary enforcement)
+- 30-day return window from date of purchase for most retail items: a return needs a customer account with an email address on file (the warranty sign-up), the receipt, and the item in original condition. No email on file means the customer is not signed up, and there is no return. No returns on firearms, ammunition, or consumables.
+- 30-day warranty: everything we sell carries a 30-day warranty except firearms, ammunition and consumables. The warranty needs a customer account with an email address on file — no email, no warranty and no return.
+- Firearms: no returns. A firearm that stops working within 30 days of purchase comes in, and the Manager and the Market Manager decide what happens.
 - Returns within 7 days of purchase: refund in the original form of payment, including cash.
 - Returns 8-30 days from purchase: store credit or gift card only — cash refunds are not permitted in this window.
 - Returns beyond 30 days from purchase: no automatic refund; requires manager review and approval on a case-by-case basis.
@@ -773,7 +787,7 @@ To be eligible for employee purchase consideration, all of the following must be
 - The item must have been on the sales floor for a minimum of ninety (90) consecutive days.
 - A completed Employee Purchase Request Form must be submitted.
 - The employee may not price, approve, or ring their own purchase.
-- Final pricing must be approved by both the Market Manager (Preston Peters) and the CEO (Joshua Davis).
+- Final pricing must be approved by both the Market Manager and the CEO (CEO).
 - Family or friend purchases initiated by an employee are treated as employee purchases.
 - All purchases must comply with the category-specific rules below.
 Failure to meet any requirement results in automatic denial.
@@ -816,22 +830,22 @@ All employees are responsible for understanding and complying with this policy. 
 - The full jewelry tray or case must never be handed to, or placed directly in front of, a customer — no exceptions, regardless of customer volume or familiarity.
 - Present a single piece; keep the rest secured and out of the customer’s reach. Return each piece before retrieving the next; never lay out several at once.
 - Verify all pieces shown are returned before moving to the next customer.
-Discrepancy / exception handling: notify the on-duty Store Manager immediately → Store Manager escalates to Preston Peters (Market Manager) the same business day → unresolved items escalate to Joshua Davis (CEO) the same business day. A Record of Conversation or other corrective action may be issued for any confirmed failure to follow this procedure.
+Discrepancy / exception handling: notify the on-duty Manager immediately → Manager escalates to the Market Manager the same business day → unresolved items escalate to the CEO the same business day. A Record of Conversation or other corrective action may be issued for any confirmed failure to follow this procedure.
 This procedure supplements, and does not replace, the Employee Handbook’s general loss-prevention standards and the jewelry count controls in Section 02.14.
 
 ## Section 5A: Online Sales (eBay)
 
 ### Precious-Metal Jewelry Listings — Designer / Diamond / Gemstone Only
-Effective: July 7, 2026. Applies to all 5 stores — anyone who creates or manages eBay listings. Owner: Joshua Davis / Preston Peters.
+Effective: July 7, 2026. Applies to all 5 stores — anyone who creates or manages eBay listings. Owner: CEO and Market Manager.
 Policy: the only precious-metal jewelry that goes on eBay is designer/branded, diamond, or gemstone pieces. Plain gold and silver — generic rings, chains, bracelets, earrings, and wedding bands sold by weight — is not listed on eBay; it stays in the in-store display case.
 - List on eBay: designer/branded jewelry (e.g., David Yurman, King Baby, Pandora, John Hardy, Tiffany), diamond pieces, and notable gemstone pieces.
 - Do NOT list on eBay: plain karat gold (10K/14K/18K) and sterling silver (925) sold by weight with no brand or stone — keep these in the in-store case.
 Why: trailing-12-month sales data shows plain gold and silver essentially does not sell online for Valley Pawn — it sells at the counter. The jewelry that actually moves on eBay is designer/branded and higher-ticket diamond/gemstone pieces reaching eBay's national audience. Listing plain metal online (1) dragged down eBay sell-through metrics with dead inventory, and (2) created double-sale risk (the same piece potentially selling online and in-store at once).
 Procedure: at intake/listing, apply the rule above. Selling a designer/diamond piece in-store: Bravo automatically ends the corresponding eBay listing when the counter sale posts (verified 7/7/2026) — no manual delist needed. Delisting must always be done through Bravo to keep the eBay integration in sync.
-Background: on July 7, 2026, 87 plain gold/silver listings were delisted from eBay (Roanoke 76, Lexington 7, Culpeper 4); those items returned to sellable in-store stock in Bravo and store managers were notified to re-case them. Designer, diamond, and gemstone pieces were kept listed.
+Background: on July 7, 2026, 87 plain gold/silver listings were delisted from eBay (Roanoke 76, Lexington 7, Culpeper 4); those items returned to sellable in-store stock in Bravo and Managers were notified to re-case them. Designer, diamond, and gemstone pieces were kept listed.
 
 ### eBay Listing-Age Standard (Reprice & Pull) — 90 / 120 / 150
-Effective: July 4, 2026; ladder amended by Joshua Davis September 17, 2026 after store feedback. Applies to everyone who creates or manages eBay listings. Owner: Joshua Davis.
+Effective: July 4, 2026; ladder amended by the CEO September 17, 2026 after store feedback. Applies to everyone who creates or manages eBay listings. Owner: CEO.
 Why: eBay is a buy-it-now marketplace — fresh listings sell, stale ones get buried. Company sales data shows the median item sells in 6 days and 94% sell within 90 days. Cutting price before day 90 was giving away margin on items still selling at full price, so nothing is touched before then.
 The ladder:
 - Days 0–89: HANDS OFF. No reprice, no cut, no offers to watchers. Get the title, photos and item specifics right at listing time instead.
@@ -839,7 +853,7 @@ The ladder:
 - Day 120: second reduction of about 10%, or end and relist fresh if it has no watchers.
 - Day 150: pull or final relist — one last relist with a materially new price, title and photos, or pull it from eBay to in-store retail, bundle or liquidate. Cuts stop at the 30% floor (three cuts maximum), at least 25 days apart; at the floor plus 14 days with no sale, the listing is ended.
 In one line: nothing before 90, first cut at 90, second at 120, pull or final relist at 150.
-FOUR RULES THAT BIND EVERY LISTING AT ANY AGE (Joshua Davis, September 17, 2026):
+FOUR RULES THAT BIND EVERY LISTING AT ANY AGE (CEO, September 17, 2026):
 1. Best Offer is never switched on by anyone. A listing marked 'no offers' stays that way — that is the store's decision at listing time. Video games, consoles and game accessories NEVER take offers, at any price or age.
 2. PRECIOUS METAL IS NEVER REPRICED ONLINE — gold, silver, platinum, bullion, coins, anything sold by weight. The counter prices metal at or just above melt, so there is no margin for a markdown to eat. Aged metal gets a person's decision, never a percentage cut. (This is the online rule. In-store aged-jewelry markdowns in Section 06.03 apply to retail-priced jewelry, and metal priced at melt is never marked down below melt anywhere.)
 3. A manufacturer's model number is never removed from a title. Only the Company's own stock code — VAP, VP, VA, CUL, ROA, WAY, HAR or LEX followed by five or more digits, e.g. (VAP031234) — comes out of a title, and it goes into the listing's custom label, never deleted. A code like (A2482) or (DCD771) is the manufacturer's model number and one of the most-searched things in the title. When in doubt, leave it in.
@@ -850,11 +864,12 @@ The signed one-page eBay Listing-Age Standard employees received in July 2026 ca
 ## Section 6: Merchandising
 
 ### 06.01 Pull for Inventory
-DEFAULT AND PULL — THE CONTROLLING TIMELINE. This section states the Company's single timeline; Sections 05.01 and 08.03 cross-reference it and do not restate it. Day 1 past due is the day after the loan due date.
-Legal floor first: Va. Code § 54.1-4005 prohibits selling a pawned item until (i) it has been in the Company's possession for the minimum term stated on the ticket, never less than 30 days, PLUS a 15-day grace period, and (ii) a statement of ownership has been obtained. The earliest a pawned item may lawfully be sold is therefore day 45 from the start of the loan.
-Company practice is more conservative than the floor. Through day 30 past the due date the item is held and collection contact continues under Section 08.03. On day 31 past the due date the item is eligible for Pull From Inventory (PFI). PFI is completed by day 61 of delinquency. Holding an item beyond day 61 requires Joshua Davis's (CEO) approval.
-CHANGE EFFECTIVE OCTOBER 1, 2026. Until then, the weekly past-due review measured loans past 75 days against a cap of 5% of the store's loan balance, and in practice items could sit to 75 days. Joshua Davis (CEO), 2026-08-13: 'October 1st, the 75 day rule goes away, meaning we won't hold anything past then.' From October 1 the 75-day tolerance ends: every defaulted loan is pulled on the timeline in this section and nothing is held past it without CEO approval. First-payment defaults — loans on which the customer never made a single payment — are marked expired in Bravo as soon as they are past due, at any amount, but nothing is pulled, priced or sold before the 15-day legal grace period ends (day 45 of the loan; Va. Code § 54.1-4005).
-THE OWNERSHIP-STATEMENT GATE. No item moves from loan status into sellable inventory unless a statement of ownership is on file for it, whatever the day count says. If one is missing, the item is held and Preston Peters is notified the same day — it is not pulled, not priced and not placed on the floor.
+DEFAULT AND PULL — THE CONTROLLING TIMELINE. This section states the Company's single timeline; Sections 05.01 and 08.03 cross-reference it and do not restate it. Day 1 past due is the day after the loan due date. The late fee (Section 05.0) applies on the 6th day past due.
+Legal floor first: Va. Code § 54.1-4005 prohibits selling a pawned item until (i) it has been in the Company's possession for the minimum term stated on the ticket, never less than 30 days, PLUS a 15-day legal hold, and (ii) a statement of ownership has been obtained. The earliest a pawned item may lawfully be sold is therefore day 45 from the start of the loan.
+Company practice is more conservative than the floor. Through day 30 past the due date the item is held and collection contact continues under Section 08.03. On day 31 past the due date the item is eligible for Pull From Inventory (PFI). PFI is completed by day 61 of delinquency. Holding an item beyond day 61 requires the CEO's approval.
+CHANGE EFFECTIVE OCTOBER 1, 2026. Until then, the weekly past-due review measured loans past 75 days against a cap of 5% of the store's loan balance, and in practice items could sit to 75 days. From October 1 the 75-day tolerance ends (CEO decision, August 13, 2026): every defaulted loan is pulled on the timeline in this section and nothing is held past it without CEO approval. First-payment defaults — loans on which the customer never made a single payment — are marked expired in Bravo at once, at any amount, but nothing is pulled, priced or sold before the 15-day legal hold ends (day 45 of the loan; Va. Code § 54.1-4005).
+WHAT CUSTOMERS HEAR. This timeline is for staff only and is always read from Bravo. When a customer asks how long the Company will hold an item or how much time they have, the answer is: "Your loan is due on its due date." Never describe the 15-day legal hold or the pull timeline to a customer, never promise a hold, and never give a date or a fee that was not read from Bravo.
+THE OWNERSHIP-STATEMENT GATE. No item moves from loan status into sellable inventory unless a statement of ownership is on file for it, whatever the day count says. If one is missing, the item is held and the Market Manager is notified the same day — it is not pulled, not priced and not placed on the floor.
 Bravo compiles items past their hold period via Loan Management > Loans to Expire.
 
 ### 06.02 Merchandising & Selling
@@ -903,12 +918,12 @@ When handling objections ('I want to think about it,' 'I can get cheaper rates e
 
 ### 07.05 Referral Program
 Referrals are one of the most important sources of new customers and are effectively free marketing. The foundation of a strong referral program is excellent customer service.
-Referral cards are given to every customer, who writes the referring customer's name on the back; the referral fee is sent to the referring customer once the new customer's business is completed. Referrals should also be requested during outreach calls. Personal referrals are not exempt from do-not-call rules, so employees do not follow up on them by calling or texting. Employees and relatives of Valley Pawn are not eligible to receive referral payments. Referral verification and payment is handled by Preston Peters (Market Manager).
+Referral cards are given to every customer, who writes the referring customer's name on the back; the referral fee is sent to the referring customer once the new customer's business is completed. Referrals should also be requested during outreach calls. Personal referrals are not exempt from do-not-call rules, so employees do not follow up on them by calling or texting. Employees and relatives of Valley Pawn are not eligible to receive referral payments. Referral verification and payment is handled by the Market Manager.
 
 ### 07.06 Telemarketing
-Telemarketing keeps the company in contact with customers between visits, focused on the store's own (especially inactive) customers due to do-not-call restrictions. It must be scheduled and tracked as a core, recurring activity — at least three days per week, one hour per day — logged on the Store Telemarketing Log and reviewed weekly by the Store Manager and periodically by the Market Manager.
+Telemarketing keeps the company in contact with customers between visits, focused on the store's own (especially inactive) customers due to do-not-call restrictions. It must be scheduled and tracked as a core, recurring activity — at least three days per week, one hour per day — logged on the Store Telemarketing Log and reviewed weekly by the Manager and periodically by the Market Manager.
 CALLING AND TEXTING RULES — THESE ARE LEGAL LIMITS, NOT PREFERENCES.
-INTERNAL DO-NOT-CALL LIST. The Company maintains a written internal do-not-call list. If a customer asks not to be contacted — on a call, by text, or in person — record it in Bravo AND tell Preston Peters the same day so it is added to the internal list. That request is honoured permanently and across ALL FIVE STORES, not just the store that took the call. Federal law (47 CFR 64.1200(d)) requires the list, the written policy and training on it.
+INTERNAL DO-NOT-CALL LIST. The Company maintains a written internal do-not-call list. If a customer asks not to be contacted — on a call, by text, or in person — record it in Bravo AND tell the Market Manager the same day so it is added to the internal list. That request is honoured permanently and across ALL FIVE STORES, not just the store that took the call. Federal law (47 CFR 64.1200(d)) requires the list, the written policy and training on it.
 HOURS. No marketing call or text before 8:00 AM or after 9:00 PM at the customer's local time (Va. Code § 59.1-510 et seq.).
 HOW LONG A CUSTOMER STAYS CALLABLE. The established-business-relationship exemption runs EIGHTEEN MONTHS from the customer's last transaction (and only three months from a bare inquiry). Do not market to a customer whose last transaction is more than eighteen months old without fresh consent. This is why outreach targets recently inactive customers rather than the whole historical file.
 TEXT MESSAGES COUNT. Every rule above applies to text messages exactly as it applies to calls, including messages sent through Chekkit. Virginia's telephone privacy law was extended in 2025 to cover text messages and any wireless number with a Virginia area code, and it carries its own penalties.
@@ -920,7 +935,7 @@ Objection-handling tips mirror those in Section 07.04 — never bash competitors
 
 ### 07.07 Business Partnerships
 A business partnership is a mutually beneficial referral relationship between a store and another local business. Good partner candidates are businesses whose customers or staff may need short-term cash, or who generate a steady flow of used goods: auto repair shops and parts suppliers, tool and equipment dealers, moving and storage companies, estate and downsizing services, musical instrument shops, jewelers, thrift and consignment stores, and local tradespeople.
-To establish a partnership: identify the right decision-maker; approach by phone, appointment or introductory letter; follow up with a call or visit; and send thank-you notes after the meeting and after any agreement. Internally: provide the partner with marked flyers or a stamp, log each referred customer in the referral log, have the customer complete a referral authorisation form, and send the form to Preston Peters (Market Manager) for verification and payment.
+To establish a partnership: identify the right decision-maker; approach by phone, appointment or introductory letter; follow up with a call or visit; and send thank-you notes after the meeting and after any agreement. Internally: provide the partner with marked flyers or a stamp, log each referred customer in the referral log, have the customer complete a referral authorisation form, and send the form to the Market Manager for verification and payment.
 
 ### 07.08 Customer Appreciation Days
 Customer Appreciation Days reward current customers, re-engage inactive accounts, market to new customers, and strengthen business-partner relationships. Four company-wide mandatory events occur annually: Easter, Independence Day, Labor Day/Back to School, and Thanksgiving/Black Friday (launch of retail season). Unless otherwise authorized, spending should not exceed $25 per event — keep costs down through partner co-hosting, donations, and community-organization participation.
@@ -942,7 +957,7 @@ Debtors may only be contacted Monday through Saturday, and not before 8:00 AM or
 Do not discuss a debtor's account in front of anyone other than the verified account holder. When mailing collection letters, do not indicate on the envelope that a debt is owed — use the plain office stamp (address only, no company name/phone number).
 
 #### Disinterested Third Parties & Employers
-Account details go only to the verified account holder: the customer gives their full name plus one non-public identifier — the ticket number, their date of birth, or the last four digits of the phone number on file. Anyone else — a spouse, relative, friend or attorney included — is a disinterested third party: never divulge account details or request payment from such a party. That person comes in with ID and the ticket, or the customer calls. Do not communicate or threaten to communicate with a debtor's employer in a way that discloses the debt; honor any request (from the debtor or employer) for no workplace calls. Routine employment verification is not prohibited.
+Account details go only to the verified account holder — the customer gives their full name, date of birth AND the phone number on file, and all three must match Bravo — or to a person whose signed power of attorney for the customer is on file. A ticket number or the last four of a phone is not enough. Anyone else — a spouse, relative, friend or attorney without a power of attorney on file — is a disinterested third party: never divulge account details or request payment from such a party. If a caller can't verify, say: "I can't go over account details on the phone, but come in with your ID and we'll take care of it." Never confirm a firearm by phone — whether we have it, whether it is on a loan, or whose it is — even to a verified caller. Do not communicate or threaten to communicate with a debtor's employer in a way that discloses the debt; honor any request (from the debtor or employer) for no workplace calls. Routine employment verification is not prohibited.
 
 #### Prohibited Conduct
 - Harassment — profane/obscene language, anonymous or collect calls, cash-on-delivery letters, repeated ringing believed to avoid the debtor, or any activity that abuses, ridicules, or degrades the consumer, or calls to the workplace against instruction.
@@ -954,7 +969,7 @@ Account details go only to the verified account holder: the customer gives their
 ### 08.03 Past Due Loans - Pull Process
 A past-due loan is one or more days late based on the due date. Reminder calls follow the Section 08.01 cadence; a contact is logged in Bravo only when direct contact is made, with any commitment noted.
 If no contact is made, the item is held past the due date with reasonable contact attempts — no more than one per day — logged in Bravo. When the item reaches the pull point in Section 06.01, it moves to Pull From Inventory on that timeline, subject to the statement-of-ownership gate in that section. Section 06.01 is the only timeline; this section does not set a separate one.
-Holding an item beyond the Section 06.01 timeline requires Joshua Davis's (CEO) approval, as stated there. Every effort must be made to inform the customer of the consequences of non-payment and the Company's right to sell the pledged item on default; after the statutory period has run and a statement of ownership is on file (Sections 05.00A and 09.03), the item becomes Company inventory.
+Holding an item beyond the Section 06.01 timeline requires the CEO's approval, as stated there. Every effort must be made to inform the customer of the consequences of non-payment and the Company's right to sell the pledged item on default; after the statutory period has run and a statement of ownership is on file (Sections 05.00A and 09.03), the item becomes Company inventory.
 
 ## Section 9: Legal Information
 
@@ -973,7 +988,7 @@ Pawn transactions involve a customer putting up an item as collateral for a loan
 
 #### Therefore: the Company does not sue a customer over a defaulted pawn, does not send an account to a collection agency, does not report it to a credit bureau, and does not pursue the customer for any shortfall if the item sells for less than the loan. Never tell a customer, or imply, that they owe a balance, that they may be sued, or that their credit will be affected. Those statements are untrue and making them can violate both federal collection standards (Section 08.02) and the Virginia Consumer Protection Act.
 
-#### Upon proper default and expiry of the statutory holding and grace periods, and once a statement of ownership is on file, the item becomes the property of the Company and may be sold in the ordinary course of business (Va. Code § 54.1-4005). See Section 06.01 for the controlling timeline.
+#### Upon proper default and expiry of the loan term and the 15-day legal hold, and once a statement of ownership is on file, the item becomes the property of the Company and may be sold in the ordinary course of business (Va. Code § 54.1-4005). See Section 06.01 for the controlling timeline.
 
 #### 09.04 Recordkeeping and Reporting Obligations
 
@@ -1001,13 +1016,13 @@ Pawn transactions involve a customer putting up an item as collateral for a loan
 
 #### 09.06 Employment Law — Where to Look
 
-#### Employment matters — at-will status, equal opportunity, harassment and discrimination, accommodation, leave, drug and alcohol policy, and the complaint procedure — are governed by the EMPLOYEE HANDBOOK, not by this manual. This manual covers operational and transactional procedure. Where the two appear to conflict on an employment question, the Handbook controls and the conflict should be reported to Preston Peters (Market Manager) so it can be fixed rather than worked around.
+#### Employment matters — at-will status, equal opportunity, harassment and discrimination, accommodation, leave, drug and alcohol policy, and the complaint procedure — are governed by the EMPLOYEE HANDBOOK, not by this manual. This manual covers operational and transactional procedure. Where the two appear to conflict on an employment question, the Handbook controls and the conflict should be reported to the Market Manager so it can be fixed rather than worked around.
 
 #### Three employment rules appear in this manual because they are inseparable from store operations, and they are absolute: all time worked is paid (Section 01.04); pay is never docked for business losses, cash shortages or lost keys (Sections 02.04 and 02.08); and nothing in this manual limits an employee's protected rights (see the Protected Rights statement in the front matter).
 
 #### 09.07 When to Stop and Ask
 
-#### No employee is expected to resolve a legal question at the counter. Stop the transaction and call Preston Peters (Market Manager) — or Joshua Davis (CEO) if Preston is unreachable — whenever: a customer threatens legal action; law enforcement asks for anything beyond routine record access; an item may be stolen or its serial number looks altered; a customer appears to be structuring transactions to stay under a reporting threshold; a firearm transaction raises any doubt at all; a subpoena, court order, garnishment, bankruptcy notice or regulator letter arrives; or something simply feels wrong. Delaying a transaction costs the Company very little. Getting one of these wrong can cost it the licence.
+#### No employee is expected to resolve a legal question at the counter. Stop the transaction and call the Market Manager — or the CEO if the Market Manager is unreachable — whenever: a customer threatens legal action; law enforcement asks for anything beyond routine record access; an item may be stolen or its serial number looks altered; a customer appears to be structuring transactions to stay under a reporting threshold; a firearm transaction raises any doubt at all; a subpoena, court order, garnishment, bankruptcy notice or regulator letter arrives; or something simply feels wrong. Delaying a transaction costs the Company very little. Getting one of these wrong can cost it the licence.
 
 ## Section 10: Safety & Security
 
@@ -1018,12 +1033,12 @@ Office security protects employees, customers, and the company's interests and a
 All employees are expected to be safety-conscious and to report any unsafe condition, regardless of severity, to the Market Manager. A clean work area is a safer one. Tips: open only one file drawer at a time; keep the lobby, work areas, and exits clear of obstacles; secure wires/cords/supplies/boxes; keep office chairs well maintained; never attempt repairs requiring special tools, and never use furniture as a makeshift ladder or tool; contact the Market Manager for any necessary equipment/facility repair; watch for sharp-object hazards; and keep the parking area clear of objects that could cause injury.
 
 #### Reporting Injuries
-Report any work-related injury or illness to your Store Manager and to Preston Peters (Market Manager) IMMEDIATELY, however minor it appears. Preston Peters notifies Joshua Davis (CEO). An injury report is completed and submitted the same day. Seek medical attention first where the injury warrants it — reporting paperwork never delays treatment.
-Company duty: Virginia law (Va. Code § 65.2-900) requires the employer to report the accident to the Virginia Workers' Compensation Commission within ten (10) days. Joshua Davis is responsible for that filing, and for notifying the Company's workers' compensation carrier.
-Returning to work: an employee does NOT have to be fully recovered or '100% healed' to return. The employee provides information about any work restrictions from their treating provider. The Company then engages in an interactive discussion with the employee to identify a reasonable accommodation — which may include modified duty, adjusted hours, changed tasks or equipment — so the employee can return as soon as it is safe to do so. A full-duty release is never a precondition to returning to work. Accommodation requests are handled by Preston Peters with Joshua Davis and are treated confidentially.
+Report any work-related injury or illness to your Manager and to the Market Manager IMMEDIATELY, however minor it appears. The Market Manager notifies the CEO. An injury report is completed and submitted the same day. Seek medical attention first where the injury warrants it — reporting paperwork never delays treatment.
+Company duty: Virginia law (Va. Code § 65.2-900) requires the employer to report the accident to the Virginia Workers' Compensation Commission within ten (10) days. The CEO is responsible for that filing, and for notifying the Company's workers' compensation carrier.
+Returning to work: an employee does NOT have to be fully recovered or '100% healed' to return. The employee provides information about any work restrictions from their treating provider. The Company then engages in an interactive discussion with the employee to identify a reasonable accommodation — which may include modified duty, adjusted hours, changed tasks or equipment — so the employee can return as soon as it is safe to do so. A full-duty release is never a precondition to returning to work. Accommodation requests are handled by the Market Manager with the CEO and are treated confidentially.
 
 ### 10.02 Store Locks & Keys
-Market Manager approval is required before issuing keys to any employee; no one employed less than 90 days is issued keys unless the Market Manager specifies otherwise. Office locks are re-keyed or replaced any time a keyholding employee is terminated or resigns — the Market Manager can do this without a locksmith. The Store Manager and Market Manager are jointly responsible for compliance with this policy.
+Market Manager approval is required before issuing keys to any employee; no one employed less than 90 days is issued keys unless the Market Manager specifies otherwise. Office locks are re-keyed or replaced any time a keyholding employee is terminated or resigns — the Market Manager can do this without a locksmith. The Manager and Market Manager are jointly responsible for compliance with this policy.
 
 ### 10.03 Severe Weather Evacuation
 In the event of a mandatory hurricane, flood, or tornado evacuation, the following procedure secures the office and employees:
@@ -1032,7 +1047,7 @@ In the event of a mandatory hurricane, flood, or tornado evacuation, the followi
 - Run the End of Day report and prepare the deposit (offices with a petty cash fund prepare a separate deposit for those funds).
 - Place all computer equipment in large plastic trash bags and raise it off the floor.
 - Place all customer checks in a locked filing cabinet.
-- Gather telephone contact numbers for all branch employees, and make sure everyone has the Market Manager, CEO (Joshua Davis), and Joshua Davis (CEO) numbers stored in their phones.
+- Gather telephone contact numbers for all branch employees, and make sure everyone has the Market Manager's and the CEO's numbers stored in their phones.
 - Contact your Market Manager to confirm the procedure is complete before leaving.
 - Lock all doors securing the store for departure and deposit all funds at the bank.
 - Remain in daily contact with your Market Manager for assistance and instruction; if unreachable, follow the chain of command.
@@ -1040,7 +1055,7 @@ In the event of a mandatory hurricane, flood, or tornado evacuation, the followi
 ### 10.04 Burglaries & Theft Procedures
 
 #### Principles and Standards
-Personal safety — yours and the customer's — is paramount if a robbery occurs. Do not take physical or heroic action. EMPLOYEES' personal firearms are not permitted inside the store and are never used in the event of a robbery. Always cooperate fully so the robbery ends quickly. Lock the doors afterward, do not allow anyone in, and do not disturb anything. Recall events and descriptions with all parties present and document immediately. Do not discuss the robbery or the loss amount with anyone other than police and Preston Peters or Joshua Davis.
+Personal safety — yours and the customer's — is paramount if a robbery occurs. Do not take physical or heroic action. EMPLOYEES' personal firearms are not permitted inside the store and are never used in the event of a robbery. Always cooperate fully so the robbery ends quickly. Lock the doors afterward, do not allow anyone in, and do not disturb anything. Recall events and descriptions with all parties present and document immediately. Do not discuss the robbery or the loss amount with anyone other than police and the Market Manager or the CEO.
 
 #### Robbery Prevention
 - Be aware of traffic and pedestrians on the property; observe customer patterns, visitors, or unusual activity.
@@ -1052,32 +1067,32 @@ Personal safety — yours and the customer's — is paramount if a robbery occur
 - Make daily deposits and go to the bank when cash on hand exceeds $3,000.
 
 #### During a Robbery
-An armed robber is a desperate and irrational person: listen and obey exact instructions; cooperate fully and never create conflict with the robber's requests; concentrate on and observe the robber and weapon to recall as much detail as possible; ask customers/witnesses to help document descriptions and, if possible, to wait for police (if they cannot wait, get contact information for the authorities to follow up); complete an Incident Report and send it to Joshua Davis (CEO) within 72 hours.
+An armed robber is a desperate and irrational person: listen and obey exact instructions; cooperate fully and never create conflict with the robber's requests; concentrate on and observe the robber and weapon to recall as much detail as possible; ask customers/witnesses to help document descriptions and, if possible, to wait for police (if they cannot wait, get contact information for the authorities to follow up); complete an Incident Report and send it to the CEO within 72 hours.
 
 ### 10.05 Burglary and After-Hours Emergency
 
 #### After the Robbery
 
-#### ANY MISSING FIREARM — 48-HOUR FEDERAL DUTY. If any firearm is lost or stolen — in a robbery, a burglary, or discovered missing in a count, a pawn walk or the monthly gun audit — tell Preston Peters and Joshua Davis immediately, the same hour. Federal law (18 U.S.C. § 923(g)(6); 27 CFR 478.39a) requires the licensee to report the theft or loss to ATF within 48 HOURS of discovery, by telephone and on ATF Form 3310.11, and to the local police. Joshua Davis makes both reports. The 72-hour incident report below does NOT satisfy this duty and does not replace it. Do not wait for the incident report to be finished before raising a missing firearm.
-Call 911; contact Preston Peters (Market Manager) and Joshua Davis (CEO); lock all doors until police arrive and allow no one in; place a 'closed' sign on the door; do not disturb anything (the police may need to dust for fingerprints).
+#### ANY MISSING FIREARM — 48-HOUR FEDERAL DUTY. If any firearm is lost or stolen — in a robbery, a burglary, or discovered missing in a count, a pawn walk or the monthly gun audit — tell the Market Manager and the CEO immediately, the same hour. Federal law (18 U.S.C. § 923(g)(6); 27 CFR 478.39a) requires the licensee to report the theft or loss to ATF within 48 HOURS of discovery, by telephone and on ATF Form 3310.11, and to the local police. The CEO makes both reports. The 72-hour incident report below does NOT satisfy this duty and does not replace it. Do not wait for the incident report to be finished before raising a missing firearm.
+Call 911; contact the Market Manager and the CEO; lock all doors until police arrive and allow no one in; place a 'closed' sign on the door; do not disturb anything (the police may need to dust for fingerprints).
 
 #### Observation Items
 Recall as accurately as possible: height and weight; approximate age; hair and eye color; build; speech defect or accent; type/color of clothing; marks, scars, or deformities; a written or drawn description of the weapon (size, color, automatic or revolver if a handgun); which hand held the weapon; and the direction the robber was last seen headed. Conduct a cash drawer audit and report any missing money to the Market Manager.
 
 #### Media/Press and Reporting
-Refer all media and press questions to Joshua Davis (CEO) — do not discuss any information with media under any circumstances. Report any incident by phone immediately to Preston Peters (Market Manager) and Joshua Davis (CEO), and complete an Incident Report listing any missing money, checks or equipment. Send the completed report to Joshua Davis within 72 hours. Prompt, accurate reporting is what allows the Company's insurance claim to be handled properly.
+Refer all media and press questions to the CEO — do not discuss any information with media under any circumstances. Report any incident by phone immediately to the Market Manager and the CEO, and complete an Incident Report listing any missing money, checks or equipment. Send the completed report to the CEO within 72 hours. Prompt, accurate reporting is what allows the Company's insurance claim to be handled properly.
 
 ### 10.06 Firearm Handling and Safety
 No handgun or long gun should ever be loaded with ammunition at any time; customers are never permitted to load a weapon during a transaction or while handling it. All firearms brought in by customers should be unloaded with any clips/magazines removed. Employees and customers are prohibited from dry-firing any firearm. A customer requesting to handle a firearm should never be given it with the clip/magazine inserted — the clip is retained by the employee and given to the customer only if the weapon is purchased.
 
 #### Mandatory Firearms Safety Training
 MANDATORY FIREARMS SAFETY TRAINING. Every employee must complete the Basic Gun Safety 101 online course and hold a current Certificate of Completion. Training is completed DURING NORMAL WORK HOURS and is paid time; it may be completed across multiple sessions.
-THE COMPANY PAYS — NO EMPLOYEE OUT-OF-POCKET COST. The provider is GunSafety.co (the former gunsafetytrainingpro.com now redirects there). As of September 2026 the roughly 40-minute course itself is FREE, and the $25 charge buys only the separately purchased Certificate of Completion. The Company purchases the certificate directly. Employees are not asked to pay the fee and seek reimbursement. Earlier instructions to 'select the $25 version of the course' and claim petty-cash reimbursement are withdrawn — they no longer describe a product that exists, and requiring an employee to front a job-related cost can unlawfully reduce pay below minimum wage in the week it is incurred.
-VERIFICATION. Certificates are unique per student and verifiable on the provider's verification page. Preston Peters verifies each certificate at the provider rather than accepting a printout, and files the verification record in the employee's personnel file with Preston Peters.
-Completion deadline and recertification: a new hire completes the course and holds a verified certificate by the end of their THIRD CALENDAR DAY of employment (first day worked is day one) as a condition of employment, and every employee recertifies annually by January 31. The separate Firearm Safety Certification policy sets out the detail, including the CEO-only written extension available solely where the Company caused the delay.
-WHO MAY HANDLE OR TRANSFER FIREARMS — A CONDITION OF EMPLOYMENT. No employee who is a prohibited person under federal law (18 U.S.C. § 922(g) — including anyone convicted of a felony, subject to a qualifying protective order, convicted of misdemeanor domestic violence, or an unlawful user of a controlled substance including marijuana) may possess, handle or transfer firearms or ammunition at any Valley Pawn store, and every store-level role involves handling firearms. Separately, Virginia law (Va. Code § 18.2-308.2:3) requires that an employee of a firearms dealer who transfers firearms pass a Virginia State Police criminal background check before doing so. Firearms-handling eligibility is therefore confirmed at hire and any change in an employee's status that would make them a prohibited person must be reported to Preston Peters immediately. An applicant or employee who is, or becomes, a prohibited person cannot work the sales floor.
-The ATF Compliance Guide and the Valley Pawn Firearm Safety Acknowledgment Form (each employee prints, signs, and returns a copy) are maintained as separate signed documents in each employee's personnel file with Preston Peters, and are referenced here rather than reproduced in full.
-The ATF Compliance Guide and the Valley Pawn Firearm Safety Acknowledgment Form are on file, signed, in every employee's personnel file with Preston Peters.
+THE COMPANY PAYS — NO EMPLOYEE OUT-OF-POCKET COST. The provider is GunSafety.co (the former gunsafetytrainingpro.com now redirects there). As of September 2026 the roughly 40-minute course itself is FREE, and the $25 charge buys only the separately purchased Certificate of Completion. The Company pays the $25 certificate fee, either directly or by reimbursing the employee on submission of the certificate (HR-2026-05 Section 4); it is never deducted from pay. Earlier instructions to 'select the $25 version of the course' are withdrawn — that product no longer exists.
+VERIFICATION. Certificates are unique per student and verifiable on the provider's verification page. The Market Manager verifies each certificate at gunsafety.co/verify rather than accepting a printout and records the holder's name, certificate number and completion date; the verified certificate is kept in the employee's Gusto Documents and personnel file.
+GUN SAFETY CERTIFICATE REQUIREMENT — A CONDITION OF EMPLOYMENT (Firearm Safety Certification policy HR-2026-05). Every employee (1) completes the free Basic Gun Safety 101 online class at GunSafety.co, (2) obtains the $25 Certificate of Completion, and (3) submits the certificate PDF by uploading it to Gusto under Documents and telling their Manager the same day. A new hire finishes all three steps by the end of their THIRD CALENDAR DAY of employment (the first day worked is day one); an employee who has not finished by then has their employment end at that point. Every employee recertifies once each calendar year, by January 31. The class and certificate are completed at the store during scheduled working hours and are paid at the employee's regular rate. The Company pays the $25 certificate fee, either directly or by reimbursing the employee on submission of the certificate; it is never deducted from pay. The only extension is one the CEO grants in writing, and only where the Company caused the delay (no working device, no internet access at the store, or no paid time scheduled for the class); no manager may extend the deadline. Employees under 18 may not handle firearms or work the sales floor and are excluded while that remains true.
+WHO MAY HANDLE OR TRANSFER FIREARMS — A CONDITION OF EMPLOYMENT. No employee who is a prohibited person under federal law (18 U.S.C. § 922(g) — including anyone convicted of a felony, subject to a qualifying protective order, convicted of misdemeanor domestic violence, or an unlawful user of a controlled substance including marijuana) may possess, handle or transfer firearms or ammunition at any Valley Pawn store, and every store-level role involves handling firearms. Separately, Virginia law (Va. Code § 18.2-308.2:3) requires that an employee of a firearms dealer who transfers firearms pass a Virginia State Police criminal background check before doing so. Firearms-handling eligibility is therefore confirmed at hire and any change in an employee's status that would make them a prohibited person must be reported to the Market Manager immediately. An applicant or employee who is, or becomes, a prohibited person cannot work the sales floor.
+The ATF Compliance Guide and the Valley Pawn Firearm Safety Acknowledgment Form (each employee prints, signs, and returns a copy) are maintained as separate signed documents in each employee's personnel file, and are referenced here rather than reproduced in full.
+The ATF Compliance Guide and the Valley Pawn Firearm Safety Acknowledgment Form are on file, signed, in every employee's personnel file.
 
 #### Broken / Non-Functioning Firearm Storage — Safety Cross-Reference
 See the full Broken/Non-Functioning Firearm Storage Protocol in Section 04.02. From a safety standpoint, non-functioning firearms must still be handled per all standard firearm-safety rules above (confirmed unloaded, pointed in a safe direction) during intake, inspection, and storage.
@@ -1091,7 +1106,7 @@ The monthly gun audit form and checklist are issued by the Market Manager. Each 
 ### 11.01 Glossary of Terms
 - Buy Transaction: A transaction in which the customer's item is bought, rather than used as collateral for a pawn loan.
 - Finance Fee: The amount of funds charged to the customer for loaning money on their item; the cost of borrowing.
-- Grace Period: the 15-day statutory period after a loan's term during which the item may not be sold (Va. Code § 54.1-4005). Company practice holds items longer — see Section 06.01.
+- 15-Day Legal Hold (Va. Code § 54.1-4005): the 15 days after a loan's term during which, by law, the item may not be sold. It is never described to customers — a loan is due on its due date. Company practice holds items longer — see Section 06.01.
 - Gun Lock: An important tool used to prevent a firearm from being discharged while the device is in place.
 - Karat: The measure of the purity of gold.
 - Layaway: A customer pays a deposit to secure an item for later purchase.
@@ -1112,7 +1127,7 @@ The monthly gun audit form and checklist are issued by the Market Manager. Each 
 ## Section 12: Store Operating Standards
 
 ### 12.01 Team Meetings
-Team meetings are held on the first and third Monday of each month at 9:00 AM by Zoom from each store. Every employee scheduled that morning attends; meeting time is paid working time. The Market Manager announces any change to the schedule in Slack.
+The team huddle is held in Slack every week, on Mondays, in the #monday-meetings channel. Every employee reads it and takes part during their shift; huddle time is paid working time. The Market Manager posts any change to the schedule in Slack.
 
 ### 12.02 Closing Time
 Stores close at the time in Section 01.01 — 6:00 PM, or 5:00 PM on Saturday at the six-day stores (Culpeper, Roanoke and Waynesboro). Staff do not stay more than 30 minutes past closing unless they are still helping customers. If customers keep you past closing, post it in Slack so the Market Manager knows. To finish on time, do the cleaning, straightening and counts during the last 15 minutes before close wherever possible, so the store is ready to lock up at closing. All time worked after close is recorded and paid (see 01.04).
@@ -1132,18 +1147,24 @@ Online purchases shipped to the store for transfer: an assault firearm purchased
 Whether a firearm is an "assault firearm" is decided using the Company's Assault Firearm Classification Quick Reference (current version issued July 3, 2026 in #compliance; it replaces the April 27, 2026 cheat sheet). Key points from that reference: stripped receivers are not covered and may be transferred; rimfire firearms are not covered; threaded-barrel pistols are addressed specifically in the reference. When an item is not clearly covered by the reference, treat it as an assault firearm and ask the Market Manager before transferring it. Employees under 21 do not handle assault firearms until the Market Manager confirms they may lawfully do so. The 2026 Virginia assault-firearm and magazine sales ban is blocked by a court order and is not in force; do not tell customers it applies. The under-21 rule (§12.05) is separate and is in force. Any question about whether a product is restricted goes to the Market Manager.
 
 ================================================================================
-SOURCE: VALLEY PAWN EMPLOYEE HANDBOOK — v2026.8 (document last modified 2026-10-21)
+SOURCE: VALLEY PAWN EMPLOYEE HANDBOOK — v2026.8 (document last modified 2026-10-25)
 HR / employment policy — pay, leave, conduct, benefits.
 CITE ANSWERS FROM THIS DOCUMENT AS: Employee Handbook v2026.8, <section number and name>
 ================================================================================
 Valley Pawn Employee Handbook
-Version 2026.8 FINAL — Full Circle Finance Inc DBA Valley Pawn — Effective October 21, 2026
+Version 2026.8 FINAL — Full Circle Finance Inc DBA Valley Pawn — Effective November 4, 2026
 
 ### What's New in Version 2026.8 (October 21, 2026) — aligned to the Valley Pawn Academy final review
 Hours of Business — Culpeper, Roanoke and Waynesboro are open Monday–Saturday and close at 5:00 p.m. on Saturday; Harrisonburg and Lexington stay closed Wednesday.
 Communication — a complaint about your supervisor goes to the next person in the chain of command (the Market Manager, then the CEO); "or Human Resources" is removed because Valley Pawn has no HR department.
 Reporting Harassment — harassment of an employee by a customer or vendor is reported the same way, and management decides whether that person is welcome back.
 Bonus Pay — starting with the December 2026 bonus month, a bonus is earned only when the store meets every standard KPI as well as the bonus goals; management approves every bonus and may suspend the program for a store with written notice for future months. Earned bonuses are always paid.
+
+### Revised October 25, 2026 (CEO decisions) — effective November 4, 2026 with the November Policy Update
+Who to Contact and Chain of Command — roles, not names; job titles as in Gusto (Sales and Loan Associate, Sales and Loan Representative, Manager, Market Manager, CEO).
+Attendance — a call-out is a voice call to the Market Manager's Zoom number, 540-202-4200, at least two hours before the shift; texts and Slack messages don't count.
+Communication — weekly team huddle in Slack (#monday-meetings); messages to the Market Manager by Slack, calls to 540-202-4200.
+Training — all training is done at the store, on the clock; never at home.
 
 ## The Story of Valley Pawn
 
@@ -1162,10 +1183,10 @@ Virginia is also a right-to-work state (Va. Code § 40.1-58). No employee is req
 
 ### Who to Contact
 Valley Pawn is a small company and does not have a separate Human Resources department. Throughout this handbook:
-“Human Resources” or “HR” means Joshua Davis, Chief Executive Officer. Any request, report, or complaint described in this handbook as going to Human Resources goes to him directly. You may also raise a matter with your Store Manager or the Market Manager, who will bring it to him. Requests involving medical information will be kept confidential and shared only with those who need to know to act on them.
-“Owner” or “President” means Joshua Davis, Chief Executive Officer.
-“Market Manager” means Preston Peters.
-“Store Manager” means the manager of the store where you work.
+“Human Resources” or “HR” means the Chief Executive Officer (CEO). Any request, report, or complaint described in this handbook as going to Human Resources goes to the CEO directly. You may also raise a matter with your Manager or the Market Manager, who will bring it to the CEO. Requests involving medical information will be kept confidential and shared only with those who need to know to act on them.
+“Owner” or “President” means the Chief Executive Officer (CEO).
+“Market Manager” means the manager over all five stores. Messages to the Market Manager go through Slack; calls go to the Market Manager's Zoom number, 540-202-4200.
+“Manager” means the manager of the store where you work. Job titles are the ones in Gusto: Sales and Loan Associate, Sales and Loan Representative, Manager, Market Manager and CEO.
 “Payroll” questions go to Human Resources.
 
 ## Company and Employee Expectations
@@ -1251,10 +1272,10 @@ The first category may be defined as an exchange of, or a request for, sexual fa
 The second category is defined as a hostile, intimidating, or offensive working environment. This category includes, but is not limited to, unwelcome sexual advances, requests for sexual favors, sexual jokes, sexually oriented comments, and verbal or physical contact of a sexual nature when such conduct creates an offensive, hostile and/or intimidating working environment. Examples of an offensive, hostile, and/or intimidating working environment include, but are not limited to, pictures, cartoons, symbols, emails, internet websites, or any other items or materials found to be offensive and/or sexual in nature or content. It is against company policy for any employee to view and/or download inappropriate pictures or materials onto the company computer systems.
 
 ### Reporting Harassment
-The company prohibits any employee from retaliating in any way against anyone who has raised any concern about harassment of any kind. The company will fully investigate any complaint of harassment and will take prompt and appropriate disciplinary action if it is reasonably determined that harassment of any kind has taken place. It is essential that the employee notify the Store Manager, the Market Manager, or the Owner — whichever the employee is comfortable speaking to — immediately, even if the employee is unsure whether the behavior is considered harassment. If the complaint involves the Market Manager, report directly to the Owner.
+The company prohibits any employee from retaliating in any way against anyone who has raised any concern about harassment of any kind. The company will fully investigate any complaint of harassment and will take prompt and appropriate disciplinary action if it is reasonably determined that harassment of any kind has taken place. It is essential that the employee notify the Manager, the Market Manager, or the CEO — whichever the employee is comfortable speaking to — immediately, even if the employee is unsure whether the behavior is considered harassment. If the complaint involves the Market Manager, report directly to the CEO.
 It is the supervisor’s responsibility to report any such incidents of harassment to Human Resources immediately. All reports will be promptly investigated with due regard to the privacy of everyone involved. However, confidentiality cannot be guaranteed. Any employee found to have harassed another employee will be subject to appropriate disciplinary action up to and including termination. The company will also take any additional action deemed necessary to appropriately remedy the situation. Retaliation of any sort will not be permitted. No adverse employment action will be taken against an employee making a good-faith report of alleged harassment.
 Each employee has the responsibility to help keep his or her work environment free from any kind of harassment. Any employee who becomes aware of or suspects an incident of harassment, whether by witnessing the incident or being told of it, must report the incident to their supervisor or Human Resources. Once management is aware of the harassment complaint the company has an obligation to take prompt and appropriate action, regardless of whether or not the person reporting it desires the company to do so.
-Harassment of an employee by a customer, vendor or visitor is reported the same way — to the Store Manager, the Market Manager or the Owner. The company will act to protect the employee, and management decides whether that person is welcome back in the store.
+Harassment of an employee by a customer, vendor or visitor is reported the same way — to the Manager, the Market Manager or the CEO. The company will act to protect the employee, and management decides whether that person is welcome back in the store.
 All harassment and discrimination policies apply to all areas of employment, including recruitment, hiring, training, development, promotion, transfer, termination, layoff, compensation, benefits, and all other conditions and privileges of employment in accordance with applicable federal, state, and local laws.
 
 ### Reporting Legal Violations (Whistleblower Protection)
@@ -1266,14 +1287,14 @@ An employee who requires an accommodation due to his or her sincerely held relig
 Upon receipt of a written accommodation request, Human Resources will meet with the requesting individual to discuss and identify the precise conflicts resulting from the religious belief and the potential accommodation that VP might make to help overcome those conflicts. VP will determine the feasibility of the requested accommodation, considering various factors including, but not limited to, the nature of the accommodation requested, duration of the request, alternative accommodations, financial impact, impact on the company’s operations, ability of the individual to perform the essential functions of the position if the accommodation is granted, and other related factors. The requesting individual will be notified in writing of the company’s determination with respect to the requested accommodation.
 
 ### Virginia Disability Accommodation Rights
-Employees have the right to request a reasonable accommodation for a disability. Employees seeking an accommodation should submit a request, in writing where possible, to Human Resources (Joshua Davis). Upon receiving a request, the Company will engage in a timely, good-faith interactive process to identify an effective, reasonable accommodation, considering the nature of the request, cost, feasibility, and impact on operations. Reasonable accommodations may include, among other things, modifications to the dress code, schedule adjustments, equipment, or unpaid leave. The Company prohibits retaliation against any employee for requesting or using an accommodation. This notice is provided to all new hires at the start of employment and to any employee within 10 days of disclosing a disability, consistent with Va. Code § 2.2-3905.1.
+Employees have the right to request a reasonable accommodation for a disability. Employees seeking an accommodation should submit a request, in writing where possible, to Human Resources (CEO). Upon receiving a request, the Company will engage in a timely, good-faith interactive process to identify an effective, reasonable accommodation, considering the nature of the request, cost, feasibility, and impact on operations. Reasonable accommodations may include, among other things, modifications to the dress code, schedule adjustments, equipment, or unpaid leave. The Company prohibits retaliation against any employee for requesting or using an accommodation. This notice is provided to all new hires at the start of employment and to any employee within 10 days of disclosing a disability, consistent with Va. Code § 2.2-3905.1.
 
 ### Pregnancy, Childbirth & Related Medical Conditions
 The Company provides reasonable accommodations for known limitations related to pregnancy, childbirth, lactation, or related medical conditions, absent undue hardship, consistent with the Virginia Human Rights Act (Va. Code § 2.2-3909) and the federal Pregnant Workers Fairness Act. Examples of accommodations may include schedule adjustments, additional or longer breaks, temporary light duty, or seating modifications. Employees may request an accommodation from Human Resources; the Company will engage in a timely, good-faith interactive process. This notice is provided to new hires at the start of employment and to any employee within 10 days of notifying the Company of a pregnancy. Retaliation against an employee for requesting an accommodation is prohibited.
-Lactation. Consistent with the federal PUMP for Nursing Mothers Act and Virginia law, the Company provides reasonable break time for an employee to express breast milk for up to one year after the child’s birth, each time the employee has need to do so, and a private location other than a bathroom, shielded from view and free from intrusion, for that purpose. At each store this will ordinarily be the office. Ask your Store Manager or Human Resources to arrange it.
+Lactation. Consistent with the federal PUMP for Nursing Mothers Act and Virginia law, the Company provides reasonable break time for an employee to express breast milk for up to one year after the child’s birth, each time the employee has need to do so, and a private location other than a bathroom, shielded from view and free from intrusion, for that purpose. At each store this will ordinarily be the office. Ask your Manager or Human Resources to arrange it.
 
 ## Employment Classifications
-At the time of hire, an employee is classified as a full-time, part-time or temporary employee. In addition, an employee is classified as either exempt or non-exempt. All other policies described in this handbook, the Policies & Procedures Manual, and other communications from the company apply to all employees, with the exception of certain wage, salary, and time-off limitations applying only to non-exempt employees. If an employee is unsure of their employment classification, he or she should contact their immediate supervisor. Sales and Loan Associates and Representatives are hourly (non-exempt). Store Managers may be hourly or salaried, as stated in their offer of employment. Any overtime must be approved by the employee’s supervisor in advance.
+At the time of hire, an employee is classified as a full-time, part-time or temporary employee. In addition, an employee is classified as either exempt or non-exempt. All other policies described in this handbook, the Policies & Procedures Manual, and other communications from the company apply to all employees, with the exception of certain wage, salary, and time-off limitations applying only to non-exempt employees. If an employee is unsure of their employment classification, he or she should contact their immediate supervisor. Sales and Loan Associates and Representatives are hourly (non-exempt). Managers may be hourly or salaried, as stated in their offer of employment. Any overtime must be approved by the employee’s supervisor in advance.
 
 ### Temporary Employees
 The company may hire employees for specific periods of time, or for a specific project. These employees are considered temporary employees. The job assignment, work schedule, and duration of the position will be determined on an individual basis.
@@ -1317,6 +1338,7 @@ The company is a service and retail company and must have liberal hours of busin
 
 ### Time Tracking — Clocking In and Out
 Each employee is responsible for accurately recording his or her time worked. No one may record another employee’s time, or clock in or clock out for any other employee. Tampering with or altering another employee’s time record is cause for disciplinary action, up to and including termination of any or all employees involved. In the event of an actual error, the employee must report the matter to their immediate supervisor immediately. All time actually worked will be paid, including time worked without clocking in or without advance approval; working off the clock is prohibited and will result in corrective action, but the time will still be paid.
+Training happens at the store. All required training — Valley Pawn Academy lessons, the gun-safety certificate course and any other assigned training — is done at the store, during business hours, on the clock, at your normal rate of pay. Never at home or off the clock. If you are running behind a training due date, tell your Manager that day.
 
 ### Lunch and Break Periods
 Each employee will be given two (2) ten-minute paid breaks each workday. The employee does not clock out for these breaks. Ideally these breaks should be taken at two different intervals, one in the morning and one in the afternoon. All break times, if not directly assigned by a supervisor, should be coordinated with co-workers to maintain adequate coverage.
@@ -1324,7 +1346,7 @@ Meal periods and breaks follow Policies & Procedures Manual 01.01. In summary: e
 
 ### Attendance and Punctuality
 Valley Pawn stores operate with small crews, and many shifts are single-coverage at the counter. An unfilled shift means a closed counter. Reliable attendance is an essential function of every store position, and the standards below are strict for that reason.
-Calling in. If you cannot report for a scheduled shift, or will be late, you must call Preston Peters, Market Manager, by telephone at the number provided to you at hire, at least two (2) hours before the shift starts. A phone call is the only accepted method. Text messages, emails, Slack messages, and messages passed through co-workers do not count. If the call is not answered, leave a voicemail and keep calling until you reach him; a voicemail alone is not a completed call-in unless he confirms it. Contact is required each day of an absence unless a longer absence has been approved in advance.
+Calling in. If you cannot report for a scheduled shift, or will be late, you must call the Market Manager by voice call at the Market Manager's Zoom number, 540-202-4200, at least two (2) hours before the shift starts. A voice call is the only accepted method. Text messages, emails, Slack messages, and messages passed through co-workers do not count. If the call is not answered, leave a voicemail and keep calling until you reach the Market Manager; a voicemail alone is not a completed call-in unless the Market Manager confirms it. Contact is required each day of an absence unless a longer absence has been approved in advance.
 Tardiness. Arrival more than seven (7) minutes after the scheduled start without prior approval is a tardy.
 No-call / no-show. Failure to report for a scheduled shift without calling in as described above is a no-call/no-show. Any no-call/no-show will result in immediate termination. The only exception is an employee who was physically unable to call (for example, hospitalized or incapacitated) and who provides documentation of that as soon as reasonably possible.
 Excessive absenteeism. One (1) or more unscheduled absences, or two (2) or more tardies, in any rolling ninety (90) day period is excessive and will result in corrective action up to and including termination. This standard applies from the first day of employment, including the Introductory Period. It is applied the same way to every employee.
@@ -1336,12 +1358,13 @@ Jury and witness duty. Employees summoned for jury duty or subpoenaed as a witne
 Successful working conditions and relationships depend upon effective communication.
 All employees must be aware of changes in procedure, policies, and general update information. Employees must also be able to communicate ideas, suggestions, personal goals, and problems as they affect their work.
 In addition to the exchanges of information and expression of ideas which occur daily, the employee must utilize all of the company’s methods of communication. The company’s methods of communication include, but are not limited to, this handbook, the company Policies & Procedures Manual, Slack, discussions with supervisors, memos, staff meetings, training sessions, and company email.
+Every week the team huddle is held in Slack, on Mondays, in the #monday-meetings channel; read it and take part during your shift (paid time). Messages to the Market Manager go through Slack; calls go to the Market Manager's Zoom number, 540-202-4200. A call-out is always a voice call (see Attendance and Punctuality).
 The company encourages each employee to discuss any issue they may have with a co-worker directly with that person. If a resolution cannot be reached, the employee should arrange a meeting with their immediate supervisor to discuss the issue or any other issues, concerns, or problems that may arise during the course of the employee’s employment. Retaliation against any employee for appropriately following the open communications policy is strictly prohibited.
 If a complaint or problem involves the employee’s immediate supervisor, the employee should follow the chain of command and inform the next person in the chain of command (the Market Manager, then the CEO).
 
 ### Chain of Command
-Sales Associates report to the Store Manager. Store Managers report to the Market Manager (Preston Peters). The Market Manager reports to the Owner (Joshua Davis). Corporate Support staff report directly to the Owner.
-Any questions, issues, complaints, or other problems should be taken up with your immediate supervisor. If the question, issue, complaint or other problem still exists after a reasonable period of time, follow up with the next person in the chain of command. If the problem is of a very serious or private nature, it may be taken to the Owner directly.
+Sales and Loan Associates and Sales and Loan Representatives report to their store's Manager. Managers report to the Market Manager. The Market Manager reports to the CEO. Corporate Support staff report directly to the CEO.
+Any questions, issues, complaints, or other problems should be taken up with your immediate supervisor. If the question, issue, complaint or other problem still exists after a reasonable period of time, follow up with the next person in the chain of command. If the problem is of a very serious or private nature, it may be taken to the CEO directly.
 
 ### Confidential Information
 Each employee’s employment with the company carries an obligation to maintain confidentiality, even after the employee is no longer employed with the company.
@@ -1406,7 +1429,7 @@ Reading magazines or other non-work materials on company premises during working
 
 ### Ethical Conduct
 The successful business operation and reputation of VP is built upon the principles of fair dealing and the ethical conduct of our employees. Our reputation for integrity and excellence requires careful observance of all applicable laws and regulations, and the Company expects its employees to conduct business in accordance with the letter, spirit, and intent of all applicable federal, state and local laws.
-As a representative of the Company, employees should observe the highest standards of conduct and personal integrity and refrain from any illegal, dishonest, or unethical conduct. Examples of situations to avoid: accepting gifts, money or special favors from a business associate; and using the Company’s name, property, equipment or facilities for personal gain. If a family member or any other person in a close personal relationship has a business relationship within the employee’s area of responsibility, all business transactions must be approved by the Owner. Compliance with this policy is the responsibility of every VP employee.
+As a representative of the Company, employees should observe the highest standards of conduct and personal integrity and refrain from any illegal, dishonest, or unethical conduct. Examples of situations to avoid: accepting gifts, money or special favors from a business associate; and using the Company’s name, property, equipment or facilities for personal gain. If a family member or any other person in a close personal relationship has a business relationship within the employee’s area of responsibility, all business transactions must be approved by the CEO. Compliance with this policy is the responsibility of every VP employee.
 
 ### Company Property
 Employees are responsible for all Company property in their possession, both in and outside Company premises. When using Company property, employees are expected to fully understand how to properly operate or use this property, exercise care in its operation, perform the required maintenance, use reasonable care to safeguard the property from theft or damage, and follow all operating instructions, safety standards and guidelines.
@@ -1432,12 +1455,12 @@ Pants: dark blue or black jeans, clean and in good repair — no rips, holes, fa
 Shoes: brown or black closed-toe shoes with no visible brand names, logos, or sports branding. No tennis shoes, sneakers, or athletic shoes of any kind. No open-toe shoes, sandals, or flip-flops.
 Belt: brown or black if the pants have belt loops.
 Outerwear: coats, hoodies, and all other outerwear are removed and stored before any customer interaction.
-Do not wear store merchandise, and do not wear personal jewelry that could be confused with inventory. New uniforms are ordered at hire; report a missing or damaged uniform to the Store Manager (see Policies & Procedures Manual 01.05).
+Do not wear store merchandise, and do not wear personal jewelry that could be confused with inventory. New uniforms are ordered at hire; report a missing or damaged uniform to the Manager (see Policies & Procedures Manual 01.05).
 Grooming. Hair must be clean and neatly styled. Sideburns, mustaches, and beards must be well trimmed and groomed. Clothing must be clean and wrinkle-free every shift.
 Jewelry and piercings. No earrings and no visible piercings of any kind may be worn at work. This applies to every employee equally. Other jewelry (rings, watches, necklaces) should be modest and must not interfere with handling merchandise or safety.
 Tattoos. Tattoos that are offensive, obscene, or discriminatory must be covered at all times. Other visible tattoos are permitted.
 Hats and head coverings. Hats, caps, beanies, hoods, and other head coverings are not permitted at work. The only exceptions are (1) an approved medical accommodation under Virginia Disability Accommodation Rights, and (2) a religious head covering (for example, a hijab, yarmulke, or turban) worn as an approved religious accommodation under the Religious Accommodation Policy, which federal and Virginia law require the company to allow absent undue hardship. Both exceptions require a request to Human Resources before the item is worn; for an approved medical accommodation the company will normally provide a Valley Pawn–branded cap at no cost to the employee.
-Weather. Extreme weather may allow a modification in outerwear for arriving and leaving; on the sales floor the standard above applies. If in doubt, ask your Store Manager before your shift.
+Weather. Extreme weather may allow a modification in outerwear for arriving and leaving; on the sales floor the standard above applies. If in doubt, ask your Manager before your shift.
 Employees who report to work out of dress code may be sent home unpaid to change and are subject to corrective action.
 
 ## Administrative Policies
@@ -1448,7 +1471,7 @@ Smoking and vaping breaks are limited to your regular breaks, must not interfere
 
 ### Branch-Ordered Supplies
 All company supplies should be ordered through the corporate office (see the #supply-request channel in Slack).
-When you receive your company supply order, verify each item you receive against the packing slip. If you did not receive an item listed, circle the missing item and write “did not receive” next to it. Sign your full name on the front lower portion of the packing slip. If an item is missing or on back order, contact your designated home-office contact for shipment information. Any orders for computer equipment or upgrades must be approved by the Owner.
+When you receive your company supply order, verify each item you receive against the packing slip. If you did not receive an item listed, circle the missing item and write “did not receive” next to it. Sign your full name on the front lower portion of the packing slip. If an item is missing or on back order, contact your designated home-office contact for shipment information. Any orders for computer equipment or upgrades must be approved by the CEO.
 
 ### Automobile Use for Company Business
 If an employee is authorized to operate a Company vehicle for business purposes, or drives his or her personal vehicle while performing his or her job, the employee must:
@@ -1568,7 +1591,7 @@ Notices and questions. Before an employee's eligibility date, and each year afte
 
 ### Workers’ Compensation
 All employees are covered by workers’ compensation insurance. This company-paid coverage is automatic and immediate and protects the employee in case of on-the-job injury or illness. If an employee cannot work due to a job-related injury or illness, workers’ compensation insurance pays eligible medical bills and may provide a portion of the employee’s income until he or she can return to work.
-All job-related injuries or illnesses, no matter how minor, must be reported immediately to the Store Manager, who will notify Human Resources the same day. Prompt reporting is essential and the key to prompt benefits. The company will pay wages for the remainder of the normal workday in which a work-related accident occurs. An employee returning to work after being absent due to a work-related injury must provide a doctor’s release prior to beginning the workday.
+All job-related injuries or illnesses, no matter how minor, must be reported immediately to the Manager, who will notify Human Resources the same day. Prompt reporting is essential and the key to prompt benefits. The company will pay wages for the remainder of the normal workday in which a work-related accident occurs. An employee returning to work after being absent due to a work-related injury must provide a doctor’s release prior to beginning the workday.
 
 ## Safety
 The company is committed to the safety and health of all employees and to complying with the regulations governing injury and accident prevention. Maintaining a safe working environment requires the continuous efforts and cooperation of all employees. If an employee has any doubts about how to safely perform a job, or has any questions about a safety issue, it is the employee’s responsibility to raise them with their immediate supervisor or Human Resources. Any suspected unsafe condition and all injuries that occur on the job must be reported immediately to your supervisor. Compliance with safety rules is a condition of employment.
@@ -1639,7 +1662,7 @@ As stated previously, the company operates under the principle of at-will employ
 The company does not respond to verbal requests for employee references. Human Resources may provide a reference to potential employers only if the former employee has completed and signed a release form. An employee may not respond to any request for information regarding another employee, a former employee, or a job applicant unless it is part of his or her assigned job responsibilities; such requests must be forwarded to Human Resources.
 
 ### Return of Company Property
-Employees are issued company property at hire, including company-branded shirts and store keys, and may be issued other items (phones, laptops, credit cards) during employment. All company property must be returned within forty-eight (48) hours after your last day of work, or immediately upon the company’s request, whichever comes first. Return items to the Store Manager or Market Manager and get a written receipt.
+Employees are issued company property at hire, including company-branded shirts and store keys, and may be issued other items (phones, laptops, credit cards) during employment. All company property must be returned within forty-eight (48) hours after your last day of work, or immediately upon the company’s request, whichever comes first. Return items to the Manager or Market Manager and get a written receipt.
 The company may deduct the replacement cost of any item not returned within 48 hours — including the cost of re-keying the store if keys are not returned — from your final paycheck, but only under the Company Property and Wage Deduction Authorization you sign at hire, which lists each item and its replacement cost. Virginia law (Va. Code § 40.1-29) requires that written, signed authorization for any deduction, and no deduction will reduce your pay below the federal minimum wage for the hours worked in that pay period. If you have not signed the authorization, or the amount exceeds what can lawfully be deducted, the company may recover the balance by other lawful means.
 
 ## Acknowledgment of Receipt

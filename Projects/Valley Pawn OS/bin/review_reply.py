@@ -109,7 +109,7 @@ def draft(code, name, stars, text, c):
               "Plain, warm, specific, 2-3 sentences, no emojis, no hashtags, no prices, no promises, no policy statements, no mention of "
               "AI. For 4-5 stars: thank them by first name, mention one specific thing from their review if there is one, name the store "
               "city, invite them back. For 1-3 stars: apologize sincerely without admitting fault on specifics, say the manager wants to "
-              "make it right, and ask them to call the store or stop by — never argue, never explain policy. End with the signature given. "
+              "make it right, and ask them to call the store or stop by — never argue, never explain policy. Never mention a loan, due date, hold period, grace period, late fee or any account or firearm detail, even if the review does — at most say to call the store. End with the signature given. "
               "Return ONLY the reply text.")
     prompt = "Store: Valley Pawn %s. Reviewer first name: %s. Stars: %s. Review text: %s\nSignature: %s" % (
         NAMES[code], first, stars if stars else "unknown", text or "(no text, stars only)", c.get("signature", ""))

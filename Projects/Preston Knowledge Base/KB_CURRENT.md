@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-10-23 22:11 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-10-26 01:13 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -1627,27 +1627,11 @@ PRESTON SAID: "Madden NFL 16 - We want to avoid the old sports games, they usual
 SOURCE: #loans-and-buys | 2024-02-13 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1707834604742049
 id: old-sports-games-20887100
 
-### [HIGH] over-5-percent-means-expire
-RULE: When a store crosses 5% of loan base past 75 days, the remedy is expiration, not more waiting.
-PRESTON SAID: "Percent of Loan Base Past 75 Days - 5.8% - Expirations need to happen here. This is over our 5% we can work with."
-SOURCE: #loans-and-buys | 2025-01-25 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1737836982465509
-id: over-5-percent-means-expire-a0622175
-
 ### [HIGH] overpaying-math
 RULE: Overpaying by just $30 a day at each store costs the company $40k a year. Margin opportunity is created at the counter on intake, not later.
 PRESTON SAID: "Make sure we are buying and loaning right! Overpaying by just $30 a day at each store costs us 40k a year! Don't be afraid to negotiate. The profit margin opportunity is set at the counter when we take it in."
 SOURCE: #general | 2025-01-25 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1737816475733739
 id: overpaying-math-c3625353
-
-### [HIGH] past-due-75-day-5-percent-ceiling
-RULE: Dollars on loans past due more than 75 days must stay under 5% of the store's total loan balance. Above 5% Preston orders expirations; 3.9-4.8% gets a "creeping to 5%" warning.
-PRESTON SAID: "Percent of Loan Base Past 75 Days - 4.8 % - Need to look to tighten this up!
-18 items in first payment default. Should be looking to expire these.
-
-
-This percent needs to be less than 5% of the loan balance."
-SOURCE: #loans-and-buys | 2026-02-09 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1770673097798459
-id: past-due-75-day-5-percent-ce-30eeab0b
 
 ### [HIGH] past-due-calls-are-phone-calls
 RULE: Past-due collection contact means actual phone calls, not texts or messages — customers already get those automatically.
@@ -2405,7 +2389,27 @@ PRESTON SAID: "You need to create an account using the store emails information"
 SOURCE: zoom-call:2a1f2bdf8dca44c68755acfecbd38591 | 2026-10-22 | UNK Chadd McClintic
 id: windows-11-pro-upgrade-store-428d028c
 
+### [SUPERSEDED] over-5-percent-means-expire
+RULE: When a store crosses 5% of loan base past 75 days, the remedy is expiration, not more waiting.
+PRESTON SAID: "Percent of Loan Base Past 75 Days - 5.8% - Expirations need to happen here. This is over our 5% we can work with."
+SOURCE: #loans-and-buys | 2025-01-25 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1737836982465509
+PRESTON'S CORRECTION (2026-10-25): Retired. The 75-day / 5%-of-loan-balance tolerance ended Oct 1, 2026 (CEO decision 2026-08-13, reaffirmed 2026-10-25: 'we do not allow loans past 75 days'). Current rule, P&P v2026.9 §06.01: held through day 30 past due, pull from day 31, done by day 61; holding past day 61 needs CEO approval. Customers hear 'Your loan is due on its due date.'
+!! SUPERSEDED - do not answer from this. Replaced by: P&P v2026.9 §06.01 (day 31 pull / day 61 done)
+id: over-5-percent-means-expire-a0622175
+
+### [SUPERSEDED] past-due-75-day-5-percent-ceiling
+RULE: Dollars on loans past due more than 75 days must stay under 5% of the store's total loan balance. Above 5% Preston orders expirations; 3.9-4.8% gets a "creeping to 5%" warning.
+PRESTON SAID: "Percent of Loan Base Past 75 Days - 4.8 % - Need to look to tighten this up!
+18 items in first payment default. Should be looking to expire these.
+
+
+This percent needs to be less than 5% of the loan balance."
+SOURCE: #loans-and-buys | 2026-02-09 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1770673097798459
+PRESTON'S CORRECTION (2026-10-25): Retired. The 75-day / 5%-of-loan-balance tolerance ended Oct 1, 2026 (CEO decision 2026-08-13, reaffirmed 2026-10-25: 'we do not allow loans past 75 days'). Current rule, P&P v2026.9 §06.01: held through day 30 past due, pull from day 31, done by day 61; holding past day 61 needs CEO approval. Customers hear 'Your loan is due on its due date.'
+!! SUPERSEDED - do not answer from this. Replaced by: P&P v2026.9 §06.01 (day 31 pull / day 61 done)
+id: past-due-75-day-5-percent-ce-30eeab0b
+
 
 ==============================================================================
-COVERAGE: 328 entries - 1 verified by Preston, 180 high-confidence rules, 90 medium, 57 low, 0 superseded.
+COVERAGE: 328 entries - 1 verified by Preston, 178 high-confidence rules, 90 medium, 57 low, 2 superseded.
 ==============================================================================

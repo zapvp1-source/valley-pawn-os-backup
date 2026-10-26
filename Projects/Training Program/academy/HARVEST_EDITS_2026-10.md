@@ -1,3 +1,5 @@
+> ON HOLD (CEO 2026-10-25): do NOT apply these edits until the CEO approves.
+
 # Academy edits from the October 2026 knowledge harvest
 
 Proposed lesson changes from what calls, texts and staff questions showed. Apply in the next lesson pass; re-run the build + validator. Source: Knowledge Harvest/2026-10.

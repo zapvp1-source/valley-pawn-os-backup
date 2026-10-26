@@ -8,6 +8,8 @@ Each item gives the lesson ids it affects. When an item is answered, update thos
 
 Resolved since the last pass: layaway down payment and term. P&P v2026.8 §05.05 states the three tiers, "Confirmed by Joshua Davis (CEO), 2026-09-23". L7-02 now teaches and tests them.
 
+**2026-10-25 — Market Manager 10/23 answers, drafts awaiting his sign-off (not in the live lessons yet):** `drafts_for_preston_20261025/` holds L7-03 (no want-list: take name + number and call when one comes in; police/ATF callback line: name, badge, department, call back on the department's main number, tell the Manager; greeting confirmed), L3-06 (teaching unchanged; stale source notes fixed: grace → 15-day legal hold, late fee 5% of principal from day 6, verification and first-payment default resolved) and L4-02 (source note: no want-list). On sign-off, copy them over `lessons/` and `lessons_target_20261028/` (back up first) before the next voice/upload pass. Paired P&P draft: Human Resources/DRAFT_Phone_Policy_Updates_for_Preston_2026-10-25.docx.
+
 ---
 
 ## Part 1: Questions for Preston

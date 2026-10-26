@@ -1,8 +1,8 @@
 # Bravo POS — Complete Screen & Report Map
 
-_Generated 2026-10-24 23:17 by `bravo_map_compile.py` from BravoMapper's read-only crawl. Do not hand-edit; add human notes to the `bravo-context` skill instead._
+_Generated 2026-10-25 22:35 by `bravo_map_compile.py` from BravoMapper's read-only crawl. Do not hand-edit; add human notes to the `bravo-context` skill instead._
 
-**Status:** IN PROGRESS (resumes nightly) · 70 steps mapped · 0 steps could not be mapped · last crawler state: `2026-10-24 23:16:58 ABORT no-dashboard-at-start`
+**Status:** IN PROGRESS (resumes nightly) · 72 steps mapped · 0 steps could not be mapped · last crawler state: `2026-10-25 22:34:43 ABORT no-dashboard after R_Lost_Stolen_or_Damaged`
 
 Raw data: `output/bravo_map/` — `screens/` (full UI tree per screen), `shots/` (screenshots), `lists/` (report lists, Custom Reports criteria / columns / saved reports), `index.tsv`, `RUN_LOG.md`.
 
@@ -655,6 +655,22 @@ Screenshot: `output/bravo_map/shots/R_Inventory_by_Location.png`
 - **Checkboxes:** Show Items
 - **Buttons:** Cancel; Done `btnDone`; Preview; Print
 
+### Report: Item History
+_key `R_Item_History` · captured 2026-10-25 07:30:42 · Bravo     2026.6.0.79     VALLEY PAWN - WAYNESBORO (WAY)_
+Screenshot: `output/bravo_map/shots/R_Item_History.png`
+
+- **Labels:** Inventory Number; Ok; Cancel; Done; Preview; Print; 8300 Audit; BRAVO Business Dashboard; Deposits and Paid Outs Spreadsheet; Disbursement Journal; End of Day; End of Day - Consolidated; End of Month; Fortis Alignment; General Exception; Inter-Store Cash Transfer; Large Cash In Transactions; Large Cash Out Transactions; Safe Register Journal; Session Journal; Store Register Journal; Till Cash Balance; Till Register Journal; Transfers; Closing Reports; Aged Inventory Summary; Cost Adjustment; Inventory Base; Inventory by Location; Item History; Lost Stolen or Damaged; Vendor Purchase; Vendor Repairs; Inventory Reports; Loan Base; Loan Disposition; Loan History; Loan Journal; Loan Notice; Loans/Buys by Location … +21 more
+- **Fields:** BravoMaskedTextBox
+- **Buttons:** Cancel; Done `btnDone`; Preview; Print
+
+### Report: Lost Stolen or Damaged
+_key `R_Lost_Stolen_or_Damaged` · captured 2026-10-25 22:33:39 · Bravo     2026.6.0.79     VALLEY PAWN - WAYNESBORO (WAY)_
+Screenshot: `output/bravo_map/shots/R_Lost_Stolen_or_Damaged.png`
+
+- **Labels:** Event Opened Date between; Event Closed Date between; Event; All; Sort By; Ok; Cancel; Done; Preview; Print; 8300 Audit; BRAVO Business Dashboard; Deposits and Paid Outs Spreadsheet; Disbursement Journal; End of Day; End of Day - Consolidated; End of Month; Fortis Alignment; General Exception; Inter-Store Cash Transfer; Large Cash In Transactions; Large Cash Out Transactions; Safe Register Journal; Session Journal; Store Register Journal; Till Cash Balance; Till Register Journal; Transfers; Closing Reports; Aged Inventory Summary; Cost Adjustment; Inventory Base; Inventory by Location; Item History; Lost Stolen or Damaged; Vendor Purchase; Vendor Repairs; Inventory Reports; Loan Base; Loan Disposition … +25 more
+- **Fields:** BravoDateEdit; TextEdit; TextEdit `PART_Editor`; BravoComboBox
+- **Buttons:** PopupBaseEdit `PART_Editor`; Cancel; Done `btnDone`; Preview; Print
+
 ## Dashboard task tiles
 
 ### Dashboard tile: Layaways Overdue
@@ -811,3 +827,7 @@ Screenshot: `output/bravo_map/shots/T_Web_Offers.png`
 - 2026-10-23 22:33 mode=full end='2026-10-23 22:31:59 ABORT no-dashboard after R_Inventory_by_Location' steps_done_total=70 (+1 this run) failed_keys=23 health=PASS CUL
 - 2026-10-24 23:17 recovered from '2026-10-24 23:16:58 ABORT no-dashboard-at-start' (health=PASS CUL)
 - 2026-10-24 23:17 mode=full end='2026-10-24 23:16:58 ABORT no-dashboard-at-start' steps_done_total=70 (+0 this run) failed_keys=23 health=PASS CUL
+- 2026-10-25 07:33 recovered from '2026-10-25 07:31:50 ABORT no-dashboard after R_Item_History' (health=PASS CUL)
+- 2026-10-25 07:33 mode=full end='2026-10-25 07:31:50 ABORT no-dashboard after R_Item_History' steps_done_total=71 (+1 this run) failed_keys=24 health=PASS CUL
+- 2026-10-25 22:35 recovered from '2026-10-25 22:34:43 ABORT no-dashboard after R_Lost_Stolen_or_Damaged' (health=PASS CUL)
+- 2026-10-25 22:35 mode=full end='2026-10-25 22:34:43 ABORT no-dashboard after R_Lost_Stolen_or_Damaged' steps_done_total=72 (+1 this run) failed_keys=25 health=PASS CUL

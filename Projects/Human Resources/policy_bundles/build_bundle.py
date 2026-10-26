@@ -92,7 +92,7 @@ def build(manifest_path):
             p = doc.add_paragraph(); r = p.add_run(f"→  {t}{tail}"); r.font.size = Pt(cf)
             p.paragraph_format.space_after = Pt(3)
     p = para(doc, f"Current manuals: Employee Handbook v{m['handbook']} and Policies & Procedures Manual v{m['pp']} — in Gusto under Documents. "
-                  "Questions: your Store Manager, Preston, or #ask-goldilocks.", 10, GREY, False, 4)
+                  "Questions: your Manager, the Market Manager, or #ask-goldilocks.", 10, GREY, False, 4)
     p.paragraph_format.space_before = Pt(10)
 
     # ---- one page per policy (house format, no per-policy signature; the packet ack covers them)

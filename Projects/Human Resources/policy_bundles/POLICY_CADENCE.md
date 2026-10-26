@@ -5,14 +5,14 @@ Set by Joshua 2026-10-21: "we don't want to continuously blast them with updates
 ## The rule
 - **Scope: EVERY new or changed staff-facing policy, procedure, guideline, standard, script, form instruction, manual revision or policy reminder — every department** (operations, loans, eBay, firearms, HR and pay, customer service, culture, compliance, training). Not just compliance.
 - **Nothing goes to staff the day it is approved.** It is added to `POLICY_QUEUE.md` (status `approved`) and waits for the next Policy Day. This binds every session, skill and scheduled task — policy-lifecycle, the compliance programs, the Preston assistant, HR, marketing, eBay, Academy.
-- **Policy Day = the first business day of each month.** Each employee gets ONE Gusto document (the Monthly Policy Update) and signs ONCE.
+- **Policy Day = the first business day of each month** (November 2026 only: Wed 11/4, the Academy launch — CEO 2026-10-25). Each employee gets ONE Gusto document (the Monthly Policy Update) and signs ONCE.
 - **One #policy-announcements post** on Policy Day — the same plain summary as page 1. No other policy posts or "reminder" posts during the month; reminders of existing rules ride in the next update's "What's new" list.
 - **Manuals** (Handbook, P&P) are revised in place as items are approved, but a new version is published only on Policy Day — at most one version bump a month. When a version changes, the update names it as NEW and that one signature is the Handbook & P&P acknowledgment for that version.
 
 ## How it is delivered (Joshua 2026-10-21: "we dont need docusign if we have fixed the login, we can upload directly to gusto")
 - **Signatures: Gusto.** The update PDF (`build_bundle.py`) goes up as ONE Gusto **Team document** with signature — current team members AND all future hires — using the proven `gusto-access` / policy-lifecycle Step 3 upload method. Everything lives in each employee's Gusto file next to the manuals and every earlier signature.
 - **Gusto sign-in is automatic:** Gusto is linked to Google sign-in (jdavis@fcfpawn.com). If Gusto has signed out, the runner clicks "Sign in with Google" — never a password or a code. If Gusto asks for a code, one line goes on Life OS/HUMAN_QUEUE.md and the send waits for the next run.
-- **Status:** read from Gusto itself (`/api/document_templates/<id>/requests` in the signed-in tab). Unsigned names go to Preston on the 15th.
+- **Status:** read from Gusto itself (`/api/document_templates/<id>/requests` in the signed-in tab). Unsigned names go to the Market Manager on the 15th (November 2026: Fri 11/6).
 - **Manuals:** a new Handbook / P&P version goes up the same day as view-only Team documents; the update's last page is the Handbook & P&P acknowledgment (HR-2026-04 Rev2 or its successor) whenever a version changes.
 - **New hires** inherit the current update automatically (Team document "future hires").
 - DocuSign is no longer used for Policy Day. (`docusign/` is kept as an archived fallback only.)
@@ -36,9 +36,23 @@ Set by Joshua 2026-10-21: "we don't want to continuously blast them with updates
 A change that cannot wait: a law or court order taking effect before the next Policy Day (e.g. the assault-firearm injunction lifting), a safety or security incident, or a regulator's instruction. Preston tells the stores directly that day; the written policy rides in the next update for signature.
 
 ## Acknowledgments vs. Records of Warning (Joshua 2026-10-21: "whether Preston asks or I do, all acks need to have a monthly cadence unless it's a record of warning")
-- **Every acknowledgment rides Policy Day** — one person or the whole team, a policy, a manual or a standard, no matter who asks (Joshua, Preston, any session or scheduled task). It becomes a POLICY_QUEUE.md row (with the person's name if it's for one person) and is signed in that month's update.
-- **On demand, same day:** Records of Warning (ROW) only — plus Action Plans (30/60/90, PIP), which are individual performance documents, not acknowledgments. Both go out as Gusto Individual documents.
+- **Every acknowledgment rides Policy Day** — one person or the whole team, a policy, a manual or a standard, no matter who asks (the CEO, the Market Manager, any session or scheduled task). It becomes a POLICY_QUEUE.md row (with the person's name if it's for one person) and is signed in that month's update.
 - Retired for on-demand use: the HR E-Sign Playbook's ACK form, its "one envelope per person for a team rollout" line, and its full Handbook/P&P ack (section 9). The weekly Gusto signature chase tasks stay off — the Policy Day runner owns reminders.
+
+## Records rail (CEO 2026-10-25)
+| Record | Rail | Where it is kept |
+|---|---|---|
+| Monthly acknowledgments (policies, manuals, standards, releases for everyone) | Policy Day — ONE Gusto **Team** document with signature (plus any named second Team document, e.g. the Nov 2026 voice release) | Each employee's Gusto Documents |
+| **ROW** — Record of Warning (Handbook, Corrective Action) | On demand, same day — Gusto **Individual** document with signature | That employee's Gusto file |
+| **ROC** — Record of Conversation (Handbook, Corrective Action: coaching record, one per visit, every employee who worked it signs) | On demand, same day — Gusto **Individual** document with signature, one per named employee | Each named employee's Gusto file |
+| Action Plans (30/60/90, PIP) | On demand, same day — Gusto Individual document with signature | That employee's Gusto file |
+
+DocuSign is retired for HR (kept only as the archived `docusign/` fallback; Bald Rock guest contracts are separate and unaffected).
+
+**How it works today (checked 2026-10-25):**
+- ROW / Action Plan: requested by the CEO or the Market Manager in #preston-claude; the "Preston assistant" task drafts it from the HR E-Sign Playbook (Drive `HR_ESIGN_PLAYBOOK.md`, id 1TwXRFcXLHnVIcUC6XH4eCC07zHhEpmyC — writing standard, STOP list, field limits) on the hosted blank forms (thevalleypawn.com `vp-row-form-v2-k7q2.pdf`, `vp-action-plan-form-v2-k7q2.pdf`) and sends it **through DocuSign**; the weekly "Gusto HR filing" task (`gusto_filing/GUSTO_FILING_RUNBOOK.md`) then uploads the signed PDF into the employee's Gusto file as a view-only document and archives it in Drive › Employee Files. The prompt change that moves ROW/Action Plans to Gusto Individual documents (`PRESTON_ASSISTANT_PROMPT_2026-10-21.md`) is written but not yet approved on the Mac.
+- ROC: written by hand by the Market Manager / Manager (blank form `vp-roc-form-v2-k7q2.pdf` on the website; summaries in #roc-<store>). The Playbook keeps ROCs out of Claude's scope (CEO 10/13), and nothing files a ROC into Gusto — the only ROC on disk is a loose PDF in Human Resources.
+- Gap: no working path exists today to send a ROW or ROC as a Gusto Individual document with signature — ROWs still go through DocuSign and are filed into Gusto afterward without a Gusto signature, and ROCs never reach Gusto at all.
 
 ## New hires
 Onboarding gets the current Handbook + P&P + the current Monthly Policy Update automatically (Gusto Team documents include "future hires") and the Academy — never back issues.

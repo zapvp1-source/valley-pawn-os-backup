@@ -67,18 +67,21 @@ SCHEMA = {
     "offered_loan_vs_buy": "true|false|null (sell/pawn calls only)", "staff_name": "first name of the employee on the call or empty",
     "service_rating": "1-5 or null (customer calls only)", "flags": "list from the FLAG LIST, empty if none",
     "summary": "one or two plain sentences, name the staff member", "quote": "one short verbatim line from the transcript that best shows the issue or the praise, or empty"}
-FLAGS = ["hold/extension past due after Oct 1", "promised callback", "excellent handling worth praising", "odd/weird conversation",
+FLAGS = ["past-due loan handled against policy", "promised callback", "excellent handling worth praising", "odd/weird conversation",
          "unverified caller given loan/account/collateral details", "stolen-property or police matters", "customer complaint or angry customer",
          "wrong or made-up policy/hours", "long hold", "personal call on store line", "low cash / can't fund", "FFL/background-check handling issues",
          "lost sale due to our process", "gossip or inappropriate talk on the line", "firearm details confirmed to unverified caller",
          "staff badmouthing company/coworkers/management", "price quote given by phone without seeing the item", "customer told to use the app instead of being helped"]
 POLICY = """Policy context (Full Circle Finance Inc DBA Valley Pawn, 5 Virginia stores):
-- Past-due timeline (Every Call Counts deck, 2026-10-23, slide 7): days 1-5 past due = grace period, no late fee (so "five-day grace period" is CORRECT policy, not a flag); late fee from day 6; days 16-75 the loan can be expired and only a manager can work with it; day 76+ expired, no exceptions. Staff may NOT promise a hold on a past-due loan, quote "two months", "60 days", "75 days and you're fine", or any date not read from Bravo; the extension or the payoff only, no partial payments. Payments and extensions BEFORE the due date are normal.
-- Account details (balance, items, due dates) only to the verified account holder (name + DOB or ID); never to a spouse, parent, friend or "calling for" someone, never to an unverified "police/ATF" caller — take a number and have a manager verify.
+- Loans (CEO decision 2026-10-25, supersedes the 10/24 deck reading): a loan is due on its due date. There is NO grace period — any mention of a "grace period" (e.g. "five-day grace period", "you have a few days of grace") to a customer is a FLAG ("wrong or made-up policy/hours"). A late fee applies on the 6th day past due — saying so is CORRECT. Internal timeline (staff only, read from Bravo, never quoted to customers as a promise): held through 30 days past due, eligible to pull on day 31, done by day 61; a first-payment default is expired at once. A customer asking how long we will hold it should hear "Your loan is due on its due date." Staff may NOT promise a hold on a past-due loan, quote "two months", "60 days", "75 days", "75 days and you're fine", or any hold/date not read from Bravo; payments (CEO correction 2026-10-25): the minimum payment is the extension (current charges, new 30-day term); a customer MAY pay more than the extension, in the store, and the extra goes toward principal (smaller loan, smaller next charge) — offering, explaining or taking a payment above the extension toward principal is CORRECT; promising or offering to take a payment SMALLER than the extension (e.g. "just put something on it", "pay $20 now and the rest Friday") is a FLAG; the payoff redeems the item. The MobilePawn app takes extensions only (debit card, $1.99 per payment); principal paydowns and payoffs are in store — telling a customer they can pay off or pay down in the app is a FLAG. Taking a card number by phone is a FLAG. Payments and extensions BEFORE the due date are normal.
+- FLAG "past-due loan handled against policy" (2026-10-25) is ONLY for a past-due/loan call that breaks the rules above: promising or agreeing to hold a past-due item, or giving any hold length or date not read from Bravo ("two months", "60 days", "75 days", "you're fine till...", "nothing gets pulled until..."); any promise that runs past day 61 past due; promising a hold on a first-payment default (a loan that never had a payment); offering or taking a payment smaller than the extension ("just put something on it", splitting the extension across paydays); a wrong late-fee quote (no late fee after day 5, a fee before the 6th day past due, or a rate/amount that is not read from Bravo/the ticket); telling the customer about a grace period. It is NOT a flag to: read the due date and days past due from Bravo, tell a customer inside the 30-day hold that the item is still here, note the day the customer says they will come in (that is the script), remind a customer before or on the due date, quote the extension or payoff from Bravo, or take an extension/payoff. Use this flag only when the transcript shows the violation; do not use it just because a loan is past due.
+- Account details (balance, items, due dates, loan status) only to the verified account holder — ALL THREE of full name + date of birth + the phone number on file must match — or to a person with a signed power of attorney on file. Never to a spouse, relative, parent, friend or someone "calling for" the holder otherwise, never to an unverified "police/ATF" caller — take a number and have a manager verify. Never confirm a firearm by phone (flag "firearm details confirmed to unverified caller"). Giving details after only a name, only a DOB, or name + DOB without the phone match is a FLAG ("unverified caller given loan/account/collateral details").
+- Police/ATF/law-enforcement callers: be friendly and cooperative, get the caller's name, badge number and department, then call back through the department's MAIN number (not a number the caller gives) before sharing ANY customer, loan or item information, and tell the Manager. Taking those details and calling back is CORRECT; giving customer/loan/item details to a caller who says they are police before that callback is a FLAG ("unverified caller given loan/account/collateral details") and also "stolen-property or police matters".
+- Want-list: Valley Pawn has NO want-list. For a request we cannot fill, staff take the caller's name and number and call them when one comes in (and may check the other four stores). Not taking a name and number on an unfilled request is "lost sale due to our process"; telling a customer they are "on our want-list" is not a flag by itself if a name and number were taken.
 - We do not take cell phones. Handguns 21+, long guns 18+. No firearm returns. 30-day warranty on retail. Layaway: deposit then a payment at least every 30 days.
 - Staff should ask qualifying questions on sell/pawn calls (brand, model, condition, what comes with it) and offer a loan as well as a buy. Phone price quotes without seeing the item are discouraged.
 - Hours: Culpeper/Roanoke/Waynesboro Mon-Fri 10-6, Sat 10-5; Harrisonburg/Lexington Mon Tue Thu Fri Sat 10-6 (closed Wed); all closed Sunday.
-- Payments, due dates and balances can also be handled in the free MobilePawn app (thevalleypawn.com/app)."""
+- The free MobilePawn app (thevalleypawn.com/app) takes extensions only, by debit card, $1.99 per payment; payoffs and payments toward principal are in the store."""
 
 
 # ---------------------------------------------------------------- helpers
@@ -428,7 +431,7 @@ def aggregate(rows):
                   "intents": collections.Counter(r.get("intent") for r in cu).most_common(6),
                   "flags": fl.most_common(14),
                   "staff": collections.Counter(r.get("staff_name") for r in cu if r.get("staff_name")).most_common(6),
-                  "holds_past_due": fl.get("hold/extension past due after Oct 1", 0),
+                  "holds_past_due": fl.get("past-due loan handled against policy", 0) + fl.get("hold/extension past due after Oct 1", 0),   # old label kept so pre-10/25 grade caches still count
                   "unverified": fl.get("unverified caller given loan/account/collateral details", 0) + fl.get("firearm details confirmed to unverified caller", 0),
                   "turned": [(r.get("item", "")[:30], r.get("turned_away_reason", "")[:40]) for r in cu if r.get("outcome") in ("turned_away_we_dont_take", "declined_price_or_condition")][:20]}
     return agg
@@ -438,11 +441,27 @@ def _ask_meta(prompt, system, max_tokens):
     """vp_ai.ask plus the stop reason (restart 2026-10-20: a narrative came back cut off at ~6.5k chars with
     no error — we need to know whether that was max_tokens). Same key, same endpoint, nothing else."""
     import vp_ai, urllib.request
-    body = {"model": MODEL, "max_tokens": max_tokens, "system": system, "messages": [{"role": "user", "content": prompt}]}
-    req = urllib.request.Request(vp_ai.API, data=json.dumps(body).encode(), method="POST", headers={
-        "content-type": "application/json", "x-api-key": vp_ai.key(), "anthropic-version": "2023-06-01"})
-    with urllib.request.urlopen(req, timeout=240) as r:
-        resp = json.load(r)
+    # 2026-10-25: every narrative since 10/24 hit max_tokens with only 1-4k chars of text — the output budget was being
+    # spent on non-text (thinking) blocks. Ask with thinking disabled and a larger budget; if the API rejects the
+    # thinking field, retry once without it. Block types are logged so the next failure is diagnosable.
+    import urllib.error
+    def _call(with_off):
+        body = {"model": MODEL, "max_tokens": max_tokens, "system": system, "messages": [{"role": "user", "content": prompt}]}
+        if with_off:
+            body["thinking"] = {"type": "disabled"}
+        req = urllib.request.Request(vp_ai.API, data=json.dumps(body).encode(), method="POST", headers={
+            "content-type": "application/json", "x-api-key": vp_ai.key(), "anthropic-version": "2023-06-01"})
+        with urllib.request.urlopen(req, timeout=600) as r:
+            return json.load(r)
+    try:
+        resp = _call(False)   # 10/25 test: the API returns 400 for thinking=disabled on this model, so just give it room
+    except urllib.error.HTTPError as e:
+        if e.code != 400:
+            raise
+        log("narrative: API error %s, retrying once" % e.code)
+        resp = _call(False)
+    kinds = collections.Counter(b.get("type") for b in resp.get("content", []))
+    log("narrative: content blocks %s" % dict(kinds))
     txt = "".join(b.get("text", "") for b in resp.get("content", []) if b.get("type") == "text")
     return txt, resp.get("stop_reason"), (resp.get("usage") or {}).get("output_tokens")
 
@@ -465,11 +484,12 @@ def narrative(since, until, st, agg, rows, tx_stats, partial_note, d_=None):
               "one 'Praise:' bullet last when the data supports it. Return ONLY JSON: {\"cross_store\": [{\"head\": str, \"body\": str}] (3-5 items), "
               "\"stores\": {\"CUL\": [{\"head\": str, \"body\": str}], \"HAR\": [...], \"WAY\": [...], \"LEX\": [...], \"ROA\": [...]}, "
               "\"texts\": [{\"head\": str, \"body\": str}] (2-4 items), \"top3\": [str, str, str] (the three things the owner should act on this week, one line each)}. "
-              "Keep every body under 70 words; the whole answer must stay under 2,500 words.")
+              "Keep every body under 70 words; the whole answer must stay under 2,500 words."
+              "\nCURRENT POLICY (2026-10-25) — describe a violation only against these rules; never state a rule that is not here (there is no 'no holds since Oct 1' rule):\n" + POLICY)
     for attempt in range(3):
         try:
             raw, stop, otok = _ask_meta("Write this week's review from these facts.%s\n\n%s" % ((" NOTE: " + partial_note) if partial_note else "", json.dumps(facts, default=str)[:180000]),
-                                        system, 12000)
+                                        system, 40000)
             log("narrative: stop_reason=%s output_tokens=%s chars=%d" % (stop, otok, len(raw)))
             if stop == "max_tokens":
                 raise ValueError("narrative cut off at max_tokens")
@@ -501,7 +521,7 @@ def html_doc(since, until, st, agg, tx, nar, n_rows, partial_note):
          row("Missed while open", [pct(st[s].get("miss_open", 0), st[s].get("in_open", 0)) for s in STORES]),
          row("Missed callers never reached by phone", [st[s].get("never", 0) for s in STORES]),
          row("Called back (median minutes)", ["%s (%s)" % (st[s].get("cb", 0), st[s].get("median_cb_min") if st[s].get("median_cb_min") is not None else "–") for s in STORES]),
-         row("Calls promising a hold on a past-due loan", [agg[s]["holds_past_due"] for s in STORES]),
+         row("Past-due loans handled against policy", [agg[s]["holds_past_due"] for s in STORES]),
          row("Account/firearm details given w/o a real ID check", [agg[s]["unverified"] for s in STORES]),
          row("Sell/pawn calls with qualifying questions", ["%d of %d" % (agg[s]["qualifying"], agg[s]["sell_calls"]) for s in STORES]),
          row("Callbacks promised / customers not helped", ["%d / %d" % (agg[s]["callback_promised"], agg[s]["no_help"]) for s in STORES]),
@@ -655,13 +675,14 @@ def _people_scrub(rows):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--since"); ap.add_argument("--until"); ap.add_argument("--render", action="store_true")
+    ap.add_argument("--week-dir", help="grade into this folder instead of Call Analysis/week_<since> (re-grades: copy the inputs there first, old grades stay untouched)")
     ap.add_argument("--max-calls", type=int); ap.add_argument("--no-pull", action="store_true"); ap.add_argument("--no-texts", action="store_true")
     a = ap.parse_args()
     if a.since and a.until:
         since, until = dt.date.fromisoformat(a.since), dt.date.fromisoformat(a.until)
     else:
         since, until = last_week()
-    d = os.path.join(CA, "week_%s" % since.isoformat()); os.makedirs(d, exist_ok=True)
+    d = a.week_dir or os.path.join(CA, "week_%s" % since.isoformat()); os.makedirs(d, exist_ok=True)
     log("week %s..%s -> %s" % (since, until, d))
     notes = []
     ok = pull(since.isoformat(), until.isoformat(), d, not a.no_pull)

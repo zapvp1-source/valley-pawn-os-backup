@@ -1,7 +1,14 @@
 # Valley Pawn Training Program — Master Plan (v2, 2026-09-28)
 
-**Domain:** 1 — Full Circle Finance Inc DBA Valley Pawn · **Owner:** Joshua · **Operator:** Preston + store managers · **Built/measured by:** automation
+**Domain:** 1 — Full Circle Finance Inc DBA Valley Pawn · **Owner:** Joshua · **Operator:** the Market Manager + Managers · **Built/measured by:** automation
 **Supersedes:** v1 of this file (same day). Joshua: *"super uninteractive and academic… we want robust engaging content so when a new hire comes on they can be put in front of a screen, take the modules, take the tests so we know they master the material, then have scorecards and accountability."*
+
+> **CEO decisions 2026-10-25 (these override anything below):**
+> - **Titles (per Gusto):** Sales and Loan Associate, Sales and Loan Representative, Manager, Market Manager, CEO. No assistant managers. Chain of command: Associate/Representative → Manager → Market Manager → CEO. Level 7 certification covers Associates and Representatives.
+> - **Contacting the Market Manager:** messages go in Slack (never a personal text); calls go to the Market Manager's Zoom line, 540-202-4200. A call-out is a voice call to the Market Manager at least 2 hours before the shift; a text or Slack message doesn't count.
+> - **Training happens in the store, on the clock — never at home.**
+> - **No AI phone sims.** The phone gate is lesson 7.3 (the phone standard) plus five practice calls run and scored by the Manager.
+> - **Academy seats rotate 5 learners at a time, newest hire first.** When a learner completes their assigned path or leaves, the seat goes to the newest hire waiting.
 
 ---
 
@@ -13,17 +20,17 @@ A new hire sits down at the store computer on day one, logs into **Valley Pawn A
 
 ## What the new hire actually experiences
 
-**Day 1, first hour.** Manager logs them into the Academy on the store PC (or their phone — mobile app). The dashboard shows one thing: *Level 1 — Welcome to Valley Pawn*. A 4-minute video from Joshua on who we are and what "be about the customer" means. Then the handbook and P&P acknowledgment (they sign in Gusto — link inside the lesson). Then the Basic Gun Safety 101 class (free, ~40 min) with the certificate number typed into the Academy so we can verify it. Level 1 is done by end of day 3 or employment ends (HR-2026-05).
+**Day 1, first hour.** Manager logs them into the Academy on the store PC (training happens in the store, on the clock — never at home). The dashboard shows one thing: *Level 1 — Welcome to Valley Pawn*. A 4-minute video from Joshua on who we are and what "be about the customer" means. Then the handbook and P&P acknowledgment (they sign in Gusto — link inside the lesson). Then the Basic Gun Safety 101 class (free, ~40 min) with the certificate number typed into the Academy so we can verify it. Level 1 is done by end of day 3 or employment ends (HR-2026-05).
 
 **Days 2–30.** Levels 2–7 unlock one at a time. Each lesson is 5–10 minutes, built the same way so it's never a wall of text: a narrated video (screen recording of Bravo doing the real thing, or a slide-narrated micro-lesson), a **real recorded call** from our own library ("listen to Logan quote the Xbox without seeing it"), then a **scenario test** — "a caller gives a surname and asks what's in pawn under it; what do you say?" — with wrong answers explained, not just marked wrong. Pass at 80% to unlock the next lesson; fail twice and the manager gets a nudge to sit with them.
 
 **Hands-on checks.** Some things can't be tested on a screen — testing gold, running a 4473, counting the drawer. Those lessons end with a *Floor Check*: the manager watches them do it and taps ✅ in the Academy (or replies ✅ to the Slack nudge). Screen test + floor check = mastered.
 
-**Practice before the phone goes live.** An AI role-play sim: the trainee "answers" a simulated customer call (text or voice), handles it, and gets scored against the phone standard (verify before you disclose, quote or capture, never confirm a firearm on premises). Five passed sims before they take a live call.
+**Practice before the phone goes live.** No AI sims (CEO 2026-10-25). The trainee passes lesson 7.3 (the phone standard), then the Manager runs five practice calls and scores each against the standard (verify before you disclose, quote or capture, never confirm a firearm on premises). Five passed practice calls before they take a live call.
 
 **Days 31–90 and after.** Level 8 (advanced: diamonds, title pawns, delayed transfers, service recovery) and a monthly 10-minute module built from that month's best and worst real calls. Annual recerts (gun safety by Jan 31, harassment/EEO, data security) are just Academy courses with due dates. Managers have their own track.
 
-**What they see the whole time:** a progress bar, their score, badges per level, a leaderboard by store (completion and score, positive only), and a certificate at Level 7 — *Certified Valley Pawn Sales & Loan Associate* — which is also the trigger for keys eligibility and the 90-day review.
+**What they see the whole time:** a progress bar, their score, badges per level, a leaderboard by store (completion and score, positive only), and a certificate at Level 7 — *Certified Valley Pawn Sales & Loan* (Associates and Representatives) — which is also the trigger for keys eligibility and the 90-day review.
 
 ---
 
@@ -31,17 +38,17 @@ A new hire sits down at the store computer on day one, logs into **Valley Pawn A
 
 | Level | Name | Lessons (each = video + call clip + scenario test; ⚙ = also has a Floor Check) | Gate |
 |---|---|---|---|
-| 1 | **Welcome & Rules of the Road** (day 1–3) | Who we are · Handbook/P&P acknowledgment (Gusto) · Basic Gun Safety 101 certificate · Systems: Bravo, Slack, #ask-handbook, Chekkit · What you never say on the phone · Cash & drawer basics ⚙ | Must complete by day 3 |
+| 1 | **Welcome & Rules of the Road** (day 1–3) | Who we are · Handbook/P&P acknowledgment (Gusto) · Basic Gun Safety 101 certificate · Systems: Bravo, Slack, #ask-goldilocks, Chekkit · What you never say on the phone · Cash & drawer basics ⚙ | Must complete by day 3 |
 | 2 | **Open, Close, Count** | Opening procedure ⚙ · Closing procedure ⚙ · Drawer balancing 2×/day ⚙ · Safe & funds verification · Jewelry daily count ⚙ | Before any opening/closing shift |
 | 3 | **The Loan** | How a pawn loan works (interest vs principal, grace vs expiration, the four permitted charges) · Qualifying the customer · Writing the ticket in Bravo — the 10 required fields ⚙ · Pawn contract closing ⚙ · Payments, renewals, redemptions ⚙ · The past-due call | Before writing loans unsupervised |
 | 4 | **Buying & Pricing** | Buying vs loaning · What we pay the most for (Preston's steer list) · Pull list / pricing ⚙ · Statement of ownership & stolen-property inquiries · Police report deadline · Employee purchase rules | Before buying unsupervised |
 | 5 | **Gold, Jewelry, Stones** | Testing gold & silver ⚙ · Melt math and the spot sheet · Scrap bucket naming · Jewelry category standard · Diamond grading basics ⚙ · Counterfeit tells | Before quoting precious metal |
 | 6 | **Firearms** | FFL basics & the A&D book · 4473 walkthrough ⚙ · NICS, delays, denials ⚙ · Receiving an FFL transfer ⚙ · Layaway firearms · Under-21 handgun rule · Never on the phone | **Hard gate**: no firearm transaction until Level 6 + Floor Checks + certificate verified |
-| 7 | **Sell & Serve** | Sales framework (merchandising, pitch, objections) · Free layaway & warranty · The phone standard (quote-or-capture) + 5 passed role-play sims · Chekkit & customer loyalty · Google reviews · eBay listing ⚙ · eBay shipping ⚙ · Service recovery | → **Certified Sales & Loan Associate** |
+| 7 | **Sell & Serve** | Sales framework (merchandising, pitch, objections) · Free layaway & warranty · The phone standard (quote-or-capture) + five practice calls scored by the Manager · Chekkit & customer loyalty · Google reviews · eBay listing ⚙ · eBay shipping ⚙ · Service recovery | → **Certified Sales & Loan Associate** |
 | 8 | **Advanced / ongoing** | Title pawns (CEO approval) · Delayed transfers · Watches & high-end brands · Monthly module from real calls · Annual recerts | Rolling |
 | M | **Manager track** | Weekly loan/layaway review · Aged inventory · Discount & sold-margin reviews · Coaching-pack huddles · Hiring pipeline · Bravo user admin · Floor-Check standards | Managers + MITs |
 
-Every lesson cites its P&P section so the Academy and #ask-handbook never disagree. Content sources are all ours: P&P v2026.8, Handbook v2026.5, Preston's knowledge base (219+ verified rules), the teachable-call library (22 clips and growing), Preston's Sales Training Framework, the PawnTrain course lists as an outline check.
+Every lesson cites its P&P section so the Academy and #ask-goldilocks never disagree. Content sources are all ours: P&P v2026.9, Handbook v2026.8, Preston's knowledge base (219+ verified rules), the teachable-call library (22 clips and growing), Preston's Sales Training Framework, the PawnTrain course lists as an outline check.
 
 ---
 
@@ -68,7 +75,7 @@ Store "branches" in TalentLMS = our 5 stores, so leaderboards and reports come o
 | **Narrated micro-lessons** (2–4 min) | Claude writes script + slides (brand studio look), generates narration, renders video | Concepts: how a loan works, the four charges, melt math |
 | **Real call clips** (30–90 s) | Already pulled from the Zoom library; new ones nominated weekly | Phone standard, sales, service recovery, collections |
 | **Scenario tests** (5–8 questions) | Written from the P&P and the actual mistakes in the call review; every wrong answer has a one-line "why" | Every lesson, 80% pass |
-| **AI role-play sim** | A "customer" the trainee handles; scored against the phone standard | Level 7 phone gate |
+| ~~AI role-play sim~~ | Dropped 2026-10-25: no sims. The Manager runs and scores five practice calls | Level 7 phone gate |
 | **Joshua on camera** (once) | 4-min welcome; 2-min "why the phone matters" | Level 1 |
 | **Floor Checks** | Manager taps ✅ | Anything physical |
 
@@ -82,7 +89,7 @@ Preston's total time: record ~20 walkthroughs (one afternoon), approve each less
 
 **Gates that make it real (recommended; written into the lessons unless overruled):**
 - Level 1 by day 3 or employment ends (HR-2026-05, already drafted).
-- No solo shift until Level 2; no unsupervised loans until Level 3; no buys until 4; no precious-metal quotes until 5; **no firearm transaction until Level 6**; no live phone until the sims are passed.
+- No solo shift until Level 2; no unsupervised loans until Level 3; no buys until 4; no precious-metal quotes until 5; **no firearm transaction until Level 6**; no live phone until lesson 7.3 is passed and the Manager has scored five practice calls.
 - Keys at 90 days *and* Certified.
 - The 90-day review reminder goes to Preston with the Academy record attached; a manager whose new hire is >7 days behind gets it on their weekly goals.
 - Manager accountability: Floor Checks left pending >3 days show on the scorecard by manager name.
@@ -95,7 +102,7 @@ Preston's total time: record ~20 walkthroughs (one afternoon), approve each less
 ## Build order
 
 **Week 1 (Sep 28 – Oct 4) — stand it up.**
-1. TalentLMS account (money — Joshua's card; the pilot can run on the free tier for 5 users), branded, 5 store branches, 18 users imported from `hr/ROSTER.json`, store-PC and mobile-app logins.
+1. TalentLMS account (money — Joshua's card; the pilot can run on the free tier for 5 users; seats rotate 5 at a time, newest hire first), branded, 5 store branches, 18 users imported from `hr/ROSTER.json`, store-PC and mobile-app logins.
 2. Curriculum locked in `CURRICULUM.md` (this file's table, expanded to lesson-level with P&P/KB citations).
 3. Level 1 built complete: welcome video script for Joshua, acknowledgment + gun-safety lessons, phone-rules lesson + test, drawer basics.
 4. Preston's shot list for the ~20 Bravo walkthroughs; he records at his pace.
@@ -105,8 +112,8 @@ Preston's total time: record ~20 walkthroughs (one afternoon), approve each less
 6. Pilot on the newest hires (Jacob Cox, Camden Ahern) + one manager; fix what confuses them.
 7. `academy-sync` native agent: new Gusto hire → Academy user + Level 1 assigned + due dates; roster changes mirrored. `academy-scorecard` (Mon) to Joshua's DM. Nudges: day-3 gate escalation to Preston + Joshua only.
 
-**Weeks 4–6 (Oct 19 – Nov 8) — Levels 5–7, the sims, the gates.**
-8. Gold/Jewelry, Firearms, Sell & Serve; role-play sim; certificate; Floor Check flow (Slack ✅ → API).
+**Weeks 4–6 (Oct 19 – Nov 8) — Levels 5–7, the gates.**
+8. Gold/Jewelry, Firearms, Sell & Serve; manager-scored practice calls (no sims); certificate; Floor Check flow (Slack ✅ → API).
 9. Whole team assigned; current staff get Level 1 by 10/24 (cure date) and Levels 2–7 as a 60-day catch-up, tested — this is where we find who actually knows what.
 10. Call-review pipeline relaunched (its three blockers fixed) so the monthly module and the outcome scoreboard run.
 

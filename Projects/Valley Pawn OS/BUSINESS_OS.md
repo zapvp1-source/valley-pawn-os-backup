@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-10-24
+# LIVE STATE - auto-refreshed 2026-10-25
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -213,34 +213,36 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-10-24 | Valley Pawn OS | - |
-| 2026-10-24 | Unified Search | - |
-| 2026-10-24 | Business Dashboard Website | - |
-| 2026-10-24 | Bravo Data Extraction | STATUS.md |
-| 2026-10-23 | eBay Customer Campaign | - |
-| 2026-10-23 | Zoom Call Pipeline | - |
-| 2026-10-23 | Website | - |
-| 2026-10-23 | Valuation Core | README.md |
-| 2026-10-23 | Training Program | STATUS.md |
+| 2026-10-25 | Valley Pawn OS | - |
+| 2026-10-25 | Unified Search | - |
+| 2026-10-25 | Life OS | - |
+| 2026-10-25 | Compliance | - |
+| 2026-10-25 | Business Dashboard Website | - |
+| 2026-10-25 | Bravo Data Extraction | STATUS.md |
+| 2026-10-24 | eBay Customer Campaign | - |
+| 2026-10-24 | Zoom Call Pipeline | - |
+| 2026-10-24 | Website | - |
+| 2026-10-24 | Valuation Core | README.md |
+| 2026-10-24 | Training Program | STATUS.md |
+| 2026-10-24 | Sold Margin Review | STATUS.md |
+| 2026-10-24 | Short Term Rental Optimization | - |
+| 2026-10-24 | Refine Social Media | - |
+| 2026-10-24 | Quickbooks Set UP | - |
+| 2026-10-24 | Preston Knowledge Base | - |
+| 2026-10-24 | Precious Metals Settlements | - |
+| 2026-10-24 | Pawn Walks | STATUS.md |
+| 2026-10-24 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-10-24 | Human Resources | - |
+| 2026-10-24 | Health Optimization | STATUS.md |
+| 2026-10-24 | Discount Outlier Review | STATUS.md |
+| 2026-10-24 | Daily Funds Verification | - |
+| 2026-10-24 | Call Analysis | - |
+| 2026-10-24 | Bonus Program | - |
 | 2026-10-23 | Taxes 2026 | - |
-| 2026-10-23 | Sold Margin Review | STATUS.md |
-| 2026-10-23 | Refine Social Media | - |
-| 2026-10-23 | Quickbooks Set UP | - |
 | 2026-10-23 | Preston Time Review | STATUS.md |
-| 2026-10-23 | Preston Knowledge Base | - |
-| 2026-10-23 | Precious Metals Settlements | - |
-| 2026-10-23 | Pawn Walks | STATUS.md |
-| 2026-10-23 | Life OS | - |
-| 2026-10-23 | Jewelry Count Reconciliation | STATUS.md |
-| 2026-10-23 | Human Resources | - |
-| 2026-10-23 | Health Optimization | STATUS.md |
 | 2026-10-23 | Email Refinement | - |
-| 2026-10-23 | Discount Outlier Review | STATUS.md |
-| 2026-10-23 | Daily Funds Verification | - |
-| 2026-10-23 | Compliance | - |
 | 2026-10-23 | Communcations | - |
 | 2026-10-22 | Knowledge Harvest | - |
-| 2026-10-22 | Bonus Program | - |
 | 2026-10-22 | Ask Valley Pawn | STATUS.md |
 | 2026-10-22 | Ai Optimized Marketing | - |
 | 2026-10-21 | mail-brief | - |
@@ -248,11 +250,9 @@ below disagrees with this block, THIS BLOCK WINS.
 | 2026-10-21 | _scratch | - |
 | 2026-10-21 | Valley Pawn Studios | STATUS.md |
 | 2026-10-21 | Solaterra Site | - |
-| 2026-10-21 | Short Term Rental Optimization | - |
 | 2026-10-21 | MobilePawn Participation | README.md |
 | 2026-10-21 | Admin Assitant | STATUS.md |
 | 2026-10-20 | Sales Tax | STATUS.md |
-| 2026-10-20 | Listing Management | STATUS.md |
 
 <!-- LIVE-STATE:END -->
 

@@ -501,6 +501,13 @@ Hard rules:
 - Do not re-propose anything already in the policy queue list provided (match by meaning). You may reference it.
 - Prefer few, high-value items with counts over many thin ones. Rank by how often it happened x risk
   (compliance/legal/firearms/money first, then customer experience, then convenience).
+- CEO decisions (2026-10-25) are settled policy — never propose anything that contradicts them, and treat any
+  source that does as a contradiction to fix: (1) a loan is due on its due date; we NEVER mention a grace period to
+  anyone; late fee on the 6th day past due; internal timeline (staff only, read from Bravo): held through 30 days past
+  due, pull eligible day 31, done by day 61, first-payment default expired at once; customers asking how long we will
+  hold it hear "Your loan is due on its due date"; never "two months", "60 days", "75 days". (2) Account details only
+  to the verified account holder (full name + date of birth + phone number on file — all three) or a person with a
+  signed power of attorney on file; never a spouse/relative/friend otherwise; never confirm a firearm by phone.
 - Output ONLY one JSON object, no prose."""
 
 PROMPT = """WINDOW: {start} to {end}

@@ -1,5 +1,10 @@
 # Training Program — STATUS
 
+## 2026-10-25 — Joshua's audit decisions applied (see Valley Pawn OS/CHANGELOG 2026-10-25)
+- Launch Wed 11/4 (managers' meeting; staff log in that week). Seats rotate 5 at a time, newest hire first (Joshua handles TalentLMS seats). Training in store, on the clock.
+- Lessons revised in lessons/ + lessons_target_20261028/; NEW L2-06 + L3-07. 10/28 run (trig_01JGmTUwtBfcXRkVShJcSgkr) voices ~90k chars and uploads 67 changed + 2 new units (needs TalentLMS signed in). Harvest edits ON HOLD for Joshua.
+- Open for Joshua: academy/DECISION_TRIAGE_2026-10-25.md (7 questions, defaults applied), academy/HARVEST_FOR_CEO_2026-10-25.md.
+
 **Read `TRAINING_PROGRAM_MASTER_PLAN.md` first.** Resume from the build order there; never restart.
 
 ## 2026-10-24 — LAUNCH DATE SET: Wednesday, November 4, 2026 (the in-person team meeting)

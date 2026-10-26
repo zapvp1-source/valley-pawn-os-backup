@@ -64,3 +64,16 @@ Posts edited (APPLIED):
 - 6ad6642b61948b67551b9ee0 Culpeper FB: vague cold/market lines → added "low 30s with patchy frost and fog ... mid 60s" and "Culpeper Downtown Farmers Market ... Oct 31, 7:30 AM to noon, Culpeper Baptist Church lot, 318 S. West Street"
 Left as-is (verified or evergreen/climatological): GBP_Roanoke, Harrisonburg FB, GBP_Harrisonburg, GBP_Culpeper, Lexington FB, GBP_Lexington, Waynesboro FB.
 Unverifiable: none. Published-wrong: none.
+
+## 2026-10-25 07:45 ET — daily fact-check (window: next 36h)
+Posts checked: 10 (all scheduled Sun 10/25 10:45 AM; no other posts in window). 5 with dated/forecast claims re-verified this morning; 5 GBP/FB climatological or landmark posts left as evergreen (GBP_Culpeper, GBP_Roanoke, GBP_Harrisonburg, GBP_Lexington, Harrisonburg FB).
+Claims verified:
+- Roanoke — NWS 7:30 AM 10/25: now 42F, today sunny high 66, tonight low 38 patchy fog (no frost), Mon sunny high 73 — https://forecast.weather.gov/zipcity.php?inputstring=Roanoke%2CVA&Go2=Go
+- Culpeper — NWS 6:27 AM 10/25: now 34F, widespread frost before 9am, patchy fog 8-10am, high 66 — https://forecast.weather.gov/zipcity.php?inputstring=Culpeper%2CVA&Go2=Go (post's "low 30s, patchy frost and fog, mid 60s" holds)
+- Culpeper Downtown Farmers Market final Saturday Oct 31, 7:30-12, 318 S. West St, no cancellation posted — https://culpeperdowntown.com/events/farmers-market/
+- Waynesboro — NWS 6:27 AM 10/25: now 33F, patchy fog 8-10am, high 63 — https://forecast.weather.gov/zipcity.php?inputstring=Waynesboro%2CVA&Go2=Go (cold-morning/fog post holds)
+- Waynesboro November Harvest Market Nov 7, 9-1, 215 W Main St — https://www.visitwaynesboro.com/events/november-harvest-market-november-7/ (Nov 14/21 and Oct 31 regular-season end per 10/24 sources, unchanged)
+- VMI Family Weekend Oct 23-25, 2026, no cancellation notice — https://www.vmi.edu/cadet-life/events-and-traditions/family-weekend/ (Lexington FB "wraps up today" holds)
+Posts edited (APPLIED):
+- 6ad664f6739ecf58fa8ed26c Roanoke FB: "climbs to about 60 ... patchy frost possible early Monday, so the windshield scraper's earning its spot" (outdated — forecast now high 66, low 38, no frost) → "climbs to the mid 60s under sunny skies, and Monday looks even nicer, sunny and up near 73"
+Unverifiable: none. Published-wrong: none.
