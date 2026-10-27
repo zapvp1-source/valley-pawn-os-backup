@@ -150,10 +150,25 @@ fi
 # post on 9/21 and 9/28. Pull the month-to-date range too (same primitive the 9/21 fix used by hand).
 if [ $RENDER -eq 0 ]; then
   MTD_FIRST=$(date +%Y-%m-01); [ "$(date +%u)" = 1 ] && MTD_FIRST=$(date -v-1d +%Y-%m-01)   # Monday run -> Sunday's month
-  if bash "$BIN/bravo_pull.sh" employee-activity "$MTD_FIRST" CUL,HAR,LEX,ROA,WAY "monday-emp-mtd-$(date +%Y%m%d-%H%M)" >>"$VLOG/$AGENT.log" 2>&1; then
+  MTD_ID="monday-emp-mtd-$(date +%Y%m%d-%H%M)"
+  bash "$BIN/bravo_pull.sh" employee-activity "$MTD_FIRST" CUL,HAR,LEX,ROA,WAY "$MTD_ID" >>"$VLOG/$AGENT.log" 2>&1
+  # 2026-10-26: Monday 06:01 LEX cell failed (UIA "File path LayoutItem not found") while the other 4 succeeded,
+  # the batch was "partial", and #employee-performance held all day. Retry every failed store ONCE, alone,
+  # before giving up (same rule as bravo-daily-gl). Exit status of bravo_pull is not enough: read the cells.
+  MTD_BAD=$("$PY" -c 'import json,sys
+try: d=json.load(open(sys.argv[1],encoding="utf-8-sig"))
+except Exception: print("CUL,HAR,LEX,ROA,WAY"); sys.exit()
+print(",".join(c.get("store","") for c in d.get("cells",[]) if c.get("status")!="success"))' "$BRAVO/results/$MTD_ID.result.json")
+  for ST in $(echo "$MTD_BAD" | tr ',' ' '); do
+    vlog "MTD employee-activity: $ST failed — solo retry"
+    bash "$BIN/bravo_pull.sh" employee-activity "$MTD_FIRST" "$ST" "$MTD_ID-retry-$ST" >>"$VLOG/$AGENT.log" 2>&1 \
+      && "$PY" -c 'import json,sys; d=json.load(open(sys.argv[1],encoding="utf-8-sig")); sys.exit(0 if all(c.get("status")=="success" for c in d.get("cells",[])) and d.get("cells") else 1)' "$BRAVO/results/$MTD_ID-retry-$ST.result.json" \
+      && MTD_BAD=$(echo ",$MTD_BAD," | sed "s/,$ST,/,/; s/^,//; s/,$//")
+  done
+  if [ -z "$MTD_BAD" ]; then
     vlog "MTD employee-activity refreshed from $MTD_FIRST"
   else
-    ledger "$AGENT" "The Monday pull could not refresh month-to-date employee activity, so the Employee Sales Rankings post will hold." "no"
+    ledger "$AGENT" "The Monday pull could not refresh month-to-date employee activity for $MTD_BAD, so the Employee Sales Rankings post will hold." "no"
   fi
 fi
 # 2026-10-02: month-to-date End-of-Month workbooks for the weekly store rankings (#store-performance).

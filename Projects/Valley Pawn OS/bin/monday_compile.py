@@ -132,6 +132,8 @@ def main():
                        env=dict(os.environ, VP_TASK="monday-store-rankings"))
     if render:
         print("=== #store-performance (exit %d) ===\n%s%s" % (rc, out[:4000], err.strip()[-300:]))
+    elif rc == 0 and "already posted" in out:
+        lines.append("⏭️ Store rankings — already posted today")
     elif rc == 0:
         lines.append("✅ Store rankings — posted to #store-performance")
     elif rc == 2:   # missing files OR the 2026-10-12 validity/sanity gate — say which, never post

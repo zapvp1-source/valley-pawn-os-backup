@@ -77,3 +77,9 @@ Claims verified:
 Posts edited (APPLIED):
 - 6ad664f6739ecf58fa8ed26c Roanoke FB: "climbs to about 60 ... patchy frost possible early Monday, so the windshield scraper's earning its spot" (outdated — forecast now high 66, low 38, no frost) → "climbs to the mid 60s under sunny skies, and Monday looks even nicer, sunny and up near 73"
 Unverifiable: none. Published-wrong: none.
+
+## 2026-10-26 07:40 ET — daily fact-check (36h window)
+- Posts checked: 0 — Publer returned 0 SCHEDULED posts through 2026-10-27 19:40 ET (also 0 scheduled and 0 drafts through 2026-11-05).
+- Publer connectivity confirmed: 26 published (10/23–10/25) and 3 failed (BrandIG, 10/23–10/24) posts returned on the same call.
+- Claims verified: 0. Posts edited: 0. Unverifiable: none.
+- Note: the scheduled queue is empty — nothing is lined up to post in the next 10 days.

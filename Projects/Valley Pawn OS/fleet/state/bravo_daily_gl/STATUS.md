@@ -1,6 +1,6 @@
 # Daily Bravo -> QuickBooks — status
 
-Updated 2026-10-25 03:15 ET
+Updated 2026-10-26 03:15 ET
 
 - Store-day entries posted: 78 (from 2026-10-01)
 - Newest day posted: 2026-10-24

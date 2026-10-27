@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-10-26 01:13 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-10-26 09:33 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -56,7 +56,7 @@ words in Slack, with a permalink to every source.
 SECTION: PRECIOUS METALS - MELT MATH & PAY PERCENTAGES
 ==============================================================================
 
-### [HIGH] approval-form-melt-vs-resale
+### [VERIFIED] approval-form-melt-vs-resale
 RULE: On large gold buys the approval worksheet dollar amount is the melt value (worst case), with resale noted as roughly 3x melt; the melt number, not a retail multiple, is what Preston approves against — except where quality diamonds are involved.
 PRESTON SAID: "Melt is 6200. There are diamonds involved. We could possibly get triple the melt value in best case scenario with diamonds. Our system is set to sticker plain gold at double the value it melts for. The sticker price in my opinion isn't not as important as the melt value with the exception of quality diamonds when it comes to me approving the worksheet value. We have a guaranteed 6200 in scrap on this deal."
 SOURCE: DM Joshua<->Preston (D03C7RBGY56) | 2025-10-19 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1760881876731899
@@ -370,7 +370,7 @@ id: return-verify-stone-not-swap-a2ed3b98
 SECTION: JEWELRY, WATCHES & CASE OPERATIONS
 ==============================================================================
 
-### [HIGH] aged-jewelry-scrap-trigger
+### [VERIFIED] aged-jewelry-scrap-trigger
 RULE: 2024-01 policy: jewelry over 1 year is separated as clearance and marked down 30% off the Bravo estimator price (firm), and scrapped at 2 years.
 PRESTON SAID: "All jewelry over 1 year old is to be separated from other jewelry in a very clear manner and marked as clearance.
 
@@ -378,29 +378,33 @@ Prices are to be marked down on the tag (change the price) by 30% from the Bravo
 
 Once 2 years of age, this jewelry is to be scrapped."
 SOURCE: #general (C03BETSS669) | 2024-01-03 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1704290400624789
+PRESTON'S CORRECTION (2026-10-26): Aged policy is anything over 1 year to be marked down 30%. Jewelry over 1 year and 6 months is to be scrapped. Deadline for markdowns is still the 15th for each month.
 !! CONFLICT: Superseded twice — see the two entries below. All three thresholds (2 yr, 1 yr + 6 mo, 1.5 yr) exist in Preston's own words at different dates.
 id: aged-jewelry-scrap-trigger-e74402f6
 
-### [HIGH] aged-jewelry-scrap-trigger
+### [VERIFIED] aged-jewelry-scrap-trigger
 RULE: 2024-07 policy: jewelry marked down 30% once aged over 1 year, moved to clearance for 6 months, then scrapped if unsold; completed no later than the 15th of each month. Jewelry markdowns do NOT compound (unlike general merchandise at 25%/month).
 PRESTON SAID: "Jewelry will be marked down 30% once it is aged over 1 year and will be moved to clearance for 6 months and then scrapped if it does not sell. This is to be completed no later than the 15th of each month.
 
 Jewelry is not going to be compoundly marked down. Only mark down new jewelry items each month and move them to clearance."
 SOURCE: #policy-announcements (C03BHQ9RLR0) | 2024-07-13 | https://valleypawnworkspace.slack.com/archives/C03BHQ9RLR0/p1720877387354809
+PRESTON'S CORRECTION (2026-10-26): Aged policy is anything over 1 year to be marked down 30%. Jewelry over 1 year and 6 months is to be scrapped. Deadline for markdowns is still the 15th for each month.
 !! CONFLICT: See the 2-year and 1.5-year versions.
 id: aged-jewelry-scrap-trigger-15acbe7a
 
-### [HIGH] aged-jewelry-scrap-trigger
+### [VERIFIED] aged-jewelry-scrap-trigger
 RULE: Operating rule as Preston enforces it in 2025-2026: all jewelry over 1.5 years old is to be scrapped each month.
 PRESTON SAID: "Reminder to everyone, all jewelry over 1.5 years old is to be scrapped each month"
 SOURCE: #aged-inventory-review (C04NGH4FF35) | 2025-03-22 | https://valleypawnworkspace.slack.com/archives/C04NGH4FF35/p1742665149906479
+PRESTON'S CORRECTION (2026-10-26): Aged policy is anything over 1 year to be marked down 30%. Jewelry over 1 year and 6 months is to be scrapped. Deadline for markdowns is still the 15th for each month.
 !! CONFLICT: Coexists with the 2-year (2024-01) and 1-year-plus-6-months (2024-07) statements above.
 id: aged-jewelry-scrap-trigger-d46cedeb
 
-### [HIGH] aged-jewelry-scrap-trigger
+### [VERIFIED] aged-jewelry-scrap-trigger
 RULE: Preston reads low aged-jewelry percentages as evidence a store is scrapping before the 1.5-year mark, and audits that stores are actually scrapping aged jewelry monthly.
 PRESTON SAID: "Waynesboro jewelry looks to be in a great spot. Indicates good management or scrapping items before the 1.5 year mark. – Roanoke has highest jewelry percent, ensure clearance has its own section and easily identifiable from other jewelry. Verify all aged items over 1.5 years are getting scrapped each month."
 SOURCE: DM Joshua<->Preston (D03C7RBGY56) | 2026-05-11 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1778509712947879
+PRESTON'S CORRECTION (2026-10-26): No store should be scrapping jewelry that is sellable before 1.5 years of age without approval from Preston.
 id: aged-jewelry-scrap-trigger-3f1850f7
 
 ### [HIGH] silver-jewelry-vs-flatware-yield
@@ -749,19 +753,19 @@ id: buyer-network-coin-buyer-90--413e8884
 SECTION: DEAL JUDGMENT, LOANS & APPROVALS
 ==============================================================================
 
-### [HIGH] approval-backup-and-detailed-notes
+### [VERIFIED] approval-backup-and-detailed-notes
 RULE: Approval requests must include DETAILED notes. When Preston is unavailable, Sandi Cole is the backup approver and is in the funds channels for over-$1k worksheet approvals.
 PRESTON SAID: "I will be on vacation all next week. If anyone needs an approval please reach out to Sandi! Her number is (540) 718-9416. When sending approvals please include DETAILED notes in the request. She has been added to the funds channels also to be involved with the over 1k worksheet approvals."
 SOURCE: #general | 2025-06-14 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1749917861277259
 id: approval-backup-and-detailed-b3688245
 
-### [HIGH] approval-form-1000-plus
+### [VERIFIED] approval-form-1000-plus
 RULE: Transactions of $1,000 or more require following the approval procedure, which includes filling out a form.
 PRESTON SAID: "And then just following the procedures for approvals on higher transactions. So like the $1,000 plus, you know, form that we fill out."
 SOURCE: zoom-call:2026-10-08_1207_Preston-to-JacobCox_9m48s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
 id: approval-form-1000-plus-3a0d3255
 
-### [HIGH] approval-form-required-fields
+### [VERIFIED] approval-form-required-fields
 RULE: Precious-metal approval forms must have the resale/melt fields filled in before Preston will approve; he rejects incomplete forms.
 PRESTON SAID: "Please make sure form is fully filled out Benjie. Missing resale/melt."
 SOURCE: #roanoke-funds (C063K8E02TW) | 2026-08-10 | https://valleypawnworkspace.slack.com/archives/C063K8E02TW/p1786373892219799
@@ -1076,13 +1080,14 @@ id: buyer-network-rockys-50b99eec
 SECTION: OTHER OPERATIONAL KNOWLEDGE
 ==============================================================================
 
-### [HIGH] aged-definition-one-year
+### [VERIFIED] aged-definition-one-year
 RULE: "Aged" inventory means anything over 1 year old. Preston tracks it per store split into Jewelry and General Merch, each as a percent of the store's inventory base, plus a total aged percent.
 PRESTON SAID: "AGED IS ANYTHING OVER 1 YEAR - MAKE SURE WE ARE REPRICING ITEMS TO CLEARANCE AND WORKING ON GETTING THIS STUFF OUT!!"
 SOURCE: #aged-inventory-review | 2025-11-10 | https://valleypawnworkspace.slack.com/archives/C04NGH4FF35/p1762811748385319
+PRESTON'S CORRECTION (2026-10-26): Aged policy is anything over 1 year to be marked down 30%. Jewelry over 1 year and 6 months is to be scrapped. Deadline for markdowns is still the 15th for each month.
 id: aged-definition-one-year-a1aed82e
 
-### [HIGH] appliances-new-in-box-only
+### [VERIFIED] appliances-new-in-box-only
 RULE: Generally don't take any appliance item unless it is brand new in the box, and it must still be tested.
 PRESTON SAID: "Cuisinart toaster oven - Generally don't want any appliance items unless they are brand new in the box. Did we test?"
 SOURCE: #loans-and-buys | 2024-04-18 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1713447001008929
@@ -2411,5 +2416,5 @@ id: past-due-75-day-5-percent-ce-30eeab0b
 
 
 ==============================================================================
-COVERAGE: 328 entries - 1 verified by Preston, 178 high-confidence rules, 90 medium, 57 low, 2 superseded.
+COVERAGE: 328 entries - 11 verified by Preston, 168 high-confidence rules, 90 medium, 57 low, 2 superseded.
 ==============================================================================

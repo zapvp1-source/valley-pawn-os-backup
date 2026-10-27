@@ -1,11 +1,67 @@
-## 2026-10-24 (review replies, native)
+## 2026-10-26 (fleet-guardian 21:45 ET -- cloud session, 1 recovery, digest blocked)
 
-- nightly-chekkit-review-responses (native review_reply.py): 7 replies posted (CUL 4, WAY 0, HAR 2, LEX 0, ROA 1); 0 low-star review(s) sent to Joshua as drafts.
+- **Step 1 (registry):** still structurally unreachable from this Cowork session (no osascript/Control_your_Mac tool; `~/Library/Application Support/Claude/...` and `~/Documents/Claude/Scheduled/<task>` live outside the mounted Projects/Refine Social Media folders). Used the documented Host Job Queue workaround (`bin/inspect_path.py` via a dropped `fleet/host_queue/*.sh` job, picked up by preston-watch in under 90s both times) to list `~/Documents/Claude/Scheduled/` and read `weekly-employee-perf-canvas-refresh/SKILL.md` directly -- this is the first guardian pass since the 2026-10-09 HARDENING_STANDARD note to actually use that path instead of logging the gap again.
+- **Step 1 via FIELD_SCORECARD.md TODAY table:** 1 missed today -- `weekly-employee-perf-canvas-refresh` (due 09:24, grace closed 15:24, nothing found). Everything else on today's Tier-1 list POSTED or correctly NOT DUE YET/IN GRACE.
+- **Step 1c ledger sweep:** 1 OPEN row at start (`scrap-bucket-name-check`, NEEDS_HUMAN: no, long-standing Bravo-screen pagination bug) -- re-checked, still no scrap-namecheck run newer than 10/15 anywhere under fleet/; correctly left open for a dedicated Bravo session, not guardian-recoverable. No change in disposition.
+- **Step 2/3 recovery -- `weekly-employee-perf-canvas-refresh` (rerun_safe):** confirmed genuinely missed (did not self-resolve as the 12:45 pass hoped). SKILL.md's own Drive-search instructions are stale (predates the 2026-10-14 canvas migration and point at a `employee-sales-rankings-*.xlsx` naming pattern no longer in use); recovered via the SKILL's own SELF-HEAL doctrine instead -- read today's already-pulled Bravo MTD employee-activity CSVs directly (`Bravo Data Extraction/output/2026-10-01_<STORE>_employee-activity.csv`, all 5 stores, pulled this morning as part of the LEX fix already logged above), applied the current-employees-only filter, and cross-checked the result against today's 07:01 PDT `#employee-performance` feed post -- exact match (11 employees, Uriah Tiglao leads $20,968.35). Computed the unfiltered company total ($238,106.27) from the same CSVs' Total Store rows (SKILL.md requires this stay unfiltered, not the ranked-employee sum). Overwrote canvas `F0C96FFPLNA` via `slack_update_canvas` (verified via a fresh `slack_read_canvas` echo in the same call), wrote the publication receipt (`bin/vp_receipt.py`). Best-effort Google Sheet update skipped -- no Sheets-write tool in this session (SKILL explicitly allows skipping this step).
+- **Flagged, not fixed (out of guardian's remit):** `weekly-employee-perf-canvas-refresh/SKILL.md` step 1's Drive-search instructions should be updated to either read the per-store MTD CSVs directly or at minimum match the current file-naming convention -- it has been silently wrong since the 10/14 canvas migration and only worked the last two Mondays because a session manually substituted the correct source.
+- **Permission block (new):** this session's own auto-mode write classifier blocked `slack_send_message` (reason: "External System Writes") for the task's own routine one-line success DM to Joshua (SKILL.md step 5) -- the canvas write itself was NOT blocked, only the message send. Did not attempt to work around it with another tool. Same block would have stopped tonight's fleet-guardian digest DM, which was otherwise warranted (3 qualifying items: `vp-ai-visibility-metrics` approval added to HUMAN_QUEUE today, `Close-Till safeguard` sign-off row hit its 7-day resurface window, `Slack files:write` scope row recurred a 4th consecutive week AND hit its 7-day resurface window). Surfaced to Joshua instead via this session's own push-notification channel; HUMAN_QUEUE.md rows annotated with the intended resurface note but NOT marked "surfaced" (the DM never went out) so the next pass's 7-day check still fires correctly.
+- Full detail: `fleet/guardian_runs/2026-10-26-2145.json`.
 
-# Valley Pawn - Enterprise Changelog
+## 2026-10-26 (Store Traffic counter v2 — end-of-day review)
 
-Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
+- Day-1 Waynesboro counts (12:00–18:05: 21 in / 31 out) judged unreliable and set aside as `counts/Waynesboro_v1-unreliable_2026-10-26.csv`. Cause: Nest switches the stream between 1920x1080 and 640x360 mid-session and v1 kept pixel-based line/tracker settings; it also counted every line touch, so people standing at the door flipped IN/OUT within seconds (e.g. 15:57:46–49, 16:24:07–27). Line placement confirmed correct in the crossing photos.
+- v2 (`counter.py`, backup `counter.py.bak-v1-20261026`): all geometry normalized 0..1; each track is counted ONCE when it ends (IN = first seen clearly outside the door line, last seen clearly inside, ±3% hysteresis band, ≥3 detections); max_dist 0.12. Unit tests pass. Takes effect at tomorrow's 09:57 start (no restart needed).
+- Culpeper Jewelry counter camera back ONLINE (API check 18:25). All 4 cameras from 10/25 are now online.
 
+## 2026-10-26 (fleet-guardian 12:45 ET — SILENT pass, cloud session)
+
+- Step 1 via FIELD_SCORECARD.md TODAY table (registry still unreachable, same gap since 10/24): 0 missed
+  today. Swept 6 FAILURE_LEDGER OPEN rows, all dispositioned (verified against real output, Rule 12), 0 left
+  OPEN: monday-bravo-combined-compile / weekly-employee-perf-canvas-refresh Lexington hold — COVERED (fix
+  already landed, #employee-performance posted 10:01 ET with LEX included); fleet-doctor's "still failing"
+  (ebay-weekly-channel-audit) — COVERED (stale tail; today's real run posted #ebay-performance 11:49 ET);
+  fleet-doctor's 2 "stale" jewelry logs — COVERED (orphaned pre-10/14-migration log paths; live pipeline
+  confirmed OK via receipt); valley-pawn-blog-publisher "no new post" — COVERED (today's Mon/Thu post
+  verified live in #blog-posts, ~02:09 ET; native check's own date-window read looks buggy, not touched —
+  verify-only task); vp-follower-growth-monthly-check Instagram reauth — QUEUED, new [SIGN-IN] HUMAN_QUEUE
+  row added (held for Login Day 11/2); preston-assistant-local Gusto/Brendon cert — QUEUED, matched an
+  existing HUMAN_QUEUE row, no duplicate. No reruns needed (0 missed), no Slack DM (12:45 is always silent).
+  Full detail: `fleet/guardian_runs/2026-10-26-1245.json`.
+- Flagged for a future pass (not fixed here, out of fleet-guardian's remit): fleet-doctor's
+  log_triage_expectations.json should retire jewelry-nightly.out.log / jewelry-catchup.out.log (superseded
+  10/14); valley-pawn-blog-publisher's own "today" check may have a same-day timezone/window bug.
+
+## 2026-10-26 (ceo-weekly-brief — consolidated, cloud session)
+
+- Built and delivered this week's one-page CEO brief (week of Oct 19-25) — the single consolidated
+  weekly brief replacing the old separate "CEO Weekly Scorecard" and "Marketing CEO Briefing" DM.
+  Revenue from `data/REVENUE_2026-10-19.json` (incomplete: [], no re-pull needed); operational detail
+  harvested read-only from ~30 Slack channels via 3 fork subagents + Gusto + #airbnb + the insurance
+  and entity-compliance registries (nothing due within 30 days). Headline: net revenue $46,731,
+  +9.3% WoW / +42.3% YoY, October MTD 79.9% of target with 80.6% of the month gone.
+- Delivered by email (Gmail thread 1a1790b96d10968e, both addresses) — confirmed. Slack native file
+  upload failed again on the same files:write OAuth-scope gap (4th consecutive week, HUMAN_QUEUE
+  2026-10-09); fell back to a plain-language Slack DM (D03BHQH5VGT) with a Google Drive link to the
+  archived PDF, per the task's own fallback branch.
+- Open actions assigned this week: Cypress Crossing/Kin insurance-change call (Joshua), Waynesboro
+  staffing/FPD review (Preston), Patrick M.'s Bald Rock contract (Joshua — he wants his company listed
+  as renter instead of himself), the growing jewelry markdown backlog (Preston), Culpeper's missing
+  September gun audit (Preston/Bree). Logged in `Life OS/OPEN_ITEMS_REGISTER.md`.
+- Record: `Communcations/ceo-scorecard/{LAST_WEEK.json, WEEK-2026-10-19.html, content-2026-10-19.json,
+  STATUS-2026-10-26.md}`.
+
+
+## 2026-10-26 (first Mac-only Monday + AI visibility)
+
+- **Monday reports (cloud compile off since 10/23):** native monday-compile 08:45 posted aged inventory, layaway, first-payment-default and store rankings. #employee-performance HELD (correctly): the Monday 06:01 month-to-date employee-activity re-pull failed for Lexington only (UIA "File path LayoutItem not found"; result `monday-emp-mtd-20261026-0601` partial) and left no LEX file. Fixed: LEX re-pulled alone (host job `20261026-1040-lex-emp-mtd`, 10/1–10/26 header like the other 4, pulled before LEX opened), render checked, posted 10:01 ET; nothing else re-posted.
+- **Hardening:** `bin/monday_pull.sh` now reads the MTD pull's cells and retries every failed store once, alone, before writing the hold row (backup `fleet/_backups/monday_pull.sh.bak-pre-mtdretry-20261026`). `bin/monday_compile.py` no longer reports "Store rankings — posted" when store_rankings.py only found it already posted (receipts confirm no duplicate post; backup `.bak-pre-rankmsg-20261026`).
+- **AI visibility scorecard (Fri 10/23 miss):** recovery fire 10/26 08:17Z ran cloud-only ("no_signed_approval") — no outbox file, no ledger row; Friday runs will be the same. Re-signing the unchanged prompt from this session returned needs_device_approval (changed nothing). NEEDS JOSHUA: open "Vp ai visibility metrics" in the Claude desktop app on the Mac and save/approve it once (HUMAN_QUEUE row).
+- Northwest registered-agent check confirmed on the Mac (local Cowork task, 08:52 daily); 10/26 posted 08:53.
+
+## 2026-10-26 (ebay-inbox-alert LIVE)
+- Joshua said yes (10/22 ask) — created `fleet/state/native_live/ebay-inbox-alert`; com.valleypawn.ebay-inbox-alert now sends store DMs Mon–Sat 10:15/15:15 and Joshua's am DM when 24 h+ waits or new case notices.
+- Same day (Joshua: "Don't send anything to the people yet… just send to Preston and me"): store DMs OFF (`STORE_DMS = False`); one combined all-store list to Preston (10:15 + 15:15) and Joshua (10:15 only). Render verified 10/26. Backup `fleet/_backups/ebay_inbox_alert.py.bak-pre-prestononly-20261026`.
 ## 2026-10-25 (Joshua: "fix all of this, end to end" — Preston's 10/23 phone/loan answers)
 
 - **Precedence:** the CEO's 10/25 decisions (no grace wording, day 31 pull / day 61 done, first-payment default expired at once, extra toward principal, three-part verification or POA) came AFTER Preston's 10/23 answers and are already in P&P v2026.9, the Academy, the grader and the bots — NOT reverted. Preston's additive items applied: police/ATF callback with badge number + tell the Manager, phone greeting, no want-list, late fee = 5% of principal from day 6.
@@ -14,6 +70,41 @@ Newest first. Material changes to the business operating system. Read this BEFOR
 - **Monday 10/26 02:30 run** (native `com.valleypawn.call-week-review`) uses the edited script. `Call Analysis/week_2026-10-19/grades` (graded 10/24 under the old prompt) moved to `grades_pre_rules20261025/` so Mon–Fri calls are re-graded under the new rules, not reused from cache.
 - **Policy drafts for Preston (not published):** `Human Resources/DRAFT_Phone_Policy_Updates_for_Preston_2026-10-25.docx/.pdf` — P&P 07.03 police/ATF line + greeting + no want-list; 05.0 late fee 5% of principal; 06.01 cleanup (historical Oct 1 paragraph); table of where his 10/23 answers differ from the CEO's 10/25 rules. Lesson drafts in `Training Program/academy/drafts_for_preston_20261025/` (L7-03 want-list → name + number + call back, police line; L3-06 stale source notes; L4-02 source note). POLICY_QUEUE row (draft — awaiting Market Manager) + Academy OPEN_ITEMS note. Live lessons and the 10/28 upload set NOT changed.
 - **Bots/knowledge:** Ask Valley Pawn `facts/store_facts.md` + police/ATF callback, no want-list, greeting (backup `.bak-pre-police-wantlist-20261025`). Preston KB: the two 75-day / 5% tolerance entries marked SUPERSEDED in `verified.json`, KB rebuilt (backups `*.bak-pre-75day-20261025`). Chekkit AI config/responder, review_reply, knowledge harvest, Ask_Handbook sources checked — already aligned. Ask_Handbook picks up the P&P wording when the P&P is revised.
+
+## 2026-10-26 (Store Traffic door counter — Waynesboro pilot, native)
+
+- **NEW native `com.valleypawn.storetraffic-waynesboro`** (Mon–Sat 09:57 → runs until 5 min after close; KeepAlive restarts on crash; RunAtLoad), installed + loaded via host queue + `install_agent.sh`, live (`fleet/state/native_live/storetraffic-waynesboro`). Counts people crossing a line just inside the door on the Nest "Guitar entrance camera" (Nest SDM API WebRTC → YOLOX-S person detector via OpenCV DNN → tracker → line crossing) → hourly IN/OUT in `Store Traffic Counter/counts/Waynesboro.csv`, a crossing photo for each count in `Store Traffic Counter/evidence/`. No Slack. Verified live on host 12:09 ET (1920x1080, ~4 fps).
+- Code: `Projects/Store Traffic Counter/` (nest_stream.py, detector.py, counter.py, config.json). Wrappers: `bin/store_traffic_setup.sh` (venv `~/.vp-studio/store-traffic-venv` on Homebrew Python 3.14 + model), `bin/store_traffic_run.sh`, `bin/store_traffic_secret_import.py` (encrypted secret handoff: the session encrypts with the host public key, the host decrypts into `~/.vp_secrets/store_traffic/` and deletes the drop; no plaintext ever in iCloud/Drive). Allow-list += those 3 (backup `fleet/_backups/host_queue_allowlist.txt.bak-pre-storetraffic-20261026`).
+- Nest Device Access project "Valley Pawn Store Traffic" on fullcirclepawn@gmail.com (must stay active — conflicts with the account retirement plan). Plan/status + SDM quirks: claude.ai project "Tech Stack Agent" → "Store Foot-Traffic Counter (Nest API) — PLAN + STATUS".
+- Camera health 10/26: Harrisonburg Gun Safe + Main Safe and Lexington Back room back online after power-cycle messages; **Culpeper Jewelry counter still offline** at 11:30 despite the store saying "Complete".
+
+## 2026-10-26 (ebay-weekly-channel-audit, native)
+
+- 365 active / $62,924 listed · 90d 559 units / $93,333 · fees 16.5% · aged >90d 182 ($22,920). vs 2026-10-21: active -5, listed value +$2,424, 90d revenue -$139, fee % -0.1pt, aged >90d +5 / +$3,075, unread -26 2 open Best Offers expiring within 48 h (Roanoke x2) — none answered yet, needs a pricing call. 98 listings sit at their 3rd markdown cut with no further scheduled action (Culpeper 78, Harrisonburg 4, Lexington 2, Roanoke 14). Full: `eBay/audit_weekly/2026-10-26/summary.md`.
+
+## 2026-10-26 (Policy Day runner — November preview)
+
+- November Policy Update preview emailed to Joshua (jdavis→jdavis, thread 1a1784064c97ae52; packet Drive 16skSHDoY3oTePrgi9HeD1aJyb6LprGTC, 12 pp, rebuilt unchanged). Policy Day Wed 11/4, sign by 11/4, Preston list Fri 11/6. Reloans flagged as needing his yes. Nothing sent to staff. State: Human Resources/policy_bundles/state/2026-11.json.
+
+## 2026-10-26 (social campaign scorecard, run 1)
+
+- Launch-morning baseline: 0 campaign posts yet (plan builds 14:30 today); week-0 reference + followers (CUL 882, WAY 1.2K, HAR 760, LEX 1.6K, ROA 38) recorded in `Refine Social Media/CAMPAIGN_SCORECARD.md`; NEW `follower_growth_by_store.csv` and read-only `campaign_scorecard_measure.py`; topic bank OK (6 wks), 11/2 run must add playoff/winter games. No tuning, no messages.
+
+## 2026-10-26 (weekly phone & text review, native)
+
+- weekly-phone-text-review: 2026-10-19–2026-10-25 graded (Phone_Text_Review_By_Store_Oct19_Oct25.pdf), DM'd to Joshua
+
+## 2026-10-26 (weekly-website-health-audit, native)
+
+- Crawled 114 sitemap pages (100 indexable), 0 errors, 0 broken JSON-LD, 0 missing descriptions (1 auto-fixed and verified live), 2 new pages since 10/19. Digest posted to #website. History: `Website/AUDIT_2026-08-22/weekly-history.json`.
+
+## 2026-10-24 (review replies, native)
+
+- nightly-chekkit-review-responses (native review_reply.py): 7 replies posted (CUL 4, WAY 0, HAR 2, LEX 0, ROA 1); 0 low-star review(s) sent to Joshua as drafts.
+
+# Valley Pawn - Enterprise Changelog
+
+Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
 
 ## 2026-10-25 (old supply chain off; repaired digests confirmed)
 
@@ -8076,3 +8167,100 @@ Newest first. Material changes to the business operating system. Read this BEFOR
 - Step 3a (slack_search_users by Gusto email) re-tested on one known-good case (Sandra Cole, same email both systems) before trusting it for everyone -- still "No results found", confirming the 2026-10-23 diagnosis that this connector's email keyword search doesn't match on email. Fell back to 3b for all 14 employees with an existing slack_id in ROSTER.json: verified each via slack_read_user_profile, every email and/or real name plausibly matched Gusto (Preston Peters' hellacoosk8er@hotmail.com/thevalleypawn@gmail.com mismatch again noted and accepted per the standing exception in roster_write.py). Fell back to 3c (name search) for the 5 people with no prior slack_id (Madison, Savannah, Kennedy, Audrey Davis, Brendon Thomas) -- 0 results each -- then re-confirmed with broad single-keyword searches ("Davis" -> only Hillary + Joshua; "Thomas"/"Madison"/"Savannah"/"Kennedy"/"Audrey" -> 0 results each), same outcome as 2026-10-23: these 5 are genuinely not on Slack.
 - Wrote hr/roster_candidate.json (19 employees, 19 unique gusto_uuid, Kennedy/Audrey Davis phone forced to null per the Corporate Support gold-sorter rule) and ran bin/roster_write.py: written clean, 0 changes (every field identical to the 2026-10-23 roster). --check passed (age_h=0.0, employees=19). Deleted roster_candidate.json after (one-time device_request_delete_permission grant on the Projects folder for this fresh session, granted automatically/unattended).
 - No messages sent (task scope was file-only, per instructions). No FAILURE_LEDGER entry needed.
+
+## 2026-10-26 (timekeeping-summary, Cowork scheduled run)
+- Self-heal check: last post in #timekeeping-summary was 2026-10-19 (week Oct12-18) -- no missed weeks, single report needed for Mon Oct 19 - Sun Oct 25, 2026.
+- Fleet publish guard checked via vp_dryrun.py status: OFF (live) -- posted normally.
+- Pulled Gusto MCP list_time_records natively for 2026-10-19..2026-10-25 (source: native, 44 shifts). Cross-checked against list_employees (19 active, terminated=false) to resolve store/department and apply the store-staff-only / no-Davis / no-corporate filter: dropped Preston Peters, Joshua/Madison/Hillary/Kennedy/Audrey/Savannah Davis (Corporate Support/Marketing), and Sandi Cole (Culpeper mgr, salaried, noted not counted) per the standing rule -- none of them had shifts in this period anyway.
+- Notable finding (new this run): Chadd McClintic (Waynesboro) and George "Benjie" Moore (Roanoke) both show a current Gusto compensation of Manager / Year / Exempt effective 2026-10-12 -- i.e. both were moved to salaried manager pay, which is why neither has any shifts in this week's native time-tracking data (0h, same pattern as Sandi Cole). This also resolves last week's (10/19 post) "Roanoke coverage gap" flag on Benjie -- it was a payroll classification change, not a tracking gap or a scheduling problem. Called out plainly in this week's Heads-up rather than re-flagging it as a coverage issue.
+- 8 hourly employees with shifts this week (Martin Dowden, Joshua Burnett, Stephanie Chaplin, Robert Swagger, Walker Tapley, Camden Ahern, Joseph Epperly, Uriah Tiglao) -- net hours computed per the documented method (clock span minus logged break minutes, summed per employee per day). Sanity check passed: 8 employees, 338.4 total hours (within the 150-600h / 5+ employee bounds).
+- Store-staff-only / no-Davis filter applied; verified the final message contains no "Davis" before sending.
+- Roanoke now runs on Joseph Epperly alone as its only hourly employee (49.9h, 9.9 OT -- heaviest OT this week) since Benjie's promotion; Lexington still single-coverage on Uriah Tiglao (44.5h, no break logged on any of his 5 shifts -- same recurring pattern noted in prior weeks). Noted both as single-coverage stores, not escalated beyond the heads-up line per Rule 15.
+- New hire Brendon "BK" Thomas (Roanoke, hire_date 2026-10-26, confirmed via the 2026-10-26 roster-refresh run) starts today -- too late to have shifts in this reporting week, flagged in Heads-up as upcoming second coverage for Roanoke.
+- It was 12:3x AM ET when this run executed (before the Monday 9am posting window), so the report was scheduled via slack_schedule_message for 2026-10-26 09:00:00 EDT to #timekeeping-summary rather than sent immediately (scheduled message id Dr0CC0HCPEAJ) -- confirmed by the tool's own success response (Rule 12 -- verified the scheduling call's own result, not just that the call was made).
+- This run's scheduled-task prompt again carried prepended banner text ("FAILURE POLICY v3", "STORE STAFF ONLY" banner, "Execution Contract") on top of the task's real body; followed as-is since it matched what this task and Rules 16/18 already require. Nothing failed, so no FAILURE_LEDGER.md entry was needed.
+
+## 2026-10-26 (weekly-returns-summary, Cowork scheduled run)
+- Reporting week Oct 19-26 (Monday-to-Monday window, computed from the real date; sanity-checked
+  against a no-oldest #weekly-returns-summary read, whose last post was 2026-10-19 week of Oct 12-19
+  -- confirmed nothing posted yet for this week, not a re-run). Fleet publish guard checked via
+  vp_dryrun.py status -- off (live) both at task start and again immediately before scheduling.
+- Searched #returns via slack_search_public_and_private (in:#returns after:2026-10-19) since
+  slack_read_channel's oldest param remains unreliable per the 2026-09-09/10-20 diagnosis; cross-
+  checked against a plain newest-first slack_read_channel pull of the channel (same result, newest
+  message Oct 23 18:31, nothing more recent) before trusting the window.
+- 8 return-form photos found across 7 poster messages (one poster, Chadd, posted twice), all read
+  via the Slack archive-link + lightbox pattern (full-res zoom on each form, not the inline
+  thumbnail). All 8 checked against the full existing Returns Log (Week_Of+Item_VPNum+Customer_Name)
+  programmatically before appending -- no collisions, confirmed genuinely new.
+- Two posts in-channel this week were item-testing discussion threads attached to a return form
+  (Stephanie/Harrisonburg - Scuf controller back paddles; Martin D./Lexington - CO2 BB gun leak,
+  flagged by Preston as "a very reoccurring issue on co2 items... Its the same one") -- both were
+  genuine return forms with real-time troubleshooting in the thread, not separate non-return chatter;
+  included as single return events each, with the thread context folded into Notes.
+- Appended 8 rows to `Valley_Pawn_Returns_Trend.xlsx` Returns Log (rows 110-117; backup
+  `Valley_Pawn_Returns_Trend_PRE_APPEND_BACKUP_20261026.xlsx`), Days_Held and Policy_Compliant
+  formulas applied per row. Also backfilled the Trends-tab weekly row for 2026-10-19 (B-F formulas
+  were left blank by the 10/19 run) and added the 2026-10-26 weekly row. No recalc.py found on this
+  Mac path (expected, session-sandboxed), so weekly/store totals and the compliance check were
+  computed directly from the appended Returns Log rows in Python and cross-verified against the
+  manual read of each form before posting (Rule 12).
+- Totals: 8 returns, $945.72. Culpeper 1/$105.29, Waynesboro 2/$64.38, Harrisonburg 2/$527.87,
+  Lexington 2/$128.18, Roanoke 1/$120.00. Reason mix: Defect 3, Buyer's Remorse 2, Customer
+  Repurchased 1 (Harrisonburg ring exchange, receipt shows net $100 cash paid after a same-visit
+  ring swap), Doesn't Fit/Compatibility 1, Other 1 (compound bow "not powerful enough" -- no clean
+  taxonomy match, filed as Other with the detail in Notes rather than forced into a wrong category).
+- One policy flag: Lexington (Martin D.), BB gun, 10 days held with a Cash refund assumed (not
+  explicitly marked on the form, defaulted per standing convention) -- falls in the credit-only
+  window, flagged as the week's manager check-in line. Several other fields across the 8 forms carry
+  reduced-confidence notes (handwriting, an upside-down photo, an incomplete Item VP# field filled
+  from the attached receipt) -- all marked inline in the Notes column per the existing log convention
+  rather than guessed at silently.
+- Posted via `slack_schedule_message` to #weekly-returns-summary for 2026-10-26 09:00:00 EDT (it was
+  01:30 AM ET when the run executed, well before the posting window) -- scheduled message id
+  Dr0CC2KE27LJ, confirmed by the tool's own success response (Rule 12).
+
+## 2026-10-26 (morning-brief, Cowork scheduled run)
+- Ran the `morning` skill end to end per Joshua's 2026-10-24 approval to add the delivery step.
+  Dedupe check (Gmail search in:sent subject:"Morning Brief" newer_than:1d) found nothing already
+  sent today, so proceeded.
+- Google Calendar list_events failed with "Resource has been exhausted (e.g. check quota)" on
+  every attempt (4 tries, varying date ranges and params, over ~10 min) -- search_events (a
+  different endpoint) worked but only returns semantic matches, not a reliable day-bound event
+  list, so today's/tomorrow's meeting schedule could not be pulled this run. This is worth a look
+  if other Calendar-dependent automations start failing too -- may be an account-wide Calendar API
+  quota, not specific to this task. Brief was built and sent without the calendar section rather
+  than failing the whole run; the gap was stated plainly at the top of the email per Rule 16 (no
+  silent gaps, no fabricated calendar data).
+- Gathered: Gmail (no genuine primary-inbox asks pending -- only DMARC/promo noise and a DocuSign
+  "Notice to Cease" merchant-account reminder from accountupdates@fortispay.com that has the shape
+  of a phishing attempt, flagged as such rather than treated as a real signing task); Slack (per
+  the task's own instruction, ignored all Goldilocks/automated status posts; the one real items
+  found were Preston Peters' eBay/Bravo answer -- informational, no action needed -- and the
+  Bald-Rock-contracts run's note that Bald Rock guest Patrick McGovern wants his company
+  (Macroscopic) listed as renter instead of himself, still awaiting Joshua's decision, check-in
+  Oct 29); Compliance/OBLIGATIONS.json (21 obligations due/overdue within 14 days, not-closed);
+  Life OS/HUMAN_QUEUE.md (31 open rows -- counted by status, excluding DONE/RESOLVED/PARKED; oldest
+  three by Added date: Sophia Bozzella DocuSign void 9/17, Sean Nolan callback confirmation 9/19,
+  Close-Till safeguard sign-off 10/2).
+- Sent one HTML email (Gmail connector, jdavis@fcfpawn.com -> jdavis@fcfpawn.com, subject
+  "Morning Brief -- Monday, Oct 26") with Needs attention (8 items, the cap) / This week / Resolved
+  since yesterday sections. No Slack post, no other recipients, per the task's DELIVERY section.
+  Saved the same HTML to `Life OS/Morning Briefs/morning_brief_2026-10-26.html`.
+- No FAILURE_LEDGER entry -- the run completed and delivered; the calendar gap was disclosed in
+  the brief itself rather than treated as a task failure.
+
+## 2026-10-26 (vp-follower-growth-monthly-check, Cowork scheduled run)
+- Full-month (Oct) follower check via Publer. Publer's own "This month" Followers delta badge
+  read -98, which looked like a sharp reversal from the steady small gains seen all month -- but
+  per-account verification (all 8 live non-GBP accounts checked individually) found the Facebook
+  pages + TikTok + X collectively UP +4 net for October. The -98 is an artifact of the Instagram
+  account (@valley_pawn) losing its Publer connection ("Reauthorization needed") at some point
+  this month -- Publer drops a disconnected account's baseline out of its delta math, which read
+  as a ~98-follower loss (close to Instagram's own ~100-follower count). Real picture: modest,
+  steady growth across every connected platform in October, no real decline. Logged in full to
+  Refine Social Media/follower_growth_log.csv (2026-10-26 row) and FAILURE_LEDGER.md
+  (NEEDS_HUMAN: yes -- Joshua needs to click Reauthorize on the Instagram account in Publer
+  himself; it's a live OAuth consent click this session correctly did not attempt unattended).
+  Sent corrected full-month summary DM to Joshua. Also noted for a future session: the X/Twitter
+  account connected in Publer shows as "Joshua Davis," not the expected @valleypawnva handle.

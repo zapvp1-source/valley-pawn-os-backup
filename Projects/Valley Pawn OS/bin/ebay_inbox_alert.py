@@ -51,6 +51,7 @@ ROSTER = os.path.join(OS_DIR, "hr", "ROSTER.json")
 LEDGER = os.path.join(OS_DIR, "fleet", "FAILURE_LEDGER.md")
 STATE = os.path.expanduser("~/Library/Logs/valleypawn/ebay-inbox-alert.state.json")
 JOSHUA = "U03BB52MDSA"
+PRESTON = "U03BWMEM9GR"
 NS = "urn:ebay:apis:eBLBaseComponents"
 URL = "https://api.ebay.com/ws/api.dll"
 READ_CALLS = {"GetMyMessages"}
@@ -371,7 +372,10 @@ def main():
             ledger("The eBay message reminders were not sent — the staff roster could not be read.")
         return 1
 
-    outbox = []
+    # Joshua 2026-10-26: "Don't send anything to the people yet. They are getting a ton of messages.
+    # Just send to Preston and me." -> store DMs OFF; one combined list to Preston (am + pm) and Joshua (am).
+    STORE_DMS = False
+    outbox, blocks = [], []
     for code, name in STORES:
         if code not in results or (code not in open_today and not render):
             continue
@@ -379,30 +383,22 @@ def main():
         text = store_message(name, waiting, actions, snips, now_utc)
         if not text:
             continue
-        for uid in TEAM.get(code, []):
-            if uid in active:
-                outbox.append((uid, code, text))
-            else:
-                print("skip %s (%s): not on the active roster" % (uid, code))
-
-    if slot == "am":
-        rows = []
-        for code, name in STORES:
-            if code not in results:
-                continue
-            waiting, actions, _ = results[code]
-            old = sum(1 for h in waiting if pts(h.get("waiting_since") or h["received"]) and now_utc - pts(h.get("waiting_since") or h["received"]) >= dt.timedelta(hours=24))
-            cases = sum(1 for k, _ in actions if k == "CASE")
-            bits = []
-            if old:
-                bits.append("%d buyer%s waiting 24 hr+" % (old, "" if old == 1 else "s"))
-            if cases:
-                bits.append("%d new case notice%s" % (cases, "" if cases == 1 else "s"))
-            if bits:
-                rows.append("• %s: %s" % (name, ", ".join(bits)))
-        if rows:
-            outbox.append((JOSHUA, "JOSHUA", "📬 eBay messages — needs attention this morning:\n" + "\n".join(rows)
-                           + "\n\nEach store has been sent its list."))
+        blk = text.rsplit("\n\nReply in eBay", 1)[0].replace("📬 *eBay messages — %s*" % name, "*%s*" % name)
+        blk = blk.replace("\n\n*Buyers waiting for a reply* (newest first · ⚠️ = over 24 hr · 💰 = wants to buy / making an offer):", "")
+        blocks.append(blk)
+        if STORE_DMS:
+            for uid in TEAM.get(code, []):
+                if uid in active:
+                    outbox.append((uid, code, text))
+    if blocks:
+        digest = ("📬 eBay buyer messages waiting for a reply — %s %s\n\n" % (today.strftime("%a %-m/%-d"), "morning" if slot == "am" else "afternoon")
+                  + "Newest first · ⚠️ = over 24 hr · 💰 = wants to buy / making an offer\n\n"
+                  + "\n\n".join(blocks)
+                  + "\n\nAnswered in eBay → Messages, they drop off the next list. Stores have not been sent these.")
+        if PRESTON in active or render:
+            outbox.append((PRESTON, "PRESTON", digest))
+        if slot == "am":
+            outbox.append((JOSHUA, "JOSHUA", digest))
 
     if render:
         print("=== RENDER ONLY (%s slot, %s) — %d DM(s) ===" % (slot, today, len(outbox)))
