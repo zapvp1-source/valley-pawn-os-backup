@@ -2387,3 +2387,17 @@ Jewelry Count — Monday 10/26 (expected = system on-hand, counted = PM count sh
 
 Harrisonburg — count sheet not filled in.
 
+
+## RUN RECORD — 2026-10-27 (Tuesday) — native jewelry-onhand-nightly-pull
+
+Open: CUL HAR LEX ROA WAY. Bravo freeze-window CSVs: all open stores. Sheets: CUL NOT USED — count sheet not readable; HAR NOT USED — count sheet not readable; LEX NOT USED — count sheet not readable; ROA NOT USED — count sheet not readable; WAY NOT USED — count sheet not readable.
+
+Jewelry Count — Tuesday 10/27 (expected = system on-hand, counted = PM count sheet)
+
+
+Culpeper — count sheet not readable.
+Harrisonburg — count sheet not readable.
+Lexington — count sheet not readable.
+Roanoke — count sheet not readable.
+Waynesboro — count sheet not readable.
+

@@ -41,26 +41,40 @@ class Tracker:
                 t = self.tracks[best]; moves.append((best, t['p'], p)); t['p'], t['ts'] = p, now; t['n'] += 1; used.add(best)
         return moves
 
+def in_door(p, cfg):
+    dz = cfg.get('door_zone')
+    return dz is None or (p[0] <= dz['x_max'] and p[1] >= dz['y_min'])
+
 def decide(t, cfg):
-    """Count a finished track once: IN if it started clearly on the outside of the door line and ended
-    clearly inside (outside of a hysteresis band), OUT for the reverse. Jitter at the line = no count."""
+    """Count a finished track once. IN = track STARTS in the door zone and ends clearly inside the store
+    (past the line + hysteresis band). OUT = the reverse. People browsing the window display next to the
+    door (ID swaps / jitter near the line) never start or end in the door zone, so they are not counted."""
     if t['n'] < cfg.get('min_hits', 3): return None
-    lx, band, inside = cfg['line_x'], cfg.get('band', 0.03), cfg.get('inside', 'right')
-    def zone(p):
-        if p[1] < cfg.get('min_y', 0.39): return None   # ignore detections above the door area
-        if p[0] < lx - band: return 'left'
-        if p[0] > lx + band: return 'right'
-        return None
-    z0, z1 = zone(t['p0']), zone(t['p'])
-    if not z0 or not z1 or z0 == z1: return None
-    return 'in' if z1 == inside else 'out'
+    lx, band = cfg['line_x'], cfg.get('band', 0.03)
+    p0, p1 = t['p0'], t['p']
+    if p0[1] < cfg.get('min_y', 0.39) or p1[1] < cfg.get('min_y', 0.39): return None
+    if in_door(p0, cfg) and p1[0] > lx + band: return 'in'
+    if in_door(p1, cfg) and p0[0] > lx + band: return 'out'
+    return None
+
+def log_track(store, t, d):
+    """Every finished track -> tracks/<store>/<date>.jsonl so rules can be re-scored offline."""
+    td = os.path.join(HERE, 'tracks', store); os.makedirs(td, exist_ok=True)
+    with open(os.path.join(td, dt.datetime.now(TZ).strftime('%Y-%m-%d') + '.jsonl'), 'a') as f:
+        f.write(json.dumps({'t': dt.datetime.now(TZ).strftime('%H:%M:%S'), 'p0': [round(v, 4) for v in t['p0']],
+                            'p': [round(v, 4) for v in t['p']], 'n': t['n'], 'd': d}) + '\n')
 
 def evidence(store, img, cfg, t, d):
     H, W = img.shape[:2]; ev = os.path.join(HERE, 'evidence', store, dt.datetime.now(TZ).strftime('%Y-%m-%d'))
     os.makedirs(ev, exist_ok=True); im = cv2.cvtColor(img, cv2.COLOR_RGB2BGR); lx = int(cfg['line_x'] * W)
     cv2.line(im, (lx, 0), (lx, H), (0, 0, 255), 3)
     cv2.arrowedLine(im, (int(t['p0'][0] * W), int(t['p0'][1] * H)), (int(t['p'][0] * W), int(t['p'][1] * H)), (0, 255, 255), 4)
-    cv2.imwrite(os.path.join(ev, dt.datetime.now(TZ).strftime('%H%M%S') + f'_{d}.jpg'), cv2.resize(im, (960, 540)))
+    dz = cfg.get('door_zone')
+    if dz: cv2.rectangle(im, (0, int(dz['y_min'] * H)), (int(dz['x_max'] * W), H), (255, 0, 255), 2)
+    base = os.path.join(ev, dt.datetime.now(TZ).strftime('%H%M%S') + f'_{d}')
+    k = 0
+    while os.path.exists(f'{base}{"_" + str(k) if k else ""}.jpg'): k += 1
+    cv2.imwrite(f'{base}{"_" + str(k) if k else ""}.jpg', cv2.resize(im, (960, 540)))
 
 def bucket(now):
     return dt.datetime.fromtimestamp(now, TZ).strftime('%Y-%m-%d %H:00')
@@ -104,6 +118,7 @@ async def run(store, minutes, debug):
                 trk.update(feet, now)
                 for t in trk.expire(now):
                     d = decide(t, cfg)
+                    if t['n'] >= cfg.get('min_hits', 3): log_track(store, t, d)
                     if d:
                         counts.setdefault(bucket(now), {'in': 0, 'out': 0})[d] += 1
                         print(dt.datetime.now(TZ).strftime('%H:%M:%S'), d.upper(), flush=True)

@@ -8471,6 +8471,27 @@ Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Roanoke ON; Culp
 - Nothing changed since the 5:04 PM run, so no #employee-prospects post and no Joshua DM this run (QUIET RULE).
 - Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0 (channel), 0 (DM).
 
+## 2026-10-27 ~11:40 AM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+- Scope per HIRING_SWITCH.md (authoritative): Waynesboro, Harrisonburg, Roanoke ON; Culpeper, Lexington, Saint Augustine FL OFF — unchanged.
+- Jobs dashboard checked live: Waynesboro ($50 total, Paused, 0 New), Harrisonburg ($100 total, Paused, 0 New), Roanoke ($50 total, Paused, 0 New) — all paused, no active sponsorship spend (Waynesboro's earlier live-spend issue from the ~10:21 AM run stays fixed/paused). 0 New on every in-scope listing — no new applicants to screen this run.
+- Indeed Messages inbox checked top to bottom: one new candidate message since the ~10:34 AM run — **Matayah Buckland** (Roanoke, interview completed 10/15, told "Joshua will be in touch with next steps soon" on 10/18) wrote again today 11:05 AM: "Ready whenever you are." This is a pending hiring-decision nudge, not a scheduling request — outside this pipeline's scope per Rule 3 (never discuss decisions). Sent a holding reply: "Thanks so much for checking back in, Matayah! Joshua is still finalizing next steps and will be in touch soon." (sent 11:35 AM, confirmed in thread). DMed Joshua once (D03BHQH5VGT) that she followed up again — her decision is still his to make. All other threads unchanged from the ~10:34 AM run (newest otherwise still Dustin Crawford Oct 26).
+- No felony disqualifications, no do-not-contact touches, no no-show reports, no 2-business-day nudges newly due (no active in-scope contacts pending), no booking made/moved/cancelled.
+- Texts: 0 — cloud-only session, no computer-use/full-screen control; not a 9:30/1:00/6:00 batch window.
+- Something changed (new candidate message + reply + DM), so logged per the quiet rule; no #employee-prospects post since the interview schedule itself didn't change.
+- Indeed messages sent: 1 (Matayah Buckland holding reply). Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0 (channel), 1 (DM).
+
+## 2026-10-27 ~11:49 AM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+- Scope per HIRING_SWITCH.md (authoritative): Waynesboro, Harrisonburg, Roanoke ON; Culpeper, Lexington, Saint Augustine FL OFF — unchanged.
+- Slack checked (DM D03BHQH5VGT + #employee-prospects C0BQDRXRPEJ): no new hiring instructions from Joshua or Preston since the 11:40 AM run's DM about Matayah Buckland. No #preston-claude scope change surfaced.
+- Jobs dashboard checked live: Waynesboro ($50 total, Paused, 0 New), Harrisonburg ($100 total, Paused, 0 New), Roanoke ($50 total, Paused, 0 New) — all paused, no active sponsorship spend. 0 New on every in-scope listing.
+- Indeed Messages inbox checked top to bottom: newest still Matayah Buckland's thread with our 11:35 AM holding reply as the last message — no new candidate reply. Dustin Crawford (Oct 26) and Ryan Armstrong (Oct 23) unchanged.
+- No felony disqualifications, no do-not-contact touches, no no-show reports, no 2-business-day nudges newly due, no booking made/moved/cancelled.
+- Texts: 0 — cloud-only session, no computer-use/full-screen control; not a 9:30/1:00/6:00 batch window.
+- Nothing changed since the 11:40 AM run, so no #employee-prospects post and no Joshua DM this run (QUIET RULE).
+- Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0 (channel), 0 (DM).
+
 ## 2026-10-26 4:48 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
 - Jobs dashboard checked live: both in-scope listings (Sales and Loan Associate — Waynesboro, 1321 W Broad St; Sales and Loan Associate — Harrisonburg, 1790 E Market St) still **Paused**, "0 New" candidates on each — same as every prior run since this was first flagged; Joshua's standing decision, reopening/respending is his call, not re-flagged again.
 - Indeed Messages inbox checked in full (all threads, not just unread badge). Only in-scope (Waynesboro/Harrisonburg) threads with the candidate's message last:
@@ -8482,4 +8503,26 @@ Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Roanoke ON; Culp
 - No new in-scope applicants to screen (0 New on both listings). No felony disqualifications. No one on the do-not-contact list was contacted. No 2-business-day nudges newly due. No no-show reports to act on.
 - Texts: 0 — not a 9:30/1:00/6:00 batch window regardless, and this is a cloud-only session (no computer-use/full-screen control).
 - Nothing changed since the prior run, so no #employee-prospects post and no Joshua DM this run (QUIET RULE).
+- Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0 (channel), 0 (DM).
+
+### Run log — 2026-10-27 ~12:19 PM ET (vp-hiring-pipeline, scheduled run)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules. No mcp__remote-devices__ tools found on probe (none exist in this session's tool list at all) — computer-use and Claude-in-Chrome are directly available tools in this session, not behind a remote bridge, so Indeed was worked live via Claude-in-Chrome. Projects folder mounted and read directly; Google Drive/iCloud not mounted (not needed this run).
+Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Roanoke ON; Culpeper, Lexington, Saint Augustine FL OFF. Interviewer banner (Preston Peters, Zoom 540-202-4200) unchanged per vp-hiring-pipeline skill (source of truth over HIRING_SWITCH.md's stale interviewer column).
+- Slack checked (DM D03BHQH5VGT, #employee-prospects C0BQDRXRPEJ, #preston-claude search after:2026-10-27): no new hiring instructions since the ~11:36 AM ET run (Matayah Buckland holding-reply DM). Today's (empty) interview list already posted to #employee-prospects at 9:21 AM ET per the daily first-run carve-out — not repeated this run.
+- Indeed Messages inbox checked live top to bottom: newest thread still Matayah Buckland 11:35 AM ET ("You: Thanks so much for checking back in...", our own holding reply from the prior run) — no new candidate reply since. Dustin Crawford (Oct 26, Preston's own in-person-meetup thread) and Ryan Armstrong (Oct 23 closing ack) unchanged, no action needed. Opened gary DePriest's Oct 20 thread (last line was his post-rejection complaint, no "You:" prefix, looked worth checking) — confirmed he was already Rejected and messaged that outcome before his complaint; no further reply warranted for a closed/rejected candidate.
+- Candidates checked live (double-navigated past the SPA stale-zero quirk): All applications 276 (unchanged), New 3 — Cristina Castaneda-Olsen, Sherron Lemelle + 1 more, all Store Manager/Saint Augustine FL or Jacksonville FL, out of scope (unchanged), Reviewing 17, Contacting 225, Interviewing 31, Rejected 212, Hired 0 — all unchanged from this morning's runs. No new in-scope Waynesboro/Harrisonburg/Roanoke applicant.
+- Calendar (jdavis@fcfpawn.com) checked 10/27–10/28 via fullText "Interview": zero matching events — no interviews booked, consistent with this morning's "no interviews booked" post. No booking action needed (no candidate reply this run required one).
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due (Roanoke's batch of "Just checking in" nudges were already sent on prior runs, one each, none repeated), no candidate questions needing Joshua.
+- Texts: 0 — not a 9:30/1:00/6:00 batch window.
+- Nothing changed since the ~11:36 AM run, so no #employee-prospects post and no Joshua DM this run (QUIET RULE).
+- Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0 (channel), 0 (DM).
+
+### Run log — 2026-10-27 ~5:04 PM ET (vp-hiring-pipeline, scheduled run)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules. Cloud-only session (no remote-devices bridge), Claude-in-Chrome browser access. Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Roanoke ON; Culpeper, Lexington, Saint Augustine FL OFF.
+- Candidates filtered to Status: New = 3 — Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan, all Store Manager / Saint Augustine FL or Jacksonville FL — out of scope, unchanged. No new in-scope Waynesboro/Harrisonburg/Roanoke applicants.
+- Indeed Messages inbox checked top to bottom (full list, not just unread): newest thread still Matayah Buckland 11:35 AM ET ("You: Thanks so much for checking back in...", our own holding reply) — no new candidate reply since. Dustin Crawford (Oct 26, Preston's own in-person-meetup thread, resolved) and Ryan Armstrong (Oct 23 closing ack) unchanged, no action needed.
+- Jobs dashboard checked live: Waynesboro ($50 total, Paused, 0 New), Harrisonburg ($100 total, Paused, 0 New), Roanoke ($50 total, Paused, 0 New) — all paused, no active sponsorship spend.
+- No felony disqualifications, no do-not-contact touches, no no-show reports, no 2-business-day nudges newly due, no booking made/moved/cancelled, no candidate questions needing Joshua.
+- Texts: 0 — cloud-only session, no computer-use/full-screen control; not a 9:30/1:00/6:00 batch window.
+- Nothing changed since the ~4:33 PM run, so no #employee-prospects post and no Joshua DM this run (QUIET RULE).
 - Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0 (channel), 0 (DM).

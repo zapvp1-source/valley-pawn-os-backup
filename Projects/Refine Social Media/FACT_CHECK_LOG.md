@@ -83,3 +83,16 @@ Unverifiable: none. Published-wrong: none.
 - Publer connectivity confirmed: 26 published (10/23–10/25) and 3 failed (BrandIG, 10/23–10/24) posts returned on the same call.
 - Claims verified: 0. Posts edited: 0. Unverifiable: none.
 - Note: the scheduled queue is empty — nothing is lined up to post in the next 10 days.
+
+## 2026-10-27 07:40 ET — daily fact-check (next 36h)
+- Posts checked: 16 (Brand x3, BrandTwitter, Culpeper x2, GBP_Culpeper, Lexington, GBP_Lexington, Harrisonburg, GBP_Harrisonburg, Waynesboro x2, GBP_Waynesboro, Roanoke x2, GBP_Roanoke). Product/warranty/evergreen-history posts skipped; store hours in Culpeper + Waynesboro product posts match standard hours.
+- Verified:
+  - Wayne Theatre 2026-27 season "For the Love" + 100th year — https://www.waynetheatre.org/performances ; opened Jan 18 1926, given to City 1999, reopened by 2017 — https://www.cinematreasures.org/theaters/5374 , https://virginialiving.com/culture/wayne-theatre-celebrates-its-100th-and-10th-anniversaries/ (reopened 2016). Waynesboro + GBP_Waynesboro left as-is.
+  - Mill Mountain Star first lit Nov 23 1949, 88.5 ft, 2,000 ft neon, red/white/blue on Veterans Day — https://www.roanokeva.gov/1329/Roanoke-Star . Nov 23 2026 = Monday (77th).
+  - Roanoke average first freeze Oct 22 — https://www.weather.gov/rnk/FallFreezeClimatology
+  - This week's forecasts (NWS api.weather.gov LWX/35,43 Harrisonburg; RNK/74,69 Roanoke, issued 10/27 AM): Harrisonburg lows 43-45, patchy fog Tue night/Wed AM, Thu sunny 73. Roanoke lows 46-47, highs 70-76.
+- Edited:
+  - 6adf9f9254db17c325bcb183 Harrisonburg FB: "scraping a windshield in the Burg this week" (lows 43-45 forecast) → "Patchy fog to start Wednesday morning ... sunshine and low 70s by Thursday". APPLIED.
+  - 6adfa01c45e001946396b95c Roanoke FB: "first frost later than any of our other towns, usually around Oct 22" (comparative unverified) → "average first freeze lands around Oct 22 ... this week staying mild, lows in the 40s, highs in the 70s". APPLIED.
+  - 6adfa02445e001946396b96a GBP_Roanoke: "As the first cold mornings arrive" (mild week) → "With Veterans Day two weeks away". APPLIED.
+- Unverifiable: none left in posts. Brand bracket "starting this week" is a brand-owned claim, left as-is. Published posts not reviewed for errors this run (none flagged).
