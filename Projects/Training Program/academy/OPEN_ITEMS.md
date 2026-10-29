@@ -343,3 +343,12 @@ Built from Preston's Sales Training Framework, P&P §04.01/§05.03/§06.02/§07.
 - 2026-10-22: Preston Peters added to TalentLMS (user 2, Learner-Type, username preston.peters, preston@fcfpawn.com, no password set by Claude) and enrolled as Learner in all 9 courses (L1-L8 + Manager Track). All 9 courses active (plan active-course limit reached). Users: Joshua (SuperAdmin) + Preston. Preston sets his password via "Forgot your password?" on valleypawn.talentlms.com.
 
 - 2026-10-26 Policy Update November (Policy Day runner): checked all lessons against the November items — none teaches an old rule. Preston-draft fixes (L7-03, L3-06 notes, L4-02) still wait on his sign-off.
+
+
+## 2026-10-28 14:31 UTC — phase-2 re-voice run (trig_01JGmTUwtBfcXRkVShJcSgkr): STOPPED at the estimate gate, auto-retry 21:45 UTC
+- Backup to backups/20261028-phase2-pre/lessons/ done; target copied; validate_lessons: 73 lessons, 0 violations.
+- voice.py estimate: billable 118,744 chars vs 21,048 remaining (of 131,000). ElevenLabs period resets 2026-10-28 21:29:54 UTC, not at midnight, so the run fired ~7 h early. Per runbook nothing generated, nothing built, nothing uploaded. lessons/ restored to the pre-run state so the retry re-runs from step 1 cleanly.
+- Billable is ~36k above the runbook's ~83k estimate; it still fits the full 131k reset (leaves ~12k for the month).
+- Retry scheduled: 2026-10-28 21:45 UTC (trig_01T44Cyp7jHLJ4u7oty2mwcu). Note: the runbook now lists 67 changed units + 2 new (L2-06, L3-07), superseding the task prompt's '14 units'.
+
+## 2026-10-28 21:46 UTC — phase-2 re-voice re-run 21:46 UTC (trig_01T44Cyp7jHLJ4u7oty2mwcu): ElevenLabs reset to 142,048; backup + target copy done, validate 0 violations (73 lessons), estimate 118,744 billable, generate done (559/559 lines cached, verify OK), build_scorm --all strict ALL GREEN (73/73 PASS, every row narration_complete). dist/ now holds the phase-2 packages. TalentLMS upload NOT done: Chrome showed the TalentLMS login page (not signed in); no password typed, line added to Life OS/HUMAN_QUEUE.md. Remaining: upload 67 changed units + 2 new (L2-06, L3-07) per REPLACE_RUNBOOK.md / UPLOAD_RUNBOOK.md once signed in.

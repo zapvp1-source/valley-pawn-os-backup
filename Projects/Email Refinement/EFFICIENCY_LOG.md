@@ -486,3 +486,6 @@ Welcomed: 84 new contacts | Skipped (failed): 0 | flag check: 5/5 ok
 
 ## 2026-10-26 (brevo-welcome-new-contacts, native)
 Welcomed: 12 new contacts | Skipped (failed): 0 | flag check: 5/5 ok
+
+## 2026-10-28 (brevo-welcome-new-contacts, native)
+Welcomed: 79 new contacts | Skipped (failed): 0 | flag check: 5/5 ok

@@ -73,3 +73,9 @@
 
 ## 2026-10-20/21 — FINAL PRE-LAUNCH REVIEW done (Joshua: "complete in depth review… 3 person expert board… Final Review before Launch")
 - See academy/FINAL_PRELAUNCH_REVIEW_2026-10-20.md and the 10/20 section at the end of academy/OPEN_ITEMS.md. 64 lessons fixed, builder hardened, phase-1 voice done, 71 packages ALL GREEN in academy/dist/. DONE 10/21: all 71 units uploaded + published in TalentLMS; P&P v2026.9 + Handbook v2026.8 built (not sent). NEXT: Joshua walkthrough; phase-2 re-voice after 10/28 (scheduled); Gusto re-sign + announcement on Joshua's OK.
+
+## 2026-10-28 — Academy phase-2 re-voice: waiting on ElevenLabs reset
+- 14:31 UTC run stopped at the estimate gate (118,744 billable vs 21,048 left; quota resets 21:29 UTC today). Validation 0 violations. Nothing voiced, built or uploaded; lessons/ unchanged. Auto-retry 21:45 UTC (trig_01T44Cyp7jHLJ4u7oty2mwcu). Detail: academy/OPEN_ITEMS.md.
+
+## 2026-10-28 (evening) — Academy phase-2 voiced + built; upload waiting on TalentLMS sign-in
+- re-run 21:46 UTC (trig_01T44Cyp7jHLJ4u7oty2mwcu): ElevenLabs reset to 142,048; backup + target copy done, validate 0 violations (73 lessons), estimate 118,744 billable, generate done (559/559 lines cached, verify OK), build_scorm --all strict ALL GREEN (73/73 PASS, every row narration_complete). dist/ now holds the phase-2 packages. TalentLMS upload NOT done: Chrome showed the TalentLMS login page (not signed in); no password typed, line added to Life OS/HUMAN_QUEUE.md. Remaining: upload 67 changed units + 2 new (L2-06, L3-07) per REPLACE_RUNBOOK.md / UPLOAD_RUNBOOK.md once signed in.

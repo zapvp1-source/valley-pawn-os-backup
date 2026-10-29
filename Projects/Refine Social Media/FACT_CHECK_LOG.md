@@ -96,3 +96,15 @@ Unverifiable: none. Published-wrong: none.
   - 6adfa01c45e001946396b95c Roanoke FB: "first frost later than any of our other towns, usually around Oct 22" (comparative unverified) → "average first freeze lands around Oct 22 ... this week staying mild, lows in the 40s, highs in the 70s". APPLIED.
   - 6adfa02445e001946396b96a GBP_Roanoke: "As the first cold mornings arrive" (mild week) → "With Veterans Day two weeks away". APPLIED.
 - Unverifiable: none left in posts. Brand bracket "starting this week" is a brand-owned claim, left as-is. Published posts not reviewed for errors this run (none flagged).
+
+## 2026-10-28 07:45 ET — daily fact-check (window: next 36h)
+- Posts checked: 31 scheduled (Oct 28 14:00 – Oct 29 15:10 ET). Product/price, warranty, evergreen history and poll posts skipped; store hours in product posts match the standard hours (Harrisonburg "open today until 6pm" on Thu Oct 29 = correct).
+- Claims verified:
+  - GBP_Roanoke 6adfa02445e001946396b96a — Veterans Day two weeks away (Oct 28 → Nov 11 = 14 days); Star lit red/white/blue on Veterans Day; 88.5 ft, 2,000 ft neon, first lit Nov 23, 1949 — https://www.roanokeva.gov/CivicAlerts.aspx?AID=2422 (6/15/2026), https://en.wikipedia.org/wiki/Roanoke_Star
+  - Harrisonburg 6adf9f9254db17c325bcb183 — patchy fog Wed morning; sunny, high near 73 Thu — NWS forecast issued 12:49 AM 10/28/2026 https://forecast.weather.gov/MapClick.php?lat=38.4496&lon=-78.8689
+  - Roanoke 6adfa01c45e001946396b95c — avg first freeze Oct 22 — https://www.weather.gov/rnk/FallFreezeClimatology ; Nov 23, 2026 is a Monday, 77th anniversary (1949) — calendar check
+  - Waynesboro / GBP_Waynesboro 6adf9f4e…, 6adf9f56… — 2026-2027 season "For the Love", 100 years of the building — https://www.waynetheatre.org/performances
+  - Culpeper/GBP_Culpeper/Waynesboro/Harrisonburg foliage posts — stated as typical windows ("usually"); consistent with VA DOF report 10/23/2026 (Blue Ridge/Ridge & Valley at max color, Piedmont lagging, oaks later) — https://www.dof.virginia.gov/education-and-recreation/fall-foliage-in-virginia/ , https://fall.virginia.org/weekly-reports/
+- Posts edited:
+  - Roanoke FB 6adfa01c45e001946396b95c (Oct 28 2:30 PM): "lows in the 40s and highs in the 70s" → "lows near 50 and highs in the 70s, close to 80 by Friday" (NWS Roanoke issued 4:30 AM 10/28: lows 48–50, highs 70/76/80) — https://forecast.weather.gov/MapClick.php?lat=37.271&lon=-79.9414 — APPLIED
+- Unverifiable: none.

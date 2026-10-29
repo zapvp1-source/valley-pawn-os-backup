@@ -69,3 +69,6 @@
 
 ## 2026-10-22 (night) — scope guard (Joshua)
 - Pawn-shop knowledge only. Financial, legal and HR questions are answered only from the P&P Manual / Employee Handbook text (POLICY passages), restated with no advice; otherwise routed to the store manager. Enforced in code before and after the model. Selftest 42/43.
+
+## 2026-10-28 — first Monday check worked
+- Batch posted Mon 10/26 06:05 PT in #preston-claude; Preston answered all 10 within 25 min (items 1-4 corrected to one rule: aged = over 1 year, marked down 30%; jewelry over 1.5 years scrapped; markdown deadline the 15th; item 5: no scrapping sellable jewelry before 1.5 years without his approval; 6-10 ok). Already applied: all 10 written to Preston Knowledge Base/verified.json on 10/26 (VERIFIED, with his corrections), so Goldilocks answers from them now.

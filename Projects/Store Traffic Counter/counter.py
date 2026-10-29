@@ -43,7 +43,7 @@ class Tracker:
 
 def in_door(p, cfg):
     dz = cfg.get('door_zone')
-    return dz is None or (p[0] <= dz['x_max'] and p[1] >= dz['y_min'])
+    return dz is None or (p[0] <= dz['x_max'] and dz['y_min'] <= p[1] <= dz.get('y_max', 1.01))
 
 def decide(t, cfg):
     """Count a finished track once. IN = track STARTS in the door zone and ends clearly inside the store
@@ -52,7 +52,6 @@ def decide(t, cfg):
     if t['n'] < cfg.get('min_hits', 3): return None
     lx, band = cfg['line_x'], cfg.get('band', 0.03)
     p0, p1 = t['p0'], t['p']
-    if p0[1] < cfg.get('min_y', 0.39) or p1[1] < cfg.get('min_y', 0.39): return None
     if in_door(p0, cfg) and p1[0] > lx + band: return 'in'
     if in_door(p1, cfg) and p0[0] > lx + band: return 'out'
     return None

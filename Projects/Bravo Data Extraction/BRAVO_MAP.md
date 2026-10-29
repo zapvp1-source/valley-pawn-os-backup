@@ -1,8 +1,8 @@
 # Bravo POS — Complete Screen & Report Map
 
-_Generated 2026-10-27 22:32 by `bravo_map_compile.py` from BravoMapper's read-only crawl. Do not hand-edit; add human notes to the `bravo-context` skill instead._
+_Generated 2026-10-28 22:41 by `bravo_map_compile.py` from BravoMapper's read-only crawl. Do not hand-edit; add human notes to the `bravo-context` skill instead._
 
-**Status:** IN PROGRESS (resumes nightly) · 74 steps mapped · 0 steps could not be mapped · last crawler state: `2026-10-27 22:31:42 ABORT no-dashboard after R_Vendor_Repairs`
+**Status:** COMPLETE · 92 steps mapped · 44 steps could not be mapped · last crawler state: `2026-10-28 22:40:59 COMPLETE`
 
 Raw data: `output/bravo_map/` — `screens/` (full UI tree per screen), `shots/` (screenshots), `lists/` (report lists, Custom Reports criteria / columns / saved reports), `index.tsv`, `RUN_LOG.md`.
 
@@ -378,7 +378,7 @@ Screenshot: `output/bravo_map/shots/M_Lost_or_Damaged_Items.png`
 - **Fields:** BravoMaskedTextBox; BravoComboBox `bcbCauseReason`; BravoComboBox `ddResolution`
 - **Grid columns:** Number; Status; Description
 
-- **Action controls recorded but deliberately NOT clicked (write/transaction actions):** Cancel; Save; Write off Item; Import List
+- **Action controls recorded but deliberately NOT clicked (write/transaction actions):** Cancel; Save; Write off Item; Import List; Confiscate Item
 
 ### Module: System Configuration
 _key `M_System_Configuration` · captured 2026-09-30 22:34:13 · Bravo     2026.6.0.79     VALLEY PAWN - WAYNESBORO (WAY)_
@@ -389,7 +389,7 @@ Screenshot: `output/bravo_map/shots/M_System_Configuration.png`
 - **Tabs:** ConfigInfoTab `BravoTabItemConfigInfoTab`; Configuration `BravoTabItem`; Payment Processors `BravoTabItem0`; Regulatory `BravoTabItem1`; Transaction `BravoTabItem2`; Storage Locations `BravoTabItem3`; Estimator `BravoTabItem4`; Calendar `BravoTabItem4`; Web `BravoTabItem0`; eBay `BravoTabItem1`
 - **Fields:** BravoMaskedTextBox `txtName`; BravoMaskedTextBox `txtPrintCode`; BravoMaskedTextBox `txtShortName`; BravoMaskedTextBox; BravoMaskedTextBox `CityEditor`; BravoComboBox `StateSelector`; BravoMaskedTextBox `ZipCodeEditor`; BravoComboBox; BravoMaskedTextBox `CountyEditor`
 
-- **Action controls recorded but deliberately NOT clicked (write/transaction actions):** Done; Add Employee; Agreements; Show inactive items; Edit; Browse...; Item: (ZTI.Bravo.Operations.Views.Items.ConfigTree.ConfigCompanyObject); Children: 2; Item: (ZTI.Bravo.Operations.Views.Items.ConfigTree.ConfigStoreObjectGroup); Children: 5; Item: (ZTI.Bravo.Operations.Views.Items.ConfigTree.ConfigStoreObject); Children: 2; Item: (ZTI.Bravo.Operations.Views.Items.ConfigTree.ConfigMobileDeviceObjectGroup); Children: 1
+- **Action controls recorded but deliberately NOT clicked (write/transaction actions):** Done; Add Employee; Agreements; Show inactive items; Edit; Browse...; Item: (ZTI.Bravo.Operations.Views.Items.ConfigTree.ConfigCompanyObject); Children: 2; Item: (ZTI.Bravo.Operations.Views.Items.ConfigTree.ConfigStoreObjectGroup); Children: 5; Item: (ZTI.Bravo.Operations.Views.Items.ConfigTree.ConfigStoreObject); Children: 2; Item: (ZTI.Bravo.Operations.Views.Items.ConfigTree.ConfigMobileDeviceObjectGroup); Children: 1; ConfigInfoTab; Configuration; Payment Processors; Regulatory; Transaction; Storage Locations; Calendar; Web; eBay
 
 ### Module: Transactions
 _key `M_Transactions` · captured 2026-09-30 22:34:40 · Bravo     2026.6.0.79     VALLEY PAWN - WAYNESBORO (WAY)_
@@ -400,7 +400,7 @@ Screenshot: `output/bravo_map/shots/M_Transactions.png`
 - **Fields:** BravoMaskedTextBox `boxEmployee`; BravoMaskedTextBox `boxOpenCloseAmnt`; BravoMaskedTextBox
 - **Grid columns:** Multiplier; Count; Amount; Tender.DisplayDescription; Expected; ActualCount; LocalizedActualAmount; OverShort
 
-- **Action controls recorded but deliberately NOT clicked (write/transaction actions):** Cancel; Save
+- **Action controls recorded but deliberately NOT clicked (write/transaction actions):** Cancel; Save; Use Expected Values
 
 ### Module: Void/View Transactions
 _key `M_Void_View_Transactions` · captured 2026-09-30 22:32:06 · Bravo     2026.6.0.79     VALLEY PAWN - WAYNESBORO (WAY)_
@@ -424,7 +424,7 @@ Screenshot: `output/bravo_map/shots/M_Web_Auctions.png`
 - **Checkboxes:** Show summary panel
 - **Grid columns:** ItemMerch.WebDesc; ItemMerch.InventoryNumber; EBayListing.StatusCode; EBayListing.StatusDate; EBayListing.StartingPrice; EBayListing.BuyItNowPrice; EBayListing.ReservePrice; EBayListing.StartTime; EBayListing.EndTime; TimeLeft; EBayListing.Winner
 
-- **Action controls recorded but deliberately NOT clicked (write/transaction actions):** Done; Cancel Auction; Print List; Delete Layout; Save; Active; Unsold (Last 90 days); Sold - Awaiting Payment; Sold - Awaiting Shipment; Sold - Expired (Last 90 days); Ended Listings (Last 90 days); Closed (Last 90 days); Auctions with questions; Listing Errors (last 90 days); Ebay; Buya; Show summary panel
+- **Action controls recorded but deliberately NOT clicked (write/transaction actions):** Done; Cancel Auction; Print List; Delete Layout; Save; Active; Unsold (Last 90 days); Sold - Awaiting Payment; Sold - Awaiting Shipment; Sold - Expired (Last 90 days); Ended Listings (Last 90 days); Closed (Last 90 days); Auctions with questions; Listing Errors (last 90 days); Ebay; Buya; Show summary panel; View Auction on eBay; Relist Auction
 
 ### Module: eBay Listings
 _key `M_eBay_Listings` · captured 2026-09-30 22:33:23 · Bravo     2026.6.0.79     VALLEY PAWN - WAYNESBORO (WAY)_
@@ -436,7 +436,7 @@ Screenshot: `output/bravo_map/shots/M_eBay_Listings.png`
 - **Checkboxes:** Show summary panel
 - **Grid columns:** StatusCode; Category; WebSalePrice; TagDescription
 
-- **Action controls recorded but deliberately NOT clicked (write/transaction actions):** Done; Cancel; Print List; Price Guide; Delete Layout; Save; ZTI.Bravo.EBayIntegration.Views.EBayListingManagementViewModel+EBayListingManagementFilterInfo; Show summary panel
+- **Action controls recorded but deliberately NOT clicked (write/transaction actions):** Done; Cancel; Print List; Price Guide; Delete Layout; Save; ZTI.Bravo.EBayIntegration.Views.EBayListingManagementViewModel+EBayListingManagementFilterInfo; Show summary panel; Place on eBay; Relist; Don't Show; View Listing on eBay
 
 ### Module: eCommerce
 _key `M_eCommerce` · captured 2026-09-30 22:32:32 · Bravo     2026.6.0.79     VALLEY PAWN - WAYNESBORO (WAY)_
@@ -450,7 +450,7 @@ Screenshot: `output/bravo_map/shots/M_eCommerce.png`
 - **Dropdowns:** SearchComboBox
 - **Grid columns:** Web_Order.SourceName; Web_Order.PrintNumber; Web_Order.Customer.FullName; Web_Order.OrderTime.Date; Item_Merch.InventoryNumber; SaleAmt; Web_Order.AgeHours; Item_Merch.Location.Name; Web_Order.FraudFlag; Web_Order_Item.Web_Order.SourceName; PrintNumber; Customer.FullName; RmaTime.Date; StatusCode; TotalAmt; Item_Merch.TagDesc; ResponseCode; OfferTime.Date; Item_Merch.ItemCost; Item_Merch.ItemPrice; OfferAmt; DiscountPct; AgeHours
 
-- **Action controls recorded but deliberately NOT clicked (write/transaction actions):** Done; Print List; Print Order; Cancel Order; Delete Layout; Save; Complete In-Store Pickup; Locate In-Store Pickup; Pending Web Fulfillments; Web Payment Settlement; Pending Web Transactions; Web Returns; Web Offers; Show summary panel
+- **Action controls recorded but deliberately NOT clicked (write/transaction actions):** Done; Print List; Print Order; Cancel Order; Delete Layout; Save; Complete In-Store Pickup; Locate In-Store Pickup; Pending Web Fulfillments; Web Payment Settlement; Pending Web Transactions; Web Returns; Web Offers; Show summary panel; Mark Customer Contacted
 
 ## Reports
 
@@ -791,6 +791,53 @@ Screenshot: `output/bravo_map/shots/T_Web_Offers.png`
 - **Checkboxes:** Show summary panel
 - **Dropdowns:** SearchComboBox
 
+## Could not be mapped automatically (needs one supervised look)
+
+- `R_ATF_A_D_Book` (failed 1x)
+- `R_ATF_A_D_Count` (failed 1x)
+- `R_Credit_Balance` (failed 1x)
+- `R_Credit_Journal` (failed 1x)
+- `R_Digital_Marketing_Settlement` (failed 1x)
+- `R_Drop_Ship_Settlement` (failed 1x)
+- `R_Employee_Review_Links_Sent` (failed 1x)
+- `R_Layaway_Balance` (failed 1x)
+- `R_Layaway_Deposits` (failed 1x)
+- `R_Layaway_History` (failed 1x)
+- `R_Layaway_Journal` (failed 1x)
+- `R_Loan_Base` (failed 1x)
+- `R_Loan_Disposition` (failed 1x)
+- `R_Loan_History` (failed 1x)
+- `R_Loan_Journal` (failed 1x)
+- `R_Loan_Notice` (failed 1x)
+- `R_Loans_Buys_by_Location` (failed 1x)
+- `R_On_Hold_Listing` (failed 1x)
+- `R_Pawn_Activity_Summary` (failed 1x)
+- `R_Retail_Reports_Dashboard` (failed 1x)
+- `R_Sales_Accounting` (failed 1x)
+- `R_Sold_Inventory` (failed 1x)
+- `R_Supplemental_Loan_Disposition` (failed 1x)
+- `R_Web_Settlement` (failed 1x)
+- `S_Lost_or_Damaged_Items__Item_History_Report` (failed 1x)
+- `S_Lost_or_Damaged_Items__Lost_Stolen_or_Damaged_Report` (failed 1x)
+- `S_System_Configuration__Estimator` (failed 1x)
+- `S_Void_View_Transactions__Custom_Reports` (failed 1x)
+- `S_Void_View_Transactions__Find_Transaction` (failed 1x)
+- `S_Void_View_Transactions__View` (failed 1x)
+- `S_Web_Auctions__Custom_Reports` (failed 1x)
+- `S_Web_Auctions__View_Auction_Item` (failed 1x)
+- `S_Web_Auctions__View_Related_Auctions` (failed 1x)
+- `S_Web_Auctions__View_Web_Order` (failed 1x)
+- `S_Web_Auctions__View_eBay_Errors` (failed 1x)
+- `S_eBay_Listings__Custom_Reports` (failed 1x)
+- `S_eBay_Listings__Estimator` (failed 1x)
+- `S_eBay_Listings__Item_Detail` (failed 1x)
+- `S_eBay_Listings__Item_History` (failed 1x)
+- `S_eCommerce__Custom_Reports` (failed 1x)
+- `S_eCommerce__Customer_View` (failed 1x)
+- `S_eCommerce__Details` (failed 1x)
+- `S_eCommerce__Item_History` (failed 1x)
+- `S_eCommerce__Web_Item_View` (failed 1x)
+
 ## Run history
 
 - 2026-09-30 16:35 skipped: Bravo never idle before the deadline
@@ -851,3 +898,4 @@ Screenshot: `output/bravo_map/shots/T_Web_Offers.png`
 - 2026-10-26 22:32 mode=full end='2026-10-26 22:31:49 ABORT no-dashboard after R_Vendor_Purchase' steps_done_total=73 (+1 this run) failed_keys=26 health=PASS CUL
 - 2026-10-27 22:32 recovered from '2026-10-27 22:31:42 ABORT no-dashboard after R_Vendor_Repairs' (health=PASS CUL)
 - 2026-10-27 22:32 mode=full end='2026-10-27 22:31:42 ABORT no-dashboard after R_Vendor_Repairs' steps_done_total=74 (+1 this run) failed_keys=27 health=PASS CUL
+- 2026-10-28 22:41 mode=full end='2026-10-28 22:40:59 COMPLETE' steps_done_total=92 (+18 this run) failed_keys=71
