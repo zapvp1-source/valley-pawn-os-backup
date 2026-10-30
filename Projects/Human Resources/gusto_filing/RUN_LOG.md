@@ -1,2 +1,3 @@
 - 2026-10-21 21:20 | built | 0 filed (no completed HR envelopes yet)
 - 2026-10-26 14:28 UTC | filed 0, skipped 5 (Bald Rock guest contracts), waiting 0 — no completed HR envelopes
+- 2026-10-29 14:41 UTC | filed 0, skipped 6 (Bald Rock guest contracts), waiting 0 — no completed HR envelopes (Gmail cross-check: only vendor/Comcast/Bald Rock completions); Nov manuals not published yet (Policy Day not approved)

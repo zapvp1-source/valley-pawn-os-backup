@@ -556,3 +556,47 @@ No post made -- nothing failed this run.
   only the real `mcp__remote-devices__*` bridge, which worked fine throughout (get_device_info,
   device_bash, device_stage_files all succeeded). Disregarded the 12-minute retry instruction
   since the real bridge was already confirmed working directly -- consistent with every prior run.
+
+---
+
+## Run: 2026-10-29 (scheduled dashboard-refresh, Cowork/cloud session, LINKED to Mac Studio)
+
+### 1. KPI data refresh - DONE (no changes needed)
+- Checked all channels per the task's 2026-10-23 current-rules list: layaway-review (latest
+  standard post still Oct 26), company-performance (latest monthly post still Oct 1 / Sep 2026
+  Month in Review, no Oct report yet), daily-funds-reconcilation (latest Tue Oct 27 -- nothing
+  posted Oct 28 or Oct 29), items-to-price (latest Oct 27 -- nothing Oct 28/29), pawn-walks
+  Intake Margin (latest Oct 26 data, posted Oct 27 -- nothing since). loan-review (retired
+  2026-10-14) and chekkit-unanswerd-summary (nothing posts there any more) left untouched per
+  the task's explicit instruction.
+- Cross-checked the gap against `Valley Pawn OS/fleet/FAILURE_LEDGER.md`: a fleet-wide Bravo
+  pipeline outage (EnsureStore / UIA failures, native `bravo-daily-gl` + guardian rows,
+  2026-10-27 through 2026-10-29, NEEDS_HUMAN: no, self-healing) is the documented cause of the
+  missing Oct 28/29 daily reports -- not a dashboard-refresh defect, so per Rule 12 no new
+  FAILURE_LEDGER row was added for it here (it's already tracked under the originating tasks).
+- Found `site/data/kpis.json` already had `asOf: October 29, 2026` with this exact data (file
+  mtime 12:28 ET today) from an earlier, unlogged run today -- confirmed byte-identical to what
+  this run independently derived from the channels, so no edit was needed. **Logging gap note:**
+  that earlier run never wrote a CHANGELOG/DEPLOY_STATUS entry -- flagging so a future session
+  doesn't mistake the missing log for a missed refresh.
+
+### 2. Artifact sync (site/artifacts/) - ALREADY CURRENT
+- `site/artifacts/vp-website-trend/index.html` (14,279 bytes, mtime 16:40 ET today) and its
+  `site/data/artifacts.json` manifest entry were already present and already matched the live
+  deployed copy exactly (diffed byte-for-byte below) -- added by the same earlier unlogged run
+  or a separate sync; nothing to do this pass.
+
+### 3. Deploy to Cloudflare Pages - SKIPPED (verified already live, byte-identical)
+- Diffed local `site/index.html`, `site/data/kpis.json`, and `site/data/artifacts.json` against
+  the live site (fetched via basic auth) -- all three matched with zero differences. Since the
+  live deployment already serves exactly what's on disk, a redeploy would have been a pure
+  no-op; skipped rather than spending a deploy cycle on identical content (Rule 15 spirit --
+  do real work, not motion).
+
+### 4. Verify - DONE
+- No-auth apex -> 401 (pass). Basic-auth apex -> 200 (pass).
+- `data/kpis.json` valid JSON, live and local identical, asOf = October 29, 2026.
+
+### Step 5 - Slack / notifications
+No Slack post (per Rule 16 and this task's own "never posts to Slack" instruction -- success,
+no notice needed either way).

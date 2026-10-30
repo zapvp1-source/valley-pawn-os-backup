@@ -1,51 +1,51 @@
 # Field Scorecard — Tier-1 publications
 
-## TODAY (Wednesday 2026-10-28) — read THIS before saying anything is broken
+## TODAY (Friday 2026-10-30) — read THIS before saying anything is broken
 
 **A task is NOT broken until its window has closed.** `NOT DUE YET` and `IN GRACE` mean nothing is wrong — it simply has not run yet. Only `MISSED TODAY` is a real miss. The table below this one is the HISTORICAL ledger (it shows each task's most recent expected instance, which for a daily task is often YESTERDAY) — never quote it as today's health.
 
-**Right now: 6 missed today.**
+**Right now: 0 missed today.**
 
 | Task | Today | Scheduled | Note |
 |---|---|---|---|
-| pawn-walk | MISSED TODAY | 07:15 | window closed 11:15, nothing found |
-| sold-review | MISSED TODAY | 07:45 | window closed 11:45, nothing found |
-| daily-items-to-price | MISSED TODAY | 08:00 | window closed 12:00, nothing found |
-| discount-review | MISSED TODAY | 08:25 | window closed 12:25, nothing found |
-| daily-dress-code-check | MISSED TODAY | 10:30 | window closed 14:30, nothing found |
-| daily-funds-verification | MISSED TODAY | 18:00 | window closed 21:00, nothing found |
-| bald-rock-15-day-contract | UNVERIFIED | 04:08 | no receipts yet — becomes measurable on the next run |
-| jewelry-onhand-nightly-pull | IN GRACE | 20:30 | due 20:30, grace until 00:30 |
-| backup-health-watchdog | POSTED | 07:00 | seen in receipt |
-| chekkit-unanswered-alert | POSTED | 08:00 | seen in slack:#chekkit-messages-missed |
-| oura-daily-import | POSTED | 08:30 | seen in receipt |
-| precious-metals-settlement-handler | POSTED | 09:00 | seen in file |
-| health-episode-capture | POSTED | 09:15 | seen in receipt |
-| daily-clockin-check | POSTED | 10:15 | seen in slack:#general |
-| daily-cloudcover-check | POSTED | 10:25 | seen in slack:#general |
-| fleet-guardian | POSTED | 12:45 | seen in file |
-| zoom-voicemail-eod-review | POSTED | 17:45 | seen in receipt |
-| daily-unopened-email-eval | POSTED | 18:00 | seen in receipt |
-| chekkit-unanswered-eod-followup | POSTED | 19:00 | seen in slack:#chekkit-messages-missed |
-| zoom-voicemail-alert | POSTED | 19:00 | seen in receipt |
-| health-records-intake | POSTED | 21:00 | seen in receipt |
-| fleet-guardian | POSTED | 21:45 | seen in file |
+| bald-rock-15-day-contract | NOT DUE YET | 04:08 | scheduled 04:08 |
+| backup-health-watchdog | NOT DUE YET | 07:00 | scheduled 07:00 |
+| pawn-walk | NOT DUE YET | 07:15 | scheduled 07:15 |
+| sold-review | NOT DUE YET | 07:45 | scheduled 07:45 |
+| chekkit-unanswered-alert | NOT DUE YET | 08:00 | scheduled 08:00 |
+| daily-items-to-price | NOT DUE YET | 08:00 | scheduled 08:00 |
+| discount-review | NOT DUE YET | 08:25 | scheduled 08:25 |
+| oura-daily-import | NOT DUE YET | 08:30 | scheduled 08:30 |
+| precious-metals-settlement-handler | NOT DUE YET | 09:00 | scheduled 09:00 |
+| health-episode-capture | NOT DUE YET | 09:15 | scheduled 09:15 |
+| daily-clockin-check | NOT DUE YET | 10:15 | scheduled 10:15 |
+| daily-cloudcover-check | NOT DUE YET | 10:25 | scheduled 10:25 |
+| daily-dress-code-check | NOT DUE YET | 10:30 | scheduled 10:30 |
+| fleet-guardian | NOT DUE YET | 12:45 | scheduled 12:45 |
+| zoom-voicemail-eod-review | NOT DUE YET | 17:45 | scheduled 17:45 |
+| daily-funds-verification | NOT DUE YET | 18:00 | scheduled 18:00 |
+| daily-unopened-email-eval | NOT DUE YET | 18:00 | scheduled 18:00 |
+| chekkit-unanswered-eod-followup | NOT DUE YET | 19:00 | scheduled 19:00 |
+| zoom-voicemail-alert | NOT DUE YET | 19:00 | scheduled 19:00 |
+| jewelry-onhand-nightly-pull | NOT DUE YET | 20:30 | scheduled 20:30 |
+| health-records-intake | NOT DUE YET | 21:00 | scheduled 21:00 |
+| fleet-guardian | NOT DUE YET | 21:45 | scheduled 21:45 |
 
 ---
 
 ## HISTORICAL — most recent expected instance per task (NOT today's status)
 
 |---|---|---|---|
-| daily-dress-code-check | MISSED | Wed 10/28 10:30 |  |
-| daily-funds-verification | MISSED | Wed 10/28 18:00 |  |
-| daily-items-to-price | MISSED | Wed 10/28 08:00 |  |
-| discount-review | MISSED | Wed 10/28 08:25 |  |
+| daily-dress-code-check | MISSED | Thu 10/29 10:30 |  |
+| daily-funds-verification | MISSED | Thu 10/29 18:00 |  |
+| daily-items-to-price | MISSED | Thu 10/29 08:00 |  |
+| discount-review | MISSED | Thu 10/29 08:25 |  |
 | eom-bravo-gl-export | MISSED | Thu 10/01 06:00 | file missing: ~/Documents/Claude/Projects/Valley Pawn OS/fleet/state/eom_gl_export/2026-09.json |
-| pawn-walk | MISSED | Wed 10/28 07:15 |  |
-| sold-review | MISSED | Wed 10/28 07:45 |  |
+| pawn-walk | MISSED | Thu 10/29 07:15 |  |
+| sold-review | MISSED | Thu 10/29 07:45 |  |
 | weekly-employee-perf-canvas-refresh | MISSED | Mon 10/26 09:24 | no receipt since 10/26 09:24 (last 10/19 09:24) |
-| backup-health-watchdog | OK | Wed 10/28 07:00 |  |
-| bald-rock-15-day-contract | UNVERIFIED | Wed 10/28 04:08 | no receipts yet — becomes measurable on the next run |
+| backup-health-watchdog | OK | Thu 10/29 07:00 |  |
+| bald-rock-15-day-contract | UNVERIFIED | Thu 10/29 04:08 | no receipts yet — becomes measurable on the next run |
 | bonus-month-close | OK | Sat 10/10 09:00 |  |
 | bonus-month-close-pull | OK | Thu 10/01 11:30 |  |
 | bonus-pace-monday | OK | Mon 10/26 09:35 |  |
@@ -58,20 +58,20 @@
 | ceo-mail-brief | INFRA | — | infrastructure task — no field publication to score (registry-guard/fleet-health cover its health) |
 | ceo-monthly-scorecard | OK | Sat 10/03 12:00 |  |
 | ceo-weekly-scorecard | NO COVERAGE | — | Tier-1 publication with no expected_outputs.json entry yet — add one verified against a real post (additive-only) |
-| chekkit-unanswered-alert | OK | Wed 10/28 08:00 |  |
-| chekkit-unanswered-eod-followup | OK | Wed 10/28 19:00 |  |
-| daily-clockin-check | OK | Wed 10/28 10:15 |  |
-| daily-cloudcover-check | OK | Wed 10/28 10:25 |  |
-| daily-unopened-email-eval | OK | Wed 10/28 18:00 |  |
+| chekkit-unanswered-alert | OK | Thu 10/29 08:00 |  |
+| chekkit-unanswered-eod-followup | OK | Thu 10/29 19:00 |  |
+| daily-clockin-check | OK | Thu 10/29 10:15 |  |
+| daily-cloudcover-check | OK | Thu 10/29 10:25 |  |
+| daily-unopened-email-eval | OK | Thu 10/29 18:00 |  |
 | eom-bravo-gl-export-watchdog | NO COVERAGE | — | Tier-1 publication with no expected_outputs.json entry yet — add one verified against a real post (additive-only) |
-| fleet-guardian | OK | Wed 10/28 12:45 |  |
-| fleet-guardian | OK | Wed 10/28 21:45 |  |
+| fleet-guardian | OK | Thu 10/29 12:45 |  |
+| fleet-guardian | OK | Thu 10/29 21:45 |  |
 | funds-verification-watchdog | NO COVERAGE | — | Tier-1 publication with no expected_outputs.json entry yet — add one verified against a real post (additive-only) |
 | google-reviews-post-watchdog | NO COVERAGE | — | Tier-1 publication with no expected_outputs.json entry yet — add one verified against a real post (additive-only) |
-| health-episode-capture | OK | Wed 10/28 09:15 |  |
-| health-records-intake | PENDING | Wed 10/28 21:00 | due 01:00, grace not yet elapsed |
+| health-episode-capture | OK | Thu 10/29 09:15 |  |
+| health-records-intake | PENDING | Thu 10/29 21:00 | due 01:00, grace not yet elapsed |
 | jewelry-onhand-catchup | NO COVERAGE | — | Tier-1 publication with no expected_outputs.json entry yet — add one verified against a real post (additive-only) |
-| jewelry-onhand-nightly-pull | PENDING | Wed 10/28 20:30 | due 00:30, grace not yet elapsed |
+| jewelry-onhand-nightly-pull | PENDING | Thu 10/29 20:30 | due 00:30, grace not yet elapsed |
 | jewelry-pull-watchdog | NO COVERAGE | — | Tier-1 publication with no expected_outputs.json entry yet — add one verified against a real post (additive-only) |
 | layaway-yield-weekly | OK | Mon 10/26 11:15 |  |
 | monday-bravo-cell-gapfill | SKIPPED | — | retired, quarterly-not-yet-due, or unparseable cadence (retired-2026-10-23) |
@@ -89,8 +89,8 @@
 | monthly-scrap-rankings | OK | Thu 10/01 04:30 |  |
 | nics-monthly-ranking | OK | Thu 10/01 09:30 |  |
 | nics-weekly-mtd-ranking | OK | Mon 10/26 09:30 |  |
-| oura-daily-import | OK | Wed 10/28 08:30 |  |
-| precious-metals-settlement-handler | OK | Wed 10/28 09:00 |  |
+| oura-daily-import | OK | Thu 10/29 08:30 |  |
+| precious-metals-settlement-handler | OK | Thu 10/29 09:00 |  |
 | review-obtained-last-week | OK | Mon 10/26 09:00 |  |
 | sales-tax-monthly-update | OK | Thu 10/01 08:00 |  |
 | sunday-checklist-summary | NO COVERAGE | — | Tier-1 publication with no expected_outputs.json entry yet — add one verified against a real post (additive-only) |
@@ -108,5 +108,5 @@
 | weekly-store-kpis | OK | Mon 10/26 08:45 |  |
 | weekly-store-perf-canvas-refresh | OK | Mon 10/26 09:28 |  |
 | weekly-timekeeping-analysis | OK | Mon 10/26 09:00 |  |
-| zoom-voicemail-alert | OK | Wed 10/28 19:00 |  |
-| zoom-voicemail-eod-review | OK | Wed 10/28 17:45 |  |
+| zoom-voicemail-alert | OK | Thu 10/29 19:00 |  |
+| zoom-voicemail-eod-review | OK | Thu 10/29 17:45 |  |

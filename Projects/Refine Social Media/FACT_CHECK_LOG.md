@@ -108,3 +108,23 @@ Unverifiable: none. Published-wrong: none.
 - Posts edited:
   - Roanoke FB 6adfa01c45e001946396b95c (Oct 28 2:30 PM): "lows in the 40s and highs in the 70s" → "lows near 50 and highs in the 70s, close to 80 by Friday" (NWS Roanoke issued 4:30 AM 10/28: lows 48–50, highs 70/76/80) — https://forecast.weather.gov/MapClick.php?lat=37.271&lon=-79.9414 — APPLIED
 - Unverifiable: none.
+
+## 2026-10-29 (07:45 ET) — social-fact-check
+- Posts checked: 30 (window to 2026-10-30 ~7:40 PM ET). Time-sensitive posts: 12 football (FB+GBP x Culpeper, Harrisonburg, Waynesboro, Roanoke), 2 Brand "this Friday", 2 same-day "open until 6" (Harrisonburg FB 10/29 Thu, Lexington FB 10/30 Fri), 6 foliage. Skipped as product/evergreen: GBP product posts, Goshen Pass, Grandin Theatre, Lexington brick sidewalks, Brand Switch/Party Box.
+- Claims verified:
+  - Culpeper: Blue Devils host Courtland Fri 10/30 7:00 PM, district game; 7-1 overall; beat James Monroe 38-18 on 10/23; 5-game win streak (Spotsylvania, Fauquier, Chancellor, King George, JM) — https://www.si.com/high-school/stats/virginia/football/teams/255248-culpeper-county-blue-devils/games , https://www.maxpreps.com/va/spotsylvania/courtland-cougars/football/schedule/ (10/30 @ Culpeper 7 PM, region game). 5-0 district: Culpeper's district wins incl. Eastern View 9/3 (flagged region on EV's MaxPreps page) + Spotsy, Chancellor, KG, JM.
+  - Eastern View at Chancellor Fri 10/30 7:00 PM — https://www.maxpreps.com/va/culpeper/eastern-view-cyclones/football/schedule/
+  - Harrisonburg at William Monroe (Stanardsville) Fri 10/30 7:00 PM — https://www.maxpreps.com/news/d_eUpiTENUC6_H8ds8IAiA/football-game-preview-harrisonburg-blue-streaks-vs-william-monroe-dragons--how-to-watch.htm
+  - JMU hosts Troy Thu 10/29 7:30 PM, Bridgeforth Stadium — https://jmusports.com/sports/football/schedule/text
+  - Waynesboro at Wilson Memorial Fri 10/30 7:00 PM, district (Shenandoah) game — https://www.maxpreps.com/va/waynesboro/waynesboro-little-giants/football/schedule/
+  - Northside hosts Staunton River Fri 10/30 7:00 PM; lost 20-17 at Fleming 10/23 (post says "close 20-17 game", accurate) — https://www.maxpreps.com/va/roanoke/northside-vikings/football/schedule/ , https://www.si.com/high-school/stats/virginia/football/teams/256554-northside-vikings/games
+  - Patrick Henry hosts Pulaski County Fri 10/30 7:00 PM — https://www.maxpreps.com/va/roanoke/patrick-henry-patriots/football/schedule/
+  - "Stop in this Friday" / "open until 6 tonight/today": matches standing store hours (Fri all stores open; Harrisonburg Thu 10-6; Lexington Fri 10-6).
+  - Foliage posts: typical-window statements ("usually"), consistent with 10/28 log's VA DOF report; no dated claim.
+- Posts edited (all APPLIED, re-listed to confirm):
+  - Culpeper FB 6adf9f1a45e001946396b72e: "sitting in first place" → removed (Courtland also unbeaten-capable in district; standings not verifiable from a current primary source); kept 7-1 / 5-0 / five-game streak / 38-18.
+  - GBP_Culpeper 6adf9f238945d24da9143ee5: ", currently in first place" → "on a five-game win streak".
+  - Harrisonburg FB 6adf9fa445e001946396b84a: "It's a district game" → dropped (SI lists only East Rockingham & Spotswood as league games; Monroe not flagged); added "in Stanardsville" and JMU "7:30 PM at Bridgeforth Stadium".
+  - GBP_Harrisonburg 6adf9fac8945d24da9144055: "in a district game" → "to Stanardsville"; added Dukes 7:30 p.m. at Bridgeforth Stadium.
+- Unverifiable: Battlefield District standings / first place (Fredericksburg Free Press 10/24 roundup unreachable — redirect loop). Removed rather than left in.
+- PUBLISHED-WRONG: none.

@@ -41,19 +41,24 @@ class Tracker:
                 t = self.tracks[best]; moves.append((best, t['p'], p)); t['p'], t['ts'] = p, now; t['n'] += 1; used.add(best)
         return moves
 
-def in_door(p, cfg):
+def in_door(p, cfg, pad=0.0):
     dz = cfg.get('door_zone')
-    return dz is None or (p[0] <= dz['x_max'] and dz['y_min'] <= p[1] <= dz.get('y_max', 1.01))
+    return dz is None or (dz.get('x_min', -1) - pad <= p[0] <= dz['x_max'] + pad and dz['y_min'] - pad <= p[1] <= dz.get('y_max', 1.01) + pad)
+
+def inside(p, cfg):
+    """Clearly inside the store: past the vertical line (line_x mode) or, in zone mode, outside the
+    door zone grown by 'clear' on every side."""
+    if 'line_x' in cfg: return p[0] > cfg['line_x'] + cfg.get('band', 0.03)
+    return not in_door(p, cfg, pad=cfg.get('clear', 0.10))
 
 def decide(t, cfg):
     """Count a finished track once. IN = track STARTS in the door zone and ends clearly inside the store
     (past the line + hysteresis band). OUT = the reverse. People browsing the window display next to the
     door (ID swaps / jitter near the line) never start or end in the door zone, so they are not counted."""
     if t['n'] < cfg.get('min_hits', 3): return None
-    lx, band = cfg['line_x'], cfg.get('band', 0.03)
     p0, p1 = t['p0'], t['p']
-    if in_door(p0, cfg) and p1[0] > lx + band: return 'in'
-    if in_door(p1, cfg) and p0[0] > lx + band: return 'out'
+    if in_door(p0, cfg) and inside(p1, cfg): return 'in'
+    if in_door(p1, cfg) and inside(p0, cfg): return 'out'
     return None
 
 def log_track(store, t, d):
@@ -65,11 +70,11 @@ def log_track(store, t, d):
 
 def evidence(store, img, cfg, t, d):
     H, W = img.shape[:2]; ev = os.path.join(HERE, 'evidence', store, dt.datetime.now(TZ).strftime('%Y-%m-%d'))
-    os.makedirs(ev, exist_ok=True); im = cv2.cvtColor(img, cv2.COLOR_RGB2BGR); lx = int(cfg['line_x'] * W)
-    cv2.line(im, (lx, 0), (lx, H), (0, 0, 255), 3)
+    os.makedirs(ev, exist_ok=True); im = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+    if 'line_x' in cfg: lx = int(cfg['line_x'] * W); cv2.line(im, (lx, 0), (lx, H), (0, 0, 255), 3)
     cv2.arrowedLine(im, (int(t['p0'][0] * W), int(t['p0'][1] * H)), (int(t['p'][0] * W), int(t['p'][1] * H)), (0, 255, 255), 4)
     dz = cfg.get('door_zone')
-    if dz: cv2.rectangle(im, (0, int(dz['y_min'] * H)), (int(dz['x_max'] * W), H), (255, 0, 255), 2)
+    if dz: cv2.rectangle(im, (int(max(dz.get('x_min', 0), 0) * W), int(dz['y_min'] * H)), (int(dz['x_max'] * W), int(min(dz.get('y_max', 1), 1) * H)), (255, 0, 255), 2)
     base = os.path.join(ev, dt.datetime.now(TZ).strftime('%H%M%S') + f'_{d}')
     k = 0
     while os.path.exists(f'{base}{"_" + str(k) if k else ""}.jpg'): k += 1
@@ -96,7 +101,7 @@ async def run(store, minutes, debug):
     cfg = CFG[store]   # all geometry is normalized (0..1)
     end = time.time() + minutes * 60; counts = {}; trk = None; seen = 0
     while time.time() < end:
-        at = ns.token(); cam = ns.camera(store, cfg['camera'])
+        at = ns.token(); cam = ns.camera(cfg.get('store', store), cfg['camera'])
         pc, fut, sid = await ns.open_stream(at, cam); started = time.time(); last = 0; nf = 0
         try:
             track = await asyncio.wait_for(fut, 30)
@@ -125,8 +130,7 @@ async def run(store, minutes, debug):
                 nf += 1; seen += len(feet)
                 if nf % 240 == 0: print(dt.datetime.now(TZ).strftime('%H:%M:%S'), f'frames={nf} detections={seen} size={W}x{H}', flush=True); seen = 0
                 if debug and nf % 40 == 1:
-                    dbg = cv2.cvtColor(img, cv2.COLOR_RGB2BGR); lx = int(cfg['line_x'] * W)
-                    cv2.line(dbg, (lx, 0), (lx, H), (0, 0, 255), 2)
+                    dbg = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
                     for x, y in feet: cv2.circle(dbg, (int(x * W), int(y * H)), 5, (0, 255, 0), -1)
                     cv2.imwrite(os.path.join(HERE, f'debug_{store}.jpg'), dbg)
                 if counts and now % 60 < 0.3: flush(store, counts)

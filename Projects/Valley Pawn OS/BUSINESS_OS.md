@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-10-28
+# LIVE STATE - auto-refreshed 2026-10-29
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -214,34 +214,34 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-10-28 | Valley Pawn OS | - |
-| 2026-10-28 | Unified Search | - |
-| 2026-10-28 | Life OS | - |
-| 2026-10-28 | Business Dashboard Website | - |
-| 2026-10-28 | Bravo Data Extraction | STATUS.md |
-| 2026-10-27 | Zoom Call Pipeline | - |
-| 2026-10-27 | Website | - |
+| 2026-10-29 | Valley Pawn OS | - |
+| 2026-10-29 | Unified Search | - |
+| 2026-10-29 | Life OS | - |
+| 2026-10-29 | Business Dashboard Website | - |
+| 2026-10-29 | Bravo Data Extraction | STATUS.md |
+| 2026-10-28 | Zoom Call Pipeline | - |
+| 2026-10-28 | Website | - |
+| 2026-10-28 | Training Program | STATUS.md |
+| 2026-10-28 | Store Traffic Counter | - |
+| 2026-10-28 | Refine Social Media | - |
+| 2026-10-28 | Precious Metals Settlements | - |
+| 2026-10-28 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-10-28 | Human Resources | - |
+| 2026-10-28 | Health Optimization | STATUS.md |
+| 2026-10-28 | Email Refinement | - |
+| 2026-10-28 | Daily Funds Verification | - |
+| 2026-10-28 | Compliance | - |
+| 2026-10-28 | Ask Valley Pawn | STATUS.md |
 | 2026-10-27 | Valuation Core | README.md |
-| 2026-10-27 | Store Traffic Counter | - |
 | 2026-10-27 | Sold Margin Review | STATUS.md |
 | 2026-10-27 | Short Term Rental Optimization | - |
-| 2026-10-27 | Refine Social Media | - |
-| 2026-10-27 | Precious Metals Settlements | - |
 | 2026-10-27 | Pawn Walks | STATUS.md |
-| 2026-10-27 | Jewelry Count Reconciliation | STATUS.md |
-| 2026-10-27 | Human Resources | - |
-| 2026-10-27 | Health Optimization | STATUS.md |
 | 2026-10-27 | Discount Outlier Review | STATUS.md |
-| 2026-10-27 | Daily Funds Verification | - |
-| 2026-10-27 | Compliance | - |
 | 2026-10-26 | eBay | - |
-| 2026-10-26 | Training Program | STATUS.md |
 | 2026-10-26 | Quickbooks Set UP | - |
 | 2026-10-26 | Preston Knowledge Base | - |
-| 2026-10-26 | Email Refinement | - |
 | 2026-10-26 | Communcations | - |
 | 2026-10-26 | Call Analysis | - |
-| 2026-10-26 | Ask Valley Pawn | STATUS.md |
 | 2026-10-25 | _scratch | - |
 | 2026-10-25 | Ai Optimized Marketing | - |
 | 2026-10-24 | eBay Customer Campaign | - |

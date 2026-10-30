@@ -1,3 +1,112 @@
+## 2026-10-29 evening (Store Traffic daily review)
+
+- Waynesboro 10/29 (v3.1, full day 09:57–18:03): 67 IN / 77 OUT; photo sample of counted crossings = real door traffic (groups leaving at lunch, individual entries). Reported to Joshua.
+- Culpeper (workstation 1, zone mode, partial day from 12:02): 5 IN / 12 OUT. Photo check: real exits through the door are caught, but people walking ACROSS the front aisle past the door (and a repeated route mat-corner ↔ top-right case, ~every 2 min) get mis-scored. Not reported.
+- **A/B test 10/30:** NEW native `com.valleypawn.storetraffic-culpeperb` (config key `CulpeperB`, `store: Culpeper`) on "Culpeper  camera" — overhead view with the entrance mat at bottom centre; door_zone x 0.30–0.62, y ≥ 0.78. Both Culpeper agents log tracks; keep whichever validates, uninstall the other (`launchctl bootout` via install_agent + remove native_live flag). `counter.py`: camera lookup now uses `cfg.store`.
+- Bravo safe-register pulls for 10/28 and 10/29 still missing (fleet-wide Bravo outage, fleet-guardian) — comparison waits on it.
+
+## 2026-10-29 (hiring pipeline — quiet run #11, cloud session, ~7:19 PM ET)
+
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules. Cloud-only session (no remote-devices bridge), Claude-in-Chrome browser access.
+- Calendar (jdavis@fcfpawn.com) checked: unchanged — tomorrow (Fri 10/30) 11:00 AM Dariel Negron + 11:05 AM Hunter Marks (both Harrisonburg).
+- Indeed Messages inbox checked live (double-navigated past SPA stale-zero quirk): unchanged from run #10 — Michael Boyer (Roanoke), 2:26 PM, "Any update?", still sitting with Joshua (no new reply posted since his 2:49/3:21/5:21 PM notes). Hunter Marks "Sounds good." and Diaundre Wright "Ok thank you" unchanged.
+- Jobs dashboard checked live: Waynesboro (88 total, 0 New), Harrisonburg (75 total, 0 New), Roanoke (58 total, 0 New), all Paused, no live sponsorship spend — unchanged.
+- Changed this run: nothing — 0 messages sent, 0 calendar changes, 0 texts (not a text-batch window; also no screen control), 0 rejections. Per quiet rule, no Slack DM or channel post sent (Boyer question still open with Joshua).
+
+## 2026-10-29 (hiring pipeline — quiet run #10, cloud session, ~4:49 PM ET)
+
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules. Cloud-only session (no remote-devices bridge), Claude-in-Chrome browser access.
+- Calendar (jdavis@fcfpawn.com) checked: unchanged — today (Thu 10/29) 11:00 AM Austin Passarelli (Harrisonburg); tomorrow (Fri 10/30) 11:00 AM Dariel Negron + 11:05 AM Hunter Marks (both Harrisonburg).
+- Indeed Messages inbox checked live (double-navigated past SPA stale-zero quirk): top thread still Michael Boyer (Roanoke), 2:26 PM, "Any update?", Awaiting response — identical to runs #8–#9, still sitting with Joshua (checked his DM; no new reply posted there since the 12:21 PM note). Hunter Marks "Sounds good." and Diaundre Wright "Ok thank you" unchanged — closing pleasantries, not ours to act on.
+- Jobs dashboard checked live: Waynesboro (88 total, 0 New), Harrisonburg (75 total, 0 New), Roanoke (58 total, 0 New), all Paused, no live sponsorship spend — unchanged. Lexington (31, 0 New) and Saint Augustine FL (24, 3 New) out of scope, unchanged.
+- Changed this run: nothing — 0 messages sent, 0 calendar changes, 0 texts (not a text-batch window; also no screen control), 0 rejections. Per quiet rule, no Slack DM or channel post sent (Boyer question still open with Joshua from run #8).
+
+## 2026-10-29 (hiring pipeline — quiet run #9, cloud session, ~2:55 PM ET)
+
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only session (no remote-devices bridge), Claude-in-Chrome browser access. Scope reconfirmed via HIRING_SWITCH.md: Waynesboro/Harrisonburg/Roanoke ON, Culpeper/Lexington/Saint Augustine FL OFF.
+- Calendar (jdavis@fcfpawn.com) checked: unchanged — today (Thu 10/29) 11:00 AM Austin Passarelli (Harrisonburg); tomorrow (Fri 10/30) 11:00 AM Dariel Negron + 11:05 AM Hunter Marks (both Harrisonburg).
+- Indeed Messages inbox checked live (double-navigated past SPA stale-zero quirk): top thread still Michael Boyer (Roanoke), 2:26 PM, "Any update?", Awaiting response — identical to run #8, already escalated to Joshua via DM that run, no reply yet from him. Hunter Marks "Sounds good." and Diaundre Wright "Ok thank you" unchanged — closing pleasantries, not ours to act on.
+- Jobs dashboard checked live: Waynesboro (88 total, 0 New), Harrisonburg (75 total, 0 New), Roanoke (58 total, 0 New), all Paused, no live sponsorship spend — unchanged. Lexington (31, 0 New) and Saint Augustine FL (24, 3 New) out of scope, unchanged.
+- Changed this run: nothing — 0 messages sent, 0 calendar changes, 0 texts (not a text-batch window; also no screen control), 0 rejections. Per quiet rule, no Slack DM or channel post sent (Boyer question already sitting with Joshua from run #8).
+
+## 2026-10-29 (hiring pipeline — run #8, cloud session, ~2:49 PM ET)
+
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only session (no remote-devices bridge), Claude-in-Chrome browser access. Scope reconfirmed via HIRING_SWITCH.md: Waynesboro/Harrisonburg/Roanoke ON, Culpeper/Lexington/Saint Augustine FL OFF.
+- Calendar (jdavis@fcfpawn.com) checked: unchanged — today (Thu 10/29) 11:00 AM Austin Passarelli (Harrisonburg); tomorrow (Fri 10/30) 11:00 AM Dariel Negron + 11:05 AM Hunter Marks (both Harrisonburg).
+- Indeed Messages inbox checked live (double-navigated past SPA stale-zero quirk): new top thread **Michael Boyer** (Roanoke), 2:26 PM, "Any update?" — read full thread: he no-showed his 10/16 phone slot, was rebooked, then Preston pulled him off the phone track and had him come into the Roanoke store in person 10/19 ("We will see you then!"). Today's "Any update?" is a hiring-decision question following that in-person visit, not a scheduling question — outside what this pipeline answers per the hard rules (scheduling only). **DM'd Joshua** (D03BHQH5VGT) asking what to tell him / confirming Preston has it — sent successfully (Slack send worked this run, unlike runs #6–#7 where it was auto-declined). No Indeed reply sent to Boyer pending Joshua's answer.
+  - Hunter Marks (Harrisonburg) "Sounds good." (12:25 PM) and Diaundre Wright (Roanoke) "Ok thank you" (12:14 PM) unchanged from run #7 — both closing pleasantries to our/Preston's prior messages, not ours to act on.
+- Jobs dashboard checked live: Waynesboro (88 total, 0 New), Harrisonburg (75 total, 0 New), Roanoke (58 total, 0 New), all Paused, no live sponsorship spend — unchanged. Lexington (31, 0 New) and Saint Augustine FL (24, 3 New) out of scope, unchanged.
+- Changed this run: 1 Slack DM to Joshua (candidate question needing his answer), 0 Indeed messages sent, 0 calendar changes, 0 texts (not a text-batch window; also no screen control), 0 rejections. No #employee-prospects post — interview schedule itself didn't change.
+
+## 2026-10-29 (hiring pipeline — quiet run #7, cloud session, ~2:24 PM ET)
+
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only session (no remote-devices bridge), Claude-in-Chrome browser access. Scope reconfirmed via HIRING_SWITCH.md: Waynesboro/Harrisonburg/Roanoke ON, Culpeper/Lexington/Saint Augustine FL OFF.
+- Calendar (jdavis@fcfpawn.com) checked: unchanged — today (Thu 10/29) 11:00 AM Austin Passarelli (Harrisonburg); tomorrow (Fri 10/30) 11:00 AM Dariel Negron + 11:05 AM Hunter Marks (both Harrisonburg).
+- Indeed Messages inbox checked live (double-navigated past SPA stale-zero quirk): top thread now Hunter Marks (Harrisonburg), 12:25 PM — opened the full thread; his "Sounds good." is a closing pleasantry to our 12:14 PM booking confirmation from run #6, not ours to act on. Diaundre Wright (Roanoke) unchanged, store-handled. No other thread has the candidate last.
+- Jobs dashboard checked live: Waynesboro (88 total, 0 New), Harrisonburg (75 total, 0 New), Roanoke (58 total, 0 New), all Paused, no live sponsorship spend — unchanged. Lexington (31, 0 New) and Saint Augustine FL (24, 3 New) out of scope, unchanged.
+- Nothing changed this run: 0 messages sent, 0 calendar changes, 0 texts (not a text-batch window; also no screen control), 0 rejections. Per quiet rule, no Slack DM or channel post sent. Note: run #6 flagged that Slack sends are being auto-declined in unattended runs ("no one was available to approve it") — not retried here since nothing needed sending; still open for Joshua to decide on pre-approving Slack for this scheduled task.
+
+## 2026-10-29 (hiring pipeline — run #6, cloud session, ~12:21 PM ET)
+
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only session (no remote-devices bridge), Claude-in-Chrome browser access. Scope reconfirmed via HIRING_SWITCH.md: Waynesboro/Harrisonburg/Roanoke ON, Culpeper/Lexington/Saint Augustine FL OFF.
+- Calendar (jdavis@fcfpawn.com) checked: today (Thu 10/29) 11:00 AM Austin Passarelli (Harrisonburg) unchanged; tomorrow (Fri 10/30) 11:00 AM Dariel Negron (Harrisonburg) unchanged.
+- Indeed Messages inbox checked live (double-navigated past SPA stale-zero quirk): two new top threads at 12:14 PM — Hunter Marks (Harrisonburg) and Diaundre Wright (Roanoke).
+  - **Diaundre Wright**: "Ok thank you" — closing pleasantry to Preston's own direct message ("I will try and connect with you soon"). Preston is handling this candidate personally (in-person meet discussion). No action taken.
+  - **Hunter Marks**: replied to our 12:06 PM nudge confirming interest, explained the earlier mechanical-issue no-show, and offered 11 AM tomorrow (Fri 10/30). 11:00 AM was already booked (Dariel Negron). Booked nearest open slot — **Fri 10/30 11:05 AM**, calendar event created (Interviewer: Preston Peters, Zoom 540-202-4200, candidate number 304-514-6758). Replied on Indeed confirming the time. Not on do-not-contact list; no felony-screener flag.
+- Jobs dashboard checked live: Waynesboro (88 total, 0 New), Harrisonburg (75 total, 0 New), Roanoke (58 total, 0 New), all Paused, no live sponsorship spend — unchanged. Lexington (31, 0 New) and Saint Augustine FL (24, 3 New) out of scope, unchanged.
+- Changed this run: 1 Indeed message sent, 1 calendar booking (Hunter Marks, Fri 10/30 11:05 AM), 0 texts (not a text-batch window; also no screen control), 0 rejections. Attempted the DM to Joshua + #employee-prospects post per the quiet rule, but both Slack sends were auto-declined ("no one was available to approve it during this scheduled run") — Slack message-send now requires live approval that isn't available in this unattended run. Logged here and in HIRING_OUTREACH.md contact log instead; flagging for Joshua to decide whether to pre-approve Slack sends for this scheduled task.
+
+## 2026-10-29 (Store Traffic — Culpeper added + visitors vs transactions comparison)
+
+- **NEW native `com.valleypawn.storetraffic-culpeper`** (same wrapper/schedule as Waynesboro; Mon–Sat 09:57 → close+5), installed + loaded 12:15 via host queue, live (`fleet/state/native_live/storetraffic-culpeper`). Joshua 10/29: "set up Culpeper as well. And start comparing the counts." Camera = "Culpeper workstation 1" (glass entrance + mats at top-left of frame; daytime frames of 3 cameras compared). Running ~3 fps alongside Waynesboro.
+- `counter.py` (backup `.bak-v31-20261029`) gains **zone mode** for doors not at a frame edge: IN = track starts in door_zone and ends outside door_zone grown by `clear` (0.10); OUT reverse. Waynesboro keeps line mode (rescore 10/28 unchanged 51/43). Culpeper door_zone x 0.19–0.39, y 0.00–0.31 — first-day tuning pending.
+- NEW `Store Traffic Counter/compare.py` → `reports/compare.csv`: per store-day door visitors vs **Bravo customer tickets** (safe-register-journal ticket-number span between SAFE OPEN and close, minus the journal's own safe/till tickets; e.g. WAY 10/22–10/27: 44, 49, 42, 48, 28; CUL 33, 65, 43, 37, 47) and tickets per visitor.
+- 10/28 safe-register-journal pull had failed for all stores (funds verification ledger row 10/28 18:36); backfill queued `fleet/host_queue/20261029-1235-funds-backfill-20261028.sh` (bravo_pull.sh, all 5 stores).
+
+## 2026-10-29 (fb-inbox-replies — quiet run, ~10:50 AM ET)
+
+- Chekkit dump refreshed (generated_at 2026-10-29T14:47Z). Brand + 5 store Messenger inboxes read live. 0 replies sent: brand page has no customer message newer than our 10/21 replies; HAR/ROA/CUL have nothing in the 1-10 day window unanswered; LEX Audrey M. and WAY Peyton M. end with the customer's closing pleasantry after a store reply (also confirmed in Chekkit) — skipped as resolved. No escalations, no ledger rows.
+
+## 2026-10-29 (hiring pipeline — quiet run #5, cloud session, ~11:48 AM ET)
+
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only session (no remote-devices bridge), Claude-in-Chrome browser access. Scope reconfirmed via HIRING_SWITCH.md: Waynesboro/Harrisonburg/Roanoke ON, Culpeper/Lexington/Saint Augustine FL OFF.
+- Calendar (jdavis@fcfpawn.com) checked: unchanged — today (Thu 10/29) 11:00 AM Austin Passarelli (Harrisonburg); tomorrow (Fri 10/30) 11:00 AM Dariel Negron (Harrisonburg).
+- Indeed Messages inbox checked live (double-navigated past SPA stale-zero quirk): top thread still Diaundre Wright (Roanoke), 10:31 AM today, identical to run #4 — store-last, not ours to act on. No other thread has the candidate last.
+- Jobs dashboard checked live: Waynesboro (88 total, 0 New), Harrisonburg (75 total, 0 New), Roanoke (58 total, 0 New), all Paused, no live sponsorship spend — unchanged. Lexington (31, 0 New) and Saint Augustine FL (24, 3 New) out of scope, unchanged.
+- Nothing changed this run: 0 messages sent, 0 calendar changes, 0 texts (not a text-batch window; also no screen control), 0 rejections. Per quiet rule, no Slack DM or channel post sent.
+
+## 2026-10-29 (hiring pipeline — quiet run #4, cloud session, ~11:05 AM ET)
+
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules. Cloud-only session (no remote-devices bridge), Claude-in-Chrome browser access. Scope reconfirmed via HIRING_SWITCH.md: Waynesboro/Harrisonburg/Roanoke ON, Culpeper/Lexington/Saint Augustine FL OFF.
+- Calendar (jdavis@fcfpawn.com) checked: unchanged — today (Thu 10/29) 11:00 AM Austin Passarelli (Harrisonburg); tomorrow (Fri 10/30) 11:00 AM Dariel Negron (Harrisonburg).
+- Indeed Messages inbox checked live (double-navigated past SPA stale-zero quirk): top thread still Diaundre Wright (Roanoke), 10:31 AM today, identical to run #3 — Preston's own direct reply to the candidate, store-last, not ours to act on. No other thread has the candidate last.
+- Jobs dashboard checked live: Waynesboro (88 total, 0 New), Harrisonburg (75 total, 0 New), Roanoke (58 total, 0 New), all Paused, no live sponsorship spend — unchanged. Lexington (31, 0 New) and Saint Augustine FL (24, 3 New) out of scope, unchanged.
+- Nothing changed this run: 0 messages sent, 0 calendar changes, 0 texts (not a text-batch window; also no screen control), 0 rejections. Per quiet rule, no Slack DM or channel post sent.
+
+## 2026-10-29 (hiring pipeline — quiet run #3, cloud session, ~10:35 AM ET)
+
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules. Cloud-only session (no remote-devices bridge), Claude-in-Chrome browser access. Scope reconfirmed via HIRING_SWITCH.md: Waynesboro/Harrisonburg/Roanoke ON, Culpeper/Lexington/Saint Augustine FL OFF.
+- Calendar (jdavis@fcfpawn.com) checked: unchanged — today (Thu 10/29) 11:00 AM Austin Passarelli (Harrisonburg); tomorrow (Fri 10/30) 11:00 AM Dariel Negron (Harrisonburg).
+- Indeed Messages inbox checked live (double-navigated past SPA stale-zero quirk): top thread now Diaundre Wright (Roanoke), 10:31 AM today — opened the full thread; the new message is Preston's own direct reply to the candidate ("Okay. I will try and connect with you soon and let you know my availability."), sent after she said she can't do Friday due to a family matter. Store-last, not ours to act on. No other thread has the candidate last.
+- Jobs dashboard checked live: Waynesboro (88 total, 0 New), Harrisonburg (75 total, 0 New), Roanoke (58 total, 0 New), all Paused, no live sponsorship spend — unchanged. Lexington (31, 0 New) and Saint Augustine FL (24, 3 New) out of scope, unchanged.
+- Nothing changed this run: 0 messages sent, 0 calendar changes, 0 texts (not a text-batch window; also no screen control), 0 rejections. Per quiet rule, no Slack DM or channel post sent.
+
+## 2026-10-29 (hiring pipeline — quiet run #2, cloud session, ~10:04 AM ET)
+
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only session, Claude-in-Chrome browser access. Scope reconfirmed via HIRING_SWITCH.md: Waynesboro/Harrisonburg/Roanoke ON, Culpeper/Lexington/Saint Augustine FL OFF.
+- Calendar (jdavis@fcfpawn.com) checked: unchanged — today (Thu 10/29) 11:00 AM Austin Passarelli (Harrisonburg); tomorrow (Fri 10/30) 11:00 AM Dariel Negron (Harrisonburg).
+- Indeed Messages inbox checked live (double-navigated past SPA stale-zero quirk): top thread still Diaundre Wright (Roanoke), 9:19 AM today, status "Awaiting response" — identical to run #1, Preston's own message to the candidate, nothing new, not ours to act on. No other thread has the candidate last.
+- Jobs dashboard checked live: Waynesboro (88 total, 0 New), Harrisonburg (75 total, 0 New), Roanoke (58 total, 0 New), all Paused, no live sponsorship spend — unchanged. Lexington (31, 0 New) and Saint Augustine FL (24, 3 New) out of scope, unchanged.
+- Nothing changed this run: 0 messages sent, 0 calendar changes, 0 texts (not a text window; also no screen control), 0 rejections. Per quiet rule, no Slack DM or channel post sent.
+
+## 2026-10-29 (hiring pipeline — run #1, cloud session, ~9:48 AM ET)
+
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules. Cloud-only session (no remote-devices bridge), Claude-in-Chrome browser access. Scope reconfirmed via HIRING_SWITCH.md: Waynesboro/Harrisonburg/Roanoke ON, Culpeper/Lexington/Saint Augustine FL OFF.
+- Calendar (jdavis@fcfpawn.com) checked: today (Thu 10/29) 11:00 AM Austin Passarelli — Harrisonburg; tomorrow (Fri 10/30) 11:00 AM Dariel Negron — Harrisonburg. Today's interview-list post to #employee-prospects/DM already sent by an earlier run this morning (6:04 AM PDT) — not duplicated.
+- Indeed Messages inbox checked live: one new item since last run — Diaundre Wright (Roanoke) thread, 9:19 AM today, but the new message is Preston's own direct message to the candidate ("pulled to another store today, available tomorrow?"), not ours to act on; awaiting Diaundre's reply. All other top threads already triaged in prior runs (James Beverly = out-of-scope hold reply sent 10/28; Shad Taha/Dustin Crawford/Ryan Armstrong = closing pleasantries; dariel negron/Austin Passarelli = confirmed bookings, we replied last; Matayah Buckland = we replied last).
+- Jobs dashboard checked live (double-navigated past the SPA stale-zero quirk): Waynesboro (88 total, 0 New), Harrisonburg (75 total, 0 New), Roanoke (58 total, 0 New), all Paused, no live sponsorship spend — unchanged. Lexington (31 total, 0 New) and Saint Augustine FL (24 total, 3 New) out of scope, unchanged.
+- Nothing changed this run: 0 messages sent, 0 calendar changes, 0 texts, 0 rejections. Per quiet rule, no Slack DM or channel post sent.
+
 ## 2026-10-28 (Store Traffic counter v3.1 — Waynesboro day-3 review; first numbers reported)
 
 - v3 ran 09:57–18:05. Counted crossings photo-checked (spread sample of 9 of 83: all real door entries/exits, no window browsers). The tracks log showed ~15 real entries/exits missed because the end point was deep in the store (y < 0.39 rule) or just outside the door zone.
@@ -8438,3 +8547,25 @@ Newest first. Material changes to the business operating system. Read this BEFOR
 
 ## 2026-10-27 — insurance-inbox-watch (Cowork scheduled run, Domain 1)
 - Found Edna Villarino's (JM Partners/ULC) 10/26 reply on the WC GC29P101236-03 statement-of-account thread: named-insured/FEIN + mailing-address correction now explicitly blocked on Joshua completing/signing/returning an attached ERM-14 Form (not a broker delay); Glencar invoices still outstanding, Edna now chasing "Tiffany" (Glencar Controller) by name. Updated `Life OS/Insurance/INSURANCE_REGISTRY.json` (VP-WC open_issues + documents + last_verified 2026-10-27), regenerated `INSURANCE_PORTFOLIO.md`, logged to `Life OS/Insurance/BROKER_PIPELINE.md` and `Life OS/OPEN_ITEMS_REGISTER.md` (no dated `Communcations/mail-brief/` queue file existed for today). No new nudge drafts created (9 insurance-relevant unsent drafts unchanged, dedupe guard held). No renewal inside 14 days, no lapse/cancellation/claim-denial signal — no Slack DM sent.
+
+
+## 2026-10-29 — insurance-inbox-watch (Cowork scheduled run, Domain 1)
+- Workers comp GC29P101236-03: Hannover Re Services (Christine Ayala) stated explicitly no record of the 2026-27 payment on 10/28, asked for full payment ASAP (not a formal cancellation notice). Updated `Life OS/Insurance/INSURANCE_REGISTRY.json` (VP-WC open_issues/status/documents, last_verified 2026-10-29), regenerated `INSURANCE_PORTFOLIO.md` (529 lines, 16 policies), logged to `BROKER_PIPELINE.md` and `Life OS/OPEN_ITEMS_REGISTER.md` (no dated `Communcations/mail-brief/` queue file existed for today). Also logged a broker follow-up on the Farming Infinity/817 Richmond standalone LRO quote ($3,505.31/yr) — decision point only, no registry change. No new nudge drafts created (9 insurance-relevant unsent drafts unchanged, dedupe guard held). Sent one plain-English Slack DM to Joshua re: the WC payment-not-on-record signal (treated as a lapse-risk item per Step 5) — no other Slack DM sent.
+
+## 2026-10-29 — morning-brief (Cowork scheduled run, delivery step)
+- Dedupe check: no "Morning Brief" sent yet today (last sent was "Wednesday, Oct 28"). Proceeded.
+- Gathered: Calendar (today + 7-day look — one interview today, Austin Passarelli 11am Harrisonburg phone screen, Preston interviewing; dinner at Le Pigeon tonight; flagged two separate Jacksonville flight legs on 10/30 as possibly duplicate bookings, no other overlaps); Gmail (insurance LRO quote follow-up from Howard Baker on 817 Richmond; Lyon Financial pool-draw status request; Security Team LLC past-due alarm invoices; Fredericksburg Technology camera-quote callback still unanswered since 10/27; Bald Rock Macroscopic rental agreement now fully signed; confirmed the recurring DocuSign "DBA_Address_Phone_Change"/"Notice_to_Cease" reminders from accountupdates@fortispay.com are the same previously-flagged phishing-shaped item, not real signing tasks); Slack (store-PC rollout Amex/Lexington decisions still open; hiring pipeline confirmed both Thu/Fri interviews booked, no action needed from Joshua since Preston interviews); Compliance/OBLIGATIONS.json (Roanoke FFL renewal postmark deadline 2027-01-01 still open); Life OS/HUMAN_QUEUE.md (31 open rows, oldest three surfaced).
+- First send had a tool-input bug: htmlBody was sent as a literal `file://` path string instead of the rendered HTML (caught by reading the sent message back). Trashed that message and resent with the HTML inlined correctly — verified by re-reading the corrected send (size estimate jumped from 3.2KB to 8.7KB, consistent with real markup).
+- Sent one HTML email (Gmail connector, jdavis@fcfpawn.com -> jdavis@fcfpawn.com, subject "Morning Brief — Thursday, Oct 29") with Needs attention (8 items, the cap) / This week / Resolved since yesterday sections. No Slack post, no other recipients, per the task's DELIVERY section. Saved the same HTML to `Life OS/Morning Briefs/morning_brief_2026-10-29.html`.
+- No FAILURE_LEDGER entry — the run completed and delivered correctly after the self-caught/self-corrected send.
+
+## 2026-10-29 (dashboard-refresh, Cowork scheduled run)
+- Verification-only pass: all KPI feeds (layaway, company-performance, daily funds, items-to-price,
+  intake margin) were already current as of an earlier, unlogged same-day run (kpis.json asOf
+  already Oct 29, mtime 12:28 ET) -- independently re-checked against each Slack channel and
+  confirmed no newer standard-format report exists for any feed (Oct 28/29 daily-report gaps are
+  the already-tracked fleet-wide Bravo outage in FAILURE_LEDGER.md, not a dashboard issue).
+  Artifact sync (vp-website-trend) also already current. Live deployment diffed byte-identical
+  to local site/ -- skipped a no-op redeploy. Verified 401 (no auth) / 200 (basic auth) / valid
+  kpis.json live. Logged to close the gap left by the earlier run, which completed the refresh
+  and deploy but never wrote a CHANGELOG/DEPLOY_STATUS entry.
