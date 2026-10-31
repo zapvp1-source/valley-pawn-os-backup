@@ -128,3 +128,20 @@ Unverifiable: none. Published-wrong: none.
   - GBP_Harrisonburg 6adf9fac8945d24da9144055: "in a district game" → "to Stanardsville"; added Dukes 7:30 p.m. at Bridgeforth Stadium.
 - Unverifiable: Battlefield District standings / first place (Fredericksburg Free Press 10/24 roundup unreachable — redirect loop). Removed rather than left in.
 - PUBLISHED-WRONG: none.
+
+## 2026-10-30 07:40 ET — daily fact-check (next 36h)
+Posts checked: 16 (10 with time-sensitive claims; 6 skipped as evergreen/product/brand — store-hours claims in Brand 10/31 and Roanoke 10/31 match standing hours).
+Verified:
+- Northside vs Staunton River, home, Fri 10/30 7:00 PM — https://www.maxpreps.com/va/roanoke/northside-vikings/football/schedule/ ; Northside L 17-20 @ Fleming (prior game) — https://www.si.com/high-school/stats/virginia/football/teams/256554-northside-vikings/games
+- Patrick Henry vs Pulaski County, home, 10/30 7:00 PM — https://www.maxpreps.com/va/roanoke/patrick-henry-patriots/football/schedule/
+- Harrisonburg @ William Monroe, 10/30 7:00 PM — https://www.maxpreps.com/va/stanardsville/william-monroe-dragons/football/schedule/
+- JMU lost to Troy 24-21 OT, Thu 10/29, Bridgeforth — https://rocktownnow.com/news/218812-dukes-drop-second-straight-ot-game-as-they-fall-to-troy-24-21/
+- Courtland @ Culpeper County, 10/30 7:00 PM — https://www.maxpreps.com/va/spotsylvania/courtland-cougars/football/schedule/ ; Culpeper 7-1, 4-0 league, W 38-18 @ James Monroe, 5-game streak — https://www.si.com/high-school/stats/virginia/football/teams/255248-culpeper-county-blue-devils/games
+- Eastern View @ Chancellor, 10/30 7:00 PM — https://www.maxpreps.com/va/culpeper/eastern-view-cyclones/football/schedule/
+- Waynesboro @ Wilson Memorial, 10/30 7:00 PM, region game — https://www.maxpreps.com/va/waynesboro/waynesboro-little-giants/football/schedule/
+Edited (all APPLIED):
+- 6adf9f1a Culpeper FB: "5-0 in the district" → "4-0 in the district"; "Battlefield District game" label dropped (sources conflict on district vs non-league); "last Friday" → "in their last game" (date not confirmed).
+- 6adf9f23 GBP_Culpeper: same corrections.
+- 6adf9fa4 Harrisonburg FB: "JMU hosts Troy the night before, Thursday..." (future tense, game already played) → "a night after JMU's 24-21 overtime loss to Troy at Bridgeforth Stadium".
+- 6adf9fac GBP_Harrisonburg: "This Friday" → "Tonight"; JMU line → "On Thursday night the Dukes fell to Troy 24-21 in overtime at Bridgeforth Stadium."
+Unverifiable: none left in posts. Published-wrong: none.

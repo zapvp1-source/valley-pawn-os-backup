@@ -179,3 +179,7 @@ Repeat-check: no store/category combo above repeats a prior night's anomaly patt
 ## RUN RECORD — 2026-10-28 (Wednesday) — native jewelry-onhand-catchup
 
 Nothing posted. Bravo incomplete: CUL (no CSV); ROA (no CSV); WAY (no CSV)
+
+## RUN RECORD — 2026-10-29 (Thursday) — native jewelry-onhand-catchup
+
+Nothing posted. Bravo incomplete: CUL (no CSV); HAR (Rings error (no prior-day empty baseline)); LEX (no CSV); ROA (no CSV); WAY (no CSV)

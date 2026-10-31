@@ -1,6 +1,6 @@
 # Daily Bravo -> QuickBooks — status
 
-Updated 2026-10-29 03:51 ET
+Updated 2026-10-30 03:50 ET
 
 - Store-day entries posted: 78 (from 2026-10-01)
 - Newest day posted: 2026-10-26
@@ -19,11 +19,16 @@ Updated 2026-10-29 03:51 ET
 
 ## Open
 
-- 2026-10-27 CUL: EnsureStore failed for CUL (tries 4)
-- 2026-10-27 HAR: UIA click sequence failed: ClickByName: element not found: Consolidated General Ledger (tries 4)
-- 2026-10-27 LEX: EnsureStore failed for LEX (tries 4)
-- 2026-10-27 ROA: EnsureStore failed for ROA (tries 4)
-- 2026-10-27 WAY: EnsureStore failed for WAY (tries 4)
-- 2026-10-28 CUL: EnsureStore failed for CUL (tries 2)
-- 2026-10-28 ROA: EnsureStore failed for ROA (tries 2)
-- 2026-10-28 WAY: EnsureStore failed for WAY (tries 2)
+- 2026-10-27 CUL: EnsureStore failed for CUL (tries 6)
+- 2026-10-27 HAR: UIA click sequence failed: ClickByName: element not found: Consolidated General Ledger (tries 6)
+- 2026-10-27 LEX: EnsureStore failed for LEX (tries 6)
+- 2026-10-27 ROA: EnsureStore failed for ROA (tries 6)
+- 2026-10-27 WAY: EnsureStore failed for WAY (tries 6)
+- 2026-10-28 CUL: EnsureStore failed for CUL (tries 4)
+- 2026-10-28 ROA: EnsureStore failed for ROA (tries 4)
+- 2026-10-28 WAY: EnsureStore failed for WAY (tries 4)
+- 2026-10-29 CUL: EnsureStore failed for CUL (tries 1)
+- 2026-10-29 HAR: UIA click sequence failed: ClickByName: element not found: Consolidated General Ledger (tries 1)
+- 2026-10-29 LEX: EnsureStore failed for LEX (tries 1)
+- 2026-10-29 ROA: EnsureStore failed for ROA (tries 1)
+- 2026-10-29 WAY: EnsureStore failed for WAY (tries 1)

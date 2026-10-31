@@ -1,9 +1,98 @@
-## 2026-10-29 evening (Store Traffic daily review)
+## 2026-10-30 night (Bravo store-switch FIXED — Joshua: "go on bravo")
 
-- Waynesboro 10/29 (v3.1, full day 09:57–18:03): 67 IN / 77 OUT; photo sample of counted crossings = real door traffic (groups leaving at lunch, individual entries). Reported to Joshua.
-- Culpeper (workstation 1, zone mode, partial day from 12:02): 5 IN / 12 OUT. Photo check: real exits through the door are caught, but people walking ACROSS the front aisle past the door (and a repeated route mat-corner ↔ top-right case, ~every 2 min) get mis-scored. Not reported.
-- **A/B test 10/30:** NEW native `com.valleypawn.storetraffic-culpeperb` (config key `CulpeperB`, `store: Culpeper`) on "Culpeper  camera" — overhead view with the entrance mat at bottom centre; door_zone x 0.30–0.62, y ≥ 0.78. Both Culpeper agents log tracks; keep whichever validates, uninstall the other (`launchctl bootout` via install_agent + remove native_live flag). `counter.py`: camera lookup now uses `cfg.store`.
-- Bravo safe-register pulls for 10/28 and 10/29 still missing (fleet-wide Bravo outage, fleet-guardian) — comparison waits on it.
+- **Root cause:** Bravo 2026.10.0.85 moved "Lock Session" into a header flyout; FindElement({Name:"Lock Session"}) now returns a [text] wrapper and the mouse click hits the closed flyout, so no store switch has worked since ~10/28. The "What's New" panel was a side issue.
+- **Probe:** `bin/bravo_lock_probe.sh` added to the host-queue allow-list (Joshua's OK; backup `fleet/_backups/host_queue_allowlist.txt.bak-pre-lockprobe-20261030`). v1 probe's Click() hung; v2 (`_lock_probe.ahk` v2, logs `_lock_probe2.log`, `_run_lock_probe.ps1` now stops only stuck _lock_probe.ahk processes) proved UIA **Invoke on the Lock Session HYPERLINK** opens the lock screen (Global Access) in 6 s.
+- **Fix (additive):** `lib/StoreCycle.ahk` SwitchStore Step 1 calls NEW `InvokeLockSession()` (hyperlink InvokePattern, falls back to the old click for older builds). Backup `lib/StoreCycle.ahk.bak-pre-2026_10-invoke-20261030`. Watcher validated + restarted 22:06.
+- **Verified:** test pull `test-switch-cul-20261030` (HAR -> CUL switch, safe-register-journal 10/29) SUCCESS, 57 rows.
+- **Backfill queued** (host jobs `20261030-2327/28/29-backfill-*`): pawn walk, sold review, discount review and funds verification for data dates 10/27, 10/28 (Wednesday: CUL/ROA/WAY), 10/29 — each gated as usual (posts only complete data). Items-to-price and jewelry on-hand are point-in-time and cannot be recreated for past days; the 10/31 06:50 morning pull and 07:45 jewelry catch-up cover the current day. bravo-daily-gl self-catches up.
+
+## 2026-10-30 evening (Bravo outage since 10/28 — ROOT CAUSE FOUND, fix pending Joshua OK)
+
+- Bravo auto-updated to **2026.10.0.85 (October release)** ~10/28. Since then every pull that needs a store switch fails: watcher clicks "Lock Session", no Session List / Global Access appears within 25 s → `EnsureStore failed` for every store except the one Bravo sits on (HAR), and HAR fails on "Safe Register Journal" menu item not found. Screenshots after the click show a new "What's New in Bravo" panel over the Dashboard. Not caused by the Mac screen lock (Bravo is up, health gate PASS, UIA works).
+- Done: `bin/bravo_whatsnew_dismiss.sh` (allow-listed, guarded) + `Bravo Data Extraction/_whatsnew_dismiss.ahk` + `_run_whatsnew.ps1` (dumps Dashboard buttons, sends Escape; never touches window controls). Panel closes with Escape but store switching still fails → the new version changed the Lock Session / store-switch UI.
+- Next (needs Joshua's OK — adding a new diagnostic script to the host-queue allow-list was blocked by a safety check): probe the new Lock Session flow, then update StoreCycle/SwitchStore additively for 2026.10, then backfill 10/28→ for all reports.
+
+## 2026-10-30 (Store Traffic — Culpeper camera chosen, both stores validated)
+
+- Culpeper A/B result: overhead "Culpeper  camera" (entrance at bottom of frame) counted 86 in / 77 out after zone tuning (x 0.20–0.70, y ≥ 0.88, clear 0.12); photo sample = real entries/exits. Workstation-1 camera only caught 10 in / 28 out → retired. Config key `Culpeper` now = overhead camera (agent `com.valleypawn.storetraffic-culpeper` picks it up 10/31); old settings kept as `CulpeperA_workstation`. `com.valleypawn.storetraffic-culpeperb` neutered by moving its live flag to `fleet/state/native_live/_off/` (exits silently at start). Archives in `Store Traffic Counter/archive/`.
+- Waynesboro re-tuned on 3 days of tracks (door_zone x ≤ 0.19, y 0.55–0.95, line_x 0.22): 10/28 54/53, 10/29 72/85, 10/30 61/72. **Visitors are now reported as the mean of door IN and OUT** (each visitor enters and leaves once; averaging halves the one-sided miss rate). compare.py updated; backups `config.json.bak-20261030`.
+- Bravo safe-register still not landing (10/28–10/30) — comparison waits.
+
+# Valley Pawn - Enterprise Changelog
+
+Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
+
+## 2026-10-30 (hiring pipeline — quiet run, cloud session, ~7:19 PM ET)
+
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules. Cloud-only session (no remote-devices bridge), Claude-in-Chrome browser access.
+- Calendar (jdavis@fcfpawn.com) checked: unchanged — today's two Harrisonburg interviews (Dariel Negron 11:00, Hunter Marks 11:05) already happened; no new bookings for Mon 11/2 yet (Amber Argenbright hasn't replied with a time).
+- Indeed Messages inbox checked live: Amber Argenbright (Waynesboro) re-contact from 3:07 PM still awaiting her reply. Michael Boyer (Roanoke) "Any update?" still Awaiting response, still sitting with Joshua/Preston per standing note — not re-flagging. Hunter Marks "Sounds good." and Diaundre Wright "Ok thank you" unchanged, closing pleasantries. No new in-scope replies.
+- Jobs dashboard checked live: Waynesboro (88 total, 0 New), Harrisonburg (75 total, 0 New), Roanoke (58 total, 0 New), all Paused, no live sponsorship spend — unchanged. Lexington (31, 0 New) and Saint Augustine FL (24, 3 New) out of scope, unchanged.
+- Changed this run: nothing — 0 messages sent, 0 calendar changes, 0 texts (no screen control in this cloud session, and not a text-batch run time), 0 rejections. Per quiet rule, no Slack DM or channel post sent.
+
+## 2026-10-30 (hiring pipeline — quiet run, cloud session, ~6:49 PM ET)
+
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules. Cloud-only session (no remote-devices bridge), Claude-in-Chrome browser access. Scope reconfirmed via HIRING_SWITCH.md: Waynesboro/Harrisonburg/Roanoke ON, Culpeper/Lexington/Saint Augustine FL OFF.
+- Calendar (jdavis@fcfpawn.com) checked: unchanged — today's two Harrisonburg interviews (Dariel Negron 11:00, Hunter Marks 11:05) already happened; no new bookings for Mon 11/2 yet (Amber Argenbright hasn't replied with a time).
+- Indeed Messages inbox checked live: Amber Argenbright (Waynesboro) re-contact from 3:07 PM still awaiting her reply. Michael Boyer (Roanoke) "Any update?" still Awaiting response, still sitting with Joshua/Preston per standing note — not re-flagging. Hunter Marks "Sounds good." and Diaundre Wright "Ok thank you" unchanged, closing pleasantries. No new in-scope replies.
+- Jobs dashboard checked live: Waynesboro (88 total, 0 New), Harrisonburg (75 total, 0 New), Roanoke (58 total, 0 New), all Paused, no live sponsorship spend — unchanged. Lexington (31, 0 New) and Saint Augustine FL (24, 3 New) out of scope, unchanged.
+- Changed this run: nothing — 0 messages sent, 0 calendar changes, 0 texts (no screen control in this cloud session), 0 rejections. Per quiet rule, no Slack DM or channel post sent.
+
+## 2026-10-30 (hiring pipeline — quiet run, cloud session, ~6:33 PM ET)
+
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules. Cloud-only session (no remote-devices bridge), Claude-in-Chrome browser access. Scope reconfirmed via HIRING_SWITCH.md: Waynesboro/Harrisonburg/Roanoke ON, Culpeper/Lexington/Saint Augustine FL OFF.
+- Calendar (jdavis@fcfpawn.com) checked: unchanged — today's two Harrisonburg interviews (Dariel Negron 11:00, Hunter Marks 11:05) already happened; no new bookings for Mon 11/2 yet (Amber Argenbright hasn't replied with a time).
+- Indeed Messages inbox checked live: Amber Argenbright (Waynesboro) re-contact from 3:07 PM still awaiting her reply. Michael Boyer (Roanoke) "Any update?" still Awaiting response, still sitting with Joshua/Preston per standing note — not re-flagging. Hunter Marks "Sounds good." and Diaundre Wright "Ok thank you" unchanged, closing pleasantries. No new in-scope replies.
+- Jobs dashboard checked live: Waynesboro (88 total, 0 New), Harrisonburg (75 total, 0 New), Roanoke (58 total, 0 New), all Paused, no live sponsorship spend — unchanged. Lexington (31, 0 New) and Saint Augustine FL (24, 3 New) out of scope, unchanged.
+- Changed this run: nothing — 0 messages sent, 0 calendar changes, 0 texts (no screen control in this cloud session), 0 rejections. Per quiet rule, no Slack DM or channel post sent (Joshua's 1:21 PM MDT DM already covers current state in full).
+
+## 2026-10-30 (hiring pipeline — quiet run, cloud session, ~6:05 PM ET)
+
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules. Cloud-only session (no remote-devices bridge), Claude-in-Chrome browser access. Scope reconfirmed via HIRING_SWITCH.md: Waynesboro/Harrisonburg/Roanoke ON, Culpeper/Lexington/Saint Augustine FL OFF.
+- Calendar (jdavis@fcfpawn.com) checked: unchanged — today's two Harrisonburg interviews (Dariel Negron 11:00, Hunter Marks 11:05) already happened; no new bookings for Mon 11/2 yet (Amber Argenbright hasn't replied with a time).
+- Indeed Messages inbox checked live: Amber Argenbright (Waynesboro) re-contact from 3:07 PM still awaiting her reply. Michael Boyer (Roanoke) "Any update?" still Awaiting response, still sitting with Joshua/Preston per standing note — not re-flagging. Hunter Marks "Sounds good." and Diaundre Wright "Ok thank you" unchanged, closing pleasantries. No new in-scope replies.
+- Jobs dashboard checked live: Waynesboro (88 total, 0 New), Harrisonburg (75 total, 0 New), Roanoke (58 total, 0 New), all Paused, no live sponsorship spend — unchanged. Lexington (31, 0 New) and Saint Augustine FL (24, 3 New) out of scope, unchanged.
+- Changed this run: nothing — 0 messages sent, 0 calendar changes, 0 texts (no screen control in this cloud session), 0 rejections. Per quiet rule, no Slack DM or channel post sent (Joshua's 1:21 PM MDT DM already covers current state in full).
+
+## 2026-10-30 (hiring pipeline — quiet run, cloud session, ~3:30 PM ET)
+
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules. Cloud-only session (no remote-devices bridge), Claude-in-Chrome browser access. Scope reconfirmed via HIRING_SWITCH.md: Waynesboro/Harrisonburg/Roanoke ON, Culpeper/Lexington/Saint Augustine FL OFF.
+- Indeed Messages inbox checked live: Amber Argenbright (Waynesboro) re-contact sent at 3:07 PM by an earlier run today — offered Monday 11/2 11 AM–3 PM, no reply yet, already reported in Joshua's 1:21 PM MDT (3:21 PM ET) DM. Michael Boyer (Roanoke) "Any update?" still Awaiting response, still sitting with Joshua/Preston per standing note — not re-flagging. Hunter Marks "Sounds good." and Diaundre Wright "Ok thank you" unchanged, closing pleasantries.
+- Calendar (jdavis@fcfpawn.com) checked: unchanged — today (Fri 10/30) 11:00 AM Dariel Negron + 11:05 AM Hunter Marks (both Harrisonburg), both already reported.
+- Jobs dashboard checked live: Waynesboro (88 total, 0 New), Harrisonburg (75 total, 0 New), Roanoke (58 total, 0 New), all Paused, no live sponsorship spend — unchanged. Lexington (31, 0 New) and Saint Augustine FL (24, 3 New) out of scope, unchanged.
+- Joshua's DM already covers this run's state in full (1:21 PM MDT note). Changed this run: nothing new beyond what's already reported — 0 messages sent, 0 calendar changes, 0 texts, 0 rejections. Per quiet rule, no Slack DM or channel post sent.
+
+## 2026-10-30 (hiring pipeline — quiet run, cloud session, ~12:20 PM ET)
+
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules. Cloud-only session (no remote-devices bridge), Claude-in-Chrome browser access. Scope reconfirmed via HIRING_SWITCH.md: Waynesboro/Harrisonburg/Roanoke ON, Culpeper/Lexington/Saint Augustine FL OFF.
+- Calendar (jdavis@fcfpawn.com) checked: unchanged — today (Fri 10/30) 11:00 AM Dariel Negron + 11:05 AM Hunter Marks (both Harrisonburg). Already posted to #employee-prospects this morning (9:21 AM DM).
+- Indeed Messages inbox checked live: unchanged — Michael Boyer (Roanoke), Oct 29 "Any update?", still Awaiting response, still sitting with Joshua/Preston (not re-flagging, already in his 9:21 AM DM note). Hunter Marks "Sounds good." and Diaundre Wright "Ok thank you" unchanged, closing pleasantries.
+- Jobs dashboard checked live: Waynesboro (88 total, 0 New), Harrisonburg (75 total, 0 New), Roanoke (58 total, 0 New), all Paused, no live sponsorship spend — unchanged. Lexington (31, 0 New) and Saint Augustine FL (24, 3 New) out of scope, unchanged.
+- Changed this run: nothing — 0 messages sent, 0 calendar changes, 0 texts (not a text-batch window; also no screen control), 0 rejections. Per quiet rule, no Slack DM or channel post sent.
+
+
+## 2026-10-30 (hiring pipeline — quiet run, cloud session, ~9:34 AM ET)
+
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules. Cloud-only session (no remote-devices bridge), Claude-in-Chrome browser access. Scope reconfirmed via HIRING_SWITCH.md: Waynesboro/Harrisonburg/Roanoke ON, Culpeper/Lexington/Saint Augustine FL OFF.
+- Calendar (jdavis@fcfpawn.com) checked: unchanged — today (Fri 10/30) 11:00 AM Dariel Negron + 11:05 AM Hunter Marks (both Harrisonburg). Already posted to #employee-prospects this morning (9:21 AM DM).
+- Indeed Messages inbox checked live (double-navigated past SPA stale-zero quirk): unchanged — Michael Boyer (Roanoke), Oct 29 "Any update?", still Awaiting response, still sitting with Joshua/Preston (not re-flagging, per his 9:21 AM DM). Hunter Marks "Sounds good." and Diaundre Wright "Ok thank you" unchanged, closing pleasantries.
+- Jobs dashboard checked live: Waynesboro (88 total, 0 New), Harrisonburg (75 total, 0 New), Roanoke (58 total, 0 New), all Paused, no live sponsorship spend — unchanged. Lexington (31, 0 New) and Saint Augustine FL (24, 3 New) out of scope, unchanged.
+- Changed this run: nothing — 0 messages sent, 0 calendar changes, 0 texts (not a text-batch window; also no screen control), 0 rejections. Per quiet rule, no Slack DM or channel post sent (today's list already posted this morning; Boyer/Buckland still open with Joshua, not re-flagged).
+
+## 2026-10-30 (dashboard-refresh, scheduled run, ~8:37 AM ET)
+
+- Ran the vp-dashboard refresh runbook (Business Dashboard Website/REFRESH_RUNBOOK.md). Loan-review feed confirmed retired (no change, kept existing pastDue). Layaway, company-performance, items-to-price, pawn-walks, daily-funds all had no newer report since last refresh -- kept existing values per runbook rule, not treated as failures.
+- #chekkit-messages-missed (the "chekkit-unanswerd-summary" channel from the task's channel map -- same ID, renamed) is still active, contrary to the task's note that it stopped posting. Pulled the real latest report: Oct 29 data, 1 unanswered (Waynesboro, Kayla Marse). Updated daily.chekkit and the feeds Last Run column accordingly. asOf -> Oct 30, 2026.
+- Artifacts sync (Step 2) skipped silently -- ~/Documents/Claude/Artifacts not a connected folder in this session, per task instructions not to request new folders.
+- Deploy: device_bash wrangler reliably hangs per the runbook's documented finding, so used Option C (staged site/ + .cloudflare/ into the cloud sandbox via device_stage_files, installed wrangler there, deployed from there). 2 files (kpis.json, vp-website-trend/index.html) were hardlinked on the Mac and refused by device_stage_files; reconstructed them byte-exact via base64 over device_bash and verified byte-for-byte before deploy.
+- Verified live: https://vp-dashboard.pages.dev/ returns 401 unauthenticated, 200 with basic auth; data/kpis.json parses valid and matches intended edits; artifacts/vp-website-trend/index.html byte-identical to source.
+- **Flagged for Joshua (pushed, not Slacked):** 3 independent daily Slack-reporting automations -- #daily-funds-reconcilation, #items-to-price, #pawn-walks (intake margin) -- have not posted since Oct 27 (3-day gap as of this run). Worth checking whether their upstream pipeline broke, especially daily funds verification.
+## 2026-10-30
+
+- Native agent appeared: com.valleypawn.storetraffic-culpeper.plist
+- Native agent appeared: com.valleypawn.storetraffic-culpeperb.plist
+- Native agent LOADED: com.valleypawn.storetraffic-culpeper
+- Native agent LOADED: com.valleypawn.storetraffic-culpeperb
 
 ## 2026-10-29 (hiring pipeline — quiet run #11, cloud session, ~7:19 PM ET)
 
@@ -8549,6 +8638,9 @@ Newest first. Material changes to the business operating system. Read this BEFOR
 - Found Edna Villarino's (JM Partners/ULC) 10/26 reply on the WC GC29P101236-03 statement-of-account thread: named-insured/FEIN + mailing-address correction now explicitly blocked on Joshua completing/signing/returning an attached ERM-14 Form (not a broker delay); Glencar invoices still outstanding, Edna now chasing "Tiffany" (Glencar Controller) by name. Updated `Life OS/Insurance/INSURANCE_REGISTRY.json` (VP-WC open_issues + documents + last_verified 2026-10-27), regenerated `INSURANCE_PORTFOLIO.md`, logged to `Life OS/Insurance/BROKER_PIPELINE.md` and `Life OS/OPEN_ITEMS_REGISTER.md` (no dated `Communcations/mail-brief/` queue file existed for today). No new nudge drafts created (9 insurance-relevant unsent drafts unchanged, dedupe guard held). No renewal inside 14 days, no lapse/cancellation/claim-denial signal — no Slack DM sent.
 
 
+## 2026-10-30 — insurance-inbox-watch (Cowork scheduled run, Domain 1)
+- Workers comp GC29P101236-03: re-reading the full Christine Ayala (Hannover Re Services) thread found the amount due now confirmed at $7,737.00 (combined -01/-02/-03), with Joshua already offering to pay but blocked by a payment-portal enrollment issue and a possible email typo on his password reset ("zapvp1@m3.com" vs zapvp1@me.com). Updated `Life OS/Insurance/INSURANCE_REGISTRY.json` (VP-WC, last_verified 2026-10-30), regenerated `INSURANCE_PORTFOLIO.md` (529 lines, 16 policies), logged to `BROKER_PIPELINE.md` and `Life OS/OPEN_ITEMS_REGISTER.md`. No new nudge drafts created (9 insurance-relevant unsent drafts unchanged, dedupe guard held). Sent one plain-English Slack DM to Joshua re: the unpaid WC balance and the password-reset email question (lapse-risk item per Step 5) — no other Slack DM sent.
+
 ## 2026-10-29 — insurance-inbox-watch (Cowork scheduled run, Domain 1)
 - Workers comp GC29P101236-03: Hannover Re Services (Christine Ayala) stated explicitly no record of the 2026-27 payment on 10/28, asked for full payment ASAP (not a formal cancellation notice). Updated `Life OS/Insurance/INSURANCE_REGISTRY.json` (VP-WC open_issues/status/documents, last_verified 2026-10-29), regenerated `INSURANCE_PORTFOLIO.md` (529 lines, 16 policies), logged to `BROKER_PIPELINE.md` and `Life OS/OPEN_ITEMS_REGISTER.md` (no dated `Communcations/mail-brief/` queue file existed for today). Also logged a broker follow-up on the Farming Infinity/817 Richmond standalone LRO quote ($3,505.31/yr) — decision point only, no registry change. No new nudge drafts created (9 insurance-relevant unsent drafts unchanged, dedupe guard held). Sent one plain-English Slack DM to Joshua re: the WC payment-not-on-record signal (treated as a lapse-risk item per Step 5) — no other Slack DM sent.
 
@@ -8569,3 +8661,31 @@ Newest first. Material changes to the business operating system. Read this BEFOR
   to local site/ -- skipped a no-op redeploy. Verified 401 (no auth) / 200 (basic auth) / valid
   kpis.json live. Logged to close the gap left by the earlier run, which completed the refresh
   and deploy but never wrote a CHANGELOG/DEPLOY_STATUS entry.
+
+## 2026-10-30 (vp-ai-visibility-metrics, Cowork scheduled run)
+- Full competitor-benchmarked run: Perplexity, Google (AI Overview + local pack), Gemini (anonymous session, signed-in session still blocked), ChatGPT (guest, new chat per query) tested across all 6 seed queries x 4 engines = 24 cells. Copilot untestable again (3rd week, account/birthdate setup wall, no bypass found). Visibility Index 75% (18/24 match-or-beat the named local rival), up from the last completed read (Oct 16, 71%) -- no Oct 23 report/CHANGELOG entry found, that week's run appears to have not completed.
+- Per-engine appearance: Perplexity 6/6 appear, 4/6 win; Google 6/6 appear, 4/6 win; Gemini 6/6 appear, 5/6 win; ChatGPT 6/6 appear, 5/6 win.
+- Market pattern flip: Harrisonburg is now the weak spot (0/4 -- The Coin & Gift Shop outranked us on every tested engine there). Roanoke improved to 2/4 (still losing Perplexity + Google to The PawnShop, but now winning Gemini + ChatGPT). Culpeper, the regional no-credit-check search, Waynesboro, and Lexington were clean 4/4 sweeps with correct hours/address/phone everywhere checked (Harrisonburg Ste 22, Roanoke Suite C, Lexington/Harrisonburg Wed-closed pattern all read back correctly).
+- NEW DEFECT FOUND: ChatGPT answered the Harrisonburg gold-selling query by naming us "Dixie Pawn / Valley Pawn" -- the forbidden name is leaking into at least one AI answer from an unknown source (likely a ghost/syndicated listing, same family as the Roanoke Yellow Pages "Gold-N-Pawn" issue). Not yet root-caused or fixed -- this is a reporting-only task; flagged in the Slack post and FAILURE_LEDGER for vp-ai-visibility-autofix / a dedicated session to investigate.
+- RECURRING DEFECT: Gemini (anonymous) again blended our Roanoke listing with "Gold-N-Pawn" (3rd+ week flagged, same Yellow Pages ghost listing at our Suite C address, still not corrected). Also one-off: Gemini invented a nonexistent Valley Pawn "Staunton location" in the Waynesboro jewelry answer (likely model hallucination, not a listing-data issue -- no corresponding wrong listing found).
+- GA4 (Session AI Assistants Tracking channel group, last 7 days Oct 23-29): AI Assistants = 7 sessions, 6 engaged (85.71% engagement rate), 0 key events, out of 433 total site sessions. Session-source breakdown confirms all 7 AI-referral sessions came from chatgpt.com (top/only AI source this week).
+- Sheet append SKIPPED: docs.google.com/spreadsheets/.../17gkCl9Bp... hit the jdavis@fcfpawn.com "Verify it's you, sign in again" wall (same wall blocking Gemini's signed-in session, standing since at least 2026-10-07/09, logged on Life OS/HUMAN_QUEUE.md). Could not read the sheet's last row either, so this week's delta is vs. the last completed outbox report (Oct 16) rather than the sheet.
+- Posted via outbox (vp-ai-visibility-metrics-20261030-064741.txt/.json) to #ai-marketing per the mandatory outbox-send path -- no direct Slack send attempted. One combined FAILURE_LEDGER row added for the two standing sign-in-wall blockers + the new Dixie Pawn name defect.
+
+## 2026-10-30 (hiring pipeline — quiet run, cloud session, ~12:49 PM ET)
+
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules. Cloud-only session (no remote-devices bridge), Claude-in-Chrome browser access. Scope reconfirmed via HIRING_SWITCH.md: Waynesboro/Harrisonburg/Roanoke ON, Culpeper/Lexington/Saint Augustine FL OFF.
+- Calendar (jdavis@fcfpawn.com) checked: unchanged — today (Fri 10/30) 11:00 AM Dariel Negron + 11:05 AM Hunter Marks (both Harrisonburg). Already posted to #employee-prospects this morning (9:19 AM DM).
+- Indeed Messages inbox checked live: unchanged — Michael Boyer (Roanoke), Oct 29 "Any update?", still Awaiting response, still sitting with Joshua/Preston (not re-flagging). Hunter Marks "Sounds good." and Diaundre Wright "Ok thank you" unchanged, closing pleasantries.
+- Jobs dashboard checked live: Waynesboro (88 total, 0 New), Harrisonburg (75 total, 0 New), Roanoke (58 total, 0 New), all Paused, no live sponsorship spend — unchanged. Lexington (31, 0 New) and Saint Augustine FL (24, 3 New) out of scope, unchanged.
+- Changed this run: nothing — 0 messages sent, 0 calendar changes, 0 texts (not a text-batch window; also no screen control), 0 rejections. Per quiet rule, no Slack DM or channel post sent.
+
+## 2026-10-30 21:45 ET (fleet-guardian, Cowork scheduled run, Social Media project session, LINKED via device bridge)
+- Loaded enterprise-map (STEP -2 bridge check: LINKED to mac-studio-2-local), read HARDENING_STANDARD.md and CHANGELOG top entries per protocol. Confirmed vp_dryrun.py guard OFF (exit=1, publications live) via direct device_bash call (no host-queue needed for this one).
+- Step 1 (registry): current scheduler reality is split across 3 layers -- cloud triggers (mcp list_triggers, dozens of active reminders/recurring jobs, all recently fired successfully), native launchd agents (com.valleypawn.*, ~180+ plists on disk), and a legacy local Cowork registry (checked by yesterday's 12:48 pass via host queue, only 2 tasks still enabled there). Did not find a `local-agent-mode-sessions/scheduled-tasks.json` path or a `Control_your_Mac` osascript tool in this session (neither exists here) -- used the documented Host Job Queue fallback (queued 20261031T0149-guardian2145-preflight/lastrun/hostdiag.sh) for anything needing native/registry access beyond device_bash's reach; results pick up next pass if not returned by preston-watch in time (same structural gap noted every pass since 9/17).
+- Step 1b/1c: FAILURE_LEDGER.md had 5 OPEN rows at start (vp-hiring-pipeline x2 Cloudflare block on Indeed, chekkit-ai-responder daily-cap pause, daily-funds-verification + jewelry-onhand-nightly-pull -- both continuing symptoms of the fleet-wide Bravo/Parallels outage, now day 4+ into the evening cycle). All 5 are verify-only per rerun_manifest.json (external messaging / Bravo-driving) -- none rerun, none were rerun-safe-and-missed, so Step 3 had nothing to execute this pass. Dispositioned: chekkit-ai-responder -> COVERED (self-resolving daily-cap reset); the other 4 -> UNRECOVERED (hard-limited, no Bravo VM/Parallels driving, no CAPTCHA solving). Backup: fleet/FAILURE_LEDGER.md.bak-guardian-20261030-2145.
+- Noted but not actioned: FIELD_SCORECARD.md flags precious-metals-settlement-handler as "MISSED TODAY" (09:00), but expected_outputs.json's own scorecard-exclude list already marks it "silent by design (acts only when a settlement email arrives)" -- this looks like a scorecard false-positive for this one task specifically (the other 4 of that same 5-item cluster -- pawn-walk, sold-review, daily-items-to-price, discount-review -- are real misses, correctly tied to the Bravo outage). Left as an observation for a future session to fix the scorecard's exclude-list honoring, not a new incident.
+- HUMAN_QUEUE.md: no new rows added; bumped the existing "Check the Bravo/Parallels VM" row (2026-10-29) with tonight's confirming detail (now spans the evening cycle too) and marked it surfaced in tonight's digest. Backup: Life OS/HUMAN_QUEUE.md.bak-guardian-20261030-2145.
+- Sign-in batching rule (2026-10-14) honored -- no [SIGN-IN] rows in tonight's digest; today is not the first Monday of the month so no Login Day section either.
+- One-DM-a-day rule: sent exactly one plain-language Slack DM to Joshua (D03BHQH5VGT, ts 1793411553.648969) -- condition (a) met (UNRECOVERED items today from the continuing Bravo outage). Content: nothing to catch up, Bravo system still stuck day 4, ask him to check it in person. No other Slack message sent anywhere.
+- Run log: fleet/guardian_runs/2026-10-30-2145.json.

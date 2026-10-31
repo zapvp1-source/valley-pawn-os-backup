@@ -143,7 +143,7 @@ SwitchStore(targetStore, password) {
     ; --- Step 1: Lock Session ---
     LogMessage("  SwitchStore: click Lock Session")
     try {
-        ClickByName("Lock Session", 5000)
+        InvokeLockSession(5000)
     } catch as e {
         LogMessage("  SwitchStore: Lock Session click failed: " . e.Message)
         ; If BackToDashboard never reached Dashboard, the real cause is
@@ -573,4 +573,35 @@ StrJoin(arr, sep) {
         out .= v
     }
     return out
+}
+
+
+; 2026-10-30 — Bravo 2026.10.0.85 (October release): "Lock Session" now lives in a header flyout as a
+; [text] wrapper around a [hyperlink]. FindElement({Name:"Lock Session"}) returns the TEXT wrapper and a
+; mouse click at its rect lands on the closed flyout, so nothing happens (every store switch failed
+; 10/28-10/30). UIA InvokePattern on the HYPERLINK works without opening the flyout (probe
+; logs/_lock_probe2.log 22:02: Invoke -> lock screen with Global Access in 6 s). Falls back to the old
+; mouse click so earlier Bravo builds keep working.
+InvokeLockSession(timeoutMs := 5000) {
+    hl := 0
+    deadline := A_TickCount + timeoutMs
+    loop {
+        try {
+            root := GetBravoRoot()
+            hl := root.FindElement({Name: "Lock Session", Type: "Hyperlink"})
+        }
+        if hl || (A_TickCount > deadline)
+            break
+        Sleep(200)
+    }
+    if hl {
+        try {
+            hl.InvokePattern.Invoke()
+            LogMessage("    [UIA] invoke Lock Session (hyperlink)")
+            return hl
+        } catch as e {
+            LogMessage("    [UIA] Lock Session invoke failed (" . e.Message . ") - falling back to click")
+        }
+    }
+    return ClickByName("Lock Session", timeoutMs)
 }

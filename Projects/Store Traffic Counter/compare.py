@@ -6,7 +6,7 @@ import csv, glob, os, re, sys, collections
 HERE = os.path.dirname(os.path.abspath(__file__))
 BRAVO = os.path.join(os.path.dirname(HERE), 'Bravo Data Extraction', 'output')
 CODES = {'Culpeper': 'CUL', 'Waynesboro': 'WAY', 'Harrisonburg': 'HAR', 'Lexington': 'LEX', 'Roanoke': 'ROA'}
-SKIP_BEFORE = {'Waynesboro': '2026-10-28'}   # earlier days were pre-validation versions (set aside)
+SKIP_BEFORE = {'Waynesboro': '2026-10-28', 'Culpeper': '2026-10-30'}   # earlier days were pre-validation versions (set aside)
 TXN = re.compile(r'^([A-Z0-9]{2,4}?)(\d{6,9}),(\d{1,2}/\d{1,2}/\d{4} \d{1,2}:\d{2} [AP]M)')
 
 def visitors(store):
@@ -29,7 +29,7 @@ for store in CODES:
     v = visitors(store)
     for day in sorted(v):
         if len(sys.argv) > 1 and day not in sys.argv[1:]: continue
-        t = tickets(store, day); vi = v[day]['in']
+        t = tickets(store, day); vi = round((v[day]['in'] + v[day]['out']) / 2)   # visitors = mean of door IN and OUT
         rows.append({'date': day, 'store': store, 'visitors_in': vi, 'visitors_out': v[day]['out'],
                      'bravo_tickets': '' if t is None else t,
                      'tickets_per_visitor': '' if (t is None or not vi) else round(t / vi, 2)})
