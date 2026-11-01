@@ -75,7 +75,7 @@ mis-cited eventually; assume it will.
 | Culpeper | ✅ 2024 lease (15 pp) + fully-executed 2026 First Amendment (3 pp) | ✅ OCR'd 9/18 | Complete through 3/31/2030 |
 | Waynesboro | ✅ 2023 lease (22 pp) | ✅ text-native | Complete; option notice due ~11/30/2027 |
 | Harrisonburg | ✅ 1995 original (38 pp) + 2024 Twelfth Amendment (2 pp) | ✅ OCR'd 9/18 | Amendments 1–9 and the 2021 Eleventh still missing |
-| Roanoke | ✅ 2023 lease (14 pp) | ✅ text-native | Fixed term ends 10/31/2026 — **Joshua in talks with landlord as of 9/18/2026** |
+| Roanoke | ✅ 2023 lease (14 pp) + new lease v2 FINAL (`Store Leases/Roanoke_Proposed_Lease_2026-10-31_Valley-Pawn_v2_FINAL.docx/.pdf`) | ✅ text-native | **New lease agreed in principle 10/28/2026** with Lanabisan LLC (Lana/Mohammad Qasem): 3-yr term 11/1/2026–10/31/2029 at $3,150 / $3,245 / $3,342; two 3-yr renewal options, renewal rent fixed at $3,600 starting LY4 (11/1/2029) +3%/yr through LY9 ($4,173.38), no market reset. Landlord asked Joshua to sign first. |
 | Lexington | ✅ 2025 lease, 125 Walker (12 pp) | ✅ OCR'd 9/18 | Runs to 7/31/2030 — **no renewal option exists** |
 
 **All five stores now have their operating lease on disk, OCR'd, as of 2026-09-18.** Remaining gaps

@@ -18,10 +18,11 @@ def seg_cross(p, q, a, b):  # does movement p->q cross segment a-b
     return side(p, a, b) != side(q, a, b) and side(a, p, q) != side(b, p, q)
 
 class Tracker:
-    """Nearest-neighbour tracker in NORMALIZED coords (0..1), so stream resolution switches
-    (Nest flips between 1920x1080 and 640x360 mid-stream) don't break it."""
-    def __init__(self, max_dist=0.08, max_age=2.0):
-        self.tracks, self.nid, self.max_dist, self.max_age = {}, 0, max_dist, max_age
+    """Nearest-neighbour tracker in NORMALIZED coords (0..1). v5 (2026-10-31): gate grows with time since the
+    track was last seen (speed allowance) and tracks survive short occlusions (max_age), so a walker is one
+    track from door to counter instead of several fragments."""
+    def __init__(self, max_dist=0.08, max_age=3.0, speed=0.30):
+        self.tracks, self.nid, self.max_dist, self.max_age, self.speed = {}, 0, max_dist, max_age, speed
     def expire(self, now, force=False):
         done = []
         for tid, t in list(self.tracks.items()):
@@ -29,16 +30,21 @@ class Tracker:
         return done
     def update(self, pts, now):
         moves, used = [], set()
-        for p in sorted(pts, key=lambda p: p[1]):
-            best, bd = None, self.max_dist
+        pairs = []
+        for i, p in enumerate(pts):
             for tid, t in self.tracks.items():
-                if tid in used: continue
                 d = math.dist(p, t['p'])
-                if d < bd: best, bd = tid, d
-            if best is None:
-                self.nid += 1; self.tracks[self.nid] = {'p': p, 'p0': p, 'ts': now, 'n': 1}; used.add(self.nid)
-            else:
-                t = self.tracks[best]; moves.append((best, t['p'], p)); t['p'], t['ts'] = p, now; t['n'] += 1; used.add(best)
+                if d <= self.max_dist + self.speed * max(0.0, now - t['ts']):
+                    pairs.append((d, i, tid))
+        pairs.sort()
+        taken = set()
+        for d, i, tid in pairs:
+            if i in taken or tid in used: continue
+            t = self.tracks[tid]; moves.append((tid, t['p'], pts[i])); t['p'], t['ts'] = pts[i], now; t['n'] += 1
+            used.add(tid); taken.add(i)
+        for i, p in enumerate(pts):
+            if i not in taken:
+                self.nid += 1; self.tracks[self.nid] = {'p': p, 'p0': p, 'ts': now, 'n': 1}
         return moves
 
 def in_door(p, cfg, pad=0.0):
@@ -60,6 +66,17 @@ def decide(t, cfg):
     if in_door(p0, cfg) and inside(p1, cfg): return 'in'
     if in_door(p1, cfg) and inside(p0, cfg): return 'out'
     return None
+
+_DET = {}
+def log_dets(store, now, feet):
+    """Raw per-frame feet points -> dets/<store>/<date>.jsonl so the tracker + rules can be re-run offline (retrack.py)."""
+    day = dt.datetime.fromtimestamp(now, TZ).strftime('%Y-%m-%d')
+    f = _DET.get(store)
+    if f is None or f[0] != day:
+        if f: f[1].close()
+        d = os.path.join(HERE, 'dets', store); os.makedirs(d, exist_ok=True)
+        _DET[store] = f = (day, open(os.path.join(d, day + '.jsonl'), 'a', buffering=1))
+    f[1].write(json.dumps([round(now, 2), [[round(x, 3), round(y, 3)] for x, y in feet]]) + '\n')
 
 def log_track(store, t, d):
     """Every finished track -> tracks/<store>/<date>.jsonl so rules can be re-scored offline."""
@@ -117,8 +134,9 @@ async def run(store, minutes, debug):
                 if now - last < 0.25: continue
                 last = now; img = f.to_ndarray(format='rgb24'); H, W = img.shape[:2]
                 if trk is None:
-                    trk = Tracker(cfg.get('max_dist', 0.08))
+                    trk = Tracker(cfg.get('max_dist', 0.08), cfg.get('max_age', 3.0), cfg.get('speed', 0.30))
                 feet = [((x1 + x2) / 2 / W, y2 / H) for x1, y1, x2, y2, s in detector.people(img, conf=cfg.get('conf', 0.30))]
+                log_dets(store, now, feet)
                 trk.update(feet, now)
                 for t in trk.expire(now):
                     d = decide(t, cfg)

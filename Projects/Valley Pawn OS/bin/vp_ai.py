@@ -9,6 +9,7 @@ import json
 import re
 import subprocess
 import urllib.request
+import urllib.error
 
 API = "https://api.anthropic.com/v1/messages"
 MODEL = "claude-sonnet-5-5"
@@ -30,8 +31,15 @@ def ask(prompt, system="", model=None, max_tokens=2000, content=None):
         body["system"] = system
     req = urllib.request.Request(API, data=json.dumps(body).encode(), method="POST", headers={
         "content-type": "application/json", "x-api-key": key(), "anthropic-version": "2023-06-01"})
-    with urllib.request.urlopen(req, timeout=180) as r:
-        resp = json.load(r)
+    try:
+        with urllib.request.urlopen(req, timeout=180) as r:
+            resp = json.load(r)
+    except urllib.error.HTTPError as e:   # 2026-10-31: keep the API's own reason (dress code 400s were opaque)
+        try:
+            detail = e.read().decode("utf-8", "replace")[:400]
+        except Exception:
+            detail = ""
+        raise RuntimeError("HTTP %s from Anthropic API: %s" % (e.code, detail)) from None
     return "".join(b.get("text", "") for b in resp.get("content", []) if b.get("type") == "text")
 
 

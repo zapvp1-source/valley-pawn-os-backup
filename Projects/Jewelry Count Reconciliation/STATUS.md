@@ -2413,3 +2413,39 @@ Nothing posted. Bravo incomplete: CUL (no CSV); HAR (Rings error (no prior-day e
 ## RUN RECORD — 2026-10-30 (Friday) — native jewelry-onhand-nightly-pull
 
 Nothing posted. Bravo incomplete: CUL (no CSV); HAR (Rings error (no prior-day empty baseline)); LEX (no CSV); ROA (no CSV); WAY (no CSV)
+
+## RUN RECORD — 2026-10-31 (Saturday) — native jewelry-onhand-nightly-pull
+
+Open: CUL HAR LEX ROA WAY. Bravo freeze-window CSVs: all open stores. Sheets: CUL ok (Sandi-Cole, 17:24); HAR ok (Walker-Tapley, 18:07); LEX ok (Uriah, 18:19); ROA ok (Benjie-Moore, 17:26); WAY NOT USED — count sheet not readable.
+
+Jewelry Count — Saturday 10/31 (expected = system on-hand, counted = PM count sheet)
+
+| Store | Category | Expected | Counted | Variance |
+|---|---|---|---|---|
+| CUL | Rings | 685 | 686 | +1 |
+| CUL | Bracelets | 126 | 126 | 0 |
+| CUL | Earrings | 181 | 181 | 0 |
+| CUL | Pendants | 249 | 252 | +3 |
+| CUL | Necklaces | 156 | 156 | 0 |
+| **CUL Total** | | **1397** | **1401** | **+4** |
+| HAR | Rings | 426 | 426 | 0 |
+| HAR | Bracelets | 50 | 50 | 0 |
+| HAR | Earrings | 49 | 49 | 0 |
+| HAR | Pendants | 100 | 100 | 0 |
+| HAR | Necklaces | 120 | 122 | +2 |
+| **HAR Total** | | **745** | **747** | **+2** |
+| LEX | Rings | 302 | 302 | 0 |
+| LEX | Bracelets | 41 | 41 | 0 |
+| LEX | Earrings | 43 | 43 | 0 |
+| LEX | Pendants | 49 | 49 | 0 |
+| LEX | Necklaces | 44 | 44 | 0 |
+| **LEX Total** | | **479** | **479** | **0** |
+| ROA | Rings | 593 | 594 | +1 |
+| ROA | Bracelets | 136 | 136 | 0 |
+| ROA | Earrings | 77 | 77 | 0 |
+| ROA | Pendants | 167 | 167 | 0 |
+| ROA | Necklaces | 148 | 148 | 0 |
+| **ROA Total** | | **1121** | **1122** | **+1** |
+
+Waynesboro — count sheet not readable.
+

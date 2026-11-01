@@ -1,15 +1,15 @@
 # Daily Funds Verification — 2026-10-29
 
-**0 of 5 stores verified; 5 could not be verified.**
+**No funds activity today — all clear.**
 
 | Store | Sent (Slack) | Expected | In Bravo | Status |
 |---|---|---|---|---|
-| Culpeper | none | $0.00 | — | ❓ Could not verify (no Bravo data) |
-| Harrisonburg | none | $0.00 | — | ❓ Could not verify (no Bravo data) |
-| Lexington | none | $0.00 | — | ❓ Could not verify (no Bravo data) |
-| Roanoke | none | $0.00 | — | ❓ Could not verify (no Bravo data) |
-| Waynesboro | none | $0.00 | — | ❓ Could not verify (no Bravo data) |
-| **Total** | | **$0.00** | | **0/5 verified** |
+| Culpeper | none | $0.00 | $0.00 | ✓ Matched |
+| Harrisonburg | none | $0.00 | $0.00 | ✓ Matched |
+| Lexington | none | $0.00 | $0.00 | ✓ Matched |
+| Roanoke | none | $0.00 | $0.00 | ✓ Matched |
+| Waynesboro | none | $0.00 | $0.00 | ✓ Matched |
+| **Total** | | **$0.00** | | **5/5 verified** |
 
 
 _Native run (bin/funds_verification.py)._

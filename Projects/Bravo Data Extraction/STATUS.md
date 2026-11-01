@@ -183,3 +183,17 @@ Nothing posted. Bravo incomplete: CUL (no CSV); ROA (no CSV); WAY (no CSV)
 ## RUN RECORD — 2026-10-29 (Thursday) — native jewelry-onhand-catchup
 
 Nothing posted. Bravo incomplete: CUL (no CSV); HAR (Rings error (no prior-day empty baseline)); LEX (no CSV); ROA (no CSV); WAY (no CSV)
+
+## RUN RECORD — 2026-10-30 (Friday) — native jewelry-onhand-catchup
+
+Open: CUL HAR LEX ROA WAY. Bravo freeze-window CSVs: all open stores. Sheets: CUL NOT USED — count sheet not readable; HAR NOT USED — count sheet not readable; LEX NOT USED — count sheet not readable; ROA NOT USED — count sheet not readable; WAY NOT USED — count sheet not readable.
+
+Jewelry Count — Friday 10/30 CATCH-UP (expected = Bravo pulled this morning inside freeze window; counted = last night's PM sheet)
+
+
+Culpeper — count sheet not readable.
+Harrisonburg — count sheet not readable.
+Lexington — count sheet not readable.
+Roanoke — count sheet not readable.
+Waynesboro — count sheet not readable.
+

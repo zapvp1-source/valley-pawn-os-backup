@@ -1,0 +1,141 @@
+<title>Lighthouse Pawn & Jewelry</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wght@600;800;900&family=Source+Sans+3:wght@400;600;700&family=Alfa+Slab+One&family=Mulish:wght@400;700;800&display=swap">
+<style>
+/* Layout mirrors thevalleypawn.com: sticky nav, hero with call/text CTAs, services cards, we-buy-gold band, family section, store card, hours, footer. */
+:root{--bg:#FBF9F4;--fg:#14202E;--navy:#10263F;--accent:#2A8C9E;--gold:#F2B134;--soft:#F3EBDD;--card:#FFFFFF;--line:#DCE3EA;--muted:#5B6B7C}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0D1520;--fg:#EEF2F6;--soft:#152033;--card:#18233A;--line:#2A3A52;--muted:#AAB7C6;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0D1520;--fg:#EEF2F6;--soft:#152033;--card:#18233A;--line:#2A3A52;--muted:#AAB7C6;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:Mulish,system-ui,sans-serif;font-size:17px;line-height:1.55;margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--navy)}
+.in{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--navy);color:#fff}
+header .in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:10px;flex-wrap:wrap}
+nav{display:flex;gap:18px;flex-wrap:wrap;font-weight:700;font-size:15px}
+nav a{color:#fff;text-decoration:none;opacity:.9} nav a:hover,nav a:focus-visible{opacity:1;text-decoration:underline;outline:none}
+.hero{background:var(--navy);color:#fff}
+.hero .in{display:grid;grid-template-columns:1.2fr 1fr;gap:32px;padding-block:40px 48px;align-items:center}
+.hero h1{font-family:'Alfa Slab One',Georgia,serif;font-size:clamp(30px,4.6vw,52px);line-height:1.05;margin:0 0 14px;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 16px}
+.badge{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:700;letter-spacing:.5px}
+.sub{font-size:20px;margin:0 0 20px;opacity:.95}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:13px 20px;border-radius:8px;font-weight:800;text-decoration:none;font-size:16px;letter-spacing:.3px}
+.btn.p{background:var(--accent);color:#fff} .btn.s{background:#fff;color:var(--navy)} .btn.o{border:2px solid #fff;color:#fff}
+.btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.hero .logo{background:#fff;border-radius:12px;padding:22px;display:flex;align-items:center;justify-content:center}
+.app{background:var(--gold);color:var(--navy);text-align:center;font-weight:800;padding-block:10px}
+.app .in{padding-block:0}
+section{padding-block:44px}
+section.soft{background:var(--soft)}
+h2{font-family:'Alfa Slab One',Georgia,serif;font-size:clamp(24px,3.4vw,36px);margin:0 0 10px;text-wrap:balance}
+.tagline{text-align:center;font-family:'Alfa Slab One',Georgia,serif;font-size:clamp(22px,3.6vw,38px);color:var(--accent);margin:0}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:22px;min-width:0}
+.card h3{margin:0 0 6px;font-size:20px;color:var(--accent)}
+.card p{margin:0;color:var(--muted)}
+.gold{background:var(--navy);color:#fff}
+.gold h2{color:var(--gold)}
+.gold .in{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
+ul.items{columns:2;gap:24px;margin:0;padding-left:18px} ul.items li{break-inside:avoid;margin-bottom:4px}
+.store{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;align-items:start}
+.hours{display:grid;grid-template-columns:auto 1fr;gap:4px 18px;font-variant-numeric:tabular-nums}
+.hours b{font-weight:800}
+.phone{font-family:'Alfa Slab One',Georgia,serif;font-size:30px;color:var(--accent);user-select:all}
+.social{display:flex;gap:12px;flex-wrap:wrap} .social a{color:var(--accent);font-weight:700}
+footer{background:var(--navy);color:#fff;font-size:14px}
+footer .in{padding-block:26px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+footer a{color:#fff}
+.note{font-size:13px;color:var(--muted)}
+@media (max-width:760px){.hero .in,.gold .in,.store{grid-template-columns:1fr} ul.items{columns:1}}
+@media (prefers-reduced-motion:no-preference){.btn{transition:transform .15s} .btn:hover{transform:translateY(-1px)}}
+</style>
+<header><div class="in">
+ <div style="display:flex;align-items:center;gap:10px"><svg style="filter:brightness(0) invert(1)" viewBox="0 0 440 130" width="230" role="img" aria-label="Lighthouse Pawn &amp; Jewelry logo concept 3" style="max-width:100%;height:auto">
+<g transform="translate(12,10)">
+ <polygon points="12,14 30,14 36,78 6,78" fill="#10263F"/>
+ <rect x="13" y="26" width="16" height="9" fill="#F2B134"/><rect x="11" y="48" width="20" height="9" fill="#F2B134"/>
+ <path d="M6,14 L36,14 L21,0 Z" fill="#F2B134"/>
+ <rect x="30" y="66" width="30" height="12" fill="#10263F"/>
+</g>
+<text x="74" y="86" font-family="'Alfa Slab One', Georgia, serif" font-size="56" textLength="352" lengthAdjust="spacingAndGlyphs" fill="#10263F">IGHTHOUSE</text>
+<text x="12" y="118" font-family="Mulish, Arial, sans-serif" font-weight="800" font-size="19" letter-spacing="6" textLength="220" lengthAdjust="spacingAndGlyphs" fill="#2A8C9E">PAWN &amp; JEWELRY</text>
+<path d="M240,112 L432,112" stroke="#F2B134" stroke-width="5" stroke-linecap="round"/>
+</svg></div>
+ <nav><a href="#loans">Loans</a><a href="#shop">Shop</a><a href="#gold">Sell Gold</a><a href="#jewelry">Sell Jewelry</a><a href="#ffl">FFL Transfer</a><a href="#visit">Visit</a></nav>
+</div></header>
+
+<section class="hero"><div class="in">
+ <div>
+  <h1>Pawn Shop &amp; Gold Buyer in St. Augustine · <em>Pawn Loans up to $25K</em></h1>
+  <div class="badges"><span class="badge">St. Augustine's newest pawn shop</span><span class="badge">30-day warranty on everything we sell</span><span class="badge">Family owned</span></div>
+  <p class="sub">Need money? We can help. Need cool stuff? We've got you.</p>
+  <div class="cta"><a class="btn p" href="#visit">Call or text us</a><a class="btn s" href="#visit">Get directions</a><a class="btn o" href="#loans">How pawn loans work</a></div>
+  <p class="note" style="color:rgba(255,255,255,.75);margin:14px 0 0">2493–2495 US Highway 1 South, St. Augustine, FL 32086 · Opening spring 2027</p>
+ </div>
+ <div class="logo"><svg viewBox="0 0 440 150" width="400" role="img" aria-label="Lighthouse Pawn &amp; Jewelry logo concept 1" style="max-width:100%;height:auto">
+<g transform="translate(14,4)">
+ <path d="M60,8 L86,22 L60,36 L34,22 Z" fill="#F2B134"/>
+ <circle cx="60" cy="22" r="7" fill="#fff"/>
+ <path d="M86,16 L120,4 M86,22 L124,22 M86,28 L120,40" stroke="#F2B134" stroke-width="4" stroke-linecap="round"/>
+ <path d="M34,16 L0,4 M34,22 L-4,22 M34,28 L0,40" stroke="#F2B134" stroke-width="4" stroke-linecap="round"/>
+ <polygon points="42,36 78,36 88,136 32,136" fill="#fff" stroke="#10263F" stroke-width="3"/>
+ <clipPath id="tower1"><polygon points="42,36 78,36 88,136 32,136"/></clipPath>
+ <g clip-path="url(#tower1)"><path d="M44,30 l44,-8 l0,10 l-44,8 z" fill="#10263F"/><path d="M42,52 l44,-8 l0,10 l-44,8 z" fill="#10263F"/><path d="M40,74 l44,-8 l0,10 l-44,8 z" fill="#10263F"/><path d="M38,96 l44,-8 l0,10 l-44,8 z" fill="#10263F"/><path d="M36,118 l44,-8 l0,10 l-44,8 z" fill="#10263F"/></g>
+ <rect x="26" y="134" width="68" height="10" rx="2" fill="#2A8C9E"/>
+</g>
+<text x="160" y="60" font-family="'Alfa Slab One', Georgia, serif" font-size="40" textLength="262" lengthAdjust="spacingAndGlyphs" fill="#10263F">LIGHTHOUSE</text>
+<text x="160" y="104" font-family="'Alfa Slab One', Georgia, serif" font-size="40" fill="#2A8C9E">PAWN</text>
+<text x="162" y="130" font-family="Mulish, Arial, sans-serif" font-weight="700" font-size="14" letter-spacing="3" textLength="262" lengthAdjust="spacingAndGlyphs" fill="#F2B134">&amp; JEWELRY · ST. AUGUSTINE</text>
+</svg></div>
+</div></section>
+<div class="app"><div class="in">GET THE FREE APP · Pay or extend your loan, make layaway payments and check due dates from your phone</div></div>
+
+<section><div class="in"><p class="tagline">Your guiding light on the First Coast.</p></div></section>
+
+<section class="soft" id="loans"><div class="in">
+ <h2>Steady, honest loans, no credit check</h2>
+ <p style="max-width:70ch">Hassle-free secured loans when you need cash, from a family that has been doing this since 2014. Bring it in, we loan on it.</p>
+ <div class="grid3">
+  <div class="card"><h3>Pawn Loans</h3><p>Bring in anything of value. We appraise it with real market data, make you a fair offer, and hold your item safely. Pay it back in 30 days or extend. No credit check, no effect on your credit.</p></div>
+  <div class="card" id="shop"><h3>Shop</h3><p>Quality new and pre-owned tools, electronics, jewelry, instruments and more at up to 25% less than the big-box price, and every item carries our 30-day warranty.</p></div>
+  <div class="card" id="jewelry"><h3>Sell Jewelry &amp; Gold</h3><p>Gold, silver, platinum, diamonds, coins and bullion. We weigh and test in front of you and pay on the spot. No appointment needed.</p></div>
+ </div>
+</div></section>
+
+<section class="gold" id="gold"><div class="in">
+ <div><h2>We buy gold, silver and bullion</h2><p>Broken chains, single earrings, class rings, dental gold, coins, bars. If it's precious metal, we'll make you an offer, and we'll show you the scale and the price we're working from.</p></div>
+ <div><h3 style="margin:0 0 8px">What we loan on and buy</h3><ul class="items"><li>Gold &amp; silver jewelry</li><li>Diamonds &amp; watches</li><li>Coins &amp; bullion</li><li>Power tools</li><li>Phones, tablets, laptops</li><li>Game consoles</li><li>TVs &amp; audio</li><li>Guitars &amp; instruments</li><li>Firearms (FFL)</li><li>Outdoor &amp; sporting gear</li></ul></div>
+</div></section>
+
+<section id="ffl"><div class="in">
+ <h2>Family-owned. NPA member. Your neighbor.</h2>
+ <p style="max-width:70ch">We're the family behind Valley Pawn, five stores in Virginia with a 4.9-star average, and St. Augustine is home now. Same rules here: we do what's right, we stand behind what we sell, and we treat you like a neighbor, because you are one. Licensed Florida pawnbroker. Federal firearms licensee with FFL transfers available.</p>
+</div></section>
+
+<section class="soft" id="visit"><div class="in">
+ <h2>Come see us</h2>
+ <div class="store">
+  <div class="card">
+   <h3>Lighthouse Pawn & Jewelry · St. Augustine</h3>
+   <p>2493–2495 US Highway 1 South<br>St. Augustine, FL 32086</p>
+   <p class="phone">(904) 000-0000</p>
+   <p class="note">Call or text the same number. Store line is being provisioned; this number is a placeholder.</p>
+   <div class="cta" style="margin-top:12px"><a class="btn p" href="#visit">Call</a><a class="btn p" href="#visit">Text</a><a class="btn s" style="background:var(--navy);color:#fff" href="https://www.google.com/maps/search/?api=1&amp;query=2493+US+Highway+1+S+St+Augustine+FL+32086" target="_blank" rel="noopener">Directions</a></div>
+  </div>
+  <div>
+   <h3 style="margin:0 0 8px">Store hours</h3>
+   <div class="hours"><b>Mon–Fri</b><span>10:00 AM – 6:00 PM</span><b>Saturday</b><span>10:00 AM – 5:00 PM</span><b>Sunday</b><span>Closed</span></div>
+   <h3 style="margin:22px 0 8px">Connect</h3>
+   <div class="social"><a href="#visit">Facebook</a><a href="#visit">Instagram</a><a href="#visit">TikTok</a><a href="#visit">Google reviews</a></div>
+   <p class="note" style="margin-top:18px">Walk in anytime during business hours. No appointment needed.</p>
+  </div>
+ </div>
+</div></section>
+
+<footer><div class="in">
+ <div><strong>Lighthouse Pawn & Jewelry</strong> · 2493–2495 US Hwy 1 S, St. Augustine, FL 32086</div>
+ <div><a href="#visit">FAQ</a> · <a href="#visit">Returns &amp; Refunds</a> · <a href="#visit">Careers</a> · <a href="#visit">Privacy</a></div>
+ <div class="note" style="color:rgba(255,255,255,.7)">Mockup for review. Phone number, social links and photos to be added when the lease is executed.</div>
+</div></footer>

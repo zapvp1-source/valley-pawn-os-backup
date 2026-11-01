@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-10-26 09:33 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-10-31 22:12 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -449,6 +449,12 @@ PRESTON SAID: "Just let me know how many pieces you do."
 SOURCE: zoom-call:7cf59b4a50e542019ce9cfe411bac905 | 2026-10-23 | UNK Sandi Cole
 id: jewelry-pricing-after-count--3a069305
 
+### [LOW] pricing-damaged-gold-jewelry-sell-vs-scrap
+RULE: For a dented hollow 14k bangle (about 20 dwt), the target was to get as close to "three" (likely $300) as possible by selling it as a jewelry piece rather than scrapping it. This was a judgment on one deal and the transcript doesn't label speakers, so treat it as unconfirmed.
+PRESTON SAID: "as close to three as possible is what I'd like to do for trying to sell as a jewelry piece, but if it's truly going to be scrapped"
+SOURCE: zoom-call:e6ab0906c7ac488a9eb47271e7f8eb3b | 2026-10-31 | UNK Benjie Moore
+id: pricing-damaged-gold-jewelry-3788295a
+
 
 ==============================================================================
 SECTION: SCRAP, BUCKETS & REFINING
@@ -661,6 +667,12 @@ PRESTON SAID: "Silver was about 6oz off of what I estimated. I'll make sure to u
 SOURCE: DM Joshua<->Preston (D03C7RBGY56) | 2026-05-27 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1779907615742359
 id: silver-weighing-accuracy-8240a2a4
 
+### [LOW] silver-scrap-keep-sellable-pieces
+RULE: When silver is being scrapped, a store may hold back a few pieces such as pendants that are good enough to sell through the holiday season, and does not need to send everything to melt. Clean up the kept pieces, and the rest goes out in a later scrap round.
+PRESTON SAID: "I'm not actively sending it out to melt so if you wanted to keep a few of the pendants and stuff you know I still clean it up because we don't want it bad but you know if there's some good stuff in there you think you'll sell through Christmas so you can leave them in there for now"
+SOURCE: zoom-call:ff0b2f980e2a481281ad4d292bd2583f | 2026-10-27 | UNK Walker Tapley
+id: silver-scrap-keep-sellable-p-011d5d1c
+
 
 ==============================================================================
 SECTION: COINS, BULLION & NUMISMATICS
@@ -747,6 +759,12 @@ RULE: The coin-flip counterparty (UNNAMED) pays 90% of value on gold coins; a cu
 PRESTON SAID: "Flip would be less. They are paying 90% this is about 80%"
 SOURCE: DM Joshua<->Preston (D03C7RBGY56) | 2026-03-09 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1773078102323369
 id: buyer-network-coin-buyer-90--413e8884
+
+### [MEDIUM] coin-split-convert-to-sku
+RULE: When writing up multiple coins, hit split, write up each coin properly and assign its own cost. Then select them all and convert to SKU before saving the pricing, so no tags need printing and the cost is accounted for.
+PRESTON SAID: "So you hit split, you write them up all properly and assign the cost that you want for each coin. So you assign the cost for each coin. And once you have them all on there, you can select them and convert to skew before you save the pricing."
+SOURCE: zoom-call:375d33b002b24139a085681aa26e3ffb | 2026-10-30 | UNK Chadd McClintic
+id: coin-split-convert-to-sku-fdeebf02
 
 
 ==============================================================================
@@ -942,6 +960,12 @@ PRESTON SAID: "Have the lady with the LV handbag looking to come in and do a loa
 SOURCE: #harrisonburg-funds | 2025-01-11 | https://valleypawnworkspace.slack.com/archives/C03BWRKEDUZ/p1736609718283309
 id: designer-handbag-loan-judgme-68db9093
 
+### [MEDIUM] ebay-lost-package-customer-refund
+RULE: When an eBay package is lost in transit, tell the customer what the tracking and USPS said. Ask whether he wants a refund or wants to wait a bit longer, then do what he chooses, refunding if he wants one.
+PRESTON SAID: "i would i would just say they they you know tell them what you found out and ask him if he'd like a refund on or if he wanted to wait a little bit longer see if it came through and then based on whatever he says just handle it and refund them"
+SOURCE: zoom-call:ba77fcf70b4449f78c2ddf6c27762eb5 | 2026-10-26 | UNK Uriah Tiglao
+id: ebay-lost-package-customer-r-2dec92e0
+
 ### [MEDIUM] estimator-loan-vs-buy-rates
 RULE: As of Nov 2025 the Bravo gold estimator was set at 50% for loan and 55% for buy; Preston's instinct was that buy should not be set below loan.
 PRESTON SAID: "Right now loan is set to 50% and buy 55%"
@@ -971,6 +995,12 @@ RULE: When deciding on loans and buys, assess risk by the item's condition, whet
 PRESTON SAID: "Making decisions on loans and buys on your own, identifying risk with, you know, condition, if it's going to resell quickly or not, you know, how quick it's selling through on eBay."
 SOURCE: zoom-call:2026-10-08_1207_Preston-to-JacobCox_9m48s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
 id: loan-buy-risk-factors-bb39aa86
+
+### [MEDIUM] loan-history-reactivated-redeemed-means-sales-floor
+RULE: If a loan history shows "reactivated and redeemed", the item had gone out to the sales floor and was then redeemed from there.
+PRESTON SAID: "Reactivated and redeemed yeah That means it would have been on the sales floor"
+SOURCE: zoom-call:022312bc19c14943a76fffe5b3bd67a7 | 2026-10-26 | UNK Walker Tapley
+id: loan-history-reactivated-red-44c3efb9
 
 ### [MEDIUM] loan-increase-interest-coverage
 RULE: When a loan is bumped up after the original loan date, interest must be covered for the whole gap. There can be no days with no interest.
@@ -1369,6 +1399,12 @@ Employee Name:______________________ DATE______________
 • Closing Procedure"
 SOURCE: #general | 2024-01-03 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1704290400471849
 id: employee-training-checklist-4dd34ccd
+
+### [HIGH] escalate-unusual-transactions-call-first
+RULE: Employees should call Preston before completing anything unusual or unclear, such as an odd return situation.
+PRESTON SAID: "anything weird like that you should please call me first"
+SOURCE: zoom-call:3291969ad65c47959d20e047c68cf3d8 | 2026-10-30 | UNK Walker Tapley
+id: escalate-unusual-transaction-62eab47a
 
 ### [HIGH] ffl-receiving-sop
 RULE: Step-by-step Bravo procedure for receiving an inbound FFL transfer firearm.
@@ -1910,6 +1946,18 @@ PRESTON SAID: "34 items in first payment default. Should be looking to expire th
 SOURCE: #loans-and-buys | 2024-02-10 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1707577201000000
 id: fpd-is-dead-money-45804a79
 
+### [MEDIUM] handgun-trade-exception-purchase-date
+RULE: The trade-in exception applies no matter when the traded-in handgun was originally bought, even 10 years ago. It still cancels out the new handgun on the form.
+PRESTON SAID: "It doesn't matter when they bought that. They could bought that hang on 10 years ago, but that's still canceled it out because they're trading one end."
+SOURCE: zoom-call:3374b4c5486647d08cedc2c5d6b42a5c | 2026-10-30 | UNK Chadd McClintic
+id: handgun-trade-exception-purc-9d94ebc2
+
+### [MEDIUM] handgun-trade-exception-state-form
+RULE: When a customer is trading in a handgun, the trade cancels out the second handgun on the state form. Mark "trade of a handgun" in the exceptions box, where the concealed permit information would normally go. Also check the matching box when submitting the background check.
+PRESTON SAID: "Yeah, if they're trading one, it basically will cancel out the second one on the state form. There's a box that says in the exceptions for where you would normally put the concealed parameters as trade of a handgun. And then when you submit the background, there's also a box that you check when you're on it."
+SOURCE: zoom-call:3374b4c5486647d08cedc2c5d6b42a5c | 2026-10-30 | UNK Chadd McClintic
+id: handgun-trade-exception-stat-e3ad6035
+
 ### [MEDIUM] high-value-deal-judgment-knives
 RULE: Example of Preston's large-loan judgment: $2,000 loan against a conservative $5,000 value (~40% LTV), justified by a long customer history worth $45,460.50 in pawn service charges since 2017.
 PRESTON SAID: "Have Tim Shelton trying to get a loan for $2000 on two really high end knives at Harrisonburg. Conservative value on the two knives is $5000. They are worth closer to $6000 though realistically."
@@ -2006,6 +2054,12 @@ PRESTON SAID: "Anything like this, if they are not new, still sealed, and I have
 SOURCE: #deal-questions (Uriah Tiglao, Lexington manager) | 2026-10-15 | https://valleypawnworkspace.slack.com/archives/C03BWGT5F5X/p1792101005062159
 id: ram-untested-ebay-comps-4becf83a
 
+### [MEDIUM] reactivation-verify-item-in-hand
+RULE: Before finalizing a reactivation, physically confirm the item is in the store. The system showing it in inventory is not enough, because items can be scrapped or closed out in error.
+PRESTON SAID: "Also, whenever you do a reactivation, you always should be making sure that we have Physically have it before we kind of reactivate it"
+SOURCE: zoom-call:022312bc19c14943a76fffe5b3bd67a7 | 2026-10-26 | UNK Walker Tapley
+id: reactivation-verify-item-in--62363da1
+
 ### [MEDIUM] red-flag-bulk-new-in-box
 RULE: Multiple identical new-in-box items from a new customer, or a batch of new-in-box items from someone out of state, is a pattern Preston flags and asks for the story behind.
 PRESTON SAID: "3 total NIB Bissel products, 2 being the exact same. -  What was the story on this? New customer seems a bit odd."
@@ -2035,6 +2089,18 @@ RULE: Returns/warranty coverage on used items is limited to 30 days. Issues rais
 PRESTON SAID: "It's not within 30 days like our policy covers."
 SOURCE: zoom-call:b7985902fd5c481cb3c1de9b038e8437 | 2026-08-29 | HAR Preston Peters
 id: return-policy-30-days-used-i-da6df0c4
+
+### [MEDIUM] return-refund-payment-method-store-credit
+RULE: A return is refunded in the same payment method used for the purchase, not based on how recently it was bought. If the item was paid for with store credit, the refund goes back as store credit, not cash.
+PRESTON SAID: "You just say that the refund was in store credit. That's the same method you'll get your money back on this next item as well."
+SOURCE: zoom-call:3291969ad65c47959d20e047c68cf3d8 | 2026-10-30 | UNK Walker Tapley
+id: return-refund-payment-method-fd3bd611
+
+### [MEDIUM] return-to-store-credit-card-procedure
+RULE: When a return should go to store credit, process it onto a store credit card and have the customer spend from the card in a separate transaction. Don't do it in the same transaction, because the system may treat the payment as cash.
+PRESTON SAID: "The best thing to do is do the return, put it on a car to store credit, and then let them spend it off the card rather than the same transaction that way."
+SOURCE: zoom-call:3291969ad65c47959d20e047c68cf3d8 | 2026-10-30 | UNK Walker Tapley
+id: return-to-store-credit-card--d86a5846
 
 ### [MEDIUM] sales-by-associate-report
 RULE: To see an associate's sales numbers, run the Reports > Sold Inventory report and group it by associate. This lets a new hire compare their numbers with others over the same period.
@@ -2171,6 +2237,12 @@ PRESTON SAID: "just get who it is and then you'd also be like so Do you need any
 SOURCE: zoom-call:779a2c14718a4ac89f6d5b7b0c5ad067 | 2026-10-13 | UNK Sandi Cole
 id: clearout-seller-company-docu-9f698906
 
+### [LOW] collector-app-card-valuation
+RULE: The collector app's condition selector gives unreliable values for sports cards. It is fine for a rough idea of value but should not be used to make offers.
+PRESTON SAID: "It's okay to get my idea, but I wouldn't use it for Making offers by any means"
+SOURCE: zoom-call:7a0de9dfd3474e1ca2dde2e335d05619 | 2026-10-27 | UNK Walker Tapley
+id: collector-app-card-valuation-0625112d
+
 ### [LOW] counterfeit-watch-resale-label-as-replica
 RULE: A counterfeit watch may be sold cheaply, but it must be clearly labeled as a replica.
 PRESTON SAID: "just clearly label it as a as a replica"
@@ -2219,6 +2291,12 @@ PRESTON SAID: "It's one of those things you kind of got to do in conversation wh
 SOURCE: zoom-call:779a2c14718a4ac89f6d5b7b0c5ad067 | 2026-10-13 | UNK Sandi Cole
 id: feel-out-seller-story-in-con-b165e8cd
 
+### [LOW] find-inventory-number-item-history
+RULE: To find an item's inventory number, use the item history screen with the current ticket number.
+PRESTON SAID: "should be item history on there?"
+SOURCE: zoom-call:022312bc19c14943a76fffe5b3bd67a7 | 2026-10-26 | UNK Walker Tapley
+id: find-inventory-number-item-h-cd23d44e
+
 ### [LOW] firearm-sale-then-layaway-preferred
 RULE: When a customer wants cash against a gun he is already buying out, the preferred route is to finalize the sale with the paperwork and then set up the layaway. That way the store earns again, rather than doing a layaway with cash back.
 PRESTON SAID: "it's best for us if he just does the paperwork we finalize the sale and then we do the layaway because then we make money again"
@@ -2237,6 +2315,12 @@ RULE: When a firearm trade is denied at transfer, the system reverses it as if w
 PRESTON SAID: "The money is, it'd be potentially a full amount."
 SOURCE: zoom-call:2026-10-13_1126_uriah-tiglao_0435.txt | 2026-10-13 | store<->Preston (transcribed 2026-10-01)
 id: firearm-trade-denied-refund-da6e4079
+
+### [LOW] firearm-trade-multiple-handguns-separate-transactions
+RULE: When the system rejects a trade because it counts more than one pistol/revolver on the request, it may need to be run as two separate transactions: one for the trade and one not for the trade. Call the state police to confirm.
+PRESTON SAID: "you have to run separate transactions. Call the state police and ask them you may have to run as two separate paperwork, one for the trade and one not for the trade."
+SOURCE: zoom-call:18f3acf6e6a5493aa2410a297b88e326 | 2026-10-30 | UNK Chadd McClintic
+id: firearm-trade-multiple-handg-c59f0d51
 
 ### [LOW] firearm-trade-nics-denial-refund
 RULE: If a customer is denied on a firearm that was part of a trade, the best-case handling is a full refund of the whole deal, not just the remainder he paid. This came from one case and the speaker on the call isn't identified.
@@ -2292,6 +2376,12 @@ PRESTON SAID: "Told them if we are interested we will follow up via phone call"
 SOURCE: #boro-funds (Chadd McClintic, Waynesboro manager) | 2026-10-09 | https://valleypawnworkspace.slack.com/archives/C03BLLRN64U/p1791582604693559
 id: job-applicant-interview-inqu-8bbce9dc
 
+### [LOW] layaway-pawn-cancel-expire-manager-only
+RULE: Only managers should be able to cancel layaways or expire pawns. Non-manager associates should have no reason to do either, and the system permission is to be changed.
+PRESTON SAID: "I can definitely fix that real quick there's really no reason for someone that's not a manager to expire upon or Cancel anyway."
+SOURCE: zoom-call:375d33b002b24139a085681aa26e3ffb | 2026-10-30 | UNK Chadd McClintic
+id: layaway-pawn-cancel-expire-m-2cf57966
+
 ### [LOW] new-location-site-selection-roanoke
 RULE: George ruled out the Melrose buildings for a possible new Roanoke location because they were run down and too close to another pawn shop. Distance from competing pawn shops and building condition were factors in his judgment.
 PRESTON SAID: "There are some building on Melrose but they are run down and too close to another pawn shop."
@@ -2316,6 +2406,18 @@ PRESTON SAID: "you can return part of it in cash. or credit and then put the oth
 SOURCE: zoom-call:977dbd23cc464aaebf05222ffcc6818f | 2026-10-07 | UNK Sandi Cole
 id: partial-refund-on-return-res-b6a103d4
 
+### [LOW] pokemon-card-authentication-back-print
+RULE: To check whether an older Pokémon card is real, get a magnified photo of the "P" on the back. Older genuine cards show a "flowering" effect there. The speaker could not describe it precisely without showing it, and the speaker's role is unknown.
+PRESTON SAID: "There's like, they look like the older cards have like a flowering effect that I don't know how to explain it without showing it."
+SOURCE: zoom-call:8ff2cdb1c20e43959d80c28b59c06c4c | 2026-10-30 | UNK Walker Tapley
+id: pokemon-card-authentication--9d4e9868
+
+### [LOW] pull-list-zero-target
+RULE: The pull list (expired loan and layaway items waiting to be priced) should be worked down to zero. Each day's new items should be priced that day so the list starts and ends the day at zero.
+PRESTON SAID: "we want that revolving door to start at zero and end at zero."
+SOURCE: zoom-call:95a6f5fd9cad4b27b51ddad0063e6bfc | 2026-10-31 | UNK Walker Tapley
+id: pull-list-zero-target-aaa78b42
+
 ### [LOW] return-and-resell-partial-refund-method
 RULE: When a customer returns an item and the store resells it to them at a discounted price, the refund can be split. Part goes back as cash or store credit and the rest to the card, or as a gift card. The speaker hedged ("maybe"), so confirm with Preston before relying on it.
 PRESTON SAID: "you can return part of it in cash or store credit and then put the other back on the card maybe"
@@ -2334,11 +2436,29 @@ PRESTON SAID: "We've got to make some phone calls to make sure we're legally all
 SOURCE: zoom-call:ab47ea2963e049ba9c8bfb3457265572 | 2026-10-13 | UNK Uriah Tiglao
 id: return-traded-firearm-after--74d6a3d8
 
+### [LOW] sale-floor-margin-over-melt
+RULE: A retail sale on a gold chain should come in at least about 20% over melt. The speaker called that "kind of a bottom," meaning a minimum. The transcript has no speaker labels, so it is unclear whether Preston or the employee said this.
+PRESTON SAID: "I mean, it puts us over 20% of mail, which is kind of a bottom bottom."
+SOURCE: zoom-call:e1425abf03404fafa2ea4c334dbda405 | 2026-10-26 | UNK Chadd McClintic
+id: sale-floor-margin-over-melt-ced3744c
+
 ### [LOW] saturday-closing-time-six-day-stores
 RULE: Stores that are open six days a week close at 5 PM on Saturday. The speaker's authority is unclear, so confirm with Preston before relying on it.
 PRESTON SAID: "If we're open six days a week you close at five on Saturday"
 SOURCE: zoom-call:882c5853d40e45bfbe179b04b6d83b73 | 2026-10-17 | UNK Walker Tapley
 id: saturday-closing-time-six-da-6c784087
+
+### [LOW] sealed-pokemon-box-shake-test
+RULE: Shaking a sealed Pokémon box to check for movement is not a reliable authenticity test. Packs sit loosely inside and the box also contains dice, so some movement is normal.
+PRESTON SAID: "Because the packs are somewhat loose in there. Like you could have a little bit of like play in there. There's also dice in there."
+SOURCE: zoom-call:cc6bc8ded63c4e2ab7497a31bb49a7d3 | 2026-10-30 | UNK Walker Tapley
+id: sealed-pokemon-box-shake-tes-4950b28c
+
+### [LOW] shipping-label-included-insurance
+RULE: Some shipping labels come with built-in coverage of up to about $100, depending on the shipping service or label source. The speaker was unsure whether this applied to the label in question.
+PRESTON SAID: "It depended on the, depending on the shipping, some of it comes with like up to a hundred dollars."
+SOURCE: zoom-call:ba77fcf70b4449f78c2ddf6c27762eb5 | 2026-10-26 | UNK Uriah Tiglao
+id: shipping-label-included-insu-db26b85a
 
 ### [LOW] silver-market-slowdown
 RULE: Preston tracks that falling silver slows in-store silver sell-through.
@@ -2352,11 +2472,29 @@ PRESTON SAID: "do the chat with the agent see if it can tell you what to do Okay
 SOURCE: zoom-call:ec8e499beb574de68d5c45ff0b59dbbe | 2026-10-12 | UNK Chadd McClintic
 id: software-support-chat-agent--bc6406c9
 
+### [LOW] soviet-ak-buy-price
+RULE: For a Soviet AK in good shape with a scratched magazine catch, the advisor said about 650 is a safe buy number. If the seller won't move, meeting at 675 or 700 is the fallback. This is a judgment on one deal. The speaker's role isn't confirmed.
+PRESTON SAID: "I would get into it for like 650. I think that's safe for us if we make that work."
+SOURCE: zoom-call:7315f555f2ab41ca974f611748462e55 | 2026-10-27 | UNK Walker Tapley
+id: soviet-ak-buy-price-a9b3d65b
+
+### [LOW] soviet-ak-retail-price
+RULE: For a Soviet AK in good shape, the advisor said the store would try to put about 1000 on it, though it might realistically sell around 900. This is a judgment on one deal. The speaker's role isn't confirmed.
+PRESTON SAID: "We try to put a thousand on it, but yeah, I'd probably say maybe 900"
+SOURCE: zoom-call:7315f555f2ab41ca974f611748462e55 | 2026-10-27 | UNK Walker Tapley
+id: soviet-ak-retail-price-5f7be027
+
 ### [LOW] stolen-property-police-hold
 RULE: When police identify a pawned item as stolen, the store holds it.
 PRESTON SAID: "Police said it was stolen and we had to hold it."
 SOURCE: DM Joshua<->Preston | 2024-01-30 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1706626237916359
 id: stolen-property-police-hold-ab895a94
+
+### [LOW] store-credit-overage-gift-card
+RULE: When a customer wants to use only part of her store credit and the system won't let you edit the credit amount, put the remainder on a gift card so you don't pay the overage out in cash.
+PRESTON SAID: "Yeah, so you can purchase a gift card."
+SOURCE: zoom-call:4b841e5c4f9141f7b93be8222884ee41 | 2026-10-31 | UNK Walker Tapley
+id: store-credit-overage-gift-ca-114611fa
 
 ### [LOW] tag-printer-failure-fallback
 RULE: If a store's main tag printer can't be fixed, swap the jewelry printer over to serve as the main printer, then order a replacement jewelry printer.
@@ -2375,6 +2513,12 @@ RULE: Typical monthly retail sales per employee run about $12-15K, and the highe
 PRESTON SAID: "retail sales. You know, generally, most of our folks are 1215 and then the higher performers are, you know, pushing 30 just to give you an idea where we want you to be."
 SOURCE: zoom-call:2026-10-08_1207_Preston-to-JacobCox_9m48s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
 id: typical-retail-sales-benchma-f03d7d66
+
+### [LOW] usps-lost-package-claim-low-value
+RULE: File USPS claims for lost packages at usps.com. On a low-value item (about $35), don't spend much time on the claim because it may not be worth the effort.
+PRESTON SAID: "i would just just open one at the usps.com i'm assuming yeah see what you can get done there i guess 35 bucks i wouldn't spend too much time on it it might not be borderline not worth it be honest with you"
+SOURCE: zoom-call:ba77fcf70b4449f78c2ddf6c27762eb5 | 2026-10-26 | UNK Uriah Tiglao
+id: usps-lost-package-claim-low--b4bd648d
 
 ### [LOW] weekly-hours-cap-40
 RULE: Staff should not be scheduled for more than 40 hours in a week, even when the store is covered six days. Stagger shifts so no one goes over.
@@ -2416,5 +2560,5 @@ id: past-due-75-day-5-percent-ce-30eeab0b
 
 
 ==============================================================================
-COVERAGE: 328 entries - 11 verified by Preston, 168 high-confidence rules, 90 medium, 57 low, 2 superseded.
+COVERAGE: 352 entries - 11 verified by Preston, 169 high-confidence rules, 98 medium, 72 low, 2 superseded.
 ==============================================================================

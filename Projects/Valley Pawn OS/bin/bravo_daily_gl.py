@@ -486,6 +486,10 @@ def main():
                         ledger("QuickBooks refused the connection while posting the daily Bravo entries; it needs to be re-authorized once.", "yes, re-authorize QuickBooks for the API app")
             elif err is None:
                 err = "daily file missing"
+            if err and "Could not select store" in err and d.isoformat() > st.get("posted_through", ""):
+                # 2026-10-31: Bravo had not confirmed this day as posted to accounting, so an empty store list means
+                # "not posted yet", not "no activity" (10/21-10/26 + 10/30 were lost this way). Keep it pending.
+                err = "Bravo day not posted to accounting yet (store not offered)"
             if err and "Could not select store" in err:
                 # Bravo's GL store list only offers stores with GL activity in the date range; two failed selects on a
                 # one-day pull = no activity that day (proven 2026-10-21: HAR/LEX 10/20 failed this way and the 10/1-10/20
@@ -497,6 +501,18 @@ def main():
                 summary.append("%s %s ERROR %s" % (d, s, err))
                 if rec["tries"] == MAX_TRIES:
                     ledger("Daily Bravo posting for %s %s has failed %d runs in a row (%s); it keeps retrying each night." % (NAME[s], d, MAX_TRIES, err[:120]))
+            save_state(st)
+        # 2026-10-31 whole-day guard: five pawn stores never ALL have zero GL activity on a business day. If every open
+        # store of day d came back "not offered", Bravo had not finished posting that day: keep it pending and retry
+        # next run (the month proof remains the final backstop).
+        drec = st["days"].get(d.isoformat(), {})
+        ops = open_stores(d)
+        if len(ops) >= 3 and all(drec.get(s, {}).get("status") == "no-activity" and "not offered" in drec.get(s, {}).get("note", "") for s in ops):
+            for s in ops:
+                r2 = drec[s]; r2["status"] = "pending"; r2["tries"] = r2.get("tries", 0) + 1
+                r2["last_error"] = "whole day not offered by Bravo GL - day not posted yet"
+            summary.append("%s ALL STORES not offered - kept pending, retry next run" % d)
+            log("%s: all %d open stores not offered by Bravo GL - kept pending" % (d, len(ops)))
             save_state(st)
     # month proof for any closed month since START not yet proven
     m = START.replace(day=1)

@@ -145,3 +145,15 @@ Edited (all APPLIED):
 - 6adf9fa4 Harrisonburg FB: "JMU hosts Troy the night before, Thursday..." (future tense, game already played) → "a night after JMU's 24-21 overtime loss to Troy at Bridgeforth Stadium".
 - 6adf9fac GBP_Harrisonburg: "This Friday" → "Tonight"; JMU line → "On Thursday night the Dukes fell to Troy 24-21 in overtime at Bridgeforth Stadium."
 Unverifiable: none left in posts. Published-wrong: none.
+
+## 2026-10-31 (Sat) daily run, ~7:40 AM ET
+Posts checked: 13 scheduled in the next 36h (Brand deals, BrandTikTok deals, Roanoke deal, plus 10 Nov 1 3 PM town posts for Lexington, Roanoke, Harrisonburg, Culpeper, Waynesboro on FB and GBP).
+Claims verified:
+- Harrisonburg FB 6adf9fb5: Harrisonburg hosts Broadway, Fri Nov 6, 2026, 7 PM. Upcoming, no cancellation. Sources: https://www.nfhsnetwork.com/events/harrisonburg-high-school-harrisonburg-va/gam14eb09a3fc ; https://www.si.com/high-school/stats/virginia/football/teams/256564-broadway-gobblers/games ("@ Harrisonburg", Harrisonburg, VA). Left as is.
+- Harrisonburg market (GBP 6adf9fbd): Tue Nov 3 and Sat Nov 7 (Harvest Fest), 8 AM-1 PM; last listed November markets Tue Nov 24 and Sat Nov 28; Holiday Market Dec 5/12/19, 9 AM-1 PM; Turner Pavilion, 228 S Liberty St. Sources: https://www.harrisonburgfarmersmarket.com/events ; https://www.harrisonburgfarmersmarket.com/hours-and-faqs ; https://augustafreepress.com/news/harrisonburg-farmers-market-returns-with-busy-schedule-for-2026/
+- Mill Mountain Star first lit Nov 23, 1949, so 77th on Nov 23, 2026 (Roanoke FB + GBP). Source: https://www.wsls.com/news/local/2019/11/23/roanokes-iconic-mill-mountain-star-celebrates-70th-birthday
+- Brand deals post: "open till 5 today" for Culpeper/Roanoke/Waynesboro and "till 6" for Harrisonburg/Lexington matches the Saturday hours. Roanoke deal post hours match too.
+- Skipped as evergreen/product: foliage-timing and frost climatology, Culpeper Depot history, Afton fog/Rockfish Gap, TikTok deal.
+Posts edited:
+- 6adf9fbd GBP_Harrisonburg: "runs Tuesdays and Saturdays through Thanksgiving, Nov 26" (not stated by the market; listed dates run to Sat Nov 28) → "open Tue, Nov 3 and Sat, Nov 7, 8 AM to 1 PM, and Saturday is also Harvest Fest ... continue through Sat, Nov 28 ... Holiday Market runs Dec 5, 12 and 19, 9 AM to 1 PM". APPLIED and re-read from Publer.
+Unverifiable: none left in posts. Published-wrong: none.

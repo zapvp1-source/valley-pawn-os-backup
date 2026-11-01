@@ -49,11 +49,15 @@ vlog "compile rc=$rc :: $(tail -1 "/tmp/${TASK}_compile_${Y//-/}.log" | cut -c1-
 
 # ---- 3. gate + post verbatim ----
 read -r MSG_OK MISSING_N FLAGS XLSX INFO <<EOF
-$($PY - "$PROJ/$SUM" <<'PY'
+$($PY - "$PROJ/$SUM" "$OPEN" <<'PY'
 import json,sys
 d=json.load(open(sys.argv[1]))
 msg=d.get("slack_message") or ""
-print(("1" if msg.strip() else "0"), len(d.get("missing_stores") or []), d.get("flags",0), (d.get("excel_path") or "-").replace(" ","\\ "), (d.get("info") or "-").replace(" ","_")[:80])
+# 2026-10-31: a store that was CLOSED that day (vp_lib open_stores: Wed = CUL ROA WAY, Sun = none) cannot be
+# "missing" — only open stores count toward the hold (the 10/28 discount backfill held on HAR/LEX, both closed).
+openset=set(sys.argv[2].split())
+miss=[s for s in (d.get("missing_stores") or []) if not openset or s in openset]
+print(("1" if msg.strip() else "0"), len(miss), d.get("flags",0), (d.get("excel_path") or "-").replace(" ","\\ "), (d.get("info") or "-").replace(" ","_")[:80])
 open(sys.argv[1]+".msg","w").write(msg)
 PY
 )

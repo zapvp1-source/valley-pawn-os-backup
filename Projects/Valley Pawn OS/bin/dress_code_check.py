@@ -345,7 +345,7 @@ def assess(cap):
         content.append(img_block(p))
     hint = ("The page text contains these words: %s." % ", ".join(cap["offline_words"])) if cap["offline_words"] else ""
     content.append({"type": "text", "text": "Store: %s. %s Assess per the rules and answer with the JSON object only." % (cap["store"], hint)})
-    out = vp_ai.ask("", system=SYSTEM, model=MODEL, max_tokens=600, content=content)
+    out = vp_ai.ask("", system=SYSTEM, model=MODEL, max_tokens=1500, content=content)
     m = re.search(r"\{.*\}", out, re.S)
     if not m:
         raise ValueError("no JSON: " + out[:200])

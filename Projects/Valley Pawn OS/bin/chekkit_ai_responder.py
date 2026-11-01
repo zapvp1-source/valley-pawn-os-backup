@@ -547,7 +547,6 @@ def main():
             if not render:
                 ledger_once(state, "cap", "The AI text responder hit its daily limit of %d replies; it paused until tomorrow." % cfg.get("max_ai_calls_per_day", 300))
             break
-        state["calls"] = state.get("calls", 0) + 1
         try:
             d = ask_claude(key, cfg, a, mct, when)
         except Exception as e:
@@ -556,7 +555,15 @@ def main():
                 ledger_once(state, "auth", "The Claude API key for the AI text responder was rejected.", "yes — replace the Claude API key")
                 save_json(STATE, state)
                 return 1
+            # 2026-11-01: a failed call no longer counts toward the daily cap, and an API-side refusal (400 usage
+            # limit, 429, 5xx) ends this run instead of retrying every alert (10/27-10/31 the spend-limit 400s
+            # burned the 300/day cap by morning and the cap row was misread as 300 replies sent).
+            if isinstance(e, urllib.error.HTTPError) and (e.code in (400, 429) or e.code >= 500):
+                if not render:
+                    ledger_once(state, "api", "The AI text responder could not reach Claude (the API refused the call); it will try again on its next run.")
+                break
             continue
+        state["calls"] = state.get("calls", 0) + 1
         status = "draft only"
         if d.get("action") == "reply" and live:
             s = mct["stores"][a["store"]]
