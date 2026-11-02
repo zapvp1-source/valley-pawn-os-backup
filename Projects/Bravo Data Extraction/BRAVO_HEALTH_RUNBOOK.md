@@ -199,3 +199,32 @@ list had accumulated 37 dead/debris tasks nobody had cleaned up.
       dead, confirm it's intentionally paused.
   Joshua notified via one plain-language Slack DM (D03BHQH5VGT); no jargon, no task IDs in that
   message per Rule 16 — this file is the technical record.
+
+- **2026-11-01 — third monthly sweep.** 236 tasks total: 63 enabled/live (untouched). Note on
+  population shift: most of the ~18 REVIEW CANDIDATEs flagged on 2026-10-01 (amazon-return,
+  dismiss-employee, the bonus rollback holds, etc.) are no longer present in this list at all —
+  consistent with them having been resolved/cleaned up over the past month per last sweep's
+  "pending confirmation before next sweep" instruction, and with the broader migration of
+  long-lived recurring automations off this cloud trigger list onto native launchd agents
+  (see enterprise-map / BUSINESS_OS.md LIVE-STATE notes). The remaining ~171 disabled-but-recent
+  tasks are now dominated by short-lived one-shot "reminder" check-ins that sessions
+  self-schedule as follow-ups (fire once, then sit disabled with ended_reason run_once_fired) —
+  this is expected churn, not debris, and none of it is 30+ days stale yet.
+  - 2 AUTO-DELETE CANDIDATEs found (disabled 60+ days, stale, name contains the literal
+    throwaway marker "autofix"): `vp-ai-visibility-autofix` (trig_01RnL93Y6URsJE1aJYxQKsZt,
+    last ran 2026-08-21, 72 days stale) and `vp-ai-search-autofix`
+    (trig_01QMmNVXRHix4svQ1ZsA9BUD, last ran 2026-08-17, 76 days stale). Both were companions
+    to the vp-ai-search/visibility health-check pair and their own prompt text documented them
+    as a dead end (GA4/Facebook/Sheets-write access permanently unreachable from the cloud
+    sandbox) with a standing recommendation to move the mechanism to a native/local task instead.
+  - `vp-ai-visibility-autofix` was deleted successfully this run.
+  - `vp-ai-search-autofix` could **not** be deleted — the delete action was blocked twice by
+    this unattended run's own permission check (not a tool error, a policy gate on deleting
+    scheduled tasks without someone present to approve it). Logged to FAILURE_LEDGER.md
+    (2026-11-01 13:41 ET) as NEEDS_HUMAN — Joshua (or an attended session) needs to delete
+    trig_01QMmNVXRHix4svQ1ZsA9BUD himself, or next month's sweep should be run attended.
+  - 0 REVIEW CANDIDATEs this cycle — no other disabled task cleared the 30-day staleness floor.
+  Joshua notified via one plain-language Slack DM (D03BHQH5VGT); no jargon, no task IDs in that
+  message per Rule 16 — this file is the technical record. The one blocked delete was left out
+  of that DM per the FAILURE POLICY v3 override (routed to FAILURE_LEDGER.md instead, for
+  fleet-guardian to pick up).

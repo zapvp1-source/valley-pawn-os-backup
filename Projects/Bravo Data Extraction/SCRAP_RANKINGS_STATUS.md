@@ -118,3 +118,15 @@ Newest first.
 - **Note for next run:** the 8/12 post carries a "Sent using Claude" footer — v3 standard forbids
   signature footers. Omit it on the 2026-09-01 post.
 - **Next real run:** 2026-09-01 4:30 AM ET → report period 2026-08, pull windows 2026-07..2026-08.
+
+## 2026-11-01 04:30 ET — HELD (2026-10, native)
+
+- no 2026-10 bucket and the pull did not succeed for CUL, WAY
+- pulls: 2026_CUL_scrap-refining-gold.csv: 26 rows on disk -> 27 after union with backups; 2026_HAR_scrap-refining-gold.csv: 36 rows on disk -> 42 after union with backups; 2026_LEX_scrap-refining-gold.csv: 29 rows on disk -> 35 after union with backups; 2026_ROA_scrap-refining-gold.csv: 18 rows on disk -> 22 after union with backups; 2026_WAY_scrap-refining-gold.csv: 21 rows on disk -> 22 after union with backups; backup _backups_20261101 (10 files); CUL pull FAILED twice (scrap-monthly-b-1793525600-CUL); HAR pull FAILED twice (scrap-monthly-b-1793526647-HAR); LEX pull FAILED twice (scrap-monthly-b-1793527846-LEX); ROA pull FAILED twice (scrap-monthly-b-1793529004-ROA); WAY pull FAILED twice (scrap-monthly-b-1793529901-WAY)
+
+## 2026-11-01 12:07 ET — POSTED (2026-10, native agent)
+
+- Window 2026-09..2026-10, one trigger per store: 2026_HAR_scrap-refining-gold.csv: 43 rows on disk -> 46 after union with backups; 2026_ROA_scrap-refining-gold.csv: 24 rows on disk -> 26 after union with backups
+- Company 326 dwt; stores with nothing posted: Culpeper, Waynesboro
+- Trend workbook rewritten (scrap_trend_sheet.py)
+- Slack ts 1793552867.191689

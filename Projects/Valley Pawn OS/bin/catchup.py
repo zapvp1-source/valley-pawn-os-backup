@@ -219,11 +219,56 @@ if today.day in (1, 2, 3):   # MobilePawn participation fires 1st-3rd 09:15 and 
                  lambda s: receipt_since("monthly-mobilepawn-participation", s) or file_since(LOGF("monthly-mobilepawn-participation"), s)))
 
 
+# ---------------------------------------------------------------------------------------------------------------
+# 2026-11-01 SAME-DAY RETRY LOOP (Joshua: "we need ALL reports to be completed ... a failed or errored report gets
+# fixed as soon as it can, not put off till next day"). The JOBS above treat "the agent wrote its log" as done, so a
+# run that HELD (incomplete data, a failed pull, an API refusal) was never retried until its next schedule. For the
+# publishing jobs below, done = the PUBLICATION evidence only (receipt / sent marker); a held run is re-kicked every
+# RETRY_GAP_MIN minutes until RETRY_UNTIL. Every job keeps its own completeness gate and duplicate guard, so a
+# re-kick either posts complete data once or holds again — it can never double-post or post partial numbers.
+RETRY_GAP_MIN = 45
+RETRY_STATE = os.path.join(OS_DIR, "fleet/state/catchup_retry.json")
+BONUS_OUT = os.path.join(HOME, "Documents/Claude/Projects/Bonus Program/out")
+_prev = (today.replace(day=1) - dt.timedelta(days=1)).strftime("%Y-%m")
+RETRY = {
+    "com.valleypawn.daily-report-pawn": (lambda s: receipt_since("daily-report-pawn", s), at(21, 0)),
+    "com.valleypawn.daily-report-sold": (lambda s: receipt_since("daily-report-sold", s), at(21, 0)),
+    "com.valleypawn.daily-report-discount": (lambda s: receipt_since("daily-report-discount", s), at(21, 0)),
+    "com.valleypawn.funds-verification": (lambda s: receipt_since("daily-funds-verification", s), at(23, 30)),
+    "com.valleypawn.monthly-analytics-report": (lambda s: receipt_since("monthly-analytics-report", s), at(22, 0)),
+    "com.valleypawn.monthly-employee-rankings": (lambda s: receipt_since("monthly-employee-sales-rankings", s), at(22, 0)),
+    "com.valleypawn.scrap-rankings-monthly": (lambda s: receipt_since("monthly-scrap-rankings", s), at(22, 0)),
+    "com.valleypawn.sales-tax-monthly": (lambda s: receipt_since("sales-tax-monthly-update", s), at(22, 0)),
+    "com.valleypawn.ebay-ratings-sweep": (lambda s: receipt_since("monthly-ebay-ratings-sweep", s), at(22, 0)),
+    "com.valleypawn.bonus-close-pull": (lambda s: os.path.exists(os.path.join(BONUS_OUT, _prev, "slack_targets.txt")), at(22, 0)),
+    "com.valleypawn.loan-layaway-outcomes": (lambda s: os.path.exists(os.path.join(OS_DIR, "loan-layaway-outcomes", _prev + ".sent")), at(22, 0)),
+    "com.valleypawn.mobilepawn-participation": (lambda s: os.path.exists(os.path.join(HOME, "Documents/Claude/Projects/MobilePawn Participation/out", _prev, "POSTED.txt")), at(22, 0)),
+    "com.valleypawn.new-customer-report": (lambda s: receipt_since("vp-new-customer-report", s), at(22, 0)),
+    "com.valleypawn.ceo-monthly-scorecard": (lambda s: receipt_since("ceo-monthly-scorecard", s), at(22, 0)),
+    "com.valleypawn.bonus-month-close": (lambda s: os.path.exists(os.path.join(BONUS_OUT, _prev, "close.json")), at(22, 0)),
+    "com.valleypawn.gun-audit-monthly": (lambda s: receipt_since("monthly-gun-audit-report", s), at(22, 0)),
+}
+
+
+def _retry_state():
+    try:
+        return json.load(open(RETRY_STATE))
+    except (OSError, ValueError):
+        return {}
+
+
 def main():
     render = "--render" in sys.argv
     uid = os.getuid()
     fired = []
+    rs = _retry_state()
     for label, pat, slot, until, done in JOBS:
+        retry = RETRY.get(label)
+        if retry:   # same-day retry: publication evidence only, longer window, at most one kick per RETRY_GAP_MIN
+            done, until = retry[0], max(until, retry[1])
+            last = rs.get(label)
+            if last and (now - dt.datetime.fromisoformat(last)).total_seconds() < RETRY_GAP_MIN * 60:
+                continue
         if not (slot <= now <= until):
             continue
         if done(slot) or running(pat):
@@ -231,8 +276,17 @@ def main():
         if not os.path.exists(os.path.join(HOME, "Library/LaunchAgents", label + ".plist")):
             continue
         fired.append(label)
+        if retry:
+            rs[label] = now.isoformat(timespec="seconds")
         if not render:
             subprocess.run(["launchctl", "kickstart", "gui/%d/%s" % (uid, label)], capture_output=True)
+    if not render and rs != _retry_state():
+        try:
+            os.makedirs(os.path.dirname(RETRY_STATE), exist_ok=True)
+            json.dump(rs, open(RETRY_STATE + ".tmp", "w"), indent=1)
+            os.replace(RETRY_STATE + ".tmp", RETRY_STATE)
+        except OSError:
+            pass
     line = "%s %s %s" % (now.strftime("%Y-%m-%d %H:%M"), "WOULD FIRE" if render else "fired", ", ".join(fired) or "nothing due")
     print(line)
     if not render and fired:

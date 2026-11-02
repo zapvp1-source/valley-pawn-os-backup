@@ -30,6 +30,66 @@ RULES = json.load(open(os.path.join(ROOT, 'bonus_rules.json')))
 DEFAULT_PLAN = {'CUL': 726042, 'HAR': 599708, 'ROA': 585973, 'LEX': 335431, 'WAY': 448674}
 
 
+MIRROR = os.path.join(ROOT, 'data', 'VP BONUS FINAL Updated.mirror.xlsx')
+PENDING = os.path.join(ROOT, 'data', 'sheet_push_pending')
+
+
+def _read_bytes(path, tries=3, gap=10):
+    import time as _t
+    last = None
+    for i in range(tries):
+        try:
+            with open(path, 'rb') as fh:
+                data = fh.read()
+            if data:
+                return data
+            last = OSError('empty read')
+        except OSError as e:
+            last = e
+        if i < tries - 1:
+            _t.sleep(gap)
+    raise last
+
+
+def resolve_sheet(drive_path):
+    """2026-11-01: Drive-for-desktop raised EDEADLK on every read of the sheet, so targets fell back to trailing-12.
+    Work on a local mirror that is refreshed from Drive whenever Drive reads cleanly; if Drive is unreadable (or a
+    previous push to Drive never landed) work on the mirror and push afterwards. Returns (work_path, mode)."""
+    if os.path.exists(PENDING) and os.path.exists(MIRROR):
+        return MIRROR, 'mirror (unpushed changes pending)'
+    try:
+        data = _read_bytes(drive_path)
+        tmp = MIRROR + '.tmp'
+        with open(tmp, 'wb') as fh:
+            fh.write(data)
+        os.replace(tmp, MIRROR)
+        return MIRROR, 'drive'
+    except OSError as e:
+        if os.path.exists(MIRROR) and os.path.getsize(MIRROR) > 0:
+            print('Drive sheet unreadable (%s); using local mirror' % e, file=sys.stderr)
+            return MIRROR, 'mirror (drive unreadable: %s)' % e
+        raise
+
+
+def push_sheet(drive_path):
+    """Copy the mirror back to Drive; leave a pending marker if it cannot land so the next run pushes again."""
+    import time as _t
+    data = open(MIRROR, 'rb').read()
+    for i in range(3):
+        try:
+            with open(drive_path, 'wb') as fh:
+                fh.write(data)
+            if os.path.getsize(drive_path) == len(data):
+                if os.path.exists(PENDING):
+                    os.remove(PENDING)
+                return True
+        except OSError as e:
+            print('Drive push retry %d: %s' % (i + 1, e), file=sys.stderr)
+        _t.sleep(10)
+    open(PENDING, 'w').write(dt.datetime.now().isoformat(timespec='seconds'))
+    return False
+
+
 def next_month(m):
     y, mo = int(m[:4]), int(m[5:])
     return '%04d-%02d' % ((y + 1, 1) if mo == 12 else (y, mo + 1))
@@ -102,8 +162,29 @@ def posted_target(month, s):
 
 def write_sheet(path, H, MS, SI, plan, plan_src, OT, year, closed_month):
     bak = path.replace('.xlsx', '.BACKUP-%s.xlsx' % dt.date.today().isoformat())
+    # 2026-11-01: the copy died mid-file on the Google Drive mount (0-byte .BACKUP left behind, sheet not updated,
+    # bonus DM fell back to trailing-12 targets). Drive-for-desktop fetches a cloud-only file on first read and can
+    # raise a transient error (e.g. "Resource deadlock avoided") meanwhile: retry the read, never keep an empty backup.
+    import time as _t
+    if os.path.exists(bak) and os.path.getsize(bak) == 0:
+        os.remove(bak)
     if os.path.exists(path) and not os.path.exists(bak):
-        shutil.copy(path, bak)
+        for i in range(6):
+            try:
+                with open(path, 'rb') as fh:
+                    data = fh.read()
+                if not data:
+                    raise OSError('empty read')
+                with open(bak, 'wb') as fh:
+                    fh.write(data)
+                break
+            except OSError as e:
+                if os.path.exists(bak) and os.path.getsize(bak) == 0:
+                    os.remove(bak)
+                if i == 5:
+                    raise
+                print('sheet read retry %d after: %s' % (i + 1, e), file=sys.stderr)
+                _t.sleep(20)
     old = openpyxl.load_workbook(path) if os.path.exists(path) else None
     wb = openpyxl.Workbook()
     ws = wb.active
@@ -234,10 +315,13 @@ def main():
         print('HELD: %s not in history.json — run bonus_engine.py collect first' % a.month)
         sys.exit(2)
     year = a.month[:4]
-    plan, plan_src = read_plan(a.sheet)
+    work, mode = resolve_sheet(a.sheet)
+    plan, plan_src = read_plan(work)
     SI = seasonal(H, MS)
     OT = open_targets(H, MS, SI, plan, year)
-    bak = write_sheet(a.sheet, H, MS, SI, plan, plan_src, OT, year, a.month)
+    bak = write_sheet(work, H, MS, SI, plan, plan_src, OT, year, a.month)
+    pushed = push_sheet(a.sheet)
+    print('sheet source: %s; pushed to Drive: %s' % (mode, pushed), file=sys.stderr)
     nm = next_month(a.month)
     nd = os.path.join(ROOT, 'data', nm); os.makedirs(nd, exist_ok=True)
     tp = os.path.join(nd, 'targets.json')

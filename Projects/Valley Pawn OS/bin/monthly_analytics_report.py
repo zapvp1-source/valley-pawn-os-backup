@@ -199,6 +199,17 @@ def main():
             W.append("| %s | %s |" % (s, " | ".join(("%.2f" % mt[k]) for k, _ in METRICS) + " | " + mt.get("reporting_dates", "")) if mt else "| %s | missing |" % s)
         if len(data[w]) == 5:
             t = totals(data[w]); W.append("| **GT** | %s | |" % " | ".join("**%.2f**" % t[k] for k, _ in METRICS))
+    # 2026-11-01: the 10/31 20:00 prestage got files ending 10/30 (Bravo's last day wasn't closed yet) and October
+    # posted one day short. Every window must END on its intended last day, or nothing posts (Rule 18); the
+    # catchup same-day retry re-kicks this job and the prestage can be re-run for the short windows.
+    import re as _re
+    for w in WINDOWS:
+        want = win[w][1].strftime("%-m/%-d/%Y")
+        for s_, mt in data[w].items():
+            rdx = mt.get("reporting_dates", "")
+            ends = _re.findall(r"- *(\d{1,2}/\d{1,2}/\d{4})", rdx)
+            if ends and ends[-1] != want:
+                problems.append("%s %s ends %s, not %s" % (w, s_, ends[-1], want))
     gate_ok = not problems and all(len(data[w]) == 5 for w in WINDOWS)
     for view, wc, wp in VIEWS:
         if len(data[wc]) == 5 and len(data[wp]) == 5:
@@ -223,6 +234,8 @@ def main():
             W += ["", "## Google Sheet", "", "NOT created: %s" % e]
             notes.append("sheet failed: %s" % e)
     post, _ = build_post(ym, data, sheet_url)
+    if "--correct" in sys.argv:   # 2026-11-01: explicit re-post after a short-month post; the guard still sees the marker
+        post = "Corrected: " + post
     W += ["", "## Slack post (same-month view only)", "", "```", post, "```"]
     if render:
         open(wf, "w").write("\n".join(W) + "\n")
@@ -235,7 +248,7 @@ def main():
         ledger("The %s company performance report was built but its spreadsheet could not be created, so nothing posted." % month)
         return 1
     os.environ["VP_TASK"] = AGENT
-    if vp_slack.has(CH, "Monthly Business Update — %s" % month, 24 * 20):
+    if "--correct" not in sys.argv and vp_slack.has(CH, "Monthly Business Update — %s" % month, 24 * 20):
         W.append("\nAlready posted this month — nothing sent."); open(wf, "w").write("\n".join(W) + "\n"); print("already posted", month); return 0
     tmp = "/tmp/monthly_analytics_%s.txt" % ym
     open(tmp, "w").write(post)

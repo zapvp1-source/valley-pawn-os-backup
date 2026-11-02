@@ -88,16 +88,15 @@ def main():
             print("already posted via outbox", ym); return 0
     rc, post, err = compile_(ym, out)
     if rc == 2 and not render and not no_pull:
+        # 2026-11-01 (Joshua: "we can't wait for tomorrow"): no more day-1 wait-until-tomorrow. Give the other
+        # month-end pulls 20 min to land the files, then pull exactly what HOLD.txt names ourselves, same day.
         if today.day == 1:
-            for _ in range(6):
+            for _ in range(2):
                 time.sleep(600)
                 rc, post, err = compile_(ym, out)
                 if rc == 0:
                     break
-            if rc != 0:
-                ledger("MobilePawn participation report held — month-end numbers not on file yet; will retry tomorrow.")
-                print("HOLD (day 1) — retry tomorrow"); return 2
-        else:
+        if rc != 0:
             need = missing_from_hold(out)
             if need:
                 pull_missing(need)

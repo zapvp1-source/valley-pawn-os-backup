@@ -73,7 +73,7 @@ def pull_store(store, window, tag):
                    capture_output=True, text=True, timeout=3000)
     rp = os.path.join(BRAVO, "results", tid + ".result.json")
     try:
-        r = json.load(open(rp))
+        r = json.load(open(rp, encoding="utf-8-sig"))   # 2026-11-01: watcher result files carry a UTF-8 BOM; plain open() raised and every good pull read as FAILED
         txt = json.dumps(r).lower()
         ok = '"status": "success"' in txt or '"status":"success"' in txt or ('"success"' in txt and '"error"' not in txt)
         return ok, tid

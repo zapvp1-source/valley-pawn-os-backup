@@ -87,7 +87,7 @@ one of them and your rate goes down. Same swing either way.
 
 {som_section}## The rules that decide who gets paid
 
-- A manager must have run the store for the **full month** to be paid on the manager rate.
+- You must have worked the **full month** to earn a bonus for it — anyone hired after the 1st of the month is not eligible for that month. A manager must have run the store for the full month to be paid on the manager rate.
 - You must be **employed on the day the bonus is paid**, not just the month you earned it.
 - Bonus is **paid monthly, on the Friday after the 15th** of the following month.
 {rights_policy}
@@ -116,8 +116,9 @@ paid the following Friday.
   the store hits its revenue goal and all task goals; {pct(a['miss'])} when it hits the revenue goal but misses a
   task goal.
 - **Task goals:** {'; '.join([g.split('** — ')[0].replace('- **', '') + ' ' + g.split('** — ')[1].split('.')[0] for g in goals])}.
-{som_handbook}- **Eligibility:** a manager must have managed the branch for the full month; all employees must be
-  employed at the time of payout, not merely when the bonus was earned.
+{som_handbook}- **Eligibility:** you must have worked the full month (hired after the 1st = not eligible for that month); a
+  manager must have managed the branch for the full month; all employees must be employed at the time of
+  payout, not merely when the bonus was earned.
 {rights_handbook}
 """
 

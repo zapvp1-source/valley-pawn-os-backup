@@ -1,5 +1,31 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-01 (third firing — manual re-run from Joshua's linked session, ~13:36 ET) — POSTING BLOCKED AGAIN
+- Switched into Valley Pawn-Roanoke ("Comment as Valley Pawn-Roanoke" confirmed) and tried the same single comment on Mill Mountain Zoo's World Lemur Day post. The permission check refused it ("Real-World Transactions") before anything was typed. Nothing was posted.
+- Starting the firing manually from a linked session did not change the result: the run itself is still unattended, so the check still blocks public posting.
+- Switched back to Joshua Davis (confirmed toast), closed the tab. No workaround tried.
+- Totals: comments 0, shares 0, replies 0, follows 0, new pages resolved 0. Facebook warnings: none.
+- HUMAN_QUEUE 11/1 row left in place (the re-run did not post).
+
+## 2026-11-01 (second firing, 13:31–13:35 ET, ramp level 1 all pages) — POSTING BLOCKED AGAIN
+- This firing's prompt now carries Joshua's written pre-authorization for public comments/shares/follows/replies. The platform permission check still refused the first post ("Real-World Transactions"), so the written authorization in the task prompt does not clear it for unattended runs.
+- Facebook signed in fine (no login or security check). Switched into Valley Pawn-Roanoke; picked Mill Mountain Zoo's World Lemur Day post (Oct 30, 3:49 PM). The comment was typed but the send (Return) was refused — nothing posted. Typed draft was cleared from the box.
+- Per the task rules no workaround was tried and the run stopped: no comments, shares, follows, replies or watchlist searches after the refusal.
+- Switched Facebook back to Joshua Davis (confirmed "Switched to Joshua Davis" toast) and closed the tab.
+- Totals: comments 0, shares 0, replies 0, follows 0, new pages resolved 0.
+- Facebook warnings: none.
+- Needs a person: the existing 2026-11-01 [DECISION] row in Life OS/HUMAN_QUEUE.md covers it (not duplicated).
+
+## 2026-11-01 (daily run, 12:42–13:20 ET, ramp level 1 all pages) — POSTING BLOCKED
+- Facebook signed in fine (no login or security check). Switched into Valley Pawn-Lexington, checked Main Street Lexington, W&L, Rockbridge Regional Libraries and City of Lexington.
+- Picked one post (W&L "fog-covered buildings to moonlit skies", yesterday 8:44 AM). The comment was never typed or sent: this unattended run's permission check refused the click ("Real-World Transactions"). Nothing was posted anywhere. Per the run rules no workaround was tried, so all comments, shares, follows and replies were skipped for every page today.
+- Switched Facebook back to Joshua Davis (confirmed in the account menu) and closed the tab.
+- Totals: comments 0, shares 0, replies 0 (reply sweep not reached), follows 0.
+- Watchlist (read-only searches as Joshua, no follows): 7 pages resolved — Culpeper County High School (ccpscchs), Germanna Community College (gccva, note: Fredericksburg HQ), City of Waynesboro (CityOfWaynesboro), Harrisonburg-Rockingham Chamber (hrchamber), Rail Yard Dawgs, Feeding Southwest Virginia (new Salem page), Taubman Museum of Art.
+- Skipped on purpose: City of Lexington harm-reduction post (NO list); W&L post includes a Lee Chapel photo, so the drafted comment stayed on fog/moon only.
+- Facebook warnings: none.
+- Needs a person: one line added to Life OS/HUMAN_QUEUE.md — unattended runs can't post publicly; Joshua decides how this task should run.
+
 ## 2026-10-31 (daily run, 13:38–14:01 ET, ramp level 1 all pages)
 - 14:01 ET: a second (manual) firing for 10/31 arrived after this run had finished. It took no actions: every page was already at its level-1 cap for the day, and the reply sweep had already run at 13:38–14:00.
 - Culpeper: 1 comment + 1 share (Culpeper Renaissance trick-or-treat post, E. Davis St 5–6:30 PM), 5 follows.

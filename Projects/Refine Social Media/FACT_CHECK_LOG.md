@@ -157,3 +157,14 @@ Claims verified:
 Posts edited:
 - 6adf9fbd GBP_Harrisonburg: "runs Tuesdays and Saturdays through Thanksgiving, Nov 26" (not stated by the market; listed dates run to Sat Nov 28) → "open Tue, Nov 3 and Sat, Nov 7, 8 AM to 1 PM, and Saturday is also Harvest Fest ... continue through Sat, Nov 28 ... Holiday Market runs Dec 5, 12 and 19, 9 AM to 1 PM". APPLIED and re-read from Publer.
 Unverifiable: none left in posts. Published-wrong: none.
+
+## 2026-11-01 (Sun) daily run, ~7:45 AM ET
+Posts checked: 10 scheduled in the next 36h (all Nov 1 3:00 PM ET: Culpeper, Waynesboro, Harrisonburg, Lexington, Roanoke on FB and GBP).
+Claims verified:
+- Harrisonburg FB 6adf9fb5: Harrisonburg hosts Broadway, Fri Nov 6, 2026, 7:00 PM. Still listed UPCOMING; no cancellation, forfeit or change. Sources: https://www.nfhsnetwork.com/events/harrisonburg-high-school-harrisonburg-va/gam14eb09a3fc ; https://www.si.com/high-school/stats/virginia/football/teams/255668-harrisonburg-blue-streaks/games (last row "vs Broadway", Harrisonburg, VA, no score). MaxPreps schedule page returned only a header, so it was not used. Left as is.
+- GBP_Harrisonburg 6adf9fbd: Tue Nov 3 and Sat Nov 7, 8 AM-1 PM; Harvest Fest Sat Nov 7; Tue/Sat markets listed through Sat Nov 28; Holiday Market Dec 5/12/19, 9 AM-1 PM; 228 S. Liberty St. Sources: https://www.harrisonburgfarmersmarket.com/events ; https://www.harrisonburgfarmersmarket.com/hours-and-faqs . Left as is.
+- Roanoke FB 6adfa042 + GBP 6adfa04b: "foliage ... right about now" is consistent with the latest state report (Oct 29, 2026: "If peak foliage is real, it's now"; lower Blue Ridge at peak, high elevations past peak). Sources: https://fall.virginia.org/weekly-reports/ ; https://www.dof.virginia.gov/education-and-recreation/fall-foliage-in-virginia/ . Mill Mountain Star 77th on Nov 23 (first lit Nov 23, 1949) and the Oct 22 average first freeze were re-confirmed from the 10/28 and 10/31 sources. Left as is.
+- "Cold morning" wording (Culpeper FB 6adf9f2b, GBP_Culpeper 6adf9f34, Waynesboro FB 6adf9f70): each is written as a general seasonal line ("always", "a cold fall morning"), not a claim about today. For reference, NWS Culpeper at 7:35 AM 11/1 showed 43°F with no frost or freeze advisory (https://forecast.weather.gov/MapClick.php?lat=38.4735&lon=-77.9966). Left as is.
+- Skipped as evergreen: Lexington FB/GBP foliage-by-elevation lines, Culpeper Depot history, Afton fog and Rockfish Gap facts.
+Posts edited: none.
+Unverifiable: none left in posts. Published-wrong: none.

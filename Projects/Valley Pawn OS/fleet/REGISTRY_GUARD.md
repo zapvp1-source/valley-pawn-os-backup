@@ -2,6 +2,31 @@
 
 Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guard`, every 5 min, zero Claude usage). Newest first, last 40 event entries kept. Heartbeats go to ~/Library/Logs/valleypawn/registry-guard.log.
 
+## 2026-11-01 08:53 — GREEN
+
+- App running: True (pid 55583, started 2026-10-29 14:47:07)
+- Registries found: 1
+- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 2 enabled, 0 null value(s), 414162 bytes, mtime 2026-11-01 08:51:17
+- ZodError lines in app logs: 0 (since app start: None)
+- Scheduler-related log lines (last 12):
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+    - `main1.log`:     "name": "scheduled-tasks",
+    - `main1.log`:       "name": "scheduled-tasks",
+- Force-relaunch flag present: False
+- Registry last written 2 min ago; app up 3966 min
+
+**Events**
+- snapshot saved (232 tasks) -> scheduled-tasks-20261101-085319.json
+
 ## 2026-10-31 08:56 — GREEN
 
 - App running: True (pid 55583, started 2026-10-29 14:47:07)
@@ -976,28 +1001,3 @@ Written by `bin/registry_guard.py` (native launchd `com.valleypawn.registry-guar
 
 **Events**
 - snapshot saved (232 tasks) -> scheduled-tasks-20261030-151942.json
-
-## 2026-10-30 15:09 — GREEN
-
-- App running: True (pid 55583, started 2026-10-29 14:47:07)
-- Registries found: 1
-- `~/Library/Application Support/Claude/local-agent-mode-sessions/823f6874-6252-4031-ae4e-a3c22d37598e/f6b75d02-cca9-4943-ad6e-88390a3f201d/scheduled-tasks.json` — 232 tasks / 2 enabled, 0 null value(s), 414162 bytes, mtime 2026-10-30 15:09:19
-- ZodError lines in app logs: 0 (since app start: None)
-- Scheduler-related log lines (last 12):
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-    - `main1.log`:     "name": "scheduled-tasks",
-    - `main1.log`:       "name": "scheduled-tasks",
-- Force-relaunch flag present: False
-- Registry last written 0 min ago; app up 1462 min
-
-**Events**
-- snapshot saved (232 tasks) -> scheduled-tasks-20261030-150941.json

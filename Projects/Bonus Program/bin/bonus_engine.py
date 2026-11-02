@@ -410,6 +410,8 @@ def stage_close(ctx):
                     continue
                 if e in elig_mgrs or e['title'] not in R['eligibility']['associate_titles']: continue
                 if a['retail_gp'] <= 0: continue
+                if R['eligibility'].get('employed_full_month') and dt.date.fromisoformat(e['hire_date']) > dt.date(int(month[:4]), int(month[5:7]), 1):
+                    ctx.notes.append(f'{name}: {e["display"]} hired {e["hire_date"]} — did not work the full month, no bonus for {month} (GP {fmt(a["retail_gp"])})'); continue
                 pa = pblock(e, s)
                 if pa:
                     pay.append({'store': s, 'employee': e['display'], 'role': e['title'], 'basis': a['retail_gp'], 'rate': 0, 'bonus': 0.0, 'note': pnote(pa)})

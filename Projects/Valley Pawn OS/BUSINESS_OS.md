@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-10-31
+# LIVE STATE - auto-refreshed 2026-11-01
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -76,6 +76,13 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.commandcenter.plist` | installed | YES |
 | `com.valleypawn.comms-drift-monthly.plist` | installed | YES |
 | `com.valleypawn.compliance-brief.plist` | installed | YES |
+| `com.valleypawn.conductwatch-culpeper.plist` | installed | YES |
+| `com.valleypawn.conductwatch-harrisonburg.plist` | installed | YES |
+| `com.valleypawn.conductwatch-lexington.plist` | installed | YES |
+| `com.valleypawn.conductwatch-nightly.plist` | installed | YES |
+| `com.valleypawn.conductwatch-report.plist` | installed | YES |
+| `com.valleypawn.conductwatch-roanoke.plist` | installed | YES |
+| `com.valleypawn.conductwatch-waynesboro.plist` | installed | YES |
 | `com.valleypawn.daily-audit-digest.plist` | installed | YES |
 | `com.valleypawn.daily-report-discount.plist` | installed | YES |
 | `com.valleypawn.daily-report-pawn.plist` | installed | YES |
@@ -115,6 +122,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.fwb-catchup-20261005.plist` | installed | YES |
 | `com.valleypawn.gift-credit.plist` | installed | YES |
 | `com.valleypawn.github-backup.plist` | installed | YES |
+| `com.valleypawn.gold-scorecard.plist` | installed | YES |
 | `com.valleypawn.gold-silver-monthly.plist` | installed | YES |
 | `com.valleypawn.guesty-pull.plist` | installed | YES |
 | `com.valleypawn.gun-audit-monthly.plist` | installed | YES |
@@ -123,6 +131,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.health-weekly-digest.plist` | installed | YES |
 | `com.valleypawn.hiring-autopost.plist` | installed | YES |
 | `com.valleypawn.hr-policy-sync.plist` | installed | YES |
+| `com.valleypawn.intake-backfill.plist` | installed | YES |
 | `com.valleypawn.items-to-price.plist` | installed | YES |
 | `com.valleypawn.jewelry-catchup.plist` | installed | YES |
 | `com.valleypawn.jewelry-nightly.plist` | installed | YES |
@@ -178,6 +187,9 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.store-kpis-weekly.plist` | installed | YES |
 | `com.valleypawn.storetraffic-culpeper.plist` | installed | YES |
 | `com.valleypawn.storetraffic-culpeperb.plist` | installed | YES |
+| `com.valleypawn.storetraffic-harrisonburg.plist` | installed | YES |
+| `com.valleypawn.storetraffic-lexington.plist` | installed | YES |
+| `com.valleypawn.storetraffic-roanoke.plist` | installed | YES |
 | `com.valleypawn.storetraffic-waynesboro.plist` | installed | YES |
 | `com.valleypawn.supply-approvals.plist` | installed | YES |
 | `com.valleypawn.supply-deliveries.plist` | installed | YES |
@@ -216,46 +228,46 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
+| 2026-11-01 | Valley Pawn OS | - |
+| 2026-11-01 | Unified Search | - |
+| 2026-11-01 | Quickbooks Set UP | - |
+| 2026-11-01 | Compliance | - |
+| 2026-11-01 | Business Dashboard Website | - |
+| 2026-11-01 | Bravo Data Extraction | STATUS.md |
+| 2026-10-31 | Zoom Call Pipeline | - |
+| 2026-10-31 | Website | - |
 | 2026-10-31 | Valuation Core | README.md |
-| 2026-10-31 | Valley Pawn OS | - |
-| 2026-10-31 | Unified Search | - |
+| 2026-10-31 | Training Program | STATUS.md |
+| 2026-10-31 | Store Traffic Counter | - |
+| 2026-10-31 | Store Conduct Watch | STATUS.md |
 | 2026-10-31 | Sold Margin Review | STATUS.md |
-| 2026-10-31 | Quickbooks Set UP | - |
+| 2026-10-31 | Refine Social Media | - |
+| 2026-10-31 | Preston Knowledge Base | - |
+| 2026-10-31 | Precious Metals Settlements | - |
 | 2026-10-31 | Pawn Walks | STATUS.md |
+| 2026-10-31 | New Store - St Augustine | STATUS.md |
 | 2026-10-31 | Life OS | - |
+| 2026-10-31 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-10-31 | Human Resources | - |
+| 2026-10-31 | Health Optimization | STATUS.md |
+| 2026-10-31 | Gold and Silver Markeitng | - |
 | 2026-10-31 | Discount Outlier Review | STATUS.md |
-| 2026-10-31 | Business Dashboard Website | - |
-| 2026-10-31 | Bravo Data Extraction | STATUS.md |
-| 2026-10-30 | Zoom Call Pipeline | - |
-| 2026-10-30 | Website | - |
+| 2026-10-31 | Daily Funds Verification | - |
+| 2026-10-31 | Ai Optimized Marketing | - |
 | 2026-10-30 | Taxes 2026 | - |
-| 2026-10-30 | Store Traffic Counter | - |
 | 2026-10-30 | Short Term Rental Optimization | - |
-| 2026-10-30 | Refine Social Media | - |
-| 2026-10-30 | Jewelry Count Reconciliation | STATUS.md |
-| 2026-10-30 | Human Resources | - |
-| 2026-10-30 | Health Optimization | STATUS.md |
-| 2026-10-30 | Daily Funds Verification | - |
-| 2026-10-30 | Compliance | - |
-| 2026-10-29 | Precious Metals Settlements | - |
 | 2026-10-29 | Email Refinement | - |
-| 2026-10-28 | Training Program | STATUS.md |
 | 2026-10-28 | Ask Valley Pawn | STATUS.md |
 | 2026-10-26 | eBay | - |
-| 2026-10-26 | Preston Knowledge Base | - |
 | 2026-10-26 | Communcations | - |
 | 2026-10-26 | Call Analysis | - |
 | 2026-10-25 | _scratch | - |
-| 2026-10-25 | Ai Optimized Marketing | - |
 | 2026-10-24 | eBay Customer Campaign | - |
 | 2026-10-24 | Bonus Program | - |
 | 2026-10-23 | Preston Time Review | STATUS.md |
 | 2026-10-22 | Knowledge Harvest | - |
 | 2026-10-21 | mail-brief | - |
 | 2026-10-21 | Valley Pawn Studios | STATUS.md |
-| 2026-10-21 | Solaterra Site | - |
-| 2026-10-21 | MobilePawn Participation | README.md |
-| 2026-10-21 | Admin Assitant | STATUS.md |
 
 <!-- LIVE-STATE:END -->
 
@@ -1064,6 +1076,7 @@ Current build order, subject to Joshua's redirects.
 
 | Date | Change | Reason |
 |---|---|---|
+| 2026-11-01 | Monthly capability drift audit run (6th consecutive month). Live counts diverge sharply from 2026-10-01 (120 enabled cloud tasks -> 2) because of the already-planned, already-documented wave-3 native-migration switchover (`fleet/SWITCHOVER_2026-11.md`, pre-flighted 2026-10-22) — confirmed intentional via CHANGELOG + SWITCHOVER doc, not treated as drift or a failure. Found the LIVE-STATE block's "Enabled: 2" undercounts live reality: a direct `list_triggers` query found at least 3 more enabled *recurring* cloud triggers the generator doesn't see (`Social outbound engagement (daily)`, `Social campaign scorecard`, `MapQuest Dixie Pawn removal (weekly until gone)` — all created 2026-10-22/31 directly via API, no local SKILL.md folder) plus 10+ one-shot switchover-verification reminders; registered the 3 recurring ones additively (see 2026-11-01 addendum), flagged the generator blind spot for awareness (not fixed — out of scope, additive-only). `list_skills` returned real data for the first time in 5 runs (80 skills, all already covered by the existing Section 3/addendum bundle-level tracking — no new names). `list_plugins` still unconfirmed: showed only 2 of 16 documented marketplaces (down from 3 last month) — not treated as removal (Rule 4), same visibility quirk. 5 connector changes to Section 13.A: HeyGen (new), Apple Mail native MCP (new, distinct from the texting-and-icloud-mail skill), BrightLocal (confirmed live), Turo identity resolved (needs_reconnect, purpose still unclear), PubMed (new, likely Domain 3 bleed-through). No skill delta staged. Posted to Joshua's DM (`#claude-notifications` confirmed not to exist, 6th time). | Scheduled `monthly-capability-drift-audit`, autonomous run. |
 | 2026-10-01 | Monthly capability drift audit run. LIVE-STATE block (223 task folders / 220 registered / 120 enabled) is current as of today via `business-os-daily-refresh` — that automation now absorbs the task-count tracking. This audit's marginal find: 58 of the 123 currently-enabled scheduled tasks were not named anywhere in the document body outside the auto-generated block (see 2026-10-01 addendum table) — registered additively. `list_skills`/`list_plugins`/`list_connectors` returned empty a 4th consecutive month (now the established pattern for this session type); cross-checked against the session's own visible skill/plugin/connector catalog instead. 19 new individual skill names found (all covered at the `anthropic-skills` bundle level, no table edit needed) incl. a likely rename: `setup-cowork` → `setup-claude`. Plugin catalog this session showed only 3 of the 16 documented marketplaces — flagged as unconfirmed (same unresolved visibility quirk as prior months), nothing removed. One previously-undocumented connector surfaced (a vehicle-search MCP) — flagged, purpose unclear, not added to Section 13.A. No skill delta staged. Posted to Joshua's DM (`#claude-notifications` still doesn't exist, confirmed again). | Scheduled `monthly-capability-drift-audit`, autonomous run. |
 | 2026-09-06 | Root-caused the Monday per-store cell failures (stranded Bravo UI / login-screen drop, no per-cell retry existed) and shipped `monday-bravo-cell-gapfill` + `bin/monday_gapfill_runner.py`. Confirmed the Rule 16/18 side was already closed by Completeness Gate v2 (2026-08-31) — no compile edit made. | Joshua: "fix what you can fix" — partial weekly ops posts found during the publications audit. |
 | 2026-09-05 | Monthly publications audit: `PUBLICATION_CALENDAR.md` created; monthly-analytics-prestage moved to native runner; monthly-employee-sales-rankings rebuilt on new `employee-activity-range` cell; vp-new-customer-report Slack-first; +24 expected_outputs entries; August catch-ups scheduled; `monthly-eom-recap` + `monthly-publication-audit` staged in `pending-tasks/` awaiting Joshua's registration. Full detail: CHANGELOG 2026-09-05 (5). | Joshua: analytics + marketing channels should all have EOM summaries — some do, some don't. |
@@ -1423,6 +1436,11 @@ on 2026-06-10 and why `weekly-timekeeping-analysis` is a migration candidate —
 | **Reviews/Reputation** | Category + overall review summaries, action plans | Reputation analytics |
 | **Travel** (Kiwi.com, lastminute.com) | Flights / hotel packages | Personal/ad-hoc |
 | **MCP Registry** | Discover + suggest new connectors | Use when a task implies an app we may not have yet |
+| **HeyGen** | AI avatar/video generation | **NEW 2026-11-01** — surfaced in live `mcp_connections` on 2 live scheduled triggers (`Social outbound engagement (daily)`, `Social campaign scorecard`); not referenced by any documented task/skill yet. Flagged for awareness, not built on. |
+| **Apple Mail** (native MCP) | Read/send via Apple Mail | **NEW 2026-11-01** — distinct from the `texting-and-icloud-mail` skill's desktop-bridge approach; now also surfaces as its own native MCP connector in live `mcp_connections`. Overlap with the skill not reconciled this run — flagged. |
+| **BrightLocal** | Local-SEO / listings API (locations, rankings) | **CONFIRMED LIVE 2026-11-01** — CHANGELOG previously noted a trial API key + a remote-MCP option ("the long-term route for Claude sessions"); now surfaces in live `mcp_connections`, so treated as connected. |
+| **Turo** | Car-rental search (`search_vehicles`) | Resolves the 2026-10-01 "vehicle-search MCP, purpose unclear" flag — identity confirmed via `SearchMcpRegistry` this run. `installState: needs_reconnect` (session expired), `connected:false`. Purpose for Valley Pawn / Bald Rock / personal still unclear — flagged, not reconnected or removed. |
+| **PubMed** | Biomedical literature search | **NEW 2026-11-01** — surfaced in live `mcp_connections`. No tie to Valley Pawn or Real Estate found; most likely Domain 3 (Personal / Health Optimization) tooling bleeding into the shared connector list. Flagged for awareness only. |
 
 ### B. Local / desktop control MCPs
 **Control your Mac** (`osascript` — required for the Bravo pipeline folder, which is outside the
@@ -1834,5 +1852,46 @@ One connector surfaced that is **not** in Section 13.A: a vehicle-search MCP (`s
 ### `#claude-notifications` — confirmed (again, 5th time) not to exist
 
 Re-checked via `slack_search_channels` this run — zero results. Posted this month's summary to Joshua's DM instead, same as every run since 2026-07-26. Recommend Joshua finally choose: create the channel, or have a future session permanently repoint this task's destination to DM.
+
+**Skill delta staged:** No — nothing this run required an `enterprise-map` or `valley-pawn-context` patch.
+
+## 2026-11-01 ADDENDUM — Monthly Capability Drift Audit
+
+_Autonomous run of `monthly-capability-drift-audit` (6th consecutive month). Additive registration only — no existing rows modified or removed._
+
+### The big number everyone will notice first: 120 → 2 enabled cloud tasks — NOT a failure
+
+LIVE-STATE (auto-refreshed today) shows 2 enabled cloud scheduled tasks vs 120 on 2026-10-01. This is the already-planned, already-executed **wave-3 native-migration switchover** — `fleet/SWITCHOVER_2026-11.md` (written 2026-10-20, pre-flighted 2026-10-22: "all 21 switched, cloud copies verified off, no duplicates") moved 21 monthly cloud tasks to native `com.valleypawn.*` launchd agents with Nov 1–20 first-run dates, following the same pattern CHANGELOG has documented in waves since 2026-09-30 (native agents for conductwatch, store traffic, gold-scorecard, intake-backfill all "appeared"/"LOADED" in today's CHANGELOG entry, 24 lines). Verified via CHANGELOG + the SWITCHOVER doc's own status column (all rows "ready"/"ready (switch together with #N)") — not inferred from the count alone (Rule 12). No action needed; flagged here only so a future session doesn't re-diagnose this as an outage.
+
+### Scheduled tasks — 3 new recurring cloud triggers found live, not in BUSINESS_OS
+
+A direct `list_triggers` query (the account-level trigger registry) found 3 enabled **recurring** cloud triggers created 2026-10-22 through 2026-10-31 directly via API — none have a local `~/Documents/Claude/Scheduled/<id>/SKILL.md` folder, which is almost certainly why the LIVE-STATE generator's "Enabled: 2" count misses them (it scans disk, not the live trigger API). Registering additively:
+
+| Task | Cadence | Trigger ID | Purpose |
+|---|---|---|---|
+| `Social outbound engagement (daily)` | daily 12:41 ET | trig_01BRxD5DFnxQC2kv3knSqxRp | Daily FB community engagement (comment/share as store pages) per Joshua's 2026-10-31 "go and build"; governed by `Refine Social Media/engagement_outbound/RUNBOOK.md`. Last run SUCCEEDED. |
+| `Social campaign scorecard` | weekly Mon 08:35 ET | trig_01MSfQtbd8d2vVUzCJcXKKvT | Weekly measure/tune for the community-post campaign (live since 2026-10-26); reports to Joshua's DM only on 11/9, 11/23, then first-Monday-of-month. Last run SUCCEEDED. |
+| `MapQuest Dixie Pawn removal (weekly until gone)` | weekly Wed 10:04 ET | trig_01XpX4P7tFeBN6ZdfkEzRHHm | Weekly re-submission of the MapQuest duplicate-listing report for the retired "Dixie Pawn Inc." name until removed; self-disables once confirmed gone. Last run SUCCEEDED. |
+
+Also live: ~10+ one-shot persistent-session reminders (`Verify Nov 1/2/3 runs`, `Verify first outbound engagement run`, `Chekkit AI replies resumed?`, `Workers comp: check payment + Edna endorsement`, `Camera watch 15-day trial review`, `St. Augustine store — Monday follow-through`, `Store counters daily review`) — these are self-expiring verification/follow-up reminders tied to specific in-flight work (the switchover, the new social campaign, the WC insurance payment, the camera-watch trial), not standing infrastructure, so not individually tabled here; `list_triggers` had more pages (`has_more:true`) not fully paged through this run — out of scope for a documentation-sync pass, consistent with the 2026-10-01 precedent of not independently verifying every task's SKILL.md.
+
+**LIVE-STATE generator blind spot (flagged, not fixed — additive-only, Rule 4):** the daily `business-os-daily-refresh` block is scoped to on-disk `Scheduled/` folders and may miss any trigger created directly via the API/meta_mcp without a local folder (as all 3 above were). Worth a future session's attention if the gap widens.
+
+### Live-truth queries — `list_skills` worked for the first time in 5 runs
+
+`ListSkills` returned **80 real results** this run (07-01 through 10-01 all returned empty — "established pattern," now broken, in a good way). Diffed against this session's own system-reminder skill catalog: **zero genuinely new names** — all 80 already tracked at the `anthropic-skills` bundle level or individually in prior addenda. `ListPlugins` returned only **2** of the 16 documented marketplaces (`slack-by-salesforce`, `cowork-plugin-management`) — down from 3 last month (`anthropic-skills` no longer shown despite its skills obviously being active, per the 80 live skill names). Not treated as removal (Rule 4 — this tool has never matched the documented 16 since 2026-07-01, a persistent visibility quirk, not evidence of drift). `SearchMcpRegistry` is working and was used to positively identify the Turo connector (see below).
+
+### Connector changes — Section 13.A updated
+
+5 additive rows added to Section 13.A this run:
+- **HeyGen** (NEW) — AI avatar/video generation; surfaced in `mcp_connections` on 2 live triggers (the new social-engagement tasks above). Not yet used by any documented task.
+- **Apple Mail** (NEW, native MCP) — distinct from the `texting-and-icloud-mail` skill's desktop-bridge approach; the two haven't been reconciled.
+- **BrightLocal** (CONFIRMED LIVE) — previously only a trial API key + a "future MCP option" note in CHANGELOG; now live in `mcp_connections`.
+- **Turo** — resolves last month's "vehicle-search MCP, purpose unclear" flag: positively identified via `SearchMcpRegistry` (`search_vehicles` tool), but `installState: needs_reconnect` (its session has lapsed) and purpose for Valley Pawn/Bald Rock/personal is still unclear. Not reconnected or removed this run.
+- **PubMed** (NEW) — biomedical literature search; no tie found to any of the 3 domains in the enterprise-map (most likely Domain 3/Health Optimization tooling visible from a shared account-level connector list, not a VP-specific addition).
+
+### `#claude-notifications` — confirmed (6th time) not to exist
+
+Re-checked via `slack_search_channels` (public + private, including archived) — zero results, same as every run since 2026-07-26. Posted this month's summary to Joshua's DM, same as the last 5 runs. Still recommend Joshua pick one: create the channel, or have a future session permanently repoint this task's `prompt`/destination to DM via `update_trigger`.
 
 **Skill delta staged:** No — nothing this run required an `enterprise-map` or `valley-pawn-context` patch.
