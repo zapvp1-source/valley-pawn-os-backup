@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-11-01
+# LIVE STATE - auto-refreshed 2026-11-02
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -114,8 +114,11 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.ffl-drift.plist` | installed | YES |
 | `com.valleypawn.ffl-guardian.plist` | installed | YES |
 | `com.valleypawn.field-scorecard.plist` | installed | YES |
+| `com.valleypawn.fleet-deck-window.plist` | installed | YES |
+| `com.valleypawn.fleet-deck.plist` | installed | YES |
 | `com.valleypawn.fleet-doctor.plist` | installed | YES |
 | `com.valleypawn.fleet-health.plist` | installed | YES |
+| `com.valleypawn.fleet-medic.plist` | installed | YES |
 | `com.valleypawn.fleet-scorecard.plist` | installed | YES |
 | `com.valleypawn.forfeiture-winback.plist` | installed | YES |
 | `com.valleypawn.funds-verification.plist` | installed | YES |
@@ -228,46 +231,46 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-11-01 | Valley Pawn OS | - |
-| 2026-11-01 | Unified Search | - |
-| 2026-11-01 | Quickbooks Set UP | - |
+| 2026-11-02 | Zoom Call Pipeline | - |
+| 2026-11-02 | Valley Pawn OS | - |
+| 2026-11-02 | Unified Search | - |
+| 2026-11-02 | Quickbooks Set UP | - |
+| 2026-11-02 | Life OS | - |
+| 2026-11-02 | Gift Card & Store Credit | README.md |
+| 2026-11-02 | Call Analysis | - |
+| 2026-11-02 | Business Dashboard Website | - |
+| 2026-11-02 | Bravo Data Extraction | STATUS.md |
+| 2026-11-01 | eBay | - |
+| 2026-11-01 | Website | - |
+| 2026-11-01 | Valuation Core | README.md |
+| 2026-11-01 | Store Conduct Watch | STATUS.md |
+| 2026-11-01 | Sold Margin Review | STATUS.md |
+| 2026-11-01 | Short Term Rental Optimization | - |
+| 2026-11-01 | Sales Tax | STATUS.md |
+| 2026-11-01 | Refine Social Media | - |
+| 2026-11-01 | Precious Metals Settlements | - |
+| 2026-11-01 | Pawn Walks | STATUS.md |
+| 2026-11-01 | New Store - St Augustine | STATUS.md |
+| 2026-11-01 | MobilePawn Participation | README.md |
+| 2026-11-01 | Human Resources | - |
+| 2026-11-01 | Health Optimization | STATUS.md |
+| 2026-11-01 | Email Refinement | - |
+| 2026-11-01 | Discount Outlier Review | STATUS.md |
+| 2026-11-01 | Daily Funds Verification | - |
 | 2026-11-01 | Compliance | - |
-| 2026-11-01 | Business Dashboard Website | - |
-| 2026-11-01 | Bravo Data Extraction | STATUS.md |
-| 2026-10-31 | Zoom Call Pipeline | - |
-| 2026-10-31 | Website | - |
-| 2026-10-31 | Valuation Core | README.md |
+| 2026-11-01 | Communcations | - |
+| 2026-11-01 | Bonus Program | - |
+| 2026-11-01 | Ai Optimized Marketing | - |
 | 2026-10-31 | Training Program | STATUS.md |
 | 2026-10-31 | Store Traffic Counter | - |
-| 2026-10-31 | Store Conduct Watch | STATUS.md |
-| 2026-10-31 | Sold Margin Review | STATUS.md |
-| 2026-10-31 | Refine Social Media | - |
 | 2026-10-31 | Preston Knowledge Base | - |
-| 2026-10-31 | Precious Metals Settlements | - |
-| 2026-10-31 | Pawn Walks | STATUS.md |
-| 2026-10-31 | New Store - St Augustine | STATUS.md |
-| 2026-10-31 | Life OS | - |
 | 2026-10-31 | Jewelry Count Reconciliation | STATUS.md |
-| 2026-10-31 | Human Resources | - |
-| 2026-10-31 | Health Optimization | STATUS.md |
 | 2026-10-31 | Gold and Silver Markeitng | - |
-| 2026-10-31 | Discount Outlier Review | STATUS.md |
-| 2026-10-31 | Daily Funds Verification | - |
-| 2026-10-31 | Ai Optimized Marketing | - |
 | 2026-10-30 | Taxes 2026 | - |
-| 2026-10-30 | Short Term Rental Optimization | - |
-| 2026-10-29 | Email Refinement | - |
 | 2026-10-28 | Ask Valley Pawn | STATUS.md |
-| 2026-10-26 | eBay | - |
-| 2026-10-26 | Communcations | - |
-| 2026-10-26 | Call Analysis | - |
 | 2026-10-25 | _scratch | - |
 | 2026-10-24 | eBay Customer Campaign | - |
-| 2026-10-24 | Bonus Program | - |
 | 2026-10-23 | Preston Time Review | STATUS.md |
-| 2026-10-22 | Knowledge Harvest | - |
-| 2026-10-21 | mail-brief | - |
-| 2026-10-21 | Valley Pawn Studios | STATUS.md |
 
 <!-- LIVE-STATE:END -->
 

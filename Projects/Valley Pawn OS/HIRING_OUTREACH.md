@@ -18,6 +18,14 @@ Preston: "I have opened up the indeed ads for Roanoke and Harrisonburg again. Ca
 - Live scope table: HIRING_SWITCH.md → ACTIVE SCOPE (authoritative; read it every run).
 - Roanoke first contacts sent 2026-10-13 1:26–1:31 PM: Anthony White, Kevan Nelson, Adam Martin. Still to contact (screened clean): Michael Boyer, Tareka Jordan, Diaundre Wright.
 
+### Run log — 2026-11-02 ~1:10 PM ET (vp-hiring-pipeline, cloud/scheduled run) — BLOCKED, no Indeed access
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only.
+Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Roanoke ON; Culpeper, Lexington, Saint Augustine FL OFF. No new scope/hiring instruction from Joshua or Preston since the 2026-10-30 ~3:19 PM DM (checked DM D03BHQH5VGT, #employee-prospects C0BQDRXRPEJ, and a fleet-wide "hiring after:2026-10-30" search).
+**Blocker: Claude in Chrome reported "not connected" on two attempts — could not reach employers.indeed.com at all this run.** No applicant screening, first-contact messages, Indeed-reply handling, no-show/nudge processing, or bookings were attempted. Calendar was not checked since no booking action was possible anyway.
+Texts: 0 — not a 9:30/1:00/6:00 batch window; cloud-only, no computer-use/full-screen control regardless.
+Per QUIET RULE, nothing posted to Slack (a run that can't reach Indeed sends nothing). Row written to Valley Pawn OS/fleet/FAILURE_LEDGER.md instead.
+Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0 (channel), 0 (DM).
+
 ### Run log — 2026-10-30 ~7:49 PM ET (vp-hiring-pipeline, cloud/scheduled run)
 Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
 Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Roanoke ON; Culpeper, Lexington, Saint Augustine FL OFF.

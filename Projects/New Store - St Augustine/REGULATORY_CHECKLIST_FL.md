@@ -37,7 +37,7 @@ Research date 2026-10-31 (web-only, official sources; statute cites checked agai
 
 ## 3. Foreign Corporation Qualification + Fictitious Name (Sunbiz)
 
-**Sunbiz status: NOT VERIFIED on 10/31** — search.sunbiz.org blocked both automated fetch and two browser attempts. Run manually at https://search.sunbiz.org/Inquiry/CorporationSearch/ByName for "Full Circle Finance" (entity) and the Fictitious Name tab for "Valley Pawn." Assume neither is registered unless shown.
+**Sunbiz status — VERIFIED 2026-11-02 (search.sunbiz.org, entity search + fictitious-name search):** (a) **Full Circle Finance Inc is NOT registered in Florida** — no foreign-qualified record. The only similar record is FULL CIRCLE FINANCE LLC (L21000026860, Delray Beach, unrelated), ADMIN DISSOLVED 09/27/2024 — more than one year ago, so the name no longer blocks ours under F.S. 607.1422/605.0716; the foreign qualification (CR2E007, $70) can be filed under the exact corporate name. (b) No Florida entity named "Rocket Pawn…" or "Valley Pawn…" exists. (c) **No Florida fictitious name "ROCKET PAWN" / "ROCKET PAWN & JEWELRY" is on file** (the list runs ROCKET PC REPAIR → ROCKETPD; Rocket Mortgage's ROCKET PRO / ROCKET PRO ORIGINATE are registered in FL from Detroit — unrelated classes, consistent with the USPTO read). Action: file foreign qualification first, then fictitious name "Rocket Pawn & Jewelry" ($50) — both online at efile.sunbiz.org; both are prerequisites for FDACS.
 
 | Item | Detail |
 |---|---|
@@ -133,7 +133,7 @@ Compressed timeline from lease signing to legally open: **~4 months** if FDACS a
 
 ## Could not verify (flagged)
 
-1. **Sunbiz status** of Full Circle Finance Inc (foreign qualification) and "Valley Pawn" fictitious name in FL — manual search needed.
+1. ~~Sunbiz status~~ — verified 11/2: FCF Inc not registered in FL; name clear; "Rocket Pawn & Jewelry" fictitious name available. File both.
 2. **SJSO electronic pawn-reporting platform** (LeadsOnline vs. BWI/other).
 3. **St. Johns County firearm waiting-period ordinance** — none found; not on the 2025 legislative 5-day-county list.
 4. **FDACS actual processing time** — not published; 90-day statutory ceiling.

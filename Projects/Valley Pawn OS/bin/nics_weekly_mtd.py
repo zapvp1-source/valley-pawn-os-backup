@@ -59,6 +59,10 @@ def main():
     today = dt.datetime.now(ET).date()
     if "--end" in sys.argv:   # render/backfill a past MTD window, e.g. --end 2026-09-28
         today = dt.date.fromisoformat(sys.argv[sys.argv.index("--end") + 1])
+    import asof as _asof   # 2026-11-02: Monday after a Sunday-the-1st -> the month that just closed (bin/asof.py)
+    rday = today - dt.timedelta(days=1)
+    if _asof.asof(rday) != rday:
+        today = _asof.asof(rday)
     start = today.replace(day=1)
     end = today
     path = lambda code: os.path.join(BRAVO, "output", "%s_to_%s_%s_nics-transfers.csv" % (start, end, code))

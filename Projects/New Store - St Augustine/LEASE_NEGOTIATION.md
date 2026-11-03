@@ -22,6 +22,22 @@ Updated 2026-10-31 · Source of record: Gmail jdavis@fcfpawn.com, thread "Ash Pr
 | 10/23 | Brad: "I will be in touch." Out of office week of 10/26, back **Mon 11/2**. |
 | 10/31 | Joshua follow-up: "Any news here?" |
 
+
+### 2b. Landlord's reply to the 10/22 counter — received Mon 11/2 8:53 AM (Brad Tessmer)
+
+| Item | Joshua asked (10/22) | Landlord answer (11/2) |
+|---|---|---|
+| Delivery | White box (electrical/plumbing/HVAC working) | **No white box.** |
+| Free-rent clock before commencement | — | Earlier of **240 days** after lease execution or opening (was 180). |
+| Free base rent | 6 months | **3 months in year 1 + 3 months in year 2** (6 total, split). |
+| Base rent | $15.00/SF | **$16.00/SF** + $3.27 CAM (unchanged). |
+| Escalation | 3% | **4%** (unchanged). |
+| Deposit | First + last at signing | **Two months' gross rent** security deposit at signing. |
+| Regulatory out | 60-day termination if pawn/firearms prohibited | **Declined.** |
+| Term / renewals / permitted use / PG | 3 yr + two 5-yr options; pawn + FFL use; PG question | Not addressed in this reply. |
+
+Joshua replied "I'll call you shortly" at 8:56 AM — **handled by phone; no email draft from Claude.** Points that still matter for the call/next draft: (1) the regulatory out is the one term worth fighting for — without it, a denied FDACS license or FFL leaves FCF on the hook for a 5-year lease; fallback is a *licensing contingency* limited to the first 120 days (terminate if FDACS or ATF denies, forfeiting the deposit) rather than an open-ended out; (2) with no white box, get the landlord's HVAC/electrical/plumbing warranty-of-condition at delivery in writing and a TI allowance or an extra free month in lieu; (3) 240 days is a real win — it covers the FDACS/ATF timeline; (4) confirm term length, renewal options and the permitted-use/firearms language, which the reply skipped.
+
 ## 3. Terms side by side
 
 | Term | Landlord 10/21 | Joshua counter 10/22 | Math / notes |

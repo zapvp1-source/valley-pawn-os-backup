@@ -309,7 +309,8 @@ def render_employee(post_date, render):
     except ce.Withhold as e:
         raise Hold(withhold_text(e))
     ranked = info["ranked"]
-    first = pdate[:8] + "01"
+    import asof as _asof   # 2026-11-02: same month rule as comms_engine (bin/asof.py)
+    first = _asof.asof(_asof.reporting_day(pdate)).isoformat()[:8] + "01"
     totals, periods, per = employee_store_detail(first)
     if len(periods) != 5 or len(set(periods)) != 1:
         raise Hold("stores' employee-activity files cover different periods: %s" % sorted(set(periods)))
@@ -383,7 +384,8 @@ def render_store(post_date, render):
     keep = os.environ.get("VP_TASK")
     import store_kpis_weekly as skw     # (its import sets VP_TASK=weekly-store-kpis — put ours back)
     os.environ["VP_TASK"] = keep
-    end = dt.date.fromisoformat(arg("--end") or (dt.date.fromisoformat(post_date) - dt.timedelta(days=1)).isoformat())
+    import asof as _asof
+    end = dt.date.fromisoformat(arg("--end") or _asof.asof(dt.date.fromisoformat(post_date) - dt.timedelta(days=1)).isoformat())
     d = skw.complete_set(end)
     if d is None:
         raise Hold("no complete 5-store month-end set dated %s or up to 2 days before" % end)

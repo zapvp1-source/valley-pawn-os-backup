@@ -363,8 +363,16 @@ def render_layaway_review(output_dir, pipeline_date, post_date, notes):
 # ---------------------------------------------------------------------------
 # EMPLOYEE PERFORMANCE (MTD)
 # ---------------------------------------------------------------------------
+def _period_end(pipeline_date):
+    """2026-11-02: after a Sunday-the-1st the MTD period is the closed month (bin/asof.py) — label it truthfully."""
+    import asof as _asof
+    a = _asof.asof(_asof.reporting_day(pipeline_date)).isoformat()
+    return a if a != _asof.reporting_day(pipeline_date).isoformat() else pipeline_date
+
+
 def load_employee_activity(output_dir, pipeline_date):
-    first = pipeline_date[:8] + "01"
+    import asof as _asof   # 2026-11-02: Sunday-the-1st reports the month that just closed (bin/asof.py)
+    first = _asof.asof(_asof.reporting_day(pipeline_date)).isoformat()[:8] + "01"
     pdate = dt.datetime.strptime(pipeline_date, "%Y-%m-%d")
     by_name, stores_seen, problems = {}, {}, []
     for code, name in STORES:
@@ -503,7 +511,7 @@ def render_employee_performance(output_dir, pipeline_date, post_date, notes):
         raise Withhold(["no current employees with sales > $0"])
     medals = {1: ":first_place_medal:", 2: ":second_place_medal:", 3: ":third_place_medal:"}
     lines = ["*MTD Employee Sales Rankings — Retail Sales Excluding Fees*",
-             ":bar_chart: Period: %s–%s" % (first, pipeline_date), ""]
+             ":bar_chart: Period: %s–%s" % (first, _period_end(pipeline_date)), ""]
     for i, (k, v) in enumerate(ranked, 1):
         rank = medals.get(i, "%dth" % i if i > 3 else "")
         stores = "+".join(sorted(v["stores"], key=lambda c: [s[0] for s in STORES].index(c)))

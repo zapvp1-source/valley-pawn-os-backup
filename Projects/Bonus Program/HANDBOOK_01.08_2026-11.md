@@ -1,5 +1,5 @@
 ### 01.08 Monthly Bonus Program
-_Generated from bonus_rules.json on 2026-11-01 — effective for earning months from 2026-11. Supersedes all earlier versions of this section, including the 2.5%/50% and $3,000-minimum language carried over from the legacy manual._
+_Generated from bonus_rules.json on 2026-11-02 — effective for earning months from 2026-11. Supersedes all earlier versions of this section, including the 2.5%/50% and $3,000-minimum language carried over from the legacy manual._
 
 Store employees earn a monthly incentive bonus, paid once a month on the Friday after the 15th of
 the month following the month in which it was earned. When the 15th falls on a Friday, the bonus is
@@ -8,11 +8,11 @@ paid the following Friday.
 - **Store revenue goal (hard gate).** If the store does not hit its monthly revenue goal, no bonus is
   paid to anyone at that store for that month.
 - **Manager bonus:** 2.5% of store revenue when the store hits its revenue goal and all task goals;
-  2% when it hits the revenue goal but misses a task goal.
+  1.5% when it hits the revenue goal but misses a task goal.
 - **Sales & Loan Associate / Representative bonus:** 5% of the gross profit on their own sales when
-  the store hits its revenue goal and all task goals; 4% when it hits the revenue goal but misses a
+  the store hits its revenue goal and all task goals; 3% when it hits the revenue goal but misses a
   task goal.
-- **Task goals:** Google reviews at least **17 new reviews** for the store that month; Email capture at least **60%** of customers leave an email address; Gold scrap at least **110 dwt** collected, in buckets closed during the month; Facebook followers at least **+5 net new followers** on the store's page that month; Beat last year the store's revenue for the month must be above the same month last year.
+- **Task goals:** Google reviews at least **17 new reviews** for the store that month; Email capture at least **70%** of customers leave an email address; Gold scrap at least **110 dwt** collected, in buckets closed during the month; Facebook followers at least **+5 net new followers** on the store's page that month; Beat last year the store's revenue for the month must be above the same month last year.
 - **Eligibility:** you must have worked the full month (hired after the 1st = not eligible for that month); a
   manager must have managed the branch for the full month; all employees must be employed at the time of
   payout, not merely when the bonus was earned.

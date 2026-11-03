@@ -38,6 +38,26 @@ def receipt_since(task, since):
     return False
 
 
+def _comms_posted(pub):
+    """comms_engine logs its own posts (no vp_slack receipt): comms-engine/runs/<today>.log '<pub>: POSTED'."""
+    try:
+        return ("%s: POSTED" % pub) in open(os.path.join(OS_DIR, "comms-engine/runs/%s.log" % dt.date.today().isoformat())).read()
+    except OSError:
+        return False
+
+
+def receipt_note_since(task, since, marker):
+    p = os.path.join(REC, task + ".jsonl")
+    try:
+        for line in open(p):
+            r = json.loads(line)
+            if r.get("ok", True) and marker in r.get("note", "") and dt.datetime.fromisoformat(r["ts"][:19]) >= since:
+                return True
+    except (OSError, ValueError, KeyError):
+        pass
+    return False
+
+
 def file_since(pattern, since):
     return any(dt.datetime.fromtimestamp(os.path.getmtime(p)) >= since for p in glob.glob(pattern))
 
@@ -102,6 +122,11 @@ if wd == 0:   # Monday
                                     ("com.valleypawn.store-canvas", "store", "weekly-store-perf-canvas-refresh", 9, 28)]:
         JOBS.append((label, "weekly_canvases.py " + kind, at(h, m), at(14, 0),
                      (lambda t: lambda s: receipt_since(t, s) or file_since(LOGF(t), s))(task)))
+    # 2026-11-02: the two Monday #store-performance / FFL posts were never caught up or retried (both held 11/2)
+    JOBS.append(("com.valleypawn.store-kpis-weekly", "store_kpis_weekly.py", at(8, 45), at(14, 0),
+                 lambda s: receipt_since("weekly-store-kpis", s) or receipt_since("monday-store-rankings", s)))
+    JOBS.append(("com.valleypawn.nics-weekly-mtd", "nics_weekly_mtd.py", at(9, 30), at(14, 0),
+                 lambda s: receipt_since("nics-weekly-mtd-ranking", s)))
     JOBS.append(("com.valleypawn.layaway-yield-weekly", "layaway_yield_weekly.py", at(11, 15), at(16, 0),
                  lambda s: receipt_since("layaway-yield-weekly", s) or file_since(LOGF("layaway-yield-weekly"), s)))
 
@@ -247,6 +272,13 @@ RETRY = {
     "com.valleypawn.ceo-monthly-scorecard": (lambda s: receipt_since("ceo-monthly-scorecard", s), at(22, 0)),
     "com.valleypawn.bonus-month-close": (lambda s: os.path.exists(os.path.join(BONUS_OUT, _prev, "close.json")), at(22, 0)),
     "com.valleypawn.gun-audit-monthly": (lambda s: receipt_since("monthly-gun-audit-report", s), at(22, 0)),
+    # Monday weekly reports (2026-11-02): done = the post itself, retried until 18:00
+    "com.valleypawn.monday-compile": (lambda s: _comms_posted("employee-performance")
+                                      and (receipt_since("monday-store-rankings", s) or receipt_since("weekly-store-kpis", s)), at(18, 0)),
+    "com.valleypawn.store-kpis-weekly": (lambda s: receipt_since("weekly-store-kpis", s) or receipt_since("monday-store-rankings", s), at(18, 0)),
+    "com.valleypawn.nics-weekly-mtd": (lambda s: receipt_since("nics-weekly-mtd-ranking", s), at(18, 0)),
+    "com.valleypawn.employee-canvas": (lambda s: receipt_since("weekly-employee-perf-canvas-refresh", s), at(18, 0)),
+    "com.valleypawn.store-canvas": (lambda s: receipt_since("weekly-store-perf-canvas-refresh", s), at(18, 0)),
 }
 
 

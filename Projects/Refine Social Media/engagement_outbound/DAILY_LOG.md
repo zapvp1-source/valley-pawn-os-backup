@@ -1,5 +1,33 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-02 evening (POST mode — Joshua in chat: "post", 18:35–18:57 ET)
+- Posted from QUEUE.json within today's level-1 caps: Culpeper 1 comment (Culpeper Renaissance Fall Restaurant Week — specials checked against the post); follows: Culpeper 4 (EVHS, CCHS, Food Closet, Parks & Rec), Waynesboro 2 (Public Schools, Family YMCA), Roanoke 1 (Explore Park), Harrisonburg 1 (Parks & Rec), Lexington 1 (Farmers Market). Every action confirmed; active profile checked each time.
+- Held for the next batch (caps already used today): comments Roanoke (Rail Yard Dawgs), Waynesboro (Waynesboro.Com — expires ~18:45 11/3), Harrisonburg (Skeleton Festival); follow Culpeper Chamber.
+- Switched back to Joshua Davis (confirmed "Comment as Joshua Davis"). Warnings: none.
+
+## 2026-11-02 (daily PREP run, 12:47–13:00 ET, level 1 all pages) — picks queued, nothing published by this run
+- Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in fine, no checkpoint.
+- Today's comment caps were already used by this morning's POST-mode chat, so the comment picks below are for the next POST chat (they expire 48 h after the post time).
+- Shares queued for the Publer auto-share agent (ISO-week cap 1/page; Culpeper already shared this week): Roanoke → Roanoke Valley SPCA "Bird" Home to Home post; Waynesboro → Wayne Theatre Amarillo By Morning tribute, Nov 20 7:30 p.m. Permalinks verified by opening them.
+- Comments queued (POST mode): Roanoke → Rail Yard Dawgs Paint the Ice; Waynesboro → Waynesboro.Com night overlook/pea soup; Harrisonburg → Downtown Harrisonburg Skeleton Festival 2026 album; Culpeper → Culpeper Renaissance Fall Restaurant Week (Nov 2–8).
+- No pick: Lexington (Main Street Lexington Shop Small Sweepstakes = giveaway, skipped; other pages stale), Brand (no post under 48 h), Harrisonburg share (Explore More post thanks a jeweler sponsor, skipped).
+- Skipped on purpose: Waynesboro Public Library election-day closing (NO list).
+- Follows queued (POST mode, ≤5/page): Roanoke Explore Park; Waynesboro Public Schools + Waynesboro Family YMCA; Harrisonburg Parks & Rec; Lexington Farmers Market (LexVAFM); Culpeper EVHS, CCHS, Food Closet, Parks & Rec, Chamber.
+- Watchlist: 5 resolved (Waynesboro Public Schools, Waynesboro Family YMCA, Harrisonburg Parks & Rec, Explore Park, Lexington VA Farmers Market); not found +1 attempt: Visit Waynesboro, City of Harrisonburg (only a political-party page came up — rejected), Salem Red Sox, RARA, Roanoke Parks & Rec. Marked followed_as_page for the 6 pages followed in this morning's POST chat; Culpeper last_share = 11/2.
+- Replies on own pages: not swept (POST mode only). Needs a person: none. Facebook warnings: none. Tab closed.
+- Totals this run: comments 0, shares 0 (2 queued), replies 0, follows 0 (10 queued), new pages resolved 5.
+
+## 2026-11-02 (POST mode — Joshua in chat: "post the community queue", 09:15–09:55 ET, level 1)
+- Queue was empty (prep run is 12:41), so this session picked and posted live, all verified on screen.
+- Roanoke: 1 comment (Roanoke Public Libraries Nov calendar), 3 follows (Rail Yard Dawgs, Feeding SWVA, Taubman).
+- Culpeper: 1 share (CCPS Veterans Day luncheon, Wed 11/11 12 PM at CTEC — facts from their post), 1 follow (CCPS).
+- Waynesboro: 1 comment (City Hall Public Works crew photo), 1 follow (City Hall).
+- Harrisonburg: 1 comment (Massanutten Regional Library Winter WONDERland kids program), 1 follow (H-R Chamber).
+- Lexington: 1 comment (Rockbridge Regional Libraries digital library). Skipped W&L fog post (Lee Chapel photo).
+- Brand: 1 comment (Blue Ridge Parkway spider-web photo).
+- Replies: not swept this session. Facebook warnings: none. Switched back to Joshua Davis (confirmed "Comment as Joshua Davis").
+- Note for runs: switching page→page via the page's own "Switch" button can silently keep the old page; use avatar menu → See all profiles → pick the page, then CHECK the "Comment as" label.
+
 ## 2026-11-01 (third firing — manual re-run from Joshua's linked session, ~13:36 ET) — POSTING BLOCKED AGAIN
 - Switched into Valley Pawn-Roanoke ("Comment as Valley Pawn-Roanoke" confirmed) and tried the same single comment on Mill Mountain Zoo's World Lemur Day post. The permission check refused it ("Real-World Transactions") before anything was typed. Nothing was posted.
 - Starting the firing manually from a linked session did not change the result: the run itself is still unattended, so the check still blocks public posting.

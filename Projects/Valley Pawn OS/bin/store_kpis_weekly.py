@@ -73,7 +73,8 @@ def connectorize(text):
 
 def main():
     render = "--render" in sys.argv
-    end = dt.datetime.now(ET).date() - dt.timedelta(days=1)
+    import asof as _asof   # 2026-11-02: Sunday-the-1st -> the closed month as of Saturday (bin/asof.py)
+    end = _asof.asof(dt.datetime.now(ET).date() - dt.timedelta(days=1))
     if "--end" in sys.argv:
         end = dt.date.fromisoformat(sys.argv[sys.argv.index("--end") + 1])
     d = complete_set(end)

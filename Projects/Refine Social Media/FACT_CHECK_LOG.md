@@ -168,3 +168,8 @@ Claims verified:
 - Skipped as evergreen: Lexington FB/GBP foliage-by-elevation lines, Culpeper Depot history, Afton fog and Rockfish Gap facts.
 Posts edited: none.
 Unverifiable: none left in posts. Published-wrong: none.
+
+## 2026-11-02 (Mon) daily run, ~7:45 AM ET
+Posts checked: 0. publer_upcoming.py --hours 36 returned no scheduled posts. Confirmed Publer is reachable and the queue is real, not an empty error: a direct read of 10/31-11/12 returned 29 posts (17 published 10/31-11/01, 11 scheduled for 11/10, 1 scheduled_reauth for 11/10). Nothing is scheduled between now and Tue 11/3 evening.
+Claims verified: none needed. Posts edited: none. Unverifiable: none. Published-wrong: none (11/1 posts were verified in the 11/1 run).
+Note: the 11/10 batch will come into the 36-hour window on the 11/9 run.

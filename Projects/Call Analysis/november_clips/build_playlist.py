@@ -8,7 +8,7 @@ MNT = sys.argv[1]
 HERE = os.path.join(MNT, "Documents/Claude/Projects/Call Analysis/november_clips")
 OUT = os.path.join(MNT, "Desktop/November Meeting/Call Examples")
 picks = json.load(open(os.path.join(HERE, "picks.json")))
-SUB = {"good": "1 - Great Calls", "bad": "2 - Bad Calls", "gs": "3 - Sales - Great", "bs": "4 - Sales - Bad", "gl": "5 - Loans - Great", "bl": "6 - Loans - Bad"}
+SUB = {"good": "1 - Great Calls", "bad": "2 - Bad Calls", "gs": "3 - Sales - Great", "bs": "4 - Sales - Bad", "gl": "5 - Loans - Great", "bl": "6 - Loans - Bad", "xbad": "7 - By Store/_extra"}
 GOODK = {"good", "gs", "gl"}
 for s in SUB.values(): os.makedirs(os.path.join(OUT, s), exist_ok=True)
 T = tempfile.mkdtemp()
@@ -21,6 +21,9 @@ def piece(src, a, b, out, tone=False):
         run("ffmpeg","-v","error","-y","-ss","%.3f" % a,"-t","%.3f" % (b-a),"-i",src,"-ac","1","-ar","16000",out)
 n = 0
 for c in picks["clips"]:
+    _dst = os.path.join(OUT, SUB[c["kind"]], c["file"])
+    if os.path.exists(_dst) and os.path.getsize(_dst) > 0 and not os.environ.get("REBUILD"):
+        c["play_len"] = dur(_dst); c["rel"] = SUB[c["kind"]] + "/" + c["file"]; continue
     pieces = []
     bleeps = c.get("bleeps", [])
     for i, (rid, a, b) in enumerate(c["parts"]):
@@ -90,5 +93,24 @@ ul{{margin:0 0 8px 20px;padding:0}} .rule{{margin:8px 0 0;font-size:16px;backgro
 <h2 class="b">Loan calls — what we never say</h2>
 {''.join(card(c, i) for i, c in enumerate(bl, 1))}
 </main></body></html>"""
+BYSTORE = {
+ "Culpeper":     {"great":["G02","G03","G06"], "bad":["B08","S-B05","X-B01"]},
+ "Harrisonburg": {"great":["G04","L-G02","L-G06"], "bad":["B05","L-B07","L-B05"]},
+ "Waynesboro":   {"great":["G05","S-G02","L-G04"], "bad":["B01","B02","L-B02"]},
+ "Lexington":    {"great":["G09","S-G01","L-G09"], "bad":["B03","B09","X-B02"]},
+ "Roanoke":      {"great":["G01","G07","S-G05"], "bad":["B06","B07","L-B01"]},
+}
+byfile = {c["file"].split(" - ")[0]: c for c in picks["clips"]}
+sec = ""
+for store, g in BYSTORE.items():
+    for kind, label in (("great","Great"),("bad","Bad")):
+        folder = os.path.join(OUT, "7 - By Store", store, label); os.makedirs(folder, exist_ok=True)
+        for n, tag in enumerate(g[kind], 1):
+            c = byfile[tag]; dst = os.path.join(folder, "%d - %s" % (n, c["file"].split(" - ",1)[1] if " - " in c["file"] else c["file"]))
+            shutil.copy2(os.path.join(OUT, c["rel"]), dst)
+    sec += "<h3 class='store'>%s</h3>" % esc(store)
+    sec += "".join(card(byfile[t], i) for i, t in enumerate(g["great"], 1)) + "".join(card(byfile[t], i) for i, t in enumerate(g["bad"], 1))
+page = page.replace("</main>", "<h2 class='g'>By store — three great, three bad</h2><p class='note'>Same calls, filed by store so each team hears its own. Copies are in the <b>7 - By Store</b> folder, one subfolder per store.</p>" + sec + "</main>")
+page = page.replace("</style>", "h3.store{margin:28px 0 6px;font-size:21px;color:var(--mute)}</style>")
 open(os.path.join(OUT, "Call Examples - Play List.html"), "w").write(page)
 for c in picks["clips"]: print("%-55s %s" % (c["file"], mmss(c["play_len"])))

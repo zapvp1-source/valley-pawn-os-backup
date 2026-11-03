@@ -353,6 +353,10 @@ def post_store_day(st, d, s, replace=False):
         memo += " Bravo's own %s GL is out of balance by %+.2f this day (inter-store item movement); carried in Bravo POS Clearing, no P&L effect." % (s, delta)
     je, tot = je_post(d, s, doc, lines, memo)
     rec.update({"status": "posted", "je_id": je["Id"], "lines": lines, "total": tot, "posted_at": now().isoformat(timespec="seconds")})
+    ym = d.strftime("%Y-%m")
+    if ym in st.get("proven", {}) and not replace:
+        st["proven"].pop(ym); st.setdefault("prove_fail", {}).pop(ym, None)
+        log("prove %s re-opened: %s posted after the month was proven" % (ym, doc))
     save_state(st)
     rec["verified"] = verify(je["Id"], tot, len(lines))
     if not rec["verified"]:
@@ -364,6 +368,15 @@ def post_store_day(st, d, s, replace=False):
 def prove(st, ym):
     y, m = map(int, ym.split("-"))
     d0, d1 = dt.date(y, m, 1), dt.date(y, m, calendar.monthrange(y, m)[1])
+    # 2026-11-02: a month is only provable once every open store-day in it is posted or no-activity. On 11/2 the
+    # October proof "tied" while 10/31 was still pending at all 5 stores (Bravo had not posted the day yet), so a tie
+    # only meant Bravo's own month ledger was missing the same day. Hold the proof until the month is complete.
+    open_days = [d0 + dt.timedelta(days=i) for i in range((d1 - d0).days + 1)]
+    unfinished = [(d.isoformat(), s) for d in open_days for s in open_stores(d)
+                  if d >= START and st["days"].get(d.isoformat(), {}).get(s, {}).get("status") not in ("posted", "no-activity")]
+    if unfinished:
+        log("prove %s: %d store-day(s) still pending (%s...) - proof deferred" % (ym, len(unfinished), ", ".join("%s %s" % u for u in unfinished[:3])))
+        return None
     if any(not os.path.exists(gl_out(d1, s)) or dt.datetime.fromtimestamp(os.path.getmtime(gl_out(d1, s))).date() <= d1 for s in STORES):
         if now().date() >= d1 + dt.timedelta(days=3) and not NO_PULL:
             bravo_pull("post-to-accounting-gl", "%s..%s" % (d0, d1), STORES, "month-" + ym)
@@ -452,7 +465,10 @@ def main():
     for d in days:
         rec = st["days"].get(d.isoformat(), {})
         todo = [s for s in open_stores(d) if rec.get(s, {}).get("status") not in ("posted", "no-activity")
-                and rec.get(s, {}).get("tries", 0) < MAX_TRIES + 6]
+                and (rec.get(s, {}).get("tries", 0) < MAX_TRIES + 6
+                     # 2026-11-02: a day Bravo has not offered for posting yet (Saturday/month-end close lag) keeps
+                     # retrying for 21 days instead of silently dropping out after 9 tries
+                     or ("not offered" in rec.get(s, {}).get("last_error", "") and (yday - d).days <= 21))]
         if todo:
             pending.append((d, todo))
     log("pending days: %s" % ", ".join("%s(%s)" % (d, ",".join(s)) for d, s in pending) if pending else "nothing pending")

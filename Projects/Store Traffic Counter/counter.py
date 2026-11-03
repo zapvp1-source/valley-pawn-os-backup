@@ -2,7 +2,7 @@
 points, counts crossings of a virtual line. Writes hourly IN/OUT to counts/<store>.csv.
 Usage: python3 counter.py <store> [--minutes N] [--debug]
 Config: config.json (per-store camera + line). Secrets: $VPST_DIR (default ~/.vpst)."""
-import asyncio, csv, datetime as dt, json, math, os, sys, time, zoneinfo
+import asyncio, random, csv, datetime as dt, json, math, os, sys, time, zoneinfo
 import cv2, numpy as np
 import nest_stream as ns, detector
 
@@ -78,6 +78,29 @@ def log_dets(store, now, feet):
         _DET[store] = f = (day, open(os.path.join(d, day + '.jsonl'), 'a', buffering=1))
     f[1].write(json.dumps([round(now, 2), [[round(x, 3), round(y, 3)] for x, y in feet]]) + '\n')
 
+_AUD = {}
+def audit_frame(store, img, cfg, feet, now):
+    """Ground-truth sampler (v5.1): during cfg audit window (default 12:00-13:00) save a timestamped crop of the
+    door area whenever the picture there changes (frame differencing - independent of the person detector),
+    to audit/<store>/<date>/. A reviewer counts real walk-ins from these and compares with the counter's IN/OUT."""
+    a = cfg.get('audit', CFG.get('_audit', {'start': '12:00', 'end': '13:00'}))
+    t = dt.datetime.fromtimestamp(now, TZ); hm = t.strftime('%H:%M')
+    if not (a['start'] <= hm < a['end']): return
+    H, W = img.shape[:2]; dz = cfg.get('door_zone') or {}; pad = 0.15
+    x0 = max(0, dz.get('x_min', 0) - pad); x1 = min(1, dz.get('x_max', 1) + pad + (0.1 if 'line_x' in cfg else 0))
+    y0 = max(0, dz.get('y_min', 0) - pad); y1 = min(1, dz.get('y_max', 1) + pad)
+    crop = img[int(y0 * H):int(y1 * H), int(x0 * W):int(x1 * W)]
+    if crop.size == 0: return
+    g = cv2.resize(cv2.cvtColor(crop, cv2.COLOR_RGB2GRAY), (64, 48)).astype(np.int16)
+    prev = _AUD.get(store); _AUD[store] = g
+    if prev is None or prev.shape != g.shape or np.mean(np.abs(g - prev)) < cfg.get('audit_motion', 4.0): return
+    im = cv2.cvtColor(crop, cv2.COLOR_RGB2BGR); h, w = im.shape[:2]; sc = 320 / w; im = cv2.resize(im, (320, int(h * sc)))
+    for fx, fy in feet:
+        if x0 <= fx <= x1 and y0 <= fy <= y1: cv2.circle(im, (int((fx - x0) * W * sc), int((fy - y0) * H * sc)), 4, (0, 255, 0), -1)
+    cv2.putText(im, t.strftime('%H:%M:%S'), (4, 14), 0, 0.45, (0, 255, 255), 1)
+    d = os.path.join(HERE, 'audit', store, t.strftime('%Y-%m-%d')); os.makedirs(d, exist_ok=True)
+    cv2.imwrite(os.path.join(d, t.strftime('%H%M%S') + f'_{int(now * 10) % 10}.jpg'), im, [cv2.IMWRITE_JPEG_QUALITY, 60])
+
 def log_track(store, t, d):
     """Every finished track -> tracks/<store>/<date>.jsonl so rules can be re-scored offline."""
     td = os.path.join(HERE, 'tracks', store); os.makedirs(td, exist_ok=True)
@@ -117,18 +140,27 @@ def flush(store, counts):
 async def run(store, minutes, debug):
     cfg = CFG[store]   # all geometry is normalized (0..1)
     end = time.time() + minutes * 60; counts = {}; trk = None; seen = 0
+    backoff = 0
     while time.time() < end:
-        at = ns.token(); cam = ns.camera(cfg.get('store', store), cfg['camera'])
-        pc, fut, sid = await ns.open_stream(at, cam); started = time.time(); last = 0; nf = 0
+        try:   # v5.1: a refused/rate-limited (429) connect backs off and retries instead of crashing the agent
+            at = ns.token(); at_ts = time.time(); cam = ns.camera(cfg.get('store', store), cfg['camera'])
+            pc, fut, sid = await ns.open_stream(at, cam)
+        except Exception as e:
+            backoff = min(300, backoff * 2 if backoff else 20)
+            print(dt.datetime.now(TZ).strftime('%H:%M:%S'), 'connect failed', repr(e)[:100], f'retry {backoff}s', flush=True)
+            await asyncio.sleep(backoff + random.uniform(0, 10)); continue
+        backoff = 0; started = time.time(); last = 0; nf = 0; ext_try = 0
         try:
             track = await asyncio.wait_for(fut, 30)
             while time.time() < end:
-                if time.time() - started > EXTEND_EVERY:
-                    try:
+                if time.time() - started > EXTEND_EVERY and time.time() - ext_try > 15:
+                    ext_try = time.time()
+                    try:   # v5.1: retry a failed extend every 15 s until the session's 5-min life is nearly up
+                        if time.time() - at_ts > 3000: at = ns.token(); at_ts = time.time()   # access tokens live 1 h
                         sid = ns.command(at, cam['id'], 'sdm.devices.commands.CameraLiveStream.ExtendWebRtcStream',
                                          {'mediaSessionId': sid})['results']['mediaSessionId']; started = time.time()
                     except Exception:
-                        break  # reconnect
+                        if time.time() - started > 290: break  # session about to expire -> reconnect
                 f = await asyncio.wait_for(track.recv(), 20)
                 now = time.time()
                 if now - last < 0.25: continue
@@ -137,6 +169,8 @@ async def run(store, minutes, debug):
                     trk = Tracker(cfg.get('max_dist', 0.08), cfg.get('max_age', 3.0), cfg.get('speed', 0.30))
                 feet = [((x1 + x2) / 2 / W, y2 / H) for x1, y1, x2, y2, s in detector.people(img, conf=cfg.get('conf', 0.30))]
                 log_dets(store, now, feet)
+                try: audit_frame(store, img, cfg, feet, now)
+                except Exception: pass
                 trk.update(feet, now)
                 for t in trk.expire(now):
                     d = decide(t, cfg)

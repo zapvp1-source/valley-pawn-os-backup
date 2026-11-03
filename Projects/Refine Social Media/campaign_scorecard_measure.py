@@ -50,9 +50,9 @@ def slot_index():
         if f.endswith("_results.json"): continue
         p = json.loads(Path(f).read_text()); slots = p["slots"] if isinstance(p, dict) else p
         for x in slots:
-            fm = x.get("format") or {}
+            fm = x.get("format") or (x.get("contract") or {}).get("format") or (x.get("item_key") or "").split(":")[0] or {}  # 2026-11-02: format lives in contract.format
             idx.append((set(x.get("accounts") or []), dt.datetime.fromisoformat(x["scheduled_at"]), x["lane"],
-                        fm.get("id") if isinstance(fm, dict) else fm, x.get("topic_id") or (x.get("contract") or {}).get("topic_id"), x["slot_id"]))
+                        fm.get("id") if isinstance(fm, dict) else fm, x.get("topic_id") or (x.get("contract") or {}).get("topic_id") or ((x.get("contract") or {}).get("topic") or {}).get("id"), x["slot_id"]))
     return idx
 
 def tag(store, post, idx):

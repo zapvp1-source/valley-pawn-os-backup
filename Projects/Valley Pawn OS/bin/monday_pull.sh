@@ -151,7 +151,23 @@ fi
 if [ $RENDER -eq 0 ]; then
   MTD_FIRST=$(date +%Y-%m-01); [ "$(date +%u)" = 1 ] && MTD_FIRST=$(date -v-1d +%Y-%m-01)   # Monday run -> Sunday's month
   MTD_ID="monday-emp-mtd-$(date +%Y%m%d-%H%M)"
+  # 2026-11-02: Sunday-the-1st (bin/asof.py) -> report the month that just closed. Use its full-month
+  # employee-activity-range file (written by monthly-employee-rankings on the 1st) as the MTD file, or pull it.
+  REPDAY=$(date +%Y-%m-%d); [ "$(date +%u)" = 1 ] && REPDAY=$(date -v-1d +%Y-%m-%d)
+  ASOF=$("$PY" "$BIN/asof.py" "$REPDAY")
+  if [ "$ASOF" != "$REPDAY" ]; then
+    MTD_FIRST="${ASOF:0:8}01"
+    for ST in CUL HAR LEX ROA WAY; do
+      [ -s "$BRAVO/output/${ASOF}_${ST}_employee-activity-range.csv" ] || \
+        bash "$BIN/bravo_pull.sh" employee-activity-range "$MTD_FIRST..$ASOF" "$ST" "$MTD_ID-range-$ST" >>"$VLOG/$AGENT.log" 2>&1
+      [ -s "$BRAVO/output/${ASOF}_${ST}_employee-activity-range.csv" ] && \
+        cp "$BRAVO/output/${ASOF}_${ST}_employee-activity-range.csv" "$BRAVO/output/${MTD_FIRST}_${ST}_employee-activity.csv"
+    done
+    printf '{"cells":[%s]}' "$(for ST in CUL HAR LEX ROA WAY; do [ -s "$BRAVO/output/${MTD_FIRST}_${ST}_employee-activity.csv" ] && s=success || s=error; printf '{"store":"%s","status":"%s"},' $ST $s; done | sed 's/,$//')" > "$BRAVO/results/$MTD_ID.result.json"
+    vlog "Sunday-the-1st: MTD employee activity = full month $MTD_FIRST..$ASOF"
+  else
   bash "$BIN/bravo_pull.sh" employee-activity "$MTD_FIRST" CUL,HAR,LEX,ROA,WAY "$MTD_ID" >>"$VLOG/$AGENT.log" 2>&1
+  fi
   # 2026-10-26: Monday 06:01 LEX cell failed (UIA "File path LayoutItem not found") while the other 4 succeeded,
   # the batch was "partial", and #employee-performance held all day. Retry every failed store ONCE, alone,
   # before giving up (same rule as bravo-daily-gl). Exit status of bravo_pull is not enough: read the cells.
@@ -175,7 +191,10 @@ fi
 # store_rankings.py reads <END>_<STORE>_end-of-month.xlsx; verified to the penny against the 9/28 post.
 if [ $RENDER -eq 0 ]; then
   EOM_END=$(date +%Y-%m-%d); [ "$(date +%u)" = 1 ] && EOM_END=$(date -v-1d +%Y-%m-%d)   # Monday run -> Sunday
+  EOM_END=$("$PY" "$BIN/asof.py" "$EOM_END")   # 2026-11-02: Sunday-the-1st -> the closed month as of Saturday
   EOM_FIRST="${EOM_END:0:8}01"
+  ls "$BRAVO/output/${EOM_END}"_{CUL,HAR,LEX,ROA,WAY}_end-of-month.xlsx >/dev/null 2>&1 && [ "$EOM_END" != "$(date -v-1d +%Y-%m-%d)" ] && \
+    vlog "EOM full-month set for $EOM_END already on disk — no pull" || \
   bash "$BIN/bravo_pull.sh" end-of-month "$EOM_FIRST..$EOM_END" CUL,HAR,LEX,ROA,WAY "monday-eom-$(date +%Y%m%d-%H%M)" >>"$VLOG/$AGENT.log" 2>&1 \
     && vlog "EOM month-to-date pulled through $EOM_END" \
     || ledger "$AGENT" "The Monday pull could not refresh the store-rankings data, so the rankings will hold." "no"

@@ -252,7 +252,8 @@ def main():
     if "--prefix" in argv:
         i = argv.index("--prefix"); argv = argv[:i] + argv[i + 2:]
     args = [a for a in argv if not a.startswith("--")]
-    end = args[0] if args else (dt.date.today() - dt.timedelta(days=1)).isoformat()
+    import asof as _asof   # 2026-11-02: Sunday-the-1st -> the closed month as of Saturday (bin/asof.py)
+    end = (_asof.asof(_asof.reporting_day(args[0])) if args else _asof.asof(dt.date.today() - dt.timedelta(days=1))).isoformat()
     # Bravo's End-of-Month export stops at the last CLOSED day, so a Sunday pull is stamped Saturday
     # (seen 2026-10-04: requested 10/1..10/4, files written as 2026-10-03_*). Use the newest complete
     # 5-store set dated END or up to 2 days before it, and label the period with THAT date (truthful).

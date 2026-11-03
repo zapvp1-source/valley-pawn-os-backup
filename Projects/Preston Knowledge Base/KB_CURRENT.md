@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-10-31 22:12 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-11-02 09:05 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -378,7 +378,7 @@ Prices are to be marked down on the tag (change the price) by 30% from the Bravo
 
 Once 2 years of age, this jewelry is to be scrapped."
 SOURCE: #general (C03BETSS669) | 2024-01-03 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1704290400624789
-PRESTON'S CORRECTION (2026-10-26): Aged policy is anything over 1 year to be marked down 30%. Jewelry over 1 year and 6 months is to be scrapped. Deadline for markdowns is still the 15th for each month.
+PRESTON'S CORRECTION (2026-11-02): Aged policy is anything over 1 year to be marked down 30%. Jewelry over 1 year and 6 months is to be scrapped. Deadline for markdowns is still the 15th for each month.
 !! CONFLICT: Superseded twice — see the two entries below. All three thresholds (2 yr, 1 yr + 6 mo, 1.5 yr) exist in Preston's own words at different dates.
 id: aged-jewelry-scrap-trigger-e74402f6
 
@@ -388,7 +388,7 @@ PRESTON SAID: "Jewelry will be marked down 30% once it is aged over 1 year and w
 
 Jewelry is not going to be compoundly marked down. Only mark down new jewelry items each month and move them to clearance."
 SOURCE: #policy-announcements (C03BHQ9RLR0) | 2024-07-13 | https://valleypawnworkspace.slack.com/archives/C03BHQ9RLR0/p1720877387354809
-PRESTON'S CORRECTION (2026-10-26): Aged policy is anything over 1 year to be marked down 30%. Jewelry over 1 year and 6 months is to be scrapped. Deadline for markdowns is still the 15th for each month.
+PRESTON'S CORRECTION (2026-11-02): Aged policy is anything over 1 year to be marked down 30%. Jewelry over 1 year and 6 months is to be scrapped. Deadline for markdowns is still the 15th for each month.
 !! CONFLICT: See the 2-year and 1.5-year versions.
 id: aged-jewelry-scrap-trigger-15acbe7a
 
@@ -396,7 +396,7 @@ id: aged-jewelry-scrap-trigger-15acbe7a
 RULE: Operating rule as Preston enforces it in 2025-2026: all jewelry over 1.5 years old is to be scrapped each month.
 PRESTON SAID: "Reminder to everyone, all jewelry over 1.5 years old is to be scrapped each month"
 SOURCE: #aged-inventory-review (C04NGH4FF35) | 2025-03-22 | https://valleypawnworkspace.slack.com/archives/C04NGH4FF35/p1742665149906479
-PRESTON'S CORRECTION (2026-10-26): Aged policy is anything over 1 year to be marked down 30%. Jewelry over 1 year and 6 months is to be scrapped. Deadline for markdowns is still the 15th for each month.
+PRESTON'S CORRECTION (2026-11-02): Aged policy is anything over 1 year to be marked down 30%. Jewelry over 1 year and 6 months is to be scrapped. Deadline for markdowns is still the 15th for each month.
 !! CONFLICT: Coexists with the 2-year (2024-01) and 1-year-plus-6-months (2024-07) statements above.
 id: aged-jewelry-scrap-trigger-d46cedeb
 
@@ -404,7 +404,7 @@ id: aged-jewelry-scrap-trigger-d46cedeb
 RULE: Preston reads low aged-jewelry percentages as evidence a store is scrapping before the 1.5-year mark, and audits that stores are actually scrapping aged jewelry monthly.
 PRESTON SAID: "Waynesboro jewelry looks to be in a great spot. Indicates good management or scrapping items before the 1.5 year mark. – Roanoke has highest jewelry percent, ensure clearance has its own section and easily identifiable from other jewelry. Verify all aged items over 1.5 years are getting scrapped each month."
 SOURCE: DM Joshua<->Preston (D03C7RBGY56) | 2026-05-11 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1778509712947879
-PRESTON'S CORRECTION (2026-10-26): No store should be scrapping jewelry that is sellable before 1.5 years of age without approval from Preston.
+PRESTON'S CORRECTION (2026-11-02): No store should be scrapping jewelry that is sellable before 1.5 years of age without approval from Preston.
 id: aged-jewelry-scrap-trigger-3f1850f7
 
 ### [HIGH] silver-jewelry-vs-flatware-yield
@@ -1114,7 +1114,7 @@ SECTION: OTHER OPERATIONAL KNOWLEDGE
 RULE: "Aged" inventory means anything over 1 year old. Preston tracks it per store split into Jewelry and General Merch, each as a percent of the store's inventory base, plus a total aged percent.
 PRESTON SAID: "AGED IS ANYTHING OVER 1 YEAR - MAKE SURE WE ARE REPRICING ITEMS TO CLEARANCE AND WORKING ON GETTING THIS STUFF OUT!!"
 SOURCE: #aged-inventory-review | 2025-11-10 | https://valleypawnworkspace.slack.com/archives/C04NGH4FF35/p1762811748385319
-PRESTON'S CORRECTION (2026-10-26): Aged policy is anything over 1 year to be marked down 30%. Jewelry over 1 year and 6 months is to be scrapped. Deadline for markdowns is still the 15th for each month.
+PRESTON'S CORRECTION (2026-11-02): Aged policy is anything over 1 year to be marked down 30%. Jewelry over 1 year and 6 months is to be scrapped. Deadline for markdowns is still the 15th for each month.
 id: aged-definition-one-year-a1aed82e
 
 ### [VERIFIED] appliances-new-in-box-only
