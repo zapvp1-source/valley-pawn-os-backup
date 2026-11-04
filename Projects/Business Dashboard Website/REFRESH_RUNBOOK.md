@@ -142,3 +142,11 @@ switch to this path:
 
 ## Step 4 — Confirm
 Post a one-line summary to Slack #general ONLY if something failed. On success, no Slack post needed.
+
+## Note (2026-11-04, dashboard-refresh run)
+The scheduled task's current-rules block says #chekkit-unanswerd-summary (C0B1PEW0C30) "nothing
+posts there any more." That's stale -- the channel (now named #chekkit-messages-missed, same ID)
+is still posting a daily "Daily Response Summary" at 8 AM plus an "End-of-Day Follow-up" at 7 PM.
+This run used the latest Daily Response Summary post and refreshed data.daily.chekkit normally.
+If the scheduled task's stored prompt is ever edited, this line can come out of its current-rules
+block.

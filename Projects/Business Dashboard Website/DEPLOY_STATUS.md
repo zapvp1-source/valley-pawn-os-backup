@@ -600,3 +600,47 @@ No post made -- nothing failed this run.
 ### Step 5 - Slack / notifications
 No Slack post (per Rule 16 and this task's own "never posts to Slack" instruction -- success,
 no notice needed either way).
+
+---
+
+## Run: 2026-11-03 (scheduled dashboard-refresh, Cowork/cloud session, LINKED to Mac Studio)
+
+### 1. KPI data refresh - DONE
+- Checked channels per the task's 2026-10-23 current-rules list. layaway-review: latest
+  standard post (Nov 2, 2026 Weekly Layaway Review) already matched what was on disk --
+  unchanged. company-performance: latest monthly post (Oct 2026, corrected, Nov 1 14:14)
+  already reflected in watch[] -- unchanged. daily-funds-reconcilation: latest post (Mon Nov 2,
+  5/5 matched) already matched what was on disk -- unchanged. loan-review (retired 2026-10-14)
+  and chekkit-unanswerd-summary (no longer posts) left untouched per instruction.
+- items-to-price: NEW post (Nov 03, 2026) -- updated daily.itemsToPrice (250 items / $14,355.50
+  total, by-store breakdown) and feeds[] Last Run.
+- pawn-walks Intake Margin: NEW post (posted Nov 03 07:15 for 2026-11-02 data) -- updated
+  daily.intakeMargin (Buy+Loan combined, item-weighted margin, flags summed per store; company
+  101 items / 57% avg / 3 flags) and feeds[] Last Run.
+- asOf already "November 3, 2026" -- left as-is. bravoDaily untouched. Backup saved as
+  `site/data/kpis.json.bak-2026-11-03-dashboard-refresh`. Validated with `python3 json.load`
+  before and after the edit.
+
+### 2. Artifact sync (site/artifacts/) - SKIPPED (known gap, not re-logged)
+- `~/Documents/Claude/Artifacts` is not one of this session's connected folders
+  (only "Business Dashboard Website" and "Projects" are) -- per the task's explicit instruction,
+  skipped silently, not a failure.
+
+### 3. Deploy to Cloudflare Pages - DONE (Option C)
+- Staged the 37 real `site/` files (excluding scratch/stage junk left by prior runs:
+  kpis_stage_*.json, kpis_deploy.json, kpis_for_deploy_*.json, kpis_stagecopy.json,
+  kpis.json.orig, kpis_fresh_test.json, plain_test.txt, index_stage_*.html, index_deploy.html,
+  index_for_deploy_*.html, index_stagecopy.html, .index_stage_tmp.html) + 4 `.cloudflare/`
+  credential files via `device_stage_files`, installed wrangler in the cloud sandbox, ran
+  `wrangler pages deploy site --project-name=vp-dashboard --commit-dirty=true`.
+- Deployment URL: `https://ff145aee.vp-dashboard.pages.dev` (2 files changed, 34 already cached).
+
+### 4. Verify - DONE
+- No-auth apex -> 401 (pass). Basic-auth apex -> 200 (pass). Basic-auth deployment URL -> 200.
+- `data/kpis.json` valid JSON on the live apex; asOf = November 3, 2026, itemsToPrice date =
+  Nov 3 2026 (250 items/$14,355.50), intakeMargin date = Nov 2 2026 (company 101 items/57%/3
+  flags) -- fresh data confirmed.
+
+### Step 5 - Slack
+No post made -- nothing failed this run (per Rule 16 and this task's own "never posts to Slack"
+instruction).

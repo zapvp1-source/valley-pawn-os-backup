@@ -2,10 +2,13 @@
 ticket-number span minus the journal's own safe/till tickets) per store, plus conversion.
 Usage: python3 compare.py [YYYY-MM-DD ...]   (default: every date that has door counts)
 Writes reports/compare.csv (one row per store-day) and prints a table."""
-import csv, glob, os, re, sys, collections
+import csv, glob, json, os, re, sys, collections
 HERE = os.path.dirname(os.path.abspath(__file__))
 BRAVO = os.path.join(os.path.dirname(HERE), 'Bravo Data Extraction', 'output')
 CODES = {'Culpeper': 'CUL', 'Waynesboro': 'WAY', 'Harrisonburg': 'HAR', 'Lexington': 'LEX', 'Roanoke': 'ROA'}
+EXCLUDE = {'2026-10-31', '2026-11-02', 'Lexington 2026-11-03'}   # degraded days: stream gaps / camera offline (see STATUS doc)
+try: EXCLUDE |= set(json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'reports', 'excluded_days.json'))))
+except Exception: pass
 SKIP_BEFORE = {'Waynesboro': '2026-10-28', 'Culpeper': '2026-10-30'}   # earlier days were pre-validation versions (set aside)
 TXN = re.compile(r'^([A-Z0-9]{2,4}?)(\d{6,9}),(\d{1,2}/\d{1,2}/\d{4} \d{1,2}:\d{2} [AP]M)')
 
@@ -29,6 +32,7 @@ for store in CODES:
     v = visitors(store)
     for day in sorted(v):
         if len(sys.argv) > 1 and day not in sys.argv[1:]: continue
+        if day in EXCLUDE or f'{store} {day}' in EXCLUDE: continue
         t = tickets(store, day); vi = round((v[day]['in'] + v[day]['out']) / 2)   # visitors = mean of door IN and OUT
         rows.append({'date': day, 'store': store, 'visitors_in': vi, 'visitors_out': v[day]['out'],
                      'bravo_tickets': '' if t is None else t,

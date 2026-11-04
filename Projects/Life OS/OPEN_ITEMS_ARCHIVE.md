@@ -1173,3 +1173,8 @@ Patsy Pernia (JM Partners) sent two firm Bald Rock quotes 10/12 9:33pm (thread 1
 ## Archived 2026-10-31 by open_items_groom
 
 | 2026-10-24 | 1 Valley Pawn | November staff meeting call examples (10 great / 10 bad + 40 sales & loan examples, MP3 + Play List) built in Desktop/November Meeting/Call Examples | DONE — files in place, not shared with anyone. Grader prompt fixed 10/24 (5-day grace = policy) | Joshua plays them at the November meeting; staff never sent copies. Rebuild/change picks: Call Analysis/november_clips/picks.json + build_playlist.py |
+
+
+## Archived 2026-11-03 by open_items_groom
+
+| 2026-10-27 | 1 — Valley Pawn (Hiring) | Waynesboro Sales & Loan Associate listing found still **Open with Sponsored Job spend actively running** ($10/day, $50 total since Oct 1) during the ~10:21 AM hiring-pipeline run, despite the ~10:06 AM run's note that it had been clicked back to Paused. Paused it again (reason given to Indeed: "actively interviewing candidates"). Harrisonburg and Roanoke listings confirmed Paused, no spend. Joshua DMed. | PAUSED — re-verify it holds on next run | Joshua: say if/when Waynesboro/Harrisonburg/Roanoke should reopen (free or sponsored) per the still-open HIRING_SWITCH.md decision. Claude: spot-check Waynesboro's status on the next hiring-pipeline run to confirm the pause held. |

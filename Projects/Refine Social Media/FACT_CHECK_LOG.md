@@ -173,3 +173,11 @@ Unverifiable: none left in posts. Published-wrong: none.
 Posts checked: 0. publer_upcoming.py --hours 36 returned no scheduled posts. Confirmed Publer is reachable and the queue is real, not an empty error: a direct read of 10/31-11/12 returned 29 posts (17 published 10/31-11/01, 11 scheduled for 11/10, 1 scheduled_reauth for 11/10). Nothing is scheduled between now and Tue 11/3 evening.
 Claims verified: none needed. Posts edited: none. Unverifiable: none. Published-wrong: none (11/1 posts were verified in the 11/1 run).
 Note: the 11/10 batch will come into the 36-hour window on the 11/9 run.
+
+## 2026-11-03 07:45 ET — daily run (window: next 36h)
+- Posts checked: 15 (Publer). Time-sensitive posts: 5 (Culpeper FB, GBP_Culpeper, Waynesboro FB, GBP_Waynesboro, Brand bracket). Skipped as evergreen/product: history posts (Lexington, Roanoke, Harrisonburg + GBP), Brand/BrandTwitter warranty posts, Culpeper mower and Waynesboro generator product posts (store hours match the standard).
+- VERIFIED Fri 11/6/2026 7:00 PM Culpeper County HS at Caroline. Source: https://www.maxpreps.com/va/milford/caroline-cavaliers/football/schedule/ (2026-27 season, "vs Culpeper County*", updated 11/3/2026). Culpeper's own MaxPreps page didn't load a schedule.
+- VERIFIED Fri 11/6/2026 7:00 PM Eastern View at Spotsylvania. Sources: https://www.maxpreps.com/va/culpeper/eastern-view-cyclones/football/schedule/ ("@ Spotsylvania*") and https://www.maxpreps.com/va/spotsylvania/spotsylvania-knights/football/schedule/ ("vs Eastern View*"), both 2026-27. No cancellation noted; pages last updated 10/21-22.
+- VERIFIED Fri 11/6/2026 7:00 PM Waynesboro hosts Riverheads, a Shenandoah region/district game. Sources: https://www.maxpreps.com/va/waynesboro/waynesboro-little-giants/football/schedule/ and https://www.maxpreps.com/va/staunton/riverheads-gladiators/football/schedule/ (2026-27), plus https://prepredzone.com/game/va/waynesboro-vs-riverheads-november-6-2026/ . No postponement found.
+- Brand bracket ("winners carried forward until the end of November"): this is our own campaign, not an outside dated fact. Left unchanged.
+- Posts edited: 0. Unverifiable claims: none. PUBLISHED-WRONG: none.

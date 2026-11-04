@@ -21,8 +21,8 @@ class Tracker:
     """Nearest-neighbour tracker in NORMALIZED coords (0..1). v5 (2026-10-31): gate grows with time since the
     track was last seen (speed allowance) and tracks survive short occlusions (max_age), so a walker is one
     track from door to counter instead of several fragments."""
-    def __init__(self, max_dist=0.08, max_age=3.0, speed=0.30):
-        self.tracks, self.nid, self.max_dist, self.max_age, self.speed = {}, 0, max_dist, max_age, speed
+    def __init__(self, max_dist=0.08, max_age=3.0, speed=0.30, cap=0.25):
+        self.tracks, self.nid, self.max_dist, self.max_age, self.speed, self.cap = {}, 0, max_dist, max_age, speed, cap
     def expire(self, now, force=False):
         done = []
         for tid, t in list(self.tracks.items()):
@@ -34,7 +34,7 @@ class Tracker:
         for i, p in enumerate(pts):
             for tid, t in self.tracks.items():
                 d = math.dist(p, t['p'])
-                if d <= self.max_dist + self.speed * max(0.0, now - t['ts']):
+                if d <= min(self.cap, self.max_dist + self.speed * max(0.0, now - t['ts'])):   # v5.2 cap: never link people across the room
                     pairs.append((d, i, tid))
         pairs.sort()
         taken = set()
@@ -140,7 +140,7 @@ def flush(store, counts):
 async def run(store, minutes, debug):
     cfg = CFG[store]   # all geometry is normalized (0..1)
     end = time.time() + minutes * 60; counts = {}; trk = None; seen = 0
-    backoff = 0
+    backoff = 0; fails = 0
     while time.time() < end:
         try:   # v5.1: a refused/rate-limited (429) connect backs off and retries instead of crashing the agent
             at = ns.token(); at_ts = time.time(); cam = ns.camera(cfg.get('store', store), cfg['camera'])
@@ -148,7 +148,11 @@ async def run(store, minutes, debug):
         except Exception as e:
             backoff = min(300, backoff * 2 if backoff else 20)
             print(dt.datetime.now(TZ).strftime('%H:%M:%S'), 'connect failed', repr(e)[:100], f'retry {backoff}s', flush=True)
+            fails += 1
+            if fails >= 6:   # v5.2: a stuck process (e.g. resolver wedged, gaierror for hours on 11/3 LEX) -> exit; launchd KeepAlive restarts it clean
+                flush(store, counts); print('6 connect failures in a row - exiting for a clean restart', flush=True); sys.exit(3)
             await asyncio.sleep(backoff + random.uniform(0, 10)); continue
+        fails = 0
         backoff = 0; started = time.time(); last = 0; nf = 0; ext_try = 0
         try:
             track = await asyncio.wait_for(fut, 30)
@@ -165,8 +169,10 @@ async def run(store, minutes, debug):
                 now = time.time()
                 if now - last < 0.25: continue
                 last = now; img = f.to_ndarray(format='rgb24'); H, W = img.shape[:2]
+                sm = img[::8, ::8]
+                if ((sm[..., 1] > 100) & (sm[..., 0] < 40) & (sm[..., 2] < 40)).mean() > 0.25: continue   # v5.2: corrupt (green) decoder frame - skip
                 if trk is None:
-                    trk = Tracker(cfg.get('max_dist', 0.08), cfg.get('max_age', 3.0), cfg.get('speed', 0.30))
+                    trk = Tracker(cfg.get('max_dist', 0.08), cfg.get('max_age', 3.0), cfg.get('speed', 0.30), cfg.get('cap', 0.25))
                 feet = [((x1 + x2) / 2 / W, y2 / H) for x1, y1, x2, y2, s in detector.people(img, conf=cfg.get('conf', 0.30))]
                 log_dets(store, now, feet)
                 try: audit_frame(store, img, cfg, feet, now)

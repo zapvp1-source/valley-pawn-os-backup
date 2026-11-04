@@ -7,16 +7,54 @@ VPST = os.environ.get('VPST_DIR', os.path.expanduser('~/.vpst'))
 C = json.load(open(os.path.join(VPST, 'sdm_oauth.json')))
 BASE = 'https://smartdevicemanagement.googleapis.com/v1/'
 
+def _locked(name):
+    """Cross-process lock (both Store Traffic and Store Conduct Watch import this module)."""
+    import fcntl
+    f = open(os.path.join(VPST, name), 'a+'); fcntl.flock(f, fcntl.LOCK_EX); return f
+
 def token():
-    d = urllib.parse.urlencode({'client_id': C['client_id'], 'client_secret': C['client_secret'],
-        'refresh_token': C['refresh_token'], 'grant_type': 'refresh_token'}).encode()
-    return json.load(urllib.request.urlopen('https://oauth2.googleapis.com/token', d))['access_token']
+    """OAuth access token, shared by every process through a cached file (refreshed 5 min before expiry),
+    so 17 streams don't each hit the token endpoint. Retries transient network/DNS errors."""
+    path = os.path.join(VPST, '.token_cache.json')
+    with _locked('.token.lock'):
+        try:
+            t = json.load(open(path))
+            if t['exp'] - time.time() > 300: return t['at']
+        except Exception:
+            pass
+        d = urllib.parse.urlencode({'client_id': C['client_id'], 'client_secret': C['client_secret'],
+            'refresh_token': C['refresh_token'], 'grant_type': 'refresh_token'}).encode()
+        for i in range(3):
+            try:
+                r = json.load(urllib.request.urlopen('https://oauth2.googleapis.com/token', d, timeout=20)); break
+            except Exception:
+                if i == 2: raise
+                time.sleep(3 * (i + 1))
+        tmp = path + '.tmp'
+        with open(tmp, 'w') as f: json.dump({'at': r['access_token'], 'exp': time.time() + int(r.get('expires_in', 3600))}, f)
+        os.chmod(tmp, 0o600); os.replace(tmp, path)
+        return r['access_token']
+
+GAP = {'GenerateWebRtcStream': 4.0}   # seconds between calls across ALL processes (default 1.0)
 
 def command(at, dev, cmd, params):
-    req = urllib.request.Request(BASE + dev + ':executeCommand', method='POST',
-        data=json.dumps({'command': cmd, 'params': params}).encode(),
-        headers={'Authorization': 'Bearer ' + at, 'Content-Type': 'application/json'})
-    return json.load(urllib.request.urlopen(req))
+    """SDM executeCommand, paced across every process sharing the project quota, with 429/5xx retry."""
+    import urllib.error
+    kind = cmd.rsplit('.', 1)[-1]
+    for i in range(3):
+        with _locked('.sdm.lock') as f:   # pace: wait until GAP since the last call of any kind
+            f.seek(0); last = float(f.read().strip() or 0)
+            wait = last + GAP.get(kind, 1.0) - time.time()
+            if wait > 0: time.sleep(min(wait, 10))
+            f.seek(0); f.truncate(); f.write(str(time.time())); f.flush()
+        req = urllib.request.Request(BASE + dev + ':executeCommand', method='POST',
+            data=json.dumps({'command': cmd, 'params': params}).encode(),
+            headers={'Authorization': 'Bearer ' + at, 'Content-Type': 'application/json'})
+        try:
+            return json.load(urllib.request.urlopen(req, timeout=20))
+        except urllib.error.HTTPError as e:
+            if e.code not in (429, 500, 502, 503) or i == 2: raise
+            time.sleep((3, 8)[i])
 
 def clean_answer(sdp):
     """SDM answer quirks: empty ICE foundation, and duplicated payload types/attributes

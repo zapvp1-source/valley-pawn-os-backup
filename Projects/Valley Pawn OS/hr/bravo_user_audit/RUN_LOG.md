@@ -5,3 +5,4 @@
 - 2026-10-03T10:06:06 month=2026-09 former_active=1 new_txn_flags=0 stale=False not_in_ledger=3
 - 2026-10-19T09:59:25 month=2026-09 former_active=1 new_txn_flags=0 stale=False not_in_ledger=4
 - 2026-10-21T12:40:18 month=2026-09 former_active=1 new_txn_flags=0 stale=False not_in_ledger=1
+- 2026-11-03T10:00:05 month=2026-10 former_active=1 new_txn_flags=0 stale=True not_in_ledger=2

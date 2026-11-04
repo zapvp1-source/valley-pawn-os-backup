@@ -137,7 +137,10 @@ def main():
     items = q.get("items", [])
     report, taken, changed = [], set(), False
     for it in items:
-        if it.get("action") != "share" or it.get("status", "pending") != "pending":
+        # 2026-11-03: Publer link-posts of facebook.com URLs publish as a bare URL (no preview card) and do not
+        # notify the shared page, so community shares moved to POST mode (real Facebook Share). This agent now only
+        # handles items explicitly marked auto=true (none by default).
+        if it.get("action") != "share" or it.get("status", "pending") != "pending" or it.get("auto") is not True:
             continue
         try:
             created = dt.datetime.fromisoformat(it["created"])

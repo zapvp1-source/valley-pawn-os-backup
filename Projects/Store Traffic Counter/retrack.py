@@ -10,7 +10,7 @@ import counter as C
 
 def replay(key, date, cfg):
     path = os.path.join(C.HERE, 'dets', key, date + '.jsonl')
-    trk = C.Tracker(cfg.get('max_dist', 0.08), cfg.get('max_age', 3.0), cfg.get('speed', 0.30))
+    trk = C.Tracker(cfg.get('max_dist', 0.08), cfg.get('max_age', 3.0), cfg.get('speed', 0.30), cfg.get('cap', 0.25))
     counts, last = {}, None
     def done(ts, tracks):
         for t in tracks:
