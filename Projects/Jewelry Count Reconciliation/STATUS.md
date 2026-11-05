@@ -2511,3 +2511,31 @@ Jewelry Count — Tuesday 11/3 (expected = system on-hand, counted = PM count sh
 
 Harrisonburg — count sheet not posted tonight.
 
+
+## RUN RECORD — 2026-11-04 (Wednesday) — native jewelry-onhand-nightly-pull
+
+Open: CUL ROA WAY. Bravo freeze-window CSVs: all open stores. Sheets: CUL ok (Rob, 18:06); ROA ok (Joey-Epperly, 18:34); WAY ok (Stephanie, 18:25).
+
+Jewelry Count — Wednesday 11/4 (expected = system on-hand, counted = PM count sheet)
+
+| Store | Category | Expected | Counted | Variance |
+|---|---|---|---|---|
+| CUL | Rings | 681 | 682 | +1 |
+| CUL | Bracelets | 126 | 126 | 0 |
+| CUL | Earrings | 179 | 179 | 0 |
+| CUL | Pendants | 248 | 248 | 0 |
+| CUL | Necklaces | 154 | 154 | 0 |
+| **CUL Total** | | **1388** | **1389** | **+1** |
+| ROA | Rings | 591 | 592 | +1 |
+| ROA | Bracelets | 135 | 135 | 0 |
+| ROA | Earrings | 77 | 77 | 0 |
+| ROA | Pendants | 167 | 167 | 0 |
+| ROA | Necklaces | 149 | 149 | 0 |
+| **ROA Total** | | **1119** | **1120** | **+1** |
+| WAY | Rings | 345 | 345 | 0 |
+| WAY | Bracelets | 49 | 49 | 0 |
+| WAY | Earrings | 60 | 60 | 0 |
+| WAY | Pendants | 72 | 71 | -1 |
+| WAY | Necklaces | 77 | 77 | 0 |
+| **WAY Total** | | **603** | **602** | **-1** |
+

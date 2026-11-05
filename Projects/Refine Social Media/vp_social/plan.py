@@ -36,6 +36,10 @@ STORE_DAY = {"Culpeper": 1, "Waynesboro": 2, "Harrisonburg": 3, "Lexington": 4, 
 DEAL_PHOTO_TIMES = {"Culpeper": "13:00", "Waynesboro": "13:15", "Harrisonburg": "13:45",
                     "Lexington": "14:15", "Roanoke": "14:45"}
 COMMUNITY_TIMES = ["13:30", "14:30", "13:05", "15:00"]
+# 2026-11-04 timing check (TIMING_CHECK_2026-11-04.md): the 15:10 deal-video slot was the weakest posting hour in the
+# 10/22-11/03 window (store-FB videos at 15:xx avg ~18 reach, index 0.23 vs page average); best video hour across the
+# 7/22-11/03 data measured on all 5 pages is 10 AM. Moved to 10:40 (no other lane uses :40 at 10; never :50 = hiring).
+DEAL_VIDEO_TIME = "10:40"
 BRAND_PILLARS = [("how_it_works", "How pawn loans / buying / layaway actually work at Valley Pawn — plain, honest, one concrete detail"),
                  ("value_warranty", "A real value angle: 30-day warranty, price vs new, or a category we buy — one concrete number"),
                  ("story_team", "A people or heritage story — a real employee (name + tenure), a store, family-owned since 2014")]
@@ -225,7 +229,7 @@ def build(week: str, deals_path: Path | None, seed: int | None = None) -> dict:
         accts = accounts_ok([store, "BrandIG"])
         if accts:
             slots.append(_slot(f"deal-video-{store}", "deal_video", item_key, accts, "video",
-                               _at(monday, STORE_DAY[store], "15:10"), week, media_path=video,
+                               _at(monday, STORE_DAY[store], DEAL_VIDEO_TIME), week, media_path=video,
                                contract=dict(base, note="15-30s vertical reel of the actual item; caption must name item + price")))
     if len(deals) >= 3:
         accts = accounts_ok(["Brand", "BrandIG", "BrandTikTok"])

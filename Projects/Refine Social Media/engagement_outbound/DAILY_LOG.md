@@ -1,5 +1,17 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-04 (daily PREP run, 12:42–12:51 ET, level 1 all pages) — picks queued, nothing published by this run
+- Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. One brief Chrome-extension disconnect mid-run; reconnected on retry, no data lost.
+- Dropped from QUEUE (past 48 h, never posted late): Roanoke Rail Yard Dawgs, Harrisonburg Skeleton Festival, Waynesboro.Com pea soup, Waynesboro Parks backup, Brand B.A.R.K. Rangers (replaced). Culpeper Chamber follow re-queued.
+- Comments queued for the next POST chat (1/page/day): Roanoke → Downtown Roanoke (Virginia's Veterans Parade Saturday); Harrisonburg → Visit Harrisonburg (late-fall woods); Waynesboro → Waynesboro Family YMCA (Turkey Trot); Brand → Shenandoah National Park (south district color). Still valid from 11/3: Culpeper → Visit Culpeper (expires 11/5 08:50); Lexington → Rockbridge Regional Libraries (expires 11/5 12:04).
+- Shares queued (POST mode, Facebook Share button): Harrisonburg → Massanutten Regional Library Fandom Fest (Sat 11/7, 10–3; permalink confirmed); Lexington → Lime Kiln Theater Fall Volunteer Day (Sat 11/7, 9–3; event page confirmed). Roanoke, Waynesboro, Culpeper already used this week's share; Brand had no fresh post that fit.
+- Follows queued: Culpeper Chamber (re-queued), Fishburne Military School (Waynesboro), Harrisonburg Fire Dept, Lexington Fire Dept, RCHS Athletics (Lexington) — plus the 8 still pending from 11/3.
+- Skipped on purpose: Waynesboro Library AI-filter post (topic can turn into an argument); Roanoke Fire-EMS smoke-alarm post (older than 48 h).
+- Watchlist: 4 resolved (Fishburne Military School, Harrisonburg Fire Department, Rockbridge County HS → athletics page, Lexington Fire Department). Not found +1 attempt: Harrisonburg HS Blue Streaks (search returned stale results). 13 pages re-checked (last_checked/last_post_seen). Shenandoah Valley Partnership newest post 10/22 (not dormant yet).
+- Needs a person (still open from 11/3): Valley Pawn- Harrisonburg Va page address still shows "Virginia Beach" in Facebook search — fix in About → Contact info.
+- Replies on own pages: not swept (POST mode only). Tab closed.
+- Totals this run: comments 0 (4 new queued, 6 pending), shares 0 (2 queued), replies 0, follows 0 (5 new queued, 13 pending), new pages resolved 4.
+
 ## 2026-11-03 (daily PREP run, 12:42–13:05 ET, level 1 all pages) — picks queued, nothing published by this run
 - Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. Election Day: skipped every election/closing post (Lexington city offices, Waynesboro Parks closing, chamber vote graphic).
 - Comments queued for the next POST chat (1/page/day): Culpeper → Visit Culpeper (Culpeper Battlefields State Park photo); Lexington → Rockbridge Regional Libraries (Japanese Culture Day, free lessons); Brand → Shenandoah National Park (B.A.R.K. Ranger pets post). Still pending from 11/2: Roanoke → Rail Yard Dawgs Paint the Ice (expires 11/4 12:00); Harrisonburg → Skeleton Festival album (expires 11/4 10:50); Waynesboro → Waynesboro.Com pea soup (EXPIRES TODAY 18:45) with a backup pick on Waynesboro Parks & Rec (Sunset Park / trails post) if it lapses.

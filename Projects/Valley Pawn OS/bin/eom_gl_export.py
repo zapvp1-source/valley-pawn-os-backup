@@ -149,14 +149,32 @@ def drive_folder(max_depth=6):
                 continue
             for cur, dirs, _files in os.walk(top):
                 depth = cur[len(top):].count(os.sep)
-                if "Accounting Exports" in dirs:
-                    return os.path.join(cur, "Accounting Exports")
+                hit = [d for d in dirs if d.strip() == "Accounting Exports"]   # 2026-11-04: the Drive name is "Accounting Exports " (trailing space)
+                if hit:
+                    return os.path.join(cur, hit[0])
                 if depth >= max_depth:
                     dirs[:] = []
     return None
 
 
+def drive_only(ym):
+    """--drive-only YYYY-MM (2026-11-04): copy an already-built '<ym> Consolidated GL.xlsx' into Accounting Exports and
+    record it in the state file. No pull, no DM."""
+    wb = os.path.join(OUT, "%s Consolidated GL.xlsx" % ym)
+    sp = os.path.join(STATE_DIR, "%s.json" % ym)
+    st = json.load(open(sp)) if os.path.exists(sp) else {}
+    d = drive_folder()
+    if not (d and os.path.exists(wb)):
+        print("DRIVE-ONLY: %s" % ("workbook missing" if not os.path.exists(wb) else "Accounting Exports folder not found")); return 2
+    shutil.copy2(wb, os.path.join(d, os.path.basename(wb)))
+    st["drive"] = os.path.join(d, os.path.basename(wb)); st.pop("drive_error", None)
+    json.dump(st, open(sp, "w"), indent=1)
+    print("DRIVE-ONLY copied to", st["drive"]); return 0
+
+
 def main():
+    if "--drive-only" in sys.argv:
+        return drive_only(sys.argv[sys.argv.index("--drive-only") + 1])
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     render, no_pull = "--render" in sys.argv, "--no-pull" in sys.argv
     start, end = month_arg(args)
@@ -225,6 +243,15 @@ def main():
             (" — in the Accounting Exports folder on the shared drive" if drive else " — saved locally (the shared-drive folder was not reachable)") if not render else ""))
         lines.append("Not posted to QuickBooks — the file is ready for your review and entry. The sales tax sheet picks up these same numbers this morning.")
     dm = "\n".join(lines)
+    if "--correct" in sys.argv and not missing:   # 2026-11-04: re-export after Bravo released a late day
+        try:   # keep the original run's posting results; this run only rebuilt the file from a fresh ledger
+            st["posting"] = json.load(open(os.path.join(STATE_DIR, "%s.json" % ym))).get("posting", st["posting"])
+        except (OSError, ValueError):
+            pass
+        st["corrected"] = dt.datetime.now(ET).isoformat()
+        dm = ("Corrected month-end books for %s: the combined general ledger file (%s) has been rebuilt so it now includes every "
+              "day of the month — the store system released the last day late, after the first file went out. "
+              "Use this version. Not posted to QuickBooks." % (month, os.path.basename(wb)))
     st["dm"] = dm
     json.dump(st, open(os.path.join(STATE_DIR, "%s%s.json" % (ym, "-render" if render else "")), "w"), indent=1)
     if render:

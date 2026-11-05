@@ -377,7 +377,12 @@ def prove(st, ym):
     if unfinished:
         log("prove %s: %d store-day(s) still pending (%s...) - proof deferred" % (ym, len(unfinished), ", ".join("%s %s" % u for u in unfinished[:3])))
         return None
-    if any(not os.path.exists(gl_out(d1, s)) or dt.datetime.fromtimestamp(os.path.getmtime(gl_out(d1, s))).date() <= d1 for s in STORES):
+    # 2026-11-04: the month file must also be NEWER than the last day posted in it — Oct's was pulled 11/1, Bravo released
+    # Saturday 10/31 on 11/4, so the old file was one day short and every re-prove failed. Re-pull it in that case.
+    last_post = max([dt.datetime.fromisoformat(r["posted_at"][:19]) for k, v in st["days"].items() if k[:7] == ym
+                     for r in v.values() if isinstance(r, dict) and r.get("posted_at")] or [dt.datetime(2000, 1, 1)])
+    stale = lambda s: dt.datetime.fromtimestamp(os.path.getmtime(gl_out(d1, s))) < last_post
+    if any(not os.path.exists(gl_out(d1, s)) or dt.datetime.fromtimestamp(os.path.getmtime(gl_out(d1, s))).date() <= d1 or stale(s) for s in STORES):
         if now().date() >= d1 + dt.timedelta(days=3) and not NO_PULL:
             bravo_pull("post-to-accounting-gl", "%s..%s" % (d0, d1), STORES, "month-" + ym)
         if any(not os.path.exists(gl_out(d1, s)) for s in STORES):
@@ -540,12 +545,39 @@ def main():
                 reprove(st, ym, bad); bad = prove(st, ym)
             if bad == []:
                 st.setdefault("proven", {})[ym] = now().isoformat(timespec="seconds"); save_state(st)
+                if not RENDER:
+                    late_reexport(st, ym)
             elif bad:
                 st.setdefault("prove_fail", {})[ym] = st.get("prove_fail", {}).get(ym, 0) + 1; save_state(st)
                 if st["prove_fail"][ym] == 3:
                     ledger("The %s daily Bravo entries do not add up to Bravo's monthly ledger for %s after re-pulling; nothing was forced." % (ym, ", ".join(NAME[s] for s, _ in bad)))
         m = (m.replace(day=28) + dt.timedelta(days=4)).replace(day=1)
+    if not RENDER and not only:
+        for ym in sorted(st.get("proven", {})):
+            late_reexport(st, ym)
     write_status(st, summary)
+
+
+def late_reexport(st, ym):
+    """2026-11-04: if the month-end GL export / sales tax row for <ym> ran BEFORE the month's last store-day was posted
+    (Oct 2026: exported 11/1, Bravo released Sat 10/31 on 11/4), redo both from the freshly proven month file, once,
+    each sending its own 'Corrected' DM. Never touches QuickBooks (both scripts are file + DM only)."""
+    sp = os.path.join(OS_DIR, "fleet", "state", "eom_gl_export", ym + ".json")
+    if not os.path.exists(sp) or st.get("reexported", {}).get(ym):
+        return
+    try:
+        ran = dt.datetime.fromisoformat(json.load(open(sp))["run"][:19])
+    except (OSError, ValueError, KeyError):
+        return
+    last_post = max([dt.datetime.fromisoformat(r["posted_at"][:19]) for k, v in st["days"].items() if k[:7] == ym
+                     for r in v.values() if isinstance(r, dict) and r.get("posted_at")] or [ran])
+    if last_post <= ran:
+        return
+    here = os.path.dirname(os.path.abspath(__file__))
+    for script in ("eom_gl_export.py", "sales_tax_monthly.py"):
+        p = subprocess.run([sys.executable, os.path.join(here, script), ym, "--no-pull", "--correct"], capture_output=True, text=True, timeout=1800)
+        log("late re-export %s %s rc=%d %s" % (ym, script, p.returncode, (p.stdout or p.stderr).strip()[-200:]))
+    st.setdefault("reexported", {})[ym] = now().isoformat(timespec="seconds"); save_state(st)
 
 
 def write_status(st, summary):

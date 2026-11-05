@@ -271,8 +271,23 @@ def launch(p, headless=False, args=(), window_size=None, **kw):
     if window_size:
         a = [x for x in a if not x.startswith("--window-size=")] + ["--window-size=%d,%d" % tuple(window_size)]
     a += [x for x in args if x not in a]
-    return p.chromium.launch_persistent_context(PROFILE, channel=CHANNEL, headless=headless,
-                                               ignore_default_args=IGNORE_DEFAULT_ARGS, args=a, **kw)
+    try:
+        return p.chromium.launch_persistent_context(PROFILE, channel=CHANNEL, headless=headless,
+                                                   ignore_default_args=IGNORE_DEFAULT_ARGS, args=a, **kw)
+    except Exception as e:
+        # 2026-11-04: 10:28/10:30 launches timed out on 11/3 and 11/4 while a launch at 11:37 worked. Clear any Chrome
+        # left holding this profile (never Joshua's own Chrome — matched on this --user-data-dir only), wait, retry once.
+        if "Timeout" not in str(e):
+            raise
+        for pid in running_pids():
+            try:
+                os.kill(int(pid), 15)
+            except (OSError, ValueError):
+                pass
+        wait_closed(timeout=30)
+        time.sleep(20)
+        return p.chromium.launch_persistent_context(PROFILE, channel=CHANNEL, headless=headless,
+                                                   ignore_default_args=IGNORE_DEFAULT_ARGS, args=a, **kw)
 
 
 def first_page(ctx):

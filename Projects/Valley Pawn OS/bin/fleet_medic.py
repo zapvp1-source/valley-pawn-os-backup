@@ -318,6 +318,19 @@ def main():
 
         # R5 — macOS permission problem: only a person can fix it
         if exit_code == "126":
+            # 2026-11-04: on 11/1-11/4 18 agents logged exit 126 and each was queued for Joshua, but the err logs say
+            # "/bin/bash: <script>: Interrupted system call" — macOS interrupted the read of the script itself, so the
+            # job never started, and the same agents succeed on their next run. Re-run it (cooldown + 3/24 h cap from
+            # can_restart); only a 126 that survives the restarts is a real permission problem for the human queue.
+            ok, why = can_restart(lbl)
+            if ok:
+                good, out = kickstart(lbl)
+                restarts.setdefault(lbl, []).append(NOW.isoformat())
+                record("restart", lbl, "macOS interrupted the job before it started (exit 126) — re-ran it" + ("" if good else ": " + out), good, observe)
+                actions += 1
+                continue
+            if why != "out_of_retries":
+                continue
             key = "tcc-" + a["name"]
             if key not in flags:
                 if human_add(key, "Mac permission: background job '%s' is blocked by macOS (exit 126). "

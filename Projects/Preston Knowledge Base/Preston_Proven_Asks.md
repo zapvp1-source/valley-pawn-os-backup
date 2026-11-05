@@ -1,42 +1,43 @@
-# What Preston can ask Claude — proven list (as of 2026-10-24)
+# What Preston can ask Claude — known workflows (as of 2026-11-04)
 
-Source: every request Preston posted in #preston-claude since 2026-09-01 and the reply that closed it.
-"Proven" = delivered correctly more than once, or once with no follow-up problem.
+Everything Preston has asked Claude since 2026-07-14, in #preston-claude and his DMs with Joshua.
+Proven = done for him, with the reply on record. Ready = the setup that does it is built and has been used elsewhere, but not yet for this exact request.
 
-## #preston-claude — jobs (type it, Claude does it, replies in thread)
+## Write-ups & HR
+- Proven: "Claude, I need a ROC/ROW/30-60-90 for <name> at <store>. Send it in Gusto for signature." (last 10/26: Brendon's 30-60-90, signed same day)
+- Proven: "Claude, upload this to <name>'s Gusto. No signature needed." (10/26: Brendon's gun safety certificate)
+- Ready: "Claude, add <new hire> on Slack to the same channels as <person>."
 
-### Proven
-| Say | Evidence |
-|---|---|
-| Claude, send me today's interview list (name, phone, store) | 15+ times, last 10/21 |
-| Claude, send me tomorrow's interviews | 9/8 |
-| Claude, reschedule today's interviews for tomorrow | 10/19 |
-| Claude, take <name> off the schedule — already interviewed / not interested / not eligible for rehire | 8+ times, last 10/19 |
-| Claude, I reopened <store> ads. Book interviews <hours> starting <day> | 3 times, last 10/13 |
-| Claude, pause Indeed outreach on <stores> | 9/16 |
-| Claude, don't schedule interviews for me before <time> | 9/11 |
-| Claude, contact <names> for in-person interviews with <manager> at <store>, <days/hours> | 9/2 |
-| Claude, send me the check amounts for today's payday | 3 times, last 9/25 (Gusto read; non-Davis staff only) |
-| Claude, put out a policy for everyone to sign: <text> | 9/17, 10/14 (goes in the monthly Gusto policy packet) |
+## Jewelry & reports
+- Proven: "Claude, group the jewelry counts as Pendants / Necklaces / Rings / Earrings / Bracelets." Posts nightly in #jewlery-counts, checked against Bravo.
+- Proven: "Claude, I built a Bravo report called <name>. Use it for <purpose>." (Forfeiture win-back runs every Sunday)
+- Proven: "Claude, can you see if we missed any callbacks?"
 
-### Goes to Joshua first (by design)
-- Anything that spends money (e.g., slatwall order 10/9, paid Indeed sponsorship)
-- Anything new the public sees; permanent deletes
+## eBay
+- Proven: "Claude, these listings are wrong (title / photos / tool only). Fix them." Weekly audit at all 5 stores.
+- Ready: "Claude, revert eBay item <#> back to the original title."
+- Proven: "Claude, can you see if we countered or declined eBay offers?" (Best Offer off on 93 listings, kept off weekly)
 
-### Not in Slack / not ready
-- Passwords — never over Slack (10/15 reply). NOTE: 10/16 a password WAS posted — HUMAN_QUEUE row 10/24.
-- Gusto changes (pay rate/salary switch, uploading a document) — held on Joshua's Gusto sign-in (10/11–10/13).
-- Off-limits by rule: P&L, QuickBooks, real estate, Davis family pay, company-wide totals.
+## Payroll
+- Proven: "Claude, send me the check amounts for today's payday." (non-Davis staff only)
+
+## Policy
+- Proven: "Claude, put out a policy for everyone to sign: <text>." Goes out on the monthly Gusto Policy Day.
+
+## Hiring (all Proven)
+- Today's or tomorrow's interview list; reschedule; take someone off; reopen or pause a store; interview hours; contact named candidates for in-person interviews.
+
+## Website & FFL
+- Ready: "Claude, add a 'For Shipment Only. No face to face transfers' watermark to our FFLs on the website."
+
+## Goes to Joshua first
+- Spending money, pay changes, new public accounts (e.g., FFL listings on Palmetto State Armory / GunBroker).
+
+## Never in Slack
+- Passwords.
 
 ## #ask-goldilocks — store questions (live since 10/22, any employee)
-Answers only from KB_CURRENT (322 rules), quotes Preston + date, flags conflicts, says "ask Preston" on gaps. Tested:
-- 14k chain, 12.4 dwt — melt and what can we pay?
-- Gold bar passed the Kee tester — good to buy?
-- Layaway no payment in 65 days — what do I do?
-- Can a 19-year-old redeem a pawned AR-15?
-- When do we scrap aged jewelry? (shows the conflict)
-- Loan on a Rolex Submariner? (routes to Preston)
-- Sick, can't make my shift — who do I tell?
+Answers only from Preston's 352 rules, quoting him with the date. It flags conflicting answers and says "ask Preston" when he hasn't ruled.
 
-## Weekly upkeep
-Mondays 9:05 in #preston-claude: up to 10 of his quotes; he replies ok / no / the right answer (first run 10/26).
+## Weekly upkeep (Proven)
+Mondays at 9:05 in #preston-claude: up to 10 of his quotes come back to him. He answered the first one 10/26 (aged inventory and jewelry scrap rules now confirmed); 11 rules are confirmed by him so far.

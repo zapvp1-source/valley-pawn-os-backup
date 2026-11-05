@@ -239,6 +239,9 @@ for _dom, _label, _pat, _task, (_h, _m), (_eh, _em) in W3B:
     if today.day == _dom:
         JOBS.append((_label, _pat, at(_h, _m), at(_eh, _em),
                      (lambda t: lambda s: receipt_since(t, s) or file_since(LOGF(t), s))(_task)))
+# 2026-11-04: the 19:20 texting scorecard DM simply never ran on 11/3 (no log line) and nothing caught it up
+JOBS.append(("com.valleypawn.texting-scorecard", "texting_scorecard.py", at(19, 20), at(23, 30),
+             lambda s: receipt_since("texting-scorecard", s)))
 if today.day in (1, 2, 3):   # MobilePawn participation fires 1st-3rd 09:15 and posts once (POSTED.txt)
     JOBS.append(("com.valleypawn.mobilepawn-participation", "mobilepawn_participation.py", at(9, 15), at(17, 0),
                  lambda s: receipt_since("monthly-mobilepawn-participation", s) or file_since(LOGF("monthly-mobilepawn-participation"), s)))
@@ -272,6 +275,9 @@ RETRY = {
     "com.valleypawn.ceo-monthly-scorecard": (lambda s: receipt_since("ceo-monthly-scorecard", s), at(22, 0)),
     "com.valleypawn.bonus-month-close": (lambda s: os.path.exists(os.path.join(BONUS_OUT, _prev, "close.json")), at(22, 0)),
     "com.valleypawn.gun-audit-monthly": (lambda s: receipt_since("monthly-gun-audit-report", s), at(22, 0)),
+    # 2026-11-04: browser checks whose 10:2x launch timed out two days running — done = the post itself
+    "com.valleypawn.cloudcover-check": (lambda s: receipt_since("daily-cloudcover-check", s), at(13, 20)),
+    "com.valleypawn.dress-code-check": (lambda s: receipt_since("daily-dress-code-check", s), at(14, 25)),
     # Monday weekly reports (2026-11-02): done = the post itself, retried until 18:00
     "com.valleypawn.monday-compile": (lambda s: _comms_posted("employee-performance")
                                       and (receipt_since("monday-store-rankings", s) or receipt_since("weekly-store-kpis", s)), at(18, 0)),

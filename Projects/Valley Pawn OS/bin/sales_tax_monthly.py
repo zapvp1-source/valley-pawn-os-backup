@@ -190,7 +190,10 @@ def main():
     text = "\n".join(dm)
     if render:
         print("=== RENDER ONLY ===\nrow %s (%s)\n%s" % (row, "already filled" if existing else "empty", text)); return 0
-    if existing:
+    if existing and "--correct" in sys.argv:
+        # 2026-11-04: --correct rewrites an already-filled month (the Oct GL was pulled before Bravo released 10/31)
+        text = "Corrected (now includes Saturday Oct 31, which the store system released late): " + text if month == "October 2026" else "Corrected: " + text
+    elif existing:
         print("row %d for %s already filled — nothing written" % (row, month)); return 0
     if guard_on(AGENT):   # rehearsal: the workbook is a real write the publish guard cannot divert
         print("DRY RUN — row %d for %s NOT written; would write %s" % (row, month, {s: figs[s] for s in STORES}))

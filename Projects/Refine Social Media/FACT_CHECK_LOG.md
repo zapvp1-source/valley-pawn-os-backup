@@ -181,3 +181,17 @@ Note: the 11/10 batch will come into the 36-hour window on the 11/9 run.
 - VERIFIED Fri 11/6/2026 7:00 PM Waynesboro hosts Riverheads, a Shenandoah region/district game. Sources: https://www.maxpreps.com/va/waynesboro/waynesboro-little-giants/football/schedule/ and https://www.maxpreps.com/va/staunton/riverheads-gladiators/football/schedule/ (2026-27), plus https://prepredzone.com/game/va/waynesboro-vs-riverheads-november-6-2026/ . No postponement found.
 - Brand bracket ("winners carried forward until the end of November"): this is our own campaign, not an outside dated fact. Left unchanged.
 - Posts edited: 0. Unverifiable claims: none. PUBLISHED-WRONG: none.
+
+## 2026-11-04 (Wed) daily run, ~7:45 AM ET
+Posts checked: 30 scheduled in the next 36h (Nov 4 2:00 PM to Nov 5 3:10 PM ET). Time-sensitive posts: 10 (Waynesboro FB+GBP game, Culpeper FB+GBP games, Harrisonburg FB+GBP game, Roanoke FB+GBP Mill Mountain Star/Veterans Day, Waynesboro FB+GBP Wayne Theatre 100th/season).
+Claims verified:
+- Fri 11/6/2026 7:00 PM Waynesboro hosts Riverheads. Sources: https://www.maxpreps.com/va/waynesboro/waynesboro-little-giants/football/schedule/ ("vs Riverheads*", 2026-27, updated 10/22) ; https://www.maxpreps.com/va/staunton/riverheads-gladiators/football/schedule/ ("@Waynesboro*"). No cancel/postpone. Left as is.
+- Fri 11/6/2026 7:00 PM Culpeper County at Caroline. Source: https://www.maxpreps.com/va/milford/caroline-cavaliers/football/schedule/ ("vs Culpeper County*", 2026-27, updated 10/16). Left as is.
+- Fri 11/6/2026 7:00 PM Eastern View at Spotsylvania. Sources: https://www.maxpreps.com/va/culpeper/eastern-view-cyclones/football/schedule/ ("@Spotsylvania*", updated 10/21) ; https://www.maxpreps.com/va/spotsylvania/spotsylvania-knights/football/schedule/ ("vs Eastern View*", updated 10/22). Left as is.
+- Fri 11/6/2026 7:00 PM Harrisonburg hosts Broadway. Sources: https://www.nfhsnetwork.com/events/harrisonburg-high-school-harrisonburg-va/gam14eb09a3fc ("UPCOMING Fri, Nov 6 7:00 PM", Harrisonburg, VA) ; https://www.si.com/high-school/stats/virginia/football/teams/255668-harrisonburg-blue-streaks/games (2026-27 row "vs Broadway", Harrisonburg, VA). Broadway hosted in 2025, so 2026 at Harrisonburg is consistent. No change noted. MaxPreps pages for both schools failed to load. Left as is.
+- Mill Mountain Star lit red, white and blue on Veterans Day; first lit Nov 23, 1949; 88.5 ft. Sources: https://www.roanokeva.gov/CivicAlerts.aspx?AID=2422 (City of Roanoke, 6/15/2026: patriotic colors on Memorial Day, Flag Day, July 4, Sept 11, Veterans Day) ; https://en.wikipedia.org/wiki/Roanoke_Star . Left as is.
+- Wayne Theatre opened Jan 18, 1926 (100th year in 2026), deeded to the City in 1999, 2026-27 season "For the Love". Sources: https://www.waynetheatre.org/about-us ; https://www.waynetheatre.org/performances ; https://virginialiving.com/culture/wayne-theatre-celebrates-its-100th-and-10th-anniversaries/ . Seat counts (650/450) are evergreen history, not re-checked. Left as is.
+- Store hours in product posts (Waynesboro generator FB+GBP, Culpeper mower GBP, Lexington generator GBP, Roanoke saw GBP, Harrisonburg MacBook FB "open today until 6" on a Thursday, GBP) match standard hours.
+- Skipped as evergreen/product: Lexington mural + foliage posts, Roanoke/Harrisonburg history posts, Culpeper Depot and Davis Street posts, Brand/BrandTwitter warranty posts, Brand This-or-That.
+Posts edited: none.
+Unverifiable: none left in posts. Published-wrong: none.
