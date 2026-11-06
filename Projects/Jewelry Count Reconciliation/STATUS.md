@@ -2539,3 +2539,43 @@ Jewelry Count — Wednesday 11/4 (expected = system on-hand, counted = PM count 
 | WAY | Necklaces | 77 | 77 | 0 |
 | **WAY Total** | | **603** | **602** | **-1** |
 
+
+## RUN RECORD — 2026-11-05 (Thursday) — native jewelry-onhand-nightly-pull
+
+Open: CUL HAR LEX ROA WAY. Bravo freeze-window CSVs: all open stores. Sheets: CUL ok (Sandi-Cole, 18:16); HAR ok (Walker-Tapley, 18:20); LEX ok (Uriah, 18:13); ROA ok (Benjie-Moore, 18:30); WAY ok (Chadd, 18:12).
+
+Jewelry Count — Thursday 11/5 (expected = system on-hand, counted = PM count sheet)
+
+| Store | Category | Expected | Counted | Variance |
+|---|---|---|---|---|
+| CUL | Rings | 712 | 681 | -31 |
+| CUL | Bracelets | 132 | 126 | -6 |
+| CUL | Earrings | 180 | 179 | -1 |
+| CUL | Pendants | 251 | 248 | -3 |
+| CUL | Necklaces | 154 | 154 | 0 |
+| **CUL Total** | | **1429** | **1388** | **-41** |
+| HAR | Rings | 422 | 422 | 0 |
+| HAR | Bracelets | 50 | 50 | 0 |
+| HAR | Earrings | 47 | 47 | 0 |
+| HAR | Pendants | 97 | 97 | 0 |
+| HAR | Necklaces | 119 | 121 | +2 |
+| **HAR Total** | | **735** | **737** | **+2** |
+| LEX | Rings | 304 | 304 | 0 |
+| LEX | Bracelets | 41 | 41 | 0 |
+| LEX | Earrings | 43 | 43 | 0 |
+| LEX | Pendants | 49 | 49 | 0 |
+| LEX | Necklaces | 44 | 44 | 0 |
+| **LEX Total** | | **481** | **481** | **0** |
+| ROA | Rings | 603 | 604 | +1 |
+| ROA | Bracelets | 134 | 134 | 0 |
+| ROA | Earrings | 76 | 76 | 0 |
+| ROA | Pendants | 169 | 167 | -2 |
+| ROA | Necklaces | 149 | 149 | 0 |
+| **ROA Total** | | **1131** | **1130** | **-1** |
+| WAY | Rings | 343 | 343 | 0 |
+| WAY | Bracelets | 49 | 49 | 0 |
+| WAY | Earrings | 60 | 60 | 0 |
+| WAY | Pendants | 71 | 71 | 0 |
+| WAY | Necklaces | 77 | 77 | 0 |
+| **WAY Total** | | **600** | **600** | **0** |
+

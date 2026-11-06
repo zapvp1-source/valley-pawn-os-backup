@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-11-02 09:05 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-11-05 22:11 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -185,6 +185,12 @@ PRESTON SAID: "I had talked to this guy a few weeks ago and had gone back and fo
 SOURCE: #harrisonburg-funds (C03BWRKEDUZ) | 2026-01-02 | https://valleypawnworkspace.slack.com/archives/C03BWRKEDUZ/p1767379817341119
 id: melt-vs-retail-decision-98691922
 
+### [MEDIUM] metals-deal-approval-melt-value
+RULE: Preston will not approve a metals deal when the submitted melt/resale value is incorrect.
+PRESTON SAID: "The melt/resale value isn't correct"
+SOURCE: #preston-claude (Preston Peters, Operations Manager) | 2026-11-05 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1793900129616829?thread_ts=1793900129.616829&cid=C0BGXSTT4TY
+id: metals-deal-approval-melt-va-4050cf2e
+
 ### [MEDIUM] pay-percentage-ceiling-melt
 RULE: Preston treats 90% of melt as above what Valley Pawn should pay; on the same item 80% of melt was the amount he was weighing.
 PRESTON SAID: "Somewhat depends on what it is, the $102 amount is 80% $123 is 90% which is more than I think we should pay. Melt is 144.85 currently"
@@ -329,10 +335,11 @@ id: ram-testing-before-buying-00ee62d3
 SECTION: DIAMONDS, GEMSTONES & COLORED STONES
 ==============================================================================
 
-### [HIGH] bravo-stone-weight-estimation
+### [VERIFIED] bravo-stone-weight-estimation
 RULE: Bravo estimates and breaks out stone weight from total weight; that breakdown is what makes the "with stones" bucket workable. Outside tools that value colored-stone jewelry off total weight overstate value.
 PRESTON SAID: "It's also not taking into account the colored stone weight vs the gold weight (the weight is altogether) bravo breaks down that difference to account for the stone weight in the system."
 SOURCE: DM Joshua<->Preston (D03C7RBGY56) | 2025-04-02 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1743609778643499
+PRESTON'S CORRECTION (2026-11-05): Preston 11/5/26: Bravo accounts for colored stones by reducing the gold value; it does not display a separate stone weight.
 id: bravo-stone-weight-estimatio-fab0f465
 
 ### [HIGH] scrap-buckets-stones-vs-no-stones
@@ -460,13 +467,14 @@ id: pricing-damaged-gold-jewelry-3788295a
 SECTION: SCRAP, BUCKETS & REFINING
 ==============================================================================
 
-### [HIGH] assay-variance-by-store
+### [VERIFIED] assay-variance-by-store
 RULE: Bravo's per-store assay estimate differs from the refiner's whole-lot averaged assay, so one store's stone-scrap will come in above Bravo's estimate and another store's below. This is expected, not an error.
 PRESTON SAID: "So it looks like it was done correctly based on what split was calculated. The stone scrap came in higher than what bravo estimated though. This is likely due to Roanoke bravo assay estimate being lower than what the total averaged out to be from the refinery. It will show other stores lower than estimated by bravo somewhere."
 SOURCE: DM Joshua<->Preston (D03C7RBGY56) | 2026-08-05 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1785964182957659
+PRESTON'S CORRECTION (2026-11-05): Preston 11/5/26: not a general rule. That was one instance caused by applying the combined (all-store) gold assay instead of each store's expected assay when finalizing the gold bucket payouts. Payouts should account for each store's expected assay.
 id: assay-variance-by-store-eba701ce
 
-### [HIGH] bravo-scrap-category-rule
+### [VERIFIED] bravo-scrap-category-rule
 RULE: In Bravo the "Scrap" jewelry category may only be used for items NOT going out for sale; "miscellaneous jewelry" must never be used. Sales-floor jewelry is limited to pendants, charms, brooches, chains, necklaces, rings, earrings, bracelets.
 PRESTON SAID: "Scrap category should only be used if it is not going out for sale, miscellaneous jewelry should never be used."
 SOURCE: #preston-claude (C0BGXSTT4TY) | 2026-08-14 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1786713377559199
@@ -789,22 +797,23 @@ PRESTON SAID: "Please make sure form is fully filled out Benjie. Missing resale/
 SOURCE: #roanoke-funds (C063K8E02TW) | 2026-08-10 | https://valleypawnworkspace.slack.com/archives/C063K8E02TW/p1786373892219799
 id: approval-form-required-field-17c67b68
 
-### [HIGH] approval-form-required-fields
+### [VERIFIED] approval-form-required-fields
 RULE: Preston will not approve a metals deal where the submitted melt/resale value is wrong — he asks for the melt value alone and checks the karat used.
 PRESTON SAID: "The melt/resale value isn't correct"
 SOURCE: #lex-funds (C03B3K5DL6T) | 2025-10-30 | https://valleypawnworkspace.slack.com/archives/C03B3K5DL6T/p1761859482227059
 id: approval-form-required-field-6dd3502b
 
-### [HIGH] approval-package-contents
+### [VERIFIED] approval-package-contents
 RULE: For a funds/deal approval Preston wants photos of the items and the customer loyalty report.
 PRESTON SAID: "Can you send me pictures of the items and customer loyalty report?"
 SOURCE: #roanoke-funds | 2025-07-19 | https://valleypawnworkspace.slack.com/archives/C063K8E02TW/p1752941656107189
 id: approval-package-contents-c57eddc9
 
-### [HIGH] below-50-percent-approval-heuristic
+### [VERIFIED] below-50-percent-approval-heuristic
 RULE: Preston will approve a gold deal he could not negotiate down as long as it is still below 50% (of melt).
 PRESTON SAID: "I'm okay with this if we can fund. Tried to negotiate lower but he doesn't want to. Still below 50%"
 SOURCE: #harrisonburg-funds (C03BWRKEDUZ) | 2026-02-23 | https://valleypawnworkspace.slack.com/archives/C03BWRKEDUZ/p1771877624730849
+PRESTON'S CORRECTION (2026-11-05): Preston 11/5/26: that was a one-off deal, not a standard. Being under 50% of melt is not by itself an approval rule — send it to Preston.
 id: below-50-percent-approval-he-69474b54
 
 ### [HIGH] buy-vs-pawn-presentation
@@ -953,6 +962,12 @@ RULE: When the store can't take in new items, tell customers it is unable to pro
 PRESTON SAID: "I wouldn't go into detail why I'm just saying stuff, tell them where stuff's down or unable to process new stuff at the moment."
 SOURCE: zoom-call:0be5295f1e7646aba4f0763590cc732f | 2026-10-19 | UNK Chadd McClintic
 id: customer-messaging-unable-to-fa7c3430
+
+### [MEDIUM] deal-approval-required-documents
+RULE: When requesting funds or deal approval from Preston, send photos of the items and the customer loyalty report.
+PRESTON SAID: "Can you send me pictures of the items and customer loyalty report?"
+SOURCE: #preston-claude (Preston Peters, Operations Manager) | 2026-11-05 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1793900129616829?thread_ts=1793900129.616829&cid=C0BGXSTT4TY
+id: deal-approval-required-docum-aaefaca6
 
 ### [MEDIUM] designer-handbag-loan-judgment
 RULE: Example of Preston's designer handbag LTV: $600-700 loan against ~$1,300 used resale with box, papers and original receipt (~46-54%), against a customer asking $1,000.
@@ -1123,7 +1138,7 @@ PRESTON SAID: "Cuisinart toaster oven - Generally don't want any appliance items
 SOURCE: #loans-and-buys | 2024-04-18 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1713447001008929
 id: appliances-new-in-box-only-32b0099a
 
-### [HIGH] assault-firearm-age-21
+### [VERIFIED] assault-firearm-age-21
 RULE: Effective immediately under VA HB 1525 (emergency clause), no "assault firearm" may be transferred to a buyer under 21 — including a pawned item being redeemed. Interim rule: anything that is not a standard hunting rifle or shotgun is not transferable to under-21.
 PRESTON SAID: "Team, effective immediately, we will not be able to transfer any "assault firearms" to buyers under the age of 21. Bill HB 1525 was signed into effect containing an "emergency" clause which puts this into effect immediately rather than July 1. 
 
@@ -1131,9 +1146,10 @@ I will work working on getting a breakdown on what is classified as an "assault 
 
 If you have any questions on this please reach out to me."
 SOURCE: #compliance | 2026-04-27 | https://valleypawnworkspace.slack.com/archives/C04NZ3GGMPH/p1777315837971889
+PRESTON'S CORRECTION (2026-11-05): Still true as of 11/5/26 (Preston).
 id: assault-firearm-age-21-cab2cae2
 
-### [HIGH] assault-firearm-exemptions
+### [VERIFIED] assault-firearm-exemptions
 RULE: Receivers are exempt from the assault-firearm ban and can still be transferred. Rimfire-ammo firearms are not included in the ban, but ammo capacity limits still apply.
 PRESTON SAID: "Good morning everyone. Some additional clarification on the Assault Firearms.
 
@@ -1141,19 +1157,27 @@ Receivers are exempt from the ban. We can still transfer those.
 
 Rimfire ammo firearms are not included in the ban however ammo capacity limits do still apply."
 SOURCE: #compliance | 2026-07-03 | https://valleypawnworkspace.slack.com/archives/C04NZ3GGMPH/p1783083600779339
+PRESTON'S CORRECTION (2026-11-05): Preston 11/5/26: the broader assault-firearm ban these receiver/rimfire clarifications referred to is no longer in effect. The under-21 assault-firearm transfer restriction still is.
 id: assault-firearm-exemptions-79afd327
 
-### [HIGH] bows-crossbows-25-percent
+### [VERIFIED] bows-crossbows-25-percent
 RULE: Bows and crossbows taken in off-season must be bought at 25% of current resale, because it's 8-9 months to season and the item could be worth half its current value by then.
 PRESTON SAID: "Tenpoint stealth - $150 - Been seeing lots of bows and crossbows coming in at all stores. These are really difficult items for us to work with at this time of year. We need to get these CHEAP. 8-9 months before we will be back in season on these and we didn't sell through all of what we had going into the season as it is. Results in lots of money tied up. By cheap I mean 25% of current resell. Could be worth half of what it is now by next season."
 SOURCE: #loans-and-buys | 2024-01-30 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1706634811340329
 id: bows-crossbows-25-percent-1c355633
 
-### [HIGH] bravo-price-guide-report
+### [VERIFIED] bravo-price-guide-report
 RULE: Use the Bravo Price Guide report when pricing intake — it shows what other pawn shops are paying. A Glock 43x with $336 sold comps should have been bought at $250-275.
 PRESTON SAID: "Glock 43x - $330 - Sold listings as low as $336. Should have gotten into this for $250-275. Make sure we use the Bravo Price Guide report. This shows what other pawn shops are paying as well!"
 SOURCE: #loans-and-buys | 2024-01-13 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1705156200759969
+PRESTON'S CORRECTION (2026-11-05): Preston 11/5/26: yes — the Bravo Price Guide should be referenced when evaluating an item, along with our other sources (not by itself).
 id: bravo-price-guide-report-5941c1bf
+
+### [HIGH] assault-firearms-under-21-transfer
+RULE: Assault firearms may not be transferred to buyers under 21 under VA HB 1525, whose emergency clause took effect immediately rather than July 1. Preston confirmed this is still true as of 2026-11-05.
+PRESTON SAID: "Team, effective immediately, we will not be able to transfer any "assault firearms" to buyers under the age of 21. Bill HB 1525 was signed into effect containing an "emergency" clause which puts this into effect immediately rather than July 1."
+SOURCE: #preston-claude (Preston Peters, Operations Manager) | 2026-11-05 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1793900129616829?thread_ts=1793900129.616829&cid=C0BGXSTT4TY
+id: assault-firearms-under-21-tr-293cfa19
 
 ### [HIGH] broken-returns-location
 RULE: Returned items that cannot be sold go to a Bravo location called "Broken," priced at cost, and staged in a designated back area until inventory, when they are written off and disposed of.
@@ -1838,6 +1862,12 @@ This stuff has got to get marked down and moved out. Has everyone finished ident
 SOURCE: #aged-inventory-review | 2025-05-27 | https://valleypawnworkspace.slack.com/archives/C04NGH4FF35/p1748363420926549
 id: aged-over-two-years-e48e0b69
 
+### [MEDIUM] alarm-wont-arm-zone-fault
+RULE: If the alarm won't arm because of a faulted zone, photograph the keypad, bypass that zone for now, and arm the system as far as possible. Then send the photo to the security vendor, or call them, for troubleshooting.
+PRESTON SAID: "take a picture of of it bypass that zone for now and arm it to the degree that you can."
+SOURCE: zoom-call:1f669b5757ca442cba5c739549d4ad64 | 2026-11-05 | UNK Chadd McClintic
+id: alarm-wont-arm-zone-fault-5a6dea93
+
 ### [MEDIUM] authenticity-verification-required
 RULE: High-counterfeit-risk brands must be verified before intake — Preston names Benchmade knives and Gibson guitars specifically and asks what steps were taken.
 PRESTON SAID: "Gibson ES 135 - $400 - Are we sure this is not a counterfeit? What steps did we take to verify authenticity?"
@@ -1945,6 +1975,12 @@ RULE: Items sitting in first payment default are "dead money" that should be exp
 PRESTON SAID: "34 items in first payment default. Should be looking to expire these. Dead money that could be inventory here. Need these expired ASAP and put on the sales floor."
 SOURCE: #loans-and-buys | 2024-02-10 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1707577201000000
 id: fpd-is-dead-money-45804a79
+
+### [MEDIUM] gold-bucket-payout-per-store-assay
+RULE: When finalizing gold bucket payouts, account for each store's expected assay. Applying the combined gold assay to all stores caused a stone-scrap discrepancy in one instance.
+PRESTON SAID: "this was one instance of data from applying the combined gold assay for all stores and not taking into account per store expected assay when finalizing the gold bucket payouts"
+SOURCE: #preston-claude (Preston Peters, Operations Manager) | 2026-11-05 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1793900129616829?thread_ts=1793900129.616829&cid=C0BGXSTT4TY
+id: gold-bucket-payout-per-store-eaa1b6f6
 
 ### [MEDIUM] handgun-trade-exception-purchase-date
 RULE: The trade-in exception applies no matter when the traded-in handgun was originally bought, even 10 years ago. It still cancels out the new handgun on the form.
@@ -2182,6 +2218,12 @@ RULE: The 30/60/90 day action plan is reviewed in person with the employee. The 
 PRESTON SAID: "So I wanted them to go over with you in person and then there's one the sign saying that you acknowledge and understand it"
 SOURCE: zoom-call:2026-10-08_1225_Preston-to-JoshuaBurnett_8m57s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
 id: 30-60-90-plan-acknowledgment-fdaeb780
+
+### [LOW] assault-firearms-july-clarification-superseded
+RULE: The ban covered by the 2026-07-03 clarification (receivers exempt, rimfire not included, capacity limits still apply) is no longer in effect, so do not rely on that clarification. The restriction on assault weapons for under-21 buyers is still in effect.
+PRESTON SAID: "this ban is no longer in effect, the assault weapons for under 21 however is."
+SOURCE: #preston-claude (Preston Peters, Operations Manager) | 2026-11-05 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1793900129616829?thread_ts=1793900129.616829&cid=C0BGXSTT4TY
+id: assault-firearms-july-clarif-6d0dea3e
 
 ### [LOW] atf-police-department-transfer-account
 RULE: For a transfer coming from a police department, receive it from the department itself, creating an account for the department in the system if possible.
@@ -2560,5 +2602,5 @@ id: past-due-75-day-5-percent-ce-30eeab0b
 
 
 ==============================================================================
-COVERAGE: 352 entries - 11 verified by Preston, 169 high-confidence rules, 98 medium, 72 low, 2 superseded.
+COVERAGE: 358 entries - 21 verified by Preston, 160 high-confidence rules, 102 medium, 73 low, 2 superseded.
 ==============================================================================

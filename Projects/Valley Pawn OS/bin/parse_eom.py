@@ -11,7 +11,9 @@ def money(v):
 def parse_store_xlsx(path):
     ws=openpyxl.load_workbook(str(path), data_only=True).active
     MC=ws.max_column
-    def nn(r): return [x for x in [ws.cell(r,c).value for c in range(1,MC+1)] if x is not None]
+    def nn(r):
+        if not r: return []
+        return [x for x in [ws.cell(r,c).value for c in range(1,MC+1)] if x is not None]
     def find(lbl,col=1,after=0,exact=False):
         for r in range(after+1,ws.max_row+1):
             v=ws.cell(r,col).value

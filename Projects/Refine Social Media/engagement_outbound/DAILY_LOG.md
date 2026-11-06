@@ -1,5 +1,17 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-05 (daily PREP run, 12:42–12:58 ET, level 1 all pages) — picks queued, nothing published by this run
+- Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only ("Comment as Joshua Davis" seen on screen) — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings.
+- No POST-mode chat has run since 11/2 evening, so the queue carries forward; nothing in ledger.jsonl since 11/2.
+- Dropped from QUEUE (source post past 48 h / replaced): Culpeper → Visit Culpeper battlefield photo; Lexington → RRL Japanese Culture Day; Brand → SNP acorn-joke post (expires 17:50 today, replaced by today's SNP post).
+- Comments queued (1/page/day): Culpeper → Visit Culpeper (Downtown Holiday Open House window); Lexington → Rockbridge Regional Libraries (November book sale, Thu–Sat); Brand → Shenandoah National Park (today's "Fall who?" peak-color post); Roanoke BACKUP → Roanoke Public Libraries (kids' costume drop-off 11/5–11/14) in case the Veterans Parade pick lapses at 20:45 tonight. Still valid from 11/4: Roanoke (Veterans Parade, until 11/5 20:45), Harrisonburg (Visit Harrisonburg, until 11/6 11:50), Waynesboro (YMCA Turkey Trot, until 11/6 11:45).
+- Shares: still queued from 11/4 — Harrisonburg → Massanutten Regional Library Fandom Fest (Sat 11/7), Lexington → Lime Kiln Fall Volunteer Day (Sat 11/7). Brand: no event-type post fit this week. Roanoke, Waynesboro, Culpeper used this week's share.
+- Follows queued: + Northside High School (Roanoke). The 11/3 follows were re-dated so they don't age out (follows aren't time-sensitive). Pending per page: Culpeper 3, Waynesboro 2, Harrisonburg 2, Lexington 2, Roanoke 5.
+- Watchlist: 1 resolved (Northside High School → facebook.com/northsidehigh, 2.4K followers). Not found +1 attempt (now 2 each): Roanoke City Public Schools, VMI Keydets, State Theatre (Culpeper). 5 pages re-checked.
+- Needs a person (still open from 11/3): Valley Pawn- Harrisonburg Va page address still shows "Virginia Beach" in Facebook search — fix in About → Contact info.
+- Replies on own pages: not swept (POST mode only). Tab closed.
+- Totals this run: comments 0 (4 new queued), shares 0 (2 pending), replies 0, follows 0 (1 new queued, 14 pending), new pages resolved 1.
+
 ## 2026-11-04 (daily PREP run, 12:42–12:51 ET, level 1 all pages) — picks queued, nothing published by this run
 - Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. One brief Chrome-extension disconnect mid-run; reconnected on retry, no data lost.
 - Dropped from QUEUE (past 48 h, never posted late): Roanoke Rail Yard Dawgs, Harrisonburg Skeleton Festival, Waynesboro.Com pea soup, Waynesboro Parks backup, Brand B.A.R.K. Rangers (replaced). Culpeper Chamber follow re-queued.

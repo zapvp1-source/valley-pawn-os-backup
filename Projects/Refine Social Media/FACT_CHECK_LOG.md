@@ -195,3 +195,31 @@ Claims verified:
 - Skipped as evergreen/product: Lexington mural + foliage posts, Roanoke/Harrisonburg history posts, Culpeper Depot and Davis Street posts, Brand/BrandTwitter warranty posts, Brand This-or-That.
 Posts edited: none.
 Unverifiable: none left in posts. Published-wrong: none.
+
+## 2026-11-05 07:55 ET — daily fact check (window to 2026-11-06 19:40 ET)
+Posts checked: 38 (time-sensitive: 18; product/hiring/evergreen skipped: 20)
+
+Verified (source):
+- Harrisonburg HS hosts Broadway, Fri 11/6, 7 PM: https://www.nfhsnetwork.com/events/harrisonburg-high-school-harrisonburg-va/gam14eb09a3fc ; https://cardinalnews.org/2026/08/22/heres-the-complete-vhsl-football-schedule-for-2026/ ("Broadway at Harrisonburg")
+- Northside hosts Lord Botetourt 11/6 7:00 PM, last game on schedule: https://www.maxpreps.com/va/roanoke/northside-vikings/football/schedule/ (26-27)
+- Patrick Henry hosts Blacksburg 11/6 7:00 PM, last game on schedule: https://www.maxpreps.com/va/roanoke/patrick-henry-patriots/football/schedule/ (26-27)
+- Waynesboro hosts Riverheads 11/6 7:00 PM, last game on schedule: https://www.maxpreps.com/va/waynesboro/waynesboro-little-giants/football/schedule/ (26-27)
+- Eastern View @ Spotsylvania 11/6 7:00 PM: https://www.maxpreps.com/va/culpeper/eastern-view-cyclones/football/schedule/ (26-27)
+- Culpeper County @ Caroline 11/6: https://virginiaprepfootball.com/schools/culpeper-county-blue-devils/ ; Cardinal News (above)
+- W&L vs Shenandoah, Sat 11/7 1 PM, Wilson Field, Senior Day: https://generalssports.com/sports/football/schedule
+- VMI hosts The Citadel 11/14 (Military Classic of the South): https://fbschedules.com/vmi-announces-2026-football-schedule/ ; ESPN game 401868395
+- Mill Mountain Star red/white/blue on Veterans Day; 88.5 ft; first lit 11/23/1949: https://www.roanokeva.gov/CivicAlerts.aspx?AID=2422 ; https://en.wikipedia.org/wiki/Roanoke_Star
+- Wayne Theatre opened 1/18/1926, 100 years in 2026, 2026-27 season "For the Love": https://www.waynetheatre.org/performances ; https://www.waynetheatre.org/about-us
+
+Edited (all APPLIED):
+- 6ae8e9ae Harrisonburg FB 11/5: dropped unverified "navy, red and white" colors → "home game for the Blue Streaks"
+- 6ae8e98c Harrisonburg FB 11/6: dropped unverified "district game and regular-season finale"
+- 6ae8e994 GBP_Harrisonburg 11/6: dropped unverified "district matchup and regular-season finale"; added "at home in Harrisonburg"
+- 6ae8ea14 Roanoke FB 11/6: dropped unverified "Northside is the school closest to our Peters Creek Road store"
+- 6ae8e947 Waynesboro FB 11/6: "purple and Vegas gold" → "purple and gold" (shade unverified)
+- 6ae8e90b GBP_Culpeper 11/6: dropped unverified "regular-season finale" and CCHS 7 p.m. kickoff (only EV's 7 p.m. confirmed)
+- 6ae8e903 Culpeper FB 11/6: same as above
+- 6ae8e9d8 GBP_Lexington 11/6: added verified W&L opponent/time/venue (Shenandoah, 1 p.m., Wilson Field); dropped "biggest sports date" claim
+- 6ae8e9d0 Lexington FB 11/6: added Shenandoah, 1 p.m., Wilson Field
+
+Unverifiable / notes: Harrisonburg colors; Harrisonburg & Culpeper County "finale" status; Culpeper County kickoff time; VHSL calendar (vhsl.org blocked). MaxPreps schedules last updated Oct 21-22; no cancellation found. Published-wrong: none.
