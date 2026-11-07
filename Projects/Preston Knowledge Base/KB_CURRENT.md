@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-11-05 22:11 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-11-06 22:10 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -437,6 +437,12 @@ RULE: On the same deal: a fashion-brand watch has no horological value; the loan
 PRESTON SAID: "If it's solid gold case then it's good to do the loan. The watch itself is not gonna be worth money. Need to heavily test the gold."
 SOURCE: #deal-questions (C03BWGT5F5X) | 2026-06-11 | https://valleypawnworkspace.slack.com/archives/C03BWGT5F5X/p1781195082144599
 id: gold-case-watch-valuation-b24fcd9e
+
+### [MEDIUM] missing-jewelry-triggers-full-inventory
+RULE: When a jewelry item goes missing and can't be found, the store does another full jewelry inventory. The speaker presents this as standing practice, not a one-off.
+PRESTON SAID: "anytime anything like that happens we're doing all it for sure"
+SOURCE: zoom-call:ea8fe00c05694ac7824b5da3c7ae1c52 | 2026-11-06 | UNK Benjie Moore
+id: missing-jewelry-triggers-ful-a1ce209b
 
 ### [MEDIUM] silver-jewelry-price-sanity-check
 RULE: Preston flags silver jewelry buys that are too expensive per dwt to plausibly be silver only.
@@ -1064,6 +1070,12 @@ RULE: When more money is added to an existing loan ticket, the system spreads th
 PRESTON SAID: "No. It just like spreads it evenly across the ticket, which is really frustrating"
 SOURCE: zoom-call:fe6c7f1f83114f2681c7d3048ecee956 | 2026-10-12 | UNK Sandi Cole
 id: loan-add-money-cost-allocati-7ecdcded
+
+### [LOW] loan-percentage-trusted-customer
+RULE: Walker raised a loan or pay percentage to 60% for a customer he considered very reliable ("bullet proof"). This was a single-deal judgment, and what the 60% applies to (item type or loan basis) isn't stated.
+PRESTON SAID: "Bumped to 60% bullet proof customer"
+SOURCE: #harrisonburg-funds (Walker Tapley, Harrisonburg manager) | 2026-11-06 | https://valleypawnworkspace.slack.com/archives/C03BWRKEDUZ/p1793981780016469
+id: loan-percentage-trusted-cust-6e2e2d54
 
 
 ==============================================================================
@@ -2303,6 +2315,12 @@ PRESTON SAID: "We have a couple options, new eBay account might be the best opti
 SOURCE: #harrisonburg-funds (Preston Peters, Operations Manager) | 2026-10-22 | https://valleypawnworkspace.slack.com/archives/C03BWRKEDUZ/p1792690005574209
 id: ebay-account-recovery-option-81af2c51
 
+### [LOW] ebay-bravo-pokemon-card-listing-workaround
+RULE: When Bravo errors out listing Pokemon/trading cards to eBay because the category demands a condition, list the item in Bravo under an "other anime / merch" type category that doesn't ask for condition. Then edit the category in eBay manually and fill in the condition and details. The listing still goes through Bravo and stays synced.
+PRESTON SAID: "So the workaround that I did I think in Bravo, it was under like other anime, like merch. So this way it didn't ask for a condition. So then I was able to post it and then I went into eBay manually and I changed the category and everything in it that way. But it still went through Bravo that way."
+SOURCE: zoom-call:7b0fe1bd5c6d4048a3357c9c2ca9d4a4 | 2026-11-06 | UNK Uriah Tiglao
+id: ebay-bravo-pokemon-card-list-432f2598
+
 ### [LOW] ebay-ringout-omni-channel
 RULE: When ringing out an eBay sale in Bravo, check that it posts to omni channel rather than web/PayPal. The routing was changed in Bravo and should now be automatic.
 PRESTON SAID: "you go to ring it out just see where omni channel it's putting it in."
@@ -2602,5 +2620,5 @@ id: past-due-75-day-5-percent-ce-30eeab0b
 
 
 ==============================================================================
-COVERAGE: 358 entries - 21 verified by Preston, 160 high-confidence rules, 102 medium, 73 low, 2 superseded.
+COVERAGE: 361 entries - 21 verified by Preston, 160 high-confidence rules, 103 medium, 75 low, 2 superseded.
 ==============================================================================

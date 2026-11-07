@@ -1,26 +1,24 @@
 # Daily Bravo -> QuickBooks — status
 
-Updated 2026-11-05 03:50 ET
+Updated 2026-11-06 03:51 ET
 
-- Store-day entries posted: 131 (from 2026-10-01)
-- Newest day posted: 2026-11-02
+- Store-day entries posted: 136 (from 2026-10-01)
+- Newest day posted: 2026-11-03
 - Months proven against Bravo's monthly ledger: 2026-10
 
 ## Last run
 
-- 2026-11-02 CUL posted
-- 2026-11-02 HAR posted
-- 2026-11-02 LEX posted
-- 2026-11-02 ROA posted
-- 2026-11-02 WAY posted
+- 2026-11-04 CUL ERROR UIA click sequence failed: Consolidated GL preview ribbon did not appear within 90s (report window never opened)
+- 2026-11-04 ROA ERROR UIA click sequence failed: Consolidated GL preview ribbon did not appear within 90s (report window never opened)
+- 2026-11-04 WAY ERROR UIA click sequence failed: Consolidated GL preview ribbon did not appear within 90s (report window never opened)
 
 ## Open
 
-- 2026-11-03 CUL: Skipped by safety rail: bravo-not-ready (could not reach a logged-in dashboard) (tries 2)
-- 2026-11-03 HAR: Skipped by safety rail: bravo-not-ready (could not reach a logged-in dashboard) (tries 2)
-- 2026-11-03 LEX: Skipped by safety rail: bravo-not-ready (could not reach a logged-in dashboard) (tries 2)
-- 2026-11-03 ROA: Skipped by safety rail: bravo-not-ready (could not reach a logged-in dashboard) (tries 2)
-- 2026-11-03 WAY: Skipped by safety rail: bravo-not-ready (could not reach a logged-in dashboard) (tries 2)
-- 2026-11-04 CUL: Skipped by safety rail: bravo-not-ready (could not reach a logged-in dashboard) (tries 1)
-- 2026-11-04 ROA: Skipped by safety rail: bravo-not-ready (could not reach a logged-in dashboard) (tries 1)
-- 2026-11-04 WAY: Skipped by safety rail: bravo-not-ready (could not reach a logged-in dashboard) (tries 1)
+- 2026-11-04 CUL: UIA click sequence failed: Consolidated GL preview ribbon did not appear within 90s (report window never opened) (tries 3)
+- 2026-11-04 ROA: UIA click sequence failed: Consolidated GL preview ribbon did not appear within 90s (report window never opened) (tries 3)
+- 2026-11-04 WAY: UIA click sequence failed: Consolidated GL preview ribbon did not appear within 90s (report window never opened) (tries 3)
+- 2026-11-05 CUL: Bravo day not posted to accounting yet (store not offered) (tries 1)
+- 2026-11-05 HAR: Bravo day not posted to accounting yet (store not offered) (tries 1)
+- 2026-11-05 LEX: Bravo day not posted to accounting yet (store not offered) (tries 1)
+- 2026-11-05 ROA: Bravo day not posted to accounting yet (store not offered) (tries 1)
+- 2026-11-05 WAY: Bravo day not posted to accounting yet (store not offered) (tries 1)

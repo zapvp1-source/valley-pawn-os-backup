@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-11-05
+# LIVE STATE - auto-refreshed 2026-11-06
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -17,7 +17,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | Enabled (will fire) | 2 |
 | Registered but disabled | 230 |
 | On disk but never registered | 4 |
-| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 3384 |
+| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 4711 |
 
 ### Enabled tasks
 
@@ -234,31 +234,31 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-11-05 | Valley Pawn OS | - |
-| 2026-11-05 | Unified Search | - |
+| 2026-11-06 | Website | - |
+| 2026-11-06 | Valley Pawn OS | - |
+| 2026-11-06 | Unified Search | - |
+| 2026-11-06 | Quickbooks Set UP | - |
+| 2026-11-06 | Business Dashboard Website | - |
+| 2026-11-06 | Bravo Data Extraction | STATUS.md |
+| 2026-11-05 | Zoom Call Pipeline | - |
+| 2026-11-05 | Valuation Core | README.md |
+| 2026-11-05 | Store Traffic Counter | - |
+| 2026-11-05 | Store Conduct Watch | STATUS.md |
+| 2026-11-05 | Sold Margin Review | STATUS.md |
 | 2026-11-05 | Refine Social Media | - |
-| 2026-11-05 | Quickbooks Set UP | - |
+| 2026-11-05 | Preston Knowledge Base | - |
+| 2026-11-05 | Precious Metals Settlements | - |
+| 2026-11-05 | Pawn Walks | STATUS.md |
 | 2026-11-05 | Life OS | - |
-| 2026-11-05 | Business Dashboard Website | - |
-| 2026-11-05 | Bravo Data Extraction | STATUS.md |
-| 2026-11-04 | Zoom Call Pipeline | - |
-| 2026-11-04 | Website | - |
-| 2026-11-04 | Valuation Core | README.md |
-| 2026-11-04 | Store Traffic Counter | - |
-| 2026-11-04 | Store Conduct Watch | STATUS.md |
-| 2026-11-04 | Sold Margin Review | STATUS.md |
+| 2026-11-05 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-11-05 | Human Resources | - |
+| 2026-11-05 | Health Optimization | STATUS.md |
+| 2026-11-05 | Email Refinement | - |
+| 2026-11-05 | Discount Outlier Review | STATUS.md |
+| 2026-11-05 | Daily Funds Verification | - |
+| 2026-11-05 | Compliance | - |
 | 2026-11-04 | Short Term Rental Optimization | - |
 | 2026-11-04 | Sales Tax | STATUS.md |
-| 2026-11-04 | Preston Knowledge Base | - |
-| 2026-11-04 | Precious Metals Settlements | - |
-| 2026-11-04 | Pawn Walks | STATUS.md |
-| 2026-11-04 | Jewelry Count Reconciliation | STATUS.md |
-| 2026-11-04 | Human Resources | - |
-| 2026-11-04 | Health Optimization | STATUS.md |
-| 2026-11-04 | Email Refinement | - |
-| 2026-11-04 | Discount Outlier Review | STATUS.md |
-| 2026-11-04 | Daily Funds Verification | - |
-| 2026-11-04 | Compliance | - |
 | 2026-11-04 | Ai Optimized Marketing | - |
 | 2026-11-03 | Communcations | - |
 | 2026-11-02 | eBay | - |

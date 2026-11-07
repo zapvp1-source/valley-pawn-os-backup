@@ -1,6 +1,6 @@
 # Insurance Portfolio — All Domains
 
-**GENERATED 2026-11-03 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
+**GENERATED 2026-11-06 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
 Update the registry, then run `Life OS/Insurance/bin/regen_portfolio.py`.
 Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker history: `BROKER_PIPELINE.md`.
 
@@ -55,8 +55,7 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 
 **VP-SURETY-ROANOKE-10K — Surety**
 
-- Pay the SuretyBonds.com invoice for the bond #101103000 re-execution before they can process/ship the re-executed bond: https://connect.suretybonds.com/policy-payments/98fe22a9-d672-41b2-a2d9-44619d73b109/ (sent 11/2/2026 1:55pm ET to both jdavis@fcfpawn.com and zapvp1@me.com)
-- After re-execution: confirm the new bond (on the City's current form) is mailed, signed/notarized by Joshua in the Principal section, and filed with the City of Roanoke permit application.
+- Receive FedEx package (tracking 879811380732), sign/notarize the re-executed bond in the Principal section, and file it with the City of Roanoke permit application to clear the permit hold caused by the 11/2/2026 rejection.
 
 **VP-SURETY-HARRISONBURG-PMG — Surety**
 
@@ -235,9 +234,9 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - **Key limits:**
   - **bond amount:** $10,000
 - **Obligee:** City of Roanoke, Virginia
-- **Status:** Issued and delivered 9/1/2026 on the PRIOR bond form. REJECTED by Roanoke Police Department 11/2/2026 for being on an outdated version of the City's bond form -- permit application on hold at the City until an accepted bond is filed. Joshua emailed SuretyBonds.com 11/2/2026 10:56am ET requesting re-execution of bond #101103000 (same number/term/penalty) on the City's current 2-page form (with notary acknowledgment blocks for Principal and Corporate Surety). SuretyBonds.com confirmed 11/2/2026 12:52pm ET they will draft the re-executed bond on that form, but require a new invoice paid first -- invoice sent 11/2/2026 1:55pm ET, UNPAID as of this run (2026-11-03).
-- **Documents:** Gmail: Bond #101103000 Shipped 8/28/2026 (thread 1a049c15d3c2ac50, attachment 'Valley Pawn - Client Bond Docs - 08 28 26.pdf' - scanned image, not text-extractable) · Gmail: FedEx 876440185117 delivered 9/1/2026 · Gmail: Order Confirmation 8/28/2026 (msg 1a049063a572de48) · Mail: City of Roanoke Virginia Surety Bond Form.pdf · Gmail: SuretyBonds.com 'List of Bonds' reply 9/9/2026 (thread 1a085cc686796c9e) - confirmed term and carrier · Gmail: Joshua to customercare@suretybonds.com 11/2/2026 10:56am ET re-execution request (thread 1a19d30d8157e3d8), attachment 'City of Roanoke Virginia Surety Bond Form.pdf' · Gmail: SuretyBonds.com (Mac) confirmation 11/2/2026 12:52pm ET - re-execution in progress, invoice to follow (thread 1a19d30d8157e3d8) · Gmail: SuretyBonds.com invoice for #101103000 sent 11/2/2026 1:55pm ET to jdavis@fcfpawn.com and zapvp1@me.com (thread 1a19d9d6767e2cac) - payment required before processing
-- **Last verified:** 2026-11-03 — source: SuretyBonds.com emails 8/25-9/9/2026; Roanoke permit thread 1a039ef6520b9da6; insurance-inbox-watch 2026-11-03 run (Gmail threads 1a19d30d8157e3d8, 1a19d9d6767e2cac)
+- **Status:** RESOLVED 11/5/2026. Re-execution invoice paid 11/5/2026 6:55-9:14pm ET ($20 shipping, paid in full). SuretyBonds.com issued the amended/re-executed bond on the City of Roanoke's current 2-page form 11/5/2026 9:36pm ET (PDF 'Valley Pawn - Superseding Client Bond Docs - 11 05 26.pdf' attached to email, supersedes the rejected 9/1/2026 bond). Physical bond package shipped same evening via FedEx tracking 879811380732 with filing instructions enclosed. AWAITING Joshua: receive the FedEx package, sign/notarize the bond in the Principal section, and file it with the City of Roanoke permit application to lift the 11/2/2026 rejection hold.
+- **Documents:** Gmail: Bond #101103000 Shipped 8/28/2026 (thread 1a049c15d3c2ac50, attachment 'Valley Pawn - Client Bond Docs - 08 28 26.pdf' - scanned image, not text-extractable) · Gmail: FedEx 876440185117 delivered 9/1/2026 · Gmail: Order Confirmation 8/28/2026 (msg 1a049063a572de48) · Mail: City of Roanoke Virginia Surety Bond Form.pdf · Gmail: SuretyBonds.com 'List of Bonds' reply 9/9/2026 (thread 1a085cc686796c9e) - confirmed term and carrier · Gmail: Joshua to customercare@suretybonds.com 11/2/2026 10:56am ET re-execution request (thread 1a19d30d8157e3d8), attachment 'City of Roanoke Virginia Surety Bond Form.pdf' · Gmail: SuretyBonds.com (Mac) confirmation 11/2/2026 12:52pm ET - re-execution in progress, invoice to follow (thread 1a19d30d8157e3d8) · Gmail: SuretyBonds.com invoice for #101103000 sent 11/2/2026 1:55pm ET to jdavis@fcfpawn.com and zapvp1@me.com (thread 1a19d9d6767e2cac) - payment required before processing · Gmail: Invoice for #101103000 re-sent 11/5/2026 6:55pm ET (thread 1a1ad107fc7f8d9e) - $20.00 shipping, payment required before processing · Gmail: Receipt for #101103000 paid in full 11/5/2026 9:14pm ET (thread 1a1ad90a338cc90e) - $20.00 · Gmail: Updated Bond 101103000 Shipped 11/5/2026 9:36pm ET (thread 1a1ada4c0b0cc278), attachment 'Valley Pawn - Superseding Client Bond Docs - 11 05 26.pdf' - amended bond on City's current form · Gmail: Document Set #101103000 Shipped 11/5/2026 9:26pm ET (thread 1a1ad9b75b55f186) - FedEx tracking 879811380732
+- **Last verified:** 2026-11-06 — source: SuretyBonds.com emails 8/25-9/9/2026; Roanoke permit thread 1a039ef6520b9da6; insurance-inbox-watch 2026-11-03 run (Gmail threads 1a19d30d8157e3d8, 1a19d9d6767e2cac); insurance-inbox-watch 2026-11-06 run (Gmail threads 1a1ad107fc7f8d9e, 1a1ad90a338cc90e, 1a1ada4c0b0cc278, 1a1ad9b75b55f186)
 
 ### VP-SURETY-HARRISONBURG-PMG — Surety - Harrisonburg VA Precious Metal & Gem Dealer Bond
 

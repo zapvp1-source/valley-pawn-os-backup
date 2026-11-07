@@ -223,3 +223,20 @@ Edited (all APPLIED):
 - 6ae8e9d0 Lexington FB 11/6: added Shenandoah, 1 p.m., Wilson Field
 
 Unverifiable / notes: Harrisonburg colors; Harrisonburg & Culpeper County "finale" status; Culpeper County kickoff time; VHSL calendar (vhsl.org blocked). MaxPreps schedules last updated Oct 21-22; no cancellation found. Published-wrong: none.
+
+## 2026-11-06 — daily fact check (window to 2026-11-07 ~20:00 ET)
+Posts checked: 16 (time-sensitive: 10 game posts; brand/evergreen and product posts with store hours: 6 — hours/"this Friday"/"open till 5 today" (Sat) checked against standard hours, all correct)
+
+Verified this morning (source):
+- Harrisonburg hosts Broadway, Fri 11/6, 7 PM: https://www.maxpreps.com/va/harrisonburg/harrisonburg-blue-streaks/football/schedule/ (updated 11/5/26) ; https://www.maxpreps.com/va/football/game/broadway-vs-harrisonburg/11-6-2026/
+- Waynesboro hosts Riverheads, Fri 11/6, 7 PM, last regular-season game: https://www.maxpreps.com/va/waynesboro/waynesboro-little-giants/football/schedule/ (updated 11/2/26) ; https://www.maxpreps.com/va/football/game/riverheads-staunton-vs-waynesboro/11-6-2026/
+- Eastern View @ Spotsylvania, Fri 11/6, 7 PM: https://www.maxpreps.com/va/football/game/eastern-view-culpeper-vs-spotsylvania/11-6-2026/ ; https://www.maxpreps.com/va/spotsylvania/spotsylvania-knights/football/schedule/
+- Northside hosts Lord Botetourt, Fri 11/6, 7 PM: https://www.maxpreps.com/va/football/game/lord-botetourt-daleville-vs-northside-roanoke/11-6-2026/ (Roanoke 11/6 scoreboard) ; https://www.si.com/high-school/stats/virginia/football/teams/256554-northside-vikings/games
+- Patrick Henry hosts Blacksburg, Fri 11/6, 7 PM: https://www.maxpreps.com/va/football/game/blacksburg-vs-patrick-henry-roanoke/11-6-2026/ ; https://www.maxpreps.com/va/blacksburg/blacksburg-bruins/football/schedule/
+- W&L vs Shenandoah, Sat 11/7, 1 p.m., Wilson Field, Senior Day: https://generalssports.com/sports/football/schedule
+- VMI hosts The Citadel, Sat 11/14, Military Classic of the South: https://vmikeydets.com/news/2026/2/18/vmi-football-releases-2026-schedule.aspx ; https://citadelsports.com/news/2025/12/18/the-citadel-officially-announces-2026-football-slate.aspx
+- No postponement/cancellation/forfeit/time change found for any game.
+
+Posts edited: none (all claims verified and specific; yesterday's edits held).
+
+Unverifiable / notes: Culpeper County @ Caroline 11/6 not re-confirmed today (Caroline/CCHS MaxPreps pages and Richmond scoreboard unreachable; not on Charlottesville scoreboard) — stays as verified 11/5 from 2026-season sources (Cardinal News 2026 VHSL schedule, virginiaprepfootball.com); posts make no kickoff-time claim for CCHS. Beware: MaxPreps "game preview" articles in search results for these matchups are 2025 articles (e.g. 2025 Northside @ Lord Botetourt) — do not use. Published-wrong: none.

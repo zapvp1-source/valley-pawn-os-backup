@@ -1,5 +1,18 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-06 (daily PREP run, 12:42–13:08 ET, level 1 all pages) — picks queued, nothing published by this run
+- Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only ("Comment as Joshua Davis" seen on screen) — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings.
+- Still no POST-mode chat since 11/2 evening (ledger unchanged), so the queue carries forward.
+- Dropped from QUEUE (source post past 48 h — never posted late): Roanoke → Veterans Parade (Downtown Roanoke), Harrisonburg → Visit Harrisonburg woods, Waynesboro → YMCA Turkey Trot; shares Harrisonburg → Fandom Fest, Lexington → Lime Kiln Volunteer Day.
+- Comments queued (1/page/day): Harrisonburg → Harrisonburg Downtown Renaissance (First Fridays, 21 venues); Waynesboro → Waynesboro.Com (Waynesboro Symphony chamber concert, Nov 15); Roanoke → Downtown Roanoke (CEO's 26-year feature in The Roanoker), with Roanoke Public Libraries costume swap kept as backup. Still valid from 11/5: Culpeper → Visit Culpeper (EXPIRES 16:45 today), Lexington → Rockbridge Regional Libraries book sale, Brand → Shenandoah National Park peak color.
+- Shares queued (permalinks opened and confirmed): Lexington → Main Street Lexington (2026 Christmas Parade applications, Fri Dec 4); Brand → Blue Ridge Parkway ("Nature's Confetti", drive-safe reminders). Harrisonburg: the only fresh event post (library Adults' Night Out, Dec 4) ages out at 20:00 tonight, so not queued. Roanoke, Waynesboro, Culpeper already used this week's share.
+- Skipped on purpose: Waynesboro.Com water-tower opinion piece (can turn into a spending argument) and an arrest post; Waynesboro Parks VRPS playground award (aged out at 10:00 today); Main Street Lexington Shop Small Sweepstakes (giveaway).
+- Follows: no new ones queued — 14 already pending (Roanoke 6, Culpeper 3, Waynesboro 2, Harrisonburg 2, Lexington 2); re-dated so they don't age out.
+- Watchlist: 2 resolved — Salem Red Sox → now "Salem RidgeYaks" (facebook.com/salemridgeyaks, 46K, Salem VA); Roanoke Parks and Recreation → Roanoke County Parks, Recreation and Tourism (facebook.com/RoanokeCountyParks, 23K). Not found +1 attempt: Visit Waynesboro (now 2). 7 pages re-checked.
+- Needs a person (still open from 11/3): Valley Pawn- Harrisonburg Va page address still shows "Virginia Beach" in Facebook search — fix in About → Contact info.
+- Replies on own pages: not swept (POST mode only). Tab closed.
+- Totals this run: comments 0 (3 new queued, 6 pending), shares 0 (2 new queued), replies 0, follows 0 (14 pending), new pages resolved 2.
+
 ## 2026-11-05 (daily PREP run, 12:42–12:58 ET, level 1 all pages) — picks queued, nothing published by this run
 - Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only ("Comment as Joshua Davis" seen on screen) — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings.
 - No POST-mode chat has run since 11/2 evening, so the queue carries forward; nothing in ledger.jsonl since 11/2.

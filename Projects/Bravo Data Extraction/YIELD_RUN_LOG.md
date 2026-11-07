@@ -129,3 +129,37 @@ recovered it in-session:
 - **Sources used:** company-kpis pulled fresh this run for both YoY windows (no fallback needed);
   all other months read from existing EOM-export-derived yield data already on disk, validated by
   `eom_validate.py` range/header checks inside the regeneration step.
+
+## 2026-11-06 — Monthly refresh (scheduled) — published, channel split skipped
+
+- **Step 0 (channel split trigger):** contention check CLEAR. Dropped trigger `yield-channel-20261106`
+  requesting company-kpis for 2025-01-01..2025-10-31 and 2026-01-01..2026-10-31. **Both cells failed**
+  on Bravo UI fragility, not a data problem: cell 1 ("Select Date Range dialog did not appear") and
+  cell 2 (calendar-walk could not reach 1/2026 after 5 reopen attempts) — see
+  `logs/yield-channel-20261106.log`. Neither company-kpis file landed. Per this task's own fallback
+  rule, continued without the channel split rather than retrying or blocking — `render_yield_artifact.py`
+  simply omits the channel/growth-by-channel section since `output/channel_growth.json` is now stale
+  (still dated 2026-10-06, last successful pull). This is the recurring Bravo UI-interaction fragility
+  already tracked in the project's `bravo-ui-fragility-incident-2026-10-15.md` finding — worth a
+  structural fix (a non-UI path to Company KPIs) but out of scope for this run; not logged to
+  FAILURE_LEDGER.md since the runbook explicitly provisions for this exact degraded path.
+- **Step 1 (regression harness):** `test_yield_by_asset_class.py` → **RESULT: PASS**, 6/6 checks
+  green. 24 months, Aug 2024–Oct 2026, 144 rows.
+- **Step 2 (render artifact):** `render_yield_artifact.py` ran clean.
+  2026 YTD (Jan–Oct): loan 12.34%/mo · inventory 21.66%/mo · blended 16.99%/mo.
+  October 2026 alone (COMPANY, from CSV): loan 13.48%/mo (161.8%/yr), inventory 21.29%/mo
+  (255.5%/yr), blended 17.40%/mo (208.8%/yr).
+  Same-window-last-year (Jan–Oct 2025) blended: 15.93% — up to 16.99% in 2026, i.e. +1.06 points YoY.
+  Growth-by-channel section not shown this cycle (channel_growth.json stale — see Step 0).
+- **Step 3 (republish):** Read the live artifact first (confirmed it was still on the September 2026
+  refresh, version 10), then republished `artifact/yield-by-asset-class.html` to the existing URL
+  (https://claude.ai/code/artifact/a2c1c285-29a3-4c6c-9388-f9b460063239), label "November 2026
+  refresh." Published as version 11 (version id 1793992677-ecc5).
+- **Step 4 (this entry).**
+- **Step 5 (Joshua DM):** sent — see Slack D03BHQH5VGT.
+- **Sources used:** all 24 months read from existing EOM-export-derived yield data already on disk
+  (October 2026 EOM exports for all 5 stores landed 2026-11-02, validated by `eom_validate.py`
+  range/header checks inside the regeneration step); company-kpis channel-split pull attempted
+  fresh this run but failed on UI fragility — fell back to the stale 2026-10-06 channel_growth.json
+  being simply omitted from the artifact (per render_yield_artifact.py's designed behavior), not
+  substituted or invented.
