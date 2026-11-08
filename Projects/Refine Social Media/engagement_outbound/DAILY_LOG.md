@@ -1,5 +1,18 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-07 (daily PREP run, 12:42–13:00 ET, level 1 all pages) — picks queued, nothing published by this run
+- Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only ("Comment as Joshua Davis" seen on screen) — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings.
+- Still no POST-mode chat since 11/2 evening (ledger unchanged), so the queue carries forward.
+- Dropped from QUEUE (source post past 48 h — never posted late): Culpeper → Visit Culpeper window; Lexington → RRL book sale; Brand → SNP peak color; Roanoke → RPL costume backup; Waynesboro → Waynesboro Symphony concert.
+- Comments queued (1/page/day): Culpeper → Culpeper Renaissance (Culpeper Downtown for the Season); Roanoke → Mill Mountain Zoo (ZooBoo 2026 recap — after the Downtown Roanoke pick, which runs until 11/8 09:45); Waynesboro → Wayne Theatre (A Christmas Story the Musical); Harrisonburg → Harrisonburg Farmers Market (Harvest Fest — use after First Fridays pick lapses 18:45 today); Lexington → Rockbridge Regional Libraries (550+ online courses); Brand → Shenandoah National Park (Nov 8 facility closings).
+- Shares queued: Harrisonburg → Harrisonburg Parks & Rec "Burg Bash" event (Sat Nov 14, 12–3 PM, Community Activities Center; event page read). Lexington ALTERNATE → RRL Glasgow Library James Webb talk (Mon Nov 9, 6 PM; permalink confirmed) if the Christmas Parade share (expires 14:50 today) lapses. Brand's Blue Ridge Parkway share still valid until 11/8 08:35. Roanoke, Waynesboro, Culpeper hold until the new week.
+- Skipped on purpose: Main Street Lexington Pink Friday (raffle); City of Waynesboro trash reminder; City of Lexington road work; W&L student profile (private individual); VA Is For Lovers oyster post (not our area).
+- Follows: + Rockbridge Area Relief Association and The News-Gazette (Lexington). 16 pending, all re-dated.
+- Watchlist: 2 resolved — Rockbridge Area Relief Association → facebook.com/raralexington (2.1K, Lexington); The News-Gazette → facebook.com/TheNewsGazette (5K, Lexington). Not found +1 attempt (now 2 each): Shenandoah Valley Art Center, Waynesboro High School Little Giants. 19 pages re-checked.
+- Needs a person (still open from 11/3): Valley Pawn- Harrisonburg Va page address still shows "Virginia Beach" in Facebook search — fix in About → Contact info.
+- Replies on own pages: not swept (POST mode only). Tab closed.
+- Totals this run: comments 0 (6 new queued), shares 0 (1 new + 1 alternate queued), replies 0, follows 0 (2 new queued, 16 pending), new pages resolved 2.
+
 ## 2026-11-06 (daily PREP run, 12:42–13:08 ET, level 1 all pages) — picks queued, nothing published by this run
 - Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only ("Comment as Joshua Davis" seen on screen) — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings.
 - Still no POST-mode chat since 11/2 evening (ledger unchanged), so the queue carries forward.

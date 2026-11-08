@@ -240,3 +240,14 @@ Verified this morning (source):
 Posts edited: none (all claims verified and specific; yesterday's edits held).
 
 Unverifiable / notes: Culpeper County @ Caroline 11/6 not re-confirmed today (Caroline/CCHS MaxPreps pages and Richmond scoreboard unreachable; not on Charlottesville scoreboard) — stays as verified 11/5 from 2026-season sources (Cardinal News 2026 VHSL schedule, virginiaprepfootball.com); posts make no kickoff-time claim for CCHS. Beware: MaxPreps "game preview" articles in search results for these matchups are 2025 articles (e.g. 2025 Northside @ Lord Botetourt) — do not use. Published-wrong: none.
+
+## 2026-11-07 07:45 ET — daily fact-check (window: next 36h)
+- Posts checked: 13 (Brand, BrandTikTok, Roanoke x2, Lexington, Harrisonburg, Culpeper, Waynesboro, GBP_Roanoke, GBP_Harrisonburg, GBP_Culpeper, GBP_Lexington, GBP_Waynesboro). Deal/price posts and evergreen history/landmark posts skipped per rules.
+- Verified:
+  - Roanoke deal post "open till 5 today" (Sat 11/7) — matches standing Sat hours 10-5.
+  - Lexington FB + GBP "frosty mornings" for Sun 11/8 — NWS RNK forecast for Lexington: tonight low ~31, Sunday sunny, high ~66 (api.weather.gov/gridpoints/RNK/89,94/forecast, updated 2026-11-07 12:00Z). Left as is.
+  - GBP_Waynesboro "cold mornings" — NWS LWX forecast for Waynesboro: low ~32 Sun morning, high ~66 (api.weather.gov/gridpoints/LWX/36,26/forecast, updated 2026-11-07 11:54Z). No active alerts. Left as is.
+  - Roanoke FB + GBP foliage/first-frost lines are phrased as typical ("usually", "around Oct 22") — seasonal climatology, not dated claims. Left as is.
+- Edited:
+  - 6ae8e9589c13cf4dad0228a7 (Waynesboro FB, Sun 11/8 3 PM): "First real cold morning of the year in the Boro" (unverifiable; LWX AFD 11/6 notes growing season still active only east of the Blue Ridge, implying earlier freezes west of it) → "The Boro woke up right around freezing today, with the Weather Service calling for a low near 32 and a sunny afternoon in the mid 60s." APPLIED.
+- Unverifiable: none left in posts. Note: forecast.weather.gov MapClick pages for Waynesboro/Lexington served stale cached content; used api.weather.gov instead.

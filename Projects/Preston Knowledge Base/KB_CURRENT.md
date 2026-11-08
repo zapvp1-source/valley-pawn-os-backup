@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-11-06 22:10 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-11-07 22:10 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -2357,6 +2357,12 @@ PRESTON SAID: "should be item history on there?"
 SOURCE: zoom-call:022312bc19c14943a76fffe5b3bd67a7 | 2026-10-26 | UNK Walker Tapley
 id: find-inventory-number-item-h-cd23d44e
 
+### [LOW] firearm-classification-double-barrel-45-long-colt
+RULE: A small double-barrel firearm that fires .45 Long Colt (Judge-style) is rung up as a pistol, not as "other." This came from one case, and the speaker's role is unknown.
+PRESTON SAID: "It's a pistol. It is a pistol."
+SOURCE: zoom-call:8dc2268ae95143c98b2cb269d9870242 | 2026-11-07 | UNK Walker Tapley
+id: firearm-classification-doubl-558fcab8
+
 ### [LOW] firearm-sale-then-layaway-preferred
 RULE: When a customer wants cash against a gun he is already buying out, the preferred route is to finalize the sale with the paperwork and then set up the layaway. That way the store earns again, rather than doing a layaway with cash back.
 PRESTON SAID: "it's best for us if he just does the paperwork we finalize the sale and then we do the layaway because then we make money again"
@@ -2411,6 +2417,12 @@ RULE: The daily gun log backs up to the computer automatically, so printing it e
 PRESTON SAID: "So our gun log should be automatically back it up to the computer."
 SOURCE: zoom-call:38fd73720bb342aeb12f016ed0618017 | 2026-10-12 | UNK Sandi Cole
 id: gun-log-printing-b19f1795
+
+### [LOW] gun-payoff-paperwork-not-run-repawn
+RULE: If a gun loan was paid off but the paperwork was never run and the customer returns days later, the customer must complete the paperwork to pick it up. The only other option is to put the gun back in pawn, and back interest is then owed.
+PRESTON SAID: "Otherwise, The only option you have is to put it back in pawn, but then there's going to be back interest owed on it."
+SOURCE: zoom-call:407e06e8aaa544b08cf2b58b870e801c | 2026-11-07 | UNK Chadd McClintic
+id: gun-payoff-paperwork-not-run-7ce29974
 
 ### [LOW] gun-safety-course-reimbursement
 RULE: The company reimburses employees for the gun safety course certification once they submit the certificate. The transcript is fragmentary, so the exact terms are unclear.
@@ -2620,5 +2632,5 @@ id: past-due-75-day-5-percent-ce-30eeab0b
 
 
 ==============================================================================
-COVERAGE: 361 entries - 21 verified by Preston, 160 high-confidence rules, 103 medium, 75 low, 2 superseded.
+COVERAGE: 363 entries - 21 verified by Preston, 160 high-confidence rules, 103 medium, 77 low, 2 superseded.
 ==============================================================================

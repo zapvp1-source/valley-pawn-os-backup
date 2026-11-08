@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-11-06
+# LIVE STATE - auto-refreshed 2026-11-07
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -17,7 +17,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | Enabled (will fire) | 2 |
 | Registered but disabled | 230 |
 | On disk but never registered | 4 |
-| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 4711 |
+| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 6151 |
 
 ### Enabled tasks
 
@@ -234,29 +234,29 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
+| 2026-11-07 | Valley Pawn OS | - |
+| 2026-11-07 | Unified Search | - |
+| 2026-11-07 | Quickbooks Set UP | - |
+| 2026-11-07 | Life OS | - |
+| 2026-11-07 | Business Dashboard Website | - |
+| 2026-11-07 | Bravo Data Extraction | STATUS.md |
+| 2026-11-06 | Zoom Call Pipeline | - |
 | 2026-11-06 | Website | - |
-| 2026-11-06 | Valley Pawn OS | - |
-| 2026-11-06 | Unified Search | - |
-| 2026-11-06 | Quickbooks Set UP | - |
-| 2026-11-06 | Business Dashboard Website | - |
-| 2026-11-06 | Bravo Data Extraction | STATUS.md |
-| 2026-11-05 | Zoom Call Pipeline | - |
-| 2026-11-05 | Valuation Core | README.md |
-| 2026-11-05 | Store Traffic Counter | - |
-| 2026-11-05 | Store Conduct Watch | STATUS.md |
-| 2026-11-05 | Sold Margin Review | STATUS.md |
-| 2026-11-05 | Refine Social Media | - |
-| 2026-11-05 | Preston Knowledge Base | - |
-| 2026-11-05 | Precious Metals Settlements | - |
-| 2026-11-05 | Pawn Walks | STATUS.md |
-| 2026-11-05 | Life OS | - |
-| 2026-11-05 | Jewelry Count Reconciliation | STATUS.md |
-| 2026-11-05 | Human Resources | - |
-| 2026-11-05 | Health Optimization | STATUS.md |
+| 2026-11-06 | Valuation Core | README.md |
+| 2026-11-06 | Store Traffic Counter | - |
+| 2026-11-06 | Store Conduct Watch | STATUS.md |
+| 2026-11-06 | Sold Margin Review | STATUS.md |
+| 2026-11-06 | Refine Social Media | - |
+| 2026-11-06 | Preston Knowledge Base | - |
+| 2026-11-06 | Precious Metals Settlements | - |
+| 2026-11-06 | Pawn Walks | STATUS.md |
+| 2026-11-06 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-11-06 | Human Resources | - |
+| 2026-11-06 | Health Optimization | STATUS.md |
+| 2026-11-06 | Discount Outlier Review | STATUS.md |
+| 2026-11-06 | Daily Funds Verification | - |
+| 2026-11-06 | Compliance | - |
 | 2026-11-05 | Email Refinement | - |
-| 2026-11-05 | Discount Outlier Review | STATUS.md |
-| 2026-11-05 | Daily Funds Verification | - |
-| 2026-11-05 | Compliance | - |
 | 2026-11-04 | Short Term Rental Optimization | - |
 | 2026-11-04 | Sales Tax | STATUS.md |
 | 2026-11-04 | Ai Optimized Marketing | - |
@@ -296,6 +296,20 @@ task. For sign-ins going forward: check if the target site already has a live se
 Chrome extension or the built-in browser first (many do); if not, ask Joshua to sign in manually
 in the browser pane (one click, e.g. "Continue with Google") rather than retrying the credential
 flow. This applies fleet-wide, all 3 domains, anywhere browser sign-in comes up.
+
+---
+
+## Hardware note — NEW MAC STUDIO arriving mid-December 2026 (logged 2026-11-07)
+
+Joshua ordered (2026-11-07) a **Mac Studio M5 Ultra, 96GB unified memory, 2TB SSD**. **Expected
+arrival: mid-December 2026.** It becomes the primary always-on automation host; the current 2022
+M1 Max (32GB / 494GB) becomes the backup/failover machine. Until it arrives, swap/disk pressure on
+the current Mac is known and expected — keep interim mitigations (nightly Chrome restart, disk
+cleanup); do not propose new hardware purchases or RAM-driven redesigns, and do not open ledger
+rows for the known memory/disk condition. On arrival, Claude drives the migration (launchd agents
+incl. fleet-deck/fleet-medic, Parallels Bravo VM, Chrome profiles, Claude app + local agents,
+FileVault / Time Machine to NAS / Backblaze, rebuild runbook) — plan lives in the Tech Stack Agent
+project doc "Hardware Audit — 2026-10-21". Applies fleet-wide, all 3 domains.
 
 ---
 
