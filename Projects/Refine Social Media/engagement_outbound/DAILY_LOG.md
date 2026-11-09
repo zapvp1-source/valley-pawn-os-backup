@@ -1,5 +1,18 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-08 (daily PREP run, 12:41–12:49 ET, level 1 all pages) — picks queued, nothing published by this run
+- Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only ("Comment as Joshua Davis" seen on screen) — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings.
+- Still no POST-mode chat since 11/2 evening (ledger unchanged), so the queue carries forward.
+- Dropped from QUEUE (source post past 48 h — never posted late): Harrisonburg → First Fridays and Farmers Market Harvest Fest; Roanoke → Downtown Roanoke Tina feature; shares Lexington → Christmas Parade and Glasgow JWST alternate; Brand → Blue Ridge Parkway; Harrisonburg → Burg Bash (lapses 13:50 today, before any likely POST chat). Brand SNP closings comment replaced (its "this weekend" wording goes stale after today's closings).
+- Comments queued (1/page/day): Harrisonburg → Massanutten Regional Library (Winter Wonderfest Holiday Crafts, Dec 5); Lexington → Rockbridge Regional Libraries (WiFi 24/7 outside the library — use after the online-courses pick lapses 17:00 today); Brand → Shenandoah National Park (winter closing dates, reworded). Still valid until Mon 11/9 morning: Culpeper → Culpeper Renaissance (09:45), Roanoke → Mill Mountain Zoo (10:45), Waynesboro → Wayne Theatre (11:50).
+- Shares: none queued. Last week's share window closes today; Roanoke, Culpeper, Waynesboro reopen Monday. No fresh event post found that stays valid into the new week (RVSPCA volunteer call lapses 19:00 tonight). Monday's run looks again.
+- Skipped on purpose: Harrisonburg Downtown Dollars reminder and FollowFriday giveaway; RRL Lexington branch closure for mold remediation (safety closure); Roanoke libraries Veterans Day closing; Main Street Lexington Pink Friday raffle; W&L student profile.
+- Follows: + City of Waynesboro Fire Department (Waynesboro), + Roanoke Regional Chamber (Roanoke). 18 pending, all re-dated.
+- Watchlist: 2 resolved — Waynesboro Fire Department → facebook.com/waynesborovafire (5.1K, 300 W Broad St); Roanoke Regional Chamber → facebook.com/RoanokeChamber (7K, Franklin Rd SW). Not found +1 attempt: Waynesboro Downtown Development (now 2). Lexington tourism search output was blocked by the tool (query string) — no attempt counted. Lime Kiln is off-season (newest post 10/25). 12 pages re-checked.
+- Needs a person — likely CLOSED: Facebook page search now lists Valley Pawn- Harrisonburg Va at "1790 E Market St, STE 22, Harrisonburg, VA" (was "Virginia Beach" since 11/3). Confirm once in a POST chat, then drop it.
+- Replies on own pages: not swept (POST mode only). Tab closed.
+- Totals this run: comments 0 (3 new queued, 6 pending), shares 0, replies 0, follows 0 (2 new queued, 18 pending), new pages resolved 2.
+
 ## 2026-11-07 (daily PREP run, 12:42–13:00 ET, level 1 all pages) — picks queued, nothing published by this run
 - Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only ("Comment as Joshua Davis" seen on screen) — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings.
 - Still no POST-mode chat since 11/2 evening (ledger unchanged), so the queue carries forward.

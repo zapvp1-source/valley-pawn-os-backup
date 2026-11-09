@@ -1,39 +1,43 @@
-# CPU Guard — 2026-11-08 00:12 EST
+# CPU Guard — 2026-11-09 00:14 EST
 
 Native agent com.valleypawn.cpu-guard (bin/cpu_guard.sh), every 5 min. See header of the script.
 
 ## Load
-0:12  up 5 days,  7:25, 1 user, load averages: 11.09 10.16 9.03
+0:14  up 6 days,  7:27, 1 user, load averages: 7.88 6.27 5.54
 
 ## Process states (R=running, U=waiting on disk)
 ```
-   6 R  689 S    2 U    3 Z 
+   6 R  574 S    4 U    3 Z 
+2 awk
+1 sort
 1 ps
 1 head
 1 /usr/libexec/diskimagesiod
-1 /System/Library/CoreServices/TimeMachine/backupd
+1 /sbin/launchd
+1 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.WebContent.xpc/Contents/MacOS/com.apple.WebKit.WebContent
+1 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mds
 ```
 
 ## Top CPU right now
 ```
  %CPU NI   PID COMM
- 41.0  0   499 /System/Library/CoreServices/TimeMachine/backupd
- 30.0  0   425 /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer
- 27.7  0  1179 /Applications/Parallels Desktop.app/Contents/MacOS//Parallels VM.app/Contents/MacOS/prl_vm_app
- 18.2  0   690 /System/Library/CoreServices/SystemUIServer.app/Contents/MacOS/SystemUIServer
-  5.0  0  1731 /Applications/Claude.app/Contents/Frameworks/Claude Helper (Renderer).app/Contents/MacOS/Claude Helper (Renderer)
-  4.4  0  1340 /System/Applications/Utilities/Activity Monitor.app/Contents/MacOS/Activity Monitor
-  3.9  0 99012 /usr/libexec/sysmond
-  2.8  0   695 /System/Library/CoreServices/Finder.app/Contents/MacOS/Finder
-  2.6  0 11739 /usr/libexec/diskimagesiod
-  1.5  0 27382 /bin/bash
-  1.5  0   426 /System/Library/PrivateFrameworks/TCC.framework/Support/tccd
+263.7  0 29306 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.WebContent.xpc/Contents/MacOS/com.apple.WebKit.WebContent
+ 61.6  0 29300 /Applications/Google Drive.app/Contents/MacOS/Google Drive
+ 57.4  0   747 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/corespotlightd
+ 22.3  0  1179 /Applications/Parallels Desktop.app/Contents/MacOS//Parallels VM.app/Contents/MacOS/prl_vm_app
+ 18.2  0   425 /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer
+ 12.1  0 98539 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python
+ 11.1  0 98535 /usr/libexec/replayd
+  5.8  0  1731 /Applications/Claude.app/Contents/Frameworks/Claude Helper (Renderer).app/Contents/MacOS/Claude Helper (Renderer)
+  4.2  0   397 /usr/sbin/securityd
+  4.1  0 99012 /usr/libexec/sysmond
+  2.4  0 98541 /bin/bash
 ```
 
 ## Memory
 ```
-total = 7168.00M  used = 5999.50M  free = 1168.50M  (encrypted)
-System-wide memory free percentage: 78%
+total = 7168.00M  used = 5895.62M  free = 1272.38M  (encrypted)
+System-wide memory free percentage: 45%
 ```
 
 ## Camera agents (nice should be 10)
@@ -42,6 +46,7 @@ System-wide memory free percentage: 78%
 
 ## Hot processes (pid, consecutive 5-min samples >150%, %cpu, name)
 ```
+29306 1 176.5 com.apple.WebKit.WebContent
 ```
 
 ## Large files changing inside Documents (last scan)
@@ -66,8 +71,8 @@ drwxr-xr-x@ 9 joshuadavis  staff  288 Nov  7 13:25 tracks
 
 /Users/joshuadavis/.vp-studio/offsync/unified-search:
 total 15987656
-drwxr-xr-x@ 5 joshuadavis  staff         160 Nov  7 13:23 .
+drwxr-xr-x@ 5 joshuadavis  staff         160 Nov  8 05:01 .
 drwxr-xr-x@ 4 joshuadavis  staff         128 Nov  7 13:23 ..
--rw-r--r--@ 2 joshuadavis  staff  8185647104 Nov  8 00:00 index.db
--rw-r--r--@ 1 joshuadavis  staff       32768 Nov  8 00:00 index.db-shm
+-rw-r--r--@ 2 joshuadavis  staff  8185647104 Nov  8 23:40 index.db
+-rw-r--r--@ 1 joshuadavis  staff       32768 Nov  8 23:39 index.db-shm
 ```

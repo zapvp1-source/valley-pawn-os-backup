@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-11-07
+# LIVE STATE - auto-refreshed 2026-11-08
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -17,7 +17,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | Enabled (will fire) | 2 |
 | Registered but disabled | 230 |
 | On disk but never registered | 4 |
-| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 6151 |
+| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 7591 |
 
 ### Enabled tasks
 
@@ -84,6 +84,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.conductwatch-report.plist` | installed | YES |
 | `com.valleypawn.conductwatch-roanoke.plist` | installed | YES |
 | `com.valleypawn.conductwatch-waynesboro.plist` | installed | YES |
+| `com.valleypawn.cpu-guard.plist` | installed | YES |
 | `com.valleypawn.daily-audit-digest.plist` | installed | YES |
 | `com.valleypawn.daily-report-discount.plist` | installed | YES |
 | `com.valleypawn.daily-report-pawn.plist` | installed | YES |
@@ -234,32 +235,32 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-11-07 | Valley Pawn OS | - |
-| 2026-11-07 | Unified Search | - |
-| 2026-11-07 | Quickbooks Set UP | - |
-| 2026-11-07 | Life OS | - |
-| 2026-11-07 | Business Dashboard Website | - |
-| 2026-11-07 | Bravo Data Extraction | STATUS.md |
-| 2026-11-06 | Zoom Call Pipeline | - |
-| 2026-11-06 | Website | - |
-| 2026-11-06 | Valuation Core | README.md |
-| 2026-11-06 | Store Traffic Counter | - |
-| 2026-11-06 | Store Conduct Watch | STATUS.md |
-| 2026-11-06 | Sold Margin Review | STATUS.md |
-| 2026-11-06 | Refine Social Media | - |
-| 2026-11-06 | Preston Knowledge Base | - |
-| 2026-11-06 | Precious Metals Settlements | - |
-| 2026-11-06 | Pawn Walks | STATUS.md |
-| 2026-11-06 | Jewelry Count Reconciliation | STATUS.md |
-| 2026-11-06 | Human Resources | - |
-| 2026-11-06 | Health Optimization | STATUS.md |
-| 2026-11-06 | Discount Outlier Review | STATUS.md |
-| 2026-11-06 | Daily Funds Verification | - |
-| 2026-11-06 | Compliance | - |
+| 2026-11-08 | Valley Pawn OS | - |
+| 2026-11-08 | Unified Search | - |
+| 2026-11-08 | Quickbooks Set UP | - |
+| 2026-11-08 | Life OS | - |
+| 2026-11-08 | Compliance | - |
+| 2026-11-08 | Business Dashboard Website | - |
+| 2026-11-08 | Bravo Data Extraction | STATUS.md |
+| 2026-11-07 | Zoom Call Pipeline | - |
+| 2026-11-07 | Website | - |
+| 2026-11-07 | Valuation Core | README.md |
+| 2026-11-07 | Store Traffic Counter | - |
+| 2026-11-07 | Store Conduct Watch | STATUS.md |
+| 2026-11-07 | Sold Margin Review | STATUS.md |
+| 2026-11-07 | Refine Social Media | - |
+| 2026-11-07 | Preston Knowledge Base | - |
+| 2026-11-07 | Precious Metals Settlements | - |
+| 2026-11-07 | Pawn Walks | STATUS.md |
+| 2026-11-07 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-11-07 | Human Resources | - |
+| 2026-11-07 | Health Optimization | STATUS.md |
+| 2026-11-07 | Discount Outlier Review | STATUS.md |
+| 2026-11-07 | Daily Funds Verification | - |
+| 2026-11-07 | Ai Optimized Marketing | - |
 | 2026-11-05 | Email Refinement | - |
 | 2026-11-04 | Short Term Rental Optimization | - |
 | 2026-11-04 | Sales Tax | STATUS.md |
-| 2026-11-04 | Ai Optimized Marketing | - |
 | 2026-11-03 | Communcations | - |
 | 2026-11-02 | eBay | - |
 | 2026-11-02 | _scratch | - |

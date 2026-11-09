@@ -1,4 +1,4 @@
-; ============================================================================
+﻿; ============================================================================
 ; reports/PostToAccountingPostV2.ahk   (cell: post-to-accounting-post-v2)
 ;
 ; V2 (2026-10-20, additive clone of PostToAccountingPost.ahk - original untouched).
@@ -159,6 +159,7 @@ PtaPostV2ClickPostFor(serial, endSerial) {
         bandTop := hdrB + 4
     LogMessage('    [post] band ' . bandTop . '-' . bandBot . ' (grid ' . gr.t . '-' . gr.b . ', header bottom ' . hdrB . ')')
     lastDir := ''
+    prevTop := -1   ; 2026-11-08: rect top seen on the previous pass (unchanged after a wheel UP = grid is at its top)
     gcx := (gr.l + gr.r) // 2
     gcy := (gr.t + gr.b) // 2
     Loop 30 {
@@ -205,9 +206,16 @@ PtaPostV2ClickPostFor(serial, endSerial) {
         }
         ; V2: row at/above the top of the band after we already wheeled UP = grid is at
         ; its top; click the centre if it sits below the header (a real, visible row).
+        ; 2026-11-08: when the HeaderPanel is unreadable the +90 fallback band starts BELOW the first row
+        ; (11/5 + 11/6: rect 283-335 vs bandTop 322 -> 30 useless wheel-ups, "could not click Post button").
+        ; If a wheel UP did not move the row (prevTop = r.t) and the row sits below the grid top + 40, it is the
+        ; real, visible top row: click it.
         if (r && r.r > r.l && r.t < bandTop && lastDir = 'up') {
             cy := (r.t + r.b) // 2
-            if (cy > bandTop - 2 && r.b <= bandBot) {
+            if ((cy > bandTop - 2 || (prevTop = r.t && r.t >= gr.t + 40)) && r.b <= bandBot) {
+                ; 2026-11-08 PM: 11/6 CUL — centre click at 309 (rect 283-335, header occludes the top of the row) did not
+                ; register; click the LOWER part of the button, which is the part that is actually visible.
+                cy := Max(cy, r.b - 6)
                 cx := (r.l + r.r) // 2
                 MouseMove(cx, cy, 10)
                 Sleep(150)
@@ -223,6 +231,7 @@ PtaPostV2ClickPostFor(serial, endSerial) {
             dir := 'up'
         LogMessage('    [post] ' . serial . ' rect=' . (r ? r.t . '-' . r.b : 'none') . ' outside band -> wheel ' . dir . ' (pass ' . A_Index . ')')
         lastDir := dir
+        prevTop := (r && r.r > r.l) ? r.t : -1
         MouseMove(gcx, gcy, 10)
         Sleep(120)
         if (dir = 'down')
