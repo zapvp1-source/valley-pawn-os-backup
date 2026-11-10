@@ -9,8 +9,9 @@ Each pass:
      (only Preston messages that address Claude), as the VP OPS ENGINE bot.
   2. A Preston message from the last 72 h is OPEN until Joshua's account (how Claude posts) replies in its
      thread or later in the channel.
-  3. New OPEN message -> one short reply in his thread ("Got it — on it") and immediately starts the cloud
-     scheduled task "Preston assistant" through its fire endpoint. The cloud task does the work.
+  3. New OPEN message -> starts the cloud scheduled task "Preston assistant" through its fire endpoint, and replies
+     "Got it — on it" in his thread ONLY once something really started (cloud start OK, or the local runner is
+     healthy per local_runner_health.json). If nothing can start (e.g. Claude is down) it stays silent (2026-11-09).
   4. Still OPEN 20 min after a start -> start it again (max 3 starts per message). Still OPEN after 90 min ->
      one FAILURE_LEDGER row (fleet-guardian handles it). No DMs, no channel noise.
   5. Writes Valley Pawn OS/fleet/state/preston_assistant/watch_status.json.
@@ -33,6 +34,7 @@ STATE_FILE = os.path.join(HOME, '.preston_watch_state_v2.json')
 LEDGER = os.path.join(OS_DIR, 'fleet/FAILURE_LEDGER.md')
 INSTALLER = os.path.join(OS_DIR, 'Install Preston Assistant Key.command')
 LOG = os.path.join(HOME, 'Library/Logs/valleypawn/preston-watch.log')
+RUNNER_HEALTH = os.path.join(STATE_DIR, 'local_runner_health.json')
 
 PRESTON_CH = 'C0BGXSTT4TY'      # #preston-claude — every Preston message is a request
 PROSPECTS_CH = 'C0BQDRXRPEJ'    # #employee-prospects — only messages that address Claude
@@ -140,6 +142,13 @@ def ledger_row(text):
         log('ledger write failed ' + str(e))
 
 
+def local_runner_ready():
+    """2026-11-09 (continuity plan): True only if the Mac's local runner checked in within 45 min (a run can take 25), is signed in,
+    and its last run did not fail. If Claude is cut off this goes False and Preston is never told "on it"."""
+    h = load_json(RUNNER_HEALTH, {})
+    return bool(h.get('signed_in')) and time.time() - float(h.get('checked_epoch', 0)) < 2700 and int(h.get('consec_fail', 0)) == 0
+
+
 def one_pass(token, fire_key, routine_id, state):
     now = time.time()
     cutoff = now - WINDOW_H * 3600
@@ -163,13 +172,9 @@ def one_pass(token, fire_key, routine_id, state):
 
     for ch, m in open_msgs:
         rec = state['open'].setdefault(m['ts'], {'channel': ch, 'acked': None, 'fires': [], 'ledger': False})
-        if not rec['acked']:
-            if DRY:
-                log('[dry] would ack %s %s' % (ch, m['ts']))
-            else:
-                r = slack(token, 'chat.postMessage', {'channel': ch, 'thread_ts': m['ts'], 'text': ACK_TEXT})
-                log('ack %s %s %s' % (ch, m['ts'], 'sent' if r.get('ok') else 'FAILED ' + str(r.get('error'))))
-            rec['acked'] = datetime.datetime.now().isoformat(timespec='seconds')
+        # 2026-11-09: start the work FIRST, then say "on it" only if something really started (a cloud start that
+        # returned OK, or a healthy local runner that will pick it up within ~2 min). Otherwise stay silent; the
+        # 90-minute ledger row below still reaches fleet-guardian. Backup: fleet/_backups/preston_watch.py.bak-pre-honestack-20261109
         last_fire = rec['fires'][-1]['at'] if rec['fires'] else 0
         if fire_key and len(rec['fires']) < MAX_FIRES and (not rec['fires'] or now - last_fire >= REFIRE_MIN * 60):
             text = ('Started by the Mac watcher: Preston posted a new request in %s at ts %s. Handle it now.'
@@ -180,6 +185,17 @@ def one_pass(token, fire_key, routine_id, state):
                 ok, detail = fire(routine_id, fire_key, text)
                 rec['fires'].append({'at': now, 'ok': ok, 'detail': detail})
                 log('fire %s %s %s' % (m['ts'], 'ok' if ok else 'FAILED', detail))
+        started = any(f.get('ok') for f in rec['fires']) or local_runner_ready()
+        if not rec['acked'] and started:
+            if DRY:
+                log('[dry] would ack %s %s' % (ch, m['ts']))
+            else:
+                r = slack(token, 'chat.postMessage', {'channel': ch, 'thread_ts': m['ts'], 'text': ACK_TEXT})
+                log('ack %s %s %s' % (ch, m['ts'], 'sent' if r.get('ok') else 'FAILED ' + str(r.get('error'))))
+            rec['acked'] = datetime.datetime.now().isoformat(timespec='seconds')
+        elif not rec['acked'] and not rec.get('noack_logged'):
+            log('no ack %s %s: nothing able to start the work (no cloud start, local runner not ready)' % (ch, m['ts']))
+            rec['noack_logged'] = True
         age_min = (now - float(m['ts'])) / 60
         if age_min >= LEDGER_MIN and not rec['ledger'] and not DRY:
             ledger_row('A request from Preston has been waiting %d minutes without an answer.' % age_min)

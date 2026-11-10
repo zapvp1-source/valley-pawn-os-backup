@@ -13,6 +13,92 @@ consecutive runs → lower its rotation (never delete); >30% above → give it p
 
 ---
 
+## 2026-11-09 (run 3 — week 2, 11/2–11/8; campaign to date 10/26–11/8)
+
+**Still open — the Monday proven-format post has not gone out (3rd week).** 11/2's Monday 13:30 debate slot was skipped again on all
+4 rolled-out stores (Culpeper "Town or County?" marked used, 0 posts tagged debate/history outside Lexington). Today's 13:30 history
+slot (test build: Mount Pony / Fishburne / Turkey Capital / Grandin 2002) will be skipped the same way — the plan builds at 14:30.
+Fix still waits on Joshua's OK (HUMAN_QUEUE 2026-11-02 row: move it to Tuesday 13:30). Not changed here (plan.py is outside scope).
+
+**Accuracy miss found.** Culpeper's 11/4 and 11/6 Facebook posts said the Blue Devils played at Caroline "Friday night, Nov. 6";
+MaxPreps (updated 11/7) shows the game was Thursday 11/5, 7:30 PM (W 26-12). The fact-check log had it as "not re-confirmed
+(source unreachable)". The new playoff entries carry the same-morning re-confirm instruction; noted here for the fact-check owner.
+
+### Per store — week 2 (Publer post insights, store FB pages, posts 11/2–11/8; Sun 11/8 still accruing)
+| Store | Posts | Median reach | % followers | Community posts | Community median | Community % | Baseline % | Eng. | Comments | Shares |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Culpeper | 6 | 73.5 | 8.3% | 4 | 89.5 | 10.1% | 17% | 13 | 1 | 0 |
+| Waynesboro | 7 | 96 | 7.7% | 4 | 88 | 7.1% | 12% | 8 | 1 | 0 |
+| Harrisonburg | 6 | 36 | 4.7% | 4 | 36 | 4.7% | 11% | 7 | 0 | 0 |
+| Lexington | 5 | 163 | 10.1% | 4 | 173 | 10.7% | 28% | 13 | 3 | 0 |
+| Roanoke | 7 | 4 | 10.3% | 4 | 3 | 7.7% | ~30% | 0 | 0 | 0 |
+
+### Per store — campaign to date (10/26–11/8)
+| Store | Posts | Median reach | % followers | Community posts | Community median | Community % | Baseline % |
+|---|---|---|---|---|---|---|---|
+| Culpeper | 12 | 82 | 9.3% | 8 | 98 | 11.1% | 17% |
+| Waynesboro | 13 | 96 | 7.7% | 8 | 114.5 | 9.2% | 12% |
+| Harrisonburg | 12 | 37.5 | 4.9% | 8 | 39 | 5.1% | 11% |
+| Lexington | 10 | 210.5 | 13.0% | 8 | 249.5 | 15.4% | 28% |
+| Roanoke | 14 | 6.5 | 16.7% | 9 | 5 | 12.8% | ~30% |
+All five remain below the 90-day mark. Best single posts this week: Lexington hat shop at Main & Washington (508 reach, 3 comments),
+Waynesboro Friday game post (203), Wayne Theatre share (156).
+
+### Per format (pooled across stores)
+| Format | Week 2 posts / median | To date posts / median | Note |
+|---|---|---|---|
+| HS game week (Fri 13:05) | 4 / 57 | 8 / 61 | vs store's other community, to date: CUL 82 vs 102 (−20%), WAY 149 vs 114.5 (+30%), HAR 36 vs 46 (−22%), ROA 5 vs 5 |
+| Debate | 0 | 1 / 321 | Lexington only (Monday slot skipped elsewhere) |
+| History | 0 | 0 | Monday slot skipped |
+| Other community | 16 / 68.5 | 32 / 84.5 | |
+| Hiring | 3 / 79 | 3 / 79 | WAY 96, HAR 79, ROA 6 |
+| Deal video | 5 / 16 | 10 / 18.5 | still well under the ~43 deal-photo baseline |
+| Other (shares, misc) | 3 / 35 | 7 / 27 | |
+| Staff video | 0 | 0 | |
+
+### Followers (Facebook page headers, 11/9)
+| Store | 10/24 launch | 11/2 | 11/9 | Week | Since launch |
+|---|---|---|---|---|---|
+| Culpeper | 881 | 883 | 885 | +2 | +4 |
+| Waynesboro | 1.2K | 1.2K | 1.2K | — | — (rounded on page) |
+| Harrisonburg | 760 | 759 | 761 | +2 | +1 |
+| Lexington | 1.6K | 1.6K | 1.6K | — | — (rounded on page) |
+| Roanoke | 38 | 39 | 40 | +1 | +2 |
+
+### Outbound engagement (engagement_outbound/ledger.jsonl, 11/2–11/8)
+All activity was the 11/2 POST-mode batch: comments 1 per page (CUL, WAY, HAR, LEX, ROA, Brand), shares CUL/WAY/ROA 1 each, follows
+CUL 5 · WAY 3 · HAR 2 · LEX 1 · ROA 4. Nothing posted 11/3–11/8. QUEUE.json holds 25 pending (7 comments, 18 follows) waiting for a
+"post the community queue" chat.
+
+### Tuning
+None. HS game week now has 8 posts pooled (≥6). Rule check: last run CUL −32% / WAY −30% / HAR −24% / ROA ≈; this week CUL −15%,
+WAY +182%, HAR −14%, ROA 0% vs each store's other community posts — no store >30% below on 2 consecutive runs, none consistently
+>30% above. Rotation unchanged. Debate/history: no signal (Monday slot).
+
+### Topic bank (self-heal)
+- Debate/history: test build 11/9 → 12/28 shows every store has a topic every week (no resting week) — runway ≥7 weeks. No adds.
+- Dated games: no store was below 2 future games, but none had a game 11/13–11/27. **Brackets posted 11/7 → 4 playoff entries added
+  for Fri 11/13 (all 7:00 PM, verified today):** Culpeper — No. 1 Blue Devils HOST No. 8 Brentsville, Region 3B quarterfinal
+  (MaxPreps + Fredericksburg Free Press); Waynesboro — Little Giants' season over, so Augusta County neighbors: Wilson Memorial AT
+  Broadway, Riverheads HOST Luray, Buffalo Gap HOST Cumberland, Stuarts Draft bye then home 11/20 (Cardinal News + MaxPreps);
+  Harrisonburg — Blue Streaks' season over, so Rockingham County: Broadway HOST Wilson Memorial, Turner Ashby HOST Monticello,
+  East Rockingham AT Fluvanna (time not stated); Roanoke — No. 3 Patrick Henry HOST No. 6 Douglas Freeman, Region 5C (MaxPreps +
+  Cardinal News); William Fleming AT Midlothian (time not stated). Northside, Eastern View, Waynesboro, Harrisonburg: not mentioned.
+  Next run: second-round games (11/20) once results are in.
+- **Test build** (copy of package + plans + ledger in a scratch folder on the VM, real planner, weeks 11/9 → 12/28, seed 1):
+  **0 collisions** every week, all times 13:05–15:00, the 11/13 playoff topics land in the Fri 13:05 slot for all 4 stores. Copy deleted.
+  Today's real 14:30 build reads the updated bank, so this Friday's game posts will use the playoff entries.
+
+### Changes made
+- `community_topics.json` (+4 playoff games, updated 2026-11-09), `state/store_followers.json` (as_of 11/9),
+  `follower_growth_by_store.csv` (+11/9 row).
+- Backups: `Valley Pawn OS/fleet/_backups/{community_topics.json,store_followers.json,follower_growth_by_store.csv,
+  CITY_COMMUNITY_KB.md,CAMPAIGN_SCORECARD.md,CHANGELOG.md}.bak-pre-scorecard-20261109`.
+- Measurement output: `state/scorecard/measure_2026-11-09_{week2,campaign}.json`.
+- Report to Joshua: due today — one plain Slack DM (D03BHQH5VGT).
+
+---
+
 ## 2026-11-02 (run 2 — week 1, 10/26–11/1)
 
 **Biggest finding — the Monday proven-format post has never gone out.** The weekly plan builds Mon 14:30 (`social-weekly`),

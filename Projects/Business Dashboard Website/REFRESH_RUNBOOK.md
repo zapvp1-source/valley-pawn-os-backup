@@ -150,3 +150,33 @@ is still posting a daily "Daily Response Summary" at 8 AM plus an "End-of-Day Fo
 This run used the latest Daily Response Summary post and refreshed data.daily.chekkit normally.
 If the scheduled task's stored prompt is ever edited, this line can come out of its current-rules
 block.
+
+## Note (2026-11-09, dashboard-refresh run)
+Confirmed the 2026-11-02 "bridge quirk" (CHANGELOG) still happens on this folder: a just-created
+or just-copied file reports nlink>1 to device_stage_files and is refused ("file is hardlinked"),
+even seconds after a fresh `cp`/`tar` into this mount -- it did NOT clear within the first ~5-10s
+this run. It DID clear on a retry roughly 30-60s later (no change to the file, just waited and
+re-issued device_stage_files with the same path). Files elsewhere under the plain `Projects` mount
+(outside the `Business Dashboard Website` subfolder) staged fine immediately. So: if a stage call
+on a freshly-written file in this folder fails with the nlink error, don't treat it as Option C
+being down -- wait ~30-60s (do something else, like a Slack read, in between) and retry the exact
+same device_stage_files call once or twice before falling back further.
+Also confirms #chekkit-messages-missed (C0B1PEW0C30) is still live and posting daily -- updated
+data.daily.chekkit normally again this run (per the 2026-11-04 note above); the scheduled task's
+"nothing posts there any more" line in its stored prompt is still stale.
+
+## 2026-11-09 — Slack Restructure: where the full data lives now (read this before Step 1)
+Channel posts are now HEADLINES (≤5 lines) and all-clear monitors are silent. Do not parse channel messages
+for tables any more. The full body of every routed report is written, verbatim (canvas markdown), to the Mac
+at `Valley Pawn OS/fleet/canvas_state/dept_sections/<dept>.json` — `{section_key: {md, updated}}` — and
+mirrored on the department canvas in Slack:
+- loans (layaway table, layaway yield, first-payment-default): `dept_sections/loans.json` · canvas F0CG1NUG093
+- scoreboard (store rankings, employee rankings, FFL/NICS): `dept_sections/scoreboard.json` · canvas F0CG6S3EXA6
+- aged inventory / markdowns: `dept_sections/aged.json` · canvas F0CG0QPVDDH
+- leadership (monthly analytics, scrap, mobilepawn, pawn walk / sold / discount): `dept_sections/leadership.json` · canvas F0CG6S5CTDY
+- daily checks (funds, jewelry, texts, calls): `dept_sections/daily.json` · canvas F0CG0QRPJJX
+- marketing: `dept_sections/marketing.json` · canvas F0CFRLDV2EB
+Funds: a matched day posts nothing. Treat a `funds-clean` line in `Valley Pawn OS/fleet/quiet_ledger/<YYYY-MM-DD>.md`
+as "all 5 stores matched" for that date; a discrepancy day still appears in `dept_sections/daily.json` and in #daily-checks.
+Channel ids are unchanged by the renames (#layaway-review → #loans-layaways, #company-performance → #leadership-reports,
+#daily-funds-reconcilation → #daily-checks, #social-media → #marketing).

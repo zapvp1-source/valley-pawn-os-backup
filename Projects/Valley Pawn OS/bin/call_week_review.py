@@ -95,6 +95,15 @@ def work(since, until):
     # 1. call history (every call, answered or not)
     try:
         ch = paged(api_get, "/phone/call_history", "call_logs", since, until)
+        # 2026-11-09: store numbers enter through an IVR menu; resolve AR rows to the queue outcome
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import zoom_call_path
+            ch, perr = zoom_call_path.resolve_rows(ch, fetch=lambda cid: api_get("/phone/call_history/" + cid))
+            if perr:
+                log(d, "call path lookups failed for %d menu calls" % perr)
+        except Exception as e:  # noqa: BLE001
+            log(d, "call path resolve skipped: %s" % e)
         json.dump(scrub(ch), open(os.path.join(d, "call_history.json"), "w"), indent=1)
         status(d, phase="call_history_done", call_history_rows=len(ch))
         log(d, "call_history rows=%d" % len(ch))

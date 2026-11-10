@@ -105,6 +105,9 @@ def read_replies(st):
     for m in msgs:
         if m.get("user") != PRESTON:
             continue
+        if MARK in (m.get("text") or ""):
+            # he pasted the batch back with answers inline; those are applied by hand, not parsed here
+            continue
         for line in (m.get("text") or "").splitlines():
             p = parse_reply(line)
             if not p or p[0] not in ids:

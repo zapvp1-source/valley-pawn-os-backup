@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-11-07 22:10 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-11-09 22:12 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -692,7 +692,7 @@ id: silver-scrap-keep-sellable-p-011d5d1c
 SECTION: COINS, BULLION & NUMISMATICS
 ==============================================================================
 
-### [HIGH] bullion-coins-discount-exclusions
+### [VERIFIED] bullion-coins-discount-exclusions
 RULE: Storewide sale discounts never apply to coins, bullion, or clearance jewelry; all such deals must collect sales tax with no out-the-door pricing.
 PRESTON SAID: "All deals have to collect sales tax. No out the door pricing.
 
@@ -700,7 +700,7 @@ The discount DOES NOT APPLY to clearance jewelry, coins, or bullion."
 SOURCE: #general (C03BETSS669) | 2025-11-24 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1763994332445149
 id: bullion-coins-discount-exclu-f9642fb8
 
-### [HIGH] bullion-loan-amounts
+### [VERIFIED] bullion-loan-amounts
 RULE: Loans on bullion must be materially below melt — a $100 loan on a 5 oz silver bar with $113 melt is too much because the redemption amount equals melt and the deal makes no sense.
 PRESTON SAID: "5 oz silver bar - $100 - This is too much on a loan. Melt value is $113. Redemption amount is $113. Need to loan less for this to make sense.
 
@@ -708,10 +708,11 @@ PRESTON SAID: "5 oz silver bar - $100 - This is too much on a loan. Melt value i
 SOURCE: #loans-and-buys (C03GBDKSLRE) | 2024-02-12 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1707748203886979
 id: bullion-loan-amounts-337082b3
 
-### [HIGH] buyer-network-coin-shop
+### [VERIFIED] buyer-network-coin-shop
 RULE: There is a "coin shop" Valley Pawn uses to quick-flip coins and bullion for immediate cash. Preston never names it in Slack. Joshua references flipping to it when cash is tight.
 PRESTON SAID: "Can quick flip this to coin shop if needed."
 SOURCE: #pepper-funds (C03BLHFJ3KN) | 2025-11-06 | https://valleypawnworkspace.slack.com/archives/C03BLHFJ3KN/p1762448777490069
+PRESTON'S CORRECTION (2026-11-09): Preston 11/9/26: quick-flipping to the coin shop is NOT a standard practice — it is done case by case, only with agreement from both Preston and Joshua.
 id: buyer-network-coin-shop-bf15f8d3
 
 ### [HIGH] coins-bravo-skus
@@ -768,11 +769,23 @@ PRESTON SAID: "I have a new customer looking to get a loan on a one ounce graded
 SOURCE: DM Joshua<->Preston (D03C7RBGY56) | 2023-09-18 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1695062718908309
 id: numismatics-graded-coin-loan-fe242620
 
+### [MEDIUM] bullion-loan-below-melt
+RULE: A bullion loan must be set below melt value. A loan whose redemption amount equals melt makes no sense, so loan less.
+PRESTON SAID: "5 oz silver bar - $100 - This is too much on a loan. Melt value is $113. Redemption amount is $113. Need to loan less for this to make sense."
+SOURCE: #preston-claude (Preston Peters, Operations Manager) | 2026-11-09 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1794233493723639?thread_ts=1794233493.723639&cid=C0BGXSTT4TY
+id: bullion-loan-below-melt-c64d1049
+
 ### [MEDIUM] buyer-network-coin-buyer-90-percent
 RULE: The coin-flip counterparty (UNNAMED) pays 90% of value on gold coins; a customer buy at ~80% therefore leaves only a thin flip margin, so Preston preferred to retail the coin instead.
 PRESTON SAID: "Flip would be less. They are paying 90% this is about 80%"
 SOURCE: DM Joshua<->Preston (D03C7RBGY56) | 2026-03-09 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1773078102323369
 id: buyer-network-coin-buyer-90--413e8884
+
+### [MEDIUM] coin-shop-quick-flip
+RULE: Quick-flipping coins or bullion to the coin shop is not standard practice. It is done case by case, with agreement from Preston and Joshua.
+PRESTON SAID: "Not a standard practice, done case by case with agreement from Preston and Joshua."
+SOURCE: #preston-claude (Preston Peters, Operations Manager) | 2026-11-09 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1794233493723639?thread_ts=1794233493.723639&cid=C0BGXSTT4TY
+id: coin-shop-quick-flip-4a6116d4
 
 ### [MEDIUM] coin-split-convert-to-sku
 RULE: When writing up multiple coins, hit split, write up each coin properly and assign its own cost. Then select them all and convert to SKU before saving the pricing, so no tags need printing and the cost is accounted for.
@@ -822,11 +835,17 @@ SOURCE: #harrisonburg-funds (C03BWRKEDUZ) | 2026-02-23 | https://valleypawnworks
 PRESTON'S CORRECTION (2026-11-05): Preston 11/5/26: that was a one-off deal, not a standard. Being under 50% of melt is not by itself an approval rule — send it to Preston.
 id: below-50-percent-approval-he-69474b54
 
-### [HIGH] buy-vs-pawn-presentation
+### [VERIFIED] buy-vs-pawn-presentation
 RULE: When presenting a deal, quote the BUY amount higher than the PAWN amount so the customer is forced to decide. Low-dollar loans have high default rates and tie up cash for a minimum of 45 days.
 PRESTON SAID: "When taking in items are we looking at customer loyalty reports? When discussing loan vs buy are we differentiating BUY amount vs PAWN amount? Buy should be presented as more money than loan to force a decision from the customer. Low dollar loans have high default rates and tie up our money for a minimum of 45 days. This is super important when it comes to cash flow!"
 SOURCE: #loans-and-buys | 2023-11-10 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1699626600129519
 id: buy-vs-pawn-presentation-7990b820
+
+### [HIGH] buy-vs-pawn-offer-presentation
+RULE: When presenting a deal, quote the BUY amount higher than the PAWN (loan) amount to force a decision from the customer.
+PRESTON SAID: "Buy should be presented as more money than loan to force a decision from the customer."
+SOURCE: #preston-claude (Preston Peters, Operations Manager) | 2026-11-09 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1794233493723639?thread_ts=1794233493.723639&cid=C0BGXSTT4TY
+id: buy-vs-pawn-offer-presentati-5b0f53e1
 
 ### [HIGH] customer-and-id-photo-mandatory
 RULE: A photo of the customer and a photo of their ID are mandatory on every intake — not optional.
@@ -1029,6 +1048,12 @@ PRESTON SAID: "I'm just making sure you can't go through days with no interest."
 SOURCE: zoom-call:00229642e5be482e8734c08511338585 | 2026-10-19 | UNK Walker Tapley
 id: loan-increase-interest-cover-d5b12224
 
+### [MEDIUM] loan-photos-match-items
+RULE: Photos on a loan must show the actual items being taken in.
+PRESTON SAID: "Pictures should reflect the actual items."
+SOURCE: #preston-claude (Preston Peters, Operations Manager) | 2026-11-09 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1794233493723639?thread_ts=1794233493.723639&cid=C0BGXSTT4TY
+id: loan-photos-match-items-973af2aa
+
 ### [MEDIUM] tv-loan-ratio
 RULE: Don't loan retail on a TV — a 40" TCL we'd sell for $110 should be a ~$60 loan (roughly 55%).
 PRESTON SAID: "TCL 40 inch tv - $110 - This is how much we would sell this for. Should be loaning like $60 on this."
@@ -1082,26 +1107,26 @@ id: loan-percentage-trusted-cust-6e2e2d54
 SECTION: BUYER & VENDOR NETWORK
 ==============================================================================
 
-### [HIGH] buyer-network-elemetal
+### [VERIFIED] buyer-network-elemetal
 RULE: Elemetal is Valley Pawn's gold and silver refiner. They issue prepaid shipping labels (not obtainable on Saturdays), and have been closed on some weekdays.
 PRESTON SAID: "Good morning. I can get silver out Monday. Can't get a label from elemetal on Saturdays. It's ready though."
 SOURCE: DM Joshua<->Preston (D03C7RBGY56) | 2026-05-30 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1780151302605529
 id: buyer-network-elemetal-5c6e61a2
 
-### [HIGH] buyer-network-elemetal-silver-rate
+### [VERIFIED] buyer-network-elemetal-silver-rate
 RULE: Elemetal paid Valley Pawn 85% on the .925 silver lots.
 PRESTON SAID: "It was all .925 what we did. Said they were doing 85%"
 SOURCE: DM Joshua<->Preston (D03C7RBGY56) | 2026-04-15 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1776259741661969
 !! CONFLICT: Joshua in the same thread quotes an alternative schedule of ".925 & up - 90% return / Below .925 - 80% return" from another (unnamed) group. Preston never confirmed which counterparty that schedule belonged to.
 id: buyer-network-elemetal-silve-14015ada
 
-### [HIGH] buyer-network-elemetal-silver-terms
+### [VERIFIED] buyer-network-elemetal-silver-terms
 RULE: Elemetal's silver buyer spot-checks the lot; if it mostly looks good he runs the whole lot as .925, and only if he sees issues do they melt and assay before paying. Lots are split by flatware, knives, and jewelry.
 PRESTON SAID: "He spot checked a bunch of it. Said if it mostly looks good he runs it as .925. If he sees issues then they melt it and do assay first before they pay us."
 SOURCE: DM Joshua<->Preston (D03C7RBGY56) | 2026-04-15 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1776259949469059
 id: buyer-network-elemetal-silve-9d6216ca
 
-### [HIGH] buyer-network-elemetal-silver-throughput
+### [VERIFIED] buyer-network-elemetal-silver-throughput
 RULE: Elemetal caps silver intake at 250 troy ounces per calendar week (15.625 lbs).
 PRESTON SAID: "Elemental is 250 ounces per calendar week. 15.625 pounds."
 SOURCE: DM Joshua<->Preston (D03C7RBGY56) | 2026-04-28 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1777394427261499
@@ -1172,6 +1197,13 @@ SOURCE: #compliance | 2026-07-03 | https://valleypawnworkspace.slack.com/archive
 PRESTON'S CORRECTION (2026-11-05): Preston 11/5/26: the broader assault-firearm ban these receiver/rimfire clarifications referred to is no longer in effect. The under-21 assault-firearm transfer restriction still is.
 id: assault-firearm-exemptions-79afd327
 
+### [VERIFIED] assault-firearms-under-21-transfer
+RULE: Assault firearms may not be transferred to buyers under 21 under VA HB 1525, whose emergency clause took effect immediately rather than July 1. Preston confirmed this is still true as of 2026-11-05.
+PRESTON SAID: "Team, effective immediately, we will not be able to transfer any "assault firearms" to buyers under the age of 21. Bill HB 1525 was signed into effect containing an "emergency" clause which puts this into effect immediately rather than July 1."
+SOURCE: #preston-claude (Preston Peters, Operations Manager) | 2026-11-05 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1793900129616829?thread_ts=1793900129.616829&cid=C0BGXSTT4TY
+PRESTON'S CORRECTION (2026-11-09): Preston 11/9/26: yes — as of right now this is still true.
+id: assault-firearms-under-21-tr-293cfa19
+
 ### [VERIFIED] bows-crossbows-25-percent
 RULE: Bows and crossbows taken in off-season must be bought at 25% of current resale, because it's 8-9 months to season and the item could be worth half its current value by then.
 PRESTON SAID: "Tenpoint stealth - $150 - Been seeing lots of bows and crossbows coming in at all stores. These are really difficult items for us to work with at this time of year. We need to get these CHEAP. 8-9 months before we will be back in season on these and we didn't sell through all of what we had going into the season as it is. Results in lots of money tied up. By cheap I mean 25% of current resell. Could be worth half of what it is now by next season."
@@ -1185,19 +1217,20 @@ SOURCE: #loans-and-buys | 2024-01-13 | https://valleypawnworkspace.slack.com/arc
 PRESTON'S CORRECTION (2026-11-05): Preston 11/5/26: yes — the Bravo Price Guide should be referenced when evaluating an item, along with our other sources (not by itself).
 id: bravo-price-guide-report-5941c1bf
 
-### [HIGH] assault-firearms-under-21-transfer
-RULE: Assault firearms may not be transferred to buyers under 21 under VA HB 1525, whose emergency clause took effect immediately rather than July 1. Preston confirmed this is still true as of 2026-11-05.
-PRESTON SAID: "Team, effective immediately, we will not be able to transfer any "assault firearms" to buyers under the age of 21. Bill HB 1525 was signed into effect containing an "emergency" clause which puts this into effect immediately rather than July 1."
-SOURCE: #preston-claude (Preston Peters, Operations Manager) | 2026-11-05 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1793900129616829?thread_ts=1793900129.616829&cid=C0BGXSTT4TY
-id: assault-firearms-under-21-tr-293cfa19
-
-### [HIGH] broken-returns-location
+### [VERIFIED] broken-returns-location
 RULE: Returned items that cannot be sold go to a Bravo location called "Broken," priced at cost, and staged in a designated back area until inventory, when they are written off and disposed of.
 PRESTON SAID: "I have created a new location "Broken" for return items that cannot be sold. Please price these items at cost and designate an area for them in the back until we do inventory to write them off and dispose of them. 
 
 Please do this now and get your pricing list cleaned up."
 SOURCE: #general | 2024-03-21 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1711040015277089
+PRESTON'S CORRECTION (2026-11-09): Preston 11/9/26: yes — any return item should be processed right away and either put back on the sales floor for resale or placed in the Broken category for write-off.
 id: broken-returns-location-be0165a0
+
+### [HIGH] broken-location-unsellable-returns
+RULE: Returned items that cannot be sold go in the Bravo location "Broken," priced at cost. Stage them in a designated back area until inventory, then write them off and dispose of them.
+PRESTON SAID: "I have created a new location "Broken" for return items that cannot be sold. Please price these items at cost and designate an area for them in the back until we do inventory to write them off and dispose of them."
+SOURCE: #preston-claude (Preston Peters, Operations Manager) | 2026-11-09 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1794233493723639?thread_ts=1794233493.723639&cid=C0BGXSTT4TY
+id: broken-location-unsellable-r-fd899894
 
 ### [HIGH] c-grade-goods-ten-dollar-offer
 RULE: Never pay full value on a C-condition item even to build goodwill with a new customer. Make a $10 offer and use the moment to explain what we pay more for — no other shop will offer anything on it anyway.
@@ -2150,6 +2183,18 @@ PRESTON SAID: "The best thing to do is do the return, put it on a car to store c
 SOURCE: zoom-call:3291969ad65c47959d20e047c68cf3d8 | 2026-10-30 | UNK Walker Tapley
 id: return-to-store-credit-card--d86a5846
 
+### [MEDIUM] sale-deals-collect-sales-tax
+RULE: During the storewide sale, all deals must collect sales tax. Out-the-door pricing is not allowed.
+PRESTON SAID: "All deals have to collect sales tax. No out the door pricing."
+SOURCE: #preston-claude (Preston Peters, Operations Manager) | 2026-11-09 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1794233493723639?thread_ts=1794233493.723639&cid=C0BGXSTT4TY
+id: sale-deals-collect-sales-tax-e1a2641d
+
+### [MEDIUM] sale-discount-exclusions
+RULE: The storewide sale discount does not apply to clearance jewelry, coins, or bullion.
+PRESTON SAID: "The discount DOES NOT APPLY to clearance jewelry, coins, or bullion."
+SOURCE: #preston-claude (Preston Peters, Operations Manager) | 2026-11-09 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1794233493723639?thread_ts=1794233493.723639&cid=C0BGXSTT4TY
+id: sale-discount-exclusions-38258400
+
 ### [MEDIUM] sales-by-associate-report
 RULE: To see an associate's sales numbers, run the Reports > Sold Inventory report and group it by associate. This lets a new hire compare their numbers with others over the same period.
 PRESTON SAID: "I would run the report, you know, where you go to reports, sold inventory and then you group by associate."
@@ -2484,6 +2529,12 @@ PRESTON SAID: "There's like, they look like the older cards have like a flowerin
 SOURCE: zoom-call:8ff2cdb1c20e43959d80c28b59c06c4c | 2026-10-30 | UNK Walker Tapley
 id: pokemon-card-authentication--9d4e9868
 
+### [LOW] pos-renewal-increase-principal-edit-fees
+RULE: When increasing the principal on a renewal in the POS, the outstanding amount won't come out right until the fees (interest, storage, etc.) are also edited. Zeroing those fees makes the outstanding amount balance to the new principal.
+PRESTON SAID: "so that's factoring in without the fees you have to edit the fees Like the interest and storage and all that yeah, that'll balance out"
+SOURCE: zoom-call:ce813b5e6f2d455b88ff0d045c69d4fb | 2026-11-09 | UNK Uriah Tiglao
+id: pos-renewal-increase-princip-0c43223b
+
 ### [LOW] pull-list-zero-target
 RULE: The pull list (expired loan and layaway items waiting to be priced) should be worked down to zero. Each day's new items should be priced that day so the list starts and ends the day at zero.
 PRESTON SAID: "we want that revolving door to start at zero and end at zero."
@@ -2632,5 +2683,5 @@ id: past-due-75-day-5-percent-ce-30eeab0b
 
 
 ==============================================================================
-COVERAGE: 363 entries - 21 verified by Preston, 160 high-confidence rules, 103 medium, 77 low, 2 superseded.
+COVERAGE: 371 entries - 31 verified by Preston, 152 high-confidence rules, 108 medium, 78 low, 2 superseded.
 ==============================================================================

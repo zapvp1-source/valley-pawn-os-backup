@@ -1,5 +1,17 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-09 (daily PREP run, 12:42–12:52 ET, level 1 all pages) — picks queued, nothing published by this run
+- Mode: PREP (per RUNBOOK). No Post/Share/Follow clicks, never switched into a Valley Pawn page. Facebook signed in, no checkpoint, no warnings. Still no POST-mode chat since 11/2 evening (ledger unchanged).
+- Profile note: at the start pages showed "Comment as Joshua Davis", but partway through Chrome's Facebook was acting as **Mountain Valley Luxury Shenandoah Valley** (not a Valley Pawn page; this run did not switch it — something else in Joshua's Chrome did). Per the hard rule, switched back to Joshua Davis at the end (avatar → Joshua Davis; "Switched to Joshua Davis" confirmed on screen).
+- Dropped from QUEUE (source post past 48 h, or lapsing before any likely POST chat): Culpeper → Culpeper Renaissance; Roanoke → Mill Mountain Zoo ZooBoo; Waynesboro → Wayne Theatre Ralphie; Lexington → RRL online courses; Brand → SNP closings; Harrisonburg → Massanutten Winter Wonderfest (lapses 13:45 today).
+- New week for shares (1/week at level 1). Shares queued, all permalinks opened and confirmed: Roanoke → Downtown Roanoke "Dickens of a Christmas" (Dec 4/11/18, 6–10 PM); Culpeper → Visit Culpeper Christmas Parade & Downtown Sunday Funday (Sun Dec 6) — EXPIRES 11/10 07:09; Waynesboro → Waynesboro Public Library Merci Train exhibit (through Nov 30); Harrisonburg → Massanutten Regional Library Red Cross Blood Drive (Tue Dec 8, 11–4); Lexington → Rockbridge Regional Library fantasy writing workshop (Thu Nov 12, 5–6 PM) — Lexington's first share. Brand: none (Sunday share day).
+- Comments queued (1/page/day): Roanoke → Mill Mountain Zoo (Career Quest, ~4,000 students); Waynesboro → Wayne Theatre (THE bunny suit); Brand → Shenandoah National Park (Skolithos fossils). Still valid: Lexington → RRL WiFi 24/7 (until 11/10 10:45). Culpeper and Harrisonburg: their pick today is the share — no fresh comment-worthy post (CCPS driver-ed notice and CRI's ended Restaurant Week skipped).
+- Follows: no new ones; 18 pending, all re-dated.
+- Watchlist: 0 resolved; 2 retired after 3rd failed search — Roanoke City Public Schools (results only Roanoke AL, a foundation and a political page) and City of Harrisonburg (only other cities' governments). 14 pages re-checked.
+- Needs a person: none new. (Harrisonburg page address item from 11/3 looked fixed on 11/8 — confirm in a POST chat.)
+- Replies on own pages: not swept (POST mode only). Tab closed.
+- Totals this run: comments 0 (3 new queued, 4 pending), shares 0 (5 new queued), replies 0, follows 0 (18 pending), new pages resolved 0.
+
 ## 2026-11-08 (daily PREP run, 12:41–12:49 ET, level 1 all pages) — picks queued, nothing published by this run
 - Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only ("Comment as Joshua Davis" seen on screen) — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings.
 - Still no POST-mode chat since 11/2 evening (ledger unchanged), so the queue carries forward.

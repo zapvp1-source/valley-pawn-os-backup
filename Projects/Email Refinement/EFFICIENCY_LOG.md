@@ -495,3 +495,6 @@ Welcomed: 8 new contacts | Skipped (failed): 0 | flag check: 5/5 ok
 
 ## 2026-11-04 (brevo-welcome-new-contacts, native)
 Welcomed: 64 new contacts | Skipped (failed): 0 | flag check: 5/5 ok
+
+## 2026-11-09 (brevo-welcome-new-contacts, native)
+Welcomed: 6 new contacts | Skipped (failed): 0 | flag check: 5/5 ok

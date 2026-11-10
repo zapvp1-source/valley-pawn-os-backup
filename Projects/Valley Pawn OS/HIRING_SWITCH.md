@@ -1,17 +1,19 @@
 # HIRING SWITCH — single source of truth (read by the hiring-switch skill)
 
 STATE: ON   (ON = at least one row below is ON; OFF = every row is OFF)
-CHANGED: 2026-10-13 ~2:00 PM ET by Claude at Joshua's direction — per-store control; Preston reopened Roanoke + Harrisonburg (#preston-claude 11:21 AM).
+CHANGED: 2026-11-09 ~10:15 AM ET by Claude (Preston assistant) — Preston opened Lexington + Harrisonburg Indeed ads (#preston-claude 10:04 AM): interviews 11–3 with Preston, no Wednesdays or Sundays, he calls from (540) 202-4200.
+PRIOR CHANGE: 2026-10-13 ~2:00 PM ET by Claude at Joshua's direction — per-store control; Preston reopened Roanoke + Harrisonburg (#preston-claude 11:21 AM).
 
 ## ACTIVE SCOPE — per store / per listing (authoritative; read by vp-hiring-pipeline and the Preston assistant every run; wins over any older scope text)
 | Store | Listing (Indeed) | Hiring | Interview days / hours | First interview day | Interviewer | Last changed by |
 |---|---|---|---|---|---|---|
 | Culpeper | Sales & Loan Associate | OFF | Mon–Fri 11:00 AM–2:55 PM, 5-min phone | next business day | Joshua Davis (804) 930-4221 | default |
 | Waynesboro | Sales & Loan Associate | ON | Mon–Fri 11:00 AM–2:55 PM, 5-min phone | next business day | Joshua Davis (804) 930-4221 | standing |
-| Harrisonburg | Sales & Loan Associate | ON | Mon–Fri 11:00 AM–2:55 PM, 5-min phone | Thu 10/15/2026 for new contacts | Joshua Davis (804) 930-4221 | Preston 10/13 |
-| Lexington | Sales & Loan Associate | OFF | Mon–Fri 11:00 AM–2:55 PM, 5-min phone | next business day | Joshua Davis (804) 930-4221 | default |
+| Harrisonburg | Sales & Loan Associate | ON | Mon, Tue, Thu, Fri, Sat 11:00 AM–2:55 PM, 5-min phone — NO Wednesdays or Sundays | Tue 11/10/2026 (next allowed day after contact) | Preston Peters, calling from (540) 202-4200 | Preston 11/9 |
+| Lexington | Sales & Loan Associate | ON | Mon, Tue, Thu, Fri, Sat 11:00 AM–2:55 PM, 5-min phone — NO Wednesdays or Sundays | Tue 11/10/2026 (next allowed day after contact) | Preston Peters, calling from (540) 202-4200 | Preston 11/9 |
 | Roanoke | Sales & Loan Associate | ON | Mon–Fri 11:00 AM–2:55 PM, 5-min phone | Thu 10/15/2026 | Joshua Davis (804) 930-4221 | Preston 10/13 |
 | Saint Augustine FL | Store Manager | OFF | — | — | Joshua Davis (804) 930-4221 | default |
+Interviewer note: per Joshua 2026-10-23 every interview is with Preston Peters calling from (540) 202-4200 — that applies to the Waynesboro/Roanoke rows too, even where the cell above still reads Joshua.
 Any role or store Preston names that isn't listed gets a new row. Hard rules in vp-hiring-pipeline apply to every row (no felons, do-not-contact list, screening order).
 
 ## STANDING RULE — PRESTON CONTROLS HIRING, DYNAMICALLY (Joshua, 2026-10-13)

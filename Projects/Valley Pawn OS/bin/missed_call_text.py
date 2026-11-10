@@ -189,7 +189,7 @@ def zoom_token(now):
     return d["access_token"]
 
 
-def zoom_calls(token, day_from, day_to):
+def zoom_calls_raw(token, day_from, day_to):
     rows, npt = [], ""
     for _ in range(20):  # hard page cap
         q = {"from": day_from, "to": day_to, "page_size": 300}
@@ -203,6 +203,25 @@ def zoom_calls(token, day_from, day_to):
         npt = d.get("next_page_token") or ""
         if not npt:
             break
+    return rows
+
+
+LAST_PATH_ERRORS = 0
+
+
+def zoom_calls(token, day_from, day_to):
+    """2026-11-09: store numbers now enter through a Zoom Auto Receptionist (IVR menu). The list
+    API only shows the first hop, so AR rows are resolved via the call path into the same shape
+    as a direct store-queue row (bin/zoom_call_path.py). Non-AR rows pass through unchanged."""
+    global LAST_PATH_ERRORS
+    rows = zoom_calls_raw(token, day_from, day_to)
+    try:
+        if BIN not in sys.path:
+            sys.path.insert(0, BIN)
+        import zoom_call_path
+        rows, LAST_PATH_ERRORS = zoom_call_path.resolve_rows(rows, token, log=log)
+    except ImportError:
+        LAST_PATH_ERRORS = 0
     return rows
 
 
@@ -412,6 +431,9 @@ def main():
             log("fetch error %s" % e)
             return 1
 
+    if LAST_PATH_ERRORS and not render and not a.fixture:
+        ledger_once(state, "callpath", "Zoom call-path lookups failed for %d menu calls; those calls may be miscounted." % LAST_PATH_ERRORS,
+                    "yes, check the Zoom app has scope phone:read:call_log:admin")
     dry = publish_guard_armed(now)
     decisions, unknown = decide(calls, cfg, state, now, lookback, render)
 

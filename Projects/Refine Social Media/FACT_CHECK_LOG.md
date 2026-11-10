@@ -251,3 +251,9 @@ Unverifiable / notes: Culpeper County @ Caroline 11/6 not re-confirmed today (Ca
 - Edited:
   - 6ae8e9589c13cf4dad0228a7 (Waynesboro FB, Sun 11/8 3 PM): "First real cold morning of the year in the Boro" (unverifiable; LWX AFD 11/6 notes growing season still active only east of the Blue Ridge, implying earlier freezes west of it) → "The Boro woke up right around freezing today, with the Weather Service calling for a low near 32 and a sunny afternoon in the mid 60s." APPLIED.
 - Unverifiable: none left in posts. Note: forecast.weather.gov MapClick pages for Waynesboro/Lexington served stale cached content; used api.weather.gov instead.
+
+## 2026-11-09 07:42 ET — daily fact-check (window: next 36h, to 2026-11-10 ~19:40 ET)
+- Posts checked: 12 — all the Tue 11/10 11:00 AM MobilePawn app post (FB: Brand, Culpeper, Waynesboro, Harrisonburg, Lexington, Roanoke; BrandIG; GBP: Culpeper, Waynesboro, Harrisonburg, Lexington, Roanoke).
+- Time-sensitive claims: none. "Busy week?" is generic, no date/event/hours claim. Product posts are out of scope per rules.
+- Spot check anyway: https://thevalleypawn.com/app/ returns 200 and says "free MobilePawn app to pay or extend your Valley Pawn loan, make layaway payments" — matches captions.
+- Posts edited: none. Unverifiable: none. Published-wrong: none.

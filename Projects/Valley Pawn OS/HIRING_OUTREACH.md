@@ -5,6 +5,13 @@
 
 **Created:** 2026-08-15 · **Owner:** Joshua (execution: Claude scheduled task `indeed-applicant-outreach`)
 
+## ✅ SCOPE ADDITION — 2026-11-09 (Preston, via #preston-claude, 10:04 AM ET) — LEXINGTON ON, HARRISONBURG REOPENED; NO WED/SUN INTERVIEWS
+Preston: "Claude, I have opened up ads for Lexington and Harrisonburg on Indeed. When contacting applicants please schedule interviews for me between 11am and 3pm. No interviews scheduled on Wednesdays or Sundays. Contact number I will be calling from is 540-202-4200."
+- Sales & Loan Associate — **Lexington** now IN SCOPE (was OFF); **Harrisonburg** stays ON with fresh ad.
+- Interviewer Preston Peters, calling from (540) 202-4200. 5-min phone slots 11:00 AM–2:55 PM, **Mon/Tue/Thu/Fri/Sat only — never Wednesday or Sunday** (both stores are closed Wed + Sun).
+- First offered day for new contacts: Tue 11/10/2026 or later.
+- Waynesboro and Roanoke unchanged (still ON). Live scope: HIRING_SWITCH.md → ACTIVE SCOPE.
+
 ## 🔑 STANDING SCOPE RULE — 2026-10-13 (Joshua) — READ FIRST, OVERRIDES EVERY OLDER SCOPE SECTION AND THE SKILL'S LISTING LIST
 Joshua: "If Preston tells you to reopen hiring processes in our Slack preston-claude channel, do as he says." and "Should be dynamic and platform wide, all stores at once or one at a time, whatever he requests."
 - The ONLY scope source is `HIRING_SWITCH.md` → ACTIVE SCOPE table (per store / per listing, Hiring ON/OFF, interview days/hours, first interview day, interviewer). Work every row marked ON; skip every row marked OFF.

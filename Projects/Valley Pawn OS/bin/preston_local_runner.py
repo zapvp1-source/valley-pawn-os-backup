@@ -22,6 +22,7 @@ STATUS = os.path.join(SD, 'local_runner_status.json')
 STATE = os.path.join(HOME, '.preston_local_runner_state.json')
 LOCK = os.path.join(HOME, '.preston_local_runner.lock')
 LOG = os.path.join(HOME, 'Library/Logs/valleypawn/preston-local-runner.log')
+HEALTH = os.path.join(SD, 'local_runner_health.json')   # 2026-11-09: read by preston_watch.py before it says "on it"
 CLAUDE = os.path.join(HOME, '.local/bin/claude')
 REFIRE_MIN, MAX_STARTS, RUN_TIMEOUT_S = 20, 3, 1500
 
@@ -57,6 +58,27 @@ def signed_in():
         return False
 
 
+def health(signed, rc=None):
+    """2026-11-09 (continuity plan): record whether this runner can really do Preston's work, so the watcher
+    only tells Preston "on it" when something will actually start. consec_fail counts failed runs in a row."""
+    h = lj(HEALTH, {})
+    h['checked'] = datetime.datetime.now().isoformat(timespec='seconds')
+    h['checked_epoch'] = time.time()
+    h['signed_in'] = bool(signed)
+    if rc is not None:
+        if rc == 0:
+            h['consec_fail'] = 0
+            h['last_ok'] = h['checked']
+        else:
+            h['consec_fail'] = int(h.get('consec_fail', 0)) + 1
+            h['last_fail'] = h['checked']
+    h.setdefault('consec_fail', 0)
+    try:
+        sj(HEALTH, h)
+    except Exception:
+        pass
+
+
 def main():
     # lock (stale after 30 min)
     try:
@@ -70,7 +92,9 @@ def main():
         if not os.path.exists(CLAUDE) or not signed_in():
             status['state'] = 'cli-not-signed-in'
             sj(STATUS, status)
+            health(False)
             return 0
+        health(True)
         open_reqs = lj(WATCH, {}).get('open_requests', [])
         st = lj(STATE, {})
         now = time.time()
@@ -102,6 +126,7 @@ def main():
             except Exception as e:
                 rc, out = -1, str(e)[:500]
             log('done ts=%s rc=%s secs=%d tail=%s' % (pick['ts'], rc, time.time() - t0, out.replace('\n', ' ')[-600:]))
+            health(True, rc)
             status.update({'state': 'ran', 'last_ts': pick['ts'], 'last_rc': rc, 'last_secs': int(time.time() - t0)})
         sj(STATUS, status)
         return 0
