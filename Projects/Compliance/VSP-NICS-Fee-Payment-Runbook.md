@@ -101,3 +101,7 @@ Check the box next to each open FIRE invoice → click **MAKE PAYMENT** → comp
 - Help desk: Firearms Transaction Center (804) 674-2292.
 
 *Last verified: 2026-06-23. June invoices confirmed paid (e.g. Harrisonburg FIRE-49581, $64.00, paid 06/04).*
+
+
+## 2026-11-10 — schedule and self-healing
+The native agent `com.valleypawn.vsp-fee-pay` runs daily at 10:15 on the 5th–28th. Each run reads all 5 balances; a store already paid this month (portal payment row or `paid_this_month` in `vsp/<YYYY-MM>.json`) is skipped; an expired portal session is re-signed once; each store pays in its own tab so one failure never blocks the others; a failed login stops all runs until the Keychain password is re-saved (`setup_autopay.sh --password`). Joshua is DM'd when payments go out, or once from the 25th if anything is still unpaid.

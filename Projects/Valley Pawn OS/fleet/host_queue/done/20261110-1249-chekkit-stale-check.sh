@@ -1,0 +1,1 @@
+python3 "$HOME/Documents/Claude/Projects/Valley Pawn OS/bin/inspect_path.py" "$HOME/Library/Logs/valleypawn/chekkit-assign-stale.log" "$HOME/Library/Logs/valleypawn/chekkit-assign-stale.err.log" "$HOME/Library/Logs/valleypawn/chekkit-assign-stale.out.log" --lines 20

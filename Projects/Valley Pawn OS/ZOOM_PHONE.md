@@ -370,3 +370,43 @@ Joshua 2026-10-14: Waynesboro is a 6-day store from 10/14 — Mon–Fri 10 AM–
   the new asset. Old asset left unused in the library. Overflow routing (Leave Voicemail to Current Extension)
   unchanged. No queue greeting added (ring-immediately rule).
 
+
+## 2026-11-10 — Store phone menus (Auto Receptionists) in front of every store queue
+
+Joshua 2026-11-09: "limit non essential calls to the stores ... press 1 for hours, press 2 to receive the link
+for the mobile app to make a payment, or press 3 to talk to a team member." Texts must come from the STORE number
+through Chekkit, never Joshua's; and "ultra fast, or they will call back and ask to talk to someone."
+
+| Store | Menu (Auto Receptionist) | Ext | Number | Key 0 / 3 / no input -> |
+|---|---|---|---|---|
+| Lexington | Lexington Store Menu | 815 | (540) 461-8349 | Lexington Store Queue 804 |
+| Harrisonburg | Harrisonburg Store Menu | 816 | (540) 574-4500 | Harrisonburg Store Queue 805 |
+| Culpeper | Culpeper Store Menu | 817 | (540) 445-5510 | Culpeper Store Queue 810 |
+| Roanoke | Roanoke Store Menu | 818 | (540) 562-0776 | Roanoke Store Queue 812 |
+| Waynesboro | Waynesboro Store Menu | 819 | (540) 221-6346 | Waynesboro Store Queue 806 |
+
+Every menu (Business Hours 24/7; AR greeting prompt Disabled so only the IVR greeting plays):
+- IVR greeting TTS "Store Menu Greeting - <Store>" (Matthew-Male): "Thank you for calling Valley Pawn in <Store>. For our
+  store hours and location, press 1. To get a text with a link to make a payment in our mobile app, press 2. To speak
+  with a team member, press 3."
+- 1 = Play a message, then return to root menu: "Menu Hours - <Store>" (store hours + street address).
+- 2 = Play a message, then disconnect: "Menu - App Link Text (short)" (~10 s, says thevalleypawn.com/app out loud).
+- 3 and 0 = Forward to the store Call Queue. Timeout: no input after 1 play -> store Call Queue (nobody is stranded).
+- Dial-by-extension OFF, voice navigation OFF. * = repeat menu.
+- The queues are unchanged: queue business hours + closed-hours voicemail greetings still apply after 3/0/timeout.
+- Zoom moved each extension's Outbound Caller ID to "<Store> Store Menu - <number>" automatically when the number
+  moved (verified on 807) — outbound caller ID is still the store number.
+
+**Press 2 text:** `bin/ivr_app_link_text.py` (native agent `com.valleypawn.ivr-app-link-text`, every 10 s,
+07:00–22:00 ET) reads Zoom call history, resolves menu calls through the call path (`bin/zoom_call_path.py`,
+scope phone:read:call_log:admin added to the "Valley Pawn Ops Agent" app 2026-11-10 with Joshua's OK) and POSTs the
+text to that store's existing Chekkit "Zoom Missed Call" webhook, so it goes FROM THE STORE NUMBER. Wording:
+`fleet/ivr_config.json`. One text per caller per 30 min. Run log ~/Library/Logs/valleypawn/ivr_app_link_text/run.log
+(each SENT line records seconds after hang-up).
+
+**Counting:** list-API rows for menu calls show the menu as the callee. `missed_call_text.zoom_calls()` (used by
+missed-call texts, missed-call alerts and the texting scorecard) and `call_week_review.py` now resolve every menu call
+to the store-queue outcome; menu-only calls read `ivr_hours` / `ivr_app_link` (never texted as missed); hang-up in
+the menu with no key = `abandoned` (gets the normal missed-call text).
+
+Unused leftover: "Menu - App Link Text" AR ext 814 (first draft; no number). Safe to delete.

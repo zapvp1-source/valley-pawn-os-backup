@@ -1,5 +1,18 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-10 (daily PREP run, 12:46–12:58 ET, level 1 all pages) — picks queued, nothing published by this run
+- Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only ("Comment as Joshua Davis" seen; composer read "What's on your mind, Joshua?" at the end) — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. Still no POST-mode chat since 11/2 evening (ledger unchanged).
+- Dropped from QUEUE (lapsed before any POST chat): Culpeper share → Visit Culpeper Christmas Parade (expired 07:09); Lexington comment → RRL WiFi 24/7 (expired 10:45).
+- Harrisonburg share → Massanutten Regional Library Red Cross Blood Drive is still valid only until 16:55 TODAY — first item for any POST chat this afternoon.
+- New picks: Culpeper comment → Visit Culpeper VA (scenic route, late-autumn foothills); Culpeper share → Culpeper County Parks & Rec free Beginner Yoga (Mondays 11/16–12/7, 5pm, ages 12+; permalink opened and confirmed) — Culpeper's share for this week; Harrisonburg comment → Visit Harrisonburg (visitor center behind the historic door); Lexington comment → Rockbridge Regional Libraries (Upload Your Shoebox, Glasgow, Nov 17).
+- Still valid from 11/9: Roanoke comment (Mill Mountain Zoo) + share (Dickens of a Christmas); Waynesboro comment (Wayne Theatre) + share (Merci Train); Lexington share (fantasy writing workshop); Brand comment (SNP Skolithos). All until 11/11.
+- Skipped on purpose: CRI repost of a salon's holiday passport (business promo) and Culpeper Pink Friday at Provisions (shop-small promo); Harrisonburg Cookie Tour ticket release and Downtown Dollars reminder (ticket/money posts).
+- Follows: no new ones; 18 pending, all re-dated.
+- Watchlist: 0 resolved; State Theatre (Culpeper) retired after 3rd failed search; Harrisonburg High School Blue Streaks now 2 attempts. 7 pages re-checked.
+- Needs a person: none. The Harrisonburg page address item is CLOSED — page search shows "1790 E Market St, STE 22, Harrisonburg, VA".
+- Replies on own pages: not swept (POST mode only). Tab closed.
+- Totals this run: comments 0 (3 new queued, 4 pending), shares 0 (1 new queued, 4 pending), replies 0, follows 0 (18 pending), new pages resolved 0.
+
 ## 2026-11-09 (daily PREP run, 12:42–12:52 ET, level 1 all pages) — picks queued, nothing published by this run
 - Mode: PREP (per RUNBOOK). No Post/Share/Follow clicks, never switched into a Valley Pawn page. Facebook signed in, no checkpoint, no warnings. Still no POST-mode chat since 11/2 evening (ledger unchanged).
 - Profile note: at the start pages showed "Comment as Joshua Davis", but partway through Chrome's Facebook was acting as **Mountain Valley Luxury Shenandoah Valley** (not a Valley Pawn page; this run did not switch it — something else in Joshua's Chrome did). Per the hard rule, switched back to Joshua Davis at the end (avatar → Joshua Davis; "Switched to Joshua Davis" confirmed on screen).

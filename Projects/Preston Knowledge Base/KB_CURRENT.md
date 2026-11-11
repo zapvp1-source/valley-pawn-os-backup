@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-11-09 22:12 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-11-10 22:11 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -2027,6 +2027,18 @@ PRESTON SAID: "this was one instance of data from applying the combined gold ass
 SOURCE: #preston-claude (Preston Peters, Operations Manager) | 2026-11-05 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1793900129616829?thread_ts=1793900129.616829&cid=C0BGXSTT4TY
 id: gold-bucket-payout-per-store-eaa1b6f6
 
+### [MEDIUM] gun-audit-second-reviewer
+RULE: Have a second person look over gun forms and audits, because a fresh set of eyes catches what the first person missed.
+PRESTON SAID: "I just wanna make sure that we're looking and have somebody else look over 'cause sometimes that's all it is is just notice that eyes will catch what you missed."
+SOURCE: zoom-call:b21c74a92d82409cadef7053465b595c | 2026-11-10 | UNK Chadd McClintic
+id: gun-audit-second-reviewer-adcd6916
+
+### [MEDIUM] gun-forms-review-before-release
+RULE: Slow down and look over the gun forms before a gun goes out the door, to catch errors that the month-end gun audit would otherwise find.
+PRESTON SAID: "I just want to make sure that we're, you know, slowing down and taking time to make sure before the guns go out, that we look as forms over."
+SOURCE: zoom-call:b21c74a92d82409cadef7053465b595c | 2026-11-10 | UNK Chadd McClintic
+id: gun-forms-review-before-rele-f466d49f
+
 ### [MEDIUM] handgun-trade-exception-purchase-date
 RULE: The trade-in exception applies no matter when the traded-in handgun was originally bought, even 10 years ago. It still cancels out the new handgun on the form.
 PRESTON SAID: "It doesn't matter when they bought that. They could bought that hang on 10 years ago, but that's still canceled it out because they're trading one end."
@@ -2457,6 +2469,20 @@ PRESTON SAID: "Just do as good as you can both ways for him and See what we can 
 SOURCE: zoom-call:b7985902fd5c481cb3c1de9b038e8437 | 2026-08-29 | HAR Preston Peters
 id: goodwill-system-to-system-sw-c43fbfde
 
+### [LOW] gun-form-2-dollar-fee-box
+RULE: Even though the ATF doesn't care about it, the correct box (including the $2 fee box) should be checked on gun forms. The $2 fee box was reportedly about 70% of the errors in the audit.
+PRESTON SAID: "obviously we should be checking the right box"
+SOURCE: zoom-call:b21c74a92d82409cadef7053465b595c | 2026-11-10 | UNK Chadd McClintic
+!! CONFLICT: The other speaker says he has never collected the $2 fee or checked that box in about 10 years.
+id: gun-form-2-dollar-fee-box-4dca7dce
+
+### [LOW] gun-form-2-dollar-fee-practice
+RULE: One store's long-standing practice has been to not collect the $2 fee and not check the $2 fee box. This is the main source of that store's gun audit errors.
+PRESTON SAID: "I've never collected the $2 fee and I've never checked on the box the $2 fee."
+SOURCE: zoom-call:b21c74a92d82409cadef7053465b595c | 2026-11-10 | UNK Chadd McClintic
+!! CONFLICT: Contradicts the statement that the right box should be checked on gun forms.
+id: gun-form-2-dollar-fee-practi-48358dd9
+
 ### [LOW] gun-log-printing
 RULE: The daily gun log backs up to the computer automatically, so printing it every day is probably not needed. The handbook's daily print requirement is questionable and was not formally changed in this call.
 PRESTON SAID: "So our gun log should be automatically back it up to the computer."
@@ -2498,6 +2524,12 @@ RULE: Only managers should be able to cancel layaways or expire pawns. Non-manag
 PRESTON SAID: "I can definitely fix that real quick there's really no reason for someone that's not a manager to expire upon or Cancel anyway."
 SOURCE: zoom-call:375d33b002b24139a085681aa26e3ffb | 2026-10-30 | UNK Chadd McClintic
 id: layaway-pawn-cancel-expire-m-2cf57966
+
+### [LOW] month-end-markdown-audit-split
+RULE: One store splits its month-end work across several people. The manager does the jewelry markdowns, one employee does the gun audit, the manager reviews the gun audit a second time, and another employee does the general merchandise markdowns.
+PRESTON SAID: "I'd do the jewelry markdowns, Martin does the gun audit, and then I generally will look it over a second time on the gun audit. And then, uh, Stephanie's been trying to do the general merchandise markdowns."
+SOURCE: zoom-call:b21c74a92d82409cadef7053465b595c | 2026-11-10 | UNK Chadd McClintic
+id: month-end-markdown-audit-spl-501ae040
 
 ### [LOW] new-location-site-selection-roanoke
 RULE: George ruled out the Melrose buildings for a possible new Roanoke location because they were run down and too close to another pawn shop. Distance from competing pawn shops and building condition were factors in his judgment.
@@ -2683,5 +2715,5 @@ id: past-due-75-day-5-percent-ce-30eeab0b
 
 
 ==============================================================================
-COVERAGE: 371 entries - 31 verified by Preston, 152 high-confidence rules, 108 medium, 78 low, 2 superseded.
+COVERAGE: 376 entries - 31 verified by Preston, 152 high-confidence rules, 110 medium, 81 low, 2 superseded.
 ==============================================================================

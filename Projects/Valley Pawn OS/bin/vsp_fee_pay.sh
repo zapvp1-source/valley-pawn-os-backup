@@ -1,5 +1,5 @@
 #!/bin/bash
-# launchd wrapper — com.valleypawn.vsp-fee-pay, 5th of month 10:15 (native, 2026-10-20).
+# launchd wrapper — com.valleypawn.vsp-fee-pay, daily 10:15 on the 5th-28th (was 5th only; 2026-11-10 retry fix). A fully paid month exits quietly.
 # Default mode is --read (balances + one DM). Switch to --pay once Joshua has stored the ACH details in Keychain
 # and said go: edit the MODE line below (that is the only switch).
 AGENT="vsp-fee-pay"; . "$HOME/Documents/Claude/Projects/Valley Pawn OS/bin/vp_lib.sh"

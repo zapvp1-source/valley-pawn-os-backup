@@ -3,7 +3,7 @@
 
 WHY (Joshua, 2026-11-09): cut non-essential calls to the stores. The store numbers answer with a
 Zoom Auto Receptionist: 1 = hours, 2 = "we're texting you the link to pay in the app",
-3 = a team member. Zoom's IVR cannot send a text itself, so this agent (launchd, every 60 s)
+3 = a team member. Zoom's IVR cannot send a text itself, so this agent (launchd, every 10 s (Joshua 2026-11-10: 'ultra fast', or they call back))
 reads Zoom call history, resolves menu calls through the call path (bin/zoom_call_path.py),
 and for every finished call whose key press was 2 POSTs the finished message to that store's
 existing Chekkit webhook (same rule as missed-call-text: event == missed_call_text,
@@ -158,7 +158,8 @@ def main():
             ok = False; log("POST failed %s %s: %s" % (code, mct.last4(caller), e))
         if ok:
             state["processed"][cid] = now.isoformat(); state["texted"][mct.h(caller)] = now.isoformat(); sent += 1
-            log("SENT app link %s %s" % (code, mct.last4(caller)))
+            lag = int((now - (mct.parse_ts(c.get("end_time")) or now)).total_seconds())
+            log("SENT app link %s %s (%ds after hang-up)" % (code, mct.last4(caller), lag))
         else:
             state.setdefault("post_fail", {}); state["post_fail"][code] = state["post_fail"].get(code, 0) + 1
             if state["post_fail"][code] >= 3:

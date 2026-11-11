@@ -6,7 +6,7 @@ Checks (no Claude involved in any of them):
   2. local_answer  — the local model actually writes a reply through bin/vp_ai.py's local path
   3. github        — the offsite GitHub backup of ~/Documents/Claude is current (HEAD == origin/main, < 48 h old)
   4. task_export   — the nightly export of the Claude cloud scheduled tasks is < 72 h old
-                     (Business Continuity/cloud_tasks_export/latest.json, written by the cloud task
+                     (Life OS/Claude Scheduled Tasks Export (latest).json, written to Drive by the cloud task, synced to this Mac;
                      "Cloud task export (nightly)")
 Writes fleet/state/continuity_selftest.json. A failing check writes ONE FAILURE_LEDGER row (fleet-guardian
 handles it). Nothing to Slack, ever. Run: continuity_selftest.py [--quiet-ledger]
@@ -20,7 +20,7 @@ import vp_ai  # noqa: E402
 
 STATE = os.path.join(OS_DIR, "fleet/state/continuity_selftest.json")
 LEDGER = os.path.join(OS_DIR, "fleet/FAILURE_LEDGER.md")
-EXPORT = os.path.join(HOME, "Documents/Claude/Projects/Business Continuity/cloud_tasks_export/latest.json")
+EXPORT = os.path.join(HOME, "Documents/Claude/Projects/Life OS/Claude Scheduled Tasks Export (latest).json")  # Drive-synced (2026-11-10)
 REPO = os.path.join(HOME, "Documents/Claude")
 
 

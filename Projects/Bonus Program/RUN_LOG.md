@@ -218,3 +218,10 @@ Gold task bar: Joshua rejected a flat bar (gimme for CUL, unreachable for LEX) a
 
 ## 2026-11-02 — November targets POSTED to #bonus-goals
 Joshua: 'send it'. Posted the revenue-only body (CUL $78,615 · HAR $54,600 · ROA $51,844 · LEX $28,597 · WAY $48,235) to #bonus-goals, ts 1793641631.490389. Recorded in data/2026-11/targets.json published block. field_posting unchanged (false).
+
+## 2026-11-10 09:00 ET — October 2026 close (native bonus-month-close)
+- roster: 19 current staff from the Gusto active roster dated 2026-11-10
+- kept existing reviews.json
+- collect exit 0
+- close exit 0
+DM sent to Joshua; nothing posted to the field.

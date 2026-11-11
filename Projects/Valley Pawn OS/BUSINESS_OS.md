@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-11-09
+# LIVE STATE - auto-refreshed 2026-11-10
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -17,7 +17,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | Enabled (will fire) | 2 |
 | Registered but disabled | 230 |
 | On disk but never registered | 4 |
-| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 9031 |
+| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 9797 |
 
 ### Enabled tasks
 
@@ -85,6 +85,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.conductwatch-report.plist` | installed | YES |
 | `com.valleypawn.conductwatch-roanoke.plist` | installed | YES |
 | `com.valleypawn.conductwatch-waynesboro.plist` | installed | YES |
+| `com.valleypawn.continuity-selftest.plist` | installed | YES |
 | `com.valleypawn.cpu-guard.plist` | installed | YES |
 | `com.valleypawn.daily-audit-digest.plist` | installed | YES |
 | `com.valleypawn.daily-report-discount.plist` | installed | YES |
@@ -236,46 +237,46 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
+| 2026-11-10 | Valley Pawn OS | - |
+| 2026-11-10 | Unified Search | - |
+| 2026-11-10 | Quickbooks Set UP | - |
+| 2026-11-10 | Life OS | - |
+| 2026-11-10 | Business Dashboard Website | - |
+| 2026-11-10 | Bravo Data Extraction | STATUS.md |
+| 2026-11-09 | eBay | - |
+| 2026-11-09 | _stage | - |
+| 2026-11-09 | _probe_tmp | - |
 | 2026-11-09 | Zoom Call Pipeline | - |
-| 2026-11-09 | Valley Pawn OS | - |
-| 2026-11-09 | Unified Search | - |
-| 2026-11-09 | Quickbooks Set UP | - |
+| 2026-11-09 | Website | - |
+| 2026-11-09 | Store Traffic Counter | - |
+| 2026-11-09 | Store Conduct Watch | STATUS.md |
+| 2026-11-09 | Refine Social Media | - |
+| 2026-11-09 | Preston Knowledge Base | - |
+| 2026-11-09 | Precious Metals Settlements | - |
+| 2026-11-09 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-11-09 | Human Resources | - |
+| 2026-11-09 | Health Optimization | STATUS.md |
+| 2026-11-09 | Gold and Silver Markeitng | - |
+| 2026-11-09 | Email Refinement | - |
+| 2026-11-09 | Daily Funds Verification | - |
+| 2026-11-09 | Compliance | - |
+| 2026-11-09 | Communcations | - |
 | 2026-11-09 | Call Analysis | - |
-| 2026-11-09 | Business Dashboard Website | - |
-| 2026-11-09 | Bravo Data Extraction | STATUS.md |
-| 2026-11-08 | eBay | - |
-| 2026-11-08 | Website | - |
+| 2026-11-09 | Business Continuity | - |
+| 2026-11-09 | Ask Valley Pawn | STATUS.md |
 | 2026-11-08 | Valuation Core | README.md |
-| 2026-11-08 | Store Conduct Watch | STATUS.md |
 | 2026-11-08 | Sold Margin Review | STATUS.md |
 | 2026-11-08 | Short Term Rental Optimization | - |
-| 2026-11-08 | Refine Social Media | - |
-| 2026-11-08 | Precious Metals Settlements | - |
 | 2026-11-08 | Pawn Walks | STATUS.md |
-| 2026-11-08 | Life OS | - |
-| 2026-11-08 | Human Resources | - |
-| 2026-11-08 | Health Optimization | STATUS.md |
-| 2026-11-08 | Email Refinement | - |
 | 2026-11-08 | Discount Outlier Review | STATUS.md |
-| 2026-11-08 | Daily Funds Verification | - |
-| 2026-11-08 | Compliance | - |
-| 2026-11-08 | Communcations | - |
 | 2026-11-08 | Ai Optimized Marketing | - |
-| 2026-11-07 | Store Traffic Counter | - |
-| 2026-11-07 | Preston Knowledge Base | - |
-| 2026-11-07 | Jewelry Count Reconciliation | STATUS.md |
 | 2026-11-04 | Sales Tax | STATUS.md |
 | 2026-11-02 | _scratch | - |
 | 2026-11-02 | Training Program | STATUS.md |
 | 2026-11-02 | New Store - St Augustine | STATUS.md |
 | 2026-11-02 | MobilePawn Participation | README.md |
-| 2026-11-02 | Gold and Silver Markeitng | - |
 | 2026-11-02 | Gift Card & Store Credit | README.md |
 | 2026-11-02 | Bonus Program | - |
-| 2026-11-02 | Ask Valley Pawn | STATUS.md |
-| 2026-10-30 | Taxes 2026 | - |
-| 2026-10-24 | eBay Customer Campaign | - |
-| 2026-10-23 | Preston Time Review | STATUS.md |
 
 <!-- LIVE-STATE:END -->
 

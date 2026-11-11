@@ -203,3 +203,32 @@ month-end settlements, so nothing staged. Fixed by making Task 1 own Phase A:
   and picks one. Verified live 10/2 — CUL till opened, both buckets closed.
 - **Amounts in manifests carry no trailing zeros** ("4051.1", not "4051.10") — the
   handler's pre-save check compares the text Bravo shows, and Bravo drops the zero.
+
+## 2026-11-10 amendment — OVERRIDES Step 2 of the stage task (October 2026 miss)
+
+What happened: on 11/4–11/5 the stage task said Culpeper and Waynesboro had "zero October gold
+buckets" and built nothing, then its 1st–5th window closed. That conclusion came from the
+list-only bucket read, which at CUL and WAY stops at ~107 of ~230 rows (it never sees names that
+sort before "J", including every `2026-xx ...` bucket — it also missed CUL's real `2026-09 GOLD`).
+The `output/2026_<STORE>_scrap-refining-gold.csv` year files are cumulative and stale (they still
+showed CUL/WAY `2026-08` buckets as OPEN weeks after those closed 9/28). Neither source can prove a
+bucket does not exist.
+
+Rules from now on (every run, every store):
+1. A bucket is only "missing" if a READ-ONLY by-name open (`readOnly:true` manifest) fails for the
+   standard name AND every variant (`<T> GOLD`, `<T> GOLD SCRAP`, `<T> GOLD WITH STONES`,
+   `<T> GOLD STONE SCRAP`, `<MONTH YYYY> GOLD SCRAP`, `<MONTH YYYY> GOLD W/STONES SCRAP`).
+   List-only output and the year CSVs are never evidence of absence.
+2. Reconcile before deciding: Bravo gold total vs Elemetal Karat pre-melt, Bravo stones total vs
+   Stone Removal pre-melt. A shortfall above 10% means a store's gold shipped without a matching
+   Bravo bucket — name the store(s) and the dwt gap in the approval message; never stage a split
+   that leaves the gap silently on the other stores.
+3. Missing stores do not stop the month. Stage what reconciles, hold the rest, and keep working the
+   month past the 5th until it is CLOSED. (The stage task's own cron is still 1st-5th; until that
+   prompt is widened, a session has to finish any month left open by hand — October 2026 is
+   still open as of 11/10.)
+4. October 2026 live read (11/10, read-only): HAR 51.378 / 59.378, LEX 19.700 / 13.197,
+   ROA 84.880 / 44.505 dwt (gold / stones) = 155.958 / 117.080. Elemetal: Karat 287.8 dwt pre-melt
+   ($28,473.30 net, INV-20261030-348183), Stone Removal 410.0 dwt ($31,961.87 net,
+   INV-20261103-350689). Gap ≈ 131.8 dwt gold / 292.9 dwt stones = Culpeper + Waynesboro, whose
+   October gold is not under any `2026-10 GOLD*` name in Bravo (225/242 rows scanned).

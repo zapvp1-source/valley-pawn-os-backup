@@ -15,6 +15,7 @@ Started 2026-10-31 (Joshua: "sure set it up" — daily camera watch for all 5 st
 - Go-live switches: `fleet/state/native_live/conductwatch-<store|nightly|report>`.
 
 ## Status
+- 2026-11-10 TRIAL ENDED EARLY (Joshua): recorders paused (markers in `Valley Pawn OS/fleet/state/native_paused_until_newmac/`), trial_end set to 2026-11-10. Final nightly runs tonight; final report 11/11 07:35. Reason: Mac overload.
 - 2026-10-31 14:10 LIVE (15-day trial to 2026-11-15, review 11/16). All 12 cameras recording; pipeline tested end-to-end (see CHANGELOG 2026-10-31).
 - Health check any time: host queue job `bash ".../bin/conduct_watch_probe.sh" status` (per-camera stills/segments/reconnects, disk free).
 - Test a store without touching the real nightly: `conduct_watch_nightly.sh <date> --store <S> [--no-audio] [--clip-test]` writes run.test-<S>.json only.

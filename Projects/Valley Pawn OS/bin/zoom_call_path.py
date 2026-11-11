@@ -156,6 +156,13 @@ def resolve_rows(rows, token=None, now=None, log=None, fetch=None):
             out.append(res)
         except Exception as e:  # noqa: BLE001
             errors += 1
+            if isinstance(e, urllib.error.HTTPError) and e.code in (400, 401):
+                # a token minted before a scope was added lacks it until expiry: drop the shared
+                # cached token so the next run mints a fresh one (self-heal, 2026-11-09)
+                try:
+                    os.remove(os.path.expanduser("~/Library/Logs/valleypawn/missed_call_text/.token.json"))
+                except OSError:
+                    pass
             rr = dict(r, _path_error=("HTTP %s" % e.code) if isinstance(e, urllib.error.HTTPError) else type(e).__name__)
             out.append(rr)
             if log:

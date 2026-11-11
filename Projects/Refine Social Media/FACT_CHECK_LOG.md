@@ -257,3 +257,17 @@ Unverifiable / notes: Culpeper County @ Caroline 11/6 not re-confirmed today (Ca
 - Time-sensitive claims: none. "Busy week?" is generic, no date/event/hours claim. Product posts are out of scope per rules.
 - Spot check anyway: https://thevalleypawn.com/app/ returns 200 and says "free MobilePawn app to pay or extend your Valley Pawn loan, make layaway payments" — matches captions.
 - Posts edited: none. Unverifiable: none. Published-wrong: none.
+
+## 2026-11-10 07:45 ET — daily fact-check (window: next 36h, to 2026-11-11 ~19:40 ET)
+- Posts checked: 26 (12x MobilePawn app post Tue 11/10 11 AM; Brand This-or-That 11/10; Waynesboro KitchenAid 11/11; Brand + BrandTwitter warranty 11/11; 11/11 2:30 PM town posts: Lexington, GBP_Lexington, Culpeper, GBP_Culpeper, Waynesboro, GBP_Waynesboro, Harrisonburg, GBP_Harrisonburg, Roanoke, GBP_Roanoke). Product/price, warranty and evergreen landmark lines skipped per rules.
+- Verified:
+  - Veterans Day = Wed 11/11/2026 (calendar).
+  - Lexington FB + GBP: VMI hosts The Citadel Sat 11/14, Military Classic of the South: https://vmikeydets.com/news/2026/2/18/vmi-football-releases-2026-schedule.aspx ; venue Alumni Memorial Field at Foster Stadium, no postponement: https://www.foxsports.com/college-football/the-citadel-bulldogs-vs-vmi-keydets-nov-14-2026-game-boxscore-44172 , https://www.espn.com/college-football/preview/_/gameId/401868395 . Kickoff time NOT added: Fox shows 5:30, ESPN shows 12:30, neither gives a time zone, and the VMI schedule page didn't load. Posts make no time claim, so they stay as they are.
+  - Roanoke FB Grandin anniversary: closed Nov 11, 2001 (last film The Last Picture Show), opened Mar 26, 1932 with "Arrowsmith", closed 1976 and 1985, reopened Oct 20, 2002 with "Mostly Martha" by the Grandin Theatre Foundation: https://www.grandintheatre.com/history ; https://www.visitroanokeva.com/blog/post/local-history-grandin-theatre-virginia-historic-grandin-village/ . Left as is.
+  - GBP_Roanoke Star: red, white and blue on Veterans Day, first lit 11/23/1949, 88.5 ft: https://www.roanokeva.gov/1329/Roanoke-Star ; https://en.wikipedia.org/wiki/Roanoke_Star
+  - Waynesboro KitchenAid post hours "Mon-Fri 10-6, Sat 10-5" match the standing hours.
+- Edited:
+  - 6af2234f0acc11d344605f54 (GBP_Roanoke, 11/11 2:30 PM): "The rest of the year the Star is white" (inaccurate: the city also lights it red, white and blue on Memorial Day, Flag Day, July 4 and Sept. 11) → "...lights the Mill Mountain Star red, white and blue for it, as it also does on Memorial Day, Flag Day, July 4 and Sept. 11." APPLIED.
+  - 6af2228af9116176eb0863f5 (Waynesboro FB, 11/11 2:30 PM): "First real cold mornings in the Boro" (couldn't verify, and our own 11/8 post already called near-freezing) → "Cold mornings in the Boro". APPLIED.
+- Unverifiable: Wed 11/11 forecast for Waynesboro/Culpeper. api.weather.gov was refused (robots) and the forecast.weather.gov MapClick pages are stale cache (Aug 28 / Nov 1). No dated weather claims remain; the leftover lines are seasonal climatology ("this time of year", "as the weather turns cold").
+- Published-wrong: none.

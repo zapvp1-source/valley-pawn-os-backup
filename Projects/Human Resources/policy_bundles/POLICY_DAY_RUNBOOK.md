@@ -38,6 +38,10 @@ Let NEXT = the update for next month (built on/after the 26th), CUR = the update
    Academy lessons that change; anything that leaked outside Policy Day last month. Last line: `Reply "approve" to send it as shown,
    "approve without <item>" to drop something, or reply with changes.` Empty queue → one short email "Nothing new for <Month> — nothing will be sent", mark closed.
 
+   **Attach the PDF(s) to the preview email itself** (Joshua 2026-11-09: the Drive link "doesn't pull up" on his iPhone). Use the Mac's
+   Mail Sender (from jdavis@fcfpawn.com, same subject, `attachments` = the out/ PDF + any second document); keep the Drive link only as a backup.
+   Keep the body to one phone screen: dates, a numbered one-line list, "Reply approve to this email."
+
 ### B. Approval watch (preview sent, not approved, today ≤ the 7th of CUR's month)
 1. Gmail: the preview thread, plus `from:jdavis@fcfpawn.com subject:"Policy Update — <Month>"` newer than preview_sent_at. Approval =
    a later message in that thread from Joshua whose first word is approve/approved/yes/send it. "without X" → drop X (state dropped_items,

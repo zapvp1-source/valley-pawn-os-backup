@@ -98,6 +98,30 @@ def load_guard():
         return {}
 
 
+def pw_sig():
+    """Short fingerprint of the Keychain password, so a login guard lifts by itself once Joshua re-saves it."""
+    import hashlib
+    kp = keychain("vp-vsp-portal-password") or ""
+    return hashlib.sha256(kp.encode()).hexdigest()[:12] if kp else ""
+
+
+def report_login_fail(msg):
+    """One sign-in failure => guard (no more tries until the password is re-saved), one DM, one ledger row."""
+    now = dt.datetime.now(ET)
+    save_guard({"date": now.strftime("%Y-%m-%d"), "at": now.strftime("%H:%M ET"), "reason": msg,
+                "skipped": 0, "pw_sig": pw_sig()})
+    if msg == "CHANGE_PASSWORD":
+        dm("The State Police billing site wants a new password before it will let anyone in. Sign in at "
+           "ebilling.vsp.virginia.gov in your Chrome and set a new one, then paste this in Terminal so the "
+           "monthly payment knows it: bash ~/Documents/Claude/Projects/Compliance/vsp/setup_autopay.sh --password")
+        ledger("VSP portal forced a password change; waiting on Joshua", "yes, set new VSP password")
+    else:
+        dm("I couldn't sign in to the State Police billing site (one try only, so the account doesn't lock). "
+           "If the password changed, paste this in Terminal with the current one: "
+           "bash ~/Documents/Claude/Projects/Compliance/vsp/setup_autopay.sh --password")
+        ledger("VSP login failed: %s" % msg, "yes, re-save VSP password")
+
+
 def save_guard(g):
     try:
         os.makedirs(os.path.dirname(GUARD), exist_ok=True)
@@ -202,14 +226,45 @@ def login(page):
 
 
 def goto_search(page):
-    page.goto(CS_URL, wait_until="domcontentloaded", timeout=60000)
-    time.sleep(2)
-    if "Change Password" in page.title():
-        raise RuntimeError("CHANGE_PASSWORD")
-    if page.locator("#Icxgocontrol").count() == 0:
-        raise RuntimeError("Customer Search page did not load (title %s)" % page.title())
-    page.locator("#Icxgocontrol").click()
-    time.sleep(3)
+    # 2026-11-10 fix: on 11/5 the run paid ROA, then crashed reaching Customer Search for WAY
+    # ("waiting for locator #Icxgocontrol") — the page/session went stale during the ~2 min checkout.
+    # Now: wait for the Go button to be VISIBLE, reload up to 3 times, and if the portal shows its
+    # login form (session expired) sign back in — login() is still one submit and raises on failure.
+    relogged = False
+    for attempt in range(3):
+        try:
+            page.goto(CS_URL, wait_until="domcontentloaded", timeout=60000)
+        except Exception as e:
+            log("goto_search attempt %d: goto failed: %s" % (attempt + 1, str(e)[:120]))
+            time.sleep(5)
+            continue
+        time.sleep(2)
+        if "Change Password" in page.title():
+            raise RuntimeError("CHANGE_PASSWORD")
+        go = page.locator("#Icxgocontrol")
+        try:
+            go.first.wait_for(state="visible", timeout=20000)
+            go.first.click(timeout=20000)
+            time.sleep(3)
+            return
+        except Exception as e:
+            log("goto_search attempt %d: Customer Search not ready (%s): %s" % (attempt + 1, page.title(), str(e)[:120]))
+        if not relogged and "Logged In As" not in page.inner_text("body"):
+            log("goto_search: session expired — signing back in")
+            relogged = True
+            try:
+                login(page)
+            except RuntimeError as e:
+                report_login_fail(str(e))
+                raise RuntimeError("LOGIN_FAILED_REPORTED: %s" % e)
+        time.sleep(5)
+    try:
+        d = os.path.join(OUT, dt.datetime.now(ET).strftime("%Y-%m"))
+        os.makedirs(d, exist_ok=True)
+        page.screenshot(path=os.path.join(d, "search-stuck-%s.png" % dt.datetime.now(ET).strftime("%d%H%M")), full_page=True)
+    except Exception:
+        pass
+    raise RuntimeError("Customer Search page did not load after 3 tries (title %s)" % page.title())
 
 
 def open_store(page, row):
@@ -261,8 +316,27 @@ def nic_fill(ctx, url, store, amount, pay, dry):
     pg.locator("#PaymentBtn").click()
     pg.wait_for_load_state("domcontentloaded")
     time.sleep(3)
-    pg.select_option("select", value="ACH")
-    time.sleep(1)
+    # 2026-11-10: WAY stuck with "Payment Type is missing" — the select was set before the page finished
+    # loading and reset to "Select One". Wait for it, set it, verify it, and re-set it before every Next.
+    pt = pg.locator("select").first
+    pt.wait_for(state="visible", timeout=45000)
+    try:
+        pg.wait_for_load_state("networkidle", timeout=30000)
+    except Exception:
+        pass
+    def set_ach():
+        for _ in range(3):
+            try:
+                if pt.input_value() == "ACH":
+                    return True
+                pt.select_option(value="ACH")
+                time.sleep(1.5)
+            except Exception:
+                time.sleep(2)
+        return pt.input_value() == "ACH"
+    if not set_ach():
+        pg.close()
+        return {"status": "error", "note": "could not select Electronic Check"}
     pg.locator("button:has-text('Next'):visible").first.click()
     time.sleep(3)
     name_box = pg.get_by_label(re.compile("Name on Account"))
@@ -276,6 +350,7 @@ def nic_fill(ctx, url, store, amount, pay, dry):
                 os.makedirs(os.path.dirname(diag), exist_ok=True)
                 pg.screenshot(path=diag, full_page=True)
                 raise
+            set_ach()
             nb = pg.locator("button:has-text('Next'):visible")
             if nb.count():
                 nb.first.click()
@@ -351,12 +426,27 @@ def main():
     month_file = os.path.join(OUT, ym + ".json")
     result = {"run_at": now.isoformat(), "mode": "pay" if pay else ("read" if read_only else "stage"),
               "dry_run": dry, "stores": {}, "total_open": 0.0}
+    # 2026-11-10: the agent now runs daily 5th-28th. Keep every confirmation already earned this month,
+    # and never pay a store this month's file already shows as paid (second guard beside the portal check).
+    prior_paid = {}
+    try:
+        old = json.load(open(month_file))
+        prior_paid = dict(old.get("paid_this_month") or {})
+        for c, st in (old.get("stores") or {}).items():
+            a = st.get("action")
+            if isinstance(a, dict) and a.get("status") in ("paid", "submitted-unconfirmed") and c not in prior_paid:
+                prior_paid[c] = a
+    except Exception:
+        pass
+    result["paid_this_month"] = prior_paid
     # 2026-10-22 LOGIN GUARD: 10/21 logged LOGIN_FAILED three times (09:26, 09:56, 10:18) — three separate
     # invocations, each "one try", but VSP locks the account after repeated failures. Once a login has failed
     # today, every later run today exits BEFORE opening the browser: no login attempt, no DM, no new ledger row.
     # Cleared automatically tomorrow, or by deleting fleet/state/vsp_login_guard.json after re-saving the password.
     guard = load_guard()
-    if guard.get("date") == now.strftime("%Y-%m-%d"):
+    # 2026-11-10: with daily runs (5th-28th) a per-day guard alone would allow one failed login per day
+    # (5 failures lock the account). The guard now also holds across days until the Keychain password changes.
+    if guard.get("date") == now.strftime("%Y-%m-%d") or (guard.get("pw_sig") and guard.get("pw_sig") == pw_sig()):
         guard["skipped"] = guard.get("skipped", 0) + 1
         save_guard(guard)
         log("LOGIN GUARD: a VSP login already failed today (%s at %s) — not attempting another; skipped %d run(s) today"
@@ -372,18 +462,7 @@ def main():
                 login(page)
             except RuntimeError as e:
                 msg = str(e)
-                save_guard({"date": now.strftime("%Y-%m-%d"), "at": dt.datetime.now(ET).strftime("%H:%M ET"),
-                            "reason": msg, "skipped": 0})
-                if msg == "CHANGE_PASSWORD":
-                    dm("The State Police billing site wants a new password before it will let anyone in. Sign in at "
-                       "ebilling.vsp.virginia.gov in your Chrome and set a new one, then paste this in Terminal so the "
-                       "monthly payment knows it: bash ~/Documents/Claude/Projects/Compliance/vsp/setup_autopay.sh --password")
-                    ledger("VSP portal forced a password change; waiting on Joshua", "yes, set new VSP password")
-                else:
-                    dm("I couldn't sign in to the State Police billing site (one try only, so the account doesn't lock). "
-                       "If the password changed, paste this in Terminal with the current one: "
-                       "bash ~/Documents/Claude/Projects/Compliance/vsp/setup_autopay.sh --password")
-                    ledger("VSP login failed: %s" % msg, "yes, re-save VSP password")
+                report_login_fail(msg)
                 result["error"] = msg
                 json.dump(result, open(month_file, "w"), indent=1)
                 return 1
@@ -413,8 +492,10 @@ def main():
                     st["hold"] = "%d open invoices" % len(st["open_invoices"])
                 elif abs(st["open_invoices"][0]["remaining"] - st["balance"]) > 0.005 or st["balance"] > MAX_STORE:
                     st["hold"] = "balance %.2f does not match its one invoice / over cap" % st["balance"]
-                elif st["payments_this_month"]:
-                    st["hold"] = "already shows a payment this month (posting lag?)"
+                elif st["payments_this_month"] or code in prior_paid:
+                    st["hold"] = "already paid this month"
+                    st["action"] = "already-paid"
+                    continue  # quiet: posting lag, not a problem
                 if st["hold"]:
                     flags.append("%s: %s" % (code, st["hold"]))
             result["flags"] = flags
@@ -434,8 +515,24 @@ def main():
                 st = result["stores"][code]
                 if st["balance"] == 0 or st["hold"]:
                     continue
-                open_store(page, row)
-                account_rows(page, "Open/pending")
+                try:
+                    old_page = page
+                    page = ctx.new_page()  # fresh tab, same signed-in context — the old tab can be stale after a checkout
+                    try:
+                        old_page.close()
+                    except Exception:
+                        pass
+                    open_store(page, row)
+                    account_rows(page, "Open/pending")
+                except Exception as e:
+                    if "CHANGE_PASSWORD" in str(e) or "LOGIN_FAILED" in str(e):  # already reported by goto_search
+                        st["action"] = {"status": "error", "note": str(e)[:200]}
+                        log(code, st["action"])
+                        break  # never keep logging in
+                    st["action"] = {"status": "error", "note": "%s: %s" % (type(e).__name__, str(e)[:200])}
+                    log(code, st["action"])
+                    json.dump(result, open(month_file, "w"), indent=1)
+                    continue
                 url = None
                 for attempt in range(2):  # the reload that carries the checkout link can be slow (WAY/HAR/CUL 10/20)
                     page.locator("input[name='Iracctdetailstables:selected:0']").check()
@@ -450,6 +547,7 @@ def main():
                     time.sleep(3)
                 if not url:
                     st["action"] = "no-checkout-url"
+                    log(code, st["action"])
                     continue
                 try:
                     st["action"] = nic_fill(ctx, url, code, st["balance"], pay, dry)
@@ -461,19 +559,26 @@ def main():
                         except Exception:
                             pass
                 log(code, st["action"])
+                if isinstance(st["action"], dict) and st["action"].get("status") in ("paid", "submitted-unconfirmed"):
+                    prior_paid[code] = dict(st["action"], amount=st["balance"], at=dt.datetime.now(ET).isoformat())
                 json.dump(result, open(month_file, "w"), indent=1)
             paid = [(c, s["balance"]) for c, s in result["stores"].items() if isinstance(s["action"], dict) and s["action"]["status"] == "paid"]
             other = [(c, s["action"]["status"] if isinstance(s["action"], dict) else (s["action"] or s.get("hold") or "held")) for c, s in result["stores"].items() if s["balance"] and not (isinstance(s["action"], dict) and s["action"]["status"] == "paid")]
+            other = [(c, a) for c, a in other if c not in prior_paid and result["stores"][c].get("action") != "already-paid"]
             if pay and not dry:
+                msg = None
                 if paid:
                     msg = "VSP gun-check fees for %s paid by e-check: %s — total $%.2f." % (now.strftime("%B"),
                           ", ".join("%s $%.2f" % x for x in paid), sum(a for _, a in paid))
                     if other:
-                        msg += " Still open (couldn't finish on the site): %s — I'll retry on the next run." % ", ".join(c for c, _ in other)
-                else:
-                    msg = "VSP gun-check fees for %s: nothing was paid this run — the payment site didn't cooperate for %s. I'll retry on the next run." % (now.strftime("%B"), ", ".join(c for c, _ in other))
-                    ledger("VSP pay run paid nothing: " + "; ".join("%s=%s" % o for o in other))
-                dm(msg)
+                        msg += " Still open: %s — it retries automatically each morning." % ", ".join(c for c, _ in other)
+                if other:
+                    ledger("VSP pay run left open: " + "; ".join("%s=%s" % (c, a) for c, a in other))
+                    if now.day >= 25 and not paid:
+                        msg = ("VSP gun-check fees for %s are still unpaid for %s (due the 1st). The daily retry "
+                               "hasn't gotten through the payment site." % (now.strftime("%B"), ", ".join(c for c, _ in other)))
+                if msg:
+                    dm(msg)
             else:
                 dm("VSP gun-check fees for %s: %s — total $%.2f. %s" % (now.strftime("%B"),
                    ", ".join("%s $%.2f" % (c, s["balance"]) for c, s in result["stores"].items() if s["balance"]),

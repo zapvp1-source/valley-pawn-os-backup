@@ -2690,3 +2690,7 @@ Jewelry Count — Monday 11/9 (expected = system on-hand, counted = PM count she
 | WAY | Necklaces | 76 | 76 | 0 |
 | **WAY Total** | | **599** | **599** | **0** |
 
+
+## RUN RECORD — 2026-11-10 (Tuesday) — native jewelry-onhand-nightly-pull
+
+Nothing posted. Bravo incomplete: CUL (no CSV); HAR (no CSV); LEX (no CSV); ROA (no CSV); WAY (no CSV)
