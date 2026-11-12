@@ -271,3 +271,17 @@ Unverifiable / notes: Culpeper County @ Caroline 11/6 not re-confirmed today (Ca
   - 6af2228af9116176eb0863f5 (Waynesboro FB, 11/11 2:30 PM): "First real cold mornings in the Boro" (couldn't verify, and our own 11/8 post already called near-freezing) → "Cold mornings in the Boro". APPLIED.
 - Unverifiable: Wed 11/11 forecast for Waynesboro/Culpeper. api.weather.gov was refused (robots) and the forecast.weather.gov MapClick pages are stale cache (Aug 28 / Nov 1). No dated weather claims remain; the leftover lines are seasonal climatology ("this time of year", "as the weather turns cold").
 - Published-wrong: none.
+
+## 2026-11-11 07:45 ET — daily fact-check (36h window)
+Posts checked: 27 (13 product/brand/evergreen skipped; 14 with dated, weather or seasonal claims reviewed)
+Verified:
+- VMI hosts The Citadel Sat Nov 14, 2026, Military Classic of the South (82nd), Lexington: https://vmikeydets.com/news/2026/2/18/vmi-football-releases-2026-schedule.aspx ; https://citadelsports.com/news/2025/12/18/the-citadel-officially-announces-2026-football-slate.aspx (kickoff conflicts, 12:30 PM Citadel vs 5:30 PM Fox, so no time added). Lexington FB + GBP_Lexington left as is.
+- Mill Mountain Star lit red/white/blue on Veterans Day; first lit Thanksgiving Eve Nov 23, 1949; 88.5 ft; 2,000 ft neon: https://en.wikipedia.org/wiki/Roanoke_Star ; https://www.visitroanokeva.com/blog/post/local-history-roanoke-star-mill-mountain-virginia-blue-ridge/ . Nov 23, 2026 = Monday (77th). GBP_Roanoke 11/11 left as is.
+- Grandin Theatre closed Nov 11, 2001 (third closing after 1976, 1985), opened 1932 with Arrowsmith, reopened Oct 20, 2002 with Mostly Martha: https://www.grandintheatre.com/history . Roanoke FB 11/11 left as is.
+- Weather (NWS, updated 6:52-7:00 AM 11/11): Roanoke Thu high 62, showers before 2 PM, gusts 29, Sat night low ~29 https://forecast.weather.gov/MapClick.php?CityName=Roanoke&state=VA&site=RNK&textField1=37.2711&textField2=-79.9414 ; Harrisonburg Thu rain chance, high 61, Fri/Sat night lows 28/27 https://forecast.weather.gov/MapClick.php?CityName=Harrisonburg&state=VA&site=LWX&textField1=38.4496&textField2=-78.8689 ; Afton 40F fair this morning, no fog https://forecast.weather.gov/MapClick.php?lat=38.03&lon=-78.88 . Roanoke Oct 2026 low 33, no freeze: https://forecast.weather.gov/product.php?site=RNK&issuedby=ROA&product=CLM
+Edited (APPLIED):
+- 6af2237a0acc11d344605fdf Roanoke FB 11/12: "First genuinely cold morning of the year ... Bundle up" (Thu low ~48, not true) → NWS-verified breezy/showers, high 62, lows near 29 Sat night; dropped unconfirmed 8:22 PM time.
+- 6af22382f9116176eb0867c2 GBP_Roanoke 11/12: "on a cold November morning" → "on a November evening".
+- 6af223020acc11d344605e73 Harrisonburg FB 11/12: "On a cold morning like these ... Wear a good coat today" (Thu low ~43, rain) → rain-jacket weather, high 61, upper-20s lows Fri/Sat nights.
+Left as general/evergreen: Waynesboro + GBP_Waynesboro Afton fog posts, Harrisonburg + GBP foliage posts (framed as typical timing), Culpeper Depot posts, GBP_Harrisonburg Blacks Run.
+Unverifiable: none left in posts. PUBLISHED-WRONG: none.

@@ -124,6 +124,7 @@ def resolve_detail(row, detail):
         else:
             out["call_result"] = "abandoned"
     out["ivr_key"] = key
+    out["ivr_keys"] = keys
     out["ivr_ar_ext"] = ar_ext
     out["ivr_top_result"] = row.get("call_result")
     out["_resolved"] = True
@@ -181,6 +182,32 @@ def _main():
     tok = mct.zoom_token(now)
     if not tok:
         print("no token"); return 1
+    if len(sys.argv) > 1 and sys.argv[1] == "--keys":
+        # read-only: every key pressed on the store menus since a date (fresh call paths, no cache)
+        since = sys.argv[2] if len(sys.argv) > 2 else now.astimezone(mct.ET).date().isoformat()
+        cfg = mct.load_json(mct.CONFIG, {})
+        rows = mct.zoom_calls_raw(tok, since, now.astimezone(mct.ET).date().isoformat())
+        menu = [r for r in rows if _norm(r.get("direction")) == "inbound" and _norm(r.get("callee_ext_type")) == "auto_receptionist"]
+        tally, ones, errs = {}, {}, 0
+        for r in menu:
+            try:
+                d = resolve_detail(r, fetch_path(tok, r["id"]))
+            except Exception:
+                errs += 1; continue
+            st = mct.store_for(r, cfg.get("stores", {})) or "?"
+            ks = d["ivr_keys"]
+            for k in set(ks):
+                tally.setdefault(st, {}).setdefault(k, 0); tally[st][k] += 1
+            if "1" in ks:
+                then = "hung up" if d["call_result"] in ("ivr_hours",) else ("then reached store: " + d["call_result"])
+                ones.setdefault(st, []).append("%s %s" % (mct.parse_ts(r["start_time"]).astimezone(mct.ET).strftime("%m-%d %I:%M %p"), then))
+        print("menu calls since %s: %d (path errors %d)" % (since, len(menu), errs))
+        print("calls per store that pressed each key: %s" % json.dumps(tally, sort_keys=True))
+        for st, lst in sorted(ones.items()):
+            print("PRESSED 1 %s: %d" % (st, len(lst)))
+            for x in lst:
+                print("   " + x)
+        return 0
     if len(sys.argv) > 2 and sys.argv[1] == "--show":
         rows = mct.zoom_calls_raw(tok, (now - dt.timedelta(days=2)).date().isoformat(), now.date().isoformat())
         r = [x for x in rows if x.get("id") == sys.argv[2]]

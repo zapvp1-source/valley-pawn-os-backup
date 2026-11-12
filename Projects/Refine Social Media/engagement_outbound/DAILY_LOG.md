@@ -1,5 +1,19 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-11 (daily PREP run, 12:45–13:25 ET, level 1 all pages, Veterans Day) — picks queued, nothing published by this run
+- Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only ("Comment as Joshua Davis" seen; composer read "What's on your mind, Joshua?" at the end) — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. Still no POST-mode chat since 11/2 evening (ledger unchanged).
+- Folders were not connected at start; device_request_folder_access granted unattended (per 11/10 note). Chrome extension dropped once mid-run (~13:10); came back after a 45 s pause — read-only call re-run, no harm.
+- Dropped from QUEUE (source post past 48 h): all 11/9 picks — Roanoke Mill Mountain Zoo comment + Dickens share; Waynesboro Wayne Theatre comment + Merci Train share; Harrisonburg Blood Drive share; Lexington fantasy-writing share (also POSTPONED by RRL — Lexington branch closed 11/12 for mold remediation); Brand SNP Skolithos comment. Also Harrisonburg → Visit Harrisonburg comment (lapses 13:50 today).
+- Still valid from 11/10: Culpeper comment (Visit Culpeper, until 11/12 08:50) + Culpeper share (Parks & Rec Beginner Yoga, until 11/12 12:03); Lexington comment (RRL Upload Your Shoebox, Glasgow — until 11/12 12:03).
+- New picks: Roanoke comment → Roanoke Valley SPCA (Horn Elementary Kindness Drive toys); Roanoke share → Explore Park Illuminights (8th year, opens Sat Nov 21; permalink confirmed); Waynesboro comment → Wayne Theatre (Chitty Chitty Bang Bang JR., young theatre artists); Waynesboro share → Waynesboro Parks & Rec Trot and Toddy Fun Run & Walk (Nov 28, Constitution Park Pavilion, 10:30–11; permalink confirmed — expires 11/12 09:59); Harrisonburg comment → Massanutten Regional Library (six free virtual author talks in December); Harrisonburg share → Harrisonburg Downtown Renaissance Arts & Crafts Swap Meet-Up (Sat Dec 5, 12–1 PM, Titan Forge; /posts/ permalink confirmed); Brand comment → Blue Ridge Parkway (Veterans Day bald eagle, worded without date words).
+- Lexington share: none — no qualifying post (City posts are road work; Main Street Lexington newest is 11/6; Farmers Market post was a vendor menu).
+- Skipped on purpose: Downtown Roanoke Small Business Saturday tote giveaway; Center in the Square Starcade Veterans Day special (expires today); Roanoke County Parks winter swim registration; Harrisonburg Parks referee hiring; SNP prescribed-fire closures; Veterans Day closing notices.
+- Follows: no new ones; 18 pending, all re-dated.
+- Watchlist: 0 resolved; 2 retired after 3rd failed search — Waynesboro High School Little Giants and Visit Waynesboro (results only Waynesboro.Com, our own pages, or other towns' tourism pages). 20 pages re-checked.
+- Needs a person: none.
+- Replies on own pages: not swept (POST mode only). Tab closed.
+- Totals this run: comments 0 (4 new queued, 2 still pending), shares 0 (3 new queued, 1 still pending), replies 0, follows 0 (18 pending), new pages resolved 0.
+
 ## 2026-11-10 (daily PREP run, 12:46–12:58 ET, level 1 all pages) — picks queued, nothing published by this run
 - Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only ("Comment as Joshua Davis" seen; composer read "What's on your mind, Joshua?" at the end) — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. Still no POST-mode chat since 11/2 evening (ledger unchanged).
 - Dropped from QUEUE (lapsed before any POST chat): Culpeper share → Visit Culpeper Christmas Parade (expired 07:09); Lexington comment → RRL WiFi 24/7 (expired 10:45).

@@ -225,8 +225,8 @@ Rules from now on (every run, every store):
    that leaves the gap silently on the other stores.
 3. Missing stores do not stop the month. Stage what reconciles, hold the rest, and keep working the
    month past the 5th until it is CLOSED. (The stage task's own cron is still 1st-5th; until that
-   prompt is widened, a session has to finish any month left open by hand — October 2026 is
-   still open as of 11/10.)
+   prompt is widened, a dated follow-up task finishes any month left open — October 2026's is
+   scheduled for Thu 11/12 10:31 AM ET, trig_01NqHvMJKE7g2PAc98ZpEkEX.)
 4. October 2026 live read (11/10, read-only): HAR 51.378 / 59.378, LEX 19.700 / 13.197,
    ROA 84.880 / 44.505 dwt (gold / stones) = 155.958 / 117.080. Elemetal: Karat 287.8 dwt pre-melt
    ($28,473.30 net, INV-20261030-348183), Stone Removal 410.0 dwt ($31,961.87 net,

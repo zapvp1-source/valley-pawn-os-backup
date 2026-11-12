@@ -107,6 +107,13 @@ nohup bash "/Users/joshuadavis/Documents/Claude/Projects/Bravo Data Extraction/b
 
 ---
 
+### 3b. Native Bravo self-heal (added 2026-11-11)
+`_watchdog.ps1` now calls `_bravo_selfheal.ps1` every 2 minutes inside Windows Session 1. It relaunches
+a dead Bravo (starting ClickOnce's `dfsvc.exe` first — required since the 11/10/2026 Patch Tuesday
+update) and recycles a Bravo that has been windowless 8+ minutes. It needs nothing from the Mac, Parallels
+grants, or computer-use, and it yields to the Mac health gate while that holds its lock. Log:
+`logs/_selfheal.log`; outage diagnostics: `logs/_selfheal_diag.txt` + `.png`. See KNOWN_ISSUES 2026-11-11.
+
 ## 4. Failure-mode → solution matrix (the "account for all failures" table)
 
 | # | Symptom in `result.json` / logs | Root cause | Automated solution | Manual? |

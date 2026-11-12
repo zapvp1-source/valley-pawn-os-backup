@@ -197,3 +197,7 @@ Lexington — count sheet not readable.
 Roanoke — count sheet not readable.
 Waynesboro — count sheet not readable.
 
+
+## RUN RECORD — 2026-11-10 (Tuesday) — native jewelry-onhand-catchup
+
+Nothing posted. Bravo incomplete: CUL (no CSV); HAR (no CSV); LEX (no CSV); ROA (outside the freeze window, not pulled (no CSV)); WAY (outside the freeze window, not pulled (no CSV))

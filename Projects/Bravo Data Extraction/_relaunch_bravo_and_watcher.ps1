@@ -20,6 +20,15 @@ function Spawn-InSession1 {
 # --- Step 1: Launch Bravo via .appref-ms shortcut --------------------------
 Write-Host "=== Launching Bravo ==="
 $bravoShortcut = "C:\Users\joshuadavis\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Bravo Store Systems\Bravo.appref-ms"
+# 2026-11-11: since the 11/10 Patch Tuesday reboot, ClickOnce's dfsvc.exe is no longer
+# COM-activated on demand, so the shortcut launch below silently did nothing (Bravo dead ~20h).
+# Start dfsvc in Session 1 first; harmless when it is already running.
+$dfExe = "$env:windir\Microsoft.NET\Framework64\v4.0.30319\dfsvc.exe"
+if (-not (Get-Process dfsvc -ErrorAction SilentlyContinue)) {
+    Spawn-InSession1 -taskName "ClaudeDfsvcStart" -execPath "cmd.exe" -argString ('/c start "" "' + $dfExe + '"')
+    Start-Sleep -Seconds 5
+    Unregister-ScheduledTask -TaskName "ClaudeDfsvcStart" -Confirm:$false -ErrorAction SilentlyContinue
+}
 Spawn-InSession1 -taskName "ClaudeBravoLaunch" -execPath "cmd.exe" -argString ('/c start "" "' + $bravoShortcut + '"')
 Start-Sleep -Seconds 30
 

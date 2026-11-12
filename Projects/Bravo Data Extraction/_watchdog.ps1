@@ -1,4 +1,4 @@
-# _watchdog.ps1 — self-healing monitor for bravo_watcher.ahk
+﻿# _watchdog.ps1 — self-healing monitor for bravo_watcher.ahk
 # Registered in Windows Task Scheduler as "BravoWatcherWatchdog", runs every 2 min.
 # Restarts the watcher when it is dead, or hung (pending trigger + no activity 4+ min).
 # Created 2026-06-11 after the 2026-06-10 15:29 hang stalled the trigger queue overnight.
@@ -25,6 +25,10 @@ $log   = Join-Path $root 'logs\watchdog.log'
 $stamp = Join-Path $root 'logs\watchdog.last_restart.txt'
 
 function Log($m) { ("{0} {1}" -f (Get-Date -Format 'yyyy-MM-dd HH:mm:ss'), $m) | Add-Content $log }
+
+# --- 0. Bravo self-heal hook (added 2026-11-11). Runs the separate, iterable
+# _bravo_selfheal.ps1 every tick. Wrapped so it can NEVER break the watcher heal below.
+try { & (Join-Path $root '_bravo_selfheal.ps1') -Root $root } catch { Log ("selfheal hook error: " + $_.Exception.Message) }
 
 # --- 1. Is the watcher process alive? -----------------------------------
 $alive = $false

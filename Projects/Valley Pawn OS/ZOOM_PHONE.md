@@ -410,3 +410,9 @@ to the store-queue outcome; menu-only calls read `ivr_hours` / `ivr_app_link` (n
 the menu with no key = `abandoned` (gets the normal missed-call text).
 
 Unused leftover: "Menu - App Link Text" AR ext 814 (first draft; no number). Safe to delete.
+
+**2026-11-12 — greeting v2 (all 5 menus).** Joshua OK'd leading with press 2, after call reasons showed loan
+payment/extension/payoff = 29.6% of answered calls vs hours/location 2.5% (COMM_STATS.md section D). New TTS
+"Store Menu Greeting v2 - <Store>": "Thank you for calling Valley Pawn in <Store>. To extend your loan or make a
+payment from your phone, press 2, and we'll text you the link right now. For our store hours and location, press 1.
+To speak with a team member, press 3." Key mapping unchanged. Old v1 assets left unused in the library.

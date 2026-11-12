@@ -2694,3 +2694,27 @@ Jewelry Count — Monday 11/9 (expected = system on-hand, counted = PM count she
 ## RUN RECORD — 2026-11-10 (Tuesday) — native jewelry-onhand-nightly-pull
 
 Nothing posted. Bravo incomplete: CUL (no CSV); HAR (no CSV); LEX (no CSV); ROA (no CSV); WAY (no CSV)
+
+## RUN RECORD — 2026-11-11 (Wednesday) — native jewelry-onhand-nightly-pull
+
+Open: CUL ROA WAY. Bravo freeze-window CSVs: all open stores. Sheets: CUL NOT USED — count sheet not readable; ROA ok (Joey-Epperly, 18:31); WAY ok (Stephanie, 18:25).
+
+Jewelry Count — Wednesday 11/11 (expected = system on-hand, counted = PM count sheet)
+
+| Store | Category | Expected | Counted | Variance |
+|---|---|---|---|---|
+| ROA | Rings | 605 | 605 | 0 |
+| ROA | Bracelets | 136 | 136 | 0 |
+| ROA | Earrings | 77 | 78 | +1 |
+| ROA | Pendants | 172 | 172 | 0 |
+| ROA | Necklaces | 155 | 155 | 0 |
+| **ROA Total** | | **1145** | **1146** | **+1** |
+| WAY | Rings | 349 | 349 | 0 |
+| WAY | Bracelets | 49 | 49 | 0 |
+| WAY | Earrings | 60 | 60 | 0 |
+| WAY | Pendants | 71 | 71 | 0 |
+| WAY | Necklaces | 77 | 77 | 0 |
+| **WAY Total** | | **606** | **606** | **0** |
+
+Culpeper — count sheet not readable.
+
