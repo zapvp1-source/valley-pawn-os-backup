@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-11-10 22:11 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-11-12 22:11 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -1785,6 +1785,12 @@ PRESTON SAID: "Arris Router - $6.50 - Not really an item worth taking in. Doesn'
 SOURCE: #loans-and-buys | 2024-02-17 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1708182000870259
 id: routers-cd7e510a
 
+### [HIGH] sales-priority-ask-for-sale
+RULE: Sales are the top priority at all times, and staff should always ask the customer for the sale.
+PRESTON SAID: "Sales are #1 priority always. Ask for the sale."
+SOURCE: #general (Preston Peters, Operations Manager) | 2026-11-12 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1794495590312279
+id: sales-priority-ask-for-sale-38429e41
+
 ### [HIGH] selling-gold-below-melt
 RULE: Preston objects to automated aged-inventory markdowns being applied to gold, because they can push listed gold below melt once fees are factored in.
 PRESTON SAID: "I'm worried about selling gold under melt"
@@ -1924,6 +1930,12 @@ RULE: Example of Preston's big-toy buy judgment: buy a Polaris 4-wheeler with ti
 PRESTON SAID: "I have a customer from Lexington wanting to sell this 4 wheeler for $2500. He has the title for it. It's a Polaris with just 300 miles on it. It's a regular customer. We would price it at around $4200 and likely get $3800+. I think it would be a good item to pickup and would sell quickly. They are super popular especially in the Lexington area. He was originally wanting 3500 and I have got him to this number but don't think I can get him any lower."
 SOURCE: DM Joshua<->Preston | 2024-03-28 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1711659629959749
 id: big-toy-buy-judgment-73dfd153
+
+### [MEDIUM] buying-spend-discipline
+RULE: When buying, spend carefully: negotiate, round the offer down, and factor in the item's condition and how quickly it will turn over.
+PRESTON SAID: "Make sure we are spending wisely! Negotiate, round down, consider condition and turn over time."
+SOURCE: #general (Preston Peters, Operations Manager) | 2026-11-12 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1794495590312279
+id: buying-spend-discipline-e67eed62
 
 ### [MEDIUM] call-out-notice-two-hours
 RULE: An employee calling out must physically call the manager/Preston at least two hours before their shift starts. The policy is written in the handbook.
@@ -2104,6 +2116,12 @@ RULE: New retail hires ramp through monthly sales goals of $7,000 for the first 
 PRESTON SAID: "But you go for for like the 30 days is going to be 7000 next 30 days 9000 and then 12,000 that kind of just ramps you into, you know, expected typical"
 SOURCE: zoom-call:2026-10-08_1207_Preston-to-JacobCox_9m48s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
 id: new-hire-sales-goals-30-60-9-2b8ffec8
+
+### [MEDIUM] no-finalizing-deals-without-approval
+RULE: Do not finalize a deal until it has been approved.
+PRESTON SAID: "And by the way, you shouldn't finalize a deal if there's no approval."
+SOURCE: zoom-call:9f68a9b08e984b3b837d6c95f24f7a04 | 2026-11-12 | UNK Walker Tapley
+id: no-finalizing-deals-without--0b8616c8
 
 ### [MEDIUM] no-guaranteed-offers-over-phone
 RULE: Don't guarantee a price over the phone. The offer depends on the item in hand, and if what the customer describes or looked up doesn't match what they bring in, the phone estimate doesn't hold.
@@ -2501,6 +2519,12 @@ PRESTON SAID: "we pay you right back"
 SOURCE: zoom-call:2026-10-08_1225_Preston-to-JoshuaBurnett_8m57s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
 id: gun-safety-course-reimbursem-c83a6fc6
 
+### [LOW] henry-authorized-dealer-signs-do-not-sell
+RULE: Do not sell the Henry signs marked "authorized dealer." The speaker said they are only available to dealers and that selling them could get the store in trouble. The plain "Why buy Henry" promotional signs were left unresolved: the speaker said "we might not be selling any of this stuff" because the source was unknown.
+PRESTON SAID: "there's another set of signs that came in that similar, but they say Henry authorized dealer. Do not sell those."
+SOURCE: zoom-call:9f68a9b08e984b3b837d6c95f24f7a04 | 2026-11-12 | UNK Walker Tapley
+id: henry-authorized-dealer-sign-b2be29e2
+
 ### [LOW] id-missing-fields-passport
 RULE: A passport doesn't carry every field the computer asks for, such as address and eye color. Get the missing details from the customer or from another ID.
 PRESTON SAID: "The computer's going to ask, but you just have to get that from like address, eye color and all that good stuff."
@@ -2524,6 +2548,12 @@ RULE: Only managers should be able to cancel layaways or expire pawns. Non-manag
 PRESTON SAID: "I can definitely fix that real quick there's really no reason for someone that's not a manager to expire upon or Cancel anyway."
 SOURCE: zoom-call:375d33b002b24139a085681aa26e3ffb | 2026-10-30 | UNK Chadd McClintic
 id: layaway-pawn-cancel-expire-m-2cf57966
+
+### [LOW] lex-funds-sheet-threshold
+RULE: The sheet is not needed unless the amount is $1,500 or more. The message doesn't say which sheet, so confirm before relying on this.
+PRESTON SAID: "Don't need sheet unless $1500+"
+SOURCE: #lex-funds (Preston Peters, Operations Manager) | 2026-11-12 | https://valleypawnworkspace.slack.com/archives/C03B3K5DL6T/p1794517903977039
+id: lex-funds-sheet-threshold-2b09a606
 
 ### [LOW] month-end-markdown-audit-split
 RULE: One store splits its month-end work across several people. The manager does the jewelry markdowns, one employee does the gun audit, the manager reviews the gun audit a second time, and another employee does the general merchandise markdowns.
@@ -2715,5 +2745,5 @@ id: past-due-75-day-5-percent-ce-30eeab0b
 
 
 ==============================================================================
-COVERAGE: 376 entries - 31 verified by Preston, 152 high-confidence rules, 110 medium, 81 low, 2 superseded.
+COVERAGE: 381 entries - 31 verified by Preston, 153 high-confidence rules, 112 medium, 83 low, 2 superseded.
 ==============================================================================

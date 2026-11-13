@@ -232,3 +232,13 @@ Rules from now on (every run, every store):
    ($28,473.30 net, INV-20261030-348183), Stone Removal 410.0 dwt ($31,961.87 net,
    INV-20261103-350689). Gap ≈ 131.8 dwt gold / 292.9 dwt stones = Culpeper + Waynesboro, whose
    October gold is not under any `2026-10 GOLD*` name in Bravo (225/242 rows scanned).
+
+## 2026-11-12 — October 2026 settled fact: CUL and WAY never created October buckets
+Native read-only check (listOnly+allStatus, grid sorted Created On descending, screenshot of the newest
+rows — `logs-scrap/scrap-2026-10-peek-culway2_<STORE>-newest.png`): Culpeper's newest bucket is
+`2026-09 GOLD WITH STONES` (9/2, CLOSED); Waynesboro's is `2026-09 GOLD WITH STONES` (9/21, CLOSED).
+No October bucket exists at either store under any name, so their October gold (≈131.8 dwt gold /
+292.9 dwt stones vs Elemetal pre-melt) shipped without being scrapped into Bravo. Not a naming problem.
+HAR/LEX/ROA October buckets exist and are OPEN with live weights (see 11/10 amendment).
+The handler now saves that newest-rows screenshot on every listOnly run — use it, never computer use.
+Follow-up task trig_01NqHvMJKE7g2PAc98ZpEkEX (computer-use plan) was disabled; its step 1 is answered.

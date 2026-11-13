@@ -65,6 +65,16 @@ def _save(c):
     os.replace(tmp, CACHE)
 
 
+def _keys():
+    """Menu key meanings live in fleet/ivr_config.json (changed 2026-11-12)."""
+    try:
+        with open(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "fleet", "ivr_config.json")) as f:
+            c = json.load(f)
+        return {"hours_key": str(c.get("hours_key", "1")), "app_link_key": str(c.get("app_link_key", "2"))}
+    except (OSError, ValueError):
+        return {"hours_key": "1", "app_link_key": "2"}
+
+
 def fetch_path(token, cid):
     req = urllib.request.Request("https://api.zoom.us/v2/phone/call_history/" + cid,
                                  headers={"Authorization": "Bearer " + token})
@@ -115,9 +125,9 @@ def resolve_detail(row, detail):
             out["call_result"] = "answered"
         elif vm:
             out["call_result"] = "voicemail"
-        elif key == "1":
+        elif key == _keys().get("hours_key", "1"):
             out["call_result"] = "ivr_hours"
-        elif key == "2":
+        elif key == _keys().get("app_link_key", "2"):
             out["call_result"] = "ivr_app_link"
         elif key:
             out["call_result"] = "ivr_key_" + key
@@ -198,7 +208,7 @@ def _main():
             ks = d["ivr_keys"]
             for k in set(ks):
                 tally.setdefault(st, {}).setdefault(k, 0); tally[st][k] += 1
-            if "1" in ks:
+            if _keys()["hours_key"] in ks:
                 then = "hung up" if d["call_result"] in ("ivr_hours",) else ("then reached store: " + d["call_result"])
                 ones.setdefault(st, []).append("%s %s" % (mct.parse_ts(r["start_time"]).astimezone(mct.ET).strftime("%m-%d %I:%M %p"), then))
         print("menu calls since %s: %d (path errors %d)" % (since, len(menu), errs))

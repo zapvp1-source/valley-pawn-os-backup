@@ -1507,6 +1507,14 @@ ListOpenBucketsOnly(manifest, result) {
                     LogMessage("  [list-only] allStatus requested - applying full status filter")
                     ScrapApplyAllStatusFilter()
                 }
+                ; 2026-11-12: picture of the top of the Created-On-descending grid (the newest
+                ; buckets). The grid walk below misses the top rows at long-history stores
+                ; (CUL/WAY capture ~105 of ~240 and never the newest), so this screenshot is the
+                ; native, zero-mutation way to see what a store actually created this month.
+                try {
+                    Sleep(1500)
+                    ScreenshotToFile(store . "-newest")
+                }
                 rows := ScrapWalkBucketGrid(CONFIG["paths.logs"] . "\" . manifest["id"] . "_" . store . "_griddiag.csv")
                 for r in rows {
                     n++

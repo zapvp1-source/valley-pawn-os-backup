@@ -1,13 +1,12 @@
-# Claude Cloud Scheduled Tasks — export 2026-11-11T02:44:14-05:00
+# Claude Scheduled Tasks Export
 
-126 tasks (64 enabled)
+Exported 2026-11-12T02:45:45-05:00 — 128 tasks
 
 ## Annual board review
 
-- ID: `trig_01XpGh4iR4cpjHM3MR78vWeN`
-- Schedule: `CRON_TZ=America/New_York 0 0 1 1 *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01XpGh4iR4cpjHM3MR78vWeN
+- schedule: CRON_TZ=America/New_York 0 0 1 1 *
+- enabled: True
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -123,10 +122,9 @@ The 2025 deck is in Google Drive: Annual Board Reviews / 2025 / Valley_Pawn_2025
 
 ## Asset recovery daily refresh
 
-- ID: `trig_014PS7pZqihrdybSZZ8q6ZPP`
-- Schedule: `CRON_TZ=America/New_York 15 19 * * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_014PS7pZqihrdybSZZ8q6ZPP
+- schedule: CRON_TZ=America/New_York 15 19 * * *
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -254,10 +252,9 @@ the identical action forever instead of escalating. Escalating is what this step
 
 ## Bald rock 15 day contract
 
-- ID: `trig_01TfdYKoTp7fAi5VTifhCjrX`
-- Schedule: `CRON_TZ=America/New_York 0 4 * * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01TfdYKoTp7fAi5VTifhCjrX
+- schedule: CRON_TZ=America/New_York 0 4 * * *
+- enabled: True
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -475,10 +472,9 @@ flag can never silence this task indefinitely.
 
 ## Bald rock guest reviews
 
-- ID: `trig_01GP5XyBvV1axBqdzed9tWu8`
-- Schedule: `CRON_TZ=America/New_York 0 11 * * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01GP5XyBvV1axBqdzed9tWu8
+- schedule: CRON_TZ=America/New_York 0 11 * * *
+- enabled: True
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -533,10 +529,9 @@ Notes: guest-facing wording never mentions Full Circle Finance — sign-offs are
 
 ## Bald rock monday briefing
 
-- ID: `trig_01PUBSN6P7rsi6BF85dm2hFF`
-- Schedule: `CRON_TZ=America/New_York 15 4 * * 1`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01PUBSN6P7rsi6BF85dm2hFF
+- schedule: CRON_TZ=America/New_York 15 4 * * 1
+- enabled: True
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -637,10 +632,9 @@ RULES
 
 ## Bald Rock off-season pricing guard
 
-- ID: `trig_011qxtUvomxsTLQkzJBUYywX`
-- Schedule: `CRON_TZ=America/New_York 54 8 * * 1,4`
-- Enabled: no
-- Requires Mac: no
+- id: trig_011qxtUvomxsTLQkzJBUYywX
+- schedule: CRON_TZ=America/New_York 54 8 * * 1,4
+- enabled: False
 
 ````
 Bald Rock STR (282 Bald Rock Rd, Verona VA; Guesty listing 68b59902faaa330013ede1f8 "Mountain Luxury") — off-season pricing guard. Joshua Davis approved this plan on 2026-11-07 and asked for this task. Run unattended: act, don't ask. No Slack, no messages to anyone, no failure pings. Never type a password.
@@ -675,45 +669,39 @@ End with <run-summary>holiday changes N, last-minute nights N, orphan gaps N, re
 
 ## Bald Rock pool fee back on (May 1)
 
-- ID: `trig_01NGnigQhijmYEYJBsQEyj22`
-- Schedule: `once at 2027-05-01T13:17:00Z`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01NGnigQhijmYEYJBsQEyj22
+- schedule: once at 2027-05-01T13:17:00Z
+- enabled: True
 
 ````
 Bald Rock STR (Guesty listing 68b59902faaa330013ede1f8 "Mountain Luxury"). Joshua's rule: the $125 pool fee is off in winter and back on May 1. Load anthropic-skills:enterprise-map and the claude-in-chrome skill. In Claude in Chrome (already signed in to app.guesty.com; never type a password), open Guesty → Properties → Mountain Luxury → Pricing & policies → Additional fees → Pool Fee ($125/stay) → ⋮ → Edit, turn ON sync for Airbnb and for Guesty booking engine, click Save, confirm "Successfully saved". Do not change prices, minimum stay, cleaning fee or anything else. Work at human pace. Then append one dated line to project doc claude/BALD_ROCK_PRICING_GUARD_LOG.md (Projects tool: read, append, write back) and close your tab. No Slack, no messages.
 ````
 
-## Bald Rock returning-guest batch 3 (VRBO)
+## Bald Rock returning-guest batch 4
 
-- ID: `trig_01SeHzYKZFh7dczMbzJ1DxkJ`
-- Schedule: `once at 2026-11-11T15:05:00Z`
-- Enabled: yes
-- Requires Mac: yes
+- id: trig_01SyD25Jc28H7JwzWLXFTAMq
+- schedule: once at 2026-11-12T15:05:00Z
+- enabled: True
 
 ````
-Bald Rock returning-guest batch 3 goes to Channing Warren, Stacy McCracken and Stephanie Cutler, through the VRBO owner inbox only (vrbo.com/supply/inbox). Do not use Guesty email.
+Bald Rock returning-guest batch 4 goes to Aliena Lopez (Mar 29 – Apr 2, 2027) and Paul Sechrist (Apr 20–23, 2027), in their Airbnb threads only.
 
 Before sending:
-- Re-pull live Guesty prices for their dates.
-- Rerun /tmp/claude-0/rg3.py.
-- Verify each guest's actual paid rate on the VRBO payment summary.
-- Check for replies from batches 1–2 (Catherine, Victoria, Jeremy, Courtney, Will, Cindy) and handle them first.
+- Re-check live prices. These dates are under the spring cap: base 632 weekdays and 867 Fri/Sat, so $726/$996 guest-facing.
+- Recompute each offer at 10% off the current average.
+- Check each thread for newer messages.
+- Handle any replies from batches 1–3 first.
 
-Messages:
-- Use the "I'll send you a quote" wording.
-- Current offers: Channing $823/night Jan 22–24; Stacy $775/night Feb 18–22; Stephanie $815/night Apr 2–5.
-- Keep every offer at least 10% below current price.
+Expected offers: $653/night with the $450 cleaning fee waived, using the "Just reply here and I'll send you a special offer" wording.
 
-After that, schedule batch 4: Aliena and Paul at $653/night with the cleaning fee waived.
+Also check whether Joshua has answered the Channing and Stephanie holds from 11/11, and act on his answer.
 ````
 
 ## Bonus — month-close pull + targets draft (1st)
 
-- ID: `trig_01TPBvdRwk2XPWo7QmtWJvmh`
-- Schedule: `CRON_TZ=America/New_York 30 11 1 * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01TPBvdRwk2XPWo7QmtWJvmh
+- schedule: CRON_TZ=America/New_York 30 11 1 * *
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -803,10 +791,9 @@ this changes only HOW a send happens, never WHETHER or WHAT.
 
 ## Bonus — paid verification (Monday after payday)
 
-- ID: `trig_01V7GZeEsh6XcweUG2s6iFPV`
-- Schedule: `CRON_TZ=America/New_York 0 10 * * 1`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01V7GZeEsh6XcweUG2s6iFPV
+- schedule: CRON_TZ=America/New_York 0 10 * * 1
+- enabled: True
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -879,10 +866,9 @@ flag can never silence this task indefinitely.
 
 ## Bonus — qualifiers + payout close (10th)
 
-- ID: `trig_01T87bLf7WsfTEAWo9ipkbke`
-- Schedule: `CRON_TZ=America/New_York 0 9 10 * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01T87bLf7WsfTEAWo9ipkbke
+- schedule: CRON_TZ=America/New_York 0 9 10 * *
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -968,10 +954,9 @@ this changes only HOW a send happens, never WHETHER or WHAT.
 
 ## Book club recheck
 
-- ID: `trig_01VH3wzfhZ1o8ePNNwhrN96D`
-- Schedule: `once at 2026-11-12T20:00:00Z`
-- Enabled: yes
-- Requires Mac: yes
+- id: trig_01VH3wzfhZ1o8ePNNwhrN96D
+- schedule: once at 2026-11-12T20:00:00Z
+- enabled: True
 
 ````
 Recheck Elizabeth Fox's Airbnb thread 2725086101 (book club, Jul 29 – Aug 1, 2027). The first special offer ($2,310, 8 guests) expired 11/10. If she has replied that the group is ready, resend the special offer at exactly $2,310 for 8 guests on the same dates (Joshua approved). If she hasn't replied, do nothing.
@@ -979,10 +964,9 @@ Recheck Elizabeth Fox's Airbnb thread 2725086101 (book club, Jul 29 – Aug 1, 2
 
 ## Booking.com: finish Guesty connection
 
-- ID: `trig_015NKY4fhMXUnaHSQ2MTX6Y1`
-- Schedule: `once at 2026-11-23T15:00:00Z`
-- Enabled: yes
-- Requires Mac: yes
+- id: trig_015NKY4fhMXUnaHSQ2MTX6Y1
+- schedule: once at 2026-11-23T15:00:00Z
+- enabled: True
 
 ````
 Bald Rock Booking.com (property 17616499): check if the location-letter code was entered and Stripe KYP done; if the property is Open/Bookable, finish Guesty → Channels → Booking.com → Retry → Connect listings, set +22% markup, verify PriceLabs prices and calendar blocks, main photo, min age 30. See BALD_ROCK_PRICING_GUARD_LOG.md.
@@ -990,10 +974,9 @@ Bald Rock Booking.com (property 17616499): check if the location-letter code was
 
 ## Boost Bald Rock holiday FB post
 
-- ID: `trig_013HSK5a26Vd71HUCGqkGboJ`
-- Schedule: `once at 2026-11-19T00:30:00Z`
-- Enabled: yes
-- Requires Mac: yes
+- id: trig_013HSK5a26Vd71HUCGqkGboJ
+- schedule: once at 2026-11-19T00:30:00Z
+- enabled: True
 
 ````
 Boost the Bald Rock holiday Facebook post (scheduled to go live Nov 18, 7 PM). Use the same setup as the hot tub boost: $10/day for 7 days, the "Bald Rock drive market 30+" audience, and https://mvpproperties.guestybookings.com as the link. Joshua approved this on 11/9. Before publishing, check the ad account's prepaid balance; about $5 will be left after the first boost. If the balance can't cover $70, don't add funds — tell Joshua he needs to add funds first.
@@ -1001,10 +984,9 @@ Boost the Bald Rock holiday Facebook post (scheduled to go live Nov 18, 7 PM). U
 
 ## Camera watch 15-day trial review
 
-- ID: `trig_01JXcWfXWp9BjntrHZqT5ynA`
-- Schedule: `once at 2026-11-16T14:30:00Z`
-- Enabled: yes
-- Requires Mac: yes
+- id: trig_01JXcWfXWp9BjntrHZqT5ynA
+- schedule: once at 2026-11-16T14:30:00Z
+- enabled: True
 
 ````
 15-day Store Conduct Watch trial ended (trial_end 2026-11-15; watchers stop themselves). Load enterprise-map, then compile the trial results from Projects/Store Conduct Watch/reports/* (episodes per store/day, severity mix, what was actually caught that we didn't know, false alarms seen, est_cost_usd totals, camera coverage gaps) and give Joshua a short keep/stop recommendation. If he keeps it: remove trial_end from config.json. If he stops: retire the 7 com.valleypawn.conductwatch-* agents via bin/retire_agent.sh and delete the native_live flags.
@@ -1012,10 +994,9 @@ Boost the Bald Rock holiday Facebook post (scheduled to go live Nov 18, 7 PM). U
 
 ## CEO Monthly Scorecard (3rd of the month)
 
-- ID: `trig_016V513wSgD6rxsRZGCF55a1`
-- Schedule: `CRON_TZ=America/New_York 0 12 3 * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_016V513wSgD6rxsRZGCF55a1
+- schedule: CRON_TZ=America/New_York 0 12 3 * *
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -1124,10 +1105,9 @@ If none of the sources above has a task, say "not measured" — never "dark" or 
 
 ## CEO Weekly Brief (Mondays)
 
-- ID: `trig_01856nWC7RsCas5P5LXqt7Rk`
-- Schedule: `CRON_TZ=America/New_York 15 12 * * 1`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01856nWC7RsCas5P5LXqt7Rk
+- schedule: CRON_TZ=America/New_York 15 12 * * 1
+- enabled: True
 
 ````
 You are producing Joshua Davis's ONE weekly CEO brief. It replaces the old "CEO Weekly Scorecard" and the separate "Marketing CEO Briefing" DM. It covers every sector of his business on a single one-page PDF and is delivered by EMAIL (attachment) and into HIS SLACK DM. Nothing else: do not post to #ceo-briefs or any channel. Do not ask Joshua anything; make reasonable choices and finish. Write it the way a CEO reads: REVENUE FIRST (Joshua: "revenue is the single most important measurement"), then what drove it, then what needs his decision.
@@ -1180,10 +1160,9 @@ FAILURE POLICY: a thin week still ships. If you cannot complete at all, send ONE
 
 ## Chekkit instant answers — daily success/friction check
 
-- ID: `trig_019hXx7ZqvgVMEBnnnuUV3Uy`
-- Schedule: `CRON_TZ=America/New_York 30 18 * * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_019hXx7ZqvgVMEBnnnuUV3Uy
+- schedule: CRON_TZ=America/New_York 30 18 * * *
+- enabled: False
 
 ````
 Valley Pawn (Full Circle Finance Inc) — DAILY check on Chekkit Smart Replies ("FAQ Instant Answers" folder, 12 keyword rules per store, live since 2026-09-29 at Culpeper, Waynesboro, Harrisonburg, Lexington, Roanoke). Joshua wants to know FAST if customers are not getting what they need. READ ONLY — never edit any Chekkit setting, never text a customer.
@@ -1201,10 +1180,9 @@ Send Joshua ONE short Slack DM (user U03BB52MDSA), plain language, his style (sh
 
 ## Chekkit new review alert
 
-- ID: `trig_014exmyAWq1GgZNRHU1HonXD`
-- Schedule: `CRON_TZ=America/New_York 10 9-21 * * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_014exmyAWq1GgZNRHU1HonXD
+- schedule: CRON_TZ=America/New_York 10 9-21 * * *
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -1290,10 +1268,9 @@ When you see any of those messages, immediately fire the next concrete tool call
 
 ## Chekkit unanswered alert
 
-- ID: `trig_016fRstAx3ySdNen1QUGaNr3`
-- Schedule: `CRON_TZ=America/New_York 0 8 * * 1-6`
-- Enabled: no
-- Requires Mac: no
+- id: trig_016fRstAx3ySdNen1QUGaNr3
+- schedule: CRON_TZ=America/New_York 0 8 * * 1-6
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -1382,10 +1359,9 @@ Not armed (exit 1 / inactive): run and publish normally.
 
 ## Chekkit unanswered eod followup
 
-- ID: `trig_01TkmNGjoAY1bk9uoS7vtFNq`
-- Schedule: `CRON_TZ=America/New_York 0 19 * * 1-6`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01TkmNGjoAY1bk9uoS7vtFNq
+- schedule: CRON_TZ=America/New_York 0 19 * * 1-6
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -1521,12 +1497,29 @@ Write the `.txt` BEFORE the `.json` — the flusher acts the moment it sees the 
 If the run has nothing to report, write nothing. The all-or-nothing and silence rules still stand.
 ````
 
+## Close October scrap gold buckets
+
+- id: trig_01NqHvMJKE7g2PAc98ZpEkEX
+- schedule: once at 2026-11-12T15:31:00Z
+- enabled: True
+
+````
+Valley Pawn (Full Circle Finance Inc) — finish closing October 2026 scrap gold in Bravo. Load the enterprise-map skill first, then bravo-context. Read `Precious Metals Settlements/BRAVO_MONTHLY_AUTOPOST.md` in full, especially the "2026-11-10 amendment" at the bottom. All paths are under /Users/joshuadavis/Documents/Claude/Projects (request that folder if not connected).
+
+Facts verified 11/10: Elemetal paid Karat 287.8 dwt pre-melt, $28,473.30 net (INV-20261030-348183) and Stone Removal 410.0 dwt, $31,961.87 net (INV-20261103-350689). Live read-only weights (Bravo Data Extraction/results-scrap/scrap-2026-10-readweights.result.json): HAR 2026-10 GOLD 51.3778809735417 / 2026-10 GOLD WITH STONES 59.3778056523194; LEX 19.7 / 13.196798652088; ROA 84.88 / 44.5046076270682. Culpeper and Waynesboro have no bucket named "2026-10 GOLD" or "2026-10 GOLD WITH STONES" (by-name open failed after scanning 225/242 rows). Gap ≈131.8 dwt gold / 292.9 dwt stones = CUL + WAY.
+
+Work during store hours only (Mon–Sat 10:15 AM–5:15 PM ET, not Wednesday). Follow bravo-context's contention rules: confirm no main-pipeline trigger is in flight before driving Bravo's screen.
+1. Find Culpeper's and Waynesboro's real October gold buckets. Use computer use on Parallels Desktop (Bravo runs inside the Windows 11 VM): switch to CUL, Inventory → Scrap Refining Process, sort Created On descending, read the top ~15 rows (name, created, status). Same for WAY. Read only — change nothing. A gold bucket created in October under any name is that store's October bucket. If a store has NO gold bucket created since its September buckets closed, its October gold shipped without a Bravo bucket — a store fix (create the bucket and scrap the items into it); record that and post nothing for the month.
+2. If all 10 buckets are found: write a readOnly manifest with the real CUL/WAY names to `Bravo Data Extraction/triggers-scrap/scrap-2026-10-readweights-culway.json` and queue it with a file `Valley Pawn OS/fleet/host_queue/<YYYYMMDD-HHMM>-scrap-2026-10-culway.sh` containing one comment line plus exactly: bash "/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/bin/scrap_closeout_run.sh" scrap-2026-10-readweights-culway 1800   (no chaining — the queue refuses it). Then run `python3 "Precious Metals Settlements/bin/build_month_split.py" --month 2026-10 --gold-net 28473.30 --stones-net 31961.87 --gold-premelt 287.8 --stones-premelt 410.0` with both result files (--readonly-result) and all 10 --map entries. Check Bravo totals vs pre-melt (normal within ~6%).
+3. Send Joshua ONE Slack DM (channel D03BHQH5VGT), plain business language, per the spec's step 6: store-by-store split, the weight check in one line, and "Reply 'post' in this thread to close these in Bravo. Reply 'hold' to pause." Then write `Precious Metals Settlements/logs/monthly_autopost_pending.json` as the spec describes so the existing approval-watch task posts on his reply. If step 1 found a store with no bucket, the DM instead says in two sentences which store's October gold went out without a Bravo bucket and that the store must scrap those items into an October bucket before the month can close; add/update the October scrap row in Life OS/OPEN_ITEMS_REGISTER.md.
+4. Prepend one entry to `Valley Pawn OS/CHANGELOG.md` with what was found and done. Never post money to Bravo yourself, never touch silver, never edit ScrapBucketCloseout.ahk or scrap_closeout_run.sh.
+````
+
 ## Cloud task export (nightly)
 
-- ID: `trig_01UC8wYz2cEbJ5WP2eRSpkjH`
-- Schedule: `CRON_TZ=America/New_York 37 2 * * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01UC8wYz2cEbJ5WP2eRSpkjH
+- schedule: CRON_TZ=America/New_York 37 2 * * *
+- enabled: True
 
 ````
 Valley Pawn continuity backup — nightly export of every Claude cloud scheduled task (Joshua approved 2026-11-09 as part of the "IF CLAUDE GOES DOWN" guide in Google Drive → Life OS). Purpose: if the Claude account is ever cut off, the schedules and full prompts survive so they can be rebuilt as local Mac jobs. Run silently: no Slack, no email, no messages to anyone, ever. Do not load other skills; this is a mechanical task.
@@ -1542,10 +1535,9 @@ Valley Pawn continuity backup — nightly export of every Claude cloud scheduled
 
 ## Community queue reminder (daily)
 
-- ID: `trig_01WxwtSxAk4vTdv3faMs7sMo`
-- Schedule: `CRON_TZ=America/New_York 23 13 * * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01WxwtSxAk4vTdv3faMs7sMo
+- schedule: CRON_TZ=America/New_York 23 13 * * *
+- enabled: True
 
 ````
 Valley Pawn — daily reminder for Joshua to approve the Facebook community engagement batch (he asked for this on 2026-11-02: "daily reminder would be awesome").
@@ -1559,10 +1551,9 @@ Never message anyone else. No Slack.
 
 ## Connector health daily
 
-- ID: `trig_01CzbLTtMwnq5FTaiWkbzmEX`
-- Schedule: `CRON_TZ=America/New_York 40 5 * * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01CzbLTtMwnq5FTaiWkbzmEX
+- schedule: CRON_TZ=America/New_York 40 5 * * *
+- enabled: True
 
 ````
 > ⚠️ **FAILURE POLICY v3.** On any failure you cannot recover: do NOT DM or message anyone. Append ONE row to `Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | connector-health-daily | <one plain sentence> | NEEDS_HUMAN: no | OPEN |` — then stop. Never post to any Slack channel, never DM, never post to #general.
@@ -1607,10 +1598,9 @@ Silent on success: no Slack, no DM, no email. End with <run-summary>ok N/8, auth
 
 ## Daily clockin check
 
-- ID: `trig_01XtvNrnsuiFkfP2NhUCpcBN`
-- Schedule: `CRON_TZ=America/New_York 15 10 * * 1-6`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01XtvNrnsuiFkfP2NhUCpcBN
+- schedule: CRON_TZ=America/New_York 15 10 * * 1-6
+- enabled: True
 
 ````
 Unattended scheduled run — act, don't ask. The user is not present.
@@ -1731,10 +1721,9 @@ End with <run-summary>day, stores covered, counts in/break/not-in, posted or not
 
 ## Daily cloudcover check
 
-- ID: `trig_017ef3AnQBKcnqSdKUztYWLA`
-- Schedule: `CRON_TZ=America/New_York 25 10 * * 1-6`
-- Enabled: no
-- Requires Mac: no
+- id: trig_017ef3AnQBKcnqSdKUztYWLA
+- schedule: CRON_TZ=America/New_York 25 10 * * 1-6
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -2033,10 +2022,9 @@ flag can never silence this task indefinitely.
 
 ## Daily dress code check
 
-- ID: `trig_01B9QqCVv6Dc9G8xnVfDhzaE`
-- Schedule: `CRON_TZ=America/New_York 30 10 * * 1-6`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01B9QqCVv6Dc9G8xnVfDhzaE
+- schedule: CRON_TZ=America/New_York 30 10 * * 1-6
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -2187,10 +2175,9 @@ flag can never silence this task indefinitely.
 
 ## Daily Jewelry Counts
 
-- ID: `trig_01VvvttPGf7VTqK6thQhf36m`
-- Schedule: `CRON_TZ=America/New_York 30 20 * * 1-6`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01VvvttPGf7VTqK6thQhf36m
+- schedule: CRON_TZ=America/New_York 30 20 * * 1-6
+- enabled: False
 
 ````
 > ## HOST ACCESS — READ FIRST (2026-09-17). The `mcp__Control_your_Mac__osascript` connector is GONE from scheduled sessions; this task died at Step 0 every day since 9/12 waiting for it. Do NOT wait for it, do NOT ledger "osascript missing". Every `do shell script` below is now done through the **host job queue**, which the Projects folder mount gives you:
@@ -2386,10 +2373,9 @@ to hold the whole post.
 
 ## Daily Store Audit digest (cash, intake, sales)
 
-- ID: `trig_013pZSiLfkYW3MjrJbWhBtha`
-- Schedule: `CRON_TZ=America/New_York 40 9 * * 1-6`
-- Enabled: no
-- Requires Mac: no
+- id: trig_013pZSiLfkYW3MjrJbWhBtha
+- schedule: CRON_TZ=America/New_York 40 9 * * 1-6
+- enabled: False
 
 ````
 You are running the Valley Pawn **Daily Store Audit digest** (Full Circle Finance Inc DBA Valley Pawn, 5 VA stores). Execute continuously; do not ask questions. Built 2026-09-30 from Joshua's reminder "Create daily audit pushed to Preston daily. Cash count, intake and sales."
@@ -2445,10 +2431,9 @@ Append one line to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/
 
 ## Daily supply order
 
-- ID: `trig_0144mJb4gXUFpvSpsy8Sc66y`
-- Schedule: `CRON_TZ=America/New_York 15 3 * * 2`
-- Enabled: no
-- Requires Mac: no
+- id: trig_0144mJb4gXUFpvSpsy8Sc66y
+- schedule: CRON_TZ=America/New_York 15 3 * * 2
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -2567,23 +2552,21 @@ MANUAL_ITEMS:
 <!-- migrated to working model 2026-06-15 -->
 ````
 
-## Dormer engineer quotes check #3
+## Dormer engineer quotes check #4
 
-- ID: `trig_012TYYsjTBhpTpsysoGM71cT`
-- Schedule: `once at 2026-11-11T19:00:00Z`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_019mN6uit1Bn1EQ9d17g8zwM
+- schedule: once at 2026-11-13T19:00:00Z
+- enabled: True
 
 ````
-Dormer engineer quotes check #3. Read in full: Hulsberg 1a1a1dc5cf82785d (with engineer since 11/6; Dery recommended them), Russell Rowland 1a1a0e55aad9e23b (Matt Pena — if no reply since 11/6, send ONE short nudge), Sabo 1a1c1af7a6a0d1a2 (chris@saboeng.com, resent 11/9) + old 1a1a0e569a1cce71, Lucas & Scott 1a1c1af867f538b9 (admin@lucas-scott.com, 11/9), Bill Freeman PE 56001 1a1c1af90b450ad7 (bill@coastal-engineer.com, 11/9). Also Gmail search for any reply from these domains on other threads. Keep emails short. Log fees/turnaround; answer questions; book site visits if asked. When 3 quotes are in: one-table comparison for Joshua + update claude/CYPRESS_DORMER_AND_ROOF_ARB_2026-10-31.md. If <3 quotes, schedule another check 2 business days out.
+Dormer engineer quotes check #4. Read in full: Russell Rowland 1a1a0e55aad9e23b (Matt Pena said 11/11 a fee proposal is coming via DocuSign within a couple days — also check DocuSign/Gmail for an envelope from russrow; do NOT sign, just log the fee/turnaround), Hulsberg 1a1a1dc5cf82785d (nudged 11/11), Sabo 1a1c1af7a6a0d1a2, Lucas & Scott 1a1c1af867f538b9, Bill Freeman 1a1c1af90b450ad7 (all sent 11/9; one short nudge each if still silent). Gmail search these domains for replies on other threads. Keep emails short. When 3 quotes are in: one-table comparison for Joshua + update claude/CYPRESS_DORMER_AND_ROOF_ARB_2026-10-31.md. If <3, schedule another check 2 business days out.
 ````
 
 ## Ebay weekly channel audit
 
-- ID: `trig_01SK1GpYNeXBW4K1VDhgtRM4`
-- Schedule: `CRON_TZ=America/New_York 45 11 * * 1`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01SK1GpYNeXBW4K1VDhgtRM4
+- schedule: CRON_TZ=America/New_York 45 11 * * 1
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -2683,10 +2666,9 @@ dashboard artifact can carry more detail than the Slack post since Joshua reads 
 
 ## Entity compliance check (monthly)
 
-- ID: `trig_01VX8BfF4x6er3yh2X4Lk5PC`
-- Schedule: `CRON_TZ=America/New_York 0 9 1 * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01VX8BfF4x6er3yh2X4Lk5PC
+- schedule: CRON_TZ=America/New_York 0 9 1 * *
+- enabled: False
 
 ````
 Monthly entity-compliance check for Joshua Davis's business and real-estate entities.
@@ -2717,10 +2699,9 @@ Never post to any team channel. Never contact anyone other than Joshua.
 
 ## Eom bravo gl export watchdog
 
-- ID: `trig_01JwaM7zURPB4Le4n2uWaFmb`
-- Schedule: `CRON_TZ=America/New_York 0 8 2 * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01JwaM7zURPB4Le4n2uWaFmb
+- schedule: CRON_TZ=America/New_York 0 8 2 * *
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -2770,10 +2751,9 @@ Never post failure notices to any team channel, store manager, or employee. Only
 
 ## Facebook inbox replies, brand + stores (Mon/Thu)
 
-- ID: `trig_01XFUKzQM3g9szKkCpgGo7nh`
-- Schedule: `CRON_TZ=America/New_York 17 10 * * 1,4`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01XFUKzQM3g9szKkCpgGo7nh
+- schedule: CRON_TZ=America/New_York 17 10 * * 1,4
+- enabled: True
 
 ````
 Unattended scheduled run for Valley Pawn (Full Circle Finance Inc). Joshua Davis set this up on 2026-10-21 and extended it the same day: answer customer Facebook messages that nobody has answered — on the BRAND page and the five STORE pages — cross-referenced with Chekkit so we never double-answer what a store already handled. Act, don't ask. Never post to Slack or DM anyone; never send failure notices anywhere.
@@ -2813,10 +2793,9 @@ End with <run-summary>per page: N replied, N skipped as already handled in Chekk
 
 ## Fleet guardian
 
-- ID: `trig_01VdqzHNkgwAGjQBXi9vLqFQ`
-- Schedule: `CRON_TZ=America/New_York 45 12,21 * * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01VdqzHNkgwAGjQBXi9vLqFQ
+- schedule: CRON_TZ=America/New_York 45 12,21 * * *
+- enabled: True
 
 ````
 You are the FLEET GUARDIAN for Valley Pawn / Full Circle Finance — the single fleet-wide recovery layer defined in `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/HARDENING_STANDARD.md` (read it first, along with `Valley Pawn OS/CHANGELOG.md` top entries, per the enterprise-map protocol). Your job is to OVERCOME missed scheduled runs, not report them. This is an automated run; Joshua is not present — execute autonomously.
@@ -2940,10 +2919,9 @@ Joshua does not want to be asked to sign in to things day by day. Sign-in walls 
 
 ## Follow up: July TPA + Guideline docs
 
-- ID: `trig_01HMFwYTwRssvcP7yqtFyR3H`
-- Schedule: `once at 2026-10-08T14:00:00Z`
-- Enabled: no
-- Requires Mac: yes
+- id: trig_01HMFwYTwRssvcP7yqtFyR3H
+- schedule: once at 2026-10-08T14:00:00Z
+- enabled: False
 
 ````
 Follow-up check: read replies from Brian Smith/Drew Norris (julyservices.com, thread 19f8b7cc26314555) and Guideline (thread 1a0d402567a7b127). If Guideline sent the clean adoption agreement/plan document/SPD, forward them to Brian (cc Drew) in the July thread after running the check-replies-before-email check. Summarize any illustration, fees, or 2026 profit-sharing answer for Joshua and update claude/Retirement Plan Design — Max Owner, Min Staff.md.
@@ -2951,10 +2929,9 @@ Follow-up check: read replies from Brian Smith/Drew Norris (julyservices.com, th
 
 ## Fortis email monitor (until done)
 
-- ID: `trig_01Pn1EMuCY4JpeLP45fHLxTP`
-- Schedule: `CRON_TZ=America/New_York 0 9,13,17 * * 1-5`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01Pn1EMuCY4JpeLP45fHLxTP
+- schedule: CRON_TZ=America/New_York 0 9,13,17 * * 1-5
+- enabled: True
 
 ````
 Load the enterprise-map skill first, then vp-operating-rules, my-writing-style and unified-search.
@@ -2984,10 +2961,9 @@ RULES: Never post to team channels. No technical jargon or failure notices in Sl
 
 ## Gdrive cache refresh
 
-- ID: `trig_01AXwYKos3ziujKZzdBpePDG`
-- Schedule: `CRON_TZ=America/New_York 0 3 * * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01AXwYKos3ziujKZzdBpePDG
+- schedule: CRON_TZ=America/New_York 0 3 * * *
+- enabled: True
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -3041,10 +3017,9 @@ This task exists so Google Drive search coverage (`vpfind --gdrive` / `vpfind --
 
 ## Guideline 2026 profit sharing task
 
-- ID: `trig_01L1eeJ7DnSixV4Qc8xML2f4`
-- Schedule: `once at 2027-01-11T14:00:00Z`
-- Enabled: yes
-- Requires Mac: yes
+- id: trig_01L1eeJ7DnSixV4Qc8xML2f4
+- schedule: once at 2027-01-11T14:00:00Z
+- enabled: True
 
 ````
 Retirement plan follow-up: confirm Joshua signed the Guideline 2027 amendment and the Company Information task (check Gmail for the all-employee 'new plan documents' email and Guideline task reminders). Then draft a short email to clients@guideline.com (reply in thread 1a0d402567a7b127) asking them to open the 2026 Profit Sharing task for account 22J06031, standard one-owner new comparability scenario, Joshua max, Hillary/kids $0. Run check-replies-before-email first and get Joshua's OK before sending. Also verify Joshua's 2026 W-2 landed at $200,000 in Gusto.
@@ -3052,10 +3027,9 @@ Retirement plan follow-up: confirm Joshua signed the Guideline 2027 amendment an
 
 ## Gusto HR filing (signed DocuSign docs into Gusto)
 
-- ID: `trig_01GMfmKcXkox5CccNSrAYm1g`
-- Schedule: `CRON_TZ=America/New_York 17 10 * * 1,4`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01GMfmKcXkox5CccNSrAYm1g
+- schedule: CRON_TZ=America/New_York 17 10 * * 1,4
+- enabled: True
 
 ````
 Valley Pawn (Full Circle Finance Inc) — Gusto HR filing. Unattended scheduled run: act, don't ask.
@@ -3075,10 +3049,9 @@ End with <run-summary>filed N, waiting N</run-summary>.
 
 ## Gusto session keeper
 
-- ID: `trig_01AyoSGD1m7jNp5a7kNZQems`
-- Schedule: `0 */2 * * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01AyoSGD1m7jNp5a7kNZQems
+- schedule: 0 */2 * * *
+- enabled: False
 
 ````
 GUSTO SESSION KEEPER — every 2 hours. Automated, silent run; Joshua approved this on 2026-10-07 so Gusto stays signed in for the daily signature check. Never message anyone. Never type passwords.
@@ -3098,10 +3071,9 @@ await new Promise(r=>setTimeout(r,6000)); if(!window.__vpKeep){window.__vpKeepSt
 
 ## Gusto signature check (daily)
 
-- ID: `trig_011ctgLsqBgbMtS9fKsC3f3p`
-- Schedule: `CRON_TZ=America/New_York 52 9 * * 1-6`
-- Enabled: no
-- Requires Mac: no
+- id: trig_011ctgLsqBgbMtS9fKsC3f3p
+- schedule: CRON_TZ=America/New_York 52 9 * * 1-6
+- enabled: False
 
 ````
 GUSTO SIGNATURE CHECK — daily, Mon–Sat. Owner: Joshua Davis, CEO, Full Circle Finance Inc DBA Valley Pawn. Automated run; Joshua is not present. Execute end to end without asking. Joshua set this up on 2026-10-07 and approved: daily check of Gusto e-sign documents, report to Slack #hr-documentation, and a Slack DM reminder from his account to any employee with documents unsigned 3+ days (max once every 3 days per person).
@@ -3153,10 +3125,9 @@ Close your tab (tabs_close on your tab only — never close the keeper tab). If 
 
 ## Health — weekly digest
 
-- ID: `trig_01EDyLrJ31mUQuyouHrrAUnW`
-- Schedule: `CRON_TZ=America/New_York 0 9 * * 0`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01EDyLrJ31mUQuyouHrrAUnW
+- schedule: CRON_TZ=America/New_York 0 9 * * 0
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -3192,10 +3163,9 @@ STEP 6 — append a one-line dated entry to CHANGELOG.md noting the digest ran a
 
 ## Hiring inbox watch
 
-- ID: `trig_01KAJ8yYRM2see7NB3UJQhRy`
-- Schedule: `CRON_TZ=America/New_York 20 10,12,14,16,18 * * 1-6`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01KAJ8yYRM2see7NB3UJQhRy
+- schedule: CRON_TZ=America/New_York 20 10,12,14,16,18 * * 1-6
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -3266,10 +3236,9 @@ HARD RULES:
 
 ## Insurance coverage audit (quarterly, 1st at 10:40 AM)
 
-- ID: `trig_01Rt1B6rvZRGvvpNLsLr6XV9`
-- Schedule: `CRON_TZ=America/New_York 40 10 1 1,4,7,10 *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01Rt1B6rvZRGvvpNLsLr6XV9
+- schedule: CRON_TZ=America/New_York 40 10 1 1,4,7,10 *
+- enabled: True
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -3303,10 +3272,9 @@ Never change a policy, never contact a carrier, never send email.
 
 ## Insurance inbox watch (daily 6:44 AM)
 
-- ID: `trig_01KBTnaVAoJbJJpYytdKH2wU`
-- Schedule: `CRON_TZ=America/New_York 44 6 * * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01KBTnaVAoJbJJpYytdKH2wU
+- schedule: CRON_TZ=America/New_York 44 6 * * *
+- enabled: True
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -3337,10 +3305,9 @@ Never send email. Never bind, cancel, or change a policy. Never post a dollar fi
 
 ## Insurance renewal runner (Mondays 7:26 AM)
 
-- ID: `trig_011v6szW3SbBXX1NuR5jCSn5`
-- Schedule: `CRON_TZ=America/New_York 26 7 * * 1`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_011v6szW3SbBXX1NuR5jCSn5
+- schedule: CRON_TZ=America/New_York 26 7 * * 1
+- enabled: True
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -3370,10 +3337,9 @@ Hard limits: never send an email (drafts only), never bind or decline coverage, 
 
 ## Jewelry onhand catchup
 
-- ID: `trig_013aQGcjJYLdEHMMuarXD8HC`
-- Schedule: `CRON_TZ=America/New_York 45 7 * * 0,2,3,4,5,6`
-- Enabled: no
-- Requires Mac: no
+- id: trig_013aQGcjJYLdEHMMuarXD8HC
+- schedule: CRON_TZ=America/New_York 45 7 * * 0,2,3,4,5,6
+- enabled: False
 
 ````
 > ## HOST ACCESS — READ FIRST (2026-09-17). The `mcp__Control_your_Mac__osascript` connector is GONE from scheduled sessions; this task died at Step 0 every day since 9/12 waiting for it. Do NOT wait for it, do NOT ledger "osascript missing". Every `do shell script` below is now done through the **host job queue**, which the Projects folder mount gives you:
@@ -3456,10 +3422,9 @@ to hold the whole post.
 
 ## MapQuest Dixie Pawn removal (weekly until gone)
 
-- ID: `trig_01XpX4P7tFeBN6ZdfkEzRHHm`
-- Schedule: `CRON_TZ=America/New_York 4 10 * * 3`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01XpX4P7tFeBN6ZdfkEzRHHm
+- schedule: CRON_TZ=America/New_York 4 10 * * 3
+- enabled: True
 
 ````
 Valley Pawn (Full Circle Finance Inc) — weekly MapQuest cleanup. Unattended run: act, don't ask. Joshua Davis set this up 2026-10-22: "keep submitting that report weekly until its gone" and contact MapQuest support saying we've reported it and nothing has been done. No Slack, no DMs, no failure notices to anyone. Never buy anything (the $150/yr MapQuest claim was declined by Joshua). Never type a password or card number.
@@ -3487,10 +3452,9 @@ End with <run-summary>listing live/removed; report submitted yes/no; support req
 
 ## Marketing ceo briefing weekly
 
-- ID: `trig_019VgDDaBme57uZmh3jrKz6z`
-- Schedule: `CRON_TZ=America/New_York 30 11 * * 1`
-- Enabled: no
-- Requires Mac: no
+- id: trig_019VgDDaBme57uZmh3jrKz6z
+- schedule: CRON_TZ=America/New_York 30 11 * * 1
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -3570,10 +3534,9 @@ Append a dated entry to `Valley Pawn OS/CHANGELOG.md` and a row to `Life OS/OPEN
 
 ## MobilePawn app post — schedule next month
 
-- ID: `trig_0175s4aamgZUBvpajaR947AE`
-- Schedule: `CRON_TZ=America/New_York 10 9 20 * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_0175s4aamgZUBvpajaR947AE
+- schedule: CRON_TZ=America/New_York 10 9 20 * *
+- enabled: False
 
 ````
 Valley Pawn (Full Circle Finance Inc) — monthly MobilePawn app-download social post. Approved by Joshua 2026-09-29 ("go"). Established automation: do not question it, just run it (Rule 17).
@@ -3588,10 +3551,9 @@ Valley Pawn (Full Circle Finance Inc) — monthly MobilePawn app-download social
 
 ## Monday bravo combined compile
 
-- ID: `trig_018He1SGinYgMjvop7i5wc4j`
-- Schedule: `CRON_TZ=America/New_York 0 8 * * 1`
-- Enabled: no
-- Requires Mac: no
+- id: trig_018He1SGinYgMjvop7i5wc4j
+- schedule: CRON_TZ=America/New_York 0 8 * * 1
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -3999,10 +3961,9 @@ connector that does not exist.
 
 ## Monday bravo combined run
 
-- ID: `trig_01LaNukN5az4k7ZdQ3xWcE2f`
-- Schedule: `CRON_TZ=America/New_York 0 18 * * 0`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01LaNukN5az4k7ZdQ3xWcE2f
+- schedule: CRON_TZ=America/New_York 0 18 * * 0
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -4356,10 +4317,9 @@ connector that does not exist.
 
 ## Monday bravo postcheck
 
-- ID: `trig_01JmQFpapytm2YBzm4L4odXv`
-- Schedule: `CRON_TZ=America/New_York 30 8 * * 1`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01JmQFpapytm2YBzm4L4odXv
+- schedule: CRON_TZ=America/New_York 30 8 * * 1
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -4468,10 +4428,9 @@ connector that does not exist.
 
 ## Month in Review — analytics + marketing channels
 
-- ID: `trig_0135CnkAXzKmou87gBG3aKZC`
-- Schedule: `CRON_TZ=America/New_York 30 10 1 * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_0135CnkAXzKmou87gBG3aKZC
+- schedule: CRON_TZ=America/New_York 30 10 1 * *
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -4509,10 +4468,9 @@ flag can never silence this task indefinitely.
 
 ## Monthly amazon store allocation
 
-- ID: `trig_017XpqoXo9the626jSPcDso5`
-- Schedule: `CRON_TZ=America/New_York 0 9 6 * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_017XpqoXo9the626jSPcDso5
+- schedule: CRON_TZ=America/New_York 0 9 6 * *
+- enabled: True
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -4624,10 +4582,9 @@ Keep it to these lines. Do not post elsewhere.
 
 ## Monthly analytics report
 
-- ID: `trig_01ELsfGJH6ECmhomucX99hKf`
-- Schedule: `CRON_TZ=America/New_York 45 1 1 * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01ELsfGJH6ECmhomucX99hKf
+- schedule: CRON_TZ=America/New_York 45 1 1 * *
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -4861,10 +4818,9 @@ this changes only HOW a send happens, never WHETHER or WHAT.
 
 ## Monthly analytics watchdog
 
-- ID: `trig_01316sgr61gDXPihZyMnWGyk`
-- Schedule: `CRON_TZ=America/New_York 0 7 1 * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01316sgr61gDXPihZyMnWGyk
+- schedule: CRON_TZ=America/New_York 0 7 1 * *
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -4967,10 +4923,9 @@ this changes only HOW a send happens, never WHETHER or WHAT.
 
 ## Monthly Bravo logins vs Gusto roster check (3rd, 10:00)
 
-- ID: `trig_01HnBYSP9KX7UUGezN5jEK96`
-- Schedule: `CRON_TZ=America/New_York 0 10 3 * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01HnBYSP9KX7UUGezN5jEK96
+- schedule: CRON_TZ=America/New_York 0 10 3 * *
+- enabled: False
 
 ````
 Monthly Bravo logins check for Valley Pawn (Full Circle Finance Inc). Joshua, 2026-09-30: "make sure bravo is clean of all old employees and that should be a part of our offboarding process." This is a registered, approved task — run it (Rule 17). Type B: NEVER open, drive or trigger Bravo; read files only.
@@ -4991,10 +4946,9 @@ Rules: no technical words in anything Joshua sees (Rule 16); never report a nega
 
 ## Monthly capability drift audit
 
-- ID: `trig_015xY2fdiVSuuMkgNgRdRDSN`
-- Schedule: `CRON_TZ=America/New_York 40 7 1 * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_015xY2fdiVSuuMkgNgRdRDSN
+- schedule: CRON_TZ=America/New_York 40 7 1 * *
+- enabled: True
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -5058,10 +5012,9 @@ Report what you did in your final message.
 
 ## Monthly ebay ratings sweep
 
-- ID: `trig_01EpZ3kMuUcQn9ffYKAeUPcy`
-- Schedule: `CRON_TZ=America/New_York 0 10 1 * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01EpZ3kMuUcQn9ffYKAeUPcy
+- schedule: CRON_TZ=America/New_York 0 10 1 * *
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -5174,10 +5127,9 @@ Seller Standards line, a "Vs. <prior month> sweep:" line, and a short "Bottom li
 
 ## Monthly employee sales rankings (FINAL)
 
-- ID: `trig_013eUiM3p32rqLmJsjN3Xsgo`
-- Schedule: `CRON_TZ=America/New_York 0 2 1 * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_013eUiM3p32rqLmJsjN3Xsgo
+- schedule: CRON_TZ=America/New_York 0 2 1 * *
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -5309,10 +5261,9 @@ flag can never silence this task indefinitely.
 
 ## Monthly gun audit report
 
-- ID: `trig_0185QmePGw5CdydjPMpjjqSr`
-- Schedule: `CRON_TZ=America/New_York 30 2 16 * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_0185QmePGw5CdydjPMpjjqSr
+- schedule: CRON_TZ=America/New_York 30 2 16 * *
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -5468,10 +5419,9 @@ flag can never silence this task indefinitely.
 
 ## Monthly Loan & Layaway Outcomes
 
-- ID: `trig_019Vz39EpCXyGdydss6cwDiX`
-- Schedule: `CRON_TZ=America/New_York 30 10 2 * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_019Vz39EpCXyGdydss6cwDiX
+- schedule: CRON_TZ=America/New_York 30 10 2 * *
+- enabled: False
 
 ````
 You are running the Valley Pawn **Monthly Loan & Layaway Outcomes** report (Full Circle Finance Inc DBA Valley Pawn, 5 VA stores). Execute continuously; do not ask questions. Built 2026-09-30 from Joshua's reminders plan (FPD follow-through + cancelled layaways).
@@ -5513,10 +5463,9 @@ The script appends its own line to `Valley Pawn OS/loan-layaway-outcomes/RUN_LOG
 
 ## Monthly MobilePawn participation by store
 
-- ID: `trig_01EpKGukgYQGjQtr9RbWi2Tm`
-- Schedule: `CRON_TZ=America/New_York 15 9 1-3 * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01EpKGukgYQGjQtr9RbWi2Tm
+- schedule: CRON_TZ=America/New_York 15 9 1-3 * *
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES everything below.** On any failure, stall, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | monthly-mobilepawn-participation | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` handles recovery and Joshua's one daily DM.
@@ -5597,10 +5546,9 @@ this changes only HOW a send happens, never WHETHER or WHAT.
 
 ## Monthly new customer report
 
-- ID: `trig_018rDcAJT31gjVbfvtxD1Hm1`
-- Schedule: `CRON_TZ=America/New_York 0 7 3 * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_018rDcAJT31gjVbfvtxD1Hm1
+- schedule: CRON_TZ=America/New_York 0 7 3 * *
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -5724,10 +5672,9 @@ flag can never silence this task indefinitely.
 
 ## Monthly scrap rankings
 
-- ID: `trig_019RbHiMJ3njWu5x2qXN4uQr`
-- Schedule: `CRON_TZ=America/New_York 30 4 1 * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_019RbHiMJ3njWu5x2qXN4uQr
+- schedule: CRON_TZ=America/New_York 30 4 1 * *
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -5895,10 +5842,9 @@ flag can never silence this task indefinitely.
 
 ## Monthly Yield by Asset Class
 
-- ID: `trig_01VtjH6cH7aRzD9z7yqZAHz7`
-- Schedule: `CRON_TZ=America/New_York 0 14 6 * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01VtjH6cH7aRzD9z7yqZAHz7
+- schedule: CRON_TZ=America/New_York 0 14 6 * *
+- enabled: True
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -5983,10 +5929,9 @@ Bravo's EOM export is named by END DATE only, and the monthly analytics job pull
 
 ## Morning brief
 
-- ID: `trig_01J21WFoeW4GUr3joWt5kbjB`
-- Schedule: `CRON_TZ=America/New_York 0 8 * * 1-5`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01J21WFoeW4GUr3joWt5kbjB
+- schedule: CRON_TZ=America/New_York 0 8 * * 1-5
+- enabled: True
 
 ````
 > FAILURE POLICY v3 — OVERRIDES every failure/DM instruction below. On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone about the failure. Append ONE row to /Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md — | <YYYY-MM-DD HH:MM ET> | morning-brief | <one plain sentence> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN | — then stop. Never post to Slack, never post to #general.
@@ -6015,10 +5960,9 @@ Create or modify no scheduled tasks; change nothing else. End with <run-summary>
 
 ## New-hire training Monday brief
 
-- ID: `trig_011ZkC74ykeSgaE4eeY86mrq`
-- Schedule: `CRON_TZ=America/New_York 32 9 * * 1`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_011ZkC74ykeSgaE4eeY86mrq
+- schedule: CRON_TZ=America/New_York 32 9 * * 1
+- enabled: True
 
 ````
 CURRENT STAFF ONLY, NO DAVIS (fleet-wide): name only people active in Gusto today; never name anyone with the last name Davis; if you can't tell whether someone is current, leave them out; never mention who was left out.
@@ -6046,10 +5990,9 @@ RULES: Do not edit the tracker sheets; if a tracker value contradicts Gusto or B
 
 ## Northwest registered agent daily check
 
-- ID: `trig_01KpsKHMBUSfTZ4hzZSyNJB9`
-- Schedule: `CRON_TZ=America/New_York 40 8 * * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01KpsKHMBUSfTZ4hzZSyNJB9
+- schedule: CRON_TZ=America/New_York 40 8 * * *
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -6155,10 +6098,9 @@ If the run has nothing to report, write nothing. The all-or-nothing and silence 
 
 ## Nov 4 meeting – Hotel Madison contract watch
 
-- ID: `trig_0136egPwYTN937NwRiXBP18T`
-- Schedule: `23 * * * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_0136egPwYTN937NwRiXBP18T
+- schedule: 23 * * * *
+- enabled: False
 
 ````
 You are watching for the Hotel Madison contract for Joshua Davis (CEO, Full Circle Finance Inc. dba Valley Pawn). Use the Gmail connector on jdavis@fcfpawn.com. Do not use Slack. Never message anyone except Camryn Tilley (ctilley@montysva.com) and Joshua himself.
@@ -6177,10 +6119,9 @@ EACH RUN
 
 ## NRF RISE Up approval watch
 
-- ID: `trig_0153NrUPEY4Ks41yNjzgEFjT`
-- Schedule: `CRON_TZ=America/New_York 0 8-19 * * 1-6`
-- Enabled: no
-- Requires Mac: no
+- id: trig_0153NrUPEY4Ks41yNjzgEFjT
+- schedule: CRON_TZ=America/New_York 0 8-19 * * 1-6
+- enabled: False
 
 ````
 Context: On 2026-10-01 Joshua Davis (CEO, Full Circle Finance Inc DBA Valley Pawn) submitted an organization application to NRF Foundation RISE Up (platform run by Kaleido/Kaleidoscope Learning, riseup.kaleidolearning.com) so three new hires can take the Customer Service & Sales course: Joshua Burnett (Culpeper), Jacob Cox (Roanoke), Camden Ahern (Harrisonburg). NRF reviews the application and emails a welcome / set-password email to jdavis@fcfpawn.com.
@@ -6195,12 +6136,21 @@ Your job each run:
 6. If today is after 2026-10-15 and still nothing has arrived, send ONE DM (once only, check history first) starting "NRF RISE Up still no reply after 2 weeks" suggesting a call to RISE Up support at (212) 679-2738 or riseupsupport@kaleidolearning.com.
 ````
 
+## Phone menu week-1 results
+
+- id: trig_01M8tLf73vv92aSxNkEDUKxF
+- schedule: once at 2026-11-16T15:47:00Z
+- enabled: True
+
+````
+Phone menu week-1 check (Joshua asked to keep monitoring). Run zoom_call_path.py --keys 2026-11-09 and agent_log_tail.py ivr_app_link_text/run 200 via the host queue. Report counts for last week (11/10-11/15, excluding Preston's 4200 tests): menu calls, presses of 1/2/3/0/no key, and app-link texts sent with their delay. Then read Call Analysis/week_2026-11-09 graded calls (intent field) and compare the hours/location and loan payment/extension/payoff shares of answered calls with the baseline (2.5% and 29.6%, COMM_STATS.md §D). Give Joshua a short answer, and recommend a greeting change if loan callers are still pressing 3 instead of 2.
+````
+
 ## Policy Day runner (monthly policy update)
 
-- ID: `trig_01Fgi1Qv4rrosDWJNPGo7TWx`
-- Schedule: `CRON_TZ=America/New_York 41 8 * * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01Fgi1Qv4rrosDWJNPGo7TWx
+- schedule: CRON_TZ=America/New_York 41 8 * * *
+- enabled: True
 
 ````
 Valley Pawn (Full Circle Finance Inc) — Policy Day runner. Unattended scheduled run: act, don't ask.
@@ -6226,10 +6176,9 @@ End with <run-summary>phase and what was done</run-summary>.
 
 ## Precious metals settlement handler
 
-- ID: `trig_01PkENxRfwEctPtxmiw7EnFP`
-- Schedule: `CRON_TZ=America/New_York 0 9 * * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01PkENxRfwEctPtxmiw7EnFP
+- schedule: CRON_TZ=America/New_York 0 9 * * *
+- enabled: True
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -6322,10 +6271,9 @@ flag can never silence this task indefinitely.
 
 ## Preston assistant
 
-- ID: `trig_01CjJusgBC2hkcCg5GHziHtC`
-- Schedule: `CRON_TZ=America/New_York 0 7-21 * * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01CjJusgBC2hkcCg5GHziHtC
+- schedule: CRON_TZ=America/New_York 0 7-21 * * *
+- enabled: True
 
 ````
 You are the always-on assistant for Preston Peters (Operations Manager / Market Manager, Valley Pawn / Full Circle Finance Inc). Unattended scheduled run: act, don't ask.
@@ -6368,10 +6316,9 @@ End with <run-summary>what was asked and what was delivered</run-summary>.
 
 ## Preston request sentinel :16
 
-- ID: `trig_01MKwW1A59b8mCFhAeD23n2C`
-- Schedule: `CRON_TZ=America/New_York 16 7-21 * * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01MKwW1A59b8mCFhAeD23n2C
+- schedule: CRON_TZ=America/New_York 16 7-21 * * *
+- enabled: True
 
 ````
 Unattended quick check for Valley Pawn. Do not load skills. Do not post to Slack or message anyone. Finish in under a minute.
@@ -6384,10 +6331,9 @@ Unattended quick check for Valley Pawn. Do not load skills. Do not post to Slack
 
 ## Preston request sentinel :31
 
-- ID: `trig_015BAf37bK2gruZ63Lv8nQGy`
-- Schedule: `CRON_TZ=America/New_York 31 7-21 * * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_015BAf37bK2gruZ63Lv8nQGy
+- schedule: CRON_TZ=America/New_York 31 7-21 * * *
+- enabled: True
 
 ````
 Unattended quick check for Valley Pawn. Do not load skills. Do not post to Slack or message anyone. Finish in under a minute.
@@ -6400,10 +6346,9 @@ Unattended quick check for Valley Pawn. Do not load skills. Do not post to Slack
 
 ## Preston request sentinel :46
 
-- ID: `trig_01NtAqubVrWVnxUcw1qKUzj2`
-- Schedule: `CRON_TZ=America/New_York 46 7-21 * * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01NtAqubVrWVnxUcw1qKUzj2
+- schedule: CRON_TZ=America/New_York 46 7-21 * * *
+- enabled: True
 
 ````
 Unattended quick check for Valley Pawn. Do not load skills. Do not post to Slack or message anyone. Finish in under a minute.
@@ -6416,10 +6361,9 @@ Unattended quick check for Valley Pawn. Do not load skills. Do not post to Slack
 
 ## PriceLabs go-live review (Bald Rock)
 
-- ID: `trig_01SFjJC4xXCdk3fA8medneuY`
-- Schedule: `once at 2026-11-21T15:00:00Z`
-- Enabled: yes
-- Requires Mac: yes
+- id: trig_01SFjJC4xXCdk3fA8medneuY
+- schedule: once at 2026-11-21T15:00:00Z
+- enabled: True
 
 ````
 PriceLabs 2-week shadow review for Bald Rock. PriceLabs is connected to Guesty with Sync OFF (min 522 / base 850 / max 2000 Guesty base). Compare PriceLabs recommended prices vs our Guesty card (claude/BALD_ROCK_PRICING_GUARD_LOG.md) for Nov 21 – Apr 30, and what booked since 11/7 at what price. Work at human pace. Then give Joshua a go/no-go: if go — set PriceLabs date overrides for holidays (Christmas, NYE, July 4, foliage), clear the Guesty manual price overrides (isBasePrice) so PriceLabs can write, disable the "Bald Rock off-season pricing guard" scheduled task, and turn on Sync. Trial ends ~Dec 8 — decide before then.
@@ -6427,10 +6371,9 @@ PriceLabs 2-week shadow review for Bald Rock. PriceLabs is connected to Guesty w
 
 ## Quarterly capex sweep
 
-- ID: `trig_015dhZ98mMtCWkfGJ4g1mUGm`
-- Schedule: `CRON_TZ=America/New_York 0 9 1 1,4,7,10 *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_015dhZ98mMtCWkfGJ4g1mUGm
+- schedule: CRON_TZ=America/New_York 0 9 1 1,4,7,10 *
+- enabled: True
 
 ````
 Quarterly capital-improvements (capex / cost-basis) sweep for Joshua Davis's real estate portfolio. Unattended scheduled run — act, don't ask, no check-ins, no Slack, no DMs, never post to #general. (Rebuilt 2026-10-23: this cloud task IS the live copy — the old local copy is off. It used to depend on a Mac connector that no longer exists; it now reads through the Google Drive connector and writes back through the Mac's host queue.)
@@ -6465,10 +6408,9 @@ End with <run-summary>quarter, new items per property, total $, needs-confirmati
 
 ## Sales tax monthly update
 
-- ID: `trig_01ToCwimcusFyjgedcuzvdR2`
-- Schedule: `CRON_TZ=America/New_York 0 8 1 * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01ToCwimcusFyjgedcuzvdR2
+- schedule: CRON_TZ=America/New_York 0 8 1 * *
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -6555,10 +6497,9 @@ Reference: this workbook was rebuilt on 2026-07-08 to a Taxable Sales / Ebay / T
 
 ## Scheduled task model audit weekly
 
-- ID: `trig_01FUHLjsYan5MHnE2ti3Daiw`
-- Schedule: `CRON_TZ=America/New_York 0 5 * * 1`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01FUHLjsYan5MHnE2ti3Daiw
+- schedule: CRON_TZ=America/New_York 0 5 * * 1
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day.
@@ -6594,10 +6535,9 @@ When unsure between adjacent tiers, choose Sonnet. Do not churn established tier
 
 ## Scrap bucket name check (5th, 15th, 25th)
 
-- ID: `trig_01Es3fBCcpjYmKBqg9i5okfR`
-- Schedule: `CRON_TZ=America/New_York 15 10 5,15,25 * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01Es3fBCcpjYmKBqg9i5okfR
+- schedule: CRON_TZ=America/New_York 15 10 5,15,25 * *
+- enabled: True
 
 ````
 Domain 1 (Full Circle Finance Inc DBA Valley Pawn). Load `enterprise-map` conventions first. Paths are relative to `/Users/joshuadavis/Documents/Claude/Projects/`.
@@ -6635,10 +6575,9 @@ This is an automated run of a scheduled task. The user is not present. Execute a
 
 ## Shop Us Online — monthly Chekkit text (3rd Thursday)
 
-- ID: `trig_015t4qHa8wAVVLJbM7LyFe6A`
-- Schedule: `CRON_TZ=America/New_York 0 11 * * 4`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_015t4qHa8wAVVLJbM7LyFe6A
+- schedule: CRON_TZ=America/New_York 0 11 * * 4
+- enabled: True
 
 ````
 > 🔁 **SEND RULE (2026-11-09, Slack Restructure — overrides every Slack posting instruction below).** Every Slack CHANNEL post this task makes goes out under the ops bot (Goldilocks), never under Joshua's own account. Procedure:
@@ -6701,10 +6640,9 @@ Rules: never mention firearms or cell phones; never use the name "Dixie Pawn"; p
 
 ## Social campaign scorecard
 
-- ID: `trig_01MSfQtbd8d2vVUzCJcXKKvT`
-- Schedule: `CRON_TZ=America/New_York 35 8 * * 1`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01MSfQtbd8d2vVUzCJcXKKvT
+- schedule: CRON_TZ=America/New_York 35 8 * * 1
+- enabled: True
 
 ````
 Weekly measure-and-tune run for the Valley Pawn community-post campaign that went live Mon 2026-10-26 (Joshua: "execute and measure the new campaigns"). Run autonomously, no check-ins.
@@ -6724,10 +6662,9 @@ EACH RUN:
 
 ## Social fact-check before posting (daily)
 
-- ID: `trig_01TLAVVVixuAm6qWDReWpzTm`
-- Schedule: `CRON_TZ=America/New_York 38 7 * * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01TLAVVVixuAm6qWDReWpzTm
+- schedule: CRON_TZ=America/New_York 38 7 * * *
+- enabled: True
 
 ````
 Unattended daily run for Valley Pawn social media (Joshua Davis set this up 2026-10-21: "make the posts time sensitive and accurate ... authenticity sells, we truly want to inform the community"). Act, don't ask. No Slack, no DMs, no failure notices anywhere.
@@ -6755,10 +6692,9 @@ End with <run-summary>N posts checked, N claims verified, N edited (one line eac
 
 ## Social outbound engagement (daily)
 
-- ID: `trig_01BRxD5DFnxQC2kv3knSqxRp`
-- Schedule: `CRON_TZ=America/New_York 41 12 * * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01BRxD5DFnxQC2kv3knSqxRp
+- schedule: CRON_TZ=America/New_York 41 12 * * *
+- enabled: True
 
 ````
 Valley Pawn (Full Circle Finance Inc) — daily outbound community engagement on Facebook.
@@ -6774,10 +6710,9 @@ FINISH: write WATCHLIST.json back as valid JSON, append every confirmed action t
 
 ## Staff roster refresh (Gusto → Slack)
 
-- ID: `trig_01Twt4LVZFosX9yDZA25Nyyp`
-- Schedule: `CRON_TZ=America/New_York 15 6 * * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01Twt4LVZFosX9yDZA25Nyyp
+- schedule: CRON_TZ=America/New_York 15 6 * * *
+- enabled: True
 
 ````
 Rebuild Valley Pawn's shared staff roster file. This file is read by other automations (the Chekkit unanswered-message alert uses it to decide which employees get store messages; the missed-call texting agent uses the phones so it never texts staff). Accuracy matters more than speed. SEND NO MESSAGES of any kind — this task only writes files.
@@ -6804,10 +6739,9 @@ STEPS
 
 ## Stage monthly Bravo scrap closeout (1st of month)
 
-- ID: `trig_01CoWCPHiohV7z3UQ4d7ae7b`
-- Schedule: `CRON_TZ=America/New_York 45 9 1-5 * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01CoWCPHiohV7z3UQ4d7ae7b
+- schedule: CRON_TZ=America/New_York 45 9 1-5 * *
+- enabled: True
 
 ````
 You are running the monthly Bravo scrap-gold-bucket closeout STAGING task for Valley Pawn (Full Circle Finance Inc). Task 1 of a two-task pair — you ONLY build the split and request approval; you NEVER post/close a bucket in Bravo. Task 2 (`scrap-monthly-bravo-approval-watch`) posts after Joshua replies "post".
@@ -6841,10 +6775,9 @@ This is an automated run of a scheduled task. The user is not present. Execute a
 
 ## Store PC rollout — drive to done
 
-- ID: `trig_01EXUPXfjHSMxP9dqxRn1Xrm`
-- Schedule: `CRON_TZ=America/New_York 7 10-18 * * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01EXUPXfjHSMxP9dqxRn1Xrm
+- schedule: CRON_TZ=America/New_York 7 10-18 * * *
+- enabled: True
 
 ````
 Valley Pawn store PC rollout (Intune + Windows 11 Pro). Joshua said "just get it done": you are authorized to post rollout help in the 5 store funds channels — answer store questions, resend steps, nudge stores that haven't finished. Plain, friendly, short; no technical jargon beyond the steps; never post the password; never post to #general; never message anyone outside these channels.
@@ -6868,12 +6801,38 @@ Each run:
 End with <run-summary>one line</run-summary>.
 ````
 
+## STR rental-numbers reply tracker
+
+- id: trig_01U4VTjnsJHbMZyyJuXpHoqF
+- schedule: CRON_TZ=America/New_York 23 13,19 * * *
+- enabled: True
+
+````
+You are tracking replies from listing agents to Joshua Davis's requests for short-term-rental numbers. Load the enterprise-map and unified-search skills first. Work in the claude.ai project "Real Estate Business".
+
+TARGETS (all asked on 11/11/2026 for 2025 + 2026 YTD rental income with nights booked, future bookings that transfer, and annual operating costs):
+- 283 Coral Way, Jacksonville Beach FL — James Valenti, RE/MAX Unlimited, text 904-806-2132 (also asked parking count)
+- 10 Sanchez Ave, St. Augustine FL — Madison Beale, MaxRev, text 904-295-5150
+- 5484 5th St, St. Augustine (Butler Beach) FL — K. Jennifer Poujade, Compass, text 904-874-4480, email jennifer.poujade@compass.com (also asked flood insurance cost)
+- 304 Flower Dr, McGaheysville VA — Trevor Crider, Real Broker, text 540-820-5607 (co-list Steven Courtney 540-746-1323); also asked renovation completion and POA STR rules
+- 393 Crooked Run Rd, Shenandoah VA — Kelly Breeden, Nest Realty, text 540-271-4211, email kelly.breeden@nestrealty.com (she also has an open thread on 3347 River Rd, Elkton)
+- 160 Wilson Way, McGaheysville VA — Nick Whitelock, Massanutten Realty, text 540-383-9601
+- Also capture any replies from the earlier 11/11 Shenandoah outreach listed in project doc claude/SHENANDOAH_STR_AGENT_OUTREACH_2026-11-11.md.
+
+EACH RUN:
+1. Read project docs claude/STR_RENTAL_NUMBERS_OUTREACH_2026-11-11.md and claude/STR_RENTAL_NUMBERS_RESPONSES.md (create the latter if missing) to see what is already captured.
+2. Check for new replies since the last run: Gmail (jdavis@fcfpawn.com) by sender/agent name/address/street; the Apple_Mail connector (iCloud); and texts — query the Unified Search index read-only at /Users/joshuadavis/Documents/Claude/Projects/Unified Search/index.db (msgs table, by handle/phone digits and agent names, since 2026-11-11; note the texts index rebuilds nightly) or vpfind --texts if a host shell exists. Open attachments (P&Ls, Airbnb/VRBO exports) via Gmail download and extract the numbers.
+3. For every new reply, record in claude/STR_RENTAL_NUMBERS_RESPONSES.md: date, agent, channel, exactly what figures were provided (gross revenue by year, nights, ADR, future bookings, costs, parking/flood/POA answers), what is still missing, and a link to the listing. Never invent or estimate figures; quote what the agent sent.
+4. When real revenue arrives for a property, re-run its STR cash flow at 20% down, 7.5%, 30-yr (costs per project doc claude/STR_UNDERWRITING_STANDARD_v3_2026-10-14.md: 9% variable, cleaning per turn, utilities, insurance, taxes at local millage x 90% of price) and record cash flow and break-even price. Also confirm the listing is still active on Redfin and note price changes.
+5. Follow-up rule: if an agent has not replied 48 hours after the 11/11 ask (i.e. on or after 11/13), send ONE short follow-up text from Joshua's number via the iMessage Sender tool (find_contact/send_text), e.g. "Hi [name], following up on the rental numbers for [address] — we're trying to buy before year-end. Thanks, Joshua 804-930-4221". Only one follow-up per agent ever; log it in the responses doc. Do not email anyone except a reply in an existing thread the agent started or already has with Joshua. Never mention financing or a cash price.
+6. If anything new came in, end with a short plain summary (property, figures received, new cash flow). If nothing new, finish quietly with "No new replies." No technical detail, no Slack posts.
+````
+
 ## Sunday checklist summary
 
-- ID: `trig_013JpfJYL7MQjASMrWyVmB8F`
-- Schedule: `CRON_TZ=America/New_York 0 20 * * 0`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_013JpfJYL7MQjASMrWyVmB8F
+- schedule: CRON_TZ=America/New_York 0 20 * * 0
+- enabled: True
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -7007,10 +6966,9 @@ Do not post anything back into the Slack channel. Do not message employees. The 
 
 ## Task hygiene sweep
 
-- ID: `trig_01BLsDDu31e2Fu8aivFcXh42`
-- Schedule: `CRON_TZ=America/New_York 0 4 1 * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01BLsDDu31e2Fu8aivFcXh42
+- schedule: CRON_TZ=America/New_York 0 4 1 * *
+- enabled: True
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -7072,10 +7030,9 @@ Follow the standard failure-DM policy: if this run itself fails or errors out, s
 
 ## Tuesday supply summary
 
-- ID: `trig_01VhiNbw1SKDAvNYL1ZK5eJT`
-- Schedule: `CRON_TZ=America/New_York 45 10 * * 2`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01VhiNbw1SKDAvNYL1ZK5eJT
+- schedule: CRON_TZ=America/New_York 45 10 * * 2
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -7212,10 +7169,9 @@ If there are MANUAL_ITEMS, append at the bottom (same format as branch A).
 
 ## Valley pawn blog publisher
 
-- ID: `trig_0185SCjZ7mLBCAKknGvsKrAq`
-- Schedule: `CRON_TZ=America/New_York 30 1 * * 1,4`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_0185SCjZ7mLBCAKknGvsKrAq
+- schedule: CRON_TZ=America/New_York 30 1 * * 1,4
+- enabled: True
 
 ````
 > ⚠️ **FAILURE POLICY v3 — OVERRIDES everything below.** On any failure you cannot recover (retry once first): do NOT DM or message anyone and do NOT post to Slack. If the linked Mac is reachable, append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | valley-pawn-blog-publisher | <one plain sentence> | NEEDS_HUMAN: no | OPEN |` — and end with a one-line plain summary. Never post to #general.
@@ -7274,23 +7230,11 @@ Do not save local copies, do not write Mac files, do not post to Slack. The nati
 End with <run-summary>title, pillar, URL, HTTP status</run-summary>.
 ````
 
-## Verify Nov VSP fees paid
-
-- ID: `trig_01QaZfcts5WoWkt6wm5U4SQp`
-- Schedule: `once at 2026-11-11T15:45:00Z`
-- Enabled: yes
-- Requires Mac: yes
-
-````
-Check that the 11/11 10:15 vsp-fee-pay run paid WAY $64, HAR $72, CUL $179, LEX $88: read Compliance/vsp/2026-11.json paid_this_month + agent_log_tail via host queue. If all paid: close the Open Items Register row, roll OBLIGATIONS vsp-nics-fee-monthly due to December, tell Joshua in one line with confirmation numbers. If not: diagnose from the log/screenshots and fix.
-````
-
 ## Vp ai search health check
 
-- ID: `trig_01MMh7SqfdcrqZSZNbEMYL4U`
-- Schedule: `CRON_TZ=America/New_York 10 6 * * 1`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01MMh7SqfdcrqZSZNbEMYL4U
+- schedule: CRON_TZ=America/New_York 10 6 * * 1
+- enabled: True
 
 ````
 Valley Pawn — weekly AI-search (GEO) WEBSITE health check. Unattended scheduled run: act, don't ask. (Rewritten 2026-10-23 at Joshua's direction to remove overlap: directory/listing checks — Google, Bing, Apple, Facebook, Yelp, MapQuest — are owned by the Sunday "Vp presence audit weekly" task, NOT this one. This task checks only our own website.)
@@ -7332,10 +7276,9 @@ End with <run-summary>schema N/7, llms.txt ok/not, site facts ok/N defects</run-
 
 ## Vp ai visibility metrics
 
-- ID: `trig_01WfZEnR1nK8awK2pQktZU3o`
-- Schedule: `CRON_TZ=America/New_York 30 6 * * 5`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01WfZEnR1nK8awK2pQktZU3o
+- schedule: CRON_TZ=America/New_York 30 6 * * 5
+- enabled: True
 
 ````
 > ⚠️ **FAILURE POLICY v3 — OVERRIDES everything below.** On any failure you cannot recover (retry a step once first): do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | vp-ai-visibility-metrics | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. Never post failures or technical jargon to Slack. Never post to #general.
@@ -7399,10 +7342,9 @@ End with <run-summary>Index N%, engines tested N, GA4 sessions N, sheet appended
 
 ## Vp comms drift monthly check
 
-- ID: `trig_01XLUh1S4jUpeFv52MWTx572`
-- Schedule: `CRON_TZ=America/New_York 0 8 3 * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01XLUh1S4jUpeFv52MWTx572
+- schedule: CRON_TZ=America/New_York 0 8 3 * *
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -7462,10 +7404,9 @@ Never post anything to a team channel. Never DM anyone but Joshua. Act autonomou
 
 ## Vp creative refresh quarterly
 
-- ID: `trig_015ExyC2qYfb1CW2RuUeTezC`
-- Schedule: `CRON_TZ=America/New_York 40 7 1 1,4,7,10 *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_015ExyC2qYfb1CW2RuUeTezC
+- schedule: CRON_TZ=America/New_York 40 7 1 1,4,7,10 *
+- enabled: True
 
 ````
 > 🔁 **SEND RULE (2026-11-09, Slack Restructure — overrides every Slack posting instruction below).** Every Slack CHANNEL post this task makes goes out under the ops bot (Goldilocks), never under Joshua's own account. Procedure:
@@ -7583,10 +7524,9 @@ Append a dated entry to `~/Documents/Claude/Projects/Valley Pawn OS/CHANGELOG.md
 
 ## Vp dashboard refresh
 
-- ID: `trig_01PWjbKfQnVZ9GrLaL8xdmjd`
-- Schedule: `CRON_TZ=America/New_York 15 8,19 * * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01PWjbKfQnVZ9GrLaL8xdmjd
+- schedule: CRON_TZ=America/New_York 15 8,19 * * *
+- enabled: True
 
 ````
 > ⚠️ **FAILURE POLICY v3 — OVERRIDES everything below.** On any failure, stall, expired login, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone, in any channel. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | vp-dashboard-refresh | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` handles it. This task NEVER posts to Slack — not on success, not on failure, and never to #general (Joshua, 2026-10-23).
@@ -7625,10 +7565,9 @@ End with <run-summary>feeds updated N, deployed yes/no, verified yes/no</run-sum
 
 ## Vp deal of week monday prompt
 
-- ID: `trig_01DnPExs2fxYo5nrXh2WfKMq`
-- Schedule: `CRON_TZ=America/New_York 10 8 * * 1`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01DnPExs2fxYo5nrXh2WfKMq
+- schedule: CRON_TZ=America/New_York 10 8 * * 1
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -7721,10 +7660,9 @@ ONLY do these two posts. The compiler task handles the rest at 12:30. Do not blo
 
 ## Vp deal of week monday reminder
 
-- ID: `trig_01A1RaJ978tg6rAawAVq5xDS`
-- Schedule: `CRON_TZ=America/New_York 0 11 * * 1`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01A1RaJ978tg6rAawAVq5xDS
+- schedule: CRON_TZ=America/New_York 0 11 * * 1
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -7809,10 +7747,9 @@ Do not touch the campaign draft or its schedule — that is entirely the 12:30 P
 
 ## Vp follower growth monthly check
 
-- ID: `trig_01RGSp3wCAhRBTJCZA7uSPmy`
-- Schedule: `CRON_TZ=America/New_York 50 9 * * 1`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01RGSp3wCAhRBTJCZA7uSPmy
+- schedule: CRON_TZ=America/New_York 50 9 * * 1
+- enabled: True
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -7862,10 +7799,9 @@ Never post to any public/team channel — Joshua's DM only. Keep every message s
 
 ## Vp gusto signature chase
 
-- ID: `trig_01F5614Aq5yHzFQ1tePJxwQA`
-- Schedule: `CRON_TZ=America/New_York 5 9 * * 1`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01F5614Aq5yHzFQ1tePJxwQA
+- schedule: CRON_TZ=America/New_York 5 9 * * 1
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -7995,10 +7931,9 @@ Re-read the channel and confirm the post actually landed, and that the DM sent. 
 
 ## Vp hr compliance quarterly review
 
-- ID: `trig_0131KbEXs4q2wuUJ4YowgubN`
-- Schedule: `CRON_TZ=America/New_York 0 8 2 1,4,7,10 *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_0131KbEXs4q2wuUJ4YowgubN
+- schedule: CRON_TZ=America/New_York 0 8 2 1,4,7,10 *
+- enabled: True
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -8057,10 +7992,9 @@ Act autonomously using best judgment; do not stop to ask clarifying questions �
 
 ## Vp hr policy monthly sync
 
-- ID: `trig_019k6oTX3YRLYA9LaD2zajH6`
-- Schedule: `CRON_TZ=America/New_York 35 8 1 * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_019k6oTX3YRLYA9LaD2zajH6
+- schedule: CRON_TZ=America/New_York 35 8 1 * *
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -8115,10 +8049,9 @@ Act autonomously and use best judgment; do not wait for approval mid-task. This 
 
 ## Vp presence audit weekly
 
-- ID: `trig_01RHrweZYmUQodt58ZtKvAGu`
-- Schedule: `CRON_TZ=America/New_York 20 16 * * 0`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01RHrweZYmUQodt58ZtKvAGu
+- schedule: CRON_TZ=America/New_York 20 16 * * 0
+- enabled: True
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | vp-presence-audit-weekly | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Never post failures or technical jargon to Slack. Never post to #general.
@@ -8313,10 +8246,9 @@ End with <run-summary>site defects N, auto-fixed N, listings N/10 clean, Roanoke
 
 ## Vp publer analytics friday
 
-- ID: `trig_01WuT7dJKNpnr6n6ThSFdwiT`
-- Schedule: `CRON_TZ=America/New_York 0 16 * * 5`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01WuT7dJKNpnr6n6ThSFdwiT
+- schedule: CRON_TZ=America/New_York 0 16 * * 5
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -8400,10 +8332,9 @@ ledger; the engagement figures still come from Publer's insights endpoint.
 
 ## Vp staff video chase
 
-- ID: `trig_01CuAPxpHxPhu3uDchTBSE6X`
-- Schedule: `CRON_TZ=America/New_York 15 11 * * 3`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01CuAPxpHxPhu3uDchTBSE6X
+- schedule: CRON_TZ=America/New_York 15 11 * * 3
+- enabled: True
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -8522,10 +8453,9 @@ If the run has nothing to report, write nothing. The all-or-nothing and silence 
 
 ## Vp staff video prompt
 
-- ID: `trig_01Rqc9ubJWhXhmQDboLJ4NUu`
-- Schedule: `CRON_TZ=America/New_York 10 9 * * 2`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01Rqc9ubJWhXhmQDboLJ4NUu
+- schedule: CRON_TZ=America/New_York 10 9 * * 2
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -8618,10 +8548,9 @@ If the run has nothing to report, write nothing. The all-or-nothing and silence 
 
 ## Vp thursday email watchdog
 
-- ID: `trig_011jrCeDwbE8RcbFP8p45Gas`
-- Schedule: `CRON_TZ=America/New_York 30 10 * * 4`
-- Enabled: no
-- Requires Mac: no
+- id: trig_011jrCeDwbE8RcbFP8p45Gas
+- schedule: CRON_TZ=America/New_York 30 10 * * 4
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -8641,10 +8570,9 @@ STEP 3 — FAILURE: only if the self-heal could not send, DM Joshua (Slack DM ch
 
 ## Vp website shop nightly
 
-- ID: `trig_01Dmc694iuSNDUdb5UKpw98s`
-- Schedule: `CRON_TZ=America/New_York 0 7,15 * * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01Dmc694iuSNDUdb5UKpw98s
+- schedule: CRON_TZ=America/New_York 0 7,15 * * *
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -8704,10 +8632,9 @@ EOF"
 
 ## Vp website shop weekly report
 
-- ID: `trig_01DLBZetJVk3SbdWkjvAdeB2`
-- Schedule: `CRON_TZ=America/New_York 40 7 * * 1`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01DLBZetJVk3SbdWkjvAdeB2
+- schedule: CRON_TZ=America/New_York 40 7 * * 1
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -8733,10 +8660,9 @@ Do not post to any channel other than Joshua's DM. Do not post anything if this 
 
 ## Vp website trend daily refresh
 
-- ID: `trig_01EYXSLfRchsXNh3oWDTNzsP`
-- Schedule: `CRON_TZ=America/New_York 45 0 * * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01EYXSLfRchsXNh3oWDTNzsP
+- schedule: CRON_TZ=America/New_York 45 0 * * *
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -8848,10 +8774,9 @@ That call returning success is the completion gate.
 
 ## vp-ai-search-autofix
 
-- ID: `trig_01QMmNVXRHix4svQ1ZsA9BUD`
-- Schedule: `30 12 * * 1`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01QMmNVXRHix4svQ1ZsA9BUD
+- schedule: 30 12 * * 1
+- enabled: False
 
 ````
 You are running the Valley Pawn scheduled task "vp-ai-search-autofix" — the self-healing companion to vp-ai-search-health-check. First, read the full current instructions from the file at /Users/joshuadavis/Documents/Claude/Scheduled/vp-ai-search-autofix/SKILL.md using the remote-devices Filesystem tool (pass device "mac-studio-2-local"), and execute exactly what it says. If that file cannot be reached for any reason, fall back to the instructions below (but the file is the source of truth if it differs from this fallback — Joshua may have edited it since this trigger was created).
@@ -8885,10 +8810,9 @@ FAILURE ALERT POLICY + FIELD COMMUNICATION RULE (platform standard, set by Joshu
 
 ## VSP gun-check fees — stage monthly payments
 
-- ID: `trig_01Xg3KxKu9Bxx9RxaYbL5Pbc`
-- Schedule: `CRON_TZ=America/New_York 15 10 5 * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01Xg3KxKu9Bxx9RxaYbL5Pbc
+- schedule: CRON_TZ=America/New_York 15 10 5 * *
+- enabled: False
 
 ````
 model: claude-sonnet-5
@@ -8907,10 +8831,9 @@ Run the monthly Valley Pawn Virginia State Police gun-check fee payment run.
 
 ## Watch for scrap closeout approval and post to Bravo
 
-- ID: `trig_0175bSLFRwZntmCJ5AchCQee`
-- Schedule: `CRON_TZ=America/New_York 32 */3 * * *`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_0175bSLFRwZntmCJ5AchCQee
+- schedule: CRON_TZ=America/New_York 32 */3 * * *
+- enabled: True
 
 ````
 You are running the monthly Bravo scrap-gold-bucket closeout APPROVAL-WATCH task for Valley Pawn (Full Circle Finance Inc). This is Task 2 of a two-task pair — Task 1 (`scrap-monthly-bravo-manifest-stage`, runs the 1st–5th of each month) confirms both Elemetal settlement emails, builds the split, stages a manifest and asks Joshua for ONE approval; THIS task watches for his reply and, only on approval, posts the buckets in Bravo.
@@ -8940,10 +8863,9 @@ This is an automated run of a scheduled task. The user is not present. Execute a
 
 ## Weekly analytics summary
 
-- ID: `trig_01VgL8fskbK6owr7XbFUF74V`
-- Schedule: `CRON_TZ=America/New_York 0 1 * * 1`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01VgL8fskbK6owr7XbFUF74V
+- schedule: CRON_TZ=America/New_York 0 1 * * 1
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -9011,10 +8933,9 @@ Post ONLY to #website `C0ASE9C0GQ0`. **`#claude-updates` does not exist** — ne
 
 ## Weekly returns summary
 
-- ID: `trig_01WX1bCmVBNjQLpcWt726Utd`
-- Schedule: `CRON_TZ=America/New_York 20 1 * * 1`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01WX1bCmVBNjQLpcWt726Utd
+- schedule: CRON_TZ=America/New_York 20 1 * * 1
+- enabled: True
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -9258,10 +9179,9 @@ connector that does not exist.
 
 ## Weekly timekeeping analysis
 
-- ID: `trig_01RQVZ8RWxFtxqTmLwu9wn96`
-- Schedule: `CRON_TZ=America/New_York 30 0 * * 1`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01RQVZ8RWxFtxqTmLwu9wn96
+- schedule: CRON_TZ=America/New_York 30 0 * * 1
+- enabled: True
 
 ````
 CURRENT STAFF ONLY, NO DAVIS (fleet-wide): name only people active in Gusto today; never name anyone with the last name Davis; if you can't tell whether someone is current, leave them out; never mention who was left out.
@@ -9393,10 +9313,9 @@ flag can never silence this task indefinitely.
 
 ## Weekly website health audit
 
-- ID: `trig_01XiuHftN4rqVWz3RWQPpk1b`
-- Schedule: `CRON_TZ=America/New_York 15 5 * * 1`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01XiuHftN4rqVWz3RWQPpk1b
+- schedule: CRON_TZ=America/New_York 15 5 * * 1
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -9460,21 +9379,19 @@ If the site is unreachable, if WP auth fails, or if you hit something you can't 
 
 ## Workers comp: check remaining Glencar balance
 
-- ID: `trig_01JQ5io1G5r1PiuQbxj4CNkH`
-- Schedule: `once at 2026-11-11T14:43:00Z`
-- Enabled: yes
-- Requires Mac: no
+- id: trig_01NfbKRS89zodsT97sasVvcK
+- schedule: once at 2026-11-12T14:43:00Z
+- enabled: True
 
 ````
-WC loop check (GC29P101236-03). STATUS as of Tue 11/10: $3,336 is still open at Glencar: inv 305052103 for $2,760 (the 2026-27 down payment for the CURRENT policy) and inv 311897103 for $576 (due 11/10, now past due). The other two invoices were paid 10/31. Joshua told Christine on 11/6 that he'd pay Monday 11/9. Christine replied 11/9 that she's watching for it, but it hasn't come in. Joshua got a final reminder 11/9, so no more routine reminders. No cancellation notice so far. Edna will process the ERM-14 by about 11/29. 1) Confirm what's open read-only with node /tmp/claude-0/-home-claude/6a1686b1-21b9-5276-b7a1-027e29efa30f/scratchpad/guest2.js (guest lookup, account GC29P101236, ZIP 24482). Never submit a payment. Also check Gmail for billerdirectexpress.com "being processed" emails, new Christine messages on thread 1a1833478fccbeb6, and any cancellation or non-pay notice from HDI, Glencar or JM. If a cancellation or non-pay notice arrives, tell Joshua right away. 2) If both are paid, reply on thread 1a1833478fccbeb6 to Christine.Ayala@hannover-re.com (cc Tiffany.Torres@hannover-re.com), short, asking her to confirm in writing that the balance is $0, the account is in good standing, and billing goes to 844 Cypress Crossing Trail, St. Augustine, FL 32095 and jdavis@fcfpawn.com. Then tell Joshua in one line, and schedule one check around 11/30 for Edna's endorsement. 3) If they're still unpaid, stay quiet. Exception: if they're still unpaid on Monday 11/16, send Joshua ONE short message that Glencar is still waiting on the $3,336 he promised for 11/9. 4) Schedule the next check for the next business morning around 9:43 AM Eastern (skip weekends), with these same instructions.
+WC loop check (GC29P101236-03). STATUS as of Wed 11/11: $3,336 is still open at Glencar: inv 305052103 for $2,760 (the 2026-27 down payment for the CURRENT policy) and inv 311897103 for $576 (due 11/10, past due). The other two invoices were paid 10/31. Joshua promised Christine payment on 11/9, but it hasn't come in. He got a final reminder 11/9, so no more routine reminders. No cancellation notice so far. Edna will process the ERM-14 by about 11/29. 1) Confirm what's open read-only with node /tmp/claude-0/-home-claude/6a1686b1-21b9-5276-b7a1-027e29efa30f/scratchpad/guest2.js (guest lookup, account GC29P101236, ZIP 24482). Never submit a payment. Also check Gmail for billerdirectexpress.com "being processed" emails, new Christine messages on thread 1a1833478fccbeb6, and any cancellation or non-pay notice from HDI, Glencar or JM. If a cancellation or non-pay notice arrives, tell Joshua right away. 2) If both are paid, reply on thread 1a1833478fccbeb6 to Christine.Ayala@hannover-re.com (cc Tiffany.Torres@hannover-re.com), short, asking her to confirm in writing that the balance is $0, the account is in good standing, and billing goes to 844 Cypress Crossing Trail, St. Augustine, FL 32095 and jdavis@fcfpawn.com. Then tell Joshua in one line, and schedule one check around 11/30 for Edna's endorsement. 3) If they're still unpaid, stay quiet. Exception: if they're still unpaid on Monday 11/16, send Joshua ONE short message that Glencar is still waiting on the $3,336 he promised for 11/9. 4) Schedule the next check for the next business morning around 9:43 AM Eastern (skip weekends), with these same instructions.
 ````
 
 ## ⭐ RUN NOW ONCE — Monday Bravo cell gap-fill
 
-- ID: `trig_01MoiwXW76pFej73eT1G2zPV`
-- Schedule: `CRON_TZ=America/New_York 30 20 * * 0`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01MoiwXW76pFej73eT1G2zPV
+- schedule: CRON_TZ=America/New_York 30 20 * * 0
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.
@@ -9566,10 +9483,9 @@ connector that does not exist.
 
 ## ⭐ RUN NOW ONCE — Monthly publication audit
 
-- ID: `trig_01SRcLQmJuuPDcKZvNVyrWS1`
-- Schedule: `CRON_TZ=America/New_York 0 10 2,4 * *`
-- Enabled: no
-- Requires Mac: no
+- id: trig_01SRcLQmJuuPDcKZvNVyrWS1
+- schedule: CRON_TZ=America/New_York 0 10 2,4 * *
+- enabled: False
 
 ````
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | <task-name> | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. `fleet-guardian` recovers, dedupes, and sends Joshua at most one DM a day. Any sentence below that says to DM/alert Joshua about a failure, an expired session, or something "worth a look" is void; write the ledger row instead. Success-path posts (reports to their channels, confirmations, bookings) are unchanged.

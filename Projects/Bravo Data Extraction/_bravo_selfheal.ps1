@@ -126,9 +126,25 @@ function Launch-Bravo([string]$why) {
 }
 
 $bravo = @(Get-Process -Name Bravo -ErrorAction SilentlyContinue)
+# Window check = same rule as _recover_to_dashboard.ahk (WinExist "Bravo "): ANY visible top-level
+# window owned by Bravo.exe whose title starts with "Bravo". Do NOT use Process.MainWindowTitle -
+# for this WPF app it often points at a small untitled popup, which made v3 (11/11-11/12 AM) read a
+# healthy Bravo as windowless and restart it several times. Fixed 2026-11-12.
 $hasWindow = $false
-foreach ($p in $bravo) { if ($p.MainWindowTitle -like 'Bravo *') { $hasWindow = $true } }
+if ($bravo.Count -gt 0) {
+  $bpids = @{}; foreach ($p in $bravo) { $bpids[[uint32]$p.Id] = $true }
+  foreach ($w in [WinEnumSH]::List($false)) {
+    $parts = $w.Split('|'); $wp = [uint32]$parts[0]; $title = $parts[5]
+    if ($bpids.ContainsKey($wp) -and $title -like 'Bravo*') { $hasWindow = $true; break }
+  }
+}
 if ($hasWindow) { return }   # healthy or mid-run: never touch it
+
+# Never act while any automation is using Bravo (main pipeline claim or scrap closeout run).
+if (@(Get-ChildItem (Join-Path $Root 'triggers\claimed') -Filter '*.json' -File -ErrorAction SilentlyContinue).Count -gt 0) { return }
+foreach ($ap in @(Get-CimInstance Win32_Process -Filter "Name='AutoHotkey64.exe'" -ErrorAction SilentlyContinue)) {
+  if ($ap.CommandLine -like '*ScrapBucketCloseoutWatcher*') { return }
+}
 
 # The Mac-side health gate is mid-recovery -> let it own Bravo, never race it.
 $gl = Join-Path $logs '_health_gate.lock'
@@ -148,7 +164,12 @@ if ($bravo.Count -eq 0) {
 $youngest = ($bravo | ForEach-Object { try { $_.StartTime } catch { Get-Date } } | Sort-Object -Descending | Select-Object -First 1)
 $ageMin = ((Get-Date) - $youngest).TotalMinutes
 Capture "Bravo running ${ageMin}m with no main window"
-if ($ageMin -lt 8 -or $sinceLaunch -lt 8) { return }   # still starting / ClickOnce updating - give it time
+if ($ageMin -lt 15 -or $sinceLaunch -lt 15) { return }   # still starting / ClickOnce updating - give it time
+# Hard cap: at most 3 forced restarts per 6 hours; beyond that only log (never thrash).
+$kf = Join-Path $logs '_selfheal_kills.txt'
+$recent = @(); if (Test-Path $kf) { $recent = @(Get-Content $kf | Where-Object { try { ((Get-Date) - [datetime]::Parse($_)).TotalHours -lt 6 } catch { $false } }) }
+if ($recent.Count -ge 3) { Write-SHLog "windowless but 3 restarts already in 6h - holding, no kill"; return }
+Set-Content $kf ($recent + (Get-Date -Format 'yyyy-MM-dd HH:mm:ss'))
 # Windowless for 8+ min = wedged (KNOWN_ISSUES: kill Bravo AND dfsvc, then relaunch).
 Write-SHLog ("Bravo windowless " + [int]$ageMin + "m -> kill Bravo + dfsvc, relaunch")
 Get-Process Bravo,dfsvc -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue

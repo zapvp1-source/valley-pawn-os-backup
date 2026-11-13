@@ -1,10 +1,41 @@
+## 2026-11-12 21:50 ET (fleet-guardian, 21:45 ET pass, Cowork, Social Media project, device-linked)
+
+- Registry healthy (232 tasks via registry-guard snapshot, 19:52 ET; 2 Cowork-side cron tasks live). Step 1b (fleet/FIELD_SCORECARD.md): 0 missed today. Step 1c: exactly 1 unprocessed FAILURE_LEDGER row -- conductwatch-roanoke (missed its Thu 11/12 09:55 run) -- COVERED as a PARKED IS NOT DARK false positive (confirmed via fleet/state/native_paused_until_newmac/conductwatch-roanoke, present since 2026-10-31; all 5 camera agents deliberately paused until the new M5 Ultra Mac). 0 reruns needed -- nothing rerun-safe was genuinely missing.
+- Bravo-daily-gl backlog (Culpeper/Roanoke/Waynesboro 2026-11-11, UNRECOVERED at the 12:45 pass) CLEARED on its own: fleet/state/bravo_daily_gl/STATUS.md (13:31 ET) shows all 5 stores posted through 2026-11-11, Open: none. Bumped the Life OS/HUMAN_QUEUE.md 2026-11-05 Bravo row to reflect full recovery.
+- HUMAN_QUEUE.md: 1 new non-sign-in row today (ivr-app-link-text blocked by macOS Full Disk Access, exit 126 -- fleet-medic) and 1 new [SIGN-IN] row (iCloud Mail connector reauth), the latter held for Login Day 2026-12-07 per the sign-in batching rule. The Indeed sign-in row logged this morning resolved itself before the first run today (21 Indeed messages sent, 14 interviews booked) -- closed.
+- Per Failure Policy v3, tonight's pass sends ONE Slack DM to Joshua (new non-sign-in HUMAN_QUEUE row today triggers condition b). Backups: `fleet/FAILURE_LEDGER.md.bak-pre-g20261112-2150`, `Life OS/HUMAN_QUEUE.md.bak-pre-g20261112-2150`, `fleet/CHANGELOG.md.bak-pre-g20261112-2150`. Full detail: `fleet/guardian_runs/2026-11-12-2150.json`.
+
+## 2026-11-12 (review replies, native)
+
+- nightly-chekkit-review-responses (native review_reply.py): 1 replies posted (CUL 0, WAY 0, HAR 0, LEX 0, ROA 1); 0 low-star review(s) sent to Joshua as drafts.
+
 ## 2026-11-11 (review replies, native)
+- 2026-11-12 — Scrap Oct 2026: confirmed natively (no computer use) that Culpeper and Waynesboro never created October gold buckets in Bravo; HAR/LEX/ROA buckets ready. October not posted, $60,435.17 Elemetal wires pending. Also: Bravo self-heal added to the VM watchdog (dfsvc fix after the 11/10 Patch Tuesday reboot) and PauseMainWatcher no longer kills the auto-login/keeper scripts.
 
 - nightly-chekkit-review-responses (native review_reply.py): 2 replies posted (CUL 0, WAY 0, HAR 0, LEX 0, ROA 2); 0 low-star review(s) sent to Joshua as drafts.
 
 # Valley Pawn - Enterprise Changelog
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
+
+
+## 2026-11-12 ~1:52 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+
+- Found and fixed a stale-note gap: Lexington applicants Tamara Thompson and Steven Burns had sat uncontacted for weeks because prior run logs kept repeating "Lexington-OFF" without re-checking HIRING_SWITCH.md (Lexington has been ON since Preston reopened it 11/9). Sent both the standard first-contact message, offering a Fri 11/13 11am-3pm phone interview with Preston (540) 202-4200. One Slack DM sent to Joshua per the quiet rule (real change — 2 new first contacts). Full detail: Valley Pawn OS/HIRING_OUTREACH.md run log ~1:52 PM.
+
+## 2026-11-12 12:47 ET (fleet-guardian, 12:45 ET pass, Cowork, Social Media project, device-linked)
+
+- Registry healthy (232 tasks, 0 nulls/ZodErrors, 2 Cowork-side cron tasks live -- both on time today: northwest-registered-agent-daily-check 13:50 UTC run vs 13:40 UTC schedule, vp-hiring-pipeline 17:33 UTC run vs 17:30 UTC schedule). Read via registry-guard's own mounted snapshot (fleet/_backups/registry/auto/) since the live Scheduled dir still isn't mountable this session and the host-queue allow-list refused an inline-python job this pass (interpreter-only scripts not permitted) -- note for a future hardening touch: add an allow-listed script that dumps registry lastRunAt/cron for the guardian, so this pass doesn't depend on the snapshot happening to be fresh. Step 1: 0 missed runs. Step 1b (fleet/FIELD_SCORECARD.md, native, refreshed 17:29 UTC): 0 missed today.
+- Processed all 8 OPEN FAILURE_LEDGER rows from today: 4 COVERED (fleet-doctor weekly aggregate -- no new gap; conductwatch-report -- same long-running Slack ops-bot conversations.history scope gap, flagged for next pass to confirm the camera-agent pause has now fully taken hold; valley-pawn-blog-publisher -- verified FALSE ALARM via WordPress REST, post #1933 "Gold-Plated vs. Solid Gold: What's Worth Money" published 2026-11-12 01:36 ET right on the Mon/Thu schedule; forfeiture-winback-texts-weekly -- design-expected Chekkit opt-out/invalid-number skips), 3 UNRECOVERED (bravo-daily-gl Culpeper/Roanoke/Waynesboro for 2026-11-11 -- hard limit, guardian never drives Bravo/Parallels; Bravo itself confirmed reachable today via today's on-time field publications), 1 QUEUED (preston-assistant-local -- Preston asked whether Indeed candidates are being contacted; they're not, employer sign-in has been blocked since ~11/2-11/3; added a new [SIGN-IN] HUMAN_QUEUE row, held for Login Day 12/7 per the sign-in batching rule). Bumped the existing 2026-11-05 Bravo-GL-backlog HUMAN_QUEUE row with today's status (CUL/ROA/WAY still open for 11-11; HAR/LEX cleared). 0 reruns attempted -- nothing rerun-safe was missing. Per Failure Policy v3 this pass is SILENT regardless of findings -- no DM sent. Backups: `fleet/FAILURE_LEDGER.md.bak-pre-g20261112-1245`, `Life OS/HUMAN_QUEUE.md.bak-pre-g20261112-1245` (via fleet copy), `fleet/CHANGELOG.md.bak-pre-g20261112-1245`. Full detail: `fleet/guardian_runs/2026-11-12-1247.json`.
+
+## 2026-11-12 15:55 ET (Unified Search reachable from cloud sessions — Joshua approved)
+
+- **NEW `bin/usearch_query.py` (allow-listed, backup `fleet/_backups/host_queue_allowlist.txt.bak-pre-usearchquery-20261112`).** Since the 11/7 relocation, index.db lives in ~/.vp-studio/offsync/unified-search, which cloud Cowork sessions cannot mount (folder grant refused), and vpfind needs a host shell. Fix: drop a host-queue job calling `usearch_query.py --tag T --corpus msgs|mail|files|photos|notes|reminders|gdrive|doc_photos [--match FTS] [--handle digits] [--since/--until YYYY-MM-DD] [--limit N]`. It opens the index read-only (mode=ro&immutable=1) and writes JSON to `Unified Search/_query_results/<tag>__<corpus>__<n>.json` (+ `<tag>.index.txt`). Picked up by preston-watch in ~2 min.
+- First use (job 20261112-1545-usearch-fireplace): 6 queries, rc=0 — pulled the Cypress Crossing fireplace dispute texts (incl. Hillary thread) and mail across all 9 accounts while the Apple_Mail connector was failing auth.
+
+## 2026-11-12 10:23 ET (fb-inbox-replies — quiet run, Cowork scheduled, LINKED)
+
+- All 6 Messenger inboxes read; 0 replies needed. Brand newest thread 10/21 (answered); HAR 10/23, LEX 10/27, ROA 8/18, CUL 10/15 (all outside window or answered); WAY Damian O. (answered Sat) and Peyton M. (store answered Fri, customer closed). Chekkit dump refreshed 15:21 UTC. No ledger rows.
 
 ## 2026-11-11 (fleet-guardian, 12:45 ET pass, Cowork, Social Media project, device-linked)
 
@@ -88,6 +119,10 @@ Newest first. Material changes to the business operating system. Read this BEFOR
 - 392 active / $65,847 listed · 90d 556 units / $98,630 · fees 16.1% · aged >90d 185 ($23,565). vs 2026-11-02: active -15, listed value -$1,189, 90d revenue -$1,841, fee % -0.2pt, aged >90d +2 / +$1,272, unread +19 97 listings sit at their 3rd markdown cut with no further scheduled action (Culpeper 75, Harrisonburg 5, Lexington 1, Roanoke 16). 6 video-game / console / game-accessory listings in the sample take offers (Waynesboro 2, Harrisonburg 3, Roanoke 1) — the standing rule is no offers on video games; store's call to switch off, not changed here. Full: `eBay/audit_weekly/2026-11-09/summary.md`.
 
 # Valley Pawn - Enterprise Changelog
+
+## 2026-11-12 (Store phone menus — keys renumbered: 1 = loan/app link, 2 = hours, 3 = team member)
+
+- Joshua: the key numbers should follow the greeting order. All 5 menus now: 1 = "we're texting you the link" + hang up (app-link text from the store number), 2 = hours/address then back to the menu, 3 / 0 / no key = store queue. New greeting v3 on all 5. Key meanings moved into `fleet/ivr_config.json` (app_link_key / hours_key), read live by `bin/ivr_app_link_text.py` and `bin/zoom_call_path.py` (backups `fleet/_backups/*.bak-pre-keyswap-20261112`). Done before opening; 0 calls in the switch window. Supersedes the v2 greeting from earlier today.
 
 ## 2026-11-12 (Store phone menus — greeting now leads with press 2 for loans)
 
@@ -9402,3 +9437,12 @@ Newest first. Material changes to the business operating system. Read this BEFOR
 - Step 0 guard: this week's video ask ("the weirdest thing that walked in this week") posted 11/10 9:10 AM in #deal-of-the-week, deadline today 2:00 PM ET. Run time 11:19 AM = ~2.7hr pre-deadline — inside the chase window, proceeded.
 - Checked live: 2 of 5 stores in (Benjie/Roanoke 11/10 1:55P, Uriah/Lexington 11/10 2:17P). Missing: Sandi/Culpeper, Chadd/Waynesboro, Walker/Harrisonburg. Posted one chase reply via outbox (vp-staff-video-chase-20261111-111932.txt/.json) tagging those three. Informational log posted via outbox to #vp-studio-queue (vp-staff-video-chase-log-20261111-111932.txt/.json).
 - casual-video-inbox confirmed empty of pending items at run time — no backlog for tonight's vp-casual-video-daily (7:44 PM) to inherit.
+
+## 2026-11-12 13:20 UTC (dashboard-refresh, Cowork scheduled run, LINKED via device bridge)
+- Checked all 6 current-rules feeds against latest Slack posts: #pawn-walks had a newer Daily Pawn Walk post (2026-11-11 data, posted Nov 12 07:15 AM) -- refreshed daily.intakeMargin (Buy+Loan combined, item-weighted avg margin, flags summed: Culpeper 34 items/59%, Roanoke 19/20%, Waynesboro 8/41%; company 61 items/45%/4 flags, matching the post's own "OVERPAY FLAGS (4)" count as a cross-check; Harrisonburg/Lexington had zero intake that day in either table, so omitted rather than fabricated). #chekkit-messages-missed had a newer Daily Response Summary (Nov 11, posted Nov 12 08:00 AM, all clear) -- refreshed daily.chekkit. #layaway-review (still Nov 9, next weekly post due Nov 16), #daily-funds-reconcilation (Wed Nov 11 post already on file -- 3/5 matched, Culpeper/Waynesboro discrepancies, matches exactly), #company-performance watch[] (Oct Month-in-Review corrected figure already on file, no new monthly post expected until ~Dec 1), and #items-to-price (still Nov 10 -- channel appears to have skipped its Nov 11/12 daily post, no newer one found; kept as-is per no-fabrication rule, worth a look if it stays silent) were all already current or had no newer post -- kept as-is. #loan-review retired 10/14, pastDue/companyLoanBalance kept as-is. bravoDaily untouched (owned by another job). asOf -> November 12, 2026. feeds[] Last Run updated for the 2 refreshed rows (Intake Margin, Chekkit Unanswered Messages) -> Nov 12, 2026.
+- Artifacts sync (Step 2) skipped silently -- ~/Documents/Claude/Artifacts not a connected folder this session (same as all prior runs; only "Business Dashboard Website" and "Projects" were connected).
+- Deploy: used Option C per the runbook's standing 2026-10-16 finding (device_bash wrangler reliably hangs) -- staged all 40 site/+.cloudflare/ files cleanly on the first try (no nlink/hardlink refusal this run, excluded the known scratch/debug leftovers per the 11/11 exclusion list), installed wrangler in the cloud sandbox, deployed cleanly: https://a4a8ce04.vp-dashboard.pages.dev
+- Verified: https://vp-dashboard.pages.dev/ returns 401 with no auth, 200 with valleypawn basic auth (apex + deployment-specific URL both 200); data/kpis.json fetched live (cache-busted) and parses, asOf/intakeMargin/chekkit/funds/layaway all match what was written. No Slack post (success, per the task's standing no-Slack-either-way rule and FAILURE POLICY v3 override).
+
+## 2026-11-12 ~6:20 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Confirmed the Indeed employer sign-in/verification wall (blocked ~11/2-11/3, flagged by Preston 9:06 AM) was already resolved earlier today and has held all day: employers.indeed.com/jobs and /messages both load normally as fullcirclepawn@gmail.com, no Cloudflare/auth wall at 6:20 PM. Closed `fleet/FAILURE_LEDGER.md`'s 2026-11-12 09:06 ET row to RESOLVED (Life OS/HUMAN_QUEUE.md's matching row was already closed at 1:37 PM). Nothing new to action this run -- Indeed Messages inbox unchanged since the 5:22 PM run, 0 New applicants on all 4 ON listings (Waynesboro/Harrisonburg/Lexington/Roanoke per HIRING_SWITCH.md) -- so no Slack post, per the task's QUIET RULE. Noted (not actioned): Waynesboro and Roanoke listings still show Paused live on Indeed despite HIRING_SWITCH.md marking both Hiring=ON (mismatch first flagged 10/26, re-confirmed 10:49 AM and again this run) -- not reopened because a prior reopen on this account auto-resumed paid sponsorship (CHANGELOG 8/15 entry), and resuming ad spend is Joshua's call, not this task's.

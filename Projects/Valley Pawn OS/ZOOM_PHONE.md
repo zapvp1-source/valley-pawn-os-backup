@@ -416,3 +416,11 @@ payment/extension/payoff = 29.6% of answered calls vs hours/location 2.5% (COMM_
 "Store Menu Greeting v2 - <Store>": "Thank you for calling Valley Pawn in <Store>. To extend your loan or make a
 payment from your phone, press 2, and we'll text you the link right now. For our store hours and location, press 1.
 To speak with a team member, press 3." Key mapping unchanged. Old v1 assets left unused in the library.
+
+**2026-11-12 — keys renumbered to match the greeting order (all 5 menus, v3).** Joshua: loan first should be key 1.
+Now: **1 = app-link text** (Play a message, then disconnect: "Menu - App Link Text (short)"), **2 = hours**
+(Play a message, then return to root menu: "Menu Hours - <Store>"), 3 / 0 / no input = store queue (unchanged).
+Greeting "Store Menu Greeting v3 - <Store>": "...To extend your loan or make a payment from your phone, press 1, and
+we'll text you the link right now. For our store hours and location, press 2. To speak with a team member, press 3."
+`fleet/ivr_config.json` app_link_key "1", hours_key "2" (read live by ivr_app_link_text.py and zoom_call_path.py —
+CHANGE IT WHENEVER THE ZOOM KEYS CHANGE). Switched before opening (0 calls in the window).

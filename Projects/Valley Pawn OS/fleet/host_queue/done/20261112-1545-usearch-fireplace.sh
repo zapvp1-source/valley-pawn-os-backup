@@ -1,0 +1,7 @@
+#!/bin/bash
+python3 "/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/bin/usearch_query.py" --tag fireplace1112 --corpus msgs --handle 9045319315 --since 2026-06-01 --limit 500
+python3 "/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/bin/usearch_query.py" --tag fireplace1112 --corpus msgs --handle 9044457142 --since 2026-06-01 --limit 500
+python3 "/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/bin/usearch_query.py" --tag fireplace1112 --corpus msgs --match "fireplace OR firebox OR todd OR premier OR napoleon OR restrictor OR flange OR hearth OR marble OR gabi OR flames OR fogging" --since 2026-06-01 --limit 800
+python3 "/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/bin/usearch_query.py" --tag fireplace1112 --corpus mail --match "fireplace OR firebox OR premier OR napoleon OR restrictor OR flange OR hearth OR knowles OR premierspecialtyservice OR floridacustommarble" --since 2026-06-01 --limit 400 --bodychars 3000
+python3 "/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/bin/usearch_query.py" --tag fireplace1112 --corpus files --match "fireplace OR premier OR napoleon OR EX36NTEL OR knowles" --limit 100 --bodychars 1500
+python3 "/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/bin/usearch_query.py" --tag fireplace1112 --corpus photos --match "fireplace OR premier OR napoleon OR EX36 OR knowles OR restrictor" --limit 100 --bodychars 1500

@@ -63,7 +63,7 @@ def decide(calls, mcfg, icfg, state, now, lookback_min):
     cool = dt.timedelta(minutes=icfg.get("cooldown_minutes", 30))
     out, batch = [], set()
     for c in calls:
-        if mct.norm(c.get("direction")) != "inbound" or str(c.get("ivr_key") or "") != "2":
+        if mct.norm(c.get("direction")) != "inbound" or str(c.get("ivr_key") or "") != str(icfg.get("app_link_key", "2")):
             continue
         code = mct.store_for(c, stores)
         cid = c.get("id") or c.get("call_id")
@@ -84,7 +84,7 @@ def decide(calls, mcfg, icfg, state, now, lookback_min):
         if not stores[code].get("webhook"):
             rec("SKIP", "no Chekkit webhook for %s" % code); continue
         batch.add(caller)
-        rec("SEND", "pressed 2")
+        rec("SEND", "pressed app-link key")
     return out
 
 

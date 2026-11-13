@@ -1,5 +1,18 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-12 (daily PREP run, 12:43–13:20 ET, level 1 all pages) — picks queued, nothing published by this run
+- Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only ("Comment as Joshua Davis" seen; composer read "What's on your mind, Joshua?" at the end) — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. Still no POST-mode chat since 11/2 evening (ledger unchanged).
+- Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).
+- Dropped from QUEUE (lapsed): Culpeper comment → Visit Culpeper (08:50), Culpeper share → Parks & Rec Beginner Yoga (12:03), Lexington comment → RRL Upload Your Shoebox (12:03), Waynesboro share → Trot and Toddy (09:59).
+- Still valid from 11/11: Roanoke comment (RVSPCA, until 11/13 11:50) + share (Explore Park Illuminights, until 11/13 07:50); Waynesboro comment (Wayne Theatre, until TODAY 16:55); Harrisonburg comment (Massanutten Regional Library, until TODAY 14:10) + share (Downtown Renaissance Swap Meet-Up, until TODAY 19:05); Brand comment (Blue Ridge Parkway eagle, until 11/13 09:15).
+- New picks (all permalinks opened and key phrases confirmed): Culpeper comment → Culpeper County Library ($100,000 gift from the Friends for the Teen and Youth Services Project); Culpeper share → Museum of Culpeper History Elementary Explorers (Wed Nov 18, first Thanksgiving; times left out because the post lists "12:30 PM – 1:15 AM"); Waynesboro share → Waynesboro Public Library Creative Writing Workshop (Sat Nov 14, 10:30–12:30, ages 18+; presenter unnamed); Lexington comment → Washington and Lee (women's soccer ODAC championship, autumn colors); Lexington share → Rockbridge Regional Libraries Bread Around the World (Buena Vista Children's Library; date only in flyer, not restated).
+- Skipped on purpose: Culpeper Renaissance Holiday Open House shop-discount post (sales promo, knives); Waynesboro North Park playground maintenance closure; Main Street Lexington Pink Friday (11/6, past 48 h); RARA Brownsburg Gardeners (lapsed 11:11); Lexington Farmers Market vendor menu; City of Lexington water-line notice; Harrisonburg-Rockingham Chamber State of the Economy (economic-policy event); Explore More junior chefs (lapses 15:41 today — Harrisonburg already has a comment and share for today).
+- Follows: no new ones; 18 pending, all re-dated.
+- Watchlist: 0 resolved; Shenandoah Valley Art Center (Waynesboro) retired after 3rd failed search. 14 pages re-checked.
+- Needs a person: none.
+- Replies on own pages: not swept (POST mode only). Tab closed.
+- Totals this run: comments 0 (2 new queued, 4 still pending), shares 0 (3 new queued, 2 still pending), replies 0, follows 0 (18 pending), new pages resolved 0.
+
 ## 2026-11-11 (daily PREP run, 12:45–13:25 ET, level 1 all pages, Veterans Day) — picks queued, nothing published by this run
 - Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only ("Comment as Joshua Davis" seen; composer read "What's on your mind, Joshua?" at the end) — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. Still no POST-mode chat since 11/2 evening (ledger unchanged).
 - Folders were not connected at start; device_request_folder_access granted unattended (per 11/10 note). Chrome extension dropped once mid-run (~13:10); came back after a 45 s pause — read-only call re-run, no harm.

@@ -1,41 +1,39 @@
-# CPU Guard — 2026-11-12 00:13 EST
+# CPU Guard — 2026-11-13 00:11 EST
 
 Native agent com.valleypawn.cpu-guard (bin/cpu_guard.sh), every 5 min. See header of the script.
 
 ## Load
-0:13  up 9 days,  7:26, 1 user, load averages: 5.00 6.03 7.05
+0:11  up 10 days,  7:24, 1 user, load averages: 5.74 6.07 6.41
 
 ## Process states (R=running, U=waiting on disk)
 ```
-   6 R  742 S    2 U    3 Z 
+   6 R  697 S    3 Z 
 1 sort
 1 ps
 1 head
-1 awk
-1 /usr/libexec/diskimagesiod
-1 /usr/libexec/PerfPowerServices
+1 /System/Library/PrivateFrameworks/MediaAnalysis.framework/Versions/A/mediaanalysisd
 1 /Applications/Google
 ```
 
 ## Top CPU right now
 ```
  %CPU NI   PID COMM
- 99.3  0 30327 /Applications/Google Drive.app/Contents/MacOS/Google Drive
- 20.1  0   425 /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer
-  9.6  0 98098 /Library/Backblaze.bzpkg/bzfilelist
-  7.5  0 97150 /Applications/Parallels Desktop.app/Contents/MacOS//Parallels VM.app/Contents/MacOS/prl_vm_app
-  6.2  0 99012 /usr/libexec/sysmond
-  3.3  0 55818 /Users/joshuadavis/Library/Application Support/Claude/claude-code/2.1.309/5af865b9901c/claude.app/Contents/MacOS/claude
-  3.2  0 77050 /bin/bash
-  2.5  0  1185 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
-  2.2  0   417 /usr/sbin/bluetoothd
-  2.2  0  4199 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.WebContent.xpc/Contents/MacOS/com.apple.WebKit.WebContent
-  1.9  0   426 /System/Library/PrivateFrameworks/TCC.framework/Support/tccd
+ 42.6  0 52697 /System/Library/PrivateFrameworks/MediaAnalysis.framework/Versions/A/mediaanalysisd
+ 28.9  0 30327 /Applications/Google Drive.app/Contents/MacOS/Google Drive
+ 23.9  0   425 /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer
+ 20.3  0 97150 /Applications/Parallels Desktop.app/Contents/MacOS//Parallels VM.app/Contents/MacOS/prl_vm_app
+  8.8  0 18534 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.WebContent.xpc/Contents/MacOS/com.apple.WebKit.WebContent
+  7.1  0   530 /System/Library/Audio/Plug-Ins/usbaudio.bundle/Contents/MacOS/usbaudiod
+  6.3  0 99012 /usr/libexec/sysmond
+  5.9  0   688 /System/Library/CoreServices/ControlCenter.app/Contents/MacOS/ControlCenter
+  3.2  0  1185 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+  2.8  0   417 /usr/sbin/bluetoothd
+  2.7  0 96015 /bin/bash
 ```
 
 ## Memory
 ```
-total = 11264.00M  used = 10135.12M  free = 1128.88M  (encrypted)
+total = 13312.00M  used = 12344.88M  free = 967.12M  (encrypted)
 System-wide memory free percentage: 52%
 ```
 
@@ -69,8 +67,8 @@ drwxr-xr-x@ 9 joshuadavis  staff  288 Nov  7 13:25 tracks
 
 /Users/joshuadavis/.vp-studio/offsync/unified-search:
 total 15987656
-drwxr-xr-x@ 5 joshuadavis  staff         160 Nov 11 05:02 .
+drwxr-xr-x@ 5 joshuadavis  staff         160 Nov 12 05:10 .
 drwxr-xr-x@ 4 joshuadavis  staff         128 Nov  7 13:23 ..
--rw-r--r--@ 1 joshuadavis  staff  8185647104 Nov 11 23:39 index.db
--rw-r--r--@ 1 joshuadavis  staff       32768 Nov 11 23:39 index.db-shm
+-rw-r--r--@ 1 joshuadavis  staff  8185647104 Nov 12 23:55 index.db
+-rw-r--r--@ 1 joshuadavis  staff       32768 Nov 12 23:55 index.db-shm
 ```
