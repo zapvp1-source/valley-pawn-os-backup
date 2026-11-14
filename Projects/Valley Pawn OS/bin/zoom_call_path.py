@@ -192,6 +192,70 @@ def _main():
     tok = mct.zoom_token(now)
     if not tok:
         print("no token"); return 1
+    if len(sys.argv) > 1 and sys.argv[1] == "--hangups":
+        # read-only friction check: menu calls that hung up before pressing anything vs the pre-menu baseline
+        # usage: --hangups <menu_since> <baseline_from> <baseline_to>
+        msince, bfrom, bto = sys.argv[2], sys.argv[3], sys.argv[4]
+        cfg = mct.load_json(mct.CONFIG, {})
+        stores = cfg.get("stores", {})
+        today = now.astimezone(mct.ET).date().isoformat()
+        def dur(r):
+            a, b = mct.parse_ts(r.get("start_time")), mct.parse_ts(r.get("end_time"))
+            return (b - a).total_seconds() if a and b else 0
+        def inb(rows):
+            return [r for r in rows if _norm(r.get("direction")) == "inbound" and _norm(r.get("connect_type")) != "internal"]
+        # ---- baseline: straight to the store queue (no menu)
+        base = [r for r in inb(mct.zoom_calls_raw(tok, bfrom, bto)) if mct.store_for(r, stores)]
+        bopen = [r for r in base if mct.during_hours(mct.parse_ts(r["start_time"]).astimezone(mct.ET), stores[mct.store_for(r, stores)])]
+        def quick_ab(rows, secs):
+            return [r for r in rows if _norm(r.get("call_result")) in ("abandoned", "no_answer", "missed") and dur(r) <= secs]
+        # ---- menu period
+        raw = inb(mct.zoom_calls_raw(tok, msince, today))
+        menu = [r for r in raw if _norm(r.get("callee_ext_type")) == "auto_receptionist"]
+        res, errs = [], 0
+        for r in menu:
+            try:
+                d = resolve_detail(r, fetch_path(tok, r["id"]))
+            except Exception:
+                errs += 1; continue
+            st = mct.store_for(r, stores)
+            t = mct.parse_ts(r["start_time"])
+            d["_open"] = bool(st) and mct.during_hours(t.astimezone(mct.ET), stores[st])
+            d["_st"] = st or "?"
+            d["_dur"] = dur(r)
+            d["_menu_hangup"] = (not d["ivr_keys"]) and d.get("callee_ext_type") == "auto_receptionist" and d["call_result"] == "abandoned"
+            res.append(d)
+        # did a menu hang-up get through later that day (any answered call from same number)?
+        answered = {}
+        for d in res:
+            if d["call_result"] == "answered":
+                answered.setdefault(mct.e164(d.get("caller_did_number")), []).append(mct.parse_ts(d["start_time"]))
+        for r in raw:
+            if _norm(r.get("callee_ext_type")) != "auto_receptionist" and _norm(r.get("call_result")) in ANSWERED:
+                answered.setdefault(mct.e164(r.get("caller_did_number")), []).append(mct.parse_ts(r["start_time"]))
+        def pct(a, b):
+            return "%d of %d (%.1f%%)" % (a, b, 100.0 * a / b) if b else "0 of 0"
+        hang = [d for d in res if d["_menu_hangup"]]
+        hang_open = [d for d in hang if d["_open"]]
+        menu_open = [d for d in res if d["_open"]]
+        print("MENU PERIOD since %s: %d menu calls (%d during open hours), path errors %d" % (msince, len(res), len(menu_open), errs))
+        print("hung up in the menu before pressing anything: %s overall; %s during open hours" % (pct(len(hang), len(res)), pct(len(hang_open), len(menu_open))))
+        b = sorted(d["_dur"] for d in hang_open)
+        if b:
+            print("  open-hours menu hang-ups, seconds on the line: %s" % b)
+        later = [d for d in hang_open if any(t > mct.parse_ts(d["start_time"]) and t.date() == mct.parse_ts(d["start_time"]).date() for t in answered.get(mct.e164(d.get("caller_did_number")), []))]
+        print("  of open-hours menu hang-ups, reached the store later the same day: %d" % len(later))
+        by = {}
+        for d in hang_open:
+            by[d["_st"]] = by.get(d["_st"], 0) + 1
+        print("  open-hours menu hang-ups by store: %s" % json.dumps(by, sort_keys=True))
+        reached = [d for d in menu_open if d["call_result"] in ANSWERED]
+        print("open-hours menu calls answered by the store: %s" % pct(len(reached), len(menu_open)))
+        print("BASELINE %s..%s (no menu): %d inbound to stores, %d during open hours" % (bfrom, bto, len(base), len(bopen)))
+        for secs in (15, 20, 30):
+            print("  hung up within %ds without being answered (open hours): %s" % (secs, pct(len(quick_ab(bopen, secs)), len(bopen))))
+        print("  answered (open hours): %s" % pct(len([r for r in bopen if _norm(r.get("call_result")) in ANSWERED]), len(bopen)))
+        return 0
     if len(sys.argv) > 1 and sys.argv[1] == "--keys":
         # read-only: every key pressed on the store menus since a date (fresh call paths, no cache)
         since = sys.argv[2] if len(sys.argv) > 2 else now.astimezone(mct.ET).date().isoformat()

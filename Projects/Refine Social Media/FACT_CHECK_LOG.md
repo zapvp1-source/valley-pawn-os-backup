@@ -285,3 +285,14 @@ Edited (APPLIED):
 - 6af223020acc11d344605e73 Harrisonburg FB 11/12: "On a cold morning like these ... Wear a good coat today" (Thu low ~43, rain) → rain-jacket weather, high 61, upper-20s lows Fri/Sat nights.
 Left as general/evergreen: Waynesboro + GBP_Waynesboro Afton fog posts, Harrisonburg + GBP foliage posts (framed as typical timing), Culpeper Depot posts, GBP_Harrisonburg Blacks Run.
 Unverifiable: none left in posts. PUBLISHED-WRONG: none.
+
+## 2026-11-13 07:50 ET — daily fact-check (window: next 36h, to 2026-11-14 ~19:40 ET)
+- Posts checked: 16 (11/13 1:05 PM playoff/town posts: Culpeper, GBP_Culpeper, Waynesboro, GBP_Waynesboro, Harrisonburg, GBP_Harrisonburg, Roanoke, GBP_Roanoke, Lexington, GBP_Lexington; Brand + BrandTwitter 11/13 2 PM; Lexington Santa 11/13; Roanoke planer 11/14; Brand + BrandTikTok deals 11/14). Product/price and evergreen (Chilhowie brick history, family-owned since 2014) lines skipped.
+- Verified (all first-round games Friday 11/13, 7 p.m., no forfeit/postponement noted; 1A forfeits only in Region 1A):
+  - Region 5C: No. 6 Douglas Freeman at No. 3 Patrick Henry; No. 7 William Fleming at No. 2 Midlothian. Region 3C: No. 8 Wilson Memorial at No. 1 Broadway; No. 6 Monticello at No. 3 Turner Ashby; No. 7 East Rockingham at No. 2 Fluvanna County. Region 3B: No. 8 Brentsville at No. 1 Culpeper County. Region 1B: No. 7 Luray at No. 2 Riverheads; No. 8 Cumberland at No. 1 Buffalo Gap. Region 2B: No. 2 Stuarts Draft first-round bye. https://cardinalnews.org/2026/11/09/vhsl-announces-final-list-of-2026-football-playoff-brackets/ (updated 11/12, "Friday, 7 p.m."); https://www.whsv.com/2026/11/07/vhsl-releases-first-round-high-school-football-playoff-matchups/ ("Nov. 13 at 7 p.m."); https://wset.com/sports/football-friday/first-round-playoff-matchups-set-for-area-high-school-football-teams-football-friday-november-2026 ; preview with forfeit notes https://cardinalnews.org/2026/11/12/2026-vhsl-football-playoffs-kick-off-this-weekend-heres-a-preview/
+  - Lexington FB "Cold morning" + GBP "chilly-morning": NWS text forecast updated 7:00 AM 11/13: 41F, wind chill 36 at 7:35 AM (KSHD), sunny high 52, gusts 25, tonight low ~30. https://forecast.weather.gov/MapClick.php?lat=37.784&lon=-79.4428&FcstType=text (graphical MapClick page is stale, Oct 1). Left as is.
+  - Hours: "open today 10am-6pm" (Lexington Fri), "all five open until 6 today" (Brand/X Fri), Roanoke "open until 5 today" (Sat) all match standing hours.
+- Edited (APPLIED):
+  - 6af2229b0acc11d344605d54 Waynesboro FB 11/13: "Stuarts Draft ... has a first-round bye and hosts on Nov. 20" → "earned a first-round bye and gets the week off" (Nov. 20 home date not in any bracket source).
+  - 6af222a4f9116176eb086455 GBP_Waynesboro 11/13: same claim → "Stuarts Draft, the No. 2 seed in Region 2B, has a first-round bye."
+- Unverifiable: Stuarts Draft second-round date/site (removed). PUBLISHED-WRONG: none.

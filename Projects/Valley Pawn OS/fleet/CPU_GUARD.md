@@ -1,40 +1,43 @@
-# CPU Guard — 2026-11-13 00:11 EST
+# CPU Guard — 2026-11-14 00:14 EST
 
 Native agent com.valleypawn.cpu-guard (bin/cpu_guard.sh), every 5 min. See header of the script.
 
 ## Load
-0:11  up 10 days,  7:24, 1 user, load averages: 5.74 6.07 6.41
+0:14  up 11 days,  7:27, 1 user, load averages: 9.86 12.32 13.17
 
 ## Process states (R=running, U=waiting on disk)
 ```
-   6 R  697 S    3 Z 
+   9 R  650 S    2 U    3 Z 
 1 sort
 1 ps
 1 head
-1 /System/Library/PrivateFrameworks/MediaAnalysis.framework/Versions/A/mediaanalysisd
-1 /Applications/Google
+1 /usr/sbin/cfprefsd
+1 /usr/libexec/diskimagesiod
+1 /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer
+1 /System/Library/Frameworks/CoreSpotlight.framework/spotlightknowledged
+1 /System/Library/CoreServices/TimeMachine/backupd
 ```
 
 ## Top CPU right now
 ```
  %CPU NI   PID COMM
- 42.6  0 52697 /System/Library/PrivateFrameworks/MediaAnalysis.framework/Versions/A/mediaanalysisd
- 28.9  0 30327 /Applications/Google Drive.app/Contents/MacOS/Google Drive
- 23.9  0   425 /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer
- 20.3  0 97150 /Applications/Parallels Desktop.app/Contents/MacOS//Parallels VM.app/Contents/MacOS/prl_vm_app
-  8.8  0 18534 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.WebContent.xpc/Contents/MacOS/com.apple.WebKit.WebContent
-  7.1  0   530 /System/Library/Audio/Plug-Ins/usbaudio.bundle/Contents/MacOS/usbaudiod
-  6.3  0 99012 /usr/libexec/sysmond
-  5.9  0   688 /System/Library/CoreServices/ControlCenter.app/Contents/MacOS/ControlCenter
-  3.2  0  1185 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
-  2.8  0   417 /usr/sbin/bluetoothd
-  2.7  0 96015 /bin/bash
+ 47.6  0   425 /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer
+ 30.4  0 16267 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python
+ 26.2  0 30327 /Applications/Google Drive.app/Contents/MacOS/Google Drive
+ 20.7  0   403 /usr/libexec/dasd
+ 14.7  0 97150 /Applications/Parallels Desktop.app/Contents/MacOS//Parallels VM.app/Contents/MacOS/prl_vm_app
+ 11.0  0 99012 /usr/libexec/sysmond
+ 10.6  0 95582 /System/Library/Frameworks/CoreSpotlight.framework/spotlightknowledged
+  7.2  0   499 /System/Library/CoreServices/TimeMachine/backupd
+  6.7  0   688 /System/Library/CoreServices/ControlCenter.app/Contents/MacOS/ControlCenter
+  5.0  0   690 /System/Library/CoreServices/SystemUIServer.app/Contents/MacOS/SystemUIServer
+  4.8  0   646 /usr/sbin/cfprefsd
 ```
 
 ## Memory
 ```
-total = 13312.00M  used = 12344.88M  free = 967.12M  (encrypted)
-System-wide memory free percentage: 52%
+total = 9216.00M  used = 8668.31M  free = 547.69M  (encrypted)
+System-wide memory free percentage: 62%
 ```
 
 ## Camera agents (nice should be 10)
@@ -66,9 +69,9 @@ drwxr-xr-x@ 8 joshuadavis  staff  256 Nov  7 13:26 evidence
 drwxr-xr-x@ 9 joshuadavis  staff  288 Nov  7 13:25 tracks
 
 /Users/joshuadavis/.vp-studio/offsync/unified-search:
-total 15987656
-drwxr-xr-x@ 5 joshuadavis  staff         160 Nov 12 05:10 .
+total 15987720
+drwxr-xr-x@ 5 joshuadavis  staff         160 Nov 13 05:27 .
 drwxr-xr-x@ 4 joshuadavis  staff         128 Nov  7 13:23 ..
--rw-r--r--@ 1 joshuadavis  staff  8185647104 Nov 12 23:55 index.db
--rw-r--r--@ 1 joshuadavis  staff       32768 Nov 12 23:55 index.db-shm
+-rw-r--r--@ 1 joshuadavis  staff  8185647104 Nov 13 23:34 index.db
+-rw-r--r--@ 1 joshuadavis  staff       65536 Nov 13 23:34 index.db-shm
 ```

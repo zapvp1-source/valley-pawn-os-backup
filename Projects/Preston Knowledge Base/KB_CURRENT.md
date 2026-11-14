@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-11-12 22:11 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-11-13 22:13 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -935,6 +935,12 @@ PRESTON SAID: "• Always do your research. Looking up items can give surprising
 SOURCE: #general | 2023-12-18 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1702908015893249
 id: qualify-needs-not-wants-792845a4
 
+### [HIGH] reloan-bump-top-customers
+RULE: On reloans, review top customers and raise the loan amount where there is room (for example, an extra $500). Keep the loan safe while raising the bottom line.
+PRESTON SAID: "Make sure you are looking at your top customers on reloans where there is room. Keep it safe but raise the bottom line!"
+SOURCE: #general (Preston Peters, Operations Manager) | 2026-11-13 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1794593511046709
+id: reloan-bump-top-customers-98063bd1
+
 ### [HIGH] what-we-pay-most-for
 RULE: The categories to steer customers toward, in Preston's written training: guns, gold (broken or resellable), jewelry, coins, ammo, "big toys" (4-wheelers, dirtbikes, motorcycles, zero-turn mowers), new-gen gaming consoles, and high-end brands of all categories. Always ask if the customer has other items and tell them what we pay the most for.
 PRESTON SAID: "• Ask if the customer has other items. Tell them what we pay the most for. This leads to getting quality merchandise and directing the flow of what we take in.
@@ -1101,6 +1107,12 @@ RULE: Walker raised a loan or pay percentage to 60% for a customer he considered
 PRESTON SAID: "Bumped to 60% bullet proof customer"
 SOURCE: #harrisonburg-funds (Walker Tapley, Harrisonburg manager) | 2026-11-06 | https://valleypawnworkspace.slack.com/archives/C03BWRKEDUZ/p1793981780016469
 id: loan-percentage-trusted-cust-6e2e2d54
+
+### [LOW] reloan-bump-example-harrisonburg
+RULE: Harrisonburg bumped a solid repeat customer's reloan by $500. This is a single-deal example of the top-customer reloan bump.
+PRESTON SAID: "Solid customer reloan. Bumping $500"
+SOURCE: #harrisonburg-funds (Walker Tapley, Harrisonburg manager) | 2026-11-13 | https://valleypawnworkspace.slack.com/archives/C03BWRKEDUZ/p1794589985705069
+id: reloan-bump-example-harrison-e8841d0a
 
 
 ==============================================================================
@@ -2745,5 +2757,5 @@ id: past-due-75-day-5-percent-ce-30eeab0b
 
 
 ==============================================================================
-COVERAGE: 381 entries - 31 verified by Preston, 153 high-confidence rules, 112 medium, 83 low, 2 superseded.
+COVERAGE: 383 entries - 31 verified by Preston, 154 high-confidence rules, 112 medium, 84 low, 2 superseded.
 ==============================================================================

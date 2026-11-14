@@ -1831,7 +1831,7 @@ ScrapApplyAllStatusFilter() {
         funnelY := pos.y + Round(pos.h / 2)
         LogMessage("    [filter] clicking funnel at " . funnelX . "," . funnelY)
         Click(funnelX . "," . funnelY)
-        Sleep(700)
+        Sleep(1200)
         ; 2026-09-28b: the funnel popup is its own floating window, not part of
         ; the main window's element tree - GetBravoRoot() (single-window) only
         ; ever saw the '(Select All)' tri-state box. Search ALL Bravo.exe
@@ -1860,6 +1860,32 @@ ScrapApplyAllStatusFilter() {
             }
         }
         LogMessage("    [filter] status boxes: " . names . " -> ticked " . ticked)
+        ; 2026-11-13: the individual status boxes are not exposed (ticked 0 every run since
+        ; 9/28), so the view silently stayed OPEN+CLOSED and every bucket already moved to
+        ; SHIPPING/RECEIVED/ASSAYED was invisible (CUL/WAY October 2026 looked "missing").
+        ; Tick "(Select All)" instead - that is every status.
+        if (ticked = 0) {
+            for b in boxes {
+                nm := ""
+                try nm := b.Name
+                if (nm != "(Select All)")
+                    continue
+                Loop 3 {
+                    st := -1
+                    try st := b.ToggleState
+                    if (st = 1)
+                        break
+                    try b.Click("left")
+                    Sleep(500)
+                }
+                st := -1
+                try st := b.ToggleState
+                LogMessage("    [filter] (Select All) state now " . st)
+                if (st = 1)
+                    ticked := 1
+                break
+            }
+        }
         if (ticked = 0 && !InStr(names, "CLOSED=1")) {
             ; nothing toggled and CLOSED not visibly on - fall back to the proven CLOSED click
             closedItem := FindByName(SCRAP_ELEMENTS["filter_closed"], 1500)

@@ -1,5 +1,19 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-13 (daily PREP run, 12:42–13:25 ET, level 1 all pages) — picks queued, nothing published by this run
+- Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only ("Comment as Joshua Davis" seen; composer read "What's on your mind, Joshua" at the end) — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. Still no POST-mode chat since 11/2 evening (ledger unchanged at 60 rows).
+- Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).
+- Dropped from QUEUE (lapsed): Roanoke RVSPCA Kindness Drive comment + Explore Park Illuminights share; Waynesboro Wayne Theatre comment (11/11 wording); Harrisonburg MRL author-talks comment + Downtown Swap Meet-Up share; Brand Blue Ridge Parkway eagle comment; Culpeper County Library comment.
+- Still valid from 11/12: Lexington comment (W&L women's soccer, until TODAY 17:00); Culpeper share (Museum Elementary Explorers, until 11/14 12:35); Waynesboro share (Library Creative Writing Workshop, until 11/14 07:50); Lexington share (RRL Bread Around the World, until 11/14 11:55).
+- New picks: Roanoke comment → Roanoke Valley SPCA (Waggin' Wednesdays, Bug Eyed Frank); Roanoke share → Roanoke Public Libraries Williamson Road Branch free dinner & movie, Free Birds, Mon Nov 16 6:00 PM (permalink confirmed); Culpeper comment → Culpeper County Public Schools (Career Partners, Business-Education Partnership Award); Waynesboro comment → Wayne Theatre (Studio Wayne, Chitty Chitty Bang Bang JR.); Harrisonburg comment → Massanutten Regional Library (Fandom Fest Cosplay Contest, no names used); Harrisonburg share → Massanutten Regional Library Winter Wonderfest, Sat Dec 5, Central Library (/posts/ permalink confirmed); Brand comment → Shenandoah National Park (Rockfish Gap hawk watch). All valid into 11/14.
+- Skipped on purpose: RVSPCA puppy parvo post (donation ask, sad); RVSPCA Bonfire store (merch sales); Downtown Roanoke gift cards / City Market (shopping promos); Harrisonburg Downtown Veterans Parade grand marshal post (sponsor list includes a jeweler — competitor rule); Harrisonburg Downtown Shops at Agora / Walkabout (shop promos); Harrisonburg Parks youth basketball (11/5, too old); MRL grief author talk; City of Waynesboro (closings, ADA plan comment period, lane closure); SNP SHENALERTS signup; Lime Kiln (newest 11/10).
+- Ramp: 14 days at level 1 completes 11/14, but nothing has been published since 11/2, so there is no clean posting record to step up on — all pages hold level 1 until POST-mode chats resume.
+- Follows: no new ones; 18 pending, all re-dated.
+- Watchlist: 0 resolved; VMI Keydets retired after 3rd failed search (only fan/rifle/soccer pages); JMU Athletics now 2 attempts. 11 pages re-checked.
+- Needs a person: none.
+- Replies on own pages: not swept (POST mode only). Tab closed.
+- Totals this run: comments 0 (5 new queued, 1 still pending), shares 0 (2 new queued, 3 still pending), replies 0, follows 0 (18 pending), new pages resolved 0.
+
 ## 2026-11-12 (daily PREP run, 12:43–13:20 ET, level 1 all pages) — picks queued, nothing published by this run
 - Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only ("Comment as Joshua Davis" seen; composer read "What's on your mind, Joshua?" at the end) — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. Still no POST-mode chat since 11/2 evening (ledger unchanged).
 - Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).

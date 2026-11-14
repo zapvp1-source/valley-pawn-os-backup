@@ -3,6 +3,8 @@
 Source of truth for the clock-in task. Edit THIS file to change the task (no app/cloud edit needed).
 Change log: 2026-10-15 — Waynesboro open Wednesdays (from 10/14, Joshua): Wednesday = Culpeper + Roanoke + Waynesboro. Added Step 0 duplicate guard because an older copy of this task may still run.
 
+> ⚠️ **SUPERSEDED 2026-11-13:** the live copy is the cloud scheduled task "Daily clockin check". Latest rule (Joshua 2026-11-13): no salaried staff ever appear — anyone whose Gusto primary job `payment_unit` is not Hour is dropped (currently Sandi Cole, Chadd McClintic, Benjie Moore), plus Preston Peters.
+
 > ⚠️ **FAILURE POLICY v3 (2026-09-08) — OVERRIDES every failure/DM instruction below.** On any failure, stall, expired login, missing connector, or anything you cannot complete: do NOT DM Joshua and do NOT message anyone. Append ONE row to `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/fleet/FAILURE_LEDGER.md` — `| <YYYY-MM-DD HH:MM ET> | daily-clockin-check | <one plain sentence: what did not happen> | <NEEDS_HUMAN: no — or yes, <the one thing only Joshua can do>> | OPEN |` — then stop. Success-path posts are unchanged.
 
 > ⚠️ **FIELD COMMUNICATION STANDARD v3 (binding):** `/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/FIELD_COMMUNICATION_STANDARD.md`. Plain everyday language only, no tool/system names (never say Gusto, Cowork, etc.), no file paths or IDs, no meta-commentary about the automation, ~100 words max, no signature footers.
