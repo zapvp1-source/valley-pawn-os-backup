@@ -6,6 +6,7 @@ bot token from Keychain (service vp-ops-slack-bot-token). stdlib only.
   vp_slack.py post <channel_id> "<text>"      post text verbatim to a channel (bot must be a member)
   vp_slack.py post <channel_id> --file <p>    post the contents of file <p> verbatim (multi-line safe)
   vp_slack.py upload <channel_or_user_id> <path> "<title>"   upload a file (xlsx etc.)
+  vp_slack.py upload-link <channel_or_user_id> <path> "<title>"   upload, print the file's permalink
   vp_slack.py has <channel_id> "<marker>" [hours]   exit 0 if a message containing marker exists in the last N hours (default 24)
 
 Exit 0 = Slack accepted it. Non-zero = not delivered (reason on stderr). Never posts on error.
@@ -204,6 +205,41 @@ def upload(target, path, title):
         sys.exit("completeUploadExternal: " + r2.get("error", "?"))
     receipt("file-upload", ch, True, size, os.path.basename(path))
     print(r["file_id"])
+    return r["file_id"], r2
+
+
+def permalink(file_id, filename, r2=None):
+    """Clickable Slack link to an uploaded file (2026-11-14, Joshua: reports that send him a spreadsheet
+    should link straight to it). Order: the upload response, files.info (needs files:read), then the
+    canonical https://<team>.slack.com/files/<uploader>/<file_id>/<name> form built from auth.test."""
+    for f in ((r2 or {}).get("files") or []):
+        if f.get("id") == file_id and f.get("permalink"):
+            return f["permalink"]
+    try:
+        r = call("files.info", params={"file": file_id})
+        if r.get("ok") and (r.get("file") or {}).get("permalink"):
+            return r["file"]["permalink"]
+    except Exception:
+        pass
+    try:
+        a = call("auth.test", payload={})
+        if a.get("ok") and a.get("url") and a.get("user_id"):
+            return "%sfiles/%s/%s/%s" % (a["url"].rstrip("/") + "/", a["user_id"], file_id,
+                                         urllib.parse.quote(filename))
+    except Exception:
+        pass
+    return ""
+
+
+def upload_link(target, path, title):
+    """upload + print ONLY the file's permalink on stdout (empty if diverted or unknown)."""
+    import io, contextlib
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf):
+        res = upload(target, path, title)
+    if not res:
+        return
+    print(permalink(res[0], os.path.basename(path), res[1]))
 
 
 def has(channel, marker, hours):
@@ -228,6 +264,8 @@ def main(a):
         post(ch, text)
     elif cmd == "upload":
         upload(a[1], a[2], a[3] if len(a) > 3 else os.path.basename(a[2]))
+    elif cmd == "upload-link":   # upload-link <channel_or_user_id> <path> "<title>" -> prints the file's permalink
+        upload_link(a[1], a[2], a[3] if len(a) > 3 else os.path.basename(a[2]))
     elif cmd == "last":   # last <channel_id> [n]  — raw text of the last n messages (debug)
         r = call("conversations.history", params={"channel": a[1], "limit": int(a[2]) if len(a) > 2 else 3})
         for m in r.get("messages", []):

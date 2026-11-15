@@ -79,18 +79,30 @@ if [ $RENDER -eq 1 ]; then
 fi
 TITLE=$(head -1 "$PROJ/$SUM.msg" | sed 's/^[[:space:]:_*a-z]*//' | cut -c1-60)   # first line = report title incl. the date
 if [ -n "$TITLE" ] && slack has "$CH" "$TITLE" 20 2>/dev/null; then vlog "already posted today — skip"; exit 0; fi
+# 2026-11-14 (Joshua): the post links straight to the spreadsheet. The xlsx goes to Joshua's DM FIRST so the
+# channel post can carry its link; if the upload or link fails, the post goes out exactly as before.
+XLSX="${XLSX//\\ / }"; XLINK=""
+if [ "$XLSX" != "-" ] && [ -f "$XLSX" ]; then
+  XLINK=$(slack upload-link U03BB52MDSA "$XLSX" "$LABEL $Y" 2>/dev/null | tail -1)
+  vlog "xlsx sent to Joshua${XLINK:+ (link ok)}"
+fi
 if [ "$KIND" = "pawn" ]; then
   # the SKILL's one line-substitution: the spreadsheet goes to Joshua, not to the channel
   sed -i '' 's/^📎 _Spreadsheet:.*$/📎 _Detailed item-level spreadsheet sent to Joshua._/' "$PROJ/$SUM.msg"
 fi
+case "$XLINK" in https://*)
+  if grep -q '^📎 _Detailed item-level spreadsheet sent to Joshua._' "$PROJ/$SUM.msg"; then
+    XL="$XLINK" $PY -c 'import os,sys;p=sys.argv[1];s=open(p,encoding="utf-8").read();open(p,"w",encoding="utf-8").write(s.replace("📎 _Detailed item-level spreadsheet sent to Joshua._","📎 _Detailed item-level spreadsheet sent to Joshua_ — <%s|open the spreadsheet>"%os.environ["XL"]))' "$PROJ/$SUM.msg"
+  else
+    printf '\n\n📎 _Detailed spreadsheet sent to Joshua_ — <%s|open the spreadsheet>' "$XLINK" >> "$PROJ/$SUM.msg"
+  fi ;;
+esac
 slack post "$CH" --file "$PROJ/$SUM.msg" >/dev/null && vlog "posted to $CH" || { ledger "$TASK" "$LABEL for $Y compiled but Slack refused the post to $CH." "no"; exit 1; }
-XLSX="${XLSX//\\ / }"
-[ "$XLSX" != "-" ] && [ -f "$XLSX" ] && slack upload U03BB52MDSA "$XLSX" "$LABEL $Y" >/dev/null && vlog "xlsx sent to Joshua"
 if [ "${FLAGS:-0}" -gt 0 ] 2>/dev/null; then
   case "$KIND" in
-    pawn)     slack dm "⚑ PAWN WALK flags $Y: $FLAGS item(s) below 30% margin. Spreadsheet is in this DM." ;;
-    sold)     slack dm "SOLD REVIEW flags $Y: $FLAGS item(s) sold below the margin floor. Spreadsheet is in this DM." ;;
-    discount) slack dm "DISCOUNT REVIEW flags $Y: $FLAGS item(s) discounted ≥20% or ≥\$50 off ticket. Spreadsheet is in this DM." ;;
+    pawn)     slack dm "⚑ PAWN WALK flags $Y: $FLAGS item(s) below 30% margin. Spreadsheet is in this DM${XLINK:+ — <$XLINK|open it>}." ;;
+    sold)     slack dm "SOLD REVIEW flags $Y: $FLAGS item(s) sold below the margin floor. Spreadsheet is in this DM${XLINK:+ — <$XLINK|open it>}." ;;
+    discount) slack dm "DISCOUNT REVIEW flags $Y: $FLAGS item(s) discounted ≥20% or ≥\$50 off ticket. Spreadsheet is in this DM${XLINK:+ — <$XLINK|open it>}." ;;
   esac >/dev/null
 fi
 vlog "=== $TASK done ==="

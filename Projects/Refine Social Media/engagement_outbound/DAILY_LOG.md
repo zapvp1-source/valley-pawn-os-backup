@@ -1,5 +1,20 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-14 (daily PREP run, 12:42–13:05 ET, level 1 all pages, Saturday) — picks queued, nothing published by this run
+- Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only ("Comment as Joshua Davis" seen; composer read "What's on your mind, Joshua?" at the end) — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. Still no POST-mode chat since 11/2 evening (ledger unchanged at 60 rows).
+- Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).
+- Dropped from QUEUE (lapsed): Culpeper share (Museum Elementary Explorers, 12:35) + Culpeper comment (CCPS Career Partners, 09:40); Waynesboro share (Library Creative Writing Workshop, 07:50); Lexington comment (W&L soccer, 11/13 17:00) + Lexington share (RRL Bread Around the World, 11:55).
+- Still valid from 11/13: Roanoke comment (RVSPCA, until TODAY 13:40) + share (Williamson Road Branch Free Birds, until 21:45); Waynesboro comment (Wayne Theatre, until 16:45); Harrisonburg comment (MRL cosplay, until 14:50) + share (MRL Winter Wonderfest, until 11/15 10:45); Brand comment (SNP hawk watch, until 13:50).
+- New picks (permalinks opened and text confirmed): Culpeper share → Culpeper County Parks & Recreation Friday Fast Break (30+) December session (until 11/15 19:45); Roanoke comment → Mill Mountain Zoo vet-tech thank-you, staff member unnamed (until 11/15 15:00); Lexington comment → W&L "favorite spot within an hour" (until TODAY 16:09); Waynesboro comment → Waynesboro Public Library BookFaceFriday (backup if the Wayne Theatre comment lapses; until 11/15 09:00).
+- Skipped on purpose: CRI Downtown thrift BOGO (shop promo); Museum of Culpeper History Culpeper Express (ticketed, near 48 h); Visit Culpeper (newest 11/10); Mill Mountain Zoo early-closing notice; Downtown Roanoke City Market tip (shopping); Main Street Lexington Pink Friday (11/6); RRL Reading in Color Family Fun Day (Lexington branch closed for mold air tests — event status unclear); Blue Ridge Parkway / SNP (newest posts 3 days old, prescribed-fire notices); Explore More (newest 11/6); Waynesboro Parks (newest 11/10).
+- Brand: no new pick (SNP hawk-watch comment still queued until 13:50).
+- Ramp: all pages hold level 1 (no clean posting record since 11/2 to step up on).
+- Follows: 2 new queued (Harrisonburg → Rockingham County Public Schools - VA, James Madison University); 20 pending, all re-dated.
+- Watchlist: 2 resolved — Rockingham County Public Schools (/rcpsva, 17K) and JMU (3rd search found no official Dukes athletics page; resolved to the James Madison University main page, 134K). 16 pages re-checked.
+- Needs a person: none.
+- Replies on own pages: not swept (POST mode only). Tab closed.
+- Totals this run: comments 0 (3 new queued, 3 still pending), shares 0 (1 new queued, 2 still pending), replies 0, follows 0 (20 pending), new pages resolved 2.
+
 ## 2026-11-13 (daily PREP run, 12:42–13:25 ET, level 1 all pages) — picks queued, nothing published by this run
 - Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only ("Comment as Joshua Davis" seen; composer read "What's on your mind, Joshua" at the end) — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. Still no POST-mode chat since 11/2 evening (ledger unchanged at 60 rows).
 - Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).

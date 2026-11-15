@@ -296,3 +296,14 @@ Unverifiable: none left in posts. PUBLISHED-WRONG: none.
   - 6af2229b0acc11d344605d54 Waynesboro FB 11/13: "Stuarts Draft ... has a first-round bye and hosts on Nov. 20" → "earned a first-round bye and gets the week off" (Nov. 20 home date not in any bracket source).
   - 6af222a4f9116176eb086455 GBP_Waynesboro 11/13: same claim → "Stuarts Draft, the No. 2 seed in Region 2B, has a first-round bye."
 - Unverifiable: Stuarts Draft second-round date/site (removed). PUBLISHED-WRONG: none.
+
+## 2026-11-14 07:45 ET — daily fact-check (window: next 36h)
+Posts checked: 13 (Roanoke product post, Brand + BrandTikTok weekly deals, 10 Sunday 11/15 3 PM local-note posts). Product/price posts' only dated claim checked against store hours.
+Claims verified:
+- Roanoke "open until 5 today" (Sat 11/14) — matches standing hours Sat 10-5.
+- Mill Mountain Star first lit 8:22 PM Nov 23, 1949; 10,000 lb; 2,000 ft neon; white year-round except Memorial Day, Flag Day, Independence Day, Patriot Day, Veterans Day (the 250th red/white/blue lighting was only July 1-5, 2026) — https://www.playroanoke.com/the-roanoke-star/ (city page, modified 2026-06-23). 88.5 ft, Kinsey Sign Co. — https://en.wikipedia.org/wiki/Roanoke_Star. Mon Nov 23, 2026 = 77th anniversary (1949+77; 11/14/26 is Sat → 11/23 Mon).
+- Culpeper Depot: 1904 Southern Railway, current Amtrak stop (Cardinal, Crescent, NE Regional), houses Museum of Culpeper History, 111 S. Commerce St — https://www.greatamericanstations.com/stations/CLP, https://en.wikipedia.org/wiki/Culpeper_station; museum moved there 2014 and is open Mon-Sun 10-4 (so the "spend a Sunday" line holds) — https://culpepermuseum.com/ , https://culpepermuseum.com/the-museum/. Note: museum lists its own address as 113 S. Commerce, Wikipedia says 109; Amtrak's 111 kept.
+- Lexington "now that we're into November" — true. Fall-color, Harrisonburg railroad and Waynesboro Rockfish Gap posts are evergreen history/seasonal-pattern — skipped per rules.
+Posts edited:
+- 6af223690acc11d344605fc1 (Roanoke FB, Sun 11/15 3 PM): "Next Monday, Nov. 23" → "A week from tomorrow, on Monday, Nov. 23" (posted on a Sunday, "next Monday" reads as 11/16). APPLIED.
+Unverifiable: none left in posts. PUBLISHED-WRONG: none.

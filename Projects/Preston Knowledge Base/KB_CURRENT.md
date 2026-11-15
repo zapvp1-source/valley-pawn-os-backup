@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-11-13 22:13 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-11-14 22:11 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -1084,6 +1084,12 @@ PRESTON SAID: "I want them to know how to look at the loan and make sure it's th
 SOURCE: zoom-call:fa7bf71c53e84e369251149633ae9205 | 2026-10-20 | UNK Sandi Cole
 id: customer-loan-status-communi-41fae0a7
 
+### [LOW] customer-makegood-signed-acknowledgment
+RULE: When a customer is made whole on a deal by swapping in replacement jewelry, the store sends the item tags to Preston, and the customer signs a document saying the store took care of her. This comes from one case, so treat it as a likely procedure rather than a confirmed rule.
+PRESTON SAID: "Just send me the tags and have her-- if I can get you something-- let me see if I can get you something for her to sign, just saying that we took care of her."
+SOURCE: zoom-call:6f1d713ac38a4a81a22b38180778c0e1 | 2026-11-14 | UNK Benjie Moore
+id: customer-makegood-signed-ack-c9d22d8e
+
 ### [LOW] expired-loan-reactivation-vs-scrap
 RULE: When a customer with an expired loan has the money and is ready to reactivate it, try to reactivate rather than scrap the item. The speaker's reasoning is that the store earns more from ongoing loan payments, whereas an item can only be scrapped once.
 PRESTON SAID: "if they but if they got money, they're ready to act and reactivate it. I feel like we should try to do that."
@@ -2081,6 +2087,18 @@ PRESTON SAID: "Have Tim Shelton trying to get a loan for $2000 on two really hig
 SOURCE: DM Joshua<->Preston | 2023-12-08 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1702049443893019
 id: high-value-deal-judgment-kni-939cd4e1
 
+### [MEDIUM] id-type-ori-dup-30-days
+RULE: The three-letter code on the ID determines the age requirement. If it is ORI or DUP, the ID needs to be 30 days old.
+PRESTON SAID: "If it is ORI or DUP then it needs to be 30 days old"
+SOURCE: #general (Preston Peters, Operations Manager) | 2026-11-14 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1794668366646509
+id: id-type-ori-dup-30-days-8c4c7984
+
+### [MEDIUM] id-type-ren-no-age-requirement
+RULE: If the three-letter code on the ID is REN, the ID does not need to be 30 days old.
+PRESTON SAID: "If it is REN then it doesn't need to be 30 days"
+SOURCE: #general (Preston Peters, Operations Manager) | 2026-11-14 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1794668350943289
+id: id-type-ren-no-age-requireme-7a5f4982
+
 ### [MEDIUM] insurance-claim-metals-valuation
 RULE: For an insurance claim on lost gold, Preston's method is to snapshot the gold spot price as of the date the claim/report was filed, then run the standard dwt melt formula. On a 54.8 dwt 14k chain the loan was $380 and melt at claim time was $7,261.
 PRESTON SAID: "That missing chain from Hburg. The guy just paid it off. It's the one that's been missing on loan for a few years. Need to discuss what we are going to/want to do. The loan was for $380. Chain is 54.8dwt of 14k. Melt is $7,261 currently."
@@ -2757,5 +2775,5 @@ id: past-due-75-day-5-percent-ce-30eeab0b
 
 
 ==============================================================================
-COVERAGE: 383 entries - 31 verified by Preston, 154 high-confidence rules, 112 medium, 84 low, 2 superseded.
+COVERAGE: 386 entries - 31 verified by Preston, 154 high-confidence rules, 114 medium, 85 low, 2 superseded.
 ==============================================================================
