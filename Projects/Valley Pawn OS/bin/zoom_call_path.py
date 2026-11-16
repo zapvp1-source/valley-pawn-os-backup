@@ -192,6 +192,122 @@ def _main():
     tok = mct.zoom_token(now)
     if not tok:
         print("no token"); return 1
+    if len(sys.argv) > 1 and sys.argv[1] == "--answer":
+        # read-only: answer rate per period, same definitions as Call Analysis/deck_2026-11/COMM_STATS.md section A
+        # usage: --answer FROM:TO [FROM:TO ...]
+        cfg = mct.load_json(mct.CONFIG, {})
+        stores = cfg.get("stores", {})
+        UN = ("no_answer", "abandoned", "voicemail", "missed", "overflowed", "ring_timeout", "busy", "timeout", "rejected")
+        for span in sys.argv[2:]:
+            f, t = span.split(":")
+            rows = [r for r in mct.zoom_calls_raw(tok, f, t) if _norm(r.get("direction")) == "inbound"
+                    and _norm(r.get("connect_type")) != "internal" and mct.store_for(r, stores)]
+            res, _ = resolve_rows(rows, tok)
+            tot = len(res); un = 0; self_served = 0; op = 0; opm = 0; per = {}
+            for r in res:
+                cr = _norm(r.get("call_result"))
+                st = mct.store_for(r, stores)
+                isopen = mct.during_hours(mct.parse_ts(r["start_time"]).astimezone(mct.ET), stores[st])
+                p = per.setdefault(st, [0, 0, 0, 0])
+                p[0] += 1
+                if cr in ("ivr_hours", "ivr_app_link"):
+                    self_served += 1
+                    continue
+                miss = cr in UN
+                un += miss; p[1] += miss
+                if isopen:
+                    op += 1; opm += miss; p[2] += 1; p[3] += miss
+            pc = lambda a, b: "%d/%d (%d%%)" % (a, b, round(100.0 * a / b)) if b else "-"
+            print("%s..%s  inbound %d  unanswered %s  self-served by menu %d  missed while open %s" % (f, t, tot, pc(un, tot), self_served, pc(opm, op)))
+            for st in sorted(per):
+                p = per[st]
+                print("    %s inbound %d  unanswered %s  missed while open %s" % (st, p[0], pc(p[1], p[0]), pc(p[3], p[2])))
+        return 0
+    if len(sys.argv) > 1 and sys.argv[1] == "--spam":
+        # read-only: how many quick hang-ups look like spam/robocalls. Prints counts only (no names, last-4 only).
+        # usage: --spam <menu_since> <baseline_from> <baseline_to> <history_from>
+        msince, bfrom, bto, hfrom = sys.argv[2:6]
+        cfg = mct.load_json(mct.CONFIG, {})
+        stores = cfg.get("stores", {})
+        today = now.astimezone(mct.ET).date().isoformat()
+        dids = {mct.e164(x.get("did")) for x in stores.values()}
+        hist = [r for r in mct.zoom_calls_raw(tok, hfrom, today) if _norm(r.get("direction")) == "inbound"]
+        hist += [r for r in mct.zoom_calls_raw(tok, msince, today) if _norm(r.get("direction")) == "inbound"]
+        seen_ids, H = set(), []
+        for r in hist:
+            if r.get("id") not in seen_ids:
+                seen_ids.add(r.get("id")); H.append(r)
+        out_rows = [r for r in mct.zoom_calls_raw(tok, hfrom, today) if _norm(r.get("direction")) == "outbound"]
+        by_num, stores_by_num = {}, {}
+        for r in H:
+            n = mct.e164(r.get("caller_did_number"))
+            if not n: continue
+            by_num.setdefault(n, []).append(r)
+            stores_by_num.setdefault(n, set()).add(mct.store_for(r, stores) or "?")
+        called_back = {mct.e164(r.get("callee_did_number")) for r in out_rows if _norm(r.get("call_result")) in ANSWERED}
+        SPAMWORDS = ("spam", "scam", "telemarket", "robo", "fraud", "potential", "unknown", "unavailable", "private", "toll free")
+        def dur(r):
+            a, b = mct.parse_ts(r.get("start_time")), mct.parse_ts(r.get("end_time"))
+            return (b - a).total_seconds() if a and b else 0
+        def classify(r):
+            n = mct.e164(r.get("caller_did_number"))
+            name = (r.get("caller_name") or "").lower()
+            sig = []
+            if r.get("spam") not in (None, "", False, "no", "not_spam", 0):
+                sig.append("zoom-spam-flag:%s" % r.get("spam"))
+            if any(w in name for w in SPAMWORDS):
+                sig.append("spam-like caller ID")
+            if not n or r.get("hide_caller_id"):
+                sig.append("no caller number")
+            d = r.get("caller_did_number") or ""
+            if n and n[2:5] in ("800", "833", "844", "855", "866", "877", "888"):
+                sig.append("toll-free")
+            st = mct.store_for(r, stores)
+            sd = mct.e164(stores.get(st, {}).get("did")) if st else None
+            if n and sd and n[:8] == sd[:8]:
+                sig.append("same prefix as store (neighbor spoof)")
+            if n and len(stores_by_num.get(n, set()) - {"?"}) >= 3:
+                sig.append("called %d stores" % len(stores_by_num[n] - {"?"}))
+            calls = by_num.get(n, [])
+            ok = [c for c in calls if _norm(c.get("call_result")) in ANSWERED and c.get("id") != r.get("id")]
+            known = bool(ok) or (n in called_back)
+            if known:
+                verdict = "real customer (talked to a store before/after)"
+            elif any(x.startswith("zoom-spam") or x.startswith("spam-like") or x.startswith("called") for x in sig):
+                verdict = "likely spam"
+            elif sig or dur(r) <= 3:
+                verdict = "possible spam"
+            else:
+                verdict = "unknown caller (never reached a store)"
+            return verdict, sig, len(calls)
+        def report(label, rows):
+            tally = {}
+            print("%s: %d calls" % (label, len(rows)))
+            for r in rows:
+                v, sig, nc = classify(r)
+                tally[v] = tally.get(v, 0) + 1
+                print("   ...%s %s %-4s %3ds  calls-from-number:%d  %s | %s" % (
+                    (r.get("caller_did_number") or "")[-4:], mct.parse_ts(r["start_time"]).astimezone(mct.ET).strftime("%m-%d %I:%M%p"),
+                    mct.store_for(r, stores) or "?", dur(r), nc, v, ", ".join(sig) or "-"))
+            print("   TOTALS: %s" % json.dumps(tally, sort_keys=True))
+        # menu hang-ups during open hours (no key, never reached the queue)
+        raw = [r for r in mct.zoom_calls_raw(tok, msince, today) if _norm(r.get("direction")) == "inbound" and _norm(r.get("callee_ext_type")) == "auto_receptionist"]
+        mh = []
+        for r in raw:
+            try:
+                d = resolve_detail(r, fetch_path(tok, r["id"]))
+            except Exception:
+                continue
+            st = mct.store_for(r, stores)
+            if st and mct.during_hours(mct.parse_ts(r["start_time"]).astimezone(mct.ET), stores[st]) and not d["ivr_keys"] \
+                    and d.get("callee_ext_type") == "auto_receptionist" and d["call_result"] == "abandoned":
+                mh.append(r)
+        report("MENU hang-ups before pressing anything, open hours, since %s" % msince, mh)
+        base = [r for r in mct.zoom_calls_raw(tok, bfrom, bto) if _norm(r.get("direction")) == "inbound" and mct.store_for(r, stores)
+                and _norm(r.get("call_result")) in ("abandoned", "no_answer", "missed") and dur(r) <= 15
+                and mct.during_hours(mct.parse_ts(r["start_time"]).astimezone(mct.ET), stores[mct.store_for(r, stores)])]
+        report("BASELINE hang-ups within 15s, open hours, %s..%s (no menu)" % (bfrom, bto), base)
+        return 0
     if len(sys.argv) > 1 and sys.argv[1] == "--hangups":
         # read-only friction check: menu calls that hung up before pressing anything vs the pre-menu baseline
         # usage: --hangups <menu_since> <baseline_from> <baseline_to>

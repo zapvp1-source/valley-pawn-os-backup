@@ -424,3 +424,9 @@ Greeting "Store Menu Greeting v3 - <Store>": "...To extend your loan or make a p
 we'll text you the link right now. For our store hours and location, press 2. To speak with a team member, press 3."
 `fleet/ivr_config.json` app_link_key "1", hours_key "2" (read live by ivr_app_link_text.py and zoom_call_path.py —
 CHANGE IT WHENEVER THE ZOOM KEYS CHANGE). Switched before opening (0 calls in the window).
+
+**2026-11-15 — greeting v4 (all 5).** Friction check showed ~3 extra real-customer hang-ups/day during the greeting.
+New "Store Menu Greeting v4 - <Store>": "Thank you for calling Valley Pawn in <Store>. Stay on the line for a team
+member. To extend your loan or make a payment from your phone, press 1. For store hours and location, press 2."
+Keys unchanged (3 still reaches the queue; no input -> queue after one play). Measure with
+`bin/zoom_call_path.py --hangups 2026-11-16 <baseline_from> <baseline_to>`.

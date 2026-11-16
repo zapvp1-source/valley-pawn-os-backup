@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-11-14
+# LIVE STATE - auto-refreshed 2026-11-15
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -17,7 +17,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | Enabled (will fire) | 2 |
 | Registered but disabled | 230 |
 | On disk but never registered | 4 |
-| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 8166 |
+| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 7386 |
 
 ### Enabled tasks
 
@@ -238,31 +238,31 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-11-14 | Valley Pawn OS | - |
-| 2026-11-14 | Unified Search | - |
+| 2026-11-15 | Valley Pawn OS | - |
+| 2026-11-15 | Unified Search | - |
+| 2026-11-15 | Quickbooks Set UP | - |
+| 2026-11-15 | Life OS | - |
+| 2026-11-15 | Compliance | - |
+| 2026-11-15 | Business Dashboard Website | - |
+| 2026-11-15 | Bravo Data Extraction | STATUS.md |
+| 2026-11-14 | Zoom Call Pipeline | - |
+| 2026-11-14 | Website | - |
+| 2026-11-14 | Valuation Core | README.md |
+| 2026-11-14 | Store Conduct Watch | STATUS.md |
+| 2026-11-14 | Sold Margin Review | STATUS.md |
 | 2026-11-14 | Short Term Rental Optimization | - |
-| 2026-11-14 | Quickbooks Set UP | - |
-| 2026-11-14 | Life OS | - |
-| 2026-11-14 | Business Dashboard Website | - |
+| 2026-11-14 | Refine Social Media | - |
+| 2026-11-14 | Preston Knowledge Base | - |
+| 2026-11-14 | Precious Metals Settlements | - |
+| 2026-11-14 | Pawn Walks | STATUS.md |
+| 2026-11-14 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-11-14 | Human Resources | - |
+| 2026-11-14 | Health Optimization | STATUS.md |
+| 2026-11-14 | Discount Outlier Review | STATUS.md |
+| 2026-11-14 | Daily Funds Verification | - |
 | 2026-11-14 | Business Continuity | - |
-| 2026-11-14 | Bravo Data Extraction | STATUS.md |
-| 2026-11-13 | Zoom Call Pipeline | - |
-| 2026-11-13 | Website | - |
-| 2026-11-13 | Valuation Core | README.md |
-| 2026-11-13 | Store Conduct Watch | STATUS.md |
-| 2026-11-13 | Sold Margin Review | STATUS.md |
-| 2026-11-13 | Refine Social Media | - |
-| 2026-11-13 | Preston Knowledge Base | - |
-| 2026-11-13 | Precious Metals Settlements | - |
-| 2026-11-13 | Pawn Walks | STATUS.md |
-| 2026-11-13 | Jewelry Count Reconciliation | STATUS.md |
-| 2026-11-13 | Health Optimization | STATUS.md |
-| 2026-11-13 | Discount Outlier Review | STATUS.md |
-| 2026-11-13 | Daily Funds Verification | - |
-| 2026-11-13 | Compliance | - |
 | 2026-11-13 | Claude outputs | - |
 | 2026-11-13 | Ask Valley Pawn | STATUS.md |
-| 2026-11-12 | Human Resources | - |
 | 2026-11-12 | Email Refinement | - |
 | 2026-11-11 | Ai Optimized Marketing | - |
 | 2026-11-10 | Store Traffic Counter | - |

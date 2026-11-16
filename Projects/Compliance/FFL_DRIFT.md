@@ -2,6 +2,16 @@
 
 Compares public FFL listings to `ffl_vendors.json`. Fix drift through the owning site (see FFL_DEPT_OS.md); most need a store sign-in.
 
+## 2026-11-15 02:41 — 8 drift, 9 ok, 0 unverified
+- **gunnook:WAY**: fee shown $20 (should be $25) (https://gunnook.com/ffl/dealer/valley-pawn-waynesboro-va)
+- **gunnook:WAY**: hours show 9:00 AM opening (real opening 10 AM) (https://gunnook.com/ffl/dealer/valley-pawn-waynesboro-va)
+- **gunnook:HAR**: fee shown $20 (should be $25) (https://gunnook.com/ffl/dealer/valley-pawn-harrisonburg-va)
+- **gunnook:HAR**: hours show 9:00 AM opening (real opening 10 AM) (https://gunnook.com/ffl/dealer/valley-pawn-harrisonburg-va)
+- **gunnook:LEX**: fee shown $20 (should be $25) (https://gunnook.com/ffl/dealer/valley-pawn-lexington-va)
+- **gunnook:LEX**: hours show 9:00 AM opening (real opening 10 AM) (https://gunnook.com/ffl/dealer/valley-pawn-lexington-va)
+- **gunmade:HAR**: legacy name 'Dixie' on page (https://www.gunmade.com/stores/virginia/harrisonburg/valley-pawn-10100/)
+- **ffleasy:HAR**: legacy name 'Dixie' on page (https://www.ffleasy.com/virginia/harrisonburg/9854)
+
 ## 2026-11-08 02:42 — 9 drift, 9 ok, 0 unverified
 - **gunnook:WAY**: fee shown $20 (should be $25) (https://gunnook.com/ffl/dealer/valley-pawn-waynesboro-va)
 - **gunnook:WAY**: hours show 9:00 AM opening (real opening 10 AM) (https://gunnook.com/ffl/dealer/valley-pawn-waynesboro-va)
