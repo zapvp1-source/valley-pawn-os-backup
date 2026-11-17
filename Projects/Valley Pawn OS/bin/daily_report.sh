@@ -79,30 +79,36 @@ if [ $RENDER -eq 1 ]; then
 fi
 TITLE=$(head -1 "$PROJ/$SUM.msg" | sed 's/^[[:space:]:_*a-z]*//' | cut -c1-60)   # first line = report title incl. the date
 if [ -n "$TITLE" ] && slack has "$CH" "$TITLE" 20 2>/dev/null; then vlog "already posted today — skip"; exit 0; fi
-# 2026-11-14 (Joshua): the post links straight to the spreadsheet. The xlsx goes to Joshua's DM FIRST so the
-# channel post can carry its link; if the upload or link fails, the post goes out exactly as before.
+# 2026-11-16 (Joshua): sold + discount posts are compact (ranking + top 5) and the spreadsheet is attached IN
+# THE POST'S THREAD so the whole team can open it. Pawn walk keeps the 11/14 behaviour (xlsx to Joshua, linked).
 XLSX="${XLSX//\\ / }"; XLINK=""
-if [ "$XLSX" != "-" ] && [ -f "$XLSX" ]; then
-  XLINK=$(slack upload-link U03BB52MDSA "$XLSX" "$LABEL $Y" 2>/dev/null | tail -1)
-  vlog "xlsx sent to Joshua${XLINK:+ (link ok)}"
-fi
+HAVE_X=0; [ "$XLSX" != "-" ] && [ -f "$XLSX" ] && HAVE_X=1
 if [ "$KIND" = "pawn" ]; then
-  # the SKILL's one line-substitution: the spreadsheet goes to Joshua, not to the channel
+  if [ $HAVE_X -eq 1 ]; then
+    XLINK=$(slack upload-link U03BB52MDSA "$XLSX" "$LABEL $Y" 2>/dev/null | tail -1)
+    vlog "xlsx sent to Joshua${XLINK:+ (link ok)}"
+  fi
   sed -i '' 's/^📎 _Spreadsheet:.*$/📎 _Detailed item-level spreadsheet sent to Joshua._/' "$PROJ/$SUM.msg"
+  case "$XLINK" in https://*)
+    XL="$XLINK" $PY -c 'import os,sys;p=sys.argv[1];s=open(p,encoding="utf-8").read();open(p,"w",encoding="utf-8").write(s.replace("📎 _Detailed item-level spreadsheet sent to Joshua._","📎 _Detailed item-level spreadsheet sent to Joshua_ — <%s|open the spreadsheet>"%os.environ["XL"]))' "$PROJ/$SUM.msg" ;;
+  esac
+  slack post "$CH" --file "$PROJ/$SUM.msg" >/dev/null && vlog "posted to $CH" || { ledger "$TASK" "$LABEL for $Y compiled but Slack refused the post to $CH." "no"; exit 1; }
+else
+  [ $HAVE_X -eq 1 ] && printf '\n\n📎 _Every item, with full detail, is in the spreadsheet in this thread_ 👇' >> "$PROJ/$SUM.msg"
+  TS=$(slack post "$CH" --file "$PROJ/$SUM.msg" 2>/dev/null | tail -1) || { ledger "$TASK" "$LABEL for $Y compiled but Slack refused the post to $CH." "no"; exit 1; }
+  vlog "posted to $CH ts=$TS"
+  if [ $HAVE_X -eq 1 ]; then
+    case "$TS" in [0-9]*.[0-9]*) XLINK=$(slack upload-thread "$CH" "$TS" "$XLSX" "$LABEL $Y — full detail" 2>/dev/null | tail -1) ;; esac
+    if [ -z "$XLINK" ]; then   # thread upload failed: never lose the spreadsheet — Joshua still gets it
+      XLINK=$(slack upload-link U03BB52MDSA "$XLSX" "$LABEL $Y" 2>/dev/null | tail -1); vlog "thread upload failed — xlsx sent to Joshua"
+    else vlog "xlsx attached in thread"; fi
+  fi
 fi
-case "$XLINK" in https://*)
-  if grep -q '^📎 _Detailed item-level spreadsheet sent to Joshua._' "$PROJ/$SUM.msg"; then
-    XL="$XLINK" $PY -c 'import os,sys;p=sys.argv[1];s=open(p,encoding="utf-8").read();open(p,"w",encoding="utf-8").write(s.replace("📎 _Detailed item-level spreadsheet sent to Joshua._","📎 _Detailed item-level spreadsheet sent to Joshua_ — <%s|open the spreadsheet>"%os.environ["XL"]))' "$PROJ/$SUM.msg"
-  else
-    printf '\n\n📎 _Detailed spreadsheet sent to Joshua_ — <%s|open the spreadsheet>' "$XLINK" >> "$PROJ/$SUM.msg"
-  fi ;;
-esac
-slack post "$CH" --file "$PROJ/$SUM.msg" >/dev/null && vlog "posted to $CH" || { ledger "$TASK" "$LABEL for $Y compiled but Slack refused the post to $CH." "no"; exit 1; }
 if [ "${FLAGS:-0}" -gt 0 ] 2>/dev/null; then
   case "$KIND" in
     pawn)     slack dm "⚑ PAWN WALK flags $Y: $FLAGS item(s) below 30% margin. Spreadsheet is in this DM${XLINK:+ — <$XLINK|open it>}." ;;
-    sold)     slack dm "SOLD REVIEW flags $Y: $FLAGS item(s) sold below the margin floor. Spreadsheet is in this DM${XLINK:+ — <$XLINK|open it>}." ;;
-    discount) slack dm "DISCOUNT REVIEW flags $Y: $FLAGS item(s) discounted ≥20% or ≥\$50 off ticket. Spreadsheet is in this DM${XLINK:+ — <$XLINK|open it>}." ;;
+    sold)     slack dm "SOLD REVIEW flags $Y: $FLAGS item(s) sold below the margin floor. Spreadsheet${XLINK:+: <$XLINK|open it>}." ;;
+    discount) slack dm "DISCOUNT REVIEW flags $Y: $FLAGS item(s) discounted past the age allowance. Spreadsheet${XLINK:+: <$XLINK|open it>}." ;;
   esac >/dev/null
 fi
 vlog "=== $TASK done ==="

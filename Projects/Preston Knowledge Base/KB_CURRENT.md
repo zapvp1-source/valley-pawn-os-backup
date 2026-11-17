@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-11-14 22:11 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-11-16 22:13 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -1120,6 +1120,12 @@ PRESTON SAID: "Solid customer reloan. Bumping $500"
 SOURCE: #harrisonburg-funds (Walker Tapley, Harrisonburg manager) | 2026-11-13 | https://valleypawnworkspace.slack.com/archives/C03BWRKEDUZ/p1794589985705069
 id: reloan-bump-example-harrison-e8841d0a
 
+### [LOW] vehicle-loan-sizing-redemption-risk
+RULE: When sizing a loan on a motorcycle, keep it safe for the store. The deeper the loan, the less likely the customer is to redeem, and an owner who cannot ride the bike has less reason to get it back.
+PRESTON SAID: "I mean, I'm in the same Mindset is you want to make sure it's safe for us and Ideally willing to pick it up. Obviously the deeper he gets in the less likely that happens Plus if he's not able to ride it the desire to get it back is lower, too"
+SOURCE: zoom-call:f9d45952336444ca9b0a34575fec0844 | 2026-11-16 | UNK Sandi Cole
+id: vehicle-loan-sizing-redempti-6ee38519
+
 
 ==============================================================================
 SECTION: BUYER & VENDOR NETWORK
@@ -1773,6 +1779,12 @@ PRESTON SAID: "It's $2,679 to reactivate and redeem. We can't negotiate the pawn
 SOURCE: #lex-funds | 2026-03-16 | https://valleypawnworkspace.slack.com/archives/C03B3K5DL6T/p1773671561147559
 id: pawn-redemption-not-negotiab-f3fb40a4
 
+### [HIGH] phone-account-verification
+RULE: Before discussing any account information with a caller over the phone, verify the caller's name and birthdate. This applies to every call-in, every time.
+PRESTON SAID: "Call-ins on accounts over the phone need to be verified with name and birthdate before we discuss any information on the account. Make sure we are doing that every time going forward."
+SOURCE: #general (Preston Peters, Operations Manager) | 2026-11-16 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1794842384049029
+id: phone-account-verification-8228c12a
+
 ### [HIGH] pre-open-30-minutes
 RULE: The 30 minutes before opening is the most productive block of the day and has a defined task list.
 PRESTON SAID: "30 minutes before we are opening. How are you using that time? Open store, ship items, pricing list, respond to eBay, chekkit, bravo messages, expire loans that are past due/make phone calls to customers, set goals for the day with your team, pawn walk to review items from previous day, etc. This should be the most productive 30 minutes of your day!"
@@ -2300,6 +2312,12 @@ PRESTON SAID: "They have been pretty bad for us. Not even considering authentici
 SOURCE: #deal-questions | 2025-10-18 | https://valleypawnworkspace.slack.com/archives/C03BWGT5F5X/p1760808569949109
 id: sunglasses-performance-cffbb564
 
+### [MEDIUM] trailer-resale-value
+RULE: Trailers tend to hold their value and sell well, so avoid pricing them cheap.
+PRESTON SAID: "Well, I will say trailers for whatever reason, they seem to hold value well and sell really well on the ones I've ever done."
+SOURCE: zoom-call:f9d45952336444ca9b0a34575fec0844 | 2026-11-16 | UNK Sandi Cole
+id: trailer-resale-value-dddacc05
+
 ### [MEDIUM] training-needs-list-process
 RULE: When an employee needs more training (e.g., handbags, antique firearms), they should write up a list of those items so training can be prioritized, and share it with Preston and Sandy.
 PRESTON SAID: "you know make a list of of that so that way we can prioritize"
@@ -2431,6 +2449,12 @@ RULE: When ringing out an eBay sale in Bravo, check that it posts to omni channe
 PRESTON SAID: "you go to ring it out just see where omni channel it's putting it in."
 SOURCE: zoom-call:8f5e64407b104b87bc4c190dc7a56412 | 2026-10-23 | UNK Benjie Moore
 id: ebay-ringout-omni-channel-80046df7
+
+### [LOW] ebay-sales-shipping-tracking-workflow
+RULE: List and sell through eBay first so the shipping tracking number is available, then manually bill the sale out in the store system (Bravo/BIA) using that tracking number.
+PRESTON SAID: "We always do it through eBay first so we can have the tracking number to put in BIA."
+SOURCE: zoom-call:f9d45952336444ca9b0a34575fec0844 | 2026-11-16 | UNK Sandi Cole
+id: ebay-sales-shipping-tracking-92026c90
 
 ### [LOW] employee-purchase-window-handbook-error
 RULE: The handbook's "90 days" employee purchase window is wrong. It likely came from an earlier draft policy and will be corrected. The correct number was not stated.
@@ -2723,6 +2747,12 @@ PRESTON SAID: "Yeah, yeah sports and the sales data there and the report tab"
 SOURCE: zoom-call:2026-10-08_1225_Preston-to-JoshuaBurnett_8m57s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
 id: tracking-sales-in-bravo-0840d260
 
+### [LOW] trailer-pricing-5x8-carry-all
+RULE: For a used 5x8 carry-all trailer in okay condition that is about $1,074-$1,100 new, Preston aims for roughly $700 and thinks $600 is likely too low. This is a judgment on one trailer.
+PRESTON SAID: "Okay. I try to get close to seven."
+SOURCE: zoom-call:f9d45952336444ca9b0a34575fec0844 | 2026-11-16 | UNK Sandi Cole
+id: trailer-pricing-5x8-carry-al-80bcd4f1
+
 ### [LOW] typical-retail-sales-benchmarks
 RULE: Typical monthly retail sales per employee run about $12-15K, and the higher performers push toward $30K.
 PRESTON SAID: "retail sales. You know, generally, most of our folks are 1215 and then the higher performers are, you know, pushing 30 just to give you an idea where we want you to be."
@@ -2775,5 +2805,5 @@ id: past-due-75-day-5-percent-ce-30eeab0b
 
 
 ==============================================================================
-COVERAGE: 386 entries - 31 verified by Preston, 154 high-confidence rules, 114 medium, 85 low, 2 superseded.
+COVERAGE: 391 entries - 31 verified by Preston, 155 high-confidence rules, 115 medium, 88 low, 2 superseded.
 ==============================================================================

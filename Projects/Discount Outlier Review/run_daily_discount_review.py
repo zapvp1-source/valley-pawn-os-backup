@@ -465,6 +465,54 @@ def build_slack_message(valued: list[dict], date: datetime.date, missing_stores:
     return "\n".join(lines)
 
 
+
+def build_slack_message_compact(valued, date, missing_stores, store_ytd=None, company_ytd=None,
+                                ytd_days=None, ytd_year=None):
+    """Joshua 2026-11-16: the channel gets the store RANKING, the TOP 5 worst discounts company-wide, and the
+    spreadsheet (attached in the thread by bin/daily_report.sh). Everything else lives in the xlsx."""
+    real = [r for r in valued if not (r["generic_sku"] or r["placeholder_price"])]
+    if len(real) < 3:
+        return None
+    RANK = {1: "🥇", 2: "🥈", 3: "🥉"}
+    def _pct(m):
+        return f"{m * 100:.0f}%" if m is not None else "—"
+    ranked, idle = [], []
+    for st in sorted(set(r["store"] for r in real) | set(store_ytd or {})):
+        si = [r for r in real if r["store"] == st]
+        if not si:
+            idle.append(st); continue
+        ps = sum(r["price"] for r in si); dsum = sum(r["discount_dollars"] for r in si)
+        ranked.append((st, len(si), dsum / ps if ps else 0.0, dsum, sum(1 for r in si if r["flag"])))
+    ranked.sort(key=lambda x: x[2])
+    lines = [f"🏷️ *Discount Review — {date.isoformat()}*", "", "*Store ranking* (lowest avg discount = 1st)"]
+    for i, (st, n, w, dsum, fl) in enumerate(ranked, 1):
+        ytd = f" · YTD ${store_ytd[st]:,.0f}" if store_ytd and st in store_ytd else ""
+        lines.append(f"{RANK.get(i, f'{i}.')} *{st}* — {_pct(w)} avg · ${dsum:,.0f} off · {fl} flagged{ytd}")
+    for st in idle:
+        lines.append(f"• *{st}* — no sales")
+    if missing_stores:
+        lines.append(f"_No data for: {', '.join(missing_stores)}_")
+    tp = sum(r["price"] for r in real); td = sum(r["discount_dollars"] for r in real)
+    ytd = f" · YTD ${company_ytd:,.0f}" if company_ytd is not None else ""
+    lines.append(f"*Company* — {_pct(td / tp if tp else None)} avg · ${td:,.0f} off · {sum(1 for r in real if r['flag'])} flagged{ytd}")
+    flagged = sorted([r for r in real if r["flag"]],
+                     key=lambda r: (0 if r["into_loss"] else 1,
+                                    -(((r["discount_pct"] or 0) - r["allowed_pct"]) if r.get("allowed_pct") is not None
+                                      else (r["discount_pct"] or 0))))
+    if flagged:
+        lines += ["", "*Top %d worst discounts*" % min(5, len(flagged))]
+        for r in flagged[:5]:
+            desc = (r.get("desc") or r.get("category") or "item").strip()
+            desc = desc[:39] + "…" if len(desc) > 40 else desc
+            allow = f" (allowed {r['allowed_pct'] * 100:.0f}%)" if r.get("allowed_pct") is not None else ""
+            loss = " · ⛔ sold at a loss" if r["into_loss"] else ""
+            lines.append(f"• *{r['store']}* · {desc} · ${r['price']:,.0f}→${r['last_price']:,.0f} · "
+                         f"{_pct(r['discount_pct'])} off{allow}{loss}")
+    else:
+        lines += ["", "_No discounts past the allowance today._ ✅"]
+    return "\n".join(lines)
+
+
 # ── Post to Slack ────────────────────────────────────────────────────────────
 def slack_post(text: str, token: str, channel: str) -> bool:
     payload = json.dumps({"channel": channel, "text": text, "mrkdwn": True}).encode("utf-8")
@@ -752,6 +800,9 @@ def main():
     slack_msg = build_slack_message(valued, date, missing,
                                     store_ytd=store_ytd, company_ytd=company_ytd,
                                     ytd_days=ytd_days, ytd_year=ytd_year)
+    summary["slack_message_full"] = slack_msg
+    slack_msg = build_slack_message_compact(valued, date, missing, store_ytd=store_ytd, company_ytd=company_ytd,
+                                            ytd_days=ytd_days, ytd_year=ytd_year)   # 2026-11-16 compact channel post
     summary["slack_message"] = slack_msg
     if slack_msg is None:
         print(f"Slack post skipped — only {len(real)} real item(s) (min 3 required).")

@@ -186,7 +186,7 @@ def post(channel, text):
     print(r.get("ts", ""))
 
 
-def upload(target, path, title):
+def upload(target, path, title, thread_ts=None):
     size = os.path.getsize(path)
     if dryrun_intercept("file-upload", target, "(binary) %s — %d bytes, title: %s"
                         % (os.path.basename(path), size, title)):
@@ -198,8 +198,10 @@ def upload(target, path, title):
         req = urllib.request.Request(r["upload_url"], data=f.read(), method="POST")
         urllib.request.urlopen(req, timeout=60).read()
     ch = dm_channel(target) if target.startswith("U") else target
-    r2 = call("files.completeUploadExternal",
-              {"files": [{"id": r["file_id"], "title": title}], "channel_id": ch})
+    body = {"files": [{"id": r["file_id"], "title": title}], "channel_id": ch}
+    if thread_ts:
+        body["thread_ts"] = thread_ts      # 2026-11-16: report spreadsheets go in the post's thread
+    r2 = call("files.completeUploadExternal", body)
     if not r2.get("ok"):
         receipt("file-upload", ch, False, size, "completeUploadExternal: " + r2.get("error", "?"))
         sys.exit("completeUploadExternal: " + r2.get("error", "?"))
@@ -231,12 +233,12 @@ def permalink(file_id, filename, r2=None):
     return ""
 
 
-def upload_link(target, path, title):
+def upload_link(target, path, title, thread_ts=None):
     """upload + print ONLY the file's permalink on stdout (empty if diverted or unknown)."""
     import io, contextlib
     buf = io.StringIO()
     with contextlib.redirect_stdout(buf):
-        res = upload(target, path, title)
+        res = upload(target, path, title, thread_ts)
     if not res:
         return
     print(permalink(res[0], os.path.basename(path), res[1]))
@@ -266,6 +268,8 @@ def main(a):
         upload(a[1], a[2], a[3] if len(a) > 3 else os.path.basename(a[2]))
     elif cmd == "upload-link":   # upload-link <channel_or_user_id> <path> "<title>" -> prints the file's permalink
         upload_link(a[1], a[2], a[3] if len(a) > 3 else os.path.basename(a[2]))
+    elif cmd == "upload-thread":  # upload-thread <channel> <thread_ts> <path> "<title>" -> prints permalink (2026-11-16)
+        upload_link(a[1], a[3], a[4] if len(a) > 4 else os.path.basename(a[3]), a[2])
     elif cmd == "last":   # last <channel_id> [n]  — raw text of the last n messages (debug)
         r = call("conversations.history", params={"channel": a[1], "limit": int(a[2]) if len(a) > 2 else 3})
         for m in r.get("messages", []):

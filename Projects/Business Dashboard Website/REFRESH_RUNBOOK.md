@@ -180,3 +180,25 @@ Funds: a matched day posts nothing. Treat a `funds-clean` line in `Valley Pawn O
 as "all 5 stores matched" for that date; a discrepancy day still appears in `dept_sections/daily.json` and in #daily-checks.
 Channel ids are unchanged by the renames (#layaway-review → #loans-layaways, #company-performance → #leadership-reports,
 #daily-funds-reconcilation → #daily-checks, #social-media → #marketing).
+
+## Note (2026-11-16, dashboard-refresh run)
+Two observations worth flagging for future runs:
+1. The dept_sections/*.json files described in the 2026-11-09 restructure note above have NOT
+   been updated since they were created (all 7 files still show mtime/`updated` timestamps of
+   2026-11-09 14:3x-4x). In practice this run went back to reading the Slack channels directly
+   (headline posts still carry the data this dashboard needs: Weekly Layaway Review, Funds
+   verification, Items to Price, Daily Pawn Walk, Chekkit Daily Response Summary all still post
+   full content, not just headlines) and that worked fine. Treat the "channel posts are now
+   headlines only" framing in the 2026-11-09 note as not reflecting current reality until the
+   dept_sections files are confirmed to actually be refreshing.
+2. #pawn-walks "Daily Pawn Walk" did not post this morning (no 2026-11-16 07:15 post for
+   2026-11-15 data) -- last post found was 2026-11-15 07:15 for 2026-11-14 data. kpis.json's
+   daily.intakeMargin was correctly left unchanged per the "no newer report -> keep existing"
+   rule, and the feeds[] Last Run date for Intake Margin was corrected from a stale "Nov 16" to
+   the accurate "Nov 15". Not treated as a dashboard-refresh failure (not this task's feed to
+   fix), but may be worth a look if it keeps happening.
+
+This run also confirmed Option C (cloud-sandbox deploy via a single tar bundle staged through
+device_stage_files, rather than staging 50+ individual files) works cleanly and is faster than
+enumerating the whole site/ tree file-by-file: `tar czf .deploy_bundle.tar.gz site .cloudflare`
+inside the project folder, stage that one file, extract in the sandbox, deploy from there.

@@ -39,6 +39,15 @@ def tag(url, store, content):
     })
     return f"{url}{sep}{params}"
 
+# 2026-11-16: card images were 35 KB each (full 500px eBay webp re-served by Jetpack's image CDN). Cards display at
+# ~170-260 CSS px, so serve a 300px/quality-70 copy (~9 KB) with a 500px copy for high-density screens (~16 KB).
+# Explicit i0.wp.com URLs are not rewritten again by Jetpack. Empty or non-eBay image URLs pass through unchanged.
+def cdn(img, w):
+    if not img or "i.ebayimg.com/" not in img:
+        return img
+    host_path = img.split("://", 1)[-1]
+    return "https://i0.wp.com/%s?w=%d&quality=70&ssl=1" % (host_path, w)
+
 cards = []
 for i in ITEMS:
     u_img   = tag(i['u'], i['s'], "img")
@@ -47,7 +56,7 @@ for i in ITEMS:
     cards.append(
 f'''<article class="vp-card" data-store="{esc(i['s'])}" data-title="{esc((i['t']+' '+i['s']).lower())}" data-price="{num(i['p'])}">
   <a class="vp-card__img" href="{esc(u_img)}" target="_blank" rel="noopener nofollow">
-    <img loading="lazy" src="{esc(i['img'])}" alt="{esc(i['t'])}">
+    <img loading="lazy" decoding="async" width="300" height="300" src="{esc(cdn(i['img'],300))}" srcset="{esc(cdn(i['img'],300))} 300w, {esc(cdn(i['img'],500))} 500w" sizes="(max-width:560px) 50vw, 260px" alt="{esc(i['t'])}">
     <span class="vp-badge" style="background:{COLORS.get(i['s'],'#2D1A5E')}">{esc(i['s'])}</span>
   </a>
   <div class="vp-card__b">

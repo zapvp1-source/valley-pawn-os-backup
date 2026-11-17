@@ -1,5 +1,20 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-16 (daily PREP run, 12:43–13:20 ET, level 1 all pages, Monday) — picks queued, nothing published by this run
+- Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only (composer read "What's on your mind, Joshua" at start and end) — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. Still no POST-mode chat since 11/2 evening (ledger unchanged at 60 rows).
+- Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).
+- Dropped from QUEUE (lapsed): Culpeper Parks & Rec share + CCHS football comment; Roanoke Mill Mountain Zoo comment; Waynesboro Wayne Theatre comment + Project 61 share; Harrisonburg MRL card-contest comment + Little Free Pantry share.
+- Still valid: Roanoke comment → Rail Yard Dawgs weekend sweep (until 11/17 12:00) — this is Roanoke's comment for today.
+- New picks (permalinks opened, key phrases confirmed, times from hover): Culpeper comment → Culpeper Chamber "Merry Little Market" at Highland Ridge Farm (until 11/18 11:13); Waynesboro comment → Waynesboro.Com MZ Afghan Express grand opening Sat Nov 21, 1035 West Broad St (until 11/17 11:02); Harrisonburg share → Harrisonburg Fire Department free smoke/CO alarms for City residents, 540-435-0795 (until 11/18 08:00); Roanoke share → Visit Virginia's Blue Ridge "6 ways to celebrate the holidays in Salem" incl. Tree Lighting & Christmas Parade Dec 4 (until 11/17 19:15).
+- Skipped on purpose: Culpeper Chamber Financial Literacy Workshop (finance topic) and 2027 partnerships (sales); Taubman Santa visits (ticket promo); City of Roanoke leaf collection / council recap (civic/government); RCPS playoff wins (Roanoke already has a comment pending); Roanoke Fire-EMS structure fire (NO-list); Waynesboro YMCA youth-basketball sponsor ask (money ask); News-Gazette Parry McCluer playoff win (11/13 22:23, past 48 h); Harrisonburg Parks family celebration (11/14, past); Main Street Lexington Pink Friday (shop promo, 11/6); Virginia Is For Lovers (newest 11/13, statewide restaurants); Shenandoah Valley Partnership (newest 10/22).
+- Lexington and Brand: no pick today (zero is fine).
+- Ramp: all pages hold level 1 (no clean posting record since 11/2 to step up on). Share week starts today: Harrisonburg and Roanoke shares queued; others none.
+- Follows: no new town searches today (22 pending follows already waiting on POST mode); all 22 re-dated.
+- Watchlist: 20 pages re-checked (Roanoke 5, Waynesboro 4, Harrisonburg 4, Lexington 3, Culpeper 2, Brand 2); no unresolved entries remain; none newly dormant.
+- Reply candidates for POST mode: carry-over from 11/15 — two people commented on a Valley Pawn-Waynesboro post; check for a page reply.
+- Needs a person: none.
+- Totals this run: comments 0 (2 new queued, 1 still pending), shares 0 (2 new queued), replies 0, follows 0 (22 pending), new pages resolved 0.
+
 ## 2026-11-15 (daily PREP run, 12:42–13:35 ET, level 1 all pages, Sunday) — picks queued, nothing published by this run
 - Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only (composer read "What's on your mind, Joshua?" at start and end) — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. Still no POST-mode chat since 11/2 evening (ledger unchanged at 60 rows).
 - Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).

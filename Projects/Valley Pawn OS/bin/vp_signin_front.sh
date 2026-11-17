@@ -48,8 +48,15 @@ TABS=("https://tune.cloudcovermusic.com/#/admin/zones" "https://home.google.com/
 # 2026-10-21: 7th tab = Amazon Business (Fullcirclepawn@gmail.com, tick "Keep me signed in") for bin/supply_order.py
 # 2026-10-20: 6th tab = VSP eReceivables (X009686) for the native gun-check fee payer (bin/vsp_fee_pay.py)
 # 2026-10-20 (comms review): 5th tab = Chekkit (jdavis@fcfpawn.com) for the native review-reply agent (bin/review_reply.py)
-if [ "$1" = "--only" ]; then
+if [ "$1" = "--only" ] && [[ "$2" == *,* ]]; then   # 2026-11-16: --only a,b,c opens just those tabs
+  ALL=("${TABS[@]}"); TABS=(); NAMES=(cloudcover google gusto northwest chekkit vsp amazon)
+  for n in ${2//,/ }; do for i in "${!NAMES[@]}"; do [ "${NAMES[$i]}" = "$n" ] && TABS+=("${ALL[$i]}"); done; done
+elif [ "$1" = "--only" ]; then
   case "$2" in cloudcover) TABS=("${TABS[0]}");; google) TABS=("${TABS[1]}");; gusto) TABS=("${TABS[2]}");; northwest) TABS=("${TABS[3]}");; chekkit) TABS=("${TABS[4]}");; vsp) TABS=("${TABS[5]}");; amazon) TABS=("${TABS[6]}");; esac
+fi
+# 2026-11-16: --all = the 7 tabs above + the 8 AI-search listing sign-ins (HUMAN_QUEUE 10/20 row), one window
+if [ "$1" = "--all" ]; then
+  TABS+=("https://www.yext.com/login" "https://www.yellowpages.com/" "https://businessconnect.apple.com/" "https://www.bingplaces.com/" "https://www.bbb.org/login" "https://biz.yelp.com/login" "https://www.wikidata.org/w/index.php?title=Special:CreateAccount" "https://copilot.microsoft.com/")
 fi
 open -na "Google Chrome" --args --user-data-dir="$PROFILE" --no-first-run --no-default-browser-check --remote-debugging-port=$PORT --new-window "${TABS[@]}"
 sleep 3

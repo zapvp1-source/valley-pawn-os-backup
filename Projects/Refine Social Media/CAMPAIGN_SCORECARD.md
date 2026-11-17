@@ -13,6 +13,97 @@ consecutive runs → lower its rotation (never delete); >30% above → give it p
 
 ---
 
+## 2026-11-16 (run 4 — week 3, 11/9–11/15; campaign to date 10/26–11/15)
+
+**Monday proven-slot fix is in.** Joshua OK'd it; another session moved the slot to **Tuesday 13:30** this morning
+(`vp_social/plan.py` COMMUNITY_DAYS, 11/16; HUMAN_QUEUE 11/2 row DONE). Week 3 still had 0 debate/history posts outside
+Lexington (the 11/9 Monday slot was skipped like before). Test build below: Tue 11/17 debates land on all 4 stores. The
+Roanoke Star history post now lands **Tue 11/24** (day after the 11/23 anniversary) — topic note added: say "Monday night
+marked 77 years", never "tonight".
+
+**Correction to run 3.** Run 3 said Culpeper's Caroline game was Thu 11/5. MaxPreps (Culpeper schedule, updated 11/16) today
+lists it as **11/6 7:00 PM @ Caroline, W 26-12**, so the 11/4 and 11/6 posts look right. The two readings disagree; no action.
+
+### Per store — week 3 (Publer post insights, store FB pages, posts 11/9–11/15; Sun 11/15 still accruing)
+| Store | Posts | Median reach | % followers | Community posts | Community median | Community % | Baseline % | Eng. | Comments | Shares |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Culpeper | 5 | 58 | 6.6% | 4 | 59 | 6.7% | 17% | 5 | 0 | 0 |
+| Waynesboro | 5 | 118 | 9.5% | 3 | 138 | 11.1% | 12% | 12 | 2 | 1 |
+| Harrisonburg | 6 | 33 | 4.3% | 4 | 41 | 5.4% | 11% | 6 | 0 | 0 |
+| Lexington | 6 | 122.5 | 7.6% | 3 | 146 | 9.0% | 28% | 18 | 1 | 4 |
+| Roanoke | 6 | 5.5 | 13.8% | 4 | 5.5 | 13.8% | ~30% | 0 | 0 | 0 |
+
+### Per store — campaign to date (10/26–11/15)
+| Store | Posts | Median reach | % followers | Community posts | Community median | Community % | Baseline % |
+|---|---|---|---|---|---|---|---|
+| Culpeper | 17 | 71 | 8.0% | 12 | 94.5 | 10.7% | 17% |
+| Waynesboro | 18 | 108 | 8.7% | 11 | 129 | 10.4% | 12% |
+| Harrisonburg | 18 | 44 | 5.8% | 12 | 45.5 | 6.0% | 11% |
+| Lexington | 16 | 221.5 | 13.7% | 11 | 271 | 16.7% | 28% |
+| Roanoke | 20 | 6.5 | 16.2% | 13 | 6 | 15.0% | ~30% |
+All five still below the 90-day mark; Waynesboro is closest (10.4% vs 12%). Best posts this week: **Lexington hiring post
+1,202 reach** (4 shares, 1 comment — the page's biggest post of the campaign), **Waynesboro playoff-neighbors game post 687**
+(2 comments, 1 share — the 2 comments have no page reply yet; outbound POST mode should answer them), Lexington Main Street
+cold-morning post 287.
+
+### Per format (pooled across stores)
+| Format | Week 3 posts / median | To date posts / median | Note |
+|---|---|---|---|
+| HS game week (Fri 13:05) | 4 / 53 | 12 / 53 | vs store's other community, to date: CUL 83 vs 102 (−19%), WAY 222 vs 123.5 (+80%), HAR 46 vs 45 (+2%), ROA 6 vs 5.5 (+9%) |
+| Debate | 0 | 1 / 328 | Lexington only (Monday slot; moves to Tuesday this week) |
+| History | 0 | 0 | same |
+| Other community | 14 / 51 | 46 / 83 | |
+| Hiring | 1 / 1,202 | 4 / 96.5 | LEX 1,202, WAY 107, HAR 86, ROA 7 |
+| Deal video | 4 / 14.5 | 14 / 24 | still under the ~43 deal-photo baseline (now 10:40) |
+| Other (MobilePawn app post, misc) | 5 / 15 | 12 / 19.5 | |
+| Staff video | 0 | 0 | |
+
+### Followers (Facebook page headers, 11/16)
+| Store | 10/24 launch | 11/9 | 11/16 | Week | Since launch |
+|---|---|---|---|---|---|
+| Culpeper | 881 | 885 | 885 | 0 | +4 |
+| Waynesboro | 1.2K | 1.2K | 1.2K | — | — (rounded on page) |
+| Harrisonburg | 760 | 761 | 760 | −1 | 0 |
+| Lexington | 1.6K | 1.6K | 1.6K | — | — (rounded on page) |
+| Roanoke | 38 | 40 | 40 | 0 | +2 |
+
+### Outbound engagement (engagement_outbound/ledger.jsonl + DAILY_LOG.md, 11/9–11/15)
+0 comments, 0 shares, 0 replies, 0 follows on every page — ledger still 60 rows (last action 11/2 evening). Daily runs are in
+PREP mode and queue picks (QUEUE.json 30 items, 22 follows pending) that lapse before a "post the community queue" chat
+happens. Ramp holds level 1. No link to followers possible yet (nothing went out). Not a scorecard-side fix (RUNBOOK/mode
+decision already made 11/1); noted for the next report.
+
+### Tuning
+- **HS game week → PRIORITY for Waynesboro.** 12 posts pooled (≥6). Waynesboro beat its other community posts by >30% two runs
+  running (+182% week 2, +437% week 3; to date +80%). Applied as: every non-holiday Friday gets a verified local game —
+  added 12/4, 12/11, 12/18 (Waynesboro had nothing until 1/8). Recorded in `community_topics.json` `_priority_note_2026-11-16`.
+- No store is >30% below on 2 consecutive runs (CUL −20%/−19% to date, under the line). No rotation lowered.
+- Debate/history: still no signal outside Lexington.
+
+### Topic bank (self-heal)
+- **Region-semifinal games, Fri 11/20 (all 7:00 PM, verified today on MaxPreps team schedules + SI bracket):** Culpeper —
+  Blue Devils HOST Skyline (beat Brentsville District 22-20); Waynesboro — Stuarts Draft HOSTS Buckingham County, Fort
+  Defiance AT Strasburg (Riverheads–Altavista and Buffalo Gap–Sussex Central also on, day/time not posted → named without
+  time); Harrisonburg — Broadway HOSTS Liberty Christian, Turner Ashby AT Fluvanna County; Roanoke — Patrick Henry AT
+  Midlothian (beat Douglas Freeman 16-14), Cave Spring AT William Byrd.
+- **Waynesboro basketball Fridays:** 12/4 Stuarts Draft HOSTS Luray 7:30; 12/11 Wilson Memorial HOSTS Rockbridge County and
+  Stuarts Draft AT Riverheads 7:30; 12/18 Little Giants boys HOST Stuarts Draft, girls AT Stuarts Draft, 7:30 (MaxPreps 2026-27).
+- Future dated games now: CUL 5, WAY 7, HAR 6, ROA 6 (all ≥2). Debate/history: test build shows a topic every week
+  11/16 → 12/7 (≥3 weeks), no resting week. 11/27 (Thanksgiving Friday) left empty on purpose.
+- **Test build** (copy of package + plans + ledger on the VM, real planner, seed 1, weeks 11/16, 11/23, 11/30, 12/7; plus 11/16
+  with the 11/9 deals file): **0 collisions** every week, community times 13:05–15:00, all 4 new 11/20 games land Fri 13:05,
+  Waynesboro 12/4 and 12/11 land, proven slot on Tuesday 13:30. Copy deleted. Today's real 14:30 build reads the updated bank.
+
+### Changes made
+- `community_topics.json` (+4 playoff games 11/20, +3 Waynesboro basketball Fridays, Roanoke Star wording note, priority note;
+  updated 2026-11-16), `state/store_followers.json` (as_of 11/16, HAR 760), `follower_growth_by_store.csv` (+11/16 row).
+- Backups: `Valley Pawn OS/fleet/_backups/{community_topics.json,store_followers.json,follower_growth_by_store.csv,
+  CAMPAIGN_SCORECARD.md,CHANGELOG.md}.bak-pre-scorecard-20261116`.
+- Measurement output: `state/scorecard/measure_2026-11-16_{week3,campaign}.json`.
+- Report to Joshua: not due (next 11/23). No Slack messages sent.
+
+---
+
 ## 2026-11-09 (run 3 — week 2, 11/2–11/8; campaign to date 10/26–11/8)
 
 **Still open — the Monday proven-format post has not gone out (3rd week).** 11/2's Monday 13:30 debate slot was skipped again on all

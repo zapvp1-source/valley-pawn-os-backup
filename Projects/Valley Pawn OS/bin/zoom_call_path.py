@@ -372,6 +372,34 @@ def _main():
             print("  hung up within %ds without being answered (open hours): %s" % (secs, pct(len(quick_ab(bopen, secs)), len(bopen))))
         print("  answered (open hours): %s" % pct(len([r for r in bopen if _norm(r.get("call_result")) in ANSWERED]), len(bopen)))
         return 0
+    if len(sys.argv) > 2 and sys.argv[1] == "--dump":
+        # read-only: one JSON line per inbound menu call since a date (store, ET time, keys, result, last4, duration)
+        since = sys.argv[2]
+        until = sys.argv[3] if len(sys.argv) > 3 else now.astimezone(mct.ET).date().isoformat()
+        cfg = mct.load_json(mct.CONFIG, {})
+        stores = cfg.get("stores", {})
+        rows = mct.zoom_calls_raw(tok, since, until)
+        n = errs = 0
+        for r in rows:
+            if _norm(r.get("direction")) != "inbound" or _norm(r.get("connect_type")) == "internal":
+                continue
+            st = mct.store_for(r, stores) or "?"
+            t = mct.parse_ts(r.get("start_time"))
+            out = {"id": r.get("id"), "store": st, "et": t.astimezone(mct.ET).strftime("%Y-%m-%d %H:%M:%S") if t else None,
+                   "callee_type": r.get("callee_ext_type"), "raw_result": r.get("call_result"),
+                   "caller4": (mct.e164(r.get("caller_did_number")) or "")[-4:],
+                   "open": bool(st in stores and t and mct.during_hours(t.astimezone(mct.ET), stores[st]))}
+            a, b = t, mct.parse_ts(r.get("end_time"))
+            out["dur"] = (b - a).total_seconds() if a and b else None
+            if _norm(r.get("callee_ext_type")) == "auto_receptionist":
+                try:
+                    d = resolve_detail(r, fetch_path(tok, r["id"]))
+                    out["keys"] = d["ivr_keys"]; out["result"] = d["call_result"]
+                except Exception as e:
+                    errs += 1; out["err"] = str(e)[:80]
+            print(json.dumps(out)); n += 1
+        print("#DONE rows=%d path_errors=%d" % (n, errs))
+        return 0
     if len(sys.argv) > 1 and sys.argv[1] == "--keys":
         # read-only: every key pressed on the store menus since a date (fresh call paths, no cache)
         since = sys.argv[2] if len(sys.argv) > 2 else now.astimezone(mct.ET).date().isoformat()

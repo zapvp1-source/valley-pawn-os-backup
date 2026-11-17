@@ -430,3 +430,14 @@ New "Store Menu Greeting v4 - <Store>": "Thank you for calling Valley Pawn in <S
 member. To extend your loan or make a payment from your phone, press 1. For store hours and location, press 2."
 Keys unchanged (3 still reaches the queue; no input -> queue after one play). Measure with
 `bin/zoom_call_path.py --hangups 2026-11-16 <baseline_from> <baseline_to>`.
+
+## 2026-11-16 — Store menus switched to the "Janet" voice (v5)
+- Every menu prompt on all 5 store menus (LEX 815, HAR 816, CUL 817, ROA 818, WAY 819) now plays a human-sounding recording instead of Zoom's robotic text-to-speech voice (Matthew-Male). The voice is HeyGen's "Janet - Warm & Approachable" (voice id 4270665fc47f44aa989c093bb3dc2b99). Joshua picked it on 11/16.
+- What each prompt plays now (all are Personal Audios, category IVR audio prompt, English US):
+  - Menu greeting → "Janet Greeting - <Store>". Same words as v4.
+  - Key 1 → "Janet App Link Message". One clip shared by all stores. Action unchanged: play the message, then disconnect.
+  - Key 2 → "Janet Hours - <Store>". Action unchanged: play the message, then return to the root menu.
+  - Keys 0 and 3, the timeout and the routing are all unchanged.
+- Source MP3s: Valley Pawn OS/assets/janet_voice/. Each prompt was re-read after saving and shows the Janet clip; Waynesboro was also checked after a full page reload.
+- How the files got into Zoom: the Chrome extension cannot upload local files, so each MP3 was first put in HeyGen asset storage (resource2.heygen.ai). The Zoom page then fetched it and placed it in the Add Audio > Upload file field.
+- Rollback: on each menu, use Edit, then "Choose from asset library", and select the old v4 TTS prompts ("Store Menu Greeting v4 - <Store>", "Menu - App Link Text (short)", "Menu Hours - <Store>").

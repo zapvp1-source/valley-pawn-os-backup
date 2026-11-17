@@ -147,7 +147,8 @@ def main():
         ledger("Retail page deals were written but the live check failed (http %s, %d blocks)." % (code, chk.count(START)))
         return 1
     os.environ["VP_TASK"] = "vp-website-deals-weekly"
-    vp_slack.post(CH, "Retail page deals refreshed: %d live now (%s). https://thevalleypawn.com/retail/" % (
+    if False:  # 2026-11-16 Joshua: no "refreshed" notices in #website — stats + recommended fixes only
+      vp_slack.post(CH, "Retail page deals refreshed: %d live now (%s). https://thevalleypawn.com/retail/" % (
         len(live), ", ".join("%s (%s)" % (d["item"], d["store"]) for d in live)))
     print("published + verified")
     return 0

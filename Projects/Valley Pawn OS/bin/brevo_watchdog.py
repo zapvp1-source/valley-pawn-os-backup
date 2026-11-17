@@ -92,5 +92,7 @@ if not DRY:
     elif seed_fixes:
         vp_slack.post(CH, ":heavy_check_mark: Standing recipient rule: auto-added list 10 (Internal Seeds) to %d campaign(s) that were missing it: %s." % (
             len(seed_fixes), ", ".join("#%s %s" % (r["id"], r["name"]) for r in seed_fixes)))
+    if not res:   # 2026-11-16: nothing scheduled = a clean check, not a miss — record it (no message to anyone)
+        vp_slack.receipt("file", "brevo-watchdog", True, 0, "no upcoming sends to check")
     if not fails and not seed_fixes and not seed_hard_fails and res:
         vp_slack.post(JOSHUA, ":white_check_mark: Email watchdog: %d upcoming send(s) checked, all carry full Call/Text + UTM instrumentation and the standing recipient list." % len(res))

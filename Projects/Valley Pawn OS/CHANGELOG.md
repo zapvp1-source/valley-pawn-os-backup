@@ -1,3 +1,162 @@
+## 2026-11-16 ~9:53 PM ET (fleet-guardian, Cowork scheduled run, LINKED device_bash bridge)
+- 21:45 ET pass. scheduled-tasks.json registry absent on host (fleet fully native) -- Step 1 contributed nothing; intake via Step 1c (FAILURE_LEDGER): 58 open rows at start, all same-day repeats of 3 already-diagnosed issues (monthly-gun-audit-report code bug, nics-weekly-mtd-ranking Bravo-driving data gap, monday-bravo-combined-compile employee-performance/first-payment-default holds). Updated 26 ledger rows to final status, added 1 summary row.
+- Reran monday-bravo-combined-compile via host_queue (20261116T2151-guardian2145-monday-recheck.sh, exit=0): aged-inventory/layaway-review/store-rankings confirmed already posted; employee-performance and #first-payment-default still blocked after 13 more hours. Did not rerun the two verify-only/code-bug items (gun-audit, nics-weekly) per hardening standard.
+- HUMAN_QUEUE.md: resurfaced 3 non-sign-in rows per 7-day rule (St. Augustine 5 decisions, AI avatar re-record, delete leftover scheduled task vp-ai-search-autofix). Sign-in rows held for Login Day (next 2026-12-07). 0 new rows added.
+- Sent tonight's one allowed Slack DM to Joshua (D03BHQH5VGT) per Failure Policy v3: 3 human-queue items (~16 min total) + 3 not-recoverable-today reports (gun audit, NICS ranking, employee performance), all tied to known code bugs needing a dev-fix session. Full detail: `Valley Pawn OS/fleet/guardian_runs/2026-11-16-2153.json`.
+- vsp-fee-pay (stuck automation-Chrome window, 10:16 ET) left as-is per existing NEEDS_HUMAN:no classification -- not relitigated, no concrete human action defined, retry window open through 11/28.
+
+## 2026-11-16 ~7:58 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge). Scope unchanged (HIRING_SWITCH.md): Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Checked Indeed Messages fresh: newest thread still Edgar Alvarez Alvira (Harrisonburg) 6:50 PM Zoom link — nothing newer than the 7:34 PM run.
+- Jobs dashboard re-checked: Waynesboro, Harrisonburg, Lexington, Roanoke all still Paused, 0 New applicants each, no live sponsorship spend. (Saint Augustine FL off-scope, shows 3 New, not actioned.) No new applicants, bookings, reschedules, or rejections needed this run.
+- Per quiet-rule standing preference: nothing changed that Joshua needs to see, so no Slack DM and no #employee-prospects post this run.
+- Indeed messages sent: 0. Calendar events created: 0. Texts: 0. Rejections: 0. Slack: 0 (quiet rule — nothing changed).
+
+## 2026-11-16 (review replies, native)
+
+- nightly-chekkit-review-responses (native review_reply.py): 2 replies posted (CUL 0, WAY 0, HAR 0, LEX 2, ROA 0); 0 low-star review(s) sent to Joshua as drafts.
+
+## 2026-11-16 ~7:34 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge). Scope unchanged (HIRING_SWITCH.md): Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Checked Indeed Messages fresh: newest thread still Edgar Alvarez Alvira (Harrisonburg) 6:50 PM Zoom link, same as logged in the 7:19 PM run — nothing newer.
+- Jobs dashboard re-checked: Waynesboro, Harrisonburg, Lexington, Roanoke all still Paused, 0 New applicants each, no live sponsorship spend. (Saint Augustine FL off-scope, shows 3 New, not actioned.) No new applicants, bookings, reschedules, or rejections needed this run.
+- Per quiet-rule standing preference: nothing changed that Joshua needs to see, so no Slack DM and no #employee-prospects post this run.
+- Indeed messages sent: 0. Calendar events created: 0. Texts: 0. Rejections: 0. Slack: 0 (quiet rule — nothing changed).
+
+## 2026-11-16 ~7:19 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge). Scope unchanged (HIRING_SWITCH.md): Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Checked Indeed Messages fresh: only new item since 6:49 PM run is Edgar Alvarez Alvira (Harrisonburg) thread showing a 6:50 PM Zoom link — confirmed by opening the thread that this was the real Preston Peters sending the Zoom link for the 11/17/26 10:30 AM Zoom interview he personally set up with Edgar and the owner; not our scripted account's thread, no action needed (same pattern as logged in prior runs).
+- Jobs dashboard re-checked: Waynesboro, Harrisonburg, Lexington, Roanoke all still Paused, 0 New applicants each, no live sponsorship spend. (Saint Augustine FL off-scope, not actioned.) No new applicants, bookings, reschedules, or rejections needed this run.
+- Per quiet-rule standing preference: nothing changed that Joshua needs to see, so no Slack DM and no #employee-prospects post this run.
+- Indeed messages sent: 0. Calendar events created: 0. Texts: 0. Rejections: 0. Slack: 0 (quiet rule — nothing changed).
+- Note: a stray empty file `CHANGELOG.md.tmp_entry` was accidentally created in this folder this run by a misdirected bash command; it could not be deleted from this session (Drive-synced folder, no delete permission here) and is harmless — safe to delete manually next time this folder is open locally.
+
+## 2026-11-16 ~6:49 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge). Scope unchanged (HIRING_SWITCH.md): Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Checked Indeed Messages fresh: only new item since 6:34 PM run is Edgar Alvarez Alvira (Harrisonburg) replying "Yes I'm available, I'll hit the link" at 6:35 PM — confirmed by opening the thread that this is his reply to Preston's own personal 2:34 PM Zoom-interview outreach (signed "Preston Peters"), not our scripted account's thread — no action needed, same as logged in the 6:34 PM run.
+- Jobs dashboard re-checked: Waynesboro, Harrisonburg, Lexington, Roanoke all still Paused, 0 New applicants each, no live sponsorship spend. (Saint Augustine FL shows 3 New, off-scope, not actioned.) No new applicants, bookings, reschedules, or rejections needed this run.
+- Per quiet-rule standing preference: nothing changed that Joshua needs to see, so no Slack DM and no #employee-prospects post this run.
+- Indeed messages sent: 0. Calendar events created: 0. Texts: 0. Rejections: 0. Slack: 0 (quiet rule — nothing changed).
+
+## 2026-11-16 ~6:34 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge). Scope unchanged (HIRING_SWITCH.md): Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Checked Indeed Messages fresh: 2 new threads since 3:49 PM run. (1) Jordyn Bolton (Harrisonburg, already phone-interviewed 10/2) asked "When will I hear back" (5:56 PM) — a decision-status question, not scheduling, so per hard rule 3 sent the standard holding reply ("we haven't finalized next steps yet — hang tight, we'll be in touch soon") rather than discussing the decision; flagged to Joshua via DM. (2) Edgar Alvarez Alvira (Harrisonburg) — new message at 6:31 PM, but it was sent by the real Preston Peters himself (not our scripted account) proposing a 11/17 10:30 AM Zoom interview with Preston + the owner; that's Preston's personal outreach awaiting Edgar's reply, not ours to answer — no action taken.
+- Jobs dashboard: Waynesboro, Harrisonburg, Lexington, Roanoke all still Paused, 0 New applicants each, no live sponsorship spend. (Saint Augustine FL off-scope, not checked for action.) No bookings, reschedules, or rejections needed this run.
+- Texting batch window (6 PM) skipped silently — no screen-control/Mac link available in this cloud-only session.
+- Indeed messages sent: 1 (Jordyn Bolton holding reply). Calendar events created: 0. Texts: 0. Rejections: 0. Slack: 1 DM to Joshua (what changed); no #employee-prospects post (schedule unchanged).
+
+## 2026-11-16 ~3:49 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge). Scope unchanged (HIRING_SWITCH.md): Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Checked Indeed Messages fresh: newest thread still Ethan Ruley's 3:35 PM "sounds good," his own ack of the booking confirmation already sent/logged in the 3:35 PM run — nothing newer. Jobs dashboard: Waynesboro, Harrisonburg, Lexington, Roanoke all still Paused, 0 New applicants each, no live sponsorship spend. (Saint Augustine FL Store Manager shows 3 New but that store is OFF — no action.) No bookings, reschedules, or rejections needed this run.
+- Per the quiet-rule standing preference: nothing changed that Joshua needs to see, so no Slack DM and no #employee-prospects post this run.
+- Indeed messages sent: 0. Calendar events created: 0. Texts: 0. Rejections: 0. Slack: 0 (quiet rule — nothing changed).
+
+## 2026-11-16 ~3:35 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules. Confirmed cloud-only (no remote-devices bridge). Scope unchanged (HIRING_SWITCH.md): Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Checked Indeed Messages fresh: 3 new threads since the 3:04 PM run. (1) Ethan Ruley (Lexington) replied with his number (5404601869) and asked for Tue 11/17 11 AM — 11:00 was already taken by Roxanne Snider, booked him 11:05 AM instead, confirmed on Indeed, calendar event created. (2) Lizeth Santiago (Harrisonburg) sent a closing "Perfect! Thank you!" on her already-booked 2:30 PM Tue 11/17 slot — no action needed. (3) Edgar Alvarez Alvira (Harrisonburg) sent another acknowledgment on his still-pending decision — no action per rule 3, already logged in the 2:35 PM run.
+- Jobs dashboard: Waynesboro, Harrisonburg, Lexington, Roanoke all still Paused, 0 New applicants each, no live sponsorship spend. (Saint Augustine FL Store Manager shows 3 New but that store is OFF — no action.)
+- Indeed messages sent: 1. Calendar events created: 1 (Ethan Ruley, Tue 11/17 11:05 AM). Texts: 0. Rejections: 0. Slack: 1 DM to Joshua (what changed), 1 updated Tue 11/17 call-list post to #employee-prospects (schedule changed).
+
+## 2026-11-16 ~3:04 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge). Scope unchanged (HIRING_SWITCH.md): Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Checked Indeed Messages fresh: newest thread still Edgar Alvarez Alvira at 2:34 PM (already handled/logged in the 2:35 PM run) — nothing newer. Jobs dashboard: Waynesboro, Harrisonburg, Lexington, Roanoke all still Paused, 0 New applicants each, no live sponsorship spend. (Saint Augustine, FL Store Manager shows 3 New but that store is OFF in HIRING_SWITCH.md — no action.) No bookings, reschedules, or rejections needed this run.
+- Per the quiet-rule standing preference: nothing changed that Joshua needs to see, so no Slack DM and no #employee-prospects post this run.
+- Indeed messages sent: 0. Calendar events created: 0. Texts: 0. Rejections: 0. Slack: 0 (quiet rule — nothing changed).
+
+## 2026-11-16 ~2:35 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only. Scope unchanged (HIRING_SWITCH.md): Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Checked Indeed Messages fresh (not just the prior run's log). Two new replies since 2:05 PM, both closing acknowledgments needing no reply: Shad Taha (Harrisonburg) "Yes, that works for me! I'll be ready for the call at 1 PM" — confirms his existing Tue 11/17 1:00 PM booking, nothing to change. Edgar Alvarez Alvira (Harrisonburg) "Okay, sorry if I'm being a bother..." — acknowledging the earlier holding reply on his pending decision, no new ask, no action per rule 3 (don't discuss decisions).
+- Jobs dashboard: Waynesboro, Harrisonburg, Lexington, Roanoke all still Paused, 0 New applicants each, $0.00 spend (Lexington/Harrisonburg/Roanoke sponsorships already lapsed, not renewed). No new applicants to first-contact. No bookings, reschedules, or rejections needed this run.
+- Per the quiet-rule standing preference: nothing changed that Joshua needs to see, so no Slack DM and no #employee-prospects post this run.
+- Indeed messages sent: 0. Calendar events created: 0. Texts: 0. Rejections: 0. Slack: 0 (quiet rule — nothing changed).
+
+## 2026-11-16 ~2:05 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge). Scope per HIRING_SWITCH.md unchanged: Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Verified the 1:51 PM run's report already posted (Slack DM + #employee-prospects) before doing anything new, to avoid duplicating a re-fired run.
+- Only change since 1:51 PM: Shad Taha (Harrisonburg) replied "Yes is tomorrow at 1 PM fine?" to the re-invite — booked Tue 11/17 1:00 PM (calendar open at that slot), confirmed on Indeed using his 10/15 number 540-208-8788 (he didn't re-send one; asked him to flag if it changed), calendar event location updated with that number. All 4 in-scope listings still 0 New applicants, still Paused, no sponsorship spend. No other threads changed (Edgar/Christian/Lizeth/Roxanne/Ethan/Sharon all same as 1:51 PM).
+- Indeed messages sent: 1. Calendar events created: 1 (Shad Taha, Tue 11/17 1:00 PM). Texts: 0. Rejections: 0. Slack: 1 DM to Joshua, 1 updated Tue 11/17 call-list post to #employee-prospects.
+
+## 2026-11-16 ~1:51 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules. Cloud-only session (no remote-devices bridge), Claude-in-Chrome browser access. Scope via HIRING_SWITCH.md (authoritative, supersedes the task's own Waynesboro/Harrisonburg-only prompt text): Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Indeed Messages inbox checked top to bottom. 3 threads needed action: (1) Shad Taha (Harrisonburg) — previously declined 10/27 (employed elsewhere), re-inquired today "still hiring?" — re-invited to a Tue 11/17 11 AM-3 PM slot, awaiting his reply/number. (2) Christian Miller (Harrisonburg) — gave "around 2 and 5715290020" for Tue 11/17 — booked 2:00 PM (2:30 was already taken by Lizeth Santiago), confirmed on Indeed, calendar event created on jdavis@fcfpawn.com. (3) Edgar Alvarez Alvira (Harrisonburg) — already pulled from the phone-screen list after an in-person meeting with Preston, decision still pending — checked in a 3rd time on a decision; sent a holding reply (no decision discussed, same pattern as Matayah Buckland 10/27), flagged to Joshua — his/Preston's call.
+- Jobs dashboard: Waynesboro, Harrisonburg, Lexington, Roanoke all Paused, 0 New applicants each, no live sponsorship spend. No new applicants to first-contact this run.
+- Other threads reviewed, no action needed: Lizeth Santiago (booked), Roxanne Snider (closing "thank you"), Ethan Ruley/Sharon Hensley (2-day nudges sent this morning, no reply yet), Jordyn Bolton/Evelyn Windsor/Jeremiah Staton (closing acknowledgments).
+- Indeed messages sent: 3. Calendar events created: 1 (Christian Miller, Tue 11/17 2:00 PM). Texts: 0 (not a texting-batch run). Rejections: 0. Slack: 1 DM to Joshua (what changed), 1 updated Tue 11/17 call-list post to #employee-prospects (schedule changed).
+
+## 2026-11-16 (ceo-weekly-brief, merged scorecard+marketing, Cowork, device-linked)
+
+- First run of the merged one-page Weekly CEO Brief (replaces the separate CEO Weekly Scorecard and marketing-ceo-briefing-weekly DM; that marketing automation's own schedule is now off). Week Nov 9-15: net revenue $39,221 (WoW -8.2%, YoY +3.9%); November MTD $82,019, 31% of $261,891 target with half the month gone, Culpeper furthest behind at 27%. Store ranking reshuffled: Harrisonburg #1 (+15.8% WoW), Culpeper fell from #1 to #3 (-27.2% WoW).
+- New this week: daily funds reconciliation flagged real cash-safe shortfalls (Culpeper $2,000, Waynesboro $1,000, both Nov 11); Culpeper and Harrisonburg both have outstanding jewelry count-sheet mismatches.
+- Delivered: PDF emailed to jdavis@fcfpawn.com + zapvp1@me.com (independently confirmed via Gmail this run, breaking the 2-week lagged-search pattern), plain-business summary DM'd to Joshua (Slack file-upload scope gap persists, 7th week). Archived copy: https://drive.google.com/file/d/1DrQtU6kmGyn7nHDnZ4FvzWMIzZ9EYAAx/view
+- Caught and corrected same-session: the brief's Decisions section listed the $7,737 workers comp balance as needing Joshua's payment call, but HUMAN_QUEUE.md already showed Joshua paid it today. Sent a follow-up plain-language Slack correction; records fixed. Open Items Register has the full process-gap note.
+
+## 2026-11-16 (ebay-weekly-channel-audit, native)
+
+- 369 active / $63,677 listed · 90d 533 units / $94,877 · fees 15.8% · aged >90d 195 ($31,025). vs 2026-11-09: active -23, listed value -$2,170, 90d revenue -$3,752, fee % -0.3pt, aged >90d +10 / +$7,460, unread +9 2 open Best Offers expiring within 48 h (Roanoke x2) — none answered yet, needs a pricing call. 95 listings sit at their 3rd markdown cut with no further scheduled action (Culpeper 73, Harrisonburg 5, Lexington 1, Roanoke 16). Full: `eBay/audit_weekly/2026-11-16/summary.md`.
+
+## 2026-11-16 10:00 ET — Website: the 3 recommended fixes from the Monday #website post (Joshua: "let's get it done")
+- **H1 on the 5 zero-H1 pages** (via WordPress.com connector): /directions-and-contact/ (11), /in-store-inventory/ (867, heading placed OUTSIDE the VP-INSTORE markers so the in-store sync keeps it), /keep-in-touch/ (569), /my-account/ (499), /spot-prices-feed/ (1479). 569, 499, 1479 also set Yoast noindex (thank-you, login and data pages). `bin/spot_site_update.py` now writes the H1 with the prices every morning (backup `fleet/_backups/spot_site_update.py.bak-pre-h1-20261116`); calculator regex `gold:` / `silver:` still parses (checked).
+- **37 long titles → all ≤ 59 chars** via the Yoast SEO title field (post titles, H1s and URLs untouched). No duplicates, brand never twice. List: `Website/AUDIT_2026-11-16/new_titles.json`. Pre-change backup of all 120 pages/posts: `Website/AUDIT_2026-11-16/backups_pre/pages_posts_edit_20261116.json`. Re-crawl of the 120 sitemap pages: 0 zero-H1, 0 titles over 62.
+- **/shop/ weight:** `Website/shop-build/generate_shop_block.py` card images now 300px / quality 70 through Jetpack's image CDN with a 500px copy for sharp phone screens (avg ~9-16 KB vs 35 KB). Backup `generate_shop_block.py.bak-pre-imgsize-20261116`. LIVE after the 15:00 refresh, verified 15:25: 377 cards, all 377 images on the new URLs, all load (webp), no double CDN wrap, srcset kept; crawler-style weight 5.1 MB -> 2.2 MB (under the 3 MB flag). Compressed HTML 88 KB.
+- Not done (needs a local session — protected Scheduled folder): blog publisher should keep new SEO titles ≤ 60 chars (same change as the duplicate-topic check already on the open list). Nothing posted to Slack.
+
+## 2026-11-16 09:20 ET — To-do list cleanup (Joshua: "review all these to-dos … do the things you can do")
+- Verified all 41 open HUMAN_QUEUE rows against Gmail, Slack, DocuSign, receipts and project files. Closed 17 as already done or moot, plus 2 done by Claude: voided the stale DocuSign envelope 21725a03-bc92-8a27-82cb-53e67e5afc5c (Sophia Bozzella), and retracted the two wrong 10/12 #store-performance posts (C03CGTN3KN1 1791809110.099659 / .387019). Backups: Life OS/HUMAN_QUEUE.md.bak-20261116, .bak-20261116b.
+- Monday community post moved to Tuesday 13:30 (Joshua OK): `Refine Social Media/vp_social/plan.py` COMMUNITY_DAYS [0,…] → [1,…] (backup `fleet/_backups/plan.py.bak-pre-tuesday-20261116`); a dry build of weeks 11/16, 11/23 and 11/30 had 0 account-minute collisions.
+- Workers comp: replied in the Hannover thread that the final payment is being made today. Logins teed up for Joshua: `bin/vp_signin_front.sh --all` (the 7 automation tabs + 8 AI-search sites; backup `.bak-pre-all-20261116`), and the Glencar portal, QuickBooks and Publer opened in his Chrome.
+
+## 2026-11-16 (preston phone brief, native)
+
+- preston-phone-week: 2026-11-09–2026-11-15, 70 calls / 169 min, 20 of 33 staff calls offloadable; DM'd to Joshua
+
+## 2026-11-16 09:00 ET (October scrap gold — all 10 weights read, split staged)
+
+- Joshua approved allow-listing `bin/scrap_readopen_run.sh` (read-only; `fleet/host_queue_allowlist.txt`, backup `.bak-pre-readopen-20261116`). Run `scrap-2026-10-readopen` read all 10 October gold buckets in the OPEN-only view: CUL 111.08/176.17, WAY 48.20/70.73, HAR 51.38/59.38, LEX 19.70/13.20, ROA 84.88/44.50 dwt (gold/stones). Split built (`reviews/2026-10_allocations_REVIEW.csv`, manifest in `triggers-scrap/pending-approval/scrap-closeout-2026-10.json`): CUL $25,502.85, HAR $9,854.83, LEX $2,938.25, ROA $11,574.82, WAY $10,564.42 = $60,435.17. Weight check: gold +9.5% vs Elemetal, stones -11.2%, combined -2.7%. Awaiting Joshua's 'post'. NOT posted. Open: closeout handler cannot find CUL/WAY buckets in its all-status view — needs an open-view lookup before those 4 can post.
+
+## 2026-11-16 09:00 ET — Report channels slimmed down (Joshua: "the summary is way too long and illegible in Slack")
+
+- **#timekeeping-summary** is now Joshua + Preston only — removed Benjie, Chadd, Martin D., Rob, Sandi, Uriah, Walker (Slack web, as Joshua; the ops bot lacks the members scope). Onboarding skill already lists it as NOT full-team. New `bin/slack_channel_trim.py` (allow-listed) for when the bot gets `groups:read`.
+- **#discount-review / #sold-review**: channel post = store ranking + company line + top 5 worst (discount: past the age allowance, losses first; sold: below cost first, then biggest $ given up vs typical/fair). The full xlsx is attached IN THE POST'S THREAD so the whole team can open it (`vp_slack.py upload-thread`); if that upload fails it goes to Joshua's DM as before. Old long text kept in the summary JSON as `slack_message_full`. Backups `*.bak-pre-compact-20261116`, `fleet/_backups/daily_report.sh.bak-pre-thread-20261116`, `vp_slack.py.bak-pre-thread-20261116`.
+- **#pawn-walks**: flags only, grouped by store, each with a detail line (buy/loan, paid, est. value, category, full description). Flag line format unchanged so Preston's feedback loop still parses. No-flag day = one line. Backup `Pawn Walks/run_daily_intake.py.bak-pre-flagsonly-20261116`.
+- **#website**: no more "Shop refreshed" (2x daily) or "Retail page deals refreshed" notices — the publishes still run. The Monday 05:15 health audit no longer posts its own digest; it writes `Website/AUDIT_2026-08-22/recommended_fixes_latest.json`, and the Monday 09:00 "Weekly Website Analytics" post appends a *Recommended fixes* block. One post a week = stats + fixes. expected_outputs.json: the 3 retired markers set to `retired-2026-11-16`.
+- Incident (fixed same hour): a test run in the cloud workspace rebuilt `Valuation Core/item_age_index.json` with no data (13:30 UTC), which would have made every report flat-flag by age. Rebuilt correctly at 13:41 UTC (17 series). No live report ran in that window (Monday's reports cover Sunday = closed).
+
+## 2026-11-16 (October scrap gold — correction)
+
+- The 11/12 entry "Culpeper and Waynesboro never created October gold buckets" is WRONG. Both stores have `2026-10 GOLD` / `2026-10 GOLD WITH STONES`, OPEN (CUL created 9/30; WAY 10/5 + 10/20) — visible in Bravo's OPEN-only view (`silver-openlist-20261113.buckets.csv`), confirmed by Preston. The all-status view skips each store's newest rows. Detail + next steps: `Precious Metals Settlements/BRAVO_MONTHLY_AUTOPOST.md` (2026-11-16 correction). `bin/scrap_readopen_run.sh` written, not yet allow-listed. Joshua approved Claude creating the monthly buckets (to build). October still unposted.
+
+## 2026-11-16 — Email watchdog false misses; stale queue row
+- Scorecard showed "Email watchdog — didn't post" on 6 of the last 11 days. bin/brevo_watchdog.py only sends its all-clear when there is an upcoming send to check, so days with nothing scheduled looked like misses. It now writes a silent receipt ("no upcoming sends to check") on those days; no message to anyone (backup `fleet/_backups/brevo_watchdog.py.bak-pre-noop-receipt-20261116`).
+- Closed the 11/7 HUMAN_QUEUE row asking for an Anthropic key for the Chekkit AI responder; the key is in place and the responder replied as recently as 11/15.
+
+# Valley Pawn - Enterprise Changelog
+
+Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
+
+## 2026-11-16 (Social campaign scorecard, run 4)
+
+- Week 3 measured (`Refine Social Media/CAMPAIGN_SCORECARD.md`): community reach to date CUL 10.7% / WAY 10.4% / HAR 6.0% / LEX 16.7% / ROA 15.0% of followers (all below the 90-day mark); Lexington hiring post 1,202 reach. Tuning: HS-game format given priority for Waynesboro (+80% vs its other community posts). Added 4 verified 11/20 region-semifinal games + 3 Waynesboro basketball Fridays to `community_topics.json`; test build 11/16→12/7 0 collisions, proven slot now Tue 13:30. Followers CUL 885 / HAR 760 / ROA 40. Outbound engagement posted nothing 11/9–11/15 (PREP only). Backups `fleet/_backups/*.bak-pre-scorecard-20261116`. No Slack.
+
+## 2026-11-16 (weekly-website-health-audit, native)
+
+- Crawled 120 sitemap pages (106 indexable), 0 errors, 0 broken JSON-LD, 0 missing descriptions (1 auto-fixed and verified live), 2 new pages since 11/9. Digest posted to #website. History: `Website/AUDIT_2026-08-22/weekly-history.json`.
+
+## 2026-11-16
+
+- Native agent appeared: com.valleypawn.disk-guard-report.plist
+- Native agent appeared: com.valleypawn.disk-guard.plist
+- Native agent appeared: com.valleypawn.mem-guard-nightly.plist
+- Native agent appeared: com.valleypawn.mem-guard.plist
+- Native agent LOADED: com.valleypawn.disk-guard
+- Native agent LOADED: com.valleypawn.disk-guard-report
+- Native agent LOADED: com.valleypawn.mem-guard
+- Native agent LOADED: com.valleypawn.mem-guard-nightly
+
 ## 2026-11-15 21:50 ET (fleet-guardian, 21:45 ET pass, Cowork, Social Media project, device-linked mac-studio-2-local)
 
 - vp_dryrun.py guard confirmed OFF (exit 1, publications live) before any step.
@@ -9554,3 +9713,21 @@ Newest first. Material changes to the business operating system. Read this BEFOR
 - Artifacts sync (Step 2) skipped silently -- ~/Documents/Claude/Artifacts not a connected folder this session (only "Business Dashboard Website" and "Projects" were connected, same as all prior runs).
 - Deploy: used Option C per the runbook's standing 2026-10-16 finding (device_bash wrangler reliably hangs) -- staged all 40 site/+.cloudflare/ files cleanly on the first try (excluded the known scratch/debug leftovers: *.bak*, *_stage*, *_test*, *_deploy*, *stagecopy*, *.orig*, *payload*, *break*), installed wrangler in the cloud sandbox, deployed cleanly: https://d753bc0f.vp-dashboard.pages.dev
 - Verified: https://vp-dashboard.pages.dev/ returns 401 with no auth, 200 with valleypawn basic auth (apex + deployment-specific URL both 200, cache-busted); data/kpis.json fetched live and parses, asOf/funds/itemsToPrice/intakeMargin all match what was written. No Slack post (success, per the task's standing no-Slack-either-way rule and FAILURE POLICY v3 override).
+
+- 2026-11-16 — Zoom store menus: every prompt on all 5 stores switched from Zoom's text-to-speech voice to HeyGen "Janet" recordings. Greeting, key 1 and key 2 now play the Janet clips; menu actions and routing are unchanged. Each prompt was checked after saving. See ZOOM_PHONE.md, 2026-11-16.
+- 2026-11-16 — bin/zoom_call_path.py: added a read-only --dump <from> [<to>] mode that prints one JSON line per inbound call, with the menu key presses resolved; used for the phone-menu week-1 check. Backup: fleet/_backups/zoom_call_path.py.bak-pre-dump-20261116.
+## 2026-11-16 ~4:04 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules. Confirmed cloud-only (no remote-devices bridge). Scope unchanged (HIRING_SWITCH.md): Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Checked Indeed Messages fresh: newest thread still Ethan Ruley's 3:35 PM "sounds good" (already logged/handled) — nothing newer. Jobs dashboard: Waynesboro, Harrisonburg, Lexington, Roanoke all still Paused, 0 New applicants each, no live sponsorship spend. (Saint Augustine FL Store Manager shows 3 New but that store is OFF — no action.) No bookings, reschedules, or rejections needed this run.
+- Per the quiet-rule standing preference: nothing changed that Joshua needs to see, so no Slack DM and no #employee-prospects post this run.
+- Indeed messages sent: 0. Calendar events created: 0. Texts: 0. Rejections: 0. Slack: 0 (quiet rule — nothing changed).
+## 2026-11-16 ~5:34 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules. Confirmed cloud-only (no remote-devices bridge). Scope unchanged (HIRING_SWITCH.md): Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Checked Indeed Messages fresh: newest thread still Ethan Ruley's 3:35 PM "sounds good" (booked Tue 11/17 11:05 AM, already confirmed — same as the 4:04 PM run). Nothing newer in the inbox. Jobs dashboard: Lexington, Waynesboro, Harrisonburg, Roanoke all 0 New applicants, no live sponsorship spend (Lexington/Harrisonburg sponsorship ended 2 days ago, Roanoke 30 days ago — none renewed, no action per standing no-spend-without-Joshua rule). Saint Augustine FL shows 3 New but that store is OFF — no action. No bookings, reschedules, rejections, or candidate questions needed this run.
+- Per the quiet-rule standing preference: nothing changed that Joshua needs to see, so no Slack DM and no #employee-prospects post this run.
+- Indeed messages sent: 0. Calendar events created: 0. Texts: 0. Rejections: 0. Slack: 0 (quiet rule — nothing changed).
+## 2026-11-16 ~6:06 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules. Confirmed cloud-only (no remote-devices bridge). Scope unchanged (HIRING_SWITCH.md): Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Checked Indeed Messages fresh: one new thread since the 5:34 PM run — Jordyn Bolton (Harrisonburg; had her phone interview 10/2, told 11/12 "Preston Peters will follow up... about next steps") messaged again at 5:56 PM: "When will I hear back." Decision/status question (same class as Edgar Alvarez Alvira at the 1:10 PM run) — no Indeed reply sent per the no-decisions rule; DM'd Joshua. All other threads unchanged (Ethan Ruley 3:35 PM still newest besides this). Jobs dashboard (employers.indeed.com/jobs) returned a Cloudflare "Additional Verification Required" challenge on 4 attempts with waits — could not check the 4 listings for brand-new applicants this run (Messages inbox unaffected); logged to FAILURE_LEDGER.md, NEEDS_HUMAN: no (same transient class as the 11/2-11/3 block, self-resolved before). No bookings, reschedules, or rejections needed this run.
+- Per the quiet-rule standing preference, something did change (Jordyn Bolton's question) so sent one short Slack DM to Joshua; no #employee-prospects post (schedule unchanged).
+- Indeed messages sent: 0. Calendar events created: 0. Texts: 0. Rejections: 0. Slack: 1 DM (Jordyn Bolton escalation + Jobs-dashboard Cloudflare note).

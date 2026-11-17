@@ -152,6 +152,34 @@ def delta(a, b, unit=""):
     return "%s%s → %s%s (%+d)" % (a, unit, b, unit, b - a)
 
 
+def recommended_fixes(day, scan, pages, fixes, decisions, still_open):
+    """2026-11-16 (Joshua): #website gets ONE weekly post = website stats + recommended fixes. This builds the
+    fixes half in plain words and saves it for weekly_analytics_summary.py (Mon 09:00) to append."""
+    m = scan["metrics"]; rec = []
+    for d in decisions + still_open:
+        rec.append(d)
+    if m.get("zero_h1_pages"):
+        z = m["zero_h1_pages"]
+        rec.append("Add a main page heading (H1) to %s%s." % (", ".join(path_of(u) for u in z[:3]),
+                   (" and %d more" % (len(z) - 3)) if len(z) > 3 else ""))
+    if m.get("titles_over_62"):
+        t = sorted((pages[u] for u in m["titles_over_62"] if u in pages), key=lambda pg: -(pg.get("title_len") or 0))
+        rec.append("Shorten %d page titles to 62 characters or less so Google shows them in full — longest: %s." % (
+            len(m["titles_over_62"]), ", ".join("%s (%s)" % (path_of(pg["url"]), pg.get("title_len")) for pg in t[:3])))
+    heavy = [(k, v) for k, v in (m.get("sample_weights") or {}).items() if (v.get("kb") or 0) >= 3000]
+    for k, v in heavy:
+        rec.append("%s weighs %.1f MB — compress its images so it loads faster on phones." % (path_of(v["url"]), v["kb"] / 1000))
+    if m.get("zero_tel_pages"):
+        rec.append("Add a tap-to-call link to %s." % ", ".join(path_of(u) for u in m["zero_tel_pages"][:4]))
+    if m.get("brand_twice_titles"):
+        rec.append("Remove the doubled brand name from %d page titles." % len(m["brand_twice_titles"]))
+    done = ["%s — search description added (live)" % path_of(f["page"]) for f in fixes if f.get("verified_live")]
+    out = {"date": day.isoformat(), "recommended": rec, "auto_fixed": done}
+    for name in ("recommended_fixes_%s.json" % day, "recommended_fixes_latest.json"):
+        json.dump(out, open(os.path.join(AUD, name), "w"), indent=1)
+    return out
+
+
 def main():
     render = "--render" in sys.argv
     send = "--send" in sys.argv and not render
@@ -262,13 +290,11 @@ def main():
     if not send:
         return 0
     json.dump(hist + [entry], open(HIST, "w"), indent=1)
-    if vp_slack.has(CH, "Weekly Website Health Audit — %s" % day.strftime("%a %b %-d, %Y"), 20):
-        print("already posted today")
-    else:
-        os.environ["VP_TASK"] = TASK
-        vp_slack.post(CH, text)
+    # 2026-11-16 (Joshua): no separate audit post — its recommended fixes ride on the Monday stats post.
+    rf = recommended_fixes(day, scan, pages, fixes, decisions, still_open)
+    print("recommended fixes saved for the Monday stats post: %d" % len(rf["recommended"]))
     note = ("## %s (weekly-website-health-audit, native)\n\n- Crawled %d sitemap pages (%d indexable), %d errors, %d broken JSON-LD, "
-            "%d missing descriptions (%d auto-fixed and verified live), %d new pages since %s. Digest posted to #website. History: "
+            "%d missing descriptions (%d auto-fixed and verified live), %d new pages since %s. Recommended fixes go out with the Monday stats post in #website. History: "
             "`Website/AUDIT_2026-08-22/weekly-history.json`.%s\n\n" % (day, cur["total_pages_in_sitemap"], cur["indexable_pages"],
             cur["errors_4xx_5xx"], cur["broken_jsonld_pages"], cur["indexable_missing_meta_description"], len(fixes), len(new_urls),
             md(pdate) if pdate else "-", (" Needs Joshua: " + " ".join(decisions)) if decisions else ""))
@@ -277,7 +303,7 @@ def main():
     open(CHANGELOG, "w").write(txt[:i + 1] + note + txt[i + 1:] if i >= 0 else txt + "\n" + note)
     if fixes or decisions:
         with open(OPEN_ITEMS, "a") as f:
-            f.write("| %s | 1 — Valley Pawn | **weekly-website-health-audit (native):** %s%s | OPEN | Review in #website digest %s |\n" % (
+            f.write("| %s | 1 — Valley Pawn | **weekly-website-health-audit (native):** %s%s | OPEN | Review in the #website stats post %s |\n" % (
                 day, ("auto-fixed: " + "; ".join("%s meta description" % path_of(x["page"]) for x in fixes) + ". ") if fixes else "",
                 ("needs a decision: " + " ".join(decisions)) if decisions else "", day))
     return 0

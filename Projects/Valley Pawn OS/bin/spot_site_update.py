@@ -4,7 +4,8 @@
 The calculators on thevalleypawn.com read window.VP_GOLD_SPOT / VP_SILVER_SPOT. Those were hard-coded in three header
 snippets (HFCM #2 4629.50, WPCode #1116 4604.40, an inline 4399.40) and had not been updated since early September.
 This writes the numbers into a small published page, /spot-prices-feed/, via WP REST (site app password); WPCode #1116
-fetches that page in the browser and overrides the hard-coded fallback. Creates the page on first run. Refuses to
+fetches that page in the browser and overrides the hard-coded fallback. 2026-11-16: page also carries an H1 (site health
+audit flags zero-H1 pages); WPCode #1116 regex /gold:\s*([0-9.]+)/ is unaffected. Creates the page on first run. Refuses to
 publish a price that fetch_spot_prices.py marked stale or that is outside sane bounds."""
 import base64, datetime as dt, json, os, sys, urllib.request
 OS_DIR = os.path.expanduser("~/Documents/Claude/Projects/Valley Pawn OS")
@@ -21,7 +22,7 @@ g, s = float(sp["gold_usd_per_ozt"]), float(sp["silver_usd_per_ozt"])
 age_h = (dt.datetime.now(dt.timezone.utc) - dt.datetime.fromisoformat(sp["updated_at"])).total_seconds() / 3600
 if not (1000 < g < 15000 and 5 < s < 400) or age_h > 72:
     print("refusing: gold %s silver %s age %.0fh" % (g, s, age_h)); sys.exit(1)
-body = "<!-- wp:paragraph --><p>gold: %.2f<br>silver: %.2f<br>updated: %s</p><!-- /wp:paragraph -->" % (g, s, sp["updated_at"])
+body = "<!-- wp:heading {\"level\":1} --><h1 class=\"wp-block-heading\">Valley Pawn Spot Price Feed</h1><!-- /wp:heading --><!-- wp:paragraph --><p>gold: %.2f<br>silver: %.2f<br>updated: %s</p><!-- /wp:paragraph -->" % (g, s, sp["updated_at"])
 pages = wp("/pages?slug=spot-prices-feed&status=publish,draft,private&context=edit&_fields=id,status")
 if "--render" in sys.argv:
     print("would write", body, "to", pages); sys.exit(0)

@@ -332,6 +332,9 @@ def main() -> int:
     result_path = DATA / "result.json"
 
     if a.post_only:
+        log("post-only: shop-refresh notices are retired (Joshua 2026-11-16) — nothing posted")
+        return 0
+    if False:
         try:
             res = json.loads(result_path.read_text())
         except Exception:
@@ -387,13 +390,13 @@ def main() -> int:
         posted_ts = None
         if a.no_post:
             log("no-post: Slack suppressed for this proving run")
-        elif state.get("last_posted_slot") != slot_id(now):
-            posted_ts = slack_post(CHANNEL_WEBSITE, body)
+        # 2026-11-16 Joshua: #website does not need a "shop refreshed" notice — stats + fixes only. Never post;
+        # mark the slot handled so the verifier never back-fills the post either.
         res = {"ts": now.isoformat(), "slot": slot_id(now), "status": "ok", "scraped": scraped,
                "scraped_total": scraped_total, "counts": counts, "total": total, "excluded": excluded,
                "reused_stores": reused, "verify": ver, "slack_body": body,
-               "posted": bool(posted_ts) or a.no_post, "slack_ts": posted_ts,
-               "posted_by": "suppressed(no-post)" if a.no_post else ("runner" if posted_ts else None)}
+               "posted": True, "slack_ts": None,
+               "posted_by": "suppressed(joshua-2026-11-16: no shop-refresh notices)"}
         result_path.write_text(json.dumps(res, indent=2))
         with (DATA / "history.csv").open("a", newline="") as f:
             w = csv.writer(f)

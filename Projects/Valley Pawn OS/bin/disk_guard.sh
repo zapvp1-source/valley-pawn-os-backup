@@ -33,6 +33,20 @@ capped() { local secs="$1"; shift; perl -e 'alarm shift; exec @ARGV' "$secs" "$@
 sz() { local o; o=$(capped 240 du -sk "$1" 2>/dev/null | awk '{printf "%.1f", $1/1048576}'); echo "${o:-timeout}"; }   # GB
 F0=$(free_gb)
 
+# One-time cleanup Joshua approves via a flag file (created by Claude through Drive after his OK).
+ONESHOT_FLAG="$HOME/Documents/Claude/Projects/Valley Pawn OS/bin/.disk_guard_oneshot_20261116_approved"
+oneshot() {
+  [ -f "$ONESHOT_FLAG" ] || return 0
+  local d="$HOME/Desktop/_deleted_installers_20260904"
+  [ -d "$d" ] && { s=$(sz "$d"); rm -rf "$d" && log "ONE-SHOT deleted $d (${s} GB, old installers)"; }
+  for f in "install_backblaze.dmg" "Intuit Meeting.dmg" "Claude.dmg" "install_backblaze_005_b1f03755763e4dc02e48d27ec2fde9d55651aac6.dmg"; do
+    [ -f "$HOME/Downloads/$f" ] && rm -f "$HOME/Downloads/$f" && log "ONE-SHOT deleted ~/Downloads/$f"
+  done
+  local mov="$HOME/Library/Mobile Documents/com~apple~CloudDocs/01 Business/Full Circle Finance (Valley Pawn)/06 Operations/Chekkit Managment copy.mov"
+  [ -f "$mov" ] && brctl evict "$mov" >/dev/null 2>&1 && log "ONE-SHOT evicted local copy of Chekkit Managment copy.mov (stays in iCloud)"
+  mv "$ONESHOT_FLAG" "$ONESHOT_FLAG.done" 2>/dev/null || rm -f "$ONESHOT_FLAG"
+}
+
 clean() {
   local before after
   before=$(free_gb)
@@ -42,6 +56,14 @@ clean() {
     s=$(sz "$d"); rm -rf "$d" 2>/dev/null && log "cleared cache $d (${s} GB)"
   done
   command -v brew >/dev/null 2>&1 && brew cleanup -s >/dev/null 2>&1 && log "brew cleanup"
+  # Claude Code CLI logs/cache (regenerable) older than 7 days — was 3.8 GB on 2026-11-15
+  if [ -d "$HOME/Library/Caches/claude-cli-nodejs" ]; then
+    s=$(sz "$HOME/Library/Caches/claude-cli-nodejs")
+    find "$HOME/Library/Caches/claude-cli-nodejs" -type f -mtime +7 -delete 2>/dev/null
+    find "$HOME/Library/Caches/claude-cli-nodejs" -mindepth 1 -type d -empty -delete 2>/dev/null
+    log "trimmed claude-cli-nodejs cache (was ${s} GB, kept last 7 days)"
+  fi
+  oneshot
   # logs older than 30 days (not the fleet's own logs)
   n=$(find "$HOME/Library/Logs" -type f \( -name '*.log' -o -name '*.log.*' -o -name '*.gz' -o -name '*.ips' -o -name '*.crash' \) \
        -mtime +30 -not -path "*/valleypawn/*" 2>/dev/null | wc -l | tr -d ' ')

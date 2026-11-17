@@ -242,3 +242,15 @@ No October bucket exists at either store under any name, so their October gold (
 HAR/LEX/ROA October buckets exist and are OPEN with live weights (see 11/10 amendment).
 The handler now saves that newest-rows screenshot on every listOnly run — use it, never computer use.
 Follow-up task trig_01NqHvMJKE7g2PAc98ZpEkEX (computer-use plan) was disabled; its step 1 is answered.
+
+## 2026-11-16 CORRECTION — the 11/12 "settled fact" above is WRONG
+Culpeper and Waynesboro DO have October buckets, all OPEN (results-scrap/silver-openlist-20261113.buckets.csv,
+Bravo default OPEN-only view; Preston confirmed 11/12): CUL `2026-10 GOLD` + `2026-10 GOLD WITH STONES`
+created 9/30; WAY `2026-10 GOLD` 10/5, `2026-10 GOLD WITH STONES` 10/20. CUL also already has `2026-11 *` (10/30).
+The all-status view never reaches a store's NEWEST rows (CUL top 6, WAY top 3, HAR/LEX/ROA top 1 unseen;
+the "-newest.png" screenshot is scrolled past them — HAR's shows 1 of its 3 10/27 buckets). Never use the
+all-status view or that screenshot to decide a bucket is missing. Weights for OPEN buckets must be read in
+the OPEN-only view: reports/ScrapBucketReadOpen.ahk via bin/scrap_readopen_run.sh (written 11/16, needs
+`scrap_readopen_run.sh` added to fleet/host_queue_allowlist.txt — Joshua's OK). Manifest staged:
+triggers-scrap-open/_staged_scrap-2026-10-readopen.json.hold (rename to scrap-2026-10-readopen.json to run).
+Joshua 11/16: Claude is to CREATE the monthly buckets at all 5 stores (same names, same day) — to build.

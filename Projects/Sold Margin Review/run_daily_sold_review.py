@@ -679,6 +679,54 @@ def build_slack_message(valued: list[dict], date: datetime.date, missing_stores:
     return "\n".join(lines)
 
 
+
+def build_slack_message_compact(valued, date, missing_stores):
+    """Joshua 2026-11-16: the channel gets the store RANKING, the TOP 5 most questionable sales company-wide,
+    and the spreadsheet (attached in the thread by bin/daily_report.sh). Everything else lives in the xlsx."""
+    if len(valued) < 3:
+        return None
+    RANK = {1: "🥇", 2: "🥈", 3: "🥉"}
+    def _pct(m):
+        return f"{m * 100:.0f}%" if m is not None else "—"
+    rows = []
+    for st in sorted(set(r["store"] for r in valued)):
+        si = [r for r in valued if r["store"] == st]
+        mm = [r["margin"] for r in si if r["margin"] is not None]
+        rows.append((st, len(si), statistics.mean(mm) if mm else None,
+                     sum(1 for r in si if r["flag"] or r.get("market_flag"))))
+    rows.sort(key=lambda x: -(x[2] if x[2] is not None else -9))
+    lines = [f"🛒 *Sold Review — {date.isoformat()}*", "", "*Store ranking* (avg margin, target ~%d%%)" % int(TARGET_MARGIN * 100)]
+    for i, (st, n, avg, fl) in enumerate(rows, 1):
+        lines.append(f"{RANK.get(i, f'{i}.')} *{st}* — {_pct(avg)} · {n} sold · {fl} flagged")
+    if missing_stores:
+        lines.append(f"_No data for: {', '.join(missing_stores)}_")
+    mm = [r["margin"] for r in valued if r["margin"] is not None]
+    revenue = sum(r["price"] for r in valued); profit = sum(r["price"] - r["cost"] for r in valued)
+    lines.append(f"*Company* — {_pct(statistics.mean(mm) if mm else None)} · {len(valued)} sold · "
+                 f"${revenue:,.0f} revenue · ${profit:,.0f} profit")
+
+    def lost(r):   # dollars this sale gave up vs what it should have brought
+        c = [r["cost"] - r["price"] if r["price"] < r["cost"] else 0,
+             r.get("market_gap") or 0 if r.get("market_flag") else 0,
+             (r["fair_value"] - r["price"]) if (r["flag"] and r.get("fair_value")) else 0]
+        return max(c)
+    q = [r for r in valued if r["flag"] or r.get("market_flag")]
+    q.sort(key=lambda r: (0 if r.get("critical") else 1, -lost(r), r["margin"] if r["margin"] is not None else 0))
+    if q:
+        lines += ["", "*Top %d questionable sales*" % min(5, len(q))]
+        for r in q[:5]:
+            desc = (r.get("desc") or r.get("category") or "item").strip()
+            desc = desc[:39] + "…" if len(desc) > 40 else desc
+            why = "below cost" if r.get("critical") else ("under typical price" if r.get("market_flag") and not r["flag"] else "margin " + _pct(r["margin"]))
+            ref = f" · typical ~${r['market_value']:,.0f}" if r.get("market_flag") and r.get("market_value") else (
+                  f" · fair ~${r['fair_value']:,.0f}" if r.get("fair_value") else "")
+            aged = f" · {r['days_on_shelf']}d old" if r.get("aged") else ""
+            lines.append(f"• *{r['store']}* · {desc} · sold ${r['price']:,.0f} / cost ${r['cost']:,.0f}{ref} · {why}{aged}")
+    else:
+        lines += ["", "_No questionable sales today._ ✅"]
+    return "\n".join(lines)
+
+
 # ── Post to Slack ──────────────────────────────────────────────────────────────
 def slack_post(text: str, token: str) -> bool:
     payload = json.dumps({"channel": SLACK_CHANNEL, "text": text, "mrkdwn": True}).encode("utf-8")
@@ -932,7 +980,8 @@ def main():
         print(f"Excel → {xlsx_path}")
     summary["excel_path"] = xlsx_path if xl_ok else None
 
-    slack_msg = build_slack_message(valued, date, missing)
+    summary["slack_message_full"] = build_slack_message(valued, date, missing)
+    slack_msg = build_slack_message_compact(valued, date, missing)   # 2026-11-16 compact channel post
     summary["slack_message"] = slack_msg
     if slack_msg is None:
         print(f"Slack post skipped — only {len(valued)} item(s) (min 3 required).")

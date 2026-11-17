@@ -583,6 +583,45 @@ def build_slack_message(valued: list[dict], date: datetime.date) -> str | None:
     return "\n".join(lines)
 
 
+
+def build_slack_message_flags(valued, date):
+    """Joshua 2026-11-16: #pawn-walks shows the overpay FLAGS only, grouped by store, with the detail for each.
+    Line 1 of every flag keeps the exact `• L · $paid · margin% · item` shape that feedback/feedback_ingest.py
+    parses (Preston's replies); the detail sits on its own line underneath so the parser ignores it."""
+    if len(valued) < 3:
+        return None
+    def _pct(m):
+        return f"{m * 100:.0f}%" if m is not None else "—"
+    flagged = [r for r in valued if r.get('flag')]
+    lines = [f"📋 *Daily Pawn Walk — {date.isoformat()}*"]
+    if not flagged:
+        lines.append(f"✅ No overpay flags — {len(valued)} items taken in, all at or above the 30% floor.")
+        return "\n".join(lines)
+    lines.append(f"_{len(flagged)} overpay flag{'s' if len(flagged) != 1 else ''} (below 30% margin) out of {len(valued)} items taken in_")
+    flagged.sort(key=lambda r: (r.get('store', ''), r['margin'] if r.get('margin') is not None else 0.0))
+    cur = None
+    for r in flagged:
+        st = r.get('store', '')
+        if st != cur:
+            lines += ["", f"*{st}:*"]
+            cur = st
+        desc = (r.get('desc') or r.get('category') or 'item').strip()
+        short = desc[:41] + "…" if len(desc) > 42 else desc
+        kind = _fb_rules.kind_label(r) if _fb_rules else ("L" if (r.get('ticket_kind') == 'LOAN') else "B")
+        lines.append(f"• {kind} · ${r.get('cost', 0):,.0f} · {_pct(r.get('margin'))} · {short}")
+        kw = {"RL": "Reloan", "L": "Loan", "B": "Buy"}.get(kind, kind)
+        det = [f"{kw}{(' #' + str(r['ticket'])) if r.get('ticket') else ''}",
+               f"paid ${r.get('cost', 0):,.0f}"]
+        if r.get('value'):
+            det.append(f"est. value ${r['value']:,.0f}")
+        if r.get('category'):
+            det.append(str(r['category']).strip())
+        if len(desc) > 42:   # the full description, since line 1 is cut for the feedback parser
+            det.append(desc[:140] + ("…" if len(desc) > 140 else ""))
+        lines.append("      _" + " · ".join(det) + "_")
+    return "\n".join(lines)
+
+
 # ── Post to Slack ──────────────────────────────────────────────────────────────
 def slack_post(text: str, token: str) -> bool:
     """POST to Slack chat.postMessage. Returns True on API ok:true."""
@@ -950,7 +989,8 @@ def main():
     summary["excel_path"] = xlsx_path if xl_ok else None
 
     # ── Slack ─────────────────────────────────────────────────────────────────
-    slack_msg = build_slack_message(valued, date)
+    summary["slack_message_full"] = build_slack_message(valued, date)
+    slack_msg = build_slack_message_flags(valued, date)   # 2026-11-16 flags-only channel post
     if slack_msg is not None and xl_ok:
         slack_msg += f"\n\n📎 _Spreadsheet: `daily/{date_str}_intake_margin.xlsx` in your Pawn Walks folder (Items/Summary/Flags tabs)_"
     summary["slack_message"] = slack_msg   # always saved — scheduled task posts via Slack MCP if needed

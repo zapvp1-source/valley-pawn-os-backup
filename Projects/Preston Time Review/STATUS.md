@@ -49,3 +49,11 @@ Week Mon 10/12–Sat 10/17, cell (540) 836-4200: 81 calls / 487 min. Staff+store
 Fortis (card processor) 1 call / 28 min. Unidentified 28 calls / 198 min (incl. recurring x9687, likely personal).
 Zoom line same week: 49 calls / 132 min (Walker 17, Chadd 10, Sandi 8). Combined ≈ 619 min ≈ 103 min/workday.
 Weekly cell calls: 9/21 100c/559m · 9/28 49c/276m · 10/5 56c/372m · 10/12 81c/487m.
+
+## 2026-11-16 — Weekly Preston Phone Brief is live (native)
+Agent `com.valleypawn.preston-phone-week` (`Valley Pawn OS/bin/preston_phone_week.py/.sh`), Mondays 06/08/10/12/14:00 —
+the first slot after the 02:30 Phone & Text Review does the work; later slots no-op. Reads that review's files only
+(no Zoom calls). Tags every Preston-line call (who / topic / could the store have handled it + the fix / customer-service
+issue), trend from every week folder → `Call Analysis/preston_phone_history.json`. PDF to Drive › Call Reviews, 3–5 line
+DM to Joshua. First edition Nov 9–15: 70 calls / 169 min (prior 4-wk avg 109), 20 of 33 staff calls offloadable,
+13 hiring screens (72 min). Cell (540-836-4200) staff/candidate calls stay outside Zoom; store→cell calls are counted.

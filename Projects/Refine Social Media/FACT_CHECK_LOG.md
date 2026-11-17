@@ -307,3 +307,9 @@ Claims verified:
 Posts edited:
 - 6af223690acc11d344605fc1 (Roanoke FB, Sun 11/15 3 PM): "Next Monday, Nov. 23" → "A week from tomorrow, on Monday, Nov. 23" (posted on a Sunday, "next Monday" reads as 11/16). APPLIED.
 Unverifiable: none left in posts. PUBLISHED-WRONG: none.
+
+## 2026-11-16 07:42 ET — daily fact-check (window: next 36h, to 2026-11-17 ~19:40 ET)
+- Posts checked: 0. publer_upcoming.py returned no scheduled posts for the next 36h (also none in a 168h window). Publer API confirmed reachable: a 11/13–11/26 query returned 26 posts, all already published (11/13: 13, 11/14: 3, 11/15: 10), 0 in scheduled state.
+- Claims verified: none needed. Posts edited: none. Unverifiable: none.
+- PUBLISHED-WRONG: none (the 11/15 posts were fact-checked and corrected in the 11/14 run before going out).
+- Note: the Publer queue is empty from today forward, so no new store/brand posts are scheduled until the next content batch is loaded.

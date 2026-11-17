@@ -86,10 +86,34 @@ def already_posted(end: str) -> bool:
     return r.returncode == 0
 
 
+def fixes_block() -> str:
+    """2026-11-16 (Joshua): #website = stats + recommended fixes. Appends the Monday 05:15 health audit's
+    recommended fixes (website_health_audit.py writes them). Missing or stale (>3 days) file = no block."""
+    f = HOME / "Documents/Claude/Projects/Website/AUDIT_2026-08-22/recommended_fixes_latest.json"
+    try:
+        d = json.loads(f.read_text())
+        if (now().date() - dt.date.fromisoformat(d["date"])).days > 3:
+            return ""
+    except Exception:
+        return ""
+    L = ["", "*🔧 Recommended fixes*"]
+    rec = d.get("recommended") or []
+    L += ["%d. %s" % (i, r) for i, r in enumerate(rec[:8], 1)] or ["• Nothing needs fixing this week ✅"]
+    if d.get("auto_fixed"):
+        L.append("_Already fixed automatically: " + "; ".join(d["auto_fixed"]) + "_")
+    return "\n".join(L) + "\n"
+
+
 def main() -> int:
     send = "--send" in sys.argv
     cached = "--cached" in sys.argv and not send
     rc, body, end, why = build(cached)
+    if rc == 0 and body:
+        fb = fixes_block()
+        if fb:   # insert above the footer lines (source / sent-using), else at the end
+            parts = body.rstrip("\n").split("\n")
+            cut = next((i for i in range(len(parts) - 1, -1, -1) if parts[i].startswith("_Source:")), len(parts))
+            body = "\n".join(parts[:cut]).rstrip() + "\n" + fb + "\n" + "\n".join(parts[cut:]) + "\n"
     if rc == 1:
         print("NO ACCESS — " + why, file=sys.stderr)
         if send:
