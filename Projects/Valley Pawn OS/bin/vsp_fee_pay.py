@@ -443,6 +443,14 @@ def main():
     # invocations, each "one try", but VSP locks the account after repeated failures. Once a login has failed
     # today, every later run today exits BEFORE opening the browser: no login attempt, no DM, no new ledger row.
     # Cleared automatically tomorrow, or by deleting fleet/state/vsp_login_guard.json after re-saving the password.
+    # 2026-11-17 (Joshua): check the portal once a month, not daily. The agent still wakes 5th-28th, but once
+    # this month's file says every store is paid ("month_complete"), it exits here — no browser, no login.
+    # Later wake-ups only touch the site when the month is NOT finished (a retry after a failed payment).
+    try:
+        if json.load(open(month_file)).get("month_complete"):
+            return 0
+    except Exception:
+        pass
     guard = load_guard()
     # 2026-11-10: with daily runs (5th-28th) a per-day guard alone would allow one failed login per day
     # (5 failures lock the account). The guard now also holds across days until the Keychain password changes.
@@ -584,6 +592,13 @@ def main():
                    ", ".join("%s $%.2f" % (c, s["balance"]) for c, s in result["stores"].items() if s["balance"]),
                    result["total_open"], "Dry run completed to the review screen." if dry else "Staged, not paid."))
         finally:
+            try:
+                sts = result.get("stores") or {}
+                if (len(sts) == len(STORES) and not result.get("error") and not dry and not result.get("flags")
+                        and all(st.get("balance") == 0 or c in prior_paid for c, st in sts.items())):
+                    result["month_complete"] = True
+            except Exception:
+                pass
             json.dump(result, open(month_file, "w"), indent=1)
             vp_browser.close(ctx)
     return 0

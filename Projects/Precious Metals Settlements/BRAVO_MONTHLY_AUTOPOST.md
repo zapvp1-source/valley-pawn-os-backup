@@ -254,3 +254,9 @@ the OPEN-only view: reports/ScrapBucketReadOpen.ahk via bin/scrap_readopen_run.s
 `scrap_readopen_run.sh` added to fleet/host_queue_allowlist.txt — Joshua's OK). Manifest staged:
 triggers-scrap-open/_staged_scrap-2026-10-readopen.json.hold (rename to scrap-2026-10-readopen.json to run).
 Joshua 11/16: Claude is to CREATE the monthly buckets at all 5 stores (same names, same day) — to build.
+
+## 2026-11-17 — October 2026 CLOSED; how the working path now runs
+1. Read weights + item costs READ-ONLY in the OPEN view: manifest in `triggers-scrap-open/`, run `bin/scrap_readopen_run.sh <id>` (allow-listed 11/16). Result JSON carries liveWeightDwt, itemCount/itemsExpected, itemCost per bucket.
+2. `bin/build_month_split.py` → REVIEW workbook; add GP by store (settlement − itemCost). Joshua wants GP before he approves.
+3. On 'post': move manifest to `triggers-scrap/`, run `bin/scrap_closeout_run.sh <id>` in store hours. Handler finds buckets in default view, verifies closed ones in the all-status ASCENDING view.
+Never use the all-status descending view or the `-newest.png` screenshot to decide a bucket is missing.

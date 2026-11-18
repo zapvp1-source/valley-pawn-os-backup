@@ -1,5 +1,20 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-17 (daily PREP run, 12:42–13:15 ET, level 1 all pages, Tuesday) — picks queued, nothing published by this run
+- Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only (composer read "What's on your mind, Joshua?" at start and end) — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. Still no POST-mode chat since 11/2 evening (ledger unchanged at 60 rows). The 11/17 Refinement Loop plan lists "auto-post outbound at current caps" as a JOSHUA decision; until it's decided the runbook's PREP mode stands.
+- Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).
+- Dropped from QUEUE (lapsed): Roanoke Rail Yard Dawgs comment (12:00 today); Waynesboro MZ Afghan Express comment (11:02 today).
+- Still valid: Culpeper comment → Chamber Merry Little Market (until 11/18 11:13); Harrisonburg share → Fire Dept free alarms (until 11/18 08:00); Roanoke share → Visit VBR Salem holidays (until TODAY 19:15).
+- New picks (permalinks opened, captions/tab titles confirmed, times from hover): Roanoke comment → Roanoke Public Libraries "Meet Santa at your Libraries" (Nov 30 Belmont … Dec 16 Main; until 11/18 21:00); Waynesboro share → Waynesboro Public Library "Winter Care of House Plants" with Central Shenandoah Valley Master Gardeners, Thu Nov 19 6–7:30pm (until 11/19 07:00); Harrisonburg comment → Harrisonburg Farmers Market Tuesday-market radish post (until 11/18 16:13); Lexington comment → The News-Gazette National Take a Hike Day staff photos (until 11/19 09:01).
+- Skipped on purpose: RVSPCA Wally / Orchard Hill Haunt thanks (fine, but Roanoke's one comment went to the Libraries); Waynesboro Parks greenway/playground closures; Century-Fest save-the-date (shared post ~2 days old, May 2027); Downtown Harrisonburg Winter Wonderfest (two posts give different dates — Dec 5 vs "Saturday, December 6"; never pick a post with a conflicting fact); Explore More (past events); Lime Kiln 2027 poll (11/10); W&L Office Space (11/13); Lexington tourism Thanksgiving (lodging/dining promo); News-Gazette vehicle fire (NO-list); SNP hiring/alerts; Blue Ridge Parkway sky post (11/15 08:30, past 48 h).
+- Brand: no pick today (zero is fine). Culpeper: comment already pending. Lexington: no share candidate.
+- Ramp: all pages hold level 1. Share week (Mon 11/16–): Harrisonburg, Roanoke, Waynesboro queued; Culpeper, Lexington, Brand none yet.
+- Follows: no new town searches (22 pending follows waiting on POST mode); all 22 re-dated.
+- Watchlist: 13 pages re-checked (Roanoke 2, Waynesboro 2, Harrisonburg 3, Lexington 4, Brand 2); none newly dormant; no unresolved entries.
+- Reply candidates for POST mode: Paige Maybush and Heather Podgorski commented on a Valley Pawn-Waynesboro post (~3 days ago, still in notifications) — check for a page reply. Also seen: someone shared a Valley Pawn-Waynesboro post (no action); a Messenger question to Valley Pawn-Lexington (DMs stay with Chekkit — not touched).
+- Needs a person: none.
+- Totals this run: comments 0 (3 new queued, 1 still pending), shares 0 (1 new queued, 2 still pending), replies 0, follows 0 (22 pending), new pages resolved 0.
+
 ## 2026-11-16 (daily PREP run, 12:43–13:20 ET, level 1 all pages, Monday) — picks queued, nothing published by this run
 - Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only (composer read "What's on your mind, Joshua" at start and end) — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. Still no POST-mode chat since 11/2 evening (ledger unchanged at 60 rows).
 - Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).

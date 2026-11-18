@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-11-16
+# LIVE STATE - auto-refreshed 2026-11-17
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -17,7 +17,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | Enabled (will fire) | 2 |
 | Registered but disabled | 230 |
 | On disk but never registered | 4 |
-| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 5946 |
+| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 3847 |
 
 ### Enabled tasks
 
@@ -179,6 +179,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.open-items-groom.plist` | installed | YES |
 | `com.valleypawn.oura-import-check.plist` | installed | YES |
 | `com.valleypawn.perf-guard.plist` | installed | YES |
+| `com.valleypawn.preston-phone-week.plist` | installed | YES |
 | `com.valleypawn.preston-watch.plist` | installed | YES |
 | `com.valleypawn.publer-friday.plist` | installed | YES |
 | `com.valleypawn.qbo-token-refresh.plist` | installed | YES |
@@ -242,46 +243,46 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
+| 2026-11-17 | Valley Pawn OS | - |
+| 2026-11-17 | Unified Search | - |
+| 2026-11-17 | Quickbooks Set UP | - |
+| 2026-11-17 | Life OS | - |
+| 2026-11-17 | Business Dashboard Website | - |
+| 2026-11-17 | Business Continuity | - |
+| 2026-11-17 | Bravo Data Extraction | STATUS.md |
+| 2026-11-16 | eBay | - |
 | 2026-11-16 | Zoom Call Pipeline | - |
-| 2026-11-16 | Valley Pawn OS | - |
-| 2026-11-16 | Unified Search | - |
-| 2026-11-16 | Quickbooks Set UP | - |
-| 2026-11-16 | Life OS | - |
+| 2026-11-16 | Website | - |
+| 2026-11-16 | Valuation Core | README.md |
+| 2026-11-16 | Store Conduct Watch | STATUS.md |
+| 2026-11-16 | Sold Margin Review | STATUS.md |
+| 2026-11-16 | Refine Social Media | - |
+| 2026-11-16 | Preston Time Review | STATUS.md |
+| 2026-11-16 | Preston Knowledge Base | - |
+| 2026-11-16 | Precious Metals Settlements | - |
+| 2026-11-16 | Pawn Walks | STATUS.md |
+| 2026-11-16 | New Store - St Augustine | STATUS.md |
+| 2026-11-16 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-11-16 | Human Resources | - |
+| 2026-11-16 | Health Optimization | STATUS.md |
+| 2026-11-16 | Gold and Silver Markeitng | - |
+| 2026-11-16 | Email Refinement | - |
+| 2026-11-16 | Discount Outlier Review | STATUS.md |
+| 2026-11-16 | Daily Funds Verification | - |
+| 2026-11-16 | Compliance | - |
+| 2026-11-16 | Communcations | - |
 | 2026-11-16 | Call Analysis | - |
-| 2026-11-16 | Business Dashboard Website | - |
-| 2026-11-16 | Bravo Data Extraction | STATUS.md |
-| 2026-11-15 | eBay | - |
-| 2026-11-15 | Website | - |
-| 2026-11-15 | Valuation Core | README.md |
-| 2026-11-15 | Store Conduct Watch | STATUS.md |
-| 2026-11-15 | Sold Margin Review | STATUS.md |
-| 2026-11-15 | Refine Social Media | - |
-| 2026-11-15 | Precious Metals Settlements | - |
-| 2026-11-15 | Pawn Walks | STATUS.md |
-| 2026-11-15 | Health Optimization | STATUS.md |
-| 2026-11-15 | Email Refinement | - |
-| 2026-11-15 | Discount Outlier Review | STATUS.md |
-| 2026-11-15 | Daily Funds Verification | - |
-| 2026-11-15 | Compliance | - |
-| 2026-11-15 | Communcations | - |
+| 2026-11-16 | Ask Valley Pawn | STATUS.md |
 | 2026-11-15 | Ai Optimized Marketing | - |
 | 2026-11-14 | Short Term Rental Optimization | - |
-| 2026-11-14 | Preston Knowledge Base | - |
-| 2026-11-14 | Jewelry Count Reconciliation | STATUS.md |
-| 2026-11-14 | Human Resources | - |
-| 2026-11-14 | Business Continuity | - |
 | 2026-11-13 | Claude outputs | - |
-| 2026-11-13 | Ask Valley Pawn | STATUS.md |
 | 2026-11-10 | Store Traffic Counter | - |
 | 2026-11-10 | Bonus Program | - |
 | 2026-11-09 | _stage | - |
 | 2026-11-09 | _probe_tmp | - |
-| 2026-11-09 | Gold and Silver Markeitng | - |
 | 2026-11-04 | Sales Tax | STATUS.md |
 | 2026-11-02 | _scratch | - |
 | 2026-11-02 | Training Program | STATUS.md |
-| 2026-11-02 | New Store - St Augustine | STATUS.md |
-| 2026-11-02 | MobilePawn Participation | README.md |
 
 <!-- LIVE-STATE:END -->
 

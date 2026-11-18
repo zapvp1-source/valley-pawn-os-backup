@@ -1,19 +1,19 @@
 # Daily Bravo -> QuickBooks — status
 
-Updated 2026-11-16 14:06 ET
+Updated 2026-11-17 14:13 ET
 
-- Store-day entries posted: 181 (from 2026-10-01)
-- Newest day posted: 2026-11-14
+- Store-day entries posted: 187 (from 2026-10-01)
+- Newest day posted: 2026-11-16
 - Months proven against Bravo's monthly ledger: 2026-10
 
 ## Last run
 
-- 2026-11-14 CUL ERROR EnsureStore failed for CUL
-- 2026-11-14 HAR posted
-- 2026-11-14 LEX posted
-- 2026-11-14 ROA posted
-- 2026-11-14 WAY posted
+- 2026-11-16 CUL posted
+- 2026-11-16 HAR posted
+- 2026-11-16 LEX posted
+- 2026-11-16 ROA posted
+- 2026-11-16 WAY posted
 
 ## Open
 
-- 2026-11-14 CUL: EnsureStore failed for CUL (tries 8)
+- none

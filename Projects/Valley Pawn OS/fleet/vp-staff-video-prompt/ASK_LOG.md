@@ -11,3 +11,4 @@ Rotation history and skip audit. One row per week. Dates are ask-post dates (usu
 | 2026-10-27 | "Show us something that came in that you had to look up." | 2026-10-28 2 PM | — | — | native post; 8-week rotation pick (had to look up) |
 | 2026-11-03 | "What's the one item on your floor right now you'd take home yourself? Show it to us and tell us why." | 2026-11-04 2 PM | — | — | native post; 8-week rotation pick (take home yourself) |
 | 2026-11-10 | "30 seconds — the weirdest thing that walked in this week." | 2026-11-11 2 PM | — | — | native post; 8-week rotation pick (weirdest thing) |
+| 2026-11-17 | "Quick tour of what's new on the jewelry counter this week." | 2026-11-18 2 PM | — | — | native post; 8-week rotation pick (jewelry counter) |

@@ -313,3 +313,20 @@ Unverifiable: none left in posts. PUBLISHED-WRONG: none.
 - Claims verified: none needed. Posts edited: none. Unverifiable: none.
 - PUBLISHED-WRONG: none (the 11/15 posts were fact-checked and corrected in the 11/14 run before going out).
 - Note: the Publer queue is empty from today forward, so no new store/brand posts are scheduled until the next content batch is loaded.
+
+## 2026-11-17 07:55 ET — daily fact-check (window: next 36h, to 2026-11-18 ~19:40 ET)
+- Posts checked: 29 (11/17: Culpeper + BrandIG PAC-MAN; 10 "Settle it for us" town posts 1:30 PM; Brand + BrandIG Bracket the Town 2:20 PM. 11/18: Waynesboro + BrandIG dehumidifier; Brand/BrandIG/BrandTwitter warranty/holiday; 10 town posts 2:30 PM; Harrisonburg Ninja). Product/price, warranty and evergreen landmark lines (Pumpkinseeds mural, City Market 1882, Grandin 1932, Culpeper Depot/Davis St, Packard Campus, Rockfish Gap, Burg/H'burg) skipped. Store hours in BrandIG footers match standing hours.
+- Verified:
+  - Harrisonburg FB + GBP_Harrisonburg: Holiday Parade Sat Dec 5, 2026, 7 PM, theme "Festival of Lights", starts at Rockingham County Office Building on Gay St, south on Main St to City Hall, tree lighting in Court Square after: https://harrisonburgva.gov/holiday-parade ; Winter Wonderfest Sat Dec 5, 2026, 1-5:30 PM: https://downtownharrisonburg.org/winter-wonderfest (body text there still says "Dec 6", stale from 2025; header and city page agree on Dec 5). Left as is.
+  - Lexington FB + GBP_Lexington: VMI hosts Furman Sat Nov 21, 2026, Alumni Memorial Field at Foster Stadium, 12:00 PM, no postponement: https://vmikeydets.com/sports/football/schedule/2026 ; Fox lists 5:00PM (= noon ET in UTC) and ESPN+: https://www.foxsports.com/college-football/furman-paladins-vs-vmi-keydets-nov-21-2026-game-boxscore-44293
+  - Roanoke FB + GBP_Roanoke: Mill Mountain Star first lit 8:22 PM Nov 23, 1949; Mon Nov 23, 2026 = 77th (verified 11/14 via https://www.playroanoke.com/the-roanoke-star/ , https://en.wikipedia.org/wiki/Roanoke_Star). Left as is.
+  - Wayne Theatre: opened Jan 18, 1926 (confirmed); closed and deeded to City 1999 (confirmed); reopened March 1, 2016 (not 2017); "A Christmas Story: The Musical" Dec 4, 2026 on homepage: https://www.waynetheatre.org/about-us , https://www.waynetheatre.org/
+- Edited (all APPLIED):
+  - 6afb5da10acc11d34476ce58 Lexington FB 11/18: "We don't want to guess at kickoff time..." → adds venue, noon kickoff per VMI schedule, ESPN+.
+  - 6afb5daaf9116176eb1ece3d GBP_Lexington 11/18: "Kickoff time ... posted on VMI's athletics page" → venue + 12 p.m. kickoff + ESPN+.
+  - 6afb5cf00acc11d34476ccf5 Waynesboro FB 11/18: "650 seats" (unverified; current hall is 385), "reopened by 2017" (was Mar 1, 2016), season title "For the Love" (not found on theatre site) → vaudeville/movie house origin, reopened March 1, 2016, A Christmas Story: The Musical Dec 4.
+  - 6afb5cf90acc11d34476cd00 GBP_Waynesboro 11/18: same three claims → same verified replacements.
+  - 6afb5e400acc11d34476cfbc Brand 11/17: "One town at a time, October through November" (October already past) → "One town at a time".
+  - 6afb5e490acc11d34476cfe2 BrandIG 11/17: "coming this fall ... October through November" → "starts now ... One town at a time".
+- Unverifiable (removed): Wayne Theatre 650 original seats; 2026-27 season title "For the Love".
+- PUBLISHED-WRONG: none.

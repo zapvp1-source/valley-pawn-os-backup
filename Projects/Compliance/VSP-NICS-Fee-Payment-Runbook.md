@@ -105,3 +105,5 @@ Check the box next to each open FIRE invoice → click **MAKE PAYMENT** → comp
 
 ## 2026-11-10 — schedule and self-healing
 The native agent `com.valleypawn.vsp-fee-pay` runs daily at 10:15 on the 5th–28th. Each run reads all 5 balances; a store already paid this month (portal payment row or `paid_this_month` in `vsp/<YYYY-MM>.json`) is skipped; an expired portal session is re-signed once; each store pays in its own tab so one failure never blocks the others; a failed login stops all runs until the Keychain password is re-saved (`setup_autopay.sh --password`). Joshua is DM'd when payments go out, or once from the 25th if anything is still unpaid.
+
+2026-11-17: once a month's file says `month_complete`, the agent's later wake-ups that month do nothing at all (no sign-in). Normal month = one portal visit, on the 5th.

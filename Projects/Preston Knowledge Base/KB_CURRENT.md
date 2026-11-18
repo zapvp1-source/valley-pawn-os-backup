@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-11-16 22:13 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-11-17 22:11 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -1108,6 +1108,12 @@ PRESTON SAID: "No. It just like spreads it evenly across the ticket, which is re
 SOURCE: zoom-call:fe6c7f1f83114f2681c7d3048ecee956 | 2026-10-12 | UNK Sandi Cole
 id: loan-add-money-cost-allocati-7ecdcded
 
+### [LOW] loan-increase-request-check-market-value-first
+RULE: When a customer asks for a larger loan on a vehicle, look up the current market value first, then decide on the request from that.
+PRESTON SAID: "Just determine the picture of the values there, and then we'll go from there."
+SOURCE: zoom-call:266b85a7163b41148b044ee1302a81ed | 2026-11-17 | UNK Sandi Cole
+id: loan-increase-request-check--83f95c42
+
 ### [LOW] loan-percentage-trusted-customer
 RULE: Walker raised a loan or pay percentage to 60% for a customer he considered very reliable ("bullet proof"). This was a single-deal judgment, and what the 60% applies to (item type or loan basis) isn't stated.
 PRESTON SAID: "Bumped to 60% bullet proof customer"
@@ -2033,6 +2039,12 @@ PRESTON SAID: "I have advised Walker on the correct handling of any opened eBay 
 SOURCE: #harrisonburg-funds (Preston Peters, Operations Manager) | 2026-10-22 | https://valleypawnworkspace.slack.com/archives/C03BWRKEDUZ/p1792690005574209
 id: ebay-opened-case-handling-808505fe
 
+### [MEDIUM] ebay-seller-cancellation-penalty
+RULE: Canceling an eBay order for any reason other than the customer asking to cancel will result in a defect ding on the store's eBay account. Avoid seller-initiated cancellations, since the dings compound.
+PRESTON SAID: "if you cancel an order because of something that is not the customer asking to cancel an order, eBay will 100% ding your account."
+SOURCE: zoom-call:1f8122e035b94c2c932771c2166a4595 | 2026-11-17 | UNK Sandi Cole
+id: ebay-seller-cancellation-pen-d466a382
+
 ### [MEDIUM] escalate-urgent-issues-to-preston
 RULE: Store staff should always loop Preston in when an urgent or emergency issue comes up, such as a payment system problem, so he can step in early.
 PRESTON SAID: "Yeah, I mean, at least always loop me in."
@@ -2657,6 +2669,18 @@ PRESTON SAID: "we want that revolving door to start at zero and end at zero."
 SOURCE: zoom-call:95a6f5fd9cad4b27b51ddad0063e6bfc | 2026-10-31 | UNK Walker Tapley
 id: pull-list-zero-target-aaa78b42
 
+### [LOW] punching-bags-with-stand-buying
+RULE: Punching bags with stands should probably sell okay. Preston's guidance is to try them if there is space and they can be bought cheap.
+PRESTON SAID: "Would probably move okay. If you have the space and can get it cheap try it out"
+SOURCE: #deal-questions (Preston Peters, Operations Manager) | 2026-11-17 | https://valleypawnworkspace.slack.com/archives/C03BWGT5F5X/p1794933512538349
+id: punching-bags-with-stand-buy-d0ce426e
+
+### [LOW] remove-company-card-from-saved-payment-methods
+RULE: After using a company card to pay for a software update or purchase, remove the card from the saved cards so it isn't stored on file.
+PRESTON SAID: "Once you get all back in there, just go and make sure you take that card off the save cards."
+SOURCE: zoom-call:a924d1e996704819a0829ca5607d8cc8 | 2026-11-17 | UNK Uriah Tiglao
+id: remove-company-card-from-sav-eab41769
+
 ### [LOW] return-and-resell-partial-refund-method
 RULE: When a customer returns an item and the store resells it to them at a discounted price, the refund can be split. Part goes back as cash or store credit and the rest to the card, or as a gift card. The speaker hedged ("maybe"), so confirm with Preston before relying on it.
 PRESTON SAID: "you can return part of it in cash or store credit and then put the other back on the card maybe"
@@ -2805,5 +2829,5 @@ id: past-due-75-day-5-percent-ce-30eeab0b
 
 
 ==============================================================================
-COVERAGE: 391 entries - 31 verified by Preston, 155 high-confidence rules, 115 medium, 88 low, 2 superseded.
+COVERAGE: 395 entries - 31 verified by Preston, 155 high-confidence rules, 116 medium, 91 low, 2 superseded.
 ==============================================================================

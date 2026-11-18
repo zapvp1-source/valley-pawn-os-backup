@@ -11,6 +11,14 @@ detail?" It is intentionally short. Depth lives in the domain files.
 
 ---
 
+## JOSHUA'S CONTACT DETAILS — use these everywhere (set by Joshua 2026-11-17)
+
+- **Joshua's phone: (804) 930-4221.** Use it on every form, application, email signature and callback request, in all domains.
+- **(540) 445-5510 is the Culpeper store line. It does NOT reach Joshua.** Never give it as his number (it stays correct only as the Culpeper store's public number in store listings).
+- Personal / real-estate email: zapvp1@me.com. Business email: jdavis@fcfpawn.com.
+
+---
+
 ## THE THREE DOMAINS — completely separate, don't cross-contaminate
 
 | # | Domain | Legal / personal owner | Master file | Mandatory skill |

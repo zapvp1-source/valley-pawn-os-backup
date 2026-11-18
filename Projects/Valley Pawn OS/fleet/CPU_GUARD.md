@@ -1,41 +1,41 @@
-# CPU Guard — 2026-11-17 00:11 EST
+# CPU Guard — 2026-11-18 00:12 EST
 
 Native agent com.valleypawn.cpu-guard (bin/cpu_guard.sh), every 5 min. See header of the script.
 
 ## Load
-0:11  up 14 days,  7:24, 2 users, load averages: 2.49 4.15 5.01
+0:12  up 15 days,  7:25, 2 users, load averages: 7.14 9.00 9.34
 
 ## Process states (R=running, U=waiting on disk)
 ```
-   8 R  646 S    2 U    3 Z 
-1 sort
+   7 R  763 S    3 Z 
 1 ps
 1 head
-1 awk
 1 /usr/libexec/dasd
-1 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python
+1 /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer
+1 /Applications/Parallels
+1 /Applications/Google
 ```
 
 ## Top CPU right now
 ```
  %CPU NI   PID COMM
- 47.2 10 60999 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python
- 43.2  0  6876 /Applications/Google Drive.app/Contents/MacOS/Google Drive
- 22.8  0   425 /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer
- 18.4  0 97150 /Applications/Parallels Desktop.app/Contents/MacOS//Parallels VM.app/Contents/MacOS/prl_vm_app
-  6.6  0   403 /usr/libexec/dasd
-  5.9  0   688 /System/Library/CoreServices/ControlCenter.app/Contents/MacOS/ControlCenter
-  4.5  0   465 /usr/libexec/airportd
-  3.8  0 99012 /usr/libexec/sysmond
-  2.1  0   798 /System/Library/CoreServices/WiFiAgent.app/Contents/MacOS/WiFiAgent
-  1.6  0 53845 /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/157.0.8103.78/Helpers/Google Chrome Helper (Aperitif Renderer).app/Contents/MacOS/Google Chrome Helper (Aperitif Renderer)
-  1.5  0 61003 /bin/bash
+ 41.5  0   425 /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer
+ 32.3  0 97150 /Applications/Parallels Desktop.app/Contents/MacOS//Parallels VM.app/Contents/MacOS/prl_vm_app
+ 28.4  0 21478 /Applications/Google Drive.app/Contents/MacOS/Google Drive
+ 21.0  0   756 /System/Library/ExtensionKit/Extensions/WallpaperAerialsExtension.appex/Contents/MacOS/WallpaperAerialsExtension
+ 11.1  0   403 /usr/libexec/dasd
+  8.4  0 99012 /usr/libexec/sysmond
+  6.8  0   688 /System/Library/CoreServices/ControlCenter.app/Contents/MacOS/ControlCenter
+  5.4  0 58188 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTDecoderXPCService.xpc/Contents/MacOS/VTDecoderXPCService
+  3.3  0 46029 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+  3.1  0  2856 /bin/bash
+  2.9  0   417 /usr/sbin/bluetoothd
 ```
 
 ## Memory
 ```
-total = 10240.00M  used = 9321.00M  free = 919.00M  (encrypted)
-System-wide memory free percentage: 48%
+total = 10240.00M  used = 9105.88M  free = 1134.12M  (encrypted)
+System-wide memory free percentage: 55%
 ```
 
 ## Camera agents (nice should be 10)
@@ -68,8 +68,8 @@ drwxr-xr-x@ 9 joshuadavis  staff  288 Nov  7 13:25 tracks
 
 /Users/joshuadavis/.vp-studio/offsync/unified-search:
 total 15987656
-drwxr-xr-x@ 5 joshuadavis  staff         160 Nov 16 05:30 .
+drwxr-xr-x@ 5 joshuadavis  staff         160 Nov 17 05:14 .
 drwxr-xr-x@ 4 joshuadavis  staff         128 Nov  7 13:23 ..
--rw-r--r--@ 1 joshuadavis  staff  8185647104 Nov 16 23:41 index.db
--rw-r--r--@ 1 joshuadavis  staff       32768 Nov 16 23:41 index.db-shm
+-rw-r--r--@ 1 joshuadavis  staff  8185647104 Nov 17 23:54 index.db
+-rw-r--r--@ 1 joshuadavis  staff       32768 Nov 17 23:54 index.db-shm
 ```

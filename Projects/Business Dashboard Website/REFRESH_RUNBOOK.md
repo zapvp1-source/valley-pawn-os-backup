@@ -202,3 +202,19 @@ This run also confirmed Option C (cloud-sandbox deploy via a single tar bundle s
 device_stage_files, rather than staging 50+ individual files) works cleanly and is faster than
 enumerating the whole site/ tree file-by-file: `tar czf .deploy_bundle.tar.gz site .cloudflare`
 inside the project folder, stage that one file, extract in the sandbox, deploy from there.
+
+## Note (2026-11-18, dashboard-refresh run)
+The Nov 17 07:15 "Daily Pawn Walk" post (for 2026-11-16 data) switched to a new, simpler format:
+only a company-wide "N overpay flags out of M items taken in" line plus a list of just the
+flagged items per store -- it no longer includes the Buy Intake / Loan Intake per-store avg-margin
+tables that daily.intakeMargin's schema needs (stores[store, items, avgMargin, flags]). Per-store
+items and avgMargin can't be derived from the flagged-items list alone, so this run left
+daily.intakeMargin unchanged (still the 2026-11-14 data from the last post in the old format,
+per the 2026-11-16 note above) rather than fabricate per-store margins. Not treated as a failure.
+If #pawn-walks keeps posting in this new format going forward, the intakeMargin schema or its
+parse logic will need to be revisited -- it will otherwise stay permanently stale.
+This run: asOf bumped to Nov 18, 2026 (no feed had a newer parseable report than what was already
+in kpis.json -- funds/items-to-price/chekkit/layaway/company-performance all already reflected
+their latest available post). Deploy used the tar-bundle Option C path per the 2026-11-16 note;
+.deploy_bundle.tar.gz hit the documented nlink>1 bridge quirk on first stage attempt, cleared
+after a ~20s gap doing other work, consistent with the 2026-11-09 note.

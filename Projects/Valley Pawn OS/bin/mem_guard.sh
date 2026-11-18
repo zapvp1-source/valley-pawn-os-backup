@@ -122,6 +122,25 @@ else
   if [ "$HIGH" -ge 2 ]; then tier3_restart_claude; fi
 fi
 
+# ---------- disk trend + emergency headroom (added 2026-11-16) ----------
+# Overnight the Data volume drops 10-15 GB (e.g. 48 -> 23 GB free by 6 AM) and recovers by day.
+# Every run: log free space + the usual suspects so the source is pinned down.
+# If free < 15 GB: thin Time Machine local snapshots (they live on the backup NAS too).
+TREND="$HOME/Documents/Claude/Projects/Valley Pawn OS/DISK_TREND.csv"
+capped() { local secs="$1"; shift; perl -e 'alarm shift; exec @ARGV' "$secs" "$@"; }
+gb() { capped 60 du -sk "$1" 2>/dev/null | awk '{printf "%.1f", $1/1048576}'; }
+DFREE=$(df -g /System/Volumes/Data 2>/dev/null | awk 'NR==2{print $4}')
+LASTT=$(st_get trend_ts); LASTT=${LASTT:-0}
+if [ $((NOW_EPOCH - LASTT)) -ge 3000 ] || [ "${DFREE:-99}" -lt 25 ]; then
+  st_set trend_ts "$NOW_EPOCH"
+  SNAPS=$(tmutil listlocalsnapshots / 2>/dev/null | grep -c TimeMachine)
+  [ -f "$TREND" ] || echo "time,free_gb,swap_files_gb,tm_local_snaps,claude_app_gb,claude_sessiondata_gb,user_caches_gb,tmp_folders_gb,vp_studio_gb,downloads_gb" > "$TREND"
+  echo "$(now),$DFREE,$(gb /private/var/vm),$SNAPS,$(gb "$HOME/Library/Application Support/Claude"),$(gb "$HOME/Library/Application Support/Claude/vm_bundles/claudevm.bundle/sessiondata.img"),$(gb "$HOME/Library/Caches"),$(gb "$(dirname "${TMPDIR:-/tmp}")"),$(gb "$HOME/.vp-studio"),$(gb "$HOME/Downloads")" >> "$TREND"
+fi
+if [ -n "$DFREE" ] && [ "$DFREE" -lt 15 ]; then
+  tmutil thinlocalsnapshots / 20000000000 4 >/dev/null 2>&1 && add "disk low (${DFREE} GB free) — thinned Time Machine local snapshots"
+fi
+
 # ---------- record ----------
 [ -n "$ACTIONS" ] && sleep 20
 SWAP1=$(swap_mb); PRES1=$(pressure); FREE1=$(freepct)

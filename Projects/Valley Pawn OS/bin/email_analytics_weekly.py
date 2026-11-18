@@ -171,17 +171,54 @@ def fnum(v):
 
 
 def arrow(cur, avg, higher_good=True):
-    if avg == 0:
+    """2026-11-17: the arrow shows which way the number MOVED; the word says whether that is good.
+    (Before, '↑' meant 'good', so an unsubscribe rate falling from 0.1 to 0 printed as '↑'.)"""
+    if avg == 0 and cur == 0:
         return "→"
-    ch = (cur - avg) / avg
+    ch = (cur - avg) / avg if avg else 1.0
     if abs(ch) <= 0.05:
         return "→"
     good = ch > 0 if higher_good else ch < 0
-    return "↑" if good else "↓"
+    return ("▲" if ch > 0 else "▼") + (" (good)" if good else " (worse)")
+
+
+MIN_EVENTS = 5   # 2026-11-17: below this many actual clicks/unsubs a movement is noise, never the headline
+
+
+def merge_ab(rows):
+    """2026-11-17 (test loop): a weekly split into '<name>' + '<name> [B]' is one send for the trend."""
+    by_name = {str(r.get("campaign_name", "")).strip(): r for r in rows}
+    out, used = [], set()
+    for r in rows:
+        nm = str(r.get("campaign_name", "")).strip()
+        if nm.endswith("[B]"):
+            if nm[:-3].strip() in by_name:
+                continue
+            out.append(r); continue
+        twin = by_name.get(nm + " [B]")
+        if not twin:
+            out.append(r); continue
+        m = dict(r)
+        for k in ("recipients", "opens", "clicks", "unsubs", "calls_clicks", "texts_clicks", "directions_clicks", "primary_cta_clicks"):
+            m[k] = fnum(r.get(k)) + fnum(twin.get(k))
+        n = m["recipients"]
+        m["open_pct"], m["click_pct"], m["unsub_pct"] = pct(m["opens"], n), pct(m["clicks"], n), pct(m["unsubs"], n)
+        m["clicks_per_1k"], m["calls_texts_per_1k"] = per_1k(m["clicks"], n), per_1k(m["calls_clicks"] + m["texts_clicks"], n)
+        out.append(m)
+    return out
+
+
+def loop_status():
+    try:
+        sys.path.insert(0, BIN)
+        import email_test_loop
+        return email_test_loop.status_line()
+    except Exception:
+        return None
 
 
 def compose(rows, today):
-    wk = weekly_rows(rows)
+    wk = weekly_rows(merge_ab(rows))
     week_of = (today - dt.timedelta(days=today.weekday())).isoformat()
     head = ":bar_chart: Email — Week of %s" % week_of
     if not wk:
@@ -209,18 +246,27 @@ def compose(rows, today):
         lines.append("Lead movement: first weekly to this audience size (%d recipients) — this send is the new baseline (%s, %s)." % (
             int(size), r0.get("theme") or r0.get("category"), d0.isoformat()))
     else:
+        n_ct = fnum(r0.get("calls_clicks")) + fnum(r0.get("texts_clicks"))
+        events = {"calls+texts per 1,000": n_ct, "directions clicks": di, "unsubscribe rate": fnum(r0.get("unsubs"))}
         deltas = [("calls+texts per 1,000", ct, ct_avg, True), ("directions clicks", di, di_avg, True),
                   ("unsubscribe rate", un, un_avg, False)]
-        name, cur, av, hg = max(deltas, key=lambda x: abs(x[1] - x[2]) / (x[2] or 1))
-        lines.append("Lead movement: %s %s — %s vs trailing avg %s (%s, %s)" % (
-            name, arrow(cur, av, hg), fmt(cur), fmt(av), r0.get("theme") or r0.get("category"), d0.isoformat()))
-    lines.append("Calls+texts per 1,000: %s (avg %s) %s" % (fmt(ct), fmt(ct_avg), arrow(ct, ct_avg)))
+        # only a metric with enough real events (this send, or expected from the average) can lead
+        expected = {"calls+texts per 1,000": ct_avg * size / 1000.0, "directions clicks": di_avg, "unsubscribe rate": un_avg * size / 100.0}
+        readable = [d for d in deltas if max(events[d[0]], expected[d[0]]) >= MIN_EVENTS]
+        if readable:
+            name, cur, av, hg = max(readable, key=lambda x: abs(x[1] - x[2]) / (x[2] or 1))
+            lines.append("Lead movement: %s %s — %s vs trailing avg %s (%s, %s)" % (
+                name, arrow(cur, av, hg), fmt(cur), fmt(av), r0.get("theme") or r0.get("category"), d0.isoformat()))
+        else:
+            lines.append("Lead movement: none readable — %d calls/texts, %d directions, %d unsubscribes on %d recipients is too few to call a change (%s, %s)." % (
+                int(n_ct), int(di), int(fnum(r0.get("unsubs"))), int(size), r0.get("theme") or r0.get("category"), d0.isoformat()))
+    lines.append("Calls+texts per 1,000: %s (avg %s) %s" % (fmt(ct), fmt(ct_avg), arrow(ct, ct_avg) if max(fnum(r0.get("calls_clicks")) + fnum(r0.get("texts_clicks")), ct_avg * size / 1000.0) >= MIN_EVENTS else "→ (too few to read)"))
     # KPI #2/#3: unsub only if it breached 0.5% twice; otherwise directions
     breach = [fnum(r.get("unsub_pct")) >= 0.5 for _, r in wk[:2]]
     if len(breach) == 2 and all(breach):
         lines.append("Unsubscribe rate: %.2f%% — above the 0.5%% red line two sends running" % un)
     else:
-        lines.append("Directions clicks: %s (avg %s) %s" % (fmt(di), fmt(di_avg), arrow(di, di_avg)))
+        lines.append("Directions clicks: %s (avg %s) %s" % (fmt(di), fmt(di_avg), arrow(di, di_avg) if max(di, di_avg) >= MIN_EVENTS else "→ (too few to read)"))
     # recommendation: the best-performing theme over the trailing 8 weekly sends, tied to numbers
     pool = [(fnum(r.get("calls_texts_per_1k")), r.get("theme") or r.get("category")) for _, r in wk[:8] if r is r0 or comparable(r)]
     if age > 8:
@@ -238,7 +284,8 @@ def compose(rows, today):
             rec = "Keep %s in rotation — it is holding at or above the trailing average; test one stronger call-to-action line next." % (r0.get("theme") or r0.get("category"))
         else:
             rec = "This week's %s came in under the trailing average — alternate back to the best theme next send rather than repeating it." % (r0.get("theme") or r0.get("category"))
-    lines.append("Recommendation for next send: " + rec)
+    ls = loop_status()   # 2026-11-17: the test loop executes the recommendation; report what it is doing
+    lines.append(ls if ls else "Recommendation for next send: " + rec)
     lines.append(":link: " + SHEET_URL)
     return "\n".join(lines), None
 

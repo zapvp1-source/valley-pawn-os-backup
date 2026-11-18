@@ -116,6 +116,9 @@ RunScrapCloseoutManifest(manifestPath) {
         LogMessage("*** READ-ONLY DRY RUN - fields will be read and logged, nothing saved, no money posted ***")
     if manifest["listOnly"]
         return ListOpenBucketsOnly(manifest, result)
+    ; 2026-11-17: "createOnly": true -> create the named (empty) buckets, nothing else. See CreateBucketsOnly.
+    if manifest["createOnly"]
+        return CreateBucketsOnly(manifest, result)
 
     if (manifest["buckets"].Length = 0) {
         LogMessage("RunScrapCloseoutManifest: manifest has zero buckets - nothing to do")
@@ -533,7 +536,41 @@ ReadSelectStatusNearLabel() {
 
 global CLOSEOUT_OCCURRENCE := 0
 
+; 2026-11-17 view modes (additive): the all-status list misses each store's NEWEST
+; rows (CUL/WAY October 2026 buckets were invisible; the sorted+filtered grid lands
+; scrolled past them). Look in three places, in order:
+;   "open" - Bravo's default view (no filter): a handful of rows, newest always reachable
+;   "all"  - the original path (Created On descending + all-status filter), unchanged
+;   "asc"  - all-status filter with Created On ASCENDING: newest rows are at the bottom,
+;            which the downward walk always reaches
+; Only for occurrence 0 (standard unique names). Occurrence > 0 keeps the original path only.
+; A manifest may pin one mode with "forceView": "open" | "all" | "asc" (testing).
+global CLOSEOUT_VIEW_MODE := "all"
+global CLOSEOUT_FORCE_VIEW := ""
 OpenBucketAndReadStatus(bucketName) {
+    global CLOSEOUT_OCCURRENCE, CLOSEOUT_VIEW_MODE, CLOSEOUT_FORCE_VIEW
+    modes := ["open", "all", "asc"]
+    if (CLOSEOUT_FORCE_VIEW != "")
+        modes := [CLOSEOUT_FORCE_VIEW]
+    else if (CLOSEOUT_OCCURRENCE > 0)
+        modes := ["all"]
+    for mode in modes {
+        CLOSEOUT_VIEW_MODE := mode
+        LogMessage("    [open] view mode: " . mode)
+        st := ""
+        try st := OpenBucketAndReadStatusInner(bucketName)
+        catch as vmErr
+            LogMessage("    [open] view mode " . mode . " error: " . vmErr.Message)
+        if (st != "") {
+            CLOSEOUT_VIEW_MODE := "all"
+            return st
+        }
+    }
+    CLOSEOUT_VIEW_MODE := "all"
+    return ""
+}
+
+OpenBucketAndReadStatusInner(bucketName) {
     global CLOSEOUT_OCCURRENCE
     Loop 3 {
         try {
@@ -1389,6 +1426,16 @@ ParseScrapManifest(path) {
     ; just OPEN. Used to locate HAR's true August buckets across all statuses.
     if RegExMatch(text, '"allStatus"\s*:\s*true')
         m["allStatus"] := true
+    m["createOnly"] := false
+    m["probe"] := false
+    if RegExMatch(text, '"createOnly"\s*:\s*true')
+        m["createOnly"] := true
+    if RegExMatch(text, '"probe"\s*:\s*true')
+        m["probe"] := true
+    global CLOSEOUT_FORCE_VIEW
+    CLOSEOUT_FORCE_VIEW := ""
+    if RegExMatch(text, '"forceView"\s*:\s*"(open|all|asc)"', &fvm)
+        CLOSEOUT_FORCE_VIEW := fvm[1]
 
     pos := 1
     while RegExMatch(text, '\{[^{}]*"store"\s*:\s*"([^"]*)"[^{}]*\}', &bm, pos) {
@@ -1748,18 +1795,35 @@ ScrapSelectScrapVendor() {
     LogMessage("    [shipping] vendor row '" . rn . "' - selecting")
     try row.Click("left")
     Sleep(600)
+    ; 2026-11-17 (Bravo 2026.10.2.1): an unrelated Button named 'OK' now exists elsewhere and
+    ; was being clicked instead of the picker's own Ok (which exposes only a Text child 'Ok'),
+    ; leaving the picker open and the vendor unset. Look for the picker's 'Ok' text BEFORE 'OK'.
     ok := ScrapFindAnyWindow("Ok", "Button", 2500)
     if !ok
-        ok := ScrapFindAnyWindow("OK", "Button", 800)
-    if !ok
         ok := ScrapFindAnyWindow("Ok", "Text", 800)   ; the Ok button exposes only its Text child
+    if !ok
+        ok := ScrapFindAnyWindow("OK", "Button", 800)
+    try ScreenshotToFile("vendor-row-selected")
     if ok {
+        okd := ""
+        try okd := ok.Type . " '" . ok.Name . "'"
+        LogMessage("    [shipping] clicking picker Ok (" . okd . ")")
         ok.Click("left")
         Sleep(1000)
     } else {
         LogMessage("    [shipping] no Ok button on the vendor picker - trying double-click on the row")
         try row.Click("left", 2)
         Sleep(1000)
+    }
+    ; 2026-11-17: if the 'Vendors found' picker is still open, the Ok did not land - double-click the row.
+    if ScrapFindAnyWindowPattern("i)^Row \d+ of \d+, Column Name, Column \d+ of \d+:\s*SCRAP\s*$", "", 700) {
+        LogMessage("    [shipping] picker still open after Ok - double-clicking the SCRAP row")
+        try {
+            row2 := ScrapFindAnyWindowPattern("i)^Row \d+ of \d+, Column Name, Column \d+ of \d+:\s*SCRAP\s*$", "", 700)
+            if row2
+                row2.Click("left", 2)
+        }
+        Sleep(1200)
     }
     DismissPopups()
     ; Live 2026-09-28 (live-1e): after Ok the vendor panel stays on screen
@@ -1770,6 +1834,12 @@ ScrapSelectScrapVendor() {
     try chosen := ScrapFindAnyWindowPattern("i)^\s*SCRAP\s*$", "Text", 2000)
     if chosen
         LogMessage("    [shipping] vendor panel shows chosen vendor 'SCRAP'")
+    else {
+        ; 2026-11-17 diagnostic: the chosen-vendor panel did not show SCRAP (Bravo 2026.10.2.1)
+        LogMessage("    [shipping] chosen-vendor panel NOT showing SCRAP - dumping windows + screenshot")
+        try ScreenshotToFile("vendor-after-ok")
+        try ScrapLogAllWindowNames(120)
+    }
     back := ScrapFindAnyWindow("Scrap Bucket Detail", "Button", 2000)
     if back {
         back.Click("left")
@@ -1813,6 +1883,24 @@ ScrapCloseoutOpenBucketList() {
         } else {
             break
         }
+    }
+    global CLOSEOUT_VIEW_MODE
+    if (CLOSEOUT_VIEW_MODE = "open") {
+        ScrapSortByCreatedOnDescending()
+        LogMessage("    [view] default view kept - no status filter")
+        return true
+    }
+    if (CLOSEOUT_VIEW_MODE = "asc") {
+        try {
+            hdrAsc := FindByName("Created On", 3000)
+            if hdrAsc {
+                hdrAsc.Click("left")
+                Sleep(500)
+                LogMessage("    [sort] Created On sorted ascending (newest at bottom)")
+            }
+        }
+        ScrapApplyAllStatusFilter()
+        return true
     }
     ScrapSortByCreatedOnDescending()
     ScrapApplyAllStatusFilter()
@@ -1902,4 +1990,162 @@ ScrapApplyAllStatusFilter() {
         LogMessage("    [filter] exception: " . fe.Message . " - proceeding with default view")
         return false
     }
+}
+
+
+; ============================================================================
+; CreateBucketsOnly (2026-11-17) - Joshua: Claude creates the monthly gold buckets.
+; Manifest: {"id": "...", "createOnly": true, "buckets": [{"store","bucketName"}...]}
+; Per bucket: open the Scrap Refining Process list (default view), skip if a bucket
+; with that exact name is already listed, else New Bucket -> type the name -> verify
+; the name reads back -> Save -> confirm it is in the list. Never touches an existing
+; bucket, never enters items, weights, vendors or money.
+; "probe": true -> click New Bucket, log the screen, CANCEL. Saves nothing.
+; ============================================================================
+CreateBucketsOnly(manifest, result) {
+    global CONFIG, CLOSEOUT_VIEW_MODE
+    overall := "success"
+    probe := manifest["probe"]
+    try {
+        PauseMainWatcher()
+        for b in manifest["buckets"] {
+            store := b["store"]
+            bname := Trim(b["bucketName"])
+            out := Map("store", store, "bucketName", bname, "amountPaid", "", "tenderType", "",
+                "status", "error", "priorStatus", "", "verified", false, "error", "")
+            LogMessage("--- create bucket '" . bname . "' (" . store . ")" . (probe ? " [PROBE - will cancel]" : "") . " ---")
+            try {
+                if !EnsureStore(store, CONFIG.Get("bravo.password", ""))
+                    throw Error("could not switch to store " . store)
+                try BackToDashboard()
+                DismissPopups()
+                CLOSEOUT_VIEW_MODE := "open"
+                if !ScrapCloseoutOpenBucketList()
+                    throw Error("could not open the bucket list")
+                Sleep(1200)
+                rows := ScrapWalkBucketGrid(CONFIG["paths.logs"] . "\" . manifest["id"] . "_" . store . "_griddiag.csv")
+                exists := false
+                for r in rows {
+                    if (Trim(r.name) = bname)
+                        exists := true
+                }
+                if (exists && !probe) {
+                    LogMessage("    [create] '" . bname . "' already exists at " . store . " - nothing to do")
+                    out["status"] := "exists"
+                    out["verified"] := true
+                    try DoneOrCancelBucketDetail()
+                    try BackToDashboard()
+                    result["buckets"].Push(out)
+                    continue
+                }
+                nb := ScrapFindAnyWindow("New Bucket", "Button", 4000)
+                if !nb
+                    throw Error("'New Bucket' button not found on the bucket list")
+                nb.Click("left")
+                Sleep(3000)
+                DismissPopups()
+                if !FindByName("Bucket Name", 6000)
+                    throw Error("new bucket screen did not open (no 'Bucket Name' field)")
+                if probe {
+                    try ScreenshotToFile(store . "-newbucket")
+                    try LogVisibleNames(200)
+                    try ScrapLogAllWindowNames(200)
+                    out["status"] := "probed"
+                    out["verified"] := true
+                    DoneOrCancelBucketDetail()
+                    try BackToDashboard()
+                    result["buckets"].Push(out)
+                    continue
+                }
+                ed := ScrapFindValueElementAfterLabel("Bucket Name")
+                if !ed
+                    throw Error("name box not found next to 'Bucket Name'")
+                ed.Click("left")
+                Sleep(250)
+                Send("^a")
+                Sleep(80)
+                Send("{Delete}")
+                Sleep(80)
+                prevClip := ""
+                try prevClip := A_Clipboard
+                A_Clipboard := bname
+                if !ClipWait(2)
+                    throw Error("clipboard did not receive the bucket name")
+                Send("^v")
+                Sleep(400)
+                A_Clipboard := prevClip
+                Send("{Tab}")
+                Sleep(400)
+                if !ScrapVerifyOpenBucketName(bname) {
+                    try ScreenshotToFile(store . "-create-name-mismatch")
+                    DoneOrCancelBucketDetail()
+                    try BackToDashboard()
+                    throw Error("name did not read back as '" . bname . "' - cancelled, nothing saved")
+                }
+                try ScreenshotToFile(store . "-create-presave")
+                ; click the real Save BUTTON (AutomationId btnSave), not the first thing named 'Save'
+                sv := 0
+                try sv := GetBravoRoot().FindElement({AutomationId: "btnSave"})
+                if sv {
+                    svd := ""
+                    try svd := sv.Type . " enabled=" . sv.IsEnabled
+                    LogMessage("    [create] clicking btnSave (" . svd . ")")
+                    try sv.Invoke()
+                    catch
+                        sv.Click("left")
+                } else {
+                    LogMessage("    [create] btnSave not found - using SaveBucketDetail")
+                    SaveBucketDetail()
+                }
+                Sleep(2500)
+                try ScreenshotToFile(store . "-create-postsave")
+                try ScrapLogAllWindowNames(120)
+                DismissPopups()
+                DoneOrCancelBucketDetail()
+                try BackToDashboard()
+                ; confirm it is now in the list
+                CLOSEOUT_VIEW_MODE := "open"
+                ScrapCloseoutOpenBucketList()
+                Sleep(1200)
+                rows2 := ScrapWalkBucketGrid(CONFIG["paths.logs"] . "\" . manifest["id"] . "_" . store . "_griddiag2.csv")
+                found := false
+                for r in rows2 {
+                    if (Trim(r.name) = bname) {
+                        found := true
+                        out["priorStatus"] := r.createdOn
+                    }
+                }
+                try DoneOrCancelBucketDetail()
+                try BackToDashboard()
+                if found {
+                    out["status"] := "created"
+                    out["verified"] := true
+                    LogMessage("    [create] CREATED and confirmed in list: '" . bname . "' (" . store . ")")
+                } else {
+                    out["error"] := "saved but not found in the list afterwards"
+                    LogMessage("    [create] " . out["error"])
+                    overall := "partial"
+                }
+            } catch as e {
+                out["error"] := e.Message
+                LogMessage("    [create] ERROR: " . e.Message)
+                overall := "partial"
+                try DoneOrCancelBucketDetail()
+                try BackToDashboard()
+            }
+            result["buckets"].Push(out)
+        }
+    } catch as e {
+        LogMessage("CreateBucketsOnly: FATAL - " . e.Message)
+        overall := "error"
+    } finally {
+        CLOSEOUT_VIEW_MODE := "all"
+        ResumeMainWatcher()
+    }
+    result["status"] := overall
+    result["bucketCount"] := result["buckets"].Length
+    result["finished_at"] := FormatTime(, "yyyy-MM-dd HH:mm:ss")
+    WriteScrapResult(CONFIG["paths.scrap_results"] . "\" . result["trigger_id"] . ".result.json", result)
+    LogMessage("CreateBucketsOnly: done - " . overall)
+    return result
 }

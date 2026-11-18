@@ -281,7 +281,16 @@ CloseoutOneBucket(store, bucketName, amountPaid, tenderType, occurrence := 0, ex
         LogMessage("    [dry-run] manifest would post   = '" . amountPaid . "' / '" . tenderType . "'")
         ; 2026-09-28: dump every named element on the detail screen so the exact
         ; field labels for the later stages can be confirmed from a real screen.
-        try LogVisibleNames(150)
+        ; 2026-11-17: read every item's Cost in this bucket (READ-ONLY: mouse wheel only,
+        ; no clicks, no keys) so gross profit per store can be computed before posting.
+        try {
+            ic := ScrapReadOpenItemCosts(store, bucketName)
+            out["itemCount"]     := ic["count"]
+            out["itemsExpected"] := ic["expected"]
+            out["itemCost"]      := ic["cost"]
+        } catch as icErr {
+            LogMessage("    [items] cost read failed: " . icErr.Message)
+        }
         DoneOrCancelBucketDetail()
         try BackToDashboard()
         out["status"]   := "readonly"
@@ -1443,6 +1452,7 @@ WriteScrapResult(path, r) {
             sb .= '    {"store": "' . b["store"] . '", "bucketName": "' . b["bucketName"] . '", '
             sb .= '"amountPaid": "' . b["amountPaid"] . '", "tenderType": "' . b["tenderType"] . '", '
             sb .= '"status": "' . b["status"] . '", "priorStatus": "' . b["priorStatus"] . '", "liveWeightDwt": "' . b.Get("liveWeightDwt", "") . '", '
+            sb .= '"itemCount": "' . b.Get("itemCount", "") . '", "itemsExpected": "' . b.Get("itemsExpected", "") . '", "itemCost": "' . b.Get("itemCost", "") . '", '
             sb .= '"verified": ' . (b["verified"] ? "true" : "false") . ', '
             errText := StrReplace(b.Get("error", ""), '"', "'")
             sb .= '"error": "' . errText . '"}'
@@ -1523,6 +1533,8 @@ ListOpenBucketsOnly(manifest, result) {
                     Sleep(1500)
                     ScreenshotToFile(store . "-newest")
                 }
+                ; 2026-11-17: dump the list dialog's controls (discovery for the bucket-creation build)
+                try ScrapLogAllWindowNames(200)
                 rows := ScrapWalkBucketGrid(CONFIG["paths.logs"] . "\" . manifest["id"] . "_" . store . "_griddiag.csv")
                 for r in rows {
                     n++
@@ -1888,4 +1900,102 @@ ScrapApplyAllStatusFilter() {
         LogMessage("    [filter] exception: " . fe.Message . " - proceeding with default view")
         return false
     }
+}
+
+
+; ============================================================================
+; ScrapReadOpenItemCosts (2026-11-17, READ-ONLY)
+; With a bucket's detail screen open, walk its item grid and total the Cost
+; column. Scrolls with the mouse wheel only - never clicks a row, never sends
+; a key - so nothing can be selected, removed or changed. Writes one CSV per
+; bucket next to the run log: <id>_<STORE>_<bucket>_items.csv
+; ============================================================================
+ScrapReadOpenItemCosts(store, bucketName) {
+    global BRAVO_LOG_PATH
+    rows := Map()
+    total := -1
+    stall := 0
+    diagLeft := 3
+    ax := 0
+    ay := 0
+    Loop 120 {
+        items := 0
+        try {
+            root := GetBravoRoot()
+            items := root.FindElements({Type: "DataItem"})
+        }
+        newThis := 0
+        if (items && items.Length) {
+            for it in items {
+                kids := 0
+                try kids := it.FindElements({Scope: 2})
+                if !(kids && kids.Length)
+                    continue
+                rowIdx := -1
+                rt := -1
+                cols := Map()
+                for k in kids {
+                    kName := ""
+                    try kName := k.Name
+                    if RegExMatch(kName, "^Row (\d+) of (\d+), Column (.+?), Column \d+ of \d+:\s?(.*)$", &m) {
+                        rowIdx := Integer(m[1])
+                        rt := Integer(m[2])
+                        cols[m[3]] := m[4]
+                    }
+                }
+                if (diagLeft > 0) {
+                    diagLeft--
+                    dn := ""
+                    for k in kids {
+                        try dn .= "[" . k.AutomationId . "|" . k.Name . "] "
+                    }
+                    LogMessage("    [items-diag] " . SubStr(dn, 1, 400))
+                }
+                if (rowIdx < 0 || !cols.Has("Cost"))
+                    continue
+                if (rt > total)
+                    total := rt
+                if (ax = 0) {
+                    try {
+                        ip := it.GetPos("screen")
+                        if (ip.w > 0 && ip.h > 0) {
+                            ax := ip.x + Round(ip.w / 2)
+                            ay := ip.y + Round(ip.h / 2)
+                        }
+                    }
+                }
+                if rows.Has(rowIdx)
+                    continue
+                rows[rowIdx] := cols
+                newThis++
+            }
+        }
+        if (total > 0 && rows.Count >= total)
+            break
+        if (newThis = 0) {
+            stall++
+            if (stall >= 8)
+                break
+        } else {
+            stall := 0
+        }
+        if (ax = 0)
+            break
+        MouseMove(ax, ay)
+        Sleep(150)
+        Send("{WheelDown 3}")
+        Sleep(600)
+    }
+    sum := 0.0
+    csvPath := RegExReplace(BRAVO_LOG_PATH, "\.log$", "") . "_" . store . "_" . RegExReplace(bucketName, "[^A-Za-z0-9]+", "-") . "_items.csv"
+    try FileDelete(csvPath)
+    WriteCsvRow(csvPath, "Store", "Bucket", "Row", "Number", "Description", "Category", "Cost")
+    for idx, cols in rows {
+        c := RegExReplace(cols.Get("Cost", ""), "[^0-9.\-]", "")
+        if (c != "")
+            sum += Float(c)
+        WriteCsvRow(csvPath, store, bucketName, idx, cols.Get("Number", ""), cols.Get("Description", ""), cols.Get("Category", ""), cols.Get("Cost", ""))
+    }
+    LogMessage("    [items] " . rows.Count . " of " . total . " item rows read, cost total = " . Round(sum, 2))
+    return Map("count", rows.Count, "expected", total, "cost", Round(sum, 2))
 }
