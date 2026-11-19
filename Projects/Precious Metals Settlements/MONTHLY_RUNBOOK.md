@@ -32,6 +32,7 @@ Bravo is busy 5:30–9:00 AM ET; a run that reports "Bravo busy … giving up" (
 4. All 10 verified: reply in the thread with the total (must equal the two wires), rename REVIEW → `_CLOSED.csv` with a STATUS line, move the pending manifest to `pending-approval/_done/`, delete the pending json, prepend one CHANGELOG entry.
 
 ## C. Create next month's buckets (15th; idempotent — an existing name is skipped)
+RUNS NATIVELY (2026-11-18): launchd `com.valleypawn.scrap-create-monthly` → `Valley Pawn OS/bin/scrap_create_monthly.py`, 15th 18:12 ET with retries on the 16th and 17th; done-marker `Valley Pawn OS/fleet/state/scrap_create/<N>.done`; log `~/Library/Logs/valleypawn/scrap-create-monthly.log`. No Claude session or approval involved. The steps below are what it does (and the manual fallback).
 1. N = next calendar month. Write `Bravo Data Extraction/triggers-scrap/scrap-create-<N>.json`:
    `{"id":"scrap-create-<N>","createOnly":true,"buckets":[{"store":"CUL","bucketName":"<N> GOLD","occurrence":0,"amountPaid":"0","tenderType":"Cashiers Check"},{"store":"CUL","bucketName":"<N> GOLD WITH STONES",…}, … 10 total]}`
    Also include the CURRENT month's two names for every store (they are skipped if present; this self-heals a missed month).

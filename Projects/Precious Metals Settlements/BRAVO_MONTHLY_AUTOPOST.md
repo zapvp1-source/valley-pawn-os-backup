@@ -1,3 +1,11 @@
+> **READ FIRST — 2026-11-17 OVERRIDES (Joshua's decisions; these win over everything below AND over the wording of the two scheduled-task prompts wherever they differ).**
+> The current procedure is `Precious Metals Settlements/MONTHLY_RUNBOOK.md`. Follow it: Section A for the staging task, Section B for the approval-watch task.
+> - Staging runs from the **10th** and retries daily until the month is CLOSED. No 1st–5th window, no "day 5" give-up.
+> - Do NOT find bucket names or weights from the `output/*scrap-refining-gold.csv` files, a listOnly/allStatus list, or `scrap_closeout_run.sh` readweights. Names are always `<T> GOLD` / `<T> GOLD WITH STONES` (Claude creates them). Weights AND item costs come only from the read-only OPEN-view reader: manifest in `triggers-scrap-open/`, run `bin/scrap_readopen_run.sh`.
+> - The approval DM must include gross profit by store (settlement − item cost). Joshua will not approve without it.
+> - Posting: run `scrap_closeout_run.sh scrap-closeout-<T> 4500` (not 2700 — ten buckets take 45–60 min and a timeout stops the run mid-bucket). Retry unverified buckets up to 3 times with new manifest ids; see Section B for the known harmless errors.
+> - Bucket creation is a separate task on the 15th (Section C).
+
 # Bravo Monthly Scrap Closeout — Autopost Spec (added 2026-09-28)
 
 Companion to `OPERATING_GUIDE.md` (Phase A: email → allocation workbook) and

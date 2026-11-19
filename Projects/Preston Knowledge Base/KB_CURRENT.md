@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-11-17 22:11 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-11-18 22:10 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -885,6 +885,12 @@ This does not need to be used for reloans. New loans and buys only!
 Added section to include if you need funds or not to help streamline."
 SOURCE: #policy-announcements | 2025-02-10 | https://valleypawnworkspace.slack.com/archives/C03BHQ9RLR0/p1739222257681319
 id: large-loan-buy-worksheet-thr-b1336f56
+
+### [HIGH] large-loan-worksheet-process
+RULE: Use the updated large loan worksheet and process for all large loans going forward. The message doesn't spell out what changed.
+PRESTON SAID: "Updated large loan worksheet and process. Please use this going forward!!"
+SOURCE: #general (Preston Peters, Operations Manager) | 2026-11-18 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1795012202747919
+id: large-loan-worksheet-process-a68fa2b4
 
 ### [HIGH] loan-and-layaway-expire-triggers
 RULE: Preston's two hard expiration triggers: a loan with no first payment needs expired; a layaway with no payment in 60+ days needs expired. Loans are also measured on count, dollars, and percent of loan balance past 75 days (cap 5%); layaways are measured on overdue count, items needing location in Bravo (should be 0), and count with no payment in over 30 days.
@@ -2420,6 +2426,12 @@ PRESTON SAID: "Key message to that information to me and Josh in the chat and we
 SOURCE: zoom-call:2026-10-08_1312_benjie-moore_0424.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
 id: card-machine-issue-escalatio-cd07339b
 
+### [LOW] certificate-of-origin-not-valid-title
+RULE: A manufacturer's or dealer's certificate of origin is not a title, and we can't take it in place of one. A pawn on a vehicle like this needs an actual title.
+PRESTON SAID: "it's a certificate of origin and essentially lets you go and get a actual title for it, but we can't use, no one else can get this titled for them because it came from the dealer to them."
+SOURCE: zoom-call:aa6245b7edfd483f8bfbd1987429620d | 2026-11-18 | UNK Chadd McClintic
+id: certificate-of-origin-not-va-febdeef1
+
 ### [LOW] clearout-seller-company-documentation
 RULE: For clear-out company sellers, ask whether they have anything showing the company's name, such as paperwork or a card. This helps confirm the story behind the items.
 PRESTON SAID: "just get who it is and then you'd also be like so Do you need anything that says for the company's name on it or?"
@@ -2639,6 +2651,12 @@ PRESTON SAID: "just don't charge them. You know, make it, make it, you know, it'
 SOURCE: zoom-call:2026-10-12_0959_chadd-mcclintic_0857.txt | 2026-10-12 | store<->Preston (transcribed 2026-10-01)
 id: no-fee-police-dept-transfer-1d65b5b0
 
+### [LOW] notarized-originals-required
+RULE: In this case, the outside party would not accept copies of the notarized documents. They required the originals with the raised notary stamp, and the manager then had to sign and have that signature notarized. The message doesn't say who "they" are or which transaction it was.
+PRESTON SAID: "They can't accept a copy. They need the originals with the raised notary stamp.  Then I need to sign it and have that notarized."
+SOURCE: #roanoke-funds (George Moore, Roanoke manager) | 2026-11-18 | https://valleypawnworkspace.slack.com/archives/C063K8E02TW/p1795039735994209
+id: notarized-originals-required-8860aeb9
+
 ### [LOW] out-of-policy-defective-buyback-offer
 RULE: When an item is outside the return policy and the store still wants to help, the fallback is to buy it back. Look up the market value of that item with the defect and make an offer, rather than refunding or swapping it.
 PRESTON SAID: "I mean, the very least we can do is look up what one that has that defect has and make an offer and purchase it back."
@@ -2662,6 +2680,12 @@ RULE: When increasing the principal on a renewal in the POS, the outstanding amo
 PRESTON SAID: "so that's factoring in without the fees you have to edit the fees Like the interest and storage and all that yeah, that'll balance out"
 SOURCE: zoom-call:ce813b5e6f2d455b88ff0d045c69d4fb | 2026-11-09 | UNK Uriah Tiglao
 id: pos-renewal-increase-princip-0c43223b
+
+### [LOW] precious-metals-license-notarized-originals
+RULE: The precious metals license paperwork has to be submitted as originals notarized with a raised seal. A copy is not accepted.
+PRESTON SAID: "she is warning the originals that were notarized with the raised you know seal on them not just a copy"
+SOURCE: zoom-call:1403adc071b44bf5985fbdd93279aaf0 | 2026-11-18 | UNK Benjie Moore
+id: precious-metals-license-nota-3c8cd247
 
 ### [LOW] pull-list-zero-target
 RULE: The pull list (expired loan and layaway items waiting to be priced) should be worked down to zero. Each day's new items should be priced that day so the list starts and ends the day at zero.
@@ -2783,6 +2807,12 @@ PRESTON SAID: "retail sales. You know, generally, most of our folks are 1215 and
 SOURCE: zoom-call:2026-10-08_1207_Preston-to-JacobCox_9m48s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
 id: typical-retail-sales-benchma-f03d7d66
 
+### [LOW] untitled-powersports-seller-must-title-first
+RULE: If the seller only has a certificate of origin, they have to go to the DMV and get a title in their own name first. They then sign that title over to us, and only then can we take the item.
+PRESTON SAID: "he's gotta take that as a DMV title and his name and then, you know, that way we can take it, 'cause right now it's not something we can transfer."
+SOURCE: zoom-call:aa6245b7edfd483f8bfbd1987429620d | 2026-11-18 | UNK Chadd McClintic
+id: untitled-powersports-seller--89611162
+
 ### [LOW] usps-lost-package-claim-low-value
 RULE: File USPS claims for lost packages at usps.com. On a low-value item (about $35), don't spend much time on the claim because it may not be worth the effort.
 PRESTON SAID: "i would just just open one at the usps.com i'm assuming yeah see what you can get done there i guess 35 bucks i wouldn't spend too much time on it it might not be borderline not worth it be honest with you"
@@ -2829,5 +2859,5 @@ id: past-due-75-day-5-percent-ce-30eeab0b
 
 
 ==============================================================================
-COVERAGE: 395 entries - 31 verified by Preston, 155 high-confidence rules, 116 medium, 91 low, 2 superseded.
+COVERAGE: 400 entries - 31 verified by Preston, 156 high-confidence rules, 116 medium, 95 low, 2 superseded.
 ==============================================================================

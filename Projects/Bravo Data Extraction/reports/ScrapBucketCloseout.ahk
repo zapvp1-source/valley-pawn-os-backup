@@ -395,7 +395,12 @@ CloseoutOneBucket(store, bucketName, amountPaid, tenderType, occurrence := 0, ex
     try BackToDashboard()
     DismissPopups()
     Sleep(1000)
+    ; 2026-11-18: the bucket is CLOSED now, so it is not in the default view - look in the
+    ; all-status ascending view first (proved 11/17 at WAY and CUL), then the original path.
+    global CLOSEOUT_EXPECT_CLOSED
+    CLOSEOUT_EXPECT_CLOSED := true
     verifyRaw := OpenBucketAndReadStatus(bucketName)
+    CLOSEOUT_EXPECT_CLOSED := false
     RecordStatusCode(verifyRaw, "after-close-approve")
     verifyStatus := NormalizeStatus(verifyRaw)
     postedAmount := ReadFieldValue(CLOSEOUT_ELEMENTS["amount_paid"])
@@ -547,9 +552,13 @@ global CLOSEOUT_OCCURRENCE := 0
 ; A manifest may pin one mode with "forceView": "open" | "all" | "asc" (testing).
 global CLOSEOUT_VIEW_MODE := "all"
 global CLOSEOUT_FORCE_VIEW := ""
+global CLOSEOUT_EXPECT_CLOSED := false
 OpenBucketAndReadStatus(bucketName) {
     global CLOSEOUT_OCCURRENCE, CLOSEOUT_VIEW_MODE, CLOSEOUT_FORCE_VIEW
+    global CLOSEOUT_EXPECT_CLOSED
     modes := ["open", "all", "asc"]
+    if (IsSet(CLOSEOUT_EXPECT_CLOSED) && CLOSEOUT_EXPECT_CLOSED)
+        modes := ["asc", "all"]
     if (CLOSEOUT_FORCE_VIEW != "")
         modes := [CLOSEOUT_FORCE_VIEW]
     else if (CLOSEOUT_OCCURRENCE > 0)

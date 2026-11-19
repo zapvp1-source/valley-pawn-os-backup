@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-11-17
+# LIVE STATE - auto-refreshed 2026-11-18
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -17,7 +17,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | Enabled (will fire) | 2 |
 | Registered but disabled | 230 |
 | On disk but never registered | 4 |
-| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 3847 |
+| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 2518 |
 
 ### Enabled tasks
 
@@ -111,6 +111,8 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.ebay-ship-alert.plist` | installed | YES |
 | `com.valleypawn.ebay-weekly-rankings.plist` | installed | YES |
 | `com.valleypawn.email-analytics-weekly.plist` | installed | YES |
+| `com.valleypawn.email-test-loop-apply.plist` | installed | YES |
+| `com.valleypawn.email-test-loop-grade.plist` | installed | YES |
 | `com.valleypawn.employee-canvas.plist` | installed | YES |
 | `com.valleypawn.entity-compliance.plist` | installed | YES |
 | `com.valleypawn.eod-photo-fetch.plist` | installed | YES |
@@ -243,33 +245,34 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-11-17 | Valley Pawn OS | - |
-| 2026-11-17 | Unified Search | - |
-| 2026-11-17 | Quickbooks Set UP | - |
+| 2026-11-18 | Valley Pawn OS | - |
+| 2026-11-18 | Unified Search | - |
+| 2026-11-18 | Quickbooks Set UP | - |
+| 2026-11-18 | Business Dashboard Website | - |
+| 2026-11-18 | Bravo Data Extraction | STATUS.md |
+| 2026-11-17 | eBay | - |
+| 2026-11-17 | Zoom Call Pipeline | - |
+| 2026-11-17 | Website | - |
+| 2026-11-17 | Valuation Core | README.md |
+| 2026-11-17 | Store Conduct Watch | STATUS.md |
+| 2026-11-17 | Sold Margin Review | STATUS.md |
+| 2026-11-17 | Refine Social Media | - |
+| 2026-11-17 | Preston Knowledge Base | - |
+| 2026-11-17 | Precious Metals Settlements | - |
+| 2026-11-17 | Pawn Walks | STATUS.md |
+| 2026-11-17 | New Store - St Augustine | STATUS.md |
+| 2026-11-17 | Listing Management | STATUS.md |
 | 2026-11-17 | Life OS | - |
-| 2026-11-17 | Business Dashboard Website | - |
+| 2026-11-17 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-11-17 | Human Resources | - |
+| 2026-11-17 | Health Optimization | STATUS.md |
+| 2026-11-17 | Email Refinement | - |
+| 2026-11-17 | Discount Outlier Review | STATUS.md |
+| 2026-11-17 | Daily Funds Verification | - |
+| 2026-11-17 | Compliance | - |
 | 2026-11-17 | Business Continuity | - |
-| 2026-11-17 | Bravo Data Extraction | STATUS.md |
-| 2026-11-16 | eBay | - |
-| 2026-11-16 | Zoom Call Pipeline | - |
-| 2026-11-16 | Website | - |
-| 2026-11-16 | Valuation Core | README.md |
-| 2026-11-16 | Store Conduct Watch | STATUS.md |
-| 2026-11-16 | Sold Margin Review | STATUS.md |
-| 2026-11-16 | Refine Social Media | - |
 | 2026-11-16 | Preston Time Review | STATUS.md |
-| 2026-11-16 | Preston Knowledge Base | - |
-| 2026-11-16 | Precious Metals Settlements | - |
-| 2026-11-16 | Pawn Walks | STATUS.md |
-| 2026-11-16 | New Store - St Augustine | STATUS.md |
-| 2026-11-16 | Jewelry Count Reconciliation | STATUS.md |
-| 2026-11-16 | Human Resources | - |
-| 2026-11-16 | Health Optimization | STATUS.md |
 | 2026-11-16 | Gold and Silver Markeitng | - |
-| 2026-11-16 | Email Refinement | - |
-| 2026-11-16 | Discount Outlier Review | STATUS.md |
-| 2026-11-16 | Daily Funds Verification | - |
-| 2026-11-16 | Compliance | - |
 | 2026-11-16 | Communcations | - |
 | 2026-11-16 | Call Analysis | - |
 | 2026-11-16 | Ask Valley Pawn | STATUS.md |
@@ -282,7 +285,6 @@ below disagrees with this block, THIS BLOCK WINS.
 | 2026-11-09 | _probe_tmp | - |
 | 2026-11-04 | Sales Tax | STATUS.md |
 | 2026-11-02 | _scratch | - |
-| 2026-11-02 | Training Program | STATUS.md |
 
 <!-- LIVE-STATE:END -->
 

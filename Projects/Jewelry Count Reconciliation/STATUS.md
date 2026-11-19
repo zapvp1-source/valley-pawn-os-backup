@@ -2905,3 +2905,31 @@ Jewelry Count — Tuesday 11/17 (expected = system on-hand, counted = PM count s
 
 Culpeper — count sheet not filled in.
 
+
+## RUN RECORD — 2026-11-18 (Wednesday) — native jewelry-onhand-nightly-pull
+
+Open: CUL ROA WAY. Bravo freeze-window CSVs: all open stores. Sheets: CUL ok (Sandi-Cole, 18:08); ROA ok (Joey-Epperly, 18:28); WAY ok (Stephanie, 18:35).
+
+Jewelry Count — Wednesday 11/18 (expected = system on-hand, counted = PM count sheet)
+
+| Store | Category | Expected | Counted | Variance |
+|---|---|---|---|---|
+| CUL | Rings | 739 | 741 | +2 |
+| CUL | Bracelets | 133 | 133 | 0 |
+| CUL | Earrings | 180 | 180 | 0 |
+| CUL | Pendants | 252 | 252 | 0 |
+| CUL | Necklaces | 160 | 159 | -1 |
+| **CUL Total** | | **1464** | **1465** | **+1** |
+| ROA | Rings | 608 | 608 | 0 |
+| ROA | Bracelets | 135 | 135 | 0 |
+| ROA | Earrings | 76 | 76 | 0 |
+| ROA | Pendants | 178 | 178 | 0 |
+| ROA | Necklaces | 147 | 147 | 0 |
+| **ROA Total** | | **1144** | **1144** | **0** |
+| WAY | Rings | 356 | 356 | 0 |
+| WAY | Bracelets | 47 | 47 | 0 |
+| WAY | Earrings | 61 | 61 | 0 |
+| WAY | Pendants | 69 | 69 | 0 |
+| WAY | Necklaces | 76 | 76 | 0 |
+| **WAY Total** | | **609** | **609** | **0** |
+

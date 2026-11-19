@@ -2,11 +2,13 @@
 
 ## Sign-in state (probe each run)
 - **Signed in, in Joshua's Chrome (2026-11-17):** Yelp for Business (biz.yelp.com) and Facebook (Joshua manages all store pages). YellowPages owner claims worked 10/20.
+- *2026-11-18:* Facebook page text reads fine, but screenshots/clicks on facebook.com return "permission denied" in Claude in Chrome; BrightLocal (tools.brightlocal.com) is not allowed for Claude in Chrome at all. BBB "Continue with Google" (jdavis@fcfpawn.com) asks for the Google password.
 - **Signed out — one-time Joshua sign-in needed:** Apple Business (business.apple.com — Apple Account + 2FA); BrightLocal (tools.brightlocal.com — Google SSO did not complete 11/17; alternative: authorize the BrightLocal connector once); BBB (bbb.org/account/login — try "Continue with Google" first).
 
 ## Yelp (biz.yelp.com)
 - Owner edits: biz.yelp.com → location switcher (top left) → Business Information → edit the field → Save. Hours, address and categories go to Yelp review; check the public page after about 7 days.
-- Duplicate or closed listing: on the public page, Suggest an edit → "This is a duplicate" / "Business closed". Escalate via biz.yelp.com/support → contact form.
+- Duplicate or closed listing: on the public page, Suggest an edit (right column) → tick "Business Closed or Moved" → Permanently Closed, or "This is a duplicate…" → context box (**300-character limit**, use form_input) → Submit Changes → green banner "moderators will take a look".
+- *Changed 2026-11-18:* Yelp has **no web support/contact form** any more. biz.yelp.com "Need Help?" = sales chat + Support Center; yelp.com/contact = FAQ article; only human channel is phone (877) 767-9357. Rung 3 for Yelp is therefore not available unattended — go to rung 4 (BrightLocal Location Manager push) instead.
 
 ## Facebook
 - Navigating to a page id that redirects to another id means it is the same page (profile id vs page id). Mark the item resolved and record both ids.
@@ -14,13 +16,20 @@
 
 ## YellowPages / Thryv
 - "Suggest an Edit" on the public listing (name field) goes to Thryv's data team. Owner dashboard: the name field is locked.
-- Rung 3: yellowpages.com → Contact Us / Thryv support form. Request a name correction for a claimed listing; include the listing ID and the website.
+- Rung 3: yellowpages.com/about/contact-us → "click here" feedback modal (name, email, comments). *2026-11-18:* the modal has a **reCAPTCHA** on submit — do not attempt. thryv.com/contact-us form needs phone + a privacy-statement checkbox (don't tick unattended). Next try: a Thryv/YP support email address from jdavis@fcfpawn.com.
 
 ## BBB
 - Business Portal: bbb.org/account/login (Continue with Google). Rung 3: BBB Serving Western Virginia, (540) 342-3455. Email the bureau through the profile's "Contact BBB" with the correction.
 
 ## MapQuest
 - Owned by the weekly "MapQuest Dixie Pawn removal" task. Free path = listing page → "Let us know" → duplicate. Direct confirm-listing URLs give "Session Expired".
+
+## Loc8NearMe
+- Listing URLs keep the old slug: Roanoke /virginia/roanoke/gold-n-pawn/5652844/, Harrisonburg /virginia/harrisonburg/dixie-pawn-inc/5726932/. Site search ignores location; use a web search with site:loc8nearme.com.
+- Fix: listing → "Suggest an Edit" (opens a popup) → tick "I'm the owner", store email (city@fcfpawn.com), message → Send Suggestion. The popup closes itself on send. Roanoke's 10/20 edit was live by 11/18.
+
+## FFLeasy
+- Claim needs a new FFLeasy account (don't create). Use ffleasy.com/contact → Department "Other" → name/phone/email/message → "Email is sent. Thank You!".
 
 ## Small directories (FFLeasy, GunNook, GunMade, MasterFFL, BlueBook, mallsinamerica, Manta, Nextdoor, ChamberofCommerce.com, Loc8NearMe)
 - Look for "Claim / Is this your business? / Suggest an edit / Report" on the listing first. Otherwise use the site's contact form. Fallback: email the address in the site footer from jdavis@fcfpawn.com.

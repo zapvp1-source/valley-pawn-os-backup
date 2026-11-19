@@ -1,5 +1,20 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-18 (daily PREP run, 12:41–12:52 ET, level 1 all pages, Wednesday) — picks queued, nothing published by this run
+- Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only (composer read "What's on your mind, Joshua?" at start and end) — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. Still no POST-mode chat since 11/2 evening (ledger unchanged at 60 rows).
+- Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).
+- Dropped from QUEUE (lapsed): Culpeper Chamber Merry Little Market comment (11:13 today); Harrisonburg Fire Dept free-alarms share (08:00 today); Roanoke Visit VBR Salem holidays share (11/17 19:15).
+- Still valid: Roanoke comment → Libraries Santa visits (until TODAY 21:00); Harrisonburg comment → Farmers Market radishes (until TODAY 16:13); Waynesboro share → Library house plants (until 11/19 07:00); Lexington comment → News-Gazette Take a Hike Day (until 11/19 09:01).
+- New picks (permalinks opened, captions/tab titles confirmed, times from hover): Culpeper comment → Visit Culpeper VA Thanksgiving bakeries (until 11/19 08:00); Culpeper share → Culpeper Star-Exponent's share of the Culpeper County Library Repair Café, Sat Nov 21, 11:00 AM–12:30 PM (until 11/20 11:43 — library's own post lapses today 16:00, so the newspaper's share is used); Harrisonburg comment → Daily News-Record Fort Defiance third straight Class 2 state final (until 11/20 10:00; use only after the Farmers Market pick lapses/posts); Roanoke share → Explore Park Illuminights opening Sat Nov 21, 725,000+ lights (until 11/20 11:30; replaces the lapsed VBR share as Roanoke's one share this week).
+- Skipped on purpose: Main Street Lexington "Greening of the Planters" volunteer call (good fit, but posted 11/16 14:21 — lapses 14:21 today); City of Lexington new Public Works director (about a named individual); Lexington Rt 11 restriping (civic notice); RARA Gin Hotel partner / Dec 1 ticketed market; Northside HS picture day + yearbook ads; Salem RidgeYaks DWTS posts; Waynesboro.Com Chick-fil-A spirit night (past, restaurant promo); Waynesboro Fire school visits (11/4, old); DNR Grottoes mayor resignation (government); DNR EMU basketball (fine, but Harrisonburg already has two comment picks); Germanna workforce/President visits (Fredericksburg-area address, nothing specific to Culpeper); Blue Ridge Parkway internship (hiring).
+- Brand and Waynesboro comment: no pick today (zero is fine). Lexington: comment pending, no share candidate with a usable window.
+- Ramp: all pages hold level 1. Share week (Mon 11/16–): Culpeper, Roanoke, Waynesboro queued; Harrisonburg's queued share lapsed; Lexington, Brand none.
+- Follows: no new town searches (22 pending follows waiting on POST mode); all 22 re-dated.
+- Watchlist: 15 pages re-checked (Culpeper 4, Roanoke 4, Waynesboro 2, Lexington 3, Harrisonburg 1, Brand 1) — oldest last_checked first (Star-Exponent 10/31, Germanna 11/1, DNR 11/3, Northside 11/5, RidgeYaks 11/6); none newly dormant; no unresolved entries.
+- Reply candidates for POST mode: carry-over — Paige Maybush and Heather Podgorski comments on a Valley Pawn-Waynesboro post; check for a page reply.
+- Needs a person: none.
+- Totals this run: comments 0 (2 new queued, 3 still pending), shares 0 (2 new queued, 1 still pending), replies 0, follows 0 (22 pending), new pages resolved 0.
+
 ## 2026-11-17 (daily PREP run, 12:42–13:15 ET, level 1 all pages, Tuesday) — picks queued, nothing published by this run
 - Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only (composer read "What's on your mind, Joshua?" at start and end) — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. Still no POST-mode chat since 11/2 evening (ledger unchanged at 60 rows). The 11/17 Refinement Loop plan lists "auto-post outbound at current caps" as a JOSHUA decision; until it's decided the runbook's PREP mode stands.
 - Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).

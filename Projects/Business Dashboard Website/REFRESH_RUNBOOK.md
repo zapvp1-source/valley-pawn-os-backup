@@ -218,3 +218,52 @@ in kpis.json -- funds/items-to-price/chekkit/layaway/company-performance all alr
 their latest available post). Deploy used the tar-bundle Option C path per the 2026-11-16 note;
 .deploy_bundle.tar.gz hit the documented nlink>1 bridge quirk on first stage attempt, cleared
 after a ~20s gap doing other work, consistent with the 2026-11-09 note.
+
+## Note (2026-11-18, dashboard-refresh run, 13:20 UTC firing)
+Second refresh today (an earlier run already bumped asOf to Nov 18 at ~00:17 UTC). Picked up
+genuinely new posts that landed after that run: Daily Funds Verification for Tue Nov 17 (posted
+2026-11-17 20:11 ET -- 3/5 stores verified, Roanoke and Waynesboro could not be verified, no
+Bravo data -- not a discrepancy, so funds.status changed from "4/5 MATCHED" to "3/5 VERIFIED (2
+unverified)"; funds.actual now sums only the 3 verified stores' Bravo amounts, Roanoke/Waynesboro
+excluded rather than treated as $0), Items to Price for Nov 18 (225 items / $12,316.00, down from
+267/$17,793 the day before), and the Chekkit Daily Response Summary posted this morning covering
+Nov 17 (all clear, 0 unanswered, confirmed by the Nov 17 7PM End-of-Day Follow-up).
+Left unchanged (no newer report than what was already in kpis.json): layaway (next Weekly Layaway
+Review is Nov 23), loan-review (retired, per standing rule), company-performance watch[] (no new
+Monthly Analytics post since Nov 1), and daily.intakeMargin (#pawn-walks is still posting the
+simplified overpay-flags-only format introduced ~Nov 16-17 -- no per-store Buy/Loan Intake margin
+tables to parse; still showing Nov 14 data per the 2026-11-16/11-18 notes above).
+Artifacts sync (Step 2) skipped silently -- ~/Documents/Claude/Artifacts is not a connected folder
+on this device_bash session.
+Deploy: Option C (tar-bundle staged via device_stage_files, wrangler run in the cloud sandbox).
+Bundle hit the documented nlink>1 bridge quirk on first stage attempt; cleared on retry after
+doing other work in between (no fixed delay needed -- just don't retry back-to-back). Deployed
+cleanly, ~1.5s upload + worker deploy. Verified: apex https://vp-dashboard.pages.dev/ returns 401
+with no auth and 200 with basic auth; kpis.json parses and matches the values written above; the
+deployment-specific URL (https://b638f416.vp-dashboard.pages.dev/) also returned 200, no stale-CDN
+concerns this run.
+
+## Note (2026-11-19, dashboard-refresh run)
+Picked up one genuinely new post: Daily Funds Verification for Wed Nov 18 (posted 2026-11-18
+18:43 ET -- 4 of 5 stores matched, Waynesboro discrepancy: expected $0.00, Bravo $2,000.00).
+funds.status changed from "3/5 VERIFIED (2 unverified)" to "4/5 MATCHED (1 discrepancy)";
+expected/actual updated to $0.00 / $2,000.00 (actual = sum of reported Bravo amounts).
+Left unchanged (no newer report than what was already in kpis.json): layaway-review (next
+Weekly Layaway Review is Nov 23), loan-review (retired, per standing rule), company-performance
+watch[] (no new Monthly/Gift-card post with KPI data since Nov 1-2), items-to-price (still the
+Nov 18 08:00 post, next due ~8 AM Nov 19), and daily.intakeMargin (#pawn-walks reposted the Nov
+17 simplified overpay-flags-only format again on Nov 18 -- still no per-store Buy/Loan Intake
+margin tables to parse; still showing Nov 14 data per the 2026-11-16/11-18 notes above).
+Chekkit unchanged -- latest Daily Response Summary still covers Nov 17 (all clear); the Nov 18
+End-of-Day Follow-up has no new daily-summary data to add until tomorrow's 8 AM post.
+Artifacts sync (Step 2) skipped silently -- ~/Documents/Claude/Artifacts is not a connected
+folder on this device_bash session.
+Deploy: Option C (tar-bundle staged via device_stage_files, wrangler run in the cloud sandbox).
+Bundle staged cleanly on the first attempt this run (no nlink>1 quirk). Deployed cleanly in
+~1.2s. Verified: apex https://vp-dashboard.pages.dev/ returns 401 with no auth and 200 with
+basic auth; kpis.json parses and matches the values written above (asOf bumped to Nov 19,
+2026); the deployment-specific URL (https://260e7870.vp-dashboard.pages.dev/) also returned
+200, no stale-CDN concerns this run.
+Minor housekeeping note: the .deploy_bundle.tar.gz staging file in this project folder could
+not be deleted (device_bash delete permission not granted in this folder) -- left in place,
+harmless, gets overwritten next run.
