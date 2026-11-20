@@ -137,8 +137,45 @@ if [ $((NOW_EPOCH - LASTT)) -ge 3000 ] || [ "${DFREE:-99}" -lt 25 ]; then
   [ -f "$TREND" ] || echo "time,free_gb,swap_files_gb,tm_local_snaps,claude_app_gb,claude_sessiondata_gb,user_caches_gb,tmp_folders_gb,vp_studio_gb,downloads_gb" > "$TREND"
   echo "$(now),$DFREE,$(gb /private/var/vm),$SNAPS,$(gb "$HOME/Library/Application Support/Claude"),$(gb "$HOME/Library/Application Support/Claude/vm_bundles/claudevm.bundle/sessiondata.img"),$(gb "$HOME/Library/Caches"),$(gb "$(dirname "${TMPDIR:-/tmp}")"),$(gb "$HOME/.vp-studio"),$(gb "$HOME/Downloads")" >> "$TREND"
 fi
-if [ -n "$DFREE" ] && [ "$DFREE" -lt 15 ]; then
-  tmutil thinlocalsnapshots / 20000000000 4 >/dev/null 2>&1 && add "disk low (${DFREE} GB free) — thinned Time Machine local snapshots"
+# 11/19 finding (DISK_TREND.csv 11/17-19): nothing on disk grows overnight — Time Machine LOCAL
+# snapshots pile up between disk-health's 22:00 and 06:00 thinning passes (count 0 -> 4-5) and
+# hold ~25 GB (free 50 -> 21-24 GB), then free snaps back once they're thinned at 06:00.
+# Fix: whenever free < 35 GB and >= 2 local snapshots exist, thin them — but only if the last
+# NAS backup is under 6h old (so every version is safely on the NAS). Below 15 GB: thin regardless.
+tm_backup_age_h() {
+  # Same 3-route logic as disk_health_sentinel.py (hardened 2026-09-20): tmutil needs Full Disk
+  # Access the launchd runner lacks, so fall back to Time Machine's own prefs (completed NAS
+  # backups only, never local snapshot dates). Unknown -> 999 (=> no thinning unless <15 GB).
+  /usr/bin/python3 - <<'PYX' 2>/dev/null || echo 999
+import subprocess, re, time, calendar
+def sh(c):
+    try: return subprocess.run(c, shell=True, capture_output=True, text=True, timeout=30).stdout
+    except Exception: return ''
+t = None
+m = re.search(r'(\d{4})-(\d{2})-(\d{2})-(\d{2})(\d{2})(\d{2})', sh('tmutil latestbackup 2>&1'))
+if m:
+    g = m.groups(); t = time.mktime(time.strptime('-'.join(g[:3]) + ' ' + ':'.join(g[3:]), '%Y-%m-%d %H:%M:%S'))
+if not t:
+    inarr = False
+    for line in sh('/usr/bin/defaults read /Library/Preferences/com.apple.TimeMachine').splitlines():
+        x = line.strip()
+        if re.match(r'^(SnapshotDates|BackupDates)\s*=\s*\(', x): inarr = True; continue
+        if inarr:
+            if x.startswith(')'): inarr = False; continue
+            mm = re.search(r'(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) \+0000', x)
+            if mm:
+                v = calendar.timegm(time.strptime(mm.group(1), '%Y-%m-%d %H:%M:%S'))
+                t = v if t is None else max(t, v)
+print(int((time.time() - t) / 3600) if t else 999)
+PYX
+}
+if [ -n "$DFREE" ] && [ "$DFREE" -lt 35 ]; then
+  NSNAP=$(tmutil listlocalsnapshots / 2>/dev/null | grep -c TimeMachine)
+  if [ "$DFREE" -lt 15 ] || { [ "$NSNAP" -ge 2 ] && [ "$(tm_backup_age_h)" -lt 6 ]; }; then
+    if tmutil thinlocalsnapshots / 40000000000 4 >/dev/null 2>&1; then
+      add "disk ${DFREE} GB free, ${NSNAP} local TM snapshots — thinned them (NAS backup current)"
+    fi
+  fi
 fi
 
 # ---------- record ----------

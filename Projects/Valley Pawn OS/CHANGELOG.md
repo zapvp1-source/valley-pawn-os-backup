@@ -1,12 +1,232 @@
-## 2026-11-18 ~21:48 ET (fleet-guardian 21:45 pass, Cowork, Social Media project session, LINKED to mac-studio-2-local via device_bash)
+# Valley Pawn - Enterprise Changelog
 
-- Guard check: bin/vp_dryrun.py status -> OFF (publications live).
-- Step 1 (registry): Host Job Queue job (fleet/host_queue/20261118-2148-guardian-preflight.sh, picked up by preston-watch within ~1 min) ran reg_shape.py + task_preflight.py directly against the real scheduler registry (232 scheduledTasks). Only 2 enabled Cowork-side cron tasks fleet-wide: northwest-registered-agent-daily-check (08:40 ET) and vp-hiring-pipeline (*/15 9-19 ET weekdays) -- both class=clear, both confirmed running today per today's own CHANGELOG entries (hiring-pipeline runs as late as 18:04 ET; northwest ran this morning, same standing sign-in wall as before). 0 missed Cowork-side fires. Fleet is otherwise fully native per SWITCHOVER_2026-11.md -- consistent with every pass since.
-- Step 1b (output verification): used today's native fleet-doctor run (fleet/doctor/2026-11-18.md) as the macro-level substitute check again (same budget call as recent passes, full expected_outputs.json sweep not re-run) -- no new findings beyond what the 12:45 pass already logged.
-- Step 1c (FAILURE_LEDGER): 1 OPEN row at start (vsp-fee-pay, 13:22 ET, missed its Wed 10:15 run). Verify-only (money movement) -- guardian hard limit forbids rerunning it; checked fleet/state and bin/ for any later same-day retry evidence, found none. Dispositioned UNRECOVERED, consistent with the 2026-11-16 10:16 ET row of the same task/class; its own daily cron (5th-28th) retries tomorrow on its own. No new HUMAN_QUEUE row (no concrete human action beyond what's already on file).
-- HUMAN_QUEUE.md: 2 non-sign-in rows were added earlier today by other tasks (ivr-app-link-text's Zoom OAuth-scope gap; fleet-medic's hiring-autopost Full Disk Access/TCC row) -- both genuinely new-today per rule (b), both included in tonight's digest. Also resurfaced 6 rows that hit the 7-day rule (last surfaced 2026-11-11): Preston phone/loan policy sign-off, Lexington email password change, company card replacement, FFL locator account creation, firearms wholesale distributor paperwork, and the compliance programs sign-off packet -- all non-sign-in, all included. Sign-in-walled rows (QuickBooks, Northwest Registered Agent, the AI-search sign-in block) correctly held for Login Day (next 2026-12-07), not surfaced tonight.
-- **One Slack DM sent to Joshua (D03BHQH5VGT)** this pass per rule (b) (two new non-sign-in rows today) and rule (c) (six 7-day-due rows) -- 8-item needs-you list (~89 min total) plus a one-line not-recoverable-today note (VSP fee payment retry tomorrow; two dev-backlog items needing a dedicated session, not Joshua's time).
-- Reruns used: 0/5 (nothing both missed and rerun-safe this pass).
+Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
+
+## 2026-11-19 ~9:00 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge found). Scope per HIRING_SWITCH.md unchanged: Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Re-read Joshua's DM (D03BHQH5VGT) and #employee-prospects fresh: nothing hiring-related new since the 9:06 AM Robert Brandt booking confirmation and interview-list post; newer DM items (Lexington precious-metals bond, Store PC rollout final summary, Fortis deadlines) are all unrelated to hiring.
+- Calendar re-checked (jdavis@fcfpawn.com): Robert Brandt 11:00 AM today (Roanoke, already occurred, no no-show report received) and Matthew Williams Fri 11/20 12:00 PM (Lexington), both unchanged/as booked.
+- Indeed Messages inbox re-checked top to bottom live via Claude in Chrome: Robert Brandt's 9:51 AM "Sounds good" is still the newest message. No new candidate messages.
+- Jobs dashboard re-checked: Waynesboro (88 All, 0 New), Harrisonburg (86 All, 0 New), Lexington (42 All, 0 New), Roanoke (58 All, 0 New) — all Paused, unchanged. Saint Augustine FL off-scope, 3 New, not actioned.
+- No felony disqualifications, no do-not-contact touches, no new in-scope applicants, bookings, reschedules, or no-shows this run.
+- Per quiet-rule standing preference: nothing changed, so no Slack DM and no #employee-prospects post.
+- Indeed messages sent: 0. Calendar changes: 0. Texts: 0 (no screen control this run — cloud-only). Rejections: 0. Slack: 0 (quiet rule).
+
+## 2026-11-19 ~8:00 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge found). Scope per HIRING_SWITCH.md unchanged: Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Re-read Joshua's DM (D03BHQH5VGT) and #employee-prospects fresh: nothing hiring-related new since the 9:06 AM Robert Brandt booking confirmation and interview-list post; newer DM items (Lexington precious-metals bond, Store PC rollout final summary, Fortis deadlines) are all unrelated to hiring.
+- Calendar re-checked (jdavis@fcfpawn.com): Robert Brandt 11:00 AM today (Roanoke, already occurred, no no-show report received) and Matthew Williams Fri 11/20 12:00 PM (Lexington), both unchanged/as booked.
+- Indeed Messages inbox re-checked top to bottom live via Claude in Chrome: Robert Brandt's 9:51 AM "Sounds good" is still the newest message. No new candidate messages.
+- Jobs dashboard re-checked: Waynesboro (88 All, 0 New), Harrisonburg (86 All, 0 New), Lexington (42 All, 0 New), Roanoke (58 All, 0 New) — all Paused, unchanged. Saint Augustine FL off-scope, 3 New, not actioned.
+- No felony disqualifications, no do-not-contact touches, no new in-scope applicants, bookings, reschedules, or no-shows this run.
+- Per quiet-rule standing preference: nothing changed, so no Slack DM and no #employee-prospects post.
+- Indeed messages sent: 0. Calendar changes: 0. Texts: 0 (no screen control this run — cloud-only). Rejections: 0. Slack: 0 (quiet rule).
+
+## 2026-11-19 ~7:04 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge). Scope per HIRING_SWITCH.md unchanged: Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Re-read Joshua's DM (D03BHQH5VGT) and #employee-prospects fresh: nothing hiring-related new since the 9:06 AM Robert Brandt booking confirmation and interview-list post; newer DM items (Lexington precious-metals bond, Store PC rollout, Fortis) are all unrelated to hiring.
+- Calendar re-checked (jdavis@fcfpawn.com): Robert Brandt 11:00 AM today (Roanoke, already occurred, no no-show report received) and Matthew Williams Fri 11/20 12:00 PM (Lexington), both unchanged/as booked.
+- Indeed Messages inbox re-checked top to bottom live via Claude in Chrome: Robert Brandt's 9:51 AM "Sounds good" is still the newest message. No new candidate messages.
+- Jobs dashboard re-checked: Waynesboro (88 All, 0 New), Harrisonburg (86 All, 0 New), Lexington (42 All, 0 New), Roanoke (58 All, 0 New) — all Paused, unchanged. Saint Augustine FL off-scope, 3 New, not actioned.
+- No felony disqualifications, no do-not-contact touches, no new in-scope applicants, bookings, reschedules, or no-shows this run.
+- Per quiet-rule standing preference: nothing changed, so no Slack DM and no #employee-prospects post.
+- Indeed messages sent: 0. Calendar changes: 0. Texts: 0 (no screen control this run — cloud-only). Rejections: 0. Slack: 0 (quiet rule).
+
+## 2026-11-19 ~6:06 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge). Scope per HIRING_SWITCH.md unchanged: Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Re-read Joshua's DM (D03BHQH5VGT) and #employee-prospects fresh: nothing hiring-related new since the 9:06 AM Robert Brandt booking confirmation and interview-list post; newer DM items (Lexington precious-metals bond, Store PC rollout, Fortis) are all unrelated to hiring.
+- Calendar re-checked (jdavis@fcfpawn.com): Robert Brandt 11:00 AM today (Roanoke) and Matthew Williams Fri 11/20 12:00 PM (Lexington), both unchanged/as booked. No no-show report received.
+- Indeed Messages inbox re-checked top to bottom live via Claude in Chrome: Robert Brandt's 9:51 AM "Sounds good" is still the newest message. No new candidate messages.
+- Jobs dashboard re-checked: Waynesboro (88 All, 0 New), Harrisonburg (86 All, 0 New), Lexington (42 All, 0 New), Roanoke (58 All, 0 New) — all Paused, unchanged. Saint Augustine FL off-scope, 3 New, not actioned.
+- No felony disqualifications, no do-not-contact touches, no new in-scope applicants, bookings, reschedules, or no-shows this run.
+- Per quiet-rule standing preference: nothing changed, so no Slack DM and no #employee-prospects post.
+- Indeed messages sent: 0. Calendar changes: 0. Texts: 0 (no screen control this run — cloud-only). Rejections: 0. Slack: 0 (quiet rule).
+
+## 2026-11-19 ~5:49 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge). Scope per HIRING_SWITCH.md unchanged: Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Re-read Joshua's DM (D03BHQH5VGT) and #employee-prospects fresh: nothing hiring-related new since the 9:06 AM Robert Brandt booking confirmation and interview-list post; newer DM items (Lexington precious-metals bond 2:50 PM, Store PC rollout summary 4:08 PM, Fortis 9:18 AM) are all unrelated to hiring.
+- Calendar re-checked (jdavis@fcfpawn.com): Robert Brandt 11:00 AM today (Roanoke) and Matthew Williams Fri 11/20 12:00 PM (Lexington), both unchanged/as booked. No no-show report received.
+- Indeed Messages inbox re-checked top to bottom live via Claude in Chrome: Robert Brandt's 9:51 AM "Sounds good" is still the newest message. No new candidate messages.
+- Jobs dashboard re-checked: Waynesboro (88 All, 0 New), Harrisonburg (86 All, 0 New), Lexington (42 All, 0 New), Roanoke (58 All, 0 New) — all Paused, unchanged. Saint Augustine FL off-scope, 3 New, not actioned.
+- No felony disqualifications, no do-not-contact touches, no new in-scope applicants, bookings, reschedules, or no-shows this run.
+- Per quiet-rule standing preference: nothing changed, so no Slack DM and no #employee-prospects post.
+- Indeed messages sent: 0. Calendar changes: 0. Texts: 0 (no screen control this run — cloud-only). Rejections: 0. Slack: 0 (quiet rule).
+
+## 2026-11-19 ~5:34 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge). Scope per HIRING_SWITCH.md unchanged: Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Re-read Joshua's DM (D03BHQH5VGT) and #employee-prospects fresh: nothing hiring-related new since the 9:06 AM Robert Brandt booking confirmation and interview-list post; newer DM items (Lexington precious-metals bond 2:50 PM, Store PC rollout summary 4:08 PM, Fortis 9:18 AM) are all unrelated to hiring.
+- Calendar re-checked (jdavis@fcfpawn.com): Robert Brandt 11:00 AM today (Roanoke) and Matthew Williams Fri 11/20 12:00 PM (Lexington), both unchanged/as booked. No no-show report received.
+- Indeed Messages inbox re-checked top to bottom live via Claude in Chrome: Robert Brandt's 9:51 AM "Sounds good" is still the newest message. No new candidate messages.
+- Jobs dashboard re-checked: Waynesboro (88 All, 0 New), Harrisonburg (86 All, 0 New), Lexington (42 All, 0 New), Roanoke (58 All, 0 New) — all Paused, unchanged. Saint Augustine FL off-scope, 3 New, not actioned.
+- No felony disqualifications, no do-not-contact touches, no new in-scope applicants, bookings, reschedules, or no-shows this run.
+- Per quiet-rule standing preference: nothing changed, so no Slack DM and no #employee-prospects post.
+- Indeed messages sent: 0. Calendar changes: 0. Texts: 0 (no screen control this run — cloud-only). Rejections: 0. Slack: 0 (quiet rule).
+
+## 2026-11-19 ~5:18 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules. Confirmed cloud-only (no remote-devices bridge). Scope per HIRING_SWITCH.md unchanged: Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Re-read Joshua's DM (D03BHQH5VGT) and #employee-prospects fresh: nothing hiring-related new since the 9:06 AM Robert Brandt booking confirmation and interview-list post; newer DM items (Lexington precious-metals bond 2:50 PM, Store PC rollout summary 4:08 PM, Fortis 9:18 AM) are all unrelated to hiring.
+- Calendar re-checked (jdavis@fcfpawn.com): Robert Brandt 11:00 AM today (Roanoke) and Matthew Williams Fri 11/20 12:00 PM (Lexington), both unchanged/as booked. No no-show report received.
+- Indeed Messages inbox re-checked top to bottom live via Claude in Chrome: Robert Brandt's 9:51 AM "Sounds good" is still the newest message. No new candidate messages.
+- Jobs dashboard re-checked: Waynesboro (88 All, 0 New), Harrisonburg (86 All, 0 New), Lexington (42 All, 0 New), Roanoke (58 All, 0 New) — all Paused, unchanged. Saint Augustine FL off-scope, 3 New, not actioned.
+- No felony disqualifications, no do-not-contact touches, no new in-scope applicants, bookings, reschedules, or no-shows this run.
+- Per quiet-rule standing preference: nothing changed, so no Slack DM and no #employee-prospects post.
+- Indeed messages sent: 0. Calendar changes: 0. Texts: 0 (no screen control this run — cloud-only). Rejections: 0. Slack: 0 (quiet rule).
+
+## 2026-11-19 ~4:30 PM ET (listings fix loop, scheduled)
+- Facebook Valley Pawn-Roanoke (61553773147464) bio no longer says "since 1988" (AI answers were repeating it). First weekly AI answer check written to Listing Management/fix-loop/AI_ANSWERS.md: named in 20/20 city/engine checks, 2 wrong facts. 5 /<store>/ short pages confirmed noindex.
+
+## 2026-11-19 10:10 AM ET (channel rename sweep)
+- 2026-11-19 10:10 ET — Slack #preston-claude renamed #preston-goldilocks (same ID C0BGXSTT4TY, so nothing stopped working). Name updated in 4 cloud tasks (Preston assistant + 3 request sentinels), 4 native scripts (preston_watch.py, preston_local_runner.py, ask_vp_capture.py, ask_vp_verify.py), Ask VP config, preston_assistant prompt, HIRING_OUTREACH/HIRING_SWITCH, Policy Day runbooks/cadence, Preston KB docs + 2 pending SKILL.md, HUMAN_QUEUE, OPEN_ITEMS_REGISTER (166 refs, 24 files). Historical logs left as-is. Backups: fleet/_backups/pre-channel-rename-20261119/. Task IDs like preston-claude-evening-check unchanged on purpose.
+
+## 2026-11-19 ~3:34 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline, vp-operating-rules. Confirmed cloud-only (no remote-devices bridge). Scope per HIRING_SWITCH.md unchanged: Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Re-read Joshua's DM (D03BHQH5VGT) and #employee-prospects fresh: nothing hiring-related new since the 9:06 AM Robert Brandt booking confirmation and interview-list post; newer DM items (Store PC rollout 2:08/4:08 summaries, Fortis 9:18 AM, Lexington precious-metals-bond 2:50 PM) are all unrelated to hiring.
+- Calendar re-checked (jdavis@fcfpawn.com): Robert Brandt 11:00 AM today (Roanoke) and Matthew Williams Fri 11/20 12:00 PM (Lexington), both unchanged/as booked. No no-show report received.
+- Indeed Messages inbox re-checked top to bottom live via Claude in Chrome: Robert Brandt's 9:51 AM "Sounds good" is still the newest message. No new candidate messages.
+- Jobs dashboard re-checked: Waynesboro (88 All, 0 New), Harrisonburg (86 All, 0 New), Lexington (42 All, 0 New), Roanoke (58 All, 0 New) — all Paused, unchanged. Saint Augustine FL off-scope, 3 New, not actioned.
+- No felony disqualifications, no do-not-contact touches, no new in-scope applicants, bookings, reschedules, or no-shows this run.
+- Per quiet-rule standing preference: nothing changed, so no Slack DM and no #employee-prospects post.
+- Indeed messages sent: 0. Calendar changes: 0. Texts: 0 (no screen control this run — cloud-only). Rejections: 0. Slack: 0 (quiet rule).
+
+## 2026-11-19 ~4:04 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge). Scope per HIRING_SWITCH.md unchanged: Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Re-read Joshua's DM (D03BHQH5VGT) and #preston-goldilocks fresh: nothing hiring-related new since the 9:06 AM run (newest DM items are the Lexington precious-metals-bond and Store PC rollout threads, both unrelated to hiring; #preston-goldilocks newest is the 2:48 PM Lexington bond / lunch-break policy thread, also non-hiring).
+- Calendar re-checked (jdavis@fcfpawn.com): Robert Brandt 11:00 AM today (Roanoke) and Matthew Williams Fri 11/20 12:00 PM (Lexington), both unchanged/as booked. No no-show report received.
+- Indeed Messages inbox re-checked top to bottom live via Claude in Chrome: Robert Brandt's 9:51 AM "Sounds good" is still the newest message (already a confirmation of his existing booking, previously actioned). No new candidate messages.
+- Jobs dashboard loaded cleanly this run (no Cloudflare block): Waynesboro (88 All, 0 New), Harrisonburg (86 All, 0 New), Lexington (42 All, 0 New), Roanoke (58 All, 0 New) — all Paused, unchanged. Saint Augustine FL off-scope, 3 New, not actioned.
+- No felony disqualifications, no do-not-contact touches, no new in-scope applicants, bookings, reschedules, or no-shows this run.
+- Per quiet-rule standing preference: nothing changed, so no Slack DM and no #employee-prospects post.
+- Indeed messages sent: 0. Calendar changes: 0. Texts: 0 (no screen control this run — cloud-only). Rejections: 0. Slack: 0 (quiet rule).
+
+## 2026-11-19 ~3:20 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge). Scope per HIRING_SWITCH.md unchanged: Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Re-read Joshua's DM (D03BHQH5VGT) and #preston-goldilocks fresh: nothing hiring-related new since the 2:58 PM run (newest DM is the 2:08 PM Store PC rollout summary, unrelated to hiring; #preston-goldilocks newest is the 11/16 Brendon Thomas ROC thread).
+- Calendar re-checked (jdavis@fcfpawn.com): Robert Brandt 11:00 AM today (Roanoke) and Matthew Williams Fri 11/20 12:00 PM (Lexington), both unchanged/as booked. No no-show report received.
+- Indeed Messages inbox re-checked top to bottom live via Claude in Chrome: Robert Brandt's 9:51 AM "Sounds good" is still the newest message (already a confirmation of his existing booking, previously actioned). No new candidate messages.
+- Jobs dashboard loaded cleanly this run (no Cloudflare block): Waynesboro (88 All, 0 New), Harrisonburg (86 All, 0 New), Lexington (42 All, 0 New), Roanoke (58 All, 0 New) — all Paused, unchanged. Saint Augustine FL off-scope, 3 New, not actioned.
+- No felony disqualifications, no do-not-contact touches, no new in-scope applicants, bookings, reschedules, or no-shows this run.
+- Per quiet-rule standing preference: nothing changed, so no Slack DM and no #employee-prospects post.
+- Indeed messages sent: 0. Calendar changes: 0. Texts: 0 (no screen control this run — cloud-only). Rejections: 0. Slack: 0 (quiet rule).
+
+## 2026-11-19 ~2:58 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge). Scope per HIRING_SWITCH.md unchanged: Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Re-read Joshua's DM (D03BHQH5VGT) fresh: nothing hiring-related new since the 9:18 AM Fortis card-processor item (unrelated to hiring); last hiring DM is the 9:06 AM Robert Brandt booking confirmation, already reflected in CHANGELOG/calendar.
+- Calendar re-checked (jdavis@fcfpawn.com): Robert Brandt 11:00 AM today (Roanoke) and Matthew Williams Fri 11/20 12:00 PM (Lexington), both unchanged/as booked. No no-show report received.
+- Indeed Messages inbox re-checked top to bottom live via Claude in Chrome: Robert Brandt's 9:51 AM "Sounds good" is still the newest message (already a confirmation of his existing booking, previously actioned). No new candidate messages.
+- Jobs dashboard loaded cleanly this run (no Cloudflare block): Waynesboro (88 All, 0 New), Harrisonburg (86 All, 0 New), Lexington (42 All, 0 New), Roanoke (58 All, 0 New) — all Paused, unchanged. Saint Augustine FL off-scope, 3 New, not actioned.
+- No felony disqualifications, no do-not-contact touches, no new in-scope applicants, bookings, reschedules, or no-shows this run.
+- Per quiet-rule standing preference: nothing changed, so no Slack DM and no #employee-prospects post.
+- Indeed messages sent: 0. Calendar changes: 0. Texts: 0 (no screen control this run — cloud-only). Rejections: 0. Slack: 0 (quiet rule).
+
+## 2026-11-19 ~2:35 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge). Scope per HIRING_SWITCH.md unchanged: Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Re-read Joshua's DM (D03BHQH5VGT) and #preston-goldilocks fresh: nothing hiring-related new since the 2:13 PM run (last DM is the 9:18 AM Fortis card-processor item; last #preston-goldilocks message is the 11/16 Brendon Thomas ROC thread).
+- Calendar re-checked (jdavis@fcfpawn.com): Robert Brandt 11:00 AM today (Roanoke) and Matthew Williams Fri 11/20 12:00 PM (Lexington), both unchanged/as booked. No no-show report received.
+- Indeed Messages inbox re-checked top to bottom live via Claude in Chrome: Robert Brandt's 9:51 AM "Sounds good" is still the newest message (already a confirmation of his existing booking, previously actioned). No new candidate messages.
+- Jobs dashboard loaded cleanly this run (no Cloudflare block): Waynesboro (88 All, 0 New), Harrisonburg (86 All, 0 New), Lexington (42 All, 0 New), Roanoke (58 All, 0 New) — all Paused, unchanged. Saint Augustine FL off-scope, 3 New, not actioned.
+- No felony disqualifications, no do-not-contact touches, no new in-scope applicants, bookings, reschedules, or no-shows this run.
+- Per quiet-rule standing preference: nothing changed, so no Slack DM and no #employee-prospects post.
+- Indeed messages sent: 0. Calendar changes: 0. Texts: 0 (no screen control this run — cloud-only). Rejections: 0. Slack: 0 (quiet rule).
+
+## 2026-11-19 ~1:35 PM ET (books health check, Cowork)
+- misc_sweep.py extended (backup misc_sweep.py.bak-20261119), runs in the 14:00/04:15 books-nightly: ATM withdrawals -> Bravo POS Clearing; Town of Culpeper -> Culpeper Utilities; Burrell Printing -> Advertising & Marketing split 20% x 5 stores; WF LOC "ONLINE ADVANCE" -> receiving checking (paired to the "FROM BUSINESSLINE" deposit, which self-offsets so the draw counts once; unpaired -> 3563 per precedent); Gusto TAX/NET/REIMB bank debits self-offset ONLY when the matching Gusto sync JE exists, else left flagged "awaiting Gusto sync". Writes now try/except (failed writes listed, run continues).
+- Found: Gusto 11/13 payroll (paper checks 10,940.07 + tax ACH 3,570.11, gross 13,852.81) never synced to QBO; last Gusto JE 11/05. Cause: one unmapped Gusto deduction (Overpayment, J. Epperly). Mapped to Employee cash advances (same as every other advance repayment); 11/13 payroll re-synced 2:3x PM (Gusto: 'Synced 1 transaction'). 14:00 sweep applied all 14 re-classes; Misc down to 63 items / 9,938.98 (3,570.11 Gusto tax clears automatically now that the JE exists).
+
+## 2026-11-19 ~2:13 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge). Scope per HIRING_SWITCH.md unchanged: Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Re-read Joshua's DM (D03BHQH5VGT) and #preston-goldilocks fresh: nothing hiring-related new since the 1:19 PM run (Fortis card-processor DM only, unrelated to hiring; Preston's channel has nothing past 11/16).
+- Calendar re-checked (jdavis@fcfpawn.com): Robert Brandt 11:00 AM today (Roanoke) and Matthew Williams Fri 11/20 12:00 PM (Lexington), both unchanged/as booked. No no-show report received.
+- Indeed Messages inbox re-checked top to bottom live via Claude in Chrome: Robert Brandt's 9:51 AM "Sounds good" is still the newest message (already a confirmation of his existing booking, previously actioned). No new candidate messages.
+- Jobs dashboard loaded cleanly this run (no Cloudflare block): Waynesboro (88 All, 0 New), Harrisonburg (86 All, 0 New), Lexington (42 All, 0 New), Roanoke (58 All, 0 New) — all Paused, unchanged. Saint Augustine FL off-scope, 3 New, not actioned.
+- No felony disqualifications, no do-not-contact touches, no new in-scope applicants, bookings, reschedules, or no-shows this run.
+- Per quiet-rule standing preference: nothing changed, so no Slack DM and no #employee-prospects post.
+- Indeed messages sent: 0. Calendar changes: 0. Texts: 0 (no screen control this run — cloud-only). Rejections: 0. Slack: 0 (quiet rule).
+
+## 2026-11-19 ~1:19 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge). Scope per HIRING_SWITCH.md unchanged: Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Re-read Joshua's DM (D03BHQH5VGT) and #preston-goldilocks fresh: nothing hiring-related new since the 12:00 PM run.
+- Calendar re-checked (jdavis@fcfpawn.com): Robert Brandt 11:00 AM today (Roanoke) and Matthew Williams Fri 11/20 12:00 PM (Lexington), both unchanged/as booked.
+- Indeed Messages inbox re-checked top to bottom live via Claude in Chrome: Robert Brandt's 9:51 AM "Sounds good" is still the newest message (already a confirmation of his existing booking, previously actioned). No new candidate messages.
+- Jobs dashboard loaded cleanly this run (no Cloudflare block): Waynesboro (88 All, 0 New), Harrisonburg (86 All, 0 New), Lexington (42 All, 0 New), Roanoke (58 All, 0 New) — all Paused, unchanged. Saint Augustine FL off-scope, 3 New, not actioned.
+- No felony disqualifications, no do-not-contact touches, no new in-scope applicants, bookings, reschedules, or no-shows this run.
+- Per quiet-rule standing preference: nothing changed, so no Slack DM and no #employee-prospects post.
+- Indeed messages sent: 0. Calendar changes: 0. Texts: 0 (no screen control this run — cloud-only). Rejections: 0. Slack: 0 (quiet rule).
+
+## 2026-11-19 12:52 ET (fleet-guardian, 12:45 ET pass, SILENT, Cowork, Social Media project, device-linked mac-studio-2-local)
+
+- Step 1 (registry): used the Host Job Queue (bin/task_lastrun.py via preston-watch) to confirm the 2 enabled Cowork-scheduled tasks (northwest-registered-agent-daily-check, vp-hiring-pipeline) both ran on schedule today; no missed Cowork runs. fleet/FIELD_SCORECARD.md independently reports 0 missed today for native-agent-measured publications.
+- Recovered mem-guard (native agent): bin/mem_guard.sh was missing from disk after a same-day sync-conflict rename (new content landed as "mem_guard (1).sh" instead of overwriting the original; see mem_guard.sh.bak-pre-tmthin-20261119 for the pre-edit version). Restored bin/mem_guard.sh from the correct newest copy, made executable, verified syntax. No other "(N)"-suffixed sync-conflict duplicates found elsewhere in bin/.
+- Verified valley-pawn-blog-publisher's "no post today" flag as a false alarm via WordPress REST: post #2012 ("Buying Used Tools: How to Spot Real Quality") published 2026-11-19 01:35:10 ET on schedule -- same false-alarm class as 2026-11-12.
+- Processed all 15 of today's OPEN fleet/FAILURE_LEDGER.md rows (fleet-doctor aggregate, mem-guard, blog-publisher, 5x daily-cloudcover-check + 1 REPEAT FAILURE, 4x daily-dress-code-check + 1 REPEAT FAILURE, forfeiture-winback-texts-weekly) -- see fleet/guardian_runs/2026-11-19-1245.json for detail. Backup: fleet/FAILURE_LEDGER.md.bak-pre-g20261119-1245.
+- Bumped the standing Life OS/HUMAN_QUEUE.md Chrome-profile-contention row (2026-11-05) -- recurred again today despite being marked DONE 2026-11-16; design fix (separate automation Chrome profiles) still not implemented. No Slack DM sent (12:45 SILENT pass, one-DM-a-day rule).
+
+## 2026-11-19 ~12:00 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge). Scope per HIRING_SWITCH.md unchanged: Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Re-read Joshua's DM (D03BHQH5VGT) and #preston-goldilocks fresh: nothing hiring-related new since the 11:19 AM run (Fortis card-processor items only, unrelated to hiring).
+- Calendar re-checked (jdavis@fcfpawn.com): Robert Brandt 11:00 AM today (Roanoke) and Matthew Williams Fri 11/20 12:00 PM (Lexington), both unchanged/as booked.
+- Indeed Messages inbox re-checked top to bottom live via Claude in Chrome: Robert Brandt's 9:51 AM "Sounds good" is still the newest message (already a confirmation of his existing booking, previously actioned). Matthew Williams thread unchanged. No new candidate messages.
+- Jobs dashboard loaded cleanly this run (no Cloudflare block): Waynesboro (88 All, 0 New), Harrisonburg (86 All, 0 New), Lexington (42 All, 0 New), Roanoke (58 All, 0 New) — all Paused, unchanged. Saint Augustine FL off-scope, 3 New, not actioned.
+- No felony disqualifications, no do-not-contact touches, no new in-scope applicants, bookings, reschedules, or no-shows this run.
+- Per quiet-rule standing preference: nothing changed, so no Slack DM and no #employee-prospects post.
+- Indeed messages sent: 0. Calendar changes: 0. Texts: 0 (no screen control this run — cloud-only). Rejections: 0. Slack: 0 (quiet rule).
+
+## 2026-11-19 ~11:45 AM — MobilePawn app download fixed (Joshua: "you can't click it and download it")
+- Cause: thevalleypawn.com/app (WP page 1300) jumped to the store by script after 1.2 s. On phones, a jump the customer didn't tap lands on a store web preview with no working download, especially inside Gmail/Outlook/SMS in-app browsers. The /app link is used by the monthly email, the monthly Chekkit text, the IVR app text and the monthly social post, so all of them were affected.
+- Page 1300: auto-redirect removed. The customer's own phone button is shown first as "Tap here to download", plus a "search MobilePawn" fallback line. Verified live. Backup: `MobilePawn Participation/app_outreach/page1300.bak-pre-noredirect-20261119.html`.
+- Email: `eBay Customer Campaign/build_month.py` app_block() now has two direct buttons, "iPhone: App Store" (clean link, because Apple 301-redirects tagged URLs) and "Android: Google Play" (keeps utm_content=app_download for the build check). Takes effect from the Dec pack onward; Nov has already sent. Backup: `build_month.py.bak-pre-appbuttons-20261119`.
+
+## 2026-11-19 ~11:20 AM — Bravo: gold app message off at all stores (Joshua: "change it")
+- NEW `Bravo Data Extraction/MobileEventsGoldOff.ahk`, `_run_mobileevents_goldoff.ps1`, `bin/mobile_events_gold_off.sh` (allow-listed; runs behind the foreground guard). Clears only events titled with "gold" in Customers > Schedule Mobile Event; Ok only when changed; re-reads after.
+- Waynesboro "We Buy Gold" turned off and verified; all five stores now 0 gold events on. MobilePawn push settings identical across stores. Details: `Loan Reminder Texts/STATUS.md`.
+
+## 2026-11-19 ~11:19 AM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge). Scope per HIRING_SWITCH.md unchanged: Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Re-read Joshua's DM (D03BHQH5VGT) and #preston-goldilocks fresh: only a Fortis/card-processor update (non-hiring) since the 11:05 AM run; no scope change from Preston.
+- Calendar re-checked (jdavis@fcfpawn.com): Robert Brandt 11:00 AM today (Roanoke) and Matthew Williams Fri 11/20 12:00 PM (Lexington), both unchanged/as booked.
+- Indeed Messages inbox re-checked top to bottom live via Claude in Chrome: Robert Brandt's 9:51 AM "Sounds good" is the newest message, already a confirmation of his existing 11:00 AM booking — no new booking/reschedule, no reply needed. Edgar Alvarez Alvira (Harrisonburg) thread reviewed — Preston is running his own final-round Zoom interview with the owner (link sent 11/16 for 11/17), outside pipeline scope; no action needed. No other new candidate messages.
+- Jobs dashboard: blocked by a Cloudflare "Additional Verification Required" challenge on two attempts this run — could not confirm New-applicant counts. Not a login/session issue (Messages inbox loaded fine); did not retry further to avoid tripping bot detection. Will re-check next run.
+- No felony disqualifications, no do-not-contact touches, no new in-scope applicants, bookings, reschedules, or no-shows this run.
+- Per quiet-rule standing preference: a same-booking confirmation reply isn't a schedule change, so no Slack DM and no #employee-prospects post.
+- Indeed messages sent: 0. Calendar changes: 0. Texts: 0 (no screen control this run — cloud-only). Rejections: 0. Slack: 0 (quiet rule).
+
+## 2026-11-19 ~11:05 AM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge). Scope per HIRING_SWITCH.md unchanged: Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+- Re-read Joshua's DM (D03BHQH5VGT) and #preston-goldilocks (renamed from #preston-claude 9:59 AM) fresh: nothing hiring-related new since the 9:05/9:49 AM run summaries; no scope change from Preston.
+- Calendar re-checked (jdavis@fcfpawn.com): Robert Brandt 11:00 AM today (Roanoke) and Matthew Williams Fri 11/20 12:00 PM (Lexington), both unchanged/as booked.
+- Indeed Messages inbox re-checked top to bottom live via Claude in Chrome: Robert Brandt replied "Sounds good" at 9:51 AM, confirming his already-booked 11:00 AM slot today — no new booking/reschedule, no reply needed. Matthew Williams thread unchanged. No new candidate messages.
+- Jobs dashboard re-checked live: Waynesboro (88 All, 0 New), Harrisonburg (86 All, 0 New), Lexington (42 All, 0 New), Roanoke (58 All, 0 New) — all Paused, unchanged. Saint Augustine FL off-scope, 3 New, not actioned.
+- No felony disqualifications, no do-not-contact touches, no new in-scope applicants, bookings, reschedules, or no-shows this run.
+- Per quiet-rule standing preference: a same-booking confirmation reply isn't a schedule change, so no Slack DM and no #employee-prospects post.
+- Indeed messages sent: 0. Calendar changes: 0. Texts: 0 (no screen control this run — cloud-only). Rejections: 0. Slack: 0 (quiet rule).
+
+## 2026-11-19 — Texting: shorter wording, dead-number skip (Joshua: "go")
+- `bin/winback_texts.py`: MSG shortened to under 160 characters with an opt-out line (was 213-220, counted double); skips numbers in `fleet/state/chekkit_failed/*.txt`. Backup `fleet/_backups/winback_texts.py.bak-pre-short-20261119`.
+- `bin/missed_call_text.py`: skips callers whose last Chekkit text failed as dead/landline (same files). Backup `fleet/_backups/missed_call_text.py.bak-pre-deadnumbers-20261119`.
+- NEW read-only `bin/chekkit_len_failed_read.py` (allow-listed): real sent lengths + failed numbers -> `fleet/state/chekkit_len_failed.json`, `fleet/state/chekkit_failed/`.
+- Chekkit dashboard: "Review Invitation" template shortened at all 5 stores; review reminder (drip) off at Culpeper and Harrisonburg (now off everywhere). Auto-replies re-verified OFF at all 5 (unchanged since 10/1).
+- Open: December 1 gold campaign text at HAR/LEX/ROA is still over 160; saving needs Chekkit's compliance confirmation. Full record: `Loan Reminder Texts/STATUS.md`.
+
+## 2026-11-19
+
+- ~9:49 AM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only): Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge). Scope per HIRING_SWITCH.md unchanged: Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+  - Re-read Joshua's DM (D03BHQH5VGT, unrelated Fortis items only) and #preston-claude fresh: nothing new since the 9:05 AM run summary.
+  - Calendar re-checked (jdavis@fcfpawn.com): Robert Brandt 11:00 AM today (Roanoke) and Matthew Williams Fri 11/20 12:00 PM (Lexington), both unchanged/as booked.
+  - Indeed Messages inbox re-checked top to bottom live via Claude in Chrome: Robert Brandt and Matthew Williams threads both still show our message with no reply. No new candidate messages.
+  - Jobs dashboard re-checked live: Waynesboro (88 All, 0 New), Harrisonburg (86 All, 0 New), Lexington (42 All, 0 New), Roanoke (58 All, 0 New) — all Paused, unchanged. Saint Augustine FL off-scope, 3 New, not actioned.
+  - No felony disqualifications, no do-not-contact touches, no new in-scope applicants, bookings, reschedules, or no-shows this run.
+  - Per quiet-rule standing preference: nothing changed that needed outbound action, so no Slack DM and no #employee-prospects post.
+  - Indeed messages sent: 0. Calendar changes: 0. Texts: 0. Rejections: 0. Slack: 0 (quiet rule).
+- ~9:05 AM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only): Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (no remote-devices bridge). Scope per HIRING_SWITCH.md: Waynesboro/Harrisonburg/Lexington/Roanoke ON, Culpeper/Saint Augustine FL OFF.
+  - Robert Brandt (Roanoke) replied 9:21 PM 11/18: flexible, available anytime in the offered Thu 11/19 11AM–3PM window. Calendar was open all morning — booked 11:00 AM (first available slot) and confirmed via Indeed: "You're set for Thursday 11/19 at 11:00 AM. Preston will call you at 540-795-0977 from (540) 202-4200." Calendar event created on jdavis@fcfpawn.com.
+  - Matthew Williams (Lexington) Fri 11/20 12:00 PM booking unchanged.
+  - Jobs dashboard loaded cleanly this run (no Cloudflare block): Waynesboro (88 All, 0 New), Harrisonburg (86 All, 0 New), Lexington (42 All, 0 New), Roanoke (58 All, 0 New) — all Paused, unchanged. Saint Augustine FL off-scope, 3 New, not actioned.
+  - No felony disqualifications, no do-not-contact touches, no new in-scope applicants.
+  - DM'd Joshua (D03BHQH5VGT) the one change. Posted today's interview list to #employee-prospects (C0BQDRXRPEJ) — schedule changed (new same-day booking).
+  - Indeed messages sent: 1 (Robert Brandt). Calendar changes: 1 (new event). Texts: 0. Rejections: 0.
+- Native agent appeared: com.valleypawn.scrap-closeout-monthly.plist
+- Native agent appeared: com.valleypawn.scrap-create-monthly.plist
+- Native agent LOADED: com.valleypawn.scrap-closeout-monthly
+- Native agent LOADED: com.valleypawn.scrap-create-monthly
 
 ## 2026-11-18 (review replies, native)
 
@@ -10087,3 +10307,5 @@ Newest first. Material changes to the business operating system. Read this BEFOR
 - No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due, no unanswered candidate question.
 - Texts: 0 -- no computer-use/full-screen control available this run (cloud-only session).
 - **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0 (channel), 0 (DM) -- per QUIET RULE, no message sent.
+## 2026-11-19 ~6:44 AM ET (insurance-inbox-watch, Cowork scheduled run, LINKED via device bridge)
+- 817 Richmond LRO (RE-RICHMOND-817): JM sent the invoice ($3,505.31, Enterprise # JM77940) and DocuSign application for the standalone Farming Infinity, LLC policy, confirming Joshua's 11/17 bind instruction is in process. `INSURANCE_REGISTRY.json` updated, `INSURANCE_PORTFOLIO.md` regenerated (569 lines, 17 policies). Flagged a payment-portal zip-code discrepancy (24482, Bald Rock's zip, shown where 817 Richmond/24401 is expected) for Joshua to verify before paying. No new nudge drafts (dedupe guard held, nothing silent 5+ business days). No Slack DM (not time-critical). Detail: Life OS/Insurance/BROKER_PIPELINE.md and Life OS/OPEN_ITEMS_REGISTER.md.

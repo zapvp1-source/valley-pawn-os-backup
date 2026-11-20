@@ -4,9 +4,9 @@ Goal: grow active MobilePawn (Bravo app) customers. Baseline Aug 2026 = 629 acti
 
 | Channel | What | Where it lives |
 |---|---|---|
-| Link | thevalleypawn.com/app — WP page 1300, redirects iPhone → App Store (id1141399930), Android → Google Play (com.bravorevolution.instapawn); desktop shows both | `app_page.html` |
+| Link | thevalleypawn.com/app — WP page 1300, App Store (id1141399930) + Google Play (com.bravorevolution.instapawn) buttons; the phone's own button is shown first. **NO auto-redirect (removed 2026-11-19 — scripted jumps land on a dead store preview on phones; never re-add)** | `app_page.html` |
 | Website | "Get the free app" banner on Home (page 7) + Loans (page 9), markers VP-APP-BANNER-START/END | backups `page7_home.bak-20260929.html`, `page9_loans.bak-20260929.html` |
-| Email | App block in every monthly Shop Online email (first = Nov 2026) | `eBay Customer Campaign/build_month.py` `app_block()`, `config.json app_block_enabled=true` |
+| Email | App block in every monthly Shop Online email (first = Nov 2026); since 2026-11-19 two DIRECT store buttons, not the /app page | `eBay Customer Campaign/build_month.py` `app_block()`, `config.json app_block_enabled=true` |
 | Social | 2nd Tuesday 11 AM ET: Brand FB+IG, 5 store FB, 5 GBP via Publer | `monthly_post.py`, graphics/, task `mobilepawn-app-social-monthly` (20th 9:10 AM) |
 | Text | Bravo (Tahoe Mack) free Klaviyo SMS to non-activated customers — asked 9/29 to make it monthly | Gmail thread "Free MobilePawn Marketing?" |
 | In store | Mobile Pawn sign missing at HAR/WAY/ROA — part of the sign "full set" | `Valley Pawn OS/STORE_SIGN_SET.md` |

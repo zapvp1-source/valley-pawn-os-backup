@@ -11,7 +11,7 @@ reach.
 
 ## A. The ongoing ask — ~10 minutes a week, forever
 
-One Slack message a week in `#preston-claude` with **up to 10 entries**. Each is something
+One Slack message a week in `#preston-goldilocks` with **up to 10 entries**. Each is something
 he already said, quoted back with the date. He replies with a number and one of:
 
 - **`ok`** — still correct, publish it

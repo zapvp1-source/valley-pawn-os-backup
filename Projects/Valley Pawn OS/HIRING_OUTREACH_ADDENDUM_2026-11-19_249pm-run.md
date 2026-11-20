@@ -1,0 +1,23 @@
+# HIRING_OUTREACH addendum — 2026-11-19, ~2:49 PM ET run (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+
+Merge into HIRING_OUTREACH.md "Contact log" / Run log section (append, newest-first). No remote-devices bridge tools on probe (none exist) — cloud-only; Drive connector, Chrome extension (Indeed), Calendar, Slack all reachable live. Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. Picks up from the ~1:34 PM run.
+
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+
+## Checked, no action needed
+
+- Indeed Messages inbox reviewed live via Chrome: newest thread still Robert Brandt (Roanoke) at 9:51 AM, "Sounds good" — unchanged. Matthew Williams (Nov 18), Shad Taha (Nov 17), Jessica Reynolds (Nov 17), Edgar Alvarez Alvira (Nov 16), Jordyn Bolton (Nov 16) all unchanged, no new candidate message.
+- Indeed Jobs dashboard checked live: Waynesboro (88 All, 0 New), Harrisonburg (86 All, 0 New), Lexington (42 All, 0 New), Roanoke (58 All, 0 New) — all Paused, unchanged. No reopen action taken (Joshua's call, real money).
+- Google Calendar (jdavis@fcfpawn.com) checked live for 11/19–11/24: Robert Brandt Thu 11/19 11:00 AM (Roanoke, event pd15rtgljd0mge677klg2mggn0) and Matthew Williams Fri 11/20 12:00 PM (Lexington, event djce4te4ln8g6ud2jg4mj65ncg) — both confirmed, no gaps/doubles/conflicts.
+- Slack checked live: DM (D03BHQH5VGT) re-read — newest hiring entry still the 9:06 AM booking post; 9:18 AM Fortis update and 2:08 PM Store PC rollout note since are unrelated to hiring. #preston-goldilocks (C0BGXSTT4TY) re-read — Preston's 2:36 PM (lunch break policy) and 2:48 PM (Lexington bond info) messages are operational, not hiring; no new hiring instruction. Robert Brandt's 11:00 AM call today occurred with no no-show report so far.
+- #employee-prospects (C0BQDRXRPEJ) re-read — unchanged since the 9:06 AM call-list post.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no unanswered candidate scheduling question beyond the already-flagged Jordyn Bolton / Edgar Alvarez Alvira / Jessica Reynolds decision holds (unchanged, Joshua/Preston's call).
+- Texts: 0 — cloud-only session, no computer-use/full-screen control; also not a 9:30/1:00/6:00 ET batch window.
+
+## Run summary
+
+Indeed messages sent: 0. Candidate statuses changed: 0. Calendar events created/changed/deleted: 0. Texts sent: 0. Slack: 0 — per the standing Quiet Rule, nothing changed since the ~1:34 PM run, so no DM or channel post sent this run.
+
+## Follow-up for next run
+
+Robert Brandt's 11:00 AM call today occurred — continue watching for a no-show report. Matthew Williams booked Fri 11/20 12:00 PM, Lexington. Jordyn Bolton, Edgar Alvarez Alvira, and Jessica Reynolds' status questions remain Joshua/Preston's to communicate. All 4 in-scope listings remain Paused with 0 New candidates.

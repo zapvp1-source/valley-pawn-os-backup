@@ -59,11 +59,37 @@ If the item still isn't fixed after its window, move up one rung. **Never resubm
 
 **On failure:** retry once, differently. If it still fails, append one row to `Valley Pawn OS/fleet/FAILURE_LEDGER.md` and finish the rest of the run.
 
+## Weekly search review (Wednesdays, added 2026-11-19, Joshua-approved)
+Goal: pick the next improvements from real search data instead of only fixing defects. Run on Wednesday's normal run, before step 4. It counts toward the 8-action cap.
+
+1. **Pull last 28 days vs the prior 28**, in Joshua's Chrome (already signed in; never type passwords):
+   - **Google Search Console**: property https://thevalleypawn.com/. Performance → Pages and Queries: clicks, impressions, CTR, position.
+   - **Bing Webmaster Tools**: thevalleypawn.com. Search Performance, plus IndexNow Insights.
+   - **Google Business Profile Performance** for all 5 stores: calls, direction requests, website clicks, searches.
+   - **Apple Maps**: read `Listing Management/apple-insights/INSIGHTS_LOG.md`. The Tuesday Apple loop writes it; don't redo it.
+2. **Write `Listing Management/search-review/SEARCH_REVIEW_<YYYY-MM-DD>.md`.** One table per source, week-over-week change, and one short "what changed" paragraph per store.
+3. **Pick at most 3 opportunities.** Choose by expected customer impact, in this order:
+   a. A /locations/<store>/ or /sell-*/ page with impressions up but CTR under 2%. Rewrite its Yoast SEO title and meta description to match the top query (city + service).
+   b. A page that lost more than 3 positions or 30% of clicks. Check it is still indexed. Refresh its opening summary or FAQ answer with the query wording.
+   c. A query with 50+ impressions/28d and no matching page section. Add one FAQ Q&A to the closest /locations/<store>/ page, and update its FAQPage schema to match.
+   d. A store whose GBP calls or directions dropped more than 20% week-over-week. Check its listings first (hours, pin, duplicates). Queue any defect as an LQ row.
+4. **Make the change** with the WordPress.com connector. Load the edit-content guide first, and change only the affected section.
+   - Verify the change on the live page with a cache-buster.
+   - Confirm IndexNow logged a successful submission (WordPress → Settings → IndexNow). If it didn't, submit the URL there manually.
+5. **Hard limits:**
+   - Never change name/address/phone/hours, prices, loan amounts or policies.
+   - Never write "since 1988" or "30+ years". The company dates from 2014; Harrisonburg 1992 and Roanoke 1998 apply to that store only.
+   - Never mention firearms in GBP or Apple content.
+   - Never create new pages or spend money.
+   - Anything bigger (a new page, a paid tool, a strategy change) goes to the review file as a "recommendation". It is not done.
+6. **Measure:** in the next Wednesday's review, report each prior change's before/after (CTR, clicks, position) and keep, revert or iterate.
+7. **Report:** add `search-review: N changes` to the run-summary. The Saturday #ai-marketing line can include one finished sentence on the biggest gain, and only when there was a measurable gain. Nothing technical.
+
 ## Ingest filters (settled facts — never turn these into queue rows)
 - A loan figure of $25,000 is CORRECT (Joshua, 2026-10-05). Drop any finding that calls $25,000 stale or expects $100,000.
 - Facebook 100478091680300 = 100058095342923 (Culpeper, same page). 303444680270846 = 100026420539296 (Waynesboro, same page).
 - Facebook "Valley Pawn" pages 100057490088122 / 367260950022473 belong to a different business in Waynesville, NC. They are not ours and not a defect.
-- Roanoke "2362-D" on ATF/FFL records is correct.
+- Roanoke "2362-D" on ATF/FFL records is correct. Never ask an FFL directory to change it to Suite C (a 11/19 request to MasterFFL/GunMade was retracted the same day).
 
 ## Joshua-approved actions
 - 2026-11-17: report legacy Facebook pages we don't control as impersonating our store page (Gold N Pawn 100041735065936, valleypawnlex). Same approval covers re-reporting these two if Facebook rejects the first report.

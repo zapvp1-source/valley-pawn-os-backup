@@ -57,7 +57,7 @@ PY = sys.executable or "/usr/bin/python3"
 PRESTON = "U03BWMEM9GR"
 CHANNELS = {   # from the staged preston-knowledge-capture task (2026-09-07) + #ask-handbook
     "C03BWGT5F5X": "#deal-questions", "C03BETSS669": "#general",   # #loans-and-buys (C03GBDKSLRE) archived — Joshua 10/8
-    "C0BGXSTT4TY": "#preston-claude", "C03BHQ9RLR0": "#policy-announcements", "C05EHBH4G67": "#scrap-rankings",
+    "C0BGXSTT4TY": "#preston-goldilocks", "C03BHQ9RLR0": "#policy-announcements", "C05EHBH4G67": "#scrap-rankings",
     "C04NGH4FF35": "#aged-inventory-review", "C063K8E02TW": "#roanoke-funds", "C03BLLRN64U": "#boro-funds",
     "C03B3K5DL6T": "#lex-funds", "C03BWRKEDUZ": "#harrisonburg-funds", "C0BS11KTYKU": "#ask-handbook",
 }

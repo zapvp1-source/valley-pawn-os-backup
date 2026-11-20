@@ -17,7 +17,7 @@ def kind(m):
     if s == "ai": return "chekkit_ai"
     if "(automated reply" in t: return "auto_ai_reply"
     if t.startswith("hi, this is valley pawn in") and "missed your call" in t: return "auto_missed_call"
-    if t.startswith("hi from valley pawn in"): return "auto_winback"
+    if t.startswith("hi from valley pawn in") or "need cash? no credit check" in t: return "auto_winback"
     if "review" in t and ("google" in t or "leave" in t or "http" in t) and s == "event": return "review_invite"
     if s == "event": return "event_other"
     if s == "business": return "owner_or_campaign" if (m.get("sentBy") or "") in ("Joshua Davis", "") else "staff_text"

@@ -7,17 +7,19 @@
     <a id="vp-ios" href="https://apps.apple.com/us/app/mobilepawn/id1141399930" style="display:block;width:100%;max-width:320px;padding:14px 18px;border-radius:10px;background:#0b2545;color:#fff;font-weight:700;text-decoration:none">Download for iPhone</a>
     <a id="vp-and" href="https://play.google.com/store/apps/details?id=com.bravorevolution.instapawn" style="display:block;width:100%;max-width:320px;padding:14px 18px;border-radius:10px;background:#c9a227;color:#0b2545;font-weight:700;text-decoration:none">Download for Android</a>
   </div>
+  <p style="margin:16px 0 0;font-size:.9rem">Or open the App Store or Google Play and search <strong>MobilePawn</strong>.</p>
   <p style="margin:28px 0 0;font-size:.9rem">Need help getting set up? Call or text your store:<br>
   Culpeper <a href="tel:+15404455510">(540) 445-5510</a> · Waynesboro <a href="tel:+15402216346">(540) 221-6346</a> · Harrisonburg <a href="tel:+15405744500">(540) 574-4500</a> · Lexington <a href="tel:+15404618349">(540) 461-8349</a> · Roanoke <a href="tel:+15405620776">(540) 562-0776</a></p>
 </div>
 <script>
 (function(){
+  // No auto-redirect (removed 2026-11-19): a scripted jump to the store opens a dead web preview
+  // inside phone mail apps. The customer taps the button; we just put their phone's button first.
   var ua = navigator.userAgent || "";
-  var dest = /iPhone|iPad|iPod/i.test(ua) ? document.getElementById("vp-ios").href
-           : /Android/i.test(ua) ? document.getElementById("vp-and").href : null;
-  if (!dest) return;                 // desktop: show both buttons, no redirect
-  // Short delay so the analytics tag records the visit + utm_source before leaving.
-  setTimeout(function(){ window.location.href = dest; }, 1200);
+  var ios = document.getElementById("vp-ios"), and = document.getElementById("vp-and");
+  if (/Android/i.test(ua) && and && ios) { ios.parentNode.insertBefore(and, ios); }
+  var mine = /iPhone|iPad|iPod/i.test(ua) ? ios : /Android/i.test(ua) ? and : null;
+  if (mine) { mine.style.fontSize = "1.15rem"; mine.style.padding = "18px"; mine.textContent = "Tap here to download"; }
 })();
 </script>
 <!-- /wp:html -->

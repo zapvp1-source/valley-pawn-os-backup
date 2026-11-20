@@ -44,15 +44,16 @@ if [ "$1" = "--test" ]; then
   exit 0
 fi
 # --only <name>: open just that site's tab (cloudcover|google|gusto|northwest) — e.g. a single re-sign-in
-TABS=("https://tune.cloudcovermusic.com/#/admin/zones" "https://home.google.com/" "https://app.gusto.com/" "https://www.northwestregisteredagent.com/login" "https://dashboard.chekkit.io/reviews" "https://ebilling.vsp.virginia.gov/" "https://www.amazon.com/gp/css/order-history")
+TABS=("https://tune.cloudcovermusic.com/#/admin/zones" "https://home.google.com/" "https://app.gusto.com/" "https://www.northwestregisteredagent.com/login" "https://dashboard.chekkit.io/reviews" "https://ebilling.vsp.virginia.gov/" "https://www.amazon.com/gp/css/order-history" "https://epolos.com/my-account/")
+# 2026-11-19: 8th tab = ePolos (staff shirts; account is under hillary91692@gmail.com, email-link login, tick "Remember me") for bin/epolos_order.py
 # 2026-10-21: 7th tab = Amazon Business (Fullcirclepawn@gmail.com, tick "Keep me signed in") for bin/supply_order.py
 # 2026-10-20: 6th tab = VSP eReceivables (X009686) for the native gun-check fee payer (bin/vsp_fee_pay.py)
 # 2026-10-20 (comms review): 5th tab = Chekkit (jdavis@fcfpawn.com) for the native review-reply agent (bin/review_reply.py)
 if [ "$1" = "--only" ] && [[ "$2" == *,* ]]; then   # 2026-11-16: --only a,b,c opens just those tabs
-  ALL=("${TABS[@]}"); TABS=(); NAMES=(cloudcover google gusto northwest chekkit vsp amazon)
+  ALL=("${TABS[@]}"); TABS=(); NAMES=(cloudcover google gusto northwest chekkit vsp amazon epolos)
   for n in ${2//,/ }; do for i in "${!NAMES[@]}"; do [ "${NAMES[$i]}" = "$n" ] && TABS+=("${ALL[$i]}"); done; done
 elif [ "$1" = "--only" ]; then
-  case "$2" in cloudcover) TABS=("${TABS[0]}");; google) TABS=("${TABS[1]}");; gusto) TABS=("${TABS[2]}");; northwest) TABS=("${TABS[3]}");; chekkit) TABS=("${TABS[4]}");; vsp) TABS=("${TABS[5]}");; amazon) TABS=("${TABS[6]}");; esac
+  case "$2" in cloudcover) TABS=("${TABS[0]}");; google) TABS=("${TABS[1]}");; gusto) TABS=("${TABS[2]}");; northwest) TABS=("${TABS[3]}");; chekkit) TABS=("${TABS[4]}");; vsp) TABS=("${TABS[5]}");; amazon) TABS=("${TABS[6]}");; epolos) TABS=("${TABS[7]}");; esac
 fi
 # 2026-11-16: --all = the 7 tabs above + the 8 AI-search listing sign-ins (HUMAN_QUEUE 10/20 row), one window
 if [ "$1" = "--all" ]; then

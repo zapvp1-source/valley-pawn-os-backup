@@ -24,8 +24,9 @@ CH = "C0B0FQZ4FS8"
 JOSH = "8049304221"
 STORES = [("CUL", "Culpeper"), ("HAR", "Harrisonburg"), ("LEX", "Lexington"), ("ROA", "Roanoke"), ("WAY", "Waynesboro")]
 # 2026-10-23 (Joshua): dropped "you're always approved for another loan" — not true when an item doesn't qualify.
-MSG = ("Hi from Valley Pawn in {TOWN}! Pawn loans are different: no credit check, and your credit is always good with us. "
-       "Just bring in something of value. Gold & silver get the most! Stop by anytime or text us right here.")
+# 2026-11-19 (Joshua "go"): shortened to stay under 160 characters (one counted text, was two) and added the opt-out line.
+MSG = ("Valley Pawn {TOWN}: need cash? No credit check. Bring in anything of value - gold & silver get the most. "
+       "Stop by or text us here. Reply STOP to opt out.")
 
 
 def p10(s):
@@ -58,6 +59,13 @@ def main():
     send = "--send" in sys.argv
     import vp_textable  # carrier safety 2026-10-23: Bravo DNT never gets a marketing text
     dnt_set = vp_textable.dnt_phones()
+    # 2026-11-19 (Joshua): skip numbers whose last Chekkit text failed as dead/landline (bin/chekkit_len_failed_read.py).
+    dead = set()
+    for _f in glob.glob(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "fleet", "state", "chekkit_failed", "*.txt")):
+        try:
+            dead |= {l.split("\t")[0].strip()[-10:] for l in open(_f) if l.strip()}
+        except Exception:
+            pass
     runs = sorted(d for d in glob.glob(os.path.join(RUNS, "20??-??-??")) if os.path.isdir(d))
     if not runs:
         print("no runs"); return 1
@@ -73,7 +81,7 @@ def main():
         todo, seen = [], set()
         for r in csv.DictReader(open(f, newline="", errors="replace")):
             p = p10(r.get("Phone"))
-            if not p or p == JOSH or p in done or p in seen or p in dnt_set:
+            if not p or p == JOSH or p in done or p in seen or p in dnt_set or p in dead:
                 continue
             seen.add(p)
             todo.append({"phone": p, "name": (r.get("First Name") or "").strip()})

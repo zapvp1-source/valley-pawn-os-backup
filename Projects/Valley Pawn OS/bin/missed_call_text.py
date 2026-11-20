@@ -264,6 +264,18 @@ def decide(calls, cfg, state, now, lookback_min, render):
     exclude = {e164(x) for x in cfg.get("exclude_numbers", []) + [s.get("did") for s in stores.values()]
                + [r.get("phone") for r in roster]}
     exclude.discard(None)
+    # 2026-11-19 (Joshua): never text a number whose last Chekkit text failed as dead/landline
+    # (fleet/state/chekkit_failed/<STORE>.txt, written by bin/chekkit_len_failed_read.py). Missing files = no effect.
+    dead = set()
+    try:
+        import glob as _glob
+        for _f in _glob.glob(os.path.join(OS_DIR, "fleet", "state", "chekkit_failed", "*.txt")):
+            for _l in open(_f):
+                _n = e164(_l.split("\t")[0].strip())
+                if _n:
+                    dead.add(_n)
+    except Exception:
+        dead = set()
     grace = dt.timedelta(seconds=cfg.get("grace_seconds", 120))
     oldest = now - dt.timedelta(minutes=lookback_min)
     cooldown = dt.timedelta(hours=cfg.get("cooldown_hours", 6))
@@ -327,6 +339,9 @@ def decide(calls, cfg, state, now, lookback_min, render):
             continue
         if caller in exclude:
             rec("SKIP", "store or staff number")
+            continue
+        if caller in dead:
+            rec("SKIP", "number failed delivery before (dead or landline)")
             continue
         if any(t > start for t in answered_in.get(caller, [])):
             rec("SKIP", "caller got through on a later call")

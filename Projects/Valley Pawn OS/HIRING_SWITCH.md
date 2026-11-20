@@ -1,8 +1,8 @@
 # HIRING SWITCH — single source of truth (read by the hiring-switch skill)
 
 STATE: ON   (ON = at least one row below is ON; OFF = every row is OFF)
-CHANGED: 2026-11-09 ~10:15 AM ET by Claude (Preston assistant) — Preston opened Lexington + Harrisonburg Indeed ads (#preston-claude 10:04 AM): interviews 11–3 with Preston, no Wednesdays or Sundays, he calls from (540) 202-4200.
-PRIOR CHANGE: 2026-10-13 ~2:00 PM ET by Claude at Joshua's direction — per-store control; Preston reopened Roanoke + Harrisonburg (#preston-claude 11:21 AM).
+CHANGED: 2026-11-09 ~10:15 AM ET by Claude (Preston assistant) — Preston opened Lexington + Harrisonburg Indeed ads (#preston-goldilocks 10:04 AM): interviews 11–3 with Preston, no Wednesdays or Sundays, he calls from (540) 202-4200.
+PRIOR CHANGE: 2026-10-13 ~2:00 PM ET by Claude at Joshua's direction — per-store control; Preston reopened Roanoke + Harrisonburg (#preston-goldilocks 11:21 AM).
 
 ## ACTIVE SCOPE — per store / per listing (authoritative; read by vp-hiring-pipeline and the Preston assistant every run; wins over any older scope text)
 | Store | Listing (Indeed) | Hiring | Interview days / hours | First interview day | Interviewer | Last changed by |
@@ -17,8 +17,8 @@ Interviewer note: per Joshua 2026-10-23 every interview is with Preston Peters c
 Any role or store Preston names that isn't listed gets a new row. Hard rules in vp-hiring-pipeline apply to every row (no felons, do-not-contact list, screening order).
 
 ## STANDING RULE — PRESTON CONTROLS HIRING, DYNAMICALLY (Joshua, 2026-10-13)
-"If Preston tells you to reopen hiring processes in our Slack preston-claude channel, do as he says." / "Should be dynamic and platform wide, all stores at once or one at a time, whatever he requests."
-- Preston can turn hiring ON or OFF for ALL stores at once or for any single store/listing, add a new store or role, and set or change interview days, hours, first interview day or interviewer — just by asking in #preston-claude.
+"If Preston tells you to reopen hiring processes in our Slack preston-goldilocks channel, do as he says." / "Should be dynamic and platform wide, all stores at once or one at a time, whatever he requests."
+- Preston can turn hiring ON or OFF for ALL stores at once or for any single store/listing, add a new store or role, and set or change interview days, hours, first interview day or interviewer — just by asking in #preston-goldilocks.
 - The Preston assistant applies it to the table above the same run (update the Hiring column, days/hours, "Last changed by: Preston <date>"), recomputes STATE, and confirms back to him in plain words.
 - Turning a row OFF: stop new first contacts and nudges for that store's candidates; keep already-booked interviews unless he says cancel them; answer candidates who write in with a short polite hold message.
 - Joshua-only, even when Preston asks: paid sponsorship / any spend, and changes to the hard rules (no felons, screening order). Those get one plain DM to Joshua; everything else Preston asks is done.

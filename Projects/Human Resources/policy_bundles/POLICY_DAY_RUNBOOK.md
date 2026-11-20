@@ -7,7 +7,7 @@ Rules in `POLICY_CADENCE.md` govern. This file is the HOW. Unattended: act, don'
 - Signatures go through **Gusto** (Team document with signature, current team + all future hires) using the `gusto-access` skill. Company UUID 15bc2823-564f-4c1a-8464-9b0e7d79d3e8.
 - **Gusto sign-in:** open https://app.gusto.com/payroll_admin in Claude in Chrome. On the login page click "Sign in with Google" and pick jdavis@fcfpawn.com. Never type a password or a code; never use a password manager. If a password or code is asked for: stop, add ONE line to `Life OS/HUMAN_QUEUE.md` ("Gusto wants a code — sign in once with 'Sign in with Google' in Chrome on the Mac and tick Remember this device"), retry next run.
 - Slack (always through the fleet outbox: write `<name>.txt`, then `<name>.json` = {"channel": "...", "file": "<host path of the .txt>"} into `Valley Pawn OS/fleet/outbox/`; never call slack_send_message in a scheduled run):
-  #policy-announcements `C03BHQ9RLR0` · #preston-claude `C0BGXSTT4TY` · Joshua `U03BB52MDSA`.
+  #policy-announcements `C03BHQ9RLR0` · #preston-goldilocks `C0BGXSTT4TY` · Joshua `U03BB52MDSA`.
 - Fleet dry-run guard before any outbox write: `python3 "Valley Pawn OS/bin/vp_dryrun.py" status` — exit 0 (armed) → write to `Valley Pawn OS/fleet/test_output/` instead.
 - Email to Joshua: Gmail connector, from and to jdavis@fcfpawn.com.
 - State file per update: `state/<YYYY-MM>.json` (create if missing):
@@ -74,7 +74,7 @@ Gusto sign-in, then GET /api/document_templates/<gusto_template_id>/requests →
 document, use it once per Monday for unsigned signers. No Slack or text messages to staff.
 
 ### E. Preston list (today ≥ Preston day, preston_list_sent_at empty)
-Refresh statuses (D). Anyone not completed → outbox to #preston-claude:
+Refresh statuses (D). Anyone not completed → outbox to #preston-goldilocks:
 "<Month> Policy Update — still not signed (due <sign-by>): <Store>: <names>; <Store>: <names>. It's waiting in their Gusto app under Documents —
 please have them sign it today." All signed → send nothing. Record preston_list_sent_at.
 

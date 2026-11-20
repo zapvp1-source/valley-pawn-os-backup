@@ -267,3 +267,60 @@ basic auth; kpis.json parses and matches the values written above (asOf bumped t
 Minor housekeeping note: the .deploy_bundle.tar.gz staging file in this project folder could
 not be deleted (device_bash delete permission not granted in this folder) -- left in place,
 harmless, gets overwritten next run.
+
+
+## Note (2026-11-19, dashboard-refresh run, 13:19 UTC firing)
+Third refresh today (earlier runs bumped asOf to Nov 19 at ~00:17 UTC, then updated the Wed Nov
+18 funds discrepancy before this firing). Picked up two genuinely new posts: Items to Price for
+Nov 19 (178 items / $16,026.97, down from 225/$12,316 the day before -- Culpeper and Harrisonburg
+both worked down their backlog materially) and the Chekkit Daily Response Summary posted this
+morning covering Nov 18 (all clear, 0 unanswered, confirmed by the Nov 18 7PM End-of-Day
+Follow-up).
+Left unchanged (no newer report than what was already in kpis.json): funds (still Wed Nov 18 --
+no new Daily Funds Verification post since the 18:43 ET post already captured), layaway-review
+(next Weekly Layaway Review is Nov 23), loan-review (retired, per standing rule),
+company-performance watch[] (no new Monthly/Gift-card post since Nov 1-2), and daily.intakeMargin
+(#pawn-walks posted again at 07:15 ET for Nov 18 data, still in the simplified overpay-flags-only
+format introduced ~Nov 16-17 -- "4 overpay flags out of 36 items taken in" with no per-store
+Buy/Loan Intake margin tables to parse; still showing Nov 14 data per the 2026-11-16/11-18 notes
+above).
+Artifacts sync (Step 2) skipped silently -- ~/Documents/Claude/Artifacts is not a connected
+folder on this device_bash session.
+Deploy: Option C (tar-bundle staged via device_stage_files, wrangler run in the cloud sandbox).
+The bundle hit the documented nlink>1 bridge quirk on the first two stage attempts (consecutive,
+no gap) -- resolved this time not by waiting but by `cp`-ing the tarball to a second filename
+(breaks the hardlink, confirmed via `stat` showing Links: 1) and staging that copy instead, which
+worked on the first try. Worth noting as a faster alternative to the wait-and-retry approach in
+the 2026-11-09/11-18 notes when there's no natural "do something else" task in between. Deployed
+cleanly (~1.3s upload + worker deploy). Verified: apex https://vp-dashboard.pages.dev/ returns 401
+with no auth and 200 with basic auth; kpis.json parses and matches the values written above
+(asOf still November 19, 2026); the deployment-specific URL
+(https://ad024db2.vp-dashboard.pages.dev/) also returned 200, no stale-CDN concerns this run.
+
+## Note (2026-11-19 EST / 2026-11-20 run)
+One genuinely new post: Daily Funds Verification for Thu Nov 19 (posted 2026-11-19 18:38 ET --
+4 of 5 stores verified; Culpeper could not be verified, no Bravo data; the 4 verified stores all
+matched -- Harrisonburg $0/$0, Lexington $0/$0, Roanoke $2,000/$2,000, Waynesboro $2,000/$2,000).
+funds.status changed from "4/5 MATCHED (1 discrepancy)" to "4/5 VERIFIED (1 unverified)" per the
+Nov 17 precedent (unverified-only case uses VERIFIED/unverified wording, not MATCHED/discrepancy);
+expected/actual both set to $4,000 (sum of the 4 verified stores only, Culpeper excluded rather
+than treated as $0).
+Left unchanged (no newer report than what was already in kpis.json): items-to-price (still the
+Nov 19 08:00 post, 178/$16,026.97 -- no Nov 20 post yet, local time was still Nov 19 evening at
+run time), layaway-review (next Weekly Layaway Review is Nov 23), loan-review (retired, per
+standing rule), company-performance watch[] (no new Monthly/Gift-card post since Nov 1-2),
+chekkit (latest Daily Response Summary still covers Nov 18, all clear; no Nov 19 End-of-Day
+Follow-up posted yet at run time), and daily.intakeMargin (#pawn-walks still posting the
+simplified overpay-flags-only format introduced ~Nov 16-17 -- no per-store Buy/Loan Intake
+margin tables to parse; still showing Nov 14 data per the 2026-11-16/18/19 notes above). Bumped
+the Intake Margin feeds[] Last Run date to Nov 19, 2026 to reflect the latest post in the channel
+(data itself still unchanged).
+Artifacts sync (Step 2) skipped silently -- ~/Documents/Claude/Artifacts is not a connected
+folder on this device_bash session.
+Deploy: Option C (tar-bundle staged via device_stage_files, wrangler run in the cloud sandbox).
+Bundle staged cleanly on the first attempt despite nlink=2 on the fresh tar (the documented
+nlink>1 quirk didn't block this stage). Deployed cleanly (~1.3s upload + worker deploy).
+Verified: apex https://vp-dashboard.pages.dev/ returns 401 with no auth and 200 with basic auth;
+kpis.json parses and matches the values written above (asOf bumped to November 20, 2026); the
+deployment-specific URL (https://d76f7593.vp-dashboard.pages.dev/) also returned 200, no
+stale-CDN concerns this run.

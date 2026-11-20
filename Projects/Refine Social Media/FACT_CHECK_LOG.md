@@ -330,3 +330,20 @@ Unverifiable: none left in posts. PUBLISHED-WRONG: none.
   - 6afb5e490acc11d34476cfe2 BrandIG 11/17: "coming this fall ... October through November" → "starts now ... One town at a time".
 - Unverifiable (removed): Wayne Theatre 650 original seats; 2026-27 season title "For the Love".
 - PUBLISHED-WRONG: none.
+
+## 2026-11-19 07:40 ET — daily fact-check (window: next 36h, to 2026-11-20 ~19:40 ET)
+- Posts checked: 32 (11/19: 5 GBP/brand product posts, 10 town posts 1:30 PM, Ninja posts on BrandIG/Brand/BrandTikTok/GBP_Roanoke/GBP_Lexington; 11/20: Lexington + BrandIG MultiPot, 10 playoff/town posts 1:05 PM, Brand/BrandIG/BrandTwitter thank-you 2 PM). Product/price, hiring-free, evergreen lines (Culpeper Depot, Chessie Trail, House/Jump Mountain, turkey statues history) skipped. All store hours stated match standing hours.
+- Verified:
+  - Region semifinals, all Friday Nov 20, 7 p.m., no postponement/forfeit found: Skyline at Culpeper County; Buckingham County at Stuarts Draft (Stuarts Draft had round-1 bye); Fort Defiance at Strasburg; Altavista at Riverheads; Sussex Central at Buffalo Gap; Liberty Christian at Broadway; Turner Ashby at Fluvanna County; Patrick Henry-Roanoke at Midlothian; Cave Spring at William Byrd. https://cardinalnews.org/2026/11/13/every-no-1-seed-wins-in-first-round-of-vhsl-football-playoffs/ (updated 11/17 with next-round game times); https://www.maxpreps.com/news/bwrrIdyXwEiEQ79PqQoTEg/football-preview-skyline-and-culpeper-county-both-lean-on-punishing-ground-games--how-to-watch.htm (Culpeper 7:00 p.m. Fri); https://www.nvdaily.com/nvdaily/high-school-schedule-nov-19/article_39c8e60b-96b3-5050-9320-0f5c5f9154f5.html (Fort Defiance at Strasburg, Skyline at Culpeper, 7 p.m. Fri); pairings also https://sports.yahoo.com/articles/updated-virginia-high-school-football-214929815.html (11/15).
+  - Round-1 scores: Culpeper County 22, Brentsville District 20; Patrick Henry 16, Douglas Freeman 14 (Nov 13): Yahoo/SI above; https://wset.com/sports/football-friday/patrick-henry-secures-playoff-win-over-douglass-freeman-in-close-matchup
+  - Rocktown Turkey Trot Thu Nov 26, 2026, 121 S Main St; Kids Dash 8:00 AM, Trot 8:30 AM; registration ends Nov 24: https://runsignup.com/Race/VA/Harrisonburg/2019RocktownTurkeyTrot (official, 2026 date)
+  - Mill Mountain Star 77th on Mon Nov 23 (verified 11/14 and 11/17 runs, https://www.playroanoke.com/the-roanoke-star/). Left as is (Roanoke FB + GBP_Roanoke).
+  - Wayne Theatre reopened March 1, 2016; 650 original seats unverified (from 11/17 run, https://www.waynetheatre.org/about-us).
+- Edited (all APPLIED):
+  - 6afb5d020acc11d34476cd1b Waynesboro FB 11/20: "Riverheads and Buffalo Gap are also still playing" (vague) → Riverheads hosts Altavista, Buffalo Gap hosts Sussex Central, all at 7.
+  - 6afb5d0b0acc11d34476cd46 GBP_Waynesboro 11/20: same → lists all four games at 7 p.m.
+  - 6afb5d26f9116176eb1ecd0a Waynesboro FB 11/19: "650 seats ... 450 after 1949", "fully restored by 2017" → seat counts dropped, reopened March 1, 2016.
+  - 6afb5d2f0acc11d34476cda7 GBP_Waynesboro 11/19: same corrections; "2026 is its 100th year" → "2026 marks 100 years since opening night".
+  - 6afb5d7ef9116176eb1ecde1 Harrisonburg FB 11/19: "It's Thanksgiving week" (Thanksgiving is 11/26) → "Thanksgiving is one week from today".
+  - 6afb5d860acc11d34476ce2a GBP_Harrisonburg 11/19: "Thanksgiving week ... Check the organizer's page for the start time and route" → one week away, 121 S. Main St, kids' dash 8 AM, Trot 8:30 AM, registration closes Nov 24.
+- Unverifiable (removed): Wayne Theatre 650/450 seat counts. PUBLISHED-WRONG: none.

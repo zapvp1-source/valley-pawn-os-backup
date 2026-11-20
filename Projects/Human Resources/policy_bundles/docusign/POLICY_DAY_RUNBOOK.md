@@ -7,7 +7,7 @@ Rules in `../POLICY_CADENCE.md` govern. This file is the HOW. Unattended: act, d
 - DocuSign account `320a0ff8-3001-4e1a-93b4-4fc3004b1116` (connector; no logins). Sender name stays as is (HR E-Sign Playbook §8).
 - Blank form URL: `docusign/FORM_URL.txt` (hosted blank PDF, no policy text). Missing → the preview says so; nothing is sent.
 - Slack (always through the fleet outbox: write `<name>.txt`, then `<name>.json` = {"channel": "...", "file": "<host path of the .txt>"} into `Valley Pawn OS/fleet/outbox/`; never call slack_send_message in a scheduled run):
-  #policy-announcements `C03BHQ9RLR0` · #preston-claude `C0BGXSTT4TY` · Joshua `U03BB52MDSA`.
+  #policy-announcements `C03BHQ9RLR0` · #preston-goldilocks `C0BGXSTT4TY` · Joshua `U03BB52MDSA`.
 - Fleet dry-run guard before any outbox write: `python3 "Valley Pawn OS/bin/vp_dryrun.py" status` — exit 0 (armed) → write to `Valley Pawn OS/fleet/test_output/` instead.
 - Email to Joshua: Gmail connector, from and to jdavis@fcfpawn.com.
 - State file per update: `docusign/state/<YYYY-MM>.json` (create if missing):
@@ -69,7 +69,7 @@ getEnvelopes(from_date = policy_day − 5, search_text "<Month> Policy Update", 
 No messages to staff — DocuSign reminds them every 3 days.
 
 ### E. Preston list (today ≥ Preston day, preston_list_sent_at empty)
-Refresh statuses (D). Anyone not completed → outbox to #preston-claude:
+Refresh statuses (D). Anyone not completed → outbox to #preston-goldilocks:
 "<Month> Policy Update — still not signed (due <sign-by>): <Store>: <names>; <Store>: <names>. It's in their email from DocuSign —
 please have them sign it today." All signed → send nothing. Record preston_list_sent_at.
 

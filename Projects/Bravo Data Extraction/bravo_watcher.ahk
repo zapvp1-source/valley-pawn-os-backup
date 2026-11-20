@@ -104,6 +104,7 @@ Persistent
 #Include reports\JewelryCaseCountV2.ahk
 #Include reports\JewelryCaseCountV3.ahk
 #Include reports\SoldDiscountDetail.ahk
+#Include reports\SoldTodayFast.ahk   ; eBay Desk takedown loop (additive 2026-11-19)
 #Include reports\CoinsOnHand.ahk
 #Include reports\EmployeeActivityRange.ahk
 #Include reports\ForfeitureWinback.ahk
@@ -238,6 +239,7 @@ Main() {
     REPORT_HANDLERS["jewelry-case-counts-v3"] := PullJewelryCaseCountsV3
     REPORT_HANDLERS["jewelry-case-counts-v3-verify"] := PullJewelryCaseCountsV3Verify
     REPORT_HANDLERS["sold-discount-detail"] := PullSoldDiscountDetail
+    REPORT_HANDLERS["sold-today-fast"] := PullSoldTodayFast   ; additive 2026-11-19
     REPORT_HANDLERS["coins-onhand"]         := PullCoinsOnHand
     REPORT_HANDLERS["employee-activity-range"] := PullEmployeeActivityRange
     REPORT_HANDLERS["forfeiture-winback"]            := PullForfeitureWinback

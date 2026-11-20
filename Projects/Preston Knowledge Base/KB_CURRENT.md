@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-11-18 22:10 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-11-19 22:11 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -988,6 +988,12 @@ SOURCE: DM Joshua<->Preston | 2025-11-11 | https://valleypawnworkspace.slack.com
 !! CONFLICT: Joshua overrode this on 2025-11-11 — "loan can stay, lower buy" and "they can be equal."
 id: buy-should-not-be-below-loan-f52cc7e7
 
+### [MEDIUM] customer-callbacks-app-link-message
+RULE: When customers call or message back about the link they received, tell them it is only a link to the app Valley Pawn uses. It does not mean they have a loan with the store.
+PRESTON SAID: "Anyone that calls or messages back just let them know it's just a link to the app we use. It doesn't mean they have a loan with us or anything."
+SOURCE: #general (Preston Peters, Operations Manager) | 2026-11-19 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1795106070888529
+id: customer-callbacks-app-link--d2c7f242
+
 ### [MEDIUM] customer-issue-escalation-to-preston
 RULE: When a store has a customer problem like an unhappy buyer or a payment dispute, the manager should give Preston a heads up. He doesn't have to be involved in resolving it, but he wants to know so he can decide whether to step in.
 PRESTON SAID: "if you ever I don't have issues like that. Just kind of loop me in. I don't necessarily have to be involved unless you need me to be but give me a heads up. It helps just so I know if I need to step in or not."
@@ -1845,6 +1851,12 @@ PRESTON SAID: "I'd be careful with that. Some of it is gold and I'm not sure wha
 SOURCE: DM Joshua<->Preston (D03C7RBGY56) | 2026-07-04 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1783194679205429
 id: selling-gold-below-melt-bb7d764b
 
+### [HIGH] text-message-unsubscribe-requests
+RULE: If a customer asks to stop receiving messages, unsubscribe them from the messaging list.
+PRESTON SAID: "Unsubscribe anyone that asks to stop messaging them as well."
+SOURCE: #general (Preston Peters, Operations Manager) | 2026-11-19 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1795106096678459
+id: text-message-unsubscribe-req-773ea0c1
+
 ### [HIGH] transfer-firearm-accounting
 RULE: Transfer firearms carry $0.00 cost, are priced at $0.01 (Bravo won't allow $0.00), sold for $0.00, and the NICS fee is charged in the transaction. Transfer revenue lands in "Retail Sales (Tax Exempt-Other)" on EOD, counted as revenue but not as sales. Report path: View/Void transactions > Custom Reports > "Claude NICS transfers."
 PRESTON SAID: "For firearm transfers:
@@ -2444,6 +2456,12 @@ PRESTON SAID: "It's okay to get my idea, but I wouldn't use it for Making offers
 SOURCE: zoom-call:7a0de9dfd3474e1ca2dde2e335d05619 | 2026-10-27 | UNK Walker Tapley
 id: collector-app-card-valuation-0625112d
 
+### [LOW] counter-price-judgment-1800-otd-offer
+RULE: An $1,800 out-the-door offer on a high-priced item was not enough. The speaker, who appears to be Preston, would take about $2,000. This is a judgment on one deal, and the transcript does not name the item.
+PRESTON SAID: "I think we need more okay yeah maybe like 2k that's what I would do it for"
+SOURCE: zoom-call:5b7750d5a17243a8b84a7ed8139c8d18 | 2026-11-19 | UNK Walker Tapley
+id: counter-price-judgment-1800--b1afdbcb
+
 ### [LOW] counterfeit-watch-resale-label-as-replica
 RULE: A counterfeit watch may be sold cheaply, but it must be clearly labeled as a replica.
 PRESTON SAID: "just clearly label it as a as a replica"
@@ -2663,6 +2681,12 @@ PRESTON SAID: "I mean, the very least we can do is look up what one that has tha
 SOURCE: zoom-call:2026-08-29_HAR_store-to-Preston_14m42s.txt | 2026-08-29 | store<->Preston (transcribed 2026-10-01)
 id: out-of-policy-defective-buyb-185524bf
 
+### [LOW] out-the-door-offer-tax-netting
+RULE: When a customer offers a price "out the door," sales tax comes out of it. An $1,800 out-the-door offer nets roughly $1,700 for the store, so judge the offer on that net figure.
+PRESTON SAID: "it's like overnight 90 dollars in tax and we need yeah it's a lot so we're selling it for 17 essentially"
+SOURCE: zoom-call:5b7750d5a17243a8b84a7ed8139c8d18 | 2026-11-19 | UNK Walker Tapley
+id: out-the-door-offer-tax-netti-bad15d3e
+
 ### [LOW] partial-refund-on-return-resale-discount
 RULE: When a customer returns an item and the store agrees to sell it back at a lower price, the return can be done in part. Refund part in cash or credit and put the remainder back on the card. The speaker hedged ("maybe") and the speaker's role is not identified, so confirm with Preston before treating this as policy.
 PRESTON SAID: "you can return part of it in cash. or credit and then put the other back on the card, maybe."
@@ -2859,5 +2883,5 @@ id: past-due-75-day-5-percent-ce-30eeab0b
 
 
 ==============================================================================
-COVERAGE: 400 entries - 31 verified by Preston, 156 high-confidence rules, 116 medium, 95 low, 2 superseded.
+COVERAGE: 404 entries - 31 verified by Preston, 157 high-confidence rules, 117 medium, 97 low, 2 superseded.
 ==============================================================================

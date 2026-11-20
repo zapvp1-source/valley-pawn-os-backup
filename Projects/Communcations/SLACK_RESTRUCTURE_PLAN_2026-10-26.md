@@ -5,7 +5,7 @@
 
 ## 1. What the 14-day read shows
 - 95 channels. 984 posts (~70/day). 521 automated (53%), 463 human.
-- Human conversation lives in ~15 channels: #general, #product-availability, #returns, #end-of-day, #2pm-update, #deal-questions, #mobile-approvals, #facilities, #supply-request, #weeklygoals, #training, #deal-of-the-week, the 5 store funds channels, 3 of 5 roc-* channels, #preston-claude.
+- Human conversation lives in ~15 channels: #general, #product-availability, #returns, #end-of-day, #2pm-update, #deal-questions, #mobile-approvals, #facilities, #supply-request, #weeklygoals, #training, #deal-of-the-week, the 5 store funds channels, 3 of 5 roc-* channels, #preston-goldilocks.
 - ~30 channels are bot-to-nobody: automated posts only, 0 reactions, 0 replies in 14 days (store-performance, layaway-review, first-payment-default, employee-performance, ebay-performance, website, email-campiagns, ai-marketing, blog-posts, chekkit-*, sold-review, discount-review, pawn-walks, jewlery-counts, items-to-price, items-to-markdown, timekeeping-summary, weekly-returns-summary, registered-agent, voicemails-calls-missed, social-media, ffl-transfer-performance, daily-funds-reconcilation, vp-studio-queue, airbnb, basics).
 - 39 channels had zero posts.
 - Biggest scroll generators: #voicemails-calls-missed 125 (per-call pings + a 17:45 digest that repeats them all), #employee-prospects 56 (full interview grid re-posted on every booking; 19 posts on 10/13), #website 34 (28 "Shop refreshed" ticker posts), #google-reviews 41, daily walls of 1,800–3,800 chars in #pawn-walks / #sold-review / #discount-review / #jewlery-counts (49 posts, 1 reaction).
@@ -25,7 +25,7 @@ Nothing is lost: the full data density Joshua wants (8/24 verdict) moves to canv
 ## 3. Channel map (95 → ~45)
 
 ### A. Unchanged — human workflow channels (35)
-#general (humans only, done 10/23) · #basics · #product-availability · #returns · #end-of-day · #2pm-update · #deal-questions · #mobile-approvals · #facilities · #supply-request · #weeklygoals · #training · #monday-meetings · #deal-of-the-week · #policy-announcements · #ask-goldilocks · #preston-claude · #monthly-gun-audit · #law-enforcement · #multiplesale · #records-of-warning · #airbnb (Domain 2) · the 5 funds channels · the 5 roc-* channels · compliance record channels left alone on purpose (#atf-traces, #gun-transfers, #ffl-copy, #business-license, #compliance — zero volume is not noise there).
+#general (humans only, done 10/23) · #basics · #product-availability · #returns · #end-of-day · #2pm-update · #deal-questions · #mobile-approvals · #facilities · #supply-request · #weeklygoals · #training · #monday-meetings · #deal-of-the-week · #policy-announcements · #ask-goldilocks · #preston-goldilocks · #monthly-gun-audit · #law-enforcement · #multiplesale · #records-of-warning · #airbnb (Domain 2) · the 5 funds channels · the 5 roc-* channels · compliance record channels left alone on purpose (#atf-traces, #gun-transfers, #ffl-copy, #business-license, #compliance — zero volume is not noise there).
 Format-only fixes inside this group: #basics → one combined "Morning checks" post instead of three; #deal-of-the-week → 5 bot posts/week → 2 (open + features), reminders in-thread.
 
 ### B. Six report channels, each with a pinned canvas

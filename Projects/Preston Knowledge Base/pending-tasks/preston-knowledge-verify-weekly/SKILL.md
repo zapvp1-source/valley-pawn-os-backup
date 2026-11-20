@@ -11,7 +11,7 @@ The verification loop for the Valley Pawn ops knowledge base. Once a week, Prest
 `do shell script "echo READY"`. If not loaded, ToolSearch `select:mcp__Control_your_Mac__osascript`, wait 30s, retry up to ~10 min. This task runs on Joshua's Mac and DOES have local access. All filesystem I/O via osascript. In-call sleeps under 18s; guard with `|| true`.
 
 ## STEP 1 — Did he answer last week's batch?
-Read `#preston-claude` (`slack_read_channel`, `C0BGXSTT4TY`, limit 40) and find the last batch this task posted, plus any replies from Preston.
+Read `#preston-goldilocks` (`slack_read_channel`, `C0BGXSTT4TY`, limit 40) and find the last batch this task posted, plus any replies from Preston.
 
 Parse his replies. He answers by number:
 - `ok` / `yes` / `correct` / 👍 → status `VERIFIED`
@@ -40,7 +40,7 @@ Before posting, cross-check the `NOT-FOUND` rows in `QUESTION_LOG.md` from the l
 **If the queue is empty and there are no new NOT-FOUNDs, post nothing.** Do not manufacture a batch to look busy. End with `<run-summary>nothing to verify</run-summary>`.
 
 ## STEP 3 — Post it
-One message to `#preston-claude`. Plain, short, numbered. No tables (they render badly there). Every value on its own line.
+One message to `#preston-goldilocks`. Plain, short, numbered. No tables (they render badly there). Every value on its own line.
 
 Format:
 ```

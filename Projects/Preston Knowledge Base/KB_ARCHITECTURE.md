@@ -30,7 +30,7 @@ and an interview request. This one does not have that problem — see below.
 **Preston's knowledge is already written down.** He has been answering deal questions in
 Slack since 2022, in writing, with numbers. A 2026-09-07 sweep of the Joshua↔Preston DM,
 the five `*-funds` channels, `#deal-questions`, `#loans-and-buys`, `#general`,
-`#scrap-rankings`, `#policy-announcements` and `#preston-claude` pulled **219 sourced
+`#scrap-rankings`, `#policy-announcements` and `#preston-goldilocks` pulled **219 sourced
 knowledge entries** on the first pass — his melt formula, his pay-percentage bands, his
 counterfeit tells, his stone-weight rules, his refiner terms, his testing sequence.
 

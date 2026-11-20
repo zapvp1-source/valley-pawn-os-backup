@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-11-18
+# LIVE STATE - auto-refreshed 2026-11-19
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -17,7 +17,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | Enabled (will fire) | 2 |
 | Registered but disabled | 230 |
 | On disk but never registered | 4 |
-| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 2518 |
+| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 1108 |
 
 ### Enabled tasks
 
@@ -189,6 +189,8 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.review-reply.plist` | installed | YES |
 | `com.valleypawn.reviews-weekly.plist` | installed | YES |
 | `com.valleypawn.sales-tax-monthly.plist` | installed | YES |
+| `com.valleypawn.scrap-closeout-monthly.plist` | installed | YES |
+| `com.valleypawn.scrap-create-monthly.plist` | installed | YES |
 | `com.valleypawn.scrap-rankings-monthly.plist` | installed | YES |
 | `com.valleypawn.scrap-year-guard.plist` | installed | YES |
 | `com.valleypawn.shop-refresh.plist` | installed | YES |
@@ -245,46 +247,46 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-11-18 | Valley Pawn OS | - |
-| 2026-11-18 | Unified Search | - |
-| 2026-11-18 | Quickbooks Set UP | - |
-| 2026-11-18 | Business Dashboard Website | - |
-| 2026-11-18 | Bravo Data Extraction | STATUS.md |
-| 2026-11-17 | eBay | - |
-| 2026-11-17 | Zoom Call Pipeline | - |
-| 2026-11-17 | Website | - |
-| 2026-11-17 | Valuation Core | README.md |
-| 2026-11-17 | Store Conduct Watch | STATUS.md |
-| 2026-11-17 | Sold Margin Review | STATUS.md |
-| 2026-11-17 | Refine Social Media | - |
-| 2026-11-17 | Preston Knowledge Base | - |
-| 2026-11-17 | Precious Metals Settlements | - |
-| 2026-11-17 | Pawn Walks | STATUS.md |
-| 2026-11-17 | New Store - St Augustine | STATUS.md |
-| 2026-11-17 | Listing Management | STATUS.md |
-| 2026-11-17 | Life OS | - |
-| 2026-11-17 | Jewelry Count Reconciliation | STATUS.md |
-| 2026-11-17 | Human Resources | - |
-| 2026-11-17 | Health Optimization | STATUS.md |
-| 2026-11-17 | Email Refinement | - |
-| 2026-11-17 | Discount Outlier Review | STATUS.md |
-| 2026-11-17 | Daily Funds Verification | - |
-| 2026-11-17 | Compliance | - |
+| 2026-11-19 | Valley Pawn OS | - |
+| 2026-11-19 | Unified Search | - |
+| 2026-11-19 | Quickbooks Set UP | - |
+| 2026-11-19 | Life OS | - |
+| 2026-11-19 | Business Dashboard Website | - |
+| 2026-11-19 | Bravo Data Extraction | STATUS.md |
+| 2026-11-18 | eBay | - |
+| 2026-11-18 | Zoom Call Pipeline | - |
+| 2026-11-18 | Website | - |
+| 2026-11-18 | Valuation Core | README.md |
+| 2026-11-18 | Store Conduct Watch | STATUS.md |
+| 2026-11-18 | Sold Margin Review | STATUS.md |
+| 2026-11-18 | Short Term Rental Optimization | - |
+| 2026-11-18 | Refine Social Media | - |
+| 2026-11-18 | Preston Knowledge Base | - |
+| 2026-11-18 | Precious Metals Settlements | - |
+| 2026-11-18 | Pawn Walks | STATUS.md |
+| 2026-11-18 | New Store - St Augustine | STATUS.md |
+| 2026-11-18 | Loan Reminder Texts | STATUS.md |
+| 2026-11-18 | Listing Management | STATUS.md |
+| 2026-11-18 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-11-18 | Human Resources | - |
+| 2026-11-18 | Health Optimization | STATUS.md |
+| 2026-11-18 | Email Refinement | - |
+| 2026-11-18 | Discount Outlier Review | STATUS.md |
+| 2026-11-18 | Daily Funds Verification | - |
+| 2026-11-18 | Compliance | - |
+| 2026-11-18 | Bonus Program | - |
+| 2026-11-18 | Ai Optimized Marketing | - |
 | 2026-11-17 | Business Continuity | - |
 | 2026-11-16 | Preston Time Review | STATUS.md |
 | 2026-11-16 | Gold and Silver Markeitng | - |
 | 2026-11-16 | Communcations | - |
 | 2026-11-16 | Call Analysis | - |
 | 2026-11-16 | Ask Valley Pawn | STATUS.md |
-| 2026-11-15 | Ai Optimized Marketing | - |
-| 2026-11-14 | Short Term Rental Optimization | - |
 | 2026-11-13 | Claude outputs | - |
 | 2026-11-10 | Store Traffic Counter | - |
-| 2026-11-10 | Bonus Program | - |
 | 2026-11-09 | _stage | - |
 | 2026-11-09 | _probe_tmp | - |
 | 2026-11-04 | Sales Tax | STATUS.md |
-| 2026-11-02 | _scratch | - |
 
 <!-- LIVE-STATE:END -->
 

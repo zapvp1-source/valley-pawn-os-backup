@@ -21,7 +21,7 @@ what kind of call each one is, and routes it. Two completely separate consumers 
               │                             │
    Preston Knowledge Base            Call Analysis
    → sourced KB entries              → aggregate demand + service metrics
-   → #preston-claude verify          → its own Slack channel
+   → #preston-goldilocks verify          → its own Slack channel
 ```
 
 **Why one pipeline and not two:** two Zoom auth paths, two transcription passes and two sets of

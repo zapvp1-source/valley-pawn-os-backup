@@ -1,6 +1,6 @@
 # What Preston can ask Claude — known workflows (as of 2026-11-04)
 
-Everything Preston has asked Claude since 2026-07-14, in #preston-claude and his DMs with Joshua.
+Everything Preston has asked Claude since 2026-07-14, in #preston-goldilocks and his DMs with Joshua.
 Proven = done for him, with the reply on record. Ready = the setup that does it is built and has been used elsewhere, but not yet for this exact request.
 
 ## Write-ups & HR
@@ -40,4 +40,4 @@ Proven = done for him, with the reply on record. Ready = the setup that does it 
 Answers only from Preston's 352 rules, quoting him with the date. It flags conflicting answers and says "ask Preston" when he hasn't ruled.
 
 ## Weekly upkeep (Proven)
-Mondays at 9:05 in #preston-claude: up to 10 of his quotes come back to him. He answered the first one 10/26 (aged inventory and jewelry scrap rules now confirmed); 11 rules are confirmed by him so far.
+Mondays at 9:05 in #preston-goldilocks: up to 10 of his quotes come back to him. He answered the first one 10/26 (aged inventory and jewelry scrap rules now confirmed); 11 rules are confirmed by him so far.

@@ -21,7 +21,7 @@ Read messages from Preston since that cutoff in each of these, using `slack_read
 - #deal-questions — `C03BWGT5F5X`
 - #loans-and-buys — `C03GBDKSLRE`
 - #general — `C03BETSS669`
-- #preston-claude — `C0BGXSTT4TY`
+- #preston-goldilocks — `C0BGXSTT4TY`
 - #policy-announcements — `C03BHQ9RLR0`
 - #scrap-rankings — `C05EHBH4G67`
 - #aged-inventory-review — `C04NGH4FF35`

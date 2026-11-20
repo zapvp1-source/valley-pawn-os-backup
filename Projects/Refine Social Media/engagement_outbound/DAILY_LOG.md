@@ -1,5 +1,35 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-19 (daily PREP run, 12:42–12:55 ET, level 1 all pages, Thursday) — picks queued for the next POST-mode chat, nothing published by this run
+- Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only (composer read "What's on your mind, Joshua?" at start and end); never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings.
+- Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).
+- This morning's POST-mode chat already used today's caps for Lexington and Harrisonburg comments and the Roanoke/Culpeper/Waynesboro weekly shares; these picks are for the next POST chat (all valid into 11/20, most into 11/21).
+- QUEUE cleaned: posted and stale items removed (already in ledger.jsonl). Still pending: Roanoke follow → Roanoke Regional Chamber.
+- New picks (permalinks opened, tab titles confirmed, times from hover):
+  - Roanoke comment → Roanoke Valley SPCA "Diamond" adoption feature (until 11/21 10:00).
+  - Culpeper comment → Culpeper Renaissance "Giving Locally for the Holidays" nonprofit afternoon at The State Theater (until 11/21 07:55).
+  - Waynesboro comment → Wayne Theatre / Studio Wayne holiday drop-in dance classes (until 11/21 09:20).
+  - Harrisonburg comment → Harrisonburg High School TSA Leadership Academy (until 11/20 14:57).
+  - Harrisonburg share → Massanutten Regional Library "Share your MRL story" 100th-anniversary interviews Dec 7 / Dec 11 / Dec 14 (until 11/21 10:00) — Harrisonburg's one share this week.
+  - Lexington comment → Washington and Lee fall foliage photo set (until 11/21 10:17).
+  - Brand comment → Shenandoah National Park Carolina mantis post (until 11/21 11:00).
+- Skipped on purpose: CRI window-decorating reel (tags The Bear And The Blade — blade shop, too close to the weapons line); Culpeper Parks sheriff armored-vehicle training (NO-list); Mill Mountain Zoo Thanksgiving post (lapsed 10:00 today); Downtown Roanoke Weekly Drop (event list); Roanoke Chamber business-network posts; Visit Harrisonburg Sage Bird cidery (alcohol business); Main Street Lexington Pink, Drink & Be Merry (shop/wine promo) and greenery call (posted 11/17, lapsed); Rockbridge Regional Library trustees meeting (civic); YMCA boxing class (fitness promo); Lexington Farmers Market vendor feature (11/17).
+- Ramp: all pages hold level 1. Share week (Mon 11/16–): Roanoke, Culpeper, Waynesboro used (11/19); Harrisonburg queued; Lexington and Brand none (no good candidate).
+- Watchlist: 18 pages re-checked; WATCHLIST synced with this morning's POST run (followed_as_page set from ledger follows; last_share 11/19 for Roanoke, Culpeper, Waynesboro). None newly dormant; Shenandoah Valley Partnership quiet since 10/22 (watch). No unresolved entries.
+- Follows: no new town searches (1 pending follow waiting on POST mode).
+- Reply candidates for POST mode (from Joshua's notifications, not opened as the page): Mark Lyon commented on a Valley Pawn-Culpeper post (~13 h ago); 10 people (Sara Dunn Vasura, Linda Crook Higgins and 8 others) commented on a Valley Pawn-Lexington post (~13 h ago); "Synster Gates Fan" mentioned Valley Pawn in a comment (~12 h ago). Seen but not touched: a Messenger question to Valley Pawn-Lexington about home stereo speakers (DMs stay with Chekkit).
+- Needs a person: none.
+- Totals this run: comments 0 (6 queued), shares 0 (1 queued), replies 0 (3 candidates), follows 0 (1 pending), new pages resolved 0.
+
+## 2026-11-19 (POST mode — Joshua in chat: "post", 08:20–09:20 ET, level 1)
+- Comments: Lexington (News-Gazette Take a Hike Day), Harrisonburg (DNR — Fort Defiance volleyball 3rd straight state final). Shares: Roanoke (Explore Park Illuminights opens Sat 11/21), Culpeper (Star-Exponent/Culpeper County Library Repair Café Sat 11/21 11–12:30), Waynesboro (Waynesboro Public Library house plants talk tonight 6–7:30). All facts re-read on the source post.
+- Follows: Lexington 4 new (+Lexington FD, RCHS athletics already followed), Harrisonburg 5, Roanoke 5, Culpeper 3, Waynesboro 3.
+- Replies on own page: Waynesboro playoff post — answered Heather Podgorski (Fort hosting Central) and Paige Maybush (Riverheads won).
+- Dropped as stale (>48 h): Roanoke Santa comment, Harrisonburg Farmers Market comment, Culpeper Visit Culpeper bakeries comment.
+- Signals: Downtown Roanoke and Roanoke Public Libraries reacted to our earlier comments; Roanoke page gained new followers this month.
+- No Facebook warnings. Switched back to Joshua Davis (confirmed).
+- Tip used: the "Switch to a different profile or Page" button next to any comment box opens the profile picker — fastest way to change pages.
+
 ## 2026-11-18 (daily PREP run, 12:41–12:52 ET, level 1 all pages, Wednesday) — picks queued, nothing published by this run
 - Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only (composer read "What's on your mind, Joshua?" at start and end) — never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. Still no POST-mode chat since 11/2 evening (ledger unchanged at 60 rows).
 - Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).

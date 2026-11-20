@@ -187,9 +187,20 @@ def cta_block(camp):
         f'<p style="margin:14px 0 0 0;color:#777777;font-size:13px;line-height:1.5;">{HOURS}</p>')
 
 
+APP_IOS = "https://apps.apple.com/us/app/mobilepawn/id1141399930"
+APP_ANDROID = "https://play.google.com/store/apps/details?id=com.bravorevolution.instapawn"
+
+
 def app_block(camp):
-    """MobilePawn download ask (added 2026-09-29, config.json app_block_enabled)."""
-    href = html.escape(utm(APP_URL, "brevo", "email", camp, "app_download"))
+    """MobilePawn download ask (added 2026-09-29, config.json app_block_enabled).
+    2026-11-19: two direct store buttons. The old single button went to thevalleypawn.com/app/,
+    whose scripted redirect landed phone users on a store web preview with no working download."""
+    # Apple 301-redirects any URL with query tags, which can stop the App Store app opening -> clean link
+    # (Brevo still counts clicks per link). Android keeps the tag the build check looks for.
+    ios = html.escape(APP_IOS)
+    andr = html.escape(utm(APP_ANDROID, "brevo", "email", camp, "app_download"))
+    btn = ('display:inline-block;margin:0 8px 8px 0;padding:12px 22px;font-size:15px;font-weight:700;'
+           'text-decoration:none;border-radius:999px;')
     return (
         '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" '
         'style="margin:22px 0 0 0;background:#F4F1FB;border-radius:10px;"><tr><td style="padding:18px 20px;">'
@@ -197,8 +208,9 @@ def app_block(camp):
         '<p style="margin:0 0 12px 0;font-size:16px;line-height:1.5;color:#1a1a1a;">'
         'Pay or extend your loan, make layaway payments and check due dates from your phone with '
         '<strong>MobilePawn</strong>. Download it and choose Valley Pawn.</p>'
-        f'<a href="{href}" style="display:inline-block;padding:12px 24px;font-size:15px;font-weight:700;'
-        'color:#ffffff;background:#2D1A5E;text-decoration:none;border-radius:999px;">Download MobilePawn &rarr;</a>'
+        f'<a href="{ios}" style="{btn}color:#ffffff;background:#2D1A5E;">iPhone: App Store &rarr;</a>'
+        f'<a href="{andr}" style="{btn}color:#2D1A5E;background:#F2B544;">Android: Google Play &rarr;</a>'
+        '<p style="margin:6px 0 0 0;font-size:13px;color:#777777;">Or search <strong>MobilePawn</strong> in your app store.</p>'
         '</td></tr></table>')
 
 
@@ -338,9 +350,11 @@ def main():
     if APP_SMS:
         # One text a month, both asks. Short links keep it inside one 160-char GSM segment.
         app_link = f"thevalleypawn.com/app/?utm_source=sms&utm_campaign={tag}"
-        sms = f"Valley Pawn: pay your loan from your phone w/ our free app thevalleypawn.com/app/?utm_source=sms Shop online thevalleypawn.com/shop Text STOP to unsubscribe"
+        # 2026-11-19 (Joshua): the 11/19 send opened with "pay your loan" and went to the whole list; customers with no
+        # loan thought they had one. Lead with shopping; the app line is conditional ("Have a loan or layaway with us?").
+        sms = "Valley Pawn: shop all 5 stores online thevalleypawn.com/shop Have a loan or layaway with us? Pay by phone: thevalleypawn.com/app Text STOP to unsubscribe"
         if len(sms) > 160:
-            sms = f"Valley Pawn: pay your loan from your phone w/ our free app {app_link} Text STOP to unsubscribe"
+            sms = f"Valley Pawn: shop all 5 stores online. {sms_link} Text STOP to unsubscribe"
 
     base, base_src = load_base()
     email = build_email(base, cfg, featured, camp)

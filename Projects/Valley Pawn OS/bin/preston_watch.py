@@ -5,7 +5,7 @@ Runs from launchd (com.valleypawn.preston-watch, every 2 min). Each invocation m
 so a new request is seen within about a minute.
 
 Each pass:
-  1. Reads the last 20 messages of #preston-claude (every Preston message is a request) and #employee-prospects
+  1. Reads the last 20 messages of #preston-goldilocks (every Preston message is a request) and #employee-prospects
      (only Preston messages that address Claude), as the VP OPS ENGINE bot.
   2. A Preston message from the last 72 h is OPEN until Joshua's account (how Claude posts) replies in its
      thread or later in the channel.
@@ -36,7 +36,7 @@ INSTALLER = os.path.join(OS_DIR, 'Install Preston Assistant Key.command')
 LOG = os.path.join(HOME, 'Library/Logs/valleypawn/preston-watch.log')
 RUNNER_HEALTH = os.path.join(STATE_DIR, 'local_runner_health.json')
 
-PRESTON_CH = 'C0BGXSTT4TY'      # #preston-claude — every Preston message is a request
+PRESTON_CH = 'C0BGXSTT4TY'      # #preston-goldilocks — every Preston message is a request
 PROSPECTS_CH = 'C0BQDRXRPEJ'    # #employee-prospects — only messages that address Claude
 PRESTON = 'U03BWMEM9GR'
 JOSHUA = 'U03BB52MDSA'
@@ -108,7 +108,7 @@ def addresses_claude(text):
 def answered(token, channel, msg, history):
     ts = float(msg['ts'])
     if any(m.get('user') == JOSHUA and float(m['ts']) > ts and not m.get('thread_ts') for m in history):
-        # A later top-level post from Joshua's account counts only in #preston-claude (it is a 1:1 channel).
+        # A later top-level post from Joshua's account counts only in #preston-goldilocks (it is a 1:1 channel).
         if channel == PRESTON_CH:
             return True
     if msg.get('reply_count'):
@@ -178,7 +178,7 @@ def one_pass(token, fire_key, routine_id, state):
         last_fire = rec['fires'][-1]['at'] if rec['fires'] else 0
         if fire_key and len(rec['fires']) < MAX_FIRES and (not rec['fires'] or now - last_fire >= REFIRE_MIN * 60):
             text = ('Started by the Mac watcher: Preston posted a new request in %s at ts %s. Handle it now.'
-                    % ('#preston-claude' if ch == PRESTON_CH else '#employee-prospects', m['ts']))
+                    % ('#preston-goldilocks' if ch == PRESTON_CH else '#employee-prospects', m['ts']))
             if DRY:
                 log('[dry] would fire for ' + m['ts'])
             else:

@@ -113,7 +113,7 @@ def main():
             st.setdefault(pick['ts'], []).append(now)
             st = {k: v for k, v in st.items() if now - float(k) < 72 * 3600}
             sj(STATE, st)
-            ch = '#preston-claude' if pick['channel'] == 'C0BGXSTT4TY' else '#employee-prospects'
+            ch = '#preston-goldilocks' if pick['channel'] == 'C0BGXSTT4TY' else '#employee-prospects'
             prompt = open(PROMPT).read() + ('\n\nSTARTED BY THE MAC RUNNER: Preston posted a request in %s (channel %s, ts %s): "%s". '
                                             'Handle this request now, then any other unanswered ones.' % (ch, pick['channel'], pick['ts'], pick.get('text', '')))
             log('start ts=%s attempt=%d' % (pick['ts'], len(st.get(pick['ts'], []))))

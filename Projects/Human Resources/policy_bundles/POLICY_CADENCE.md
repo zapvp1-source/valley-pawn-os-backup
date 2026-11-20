@@ -27,7 +27,7 @@ Set by Joshua 2026-10-21: "we don't want to continuously blast them with updates
 | Policy Day (1st business day), 8:40 AM | One Gusto Team document to every employee + future hires; one #policy-announcements post; manuals published (Gusto view-only + store binder) | Policy Day runner |
 | Mondays | Signature status read from Gusto; Gusto's own reminder sent to anyone unsigned | Policy Day runner |
 | 10th (next business day if weekend) | Signatures due | Employees |
-| 15th (next business day if weekend) | Names still unsigned, by store, go to Preston in #preston-claude | Policy Day runner |
+| 15th (next business day if weekend) | Names still unsigned, by store, go to Preston in #preston-goldilocks | Policy Day runner |
 | End of month | Packet closed: signed / unsigned count recorded; compliance calendar row updated | Policy Day runner |
 | Empty queue | Nothing is sent that month; Joshua gets one line saying so | Policy Day runner |
 | No "approve" by Policy Day | Nothing is sent. Runner waits up to the 7th, then rolls the items to next month and tells Joshua once | Policy Day runner |
@@ -50,7 +50,7 @@ A change that cannot wait: a law or court order taking effect before the next Po
 DocuSign is retired for HR (kept only as the archived `docusign/` fallback; Bald Rock guest contracts are separate and unaffected).
 
 **How it works today (checked 2026-10-25):**
-- ROW / Action Plan: requested by the CEO or the Market Manager in #preston-claude; the "Preston assistant" task drafts it from the HR E-Sign Playbook (Drive `HR_ESIGN_PLAYBOOK.md`, id 1TwXRFcXLHnVIcUC6XH4eCC07zHhEpmyC — writing standard, STOP list, field limits) on the hosted blank forms (thevalleypawn.com `vp-row-form-v2-k7q2.pdf`, `vp-action-plan-form-v2-k7q2.pdf`) and sends it **through DocuSign**; the weekly "Gusto HR filing" task (`gusto_filing/GUSTO_FILING_RUNBOOK.md`) then uploads the signed PDF into the employee's Gusto file as a view-only document and archives it in Drive › Employee Files. The prompt change that moves ROW/Action Plans to Gusto Individual documents (`PRESTON_ASSISTANT_PROMPT_2026-10-21.md`) is written but not yet approved on the Mac.
+- ROW / Action Plan: requested by the CEO or the Market Manager in #preston-goldilocks; the "Preston assistant" task drafts it from the HR E-Sign Playbook (Drive `HR_ESIGN_PLAYBOOK.md`, id 1TwXRFcXLHnVIcUC6XH4eCC07zHhEpmyC — writing standard, STOP list, field limits) on the hosted blank forms (thevalleypawn.com `vp-row-form-v2-k7q2.pdf`, `vp-action-plan-form-v2-k7q2.pdf`) and sends it **through DocuSign**; the weekly "Gusto HR filing" task (`gusto_filing/GUSTO_FILING_RUNBOOK.md`) then uploads the signed PDF into the employee's Gusto file as a view-only document and archives it in Drive › Employee Files. The prompt change that moves ROW/Action Plans to Gusto Individual documents (`PRESTON_ASSISTANT_PROMPT_2026-10-21.md`) is written but not yet approved on the Mac.
 - ROC: written by hand by the Market Manager / Manager (blank form `vp-roc-form-v2-k7q2.pdf` on the website; summaries in #roc-<store>). The Playbook keeps ROCs out of Claude's scope (CEO 10/13), and nothing files a ROC into Gusto — the only ROC on disk is a loose PDF in Human Resources.
 - Gap: no working path exists today to send a ROW or ROC as a Gusto Individual document with signature — ROWs still go through DocuSign and are filed into Gusto afterward without a Gusto signature, and ROCs never reach Gusto at all.
 

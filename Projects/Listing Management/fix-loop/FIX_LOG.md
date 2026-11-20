@@ -1,5 +1,15 @@
 # Listings Fix Loop — FIX_LOG (newest first)
 
+## 2026-11-19 — daily run + Thursday AI answer check (scheduled, unattended, Joshua's Chrome) — 8 actions
+- **AI answer check (GEO/AEO, first week):** Valley Pawn named in 20 of 20 city/engine checks; all 60 answers had the right name, address (Suite C / Ste 22), phone, hours and Wednesday status. 2 wrong facts, both "since 1988 / 30+ years" (Copilot Roanoke, ChatGPT Lexington). Full table: AI_ANSWERS.md. Copilot run through Bing AI Mode (copilot.microsoft.com redirects to the work M365 Copilot).
+- **FIXED (proved live):** LQ-040 part 1: Facebook Valley Pawn-Roanoke (61553773147464, our page) bio said "Family Owned Pawn Shop since 1988!"; edited to drop 1988, re-fetched live. Switched back to Joshua's profile after. LQ-031: all 5 /<store>/ short pages are now noindex,follow (no longer duplicate /locations/).
+- **SUBMITTED:** LQ-008 + LQ-009 YellowPages names → emailed support@thryv.com (rung 3, check-replies run, no prior thread). LQ-011 GunNook fee/hours → emailed support@gunnook.com (claim needs a new account; contact form has reCAPTCHA). LQ-013 mallsinamerica "Dixie Pawn" → emailed info@mallsinamerica.com. LQ-030 Google's stale /culpeper snippet → page is noindex now, Request Indexing rejected; waiting for recrawl (re-check 12/3).
+- **ESCALATED / DECISION:** LQ-027 Manta Lexington (640 N Lee Hwy, unclaimed) — no contact path; only a new Manta account or aggregator push. LQ-026 BlueBook Roanoke — two listings both NAMED "GOLD-N-PAWN" (bigger than the typo); likely from the ATF license record, else a dealer claim (new account).
+- **STILL LIVE:** LQ-028 YP 549753098 (our claim) still 439 E Nelson; MapQuest 370030847 (439 E Nelson) + 415053384 (640 N Lee Hwy). YP owner login needs a password (not used).
+- **New rows:** LQ-040 (1988/30+ years, ai-answer), LQ-041 Henry dealer locator hours, LQ-042 Buya/CLOSO/Wheree Waynesboro hours, LQ-043 MapQuest Culpeper at 641 James Madison, LQ-044 Bing Places Lexington Wed (check vs 11/25 special hours).
+- **Sign-in probe:** Apple Business ❌ still signed out. Facebook clicks WORK again today (were "permission denied" 11/18). BrightLocal not retried (extension permission).
+- **Note:** valley-pawn-context skill still lists Waynesboro as closed Wednesday; RUNBOOK, live website, llms.txt and every AI engine say Waynesboro is a 6-day store (Mon–Fri 10–6, Sat 10–5). Kept the RUNBOOK facts. The skill needs updating.
+
 ## 2026-11-18 — daily run (scheduled, unattended, Joshua's Chrome) — 8 actions
 - **Sign-in probe:** Yelp for Business ✅ · Facebook ✅ (page text readable; screenshots/clicks on facebook.com now "permission denied" in Claude in Chrome) · Apple Business ❌ · BBB ❌ (Continue with Google asks for the jdavis@fcfpawn.com password — stopped; did not try the gmail identity to avoid creating a new BBB account) · BrightLocal: Claude in Chrome not allowed on tools.brightlocal.com.
 - **FIXED (proved live):** LQ-023 Loc8NearMe Roanoke — now Valley Pawn, Ste C, open, Sat 10–5, clean description (evidence/2026-11-18_loc8nearme_roanoke.txt). The 10/20 owner correction landed.
@@ -22,3 +32,7 @@
 - NOT OURS: FB 100057490088122 / 367260950022473 = Valley Pawn, Waynesville NC.
 - NEW FINDING: FB valleypawnlex = our old Lexington page, still at 640 N Lee Hwy, and we don't have admin.
 - ESCALATE NEXT RUN (rung 3): LQ-022 Yelp Harrisonburg category (2 removals ignored) → Yelp support · LQ-020 Yelp Staunton ghost (not in our account) → Yelp support · LQ-008/009 YP name locks → YP feedback form / Thryv.
+
+- 2026-11-19: LQ-004/005/006/007/012/039 set to tracking - claimed by the BrightLocal/aggregators chat (BBB + FFL directory corrections). Joshua: home address must not appear on any FFL directory; ATF mailing address stays at home.
+- 2026-11-19: claims released. LQ-007 FIXED (BBB Bald Rock removed, verified 404). LQ-004/005/006 emailed BBB W.VA (Lesley Shelton). LQ-012 emailed MasterFFL support (hide home mailing address on all profiles; Roanoke phone/suite). LQ-039 + Roanoke 2362-D sent via GunMade contact form.
+- 2026-11-19: RUNBOOK v1.1 - added Wednesday weekly search review (GSC, Bing WMT, GBP Performance, Apple insights -> up to 3 SEO improvements/week, measured next week). Retracted the 2362-D change requests to MasterFFL/GunMade.

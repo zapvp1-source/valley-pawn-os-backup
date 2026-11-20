@@ -21,7 +21,7 @@ def kind(m):
     if s == "ai": return "chekkit_ai"
     if "(automated reply" in t: return "auto_ai_reply"
     if t.startswith("hi, this is valley pawn in") and "missed your call" in t: return "auto_missed_call"
-    if t.startswith("hi from valley pawn in"): return "auto_winback"
+    if t.startswith("hi from valley pawn in") or "need cash? no credit check" in t: return "auto_winback"
     if "thevalleypawn.com/app" in t and "payment" in t: return "auto_app_link"
     if "review" in t and ("google" in t or "leave" in t or "http" in t): return "review_invite"
     if "shop" in t and ("ebay" in t or "online" in t or "thevalleypawn.com/shop" in t): return "shop_online_campaign"

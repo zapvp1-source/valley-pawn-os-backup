@@ -1,6 +1,6 @@
 # Insurance Portfolio — All Domains
 
-**GENERATED 2026-11-18 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
+**GENERATED 2026-11-19 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
 Update the registry, then run `Life OS/Insurance/bin/regen_portfolio.py`.
 Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker history: `BROKER_PIPELINE.md`.
 
@@ -14,7 +14,7 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 | 2027-06-01 | Surety | Full Circle Finance Inc | Travelers Bond | 107451942 | — |
 | 2027-06-13 | Workers compensation & employers liability | Full Circle Finance Inc | HDI Global Insurance Company, managed/direct-billed by Glencar Underwriting Managers (ar@glencarum.com, 630-361-9400) | GC29P101236-03 (bound eff 6/13/2026 per ULC binder; -02 expired 6/13/2026) | — |
 | 2027-07-02 | Commercial package | Full Circle Finance Inc | HDI Global Specialty SE (A.M. Best A+), surplus lines VA | IK29P109337-05 | $11,103.04 |
-| 2027-07-02 | Commercial building (lessor's risk) | Farming Infinity LLC (owner) - see ENTITY_STRUCTURE.md | HDI Global Specialty SE | IK29P109337-05 (Loc 5) | $1,104 |
+| 2027-07-02 | Standalone lessor's-risk (LRO) commercial package | Farming Infinity LLC (owner) - see ENTITY_STRUCTURE.md | HDI Global Specialty SE | JM Enterprise # JM77940 (formal policy number not yet received); was IK29P109337-05 (Loc 5, pending removal) | $3,505.31 |
 | 2027-07-02 | Homeowners HO3 written as 'Primary home' | Farming Infinity Mountains LLC / Joshua (per REAL_ESTATE_OS) - NOT FCF Inc | Homesite Insurance Company of the Midwest (Homesite Group) via GEICO Insurance Agency, LLC | 39168908 | $2,356 |
 | 2027-07-28 | Surety | Full Circle Finance Inc | Travelers Bond | 107884069 | — |
 | 2027-08-03 | Surety | Full Circle Finance Inc | American Contractors Indemnity Company (HCC Surety) | 100982291 | — |
@@ -79,12 +79,13 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - Confirm with the City of Lexington (or Rockbridge County) whether a precious metal & gem dealer bond is actually required for this location.
 - If required, obtain one from SuretyBonds.com under the correct obligee (City of Lexington vs Rockbridge County) - this is Joshua's decision on which broker/carrier, not an autonomous bind.
 
-**RE-RICHMOND-817 — Commercial building (lessor's risk)**
+**RE-RICHMOND-817 — Standalone lessor's-risk (LRO) commercial package**
 
 - Insurable-interest / named-insured mismatch: owner (Farming Infinity LLC) is only an AI/loss payee; FCF Inc is named insured. Joshua flagged 7/31/2026 that a standalone policy under the real estate company may be needed.
 - Premium paid by FCF Inc for a Domain 2 asset - bookkeeping allocation.
 - 9/22/2026: Attempted standalone lessor's-risk quote via NEXT Insurance (app.nextinsurance.com), Lessors of Commercial Buildings product, applicant Farming Infinity LLC. NEXT DECLINED and redirected to a Tivly lead-gen page (not a real quote) - not pursued further. Fallback: emailed Howard Baker (incumbent broker, already carries this building as Loc 5) to quote it as a standalone policy in Farming Infinity LLC's own name, using the existing Loc 5 schedule as the starting spec ($577K building RC, $1M/$2M GL, DCCU mortgagee). If bound, drop Loc 5 from VP-PKG (IK29P109337) for the ~$1,104/yr credit.
 - QUOTE RECEIVED 9/23/2026: Wexford Insurance / Christian Bandy (cbandy@wexfordins.com, 317-942-0549 ext 2) quoted the standalone LRO policy at $3,309.16/yr ($1,220.06 down + 10 x $208.91), GL $1M/$2M occ/agg incl $1M personal & advertising injury, $100K damage-to-premises-rented, $5K medical expense; property $577,000 building RC, $45,000 BI w/ extra expense, $10,000 deductible, Cause of Loss Basic. Attachments (Pathpoint cover letter addressed to Farming Infinity, LLC; Navigators Quote Letter) saved to Gmail thread 1a0cfb68ada34da3, not yet copied to Drive. Awaiting Howard Baker's competing number before Joshua picks.
+- 2026-11-18/19 (insurance-inbox-watch): JM (Yuliet Arevalo) sent the invoice ($3,505.31) and a DocuSign application to complete for the standalone policy (Enterprise # JM77940). NOT YET PAID, DocuSign NOT YET SIGNED as of this run. Payment portal zip code (24482) looks like Bald Rock's zip, not 817 Richmond's (24401) - worth Joshua double-checking before paying in case JM billed the wrong property's rate/record. Loc 5 removal from IK29P109337 and the ~$1,104/yr pro-rata return are not yet confirmed either.
 
 **RE-CYPRESS-HO — Homeowners HO3 (Special Form)**
 
@@ -316,15 +317,15 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 
 ## DOMAIN 2 — Real Estate
 
-### RE-RICHMOND-817 — Commercial building (lessor's risk) - covered as Loc 5 on VP-PKG, not a separate policy
+### RE-RICHMOND-817 — Standalone lessor's-risk (LRO) commercial package - Farming Infinity, LLC (bind in process; was: covered as Loc 5 on VP-PKG)
 
 - **Named insured (entity):** Farming Infinity LLC (owner) - see ENTITY_STRUCTURE.md
-- **Named insured (as written on policy):** Full Circle Finance, Inc. DBA: Valley Pawn (Farming Infinity LLC is Additional Insured/Loss Payee - Building)
+- **Named insured (as written on policy):** Farming Infinity, LLC (standalone policy; JM Enterprise # JM77940). Loc 5 on IK29P109337 (FCF Inc) not yet confirmed removed.
 - **Scope:** 817 Richmond Ave, Staunton VA 24401; leased to First Cash ~3,750 sf
 - **Carrier:** HDI Global Specialty SE · **Program/MGA:** Union Life & Casualty
 - **Broker:** JM Insurance Agency Partners · Howard Baker
-- **Policy #:** IK29P109337-05 (Loc 5) · **Term:** 2026-07-02 → 2027-07-02 · **Renews:** 2027-07-02
-- **Premium:** $1,104 — Location premium incl TRIA on 8/17/2026 schedule
+- **Policy #:** JM Enterprise # JM77940 (formal policy number not yet received); was IK29P109337-05 (Loc 5, pending removal) · **Term:** 2026-07-02 → 2027-07-02 · **Renews:** 2027-07-02
+- **Premium:** $3,505.31 — Invoice received 11/18/2026 6:45pm ET from Yuliet Arevalo (JM, yarevalo@jmpartners.com) for $3,505.31, matches Howard's 10/16 quote. Pay via https://jmpartners.epaypolicy.com (Enterprise # JM77940, zip entered on portal: 24482 - NOTE: 24482 is Verona/Bald Rock's zip, not Staunton 24401 where 817 Richmond sits; flagging as a possible JM data-entry mismatch, not corrected by Claude). Can also mail check to JM Insurance Agency Partners, Inc., 5200 Waterford District Drive, Suite 100, Miami, FL 33126. Prior Loc-5 premium was $1,104/yr annual (pending pro-rata return once Loc 5 is confirmed dropped from IK29P109337).
 - **Payment:** Via VP-PKG (FCF Inc pays) - intercompany allocation to Farming Infinity LLC not evidenced
 - **Key limits:**
   - **building replacement cost:** $577,000
@@ -340,7 +341,7 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - **Additional Insured / Loss Payee - Building:** Farming Infinity, LLC
 - **Status:** DECISION 2026-11-17: Joshua emailed FirstCash (thread 1a11ba506e2712f0, 10:23am ET) that he is binding the more expensive policy today - i.e. JM/HDI standalone building + GL in Farming Infinity LLC's name, $3,505.31/yr incl VA SL taxes, $10K deductible, TRIA included (Howard quote 10/16, thread 1a145f65c8f27040). Bind instruction to Howard not yet sent as of 2026-11-17 10:30am. On bind, JM deletes Loc 5 from IK29P109337 (~$1,104/yr location premium returns pro-rata). In force via VP-PKG. UPDATE 2026-11-11 (insurance-inbox-watch): Howard Baker (JM) followed up 11/10 12:38pm ET on the standalone Farming Infinity LLC lessor's-risk-only (LRO) quote for 817 Richmond ($3,505.31/yr, per 10/29 log); Joshua replied same day 6:54pm ET: 'Yes, I am waiting on First Cash to give me proof of insurance so we can go with a liability only policy.' Decision still pending on Joshua/FirstCash - not a silence-sweep candidate (Joshua's own reply is the latest message, waiting on a third party, not an unanswered broker thread). UPDATE 2026-11-18 (insurance-inbox-watch): Joshua sent the bind instruction to Howard Baker 11/17 3:35pm ET (thread 1a145f65c8f27040) — bind the 817 Richmond standalone LRO policy in Farming Infinity, LLC's name per the 10/16 quote ($3,505.31/yr, $10K deductible), effective 11/17/2026, DuPont Community Credit Union staying on as mortgagee; once bound, delete Loc 5 from IK29P109337 (VP-PKG) and send the return premium. No reply from Howard yet as of this run (11/18 6:44am scan) — awaiting his bind confirmation and declarations page. This resolves the prior 'waiting on FirstCash' blocker: Joshua decided to proceed without further waiting.
 - **Documents:** Same as VP-PKG
-- **Last verified:** 2026-11-18 — source: 8/17/2026 schedule; IK29P109337-04 mortgagee page; NEXT Insurance application attempt 9/22/2026; Wexford Insurance (Pathpoint/Navigators) quote 9/23/2026
+- **Last verified:** 2026-11-19 — source: 8/17/2026 schedule; IK29P109337-04 mortgagee page; NEXT Insurance application attempt 9/22/2026; Wexford Insurance (Pathpoint/Navigators) quote 9/23/2026; JM invoice email 11/18/2026 6:45pm ET (Gmail thread 1a1effa5c607f78b)
 
 ### RE-CYPRESS-HO — Homeowners HO3 (Special Form)
 

@@ -3,7 +3,7 @@
 ask_vp_verify.py — the weekly ten-minute ask of Preston (agent ask-vp-verify, Mondays 09:00).
 
 The only recurring ask on Preston's time in the whole Ask Valley Pawn system. Each Monday:
-  1. Reads #preston-claude for the last batch this script posted and Preston's numbered replies:
+  1. Reads #preston-goldilocks for the last batch this script posted and Preston's numbered replies:
         ok / yes / correct / 👍        -> VERIFIED
         no / wrong / not anymore        -> REJECTED (entry stops publishing)
         anything else                   -> VERIFIED with that text as the correction
@@ -11,7 +11,7 @@ The only recurring ask on Preston's time in the whole Ask Valley Pawn system. Ea
   2. Builds this week's batch: kb_build.py --queue (<= 10 pending entries, highest confidence first —
      those are what the responder is already answering from) plus any NOT-FOUND questions from
      Ask Valley Pawn/QUESTION_LOG.md in the last 7 days (a real store question beats a queued rule).
-  3. Posts ONE message to #preston-claude — only if Ask Valley Pawn/config.json has "verify_enabled": true.
+  3. Posts ONE message to #preston-goldilocks — only if Ask Valley Pawn/config.json has "verify_enabled": true.
      Until Joshua flips that, the batch is written to Ask Valley Pawn/verify/<date>.md and nothing is posted.
 
 Nothing else is ever sent. Never more than 10 items. Rule 16 on failure.
