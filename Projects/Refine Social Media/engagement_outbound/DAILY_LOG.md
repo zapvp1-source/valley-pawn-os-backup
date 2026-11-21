@@ -1,5 +1,18 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-20 (daily PREP run, 12:42–13:00 ET, level 1 all pages, Friday) — picks queued for the next POST-mode chat, nothing published by this run
+- Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only (composer read "What's on your mind, Joshua?" at start and end); never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings.
+- Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).
+- No POST-mode chat since 11/19 morning (ledger unchanged at 88 rows). All 8 items from 11/19 still in QUEUE and valid: Roanoke follow (Roanoke Regional Chamber); comments Roanoke SPCA Diamond (to 11/21 10:00), Culpeper CRI Giving Locally (to 11/21 07:55), Waynesboro Wayne Theatre (to 11/21 09:20), Harrisonburg HHS TSA (to TODAY 14:57), Lexington W&L foliage (to 11/21 10:17), Brand SNP mantis (to 11/21 11:00); Harrisonburg share MRL stories (to 11/21 10:00).
+- New pick: Harrisonburg comment → Daily News-Record, Turner Ashby (10-1) Region 3C semifinal at Fluvanna (posted ~11/19 20:45, valid to ~11/21 20:30) — replaces the HHS pick once it lapses; one Harrisonburg comment per day.
+- Lexington share: still none this week — Main Street Lexington's greenery call and parade applications are pinned older posts; tourism/RARA/Lime Kiln/News-Gazette had nothing fresh on the YES list.
+- Skipped on purpose: News-Gazette fire/Tulane charges/Public Works director; DNR Arkansas governor quote (political/religious); CCPS sub spotlights (name individuals; Culpeper already has a pick); Rail Yard Dawgs jersey auction/raffle; Museum of Culpeper registration/ticketed caboose; RARA Dec 1 ticketed market.
+- Watchlist: 9 pages re-checked (DNR, News-Gazette, Main Street Lexington, Lexington tourism, Lime Kiln, RARA, CCPS, Museum of Culpeper, Rail Yard Dawgs). None newly dormant; no unresolved entries.
+- Ramp: all pages hold level 1. Share week (Mon 11/16–): Roanoke, Culpeper, Waynesboro used; Harrisonburg queued; Lexington none; Brand none (Sunday slot).
+- Reply / follow-back candidates for POST mode (from Joshua's notifications): carry-overs Mark Lyon on a Valley Pawn-Culpeper post, ~10 commenters on a Valley Pawn-Lexington post, "Synster Gates Fan" mention on Valley Pawn; new: Kelsey L Iane and 3 others followed Valley Pawn-Lexington (~2h) — follow back only if a Follow button is offered.
+- Needs a person: Facebook shows "We noticed a new login from a device or location you don't usually use. Please review." (1d old) — not opened by this run; one line added to Life OS/HUMAN_QUEUE.md for Joshua to review. Not a checkpoint; browsing worked normally.
+- Totals this run: comments 0 (1 new queued, 6 still pending), shares 0 (1 pending), replies 0 (3 candidates), follows 0 (1 pending), new pages resolved 0.
+
 ## 2026-11-19 (daily PREP run, 12:42–12:55 ET, level 1 all pages, Thursday) — picks queued for the next POST-mode chat, nothing published by this run
 - Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only (composer read "What's on your mind, Joshua?" at start and end); never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings.
 - Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).

@@ -34,3 +34,11 @@
 ## Small directories (FFLeasy, GunNook, GunMade, MasterFFL, BlueBook, mallsinamerica, Manta, Nextdoor, ChamberofCommerce.com, Loc8NearMe)
 - Look for "Claim / Is this your business? / Suggest an edit / Report" on the listing first. Otherwise use the site's contact form. Fallback: email the address in the site footer from jdavis@fcfpawn.com.
 - Many sit behind Cloudflare. If a challenge blocks the page, go to the support email (rung 3) instead of retrying.
+
+## Bing Places (added 2026-11-20)
+- Public check: bing.com/maps?q=Valley+Pawn+<address> → read the hours table (javascript `document.querySelectorAll('table')`). Listings are claimed (verified badge).
+- Owner edit: bingplaces.com → Sign in. Both "Continue as Joshua" (Google) and "Microsoft account" open a popup outside the Claude in Chrome tab group and do not finish → needs Joshua's one-time sign-in, or a BrightLocal push.
+
+## pawnshopatlas.com / BaseLocal (added 2026-11-20)
+- pawnshopatlas: city pages /virginia/<city>/; "Spotted an error? Let us know" = mailto contact@pawnshopatlas.com. No form.
+- BaseLocal: "best of" list pages only (no business page); correction = hello@baselocal.com.

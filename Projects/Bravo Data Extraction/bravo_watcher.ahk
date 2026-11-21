@@ -112,6 +112,7 @@ Persistent
 #Include reports\CustomerLoyalty.ahk
 #Include reports\CustomerLoyaltyProbe.ahk
 #Include reports\PmLoanGrowth.ahk
+#Include reports\LoanReminders.ahk   ; ADDED 2026-11-20 loan-reminders (Chekkit reminder feed)
 #Include reports\StoreConfigAdmin.ahk   ; 2026-10-20 employee-status + store-hours (System Configuration writes)
 ; Add #Include for each new report module here.
 
@@ -250,6 +251,7 @@ Main() {
     REPORT_HANDLERS["customer-loyalty"]              := PullCustomerLoyalty
     REPORT_HANDLERS["customer-loyalty-probe"]        := PullCustomerLoyaltyProbe
     REPORT_HANDLERS["pm-loan-growth"]                := PullPmLoanGrowth
+    REPORT_HANDLERS["loan-reminders"]                := PullLoanReminders   ; ADDED 2026-11-20
     REPORT_HANDLERS["layaway-detail"]                := PullLayawayDetail   ; ADDED 2026-10-21
     REPORT_HANDLERS["employee-status"]               := PullEmployeeStatus      ; 2026-10-20 StoreConfigAdmin.ahk
     REPORT_HANDLERS["store-hours"]                   := PullStoreHours          ; 2026-10-20 StoreConfigAdmin.ahk

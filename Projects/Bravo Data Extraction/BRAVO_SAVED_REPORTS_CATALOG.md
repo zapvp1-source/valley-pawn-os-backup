@@ -14,6 +14,7 @@ session learns what a saved report actually filters. Exact names are case-sensit
 | **75 Days Past Due** | Past Due Age > 75 | no | Weekly 5% rule (cells `loans-75-days-past-due`, `loans75-detail`). |
 | **Claude First Payment Default** | On loan, past pull date, no payment | no | `fpd-cohort`. |
 | **Claude Forfeiture Winback** | LOAN, EXPIRED, Age < 730 | no | Weekly win-back. |
+| **Claude Loan Reminders** (SHARED COMPANY-WIDE, created 2026-11-20) | Ticket Kind = LOAN; **Due Date range**; every disposition; saved layout FDP; rows 1000 (cell passes rows=5000) | YES - pos1/pos2 = due-date range, verified in CSV 11/20 (CUL, HAR) | Loan reminder texts: every loan due in a window. Cell `loan-reminders` (`reports/LoanReminders.ahk`), token = day -> day-45..day+6. Keep Disposition = ON LOAN. |
 | **Claude Loan Reviews** | Ticket Kind = **BUY**, Loan Amount $1–$5 (a clone of Low Dollar) — NOT a loan report despite the name | yes | Avoid for loan work. |
 | Loans By Amount (SHARED GLOBALLY) | not yet read (layout pick failed on WAY 10/7) | ? | — |
 

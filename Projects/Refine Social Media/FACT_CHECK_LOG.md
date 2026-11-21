@@ -347,3 +347,16 @@ Unverifiable: none left in posts. PUBLISHED-WRONG: none.
   - 6afb5d7ef9116176eb1ecde1 Harrisonburg FB 11/19: "It's Thanksgiving week" (Thanksgiving is 11/26) → "Thanksgiving is one week from today".
   - 6afb5d860acc11d34476ce2a GBP_Harrisonburg 11/19: "Thanksgiving week ... Check the organizer's page for the start time and route" → one week away, 121 S. Main St, kids' dash 8 AM, Trot 8:30 AM, registration closes Nov 24.
 - Unverifiable (removed): Wayne Theatre 650/450 seat counts. PUBLISHED-WRONG: none.
+
+## 2026-11-20 07:50 ET — daily fact-check (window: next 36h)
+- Posts checked: 25 (8 high-school football posts with dated claims; 1 brand post with a store-hours claim; the rest were product, hiring, evergreen Lexington mountain or brand-thank-you posts, so skipped).
+- Verified (2026 season; all region semifinals Fri Nov 20, 7 p.m., no postponement or change found as of this morning):
+  - Culpeper + GBP_Culpeper: Skyline at Culpeper County (Culpeper hosts); Culpeper beat Brentsville District 22-20 on Nov 13. Sources: https://cardinalnews.org/2026/11/13/every-no-1-seed-wins-in-first-round-of-vhsl-football-playoffs/ ; https://www.si.com/high-school/virginia/virginia-high-school-football-playoff-final-scores-results-november-13-01m7cbettwb1 ; https://sports.yahoo.com/articles/updated-virginia-high-school-football-214929815.html
+  - Roanoke + GBP_Roanoke: Patrick Henry at Midlothian (PH beat Douglas Freeman 16-14); Cave Spring at William Byrd. Source: Cardinal (above), Yahoo/SI (above)
+  - Harrisonburg + GBP_Harrisonburg: Liberty Christian at Broadway; Turner Ashby at Fluvanna County. Source: Cardinal, Yahoo/SI
+  - Waynesboro + GBP_Waynesboro: Buckingham at Stuarts Draft (Stuarts Draft had a first-round bye, confirmed by Yahoo/SI); Fort Defiance at Strasburg (Fort Defiance beat Central-Woodstock 21-3, MaxPreps https://www.maxpreps.com/news/ubeW1mfuK0WjjkTKXW8Y8w/football-recap-fort-defiance-pulls-away-from-central-woodstock--how-to-watch.htm ; WSET had the score reversed); Altavista at Riverheads; Sussex Central at Buffalo Gap. Source: Cardinal, Yahoo/SI
+  - Brand (Sat 11/21): "Culpeper, Roanoke and Waynesboro close at 5 today" matches the store hours on file (Sat 10-5).
+- Note: SI game-preview pages dated "Nov 21" (Skyline/Culpeper, Stuarts Draft/Buckingham) are from 2025. Not used.
+- Edited: 0. All claims were true and specific.
+- Unverifiable: none. 7 p.m. kickoffs come from Cardinal News only (MaxPreps preview and WRIC pages wouldn't load); no source shows a different time.
+- PUBLISHED-WRONG: none.

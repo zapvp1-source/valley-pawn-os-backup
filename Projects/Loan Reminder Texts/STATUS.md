@@ -207,3 +207,21 @@ Proposed wording (waiting on Joshua's OK, then: edit the 3 gold campaigns + remo
 ## 2026-11-19 11:05 PM — Joshua: "dec 1 hold" + report may be built by background script, but the nightly info must come from an agent
 - Gold campaigns HELD (rescheduled, same text and list, still "Scheduled"): Harrisonburg "We By Gold Ongoing" Dec 1 -> Jan 4, 2027 1:47 PM (925); Waynesboro "Gold Boro" Dec 1 -> Jan 4, 2027 12:01 PM (1,046). Culpeper, Lexington, Roanoke unchanged (Dec 1). Re-check WAY/HAR opt-out rate before Jan 4.
 - Design rule from Joshua: the nightly reminder feed is a native agent (launchd + pipeline cell), never a chat session or screen control.
+
+## 2026-11-20 8:20 AM — Joshua: Jan 4 good; add reply-stop to birthday text; "Chekkit already adds this"
+- CONFIRMED from yesterday's sends: Chekkit appends " Text STOP to unsubscribe" to some outgoing texts that lack that exact phrase (missed-call: 4 of 9 got "...Reply STOP to opt out. Text STOP to unsubscribe"; review invites 159 of 172 at CUL; win-back too). Not every text gets it (likely first contact / periodic).
+- Win-back wording now ends with the exact phrase "Text STOP to unsubscribe" (155-160 chars) so nothing is doubled.
+- Rule for every Chekkit text we write (loan/layaway reminders, birthday, anniversary): end with exactly "Text STOP to unsubscribe" and count it inside the 160. reminder_core.py wording still says "Reply STOP to opt out." -> change before the trial.
+- Birthday/anniversary: opt-out line goes into the Chekkit version at cutover. Not added in Bravo: it pushes the Bravo text past 160 (2 x $0.07).
+- Missed-call text wording (fleet/missed_call_text_config.json) still has "Reply STOP to opt out." and sometimes gets the Chekkit line appended as well. Not changed.
+- "hold the oin text also": unclear which text; asked Joshua.
+- 11/20 9:25 AM: MobilePawn after the 11/19 text (Bravo month-end report, YTD through 11/18 vs 11/19): active app customers WAY 282 -> 283, HAR 353 -> 353; app loan payments on 11/19: WAY 12 (YTD avg ~6/day), HAR 8 (avg ~8/day). Cost: 102 opt-outs. 'Customers Active' may count only customers who have used the app, so installs without a payment may not show.
+
+## 2026-11-20 7:10-8:10 PM — Bravo list for the reminders BUILT and tested (Joshua "yes" 11/19; background script, no screen control)
+- NEW saved report in Bravo: **Claude Loan Reminders** (Loans/Buys > Custom Reports). Ticket Kind = LOAN, Due Date range, layout FDP, Shared Company-Wide. Saved 7:44 PM at Culpeper. Nothing existing was loaded, changed or deleted.
+- Built by `MobileEventsGoldOff.ahk` modes crprobe (look only) / crdry (everything except Save, leaves by Cancel) / crbuild (Save only if every check passes; refuses if the name already exists). Backups .bak-pre-crprobe-20261120, .bak-pre-crbuild-20261120.
+- Lessons: first list-open after a Tab does nothing (read it twice); a date set by value is text and Save rejects it (red X) - click the box and type, Bravo then holds a real date (it kept today's date; the runner overrides both dates each run anyway).
+- NEW pipeline cell `loan-reminders` (`reports/LoanReminders.ahk`, two added lines in bravo_watcher.ahk, backup .bak-pre-loanreminders-20261120, validated + watcher restarted 8:01 PM). Token = a day -> due dates 45 days back to 6 days ahead -> `output/<day>_<STORE>_loan-reminders.csv`. Read only.
+- Test 8:01-8:09 PM: CUL 1,085 rows, 533 tickets, 271 on loan (182 past due), due dates 10/6-11/26 exactly as asked, 214 of the 271 have the app activated. HAR 705 rows, 495 tickets, 277 on loan (210 app activated). Harrisonburg seeing the report proves it is shared to all stores. Columns: Ticket Number, Disposition, Due Date, Customer, MobilePawn, SMS, Last Payment.
+- reminder_core.py: both loan texts now end "Text STOP to unsubscribe" (backup fleet/_backups/reminder_core.py.bak-pre-stopline-20261120). Ticket numbers print digits only (#4017707); when several tickets would push past 160 it says "your 3 loans". Longest text on real Culpeper data: 152. 11 tests pass. Still no send function.
+- NOT built yet: phone numbers for these customers (existing ChekkitInvitesRange handler has phones), Chekkit opt-out list feed, the nightly native agent (launchd, after close, no-send for 7 days), layaway and birthday lists.

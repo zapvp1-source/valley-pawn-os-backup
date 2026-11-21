@@ -65,6 +65,12 @@ GoMain() {
             GoChannels(st)
         else if (MODE = "probe")
             GoProbe(st)
+        else if (MODE = "crprobe")
+            GoCrProbe(st)
+        else if (MODE = "crdry")
+            GoCrBuild(st, false)
+        else if (MODE = "crbuild")
+            GoCrBuild(st, true)
         else if (MODE = "align") {
             GoAlign(st)
             GoVerify(st)
@@ -482,6 +488,86 @@ GoPick(combo, want) {
     return false
 }
 
+; crprobe (2026-11-20): READ ONLY. Loans/Buys > Custom Reports: dump the dialog, press "New Report", dump again,
+; open the criteria drop-down and dump its list, close it with Escape, then leave by Cancel. Never Save / Delete Report.
+GoCrProbe(st) {
+    global DUMP_COUNT
+    el := MerFind(GetBravoRoot(), {Name: "Loans/Buys"})
+    if !el {
+        GoResult(st, "CRPROBE Loans/Buys not found")
+        return
+    }
+    el.Click("left")
+    Sleep(5000)
+    DismissPopups()
+    MerWaitNotHung(90)
+    cr := MerFind(GetBravoRoot(), {Name: "Custom Reports", Type: "Button"})
+    if !cr {
+        GoResult(st, "CRPROBE Custom Reports button not found")
+        try BackToDashboard()
+        return
+    }
+    cr.Click("left")
+    Sleep(4000)
+    MerWaitNotHung(60)
+    if !MerFind(GetBravoRoot(), {AutomationId: "BoxSelectCriteria"}) {
+        GoResult(st, "CRPROBE dialog did not open")
+        try BackToDashboard()
+        return
+    }
+    out := "## dialog as opened`r`n"
+    DUMP_COUNT := 0
+    try MerDump(GetBravoRoot(), 0, &out)
+    MerShot(st . "_crprobe_1")
+    nr := MerFind(GetBravoRoot(), {Name: "New Report", Type: "Button"})
+    if nr {
+        nr.Click("left")
+        Sleep(2500)
+        out .= "## after New Report`r`n"
+        DUMP_COUNT := 0
+        try MerDump(GetBravoRoot(), 0, &out)
+        MerShot(st . "_crprobe_2")
+    } else
+        out .= "## New Report button not found`r`n"
+    for aid in ["BoxSelectCriteria", "BoxIsShared", "BoxColumns"] {
+        cb := MerFind(GetBravoRoot(), {AutomationId: aid})
+        if !cb
+            continue
+        arrow := 0
+        try arrow := cb.FindElement({Type: "Button"})
+        if !arrow
+            continue
+        try arrow.InvokePattern.Invoke()
+        catch
+            arrow.Click("left")
+        Sleep(2000)
+        out .= "## list of " . aid . "`r`n"
+        mainHwnd := WinExist(BRAVO_WIN_TITLE)
+        for hwnd in WinGetList("ahk_exe Bravo.exe") {
+            if (hwnd = mainHwnd || !DllCall("IsWindowVisible", "ptr", hwnd, "int"))
+                continue
+            DUMP_COUNT := 0
+            try MerDump(UIA.ElementFromHandle(hwnd), 0, &out)
+        }
+        Send("{Escape}")
+        Sleep(1200)
+    }
+    MerWrite(OUT_DIR . "\" . st . "_crprobe.txt", out)
+    closed := false
+    Loop 5 {
+        if !MerFind(GetBravoRoot(), {AutomationId: "BoxSelectCriteria"}) {
+            closed := true
+            break
+        }
+        c := MerFind(GetBravoRoot(), {Name: "Cancel", Type: "Button"})
+        if c
+            c.Click("left")
+        Sleep(2500)
+    }
+    GoResult(st, "CRPROBE done, dialog " . (closed ? "closed by Cancel" : "STILL OPEN") . " (nothing saved)")
+    try BackToDashboard()
+}
+
 GoResult(st, s) {
     try FileAppend(FormatTime(, "yyyy-MM-dd HH:mm:ss") . " " . st . " " . s . "`r`n", RESULT_FILE, "UTF-8-RAW")
     try LogMessage("result " . st . ": " . s)
@@ -686,4 +772,478 @@ MerOnError(e, mode) {
     try MerStatus("ABORT unhandled " . e.Message)
     ExitApp(3)
     return 1
+}
+
+; ============================================================================
+; crdry / crbuild (2026-11-20, Joshua "yes" to ONE new saved report). Loans/Buys > Custom Reports > New Report:
+; name "Claude Loan Reminders", Shared Company-Wide, layout FDP, Ticket Kind = LOAN, Due Date range (two dates).
+; ADDITIVE ONLY: never loads, updates or deletes an existing saved report. crdry does everything except Save and
+; leaves by Cancel. crbuild presses the form's own Save only if every check passes; otherwise Cancel.
+; ============================================================================
+CrPopups() {
+    res := []
+    mainHwnd := WinExist(BRAVO_WIN_TITLE)
+    for hwnd in WinGetList("ahk_exe Bravo.exe") {
+        if (hwnd = mainHwnd || !DllCall("IsWindowVisible", "ptr", hwnd, "int"))
+            continue
+        el := 0
+        try el := UIA.ElementFromHandle(hwnd)
+        if !el
+            continue
+        c := ""
+        try c := el.ClassName
+        if (c = "Popup")
+            res.Push(el)
+    }
+    return res
+}
+
+CrDumpPopups(&out, label) {
+    global DUMP_COUNT
+    out .= "## popups: " . label . "`r`n"
+    for p in CrPopups() {
+        DUMP_COUNT := 0
+        try MerDump(p, 0, &out)
+    }
+}
+
+; opens a combo's list, scans it (scrolling) for one of wants; selects it when doSelect. Returns the matched text or "".
+CrPick(combo, wants, &seen, doSelect := true, byClick := false) {
+    arrow := 0
+    try arrow := combo.FindElement({Type: "Button"})
+    if !arrow
+        return ""
+    try arrow.InvokePattern.Invoke()
+    catch
+        arrow.Click("left")
+    Sleep(2200)
+    pops := CrPopups()
+    if (pops.Length = 0)
+        return ""
+    lst := 0
+    try lst := pops[1].FindElement({ClassName: "ListBox"})
+    if !lst {
+        Send("{Escape}")
+        Sleep(900)
+        return ""
+    }
+    found := 0, foundName := "", v := 0
+    Loop 12 {
+        kids := []
+        try kids := lst.GetChildren()
+        for it in kids {
+            txts := []
+            try txts := it.FindElements({Type: "Text"})
+            for t in txts {
+                n := ""
+                try n := t.Name
+                if (n = "")
+                    continue
+                if !InStr(seen, ";" . n . ";")
+                    seen .= n . ";"
+                for w in wants
+                    if (n = w)
+                        found := it, foundName := n
+            }
+            if found
+                break
+        }
+        if (found || v >= 100)
+            break
+        v += 10
+        try lst.ScrollPattern.SetScrollPercent(v)
+        catch
+            break
+        Sleep(450)
+    }
+    if (!found || !doSelect) {
+        if (CrPopups().Length > 0) {
+            Send("{Escape}")
+            Sleep(900)
+        }
+        return doSelect ? "" : foundName
+    }
+    try found.ScrollItemPattern.ScrollIntoView()
+    Sleep(400)
+    ok := false
+    if !byClick {
+        try {
+            found.SelectionItemPattern.Select()
+            ok := true
+        }
+    }
+    if !ok
+        try found.Click("left")
+    Sleep(1300)
+    if (CrPopups().Length > 0) {
+        Send("{Enter}")
+        Sleep(1300)
+    }
+    if (CrPopups().Length > 0) {
+        Send("{Escape}")
+        Sleep(900)
+    }
+    return foundName
+}
+
+; text of the selected item in a combo's list (opens it, reads, Escape)
+CrSelected(combo) {
+    arrow := 0
+    try arrow := combo.FindElement({Type: "Button"})
+    if !arrow
+        return ""
+    try arrow.InvokePattern.Invoke()
+    catch
+        arrow.Click("left")
+    Sleep(2000)
+    sel := ""
+    global CR_DBG
+    CR_DBG .= "[sel-read pops=" . CrPopups().Length . "]"
+    for p in CrPopups() {
+        its := []
+        try its := p.FindElements({Type: "ListItem"})
+        for it in its {
+            s := false, tn := ""
+            try s := it.SelectionItemPattern.IsSelected
+            try tn := it.FindElement({Type: "Text"}).Name
+            CR_DBG .= " " . tn . "=" . s
+            if (s && sel = "")
+                sel := tn
+        }
+    }
+    if (CrPopups().Length > 0) {
+        Send("{Escape}")
+        Sleep(900)
+    }
+    return sel
+}
+
+CrList() {
+    return MerFind(GetBravoRoot(), {ClassName: "FilterEditingCriteriaListView"})
+}
+
+; names of the Text children of the criteria list, in order, joined by " | "
+CrRowTexts() {
+    s := ""
+    lv := CrList()
+    if !lv
+        return s
+    for k in lv.GetChildren() {
+        c := "", n := ""
+        try c := k.ClassName
+        try n := k.Name
+        if (c = "TextBlock" && n != "")
+            s .= n . " | "
+    }
+    return s
+}
+
+; first child of the criteria list with class cls that comes after the Text child named label (same row)
+CrAfter(label, cls) {
+    lv := CrList()
+    if !lv
+        return 0
+    hit := false
+    for k in lv.GetChildren() {
+        c := "", n := ""
+        try c := k.ClassName
+        try n := k.Name
+        if (!hit) {
+            if (c = "TextBlock" && n = label)
+                hit := true
+            continue
+        }
+        if (c = "Button")
+            return 0
+        if (c = cls)
+            return k
+    }
+    return 0
+}
+
+CrDateEdits() {
+    res := []
+    lv := CrList()
+    if !lv
+        return res
+    for k in lv.GetChildren() {
+        c := ""
+        try c := k.ClassName
+        if (c = "BravoDateEdit")
+            res.Push(k)
+    }
+    return res
+}
+
+CrCancelOut(&out) {
+    global DUMP_COUNT
+    closed := false
+    Loop 5 {
+        if !MerFind(GetBravoRoot(), {AutomationId: "BoxSelectCriteria"}) {
+            closed := true
+            break
+        }
+        if (CrPopups().Length > 0) {
+            Send("{Escape}")
+            Sleep(900)
+        }
+        c := MerFind(GetBravoRoot(), {Name: "Cancel", Type: "Button"})
+        if c
+            c.Click("left")
+        Sleep(2500)
+        if (A_Index = 2) {
+            out .= "## still open after 2 cancels`r`n"
+            DUMP_COUNT := 0
+            try MerDump(GetBravoRoot(), 0, &out)
+        }
+    }
+    return closed
+}
+
+GoCrBuild(st, doSave) {
+    global DUMP_COUNT, CR_NAME, CR_DBG
+    CR_DBG := ""
+    CR_NAME := "Claude Loan Reminders"
+    tag := doSave ? "CRBUILD" : "CRDRY"
+    out := ""
+    outFile := OUT_DIR . "\" . st . "_" . StrLower(tag) . ".txt"
+    el := MerFind(GetBravoRoot(), {Name: "Loans/Buys"})
+    if !el {
+        GoResult(st, tag . " Loans/Buys not found")
+        return
+    }
+    el.Click("left")
+    Sleep(5000)
+    DismissPopups()
+    MerWaitNotHung(90)
+    cr := MerFind(GetBravoRoot(), {Name: "Custom Reports", Type: "Button"})
+    if !cr {
+        GoResult(st, tag . " Custom Reports button not found")
+        try BackToDashboard()
+        return
+    }
+    cr.Click("left")
+    Sleep(4000)
+    MerWaitNotHung(60)
+    if !MerFind(GetBravoRoot(), {AutomationId: "BoxSelectCriteria"}) {
+        GoResult(st, tag . " dialog did not open")
+        try BackToDashboard()
+        return
+    }
+    verdict := ""
+    saved := false
+    try {
+        ; a. does the report already exist?
+        bar := MerFind(GetBravoRoot(), {ClassName: "EntityAdvancedSearchControlBarView"})
+        sc := bar ? MerFind(bar, {ClassName: "BravoComboBox"}) : 0
+        if !sc
+            throw Error("saved-report list not found")
+        seen := ";"
+        have := ""
+        Loop 3 {
+            have := CrPick(sc, [CR_NAME], &seen, false)
+            if (have != "" || StrLen(seen) >= 20)
+                break
+            Sleep(2000)
+        }
+        out .= "## saved reports seen: " . seen . "`r`n"
+        if (have != "")
+            throw Error("ALREADY EXISTS - nothing to do")
+        if (StrLen(seen) < 20)
+            throw Error("saved-report list could not be read")
+        ; b. New Report
+        nr := MerFind(GetBravoRoot(), {Name: "New Report", Type: "Button"})
+        if !nr
+            throw Error("New Report button not found")
+        nr.Click("left")
+        Sleep(2500)
+        nb := MerFind(GetBravoRoot(), {AutomationId: "BoxReportName"})
+        if !nb
+            throw Error("report name box not found")
+        v := ""
+        try v := nb.Value
+        if (v != "" || CrRowTexts() != "")
+            throw Error("form not blank after New Report (name='" . v . "' rows='" . CrRowTexts() . "')")
+        if MerFind(GetBravoRoot(), {Name: "Update", Type: "Button"})
+            throw Error("Update button present - an existing report is loaded")
+        ; c. name
+        inner := MerFind(nb, {ClassName: "TextBox"})
+        (inner ? inner : nb).Click("left")
+        Sleep(500)
+        Send("^a")
+        Sleep(200)
+        SendText(CR_NAME)
+        Sleep(500)
+        Send("{Tab}")
+        Sleep(900)
+        v := ""
+        try v := MerFind(GetBravoRoot(), {AutomationId: "BoxReportName"}).Value
+        nameOk := (v = CR_NAME)
+        out .= "name box = '" . v . "'`r`n"
+        ; d. shared company-wide
+        s1 := ";"
+        CR_DBG := ""
+        before := CrSelected(MerFind(GetBravoRoot(), {AutomationId: "BoxIsShared"}))
+        pk := CrPick(MerFind(GetBravoRoot(), {AutomationId: "BoxIsShared"}), ["Shared Company-Wide"], &s1, true, true)
+        shSel := CrSelected(MerFind(GetBravoRoot(), {AutomationId: "BoxIsShared"}))
+        out .= "shared before='" . before . "' pick returned '" . pk . "' seen " . s1 . " dbg " . CR_DBG . "`r`n"
+        sharedOk := (shSel = "Shared Company-Wide")
+        out .= "shared selected = '" . shSel . "'`r`n"
+        ; e. layout FDP
+        s2 := ";"
+        CrPick(MerFind(GetBravoRoot(), {AutomationId: "BoxColumns"}), ["FDP"], &s2)
+        v := ""
+        try v := MerFind(GetBravoRoot(), {AutomationId: "BoxColumns"}).Value
+        layoutOk := InStr(v, "66b3ae3b") > 0
+        out .= "layout value = '" . v . "'`r`n"
+        ; f. Ticket Kind = LOAN
+        s3 := ";"
+        CrPick(MerFind(GetBravoRoot(), {AutomationId: "BoxSelectCriteria"}), ["Ticket Kind"], &s3)
+        out .= "criteria seen: " . s3 . "`r`n"
+        out .= "rows after Ticket Kind: " . CrRowTexts() . "`r`n"
+        kc := CrAfter("Ticket Kind", "BravoComboBox")
+        kindOk := false
+        if kc {
+            s4 := ";"
+            CrPick(kc, ["LOAN", "Loan"], &s4)
+            out .= "ticket kinds seen: " . s4 . "`r`n"
+            v := ""
+            try v := CrAfter("Ticket Kind", "BravoComboBox").Value
+            out .= "ticket kind value = '" . v . "'`r`n"
+            kindOk := InStr(v, "TKLOAN") > 0
+        } else
+            out .= "ticket kind value combo NOT found`r`n"
+        ; g. Due Date range
+        s5 := ";"
+        CrPick(MerFind(GetBravoRoot(), {AutomationId: "BoxSelectCriteria"}), ["Due Date"], &s5)
+        out .= "rows after Due Date: " . CrRowTexts() . "`r`n"
+        if !InStr(CrRowTexts(), "Due Date | range") {
+            lv := CrList()
+            op := 0, hit := false
+            for k in lv.GetChildren() {
+                c := "", n := ""
+                try c := k.ClassName
+                try n := k.Name
+                if (!hit) {
+                    if (c = "TextBlock" && n = "Due Date")
+                        hit := true
+                    continue
+                }
+                if (c = "TextBlock") {
+                    op := k
+                    break
+                }
+            }
+            if op {
+                h := MerFind(op, {Type: "Hyperlink"})
+                tgt := h ? h : op
+                did := false
+                try {
+                    tgt.InvokePattern.Invoke()
+                    did := true
+                }
+                if !did
+                    tgt.Click("left")
+                Sleep(1800)
+                CrDumpPopups(&out, "operator list")
+                rg := 0
+                for p in CrPopups() {
+                    try rg := p.FindElement({Name: "range", Type: "Text"})
+                    if rg
+                        break
+                }
+                if !rg
+                    rg := MerFind(GetBravoRoot(), {Name: "range", Type: "Text"})
+                if rg {
+                    rg.Click("left")
+                    Sleep(1300)
+                }
+                if (CrPopups().Length > 0 && !InStr(CrRowTexts(), "Due Date | range")) {
+                    Send("{Enter}")
+                    Sleep(1200)
+                }
+                if (CrPopups().Length > 0) {
+                    Send("{Escape}")
+                    Sleep(900)
+                }
+            } else
+                out .= "operator text after Due Date NOT found`r`n"
+        }
+        rangeOk := InStr(CrRowTexts(), "Due Date | range") > 0
+        d1 := FormatTime(DateAdd(A_Now, -10, "Days"), "M/d/yyyy")
+        d2 := FormatTime(DateAdd(A_Now, 6, "Days"), "M/d/yyyy")
+        ; type the dates like a person (setting the value directly leaves text, not a date, and Save rejects it)
+        for i, dd in [d1, d2] {
+            des := CrDateEdits()
+            if (des.Length != 2)
+                break
+            tb := MerFind(des[i], {ClassName: "TextBox"})
+            if !tb
+                break
+            tb.Click("left")
+            Sleep(500)
+            Send("^a")
+            Sleep(200)
+            SendText(dd)
+            Sleep(400)
+            Send("{Tab}")
+            Sleep(700)
+        }
+        des := CrDateEdits()
+        dv1 := "", dv2 := ""
+        if (des.Length = 2) {
+            try dv1 := des[1].Value
+            try dv2 := des[2].Value
+        }
+        datesOk := (des.Length = 2 && RegExMatch(dv1, "^\d+/\d+/\d{4} 12:00:00 AM") && RegExMatch(dv2, "^\d+/\d+/\d{4} 12:00:00 AM"))  ; any real date: the runner overrides both at run time
+        out .= "date edits = " . des.Length . " '" . dv1 . "' '" . dv2 . "' want " . d1 . " " . d2 . "`r`n"
+        rows := CrRowTexts()
+        out .= "final rows: " . rows . "`r`n"
+        rowsOk := (rows = "Ticket Kind | = | LOAN | Due Date | range | " || rows = "Ticket Kind | = | Due Date | range | ")
+        lay := MerFind(GetBravoRoot(), {ClassName: "LayoutView"})
+        sb := lay ? MerFind(lay, {Name: "Save", Type: "Button"}) : 0
+        noUpd := !MerFind(GetBravoRoot(), {Name: "Update", Type: "Button"})
+        gate := "name=" . nameOk . " shared=" . sharedOk . " layout=" . layoutOk . " kind=" . kindOk . " range=" . rangeOk . " dates=" . datesOk . " rows=" . rowsOk . " save=" . (sb ? 1 : 0) . " noUpdate=" . noUpd
+        out .= "GATE " . gate . "`r`n## form before save`r`n"
+        DUMP_COUNT := 0
+        try MerDump(GetBravoRoot().FindElement({ClassName: "LayoutView"}), 0, &out)
+        DUMP_COUNT := 0
+        try MerDump(GetBravoRoot().FindElement({ClassName: "FilterEditingView"}), 0, &out)
+        MerShot(st . "_" . StrLower(tag) . "_1")
+        allOk := (nameOk && sharedOk && layoutOk && kindOk && rangeOk && datesOk && rowsOk && sb && noUpd)
+        if !allOk
+            verdict := "NOSAVE " . gate
+        else if !doSave
+            verdict := "DRY OK (all checks pass, not saved) " . gate
+        else {
+            sb.Click("left")
+            Sleep(4000)
+            MerWaitNotHung(60)
+            saved := true
+            out .= "## after Save`r`n"
+            CrDumpPopups(&out, "after save")
+            MerShot(st . "_" . StrLower(tag) . "_2")
+            if !MerFind(GetBravoRoot(), {AutomationId: "BoxSelectCriteria"}) {
+                DismissPopups()
+                cr2 := MerFind(GetBravoRoot(), {Name: "Custom Reports", Type: "Button"})
+                if cr2 {
+                    cr2.Click("left")
+                    Sleep(4000)
+                }
+            }
+            bar := MerFind(GetBravoRoot(), {ClassName: "EntityAdvancedSearchControlBarView"})
+            sc := bar ? MerFind(bar, {ClassName: "BravoComboBox"}) : 0
+            seen2 := ";"
+            have := sc ? CrPick(sc, [CR_NAME], &seen2, false) : ""
+            out .= "## saved reports after save: " . seen2 . "`r`n"
+            verdict := (have != "") ? "SAVED+LISTED " . gate : "SAVE CLICKED but not seen in list " . gate
+        }
+    } catch as e {
+        verdict := (saved ? "ERROR AFTER SAVE " : "NOSAVE ") . e.Message
+    }
+    closed := CrCancelOut(&out)
+    MerShot(st . "_" . StrLower(tag) . "_end")
+    MerWrite(outFile, out)
+    GoResult(st, tag . " " . verdict . " / dialog " . (closed ? "closed" : "STILL OPEN"))
+    try BackToDashboard()
 }

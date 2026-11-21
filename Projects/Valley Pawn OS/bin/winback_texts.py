@@ -25,8 +25,10 @@ JOSH = "8049304221"
 STORES = [("CUL", "Culpeper"), ("HAR", "Harrisonburg"), ("LEX", "Lexington"), ("ROA", "Roanoke"), ("WAY", "Waynesboro")]
 # 2026-10-23 (Joshua): dropped "you're always approved for another loan" — not true when an item doesn't qualify.
 # 2026-11-19 (Joshua "go"): shortened to stay under 160 characters (one counted text, was two) and added the opt-out line.
+# 2026-11-20: opt-out line is Chekkit's exact phrase. Chekkit appends "Text STOP to unsubscribe" to texts that lack it
+# (seen on missed-call, review-invite and win-back sends), which doubled the line and pushed texts over 160.
 MSG = ("Valley Pawn {TOWN}: need cash? No credit check. Bring in anything of value - gold & silver get the most. "
-       "Stop by or text us here. Reply STOP to opt out.")
+       "Stop by or text us here. Text STOP to unsubscribe")
 
 
 def p10(s):

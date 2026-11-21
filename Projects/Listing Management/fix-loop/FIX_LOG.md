@@ -1,5 +1,13 @@
 # Listings Fix Loop — FIX_LOG (newest first)
 
+## 2026-11-20 — daily run (scheduled, unattended, Joshua's Chrome) — 8 actions
+- **Ingest:** no new presence scorecard (latest 11/15) or FFL_DRIFT (11/15) since 11/18; nothing new to add. No Thursday AI check (Friday) and no Saturday post.
+- **SUBMITTED:** LQ-040 "since 1988" sources → emailed contact@pawnshopatlas.com (Since 1988 + Mon–Sat 10–6 on all our listings; phantom Staunton 817 Richmond, Salem 1617 W Main, Lexington 640 N Lee Hwy; Roanoke missing) and hello@baselocal.com (Roanoke blurb/JSON-LD "Family owned since 1988"). Pawn Spots Lexington re-checked: already clean. LQ-043 MapQuest Culpeper 438523385 verified at 641 James Madison Hwy with the old Yext "Salem / Dixie Pawn / GNP Pawn" description → added to MapQuest ticket #3229823 with LQ-028's Lexington ids 370030847 + 415053384. LQ-028 YP 549753098 (439 E Nelson) → added to the Thryv case (Thryv replied 11/20: forwarded to Client Care). check-replies run before each email (no prior threads except Thryv/MapQuest, replied in-thread).
+- **STILL PENDING:** LQ-017 FB Gold N Pawn and LQ-014 valleypawnlex still live; no decision in Support Inbox (not rejected → no re-report yet). Re-check 11/24.
+- **BLOCKED:** LQ-044 Bing shows Lexington open Wed 10–6 (regular hours, no holiday marker; Sat also 10–6 which is correct for LEX). Listing is claimed; Bing Places sign-in opens a popup outside the Claude tab group and never completes → blocked_signin, added to the Joshua row.
+- **Sign-in probe:** Apple Business ❌ still signed out. Facebook ✅ (clicks work).
+- **Note for playbooks:** Bing Places "Continue as Joshua" (Google) and "Microsoft account" both open popups Claude in Chrome can't reach.
+
 ## 2026-11-19 — daily run + Thursday AI answer check (scheduled, unattended, Joshua's Chrome) — 8 actions
 - **AI answer check (GEO/AEO, first week):** Valley Pawn named in 20 of 20 city/engine checks; all 60 answers had the right name, address (Suite C / Ste 22), phone, hours and Wednesday status. 2 wrong facts, both "since 1988 / 30+ years" (Copilot Roanoke, ChatGPT Lexington). Full table: AI_ANSWERS.md. Copilot run through Bing AI Mode (copilot.microsoft.com redirects to the work M365 Copilot).
 - **FIXED (proved live):** LQ-040 part 1: Facebook Valley Pawn-Roanoke (61553773147464, our page) bio said "Family Owned Pawn Shop since 1988!"; edited to drop 1988, re-fetched live. Switched back to Joshua's profile after. LQ-031: all 5 /<store>/ short pages are now noindex,follow (no longer duplicate /locations/).

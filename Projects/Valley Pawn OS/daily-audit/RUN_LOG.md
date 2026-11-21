@@ -48,3 +48,4 @@ One line per run. Technical detail lives here, never in Slack.
 - 2026-11-17 09:40 ET | date=2026-11-16 | complete=True | sent_to=U03BB52MDSA | path=native | note=14 exceptions; Preston disabled per switch
 - 2026-11-18 09:50 ET | date=2026-11-17 | complete=False | sent_to=U03BB52MDSA | path=native | note=re-ran after 10 min; 11 exceptions; Preston disabled per switch
 - 2026-11-19 09:50 ET | date=2026-11-18 | complete=False | sent_to=U03BB52MDSA | path=native | note=re-ran after 10 min; 13 exceptions; Preston disabled per switch
+- 2026-11-20 09:50 ET | date=2026-11-19 | complete=False | sent_to=U03BB52MDSA | path=native | note=re-ran after 10 min; 16 exceptions; Preston disabled per switch

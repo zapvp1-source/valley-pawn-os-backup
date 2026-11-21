@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-11-19 22:11 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-11-20 22:12 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -792,6 +792,12 @@ RULE: When writing up multiple coins, hit split, write up each coin properly and
 PRESTON SAID: "So you hit split, you write them up all properly and assign the cost that you want for each coin. So you assign the cost for each coin. And once you have them all on there, you can select them and convert to skew before you save the pricing."
 SOURCE: zoom-call:375d33b002b24139a085681aa26e3ffb | 2026-10-30 | UNK Chadd McClintic
 id: coin-split-convert-to-sku-fdeebf02
+
+### [LOW] coin-and-gift-coin-buyer
+RULE: Coin and Gift is a buyer the store asks for a quote on a coin it wants to sell, here when the gold price had dropped below what was paid. The store can present the request as business-to-business and ask them to improve their price.
+PRESTON SAID: "Anyways, see what they can do for us at the coin and gift on that."
+SOURCE: zoom-call:f8f2d4ad8beb4967af60af0995c3b887 | 2026-11-20 | UNK Walker Tapley
+id: coin-and-gift-coin-buyer-9b09780d
 
 
 ==============================================================================
@@ -2522,6 +2528,18 @@ PRESTON SAID: "It's one of those things you kind of got to do in conversation wh
 SOURCE: zoom-call:779a2c14718a4ac89f6d5b7b0c5ad067 | 2026-10-13 | UNK Sandi Cole
 id: feel-out-seller-story-in-con-b165e8cd
 
+### [LOW] ffl-vendor-identification
+RULE: When logging a firearm, the vendor is the name on the FFL. Read it from the FFL document.
+PRESTON SAID: "So the vendor would be what's on the FFL"
+SOURCE: zoom-call:4fa5b50c7e274864851decf0e69dfe59 | 2026-11-20 | UNK Walker Tapley
+id: ffl-vendor-identification-7c0c460c
+
+### [LOW] ffl-verification-ffl-ez-check
+RULE: Look up and verify an FFL with FFL EZ Check, found by searching it on Google. It returns the FFL's details and confirms the FFL is valid.
+PRESTON SAID: "if you go to FFL easy check on the internet just type it in and search bar Google"
+SOURCE: zoom-call:4fa5b50c7e274864851decf0e69dfe59 | 2026-11-20 | UNK Walker Tapley
+id: ffl-verification-ffl-ez-chec-2d05101e
+
 ### [LOW] find-inventory-number-item-history
 RULE: To find an item's inventory number, use the item history screen with the current ticket number.
 PRESTON SAID: "should be item history on there?"
@@ -2650,6 +2668,12 @@ RULE: The sheet is not needed unless the amount is $1,500 or more. The message d
 PRESTON SAID: "Don't need sheet unless $1500+"
 SOURCE: #lex-funds (Preston Peters, Operations Manager) | 2026-11-12 | https://valleypawnworkspace.slack.com/archives/C03B3K5DL6T/p1794517903977039
 id: lex-funds-sheet-threshold-2b09a606
+
+### [LOW] lexington-pawnbroker-bond
+RULE: Preston's read is that a $50K pawnbroker bond was taken for Lexington, and he plans to reuse it. This is not confirmed, and it is unclear who "they" are.
+PRESTON SAID: "It looks like they took the pawnbroker 50 K bond, so I’ll just try to use that one again"
+SOURCE: #preston-goldilocks (Preston Peters, Operations Manager) | 2026-11-20 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1795187883503759
+id: lexington-pawnbroker-bond-0345f0e9
 
 ### [LOW] month-end-markdown-audit-split
 RULE: One store splits its month-end work across several people. The manager does the jewelry markdowns, one employee does the gun audit, the manager reviews the gun audit a second time, and another employee does the general merchandise markdowns.
@@ -2883,5 +2907,5 @@ id: past-due-75-day-5-percent-ce-30eeab0b
 
 
 ==============================================================================
-COVERAGE: 404 entries - 31 verified by Preston, 157 high-confidence rules, 117 medium, 97 low, 2 superseded.
+COVERAGE: 408 entries - 31 verified by Preston, 157 high-confidence rules, 117 medium, 101 low, 2 superseded.
 ==============================================================================

@@ -24,11 +24,17 @@ def layaway_kind(next_due, today):
     return None
 
 
-TEMPLATES = {   # loan wording APPROVED by Joshua 2026-11-18 12:43 PM ("looks good"); layaway wording not drafted yet
-    "courtesy": "Valley Pawn {store}: your loan{s} {tickets} {is_are} due {due}. Pay in store or in the MobilePawn app: thevalleypawn.com/app Reply STOP to opt out.",
-    "past_due": "Valley Pawn {store}: your loan{s} {tickets} {is_are} past due. Call or text us here, or pay in the MobilePawn app: thevalleypawn.com/app Reply STOP to opt out.",
+TEMPLATES = {   # loan wording APPROVED by Joshua 2026-11-18 12:43 PM ("looks good"); layaway wording not drafted yet. Opt-out line = exactly what Chekkit adds (11/20) so it is never doubled
+    "courtesy": "Valley Pawn {store}: your loan{s} {tickets} {is_are} due {due}. Pay in store or in the MobilePawn app: thevalleypawn.com/app Text STOP to unsubscribe",
+    "past_due": "Valley Pawn {store}: your loan{s} {tickets} {is_are} past due. Call or text us here, or pay in the MobilePawn app: thevalleypawn.com/app Text STOP to unsubscribe",
 }
 LIVE_DISPOSITIONS = {"ON LOAN"}          # POLICE LOAN HOLD / COURTESY HOLD are never texted
+
+
+def short_ticket(t):
+    """LT-VP4017707 -> 4017707 (keeps the text short; the number is what is printed large on the ticket)."""
+    m = re.search(r"(\d+)$", str(t))
+    return m.group(1) if m else str(t)
 
 
 def norm_name(n):
@@ -88,7 +94,11 @@ def build_plan(store, tickets, contacts, today, sent_keys=frozenset()):
     texts = []
     for (phone, kind, due), items in sorted(groups.items(), key=lambda x: (x[0][0], x[0][1])):
         n = len(items)
-        body = TEMPLATES[kind].format(store=store, s="s" if n > 1 else "", is_are="are" if n > 1 else "is",
-                                      tickets=", ".join("#" + i[0]["ticket"] for i in items), due=due.strftime("%-m/%-d"))
+        # 160-character rule (a longer text counts double in Chekkit): ticket numbers show digits only
+        # (#4017707, not #LT-VP4017707); if several tickets still push it over, say how many instead.
+        fmt = dict(store=store, s="s" if n > 1 else "", is_are="are" if n > 1 else "is", due=due.strftime("%-m/%-d"))
+        body = TEMPLATES[kind].format(tickets=", ".join("#" + short_ticket(i[0]["ticket"]) for i in items), **fmt)
+        if len(body) > 160:
+            body = TEMPLATES[kind].replace("your loan{s} {tickets}", "your %d loans" % n).format(tickets="", **fmt)
         texts.append({"store": store, "phone": phone, "kind": kind, "text": body, "keys": [i[1] for i in items], "segments": -(-len(body) // 153) if len(body) > 160 else 1})
     return texts, skipped
