@@ -28,6 +28,12 @@ from . import config, ledger
 # X and Brand IG keep their full targets; the audit change that survives is the 1-3 PM timing below.
 TARGETS = {"Brand": 7, "BrandIG": 10, "BrandTwitter": 3, "BrandTikTok": 3,
            **{s: 7 for s in config.STORES}, **{f"GBP_{s}": 7 for s in config.STORES}}
+# 2026-11-21 (Joshua approved YouTube Shorts plan + Pinterest Business): every vertical video that goes to Brand IG /
+# TikTok also goes to Shorts (5 deal reels + compilation + comedy ~= 7/wk; 14 leaves room for the 17-video backfill
+# that runs 1/day from 11/22, which lands in the same weeks). Pinterest = 5 live jewelry/watch listings a week.
+TARGETS.update({"BrandYouTube": 14, "BrandPinterest": 5})
+PIN_TIMES = ["11:25", "11:25", "11:25", "11:25", "11:25"]   # Tue-Sat; no other lane uses :25 at 11
+PIN_DAYS = [1, 2, 3, 4, 5]   # Tue-Sat: the plan is built Monday 14:30, so a Monday slot is always in the past
 
 STORE_DAY = {"Culpeper": 1, "Waynesboro": 2, "Harrisonburg": 3, "Lexington": 4, "Roanoke": 5}  # Tue..Sat
 # 2026-10-21 (audit): measured FB reach peaks 1-3 PM (203-262 avg) and Sundays; 4 PM and Saturday are the worst.
@@ -52,6 +58,19 @@ CHANNEL_RULES = {
           "may use 1-2 emojis, five-store footer required for Brand posts.",
     "x": "X: under 260 characters total, one line, no hashtags beyond #ValleyPawn.",
     "tiktok": "TikTok: 1-2 short lines, 3-5 hashtags, casual.",
+    "youtube": "YouTube Short. LINE 1 = the video TITLE: a search phrase someone would type plus 'at Valley Pawn <City> VA' "
+               "(e.g. 'Gretsch guitar just came in at Valley Pawn Harrisonburg VA'), 70 characters or less, no price, no emoji, "
+               "no hashtags. For a deal reel the title says 'just came in', never a price. For a five-store video use "
+               "'| Valley Pawn' instead of a city. Then ONE blank line, then the DESCRIPTION: one plain line about the video, "
+               "then the store's street address (all five for a five-store video), then 'thevalleypawn.com', then "
+               "\"What's Right Is Right.\", then one line '#Shorts' plus at most 2 more hashtags. NEVER store hours or "
+               "days open (a Short stays up for years), never a phone number.",
+    "pinterest": "Pinterest pin for a real listed item. LINE 1 = pin TITLE: what the item is in plain search words (brand, "
+                 "metal, style), 100 characters or less, no price, no emoji, no hashtags. Then ONE blank line, then the "
+                 "DESCRIPTION (200-450 characters): 2-3 sentences on what makes the piece worth a look (only facts in the "
+                 "contract), that it is pre-owned and listed by Valley Pawn's <store> store in Virginia, and 'Tap through "
+                 "to see the full listing.' End with 2-3 hashtags such as #prelovedjewelry #vintagejewelry #watches. Never "
+                 "store hours, never a phone number, never a price.",
 }
 HARD_RULES = ("Never mention firearms/guns/ammo. Never 'Dixie Pawn'. Never 'Full Circle Finance'. "
               "Never 'fast cash'/'instant cash'/'no credit check'. Hours: Culpeper, Roanoke & Waynesboro Mon-Fri 10-6, Sat 10-5, closed Sun (Waynesboro open Wednesdays from 10/14); "
@@ -171,6 +190,10 @@ def _rules_for(acct: str) -> str:
         return CHANNEL_RULES["x"]
     if acct == "BrandTikTok":
         return CHANNEL_RULES["tiktok"]
+    if acct == "BrandYouTube":
+        return CHANNEL_RULES["youtube"]
+    if acct == "BrandPinterest":
+        return CHANNEL_RULES["pinterest"]
     return CHANNEL_RULES["fb"]
 
 
@@ -226,13 +249,13 @@ def build(week: str, deals_path: Path | None, seed: int | None = None) -> dict:
             slots.append(_slot(f"deal-photo-{store}", "deal_photo", item_key, accts, "photo",
                                _at(monday, 3, DEAL_PHOTO_TIMES[store]), week, media_path=d.get("photo"), contract=base))
         video = d.get("video") or str(config.REELS_DIR / f"deal_{store.lower()}_{week}.mp4")
-        accts = accounts_ok([store, "BrandIG"])
+        accts = accounts_ok([store, "BrandIG", "BrandYouTube"])
         if accts:
             slots.append(_slot(f"deal-video-{store}", "deal_video", item_key, accts, "video",
                                _at(monday, STORE_DAY[store], DEAL_VIDEO_TIME), week, media_path=video,
                                contract=dict(base, note="15-30s vertical reel of the actual item; caption must name item + price")))
     if len(deals) >= 3:
-        accts = accounts_ok(["Brand", "BrandIG", "BrandTikTok"])
+        accts = accounts_ok(["Brand", "BrandIG", "BrandTikTok", "BrandYouTube"])
         if accts:
             slots.append(_slot("deal-compilation", "deal_video", f"deal:{week}:compilation", accts, "video",
                                _at(monday, 5, "13:20"), week, media_path=str(config.REELS_DIR / f"deal_compilation_{week}.mp4"),
@@ -319,13 +342,35 @@ def build(week: str, deals_path: Path | None, seed: int | None = None) -> dict:
     hp = engine.select("humor", 1, account="Brand", today=monday, seed=seed)
     if hp:
         f = hp[0]
-        accts = accounts_ok(["Brand", "BrandIG", "BrandTikTok"])
+        accts = accounts_ok(["Brand", "BrandIG", "BrandTikTok", "BrandYouTube"])
         if accts:
             slots.append(_slot("humor-1", "humor", f"{f.id}:{week}", accts, "video",
                                _at(monday, 3, "14:35"), week, media_path=str(config.REELS_DIR / f"comedy_{week}_1.mp4"),
                                format_id=f.id, deferred=True,
                                contract={"pillar": "humor", "format": {"id": f.id, "title": f.title, "template": f.template},
                                          "note": "rendered by vp_comedy_reel.py in the midweek run; caption 1-2 lines", "min_words": {"fb": 8, "ig": 8, "tiktok": 4}}))
+
+    # ---- Pinterest (2026-11-21): live jewelry/watch eBay listings, one pin per weekday, linked to the listing ----
+    try:
+        from . import pinterest as _pin
+        need = remaining.get("BrandPinterest", 0)
+        for j, it in enumerate(_pin.pick(monday, need) if need else []):
+            if j >= len(PIN_DAYS):
+                break
+            at = _at(monday, PIN_DAYS[j], PIN_TIMES[j])
+            if dt.datetime.fromisoformat(at) < dt.datetime.now(config.TZ) + dt.timedelta(minutes=45):
+                continue                                   # late run: never schedule a pin in the past
+            img = _pin.fetch_image(it["img"], _pin.LANE_DIR / week / (it["item_key"].replace(":", "_") + ".jpg"))
+            if not img or not take("BrandPinterest"):
+                continue
+            slots.append(_slot(f"pin-{j+1}", "pinterest", it["item_key"], ["BrandPinterest"], "photo", at, week,
+                               media_path=img, pin_board=it["board"], pin_board_id=it["board_id"], pin_url=it["url"],
+                               contract={"pillar": "pinterest", "product": it["title"], "store": it["store"],
+                                         "board": it["board"], "listing": it["listing"],
+                                         "note": "real pre-owned item listed on eBay right now; the pin links to that listing",
+                                         "min_words": {"pinterest": 25}}))
+    except Exception as e:                                 # Pinterest must never block the rest of the week
+        notes.append(f"pinterest lane skipped: {type(e).__name__}: {str(e)[:120]}")
 
     plan = {"plan_id": plan_id, "week": week, "created_at": dt.datetime.now(config.TZ).isoformat(timespec="seconds"),
             "season": season, "existing_counts": dict(have), "remaining_after_plan": remaining, "notes": notes,

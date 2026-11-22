@@ -25,13 +25,17 @@ PROFILE="$HOME/Library/Application Support/valleypawn/pw-vp"
 OS_BIN="$HOME/Documents/Claude/Projects/Valley Pawn OS/bin"
 PORT=9333   # = vp_browser.DEBUG_PORT
 mkdir -p "$PROFILE"; chmod 700 "$PROFILE"
+# 2026-11-21: always-on browser host (bin/vp_browser_host.py). When it is enabled the sign-in tabs open IN that
+# Chrome, in one window in front, and the checks keep running; nothing is quit first. Old path below otherwise.
+HOST_MODE=0
+if [ "$1" != "--test" ] && /usr/bin/python3 "$OS_BIN/vp_browser_host.py" enabled; then HOST_MODE=1; fi
 MAIN=$(pgrep -f -- "Google Chrome --user-data-dir=$PROFILE" | head -1)
-if [ -n "$MAIN" ]; then
+if [ "$HOST_MODE" = 0 ] && [ -n "$MAIN" ]; then
   /usr/bin/python3 "$OS_BIN/vp_browser.py" cdp-close || kill -TERM "$MAIN"
   for i in $(seq 1 20); do pgrep -f -- "--user-data-dir=$PROFILE" >/dev/null || break; sleep 1; done
 fi
-/usr/bin/python3 "$OS_BIN/vp_browser.py" prefs
-/usr/bin/python3 "$OS_BIN/vp_browser.py" set-startup
+[ "$HOST_MODE" = 0 ] && /usr/bin/python3 "$OS_BIN/vp_browser.py" prefs
+[ "$HOST_MODE" = 0 ] && /usr/bin/python3 "$OS_BIN/vp_browser.py" set-startup
 if [ "$1" = "--test" ]; then
   open -na "Google Chrome" --args --user-data-dir="$PROFILE" --no-first-run --no-default-browser-check --new-window \
     --remote-debugging-port=$PORT --window-position=-2400,-2400 --window-size=1280,900 \
@@ -58,6 +62,9 @@ fi
 # 2026-11-16: --all = the 7 tabs above + the 8 AI-search listing sign-ins (HUMAN_QUEUE 10/20 row), one window
 if [ "$1" = "--all" ]; then
   TABS+=("https://www.yext.com/login" "https://www.yellowpages.com/" "https://businessconnect.apple.com/" "https://www.bingplaces.com/" "https://www.bbb.org/login" "https://biz.yelp.com/login" "https://www.wikidata.org/w/index.php?title=Special:CreateAccount" "https://copilot.microsoft.com/")
+fi
+if [ "$HOST_MODE" = 1 ]; then
+  exec /usr/bin/python3 "$OS_BIN/vp_browser_host.py" signin "${TABS[@]}"
 fi
 open -na "Google Chrome" --args --user-data-dir="$PROFILE" --no-first-run --no-default-browser-check --remote-debugging-port=$PORT --new-window "${TABS[@]}"
 sleep 3

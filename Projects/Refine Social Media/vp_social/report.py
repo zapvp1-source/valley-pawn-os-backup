@@ -13,10 +13,10 @@ from collections import Counter, defaultdict
 
 from . import config, ledger, reader
 
-ORDER = ["Brand", "BrandIG", "BrandTikTok", "BrandTwitter", "BrandBlog",
+ORDER = ["Brand", "BrandIG", "BrandTikTok", "BrandTwitter", "BrandYouTube", "BrandPinterest", "BrandBlog",
          "Culpeper", "Waynesboro", "Harrisonburg", "Lexington", "Roanoke",
          "GBP_Culpeper", "GBP_Waynesboro", "GBP_Harrisonburg", "GBP_Lexington", "GBP_Roanoke"]
-LABEL = {"facebook": "Facebook", "instagram": "Instagram", "tiktok": "TikTok", "twitter": "X",
+LABEL = {"youtube": "YouTube", "pinterest": "Pinterest", "facebook": "Facebook", "instagram": "Instagram", "tiktok": "TikTok", "twitter": "X",
          "google_business": "Google Business Profile", "gmb": "Google Business Profile",
          "wordpress_oauth": "Blog", "wordpress": "Blog"}
 
@@ -177,6 +177,7 @@ def digest(days: int = 7) -> str:
                 an = it.get("analytics") or {}
                 eng = _aval(an, "engagement") or (_aval(an, "likes") + _aval(an, "comments") + _aval(an, "shares") + _aval(an, "post_clicks"))
                 scored.append({"key": key, "text": (it.get("text") or it.get("caption") or "")[:90].replace("\n", " "),
+                               "views": _aval(an, "views") or _aval(an, "video_views") or _aval(an, "impressions"),
                                "reach": _aval(an, "reach"), "eng": eng or 0, "type": it.get("type") or it.get("postType")})
         except Exception as e:  # noqa: BLE001
             failures.append(f"{key}: {e}")
@@ -193,6 +194,12 @@ def digest(days: int = 7) -> str:
         lines += [f"• {s['key']} — {s['eng']} eng / {s['reach']} reach — \"{s['text']}\"" for s in top]
     by_acct = Counter(r["account_key"] for r in rows)
     lines += ["", "*Volume by page:* " + " · ".join(f"{k} {by_acct[k]}" for k in ORDER if by_acct.get(k))]
+    # 2026-11-21 (YouTube Shorts plan, "Measure"): the two new channels get their own line every Friday.
+    for k, name, unit in (("BrandYouTube", "YouTube Shorts", "views"), ("BrandPinterest", "Pinterest", "impressions")):
+        ss = [s for s in scored if s["key"] == k]
+        if by_acct.get(k) or ss:
+            lines.append(f"*{name}:* {by_acct.get(k, 0)} published · {sum(s['views'] or s['reach'] for s in ss):,} {unit} · "
+                         f"{sum(s['eng'] for s in ss):,} engagements")
     if failures:
         lines += ["", "_Analytics not returned for: " + ", ".join(f.split(":")[0] for f in failures) + "._"]
     lines += _store_reach_block()

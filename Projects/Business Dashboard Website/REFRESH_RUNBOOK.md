@@ -384,3 +384,57 @@ above (asOf unchanged at November 20, 2026 -- already current from an earlier ru
 deployment-specific URL (https://1bb6d9cc.vp-dashboard.pages.dev/) also returned 200, no
 stale-CDN concerns this run. No Slack post (success, per standing no-Slack-ever rule for this
 task).
+
+## Note (2026-11-21, dashboard-refresh run)
+Picked up two genuinely new posts: Items to Price for Nov 21 (150 items / $9,980.83, down from
+178/$16,027 on Nov 19 -- most stores worked down backlog) and the Chekkit Daily Response Summary
+posted this morning covering Nov 20 (all clear, 0 unanswered, confirmed by the Nov 20 7PM
+End-of-Day Follow-up).
+Left unchanged (no newer report than what was already in kpis.json): funds (still Fri Nov 20
+5/5 matched -- today's Daily Funds Verification posts at 6 PM ET, after this run), layaway-review
+(next Weekly Layaway Review is Nov 23), loan-review (retired, per standing rule),
+company-performance watch[] (no new Monthly/Gift-card post since Nov 1-2), and daily.intakeMargin
+(#pawn-walks posted again at 07:15 ET for Nov 20 data, still in the simplified overpay-flags-only
+format -- "2 overpay flags out of 73 items taken in" with no per-store Buy/Loan Intake margin
+tables to parse; still showing Nov 14 data per prior notes).
+Artifacts sync (Step 2) skipped silently -- ~/Documents/Claude/Artifacts is not a connected
+folder on this device_bash session.
+Deploy: Option C (tar bundle staged via device_stage_files, wrangler run in the cloud sandbox).
+The bundle hit the documented nlink>1 bridge quirk on the first stage attempt; cleared on retry
+after one unrelated Slack read in between (no renamed-copy workaround needed this time).
+Deployed cleanly (~1.3s upload + worker deploy). Verified: apex https://vp-dashboard.pages.dev/
+returns 401 with no auth and 200 with basic auth; kpis.json parses and matches the values
+written above (asOf Nov 21, 2026); the deployment-specific URL
+(https://bb7b18b0.vp-dashboard.pages.dev/) also returned 200, no stale-CDN concerns this run.
+Housekeeping: a few extra deploy-bundle copies (.deploy_bundle2.tar.gz, deploy_bundle_v2.tar.gz)
+were created in this folder while working around the nlink quirk and could not be deleted
+(device_bash delete permission not granted here) -- left in place, harmless, safe to clean up
+next time delete permission is granted.
+
+## Note (2026-11-21, dashboard-refresh run, ~19:17 ET firing)
+Fourth refresh today. Picked up one genuinely new post: Daily Funds Verification for Sat Nov 21
+(posted 2026-11-21 18:38:46 ET -- all 5 stores matched, every dollar sent is in Bravo: Culpeper
+$0/$0, Harrisonburg $0/$0, Lexington $0/$0, Roanoke $0/$0, Waynesboro $1,000/$1,000).
+funds.status stayed "5/5 MATCHED"; expected/actual updated from $8,000 to $1,000 (sum of the one
+store with activity).
+Left unchanged (no newer report than what was already in kpis.json): items-to-price (still the
+Nov 21 08:00 post, 150/$9,980.83), layaway-review (next Weekly Layaway Review is Nov 23),
+loan-review (retired, per standing rule), company-performance watch[] (no new Monthly/Gift-card
+post since Nov 1-2), and daily.intakeMargin (#pawn-walks posted again at 07:15 ET for Nov 20
+data, still the simplified overpay-flags-only format -- "2 overpay flags out of 73 items" with
+no per-store Buy/Loan Intake margin tables to parse; still showing Nov 14 data). Bumped the
+Intake Margin feeds[] Last Run date to Nov 21, 2026 per the established precedent. Chekkit
+unchanged -- latest Daily Response Summary still covers Nov 20 (all clear); the Nov 21 7PM
+End-of-Day Follow-up is a same-day real-time note, not a new Daily Response Summary, so left as-is.
+Artifacts sync (Step 2) skipped silently -- ~/Documents/Claude/Artifacts is not a connected
+folder on this device_bash session (only "Business Dashboard Website" and "Projects" connected).
+Deploy: Option C (tar-bundle staged via device_stage_files, wrangler run in the cloud sandbox).
+First stage attempt on the fresh bundle hit the documented nlink>1 bridge quirk even though
+`stat` reported Links: 1; a `cp` to a second filename also showed nlink>1 on first try, but
+succeeded on an immediate retry of the same call (no wait needed this time). Deployed cleanly
+(~1.1s upload + worker deploy). Verified: apex https://vp-dashboard.pages.dev/ returns 401 with
+no auth and 200 with basic auth; kpis.json parses as valid JSON and matches the values written
+above (asOf unchanged at November 21, 2026 -- already current from an earlier run today); the
+deployment-specific URL (https://4d35650b.vp-dashboard.pages.dev/) also returned 200, no
+stale-CDN concerns this run. No Slack post (success, per standing no-Slack-ever rule for this
+task).

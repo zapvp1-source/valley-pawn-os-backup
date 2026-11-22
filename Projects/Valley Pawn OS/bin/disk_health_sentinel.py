@@ -148,6 +148,10 @@ def tm_last_success_age_hours():
 def thin_local_snapshots():
     # Apple's supported way to reclaim local TM snapshot space once the network copy has landed.
     # Purge-space semantics: ask for a large amount, thinning proportionally what's safe to drop.
+    # 2026-11-21: never thin while a backup is running — it deletes the snapshot Time Machine is
+    # copying from and the backup fails with an I/O error (seen 11/21 09:09).
+    if 'Running = 1' in sh('tmutil status 2>&1', timeout=30):
+        return 'skipped: Time Machine backup in progress'
     out = sh('tmutil thinlocalsnapshots / 20000000000 4 2>&1', timeout=120)
     return out
 

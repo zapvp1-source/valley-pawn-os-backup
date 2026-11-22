@@ -1,5 +1,25 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-21 (daily PREP run, 12:41–12:57 ET, level 1 all pages, Saturday) — picks queued for the next POST-mode chat, nothing published by this run
+- Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only (composer read "What's on your mind, Joshua?"); never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings.
+- Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).
+- No POST-mode chat since 11/19 morning (ledger unchanged at 88 rows), so nothing to sync into WATCHLIST.
+- QUEUE cleaned: 8 picks from 11/19 lapsed this morning unposted (SPCA Diamond, CRI Giving Locally, Wayne Theatre, HHS TSA, W&L foliage, SNP mantis, MRL stories share). DNR Turner Ashby semifinal comment dropped — the game was last night and the result isn't posted, so "title shot on the line" now reads stale. Still pending: Roanoke follow → Roanoke Regional Chamber.
+- New picks (times from hover, permalinks read from the post):
+  - Roanoke comment → Explore Park / RVTV Illuminights Grand Illumination reel (until 11/22 14:24). Alternate: SPCA "Cheesecake" (until tonight 22:43).
+  - Culpeper comment → Culpeper County High School thank-you to its 30-year sports announcers (until 11/22 21:32).
+  - Waynesboro comment → Waynesboro.Com "Downtown Has A Twinkle In Its Eye" (until TONIGHT 21:14 — drop if no POST chat today).
+  - Harrisonburg comment → Massanutten Regional Library Little Free Pantry ribbon cutting (until 11/22 14:00).
+  - Brand share → Shenandoah National Park winter closing dates (posted ~11:50 today, until ~11/23 11:50) — Brand's Sunday share slot.
+  - Lexington: nothing fresh on the YES list (RCHS Speech & Debate results have comments limited; others older than 48 h).
+- Skipped on purpose: SPCA Fiona condolence (death); CRI Pink Friday and Main Street Lexington Pink, Drink & Be Merry (shopping promos); CRI window contest (tags the blade shop, as before); Visit Culpeper cider/wine; Star-Exponent police and demolition stories; News-Gazette fire; HDR Back the Burg (money ask); HDR awards and WPS Thanksgiving thank-you (both lapse this afternoon); Visit Harrisonburg Winter Wonderfest (4 days old); SNP fire restrictions (kept for awareness only).
+- Next-week share ideas (check freshness Monday): Culpeper County Library "Winter Funderland" at PlayDate Dec 5; Wayne Theatre Dec 21 caroling + film.
+- Ramp: all pages hold level 1. Share week (Mon 11/16–Sun 11/22): Roanoke, Culpeper, Waynesboro used; Harrisonburg's MRL share lapsed unposted; Lexington none; Brand queued for Sunday.
+- Watchlist: 32 pages re-checked; none newly dormant; no unresolved entries. No town follow searches this run (Roanoke follow still pending).
+- Reply / follow-back candidates for POST mode: carry-overs (Mark Lyon on Valley Pawn-Culpeper; ~10 commenters on a Valley Pawn-Lexington post; "Synster Gates Fan" mention on Valley Pawn; Kelsey L Iane and 3 others followed Valley Pawn-Lexington — follow back only if offered). Seen, not touched: "Sandy Bryant is waiting for a reply from Valley Pawn-Lexington" (Messenger — stays with Chekkit).
+- Needs a person: none new (the 11/20 "new login" review line is already on HUMAN_QUEUE).
+- Totals this run: comments 0 (4 queued), shares 0 (1 queued), replies 0, follows 0 (1 pending), new pages resolved 0.
+
 ## 2026-11-20 (daily PREP run, 12:42–13:00 ET, level 1 all pages, Friday) — picks queued for the next POST-mode chat, nothing published by this run
 - Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only (composer read "What's on your mind, Joshua?" at start and end); never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings.
 - Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).

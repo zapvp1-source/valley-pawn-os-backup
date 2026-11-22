@@ -189,10 +189,91 @@ def min_words(acct):
     r = vps_config.RULES
     if acct == "BrandTikTok":
         return 6
+    if acct in ("BrandYouTube", "BrandPinterest"):   # 2026-11-21
+        return 12
     return r["min_words_brand"] if acct.startswith("Brand") and acct != "BrandTwitter" else (12 if acct == "BrandTwitter" else r["min_words_store"])
 
 
+def youtube_backfill():
+    """--youtube-backfill [--live]  (2026-11-21, YouTube Shorts plan): schedule the 17 evergreen vertical videos to
+    BrandYouTube, 1/day, from state/youtube_backfill_2026-11.json (titles/descriptions written and QA'd in advance).
+    Goes through the engine's only writer (vp_social publish): same QA, ledger, idempotency; re-runs never double-post;
+    any slot whose time already passed is dropped. Without --live it is a dry run."""
+    man = json.load(open(os.path.join(RSM, "state", "youtube_backfill_2026-11.json")))
+    now = dt.datetime.now(ET)
+    slots = []
+    for i, v in enumerate(man["videos"]):
+        at = v["scheduled_at"]
+        if dt.datetime.fromisoformat(at) < now + dt.timedelta(minutes=30):
+            continue
+        slots.append({"slot_id": "ytb-%02d" % (i + 1), "lane": "yt_backfill", "item_key": "ytb:" + v["file"],
+                      "accounts": ["BrandYouTube"], "kind": "video", "scheduled_at": at, "week": "ytbackfill-2026-11",
+                      "media_path": os.path.join(RSM, "reels", v["file"]), "captions": {"BrandYouTube": v["caption"]},
+                      "contract": {"pillar": "yt_backfill", "store": v["store"]}})
+    plan = {"plan_id": "plan_ytbackfill_2026-11", "week": "ytbackfill-2026-11", "notes": [], "slots": slots,
+            "created_at": now.isoformat(timespec="seconds")}
+    ppath = os.path.join(RSM, "state", "plans", "plan_ytbackfill_2026-11.json")
+    json.dump(plan, open(ppath, "w"), indent=1, ensure_ascii=False)
+    print("youtube backfill: %d slots (%s .. %s)" % (len(slots), slots[0]["scheduled_at"][:10] if slots else "-",
+                                                      slots[-1]["scheduled_at"][:10] if slots else "-"))
+    cmd = [PY, "-m", "vp_social", "publish", ppath] + (["--live"] if "--live" in sys.argv else [])
+    rc, out, err = run(cmd, timeout=5400)
+    print(out[-3000:], err[-800:])
+    try:
+        res = json.load(open(ppath.replace(".json", "_results.json")))
+        print("RESULT scheduled=%s skipped=%s failed=%s blocked=%s" % (res.get("scheduled"), res.get("skipped"),
+                                                                       res.get("failed"), res.get("blocked")))
+        for it in res.get("items", []):
+            print(" ", it.get("slot"), it.get("status"), it.get("scheduled_at", ""), (it.get("reason") or "")[:160])
+    except Exception as e:
+        print("no results file:", e)
+    return rc
+
+
+def pinterest_kickoff():
+    """--pinterest-kickoff [--live]  (2026-11-21): first live pin tomorrow 11:25 ET so the Pinterest path is proven
+    before the Monday plan relies on it. Same picker, captions, QA and publisher as the weekly pinterest lane."""
+    sys.path.insert(0, RSM)
+    from vp_social import pinterest as vpin
+    now = dt.datetime.now(ET)
+    day = now.date() + dt.timedelta(days=1)
+    items = vpin.pick(day, 1)
+    if not items:
+        print("pinterest kickoff: no eligible listing"); return 1
+    it = items[0]
+    img = vpin.fetch_image(it["img"], vpin.LANE_DIR / "kickoff" / (it["item_key"].replace(":", "_") + ".jpg"))
+    if not img:
+        print("pinterest kickoff: image download failed", it["img"]); return 1
+    at = dt.datetime.combine(day, dt.time(11, 25), tzinfo=ET).isoformat()
+    slot = vps_plan._slot("pin-kickoff", "pinterest", it["item_key"], ["BrandPinterest"], "photo", at, "pinkickoff-2026-11",
+                          media_path=img, pin_board=it["board"], pin_board_id=it["board_id"], pin_url=it["url"],
+                          contract={"pillar": "pinterest", "product": it["title"], "store": it["store"], "board": it["board"],
+                                    "listing": it["listing"], "note": "real pre-owned item listed on eBay right now; the pin links to that listing"})
+    cap = write_captions(slot, "").get("BrandPinterest", "")
+    probs = vps_publish.qa_caption(cap, "BrandPinterest", "photo", min_words("BrandPinterest"))
+    if probs:
+        cap = write_captions(dict(slot, contract=dict(slot["contract"], fix_these=probs, previous=cap)), "").get("BrandPinterest", "")
+    slot["captions"]["BrandPinterest"] = cap or None
+    print("pin:", it["title"], "->", it["board"], "|", at, "\n" + (cap or "(caption failed QA)"))
+    plan = {"plan_id": "plan_pinkickoff_2026-11", "week": "pinkickoff-2026-11", "notes": [], "slots": [slot],
+            "created_at": now.isoformat(timespec="seconds")}
+    ppath = os.path.join(RSM, "state", "plans", "plan_pinkickoff_2026-11.json")
+    json.dump(plan, open(ppath, "w"), indent=1, ensure_ascii=False)
+    rc, out, err = run([PY, "-m", "vp_social", "publish", ppath] + (["--live"] if "--live" in sys.argv else []))
+    print(out[-1500:], err[-600:])
+    try:
+        res = json.load(open(ppath.replace(".json", "_results.json")))
+        print("RESULT", json.dumps(res)[:800])
+    except Exception as e:
+        print("no results file:", e)
+    return rc
+
+
 def main():
+    if "--youtube-backfill" in sys.argv:
+        return youtube_backfill()
+    if "--pinterest-kickoff" in sys.argv:
+        return pinterest_kickoff()
     render = "--render" in sys.argv
     now = dt.datetime.now(ET)
     monday = dt.date.fromisoformat(sys.argv[sys.argv.index("--week") + 1]) if "--week" in sys.argv else now.date() - dt.timedelta(days=now.weekday())

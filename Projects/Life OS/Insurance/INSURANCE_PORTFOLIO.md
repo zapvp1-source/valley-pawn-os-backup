@@ -1,6 +1,6 @@
 # Insurance Portfolio — All Domains
 
-**GENERATED 2026-11-20 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
+**GENERATED 2026-11-21 from `INSURANCE_REGISTRY.json` — do not hand-edit.**
 Update the registry, then run `Life OS/Insurance/bin/regen_portfolio.py`.
 Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker history: `BROKER_PIPELINE.md`.
 
@@ -10,7 +10,7 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 |---|---|---|---|---|---|
 | 2026-11-28 | Personal auto | Hillary D. Davis / Joshua C. Davis personally | Progressive Select Insurance Co (NAIC 10192) | 998062549 | — |
 | 2026-12-15 (open enrollment deadline for 1/1 coverage - typical) | Health | Joshua & Hillary Davis personally | — | — | — |
-| 2027-01-09 | Landlord / rental dwelling | Joshua & Hillary Davis (deed transfer to Farming Infinity Tennessee LLC unresolved - see hardinberry-property skill) | Obsidian Insurance Company | OB3-TN-22196824-01 | $960 |
+| 2027-01-09 | Landlord / rental dwelling | Joshua & Hillary Davis (deed transfer to Farming Infinity Tennessee LLC unresolved - see hardinberry-property skill) | Obsidian Insurance Company | OB3-TN-22196824-02 | $977 |
 | 2027-06-01 | Surety | Full Circle Finance Inc | Travelers Bond | 107451942 | — |
 | 2027-06-13 | Workers compensation & employers liability | Full Circle Finance Inc | HDI Global Insurance Company, managed/direct-billed by Glencar Underwriting Managers (ar@glencarum.com, 630-361-9400) | GC29P101236-03 (bound eff 6/13/2026 per ULC binder; -02 expired 6/13/2026) | — |
 | 2027-07-02 | Commercial package | Full Circle Finance Inc | HDI Global Specialty SE (A.M. Best A+), surplus lines VA | IK29P109337-05 | $11,103.04 |
@@ -76,8 +76,8 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 
 **GAP-SURETY-LEXINGTON-PMG — Surety**
 
-- Confirm with the City of Lexington (or Rockbridge County) whether a precious metal & gem dealer bond is actually required for this location.
-- If required, obtain one from SuretyBonds.com under the correct obligee (City of Lexington vs Rockbridge County) - this is Joshua's decision on which broker/carrier, not an autonomous bind.
+- Joshua: print the bond, sign as principal, and file it with the City of Lexington permit application — the bond exists but has not yet been filed with the obligee.
+- Confirm the underwriting carrier name from the attached bond PDF (not stated in the issuance email) and fill in the carrier field.
 
 **RE-RICHMOND-817 — Standalone lessor's-risk (LRO) commercial package**
 
@@ -127,13 +127,11 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 
 **RE-HARDINBERRY-LL — Landlord / rental dwelling**
 
-- CHANGE REQUEST SUBMITTED TO STEADILY 2026-09-22 (portal, status Pending) asking them to: (1) correct 'Condominium unit / Anderson County' to fee-simple attached townhome / Roane County; (2) re-run 360Value for the FULL structure and re-rate the dwelling at ~$200-230K RC (their BA8U-V7KF.1 valuation was run WALLS-IN — no roof, foundation, exterior walls, rough electrical/plumbing or HVAC — which is why the limit is $105K, roughly half the rebuild); (3) quote premises liability at $1M/$2M in addition to the current $300K; (4) confirm named insured = Joshua Christian Davis AND Hillary D. Holmes per the deed. Revised quote to zapvp1@me.com. Joshua decides on the new limit/premium when it arrives — nothing bound.
-- REVISED QUOTE RECEIVED 2026-09-23 (Steadily, John Jungen, support@steadily.com): property type corrected to single family; premises liability quoted at $1,000,000/$2,000,000; Hillary Holmes added as an additional named insured. PDF attached to Gmail thread 1a0cb628a878111e, not yet parsed for the new dwelling limit/premium (still needs pulling from the PDF or the Steadily portal). Nothing bound — Joshua's decision on the new premium once the dwelling RC figure is confirmed.
-- 9/25/2026 (same thread): Joshua asked Steadily what's driving the higher premium. John Jungen replied the primary driver is dwelling coverage - the current policy is rated as a condo (walls-in only, $105K); reclassifying to single-family townhome raises dwelling to $260K-$270K, which will more than double the premium. Other levers (liability, deductibles) are secondary. Awaiting Joshua's decision on whether to proceed at the higher premium - his call (limits/spend), not actioned autonomously.
-- Confirm from the HOA CC&Rs whether the association's master policy covers any part of the attached structure (party walls/roof). Fee-simple townhome PUDs usually do NOT — but if it does, the dwelling limit can stay lower.
+- Pull the actual 'Notice of Changes at Renewal' PDF and renewal declarations page from the Steadily portal (app.steadily.com/customer/policy/OB3-TN-22196824-02/documents/) to see exactly what changed and confirm the dwelling limit for the new term — not done this run.
+- The $105K walls-in-only dwelling limit (roughly half the ~$200-270K full rebuild cost per Steadily's own 9/25/2026 estimate) appears to be renewing unchanged given the premium barely moved — Joshua's call whether to push the re-rate again before 1/9/2027.
+- Confirm from the HOA CC&Rs whether the association's master policy covers any part of the attached structure (party walls/roof).
 - Named insured currently Joshua Davis only; deed is Hillary D. Holmes AND Joshua Christian Davis; intended entity is Farming Infinity Tennessee LLC (Hillary's) but title has not moved — do not change to the LLC until the deed records.
-- Read the 'Notice of Changes at Renewal' PDF (01_notice-of-changes-at-renewal.pdf) to confirm what changed at the 1/9/2026 renewal.
-- No umbrella.
+- No umbrella (tracked separately under the umbrella architecture open items).
 
 **RE-WOODSWALK-LL — Landlord / rental dwelling**
 
@@ -307,14 +305,19 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 ### GAP-SURETY-LEXINGTON-PMG — Surety - City of Lexington VA Precious Metal & Gem Dealer Bond - NO BOND ON FILE
 
 - **Named insured (entity):** Full Circle Finance Inc
+- **Named insured (as written on policy):** Full Circle Finance Inc DBA Valley Pawn (per application; verify against bond form)
 - **Scope:** Lexington, VA store, 125 Walker St (moved from 439 E Nelson St eff 7/31/2026)
 - **Carrier:** — · **Program/MGA:** SuretyBonds.com (agency)
 - **Broker:** SuretyBonds.com · customercare@suretybonds.com
-- **Policy #:** — · **Term:** ? → ? · **Renews:** —
-- **Premium:** —
-- **Status:** GAP - CONFIRMED NO BOND ON FILE as of 9/9/2026. If Lexington's precious-metal/gem-dealer license requires a bond the way Harrisonburg/Waynesboro/Culpeper do, the store may be operating out of compliance.
-- **Documents:** Gmail: SuretyBonds.com 'List of Bonds' reply 9/9/2026 (thread 1a085cc686796c9e) - confirms 'no bond on file' for Lexington · Gmail: SuretyBonds.com 6/18/2024 note (referenced in Joshua's 9/9/2026 email) - original bond was written for Rockbridge County, not City of Lexington
-- **Last verified:** 2026-09-10 — source: SuretyBonds.com 'List of Bonds' reply 9/9/2026
+- **Policy #:** 101128914 · **Term:** 2026-11-20 → ? · **Renews:** —
+- **Premium:** $100 — First-term bond premium $100.00, paid in full online 11/20/2026. SuretyBonds.com notes first-term bonds are non-cancellable, non-refundable.
+- **Payment:** Paid online by Joshua 11/20/2026, $100.00 total (per SuretyBonds.com order confirmation).
+- **Key limits:**
+  - **bond amount:** $10,000
+- **Obligee:** City of Lexington, Virginia
+- **Status:** BOND ISSUED 11/20/2026 — Official $10,000 Virginia Precious Metal and Gem Dealer Bond #101128914 for Full Circle Finance Inc DBA Valley Pawn, obligee City of Lexington, Virginia, location 125 Walker Street, Lexington, VA 24450. Requested, approved, paid ($100), and issued all within one business day (11/20/2026) at Joshua's own initiative, citing an already-due City permit renewal. Underwriting carrier not stated in the issuance email — left null pending a read of the attached bond PDF. The prior 'no bond on file' compliance gap is CLOSED on the bond side; filing with the City is still outstanding (see open_issues).
+- **Documents:** Gmail: SuretyBonds.com 'List of Bonds' reply 9/9/2026 (thread 1a085cc686796c9e) - confirms 'no bond on file' for Lexington · Gmail: SuretyBonds.com 6/18/2024 note (referenced in Joshua's 9/9/2026 email) - original bond was written for Rockbridge County, not City of Lexington · Gmail: SuretyBonds.com 'Official Bond #101128914 for Full Circle Finance Inc DBA Valley Pawn' email 11/20/2026 5:52pm ET (thread 1a1fa164676cd7f6), PDF 'Valley Pawn- Client Bond Docs - 11 20 2026.pdf' attached. Joshua requested the bond that morning (thread 1a1f982e44ae74d5, 9:11am ET, citing an already-due City permit renewal and asking to expedite); Bob Wolf (SuretyBonds.com) approved and Joshua paid $100 online same day (3:48pm ET), specifying obligee City of Lexington, Virginia and address 125 Walker Street, Lexington, VA 24450 (corrected from a Roanoke address shown at checkout).
+- **Last verified:** 2026-11-21 — source: insurance-inbox-watch run 2026-11-21 (Gmail threads 1a1f982e44ae74d5, 1a1f98920f10f370, 1a1f9d18df58faaa, 1a1fa164676cd7f6)
 
 ## DOMAIN 2 — Real Estate
 
@@ -441,8 +444,8 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
 - **Scope:** 148 Hardinberry St, Oak Ridge TN 37830 — ROANE County parcel 039F A 02600 000, Preserve @ Rarity Ridge (marketed as The Preserve at Clinch River), Lot T65A, Plat Book D pp. 60-63. FEE-SIMPLE attached single-family townhome/villa, END UNIT, 1 story, brick, slab, comp shingle, built 2007; 1,067 sf living + 240 sf attached finished garage + 136 sf open porch. HOA ~$199/mo (landscaping, social club, assessment). County 2025 reappraisal: land $30,000 + improvement $218,300 = $248,300. NOT a condominium (land separately owned/assessed; no condo regime). Verified 2026-09-22 on assessment.cot.tn.gov.
 - **Carrier:** Obsidian Insurance Company · **Program/MGA:** Steadily Insurance Agency Inc (CA Lic 6002990), 888-966-1611, support@steadily.com
 - **Broker:** Steadily · support@steadily.com; historically Cameron Hopkins, Sr Account Manager
-- **Policy #:** OB3-TN-22196824-01 · **Term:** 2026-01-09 → 2027-01-09 · **Renews:** 2027-01-09
-- **Premium:** $960 — CONFIRMED in Steadily portal 2026-09-22: carrier Obsidian Insurance Company, annual premium $960.00, status Renewal (Active). Mailing address on file is 282 Bald Rock Rd, Verona VA 24482 (routed to Joshua's Bald Rock address, not Hardinberry itself). $80.00 payment 7/9/2026 (Amex x2003) reads as a monthly installment (12 x $80 = $960, consistent).
+- **Policy #:** OB3-TN-22196824-02 · **Term:** 2027-01-09 → 2028-01-09 · **Renews:** 2027-01-09
+- **Premium:** $977 — Renewal notice 11/20/2026 (reply@support.steadily.com): renewal premium (incl. taxes & fees) $977.00/yr, up from $960.00 — a modest ~1.8% increase, NOT the 2x+ jump Steadily (John Jungen) projected on 9/25/2026 if the dwelling were reclassified from walls-in condo-style ($105K) to full single-family replacement cost (~$200-270K). This strongly suggests the dwelling-limit fix discussed in Sept 2026 was never actually applied, and the policy is set to auto-renew 1/9/2027 still under-covered at the $105K walls-in dwelling limit unless Joshua acts before then. Payment method on file: American Express x2003, monthly schedule, auto-drafted; coverage voids if payment fails or isn't made by 1/9/2027.
 - **Payment:** American Express x2003 via Steadily/Braintree
 - **Key limits:**
   - **form:** DP-0003 Dwelling Policy (Special Form) + GL-0605 Commercial Liability (Premises Only - Landlords), Occupancy: TENANT-OCCUPIED - correct form for a long-term rental
@@ -463,9 +466,9 @@ Ownership authority: `Life OS/ENTITY_STRUCTURE.md`. Claims: `CLAIMS.md`. Broker 
   - **all other perils:** $5,000
   - **wind hail:** $5,000
 - **Mortgagee:** None (Steadily confirmed no mortgagee 8/7/2024)
-- **Status:** CONFIRMED IN FORCE 2026-09-22 - Renewal (Active), term 1/9/2026-1/9/2027, carrier Obsidian Insurance Company, premium $960/yr. A 'Notice of Changes at Renewal' was sent 11/20/2025 and shows as delivered - read the actual PDF next review to see what changed. Payment confirmation received 2026-10-09 ($80 installment) reconfirms policy active, same $960/yr premium, named insured Joshua Davis - no change to limits or the open condo-vs-townhome re-rate decision below.
-- **Documents:** Life OS/Insurance/documents/hardinberry/ - notice of changes at renewal, policy packet (renewal), declaration (renewal), Value360 valuation - pulled from Steadily portal 2026-09-22 · Gmail: Fwd 'Payment confirmation: 148 Hardinberry St' (Steadily 7/9/2026, thread 19f669f7dc48c088) · Mail: policy packet with declaration.pdf (Safeco OY9071463, 2024-25) · Mail: Update - Joshuan Davis - 148 Hardinberry St - Travelers.pdf · Drive: 0e02a09193de8bee_148 Insurance Declaration.pdf (Erie 2021-22, historical) · Gmail: Payment confirmation: 148 Hardinberry St (Steadily/support@steadily.com to zapvp1@me.com, 2026-10-09 05:10 UTC, thread 1a11f11bad4e9f3a) - $80.00 charged to Amex x2003, named insured Joshua Davis, policy OB3-TN-22196824-01 - consistent with the confirmed $960/yr annual premium (12 x $80).
-- **Last verified:** 2026-10-09 — source: Steadily portal (app.steadily.com) direct pull 2026-09-22, policy detail page + Documents section; revised quote email 9/23/2026; premium-driver follow-up email 9/25/2026
+- **Status:** RENEWAL NOTICE RECEIVED 11/20/2026 for term 1/9/2027-1/9/2028: policy OB3-TN-22196824-02, $977.00/yr (was $960.00), auto-renewing unless cancelled, payment via Amex x2003. The email flags unspecified changes to terms/coverages — the actual 'Notice of Changes at Renewal' and renewal declarations page have NOT been pulled from the Steadily portal this run, so the dwelling limit, liability, and whether the condo-vs-townhome/walls-in-RC issue below was addressed are UNCONFIRMED. The premium's small increase (+1.8%) suggests it was NOT addressed. Prior-term policy OB3-TN-22196824-01 status (CONFIRMED IN FORCE 2026-09-22, $960/yr, carrier Obsidian Insurance Company) carries forward below until the renewal docs are actually read.
+- **Documents:** Life OS/Insurance/documents/hardinberry/ - notice of changes at renewal, policy packet (renewal), declaration (renewal), Value360 valuation - pulled from Steadily portal 2026-09-22 · Gmail: Fwd 'Payment confirmation: 148 Hardinberry St' (Steadily 7/9/2026, thread 19f669f7dc48c088) · Mail: policy packet with declaration.pdf (Safeco OY9071463, 2024-25) · Mail: Update - Joshuan Davis - 148 Hardinberry St - Travelers.pdf · Drive: 0e02a09193de8bee_148 Insurance Declaration.pdf (Erie 2021-22, historical) · Gmail: Payment confirmation: 148 Hardinberry St (Steadily/support@steadily.com to zapvp1@me.com, 2026-10-09 05:10 UTC, thread 1a11f11bad4e9f3a) - $80.00 charged to Amex x2003, named insured Joshua Davis, policy OB3-TN-22196824-01 - consistent with the confirmed $960/yr annual premium (12 x $80). · Gmail: Steadily 'Policy renewal: 148 Hardinberry St - notice of change to policy terms' 11/20/2026 4:42pm ET (thread 1a1f9d6ffd6815e7) — renewal policy OB3-TN-22196824-02, premium $977.00, auto-renews 1/9/2027; email states the policy IS renewing with changes to terms/coverages/duties/conditions vs. the expiring policy and points to a 'Notice of Changes at Renewal' + renewal declarations page in the Steadily customer portal, neither pulled this run.
+- **Last verified:** 2026-11-21 — source: insurance-inbox-watch run 2026-11-21 (Gmail thread 1a1f9d6ffd6815e7)
 
 ### RE-WOODSWALK-LL — Landlord / rental dwelling
 

@@ -59,6 +59,10 @@ def text(tok, body):
 
 def main():
     send = "--send" in sys.argv
+    # HOLD SWITCH (Joshua 2026-11-21: hold the weekly win-back text). While fleet/state/winback_texts.HOLD exists
+    # nothing is sent and nothing is posted. Delete the file to resume; no reload needed.
+    if os.path.exists(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "fleet", "state", "winback_texts.HOLD")):
+        print("HOLD file present - win-back texts held, nothing sent"); return 0
     import vp_textable  # carrier safety 2026-10-23: Bravo DNT never gets a marketing text
     dnt_set = vp_textable.dnt_phones()
     # 2026-11-19 (Joshua): skip numbers whose last Chekkit text failed as dead/landline (bin/chekkit_len_failed_read.py).

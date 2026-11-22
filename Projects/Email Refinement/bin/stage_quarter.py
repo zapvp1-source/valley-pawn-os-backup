@@ -124,7 +124,7 @@ def build(base, it):
     new_body = body[:ph_end] + "\n" + "\n".join(para(b) for b in it["body"])
     if it.get("notpawn"):
         new_body += ('\n<p style="margin:18px 0 0 0;font-size:13px;line-height:1.6;color:#8a6a3a;">'
-                     "<strong>NOTPAWN</strong> &middot; " + it["notpawn"] + "</p>")
+                     "<strong>Around the Valley</strong> &middot; " + it["notpawn"] + "</p>")
     new_body += "\n          </td>\n        </tr>\n\n        "
     h = h[:s] + new_body + h[e:]
     # PRIMARY CTA label

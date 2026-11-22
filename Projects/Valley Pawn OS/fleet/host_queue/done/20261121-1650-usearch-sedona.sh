@@ -1,0 +1,2 @@
+python3 "/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/bin/usearch_query.py" --tag sedona1121 --corpus msgs --match "sedona OR arizona OR phoenix OR flagstaff OR \"grand canyon\" OR \"spring break\"" --since 2025-06-01 --limit 300 --bodychars 1500
+python3 "/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/bin/usearch_query.py" --tag dadmsgs1121 --corpus msgs --match "dad OR daddy" --since 2026-06-01 --limit 400 --bodychars 600

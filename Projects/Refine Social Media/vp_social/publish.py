@@ -125,15 +125,38 @@ class Publisher(PublerClient):
         return {"status": "timeout", "job_id": job_id}
 
     def schedule_one(self, *, text: str, account_key: str, scheduled_at: str,
-                     kind: str, media_id: str | None) -> dict:
+                     kind: str, media_id: str | None, slot: dict | None = None) -> dict:
         meta = self._account_meta(account_key)
         net: dict = {"type": "status" if not media_id else ("video" if kind == "video" else "photo"), "text": text}
         if media_id:
             net["media"] = [{"type": "video" if kind == "video" else "image", "id": media_id}]
+        acct = {"id": meta["publer_id"], "scheduled_at": scheduled_at}
+        # 2026-11-21: YouTube Shorts + Pinterest. Caption convention for both: line 1 = title, blank line, description.
+        if meta["network"] == "youtube":
+            title, desc = split_title(text)
+            net.update(type="video", title=title[:100], text=desc or title,
+                       details={"type": "short", "privacy": "public"})
+        elif meta["network"] == "pinterest":
+            title, desc = split_title(text)
+            net.update(type="photo", title=title[:100], text=(desc or title)[:500])
+            if (slot or {}).get("pin_url"):
+                net["url"] = slot["pin_url"]
+            board = (slot or {}).get("pin_board_id")
+            if not board:
+                boards = (self.accounts.get(account_key) or {}).get("boards") or {}
+                board = boards.get((slot or {}).get("pin_board") or "gold-and-silver")
+            if board:
+                acct["album_id"] = board
         body = {"bulk": {"state": "scheduled",
-                         "posts": [{"networks": {meta["network"]: net},
-                                    "accounts": [{"id": meta["publer_id"], "scheduled_at": scheduled_at}]}]}}
+                         "posts": [{"networks": {meta["network"]: net}, "accounts": [acct]}]}}
         return self.post("/posts/schedule", json=body)
+
+
+def split_title(text: str) -> tuple[str, str]:
+    """YouTube/Pinterest caption -> (title, description): first non-empty line, then the rest."""
+    lines = (text or "").strip().splitlines()
+    title = lines[0].strip() if lines else ""
+    return title, "\n".join(lines[1:]).strip()
 
 
 # --- QA gates ------------------------------------------------------------------
@@ -166,7 +189,28 @@ def qa_caption(text: str, account_key: str, kind: str, min_words: int) -> list[s
     if account_key in config.STORES or account_key == "Brand":
         if "#" in t:
             problems.append("Facebook: no hashtags")
+    if account_key in ("BrandYouTube", "BrandPinterest"):
+        title, desc = split_title(t)
+        cap = 75 if account_key == "BrandYouTube" else 100
+        if len(title) > cap:
+            problems.append(f"{account_key}: title {len(title)} chars > {cap}")
+        if not desc:
+            problems.append(f"{account_key}: needs title line + blank line + description")
+        if "#" in title or "$" in title:
+            problems.append(f"{account_key}: no hashtags or price in the title")
+        if _PHONE.search(t):
+            problems.append(f"{account_key}: phone number")
+        if _HOURS.search(t):
+            problems.append(f"{account_key}: no store hours (Shorts and pins stay up for years)")
+        if account_key == "BrandYouTube" and t.count("#") > 3:
+            problems.append("YouTube: at most #Shorts plus 2 tags")
+        if account_key == "BrandPinterest" and len(desc) > 500:
+            problems.append(f"Pinterest: description {len(desc)} chars > 500")
     return problems
+
+
+_HOURS = re.compile(r"\b\d{1,2}(?::\d{2})?\s*(?:am|pm|a\.m\.|p\.m\.)|\bopen (?:mon|tue|wed|thu|fri|sat|sun|daily|until|till)|"
+                    r"\bclosed (?:on )?(?:mon|tue|wed|thu|fri|sat|sun)|\bhours\b", re.I)
 
 
 def plan_level_checks(plan: dict) -> list[str]:
@@ -244,6 +288,8 @@ def publish_plan(plan_path: Path, dry_run: bool | None = None, sleep_between: fl
                 min_words = 20
             if acct == "BrandTikTok":       # 2026-10-05: TikTok captions are 1-2 lines by rule; 40 words made every one fail
                 min_words = 6
+            if acct in ("BrandYouTube", "BrandPinterest"):   # 2026-11-21: title + short description by rule
+                min_words = 12
             probs = qa_caption(cap, acct, kind, min_words)
             if probs:
                 r.update(status="skipped", reason="; ".join(probs))
@@ -264,7 +310,7 @@ def publish_plan(plan_path: Path, dry_run: bool | None = None, sleep_between: fl
                 continue
             try:
                 mid = _media_for(p, s, media_cache)
-                resp = p.schedule_one(text=cap, account_key=acct, scheduled_at=s["scheduled_at"], kind=kind, media_id=mid)
+                resp = p.schedule_one(text=cap, account_key=acct, scheduled_at=s["scheduled_at"], kind=kind, media_id=mid, slot=s)
                 job = resp.get("job_id") if isinstance(resp, dict) else None
                 st = p.wait_for_job(job) if job else {"status": "no-job"}
                 if st.get("status") == "completed":

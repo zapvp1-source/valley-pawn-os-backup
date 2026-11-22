@@ -67,6 +67,16 @@ GoMain() {
             GoProbe(st)
         else if (MODE = "crprobe")
             GoCrProbe(st)
+        else if (MODE = "crprobecust")
+            GoCrProbe(st, "Customers")
+        else if (MODE = "apponly" || MODE = "appauto") {
+            if (STORES.Length != 1) {
+                GoResult(st, "APPONLY refused: one store per run")
+                continue
+            }
+            GoAppOnly(st, (MODE = "apponly") ? "MobilePawn" : "AUTO")
+            GoVerify(st)
+        }
         else if (MODE = "crdry")
             GoCrBuild(st, false)
         else if (MODE = "crbuild")
@@ -490,9 +500,9 @@ GoPick(combo, want) {
 
 ; crprobe (2026-11-20): READ ONLY. Loans/Buys > Custom Reports: dump the dialog, press "New Report", dump again,
 ; open the criteria drop-down and dump its list, close it with Escape, then leave by Cancel. Never Save / Delete Report.
-GoCrProbe(st) {
+GoCrProbe(st, side := "Loans/Buys") {
     global DUMP_COUNT
-    el := MerFind(GetBravoRoot(), {Name: "Loans/Buys"})
+    el := MerFind(GetBravoRoot(), {Name: side})
     if !el {
         GoResult(st, "CRPROBE Loans/Buys not found")
         return
@@ -542,6 +552,32 @@ GoCrProbe(st) {
             arrow.Click("left")
         Sleep(2000)
         out .= "## list of " . aid . "`r`n"
+        if (aid = "BoxSelectCriteria") {
+            sx := ";"
+            for pp in CrPopups() {
+                ll := 0
+                try ll := pp.FindElement({ClassName: "ListBox"})
+                if !ll
+                    continue
+                vv := 0
+                Loop 12 {
+                    for it in ll.GetChildren() {
+                        for t in it.FindElements({Type: "Text"}) {
+                            nn := ""
+                            try nn := t.Name
+                            if (nn != "" && !InStr(sx, ";" . nn . ";"))
+                                sx .= nn . ";"
+                        }
+                    }
+                    if (vv >= 100)
+                        break
+                    vv += 10
+                    try ll.ScrollPattern.SetScrollPercent(vv)
+                    Sleep(400)
+                }
+            }
+            out .= "ALL CRITERIA: " . sx . "`r`n"
+        }
         mainHwnd := WinExist(BRAVO_WIN_TITLE)
         for hwnd in WinGetList("ahk_exe Bravo.exe") {
             if (hwnd = mainHwnd || !DllCall("IsWindowVisible", "ptr", hwnd, "int"))
@@ -552,7 +588,7 @@ GoCrProbe(st) {
         Send("{Escape}")
         Sleep(1200)
     }
-    MerWrite(OUT_DIR . "\" . st . "_crprobe.txt", out)
+    MerWrite(OUT_DIR . "\" . st . ((side = "Loans/Buys") ? "_crprobe.txt" : "_crprobe_cust.txt"), out)
     closed := false
     Loop 5 {
         if !MerFind(GetBravoRoot(), {AutomationId: "BoxSelectCriteria"}) {
@@ -1245,5 +1281,95 @@ GoCrBuild(st, doSave) {
     MerShot(st . "_" . StrLower(tag) . "_end")
     MerWrite(outFile, out)
     GoResult(st, tag . " " . verdict . " / dialog " . (closed ? "closed" : "STILL OPEN"))
+    try BackToDashboard()
+}
+
+; ============================================================================
+; apponly (2026-11-21, Joshua: "lets do the culpeper cut over"). ONE store per run. Sets the delivery choice of the
+; three reminder events Chekkit now texts - Loan Courtesy Reminder, Layaway Notice, Loan Past Due (Due Date) - from
+; AUTO to MobilePawn (app notice only), so no customer is texted by both systems. Nothing else is touched. Presses Ok
+; only if all three changed to the same non-text setting; otherwise Cancel. "appauto" puts the same three back to AUTO.
+; ============================================================================
+GoAppOnly(st, want) {
+    if !MerOpenEditor() {
+        GoResult(st, "APPONLY editor did not open")
+        try BackToDashboard()
+        return
+    }
+    pane := MerFind(GetBravoRoot(), {ClassName: "ScrollViewer"})
+    std := Map("Loan Courtesy Reminder",1, "Layaway Notice",1, "Loan Past Due (Due Date)",1)
+    title := "", changed := 0, failed := 0, already := 0, log := "", codes := Map()
+    for k in pane.GetChildren() {
+        c := "", n := "", v := ""
+        try c := k.ClassName
+        if (c = "CheckBox") {
+            title := ""
+            continue
+        }
+        if (title = "" && c = "TextBlock") {
+            try n := k.Name
+            title := n
+            continue
+        }
+        if (title = "" && c = "BravoMaskedTextBox") {
+            title := "(custom)"
+            continue
+        }
+        if (c = "BravoComboBox" && std.Has(title)) {
+            try v := k.Value
+            if (want = "MobilePawn" && v != "NTFAUT" && v != "NTFSMS") {
+                already += 1
+                codes[v] := 1
+                log .= " " . title . ":already(" . v . ")"
+            } else if (want = "AUTO" && v = "NTFAUT") {
+                already += 1
+                log .= " " . title . ":already(AUTO)"
+            } else {
+                ok := false, v2 := ""
+                Loop 3 {
+                    GoBringIntoView(pane, k)
+                    Sleep(1000)
+                    ok := GoPick(k, want)
+                    v2 := ""
+                    try v2 := k.Value
+                    if (ok && v2 != v && v2 != "")
+                        break
+                    Sleep(1500)
+                }
+                good := (want = "AUTO") ? (v2 = "NTFAUT") : (v2 != "" && v2 != "NTFAUT" && v2 != "NTFSMS")
+                if (ok && good) {
+                    changed += 1
+                    codes[v2] := 1
+                    log .= " " . title . ":" . v . "->" . v2
+                } else {
+                    failed += 1
+                    log .= " " . title . ":FAILED(" . v2 . ")"
+                }
+            }
+            std.Delete(title)
+        }
+    }
+    line := "APPONLY want=" . want . " changed=" . changed . " already=" . already . " failed=" . failed . " notfound=" . std.Count . log
+    if (changed > 0 && failed = 0 && std.Count = 0 && codes.Count <= 1) {
+        okt := MerFind(GetBravoRoot(), {Name: "Ok", Type: "Text"})
+        if !okt {
+            GoResult(st, line . " | Ok not found, Cancel")
+            MerCancelAll(st)
+            try BackToDashboard()
+            return
+        }
+        okt.Click("left")
+        Sleep(4000)
+        MerWaitNotHung(90)
+        if ExistsByName(EDITOR_TEXT) {
+            line .= " | editor-still-open, Cancel"
+            MerCancelAll(st)
+        } else
+            line .= " | saved"
+    } else {
+        line .= " | nothing saved"
+        MerCancelAll(st)
+    }
+    GoResult(st, line)
     try BackToDashboard()
 }

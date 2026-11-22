@@ -42,3 +42,18 @@
 ## pawnshopatlas.com / BaseLocal (added 2026-11-20)
 - pawnshopatlas: city pages /virginia/<city>/; "Spotted an error? Let us know" = mailto contact@pawnshopatlas.com. No form.
 - BaseLocal: "best of" list pages only (no business page); correction = hello@baselocal.com.
+
+## Nextdoor (added 2026-11-21)
+- All 5 store pages are claimed under one business login (Google jdavis@fcfpawn.com); edit via /page-admin/home/?profile_id=<id> (ids in CHANGELOG 11/21).
+- Unclaimed duplicate/ghost: public page → "Suggest an Edit" (right column) → Operating status = Permanently closed → Submit → toast "Thanks! Your suggestion has been submitted." The ⋯ menu has no report option.
+
+## ChamberofCommerce.com (added 2026-11-21)
+- Listing → "Listing Incorrect?" opens /request-contact?help=Dispute&id=<id> — the form **requires a captcha** on submit (don't attempt). No support email is published. Claim = new account. It is a Yext publisher, so the Yext correction (LQ-003) may also clear it.
+
+## Henry Repeating Arms dealer locator (added 2026-11-21)
+- Only path: henryusa.com/contact-henry-repeating/ → Reason "Become a Henry Dealer / Current Dealer Inquiries" → Store Name + Message. Submitting **auto-subscribes the sender to the Henry newsletter**, so it needs Joshua's OK.
+
+## CLOSO / Wheree / Buya (added 2026-11-21)
+- CLOSO registry pages have no edit link; email support@closo.co.
+- Wheree (*.wheree.com) sits behind Cloudflare; use a support email.
+- Buya store profile (buya.com/StoreProfile/About/VALLEY-PAWN-WAYNESBORO/1557) is correct as of 11/21.

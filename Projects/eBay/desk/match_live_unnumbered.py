@@ -8,7 +8,7 @@ from match_unnumbered import words, money, CODE
 OUT = os.path.join(HERE, "..", "..", "Bravo Data Extraction", "output")
 def bravo_items(code):
     items = {}
-    for pat in ("*_%s_markdown-verification.csv", "*_%s_items-to-price.csv", "*_%s_inventory-details.csv"):
+    for pat in ("*_%s_markdown-verification.csv", "*_%s_items-to-price.csv", "*_%s_inventory-details.csv", "*_%s_ebay-listed.csv"):
         for f in sorted(glob.glob(os.path.join(OUT, pat % code))):
             for r in csv.DictReader(open(f, newline="", encoding="utf-8", errors="ignore")):
                 n = (r.get("Number") or "").strip().upper()

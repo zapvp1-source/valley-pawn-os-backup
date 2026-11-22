@@ -360,3 +360,12 @@ Unverifiable: none left in posts. PUBLISHED-WRONG: none.
 - Edited: 0. All claims were true and specific.
 - Unverifiable: none. 7 p.m. kickoffs come from Cardinal News only (MaxPreps preview and WRIC pages wouldn't load); no source shows a different time.
 - PUBLISHED-WRONG: none.
+
+## 2026-11-21 07:55 ET — daily fact-check (window: next 36h, to 2026-11-22 ~19:40 ET)
+- Posts checked: 15 (11/21: 5 product/price posts on Roanoke, BrandIG, Brand, BrandTikTok; 11/22 3 PM: 10 town posts). Skipped as evergreen history: Harrisonburg/GBP_Harrisonburg Chesapeake Western, Culpeper/GBP_Culpeper Depot, Lexington/GBP_Lexington brick sidewalks.
+- Verified:
+  - Store hours stated (Roanoke FB + BrandIG product posts; Brand "Culpeper, Roanoke and Waynesboro close at 5 today" on Sat 11/21) match standing hours.
+  - Mill Mountain Star (Roanoke FB + GBP_Roanoke): first lit 8:22 p.m. Nov 23, 1949 (Thanksgiving Eve); 77th anniversary Mon Nov 23, 2026 ("tomorrow night" from the 11/22 post is correct); 2,000 ft of neon; 10,000 lb (City page; Wikipedia gives 60,000 lb for the steel structure, City page used as primary); 88.5 ft (Wikipedia); white year-round, red/white/blue on Memorial Day, Flag Day, Independence Day, Patriot Day and Veterans Day. https://www.playroanoke.com/the-roanoke-star/ (City of Roanoke Parks & Rec, updated 2026-06-23); https://en.wikipedia.org/wiki/Roanoke_Star
+  - Afton Mountain (Waynesboro FB + GBP_Waynesboro): Thanksgiving is Thu Nov 26, 2026, so 11/22 is the start of Thanksgiving week; VDOT Fog Warning System on Afton (fog detection, message signs, strip lighting) listed as existing, run by VDOT NWRO TOC. https://local.iteris.com/virginiaitsarchitecture/architectures/northwestern/html/elements/el69.html ; https://augustafreepress.com/news/interstate-64-safety-upgrades-on-afton-mountain-enter-final-phases/ (2015 article; VDOT operates the system). 1,903 ft Rockfish Gap elevation is an evergreen geography fact, not re-checked.
+- Edited: 0. All dated claims true and specific.
+- Unverifiable: none affecting dated claims. PUBLISHED-WRONG: none.

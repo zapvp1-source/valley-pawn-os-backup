@@ -29,9 +29,11 @@ class T(unittest.TestCase):
         nxt, _ = r.build_plan("Culpeper", tk, CONTACTS, date(2026, 11, 27), frozenset(fri[0]["keys"]))
         self.assertEqual(len(nxt), 1)
     def test_layaway_schedule(self):
-        d0 = date(2026, 11, 18)
-        self.assertEqual([r.layaway_kind(date(2026, 11, 23), d0), r.layaway_kind(date(2026, 11, 19), d0), r.layaway_kind(date(2026, 11, 13), d0), r.layaway_kind(date(2026, 11, 14), d0)],
-                         ["layaway_notice", "layaway_notice", "layaway_late", None])
+        d0 = date(2026, 11, 18)   # a Wednesday
+        self.assertEqual([r.layaway_kind(date(2026, 11, 19), d0), r.layaway_kind(date(2026, 11, 17), d0), r.layaway_kind(date(2026, 11, 23), d0), r.layaway_kind(date(2026, 11, 13), d0)],
+                         ["layaway_notice", "layaway_late", None, None])
+        fri = date(2026, 11, 20)
+        self.assertEqual([r.layaway_kind(date(2026, 11, 10), fri), r.layaway_kind(date(2026, 10, 1), fri)], ["layaway_late", None])
     def test_other_days_send_nothing(self):
         texts, skipped = self.plan([row("1", "Pat Example", "11/25/2026")])
         self.assertEqual((texts, skipped), ([], []))

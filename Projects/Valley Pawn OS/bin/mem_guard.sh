@@ -102,8 +102,17 @@ tier2_restart_drive() {
 tier3_restart_claude() {
   if [ "$IDLE" -lt 1200 ]; then log "skip Claude restart: Joshua active (idle ${IDLE}s)"; return; fi
   local last; last=$(st_get claude_restart); last=${last:-0}
-  if [ "$MODE" = "watch" ] && [ $((NOW_EPOCH - last)) -lt 14400 ]; then return; fi
-  if restart_app "Claude" "Claude"; then add "restarted Claude desktop app"; st_set claude_restart "$NOW_EPOCH"; fi
+  # 11/21: swap stayed ~17.8 GB through repeated Claude restarts — the swapped pages belong to
+  # long-lived processes (VM etc.), not Claude. If the last restart freed < 1 GB of swap, back
+  # off to once per 12h in watch mode so Joshua's Claude sessions aren't cut for no gain.
+  local gap=14400 helped; helped=$(st_get claude_restart_freed_mb); helped=${helped:-9999}
+  [ "$helped" -lt 1024 ] && gap=43200
+  if [ "$MODE" = "watch" ] && [ $((NOW_EPOCH - last)) -lt "$gap" ]; then return; fi
+  if restart_app "Claude" "Claude"; then
+    add "restarted Claude desktop app"; st_set claude_restart "$NOW_EPOCH"
+    sleep 60; local after; after=$(swap_mb); after=${after:-$SWAP0}
+    st_set claude_restart_freed_mb "$(( SWAP0 - after ))"
+  fi
 }
 
 # ---------- decide ----------
@@ -169,7 +178,11 @@ if not t:
 print(int((time.time() - t) / 3600) if t else 999)
 PYX
 }
-if [ -n "$DFREE" ] && [ "$DFREE" -lt 35 ]; then
+# 11/21: the 09:00 NAS backup failed at 09:09:20 (I/O error on source) because this block thinned the
+# local snapshot Time Machine was copying FROM. Never thin while a backup is running, unless the
+# disk is in real danger (< 10 GB free).
+tm_running() { tmutil status 2>/dev/null | grep -q "Running = 1"; }
+if [ -n "$DFREE" ] && [ "$DFREE" -lt 35 ] && { [ "$DFREE" -lt 10 ] || ! tm_running; }; then
   NSNAP=$(tmutil listlocalsnapshots / 2>/dev/null | grep -c TimeMachine)
   if [ "$DFREE" -lt 15 ] || { [ "$NSNAP" -ge 2 ] && [ "$(tm_backup_age_h)" -lt 6 ]; }; then
     if tmutil thinlocalsnapshots / 40000000000 4 >/dev/null 2>&1; then

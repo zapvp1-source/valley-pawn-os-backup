@@ -140,6 +140,34 @@ previous 90 days.
 
 ---
 
+<!-- CAMPAIGN-BRIEFS:BEGIN (source: Seasonal Campaigns/campaigns.json; rebuilt 2026-11-21) -->
+## SEASONAL CAMPAIGN BRIEFS — Nov 2026 through Jan 2028 (Joshua-approved defaults 2026-11-21)
+Use the brief whose window covers the week being planned. Offer facts are exact; never change dates or the offer.
+
+**Rules for every sale brief:** 15% off in store on the two sale days only. No minimum. Always add "Some exclusions apply." Public, all five stores. Fri hours 10-6 everywhere; Sat Culpeper, Roanoke, Waynesboro 10-5, Harrisonburg and Lexington 10-6. Cadence: offer post Tue or Wed of sale week on each store page, each store Google profile and Brand FB/IG; day-of post Friday morning; one more Saturday morning. Never firearms, never "fast cash" or "no credit check". Google profiles: no hashtags, no phone numbers.
+
+- **Black Friday + Small Business Saturday** — sale **Nov 27 and Nov 28, 2026**. Start mentioning Nov 21. Landing page: thevalleypawn.com/black-friday/. Angle: Thank-you sale; free layaway for Christmas; Saturday is Small Business Saturday. Closed Thanksgiving Day Nov 26.
+- **Christmas Sale** — sale **Dec 18 and Dec 19, 2026**. Start mentioning Dec 8. Landing page: thevalleypawn.com/christmas-sale/. Angle: Real gifts at pawn-shop prices: jewelry, watches, tools, game consoles, guitars.
+- **New year, extra cash (gold buying + pawn loans)** — Dec 27 to Jan 16, 2027. Link: thevalleypawn.com/loans/. Angle: No discount. We buy gold and silver; pawn loans up to $25K; no judgment.
+- **Valentine's Day Sale** — sale **Feb 12 and Feb 13, 2027**. Start mentioning Feb 2. Landing page: thevalleypawn.com/valentines-day-sale/. Angle: Real gold and real diamonds, tested, well under retail.
+- **Tax Refund Season** — Feb 14 to Mar 8, 2027. Link: thevalleypawn.com/shop/. Angle: No discount. Make your refund go further; 30-day warranty; free layaway.
+- **St. Patrick's Day Sale** — sale **Mar 19 and Mar 20, 2027**. Start mentioning Mar 9. Landing page: thevalleypawn.com/st-patricks-day-sale/. Angle: Spring projects: tools, mowers, pressure washers.
+- **Easter Sale** — sale **Mar 26 and Mar 27, 2027**. Start mentioning Mar 21. Landing page: thevalleypawn.com/easter-sale/. Angle: Easter weekend (Easter is Sun Mar 28). Jewelry, watches, tools, TVs. Easter Sunday itself: no-selling greeting.
+- **Mother's Day Sale** — sale **May 7 and May 8, 2027**. Start mentioning Apr 27. Landing page: thevalleypawn.com/mothers-day-sale/. Angle: Jewelry and watches she'll actually wear.
+- **Memorial Day Sale** — sale **May 28 and May 29, 2027**. Start mentioning May 18. Landing page: thevalleypawn.com/memorial-day-sale/. Angle: Tools, outdoor gear, speakers, TVs for the long weekend. Memorial Day itself: thank-you only, no selling.
+- **Father's Day Sale** — sale **Jun 18 and Jun 19, 2027**. Start mentioning Jun 8. Landing page: thevalleypawn.com/fathers-day-sale/. Angle: Tool sets, watches, guitars for Dad and the graduate.
+- **4th of July Sale** — sale **Jul 2 and Jul 3, 2027**. Start mentioning Jun 22. Landing page: thevalleypawn.com/july-4th-sale/. Angle: Speakers, TVs, tools, outdoor gear for summer.
+- **Back to School Sale** — sale **Aug 13 and Aug 14, 2027**. Start mentioning Aug 3. Landing page: thevalleypawn.com/back-to-school-sale/. Angle: Laptops, tablets, monitors, dorm gear.
+- **Labor Day Sale** — sale **Sep 3 and Sep 4, 2027**. Start mentioning Aug 24. Landing page: thevalleypawn.com/labor-day-sale/. Angle: Fall project tools; TVs for football season.
+- **Christmas Layaway Opens** — Sep 15 to Oct 15, 2027. Link: thevalleypawn.com/shop/. Angle: No discount. Free layaway; weekly beat through December.
+- **Halloween Sale** — sale **Oct 29 and Oct 30, 2027**. Start mentioning Oct 19. Landing page: thevalleypawn.com/halloween-sale/. Angle: Halloween weekend (Halloween is Sun Oct 31). Storm prep: generators, chainsaws, tool chests. Community Halloween posts stay no-selling.
+- **Black Friday + Small Business Saturday** — sale **Nov 26 and Nov 27, 2027**. Start mentioning Nov 16. Landing page: thevalleypawn.com/black-friday-2027/. Angle: Thank-you sale; closed Thanksgiving Day Nov 25.
+- **Christmas Sale 2027** — sale **Dec 17 and Dec 18, 2027**. Start mentioning Dec 7. Landing page: thevalleypawn.com/christmas-sale-2027/. Angle: Real gifts at pawn-shop prices: jewelry, watches, tools, game consoles, guitars.
+- **New year, extra cash 2028 (gold buying + pawn loans)** — Dec 27 to Jan 15, 2028. Link: thevalleypawn.com/loans/. Angle: No discount. We buy gold and silver; pawn loans up to $25K; no judgment.
+<!-- CAMPAIGN-BRIEFS:END -->
+
+---
+
 ## Email (Brevo) — weekly, resumed
 Store Spotlight rotating through all five stores, weekly, per Joshua's 2026-08-22 decision.
 Proven: **250 calls+texts per 1,000 recipients** vs Education at **0, twice**. Every dark week is

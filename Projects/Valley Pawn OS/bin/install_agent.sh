@@ -20,8 +20,12 @@ fi
 [ -f "$SRC" ] || { echo "REFUSED: $SRC not found"; exit 2; }
 grep -q "/bin/vp-runner" "$SRC" || { echo "REFUSED: $SRC does not run through ~/bin/vp-runner"; exit 2; }
 plutil -lint "$SRC" >/dev/null 2>&1 || { echo "REFUSED: $SRC is not a valid plist"; exit 2; }
-[ -f "$DST" ] && cp "$DST" "$BK/$LABEL.plist.bak-$(date +%Y%m%d-%H%M%S)"
-cp "$SRC" "$DST"
+# 2026-11-21: rewriting an unchanged plist makes macOS post another "can run in the background"
+# pop-up. Only back up + copy when the plist actually changed.
+if ! cmp -s "$SRC" "$DST"; then
+  [ -f "$DST" ] && cp "$DST" "$BK/$LABEL.plist.bak-$(date +%Y%m%d-%H%M%S)"
+  cp "$SRC" "$DST"
+fi
 launchctl bootout "gui/$U/$LABEL" 2>/dev/null; sleep 1
 launchctl bootstrap "gui/$U" "$DST" 2>&1 && echo "$LABEL bootstrapped"
 sleep 3; launchctl list | grep -F "$LABEL"

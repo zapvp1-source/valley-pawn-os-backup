@@ -340,6 +340,29 @@ def main():
         upserts.append(row)
         print("%-5s %s %s recipients=%s calls+texts/1k=%s" % (kind, row["campaign_id"], row["campaign_name"][:50],
                                                              row["recipients"], row["calls_texts_per_1k"]))
+    # 2026-11-21: Brevo's link totals count mail-security scanners (the 11/19 weekly showed 134 clicks; 4 real people
+    # clicked, none on a call/text button, yet the report said "13 calls+texts per 1,000"). For weekly-size sends,
+    # count unique PEOPLE from contact-level history instead (email_test_loop.human_clicks, scanners removed).
+    # weekly sends only: human_clicks reads the weekly audience (lists 7 + 13); win-back etc. go to other lists
+    small = [u for u in upserts if 0 < fnum(u["recipients"]) <= 2500
+             and (str(u.get("category", "")) == "Weekly" or re.match(r"W\d+$", str(u.get("category", ""))))]
+    if small:
+        try:
+            sys.path.insert(0, BIN)
+            import email_test_loop
+            hc = email_test_loop.human_clicks([u["campaign_id"] for u in small])
+            for u in small:
+                h = hc[u["campaign_id"]]
+                u["calls_clicks"], u["texts_clicks"], u["directions_clicks"] = h["callers"], h["texters"], h["mappers"]
+                u["calls_texts_per_1k"] = per_1k(h["callers"] + h["texters"], fnum(u["recipients"]))
+                tag = "[people, scanners removed: %d]" % h["scanners"]
+                u["notes"] = (re.sub(r"\s*\[people, scanners removed: \d+\]", "", str(u.get("notes") or "")) + " " + tag).strip()
+                print("people-only %s: callers=%d texters=%d directions=%d scanners=%d" % (u["campaign_id"], h["callers"], h["texters"], h["mappers"], h["scanners"]))
+        except Exception as e:
+            print("people-only click pull failed:", type(e).__name__, str(e)[:200])
+            if not render:
+                ledger("The weekly email analytics could not separate real clicks from scanner clicks (%s), so no report was posted; it retries next run." % type(e).__name__)
+            return 1
     merged = {int(float(r["campaign_id"])): dict(r) for r in rows if str(r.get("campaign_id", "")).strip()}
     for u in upserts:
         merged[u["campaign_id"]] = u

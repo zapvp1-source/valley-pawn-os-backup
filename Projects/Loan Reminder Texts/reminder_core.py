@@ -17,16 +17,23 @@ def loan_kind(due, today):
 
 
 def layaway_kind(next_due, today):
-    """Layaway notices: 5 days and 1 day before the next due date; every 5 days while late."""
+    """Layaway TEXTS (2026-11-21, re-read of Bravo's screen): Bravo texts a layaway notice 1 day before the
+    payment is due; its 5-day notice is app-only, so no text for it. Past due (wording approved by Joshua 11/21):
+    1 day after, then Fridays while late, for at most 30 days (older accounts are for the store to work by phone)."""
     d = (today - next_due).days
-    if d in (-5, -1): return "layaway_notice"
-    if d > 0 and d % 5 == 0: return "layaway_late"
+    if d == -1: return "layaway_notice"
+    if d == 1: return "layaway_late"
+    if 1 < d <= 30 and today.weekday() == 4: return "layaway_late"
     return None
 
 
 TEMPLATES = {   # loan wording APPROVED by Joshua 2026-11-18 12:43 PM ("looks good"); layaway wording not drafted yet. Opt-out line = exactly what Chekkit adds (11/20) so it is never doubled
     "courtesy": "Valley Pawn {store}: your loan{s} {tickets} {is_are} due {due}. Pay in store or in the MobilePawn app: thevalleypawn.com/app Text STOP to unsubscribe",
     "past_due": "Valley Pawn {store}: your loan{s} {tickets} {is_are} past due. Call or text us here, or pay in the MobilePawn app: thevalleypawn.com/app Text STOP to unsubscribe",
+    # layaway wording APPROVED by Joshua 2026-11-21 8:34 AM ("layaway wording is good")
+    # 160 rule: a long first name at Harrisonburg reaches 161 - the layaway builder must then open "Your Valley Pawn ..." (no name).
+    "layaway_notice": "Hi {name}, your Valley Pawn {store} layaway payment is due {due}. Pay in store or in the MobilePawn app: thevalleypawn.com/app Text STOP to unsubscribe",
+    "layaway_late": "Hi {name}, your Valley Pawn {store} layaway payment is past due. Pay in store or in the MobilePawn app: thevalleypawn.com/app Text STOP to unsubscribe",
 }
 LIVE_DISPOSITIONS = {"ON LOAN"}          # POLICE LOAN HOLD / COURTESY HOLD are never texted
 

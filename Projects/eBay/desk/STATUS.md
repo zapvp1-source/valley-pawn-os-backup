@@ -93,3 +93,24 @@ Next (no approval needed): dedicated Bravo sold-today handler (new saved report 
 ## 2026-11-19 12:00 — Joshua: risk accepted. "If the odds are 1 double sale in 5 years we are ok."
 - DECISION: store-by-store takedown loop on its own Bravo session (extra key, new Mac Studio in December) is the design. Measured today 15–30 min per 5-store pass -> roughly one double sale every 2.5–5 years. "Sold in store" button + nightly two-way reconcile stay as backstops. Company-wide one-pull report (tonight's 9:30 PM build) is a speed-up, not a requirement.
 - Build now on this Mac (current key, after hours / off the morning cluster): order feed, takedown executor (eBay EndItem, Culpeper first, capped), ring handler (map sale screen read-only -> one test sale + void with Joshua -> Culpeper capped -> all 5), store page. Cut over to the dedicated session when the new Mac Studio and extra key arrive.
+
+## 2026-11-21 09:55 — Joshua: build the Bravo saved reports without screen control
+- Path found: MobileEventsGoldOff.ahk (crbuild mode, 11/20) already builds + saves a NEW shared saved Custom Report inside the VM via UIA, no Mac screen control (built "Claude Loan Reminders" 11/20 19:44, SAVED+LISTED). Plan: clone it as InvReportBuild.ahk (Inventory > Custom Reports; invprobe read-only first, then build "Claude eBay Sold Today All" and "Claude eBay Listed"), launched by a cloned bin/inv_report_build.sh + _run_invreport.ps1.
+- Blocked: adding inv_report_build.sh to fleet/host_queue_allowlist.txt (needed for the host queue to launch it) was refused by the session's safety check. Nothing was written. Needs Joshua's explicit OK to add one line to the allowlist (or to run it another approved way).
+
+## 2026-11-21 19:40–20:58 — Bravo reports built without screen control (Joshua approved 11/21 09:57: add the job + the two reports)
+- New job: Bravo Data Extraction/InvReportBuild.ahk (clone of MobileEventsGoldOff.ahk; modes invprobe / invdry / invbuild), launcher _run_invreport.ps1, Valley Pawn OS/bin/inv_report_build.sh; inv_report_build.sh added to fleet/host_queue_allowlist.txt (backup host_queue_allowlist.txt.bak-pre-invreport-20261121).
+- SAVED + LISTED in Bravo (Shared Company-Wide, built at CUL 20:13 / 20:15):
+  A "Claude eBay Sold Today All": layout "Sold inv detail", Status = SOLD, Status Date range, Store = All stores.
+  B "Claude eBay Listed": layout "Inv item detailed", Status = INVENTORY, Web Platform = EBAY (per store; no Store criterion).
+- New pipeline cells (additive, watcher validated + restarted twice): sold-today-all (reports/SoldTodayAll.ahk; trigger store "ALL" = no store switch) and ebay-listed (reports/EbayListed.ahk). Backups bravo_watcher.ahk.bak-pre-sold-today-all-20261121, .bak-pre-ebay-listed-20261121.
+- TIMING sold-today-all, 3 back-to-back runs: 94 s, 88 s, 88 s. 92 rows, all dated 11/21, from ALL 5 stores (ROA 21, HAR 19, WAY 19, CUL 18, LEX 13, +2 SKU items). => takedown pass ≈ 1.5 min, no store switching. Double-sell odds at a ~2-minute loop: roughly once in 15+ years.
+- ebay-listed per store: CUL 194 (2nd try; 1st hit the Done-loop), WAY 82, HAR 38, LEX 43, ROA 110 = 467 items Bravo has marked EBAY; 104–130 s per store.
+- SKU link: 72 unnumbered live listings matched to Bravo's eBay-listed items and written (run 20261122-0152xx/015605-skulink-matched, all ok) + 7 new Roanoke title codes (sku_link). Now 323 of 381 live listings carry the Bravo number (85%); 58 left with no confident match (CUL 35, WAY 16, HAR 5, LEX 2).
+- Pull CSVs moved to eBay/desk/out/bravo_pulls/ (out of Bravo output/).
+
+## 2026-11-21 23:40 — watch-only takedown loop installed (Joshua "ok")
+- eBay/desk/takedown_watch.py + Valley Pawn OS/bin/ebay_takedown_watch.sh + fleet/com.valleypawn.ebay-takedown-watch.plist (bootstrapped 23:48; native_live marker set). Every 20 min at :07/:27/:47, 10:00–17:59, open days only (Sunday none). Skips when Bravo is busy, a trigger is waiting or the foreground guard is held; never self-heals Bravo; takes its trigger back if not claimed in 6 min.
+- WATCH ONLY: logs to eBay/desk/out/takedown_watch.jsonl (would-end listings, first-seen time, and when a listing later disappears = today's manual takedown lag). No eBay or Bravo writes. Dry run on 11/21 data: 92 sold rows, 379 live (318 numbered), 0 would end.
+- First live rounds: Monday 11/23 10:07. Review after 3–5 open days: every would-end must be a real counter sale of a live listing; then ask Joshua for the OK to end for real (Culpeper first, cap 3/day).
+- Still open with Joshua: OK to end listings for real; test sale + void; standing reply to price offers; Slack to Lexington (Canon VA1058519) and Harrisonburg (Switch VA5019380); what to do with the 58 unnumbered listings.

@@ -225,3 +225,44 @@ Proposed wording (waiting on Joshua's OK, then: edit the 3 gold campaigns + remo
 - Test 8:01-8:09 PM: CUL 1,085 rows, 533 tickets, 271 on loan (182 past due), due dates 10/6-11/26 exactly as asked, 214 of the 271 have the app activated. HAR 705 rows, 495 tickets, 277 on loan (210 app activated). Harrisonburg seeing the report proves it is shared to all stores. Columns: Ticket Number, Disposition, Due Date, Customer, MobilePawn, SMS, Last Payment.
 - reminder_core.py: both loan texts now end "Text STOP to unsubscribe" (backup fleet/_backups/reminder_core.py.bak-pre-stopline-20261120). Ticket numbers print digits only (#4017707); when several tickets would push past 160 it says "your 3 loans". Longest text on real Culpeper data: 152. 11 tests pass. Still no send function.
 - NOT built yet: phone numbers for these customers (existing ChekkitInvitesRange handler has phones), Chekkit opt-out list feed, the nightly native agent (launchd, after close, no-send for 7 days), layaway and birthday lists.
+
+## 2026-11-21 8:34 AM — Joshua: hold the weekly win-back; layaway wording good
+- Weekly win-back text HELD: hold file `Valley Pawn OS/fleet/state/winback_texts.HOLD` + check at the top of bin/winback_texts.py (backup fleet/_backups/winback_texts.py.bak-pre-hold-20261121). Nothing sends or posts while the file exists; delete it to resume. Next run would have been Thu 11/26 10:33 AM.
+- Layaway wording approved and added to reminder_core.py TEMPLATES (layaway_notice / layaway_late), up to 161 chars with a long first name at Harrisonburg - the builder drops the name when a text would pass 160.
+
+## 2026-11-21 9:50 AM-12:00 PM — Joshua "ok lets go": nightly NO-SEND agent built, installed, first run clean
+- NEW native agent `com.valleypawn.loan-reminders` (fleet plist, installed via install_agent.sh), 11:15 PM daily -> `Valley Pawn OS/bin/loan_reminders_nightly.sh`: (1) Bravo cell loan-reminders, all 5 stores, retries only the stores that failed, up to 3 passes; (2) `bin/chekkit_optouts_sync.py --days 3` (GET only) -> fleet/state/chekkit_optouts/<STORE>.tsv; (3) `Loan Reminder Texts/loan_reminders_plan.py` (offline, no send function) -> trial/<send date>/plan_<STORE>.csv, skipped_<STORE>.csv, summary.json, trial/SUMMARY.csv, trial/ledger_<STORE>.txt. One-time 120-day opt-out backfill runs after tonight's plan. Both scripts allow-listed. Silent: files + agent log only.
+- Phones: from the weekly Bravo customer exports already on disk (forfeiture-winback-comparison-contacts + chekkit-invites-range), newest export per name. Chekkit opt-outs and dead numbers removed. Customers with MobilePawn "Activated" are left to Bravo's app notice.
+- First run 10:11-11:06 AM (store hours; Harrisonburg login failed on pass 1, came through on pass 2). Plan for Sun 11/22: CUL 26 reminders due / 17 app / 9 texts; HAR 22 / 18 / 4; LEX 20 / 12 / 6; ROA 30 / 14 / 15; WAY 24 / 13 / 11. Longest text 156. Nothing skipped for a missing phone.
+- Friday 11/27 projection from today's lists (past-due repeat day): CUL 54, HAR 60, LEX 47, ROA 128, WAY 76 texts (1 no phone at HAR, 1 Chekkit opt-out at LEX). Without the app split it would be 167-303 a store.
+- Chekkit opt-outs known after 3 days read: CUL 0, HAR 52, LEX 6, ROA 2, WAY 74.
+- Open: the list is pulled the night before; a loan paid between 11:15 PM and 10 AM would still get its text. Decide at cutover whether to add a 9:30 AM re-pull. Layaway and birthday lists not built. Trial ends after the Sat 11/28 plan (7 nights).
+
+## 2026-11-21 12:09 PM — Joshua: design it so nobody can get a reminder after paying
+- RULE (in loan_reminders_plan.py `send_window_ok`, to be enforced by the sender): list pulled after all stores close (6 PM; 11:15 PM agent), texts go out 9:15 AM, before stores open at 10. No store is open in between, so nothing on the list can have been paid at a counter or by phone. App payers are never on the text side. If the night pull is missing or late for a store, that store sends nothing that day (never a stale or late send). No morning re-pull needed (my earlier idea dropped).
+- Today's daytime test list correctly reads "not allowed to send" (pulled before close).
+
+## 2026-11-21 2:35 PM — Joshua: fix texting first, fleet improvements after
+- Layaway reminders added to the same nightly no-send agent: pulls cell `layaway-detail` (all 5 stores, two triggers), plans with Bravo's schedule (5 and 1 days before next due; every 5 days while late), approved wording, first name only, name dropped if the text would pass 160. One text per customer per kind. App-activated customers left to Bravo. Offline test on the 10/21 Harrisonburg list: 1-4 texts a day, longest 158.
+- Agent moved 11:15 PM -> 10:40 PM (loans ~25 min, layaways up to ~65 min, done before the 12:45 AM daily GL). Reinstalled.
+- Still to build for texting: birthday + store-anniversary list (no Bravo list yet), the sender (must call send_window_ok; off until Joshua's go), cutover step in Bravo (reminders AUTO -> MobilePawn only).
+- 2:55 PM: SENDER built and installed, OFF: `com.valleypawn.loan-reminders-send` 9:15 AM daily -> bin/loan_reminders_send.sh -> loan_reminders_send.py. A store sends only with a LIVE file (fleet/state/loan_reminders_live/<STORE>, none exist), last night's plan, send_window_ok (list pulled after close, before 9:45 AM), every text <=160, plan <=250. Otherwise nothing is sent that day. Dry run today: CUL/HAR "HELD (past 9:45 AM)", others "no plan" - correct. Cutover for a store = create its LIVE file + switch that store's Bravo loan/layaway events AUTO -> MobilePawn. Needs Joshua's go.
+- Plan rows now carry the customer name (Chekkit contact name). trial/SUMMARY.csv has repeat rows for 11/22 from test re-runs: use the last row per date/store.
+
+## 2026-11-21 3:14 PM — Joshua: OK on birthday/anniversary; "lets do the culpeper cut over"
+- CUTOVER PLAN (Culpeper): Sun 11/22 night, after the 10:40 PM run finishes and the 11/23 plan checks out -> Bravo CUL: Loan Courtesy Reminder, Layaway Notice, Loan Past Due switched AUTO -> MobilePawn (new script mode `apponly`, one store per run, Ok only if all three change; `appauto` reverses) -> then create fleet/state/loan_reminders_live/CUL. First live Chekkit send Mon 11/23 9:15 AM. If the plan is not ready at 11:59 PM, wait for it (layaway pulls can run past midnight); stay clear of the 12:45 AM daily GL.
+- Other four stores: Mon 11/30 after five clean Culpeper days. Birthday/anniversary: target Mon 12/7 (needs a new Bravo list). Bravo's app-invite/onboarding messages are not part of this move.
+- Layaway text schedule corrected after re-reading Bravo's screen: Bravo TEXTS only 1 day before (its 5-day notice is app-only). Chekkit: 1 day before; past due 1 day after, then Fridays, 30 days max. Tests updated (11 pass).
+- Nightly agent: second run 4:40 AM = catch-up (re-pulls only stores missing from last night, still after close/before open, rebuilds today's plan).
+- Tonight 7:42 PM: no-op test of `apponly` at Roanoke (has none of the three events) + read-only look for birthday criteria.
+
+## 2026-11-21 3:19 PM — Joshua: speed it up, every day on Bravo costs money -> ACCELERATED SCHEDULE (supersedes the 3:14 PM plan)
+- Culpeper: switch tonight after the 10:40 PM run (trigger 12:20 AM Sun), first live send Sun 11/22 9:15 AM, verify 9:50 AM.
+- Harrisonburg, Lexington, Waynesboro, Roanoke: switch Mon 11/23 night (trigger 12:20 AM Tue) if Culpeper's Sun + Mon sends were clean; first live send Tue 11/24 9:15 AM; verify 9:50 AM.
+- Older triggers (Sun 11:59 PM cutover, Mon 9:50 AM verify, Sat 11/28 trial review) still fire: treat them as re-checks of what is already live.
+- Birthday/anniversary: build the Bravo list this week; target moved up to as soon as it is proven (was 12/7).
+- Cost context: Bravo billed 4,439 texts in Sept and 4,693 in Oct at $0.07 = about $310-330 a month, about $10-11 a day for all five stores and all text types.
+
+## 2026-11-21 7:42-7:52 PM — cutover prep checks
+- `apponly` no-op at Roanoke: PASS ("changed=0 already=0 failed=0 notfound=3 | nothing saved"), script loads and exits clean. Culpeper switch stays scheduled for ~12:20 AM.
+- Customers > Custom Reports criteria read at Culpeper (look only, new mode crprobecust): includes **Birthday**, **First Time In**, Mobile, MobilePawn Activation Date, Last Time In, Store. A birthday / store-anniversary list can be built the same way as "Claude Loan Reminders". Not built yet: need the Birthday operator choices (dry run) - scheduled for Sunday afternoon (stores closed).

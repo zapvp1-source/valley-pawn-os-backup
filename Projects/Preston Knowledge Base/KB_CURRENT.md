@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-11-20 22:12 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-11-21 22:11 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -2057,11 +2057,29 @@ PRESTON SAID: "We still had the product. We sold the product, disclosing all iss
 SOURCE: zoom-call:2026-08-29_HAR_store-to-Preston_14m42s.txt | 2026-08-29 | store<->Preston (transcribed 2026-10-01)
 id: disclosed-defect-sold-as-tes-beea03ff
 
+### [MEDIUM] ebay-dispute-document-in-writing
+RULE: Handle eBay return disputes in writing through eBay's messaging and keep a record of everything.
+PRESTON SAID: "do everything in writing through e-base and make sure you got record of it all."
+SOURCE: zoom-call:22c8e11a648f44fb95981963b29c79ec | 2026-11-21 | UNK Uriah Tiglao
+id: ebay-dispute-document-in-wri-e4ae4ec5
+
 ### [MEDIUM] ebay-opened-case-handling
 RULE: Any opened eBay case needs immediate attention, and the Operations Manager (Preston) must be told about it as well.
 PRESTON SAID: "I have advised Walker on the correct handling of any opened eBay case and that it needs immediate attention and to let me know as well."
 SOURCE: #harrisonburg-funds (Preston Peters, Operations Manager) | 2026-10-22 | https://valleypawnworkspace.slack.com/archives/C03BWRKEDUZ/p1792690005574209
 id: ebay-opened-case-handling-808505fe
+
+### [MEDIUM] ebay-return-missing-items-deduction
+RULE: When an eBay buyer returns an item without all the items included in the sale (charger, cable), deduct the replacement value of the missing items from the refund and tell the buyer the deduction amount.
+PRESTON SAID: "whatever the value of that is say, Hey, you know, This is the value of its replacement charger that we have to get. And, you know, so we're going to deduct the charger value and go from there and see what they say."
+SOURCE: zoom-call:22c8e11a648f44fb95981963b29c79ec | 2026-11-21 | UNK Uriah Tiglao
+id: ebay-return-missing-items-de-ab5323d7
+
+### [MEDIUM] ebay-return-replacement-price-source
+RULE: Price missing accessories at the cost of a brand-new replacement from the manufacturer's own site (e.g. Apple), so the deduction is a documented figure and not a negotiation.
+PRESTON SAID: "Get it right off like Apple side or something if you can"
+SOURCE: zoom-call:22c8e11a648f44fb95981963b29c79ec | 2026-11-21 | UNK Uriah Tiglao
+id: ebay-return-replacement-pric-e5193fe1
 
 ### [MEDIUM] ebay-seller-cancellation-penalty
 RULE: Canceling an eBay order for any reason other than the customer asking to cancel will result in a defect ding on the store's eBay account. Avoid seller-initiated cancellations, since the dings compound.
@@ -2230,6 +2248,18 @@ RULE: Every intake item requires a photo of the actual item, and photos must ref
 PRESTON SAID: "Aventon Pace 500 - No photo of item - Why are we not getting photos? 2 yesterday and one today."
 SOURCE: #loans-and-buys | 2024-03-15 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1710509400000000
 id: photo-required-every-item-cb8ff861
+
+### [MEDIUM] private-party-firearm-transfer-procedure
+RULE: For a private party firearm transfer, log it in the system. Buy the gun from the selling customer for $0, price it at one cent, then sell it for $0 to the receiving person. Charge the $25 transfer fee and ring it out.
+PRESTON SAID: "just for our gun log and to track it properly in our system, if there ever was a trace, you buy it from the customer for $0 who's selling it, and then you price it at one cent and then sell it for $0 to the next person, and then just do it for $0. the $25 transfer fee and ring it out."
+SOURCE: zoom-call:ca779dbaa9104de89865517d6c31d8e2 | 2026-11-21 | UNK Walker Tapley
+id: private-party-firearm-transf-4705eeaf
+
+### [MEDIUM] private-party-transfer-seller-bill-of-sale
+RULE: In a private party transfer, the selling customer signs the buy ticket. The ticket serves as a bill of sale and shows the seller disposed of the firearm if a trace ever comes back.
+PRESTON SAID: "they'll sign it and that gives them a ticket too that just shows that they disposed of it. So if anything ever comes back, yeah, just a bill of sale for them makes them feel comfortable too."
+SOURCE: zoom-call:ca779dbaa9104de89865517d6c31d8e2 | 2026-11-21 | UNK Walker Tapley
+id: private-party-transfer-selle-dc84c8d0
 
 ### [MEDIUM] pull-list-priority
 RULE: Work the pull list with higher-dollar items first, then jewelry.
@@ -2426,6 +2456,20 @@ PRESTON SAID: "Make sure when you do just tell them that they they're gonna have
 SOURCE: zoom-call:2026-10-08_0949_Preston-to-Sandi_1m55s.txt | 2026-10-08 | store<->Preston (transcribed 2026-10-01)
 id: bank-account-adding-employee-34f86c43
 
+### [LOW] black-friday-sale-2026-proposed-discounts
+RULE: Preston proposed a week-long Black Friday sale promoted by email/text blast: 10% off firearms, 20% off general merchandise, 30% off jewelry. Clearance jewelry and bullion are excluded.
+PRESTON SAID: "I'd like to do an email/text blast for Black Friday sale all week long next week. 10% off firearms, 20% off general merchandise, 30% off jewelry. Does not include clearance jewelry or bullion."
+SOURCE: #preston-goldilocks (Preston Peters, Operations Manager) | 2026-11-21 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1795280817229869?thread_ts=1795280817.229869&cid=C0BGXSTT4TY
+!! CONFLICT: A later message from Preston in the same thread suggests 15% off general merchandise instead of 20%.
+id: black-friday-sale-2026-propo-3e90a54c
+
+### [LOW] black-friday-sale-2026-revised-discounts
+RULE: Preston's revised suggestion is to run the Black Friday sale all week at 10% off guns, 15% off general merchandise, and 30% off jewelry. He called it his input, not a final decision.
+PRESTON SAID: "I'd like to run it all week for 10% guns, 15% general merch, and 30% jewelry. Just my input"
+SOURCE: #preston-goldilocks (Preston Peters, Operations Manager) | 2026-11-21 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1795286973844979?thread_ts=1795280817.229869&cid=C0BGXSTT4TY
+!! CONFLICT: His earlier proposal in the same thread had general merchandise at 20% off, not 15%.
+id: black-friday-sale-2026-revis-763c821e
+
 ### [LOW] bravo-issue-connectivity-not-card-reader
 RULE: The Bravo issue the store was seeing was described as a connectivity problem, not a card reader problem. Check connectivity first when Bravo acts up, and keep an eye on the card reader while using it.
 PRESTON SAID: "the Bravo issue is a connectivity issue."
@@ -2491,6 +2535,12 @@ RULE: When Bravo errors out listing Pokemon/trading cards to eBay because the ca
 PRESTON SAID: "So the workaround that I did I think in Bravo, it was under like other anime, like merch. So this way it didn't ask for a condition. So then I was able to post it and then I went into eBay manually and I changed the category and everything in it that way. But it still went through Bravo that way."
 SOURCE: zoom-call:7b0fe1bd5c6d4048a3357c9c2ca9d4a4 | 2026-11-06 | UNK Uriah Tiglao
 id: ebay-bravo-pokemon-card-list-432f2598
+
+### [LOW] ebay-return-missing-box-valuation
+RULE: When an original box is missing from an eBay return, don't try to deduct for it, because it has no real value. Base the deduction on the replacement charger and cable.
+PRESTON SAID: "a brand new charger and cord is Is our main argument because you can't really put value on a box."
+SOURCE: zoom-call:22c8e11a648f44fb95981963b29c79ec | 2026-11-21 | UNK Uriah Tiglao
+id: ebay-return-missing-box-valu-f8e203a3
 
 ### [LOW] ebay-ringout-omni-channel
 RULE: When ringing out an eBay sale in Bravo, check that it posts to omni channel rather than web/PayPal. The routing was changed in Bravo and should now be automatic.
@@ -2907,5 +2957,5 @@ id: past-due-75-day-5-percent-ce-30eeab0b
 
 
 ==============================================================================
-COVERAGE: 408 entries - 31 verified by Preston, 157 high-confidence rules, 117 medium, 101 low, 2 superseded.
+COVERAGE: 416 entries - 31 verified by Preston, 157 high-confidence rules, 122 medium, 104 low, 2 superseded.
 ==============================================================================

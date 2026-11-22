@@ -50,3 +50,9 @@ After this: Login Day is the first Monday each month, and the list should normal
 ## Files
 - Valley Pawn OS/bin: guesty_pull.py, guesty_pull.sh, api_keys_setup.sh, analytics_api_pull.sh, login_wall_audit.py
 - Valley Pawn OS/fleet: com.valleypawn.guesty-pull.plist, com.valleypawn.analytics-api-pull.plist, LOGIN_WALL_AUDIT.json
+
+## Update 2026-11-21 — always-on automation browser (Sign-in Agent project)
+Most remaining "sign-in" failures were the shared profile locking itself, not logouts. Fixed with the browser host
+(com.valleypawn.browser-host) + attach mode in vp_browser.py + nightly session check (com.valleypawn.browser-sessions).
+Detail: CHANGELOG 2026-11-21. Plan doc: https://claude.ai/artifact/RQAJb12u3JmghgJkDLZXVG
+Rollback: fleet/state/browser_host/config.json enabled=false, then `vp_browser_host.py stop`.

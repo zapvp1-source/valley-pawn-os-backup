@@ -18,7 +18,8 @@ recommendation a real test on the next send, grades it, and promotes winners aut
 
 Metric: store actions per 1,000 delivered = call + text + directions clicks (UTM buckets *_call, *_text,
 *_map / deal_of_week_*), the same buckets email_analytics_weekly.py counts.
-Decision: needs >=2 sends and >=20 actions across both halves; WIN/LOSE at one-sided z >= 1.28 (~90%);
+Decision (2026-11-21): counts UNIQUE PEOPLE with a store action, mail-scanner clicks removed (human_clicks).
+Needs >=2 sends and >=8 such people across both halves; WIN/LOSE by exact binomial test at 90% confidence;
 after 6 sends with no clear result -> NO DIFFERENCE, the control stays. A variant whose unsubscribe rate
 runs 0.3 points above control (3+ unsubs) loses regardless.
 Levers it may touch: top strips, preview text, subject. Never offers, discounts, loan/legal copy, audiences.
@@ -39,7 +40,7 @@ LEDGER = os.path.join(HOME, "Documents/Claude/Projects/Valley Pawn OS/fleet/FAIL
 AUDIENCE = [7, 13]          # weekly audience since the 2026-10-20 audit (Engaged + new store contacts)
 SEEDS = 10
 STORES = ["culpeper", "waynesboro", "harrisonburg", "lexington", "roanoke"]
-MIN_SENDS, MIN_ACTIONS, MAX_SENDS, Z = 2, 20, 6, 1.28
+MIN_SENDS, MIN_ACTIONS, MAX_SENDS, ALPHA = 2, 8, 6, 0.10
 TASK = "email-test-loop"
 _K = None
 
@@ -258,6 +259,12 @@ def apply(render=False):
         return 0
     ctl = b("/emailCampaigns/%d" % queued[0]["id"])
     html, subject = ctl.get("htmlContent") or "", ctl.get("subject") or ""
+    skip = (backlog().get("skip_weeks") or {}).get(wk)
+    closed = re.search(r"closed\s+today", re.sub(r"<[^>]+>", " ", html), re.I)
+    if skip or closed:
+        # 2026-11-21: no test on a day the stores are closed ("a real person answers" would be false) — full audience, unsplit
+        print("week %s not tested (%s) — #%d goes to everyone as is" % (wk, skip or "email says the stores are closed", ctl["id"]))
+        return 0
     if "/t/" not in html or "/c/" not in html:
         print("#%d has no call/text buttons (community-only send) — excluded from testing" % ctl["id"])
         return 0
@@ -346,55 +353,129 @@ def apply(render=False):
 
 
 # ---------------------------------------------------------------- grade
-def actions(cid):
-    c = b("/emailCampaigns/%d" % cid)
-    st = (c.get("statistics") or {})
-    delivered = sum(int(x.get("delivered") or x.get("sent") or 0) for x in (st.get("campaignStats") or []))
-    unsubs = sum(int(x.get("unsubscriptions") or 0) for x in (st.get("campaignStats") or []))
-    links = st.get("linksStats") or {}
-    a = 0
-    for url, n in links.items():
-        u = urllib.parse.unquote(url.replace("&amp;", "&"))
-        tag = (re.search(r"utm_content=([^&#]+)", u) or [None, ""])[1]
-        if tag.endswith("_call") or tag.endswith("_text") or tag.endswith("_map") or tag.startswith("deal_of_week_"):
-            a += int(n if not isinstance(n, dict) else n.get("clicks", 0))
-    return delivered, a, unsubs
+def is_action(tag):
+    return tag.endswith("_call") or tag.endswith("_text") or tag.endswith("_map") or tag.startswith("deal_of_week_")
+
+
+def _ts(v):
+    try:
+        return dt.datetime.fromisoformat(str(v).replace("Z", "+00:00")).timestamp()
+    except ValueError:
+        return 0.0
+
+
+def is_scanner(links):
+    """A mail-security scanner opens many links at once; a person does not.
+    2026-11-21: on the 11/19 send Brevo's totals showed 134 clicks; contact-level data showed 6 clickers, 2 of them
+    scanners (5 strip links in 2 s; 4 links of one store block in 2 s). Rule: 3+ different links inside 30 s, or
+    2+ different links inside 3 s."""
+    t = sorted(_ts(l.get("eventTime")) for l in links)
+    n = len(t)
+    for i in range(n):
+        if i + 2 < n and t[i + 2] - t[i] <= 30:
+            return True
+        if i + 1 < n and t[i + 1] - t[i] <= 3:
+            return True
+    return False
+
+
+CLICK_CACHE = os.path.join(ROOT, "clicks_cache.json")
+
+
+def human_clicks(cids, max_age_h=6):
+    """{cid: {"actors", "callers", "texters", "mappers", "clickers", "scanners"}} — UNIQUE PEOPLE, scanners removed.
+    Reads every weekly-audience contact's own click history (lists 7 + 13; the internal seed list is never counted).
+    ~15 min for ~900 contacts, cached for 6 h so the Friday report and the grade share one pull."""
+    import time
+    cids = sorted(set(int(c) for c in cids))
+    cache = load(CLICK_CACHE, {})
+    if cache.get("at") and (dt.datetime.now(ET) - dt.datetime.fromisoformat(cache["at"])).total_seconds() < max_age_h * 3600 \
+            and set(cids) <= set(cache.get("cids", [])):
+        return {int(k): v for k, v in cache["data"].items() if int(k) in cids}
+    data = {c: {"actors": 0, "callers": 0, "texters": 0, "mappers": 0, "clickers": 0, "scanners": 0} for c in cids}
+    emails = sorted(set(e for lid in AUDIENCE for e in list_emails(lid)))
+    for e in emails:
+        c = None
+        for attempt in range(4):
+            try:
+                c = b("/contacts/" + urllib.parse.quote(e)); break
+            except urllib.error.HTTPError as ex:
+                if ex.code == 404:
+                    break
+                time.sleep(2 + 3 * attempt)
+            except Exception:
+                time.sleep(2 + 3 * attempt)
+        else:
+            raise RuntimeError("contact history unavailable")
+        for ev in ((c or {}).get("statistics") or {}).get("clicked") or []:
+            cid = int(ev.get("campaignId", 0))
+            if cid not in data:
+                continue
+            links = ev.get("links") or []
+            if is_scanner(links):
+                data[cid]["scanners"] += 1
+                continue
+            tags = [(re.search(r"utm_content=([^&#]+)", urllib.parse.unquote(l.get("url", "").replace("&amp;", "&"))) or [None, ""])[1] for l in links]
+            data[cid]["clickers"] += 1
+            data[cid]["callers"] += any(t.endswith("_call") for t in tags)
+            data[cid]["texters"] += any(t.endswith("_text") for t in tags)
+            data[cid]["mappers"] += any(t.endswith("_map") or t.startswith("deal_of_week_") for t in tags)
+            data[cid]["actors"] += any(is_action(t) for t in tags)
+        time.sleep(0.05)
+    save(CLICK_CACHE, {"at": dt.datetime.now(ET).isoformat(), "cids": cids, "contacts": len(emails), "data": data})
+    return data
+
+
+def delivered_unsubs(cid):
+    st = (b("/emailCampaigns/%d" % cid).get("statistics") or {})
+    rows = st.get("campaignStats") or []
+    return (sum(int(x.get("delivered") or x.get("sent") or 0) for x in rows), sum(int(x.get("unsubscriptions") or 0) for x in rows))
+
+
+def binom_tail(k, n, p):
+    """P(X >= k), X ~ Binomial(n, p) — exact; the counts here are far too small for a z-test."""
+    return sum(math.comb(n, i) * p ** i * (1 - p) ** (n - i) for i in range(k, n + 1))
 
 
 def decide(A, Bv, sends):
-    """A/Bv = (delivered, actions, unsubs). -> (decision or None, z, why)."""
+    """A/Bv = (delivered, people who took a store action, unsubs). -> (decision or None, confidence, why)."""
     (na, xa, ua), (nb, xb, ub) = A, Bv
     if na == 0 or nb == 0:
         return None, 0.0, "no delivered counts yet"
     if ub >= 3 and (ub / nb - ua / na) * 100 >= 0.3:
         return "LOSE", 0.0, "variant drove extra unsubscribes"
-    p = (xa + xb) / float(na + nb)
-    se = math.sqrt(p * (1 - p) * (1.0 / na + 1.0 / nb)) if 0 < p < 1 else 0
-    z = ((xb / float(nb)) - (xa / float(na))) / se if se else 0.0
-    if sends < MIN_SENDS or xa + xb < MIN_ACTIONS:
+    k, share = xa + xb, nb / float(na + nb)
+    p_win = binom_tail(xb, k, share) if k else 1.0          # chance of the variant doing this well by luck
+    p_lose = binom_tail(xa, k, 1 - share) if k else 1.0
+    conf = round(1 - min(p_win, p_lose), 3)
+    if sends < MIN_SENDS or k < MIN_ACTIONS:
         if sends >= MAX_SENDS:
-            return "NO DIFFERENCE", z, "too few actions after %d sends" % sends
-        return None, z, "needs %d sends and %d actions (has %d, %d)" % (MIN_SENDS, MIN_ACTIONS, sends, xa + xb)
-    if z >= Z:
-        return "WIN", z, ""
-    if z <= -Z:
-        return "LOSE", z, ""
+            return "NO DIFFERENCE", conf, "too few store actions after %d sends" % sends
+        return None, conf, "needs %d sends and %d people taking a store action (has %d, %d)" % (MIN_SENDS, MIN_ACTIONS, sends, k)
+    if p_win <= ALPHA:
+        return "WIN", conf, ""
+    if p_lose <= ALPHA:
+        return "LOSE", conf, ""
     if sends >= MAX_SENDS:
-        return "NO DIFFERENCE", z, ""
-    return None, z, "too close to call yet"
+        return "NO DIFFERENCE", conf, ""
+    return None, conf, "too close to call yet"
 
 
 def tally(s, tid, today):
-    A, Bv, sends = [0, 0, 0], [0, 0, 0], 0
+    A, Bv, sends, pairs = [0, 0, 0], [0, 0, 0], 0, []
     for wk, w in sorted(s["weeks"].items()):
         if w.get("test") != tid or w.get("status") != "applied":
             continue
         if (today - dt.date.fromisoformat(wk)).days < 3:
             continue
-        for tot, cid in ((A, w["control_id"]), (Bv, w["variant_id"])):
-            d, x, u = actions(cid)
-            tot[0] += d; tot[1] += x; tot[2] += u
-        sends += 1
+        pairs.append((w["control_id"], w["variant_id"]))
+    if pairs:
+        hc = human_clicks([c for p in pairs for c in p])
+        for ctl, var in pairs:
+            for tot, cid in ((A, ctl), (Bv, var)):
+                d, u = delivered_unsubs(cid)
+                tot[0] += d; tot[1] += hc[cid]["actors"]; tot[2] += u
+            sends += 1
     return tuple(A), tuple(Bv), sends
 
 
@@ -411,16 +492,16 @@ def grade(render=False):
     A, Bv, sends = tally(s, tid, today)
     dec, z, why = decide(A, Bv, sends)
     rate = lambda t: (1000.0 * t[1] / t[0]) if t[0] else 0.0
-    s["last_grade"] = {"test": tid, "at": today.isoformat(), "sends": sends, "A": A, "B": Bv, "z": round(z, 2),
+    s["last_grade"] = {"test": tid, "at": today.isoformat(), "sends": sends, "A": A, "B": Bv, "confidence": z,
                        "decision": dec, "why": why, "rate_A": round(rate(A), 2), "rate_B": round(rate(Bv), 2)}
-    print("grade %s: sends=%d A=%s B=%s z=%.2f -> %s %s" % (tid, sends, A, Bv, z, dec or "RUNNING", why))
+    print("grade %s: sends=%d A=%s B=%s confidence=%.2f -> %s %s" % (tid, sends, A, Bv, z, dec or "RUNNING", why))
     if dec and not render:
         s["results"][tid] = dict(s["last_grade"])
         if dec == "WIN":
             s["promoted"].append(tid)
         s["active"] = next_test(s)
-        md("%s | %s | %s — control %.1f vs variant %.1f store actions per 1,000 over %d sends (z %.2f). Next: %s" % (
-            today.isoformat(), tid, dec, rate(A), rate(Bv), sends, z, s["active"] or "backlog empty"))
+        md("%s | %s | %s — control %.1f vs variant %.1f store actions per 1,000 over %d sends (%d vs %d people, confidence %.0f%%). Next: %s" % (
+            today.isoformat(), tid, dec, rate(A), rate(Bv), sends, A[1], Bv[1], 100 * z, s["active"] or "backlog empty"))
     if not render:
         save(STATE, s)
     return 0
@@ -437,12 +518,12 @@ def status_line(s=None):
             g["test"], res, g.get("rate_B", 0), g.get("rate_A", 0), g.get("sends", 0))
         return head + (" Next test: %s, starts Thursday." % s["active"] if s.get("active") else " Backlog empty.")
     if s.get("active") and g.get("test") == s["active"] and g.get("sends"):
-        return "Test running: %s — variant %.1f vs control %.1f store actions per 1,000 after %d send%s (%s)." % (
-            s["active"], g.get("rate_B", 0), g.get("rate_A", 0), g["sends"], "" if g["sends"] == 1 else "s", g.get("why") or "close")
+        return "Test running: %s — %d people took a store action from the new version vs %d from the current one after %d send%s (%s)." % (
+            s["active"], g["B"][1], g["A"][1], g["sends"], "" if g["sends"] == 1 else "s", g.get("why") or "close")
     if s.get("active"):
         ran = sorted(wk for wk, w in s.get("weeks", {}).items() if w.get("test") == s["active"] and w.get("status") == "applied")
         if ran and ran[-1] <= dt.datetime.now(ET).date().isoformat():
-            return "Test running: %s — half the list got it on %s; first score next Friday (needs 2 sends and 20 store actions)." % (
+            return "Test running: %s — half the list got it on %s; scored once 2 sends are in." % (
                 s["active"], ", ".join(ran))
         return "Test starting Thursday: %s — %s" % (s["active"], names.get(s["active"], ""))
     return None
@@ -473,6 +554,25 @@ def probe():
     print("probe ok:", len(summ["campaigns"]), "campaigns")
 
 
+def clickdump(cids):
+    """read-only: per-contact click events for the two test halves on the given campaigns -> probe/clicks_<ids>.json"""
+    import time
+    st = state()
+    emails = sorted(set(e for side in ("A", "B") for e in list_emails(st["lists"][side])))
+    out = []
+    for e in emails:
+        try:
+            c = b("/contacts/" + urllib.parse.quote(e))
+        except Exception as ex:
+            out.append({"email": e, "error": type(ex).__name__}); continue
+        ev = [x for x in ((c.get("statistics") or {}).get("clicked") or []) if int(x.get("campaignId", 0)) in cids]
+        if ev:
+            out.append({"id": c.get("id"), "lists": c.get("listIds"), "clicked": ev})
+        time.sleep(0.12)
+    save(os.path.join(ROOT, "probe", "clicks_%s.json" % "_".join(map(str, cids))), {"n_contacts": len(emails), "clickers": out})
+    print("clickdump ok: %d contacts, %d with clicks" % (len(emails), len(out)))
+
+
 if __name__ == "__main__":
     os.makedirs(ROOT, exist_ok=True)
     cmd = sys.argv[1] if len(sys.argv) > 1 else ""
@@ -486,6 +586,8 @@ if __name__ == "__main__":
             print(status_line() or "(no test)"); sys.exit(0)
         if cmd == "probe":
             probe(); sys.exit(0)
+        if cmd == "clickdump":
+            clickdump([int(x) for x in sys.argv[2:] if x.isdigit()]); sys.exit(0)
         print(__doc__); sys.exit(2)
     except Exception as e:
         print("ERROR", type(e).__name__, e)
