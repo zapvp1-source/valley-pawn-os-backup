@@ -369,3 +369,13 @@ Unverifiable: none left in posts. PUBLISHED-WRONG: none.
   - Afton Mountain (Waynesboro FB + GBP_Waynesboro): Thanksgiving is Thu Nov 26, 2026, so 11/22 is the start of Thanksgiving week; VDOT Fog Warning System on Afton (fog detection, message signs, strip lighting) listed as existing, run by VDOT NWRO TOC. https://local.iteris.com/virginiaitsarchitecture/architectures/northwestern/html/elements/el69.html ; https://augustafreepress.com/news/interstate-64-safety-upgrades-on-afton-mountain-enter-final-phases/ (2015 article; VDOT operates the system). 1,903 ft Rockfish Gap elevation is an evergreen geography fact, not re-checked.
 - Edited: 0. All dated claims true and specific.
 - Unverifiable: none affecting dated claims. PUBLISHED-WRONG: none.
+
+## 2026-11-22 (Sun) 07:45 ET — daily fact-check, window to 2026-11-23 19:40 ET
+- Posts checked: 13 (Roanoke FB + GBP Mill Mountain Star; Waynesboro FB + GBP Afton; Culpeper FB + GBP Depot; Lexington FB + GBP bricks; Harrisonburg FB + GBP railway; BrandPinterest watch; BrandYouTube x2 product shorts).
+- Skipped as evergreen/product: Culpeper Depot, Lexington bricks, Harrisonburg railway history, Pinterest watch, YouTube jewelry + pool robot.
+- Verified:
+  - Mill Mountain Star first lit Thanksgiving Eve, Nov 23, 1949, 8:22 PM; 88.5 ft, 10,000 lb star, 2,000 ft neon; white year-round, red/white/blue on Memorial Day, Flag Day, July 4, Patriot Day, Veterans Day (current practice). 77th anniversary = Mon Nov 23, 2026, so "Tomorrow night" in the Nov 22 Roanoke FB post is correct. Sources: https://www.playroanoke.com/the-roanoke-star/ (City of Roanoke P&R, modified 2026-06-23), https://en.wikipedia.org/wiki/Roanoke_Star
+  - Thanksgiving 2026 = Thu Nov 26, so "this Thanksgiving week" (Waynesboro FB + GBP) is current.
+  - Rockfish Gap elevation 1,903 ft; VDOT Afton Mountain fog warning system (fog detection, message signs, pavement lighting) listed as Existing. Sources: https://en.wikipedia.org/wiki/Rockfish_Gap, https://local.iteris.com/virginiaitsarchitecture/architectures/northwestern/html/elements/el69.html
+- Edited: none — all time-sensitive claims true and specific.
+- Unverifiable: none. Note: Wikipedia puts the Skyline Drive/BRP junction just north of the gap itself (evergreen geography, wording left as is).

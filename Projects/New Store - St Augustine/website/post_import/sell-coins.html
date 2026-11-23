@@ -1,0 +1,126 @@
+<!-- wp:html -->
+<script>
+window.VP_GOLD_SPOT = 3539.00;    // USD/troy oz — update weekly from kitco.com
+window.VP_SILVER_SPOT = 41.08;    // USD/troy oz — update weekly
+window.VP_PAYOUT_LOW = 0.70;
+window.VP_PAYOUT_HIGH = 0.85;
+window.VP_COIN_PAYOUT_LOW = 0.75;
+window.VP_COIN_PAYOUT_HIGH = 0.90;
+window.VP_GOLD_PAYOUT = 0.50;  // We pay 50% of melt
+</script>
+<script>window.VP_GOLD_SPOT = 3539.00; window.VP_SILVER_SPOT = 41.08;</script>
+<script>// Rocket Pawn & Jewelry spot prices. Fallback = last value pushed by the Mac (2026-10-05); the live number comes from
+// /spot-prices-feed/, which the Mac updates every morning from the same feed the store intake valuations use.
+window.VP_GOLD_SPOT = 3539.00;
+window.VP_SILVER_SPOT = 41.08;
+(function(){try{fetch('https://thevalleypawn.com/wp-json/wp/v2/pages?slug=spot-prices-feed&_fields=content',{cache:'no-store'}).then(function(r){return r.json();}).then(function(a){var t=(a&&a[0]&&a[0].content&&a[0].content.rendered)||'';var g=t.match(/gold:\s*([0-9.]+)/),s=t.match(/silver:\s*([0-9.]+)/);if(g&&+g[1]>1000)window.VP_GOLD_SPOT=+g[1];if(s&&+s[1]>5)window.VP_SILVER_SPOT=+s[1];}).catch(function(){});}catch(e){}})();</script>
+<script>document.addEventListener('DOMContentLoaded',function(){
+(function() {
+  'use strict';
+  window.VP_GOLD_SPOT = window.VP_GOLD_SPOT || 4500;
+  window.VP_SILVER_SPOT = window.VP_SILVER_SPOT || 76;
+  window.VP_COIN_PAYOUT_LOW = window.VP_COIN_PAYOUT_LOW || 0.75;
+  window.VP_COIN_PAYOUT_HIGH = window.VP_COIN_PAYOUT_HIGH || 0.90;
+  var STORE_ID = 'staugustine';
+  var STORE_CITY = 'St. Augustine';
+  var STORE_PHONE_RAW = '';
+  var GRAMS_PER_TROY_OZ = 31.1035;
+
+  // Silver content per coin (troy oz)
+  var COIN_SPECS = {
+    dime:        { silver_oz: 0.0723, gold_oz: 0,    label: 'Silver Dime' },
+    quarter:     { silver_oz: 0.1808, gold_oz: 0,    label: 'Silver Quarter' },
+    half:        { silver_oz: 0.3617, gold_oz: 0,    label: 'Silver Half' },
+    dollar:      { silver_oz: 0.7734, gold_oz: 0,    label: 'Silver Dollar' },
+    kennedy40:   { silver_oz: 0.1479, gold_oz: 0,    label: '40% Kennedy Half' },
+    sileagle:    { silver_oz: 1.0,    gold_oz: 0,    label: 'Silver Eagle' },
+    goldeagle:   { silver_oz: 0,      gold_oz: 1.0,  label: 'Gold Eagle 1oz' }
+  };
+
+  var inputs = {};
+  var keys = ['dime','quarter','half','dollar','kennedy40','sileagle','goldeagle'];
+  keys.forEach(function(k) { inputs[k] = document.getElementById('vp-cn-' + k + '-' + STORE_ID); });
+
+  var offerEl = document.getElementById('vp-offer-' + STORE_ID);
+  var noteEl = document.getElementById('vp-note-' + STORE_ID);
+  var calcCta = document.getElementById('vp-calc-cta-' + STORE_ID);
+
+  var state = { offerLow: 0, offerHigh: 0, totalCoins: 0, calcStarted: false, calcQuoted: false };
+
+  function track(eventName, params) {
+    params = params || {};
+    params.store_id = STORE_ID;
+    params.store_city = STORE_CITY;
+    params.category = 'coins';
+    if (typeof window.gtag === 'function') window.gtag('event', eventName, params);
+    if (window.dataLayer) window.dataLayer.push(Object.assign({ event: eventName }, params));
+    if (window.VP_DEBUG) console.log('[VP TRACK]', eventName, params);
+  }
+
+  function calc() {
+    var totalSilverOz = 0;
+    var totalGoldOz = 0;
+    var totalCoins = 0; var junkSilverOz = 0; var bullionSilverOz = 0;
+    var summary = [];
+    keys.forEach(function(k) {
+      var qty = parseInt(inputs[k].value, 10);
+      if (isNaN(qty) || qty <= 0) return;
+      totalCoins += qty;
+      totalSilverOz += qty * COIN_SPECS[k].silver_oz;
+      totalGoldOz += qty * COIN_SPECS[k].gold_oz; if (COIN_SPECS[k].silver_oz===1) { bullionSilverOz += qty * COIN_SPECS[k].silver_oz; } else { junkSilverOz += qty * COIN_SPECS[k].silver_oz; }
+      summary.push(qty + 'x ' + COIN_SPECS[k].label);
+    });
+
+    state.totalCoins = totalCoins;
+
+    if (totalCoins === 0) {
+      offerEl.textContent = 'Enter quantities to see your offer';
+      noteEl.textContent = 'Based on live spot prices';
+      return;
+    }
+
+    var silverValue = totalSilverOz * window.VP_SILVER_SPOT;
+    var goldValue = totalGoldOz * window.VP_GOLD_SPOT;
+    var totalMelt = silverValue + goldValue;
+
+    var junkMelt = junkSilverOz * window.VP_SILVER_SPOT; var bullionMelt = bullionSilverOz * window.VP_SILVER_SPOT + totalGoldOz * window.VP_GOLD_SPOT; state.offerLow = Math.round(junkMelt * 0.42 + bullionMelt * window.VP_COIN_PAYOUT_LOW);
+    state.offerHigh = Math.round(junkMelt * 0.48 + bullionMelt * window.VP_COIN_PAYOUT_HIGH);
+
+    if (state.offerLow < 1) offerEl.textContent = 'Less than $1 — bring in for an exact offer';
+    else offerEl.textContent = '$' + state.offerLow.toLocaleString() + ' – $' + state.offerHigh.toLocaleString();
+
+    var noteParts = [];
+    if (totalSilverOz > 0) noteParts.push((Math.round(totalSilverOz * 100)/100) + ' oz silver');
+    if (totalGoldOz > 0) noteParts.push((Math.round(totalGoldOz * 100)/100) + ' oz gold');
+    noteEl.textContent = totalCoins + ' coins · ' + noteParts.join(' + ');
+
+    var msg = "Hi Rocket Pawn & Jewelry " + STORE_CITY + " — I'd like to sell coins. " + summary.join(', ') + ". Your calculator estimated $" + state.offerLow + "–$" + state.offerHigh + ". Can you confirm?";
+    if (calcCta) calcCta.href = 'mailto:hello@rocketpawnjewelry.com?subject=' + encodeURIComponent('Quote request') + '&body=' + encodeURIComponent(msg);
+
+    if (!state.calcStarted) { state.calcStarted = true; track('calc_started', { total_coins: totalCoins }); }
+    if (!state.calcQuoted && state.offerHigh > 0) {
+      state.calcQuoted = true;
+      track('calc_quoted', { total_coins: totalCoins, silver_oz: Math.round(totalSilverOz * 100)/100, gold_oz: Math.round(totalGoldOz * 100)/100, offer_low: state.offerLow, offer_high: state.offerHigh });
+    }
+  }
+
+  keys.forEach(function(k) { if (inputs[k]) inputs[k].addEventListener('input', calc); });
+
+  document.querySelectorAll('.vp-faq__q').forEach(function(q) {
+    q.addEventListener('click', function() { q.closest('.vp-faq__item').classList.toggle('open'); });
+  });
+
+  document.querySelectorAll('[data-vp-track]').forEach(function(el) {
+    el.addEventListener('click', function() { track(el.dataset.vpTrack, { location: el.dataset.vpLocation || 'unknown', href: el.href || '' }); });
+  });
+
+  var scrollMarks = { 25: false, 50: false, 75: false };
+  window.addEventListener('scroll', function() {
+    var p = Math.round((window.scrollY + window.innerHeight) / document.body.scrollHeight * 100);
+    Object.keys(scrollMarks).forEach(function(m) { if (!scrollMarks[m] && p >= m) { scrollMarks[m] = true; track('scroll_' + m); } });
+  }, { passive: true });
+
+  calc();
+})();
+});</script>
+<!-- /wp:html -->

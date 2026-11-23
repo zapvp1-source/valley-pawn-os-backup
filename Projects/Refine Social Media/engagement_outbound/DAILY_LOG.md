@@ -1,5 +1,25 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-22 (daily PREP run, 12:42–12:55 ET, level 1 all pages, Sunday) — picks queued for the next POST-mode chat, nothing published by this run
+- Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only (composer read "What's on your mind, Joshua?" at start and end); never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings.
+- Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).
+- No POST-mode chat since 11/19 morning (ledger unchanged at 88 rows), so nothing to sync into WATCHLIST.
+- QUEUE cleaned: Waynesboro.Com "Downtown twinkle" lapsed 11/21 21:14 unposted (removed). Still pending from 11/21: Roanoke Explore Park reel (to TODAY 14:24), Harrisonburg MRL Little Free Pantry (to TODAY 14:00), Culpeper CCHS announcers (to TODAY 21:32), Brand SNP closings share (to 11/23 11:50), Roanoke follow → Roanoke Regional Chamber.
+- New picks (permalinks opened and confirmed, times from hover):
+  - Roanoke comment → Roanoke Valley SPCA weekly intake recap (to ~11/23 21:30) — next Roanoke comment after the Explore Park pick.
+  - Culpeper share → Culpeper County Library "Read to a Therapy Dog" Sat Dec 5, 2:00–3:00pm, K–5 (posted Sat 11/21 14:00, to 11/23 14:00) — Culpeper's share for the week of 11/23.
+  - Waynesboro comment → Waynesboro.Com red-sky sunset (to 11/23 17:24).
+  - Harrisonburg comment → Daily News-Record, Fort Defiance volleyball fifth state title, first since 1995 (to 11/23 13:13).
+  - Brand comment → Shenandoah National Park, PATC founded 1927 history post (to 11/24 09:30).
+  - Lexington: none. The only fresh YES post (Rockbridge Regional Libraries wifi 24/7) is too close to Lexington's 11/2 "library that never closes" comment on the same page.
+- Skipped on purpose: CRI Holiday Open House/Tree Lighting moved to Sun 11/29 (good, but Culpeper's share week is spent and the post lapses 15:51 today — re-check for a fresh reminder post this week); Waynesboro.Com White Oak Flat wildfire and school-board superintendent meeting; News-Gazette staff birthday (names a person) and Parry McCluer loss; DNR Elkton coffee shop (business opening, outside town) and Luray awards (names students); W&L pre-health trip (lapsed 12:51 today); Culpeper Library Indie Author spotlight (bland; Culpeper already has picks).
+- Next-week share ideas: CRI Holiday Open House 11/29 (watch for a fresh post); Wayne Theatre Dec 21 caroling + film; Visit Harrisonburg Winter Wonderfest Dec 5 (watch for a fresh post).
+- Ramp: all pages hold level 1. Share week (Mon 11/16–Sun 11/22) closes today: Roanoke, Culpeper, Waynesboro used; Harrisonburg, Lexington none; Brand's SNP share still pending (counts as the week of 11/23 if posted Monday).
+- Watchlist: 13 pages re-checked; none newly dormant; no unresolved entries. No town follow searches this run (Roanoke follow still pending).
+- Reply / follow-back candidates for POST mode: unchanged carry-overs (Mark Lyon on Valley Pawn-Culpeper; ~10 commenters on a Valley Pawn-Lexington post; "Synster Gates Fan" mention on Valley Pawn; Kelsey L Iane and 3 others followed Valley Pawn-Lexington — follow back only if offered). Seen, not touched: "Sandy Bryant is waiting for a reply from Valley Pawn-Lexington" (Messenger — stays with Chekkit); "Agua Construction Company invited you to follow their Page" (Joshua's personal invite, ignored); Valley Pawn-Culpeper reached 884 fans.
+- Needs a person: none new.
+- Totals this run: comments 0 (4 new queued), shares 0 (1 new queued), replies 0, follows 0 (1 pending), new pages resolved 0.
+
 ## 2026-11-21 (daily PREP run, 12:41–12:57 ET, level 1 all pages, Saturday) — picks queued for the next POST-mode chat, nothing published by this run
 - Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only (composer read "What's on your mind, Joshua?"); never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings.
 - Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).

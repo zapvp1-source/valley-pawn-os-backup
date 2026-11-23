@@ -1,0 +1,85 @@
+<!-- wp:html -->
+<script>
+window.VP_GOLD_SPOT = 3539.00;    // USD/troy oz — update weekly from kitco.com
+window.VP_SILVER_SPOT = 41.08;    // USD/troy oz — update weekly
+window.VP_PAYOUT_LOW = 0.70;
+window.VP_PAYOUT_HIGH = 0.85;
+window.VP_COIN_PAYOUT_LOW = 0.75;
+window.VP_COIN_PAYOUT_HIGH = 0.90;
+window.VP_GOLD_PAYOUT = 0.50;  // We pay 50% of melt
+</script>
+<script>window.VP_GOLD_SPOT = 3539.00; window.VP_SILVER_SPOT = 41.08;</script>
+<script>// Rocket Pawn & Jewelry spot prices. Fallback = last value pushed by the Mac (2026-10-05); the live number comes from
+window.VP_GOLD_SPOT = 3539.00;
+window.VP_SILVER_SPOT = 41.08;
+(function(){try{fetch('https://thevalleypawn.com/wp-json/wp/v2/pages?slug=spot-prices-feed&_fields=content',{cache:'no-store'}).then(function(r){return r.json();}).then(function(a){var t=(a&&a[0]&&a[0].content&&a[0].content.rendered)||'';var g=t.match(/gold:\s*([0-9.]+)/),s=t.match(/silver:\s*([0-9.]+)/);if(g&&+g[1]>1000)window.VP_GOLD_SPOT=+g[1];if(s&&+s[1]>5)window.VP_SILVER_SPOT=+s[1];}).catch(function(){});}catch(e){}})();</script>
+<script>document.addEventListener('DOMContentLoaded',function(){
+(function(){
+var GOLD_SPOT = window.VP_GOLD_SPOT||4100;
+var OZ = 31.1035;
+fetch('https://api.metals.live/v1/spot/gold')
+.then(function(r){return r.json();})
+.then(function(d){if(d&&d.price) GOLD_SPOT=d.price;})
+.catch(function(){});
+var state = {};
+function dots(active) {
+[1,2,3,4].forEach(function(n){
+var d = document.getElementById('vjDot'+n);
+d.className = 'vp-est__step-dot' + (n===active?' active': n<active?' done':'');
+});
+}
+function show(n) {
+[1,2,3,4].forEach(function(i){
+document.getElementById('vjStep'+i).className='vp-est__panel'+(i===n?' active':'');
+});
+dots(n);
+}
+window.vpJewEst = {
+pickItem: function(type, label, sizes) {
+state.type = type; state.label = label; state.sizes = sizes;
+if(window.gtag) gtag('event','jewelry_est_item',{item_type:type});
+show(2);
+},
+pickKarat: function(karat, purity) {
+state.karat = karat; state.purity = purity;
+if(window.gtag) gtag('event','jewelry_est_karat',{karat:karat});
+var html = '';
+state.sizes.forEach(function(s){
+html += '<button class="vp-est__opt" onclick="vpJewEst.pickSize('+JSON.stringify(s[0])+','+s[1]+')">'+s[0]+'</button>';
+});
+document.getElementById('vjSizeOpts').innerHTML = html;
+document.getElementById('vjStep3Label').textContent = 'Step 3 — How would you describe your ' + state.label.toLowerCase() + '?';
+show(3);
+},
+pickSize: function(sizeLabel, grams) {
+state.size = sizeLabel; state.grams = grams;
+if(window.gtag) gtag('event','jewelry_est_size',{size:sizeLabel});
+var pricePerGram = GOLD_SPOT / OZ;
+var melt = pricePerGram * state.purity * grams;
+var lo = Math.floor(melt * 0.4 / 5) * 5;
+var hi = Math.ceil(melt * 0.5 / 5) * 5;
+lo = Math.max(lo, 5);
+document.getElementById('vjRange').textContent = '$'+lo.toLocaleString()+' – $'+hi.toLocaleString();
+document.getElementById('vjDesc').textContent = state.karat+' gold '+state.label.toLowerCase()+' ('+sizeLabel.toLowerCase()+')';
+document.getElementById('vjSpot').textContent = 'Based on gold at $'+Math.round(GOLD_SPOT).toLocaleString()+'/oz today';
+document.getElementById('vjCTA').onclick = function(){
+if(window.gtag) gtag('event','jewelry_est_cta',{item_type:state.type,karat:state.karat,lo:lo,hi:hi});
+};
+if(window.gtag) gtag('event','jewelry_est_quote',{item_type:state.type,karat:state.karat,lo:lo,hi:hi});
+show(4);
+},
+goTo: function(n) { show(n); },
+restart: function() { state={}; show(1); if(window.gtag) gtag('event','jewelry_est_restart',{}); }
+};
+})();
+});</script>
+<script>document.addEventListener('DOMContentLoaded',function(){
+(function() {
+document.querySelectorAll('.vp-faq__q').forEach(function(q) {
+q.addEventListener('click', function() {
+q.closest('.vp-faq__item').classList.toggle('open');
+});
+});
+})();
+});</script>
+<!-- /wp:html -->

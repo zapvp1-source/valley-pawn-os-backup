@@ -45,3 +45,12 @@ Easter Sale Mar 26-27, 2027: Brevo #107 (Tue 3/23 10:00, 11,624), page 2066 /eas
 ## 2026-11-21 3:25 PM — extended through New Year 2028; daily check is LIVE
 - Christmas 2027: Brevo #108 (Tue 12/14/27 10:00), page 2070 /christmas-sale-2027/ (publishes 12/7/27), banner 12/7-12/18, sale Dec 17-18. New Year 2028: Brevo #109 (Tue 12/28/27 10:00, gold + loans, no discount), banner 12/27/27-1/15/28 to /loans/.
 - Joshua ran the install paste ~3:11 PM. First native run wrote RUN_LOG.md: Black Friday email, page, banner, brief PASS; Christmas email, banner, brief PASS; no failures queued. com.valleypawn.seasonal-campaigns runs daily 06:20.
+
+
+## 2026-11-22 — channels finished
+- **Texts:** done. Rides the monthly 3rd-Thursday Chekkit text via seasonal_sms() in eBay Customer Campaign/build_month.py. Dec 2026 Christmas, Feb tax refund, Mar St. Patrick's, May Memorial Day, Jun Father's Day, Sep layaway already in packs; Oct Halloween, Nov Black Friday, Dec Christmas 2027 fill in at build time.
+- **Google profile holiday hours:** Thanksgiving, Christmas, New Year's Day 2027 Closed at all 5 stores. 2027 holidays (11/25/27, 12/25/27, 1/1/28) to set in fall 2027.
+- **App push:** not wired. Bravo push service declined; next step is a Schedule Mobile Event mode once the other Bravo session's work settles.
+- **eBay promotions:** not run; the offer is in-store only.
+- **Signs:** need Joshua's purchase approval (store-sign-set skill).
+- **Exclusions:** Joshua will define later.

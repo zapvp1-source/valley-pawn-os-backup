@@ -16,3 +16,12 @@
 - christmas-2026 EMAIL: PASS — #94 scheduled Dec 15 10:00 AM
 - christmas-2026 BANNER: PASS — homepage banner set for Dec 8 to Dec 19
 - christmas-2026 BRIEFS: PASS — social brief present
+
+## 2026-11-22 (native check)
+- black-friday-2026 EMAIL: PASS — #93 scheduled Nov 23 10:00 AM
+- black-friday-2026 PAGE: PASS — /black-friday/ live
+- black-friday-2026 BANNER: PASS — homepage banner set for Nov 21 to Nov 28
+- black-friday-2026 BRIEFS: PASS — social brief present
+- christmas-2026 EMAIL: PASS — #94 scheduled Dec 15 10:00 AM
+- christmas-2026 BANNER: PASS — homepage banner set for Dec 8 to Dec 19
+- christmas-2026 BRIEFS: PASS — social brief present

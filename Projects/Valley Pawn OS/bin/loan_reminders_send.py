@@ -76,7 +76,11 @@ def main():
                 w.writerow([r["phone"], r["kind"], st, err, dt.datetime.now().isoformat(timespec="seconds")]); fh.flush()
                 done.add((r["phone"], r["kind"]))
                 if 200 <= st < 300: n += 1
-                else: bad += 1
+                else:
+                    bad += 1
+                    if "opted out" in (err or "").lower():   # Chekkit is the do-not-text source: remember it
+                        op = os.path.join(os.path.dirname(HERE), "fleet", "state", "chekkit_optouts", code + ".tsv")
+                        with open(op, "a") as of: of.write("%s\t%s\tChekkit refused: opted out\n" % (r["phone"], dt.datetime.now().isoformat(timespec="seconds")))
                 time.sleep(1.1)
         print("%s: sent %d, rejected %d of %d planned" % (code, n, bad, len(rows)))
     return 0

@@ -1,0 +1,196 @@
+<!-- wp:html -->
+<script>
+window.VP_GOLD_SPOT = 3539.00;    // USD/troy oz — update weekly from kitco.com
+window.VP_SILVER_SPOT = 41.08;    // USD/troy oz — update weekly
+window.VP_PAYOUT_LOW = 0.70;
+window.VP_PAYOUT_HIGH = 0.85;
+window.VP_COIN_PAYOUT_LOW = 0.75;
+window.VP_COIN_PAYOUT_HIGH = 0.90;
+window.VP_GOLD_PAYOUT = 0.50;  // We pay 50% of melt
+</script>
+<script>window.VP_GOLD_SPOT = 3539.00; window.VP_SILVER_SPOT = 41.08;</script>
+<script>// Rocket Pawn & Jewelry spot prices. Fallback = last value pushed by the Mac (2026-10-05); the live number comes from
+window.VP_GOLD_SPOT = 3539.00;
+window.VP_SILVER_SPOT = 41.08;
+(function(){try{fetch('https://thevalleypawn.com/wp-json/wp/v2/pages?slug=spot-prices-feed&_fields=content',{cache:'no-store'}).then(function(r){return r.json();}).then(function(a){var t=(a&&a[0]&&a[0].content&&a[0].content.rendered)||'';var g=t.match(/gold:\s*([0-9.]+)/),s=t.match(/silver:\s*([0-9.]+)/);if(g&&+g[1]>1000)window.VP_GOLD_SPOT=+g[1];if(s&&+s[1]>5)window.VP_SILVER_SPOT=+s[1];}).catch(function(){});}catch(e){}})();</script>
+<script>document.addEventListener('DOMContentLoaded',function(){
+(function() {
+'use strict';
+window.VP_GOLD_SPOT = window.VP_GOLD_SPOT || 4500;     // USD per troy ounce — updated daily from kitco
+window.VP_GOLD_PAYOUT = window.VP_GOLD_PAYOUT || 0.50; // We pay 50% of melt value
+var STORE_ID = 'staugustine';
+var STORE_CITY = 'St. Augustine';
+var STORE_PHONE_RAW = '';
+var GRAMS_PER_TROY_OZ = 31.1035;
+var GRAMS_PER_DWT = 1.5552;
+var state = {
+purity: 0.5833, // 14k default
+karat: 14,
+weight: 0,
+unit: 'g',
+weightGrams: 0,
+offer: 0,
+calcStarted: false,
+calcQuoted: false,
+timeOnPage: Date.now()
+};
+var karatBtns = document.querySelectorAll('#vp-karat-' + STORE_ID + ' button');
+var weightInput = document.getElementById('vp-weight-' + STORE_ID);
+var unitSelect = document.getElementById('vp-unit-' + STORE_ID);
+var offerEl = document.getElementById('vp-offer-' + STORE_ID);
+var noteEl = document.getElementById('vp-note-' + STORE_ID);
+var calcCta = document.getElementById('vp-calc-cta-' + STORE_ID);
+function track(eventName, params) {
+params = params || {};
+params.store_id = STORE_ID;
+params.store_city = STORE_CITY;
+if (typeof window.gtag === 'function') {
+window.gtag('event', eventName, params);
+}
+if (window.dataLayer) {
+var dlEvent = Object.assign({ event: eventName }, params);
+window.dataLayer.push(dlEvent);
+}
+if (window.VP_DEBUG) console.log('[VP TRACK]', eventName, params);
+}
+function convertToGrams(weight, unit) {
+if (unit === 'g') return weight;
+if (unit === 'dwt') return weight * GRAMS_PER_DWT;
+if (unit === 'oz') return weight * GRAMS_PER_TROY_OZ;
+return weight;
+}
+function calculateOffer() {
+var weight = parseFloat(weightInput.value);
+if (isNaN(weight) || weight <= 0) {
+offerEl.textContent = 'Enter a weight to see your offer';
+noteEl.textContent = 'Based on live spot price · ' + state.karat + 'k · 0' + state.unit;
+return;
+}
+state.weight = weight;
+state.weightGrams = convertToGrams(weight, state.unit);
+var pureGoldGrams = state.weightGrams * state.purity;
+var meltValue = pureGoldGrams * (window.VP_GOLD_SPOT / GRAMS_PER_TROY_OZ);
+state.offer = Math.round(meltValue * window.VP_GOLD_PAYOUT);
+if (state.offer < 1) {
+if (meltValue > 0) {
+offerEl.textContent = 'Less than $1 — bring it in for an exact offer';
+} else {
+offerEl.textContent = '$' + state.offer.toLocaleString();
+}
+} else {
+offerEl.textContent = '$' + state.offer.toLocaleString();
+}
+noteEl.textContent = 'Based on $' + window.VP_GOLD_SPOT.toLocaleString() + '/oz spot · ' +
+state.karat + 'k · ' + state.weight + ' ' + state.unit;
+updateSmsCta();
+if (!state.calcStarted) {
+state.calcStarted = true;
+track('calc_started', { karat: state.karat, unit: state.unit });
+}
+if (!state.calcQuoted) {
+if (state.offer > 0) {
+state.calcQuoted = true;
+track('calc_quoted', {
+karat: state.karat,
+weight_grams: Math.round(state.weightGrams * 100) / 100,
+offer: state.offer
+});
+}
+}
+}
+function updateSmsCta() {
+if (!calcCta) return;
+var msg;
+if (state.offer > 0) {
+msg = "Hi Rocket Pawn & Jewelry " + STORE_CITY + " — I'd like to sell my gold. " +
+"I have " + state.weight + " " + state.unit + " of " + state.karat + "k. " +
+"Your calculator showed $" + state.offer + ". " +
+"Can you confirm? Thanks!";
+} else {
+msg = "Hi Rocket Pawn & Jewelry " + STORE_CITY + " — I'd like to sell some gold. Can you help me get an offer?";
+}
+calcCta.href = 'mailto:hello@rocketpawnjewelry.com?subject=' + encodeURIComponent('Quote request') + '&body=' + encodeURIComponent(msg);
+}
+karatBtns.forEach(function(btn) {
+btn.addEventListener('click', function() {
+karatBtns.forEach(function(b) { b.classList.remove('active'); });
+btn.classList.add('active');
+state.purity = parseFloat(btn.dataset.purity);
+state.karat = parseInt(btn.dataset.karat, 10);
+calculateOffer();
+});
+});
+if (weightInput) {
+weightInput.addEventListener('input', calculateOffer);
+weightInput.addEventListener('change', calculateOffer);
+weightInput.addEventListener('blur', function() {
+calculateOffer();
+if (window.innerWidth <= 640) {
+var resultEl = document.getElementById('vp-result-' + STORE_ID) ||
+offerEl.parentElement;
+setTimeout(function() {
+if (resultEl) {
+if (resultEl.scrollIntoView) {
+resultEl.scrollIntoView({behavior: 'smooth', block: 'center'});
+}
+}
+}, 250);
+}
+});
+}
+if (unitSelect) {
+unitSelect.addEventListener('change', function() {
+state.unit = unitSelect.value;
+calculateOffer();
+});
+}
+document.querySelectorAll('.vp-faq__q').forEach(function(q) {
+q.addEventListener('click', function() {
+var item = q.closest('.vp-faq__item');
+var wasOpen = item.classList.contains('open');
+item.classList.toggle('open');
+if (!wasOpen) {
+track('faq_open', { question: q.textContent.trim() });
+}
+});
+});
+document.querySelectorAll('[data-vp-track]').forEach(function(el) {
+el.addEventListener('click', function() {
+track(el.dataset.vpTrack, {
+location: el.dataset.vpLocation || 'unknown',
+href: el.href || ''
+});
+});
+});
+var scrollMarks = { 25: false, 50: false, 75: false };
+window.addEventListener('scroll', function() {
+var scrollPercent = Math.round((window.scrollY + window.innerHeight) / document.body.scrollHeight * 100);
+Object.keys(scrollMarks).forEach(function(mark) {
+if (!scrollMarks[mark]) {
+if (scrollPercent >= mark) {
+scrollMarks[mark] = true;
+track('scroll_' + mark);
+}
+}
+});
+}, { passive: true });
+window.addEventListener('beforeunload', function() {
+if (state.calcQuoted) {
+var timeAfterQuote = (Date.now() - state.timeOnPage) / 1000;
+if (timeAfterQuote < 30) {
+if (navigator.sendBeacon) {
+if (window.dataLayer) {
+window.dataLayer.push({
+event: 'bounce_after_quote',
+store_id: STORE_ID,
+time_to_bounce_sec: Math.round(timeAfterQuote)
+});
+}
+}
+}
+}
+});
+calculateOffer();
+})();
+});</script>
+<!-- /wp:html -->

@@ -438,3 +438,60 @@ above (asOf unchanged at November 21, 2026 -- already current from an earlier ru
 deployment-specific URL (https://4d35650b.vp-dashboard.pages.dev/) also returned 200, no
 stale-CDN concerns this run. No Slack post (success, per standing no-Slack-ever rule for this
 task).
+
+## Note (2026-11-22, dashboard-refresh run, 13:17 UTC/08:17 ET firing)
+Picked up one new post: Items to Price for Nov 22 (144 items / $8,113.26, down from
+150/$9,980.83 the day before). Updated daily.itemsToPrice and bumped the feeds[] Last Run date.
+Left unchanged (no newer report than what was already in kpis.json): funds (still Sat Nov 21
+5/5 matched; today's Daily Funds Verification posts at 6 PM ET, after this run), layaway-review
+(next Weekly Layaway Review is Nov 23, today is Sunday), loan-review (retired, per standing
+rule -- pastDue values kept as-is), company-performance watch[] (no new Monthly/Gift-card post
+since Nov 1-2), daily.intakeMargin (#pawn-walks posted again at 07:15 ET for Nov 21 data, still
+the simplified overpay-flags-only format introduced ~Nov 16-17 -- no per-store Buy/Loan Intake
+margin tables to parse; still showing Nov 14 data per prior notes; bumped the feeds[] Last Run
+date per established precedent), and chekkit (channel #chekkit-messages-missed, C0B1PEW0C30, is
+still posting daily; re-checked at run time (08:17 ET) and no Nov 22 08:00 Daily Response
+Summary had posted yet, so left the stored Nov 20-data block as-is per the "no newer report ->
+keep existing" rule).
+Artifacts sync (Step 2) skipped silently -- ~/Documents/Claude/Artifacts was not a connected
+folder on this device bridge session (only "Business Dashboard Website" and "Projects" connected).
+Deploy: site/ staged to the cloud sandbox as a tar bundle via device_stage_files; the 4
+.cloudflare/* credential files were staged as individual files rather than bundled into the same
+archive. wrangler ran in the cloud sandbox. Deployed cleanly (~1.1s upload + worker deploy).
+Verified: apex https://vp-dashboard.pages.dev/ returns 401 with no auth and 200 with basic auth;
+kpis.json parses as valid JSON and matches the values written above (asOf bumped to November 22,
+2026); the deployment-specific URL (https://7d5a0b2d.vp-dashboard.pages.dev/) also returned 200.
+No Slack post (success, per standing rule for this task).
+Housekeeping: .deploy_site_1795353525.tar.gz and .deploy_site_copy_1795353525.tar.gz were left in
+the project folder (delete permission not granted here) -- harmless, safe to remove later.
+
+## Note (2026-11-22, dashboard-refresh run, ~19:16 ET firing)
+Second refresh today. Picked up one genuinely new post: Daily Funds Verification for Sun Nov 22
+(posted 2026-11-22 18:37:43 ET -- no funds activity today, all 5 stores matched at $0.00/$0.00).
+funds.status stayed "5/5 MATCHED"; expected/actual updated from the Sat Nov 21 $1,000 to $0.00.
+Left unchanged (no newer report than what was already in kpis.json): items-to-price (still the
+Nov 22 08:00 post, 144/$8,113.26), layaway-review (next Weekly Layaway Review is Nov 23, tomorrow),
+loan-review (retired, per standing rule), company-performance watch[] (no new Monthly/Gift-card
+post since Nov 1-2), daily.intakeMargin (#pawn-walks posted again at 07:15 ET for Nov 21 data,
+still the simplified overpay-flags-only format -- "3 overpay flags out of 61 items" with no
+per-store Buy/Loan Intake margin tables to parse; still showing Nov 14 data; feeds[] Last Run
+for Intake Margin already Nov 22 from the earlier run today), and chekkit (channel
+#chekkit-messages-missed, C0B1PEW0C30; checked at run time 19:16 ET -- no Nov 22 08:00 Daily
+Response Summary and no Nov 22 7PM End-of-Day Follow-up had posted yet (last post found was the
+Nov 21 19:00 End-of-Day Follow-up); left the stored Nov 20-data block as-is per the "no newer
+report -> keep existing" rule).
+Artifacts sync (Step 2) skipped silently -- ~/Documents/Claude/Artifacts was not a connected
+folder on this device bridge session (only "Business Dashboard Website" and "Projects"
+connected).
+Deploy: tar bundle staged to the cloud sandbox via device_stage_files, wrangler run there.
+First stage attempt on the fresh bundle hit the documented nlink>1 bridge quirk; a `cp` to a
+second filename also showed nlink>1 immediately, but succeeded on a retry of the same call after
+one unrelated Slack read in between (no fixed wait needed). Deployed cleanly (~1.05s upload +
+worker deploy). Verified: apex https://vp-dashboard.pages.dev/ returns 401 with no auth and 200
+with basic auth; kpis.json parses as valid JSON and matches the values written above (asOf
+unchanged at November 22, 2026); the deployment-specific URL
+(https://92a5d735.vp-dashboard.pages.dev/) returned 401 without auth and 200 with auth,
+consistent with the worker gate applying there too -- no stale-CDN concerns this run.
+Housekeeping: .deploy_bundle_1795393036.tar.gz and .deploy_bundle_1795393036_copy.tar.gz left in
+the project folder (device_bash delete permission not granted here) -- harmless, safe to remove
+later.

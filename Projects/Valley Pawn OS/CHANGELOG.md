@@ -1,11 +1,38 @@
-## 2026-11-21 ~9:50 PM ET (fleet-guardian 21:45 ET pass)
-- 2026-11-21 — eBay Desk: two new Bravo saved reports ("Claude eBay Sold Today All" = all 5 stores in one ~90 s pull; "Claude eBay Listed"), new cells sold-today-all / ebay-listed / sold-today-fast, report builder InvReportBuild.ahk + bin/inv_report_build.sh (allow-listed, Joshua OK), and native agent com.valleypawn.ebay-takedown-watch (WATCH ONLY, every 20 min 10:07–17:47 on open days; ends nothing; skips when Bravo is busy). Detail: eBay/desk/STATUS.md.
-- Step 1 registry: skipped fresh host-queue re-poll (low-risk) -- this morning's snapshot (232 tasks, 2 enabled) already showed 0 missed Cowork-side fires for the day, and both enabled tasks had no further scheduled fires before tonight.
-- Step 1b: VERIFIED review-reply / nightly-chekkit-review-responses recovered cleanly tonight (7 replies 19:30-19:33 ET, matches fleet/state/review_reply/2026-11-21.json) -- first clean night since the 9:45 AM browser-host fix, after 2 straight UNRECOVERED nights (11/19, 11/20). Corrected expected_outputs.json's entry for this task: it was pointed at a Slack channel/marker ('Nightly review responses complete' in #chekkit-updates) that has never existed; task is file-only. Re-pointed to output:file per the shop-in-store-sync pattern.
-- Step 1c: closed the lone FAILURE_LEDGER OPEN row (ivr-app-link-text medic-giveup 17:40 ET) as COVERED -- known Zoom OAuth scope gap already tracked in HUMAN_QUEUE (2026-11-18 row, bumped); launchd keeps the daemon self-invoking regardless.
-- 0 reruns needed (Step 1 clean). One Slack DM sent (D03BHQH5VGT) -- two HUMAN_QUEUE rows resurfaced under the 7-day rule (Amazon Business CAPTCHA box, Gusto gun-safety-certificate filing); no [SIGN-IN] items included. Full detail: fleet/guardian_runs/2026-11-21-2150.json.
 
-## 2026-11-21 (review replies, native)
+## 2026-11-22 ~9:45 PM ET (fleet-guardian 21:45 ET pass)
+- Step 1 registry: fresh live task_preflight snapshot via host_queue. 232 tasks, 2 enabled Cowork-side (northwest-registered-agent-daily-check, vp-hiring-pipeline), both clear. 0 missed Cowork-side fires.
+- Step 1c: closed 3 FAILURE_LEDGER OPEN rows -- vsp-fee-pay 13:18 ET COVERED (November already fully paid at all 5 stores, confirmed Compliance/vsp/2026-11.json, last run 11/17; today's missed daily retry had nothing to do); ebay-takedown-watch 13:28 ET COVERED (exit=0, outside store hours, resumes tomorrow; added to fleet/rerun_manifest.json rerun_safe); registry-guard 14:34 ET COVERED (self-healed, green every 5 min since well before this pass, 0 ZodErrors).
+- HUMAN_QUEUE: closed 3 Mac-permission (TCC) rows (hiring-autopost, mem-guard, joshua-text-alert) -- same self-healing class as prior rows, confirmed exit=0. Resurfaced monthly-publication-audit (still off, due before 12/2, 7-day rule) and the two decision rows added today (Bald Rock Verdocs e-sign question, seasonal signs/exclusions) in tonight's digest.
+- 1 Slack DM sent to Joshua (D03BHQH5VGT) per Failure Policy v3: 2 decision rows added today + 1 row crossed the 7-day resurface threshold. 0/5 reruns used. Full detail: fleet/guardian_runs/2026-11-22-2145.json.
+
+## 2026-11-22 ~12:52 PM ET (fleet-guardian 12:45 ET pass, SILENT)
+- Step 1 registry: fresh live task_preflight snapshot via host_queue, cross-checked against this morning's independent registry-guard auto-snapshot. 232 tasks, 2 enabled Cowork-side (northwest-registered-agent-daily-check, vp-hiring-pipeline), both clear, both confirmed actually running/correctly-quiet today. 0 missed Cowork-side fires.
+- Step 1c: closed 2 FAILURE_LEDGER OPEN rows -- fleet-doctor 02:10 ET aggregate COVERED (1 broken agent was a non-fleet third-party app; the rest is pre-existing tracked vp_live_gate noise); browser-sessions 02:43 ET RECOVERED via host-queue rerun of bin/vp_browser_sessions.sh (exit=0, verified fresh fleet/state/browser_host/sessions.json -- all 3 sites signed in).
+- No HUMAN_QUEUE changes, no missed verify-only tasks, 1/5 reruns used. Silent by design -- no Slack DM. Full detail: fleet/guardian_runs/2026-11-22-1252.json.
+# Valley Pawn - Enterprise Changelog
+
+Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
+
+## 2026-11-22
+
+- Seasonal campaigns, texts: eBay Customer Campaign/build_month.py gained seasonal_sms(); the 3rd-Thursday Chekkit text now carries the seasonal sale/message when one is due (same send, same opt-out guard, no extra blasts). Packs 2026-12, 2027-02/03/05/06/09 sms.txt updated; Oct/Nov/Dec 2027 handled at build time. Backups: fleet/_backups/build_month.py.bak-pre-seasonaltext-20261122 and sms.txt.bak-pre-seasonal-20261122.
+- Seasonal campaigns, Google profiles: New Year's Day 1/1/2027 set Closed on all 5 stores (Thanksgiving and Christmas were already Closed). Pending Google review. Existing Wed 11/25 and 12/23 10-6 entries left as set.
+- Seasonal campaigns, not built by design: app push (Bravo push service declined; needs a Bravo Schedule Mobile Event mode, not built while another session is mid-change on MobileEventsGoldOff.ahk); eBay promotions (offer is in-store only); signs (a purchase, needs Joshua).
+
+- Native agent appeared: com.valleypawn.browser-host.plist
+- Native agent appeared: com.valleypawn.browser-sessions.plist
+- Native agent appeared: com.valleypawn.ebay-takedown-watch.plist
+- Native agent appeared: com.valleypawn.loan-reminders-send.plist
+- Native agent appeared: com.valleypawn.loan-reminders.plist
+- Native agent appeared: com.valleypawn.reminders-export.plist
+- Native agent appeared: com.valleypawn.seasonal-campaigns.plist
+- Native agent LOADED: com.valleypawn.browser-host
+- Native agent LOADED: com.valleypawn.browser-sessions
+- Native agent LOADED: com.valleypawn.ebay-takedown-watch
+- Native agent LOADED: com.valleypawn.loan-reminders
+- Native agent LOADED: com.valleypawn.loan-reminders-send
+- Native agent LOADED: com.valleypawn.reminders-export
+- Native agent LOADED: com.valleypawn.seasonal-campaigns
 
 - nightly-chekkit-review-responses (native review_reply.py): 7 replies posted (CUL 3, WAY 1, HAR 0, LEX 1, ROA 2); 0 low-star review(s) sent to Joshua as drafts.
 
@@ -94,6 +121,15 @@ Newest first. Material changes to the business operating system. Read this BEFOR
 
 - Native agent appeared: com.valleypawn.joshua-text-alert.plist
 - Native agent LOADED: com.valleypawn.joshua-text-alert
+
+## 2026-11-22 8:35 PM ET (Communications: birthday / anniversary text lists built, not sending)
+- Culpeper first live Chekkit reminder send 9:15 AM: 7 sent, 1 refused (opted out).
+- NEW bin/birthday_list_pull.sh (read only; win-back comparison report + Demographics Report layout). Planner writes trial/<date>/occasions_<STORE>.csv (not read by the sender). MobileEventsGoldOff.ahk gained look-only modes crprobecust / crcustdry.
+- Stale claimed trigger birthdays-CUL-20261122-1 moved to triggers/claimed/aborted-stale-2026-11-22.
+
+## 2026-11-22 12:25 AM ET (Communications: CULPEPER loan/layaway reminder texts cut over to Chekkit)
+- Bravo CUL Schedule Mobile Event: Loan Courtesy Reminder, Layaway Notice, Loan Past Due (Due Date) delivery AUTO -> MobilePawn (app only). Script MobileEventsGoldOff.ahk mode apponly (appauto reverses). Other stores unchanged.
+- Chekkit sender live for CUL only (fleet/state/loan_reminders_live/CUL), 9:15 AM daily. Other four planned Tue 11/24.
 
 ## 2026-11-21 3:00 PM ET (Communications: reminder texts - layaways, sender, schedule)
 - com.valleypawn.loan-reminders moved to 10:40 PM and now also pulls layaway-detail (2 triggers) and plans layaway texts.
@@ -10629,3 +10665,16 @@ Newest first. Material changes to the business operating system. Read this BEFOR
 - 3 open items appended to `Life OS/OPEN_ITEMS_REGISTER.md` (Lexington bond filing, Hardinberry dwelling-limit decision, JM mailing-address nudge).
 ## 2026-11-21 ~4:09 PM ET (bald-rock-guest-reviews, Cowork scheduled run, LINKED via device bridge, Claude in Chrome)
 - Guesty Past Bookings checked for checkouts Nov 18-21, 2026 (Status Confirmed): 0 matches. Cross-checked Airbnb hosting Today tab (0 reservations, no pending "Leave a review" cards) and VRBO reviews page filtered to "Need rating" (0 results — most recent posted review on file still Kathleen Remley, Sep 27). Safety-net check of Guesty's "Reviews left in the last 14 days" view: only the already-completed Victoria Stattel mutual review, nothing new.
+
+## 2026-11-22 ~4:08 AM EST (bald-rock-15-day-contract, Cowork scheduled run, LINKED via device bridge, Claude in Chrome for Guesty REST API, DocuSign MCP, Gmail MCP, Slack MCP for the DM)
+
+- Window 2026-11-22→2026-12-07. Pulled all 122 Guesty reservations via the in-page REST API (api/reservations-reports, per-column fetches merged by _id) — 2 candidates in window: Stephenie Nickens (VRBO, cancelled, skipped) and Lina Nino (Airbnb, HMC5WQ2P5R, check-in 11/25, confirmed). DocuSign getEnvelopes (search_text Nino) showed her envelope (sent 11/10) still unsigned.
+- **Found and did NOT act on: an undocumented e-signature switch to Verdocs.** Her Guesty conversation thread has a message dated 11/10 10:33 AM, signed "Joshua," saying "we've moved to a new e-signature system" with an app.verdocs.com guest-signing link — not part of any documented flow (DocuSign only, per the bald-rock-property skill). Gmail (jdavis@fcfpawn.com) shows two notifications@verdocs.com emails on 11/19 ("Action required" then "completed" 3 min later) for a generic "Bald Rock - Airbnb Rental Agreement (Verdocs)" envelope; downloaded and read the completed PDF — signature line reads "Joshua Davis"/"joshua," dated 11/19/2026, not Lina. Reads as a prior session testing the tool on itself (same jdavis@fcfpawn.com placeholder-recipient pattern used for the real Airbnb DocuSign workaround), not a real guest signature. No CHANGELOG/skill/Slack record of this change anywhere (checked all three). Did not send Lina a third conflicting message, did not touch the Verdocs link or account. Logged to Life OS/HUMAN_QUEUE.md and OPEN_ITEMS_REGISTER.md (2026-11-22) for Joshua's decision: which link is authoritative, was Verdocs ever authorized, does the account need a security look.
+- Age/ID verification: Lina Nino already verified 11/10 ("you're all set") — no new request sent, no duplicate.
+- Slack DM posted to D03BHQH5VGT (fleet publish guard confirmed not armed first) with the run summary plus the Verdocs flag; self-verified landed (ts 1795338714.022459); receipt written (fleet/receipts/bald-rock-15-day-contract.jsonl, first receipt ever written for this task — it had been AWAITING RECEIPTS in the fleet audit).
+- Catch-up: no run summary found posted 11/19, 11/20, or 11/21 (3 consecutive missed days, cause not investigated this run — noted in today's DM per the hardening block's catch-up rule; did not back-fill any sends, today's de-dup check against live DocuSign/Guesty state stands on its own).
+## 2026-11-22 ~6:44 AM ET (insurance-inbox-watch, Cowork scheduled run, LINKED via device bridge)
+- Gmail scan (newer_than:2d) across carrier/broker/document keywords: GEICO/Homesite sent "Confirmation of GEICO Insurance Agency, LLC Policy Cancellation" (thread 1a20129d9c670872, 2026-11-22 2:50am ET) — the old Bald Rock HO-3 (policy 39168908) cancellation is CONFIRMED effective 11/9/2026, exactly matching the Proper Insurance (PIV301688) bind date, so there's no coverage gap. This resolves the "cancel Homesite pro-rata" action that had been open since 11/9 (Joshua's own action, now carrier-confirmed done). `INSURANCE_REGISTRY.json` updated (RE-BALDROCK-HO, RE-BALDROCK-STR), portfolio regenerated via `bin/regen_portfolio.py` (573 lines, 17 policies). Backup saved as `INSURANCE_REGISTRY.json.bak-20261122-pre-insurance-inbox-watch`. The remaining 11/20-dated mail in the scan window (Lexington precious-metals bond issuance, Hardinberry Steadily renewal notice) was already logged in the 11/21 entry — no new action.
+- Silence sweep: `list_drafts` checked (dedupe guard) — all 3 standing non-excluded candidates (Howard Baker/817 Richmond mailing address `1a1c656ac41fc32c`, Ford/Kyler `1a0ed831eba1a46e`, Valley Trust/Branham `1a0cf86e7af6af58`) already carry an unsent nudge draft from a prior run. Zero new nudges created (0 of 3 cap used).
+- No new claims activity (`CLAIMS.md` checked — PBIH26050007 remains carrier-closed, unchanged). No broker pipeline changes (`BROKER_PIPELINE.md` checked, unchanged).
+- No time-critical item (no renewal inside 14 days at risk, no lapse, no claim denial, no cancellation-at-risk notice) — no Slack DM sent. One resolved open item logged to `Life OS/OPEN_ITEMS_REGISTER.md`.

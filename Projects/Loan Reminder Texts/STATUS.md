@@ -266,3 +266,31 @@ Proposed wording (waiting on Joshua's OK, then: edit the 3 gold campaigns + remo
 ## 2026-11-21 7:42-7:52 PM — cutover prep checks
 - `apponly` no-op at Roanoke: PASS ("changed=0 already=0 failed=0 notfound=3 | nothing saved"), script loads and exits clean. Culpeper switch stays scheduled for ~12:20 AM.
 - Customers > Custom Reports criteria read at Culpeper (look only, new mode crprobecust): includes **Birthday**, **First Time In**, Mobile, MobilePawn Activation Date, Last Time In, Store. A birthday / store-anniversary list can be built the same way as "Claude Loan Reminders". Not built yet: need the Birthday operator choices (dry run) - scheduled for Sunday afternoon (stores closed).
+
+## 2026-11-22 12:20-12:30 AM — CULPEPER CUT OVER
+- 10:40 PM run clean, done 11:49 PM: loan + layaway lists for all 5 stores (first layaway pull at all five: CUL 113 active, HAR 81, LEX 41, ROA 65, WAY 50), all lists pulled after close, every text <=160.
+- Bravo Culpeper 12:23 AM: Loan Courtesy Reminder, Layaway Notice, Loan Past Due (Due Date) AUTO -> MobilePawn (NTFAUT -> NTFIPN), saved; re-read 12:24 AM: only those three changed, all 21 events otherwise identical.
+- LIVE file created: fleet/state/loan_reminders_live/CUL. First live send 9:15 AM today: 8 texts planned (6 due-tomorrow, 2 past due), 17 more loans covered by the app notice.
+- Roll back = delete the LIVE file + `mobile_events_gold_off.sh CUL appauto`.
+
+## 2026-11-22 9:50 AM — Culpeper first live send verified
+- 9:15:05-9:15:17 AM: 8 planned, 7 delivered to Chekkit (6 due-tomorrow, 1 past due), 1 refused by Chekkit ("Customer has opted out") - correct behavior; that number added to the Culpeper opt-out list and the sender now records such refusals automatically. No other store sent.
+
+## 2026-11-22 2:30-4:45 PM — birthday / store-anniversary: what Bravo does and what data exists
+- Bravo events (both AUTO): Birthday = on the birthday, "Happy Birthday, <name>! In celebration, show this message at any of our ValleyPawn locations to enjoy 15% OFF during the next 30 days."; Store Anniversary = yearly on the first-transaction date, "Happy Anniversary <name>! It's the anniversary of your first visit to ValleyPawn! Show this message at any of our locations to enjoy 15% OFF!"
+- Customers > Custom Reports (look-only mode crcustdry at CUL): criteria Birthday (=, range, in, is empty, is not empty) and First Time In; saved reports "Birthday Range" and "Customers First Time In" exist; layouts Demographics Report (Name + Birthday), Customers First Time In (Name + First Time In), Customer Address Check (Name + Phone + MobilePawn + SMS).
+- No new saved report needed. On disk already (weekly win-back job): per-store full contacts (phones) and visits (First Time In) for customers seen in the last 760 days (~3,400 a store; about 7 anniversaries a day a store before filters).
+- NEW bin/birthday_list_pull.sh (allow-listed, read only): "Claude Forfeiture Winback Comparison" + layout Demographics Report -> output/<D>_<STORE>_forfeiture-winback-comparison-birthdays.csv, reused for 60 days. First CUL pull died at 2:41 PM, 23% through the grid (the Mac/bridge dropped at the same minute). Re-run after the Sunday 4:30 PM monday-pull finishes.
+
+## 2026-11-22 7:50 PM — birthday / anniversary planner built (NOT sending)
+- loan_reminders_plan.plan_occasions + reminder_core TEMPLATES birthday/anniversary (not yet approved by Joshua). Output: trial/<date>/occasions_<STORE>.csv, which the sender does not read. Marketing rule applied: Bravo DNT + Chekkit opt-outs + dead numbers excluded; app-activated left to Bravo's app notice; one per customer per kind per year.
+- Bravo shows birthdays as "August 9" (no year). Birthday lists pulled 7-7:45 PM: CUL 3,473 customers (3,103 with a birthday), HAR 3,333 (3,184), LEX 2,143 (1,988); ROA and WAY still pulling (pulls took 7-25 min a store; LEX needed a second pass). A stale claimed trigger from the 2:41 PM cut-off had blocked the queue; moved to triggers/claimed/aborted-stale-2026-11-22.
+- Next 30 days: CUL 153 birthday + 174 anniversary; HAR 149 + 109; LEX 82 + 103. Longest text 159.
+
+## 2026-11-22 8:35 PM — birthday / anniversary lists complete for all 5 stores (still NOT sending; waiting on Joshua)
+- Birthday lists pulled for all five by 8:12 PM (reused for 60 days; bin/birthday_list_pull.sh).
+- Next 30 days, birthday + anniversary texts: CUL 153 + 174, HAR 149 + 109, LEX 82 + 103, ROA 156 + 129, WAY 146 + 148. Longest 159.
+- Left out over the 30 days (all five): app customers 451 (Bravo app notice), store-marked do-not-text 366, Chekkit opt-outs 22, no phone 27, dead numbers 4.
+- Decisions for Joshua: wording OK; scope = customers seen in the last ~2 years (Bravo: everyone ever).
+- To build once approved: move occasions into the sender's plan, add the birthday list pull to a monthly slot, switch Bravo Birthday + Store Anniversary events to app-only per store at go-live.
+- 11/22 11:59 PM re-check (old trigger): second nightly run clean at all 5 stores, done 11:24 PM. Culpeper already live; plan for Mon 11/23: CUL 3 texts (past due), others planned but not live (HAR 4, LEX 2, ROA 13, WAY 4).

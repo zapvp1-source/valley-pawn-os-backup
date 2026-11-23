@@ -1,47 +1,48 @@
-# CPU Guard — 2026-11-22 00:10 EST
+# CPU Guard — 2026-11-23 00:14 EST
 
 Native agent com.valleypawn.cpu-guard (bin/cpu_guard.sh), every 5 min. See header of the script.
 
 ## Load
-0:10  up 19 days,  7:23, 3 users, load averages: 12.71 17.14 17.83
+0:14  up  9:32, 1 user, load averages: 15.63 12.45 11.24
 
 ## Process states (R=running, U=waiting on disk)
 ```
-   8 R  789 S    3 U    3 Z 
+  21 R  829 S    1 U 
 1 sort
 1 ps
 1 head
-1 /usr/libexec/logd
-1 /usr/libexec/diskimagesiod
-1 /usr/libexec/dasd
-1 /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer
-1 /System/Library/PrivateFrameworks/EmailDaemon.framework/Versions/A/maild
+1 awk
+1 /usr/sbin/cfprefsd
+1 /usr/libexec/sysmond
+1 /usr/libexec/nsurlsessiond
+1 /usr/libexec/duetexpertd
 ```
 
 ## Top CPU right now
 ```
  %CPU NI   PID COMM
- 41.2  0   499 /System/Library/CoreServices/TimeMachine/backupd
- 28.4  0   690 /System/Library/CoreServices/SystemUIServer.app/Contents/MacOS/SystemUIServer
+ 63.3  0  1778 /System/Library/Frameworks/Contacts.framework/Support/contactsd
+ 50.6  0 22966 /System/Library/Frameworks/CoreSpotlight.framework/spotlightknowledged
+ 47.2  0 54277 /System/Library/Frameworks/AddressBook.framework/Versions/A/Helpers/AddressBookManager.app/Contents/MacOS/AddressBookManager
  26.2  0   425 /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer
- 17.9  0 97150 /Applications/Parallels Desktop.app/Contents/MacOS//Parallels VM.app/Contents/MacOS/prl_vm_app
- 13.0  0   756 /System/Library/ExtensionKit/Extensions/WallpaperAerialsExtension.appex/Contents/MacOS/WallpaperAerialsExtension
- 11.7  0   403 /usr/libexec/dasd
- 11.3  0   350 /usr/libexec/logd
-  9.9  0 33069 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python
-  8.4  0 99012 /usr/libexec/sysmond
-  4.4  0 58188 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTDecoderXPCService.xpc/Contents/MacOS/VTDecoderXPCService
-  3.9  0   714 /System/Library/PrivateFrameworks/FileProvider.framework/Support/fileproviderd
+ 23.2  0  1239 /Applications/Parallels Desktop.app/Contents/MacOS//Parallels VM.app/Contents/MacOS/prl_vm_app
+ 21.8  0   780 /System/Library/ExtensionKit/Extensions/WallpaperAerialsExtension.appex/Contents/MacOS/WallpaperAerialsExtension
+ 20.9  0   433 /usr/libexec/runningboardd
+ 12.2  0  1120 /usr/libexec/sysmond
+ 10.6  0   739 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/corespotlightd
+  8.5  0  3383 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python
+  6.3  0   802 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTDecoderXPCService.xpc/Contents/MacOS/VTDecoderXPCService
 ```
 
 ## Memory
 ```
-total = 22528.00M  used = 21608.19M  free = 919.81M  (encrypted)
-System-wide memory free percentage: 43%
+total = 0.00M  used = 0.00M  free = 0.00M  (encrypted)
+System-wide memory free percentage: 65%
 ```
 
 ## Camera agents (nice should be 10)
 ```
+54347  0   0.0 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python /Users
 ```
 
 ## Hot processes (pid, consecutive 5-min samples >150%, %cpu, name)
@@ -70,8 +71,8 @@ drwxr-xr-x@ 9 joshuadavis  staff  288 Nov  7 13:25 tracks
 
 /Users/joshuadavis/.vp-studio/offsync/unified-search:
 total 15987656
-drwxr-xr-x@ 5 joshuadavis  staff         160 Nov 21 05:04 .
+drwxr-xr-x@ 5 joshuadavis  staff         160 Nov 22 05:12 .
 drwxr-xr-x@ 4 joshuadavis  staff         128 Nov  7 13:23 ..
--rw-r--r--@ 1 joshuadavis  staff  8185647104 Nov 21 22:40 index.db
--rw-r--r--@ 1 joshuadavis  staff       32768 Nov 21 22:40 index.db-shm
+-rw-r--r--@ 1 joshuadavis  staff  8185647104 Nov 22 23:47 index.db
+-rw-r--r--@ 1 joshuadavis  staff       32768 Nov 22 23:47 index.db-shm
 ```

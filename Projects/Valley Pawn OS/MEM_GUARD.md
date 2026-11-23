@@ -1,26 +1,26 @@
-# Memory Guard — 2026-11-21 20:57:57
+# Memory Guard — 2026-11-22 17:05:53
 
 Native agents com.valleypawn.mem-guard (every 15 min) + com.valleypawn.mem-guard-nightly (3:50 AM).
 Script: Valley Pawn OS/bin/mem_guard.sh. Stopgap until the 96GB Mac Studio arrives (mid-Dec 2026).
 
 ## Last run (watch)
-- Swap: 20537 MB -> 20529 MB
-- Pressure level (1 ok / 2 warn / 4 critical): 2 -> 2
-- Free memory: 40% -> 43%
-- Actions: disk 27 GB free, 2 local TM snapshots — thinned them (NAS backup current)
+- Swap: 0 MB -> 0 MB
+- Pressure level (1 ok / 2 warn / 4 critical): 1 -> 1
+- Free memory: 69% -> 69%
+- Actions: disk 19 GB free, 2 local TM snapshots — thinned them (NAS backup current)
 
 ## Last 12 actions
 ```
-2026-11-21 13:48:44 [watch] quit idle app: Safari
-2026-11-21 13:48:49 [watch] restarted Claude desktop app
-2026-11-21 13:50:52 [watch] disk 14 GB free, 2 local TM snapshots — thinned them (NAS backup current)
-2026-11-21 14:36:14 [watch] skip Claude restart: Joshua active (idle 5s)
-2026-11-21 14:51:14 [watch] skip Claude restart: Joshua active (idle 627s)
-2026-11-21 15:21:38 [watch] skip Claude restart: Joshua active (idle 0s)
-2026-11-21 15:36:38 [watch] skip Claude restart: Joshua active (idle 544s)
-2026-11-21 16:07:11 [watch] restarted Google Drive
-2026-11-21 17:54:05 [watch] disk 26 GB free, 2 local TM snapshots — thinned them (NAS backup current)
-2026-11-21 18:24:26 [watch] skip Claude restart: Joshua active (idle 395s)
-2026-11-21 20:10:40 [watch] restarted Google Drive
-2026-11-21 20:57:37 [watch] disk 27 GB free, 2 local TM snapshots — thinned them (NAS backup current)
+2026-11-22 03:50:17 [nightly] restarted Claude desktop app
+2026-11-22 08:03:21 [watch] restarted Google Drive
+2026-11-22 08:05:34 [watch] disk 24 GB free, 2 local TM snapshots — thinned them (NAS backup current)
+2026-11-22 09:52:16 [watch] skip Claude restart: Joshua active (idle 225s)
+2026-11-22 10:07:38 [watch] skip Claude restart: Joshua active (idle 1148s)
+2026-11-22 12:08:37 [watch] restarted Google Drive
+2026-11-22 12:23:57 [watch] skip Claude restart: Joshua active (idle 65s)
+2026-11-22 12:39:33 [watch] skip Claude restart: Joshua active (idle 1000s)
+2026-11-22 12:54:33 [watch] quit idle app: Safari
+2026-11-22 13:43:50 [watch] disk 23 GB free, 2 local TM snapshots — thinned them (NAS backup current)
+2026-11-22 14:29:12 [watch] skip Claude restart: Joshua active (idle 231s)
+2026-11-22 17:05:33 [watch] disk 19 GB free, 2 local TM snapshots — thinned them (NAS backup current)
 ```

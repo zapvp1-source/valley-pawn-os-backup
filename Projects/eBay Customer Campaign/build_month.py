@@ -86,6 +86,34 @@ OLD_HOURS_FIXES = [
 
 
 # ------------------------------------------------------------------ helpers
+
+def seasonal_sms(sms_date):
+    """2026-11-22 (Joshua: seasonal campaigns on every channel). If a seasonal sale starts 0-10 days after this
+    month's text date, the monthly text carries that sale instead of the shop/app line. Source of truth:
+    Projects/Seasonal Campaigns/campaigns.json. Same send day, same lists, same opt-out guard: one text a month.
+    Returns (text, campaign_id) or (None, None)."""
+    try:
+        sc = json.load(open(os.path.expanduser("~/Documents/Claude/Projects/Seasonal Campaigns/campaigns.json")))
+    except Exception:
+        return None, None
+    for c in sc.get("campaigns", []):
+        days = [dt.date.fromisoformat(x) for x in (c.get("sale_days") or [])]
+        slug = ((c.get("website") or {}).get("landing") or "/shop/").strip("/")
+        if c.get("kind") == "sale" and days and 0 <= (days[0] - sms_date).days <= 10:
+            d1, d2 = days[0], days[-1]
+            for t in (f"Valley Pawn: 15% off in store {d1:%a} {d1.month}/{d1.day} & {d2:%a} {d2.month}/{d2.day} at all 5 stores. Some exclusions apply. thevalleypawn.com/{slug} Text STOP to unsubscribe",
+                      f"Valley Pawn: 15% off in store {d1.month}/{d1.day} & {d2.month}/{d2.day}, all 5 stores. Some exclusions apply. thevalleypawn.com/{slug} Text STOP to unsubscribe"):
+                if len(t) <= 160 and gsm_ok(t):
+                    return t, c["id"]
+        if c.get("kind") == "message" and c.get("text"):
+            w = c.get("website") or {}
+            a, b = w.get("banner_from"), w.get("banner_to")
+            if a and b and dt.date.fromisoformat(a) <= sms_date <= dt.date.fromisoformat(b):
+                t = c["text"] + " Text STOP to unsubscribe"
+                if len(t) <= 160 and gsm_ok(t):
+                    return t, c["id"]
+    return None, None
+
 def nth_weekday(year, month, weekday, n):
     """weekday: Mon=0 ... Sun=6; n: 1-based."""
     days = [d for d in range(1, calendar.monthrange(year, month)[1] + 1)
@@ -355,6 +383,9 @@ def main():
         sms = "Valley Pawn: shop all 5 stores online thevalleypawn.com/shop Have a loan or layaway with us? Pay by phone: thevalleypawn.com/app Text STOP to unsubscribe"
         if len(sms) > 160:
             sms = f"Valley Pawn: shop all 5 stores online. {sms_link} Text STOP to unsubscribe"
+    season_sms, season_id = seasonal_sms(sms_date)
+    if season_sms:
+        sms = season_sms   # seasonal campaign owns this month's text (see seasonal_sms)
 
     base, base_src = load_base()
     email = build_email(base, cfg, featured, camp)

@@ -1,0 +1,25 @@
+<!-- wp:html -->
+<script>
+window.VP_GOLD_SPOT = 3539.00;    // USD/troy oz — update weekly from kitco.com
+window.VP_SILVER_SPOT = 41.08;    // USD/troy oz — update weekly
+window.VP_PAYOUT_LOW = 0.70;
+window.VP_PAYOUT_HIGH = 0.85;
+window.VP_COIN_PAYOUT_LOW = 0.75;
+window.VP_COIN_PAYOUT_HIGH = 0.90;
+window.VP_GOLD_PAYOUT = 0.50;  // We pay 50% of melt
+</script>
+<script>window.VP_GOLD_SPOT = 3539.00; window.VP_SILVER_SPOT = 41.08;</script>
+<script>// Rocket Pawn & Jewelry spot prices. Fallback = last value pushed by the Mac (2026-10-05); the live number comes from
+window.VP_GOLD_SPOT = 3539.00;
+window.VP_SILVER_SPOT = 41.08;
+(function(){try{fetch('https://thevalleypawn.com/wp-json/wp/v2/pages?slug=spot-prices-feed&_fields=content',{cache:'no-store'}).then(function(r){return r.json();}).then(function(a){var t=(a&&a[0]&&a[0].content&&a[0].content.rendered)||'';var g=t.match(/gold:\s*([0-9.]+)/),s=t.match(/silver:\s*([0-9.]+)/);if(g&&+g[1]>1000)window.VP_GOLD_SPOT=+g[1];if(s&&+s[1]>5)window.VP_SILVER_SPOT=+s[1];}).catch(function(){});}catch(e){}})();</script>
+<script>document.addEventListener('DOMContentLoaded',function(){
+(function() {
+document.querySelectorAll('.vp-faq__q').forEach(function(q) {
+q.addEventListener('click', function() {
+q.closest('.vp-faq__item').classList.toggle('open');
+});
+});
+})();
+});</script>
+<!-- /wp:html -->

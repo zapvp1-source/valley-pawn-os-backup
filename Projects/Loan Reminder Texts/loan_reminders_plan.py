@@ -114,6 +114,60 @@ def plan_layaways(code, town, pull, send, contacts, dead, sent_keys):
     return texts, skipped, {"active_layaways": len(rows), "layaway_reminders_due": due_n, "layaway_left_to_app": app_n}
 
 
+def plan_occasions(code, town, send, optouts, dead, sent_keys):
+    """Birthday and first-visit-anniversary texts (marketing: 15% off). Offline, from Bravo exports already on disk:
+    birthdays  <D>_<STORE>_forfeiture-winback-comparison-birthdays.csv (Name, Birthday)   [bin/birthday_list_pull.sh]
+    visits     <D>_<STORE>_forfeiture-winback-comparison-visits.csv    (Name, First Time In)  [weekly win-back job]
+    contacts   <D>_<STORE>_forfeiture-winback-comparison-contacts.csv  (Name, Phone, MobilePawn, SMS)
+    Covers customers seen in the last ~760 days. Because it is marketing, Bravo's DNT flag is honored as well as
+    Chekkit opt-outs (carrier-safety rule 10/23). App-activated customers are left to Bravo's app notice.
+    One text per customer per kind per year. Returns (texts, stats). Written to occasions_<STORE>.csv, which the
+    sender does NOT read - nothing here can go out until Joshua approves it."""
+    def newest(pattern, ncol, vcol):
+        best = {}
+        for f in glob.glob(os.path.join(BRAVO_OUT, pattern % code)):
+            d = "%014d" % os.path.getmtime(f)
+            try:
+                with open(f, newline="", encoding="utf-8-sig", errors="replace") as fh:
+                    for r in csv.DictReader(fh):
+                        n = rc.norm_name(r.get(ncol))
+                        if n and (n not in best or d >= best[n][0]): best[n] = (d, r)
+            except OSError:
+                pass
+        return {n: r for n, (d, r) in best.items()}
+    con = newest("*_%s_forfeiture-winback-comparison-contacts.csv", "Name", "Phone")
+    vis = newest("*_%s_forfeiture-winback-comparison-visits.csv", "Name", "First Time In")
+    bd = newest("*_%s_forfeiture-winback-comparison-birthdays.csv", "Name", "Birthday")
+    texts, why = [], collections.Counter()
+    seen_phone = set()
+    for kind, src, col in (("birthday", bd, "Birthday"), ("anniversary", vis, "First Time In")):
+        for n, r in sorted(src.items()):
+            raw = (r.get(col) or "").strip()
+            if kind == "birthday":            # Bravo shows birthdays as "August 9" (no year)
+                try: d = datetime.strptime(raw + " 2000", "%B %d %Y").date()
+                except ValueError: d = None
+                if not d or (d.month, d.day) != (send.month, send.day): continue
+            else:
+                d = rc.parse_date(raw)
+                if not d or (d.month, d.day) != (send.month, send.day) or d.year >= send.year: continue
+            c = con.get(n)
+            phone = rc.phone10(c.get("Phone")) if c else ""
+            key = "%s|%s|%d" % (kind, phone, send.year)
+            if not phone: why[kind + ": no phone on file"] += 1
+            elif (c.get("SMS") or "").strip().upper() == "DNT": why[kind + ": store marked do-not-text"] += 1
+            elif phone in optouts: why[kind + ": opted out in Chekkit"] += 1
+            elif phone in dead: why[kind + ": dead number"] += 1
+            elif (c.get("MobilePawn") or "").strip().lower() == "activated": why[kind + ": left to app notice"] += 1
+            elif key in sent_keys or (phone, kind) in seen_phone: why[kind + ": already sent this year"] += 1
+            else:
+                seen_phone.add((phone, kind))
+                first = ((r.get(col and "Name") or "").split() or [""])[0].title()
+                body = rc.TEMPLATES[kind].format(name=first)
+                if len(body) > 160 or not first: body = body.replace(", " + first + "!", "!").replace(", !", "!")
+                texts.append({"store": town, "phone": phone, "kind": kind, "text": body, "name": (r.get("Name") or "").title(), "keys": [key], "segments": 1 if len(body) <= 160 else 2})
+    return texts, {"customers_with_phone_list": len(con), "birthdays_on_file": len(bd), "first_visits_on_file": len(vis), "why_not": dict(why)}
+
+
 def main():
     pull = arg("--pull-date", date.today().isoformat())
     send = datetime.strptime(arg("--send-date", (datetime.strptime(pull, "%Y-%m-%d").date() + timedelta(days=1)).isoformat()), "%Y-%m-%d").date()
@@ -152,6 +206,10 @@ def main():
         lay_stats = {"layaway_list": "none for %s" % pull}
         if lay:
             texts += lay[0]; skipped += lay[1]; lay_stats = lay[2]
+        occ, occ_stats = plan_occasions(code, town, send, optouts, dead, sent_keys)
+        with open(os.path.join(out, "occasions_%s.csv" % code), "w", newline="") as fh:   # NOT read by the sender
+            w = csv.writer(fh); w.writerow(["phone", "kind", "characters", "counts_as", "text", "tickets", "name"])
+            for t in occ: w.writerow([t["phone"], t["kind"], len(t["text"]), t["segments"], t["text"], t["keys"][0], t["name"]])
         with open(os.path.join(out, "plan_%s.csv" % code), "w", newline="") as fh:
             w = csv.writer(fh); w.writerow(["phone", "kind", "characters", "counts_as", "text", "tickets", "name"])
             for t in texts:
@@ -172,6 +230,8 @@ def main():
             "skipped": dict(why), "chekkit_optouts_known": len(optouts), "bravo_rows": len(rows),
             "would_be_allowed_to_send": list(send_window_ok(f, send))}
         summary["stores"][code].update(lay_stats)
+        ok_ = collections.Counter(t["kind"] for t in occ)
+        summary["stores"][code]["occasions_NOT_SENT"] = dict(occ_stats, birthday_texts=ok_.get("birthday", 0), anniversary_texts=ok_.get("anniversary", 0), longest=max([len(t["text"]) for t in occ] or [0]))
         summary["stores"][code].update({"layaway_notice": kinds.get("layaway_notice", 0), "layaway_late": kinds.get("layaway_late", 0)})
     json.dump(summary, open(os.path.join(out, "summary.json"), "w"), indent=1)
     sp = os.path.join(HERE, "trial", "SUMMARY.csv")

@@ -1,4 +1,4 @@
-# Disk Guard — 2026-11-15 12:19:32
+# Disk Guard — 2026-11-22 14:43:33
 
 Native agents com.valleypawn.disk-guard (clean, daily 4:10 AM) + disk-guard-report (Sun 4:20 AM).
 Script: Valley Pawn OS/bin/disk_guard.sh. Stopgap until the 2TB Mac Studio arrives (mid-Dec 2026).
@@ -6,33 +6,33 @@ Script: Valley Pawn OS/bin/disk_guard.sh. Stopgap until the 2TB Mac Studio arriv
 ## Volume
 ```
 Filesystem      Size    Used   Avail Capacity iused ifree %iused  Mounted on
-/dev/disk3s5    494G    410G     48G    90%    3.3M  465M    1%   /System/Volumes/Data
+/dev/disk3s5    494G    415G     54G    89%    2.3M  523M    0%   /System/Volumes/Data
 ```
-Swap files: 0.0 GB · Time Machine local snapshots: 2
+Swap files: 0.0 GB · Time Machine local snapshots: 1
 
 ## Biggest places (GB)
 | GB | Path |
 |---|---|
-| 67.4 | ~/Parallels |
-| 47.2 | ~/Library/Application Support |
-| 27.5 | ~/Library/Mail |
-| 26.6 | ~/Library/Mobile Documents |
-| 21.4 | /Applications |
-| 19.4 | ~/.vp-studio |
-| 19.1 | ~/Pictures |
-| 13.1 | ~/Library/Containers |
-| 11.1 | ~/Documents |
-| 10.8 | ~/Library/Messages |
-| 9.8 | ~/Library/Caches |
-| 9.3 | ~/Desktop |
+| 67.8 | ~/Parallels |
+| 52.1 | ~/Library/Application Support |
+| 27.9 | ~/Library/Mail |
+| 23.0 | ~/Library/Mobile Documents |
+| 22.0 | ~/Library/Containers |
+| 20.7 | /Applications |
+| 19.4 | ~/Pictures |
+| 19.3 | ~/.vp-studio |
+| 11.7 | ~/Documents |
+| 10.9 | ~/Library/Messages |
 | 8.4 | ~/.ollama |
-| 6.9 | ~/Downloads |
+| 6.4 | ~/Downloads |
 | 6.3 | /Library |
+| 5.9 | ~/Library/Caches |
+| 3.2 | ~/Desktop |
 | 3.0 | ~/Library/Group Containers |
+| 0.4 | ~/Library/CloudStorage |
 | 0.3 | ~/.cache |
 | 0.2 | ~/Music |
 | 0.2 | ~/Library/Logs |
-| 0.1 | ~/Library/CloudStorage |
 | 0.0 | ~/Movies |
 | 0.0 | ~/Applications (Parallels) |
 | 0.0 | ~/.npm |
@@ -40,25 +40,25 @@ Swap files: 0.0 GB · Time Machine local snapshots: 2
 
 ### Top 10 inside ~/Library/Application Support (GB)
 ```
-  36.0  ~/Library/Application Support/Claude
+  40.1  ~/Library/Application Support/Claude
    5.4  ~/Library/Application Support/Google
    1.8  ~/Library/Application Support/Slack
-   0.8  ~/Library/Application Support/com.apple.wallpaper
+   1.2  ~/Library/Application Support/com.apple.wallpaper
+   0.5  ~/Library/Application Support/valleypawn
    0.4  ~/Library/Application Support/HealthOS
    0.4  ~/Library/Application Support/zoom.us
    0.4  ~/Library/Application Support/WebEx Folder
    0.4  ~/Library/Application Support/Spotify
    0.4  ~/Library/Application Support/FileProvider
-   0.4  ~/Library/Application Support/valleypawn
 ```
 
 ### Top 10 inside ~/Library/Containers (GB)
 ```
-   3.5  ~/Library/Containers/com.apple.podcasts
-   1.4  ~/Library/Containers/com.tinyspeck.slackmacgap
+  11.6  ~/Library/Containers/com.apple.podcasts
+   1.7  ~/Library/Containers/com.tinyspeck.slackmacgap
    1.3  ~/Library/Containers/com.apple.mail
    1.3  ~/Library/Containers/com.apple.AMPArtworkAgent
-   1.3  ~/Library/Containers/com.apple.Safari
+   1.2  ~/Library/Containers/com.apple.Safari
    1.1  ~/Library/Containers/com.microsoft.teams2
    0.5  ~/Library/Containers/com.apple.photolibraryd
    0.5  ~/Library/Containers/com.apple.geod
@@ -80,42 +80,14 @@ Swap files: 0.0 GB · Time Machine local snapshots: 2
    0.0  ~/Library/Group Containers/group.com.apple.contacts
 ```
 
-### Top 10 inside ~/Library/Caches (GB)
-```
-   3.8  ~/Library/Caches/claude-cli-nodejs
-   2.2  ~/Library/Caches/Google
-   1.2  ~/Library/Caches/valleypawn
-   0.4  ~/Library/Caches/CloudKit
-   0.4  ~/Library/Caches/com.spotify.client
-   0.3  ~/Library/Caches/com.apple.textunderstandingd
-   0.3  ~/Library/Caches/com.tinyspeck.slackmacgap.ShipIt
-   0.3  ~/Library/Caches/SiriTTS
-   0.2  ~/Library/Caches/com.apple.AppleMediaServices
-   0.2  ~/Library/Caches/GeoServices
-```
-
-### Top 10 inside ~/Documents (GB)
-```
-  10.5  ~/Documents/Claude
-   0.3  ~/Documents/Recordings
-   0.2  ~/Documents/Zoom
-   0.0  ~/Documents/.tmp.driveupload
-   0.0  ~/Documents/STATEMENT 2015-2024.zip
-   0.0  ~/Documents/STATEMENT 2015-2024 2.zip
-   0.0  ~/Documents/CustomerReport.pdf
-   0.0  ~/Documents/proof_44406-1.pdf
-   0.0  ~/Documents/Scan_20260907 (2).pdf
-   0.0  ~/Documents/Scan_20260907 (2) 2.pdf
-```
-
 ### Top 10 inside ~/Documents/Claude/Projects (GB)
 ```
-   1.3  ~/Documents/Claude/Projects/Refine Social Media
+   1.4  ~/Documents/Claude/Projects/Refine Social Media
    1.3  ~/Documents/Claude/Projects/Unified Search
-   1.0  ~/Documents/Claude/Projects/Valley Pawn OS
+   1.1  ~/Documents/Claude/Projects/Valley Pawn OS
    1.0  ~/Documents/Claude/Projects/Call Analysis
+   1.0  ~/Documents/Claude/Projects/Training Program
    1.0  ~/Documents/Claude/Projects/Store Conduct Watch
-   0.9  ~/Documents/Claude/Projects/Training Program
    0.8  ~/Documents/Claude/Projects/Bravo Data Extraction
    0.5  ~/Documents/Claude/Projects/Zoom Call Pipeline
    0.4  ~/Documents/Claude/Projects/Valley Pawn Studios
@@ -124,25 +96,35 @@ Swap files: 0.0 GB · Time Machine local snapshots: 2
 
 ### Top 10 inside ~/Library/CloudStorage (GB)
 ```
-   0.1  ~/Library/CloudStorage/GoogleDrive-jdavis@fcfpawn.com
+   0.4  ~/Library/CloudStorage/GoogleDrive-jdavis@fcfpawn.com
    0.0  ~/Library/CloudStorage/Claude outputs
    0.0  ~/Library/CloudStorage/.DS_Store
 ```
 
 ## Files over 2 GB anywhere in home
 ```
+  61.5 ~/Parallels/Windows 11.pvm/harddisk.hdd/harddisk.hdd.0.{5fbaabe3-6958-40ff-92a7-860e329aab41}.hds
   10.0 ~/Library/Application Support/Claude/vm_bundles/claudevm.bundle/rootfs.img
-   9.5 ~/Library/Application Support/Claude/vm_bundles/claudevm.bundle/sessiondata.img
-   3.6 ~/Library/Mobile Documents/com~apple~CloudDocs/01 Business/Full Circle Finance (Valley Pawn)/06 Operations/Chekkit Managment copy.mov
-   2.6 ~/Desktop/_deleted_installers_20260904/Microsoft_365_and_Office_16.104.25121423_Installer.pkg
-   2.5 ~/Desktop/_deleted_installers_20260904/Microsoft_365_and_Office_16.105.26011018_Installer.pkg
+   9.9 ~/Library/Application Support/Claude/vm_bundles/claudevm.bundle/sessiondata.img
+   8.4 ~/.ollama/models/blobs/sha256-2049f5674b1e92b4464e5729975c9689fcfbf0b0e4443ccf10b5339f370f9a54
+   7.6 ~/.vp-studio/offsync/unified-search/index.db
 ```
 
 ## Recent guard actions
 ```
-2026-11-15 12:19:31 [report] cleared cache /Users/joshuadavis/.npm/_cacache (0.1 GB)
-2026-11-15 12:19:32 [report] cleared cache /Users/joshuadavis/Library/Caches/pip (0.4 GB)
-2026-11-15 12:19:32 [report] cleared cache /Users/joshuadavis/Library/Caches/Homebrew (0.4 GB)
-2026-11-15 12:19:32 [report] deleted 105 log/crash files older than 30 days
-2026-11-15 12:19:32 [report] free 44 GB -> 44 GB
+2026-11-18 04:10:05 [clean] trimmed claude-cli-nodejs cache (was 0.0 GB, kept last 7 days)
+2026-11-18 04:10:05 [clean] free 25 GB -> 25 GB
+2026-11-19 04:10:03 [clean] trimmed claude-cli-nodejs cache (was 0.0 GB, kept last 7 days)
+2026-11-19 04:10:03 [clean] free 28 GB -> 28 GB
+2026-11-20 04:10:04 [clean] trimmed claude-cli-nodejs cache (was 0.0 GB, kept last 7 days)
+2026-11-20 04:10:04 [clean] free 41 GB -> 41 GB
+2026-11-21 04:10:04 [clean] trimmed claude-cli-nodejs cache (was 0.0 GB, kept last 7 days)
+2026-11-21 04:10:05 [clean] free 34 GB -> 34 GB
+2026-11-22 04:10:05 [clean] trimmed claude-cli-nodejs cache (was 0.0 GB, kept last 7 days)
+2026-11-22 04:10:05 [clean] free 20 GB -> 20 GB
+2026-11-22 04:20:05 [report] trimmed claude-cli-nodejs cache (was 0.0 GB, kept last 7 days)
+2026-11-22 04:20:05 [report] free 18 GB -> 18 GB
+2026-11-22 04:40:15 [report] report written
+2026-11-22 14:43:29 [report] trimmed claude-cli-nodejs cache (was 0.0 GB, kept last 7 days)
+2026-11-22 14:43:33 [report] free 49 GB -> 49 GB
 ```
