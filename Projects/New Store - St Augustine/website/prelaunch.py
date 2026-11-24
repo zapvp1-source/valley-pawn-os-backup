@@ -27,11 +27,11 @@ CFG = dict(
     email='hello@rocketpawnjewelry.com',
     social={},             # e.g. {'facebook': 'https://www.facebook.com/rocketpawnjewelry'}
     app=False,             # True once Bravo confirms store 6 is in the MobilePawn app
-    opening='Opening spring 2027',
+    opening='Opening early 2027',
 )
 SHORT_ADDR = 'US-1 South, St. Augustine, FL'
 OPEN_DAYS = ['Monday', 'Tuesday', 'Thursday', 'Friday', 'Saturday']   # 10 AM–6 PM; closed Wednesday and Sunday
-HOURS_SENTENCE = ('Once we open in spring 2027, our hours are Monday, Tuesday, Thursday, Friday and Saturday, '
+HOURS_SENTENCE = ('Once we open in early 2027, our hours are Monday, Tuesday, Thursday, Friday and Saturday, '
                   '10 AM–6 PM (closed Wednesday and Sunday).')
 # Same feed the Mac updates every morning for the Virginia stores (CORS allows rocketpawnjewelry.com)
 SPOT_FEED = 'https://thevalleypawn.com/wp-json/wp/v2/pages?slug=spot-prices-feed&_fields=content'
@@ -91,7 +91,8 @@ def text_fixes(h):
     h = _re.sub(r'We buy (gold|silver|coins|jewelry) at every Rocket Pawn (&amp;|&) Jewelry store\.', r'We buy \1 at our St. Augustine store.', h)
     h = _re.sub(r'Find Your Nearest Rocket Pawn (&amp;|&) Jewelry →', 'Find Our St. Augustine Store →', h)
     h = h.replace('Send a quick photo to your nearest store.', 'Send us a quick photo.')
-    h = h.replace('Coming to US-1 South in St. Augustine, spring 2027.', 'Coming to 2493-2495 US Highway 1 South, St. Augustine, spring 2027.')
+    h = h.replace('Coming to US-1 South in St. Augustine, early 2027.', 'Coming to 2493-2495 US Highway 1 South, St. Augustine, early 2027.')
+    h = h.replace('Whats Right is RIGHT', 'What’s Right is RIGHT')
     # JSON-LD hygiene (11/22)
     h = h.replace('wp-content/uploads/2026/03/vp_logo_name-no-tag.png', 'wp-content/uploads/2026/11/logo_red.png').replace('https://i0.wp.com/rocketpawnjewelry.com/', 'https://rocketpawnjewelry.com/')
     h = _re.sub(r'/(sell-(?:gold|silver|coins|jewelry))-staugustine/', r'/\1/', h)
@@ -111,15 +112,15 @@ def text_fixes(h):
     hours_line = CFG['hours'] or CFG['opening']
     for line in HOURS_LINES:
         h = h.replace(line, hours_line)
-    h = HOURS_SENT.sub(HOURS_SENTENCE if CFG['hours'] else 'We open on US-1 South in spring 2027.', h)
+    h = HOURS_SENT.sub(HOURS_SENTENCE if CFG['hours'] else 'We open on US-1 South in early 2027.', h)
     if not CFG['address_public']:
         h = h.replace(CFG['street'], 'US-1 South')
     h = re.sub(r'(\(closed Wednesday and Sunday\)\.)\s*(?:\(closed Sunday\)\.?|,?\s*closed Sunday\.)', r'\1', h)
     h = h.replace('Open Mon–Fri 10 AM–6 PM, Sat 10 AM–5 PM, closed Sunday.',
-                  HOURS_SENTENCE if CFG['hours'] else 'We open in spring 2027.')
+                  HOURS_SENTENCE if CFG['hours'] else 'We open in early 2027.')
     h = re.sub(r'Mon – Fri<br/><strong[^>]*>10 AM – 6 PM</strong><br/>Saturday<br/><strong[^>]*>10 AM – 5 PM</strong><br/><span[^>]*>Closed Sunday</span>',
                ('Mon, Tue, Thu, Fri &amp; Sat<br/><strong style="color:#0b0b0b;">10 AM – 6 PM</strong><br/>'
-                '<span style="color:#999;font-size:13px;">Closed Wednesday &amp; Sunday · Opening spring 2027</span>')
+                '<span style="color:#999;font-size:13px;">Closed Wednesday &amp; Sunday · Opening early 2027</span>')
                if CFG['hours'] else '<strong style="color:#0b0b0b;">' + CFG['opening'] + '</strong>', h)
     if not CFG['phone']:
         h = re.sub(r'[Cc]all or text <a href="tel:[^"]+">[^<]*</a> or email ', 'Email ', h)
@@ -134,8 +135,8 @@ def text_fixes(h):
             (f"at any of Rocket Pawn {amp} Jewelry's 5 Florida locations", f"at Rocket Pawn {amp} Jewelry in St. Augustine"),
             (f"at any of Rocket Pawn {amp} Jewelry’s 5 Florida locations", f"at Rocket Pawn {amp} Jewelry in St. Augustine"),
             (f"great deals on guns, tools {amp} electronics. Call or text any of our 5 Florida stores.",
-             f"great deals on tools {amp} electronics. Opening spring 2027 on US-1 South in St. Augustine."),
-            (f"Call or text Rocket Pawn {amp} Jewelry on US-1 South.", f"Rocket Pawn {amp} Jewelry, opening spring 2027 on US-1 South."),
+             f"great deals on tools {amp} electronics. Opening early 2027 on US-1 South in St. Augustine."),
+            (f"Call or text Rocket Pawn {amp} Jewelry on US-1 South.", f"Rocket Pawn {amp} Jewelry, opening early 2027 on US-1 South."),
             (f"any Rocket Pawn {amp} Jewelry location can help get the process started", "we’ll get the process started"),
         ]:
             h = h.replace(a, b)
@@ -144,15 +145,15 @@ def text_fixes(h):
         (' - free appraisals at 5 Florida locations.', ' - free appraisals in St. Augustine.'),
         (' across 5 Florida locations.', '.'),
         (' - 5 Florida locations.', ' in St. Augustine.'),
-        ('See open roles across our 5 Florida stores and apply today.', 'Join the team opening our St. Augustine store in spring 2027.'),
-        ('Open Mon-Sat. Call or text before you come.', 'Opening spring 2027.'),
+        ('See open roles across our 5 Florida stores and apply today.', 'Join the team opening our St. Augustine store in early 2027.'),
+        ('Open Mon-Sat. Call or text before you come.', 'Opening early 2027.'),
         ('Monday–Friday 10 AM–6 PM and Saturday 10 AM–5 PM (closed Sunday).',
-         HOURS_SENTENCE if CFG['hours'] else 'We open on US-1 South in spring 2027 and will post our hours before opening day.'),
+         HOURS_SENTENCE if CFG['hours'] else 'We open on US-1 South in early 2027 and will post our hours before opening day.'),
         ("with our store across Florida's First Coast", "on US-1 South in St. Augustine, Florida,"),
         ('Just call or text the store', 'Just email us'),
         ('visit our stores,', 'visit our store,'),
         ('Phone, text and email for all 5 First Coast stores, plus addresses, hours and directions.',
-         'Opening spring 2027 on US-1 South in St. Augustine. Email us any time.'),
+         'Opening early 2027 on US-1 South in St. Augustine. Email us any time.'),
         ('has our store across Florida: St. Augustine. Each location buys jewelry', 'is on US-1 South in St. Augustine and buys jewelry'),
         ('You can now find addresses, hours, phone numbers, email and directions for our St. Augustine store in one place',
          'Contact details for our St. Augustine store are in one place'),
@@ -163,9 +164,9 @@ def text_fixes(h):
         ('Rocket Pawn &amp; Jewelry Florida Locations', 'Rocket Pawn &amp; Jewelry St. Augustine'),
         ('Rocket Pawn & Jewelry Florida Locations', 'Rocket Pawn & Jewelry St. Augustine'),
         ("or get directions to our 5 First Coast locations. We're open Mon-Sat, no appointment needed.",
-         "opening spring 2027 on US-1 South in St. Augustine, FL. Email us any time."),
+         "opening early 2027 on US-1 South in St. Augustine, FL. Email us any time."),
         ('Shop live inventory from Rocket Pawn &amp; Jewelry in St. Augustine, Florida — tools, electronics, jewelry, instruments and more, inspected, tested and backed by our 30-day warranty.',
-         'Tools, electronics, jewelry, instruments and more from Rocket Pawn &amp; Jewelry in St. Augustine, Florida, every piece backed by our 30-day warranty. Our online shop opens with the store in spring 2027.'),
+         'Tools, electronics, jewelry, instruments and more from Rocket Pawn &amp; Jewelry in St. Augustine, Florida, every piece backed by our 30-day warranty. Our online shop opens with the store in early 2027.'),
         ('Now hiring at Rocket Pawn &amp; Jewelry. Competitive pay, real advancement, and a team that treats people right. ', ''),
         ('Now hiring at Rocket Pawn & Jewelry. Competitive pay, real advancement, and a team that treats people right. ', ''),
         ('locations/culpeper/', 'locations/'), ('%2Flocations%2Fculpeper%2F', '%2Flocations%2F'),
@@ -181,8 +182,8 @@ def text_fixes(h):
         h = re.sub(r'(?<![\w-])text us\b', 'email us', h)
     # pre-opening wording
     for a, b in [
-        ('Now in St. Augustine. Your neighborhood pawn shop.', 'Coming to US-1 South in St. Augustine, spring 2027. Your neighborhood pawn shop.'),
-        ('Pick your nearest Rocket Pawn &amp; Jewelry location and walk in today.', 'Visit us on US-1 South when we open in spring 2027.'),
+        ('Now in St. Augustine. Your neighborhood pawn shop.', 'Coming to US-1 South in St. Augustine, early 2027. Your neighborhood pawn shop.'),
+        ('Pick your nearest Rocket Pawn &amp; Jewelry location and walk in today.', 'Visit us on US-1 South when we open in early 2027.'),
         ('Pick the store nearest you. Every location buys', 'We buy'),
         ('Pick the store nearest you. Each location buys', 'We buy'),
         ('Every location buys', 'We buy'), ('Each location buys', 'We buy'),
@@ -193,7 +194,7 @@ def text_fixes(h):
         h = h.replace(a, b)
     if not CFG['phone']:
         h = re.sub(r'Texting works too — same number\.\s*<a href="([^"]+)">All addresses &amp; hours →</a>',
-                   r'Opening spring 2027 on US-1 South. <a href="\1">Store details →</a>', h)
+                   r'Opening early 2027 on US-1 South. <a href="\1">Store details →</a>', h)
         h = re.sub(r'(<div style="font-size:36px;margin-bottom:10px;">)📱(</div>\s*<h3[^>]*>)Text Us(</h3>\s*<p[^>]*>)Click the chat button<br/>in the bottom right corner<br/><strong([^>]*)>Quick answers, fast service</strong> ⚡',
                    r'\1✉️\2Email Us\3' + CFG['email'] + r'<br/><strong\4>A real person answers</strong>', h)
         h = h.replace('text a photo', 'email a photo').replace('Text a photo', 'Email a photo')
@@ -202,7 +203,7 @@ def text_fixes(h):
         h = re.sub(r'window\.VP_GOLD_SPOT = [0-9.]+;', f'window.VP_GOLD_SPOT = {SPOT[0]:.2f};', h)
         h = re.sub(r'window\.VP_SILVER_SPOT = [0-9.]+;', f'window.VP_SILVER_SPOT = {SPOT[1]:.2f};', h)
     h = re.sub(r'Shop live inventory from Rocket Pawn (&amp;|&) Jewelry in St\. Augustine, Florida[^"<]*?warranty\.',
-               r'Tools, electronics, jewelry, instruments and more from Rocket Pawn \1 Jewelry in St. Augustine, Florida, every piece backed by our 30-day warranty. Our online shop opens with the store in spring 2027.', h)
+               r'Tools, electronics, jewelry, instruments and more from Rocket Pawn \1 Jewelry in St. Augustine, Florida, every piece backed by our 30-day warranty. Our online shop opens with the store in early 2027.', h)
     h = h.replace("'culpeper'", "'staugustine'").replace('-culpeper', '-staugustine')
     # internal build notes left in HTML comments
     h = re.sub(r'<!--(?:(?!-->).)*?(?:Master Template|Category hub for).*?-->', '', h, flags=re.S)
@@ -218,8 +219,8 @@ def clean_ld(o):
                                    else f"{CFG['opening']}. We'll post our hours before opening day."}
         elif nm == 'Where are your stores?':
             o['name'] = 'Where are you located?'
-            o['acceptedAnswer'] = {'@type': 'Answer', 'text': (f"{CFG['street']}, St. Augustine, FL {CFG['zip']}. Opening spring 2027."
-                                   if CFG['address_public'] else 'One store, on US-1 South in St. Augustine, Florida. Opening spring 2027.')}
+            o['acceptedAnswer'] = {'@type': 'Answer', 'text': (f"{CFG['street']}, St. Augustine, FL {CFG['zip']}. Opening early 2027."
+                                   if CFG['address_public'] else 'One store, on US-1 South in St. Augustine, Florida. Opening early 2027.')}
     if isinstance(o, dict):
         for k in list(o):
             v = o[k]
@@ -264,7 +265,7 @@ PAGE_BODY = {
 <p style="color:#c8102e;font-weight:700;margin:0 0 22px">What’s Right Is Right</p>
 <p>Buying a firearm online or from an out-of-state seller? Federal law requires it to ship to a licensed dealer
 (an FFL) for pickup. Rocket Pawn &amp; Jewelry will accept incoming firearm transfers once our Federal Firearms
-License is issued and the store opens on US-1 South in St. Augustine in spring 2027. Our license application
+License is issued and the store opens on US-1 South in St. Augustine in early 2027. Our license application
 is filed with the ATF; we will post our license number and a signed copy of the license here as soon as it is issued.</p>
 <h2>How transfers will work</h2>
 <ol>
@@ -279,7 +280,7 @@ background check. You must be 21 or older. Every transfer follows federal and Fl
 </section>''',
  'careers/index.html': WRAP + '''
 <h1 style="font-size:2.2rem;margin:0 0 10px">Come work where What’s Right Is Right</h1>
-<p>Rocket Pawn &amp; Jewelry opens on US-1 South in St. Augustine in spring 2027. We’re from the family behind
+<p>Rocket Pawn &amp; Jewelry opens on US-1 South in St. Augustine in early 2027. We’re from the family behind
 Valley Pawn, in the pawn business since 2014, and we run things the same way: fair, data-driven appraisals,
 a 30-day warranty on everything we sell, and a team treated like family.</p>
 <h2>What the job is</h2>
@@ -302,7 +303,7 @@ characteristic protected by law.</p>
 </section>''',
  'contact/index.html': WRAP + '''
 <h1 style="font-size:2.2rem;margin:0 0 12px">Contact Rocket Pawn &amp; Jewelry</h1>
-<p>We open on US-1 South in St. Augustine, Florida, in spring 2027. Until then, email is the fastest way to reach us
+<p>We open on US-1 South in St. Augustine, Florida, in early 2027. Until then, email is the fastest way to reach us
 — questions about loans, selling gold or jewelry, firearm transfers or jobs all come to the same inbox, and a real
 person answers.</p>
 <p><a href="mailto:{email}" style="''' + BTN + '''">✉️ {email}</a></p>
@@ -312,7 +313,7 @@ person answers.</p>
 <h1 style="font-size:2.2rem;margin:0 0 12px">Weekly deals start on opening day</h1>
 <p>Every week we’ll post hand-picked markdowns from the St. Augustine store — tools, jewelry, electronics,
 instruments and more, priced well below retail and backed by our 30-day warranty. The first deals go up when
-we open in spring 2027.</p>
+we open in early 2027.</p>
 <p><a href="mailto:{email}?subject=Weekly%20deals" style="''' + BTN + '''">✉️ Send me the deals</a></p>
 </section>''',
 }
@@ -365,7 +366,7 @@ def fix_soup(soup, rel):
                 if CFG['hours']:
                     rows = ''.join(f"<tr><td>{d}</td><td>{'10:00 AM – 6:00 PM' if d in OPEN_DAYS else 'Closed'}</td></tr>"
                                    for d in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
-                    t.replace_with(BeautifulSoup(f'<table>{rows}</table><p>Opening spring 2027.</p>', 'html.parser'))
+                    t.replace_with(BeautifulSoup(f'<table>{rows}</table><p>Opening early 2027.</p>', 'html.parser'))
                 else:
                     p = soup.new_tag('p'); p.string = f"{CFG['opening']}. We'll post our hours here before the doors open."
                     t.replace_with(p)
@@ -431,8 +432,8 @@ def fix_soup(soup, rel):
                     p.string = HOURS_SENTENCE if CFG['hours'] else f"{CFG['opening']}. We'll post our hours here before opening day."
                 else:
                     h3.string = 'Where are you located?'
-                    p.string = (f"{CFG['street']}, St. Augustine, FL {CFG['zip']}. Opening spring 2027."
-                                if CFG['address_public'] else 'One store, on US-1 South in St. Augustine, Florida. Opening spring 2027.')
+                    p.string = (f"{CFG['street']}, St. Augustine, FL {CFG['zip']}. Opening early 2027."
+                                if CFG['address_public'] else 'One store, on US-1 South in St. Augustine, Florida. Opening early 2027.')
                 h3.insert_after(p)
     if str(rel) in PAGE_BODY:
         main = soup.find('main')
@@ -448,7 +449,7 @@ def fix_soup(soup, rel):
                 f'<section style="max-width:760px;margin:60px auto;padding:0 20px;text-align:center">'
                 f'<h1 style="font-size:2.2rem;margin:0 0 12px">Shop online — coming with our opening</h1>'
                 f'<p style="font-size:1.1rem;line-height:1.6">Jewelry, tools, electronics, instruments and more, every piece '
-                f'backed by our 30-day warranty. Our online shop goes live when the St. Augustine store opens in spring 2027.</p>'
+                f'backed by our 30-day warranty. Our online shop goes live when the St. Augustine store opens in early 2027.</p>'
                 f'<p><a href="mailto:{CFG["email"]}?subject=Shop%20updates" style="display:inline-block;padding:12px 26px;'
                 f'border-radius:999px;background:#c8102e;color:#fff;font-weight:700;text-decoration:none">✉️ Tell me when it opens</a></p>'
                 f'</section>', 'html.parser')

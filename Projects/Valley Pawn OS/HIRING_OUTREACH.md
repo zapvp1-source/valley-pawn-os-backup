@@ -25,6 +25,79 @@ Preston: "I have opened up the indeed ads for Roanoke and Harrisonburg again. Ca
 - Live scope table: HIRING_SWITCH.md → ACTIVE SCOPE (authoritative; read it every run).
 - Roanoke first contacts sent 2026-10-13 1:26–1:31 PM: Anthony White, Kevan Nelson, Adam Martin. Still to contact (screened clean): Michael Boyer, Tareka Jordan, Diaundre Wright.
 
+### Run log — 2026-11-23 ~3:35 PM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access, sixth run of the day)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Candidates "All applications" checked live: still 298, New 3 — same out-of-scope Saint Augustine FL Store Manager candidates (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan). No new in-scope applicant.
+- Indeed Messages inbox checked live top to bottom: newest in-scope thread still Christian Miller's Nov 20 confirmation (ours); Jeanie Herring still awaiting her reply (ours was last); Andrew Figgins and Michael Boyer threads also end on our side; Robert Brandt's old "Sounds good" acknowledgment needs no reply. No unanswered candidate question, no new booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live for 11/23: same 2 confirmed — Andrew Figgins 12:00 PM, Christian Miller 12:05 PM (both Harrisonburg), unchanged.
+- Slack DM (D03BHQH5VGT) re-read: newest hiring-related message still the ~9:21 AM first-run interview-list post; everything since (weekly CEO brief, supply approvals, bonus payout, follower check, FB check-in, Bald Rock contracts, shirt order ask) is unrelated to hiring. #preston-goldilocks channel not resolvable by name via Slack search this run (private/renamed?); #ask-goldilocks checked as the closest match, no hiring content, nothing recent.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due.
+- Not the first weekday run (already posted ~9:21 AM) — per QUIET RULE, no Slack post or DM this run.
+- Texts: 0 — not a 9:30/1:00/6:00 batch window.
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
+### Run log — 2026-11-23 ~1:00 PM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access, fifth run of the day)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Candidates "All applications" checked live: still 298, New 3 — same out-of-scope Saint Augustine FL Store Manager candidates (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan). No new in-scope applicant.
+- Indeed Messages inbox checked live top to bottom: newest in-scope thread still Christian Miller's Nov 20 confirmation (ours); Jeanie Herring still awaiting her reply (ours was last); Andrew Figgins and Michael Boyer threads also end on our side; Robert Brandt's old "Sounds good" acknowledgment needs no reply. No unanswered candidate question, no new booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live for 11/23: same 2 confirmed — Andrew Figgins 12:00 PM, Christian Miller 12:05 PM (both Harrisonburg), unchanged.
+- Slack DM (D03BHQH5VGT) re-read: newest hiring-related message still the ~9:21 AM first-run interview-list post; everything since (weekly CEO brief, supply approvals, bonus payout, follower check, FB check-in, Bald Rock contracts) is unrelated to hiring. #preston-goldilocks re-read: newest activity is Joshua's 11:52 AM Wed-hours heads-up to Preston and the Academy-login/Culpeper-supply/Goldilocks Q&A threads — no new hiring instruction from Preston since 11/9.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due.
+- Not the first weekday run (already posted ~9:21 AM) — per QUIET RULE, no Slack post or DM this run.
+- Texts: 0 — not a 9:30/1:00/6:00 batch window (close to 1:00 PM; no candidate needed texting anyway).
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
+### Run log — 2026-11-23 ~11:10 AM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access, fourth run of the day)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Jobs dashboard checked live: Waynesboro (88 All, 0 New), Harrisonburg (86 All, 0 New), Lexington (42 All, 0 New), Roanoke (58 All, 0 New) — all Paused, no live sponsorship spend, unchanged.
+- Candidates "New" filter checked live: still 3, all Saint Augustine FL Store Manager (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan), out of scope — unchanged. All applications 298, identical to the 10:05 AM run. No new in-scope applicant.
+- Indeed Messages inbox checked live top to bottom: newest in-scope thread still Christian Miller's Nov 20 confirmation (ours); Jeanie Herring's thread still awaiting her reply to "what time between 11 AM and 3 PM on Monday 11/23" (asked Nov 20, no answer yet — nothing to action until she replies). No unanswered candidate question, no new booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live for 11/23: same 2 confirmed — Andrew Figgins 12:00 PM, Christian Miller 12:05 PM (both Harrisonburg), unchanged.
+- Slack DM (D03BHQH5VGT) re-read: newest hiring update still the ~9:21 AM first-run interview-list post; nothing since (10:06/10:20/09:53/08:42/04:08 AM messages are bonuses/supply-approval/followers/FB-check-in/Bald Rock, all unrelated to hiring). #preston-goldilocks re-read: newest activity is the Academy-login + Culpeper-supply thread (10:13–10:20 AM) and this morning's Goldilocks Q&A — no new hiring instruction from Preston since 11/9.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due.
+- Not the first weekday run (already posted ~9:21 AM) — per QUIET RULE, no Slack post or DM this run.
+- Texts: 0 — not a 9:30/1:00/6:00 batch window.
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
+### Run log — 2026-11-23 ~10:05 AM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access, third run of the day)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Jobs dashboard checked live: Waynesboro (88 All, 0 New), Harrisonburg (86 All, 0 New) — unchanged, both still Paused.
+- Candidates "New" filter checked live across all jobs: 3, all Store Manager/Saint Augustine FL (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan) — same out-of-scope set as every prior run. No new in-scope applicant.
+- Indeed Messages inbox checked live top to bottom: newest in-scope thread still Christian Miller's Nov 20 confirmation. All other candidate-last messages in Harrisonburg/Waynesboro threads are plain closing acknowledgments (Shad Taha, Lizeth Santiago, Lynette Hall, Thalia Lopez Ayala, Amber Argenbright, Gloria Harris, Dustin Crawford, Ryan Armstrong) needing no reply. No unanswered question, no new booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live for 11/23: same 2 confirmed — Andrew Figgins 12:00 PM, Christian Miller 12:05 PM (both Harrisonburg), unchanged. Jeanie Herring still unbooked (accepted but never gave a time) — nothing to action until she replies.
+- Slack DM (D03BHQH5VGT) re-read: newest hiring update still the ~9:21 AM first-run interview-list post; nothing since. #preston-goldilocks re-read: no new hiring instruction from Preston since 11/9.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due.
+- Not the first weekday run (already posted ~9:21 AM) — per QUIET RULE, no Slack post or DM this run.
+- Texts: 0 — not a 9:30/1:00/6:00 batch window.
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
+### Run log — 2026-11-23 ~9:15 AM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only, first run of the day)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF. Harrisonburg/Lexington: no Wed/Sun. Interviewer for every row: Preston Peters, (540) 202-4200.
+- Jobs dashboard checked live: Waynesboro (88 All, 0 New), Harrisonburg (86 All, 0 New), Lexington (42 All, 0 New), Roanoke (58 All, 0 New) — all Paused, no live sponsorship spend, unchanged. (Saint Augustine FL off-scope, Store Manager, not actioned.)
+- Indeed Messages inbox checked live top to bottom, ~45 threads scanned: every thread either ends on our side or on a plain closing acknowledgment (Robert Brandt "Sounds good" to his already-past 11/19 interview; Shad Taha "Absolutely thank you" after Preston's post-interview message) needing no reply. Edgar Alvarez Alvira / Jordyn Bolton / gary DePriest / Jay Ridgeway threads are old decision/status items already correctly left to Joshua/Preston per the no-decisions rule. No unanswered candidate question, no new applicant, no booking, reschedule, or no-show.
+- Calendar (jdavis@fcfpawn.com) checked live for 11/23: 2 confirmed — Andrew Figgins 12:00 PM, Christian Miller 12:05 PM (both Harrisonburg). Jeanie Herring never gave a time after accepting the reschedule offer — still unbooked, nothing to action until she replies.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due.
+- First weekday run: posted today's interview list to #employee-prospects (Andrew Figgins 12:00 PM, Christian Miller 12:05 PM) and DM'd Joshua. No other Slack messages sent this run (QUIET RULE — nothing else changed).
+- Texts: 0 — not a 9:30/1:00/6:00 batch window.
+
+### Run log — 2026-11-23 ~9:34 AM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access, second run ~19 min after first)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Slack DM (D03BHQH5VGT) re-read: newest hiring update is this morning's ~9:21 AM run post (first-run interview list). Nothing new since — later messages (FB community check-in, Bald Rock contracts) are unrelated to hiring.
+- #preston-goldilocks (C0BGXSTT4TY) re-read: newest activity is Goldilocks ops-knowledge Q&A (9:05 AM) and older silver-scrap-bucket/Comcast/Black Friday threads — none touch hiring scope.
+- Calendar (jdavis@fcfpawn.com) checked live for 11/23–11/27: same 2 confirmed interviews today, Andrew Figgins 12:00 PM and Christian Miller 12:05 PM (both Harrisonburg) — unchanged, no new bookings/conflicts.
+- Indeed Messages inbox checked live: newest thread still Christian Miller's Nov 20 "You're set..." confirmation — no new candidate message since the 9:15 AM run.
+- Candidates checked live: All applications 298, New 3 (same out-of-scope Store Manager/Saint Augustine FL candidates as prior runs) — no new in-scope Waynesboro/Harrisonburg/Lexington/Roanoke applicant.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due.
+- Not the first weekday run (already posted ~9:21 AM) — per QUIET RULE, no further Slack post or DM since nothing changed.
+- Texts: 0 — not a 9:30/1:00/6:00 batch window (close to 9:30 but this run started 9:34, after the window check; no candidate needed texting anyway).
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
 ### Run log — 2026-11-20 ~3:35 PM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access)
 Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe (none exist) — direct Chrome access via Claude in Chrome; Projects folder read directly; Slack and Calendar connectors reachable live this run.
 Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF. Harrisonburg/Lexington: no Wed/Sun. Interviewer for every row: Preston Peters, (540) 202-4200.
@@ -9303,3 +9376,38 @@ No felony disqualifications, no do-not-contact touches, no new no-show reports b
 Texts: 0 — cloud-only session, no computer-use/full-screen control; not a 9:30/1:00/6:00 batch window (ran ~7:03 PM).
 Change this run (Jeanie Herring asked for a specific time) → sent one DM to Joshua (D03BHQH5VGT) naming only the change, per QUIET RULE. No booking made, so no #employee-prospects post.
 Indeed messages sent: 1 (Jeanie Herring time request). Calendar events created/changed/deleted: 0. Texts sent: 0. Rejections sent: 0. Slack posts: 0 (channel), 1 (DM).
+
+### Run log — 2026-11-23 ~12:30 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe (none exist) — cloud-only; Projects folder read directly; Indeed worked live via Claude in Chrome; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+Slack DM (D03BHQH5VGT) re-read back through the ~9:21 AM first-run-of-the-day post (today's call list: 12:00 PM Andrew Figgins, 12:05 PM Christian Miller, both Harrisonburg, both confirmed — already posted, not repeating). No hiring-related DM or #preston-goldilocks message since (later items today are CEO brief, supply approvals, bonuses, follower check, Facebook check-in, Bald Rock contracts — all non-hiring).
+Indeed Messages inbox checked live top to bottom: newest threads still Christian Miller and Jeanie Herring (both Nov 20) and Andrew Figgins/Michael Boyer (Nov 20), Robert Brandt (Nov 19) — no thread dated Nov 21–23. Jeanie Herring's last message is still our own "What time between 11 AM and 3 PM..." ask (sent 11/20) — no reply from her yet, not due for a second touch. No new candidate-initiated message anywhere.
+Jobs dashboard checked live: Waynesboro (88 All, 0 New), Harrisonburg (86 All, 0 New), Lexington (42 All, 0 New), Roanoke (58 All, 0 New) — all Paused, 0 New, unchanged for weeks (HIRING_SWITCH.md's table still shows these rows ON; not re-flagging the stale-vs-live Paused mismatch again, same as every prior run since 10/26).
+Calendar (jdavis@fcfpawn.com) checked live for 11/23: Andrew Figgins 12:00–12:05 PM and Christian Miller 12:05–12:10 PM (both Harrisonburg) are today's only booked slots, both still present, no gaps/doubles/conflicts. No no-show report received from Preston or Joshua for either slot as of this run.
+No felony disqualifications, no do-not-contact touches, no new in-scope applicants, bookings, reschedules, or no-shows this run.
+Texts: 0 — not a 9:30/1:00/6:00 batch window; cloud-only session has no screen control regardless.
+Per QUIET RULE: nothing changed this run, so no Slack DM and no #employee-prospects post (today's call list was already posted at the ~9:21 AM first run).
+Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0 (channel), 0 (DM).
+
+### Run log — 2026-11-23 ~3:19 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe (none exist) — cloud-only; Projects folder read directly; Indeed worked live via Claude in Chrome; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+Slack re-read (DM D03BHQH5VGT + search "hiring" after:2026-11-21 fleet-wide): nothing hiring-related since the ~9:21 AM first-run post (today's call list: 12:00 PM Andrew Figgins, 12:05 PM Christian Miller, both Harrisonburg, both confirmed — already posted, not repeating). No #preston-goldilocks instruction found.
+Jobs dashboard checked live: Waynesboro (88 All, 0 New, Paused), Harrisonburg (86 All, 0 New, Paused), Lexington (42 All, 0 New, Paused, sponsorship ended 9 days ago), Roanoke (58 All, 0 New, Paused, sponsorship ended 1 month ago) — all unchanged, reopening/respend remains Joshua's standing decision, not re-flagging.
+Indeed Messages inbox checked live, full scroll (all 4 in-scope stores): newest threads still Christian Miller/Jeanie Herring/Andrew Figgins/Michael Boyer (Nov 20) and Robert Brandt (Nov 19) — no thread dated Nov 21-23. Reviewed every candidate-last-message thread across Waynesboro/Harrisonburg/Lexington/Roanoke (Shad Taha, Edgar Alvarez Alvira, Lizeth Santiago, GLORIA HARRIS, Thalia Lopez Ayala, Robert Brandt, Ethan Ruley, Roxanne Snider, Lynette Hall, Dakota Camden, Aaron Cole, Shawn Withrow, Amber Argenbright, Ryan Armstrong, preston haylock, Diaundre Wright, Hunter Marks, Dustin Crawford) — every one is a closed-loop acknowledgment ("thank you"/"sounds good"/etc.) or (Edgar Alvarez Alvira) a Zoom link Preston already sent with the candidate's confirmation as the last word; none needs a reply. gary DePriest's Oct 20 complaint and Jay Ridgeway's Oct 21 thread are old/stale, already surfaced in prior runs, not re-opened. No new candidate-initiated message anywhere.
+Calendar (jdavis@fcfpawn.com) checked live for 11/23: Andrew Figgins 12:00-12:05 PM and Christian Miller 12:05-12:10 PM (both Harrisonburg) remain the only booked slots, both still confirmed, no gaps/doubles/conflicts. No no-show report received from Preston or Joshua for either slot as of this run.
+No felony disqualifications, no do-not-contact touches, no new in-scope applicants, bookings, reschedules, or no-shows this run.
+Texts: 0 — 3:19 PM ET, not a 9:30/1:00/6:00 batch window; cloud-only session has no screen control regardless.
+Per QUIET RULE: nothing changed this run, so no Slack DM and no #employee-prospects post.
+Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0 (channel), 0 (DM).
+
+### Run log — 2026-11-23 ~6:35 PM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access, seventh run of the day)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Slack DM (D03BHQH5VGT) re-read: newest hiring item still the ~3:35 PM run's "nothing changed" (not posted, per QUIET RULE); non-hiring items since (shirt order ask 3:04 PM) are unrelated. No new hiring instruction from Joshua or Preston.
+- Calendar (jdavis@fcfpawn.com) checked live for 11/23: same 2 confirmed — Andrew Figgins 12:00 PM, Christian Miller 12:05 PM (both Harrisonburg), unchanged. Both interview times have now passed with no no-show report from Preston or Joshua.
+- Indeed Messages inbox checked live top to bottom: unchanged — newest in-scope thread still Christian Miller's Nov 20 confirmation; Jeanie Herring still awaiting her reply to "what time between 11 AM and 3 PM" (asked 11/20); Andrew Figgins, Michael Boyer, Robert Brandt threads all end on our side or with plain closing acknowledgments. No unanswered candidate question, no new booking request, no reschedule, no no-show report.
+- Candidates checked live: All applications 298 (unchanged), New 3 — same out-of-scope Saint Augustine FL candidates (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan). No new in-scope applicant.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due.
+- Texts: 0 — not a 9:30/1:00/6:00 batch window (ran ~6:35 PM, just past the 6:00 window; no candidate needed texting anyway).
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.

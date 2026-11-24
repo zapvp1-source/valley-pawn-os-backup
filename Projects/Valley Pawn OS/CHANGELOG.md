@@ -1,3 +1,50 @@
+## 2026-11-23 ~9:50 PM ET (fleet-guardian 21:45 ET pass)
+- Step 1 registry: fresh live task_preflight-equivalent via registry-guard's own auto snapshot (scheduled-tasks-20261123-195527.json, ~1hr fresh). 232 tasks, 2 enabled Cowork-side (northwest-registered-agent-daily-check, vp-hiring-pipeline), both clear via croniter check. 0 missed Cowork-side fires.
+- Step 1c: processed 13 new bare-OPEN FAILURE_LEDGER rows from today (12:56 ET onward) -- conductwatch-lexington + storetraffic-lexington UNRECOVERED (both missed Mon 09:55/09:57 runs, same last-activity timestamp Sun 11/22 14:43, one stalled Lexington collector; unlisted/verify-only, internal camera/door-counter checks only, no customer/money impact); 8x nics-weekly-mtd-ranking duplicate retries COVERED (same Bravo-GL 2026-11-21 backlog as the 10:03 ET row -- EnsureStore failed for CUL/HAR/LEX/WAY, 8 tries each per STATUS.md, only ROA posted; verify-only hard limit, tonight's 00:45/03:15 ET native retry hasn't run yet, will re-check before any HUMAN_QUEUE escalation); bravo-health-watchdog COVERED (self-heal already ran per its own message, confirmed via nightly-chekkit-review-responses posting cleanly at 19:30 ET, 3rd clean night); supply-deliveries UNRECOVERED (same benign recurring Chrome/Playwright contention as 10/29, 11/19, 11/20, 11/22); vp-dashboard-refresh COVERED (duplicate of the still-open 08:19 ET HUMAN_QUEUE row, same Cloudflare-deploy-blocked-by-policy root cause, no new row added).
+- HUMAN_QUEUE: 2 rows resurfaced under the 7-day rule (St. Augustine store 5 calls, 7 days since 11/16; Books -- 5 rulings, 8 days since 11/15). Sign-in-only rows (Listings fix loop, TalentLMS, iCloud Mail, Indeed, Gusto invoice, pdfFiller) held per the sign-in-batching rule -- next Login Day is 2026-12-01.
+- 0/5 reruns used (nothing today was both rerun-safe and actionable). 1 Slack DM sent to Joshua (D03BHQH5VGT) per Failure Policy v3 -- new rows added today plus 2 resurfaced 7-day items. Full detail: fleet/guardian_runs/2026-11-23-2150.json.
+
+## 2026-11-23 (listings-fix-loop)
+
+- YellowPages Harrisonburg now shows Valley Pawn (was "Dixie Pawn Inc"), verified live. FFLs.com Harrisonburg "regression" confirmed a false positive (expired 2019 license page); playbook note added. Thryv asked for the Lexington link and got it the same day.
+
+## 2026-11-23 ~12:50 PM ET (fleet-guardian 12:45 ET pass, SILENT)
+- Step 1 registry: fresh live task_preflight snapshot via host_queue. 232 tasks, 2 enabled Cowork-side (northwest-registered-agent-daily-check, vp-hiring-pipeline), both clear. 0 missed Cowork-side fires.
+- Step 1c: processed all 10 OPEN FAILURE_LEDGER rows -- ceo-week-pull RECOVERED (REVENUE_2026-11-16.json self-healed, incomplete=[], today's ceo-weekly-brief already delivered); fleet-doctor COVERED (ran healthy, 42/42 self-tests; its 4-still-failing finding is routine, left for a dev session); nics-weekly-mtd-ranking x4 COVERED (single incident, root cause = Bravo-GL 2026-11-21 backlog per fleet/state/bravo_daily_gl/STATUS.md, same self-clearing class as 11/9-11/13, verify-only/hard-limit, never rerun); valley-pawn-blog-publisher COVERED (FALSE ALARM, verified live via WordPress REST -- post #2075 published 2026-11-23 01:37 ET on schedule, same recurring timezone/window bug as 11/9/11/12/11/19); fb-inbox-replies RECOVERED (chekkit_recent.json self-healed, fresh as of 15:19 UTC). 2 NEEDS_HUMAN rows queued to Life OS/HUMAN_QUEUE.md: vp-dashboard-refresh (Cloudflare Pages deploy blocked by this session's own credential-transfer policy classifier -- needs a decision on native-agent-deploy vs GitHub-push vs allowlisting the transfer) and oura-daily-import (ring not synced since 11/19, fresh recurrence of the 10/21-11/7 pattern).
+- 0/5 reruns used (all dispositions resolved via output-verification, no rerun needed). No verify-only misses beyond nics (already covered, hard limit). Silent by design -- no Slack DM. Full detail: fleet/guardian_runs/2026-11-23-1250.json.
+
+## 2026-11-23 (ceo-weekly-brief, cloud session)
+
+- Weekly CEO Brief built for week Mon Nov 16 - Sun Nov 22, 2026: net revenue $80,223 (+104.5% WoW/+111.8% YoY, driven by a $66,971 gold/silver refinery settlement); core business also grew (loan fees +34.7% WoW, retail +27.9% WoW). MTD $162,243, 62% of the $261,891 November target. Delivered by email (jdavis@fcfpawn.com, zapvp1@me.com, confirmed via Gmail) and Slack DM to Joshua (D03BHQH5VGT, full plain-language text + Drive PDF link - Slack native file upload still blocked by the files:write scope gap, 8th consecutive week). PDF archived to Google Drive and outbox/sent/. LAST_WEEK.json, STATUS-2026-11-23.md, WEEK-2026-11-16.html, content-2026-11-16.json written to Communcations/ceo-scorecard/. 5 Open Items Register rows added; HUMAN_QUEUE.md updated (Verdocs row bumped, new Woods Walk autopay row added).
+
+## 2026-11-23 (ebay-weekly-channel-audit, native)
+
+- 375 active / $64,697 listed · 90d 521 units / $93,628 · fees 15.7% · aged >90d 197 ($32,205). vs 2026-11-16: active +6, listed value +$1,020, 90d revenue -$1,250, fee % -0.1pt, aged >90d +2 / +$1,180, unread +0 93 listings sit at their 3rd markdown cut with no further scheduled action (Culpeper 72, Harrisonburg 5, Lexington 1, Roanoke 15). 3 video-game / console / game-accessory listings in the sample take offers (Culpeper 1, Waynesboro 1, Harrisonburg 1) — the standing rule is no offers on video games; store's call to switch off, not changed here. Full: `eBay/audit_weekly/2026-11-23/summary.md`.
+
+## 2026-11-23 (December 2026 Policy Update packet wired in, WS2 thread)
+
+- Human Resources/policy_bundles: manifests/2026-12.json added (prepared from 2026-11.json: Dec 1 / sign-by Dec 10 / list Dec 15; CEO 11/21 'listen to Preston' ruling applied to Preston's 11/17 points 2-4; point 1 NOT applied); ack HR-2026-04 Rev3 DRAFT PDF added; build_bundle.py run -> out/2026-12_Policy_Update.pdf, 12 pages (pages 1 and 7 checked)
+- state/2026-12.json note appended; POLICY_QUEUE.md: 11/18 Market Manager row marked decided for points 2-4 (point 1 open), new 11/23 row for Handbook v2026.9 + P&P v2026.10 rev2 + ack Rev3 (approved-pending, 2026-12)
+- Drafts copied (not FINAL): Human Resources/Employee_Handbook_v2026.9_DRAFT.docx/.pdf, Human Resources/_drafts_2026-12/DRAFT_PP_v2026.10_rev2_for_Policy_Day.docx/.pdf, Human Resources/Valley_Pawn_Handbook_PP_Acknowledgment_HR-2026-04_Rev3_DRAFT.docx/.pdf; v2026.8 FINAL and the original P&P draft untouched
+- Academy: L6-09 FFL 5 Deadly Sins draft at Training Program/academy/drafts_2026-11-23/ (not in lessons/); OPEN_ITEMS.md updated
+- Nothing sent to staff, Gusto, Slack or email. Backups: *.bak-20261123-ws2
+
+## 2026-11-23 (social campaign scorecard, run 5)
+
+- Week 4 measured (Tuesday debate slot now posting on all stores; debate +52–77% over other community posts at CUL/HAR/LEX, run 1 of 2, no rotation change); followers CUL 884, HAR 761, ROA 41; topic bank: Roanoke Star deferred to 2027 (already posted 3x by drift), +1 verified Roanoke history topic (N&W 611), test build 11/23–12/21 0 collisions. Detail: Refine Social Media/CAMPAIGN_SCORECARD.md
+
+## 2026-11-23 (preston phone brief, native)
+
+- preston-phone-week: 2026-11-16–2026-11-22, 50 calls / 128 min, 15 of 30 staff calls offloadable; DM'd to Joshua
+
+## 2026-11-23 (weekly phone & text review, native)
+
+- weekly-phone-text-review: 2026-11-16–2026-11-22 graded (Phone_Text_Review_By_Store_Nov16_Nov22.pdf), DM'd to Joshua
+
+
+## 2026-11-23 (weekly-website-health-audit, native)
+
+- Crawled 123 sitemap pages (108 indexable), 0 errors, 0 broken JSON-LD, 0 missing descriptions (3 auto-fixed and verified live), 3 new pages since 11/16. Recommended fixes go out with the Monday stats post in #website. History: `Website/AUDIT_2026-08-22/weekly-history.json`.
 
 ## 2026-11-22 ~9:45 PM ET (fleet-guardian 21:45 ET pass)
 - Step 1 registry: fresh live task_preflight snapshot via host_queue. 232 tasks, 2 enabled Cowork-side (northwest-registered-agent-daily-check, vp-hiring-pipeline), both clear. 0 missed Cowork-side fires.
@@ -12,6 +59,7 @@
 # Valley Pawn - Enterprise Changelog
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
+
 
 ## 2026-11-22
 
@@ -10678,3 +10726,15 @@ Newest first. Material changes to the business operating system. Read this BEFOR
 - Silence sweep: `list_drafts` checked (dedupe guard) — all 3 standing non-excluded candidates (Howard Baker/817 Richmond mailing address `1a1c656ac41fc32c`, Ford/Kyler `1a0ed831eba1a46e`, Valley Trust/Branham `1a0cf86e7af6af58`) already carry an unsent nudge draft from a prior run. Zero new nudges created (0 of 3 cap used).
 - No new claims activity (`CLAIMS.md` checked — PBIH26050007 remains carrier-closed, unchanged). No broker pipeline changes (`BROKER_PIPELINE.md` checked, unchanged).
 - No time-critical item (no renewal inside 14 days at risk, no lapse, no claim denial, no cancellation-at-risk notice) — no Slack DM sent. One resolved open item logged to `Life OS/OPEN_ITEMS_REGISTER.md`.
+## 2026-11-23 (weekly-returns-summary, Cowork scheduled run, LINKED via device bridge)
+- Computed the 7-day window from today's real date (oldest_epoch sanity-checked against a no-oldest #returns read and the trend workbook's prior Week_Of=2026-11-16 row) -- newest #returns activity was 2026-11-21, well within range. Idempotency check: #weekly-returns-summary's last post was 2026-11-16 (week of Nov 9-16); nothing posted yet for this week.
+- Read #returns for the window (Nov 16-23): 5 return transactions across 5 messages (Walker Tapley 11/17 -- 2-item receipt for Bryce Rose [Xbox Series S + Xbox One Controller]; Chadd 11/18 -- Caitlyn Freeman, Canon Flash Speedlite; Sandi 11/18 -- Nathaniel Cropp, Sony camo controller; Cam 11/20 -- Nathaniel Smith, PS5; Walker Tapley 11/21 -- Mehreteab Tekie, Canon lens). Read every form/receipt photo via Chrome's Slack lightbox at full resolution (not message metadata). Note: Preston posted a NEW mandatory return form (printed Purchase Date / Return Tender Type / Guest Signature / Notes fields) on 11/18 9:30 AM; Chadd's 11/18 return still used the old reprint-receipt style and said so in-thread. Poster 'Cam' (11/20) is not yet on the manager->store roster -- store confirmed Harrisonburg by receipt address + cashier match, per the receipt-wins rule.
+- Classified reasons against the controlled vocabulary: 4 Buyer's Remorse, 1 Defect, 1 Doesn't Fit/Compatibility. No Policy_Compliant violations this week (all returns were either within 7 days or refunded non-cash in the 8-30 day window) -- no manager-check-in line in this week's post.
+- Appended 6 new rows (138-143) to `Valley_Pawn_Returns_Trend.xlsx` Returns Log after a dedupe check against (Week_Of, Item_VPNum, Customer_Name) -- no existing matches found; added the Week_Of=2026-11-23 row (52) to the Trends tab. Backup `Valley_Pawn_Returns_Trend_PRE_APPEND_BACKUP_20261123.xlsx`. Recalc helper skipped (session-path pattern doesn't apply via the device bridge, same as prior weeks); weekly + cumulative figures computed directly from the Returns Log rows in Python instead. Totals: 5 returns (transactions), $1,160.73 -- Culpeper 1/$23.68, Waynesboro 1/$24.99, Harrisonburg 3/$1,112.06, Lexington 0, Roanoke 0.
+- Fleet publish guard confirmed off (live) both at task start and again immediately before posting. Scheduled the short-format digest (2026-08-03 rewrite format -- no reason breakdown or file/column references in the channel post) to #weekly-returns-summary for 2026-11-23 09:00:00 EST -- scheduled message id Dr0CL786RZCL, confirmed by the tool's own success response.
+
+## 2026-11-23 ~4:08 AM EST (bald-rock-15-day-contract, Cowork scheduled run, LINKED via device bridge, Claude in Chrome for Guesty REST API, DocuSign MCP, Slack MCP for the DM)
+- Window 2026-11-23 -> 2026-12-08: 2 candidates (Stephenie Nickens/VRBO canceled, skipped; Lina Nino/Airbnb HMC5WQ2P5R confirmed). Sent: 0. Reminded: 0. Age/ID: 1 already verified (Lina Nino, 11/10), 0 new.
+- Lina Nino's unsigned DocuSign envelope (sent 11/10) remains held, not reminded -- same Verdocs e-signature ambiguity flagged 2026-11-22 (HUMAN_QUEUE.md row still OPEN, Joshua has not yet replied to the 11/22 9:57pm fleet note asking for his call). Verified via Guesty conversation thread (posts API) that nothing changed since last night: last activity is the 11/20 automated check-in-instructions message, no new guest reply, no new Joshua message. Held again rather than send a third, possibly-conflicting message.
+- Checked the new Airbnb amenity-safety contract policy (bald-rock-property skill, added 2026-11-19/20): bookings made on/after 2026-11-20 need the new 1-page "Mountain Luxury - Amenity Safety and Assumption of Risk Agreement" template instead of the old 5-page Airbnb Rental Contract. Confirmed via DocuSign getTemplates (search_text "Amenity Safety" and "Mountain Luxury") that the template does not exist in the account yet (0 results). No guest in this run's window was booked on/after 11/20, so nothing was blocked today -- flagged in the Slack summary as a heads-up for when it does apply.
+- Fleet publish guard checked first (vp_dryrun.py status -> not armed, live). Slack DM posted to D03BHQH5VGT, self-verified landed (ts 1795424933.745649). Receipt written (fleet/receipts/bald-rock-15-day-contract.jsonl).

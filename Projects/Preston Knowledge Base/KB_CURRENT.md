@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-11-21 22:11 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-11-23 22:12 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -757,6 +757,12 @@ PRESTON SAID: "Silver bullion qty 2 - $30 - These should be taken in under Morga
 SOURCE: #loans-and-buys (C03GBDKSLRE) | 2023-10-24 | https://valleypawnworkspace.slack.com/archives/C03GBDKSLRE/p1698154200224509
 id: coins-writeup-standards-04d5de10
 
+### [HIGH] flipping-gold-to-bullion-shops-policy
+RULE: Flipping items to bullion shops is not Valley Pawn policy. It has been done with approval, as a case-by-case decision made only by the market manager and owner.
+PRESTON SAID: "bullion shops pay more than us and there has been times with approval we have flipped items to them. It is not our policy to do so and is case by case decision by the market manager and owner only."
+SOURCE: #preston-goldilocks (Preston Peters, Operations Manager) | 2026-11-23 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1795463474632929?thread_ts=1795463474.632929&cid=C0BGXSTT4TY
+id: flipping-gold-to-bullion-sho-02b48352
+
 ### [HIGH] numismatics-eagles-vs-generic-bullion
 RULE: Eagles carry a premium over generic bullion; when liquidating, find out the price difference the buyer pays, keep the eagles and sell the generic bullion.
 PRESTON SAID: "Do we have eagles or just bullion? Find out the difference they are paying. Would rather keep the eagles and sell the bullion."
@@ -871,6 +877,12 @@ PRESTON SAID: "Prioritize the customers!!
 You can always get the customer started on gun paperwork while we attend to other customers and then catch up with them to finish out the paperwork."
 SOURCE: #general | 2026-02-07 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1770477414488329
 id: customer-priority-order-43c598a0
+
+### [HIGH] deal-presentation-buy-vs-loan
+RULE: Always present the buy price as more money than the loan price, so the customer has to make a decision.
+PRESTON SAID: "Buy should be presented as more money than loan to force a decision from the customer."
+SOURCE: #preston-goldilocks (Preston Peters, Operations Manager) | 2026-11-23 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1795463474632929?thread_ts=1795463474.632929&cid=C0BGXSTT4TY
+id: deal-presentation-buy-vs-loa-e0c2792c
 
 ### [HIGH] default-rate-drives-loan-vs-buy
 RULE: A customer with a 60% default rate on a super-low-dollar item should have been a buy, not a loan.
@@ -1287,9 +1299,9 @@ SOURCE: #loans-and-buys | 2023-12-16 | https://valleypawnworkspace.slack.com/arc
 id: c-grade-goods-ten-dollar-off-8065cb7e
 
 ### [HIGH] call-out-procedure
-RULE: Anyone calling out must phone Preston at 540-202-4200 at least 2 hours before their shift starts. If something prevents that, they must call as soon as they are able.
+RULE: Employees calling out must phone Preston directly at least 2 hours before their shift. If something prevents that, they must call as soon as they are able.
 PRESTON SAID: "Everyone, if you are calling out, you need to physically call me at <tel:540-202-4200|540-202-4200> and tell me you will be out at least 2 hours before you are expected to be at work. If there is a situation that prevents that then you need to call me as soon as you are able to."
-SOURCE: #general (Preston Peters, Operations Manager) | 2026-10-12 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1791814597546529
+SOURCE: #preston-goldilocks (Preston Peters, Operations Manager) | 2026-11-23 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1795463474632929?thread_ts=1795463474.632929&cid=C0BGXSTT4TY
 id: call-out-procedure-289787c3
 
 ### [HIGH] cant-test-dont-take
@@ -1682,6 +1694,12 @@ PRESTON SAID: "Good morning!!! I sent out another policy that needs a signature 
 SOURCE: #policy-announcements (C03BHQ9RLR0) | 2026-02-26 | https://valleypawnworkspace.slack.com/archives/C03BHQ9RLR0/p1772117100970139
 id: metals-policy-signoff-f777a443
 
+### [HIGH] must-test-or-dont-take
+RULE: If an item can't be tested, we don't take it. If you want the item, find a way to test it.
+PRESTON SAID: "Our policy is if we can't test it then we don't take it. If you want to take it then find a way to test it."
+SOURCE: #preston-goldilocks (Preston Peters, Operations Manager) | 2026-11-23 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1795463474632929?thread_ts=1795463474.632929&cid=C0BGXSTT4TY
+id: must-test-or-dont-take-c597c787
+
 ### [HIGH] muzzleloader-condition-checks
 RULE: We don't typically take muzzleloaders at all; if one is taken, the bore must be perfectly clean with no corrosion and the gun must be confirmed unloaded.
 PRESTON SAID: "Knight muzzleloader - $70 - Don't typically take muzzloaders. Is the bore on this perfectly clean with no corrosion? Did we make sure it is not still loaded?"
@@ -1832,6 +1850,18 @@ RULE: 30-day warranty on sales. Refunds: first 7 days cash back; after 7 days st
 PRESTON SAID: "2. Refund policy is 30 days warranty - first 7 days cash back, after 7 days is store credit."
 SOURCE: DM Joshua<->Preston | 2026-07-14 | https://valleypawnworkspace.slack.com/archives/D03C7RBGY56/p1784039155417799
 id: refund-and-warranty-policy-2e0df63d
+
+### [HIGH] returns-broken-location
+RULE: Returned items that can't be sold go in the Bravo location "Broken", priced at cost. Keep them in a designated back area until inventory, then write them off and dispose of them.
+PRESTON SAID: "I have created a new location "Broken" for return items that cannot be sold. Please price these items at cost and designate an area for them in the back until we do inventory to write them off and dispose of them."
+SOURCE: #preston-goldilocks (Preston Peters, Operations Manager) | 2026-11-23 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1795463474632929?thread_ts=1795463474.632929&cid=C0BGXSTT4TY
+id: returns-broken-location-9a53d647
+
+### [HIGH] returns-unsellable-parts-first
+RULE: Before writing off a returned item that can't be sold, check whether it can be sold for parts at a profit. If it can, do that first.
+PRESTON SAID: "yes, if it can be sold for parts for a profit then we need to do that first"
+SOURCE: #preston-goldilocks (Preston Peters, Operations Manager) | 2026-11-23 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1795463474632929?thread_ts=1795463474.632929&cid=C0BGXSTT4TY
+id: returns-unsellable-parts-fir-de8a30c0
 
 ### [HIGH] routers
 RULE: The only router we should take is a high-end gaming router; standard routers don't sell in store and don't bring enough to sell online.
@@ -1996,6 +2026,12 @@ RULE: When buying, spend carefully: negotiate, round the offer down, and factor 
 PRESTON SAID: "Make sure we are spending wisely! Negotiate, round down, consider condition and turn over time."
 SOURCE: #general (Preston Peters, Operations Manager) | 2026-11-12 | https://valleypawnworkspace.slack.com/archives/C03BETSS669/p1794495590312279
 id: buying-spend-discipline-e67eed62
+
+### [MEDIUM] c-condition-items-no-full-value
+RULE: Don't pay full value on a C-condition item. Make a $10 offer and explain what we can pay more for.
+PRESTON SAID: "Still can't pay full value on a C good item. Make a $10 offer and explain what we can pay more for."
+SOURCE: #preston-goldilocks (Preston Peters, Operations Manager) | 2026-11-23 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1795463474632929?thread_ts=1795463474.632929&cid=C0BGXSTT4TY
+id: c-condition-items-no-full-va-cbdc1164
 
 ### [MEDIUM] call-out-notice-two-hours
 RULE: An employee calling out must physically call the manager/Preston at least two hours before their shift starts. The policy is written in the handbook.
@@ -2767,6 +2803,12 @@ PRESTON SAID: "you can return part of it in cash. or credit and then put the oth
 SOURCE: zoom-call:977dbd23cc464aaebf05222ffcc6818f | 2026-10-07 | UNK Sandi Cole
 id: partial-refund-on-return-res-b6a103d4
 
+### [LOW] platinum-magnetic-testing
+RULE: A magnetic reaction does not by itself rule out platinum. Some older platinum pieces were made with alloys that have some magnetism, so keep testing (weights, diamond test) before rejecting the item.
+PRESTON SAID: "They did use different alloys with that, that had some magneticness to it."
+SOURCE: zoom-call:14ce6f713ca34de5a151d23522260136 | 2026-11-23 | UNK Sandi Cole
+id: platinum-magnetic-testing-ac6421c2
+
 ### [LOW] pokemon-card-authentication-back-print
 RULE: To check whether an older Pokémon card is real, get a magnified photo of the "P" on the back. Older genuine cards show a "flowering" effect there. The speaker could not describe it precisely without showing it, and the speaker's role is unknown.
 PRESTON SAID: "There's like, they look like the older cards have like a flowering effect that I don't know how to explain it without showing it."
@@ -2881,6 +2923,12 @@ PRESTON SAID: "Yeah, so you can purchase a gift card."
 SOURCE: zoom-call:4b841e5c4f9141f7b93be8222884ee41 | 2026-10-31 | UNK Walker Tapley
 id: store-credit-overage-gift-ca-114611fa
 
+### [LOW] store-network-rename-phones-cameras
+RULE: If phones and cameras stop working after the store Wi-Fi router is renamed, rename the router back to exactly the old network name (the Comcast Business Wi-Fi name).
+PRESTON SAID: "basically, we just need to rename that Wi-Fi router to the old one, the same as the old one."
+SOURCE: zoom-call:14ce6f713ca34de5a151d23522260136 | 2026-11-23 | UNK Sandi Cole
+id: store-network-rename-phones--b2eea508
+
 ### [LOW] tag-printer-failure-fallback
 RULE: If a store's main tag printer can't be fixed, swap the jewelry printer over to serve as the main printer, then order a replacement jewelry printer.
 PRESTON SAID: "Worst case scenario, I'll switch your jewelry printer over to the main one so that way you have a working one and then I'll get you a new jewelry printer."
@@ -2957,5 +3005,5 @@ id: past-due-75-day-5-percent-ce-30eeab0b
 
 
 ==============================================================================
-COVERAGE: 416 entries - 31 verified by Preston, 157 high-confidence rules, 122 medium, 104 low, 2 superseded.
+COVERAGE: 424 entries - 31 verified by Preston, 162 high-confidence rules, 123 medium, 106 low, 2 superseded.
 ==============================================================================

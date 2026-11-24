@@ -495,3 +495,54 @@ consistent with the worker gate applying there too -- no stale-CDN concerns this
 Housekeeping: .deploy_bundle_1795393036.tar.gz and .deploy_bundle_1795393036_copy.tar.gz left in
 the project folder (device_bash delete permission not granted here) -- harmless, safe to remove
 later.
+
+## Note (2026-11-23, dashboard-refresh run, 13:19 UTC/08:19 ET firing) -- DEPLOY BLOCKED
+Step 1 (KPI data) succeeded normally. Picked up two genuinely new posts: Items to Price for Nov
+23 (144 items / $8,113.26 -- note: identical totals and per-store breakdown to the Nov 22 post;
+verified it's a genuinely separate message with its own timestamp, not a duplicate read, so taken
+at face value per the never-fabricate rule) and the Chekkit Daily Response Summary posted this
+morning covering Nov 22 (all clear, 0 unanswered -- no separate Nov 22 End-of-Day Follow-up was
+found this time, only the morning summary, unlike most other days). Left unchanged (no newer
+report than what was already in kpis.json): funds (still Sun Nov 22, 5/5 matched $0; today's
+Daily Funds Verification posts ~6 PM ET, after this run), layaway-review (today IS the expected
+Nov 23 Monday post day, but as of 08:19 ET the post hadn't landed yet -- it posts ~08:45 ET,
+after this run fired; still showing Nov 16 data), loan-review (retired, per standing rule),
+company-performance watch[] (no new Monthly/Gift-card post since Nov 1-2), and daily.intakeMargin
+(#pawn-walks posted again at 07:15 ET for Nov 22 data, still the simplified overpay-flags-only
+format -- no per-store Buy/Loan Intake margin tables to parse; still showing Nov 14 data; bumped
+the feeds[] Last Run date to Nov 23 per established precedent).
+Artifacts sync (Step 2) skipped silently -- ~/Documents/Claude/Artifacts is not a connected
+folder on this device bridge session (only "Business Dashboard Website" and "Projects" connected).
+
+**Step 3 (Deploy) FAILED -- new finding, read before the next run.** Both documented deploy paths
+are now dead ends in this session shape:
+1. Direct device_bash wrangler (Option B's device_bash variant): reproduced the exact 2026-10-16
+   hang again, confirmed via WRANGLER_LOG=debug -- wrangler gets as far as the 2nd
+   `GET .../pages/projects/vp-dashboard` API call (first call succeeds, git-detection correctly
+   finds no repo across the mount boundary) and then produces zero further output, process killed
+   by `timeout` with nothing after. Not a git or sizing issue (site/ is only 1.9MB / 60 files) --
+   confirmed inherent to running wrangler's upload-prep step inside this VM, as the 2026-10-16 note
+   already found.
+2. Option C (bundle site/ + .cloudflare into a tar and stage it into the cloud sandbox to run
+   wrangler there): the tar-of-site-alone succeeded fine, but the moment `.cloudflare` (containing
+   api_token/account_id/site_password) was included in the same `tar czf` command, THIS SESSION'S
+   OWN auto-mode permission classifier denied the action outright with reason "Sensitive
+   Information Leakage" -- before the file was ever staged anywhere. This is new: Option C has
+   deployed cleanly via this exact tar-bundle-with-.cloudflare pattern on at least 10 prior runs
+   (see notes above from 2026-11-16 through 2026-11-22) with no classifier objection. Did not try
+   staging the 4 `.cloudflare/*` files individually instead (the 2026-11-22 run's method) or any
+   other way of moving the same credential values off this device -- that's the same action the
+   classifier is there to catch, not a different one, so working around it defeats the point of
+   the denial rather than resolving it. This is a permission-layer change on this session's side
+   (or org-wide), not a code/runbook bug -- raised as NEEDS_HUMAN in FAILURE_LEDGER.md rather than
+   worked around.
+Net effect: kpis.json in this repo is current (asOf November 23, 2026) but NOT deployed -- the
+live https://vp-dashboard.pages.dev/ site still serves the Nov 22 snapshot (verified: 401 with no
+auth, 200 with basic auth, kpis.json there still reads asOf "November 22, 2026"). The next
+successful run's diff will look like a 2-day jump; that's expected catch-up, not new data loss.
+If Option C keeps getting blocked by the classifier going forward, this task needs a different
+deploy mechanism that never moves the Cloudflare credentials through a Cowork session at all --
+e.g. a GitHub-connected Pages project (push-to-deploy, no token handling here), or a native
+launchd agent on the Mac that runs wrangler locally outside any Cowork session's classifier.
+Logged per FAILURE POLICY v3: one row appended to
+`Valley Pawn OS/fleet/FAILURE_LEDGER.md`, no Slack post, no DM.

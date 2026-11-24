@@ -1,5 +1,25 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-23 (daily PREP run, 12:42–13:08 ET, level 1 all pages, Monday) — picks queued for the next POST-mode chat, nothing published by this run
+- Mode: PREP (per RUNBOOK). Never switched into a Valley Pawn store page; no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings.
+- At start Joshua's Chrome was acting as the "Rocket Pawn & Jewelry" page (Joshua's new page; another session left it there). Switched back to Joshua Davis via avatar menu per the 11/9 note; composer read "What's on your mind, Joshua?" before browsing and again at the end.
+- Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).
+- No POST-mode chat since 11/19 morning (ledger unchanged at 88 rows), so nothing to sync into WATCHLIST.
+- QUEUE cleaned: lapsed unposted — Roanoke Explore Park reel, Culpeper CCHS announcers, Harrisonburg MRL pantry, Brand SNP closings share (lapsed 11:50 today); Harrisonburg DNR Fort Defiance title comment dropped (lapses 13:13 today, no POST chat possible in time). Still pending: Roanoke follow → Roanoke Regional Chamber; Roanoke SPCA intake comment (to tonight ~21:30); Culpeper therapy-dog share (to TODAY 14:00); Waynesboro red-sky comment (to TODAY 17:24); Brand SNP PATC 1927 comment (to 11/24 09:30).
+- New picks (permalinks read from the hovered timestamp, times from hover):
+  - Culpeper comment → Culpeper County Library Costume Closet, over 1,600 costumes given away (to 11/24 14:00).
+  - Waynesboro comment → Wayne Theatre, A Christmas Story: The Musical (to 11/24 16:49) — next after the red-sky pick.
+  - Waynesboro share → Waynesboro.Com post of the Waynesboro Area Refuge Ministry Cold Weather Shelter, Week 1 Nov 23–30 at Fishersville United Methodist Church (to 11/25 09:45) — Waynesboro's share for the week of 11/23.
+  - Roanoke comment → Mill Mountain Zoo share of a school zoo-visit post (to 11/25 12:18) — next after the SPCA pick.
+  - Harrisonburg, Lexington: none (nothing fresh on the YES list). Brand: no new share this week yet.
+- Skipped on purpose: W&L favorite-places reel (11/12, old); RCHS Rocktown scrimmage thank-you (~2 days, comments usually limited); RRL digital library/Libby (too close to Lexington's 11/2 comment on that page); Lexington Farmers Market vendor features (promos, name vendors); DNR Fort Defiance follow-up stories (same topic as the dropped pick); HDR Back the Burg (money ask); MRL December programs (held in Page County); HFD art contest (4 days old); Roanoke County Parks TRS 50th (event past) and fitness classes (promo); Mill Mountain Zoo's Freedom First Credit Union share (financial); Blue Ridge Parkway sky-views post (11/15).
+- Next-week share ideas: CRI Holiday Open House & Tree Lighting Sun 11/29 (watch for a fresh reminder post — Culpeper's share if the therapy-dog share lapses); Wayne Theatre Dec 21 caroling + film; Explore Park Illuminights Sensory Night Wed Dec 2 (watch for a fresh post — Roanoke).
+- Ramp: all pages hold level 1. Share week (Mon 11/23–Sun 11/29): none used yet; queued Culpeper (lapses today) and Waynesboro.
+- Watchlist: 28 pages re-checked; none newly dormant; no unresolved entries. No town follow searches this run (Roanoke follow still pending).
+- Reply / follow-back candidates for POST mode: unchanged carry-overs (Mark Lyon on Valley Pawn-Culpeper; ~10 commenters on a Valley Pawn-Lexington post; "Synster Gates Fan" mention on Valley Pawn; Kelsey L Iane and 3 others followed Valley Pawn-Lexington — follow back only if offered).
+- Needs a person: none new.
+- Totals this run: comments 0 (4 new queued), shares 0 (1 new queued), replies 0, follows 0 (1 pending), new pages resolved 0.
+
 ## 2026-11-22 (daily PREP run, 12:42–12:55 ET, level 1 all pages, Sunday) — picks queued for the next POST-mode chat, nothing published by this run
 - Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only (composer read "What's on your mind, Joshua?" at start and end); never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings.
 - Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).

@@ -25,3 +25,10 @@ site id 258887816, in **Coming Soon** mode until opening.
 
 Calculator prices: the same 7 AM feed the Virginia stores use
 (thevalleypawn.com/wp-json/wp/v2/pages?slug=spot-prices-feed), read live by the page.
+
+## 2026-11-23 — live site is now the source of truth
+The site is public. Small edits go straight onto rocketpawnjewelry.com (WordPress, site 258887816). Edits that exist ONLY on the live site and would be lost by a re-import from prelaunch.py:
+- Homepage "Be first through the door" email sign-up form (posts to Brevo form "Rocket Pawn — Be first through the door", list #34).
+- Homepage "Get directions" button color (primary red instead of grey).
+- JSON-LD blocks on 9 pages (source: post_import/jsonld_blocks.json).
+Do not re-import the whole site; edit pages in place.

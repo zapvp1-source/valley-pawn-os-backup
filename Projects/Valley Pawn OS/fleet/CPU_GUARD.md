@@ -1,48 +1,47 @@
-# CPU Guard — 2026-11-23 00:14 EST
+# CPU Guard — 2026-11-24 00:11 EST
 
 Native agent com.valleypawn.cpu-guard (bin/cpu_guard.sh), every 5 min. See header of the script.
 
 ## Load
-0:14  up  9:32, 1 user, load averages: 15.63 12.45 11.24
+0:11  up 1 day,  9:29, 1 user, load averages: 5.84 7.16 7.54
 
 ## Process states (R=running, U=waiting on disk)
 ```
-  21 R  829 S    1 U 
-1 sort
+  12 R  640 S    3 U 
 1 ps
 1 head
-1 awk
-1 /usr/sbin/cfprefsd
-1 /usr/libexec/sysmond
-1 /usr/libexec/nsurlsessiond
-1 /usr/libexec/duetexpertd
+1 /usr/libexec/trustd
+1 /usr/libexec/diskimagesiod
+1 /sbin/launchd
+1 /System/Library/PrivateFrameworks/CloudKitDaemon.framework/Support/cloudd
+1 /System/Library/CoreServices/TimeMachine/backupd
+1 /System/Applications/Mail.app/Contents/MacOS/Mail
 ```
 
 ## Top CPU right now
 ```
  %CPU NI   PID COMM
- 63.3  0  1778 /System/Library/Frameworks/Contacts.framework/Support/contactsd
- 50.6  0 22966 /System/Library/Frameworks/CoreSpotlight.framework/spotlightknowledged
- 47.2  0 54277 /System/Library/Frameworks/AddressBook.framework/Versions/A/Helpers/AddressBookManager.app/Contents/MacOS/AddressBookManager
- 26.2  0   425 /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer
- 23.2  0  1239 /Applications/Parallels Desktop.app/Contents/MacOS//Parallels VM.app/Contents/MacOS/prl_vm_app
- 21.8  0   780 /System/Library/ExtensionKit/Extensions/WallpaperAerialsExtension.appex/Contents/MacOS/WallpaperAerialsExtension
- 20.9  0   433 /usr/libexec/runningboardd
- 12.2  0  1120 /usr/libexec/sysmond
- 10.6  0   739 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/corespotlightd
-  8.5  0  3383 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python
-  6.3  0   802 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTDecoderXPCService.xpc/Contents/MacOS/VTDecoderXPCService
+ 31.0  0   425 /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer
+ 29.6  0 20960 /Applications/Google Drive.app/Contents/MacOS/Google Drive
+ 29.4  0  1239 /Applications/Parallels Desktop.app/Contents/MacOS//Parallels VM.app/Contents/MacOS/prl_vm_app
+ 20.5  0   805 /System/Library/PrivateFrameworks/MediaAnalysis.framework/Versions/A/mediaanalysisd
+ 16.0  0   780 /System/Library/ExtensionKit/Extensions/WallpaperAerialsExtension.appex/Contents/MacOS/WallpaperAerialsExtension
+ 10.6  0 53258 /System/Applications/Mail.app/Contents/MacOS/Mail
+  6.8  0   694 /System/Library/CoreServices/ControlCenter.app/Contents/MacOS/ControlCenter
+  6.3  0  1120 /usr/libexec/sysmond
+  6.2  0   679 /System/Library/PrivateFrameworks/CloudKitDaemon.framework/Support/cloudd
+  4.6  0 39674 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTDecoderXPCService.xpc/Contents/MacOS/VTDecoderXPCService
+  3.4  0 89960 /bin/bash
 ```
 
 ## Memory
 ```
-total = 0.00M  used = 0.00M  free = 0.00M  (encrypted)
-System-wide memory free percentage: 65%
+total = 2048.00M  used = 1152.25M  free = 895.75M  (encrypted)
+System-wide memory free percentage: 49%
 ```
 
 ## Camera agents (nice should be 10)
 ```
-54347  0   0.0 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python /Users
 ```
 
 ## Hot processes (pid, consecutive 5-min samples >150%, %cpu, name)
@@ -71,8 +70,8 @@ drwxr-xr-x@ 9 joshuadavis  staff  288 Nov  7 13:25 tracks
 
 /Users/joshuadavis/.vp-studio/offsync/unified-search:
 total 15987656
-drwxr-xr-x@ 5 joshuadavis  staff         160 Nov 22 05:12 .
+drwxr-xr-x@ 5 joshuadavis  staff         160 Nov 23 05:19 .
 drwxr-xr-x@ 4 joshuadavis  staff         128 Nov  7 13:23 ..
--rw-r--r--@ 1 joshuadavis  staff  8185647104 Nov 22 23:47 index.db
--rw-r--r--@ 1 joshuadavis  staff       32768 Nov 22 23:47 index.db-shm
+-rw-r--r--@ 1 joshuadavis  staff  8185647104 Nov 23 23:55 index.db
+-rw-r--r--@ 1 joshuadavis  staff       32768 Nov 23 23:55 index.db-shm
 ```

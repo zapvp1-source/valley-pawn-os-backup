@@ -13,6 +13,97 @@ consecutive runs → lower its rotation (never delete); >30% above → give it p
 
 ---
 
+## 2026-11-23 (run 5 — week 4, 11/16–11/22; campaign to date 10/26–11/22)
+
+**The Tuesday proven slot works.** First week with the fix: the debate post went out on all 4 rolled-out stores Tue 11/17
+13:30 (Lexington ran its own debate Fri 11/20). Debate now has 6 posts pooled — first real signal, and it is strong.
+
+**Biggest single post of the campaign:** Lexington, Tue 11/17 13:32, the shop at Main & Washington — **3,322 reach,
+10 comments** (2x the page's followers). The 10 comments show no page reply yet; the outbound PREP log lists them as reply
+candidates waiting for a POST-mode chat.
+
+### Per store — week 4 (Publer post insights, store FB pages, posts 11/16–11/22; Sun 11/22 still accruing; % uses 11/16 followers)
+| Store | Posts | Median reach | % followers | Community posts | Community median | Community % | Baseline % | Eng. | Comments | Shares |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Culpeper | 8 | 50.5 | 5.7% | 5 | 69 | 7.8% | 17% | 19 | 1 | 1 |
+| Waynesboro | 8 | 70 | 5.6% | 5 | 73 | 5.9% | 12% | 5 | 0 | 0 |
+| Harrisonburg | 7 | 53 | 7.0% | 6 | 44.5 | 5.9% | 11% | 7 | 0 | 0 |
+| Lexington | 6 | 196.5 | 12.1% | 5 | 212 | 13.1% | 28% | 26 | 11 | 0 |
+| Roanoke | 8 | 5 | 12.5% | 5 | 5 | 12.5% | ~30% | 0 | 0 | 0 |
+
+### Per store — campaign to date (10/26–11/22)
+| Store | Posts | Median reach | % followers | Community posts | Community median | Community % | Baseline % |
+|---|---|---|---|---|---|---|---|
+| Culpeper | 25 | 69 | 7.8% | 17 | 90 | 10.2% | 17% |
+| Waynesboro | 27 | 95 | 7.7% | 17 | 110 | 8.9% | 12% |
+| Harrisonburg | 25 | 50 | 6.6% | 18 | 52 | 6.8% | 11% |
+| Lexington | 22 | 213 | 13.1% | 16 | 270 | 16.7% | 28% |
+| Roanoke | 28 | 7 | 17.5% | 18 | 5 | 12.5% | ~30% |
+All five still below the 90-day mark. Note: the baseline is a 90-day median that includes Lexington's and others' best stretch;
+the to-date medians have been flat-to-slightly-down each week (Waynesboro 10.4% → 8.9% this run).
+
+### Per format (pooled across stores)
+| Format | Week 4 posts / median | To date posts / median | Note |
+|---|---|---|---|
+| Debate (Tue 13:30) | 5 / 75 | 6 / 92 | vs store's other community this week: CUL 109 vs 61.5 (+77%), HAR 62 vs 36 (+72%), LEX 298 vs 196.5 (+52%), WAY 75 vs 70 (+7%), ROA 4 vs 5 (−20%) |
+| History | 0 | 0 | first one Tue 11/24 |
+| HS game week (Fri 13:05) | 4 / 60 | 16 / 63 | to date vs other community: CUL 77 vs 103 (−25%), WAY 161 vs 110 (+46%, priority already), HAR 51.5 vs 53 (−3%), ROA 6 vs 5 |
+| Other community | 17 / 57 | 64 / 79 | |
+| Hiring | 3 / 68 | 7 / 89 | WAY 188, HAR 68, ROA 10 |
+| Deal video | 4 / 16 | 18 / 25.5 | still under the ~43 deal-photo baseline |
+| Other (holiday promo, library events, misc) | 4 / 26.5 | 16 / 27 | |
+| Staff video | 0 | 0 | |
+
+**Repetition seen in the drift engine (not the topic bank):** Roanoke posted the Mill Mountain Star's 77th birthday three times
+(11/18, 11/19, 11/22); Waynesboro the Wayne Theatre's 1926 opening twice (11/18, 11/19); Culpeper the 1904 Depot twice
+(11/19, 11/22). The drift/community writer is hardened infra outside this task's scope — noted for its owner. Handled the
+part in scope: the bank's Star history topic (set for Tue 11/24) would have been a 4th, so it was deferred (below).
+
+### Followers (Facebook page headers, 11/23)
+| Store | 10/24 launch | 11/16 | 11/23 | Week | Since launch |
+|---|---|---|---|---|---|
+| Culpeper | 881 | 885 | 884 | −1 | +3 |
+| Waynesboro | 1.2K | 1.2K | 1.2K | — | — (rounded on page) |
+| Harrisonburg | 760 | 760 | 761 | +1 | +1 |
+| Lexington | 1.6K | 1.6K | 1.6K | — | — (rounded on page) |
+| Roanoke | 38 | 40 | 41 | +1 | +3 |
+
+### Outbound engagement (engagement_outbound/ledger.jsonl + DAILY_LOG.md, 11/16–11/22)
+One POST-mode chat (11/19 morning): Culpeper 1 share + 3 follows; Waynesboro 1 share + 2 replies (both open comments on the
+11/13 playoff post answered) + 3 follows; Harrisonburg 1 comment + 5 follows; Lexington 1 comment + 5 follows; Roanoke 1 share
++ 5 follows. Nothing posted 11/20–11/22 (PREP picks lapsed). Ramp holds level 1. Follower change stays ±1 per page — no link
+visible yet.
+
+### Tuning
+- **Debate:** ≥6 posts pooled for the first time; beat other community posts by >30% at Culpeper, Harrisonburg, Lexington.
+  Run 1 of 2 — no rotation change until it repeats next run (same 2-run standard used for the 11/16 Waynesboro game priority).
+- **HS game week:** no store >30% below for 2 runs (Culpeper −19% → −25% to date, under the line). Waynesboro priority stays.
+- No rotation lowered.
+
+### Topic bank (self-heal)
+- **Roanoke Star deferred**, not deleted: `roa-his-star-1949` prefer_week → 2027-11-22 (78th anniversary next year; fact-check
+  must restate the number). `roa-his-hotel-roanoke` takes Roanoke's Tue 11/24 history slot.
+- That left Roanoke's 12/8 proven slot resting → **added `roa-his-611-east-end-shops`** (N&W Class J 611 built at Roanoke's East
+  End Shops, May 1950; retired 1959; on display 1962; early-1980s restoration; off excursions 1994; back in service 2015; only
+  surviving Class J; state steam locomotive; home VMT, 303 Norfolk Ave SW). Verified today on vmt.org/attractions/611 +
+  Virginia DHR PIF 128-6479 + ASME landmark #94. Sources differ on 1981 vs 1982 → topic says "early 1980s"; no top speed stated.
+- Future dated games: CUL 4, WAY 6, HAR 5, ROA 5 (all ≥2). Harrisonburg has no game 12/4 or 12/11 (not required; its game
+  format is neutral at −3%). 11/27 Thanksgiving Friday left empty on purpose.
+- **Test build** (copy of package + plans + ledger in VM scratch, real planner, seed 1, 11/16 deals file, weeks 11/23 → 12/21):
+  **0 collisions** every week, community times 13:05–15:00, no store resting any week after the 611 add (before it: Roanoke
+  rested 12/7). Roanoke: 11/24 Hotel Roanoke, 12/1 Triple Crown debate + 12/4 game, 12/8 the 611, 12/15 Big Lick + 12/18 game,
+  12/22 city-names debate. Copy deleted. Today's real 14:30 build reads the updated bank.
+
+### Changes made
+- `community_topics.json` (Star deferred, Hotel Roanoke prefer_week 11/23, +1 Roanoke history topic, change note; updated
+  2026-11-23), `state/store_followers.json` (as_of 11/23: CUL 884, HAR 761, ROA 41), `follower_growth_by_store.csv` (+11/23 row).
+- Backups: `Valley Pawn OS/fleet/_backups/{community_topics.json,store_followers.json,follower_growth_by_store.csv,
+  CAMPAIGN_SCORECARD.md,CHANGELOG.md}.bak-pre-scorecard-20261123`.
+- Measurement output: `state/scorecard/measure_2026-11-23_{week4,campaign}.json`.
+- Report to Joshua: due today — one plain Slack DM (D03BHQH5VGT).
+
+---
+
 ## 2026-11-16 (run 4 — week 3, 11/9–11/15; campaign to date 10/26–11/15)
 
 **Monday proven-slot fix is in.** Joshua OK'd it; another session moved the slot to **Tuesday 13:30** this morning

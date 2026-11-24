@@ -379,3 +379,8 @@ Unverifiable: none left in posts. PUBLISHED-WRONG: none.
   - Rockfish Gap elevation 1,903 ft; VDOT Afton Mountain fog warning system (fog detection, message signs, pavement lighting) listed as Existing. Sources: https://en.wikipedia.org/wiki/Rockfish_Gap, https://local.iteris.com/virginiaitsarchitecture/architectures/northwestern/html/elements/el69.html
 - Edited: none — all time-sensitive claims true and specific.
 - Unverifiable: none. Note: Wikipedia puts the Skyline Drive/BRP junction just north of the gap itself (evergreen geography, wording left as is).
+
+## 2026-11-23 (Mon) 07:40 ET — daily fact-check, window to 2026-11-24 ~19:40 ET
+- Posts checked: 2 (BrandYouTube 11/23 12:10 PM pool-robot Short, Roanoke; BrandYouTube 11/24 12:10 PM Martin 000 guitar Short, Harrisonburg).
+- Both are product posts with no dated or time-sensitive claims (no events, games, hours or "this week" language). Store addresses are standing facts. Skipped per rules.
+- Claims verified: 0 needed. Edited: 0. Unverifiable: none. PUBLISHED-WRONG: none.

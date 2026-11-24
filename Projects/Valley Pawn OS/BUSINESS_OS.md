@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-11-22
+# LIVE STATE - auto-refreshed 2026-11-23
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -255,46 +255,46 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-11-22 | Valley Pawn OS | - |
-| 2026-11-22 | Unified Search | - |
-| 2026-11-22 | Quickbooks Set UP | - |
-| 2026-11-22 | Loan Reminder Texts | STATUS.md |
-| 2026-11-22 | Life OS | - |
+| 2026-11-23 | Zoom Call Pipeline | - |
+| 2026-11-23 | Valley Pawn OS | - |
+| 2026-11-23 | Unified Search | - |
+| 2026-11-23 | Quickbooks Set UP | - |
+| 2026-11-23 | Loan Reminder Texts | STATUS.md |
+| 2026-11-23 | Life OS | - |
+| 2026-11-23 | Call Analysis | - |
+| 2026-11-23 | Business Dashboard Website | - |
+| 2026-11-23 | Bravo Data Extraction | STATUS.md |
+| 2026-11-22 | eBay Customer Campaign | - |
+| 2026-11-22 | eBay | - |
+| 2026-11-22 | Website | - |
+| 2026-11-22 | Valuation Core | README.md |
+| 2026-11-22 | Training Program | STATUS.md |
+| 2026-11-22 | Store Conduct Watch | STATUS.md |
+| 2026-11-22 | Sold Margin Review | STATUS.md |
+| 2026-11-22 | Seasonal Campaigns | STATUS.md |
+| 2026-11-22 | Refine Social Media | - |
+| 2026-11-22 | Precious Metals Settlements | - |
+| 2026-11-22 | Pawn Walks | STATUS.md |
+| 2026-11-22 | New Store - St Augustine | STATUS.md |
+| 2026-11-22 | Knowledge Harvest | - |
+| 2026-11-22 | Human Resources | - |
+| 2026-11-22 | Health Optimization | STATUS.md |
+| 2026-11-22 | Email Refinement | - |
+| 2026-11-22 | Discount Outlier Review | STATUS.md |
+| 2026-11-22 | Daily Funds Verification | - |
 | 2026-11-22 | Compliance | - |
-| 2026-11-22 | Business Dashboard Website | - |
-| 2026-11-22 | Bravo Data Extraction | STATUS.md |
-| 2026-11-21 | eBay | - |
-| 2026-11-21 | Zoom Call Pipeline | - |
-| 2026-11-21 | Website | - |
-| 2026-11-21 | Valuation Core | README.md |
-| 2026-11-21 | Training Program | STATUS.md |
-| 2026-11-21 | Store Conduct Watch | STATUS.md |
-| 2026-11-21 | Sold Margin Review | STATUS.md |
+| 2026-11-22 | Communcations | - |
+| 2026-11-22 | Ask Valley Pawn | STATUS.md |
+| 2026-11-22 | Ai Optimized Marketing | - |
 | 2026-11-21 | Short Term Rental Optimization | - |
-| 2026-11-21 | Seasonal Campaigns | STATUS.md |
-| 2026-11-21 | Refine Social Media | - |
 | 2026-11-21 | Preston Knowledge Base | - |
-| 2026-11-21 | Precious Metals Settlements | - |
-| 2026-11-21 | Pawn Walks | STATUS.md |
-| 2026-11-21 | New Store - St Augustine | STATUS.md |
 | 2026-11-21 | Listing Management | STATUS.md |
 | 2026-11-21 | Jewelry Count Reconciliation | STATUS.md |
-| 2026-11-21 | Human Resources | - |
-| 2026-11-21 | Health Optimization | STATUS.md |
-| 2026-11-21 | Email Refinement | - |
-| 2026-11-21 | Discount Outlier Review | STATUS.md |
-| 2026-11-21 | Daily Funds Verification | - |
 | 2026-11-21 | Business Continuity | - |
 | 2026-11-20 | MobilePawn Participation | README.md |
-| 2026-11-19 | eBay Customer Campaign | - |
 | 2026-11-19 | _scratch | - |
-| 2026-11-19 | Communcations | - |
 | 2026-11-19 | Bonus Program | - |
-| 2026-11-19 | Ask Valley Pawn | STATUS.md |
-| 2026-11-18 | Ai Optimized Marketing | - |
 | 2026-11-16 | Preston Time Review | STATUS.md |
-| 2026-11-16 | Gold and Silver Markeitng | - |
-| 2026-11-16 | Call Analysis | - |
 
 <!-- LIVE-STATE:END -->
 

@@ -1,5 +1,13 @@
 # Listings Fix Loop — FIX_LOG (newest first)
 
+## 2026-11-23 — daily run (scheduled, unattended, Joshua's Chrome) — 8 actions
+- **Ingest:** new presence scorecard 11/22 + FFL_DRIFT 11/22. FFL_DRIFT unchanged (GunNook WAY/HAR/LEX, GunMade HAR, FFLeasy HAR — all already queued). New rows: LQ-045 (FFLs.com HAR "regression") and LQ-046 (Waynesboro FB snippet with an NC phone). Left out as non-listing items: YouTube channel question, Roanoke FFL renewal date, FB brand-page email choice, $100,000 task-prompt maintenance (already LQ-029).
+- **FIXED (proved live):** LQ-008 YellowPages Harrisonburg 452862505 now "Valley Pawn" (claimed), Ste 22, right phone, Wed closed, no "Dixie" text. Thryv applied the 11/19 request. LQ-045 FFLs.com HAR closed as a false positive: the "Dixie Pawn Inc" page is an expired 2019 ATF license; the active record reads VALLEY PAWN, Unit 22. Proof: evidence/2026-11-23_live_checks.txt.
+- **SUBMITTED / FOLLOW-UP:** Thryv (Evi Santos) asked this morning for the exact Lexington listing link → replied in-thread with yellowpages.com/lexington-va/mip/valley-pawn-549753098 (LQ-028), thanked them for Harrisonburg, and restated Roanoke (LQ-009): still "Gold-N-Pawn" and its hours now show Wednesday closed (wrong). check-replies run first (thread read to the newest message; no reply from Joshua after Thryv's).
+- **NEW / OPEN:** LQ-046 Google's snippet for our Waynesboro FB page shows "Feel free to call (336) 679-4998" (Yadkinville Pawn and Jewelry, NC). Not in the page intro or recent timeline; next run looks through older page posts. Google AI Overview for "pawn shop waynesboro va" names Valley Pawn with correct address/hours/phone.
+- **Sign-in probe:** Apple Business ❌, Bing Places ❌, BrightLocal connector ❌ (refused). Facebook ✅ (note: the page's contact-info tab redirects to Joshua's personal profile; left untouched).
+- No Thursday AI check (Monday), no Saturday post.
+
 ## 2026-11-21 — daily run (scheduled, unattended, Joshua's Chrome) — 8 actions
 - **Ingest:** no new presence scorecard (latest 11/15) or FFL_DRIFT (11/15). New context: another session claimed all 5 Nextdoor pages today (CHANGELOG 11/21 ~4:15 PM).
 - **VERIFIED LIVE:** Nextdoor Roanoke (gold-n-pawn-roanoke-va-1) and Harrisonburg (dixie-pawn-inc-harrisonburg-va) now named Valley Pawn with correct address/phone (LQ-024 part). Buya Waynesboro now Mon–Fri 10–6, Sat 10–5, Sun closed (LQ-042 part). Proof: evidence/2026-11-21_live_checks.txt.

@@ -57,3 +57,6 @@
 - CLOSO registry pages have no edit link; email support@closo.co.
 - Wheree (*.wheree.com) sits behind Cloudflare; use a support email.
 - Buya store profile (buya.com/StoreProfile/About/VALLEY-PAWN-WAYNESBORO/1557) is correct as of 11/21.
+
+## FFLs.com (added 2026-11-23)
+- FFLs.com keeps a page for every ATF license ever issued, including expired ones (marked "This FFL is Expired"). Harrisonburg's old "DIXIE PAWN INC" pages (/ffl/154660029m39381, /ffl/154660022m39381, expired 2019) are historical — never treat them as a defect. Check the active record on /directory/va/<city> (HAR = VALLEY PAWN, 1-54-165-02-7M-26284). "Claim this FFL" needs a new account.

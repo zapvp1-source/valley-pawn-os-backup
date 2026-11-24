@@ -294,3 +294,4 @@ Proposed wording (waiting on Joshua's OK, then: edit the 3 gold campaigns + remo
 - Decisions for Joshua: wording OK; scope = customers seen in the last ~2 years (Bravo: everyone ever).
 - To build once approved: move occasions into the sender's plan, add the birthday list pull to a monthly slot, switch Bravo Birthday + Store Anniversary events to app-only per store at go-live.
 - 11/22 11:59 PM re-check (old trigger): second nightly run clean at all 5 stores, done 11:24 PM. Culpeper already live; plan for Mon 11/23: CUL 3 texts (past due), others planned but not live (HAR 4, LEX 2, ROA 13, WAY 4).
+- 11/23 9:50 AM: Culpeper day 2 (first weekday): 3 planned, 3 delivered (all past due), 0 rejected, 9:15:06 AM. No other store sent. Other four switch tonight (~12:20 AM) for Tue 11/24 if nothing changes (supersedes the 11/30 date in the old trigger text).
