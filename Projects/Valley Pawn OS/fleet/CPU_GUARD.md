@@ -1,43 +1,43 @@
-# CPU Guard — 2026-11-24 00:11 EST
+# CPU Guard — 2026-11-25 00:11 EST
 
 Native agent com.valleypawn.cpu-guard (bin/cpu_guard.sh), every 5 min. See header of the script.
 
 ## Load
-0:11  up 1 day,  9:29, 1 user, load averages: 5.84 7.16 7.54
+0:11  up 2 days,  9:30, 1 user, load averages: 8.24 7.09 6.83
 
 ## Process states (R=running, U=waiting on disk)
 ```
-  12 R  640 S    3 U 
+   9 R  673 S    4 U 
+1 sort
 1 ps
 1 head
-1 /usr/libexec/trustd
 1 /usr/libexec/diskimagesiod
-1 /sbin/launchd
-1 /System/Library/PrivateFrameworks/CloudKitDaemon.framework/Support/cloudd
-1 /System/Library/CoreServices/TimeMachine/backupd
-1 /System/Applications/Mail.app/Contents/MacOS/Mail
+1 /System/Library/PrivateFrameworks/PhotoLibraryServices.framework/Versions/A/Support/photolibraryd
+1 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.WebContent.xpc/Contents/MacOS/com.apple.WebKit.WebContent
+1 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mds_stores
+1 /System/Library/Frameworks/Contacts.framework/Support/contactsd
 ```
 
 ## Top CPU right now
 ```
  %CPU NI   PID COMM
- 31.0  0   425 /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer
- 29.6  0 20960 /Applications/Google Drive.app/Contents/MacOS/Google Drive
- 29.4  0  1239 /Applications/Parallels Desktop.app/Contents/MacOS//Parallels VM.app/Contents/MacOS/prl_vm_app
- 20.5  0   805 /System/Library/PrivateFrameworks/MediaAnalysis.framework/Versions/A/mediaanalysisd
- 16.0  0   780 /System/Library/ExtensionKit/Extensions/WallpaperAerialsExtension.appex/Contents/MacOS/WallpaperAerialsExtension
- 10.6  0 53258 /System/Applications/Mail.app/Contents/MacOS/Mail
-  6.8  0   694 /System/Library/CoreServices/ControlCenter.app/Contents/MacOS/ControlCenter
-  6.3  0  1120 /usr/libexec/sysmond
-  6.2  0   679 /System/Library/PrivateFrameworks/CloudKitDaemon.framework/Support/cloudd
-  4.6  0 39674 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTDecoderXPCService.xpc/Contents/MacOS/VTDecoderXPCService
-  3.4  0 89960 /bin/bash
+ 41.3  0   739 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/corespotlightd
+ 39.7  0   495 /System/Library/CoreServices/TimeMachine/backupd
+ 23.5  0 71756 /Applications/Google Drive.app/Contents/MacOS/Google Drive
+ 21.8  0 46450 /System/Library/PrivateFrameworks/PhotoLibraryServices.framework/Versions/A/Support/photolibraryd
+ 20.7  0   425 /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer
+ 14.7  0  1239 /Applications/Parallels Desktop.app/Contents/MacOS//Parallels VM.app/Contents/MacOS/prl_vm_app
+ 14.6  0     1 /sbin/launchd
+  9.8  0 63859 /System/Library/Frameworks/Contacts.framework/Support/contactsd
+  8.5  0   588 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mds_stores
+  7.3  0 44431 /System/Library/PrivateFrameworks/CoreSuggestions.framework/Versions/A/Support/suggestd
+  5.6  0   694 /System/Library/CoreServices/ControlCenter.app/Contents/MacOS/ControlCenter
 ```
 
 ## Memory
 ```
-total = 2048.00M  used = 1152.25M  free = 895.75M  (encrypted)
-System-wide memory free percentage: 49%
+total = 8192.00M  used = 6916.62M  free = 1275.38M  (encrypted)
+System-wide memory free percentage: 55%
 ```
 
 ## Camera agents (nice should be 10)
@@ -70,8 +70,8 @@ drwxr-xr-x@ 9 joshuadavis  staff  288 Nov  7 13:25 tracks
 
 /Users/joshuadavis/.vp-studio/offsync/unified-search:
 total 15987656
-drwxr-xr-x@ 5 joshuadavis  staff         160 Nov 23 05:19 .
+drwxr-xr-x@ 5 joshuadavis  staff         160 Nov 24 05:26 .
 drwxr-xr-x@ 4 joshuadavis  staff         128 Nov  7 13:23 ..
--rw-r--r--@ 1 joshuadavis  staff  8185647104 Nov 23 23:55 index.db
--rw-r--r--@ 1 joshuadavis  staff       32768 Nov 23 23:55 index.db-shm
+-rw-r--r--@ 1 joshuadavis  staff  8185647104 Nov 24 23:33 index.db
+-rw-r--r--@ 1 joshuadavis  staff       32768 Nov 24 23:33 index.db-shm
 ```

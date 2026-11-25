@@ -53,6 +53,20 @@ def lines(path):
         return set()
 
 
+def no_send_dates():
+    """Days on which nothing is texted (holidays), from fleet/state/loan_reminders_no_send_dates.txt."""
+    out = set()
+    try:
+        for l in open(os.path.join(STATE, "loan_reminders_no_send_dates.txt")):
+            l = l.strip()
+            if l and not l.startswith("#"):
+                try: out.add(datetime.strptime(l[:10], "%Y-%m-%d").date())
+                except ValueError: pass
+    except OSError:
+        pass
+    return out
+
+
 def send_window_ok(list_path, send, now=None):
     """NO REMINDER AFTER A PAYMENT (Joshua 2026-11-21). A text may only go out when BOTH hold:
       1. the Bravo list was pulled after every store closed the evening before the send date (stores close 6 PM;
@@ -193,6 +207,13 @@ def main():
         sent_keys = frozenset(l.split("\t")[0].strip() for l in open(ledger) if l.strip() and l.rstrip("\n").split("\t")[-1] != send.isoformat()) if os.path.exists(ledger) else frozenset()
         mine = set(l.split("\t")[0].strip() for l in open(ledger) if l.rstrip("\n").split("\t")[-1] == send.isoformat()) if os.path.exists(ledger) else set()
         texts, skipped = rc.build_plan(town, text_side, contacts, send, sent_keys)
+        # No-send day tomorrow (holiday): the "due tomorrow" notice it would have carried goes out today instead,
+        # so nobody loses the heads-up. Past-due texts are simply not sent on the holiday.
+        hol = no_send_dates()
+        nxt = send + timedelta(days=1)
+        if nxt in hol:
+            early, _ = rc.build_plan(town, text_side, contacts, nxt, sent_keys)
+            texts += [t for t in early if t["kind"] == "courtesy"]
         keep = []
         for t in texts:
             if t["phone"] in dead:
@@ -207,9 +228,19 @@ def main():
         if lay:
             texts += lay[0]; skipped += lay[1]; lay_stats = lay[2]
         occ, occ_stats = plan_occasions(code, town, send, optouts, dead, sent_keys)
+        back = send - timedelta(days=1)
+        while back in hol:                      # birthdays/anniversaries that fell on a no-send day go out the day after
+            more, _ = plan_occasions(code, town, back, optouts, dead, sent_keys)
+            have_ = {(t["phone"], t["kind"]) for t in occ}
+            occ += [t for t in more if (t["phone"], t["kind"]) not in have_]
+            back -= timedelta(days=1)
         with open(os.path.join(out, "occasions_%s.csv" % code), "w", newline="") as fh:   # NOT read by the sender
             w = csv.writer(fh); w.writerow(["phone", "kind", "characters", "counts_as", "text", "tickets", "name"])
             for t in occ: w.writerow([t["phone"], t["kind"], len(t["text"]), t["segments"], t["text"], t["keys"][0], t["name"]])
+        # birthday / anniversary go into the sendable plan only for stores switched on for them (Joshua OK 11/24:
+        # wording approved, customers seen in the last two years only). Flag: fleet/state/loan_reminders_live/<STORE>.occasions
+        occ_live = os.path.exists(os.path.join(STATE, "loan_reminders_live", code + ".occasions"))
+        if occ_live: texts += occ
         with open(os.path.join(out, "plan_%s.csv" % code), "w", newline="") as fh:
             w = csv.writer(fh); w.writerow(["phone", "kind", "characters", "counts_as", "text", "tickets", "name"])
             for t in texts:
@@ -231,7 +262,7 @@ def main():
             "would_be_allowed_to_send": list(send_window_ok(f, send))}
         summary["stores"][code].update(lay_stats)
         ok_ = collections.Counter(t["kind"] for t in occ)
-        summary["stores"][code]["occasions_NOT_SENT"] = dict(occ_stats, birthday_texts=ok_.get("birthday", 0), anniversary_texts=ok_.get("anniversary", 0), longest=max([len(t["text"]) for t in occ] or [0]))
+        summary["stores"][code]["occasions_in_plan" if occ_live else "occasions_NOT_SENT"] = dict(occ_stats, birthday_texts=ok_.get("birthday", 0), anniversary_texts=ok_.get("anniversary", 0), longest=max([len(t["text"]) for t in occ] or [0]))
         summary["stores"][code].update({"layaway_notice": kinds.get("layaway_notice", 0), "layaway_late": kinds.get("layaway_late", 0)})
     json.dump(summary, open(os.path.join(out, "summary.json"), "w"), indent=1)
     sp = os.path.join(HERE, "trial", "SUMMARY.csv")

@@ -25,6 +25,140 @@ Preston: "I have opened up the indeed ads for Roanoke and Harrisonburg again. Ca
 - Live scope table: HIRING_SWITCH.md → ACTIVE SCOPE (authoritative; read it every run).
 - Roanoke first contacts sent 2026-10-13 1:26–1:31 PM: Anthony White, Kevan Nelson, Adam Martin. Still to contact (screened clean): Michael Boyer, Tareka Jordan, Diaundre Wright.
 
+### Run log — 2026-11-24 ~5:14 PM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access, fourteenth run of the day)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only/direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Candidates checked live (New tab, read_page confirmed): still 3, all Store Manager/Saint Augustine FL (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan), out of scope, unchanged. All applications 298 (unchanged). No new in-scope applicant.
+- Indeed Messages inbox checked live (screenshot, top to bottom): newest two threads unchanged — Patrick Hensley (2:35 PM, ours last — Wed 11/25 11:00 AM booking) and Jeanie Herring (9:05 AM, ours last — nudge, no reply). No new candidate-initiated message, no booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live 11/24–11/30: 1 interview confirmed — Patrick Hensley Wed 11/25 11:00 AM (Harrisonburg), unchanged.
+- Slack DM (D03BHQH5VGT) re-read: newest item is the 5:13:51 PM Fortis vendor update (not hiring). Newest hiring item still the 2:35:25 PM Patrick Hensley booking post. No new hiring instruction.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due beyond what earlier runs today already sent.
+- Not the first weekday run (already posted earlier) — per QUIET RULE, no Slack post or DM this run.
+- Texts: 0 — not a 9:30/1:00/6:00 batch window (run at 5:14 PM).
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
+### Run log — 2026-11-24 ~4:49 PM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access, thirteenth run of the day)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only/direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Candidates checked live (New tab clicked and confirmed): still 3, all Store Manager/Saint Augustine FL (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan), out of scope, unchanged. All applications 298 (unchanged). No new in-scope applicant.
+- Indeed Messages inbox checked live top to bottom: newest two threads unchanged — Patrick Hensley (2:35 PM, ours last — Wed 11/25 11:00 AM booking) and Jeanie Herring (9:05 AM, ours last — nudge, no reply). No new candidate-initiated message, no booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live 11/24–11/27: 1 interview confirmed — Patrick Hensley Wed 11/25 11:00 AM (Harrisonburg), unchanged.
+- Slack DM (D03BHQH5VGT) re-read: newest hiring item still the 2:35:25 PM Patrick Hensley booking post. #preston-goldilocks searched for hiring content: no results after today — no new hiring instruction.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due beyond what earlier runs today already sent.
+- Not the first weekday run (already posted earlier) — per QUIET RULE, no Slack post or DM this run.
+- Texts: 0 — not a 9:30/1:00/6:00 batch window (run at 4:49 PM).
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
+### Run log — 2026-11-24 ~4:04 PM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access, twelfth run of the day)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only/direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Candidates checked live (New tab clicked and confirmed): still 3, all Store Manager/Saint Augustine FL (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan), out of scope, unchanged. All applications 298 (unchanged). No new in-scope applicant.
+- Indeed Messages inbox checked live (screenshot, top to bottom): newest two threads unchanged — Patrick Hensley (2:35 PM, ours last — Wed 11/25 11:00 AM booking) and Jeanie Herring (9:05 AM, ours last — nudge, no reply). No new candidate-initiated message, no booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live 11/24–11/27: 1 interview confirmed — Patrick Hensley Wed 11/25 11:00 AM (Harrisonburg), unchanged.
+- Slack DM (D03BHQH5VGT) re-read: newest hiring item still the 2:35:25 PM Patrick Hensley booking post. #preston-goldilocks searched for anything after 2026-11-24: no results — no new hiring instruction.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due beyond what earlier runs today already sent.
+- Not the first weekday run (already posted earlier) — per QUIET RULE, no Slack post or DM this run.
+- Texts: 0 — not a 9:30/1:00/6:00 batch window.
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
+### Run log — 2026-11-24 ~3:35 PM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access, eleventh run of the day)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only/direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Candidates checked live (New tab clicked and confirmed): still 3, all Store Manager/Saint Augustine FL (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan), out of scope, unchanged. All applications 298 (unchanged). No new in-scope applicant.
+- Indeed Messages inbox checked live (screenshot, top to bottom): newest two threads unchanged — Patrick Hensley (2:35 PM, ours last — Wed 11/25 11:00 AM booking) and Jeanie Herring (9:05 AM, ours last — nudge, no reply). No new candidate-initiated message, no booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live 11/24–11/27: 1 interview confirmed — Patrick Hensley Wed 11/25 11:00 AM (Harrisonburg), unchanged.
+- Slack DM (D03BHQH5VGT) re-read: newest hiring item still the 2:35:25 PM Patrick Hensley booking post. #preston-goldilocks searched for hiring/Preston/candidate content after 2026-11-24: no results — no new hiring instruction.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due beyond what earlier runs today already sent.
+- Not the first weekday run (already posted earlier) — per QUIET RULE, no Slack post or DM this run.
+- Texts: 0 — not a 9:30/1:00/6:00 batch window.
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
+### Run log — 2026-11-24 ~3:04 PM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access, tenth run of the day)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only/direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Candidates checked live (New filter clicked and confirmed): still 3, all Store Manager/Saint Augustine FL (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan), out of scope, unchanged. All applications 298 (unchanged). No new in-scope applicant.
+- Indeed Messages inbox checked live top to bottom: newest two threads still Patrick Hensley (2:35 PM, ours last — Wed 11/25 11:00 AM booking) and Jeanie Herring (9:05 AM, ours last — nudge, no reply). No new candidate-initiated message, no booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live 11/24–11/28: 1 interview confirmed — Patrick Hensley Wed 11/25 11:00 AM (Harrisonburg), unchanged from the 2:49 PM run.
+- Slack DM (D03BHQH5VGT) searched for anything after 2026-11-24: no results since the 2:35 PM Patrick Hensley booking post. #preston-goldilocks/hiring search after 2026-11-24: no results — no new hiring instruction from Preston.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due beyond what earlier runs today already sent.
+- Not the first weekday run (already posted earlier) — per QUIET RULE, no Slack post or DM this run.
+- Texts: 0 — not a 9:30/1:00/6:00 batch window.
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
+### Run log — 2026-11-24 ~2:49 PM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access, ninth run of the day)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only/direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Candidates checked live (New filter clicked and confirmed): still 3, all Store Manager/Saint Augustine FL (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan), out of scope, unchanged. All applications 298 (unchanged). No new in-scope applicant.
+- Indeed Messages inbox checked live: Patrick Hensley (Harrisonburg) had already replied (2:25 PM, "Wednesday at 11 sounds perfect!") and been booked/confirmed (2:35 PM, Wed 11/25 11:00 AM, Preston calling 703-999-7712 from (540) 202-4200) by an earlier run/session before this one started — verified via the calendar event (created 2:34:54 PM ET, id oi39fs87lnc9nomf6pkstvcfd0) and Joshua's 2:35:25 PM Slack DM reporting the same booking. Not re-sent, not re-booked. Jeanie Herring's thread unchanged — still our own 9:05 AM nudge, no reply. No other candidate-initiated message, no new booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live 11/24–11/27: 1 interview confirmed — Patrick Hensley Wed 11/25 11:00 AM (Harrisonburg), booked by the prior run; otherwise unchanged (unrelated personal travel entries 11/24–11/25).
+- Slack DM (D03BHQH5VGT) re-read from 9:53 AM forward: newest hiring item is the 2:35:25 PM Patrick Hensley booking post from the prior run; nothing hiring-related since. #preston-goldilocks not resolvable by channel search this run (as in several prior runs); slack_search_public_and_private for hiring/Preston/candidate content after 2:35:25 PM returned nothing new.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due beyond what earlier runs today already sent.
+- Not the first weekday run (already posted at 9:21/9:06 AM) — per QUIET RULE, no Slack post or DM this run (Patrick Hensley's booking was already DM'd by the prior run at 2:35:25 PM).
+- Texts: 0 — not a 9:30/1:00/6:00 batch window.
+- Housekeeping note (not actioned, no human present to approve deletion): this folder contains 3 stray tmp files from past append attempts — `HIRING_OUTREACH.md.append_tmp`, `HIRING_OUTREACH_APPEND_TMP.md`, `HIRING_OUTREACH_run_append.tmp` — none readable/removable by this session's file tools (Projects folder files can't be deleted without asking Joshua first). Flagging for cleanup next time a human is present; harmless, not referenced by any automation.
+- **Changed this run:** nothing new (Patrick Hensley's booking was already completed by a prior run before this one started). Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
+### Run log — 2026-11-24 ~12:50 PM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access, eighth run of the day)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only/direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Candidates checked live (New filter): still 3, all Store Manager/Saint Augustine FL (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan), out of scope, unchanged. All applications 298 (unchanged). No new in-scope applicant.
+- Indeed Messages inbox checked live (screenshot, top to bottom): newest two threads still this morning's own Patrick Hensley (9:53 AM) and Jeanie Herring (9:05 AM) sends, both still unanswered by the candidate. No new candidate-initiated message, no booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live 11/24–11/27: no interview events booked, unchanged (only the unrelated Bald Rock Homeaway stay entry on 11/25).
+- Slack DM (D03BHQH5VGT) re-read from 9:53 AM forward: no new message. #preston-goldilocks searched for anything after the 11:44–11:45 AM Dec aged-markdowns/gun-audit/margins instructions already seen in the prior run: nothing new, no hiring instruction. (Noted but not actioned: Preston confirmed Harrisonburg + Lexington will be open two Wednesdays this season, 11/25 and 12/23 — a store-hours change, not a change to the standing "no Wed/Sun interviews" rule; left untouched absent an explicit scheduling instruction.)
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due beyond what earlier runs today already sent.
+- Not the first weekday run (already posted at 9:06/9:21 AM) — per QUIET RULE, no Slack post or DM this run.
+- Texts: 0 — not a 9:30/1:00/6:00 batch window.
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
+### Run log — 2026-11-24 ~12:34 PM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access, seventh run of the day)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only/direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Candidates checked live (New filter clicked and confirmed): still 3, all Store Manager/Saint Augustine FL (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan), out of scope, unchanged. All applications 298 (unchanged). No new in-scope applicant.
+- Indeed Messages inbox checked live top to bottom: newest two threads still this morning's own Patrick Hensley (9:53 AM) and Jeanie Herring (9:05 AM) sends, both still unanswered by the candidate. No new candidate-initiated message, no booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live 11/24–11/27: no interview events booked, unchanged (only the unrelated Bald Rock Homeaway stay entry on 11/25).
+- Slack DM (D03BHQH5VGT) re-read from 9:53 AM forward: no new message. #preston-goldilocks searched for anything after 2026-11-23: 3 new messages found (11:44–11:45 AM, Dec aged-markdowns/gun-audit/margins instructions to Preston) — none hiring-related, no new hiring instruction.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due beyond what earlier runs today already sent.
+- Not the first weekday run (already posted at 9:06/9:21 AM) — per QUIET RULE, no Slack post or DM this run.
+- Texts: 0 — not a 9:30/1:00/6:00 batch window.
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
+### Run log — 2026-11-24 ~11:19 AM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access, fifth run of the day)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only/direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Candidates checked live (New filter clicked and confirmed, not just URL param): still 3, all Store Manager/Saint Augustine FL (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan), out of scope, unchanged. All applications 298 (unchanged). No new in-scope applicant.
+- Indeed Messages inbox checked live top to bottom: newest two threads still this morning's own Patrick Hensley (9:53 AM) and Jeanie Herring (9:05/11:19 shows "2 hours ago") sends, both still unanswered by the candidate. No new candidate-initiated message, no booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live 11/24–11/27: no interview events booked, unchanged (only the unrelated Bald Rock Homeaway stay entry on 11/25).
+- Slack DM (D03BHQH5VGT) and #employee-prospects re-read from 11/23 3:04 PM forward: newest hiring item still the 9:53 AM Patrick Hensley/no-show note; nothing hiring-related since (shirt order ask and fleet night-note are unrelated). #preston-goldilocks searched for anything after 2026-11-23: no results — no new hiring instruction from Preston.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due beyond what earlier runs today already sent.
+- Not the first weekday run (already posted at 9:06 AM) — per QUIET RULE, no Slack post or DM this run.
+- Texts: 0 — not a 9:30/1:00/6:00 batch window.
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
+### Run log — 2026-11-24 ~10:35 AM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access, fourth run of the day)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Candidates checked live: All applications 298, New 3 — same out-of-scope Saint Augustine FL Store Manager candidates (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan), unchanged. No new in-scope applicant.
+- Indeed Messages inbox checked live: newest two threads still this morning's own Patrick Hensley (9:53 AM) and Jeanie Herring (9:05 AM) sends, both still unanswered by the candidate. No new candidate-initiated message, no booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live 11/24–11/27: no interview events booked, unchanged from the 10:05 AM run.
+- Slack DM (D03BHQH5VGT) re-read: newest hiring update still the 9:53 AM Patrick Hensley/no-show note; nothing since. #preston-goldilocks searched for anything after 2026-11-23: no results — no new hiring instruction from Preston.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due beyond what earlier runs today already sent.
+- Not the first weekday run (already posted at 9:06 AM) — per QUIET RULE, no Slack post or DM this run.
+- Texts: 0 — not a 9:30/1:00/6:00 batch window.
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
+### Run log — 2026-11-24 ~10:05 AM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only (no remote-devices bridge on probe), third run of the day)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Earlier runs today (per Slack DM, not yet in this file): ~9:06 AM nudged Jeanie Herring for Tue 11/24 or Thu 11/26 (no time given yet); ~9:53 AM sent Patrick Hensley a reschedule offer for Wed 11/25 (11-day-old no-show gap caught and closed), and confirmed Andrew Figgins + Christian Miller's Monday no-shows are each a second miss — per the two-no-show rule, no further contact.
+- Candidates "New" filter checked live: still 3, same out-of-scope Saint Augustine FL Store Manager candidates (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan). All applications 298. No new in-scope applicant.
+- Indeed Messages inbox checked live: newest two threads are this morning's own Jeanie Herring and Patrick Hensley sends (9:05/9:53 AM) — both still unanswered by the candidate, nothing to action yet. No other candidate-last message found needing a reply, no new booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live for the week of 11/24: no interview events on the books (only an unrelated Bald Rock Homeaway stay entry on 11/25). Today's "no interviews booked" post already went out at 9:06 AM.
+- Slack DM (D03BHQH5VGT) re-read: newest hiring update is the 9:53 AM Patrick Hensley/no-show note; nothing hiring-related since. #preston-goldilocks re-read: newest activity is shirt order, SOP-review doc, and Goldilocks policy Q&A — no new hiring instruction from Preston since 11/9.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due beyond what the 9:06/9:53 AM runs already sent.
+- Not the first weekday run (already posted at 9:06 AM) — per QUIET RULE, no Slack post or DM this run.
+- Texts: 0 — not a 9:30/1:00/6:00 batch window.
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
 ### Run log — 2026-11-23 ~3:35 PM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access, sixth run of the day)
 Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
 Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
@@ -9410,4 +9544,60 @@ Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harr
 - Candidates checked live: All applications 298 (unchanged), New 3 — same out-of-scope Saint Augustine FL candidates (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan). No new in-scope applicant.
 - No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due.
 - Texts: 0 — not a 9:30/1:00/6:00 batch window (ran ~6:35 PM, just past the 6:00 window; no candidate needed texting anyway).
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
+### Run log — 2026-11-24 ~11:50 AM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access, sixth run of the day)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only/direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Candidates checked live (New filter): still 3, all Store Manager/Saint Augustine FL (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan), out of scope, unchanged. All applications 298 (unchanged). No new in-scope applicant.
+- Indeed Messages inbox checked live: newest two threads still this morning's own Patrick Hensley (9:53 AM) and Jeanie Herring (9:05 AM) sends, both still unanswered by the candidate. No new candidate-initiated message, no booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live 11/24-11/27: no interview events booked, unchanged (only the unrelated Bald Rock Homeaway stay entry on 11/25).
+- Slack DM (D03BHQH5VGT) re-read from 9:53 AM forward: no new message. #preston-goldilocks searched for anything after 2026-11-23: no results — no new hiring instruction from Preston.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due beyond what earlier runs today already sent.
+- Not the first weekday run (already posted at 9:06 AM) — per QUIET RULE, no Slack post or DM this run.
+- Texts: 0 — not a 9:30/1:00/6:00 batch window.
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
+### Run log — 2026-11-24 ~1:05 PM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access, seventh run of the day)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only/direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Candidates checked live (New filter): still 3, all Store Manager/Saint Augustine FL (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan), out of scope, unchanged. All applications 298 (unchanged). No new in-scope applicant.
+- Indeed Messages inbox checked live top to bottom: unchanged — newest threads still our own Patrick Hensley (9:53 AM, reschedule offer for Wed 11/25 11AM-3PM) and Jeanie Herring (9:05 AM, nudge for Tue 11/24 or Thu 11/26) sends, both still unanswered by the candidate. No new candidate-initiated message, no booking request, no reschedule, no new no-show report beyond the 9:53 AM Slack DM (Andrew Figgins and Christian Miller both no-showed Monday 11/23 — second miss each, per two-no-show rule not re-contacting; already actioned by the 9:53 AM run).
+- Calendar (jdavis@fcfpawn.com) checked live 11/24-11/27: no interview events booked, unchanged (only the unrelated Bald Rock Homeaway stay entry on 11/25). Patrick Hensley's 11/25 offer not yet accepted/booked.
+- Slack DM (D03BHQH5VGT) re-read from 9:53 AM forward: no new hiring message (unrelated items only — shirt order, weekly CEO brief, bonus/supply items). #preston-goldilocks searched for anything after 2026-11-23: 3 results, all store ops (aged markdowns, gun-paperwork audit, discount/margin feedback) — no hiring instruction.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports beyond what's already reflected above and already DM'd by the 9:53 AM run, no 2-business-day nudges newly due, no unanswered candidate question.
+- Not the first weekday run (already posted at 9:06/9:53 AM) — per QUIET RULE, no Slack post or DM this run.
+- Texts: 0 — 1:05 PM run falls in the 1:00 PM batch window, but no candidate currently needs a text (both outstanding items — Patrick Hensley, Jeanie Herring — already messaged via Indeed this morning; no new number needing a text); cloud-only session has no screen control regardless.
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
+### Run log — 2026-11-24 ~2:25-2:35 PM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access, eighth run of the day) [backfilled by 6:48 PM run — this entry was executed but not logged at the time]
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. Cloud-only/direct Chrome access; Slack and Calendar connectors reachable live.
+Scope per HIRING_SWITCH.md unchanged: Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Patrick Hensley (Harrisonburg) replied 2:25 PM "Wednesday at 11 sounds perfect!" to the 9:53 AM reschedule offer (Wed 11/25, 11 AM–3 PM). Booked: calendar event "Interview — Patrick Hensley — Sales & Loan Associate, Harrisonburg (Phone)" created on jdavis@fcfpawn.com, Wed 11/25 11:00–11:05 AM, location 703-999-7712, description "Interviewer: Preston Peters. Phone screen. Call from Zoom (540) 202-4200." Confirmed via Indeed message sent 2:35 PM: "You're set for Wednesday 11/25 at 11:00 AM. Preston will call you at 703-999-7712 from (540) 202-4200. Talk to you then!"
+- Change this run → DM to Joshua (D03BHQH5VGT, 2:35:25 PM) and #employee-prospects post (2:35:28 PM, updated Wed 11/25 schedule) per the reporting rule.
+- Indeed messages sent: 1 (Patrick Hensley booking confirmation). Calendar events created: 1. Texts: 0. Rejections: 0. Slack posts: 1 (channel), 1 (DM).
+
+### Run log — 2026-11-24 ~6:48 PM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access, ninth run of the day)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only/direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Found and backfilled the ~2:25-2:35 PM run's Patrick Hensley booking, which had executed (Indeed message + calendar event + Slack DM/channel post, all verified live) but was never logged to this file — see entry immediately above. No action was taken on it this run beyond logging; it was already complete.
+- Indeed Messages inbox checked live top to bottom: unchanged since 2:35 PM — newest threads still Patrick Hensley's booking confirmation (2:35 PM, our message) and Jeanie Herring's unanswered 9:05 AM nudge (now "Read" per Indeed, no reply). No new candidate-initiated message, no booking request, no reschedule, no no-show report.
+- Candidates checked live (New filter): still 3, all out-of-scope Saint Augustine FL (per prior runs' identification), All applications 298 (unchanged). No new in-scope applicant.
+- Calendar (jdavis@fcfpawn.com) checked live for 11/24-11/27: only the Patrick Hensley Wed 11/25 11:00 AM event (confirmed above) and the unrelated Bald Rock Homeaway stay entry on 11/25. No gaps/doubles/conflicts.
+- Slack DM (D03BHQH5VGT) and #employee-prospects re-read from 2:35 PM forward, plus a fleet-wide search for hiring/candidate/interview after 2026-11-24: no new hiring-related message (later items today — Fortis update — unrelated). No new instruction from Joshua or Preston.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due, no unanswered candidate question.
+- Texts: 0 — 6:48 PM run falls in the 6:00 PM batch window, but no candidate currently needs a text (Patrick Hensley already confirmed via Indeed, Jeanie Herring already nudged via Indeed); cloud-only session has no screen control regardless.
+- Not the first weekday run — per QUIET RULE, no Slack post or DM this run (nothing changed beyond the backfill, which was already reported in real time by the run that did it).
+- **Changed this run:** nothing new (backfill-only). Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
+### Run log — 2026-11-24 ~7:18 PM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access, tenth run of the day)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only/direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Candidates checked live: New still 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Store Manager/Saint Augustine FL, out of scope, unchanged). Reviewing still 15, full walk — Christopher Crammer (already interviewed, decision queue), Scarlet Ledford (pay question still correctly flagged to Joshua, untouched, not re-flagged), rest Store Manager FL/withdrawn. No uncontacted in-scope Waynesboro/Harrisonburg/Lexington/Roanoke applicant.
+- Indeed Messages inbox checked live top to bottom: unchanged since 2:35 PM — newest threads still Patrick Hensley's booking confirmation (2:35 PM, our message) and Jeanie Herring's unanswered 9:05 AM nudge (no reply). No new candidate-initiated message, no booking request, no reschedule, no new no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live 11/24-11/28: only the Patrick Hensley Wed 11/25 11:00 AM event (unchanged) plus unrelated personal travel/reservation entries (Orlando hotel, restaurant reservations) added by Joshua this evening — no interview conflicts, no gaps/doubles.
+- Slack DM (D03BHQH5VGT) re-read from 6:48 PM forward: only Joshua's 7:13 PM Fortis vendor-paperwork update, unrelated to hiring. #employee-prospects unchanged since 2:35 PM. #preston-goldilocks searched for anything after 2026-11-24: no results — no new hiring instruction from Preston.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due, no unanswered candidate question.
+- Not the first weekday run — per QUIET RULE, no Slack post or DM this run (nothing changed).
+- Texts: 0 — 7:18 PM run is outside the 9:30/1:00/6:00 batch windows; also no candidate currently needs a text.
 - **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.

@@ -384,3 +384,15 @@ Unverifiable: none left in posts. PUBLISHED-WRONG: none.
 - Posts checked: 2 (BrandYouTube 11/23 12:10 PM pool-robot Short, Roanoke; BrandYouTube 11/24 12:10 PM Martin 000 guitar Short, Harrisonburg).
 - Both are product posts with no dated or time-sensitive claims (no events, games, hours or "this week" language). Store addresses are standing facts. Skipped per rules.
 - Claims verified: 0 needed. Edited: 0. Unverifiable: none. PUBLISHED-WRONG: none.
+
+## 2026-11-24 (Tue) 07:55 ET — daily fact-check, window to 2026-11-25 ~19:40 ET
+- Posts checked: 36 (11/24: 13 town/history posts, 2 Lexington hiring, 8 product/brand; 11/25: 3 Brand Thanksgiving posts, 10 town posts, 5 product/poll). Skipped as evergreen/product/hiring: Hotel Roanoke, Town of Fairfax, Thomas Harrison deed, Lexington bricks, Basic City, Mount Pony, Chesapeake Western, Goshen Pass, all product/price/Pinterest/YouTube posts, Lexington hiring.
+- Verified:
+  - Thanksgiving 2026 = Thu Nov 26: "Thanksgiving week" (Lexington FB + GBP 11/24) and "Thanksgiving's tomorrow" (Brand/BrandIG/BrandTwitter 11/25) correct.
+  - Mill Mountain Star (Roanoke FB + GBP 11/25): first lit Nov 23, 1949, 8:22 PM; "this week marks 77 years" correct. Re-confirmed from prior runs: https://www.playroanoke.com/the-roanoke-star/
+  - Wayne Theatre (Waynesboro FB + GBP 11/24): opened Jan 18, 1926, 650 seats; 450 after 1949; closed and given to City 1999; reopened March 1, 2016 (388 seats); 2026 = 100th + 10th anniversaries. https://visitshenandoah.org/whats-new/a-night-at-the-theatre-in-waynesboro/ (2026-08-06), https://cinematreasures.org/theaters/5374, https://virginialiving.com/culture/wayne-theatre-celebrates-its-100th-and-10th-anniversaries/ (2026-06-16), https://sah-archipedia.org/node/1630
+  - Black Friday/Small Business Saturday: 15% off in store Fri-Sat Nov 27-28, no minimum, some exclusions; all 5 stores closed Thanksgiving Day Nov 26. https://thevalleypawn.com/black-friday/ (modified 2026-11-23); matches Seasonal Campaigns/campaigns.json and handbook closed-days policy.
+- Edited (5, all APPLIED):
+  - Waynesboro FB 6b04979f… + GBP_Waynesboro 6b0497a7…: "By 2017 it had reopened" (vague) → "reopened on March 1, 2016 … also its 10th year back".
+  - Brand 6b049715…, BrandIG 6b04971d…, BrandTwitter 6b049726…: vague "out looking for gifts this weekend / come see us" → closed Thanksgiving Day, back Friday 10 AM, 15% off in store Fri-Sat Nov 27-28, no minimum (FB/IG), some exclusions apply. X 226 chars. Also clears the Seasonal Campaigns SOCIAL check gap for brand channels.
+- Unverifiable: none. PUBLISHED-WRONG: none.

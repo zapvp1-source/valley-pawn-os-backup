@@ -16,8 +16,9 @@ from datetime import datetime, timedelta, timezone
 NS = "urn:ebay:apis:eBLBaseComponents"
 STORE_CODE = {"Culpeper": "CUL", "Roanoke": "ROA", "Waynesboro": "WAY", "Harrisonburg": "HAR", "Lexington": "LEX"}
 # Same rule as engine/ebay_common.py CODE_RE (tightened 2026-09-17): store prefix + 5 or more digits.
-CODE_RE = re.compile(r"\(((?:VAP|VP|VA|CUL|ROA|WAY|HAR|LEX)\d{5,})\)")
-BARE_CODE_RE = re.compile(r"^(?:VAP|VP|VA|CUL|ROA|WAY|HAR|LEX)\d{5,}$")
+# 2026-11-24: + GP / SLM (older Bravo number prefixes still in Roanoke / Harrisonburg inventory).
+CODE_RE = re.compile(r"\(((?:VAP|VP|VA|CUL|ROA|WAY|HAR|LEX|GP|SLM)\d{5,})\)")
+BARE_CODE_RE = re.compile(r"^(?:VAP|VP|VA|CUL|ROA|WAY|HAR|LEX|GP|SLM)\d{5,}$")
 NOT_RUNG_AFTER_HOURS = 24
 
 

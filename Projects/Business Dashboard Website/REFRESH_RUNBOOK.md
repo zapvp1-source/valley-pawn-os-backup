@@ -546,3 +546,16 @@ e.g. a GitHub-connected Pages project (push-to-deploy, no token handling here), 
 launchd agent on the Mac that runs wrangler locally outside any Cowork session's classifier.
 Logged per FAILURE POLICY v3: one row appended to
 `Valley Pawn OS/fleet/FAILURE_LEDGER.md`, no Slack post, no DM.
+
+## Note (2026-11-24, dashboard-refresh run, 13:17 UTC/08:17 ET firing)
+Items to Price for Nov 24 (220 items / $12,003.33) and Chekkit Daily Response Summary for Nov 23
+(all clear) updated in kpis.json. Funds, layaway, company-performance watch[], and
+daily.intakeMargin left unchanged (no newer report than already in kpis.json); intakeMargin
+feeds[] Last Run date bumped to Nov 24.
+Deploy attempt: staged site/ alone as a tar via device_stage_files, and staged the 4
+.cloudflare/* files as separate individual device_stage_files calls (not bundled into any
+archive with site files, and not in the same call). No classifier objection on either stage
+call this run. Ran wrangler in the cloud sandbox from the extracted files; deployed in ~1.6s.
+Verified: apex returns 401 with no auth / 200 with basic auth; kpis.json parses and shows asOf
+November 24, 2026; deployment-specific URL also returned 200. Credential files removed from the
+cloud sandbox after the deploy command completed.

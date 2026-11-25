@@ -1,5 +1,23 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-24 (daily PREP run, 12:41–12:48 ET, level 1 all pages, Tuesday) — picks queued for the next POST-mode chat, nothing published by this run
+- Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only (composer read "What's on your mind, Joshua?" at start and end); never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. A Messenger chat window from a contractor page was open on Joshua's profile — not touched.
+- Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).
+- No POST-mode chat since 11/19 morning (ledger unchanged at 88 rows), so nothing to sync into WATCHLIST.
+- QUEUE cleaned: lapsed unposted — Roanoke SPCA intake comment, Culpeper therapy-dog share, Waynesboro red-sky comment, Brand SNP PATC 1927 comment. Still pending: Roanoke follow → Roanoke Regional Chamber; Culpeper Costume Closet comment (to TODAY 14:00); Waynesboro Wayne Theatre comment (to TODAY 16:49); Waynesboro WARM shelter share (to 11/25 09:45); Roanoke Mill Mountain Zoo comment (to 11/25 12:18).
+- New picks (permalinks read from the hovered timestamp and opened to confirm):
+  - Harrisonburg comment → Daily News-Record, Bridgewater College women's basketball freshman class (to 11/26 12:26).
+  - Lexington comment → Rockbridge Regional Libraries, Staunton Talking Book Center service (to 11/26 12:00).
+  - Culpeper comment → Culpeper Renaissance reel, local flower farmers' florals on the downtown archway (to 11/25 16:06) — next after the Costume Closet pick.
+  - Brand, Roanoke, Waynesboro: nothing new (Roanoke and Waynesboro already have picks).
+- Skipped on purpose: SNP Skyline Drive wildfire closure; News-Gazette share of a police department post; Blue Ridge Parkway Helene reopening (11/21, past 48 h); Virginia Is For Lovers Christmas in Middleburg (Loudoun, outside our area); Visit Harrisonburg Small Business Saturday shop promo (retail promo); Main Street Lexington Pink, Drink (11/20, old); Explore Park Illuminights collab post (Roanoke already shared Illuminights 11/19 — near-repeat); Downtown Roanoke/RVTV Downtown Ambassadors (good post, Roanoke already has a comment pick).
+- Next-week share ideas: CRI Holiday Open House & Tree Lighting Sun 11/29 (no fresh reminder post yet — Culpeper's share for this week now that the therapy-dog share lapsed); Wayne Theatre Dec 21 caroling + film; Explore Park Illuminights Sensory Night Wed Dec 2 (only if a fresh, distinct post appears).
+- Ramp: all pages hold level 1. Share week (Mon 11/23–Sun 11/29): none used; Waynesboro queued.
+- Watchlist: 11 pages re-checked; none newly dormant; no unresolved entries. No town follow searches this run (Roanoke follow still pending).
+- Reply / follow-back candidates for POST mode: unchanged carry-overs (Mark Lyon on Valley Pawn-Culpeper; ~10 commenters on a Valley Pawn-Lexington post; "Synster Gates Fan" mention on Valley Pawn; Kelsey L Iane and 3 others followed Valley Pawn-Lexington — follow back only if offered).
+- Needs a person: none new.
+- Totals this run: comments 0 (3 new queued), shares 0 (0 new queued), replies 0, follows 0 (1 pending), new pages resolved 0.
+
 ## 2026-11-23 (daily PREP run, 12:42–13:08 ET, level 1 all pages, Monday) — picks queued for the next POST-mode chat, nothing published by this run
 - Mode: PREP (per RUNBOOK). Never switched into a Valley Pawn store page; no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings.
 - At start Joshua's Chrome was acting as the "Rocket Pawn & Jewelry" page (Joshua's new page; another session left it there). Switched back to Joshua Davis via avatar menu per the 11/9 note; composer read "What's on your mind, Joshua?" before browsing and again at the end.

@@ -6,7 +6,7 @@
 # Silent (Rule 16): results go to eBay/desk/out/takedown_watch.jsonl and the agent log only.
 AGENT="ebay-takedown-watch"; . "$HOME/Documents/Claude/Projects/Valley Pawn OS/bin/vp_lib.sh"; . "$BIN/vp_live.sh"
 vp_live_gate "$AGENT"
-vp_lock "$AGENT" 15
+vp_lock "$AGENT" 18
 TODAY=$(date +%Y-%m-%d)
 [ -z "$(open_stores "$TODAY")" ] && exit 0
 H=$((10#$(date +%H))); { [ $H -lt 10 ] || [ $H -ge 18 ]; } && exit 0
@@ -17,12 +17,19 @@ ID="ebaydesk-takedown-watch-$(date +%Y%m%dT%H%M)"
 printf '{"id":"%s","requested_at":"%s","reports":[{"name":"sold-today-all","stores":["ALL"],"date":"%s..%s"}]}' "$ID" "$(date +%Y-%m-%dT%H:%M:%S%z)" "$TODAY" "$TODAY" > "$BRAVO/triggers/staging/$ID.json"
 mv "$BRAVO/triggers/staging/$ID.json" "$BRAVO/triggers/$ID.json"
 T0=$(date +%s)
-while [ ! -f "$BRAVO/results/$ID.result.json" ] && [ $(( $(date +%s) - T0 )) -lt 360 ]; do sleep 10; done
+# 2026-11-24: once the watcher has CLAIMED the trigger it will finish it, so wait for that run (up to 14 min) instead of
+# walking away at 6 min (11/23 13:07: result landed at 6m40s and the round was lost). Unclaimed after 6 min = take it back.
+while [ ! -f "$BRAVO/results/$ID.result.json" ]; do
+  EL=$(( $(date +%s) - T0 ))
+  if [ -f "$BRAVO/triggers/$ID.json" ]; then [ $EL -ge 360 ] && break; else [ $EL -ge 840 ] && break; fi
+  sleep 10
+done
 if [ ! -f "$BRAVO/results/$ID.result.json" ]; then
   rm -f "$BRAVO/triggers/$ID.json"          # still unclaimed: take it back so rounds never pile up
   vlog "skip: no result for $ID in 6 min"; exit 0
 fi
 CSV="$BRAVO/output/${TODAY}_to_${TODAY}_ALL_sold-today-all.csv"
+find "$BRAVO/output" -maxdepth 1 -name "*_ALL_sold-today-all.csv" ! -name "${TODAY}_*" -delete 2>/dev/null   # leftovers from a lost round
 grep -q '"status": *"success"' "$BRAVO/results/$ID.result.json" && [ -f "$CSV" ] || { vlog "skip: pull not successful ($ID)"; exit 0; }
 DST="$HOME/Documents/Claude/Projects/eBay/desk/out/bravo_pulls"; mkdir -p "$DST"
 mv "$CSV" "$DST/sold-today-all_latest.csv"

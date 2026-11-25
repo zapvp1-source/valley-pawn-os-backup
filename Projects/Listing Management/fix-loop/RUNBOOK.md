@@ -89,6 +89,7 @@ Goal: pick the next improvements from real search data instead of only fixing de
 - A loan figure of $25,000 is CORRECT (Joshua, 2026-10-05). Drop any finding that calls $25,000 stale or expects $100,000.
 - Facebook 100478091680300 = 100058095342923 (Culpeper, same page). 303444680270846 = 100026420539296 (Waynesboro, same page).
 - Facebook "Valley Pawn" pages 100057490088122 / 367260950022473 belong to a different business in Waynesville, NC. They are not ours and not a defect.
+- Facebook @valleypawnIV ("Valley Pawn", (760) 353-7946, valleypawnonline.com) is a different business in California. Not ours, not a defect (2026-11-24).
 - Roanoke "2362-D" on ATF/FFL records is correct. Never ask an FFL directory to change it to Suite C (a 11/19 request to MasterFFL/GunMade was retracted the same day).
 
 ## Joshua-approved actions

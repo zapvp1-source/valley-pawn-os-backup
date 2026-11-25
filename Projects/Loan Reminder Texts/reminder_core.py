@@ -34,7 +34,7 @@ TEMPLATES = {   # loan wording APPROVED by Joshua 2026-11-18 12:43 PM ("looks go
     # 160 rule: a long first name at Harrisonburg reaches 161 - the layaway builder must then open "Your Valley Pawn ..." (no name).
     "layaway_notice": "Hi {name}, your Valley Pawn {store} layaway payment is due {due}. Pay in store or in the MobilePawn app: thevalleypawn.com/app Text STOP to unsubscribe",
     "layaway_late": "Hi {name}, your Valley Pawn {store} layaway payment is past due. Pay in store or in the MobilePawn app: thevalleypawn.com/app Text STOP to unsubscribe",
-    # birthday / first-visit anniversary: Bravo's current offer, shortened to one text. NOT approved yet (11/22).
+    # birthday / first-visit anniversary: Bravo's current offer, shortened to one text. APPROVED by Joshua 2026-11-24 12:17 PM ("wording is ok"; customers of the past two years only).
     "birthday": "Happy Birthday, {name}! Show this text at any Valley Pawn in the next 30 days for 15% OFF. Text STOP to unsubscribe",
     "anniversary": "Happy Anniversary, {name}! It's the anniversary of your first visit to Valley Pawn. Show this text at any location for 15% OFF! Text STOP to unsubscribe",
 }

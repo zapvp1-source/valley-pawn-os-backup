@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-11-23 22:12 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-11-24 22:11 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -1065,6 +1065,12 @@ RULE: A firearm that is paid off (even with a balance as small as one cent) must
 PRESTON SAID: "Yeah, you can't. I mean, we have to transfer it to him before we can loan on it."
 SOURCE: zoom-call:79a4d017e2a24fd9805aeb3ad1cd8ffc | 2026-10-19 | UNK Walker Tapley
 id: firearm-reloan-requires-tran-640431de
+
+### [MEDIUM] loan-bump-requires-good-standing
+RULE: Do not bump (increase) a pawn loan that is past due or not in good standing. Giving more money on a bad loan means paying ourselves with our own money and then lending more.
+PRESTON SAID: "Yeah, we just can't bump alone. It's not good standing and you know, we're just we're paying ourselves with our own money and then giving them more I'm a bad loan."
+SOURCE: zoom-call:6fda638b7d594d858c8853313488d44e | 2026-11-24 | UNK Walker Tapley
+id: loan-bump-requires-good-stan-e7818689
 
 ### [MEDIUM] loan-buy-risk-factors
 RULE: When deciding on loans and buys, assess risk by the item's condition, whether it will resell quickly, and how fast it sells through on eBay.
@@ -2863,6 +2869,12 @@ PRESTON SAID: "We've got to make some phone calls to make sure we're legally all
 SOURCE: zoom-call:ab47ea2963e049ba9c8bfb3457265572 | 2026-10-13 | UNK Uriah Tiglao
 id: return-traded-firearm-after--74d6a3d8
 
+### [LOW] rush-deal-red-flags-hold-off
+RULE: A rushed deal on a high-value watch, especially when the seller can't produce paperwork, is a red flag beyond whether the watch is authentic. In that case hold off on the deal rather than buying on the spot.
+PRESTON SAID: "the deal feels kind of weird to me. It's like a rush deal."
+SOURCE: zoom-call:6fe59d7b6cac44218d67ac01a1ce0581 | 2026-11-24 | UNK Benjie Moore
+id: rush-deal-red-flags-hold-off-0832e87c
+
 ### [LOW] sale-floor-margin-over-melt
 RULE: A retail sale on a gold chain should come in at least about 20% over melt. The speaker called that "kind of a bottom," meaning a minimum. The transcript has no speaker labels, so it is unclear whether Preston or the employee said this.
 PRESTON SAID: "I mean, it puts us over 20% of mail, which is kind of a bottom bottom."
@@ -3005,5 +3017,5 @@ id: past-due-75-day-5-percent-ce-30eeab0b
 
 
 ==============================================================================
-COVERAGE: 424 entries - 31 verified by Preston, 162 high-confidence rules, 123 medium, 106 low, 2 superseded.
+COVERAGE: 426 entries - 31 verified by Preston, 162 high-confidence rules, 124 medium, 107 low, 2 superseded.
 ==============================================================================

@@ -71,12 +71,13 @@ GoMain() {
             GoCrCustDry(st)
         else if (MODE = "crprobecust")
             GoCrProbe(st, "Customers")
-        else if (MODE = "apponly" || MODE = "appauto") {
+        else if (MODE = "apponly" || MODE = "appauto" || MODE = "apponlyocc" || MODE = "appautoocc") {
             if (STORES.Length != 1) {
                 GoResult(st, "APPONLY refused: one store per run")
                 continue
             }
-            GoAppOnly(st, (MODE = "apponly") ? "MobilePawn" : "AUTO")
+            ; ...occ (2026-11-24, Joshua OK on birthday/anniversary): the Birthday and Store Anniversary events instead
+            GoAppOnly(st, (MODE = "apponly" || MODE = "apponlyocc") ? "MobilePawn" : "AUTO", InStr(MODE, "occ") ? "occ" : "loan")
             GoVerify(st)
         }
         else if (MODE = "crdry")
@@ -1292,7 +1293,7 @@ GoCrBuild(st, doSave) {
 ; AUTO to MobilePawn (app notice only), so no customer is texted by both systems. Nothing else is touched. Presses Ok
 ; only if all three changed to the same non-text setting; otherwise Cancel. "appauto" puts the same three back to AUTO.
 ; ============================================================================
-GoAppOnly(st, want) {
+GoAppOnly(st, want, which := "loan") {
     if !MerOpenEditor() {
         GoResult(st, "APPONLY editor did not open")
         try BackToDashboard()
@@ -1300,6 +1301,8 @@ GoAppOnly(st, want) {
     }
     pane := MerFind(GetBravoRoot(), {ClassName: "ScrollViewer"})
     std := Map("Loan Courtesy Reminder",1, "Layaway Notice",1, "Loan Past Due (Due Date)",1)
+    if (which = "occ")
+        std := Map("Birthday",1, "Store Anniversary",1)
     title := "", changed := 0, failed := 0, already := 0, log := "", codes := Map()
     for k in pane.GetChildren() {
         c := "", n := "", v := ""

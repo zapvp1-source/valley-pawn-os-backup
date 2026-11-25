@@ -42,6 +42,8 @@ def text(tok, body):
 def main():
     dry = "--dry" in sys.argv
     today = dt.date.today()
+    if today in lp.no_send_dates():
+        print("%s is a no-send day (fleet/state/loan_reminders_no_send_dates.txt) - nothing sent at any store" % today); return 0
     pull = (today - dt.timedelta(days=1)).isoformat()
     day = os.path.join(LR, "trial", today.isoformat())
     for code, town in lp.STORES:

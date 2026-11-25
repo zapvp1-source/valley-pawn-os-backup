@@ -507,3 +507,6 @@ Welcomed: 94 new contacts | Skipped (failed): 0 | flag check: 5/5 ok
 
 ## 2026-11-23 (brevo-welcome-new-contacts, native)
 Welcomed: 10 new contacts | Skipped (failed): 0 | flag check: 5/5 ok
+
+## 2026-11-24 (brevo-welcome-new-contacts, native)
+Welcomed: 1 new contacts | Skipped (failed): 0 | flag check: 1/1 ok

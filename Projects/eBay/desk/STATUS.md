@@ -114,3 +114,16 @@ Next (no approval needed): dedicated Bravo sold-today handler (new saved report 
 - WATCH ONLY: logs to eBay/desk/out/takedown_watch.jsonl (would-end listings, first-seen time, and when a listing later disappears = today's manual takedown lag). No eBay or Bravo writes. Dry run on 11/21 data: 92 sold rows, 379 live (318 numbered), 0 would end.
 - First live rounds: Monday 11/23 10:07. Review after 3–5 open days: every would-end must be a real counter sale of a live listing; then ask Joshua for the OK to end for real (Culpeper first, cap 3/day).
 - Still open with Joshua: OK to end listings for real; test sale + void; standing reply to price offers; Slack to Lexington (Canon VA1058519) and Harrisonburg (Switch VA5019380); what to do with the 58 unnumbered listings.
+
+## 2026-11-24 12:10 — watch-only loop, first two days
+- Mon 11/23: only 4 rounds ran of 24 (Bravo busy nearly all day: 70 dailygl runs + Monday jobs -> rounds skipped by design); 3 of the 4 failed "BackToDashboard could not return Bravo to Dashboard", 1 succeeded (25 rows, 89 s) but its result landed at 6m40s, after the 6-min wait, so it was not logged.
+- Tue 11/24: 7 of 7 rounds succeeded by 12:07 (72–115 s each; sold rows 0 -> 20 through the morning). Would-end so far: 0 (no eBay-numbered item sold at a counter yet).
+- Fix 11/24: wrapper now waits up to 14 min once the watcher has claimed the trigger; clears leftover CSVs from lost rounds (backup ebay_takedown_watch.sh.bak-20261124).
+- Finding: on a shared Bravo session the loop loses most of a busy Monday. Confirms the dedicated session (extra key, December) is needed for Mondays; other days it holds a 20-min cadence.
+
+## 2026-11-24 12:12–12:30 — Joshua's decisions + follow-through
+- DECISION: live testing (ending listings, ringing) starts at LEXINGTON (smallest store), not Culpeper, once the new Mac Studio is in. Watch-only loop keeps running all stores until then.
+- Bravo numbers: 51 more written after an eye-checked residual match against Bravo's eBay-marked items (run 20261124-1714xx/171615-skulink-reviewed; identical multiples — Liberty slabs x4, Denver tokens x2, Eisenhower kits x3 — assigned one number each). desk_core regex now also accepts GP / SLM prefixes (older Bravo numbers). NOW 374 of 380 live listings carry the Bravo number (98%). Left 6: CUL Ninja griddle 920149643013; ROA DeWalt DW004 306337607219 (Bravo number "392434" has no store prefix); WAY McFarlane multi 800508951766; HAR Sony speaker 800957828737 and Ridgid press kit 800961068588 (not in Bravo's eBay-marked list); LEX Star Wars puzzle 157975616675.
+- Lexington Canon VA1058519: RUNG 11/19 ($299.99) — 16 days after the 11/3 eBay sale. Closed; no message needed.
+- Harrisonburg Switch OLED VA5019380: Bravo SOLD 9/24 $229.99; eBay listing 800232060996 still ACTIVE at $183.99, not in Bravo's eBay-marked inventory. Slack draft to #roc-hburg shown to Joshua, waiting for his OK.
+- Emailed Preston 11/24 12:2x PM (new thread "eBay buyer messages going unanswered"): 144 messages / 42 unanswered in 30 days by store; asked (1) standing auto-reply to offers or stores answer, (2) OK with desk-drafted replies + 24 h flag. Reply pending.

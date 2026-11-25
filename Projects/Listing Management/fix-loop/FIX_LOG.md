@@ -1,5 +1,14 @@
 # Listings Fix Loop — FIX_LOG (newest first)
 
+## 2026-11-24 — daily run (scheduled, unattended, Joshua's Chrome) — 8 actions
+- **Ingest:** no new presence scorecard (latest 11/22) or FFL_DRIFT (11/22) since yesterday's run; nothing new to add.
+- **VERIFIED (still wrong):** LQ-017 FB "Gold N Pawn" 100041735065936 and LQ-014 valleypawnlex still live; no decision in Support Inbox 7 days after the 11/17 reports (not rejected). Both move to rung 3 (Facebook impersonation/business support form) on the next run.
+- **RESOLVED (not ours):** LQ-014 part: @valleypawnIV is a different "Valley Pawn" ((760) 353-7946, valleypawnonline.com, California).
+- **LQ-046 → tracking:** the Yadkinville (336) 679-4998 number is not on our Waynesboro page (full scroll); Google stitches the same sentence into snippets for several unrelated pages. Re-check 12/8, then Google result feedback if still shown.
+- **LQ-032:** Yelp for Business signed in; the categories block doesn't read as text — next run uses screenshots per store.
+- **Sign-in probe:** Apple Business ❌, Bing Places ❌, BrightLocal connector ❌ (refused). Facebook ✅, Yelp ✅.
+- Proof: evidence/2026-11-24_live_checks.txt. No Thursday AI check, no Saturday post, no Wednesday search review (Tuesday).
+
 ## 2026-11-23 — daily run (scheduled, unattended, Joshua's Chrome) — 8 actions
 - **Ingest:** new presence scorecard 11/22 + FFL_DRIFT 11/22. FFL_DRIFT unchanged (GunNook WAY/HAR/LEX, GunMade HAR, FFLeasy HAR — all already queued). New rows: LQ-045 (FFLs.com HAR "regression") and LQ-046 (Waynesboro FB snippet with an NC phone). Left out as non-listing items: YouTube channel question, Roanoke FFL renewal date, FB brand-page email choice, $100,000 task-prompt maintenance (already LQ-029).
 - **FIXED (proved live):** LQ-008 YellowPages Harrisonburg 452862505 now "Valley Pawn" (claimed), Ste 22, right phone, Wed closed, no "Dixie" text. Thryv applied the 11/19 request. LQ-045 FFLs.com HAR closed as a false positive: the "Dixie Pawn Inc" page is an expired 2019 ATF license; the active record reads VALLEY PAWN, Unit 22. Proof: evidence/2026-11-23_live_checks.txt.

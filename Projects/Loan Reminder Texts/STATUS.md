@@ -295,3 +295,21 @@ Proposed wording (waiting on Joshua's OK, then: edit the 3 gold campaigns + remo
 - To build once approved: move occasions into the sender's plan, add the birthday list pull to a monthly slot, switch Bravo Birthday + Store Anniversary events to app-only per store at go-live.
 - 11/22 11:59 PM re-check (old trigger): second nightly run clean at all 5 stores, done 11:24 PM. Culpeper already live; plan for Mon 11/23: CUL 3 texts (past due), others planned but not live (HAR 4, LEX 2, ROA 13, WAY 4).
 - 11/23 9:50 AM: Culpeper day 2 (first weekday): 3 planned, 3 delivered (all past due), 0 rejected, 9:15:06 AM. No other store sent. Other four switch tonight (~12:20 AM) for Tue 11/24 if nothing changes (supersedes the 11/30 date in the old trigger text).
+
+## 2026-11-24 12:20-12:35 AM — ALL FIVE STORES CUT OVER (loan + layaway reminders)
+- Preconditions met: Culpeper live sends clean Sun 11/22 (7 sent, 1 opted-out refusal) and Mon 11/23 (3/3); Slack searched (read only) for complaints since 11/21: none. Nightly run 11/23 clean, done 11:25 PM, all lists after close, every text <=160.
+- Bravo, saved and re-read (only these three events changed at each store, AUTO -> MobilePawn): Harrisonburg 12:24 AM, Waynesboro 12:29 AM, Lexington 12:32 AM (first Lexington pass changed 2 of 3 so it saved nothing; second pass clean). Roanoke has no such events.
+- LIVE files: CUL, HAR, LEX, ROA, WAY. First all-store send Tue 11/24 9:15 AM: CUL 5, HAR 5, LEX 6, ROA 21 (incl. 1 layaway past due), WAY 2 = 39 texts.
+- Bravo text events still on at all stores: Birthday, Store Anniversary (AUTO), app invites/onboarding.
+- 11/24 9:50 AM: first all-store live send verified: CUL 5/5, HAR 5/5, LEX 6/6, ROA 21/21, WAY 2/2 = 39 sent, 0 rejected, 9:15:05-9:16:08 AM.
+
+## 2026-11-24 12:17 PM — Joshua: birthday/anniversary wording OK; customers of the past two years only
+- Templates marked approved. Scope = customers seen in the last ~760 days (what the exports hold).
+- Planner: a store's birthday/anniversary texts join the sendable plan only when fleet/state/loan_reminders_live/<STORE>.occasions exists. CUL.occasions created (first send Wed 11/25). Test plan for 11/25: CUL 5 birthday + 1 anniversary on top of 4 reminders.
+- Bravo script: modes apponlyocc / appautoocc (Birthday + Store Anniversary -> app-only / back to AUTO), one store per run. Culpeper switch scheduled 12:20 AM Wed; other four Thu 11/26 if Culpeper is clean.
+- NEW agent com.valleypawn.birthday-list, Sundays 2:40 PM: weekly refresh of the birthday lists (bin/birthday_list_pull.sh, reuse window now 6 days). Phones and first-visit dates keep coming from the Sunday 12:30 PM win-back job.
+
+## 2026-11-24 12:21 PM — Joshua: hold the other four stores' birthday texts to Friday; NO communications on Thanksgiving (Thu 11/26)
+- NO-SEND DAYS: fleet/state/loan_reminders_no_send_dates.txt (2026-11-26). The sender sends nothing at any store on a listed day. Planner: the "due tomorrow" loan notice that would have gone on the holiday goes out the day before; birthdays/anniversaries that fall on the holiday go out the day after; past-due texts are simply not sent that day (Friday repeats them anyway).
+- Revised birthday/anniversary dates: Culpeper Wed 11/25 (unchanged). HAR/LEX/ROA/WAY: Bravo events switch to app-only Wed night (so Bravo sends no birthday texts on Thanksgiving either), Chekkit flags created Wed, first Chekkit birthday/anniversary texts Fri 11/27 (covering Thursday's). The Thu 9:50 AM check must confirm NOTHING was sent Thursday (no sent_*.csv in trial/2026-11-26).
+- Other Thursday sends found (read only): Brevo email #65 "Thanksgiving and Small Business Saturday" queued Thu 11/26 10:00 AM (bin/brevo_scheduled_list.py -> fleet/state/brevo_scheduled.json). NOT changed - asked Joshua. Win-back text (Thu 10:33) already held. Still automatic on Thursday: missed-call reply text, AI replies to inbound texts, Bravo app notices.
