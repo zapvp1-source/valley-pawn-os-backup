@@ -8,11 +8,14 @@
 ## Yelp (biz.yelp.com)
 - Owner edits: biz.yelp.com → location switcher (top left) → Business Information → edit the field → Save. Hours, address and categories go to Yelp review; check the public page after about 7 days.
 - Duplicate or closed listing: on the public page, Suggest an edit (right column) → tick "Business Closed or Moved" → Permanently Closed, or "This is a duplicate…" → context box (**300-character limit**, use form_input) → Submit Changes → green banner "moderators will take a look".
+- *Added 2026-11-25:* Categories: biz.yelp.com/biz_info/<id> → "Categories and services" → Edit on a row → Edit → type the category → pick from the dropdown → Save (toast "Success!"). Location ids: CUL aXJM5sHLgFNyDs2xQU4N0g, HAR ZRDiyqHxc7hWQ4ZudjUtjQ, LEX vjj6EOupA8SuBPihtBKZgg, WAY EFQXMVX3Ji1BRs36nGlOwg, ROA tSgwF17MRxkmfsQV8OHUlg. Public check: yelp.com/biz/<id> redirects to the slug; categories are the line under "Claimed". A Thanksgiving popup appears on every page — close it (X).
+- The Staunton ghost (yelp.com/biz/valley-pawn-staunton) is claimed under Preston's Yelp login (owner block "Preston P."), not Joshua's.
 - *Changed 2026-11-18:* Yelp has **no web support/contact form** any more. biz.yelp.com "Need Help?" = sales chat + Support Center; yelp.com/contact = FAQ article; only human channel is phone (877) 767-9357. Rung 3 for Yelp is therefore not available unattended — go to rung 4 (BrightLocal Location Manager push) instead.
 
 ## Facebook
 - Navigating to a page id that redirects to another id means it is the same page (profile id vs page id). Mark the item resolved and record both ids.
 - A page we admin shows "Manage Page" in the left rail. Legacy page we admin: Settings → General → Merge Pages (or Unpublish). Page we don't admin: ⋯ → Report profile → "Duplicate"/"Pretending to be a business".
+- *2026-11-25:* Rung 3 for a page we don't admin is NOT available unattended. facebook.com/help/contact/295309487309948 (impostor) covers people only; Meta Business Support Home (business.facebook.com/business-support-home) stops on a "Redirect Confirmation" interstitial in the Claude tab. After a report sits 7 days undecided, route to Joshua (Meta Business Support chat from Business Suite).
 
 ## YellowPages / Thryv
 - "Suggest an Edit" on the public listing (name field) goes to Thryv's data team. Owner dashboard: the name field is locked.

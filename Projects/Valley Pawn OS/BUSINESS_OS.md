@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-11-24
+# LIVE STATE - auto-refreshed 2026-11-25
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -17,7 +17,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | Enabled (will fire) | 2 |
 | Registered but disabled | 230 |
 | On disk but never registered | 4 |
-| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 223 |
+| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 112 |
 
 ### Enabled tasks
 
@@ -39,6 +39,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.ask-vp.plist` | installed | YES |
 | `com.valleypawn.asset-recovery.plist` | installed | YES |
 | `com.valleypawn.backup-health.plist` | installed | YES |
+| `com.valleypawn.birthday-list.plist` | installed | YES |
 | `com.valleypawn.blog-announce.plist` | installed | YES |
 | `com.valleypawn.bonus-close-pull.plist` | installed | YES |
 | `com.valleypawn.bonus-month-close.plist` | installed | YES |
@@ -146,6 +147,8 @@ below disagrees with this block, THIS BLOCK WINS.
 | `com.valleypawn.health-weekly-digest.plist` | installed | YES |
 | `com.valleypawn.hiring-autopost.plist` | installed | YES |
 | `com.valleypawn.hr-policy-sync.plist` | installed | YES |
+| `com.valleypawn.icloud-mail-mirror.plist` | installed | YES |
+| `com.valleypawn.instock-nightly.plist` | installed | YES |
 | `com.valleypawn.intake-backfill.plist` | installed | YES |
 | `com.valleypawn.items-to-price.plist` | installed | YES |
 | `com.valleypawn.ivr-app-link-text.plist` | installed | YES |
@@ -255,43 +258,43 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-11-24 | Valley Pawn OS | - |
-| 2026-11-24 | Unified Search | - |
+| 2026-11-25 | Valley Pawn OS | - |
+| 2026-11-25 | Unified Search | - |
+| 2026-11-25 | Quickbooks Set UP | - |
+| 2026-11-25 | Loan Reminder Texts | STATUS.md |
+| 2026-11-25 | Life OS | - |
+| 2026-11-25 | Business Dashboard Website | - |
+| 2026-11-25 | Bravo Data Extraction | STATUS.md |
+| 2026-11-24 | eBay Customer Campaign | - |
+| 2026-11-24 | eBay | - |
+| 2026-11-24 | Zoom Call Pipeline | - |
+| 2026-11-24 | Website | - |
+| 2026-11-24 | Valuation Core | README.md |
+| 2026-11-24 | Store Conduct Watch | STATUS.md |
+| 2026-11-24 | Sold Margin Review | STATUS.md |
+| 2026-11-24 | Seasonal Campaigns | STATUS.md |
 | 2026-11-24 | Refine Social Media | - |
-| 2026-11-24 | Quickbooks Set UP | - |
-| 2026-11-24 | Loan Reminder Texts | STATUS.md |
-| 2026-11-24 | Life OS | - |
-| 2026-11-24 | Business Dashboard Website | - |
+| 2026-11-24 | Preston Knowledge Base | - |
+| 2026-11-24 | Precious Metals Settlements | - |
+| 2026-11-24 | Pawn Walks | STATUS.md |
+| 2026-11-24 | Listing Management | STATUS.md |
+| 2026-11-24 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-11-24 | Human Resources | - |
+| 2026-11-24 | Health Optimization | STATUS.md |
+| 2026-11-24 | Email Refinement | - |
+| 2026-11-24 | Discount Outlier Review | STATUS.md |
+| 2026-11-24 | Daily Funds Verification | - |
+| 2026-11-24 | Compliance | - |
 | 2026-11-24 | Business Continuity | - |
-| 2026-11-24 | Bravo Data Extraction | STATUS.md |
-| 2026-11-23 | eBay | - |
-| 2026-11-23 | Zoom Call Pipeline | - |
-| 2026-11-23 | Website | - |
 | 2026-11-23 | Valley Pawn Studios | STATUS.md |
 | 2026-11-23 | Training Program | STATUS.md |
-| 2026-11-23 | Store Conduct Watch | STATUS.md |
-| 2026-11-23 | Seasonal Campaigns | STATUS.md |
-| 2026-11-23 | Preston Knowledge Base | - |
-| 2026-11-23 | Precious Metals Settlements | - |
 | 2026-11-23 | New Store - St Augustine | STATUS.md |
-| 2026-11-23 | Listing Management | STATUS.md |
-| 2026-11-23 | Jewelry Count Reconciliation | STATUS.md |
-| 2026-11-23 | Human Resources | - |
-| 2026-11-23 | Health Optimization | STATUS.md |
 | 2026-11-23 | Gold and Silver Markeitng | - |
-| 2026-11-23 | Email Refinement | - |
-| 2026-11-23 | Daily Funds Verification | - |
-| 2026-11-23 | Compliance | - |
 | 2026-11-23 | Communcations | - |
 | 2026-11-23 | Call Analysis | - |
 | 2026-11-23 | Bonus Program | - |
 | 2026-11-23 | Ask Valley Pawn | STATUS.md |
-| 2026-11-22 | eBay Customer Campaign | - |
-| 2026-11-22 | Valuation Core | README.md |
-| 2026-11-22 | Sold Margin Review | STATUS.md |
-| 2026-11-22 | Pawn Walks | STATUS.md |
 | 2026-11-22 | Knowledge Harvest | - |
-| 2026-11-22 | Discount Outlier Review | STATUS.md |
 | 2026-11-22 | Ai Optimized Marketing | - |
 | 2026-11-21 | Short Term Rental Optimization | - |
 | 2026-11-20 | MobilePawn Participation | README.md |

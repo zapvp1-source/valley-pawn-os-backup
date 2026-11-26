@@ -11,3 +11,4 @@
 - 2026-10-29 10:21: Brendon Thomas: slack_id changed
 - 2026-11-17 11:19: removed Audrey Davis (Corporate Support); removed Kennedy Davis (Corporate Support)
 - 2026-11-23 11:19: added Edgar Alvarez Alvira (Harrisonburg)
+- 2026-11-25 17:50: Edgar Alvarez Alvira: slack_id changed

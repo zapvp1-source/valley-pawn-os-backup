@@ -3116,3 +3116,22 @@ Jewelry Count — Tuesday 11/24 (expected = system on-hand, counted = PM count s
 
 Harrisonburg — count sheet not posted tonight.
 
+
+## RUN RECORD — 2026-11-25 (Wednesday) — native jewelry-onhand-nightly-pull
+
+Open: CUL ROA WAY. Bravo freeze-window CSVs: all open stores. Sheets: CUL NOT USED — count sheet not filled in; ROA ok (Joey-Epperly, 18:40); WAY NOT USED — count sheet not filled in.
+
+Jewelry Count — Wednesday 11/25 (expected = system on-hand, counted = PM count sheet)
+
+| Store | Category | Expected | Counted | Variance |
+|---|---|---|---|---|
+| ROA | Rings | 602 | 602 | 0 |
+| ROA | Bracelets | 141 | 141 | 0 |
+| ROA | Earrings | 76 | 76 | 0 |
+| ROA | Pendants | 176 | 176 | 0 |
+| ROA | Necklaces | 153 | 153 | 0 |
+| **ROA Total** | | **1148** | **1148** | **0** |
+
+Culpeper — count sheet not filled in.
+Waynesboro — count sheet not filled in.
+

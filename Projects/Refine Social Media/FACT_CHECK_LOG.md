@@ -396,3 +396,14 @@ Unverifiable: none left in posts. PUBLISHED-WRONG: none.
   - Waynesboro FB 6b04979f… + GBP_Waynesboro 6b0497a7…: "By 2017 it had reopened" (vague) → "reopened on March 1, 2016 … also its 10th year back".
   - Brand 6b049715…, BrandIG 6b04971d…, BrandTwitter 6b049726…: vague "out looking for gifts this weekend / come see us" → closed Thanksgiving Day, back Friday 10 AM, 15% off in store Fri-Sat Nov 27-28, no minimum (FB/IG), some exclusions apply. X 226 chars. Also clears the Seasonal Campaigns SOCIAL check gap for brand channels.
 - Unverifiable: none. PUBLISHED-WRONG: none.
+
+## 2026-11-25 (Wed) 07:45 ET — daily fact-check, window to 2026-11-26 ~19:40 ET
+- Posts checked: 38 (11/25: 19 — product, Brand Thanksgiving x3, town history x10, Lexington poll; 11/26: 19 — Thanksgiving-day town posts x10, product/poll/Pinterest/YouTube). Skipped as evergreen/product: Basic City, Mount Pony, Chesapeake Western, Goshen Pass, Culpeper Depot, Chessie Trail, Big Lick/Roanoke 1882, all Pinterest/YouTube/product-price/poll posts.
+- Verified:
+  - Thanksgiving 2026 = Thu Nov 26: "Thanksgiving's tomorrow" (Brand/BrandIG/BrandTwitter 11/25) and "Happy Thanksgiving" (11/26 town posts) correct.
+  - Black Friday/Small Business Saturday: 15% off in store Fri-Sat Nov 27-28, 2026, no minimum, some exclusions; all 5 stores closed Thanksgiving Day Thu Nov 26; Fri hours from 10am. Re-read today: https://thevalleypawn.com/black-friday/
+  - Mill Mountain Star (Roanoke FB + GBP 11/25): first lit Thanksgiving Eve Nov 23, 1949, 8:22 PM; "this week marks 77 years" correct. https://www.playroanoke.com/the-roanoke-star/
+  - Store hours in GBP posts match standing hours.
+- Edited (3, all APPLIED):
+  - GBP_Culpeper 6b04964c… (Loungefly), GBP_Waynesboro 6b049675… (KitchenAid), GBP_Roanoke 6b0496c5… (Razor MX650), all posting on Thanksgiving Day: listed regular hours only → added "We're closed today for Thanksgiving and back Friday at 10am", hours relabeled "Regular hours".
+- Unverifiable: none. PUBLISHED-WRONG: none.

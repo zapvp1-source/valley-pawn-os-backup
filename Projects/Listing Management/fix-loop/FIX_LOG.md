@@ -1,5 +1,16 @@
 # Listings Fix Loop — FIX_LOG (newest first)
 
+## 2026-11-25 — daily run + Wednesday search review (scheduled, unattended, Joshua's Chrome) — 8 actions
+- **Ingest:** no new presence scorecard (latest 11/22) or FFL_DRIFT (11/22); nothing new to add.
+- **ESCALATED → Joshua:** LQ-017 FB "Gold N Pawn" 100041735065936 still live (18 followers, our Roanoke phone) and LQ-014 valleypawnlex. Facebook rung 3 has no unattended path: the impostor form is person-only, and Meta Business Support Home stops on a redirect interstitial. Both → joshua_decision (Meta Business Support chat from Business Suite, or let the 11/17 reports run). Re-check 12/2.
+- **NEW LQ-047 (split from LQ-020):** Yelp "Valley Pawn" Staunton ghost (817 Richmond Ave) still live 7 days after the suggest-edit. Its owner block reads "Preston P., Manager", so it is claimed under Preston's Yelp login, not Joshua's. Only that login can close it → blocked_signin. LQ-020's other 8 sites continue tomorrow.
+- **SUBMITTED (LQ-032):** Yelp owner edits — Culpeper Electronics → Gold Buyers; Waynesboro Installment Loans → Jewelry ("Success"). Public pages still show the old set; verify 12/2. Roanoke already correct; Lexington (Electronics) next run; Harrisonburg is LQ-022.
+- **Search review (week 1, baseline):** Google clicks +27% (1,140 vs 900), impressions +21%; location pages now take the store searches (home −349, /locations/ +~560). Change made: /sell-jewelry-roanoke/ Yoast title + meta rewritten for engagement-ring/diamond queries (CTR 0.4% on 1,188 impressions); verified live, IndexNow Success. Bing data starts 11/20 (67 impressions). GBP performance not pulled (cap). File: search-review/SEARCH_REVIEW_2026-11-25.md.
+- **Noticed, not changed:** all 5 Yelp pages show "Open, special hours 10–6" today (Wed) — set by someone in the account for Thanksgiving week.
+- **Sign-in probe:** Facebook ✅, Yelp ✅, Search Console ✅, Bing Webmaster ✅. Apple Business ❌ (11/24 Apple loop), Bing Places ❌, BrightLocal ❌ (not retried).
+- Proof: evidence/2026-11-25_live_checks.txt. No Thursday AI check, no Saturday post.
+- search-review: 1 change
+
 ## 2026-11-24 — daily run (scheduled, unattended, Joshua's Chrome) — 8 actions
 - **Ingest:** no new presence scorecard (latest 11/22) or FFL_DRIFT (11/22) since yesterday's run; nothing new to add.
 - **VERIFIED (still wrong):** LQ-017 FB "Gold N Pawn" 100041735065936 and LQ-014 valleypawnlex still live; no decision in Support Inbox 7 days after the 11/17 reports (not rejected). Both move to rung 3 (Facebook impersonation/business support form) on the next run.

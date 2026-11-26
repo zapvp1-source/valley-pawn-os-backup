@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-11-24 22:11 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-11-25 22:09 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -2731,6 +2731,12 @@ PRESTON SAID: "there's another set of signs that came in that similar, but they 
 SOURCE: zoom-call:9f68a9b08e984b3b837d6c95f24f7a04 | 2026-11-12 | UNK Walker Tapley
 id: henry-authorized-dealer-sign-b2be29e2
 
+### [LOW] holiday-scheduling-no-40-hour-guarantee
+RULE: On holidays, don't schedule extra staff just to bring everyone up to 40 hours. Extra scheduled people are only added cost, so some employees may get under 40 hours that week.
+PRESTON SAID: "there's just there's no reason to schedule extra people It's just extra costs"
+SOURCE: zoom-call:3fc688b330b449e08808ffca0e4a385a | 2026-11-25 | UNK Chadd McClintic
+id: holiday-scheduling-no-40-hou-b268f830
+
 ### [LOW] id-missing-fields-passport
 RULE: A passport doesn't carry every field the computer asks for, such as address and eye color. Get the missing details from the customer or from another ID.
 PRESTON SAID: "The computer's going to ask, but you just have to get that from like address, eye color and all that good stuff."
@@ -3017,5 +3023,5 @@ id: past-due-75-day-5-percent-ce-30eeab0b
 
 
 ==============================================================================
-COVERAGE: 426 entries - 31 verified by Preston, 162 high-confidence rules, 124 medium, 107 low, 2 superseded.
+COVERAGE: 427 entries - 31 verified by Preston, 162 high-confidence rules, 124 medium, 108 low, 2 superseded.
 ==============================================================================

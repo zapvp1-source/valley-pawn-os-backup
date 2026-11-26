@@ -1,5 +1,26 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-25 (daily PREP run, 12:42–12:58 ET, level 1 all pages, Wednesday before Thanksgiving) — picks queued for the next POST-mode chat, nothing published by this run
+- Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only (composer read "What's on your mind, Joshua?" at start and end); never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. A Marketplace Messenger chat window (a seller about a watch) was open on Joshua's profile — not touched.
+- Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).
+- No POST-mode chat since 11/19 morning (ledger unchanged at 88 rows), so nothing to sync into WATCHLIST.
+- QUEUE cleaned: lapsed unposted — Culpeper Costume Closet comment (11/24 14:00), Waynesboro Wayne Theatre comment (11/24 16:49), Waynesboro WARM location share (11/25 09:45), Roanoke Mill Mountain Zoo comment (11/25 12:18). Still pending: Roanoke follow → Roanoke Regional Chamber; Culpeper CRI florals comment (to TODAY 16:06); Harrisonburg DNR Bridgewater basketball comment (to 11/26 12:26); Lexington RRL Talking Book comment (to 11/26 12:00).
+- New picks (permalinks opened and confirmed, times from hover):
+  - Roanoke comment → Downtown Roanoke, Inc. / RVTV reel, Downtown Roanoke Ambassadors (to 11/26 11:28).
+  - Waynesboro comment → Waynesboro.Com reel, holiday display on Maple Avenue (to ~11/26 20:00).
+  - Waynesboro share → Waynesboro.Com, WARM Cold Weather Shelter served 31 neighbors on its first night, Mon 11/23 (to 11/26 23:30) — Waynesboro's share for the week of 11/23.
+  - Brand comment → Shenandoah National Park webcams post (to 11/26 13:00); re-open before posting in case the thread turns to wildfire complaints.
+  - Culpeper comment → Culpeper County Library Youth Knit & Crochet class (to 11/26 12:00) — only if the CRI florals pick isn't posted the same day.
+  - Culpeper share → Culpeper Renaissance Inc. reel, Santa visit Sat 11/28, 1:00–5:00 PM, Culpeper Visitors Center, 111 Commerce Street (to 11/27 09:45) — Culpeper's share for the week.
+  - Harrisonburg, Lexington: no new picks (both have picks valid through tomorrow noon).
+- Skipped on purpose: DRI Holiday Gift Guide and CRI gift-card post (retail promos); SNP Skyline Drive wildfire closures; Visit VBR Illuminights (Roanoke near-repeat of its 11/19 share) and Land of Lights (Franklin County, outside area); Culpeper Library $300K PATH grant and $100K Friends gift (money topics, older); Town of Culpeper police job postings; Lexington FD recruitment bonus.
+- Thanksgiving note: a POST chat on Thursday 11/26 morning would still catch every new pick; by Friday only the Culpeper Santa share remains.
+- Ramp: all pages hold level 1. Share week (Mon 11/23–Sun 11/29): none used; queued Waynesboro and Culpeper.
+- Watchlist: 9 pages re-checked; none newly dormant; no unresolved entries. No town follow searches this run (Roanoke follow still pending).
+- Reply / follow-back candidates for POST mode: unchanged carry-overs (Mark Lyon on Valley Pawn-Culpeper; ~10 commenters on a Valley Pawn-Lexington post; "Synster Gates Fan" mention on Valley Pawn; Kelsey L Iane and 3 others followed Valley Pawn-Lexington — follow back only if offered).
+- Needs a person: none new.
+- Totals this run: comments 0 (4 new queued), shares 0 (2 new queued), replies 0, follows 0 (1 pending), new pages resolved 0.
+
 ## 2026-11-24 (daily PREP run, 12:41–12:48 ET, level 1 all pages, Tuesday) — picks queued for the next POST-mode chat, nothing published by this run
 - Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only (composer read "What's on your mind, Joshua?" at start and end); never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. A Messenger chat window from a contractor page was open on Joshua's profile — not touched.
 - Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).

@@ -1,6 +1,160 @@
 # Sent mail — last 7 days (iCloud + all other Mail accounts)
 
-_Mirror of Apple Mail on the Mac Studio, refreshed every 10 minutes. Times are Eastern. Mirror run: 2026-11-25 00:14 EST._
+_Mirror of Apple Mail on the Mac Studio, refreshed every 10 minutes. Times are Eastern. Mirror run: 2026-11-26 00:10 EST._
+
+**[zapvp1@me.com]** ### 2026-11-25 13:19 EST — Lease Buy Out Loan
+- From: Joshua Davis <zapvp1@me.com>
+- To: Mary O'Cain <mary.ocain@usbank.com>
+
+All signed.  Are we good to go? Sent from my iPhone
+
+ On Nov 25, 2026, at 12:46 PM, Joshua Davis <zapvp1@me.com> wrote:
+
+ ﻿ Thanks Mary.  I haven’t recieved. Does it take some time? Sent from my iPhone
+
+ On Nov 25, 2026, at 11:58 AM, O'Cain, Mary <mary.ocain@usbank.com> wrote:
+
+ ﻿
+
+ Hello Joshua, 
+
+ I look forward to assisting you today with your lease buyout signing.  I apologize I was not able to waive the fee. 
+
+ Your loan documents will be sent to your email from U.S. Bank and will be signed electronically through OneSpan. 
+
+ Before signing, I would like to review the following information reflected in your contract: 
+
+ Sales Tax: The
+ tax amount included in your payoff is an estimate based on your county and may be subject to adjustment. Loan Origination Fee: 
+ A $100 loan origination fee is included in the loan amount. This fee can be found on Page 1 of the contract under the
+ Itemization of Amount Financed , Line B. 
+
+ Important: Disable Pop-Up Blockers Before Signing 
+
+ To ensure a smooth signing experience in OneSpan, please disable any pop-up or redirect blockers before opening your documents, especially if you
+ are signing from a mobile device. 
+
+ For iPhone or iPad: 
+
+ 
+
+**[zapvp1@me.com]** ### 2026-11-25 12:46 EST — Lease Buy Out Loan
+- From: Joshua Davis <zapvp1@me.com>
+- To: Mary O'Cain <mary.ocain@usbank.com>
+
+Thanks Mary.  I haven’t recieved. Does it take some time? Sent from my iPhone
+
+ On Nov 25, 2026, at 11:58 AM, O'Cain, Mary <mary.ocain@usbank.com> wrote:
+
+ ﻿
+
+ Hello Joshua, 
+
+ I look forward to assisting you today with your lease buyout signing.  I apologize I was not able to waive the fee. 
+
+ Your loan documents will be sent to your email from U.S. Bank and will be signed electronically through OneSpan. 
+
+ Before signing, I would like to review the following information reflected in your contract: 
+
+ Sales Tax: The
+ tax amount included in your payoff is an estimate based on your county and may be subject to adjustment. Loan Origination Fee: 
+ A $100 loan origination fee is included in the loan amount. This fee can be found on Page 1 of the contract under the
+ Itemization of Amount Financed , Line B. 
+
+ Important: Disable Pop-Up Blockers Before Signing 
+
+ To ensure a smooth signing experience in OneSpan, please disable any pop-up or redirect blockers before opening your documents, especially if you
+ are signing from a mobile device. 
+
+ For iPhone or iPad: 
+
+ Go to
+ Settings > Apps > Safari Turn
+ Block Pop-ups off Reload the page before accessing your documents 
+
+ For Android (Chro
+
+**[zapvp1@me.com]** ### 2026-11-25 11:42 EST — Lease Buy Out Loan
+- From: Joshua Davis <zapvp1@me.com>
+- To: Mary O'Cain <mary.ocain@usbank.com>
+
+Hey Mary 
+
+ I have talked to everyone.  I guess you all can’t waive it. Send over the contracts. Please
+
+ Joshua Sent from my iPhone
+
+ On Nov 25, 2026, at 11:12 AM, O'Cain, Mary <mary.ocain@usbank.com> wrote:
+
+ ﻿
+
+ Hello Joshua, 
+
+ Thank you for your recent inquiry regarding your loan with U.S. Bank. It’s always a pleasure to assist you with any questions or concerns you may have regarding your loan. 
+
+ I have the loan documents ready for you to sign. However, I am unable to make an adjustment to the term fees. Since you were advised by the Maturity Department that the fees could be adjusted by my department, I consulted with my manager. My manager then
+ reached out to the End of Term team, who advised that Servicing may be able to assist you. You can contact Servicing at 800-259-8779. 
+
+ If you would like me to send the contracts to you today, please let me know. 
+
+ If we may be of further assistance, please contact us at 1-800-342-4310. We’re available Monday through Friday, 8 a.m. to 6 p.m. Central time. 
+
+ Thank you, 
+
+ Mary 
+
+ Account Sales Rep 
+
+ O:  445-213-4138 
+
+ U.S. Bank |  usbank.com 
+
+ <image001.png>
+
+ You are receiving this email as a service to your account because y
+
+**[zapvp1@me.com]** ### 2026-11-25 09:12 EST — Lease Buy Out Loan
+- From: Joshua Davis <zapvp1@me.com>
+- To: Mary O'Cain <mary.ocain@usbank.com>
+
+Morning Mary. Can we close the loan today? 
+
+ Best
+ Joshua Sent from my iPhone
+
+ On Nov 10, 2026, at 10:21 AM, Joshua Davis <zapvp1@me.com> wrote:
+
+ ﻿ Yes please update for 85k Sent from my iPhone
+
+ On Nov 10, 2026, at 10:14 AM, O'Cain, Mary <mary.ocain@usbank.com> wrote:
+
+ ﻿
+
+ Hello Joshua, 
+
+ As mentioned in our last communication, the End of Term department with Lease Maturity can provide a complete breakdown of all applicable fees. You may also discuss and negotiate any changes related to the lease buyout directly with them. Their phone number
+ is 866-250-3147. 
+
+ The current loan details are based on a loan amount of $80,000. Would you like me to update the loan amount before I send the loan details to you? 
+
+ If we may be of further assistance, please contact us at 1-800-342-4310. We’re available Monday through Friday, 8 a.m. to 6 p.m. Central Time. 
+
+ Thank you, 
+
+ Mary 
+
+ Account Sales Rep 
+
+ O:  445-213-4138 
+
+ U.S. Bank |  usbank.com 
+
+ <image001.png>
+
+ You are receiving this email as a service to your account because you started, saved or completed an application. To ensure continued delivery, please add us to
+ your Address Book ( usbank@notifications.usbank.com ). 
+
+ Yo
 
 **[zapvp1@me.com]** ### 2026-11-24 19:18 EST — Thanksgiving dinner request – Thu 11/26, 7:00 PM, party of 7
 - From: Joshua Davis <joshua@luckydavis.com>
@@ -352,308 +506,4 @@ Joshua Davis
 > Joshua Davis
 > (804) 930-4221
 >
-
-**[zapvp1@me.com]** ### 2026-11-18 17:38 EST — Attn: Akim Samuel - Voucher transfer letter [Incident: 260707-000161]
-- From: Joshua Davis <zapvp1@me.com>
-- To: customersupport@sandals.com
-- Cc: vedward@grp.sandals.com, filius.laurent@grp.sandals.com
-
-> Hi Akim,
-> 
-> As you requested, attached are:
-> 
-> 1. Our signed letter transferring our voucher (booking 12394882, incident 250802-000085) to Christopher and Cathrine Marney
-> 2. Copies of our driver's licenses
-> 3. The original voucher, signed by both of us
-> 
-> They would like to stay at Sandals Regency La Toc January 9-16, 2027. Please confirm once the transfer is complete so they can book.
-> 
-> Thank you,
-> Joshua & Hillary Davis
-> (804) 930-4221
-> 
-
-Joshua Davis
-
-￼￼￼
-
-**[zapvp1@me.com]** ### 2026-11-18 15:38 EST — [Happy Head] Cheers to Your Hair Growth!🙌
-- From: Joshua Davis <zapvp1@me.com>
-- To: Happy Head <help@happyhead.com>
-
-Great. Ty Sent from my iPhone
-
- On Nov 18, 2026, at 3:24 PM, Glyza Faye P. (Happy Head) <help@happyhead.com> wrote:
-
- ﻿
-
- Your request (2054993) has been updated. To add additional comments, reply to this email.
-
- Glyza Faye P. (Happy Head) 
- Nov 18, 2026, 12:24 PM PST 
- HI, Joshua!
-
-That’s great to hear it’s working! Please let us know if you run into any issues—we’ll be happy to help!
-
-I’m happy to confirm your next refill is scheduled for 11/20/26.
-
-Your subscription runs every 25 days. 
-
-Want to make a change? It’s easy! Manage your account online here , or simply respond to this message and I’ll be glad to help.
-
-P.S. If you’re not already, follow us on Instagram for our latest hair growth tips and tricks!
- -
-
-Glyza Faye P.
- Senior Team Lead
- For further assistance, respond here or reach out to us at happyhead.com/help
- DISCLAIMER: The information in this message does not constitute medical advice and should be used for informational purposes only and does not establish a patient/doctor relationship. Please do not rely on this information to make medical decisions. Please make sure to discuss the risks and benefits of any treatment with your medical doctor before beginning tre
-
-**[zapvp1@me.com]** ### 2026-11-18 13:06 EST — 148 Hardinberry St - maintenance plan
-- From: Joshua Davis <zapvp1@me.com>
-- To: Heather <airecareinfo@gmail.com>
-
-Paid.  Thanks Heather  Sent from my iPhone
-
- On Nov 18, 2026, at 12:41 PM, Heather <airecareinfo@gmail.com> wrote:
-
- ﻿ Hi Joshua,
-
-I have updated your account to the $159 annual plan and deleted the $19.95/month one as requested. I will be reaching out to your tenant to get scheduled soon.  
-
-Thank you, Tiffany 
-
- On Wed, Nov 18, 2026 at 12:28 PM Joshua Davis < zapvp1@me.com > wrote:
-
-Hi,
-
-Got both plan links for 148 Hardinberry St, Oak Ridge . We want the one-time $159 annual plan, not the monthly. Please cancel the $19.95/month one.
-
-Thanks
-Joshua Davis
- 804-930-4221
-
-**[zapvp1@me.com]** ### 2026-11-18 12:27 EST — 148 Hardinberry St - maintenance plan
-- From: Joshua Davis <zapvp1@me.com>
-- To: airecareinfo@gmail.com
-
-> Hi,
-> 
-> Got both plan links for 148 Hardinberry St, Oak Ridge. We want the one-time $159 annual plan, not the monthly. Please cancel the $19.95/month one.
-> 
-> Thanks
-> Joshua Davis
-> 804-930-4221
->
-
-**[zapvp1@me.com]** ### 2026-11-18 11:30 EST — Quote request - well pressure tank replacement, 282 Bald Rock Rd, Verona
-- From: Joshua Davis <zapvp1@me.com>
-- To: chjmdexter@icloud.com
-
-> Hi Cory,
-> 
-> The current tank is a Goulds V260 (about 85 gallons). I don't have the pump horsepower or GPM handy. Can you check those on site?
-> 
-> Two prices, please:
-> 1. Replace the V260 with a new tank, tank tee, pressure switch, gauge and relief valve.
-> 2. A constant-pressure setup (for example a Franklin SubDrive/MonoDrive on the existing pump) with a smaller tank, if our pump works with it.
-> 
-> It's a rental, so the work needs to happen between guest stays.
-> 
-> Thanks,
-> Joshua Davis
-> (804) 930-4221
-> 
-
-Joshua Davis
-
-**[zapvp1@me.com]** ### 2026-11-18 10:52 EST — 14300 Woods Walk Lane - Comfort Club
-- From: Joshua Davis <zapvp1@me.com>
-- To: Stacey Anderson <stacey.anderson@howellsac.com>
-
-Awesome. TY Sent from my iPhone
-
- On Nov 18, 2026, at 10:46 AM, Stacey Anderson <stacey.anderson@howellsac.com> wrote:
-
- ﻿
-
- Great, thank you! 
-
- Yes, the first visit was completed on 10/2. 
-
- Thank you 
-
-                                        Stacey
- Anderson 
-
-                               Customer
- Service Rep 
-
- <image002.png>
-
-                         Email:
- Stacey.anderson@howellsac.com 
-
-                         P: 804 798 1371 
-
-                         HowellsAc.com 
-
- HOWELLS HEATING AND AIR 
-
-                         Commercial & Residential 
-
- 11216 Air Park Road, Ashland, VA 23005 . 
-
- From: Joshua Davis <zapvp1@me.com>
-
- Sent: Wednesday, November 18, 2026 10:35 AM
-
- To: Stacey Anderson <stacey.anderson@howellsac.com>
-
- Subject: Re: 14300 Woods Walk Lane - Comfort Club 
-
- I just paid!!, so we already went out there? 
-
- Joshua Davis 
-
- On Nov 18, 2026, at 10:11   AM, Stacey Anderson < stacey.anderson@howellsac.com > wrote: 
-
- Good Morning Joshua, 
-
- The membership is active; however, the invoice is still outstanding and we do not have a card on file. 
-
- You can call me at any time to pay, alternatively I have text a link to pay. 
-
- Next visit is scheduled on 4/2/27 8
-
-**[zapvp1@me.com]** ### 2026-11-18 10:41 EST — Quote request - well pressure tank replacement, 282 Bald Rock Rd, Verona
-- From: Joshua Davis <zapvp1@me.com>
-- To: chjmdexter@icloud.com
-
-> Cory, we'll get you a picture of the pump specs.
-> 
-> Joshua
-> 
-
-Joshua Davis
-
-**[zapvp1@me.com]** ### 2026-11-18 10:35 EST — 14300 Woods Walk Lane - Comfort Club
-- From: Joshua Davis <zapvp1@me.com>
-- To: Stacey Anderson <stacey.anderson@howellsac.com>
-
-I just paid!!, so we already went out there?
-
-Joshua Davis
-
-> On Nov 18, 2026, at 10:11 AM, Stacey Anderson <stacey.anderson@howellsac.com> wrote:
-> 
-> Good Morning Joshua,
-> 
-> The membership is active; however, the invoice is still outstanding and we do not have a card on file.
-> 
-> You can call me at any time to pay, alternatively I have text a link to pay.
-> 
-> Next visit is scheduled on 4/2/27 8–10 time frame.
-> 
-> Please let me know if you have any other questions
-> 
-> Thank you
-> 
-> Stacey Anderson
-> Customer Service Rep 
-> <image003.png>
-> Email: Stacey.anderson@howellsac.com <mailto:Stacey.anderson@howellsac.com>
-> P: 804 798 1371
-> HowellsAc.com <http://howellsac.com/>
-> 
-> HOWELLS HEATING AND AIR 
-> Commercial & Residential
-> 11216 Air Park Road, Ashland, VA 23005.
-> 
-> From: Joshua Davis <zapvp1@me.com>
-> Sent: Wednesday, November 18, 2026 10:01 AM
-> To: Stacey Anderson <stacey.anderson@howellsac.com>
-> Subject: 14300 Woods Walk Lane - Comfort Club
-> 
-> 
-> Hi Stacey,
-> 
-> Can you confirm the Comfort Club membership is active for 14300 Woods Walk Lane, Midlothian and that invoice 518585 ($300) is paid with the card on file? Also when is the next visit due?
-> 
-> Thanks
-> 
-
-**[zapvp1@me.com]** ### 2026-11-18 10:00 EST — 14300 Woods Walk Lane - Comfort Club
-- From: Joshua Davis <zapvp1@me.com>
-- To: stacey.anderson@howellsac.com
-
-> Hi Stacey,
-> 
-> Can you confirm the Comfort Club membership is active for 14300 Woods Walk Lane, Midlothian and that invoice 518585 ($300) is paid with the card on file? Also when is the next visit due?
-> 
-> Thanks
-> Joshua Davis
-> 804-930-4221
-> 
-
-Joshua Davis
-
-**[zapvp1@me.com]** ### 2026-11-18 09:51 EST — Quote request - well pressure tank replacement, 282 Bald Rock Rd, Verona
-- From: Joshua Davis <zapvp1@me.com>
-- To: lhburner@comcast.net
-
-> Hi,
-> 
-> I need the well pressure tank replaced at 282 Bald Rock Road, Verona, VA 24482 (Augusta County). It's a 5-bedroom vacation rental, so I'd like to schedule between guest stays.
-> 
-> Do you service Verona? If so, could you send a written quote for the tank replacement (tank, fittings, labor) and your earliest availability? Please quote the tank only. If you find anything else that needs work, call me before doing it.
-> 
-> Thanks,
-> Joshua Davis
-> (804) 930-4221
-> 
-
-Joshua Davis
-
-**[zapvp1@me.com]** ### 2026-11-18 09:51 EST — Quote request - well pressure tank replacement, 282 Bald Rock Rd, Verona
-- From: Joshua Davis <zapvp1@me.com>
-- To: dexteroffice@ondeck.email
-
-> Hi,
-> 
-> I need the well pressure tank replaced at 282 Bald Rock Road, Verona, VA 24482. It's a 5-bedroom vacation rental, so I'd like to schedule between guest stays.
-> 
-> Could you send a written quote for the tank replacement (tank, fittings, labor) and your earliest availability? Please quote the tank only. If you find anything else that needs work, call me before doing it.
-> 
-> Thanks,
-> Joshua Davis
-> (804) 930-4221
-> 
-
-Joshua Davis
-
-**[zapvp1@me.com]** ### 2026-11-18 09:15 EST — Appointment reminder — Alpha Gas Services
-- From: Joshua Davis <zapvp1@me.com>
-- To: Alpha Gas Services <alphagasservices22@gmail.com>
-
-Hio we have hired someone, thanks for your time
-
-Best
-Joshua Davis
-
-> On Nov 18, 2026, at 8:00 AM, Alpha Gas Services <alphagasservices22@gmail.com> wrote:
-> 
-> 
-> Appointment Thursday, November 19
-> 
-> Hi Joshua,
-> 
-> This is a friendly reminder of your appointment with Alpha Gas Services tomorrow, Thursday, November 19, arrival between 4:00 PM and 5:00 PM.
-> Address: 844 Cypress Crossing Trail, St. Augustine, FL 32095
-> 
-> If anything changes, just reply to this email or call us at (904) 888-4610.
-> 
-> Fran Paez
-> Alpha Gas Services LLC
-> Alpha Gas Services LLC | (904) 888-4610 | alphagasservices22@gmail.com <mailto:alphagasservices22@gmail.com>
 

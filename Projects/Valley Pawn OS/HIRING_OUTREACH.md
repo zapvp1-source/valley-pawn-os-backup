@@ -5,6 +5,95 @@
 
 **Created:** 2026-08-15 · **Owner:** Joshua (execution: Claude scheduled task `indeed-applicant-outreach`)
 
+### Run log — 2026-11-25 ~5:xx PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Candidates checked live: New tab still 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Store Manager/Saint Augustine FL, out of scope, unchanged). All applications 298, Reviewing 15, Contacting 249, Interviewing 31, Rejected 216 — unchanged. No new in-scope applicant.
+- Indeed Messages inbox checked live top to bottom (screenshot): unchanged from the ~4:1x PM run — our confirmation to Patrick Hensley (interview today, 11:00 AM), Jeanie Herring's nudge still awaiting reply, Christian Miller/Andrew Figgins/Michael Boyer/Matthew Williams/Robert Brandt/Shad Taha all end on our side or are acks needing no reply. No unanswered candidate question, no new booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live for 11/25–11/30: 1 confirmed interview — Patrick Hensley 11:00 AM today, Harrisonburg, 703-999-7712, unchanged.
+- Slack DM (D03BHQH5VGT) re-read: newest item is 4:09 AM Bald Rock contracts note (not hiring); newest hiring item still the 9:20:38 AM first-run post. Nothing hiring-related since.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no new candidate questions beyond already-escalated items (Michael Boyer, Scarlet Ledford, Edgar Alvarez Alvira).
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0 (not a 9:30/1:00/6:00 batch window; also no screen control — cloud-only). Rejections: 0. Per the Quiet Rule, no Slack post or DM this run (already posted at 9:20 AM today; nothing new since).
+
+### Run log — 2026-11-25 ~4:1x PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Candidates checked live: New tab still 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Store Manager/Saint Augustine FL, out of scope, unchanged). All applications 298, Reviewing 15, Contacting 249, Interviewing 31, Rejected 216 — unchanged. No new in-scope applicant.
+- Indeed Messages inbox checked live top to bottom: unchanged from the ~3:xx PM run — our confirmation to Patrick Hensley (interview today, 11:00 AM), Jeanie Herring's nudge still awaiting reply, Christian Miller/Andrew Figgins/Michael Boyer/Matthew Williams/Robert Brandt/Shad Taha all end on our side or are acks needing no reply. No unanswered candidate question, no new booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live for 11/25–11/30: 1 confirmed interview — Patrick Hensley 11:00 AM today, Harrisonburg, 703-999-7712, unchanged. Thu 11/26 (Thanksgiving) confirmed on calendar as a holiday block via personal travel events — next-business-day booking logic skips to Fri 11/27 per standing note.
+- Slack DM (D03BHQH5VGT) re-read: newest hiring item still the 9:20:38 AM first-run post; nothing hiring-related since (Bald Rock Verdocs escalation, Fortis, fleet notes, weekly brief, shirt order are all unrelated, non-hiring).
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no new candidate questions beyond already-escalated items (Michael Boyer, Scarlet Ledford, Edgar Alvarez Alvira).
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0 (not a 9:30/1:00/6:00 batch window; also no screen control — cloud-only). Rejections: 0. Per the Quiet Rule, no Slack post or DM this run (already posted at 9:20 AM today; nothing new since).
+
+### Run log — 2026-11-25 ~3:xx PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Candidates checked live: New tab still 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Store Manager/Saint Augustine FL, out of scope, unchanged). All applications 298, Reviewing 15, Contacting 249, Interviewing 31, Rejected 216 — unchanged. No new in-scope applicant.
+- Indeed Messages inbox checked live top to bottom: unchanged from the ~2:03 PM run — our confirmation to Patrick Hensley (interview today), Jeanie Herring's nudge still awaiting reply, Christian Miller/Andrew Figgins/Michael Boyer/Matthew Williams/Robert Brandt/Shad Taha all end on our side or are acks needing no reply. No unanswered candidate question, no new booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live for 11/25–12/01: 1 confirmed interview — Patrick Hensley 11:00 AM today, Harrisonburg, 703-999-7712, unchanged. Reminder: Thu 11/26 is Thanksgiving (federal holiday) — any next-business-day booking logic must skip to Fri 11/27.
+- Slack DM (D03BHQH5VGT) re-read: newest hiring item still the 9:20:38 AM first-run post; nothing hiring-related since (Bald Rock, Fortis, weekly brief, shirt order are all unrelated).
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no new candidate questions beyond already-escalated items (Michael Boyer, Scarlet Ledford, Edgar Alvarez Alvira).
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0 (not a 9:30/1:00/6:00 batch window; also no screen control — cloud-only). Rejections: 0. Per the Quiet Rule, no Slack post or DM this run (already posted at 9:20 AM today; nothing new since).
+
+### Run log — 2026-11-25 ~1:19 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Candidates checked live: New tab still 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Store Manager/Saint Augustine FL, out of scope, unchanged). All applications 298, Reviewing 15, Contacting 249, Interviewing 31, Rejected 216 — unchanged. No new in-scope applicant.
+- Indeed Messages inbox checked live top to bottom: unchanged from the ~2:03 PM run — our confirmation to Patrick Hensley (interview today), Jeanie Herring's nudge still awaiting reply, Christian Miller/Andrew Figgins/Michael Boyer/Matthew Williams/Robert Brandt/Shad Taha all end on our side or are acks needing no reply. No unanswered candidate question, no new booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live for 11/25–11/30: 1 confirmed interview — Patrick Hensley 11:00 AM today, Harrisonburg, 703-999-7712, unchanged.
+- Slack DM (D03BHQH5VGT) re-read: newest hiring item still the 9:20:38 AM first-run post; nothing hiring-related since.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no new candidate questions beyond already-escalated items (Michael Boyer, Scarlet Ledford, Edgar Alvarez Alvira).
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0 (not a 9:30/1:00/6:00 batch window; also no screen control — cloud-only). Rejections: 0. Per the Quiet Rule, no Slack post or DM this run (already posted at 9:20 AM today; nothing new since).
+
+### Run log — 2026-11-25 ~2:03 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Candidates checked live: New tab still 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Store Manager/Saint Augustine FL, out of scope, unchanged). All applications 298, Reviewing 15, Contacting 249, Interviewing 31, Rejected 216 — unchanged. No new in-scope applicant.
+- Indeed Messages inbox checked live top to bottom: unchanged from the 10:49 AM run — our confirmation to Patrick Hensley (interview today), Jeanie Herring's nudge still awaiting reply, Christian Miller/Andrew Figgins/Michael Boyer/Matthew Williams/Robert Brandt/Shad Taha all end on our side or are acks needing no reply. No unanswered candidate question, no new booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live for 11/25–11/28: 1 confirmed interview — Patrick Hensley 11:00 AM today, Harrisonburg, 703-999-7712, unchanged.
+- Slack DM (D03BHQH5VGT) re-read in full (back through 11/21): newest hiring item still the 9:20:38 AM first-run post; nothing hiring-related since (Bald Rock contracts, Fortis, weekly brief, bonuses, shirt order, supply approvals are all unrelated).
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no new candidate questions beyond already-escalated items (Michael Boyer, Scarlet Ledford, Edgar Alvarez Alvira).
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0 (not a 9:30/1:00/6:00 batch window; also no screen control — cloud-only). Rejections: 0. Per the Quiet Rule, no Slack post or DM this run (already posted at 9:20 AM today; nothing new since).
+
+### Run log — 2026-11-25 ~10:49 AM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF. Harrisonburg/Lexington: no Wed/Sun.
+- Candidates checked live: New tab still 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — all Store Manager/Saint Augustine FL, out of scope, unchanged). All applications 298, Reviewing 15 (unchanged). No new in-scope applicant.
+- Indeed Messages inbox checked live top to bottom: unchanged from the 10:40 AM run — our confirmation to Patrick Hensley (interview today), Jeanie Herring's nudge still awaiting reply, Christian Miller/Andrew Figgins/Michael Boyer/Matthew Williams end on our side, Robert Brandt's "Sounds good" and Shad Taha's "Absolutely thank you." are acks needing no reply. No unanswered candidate question, no new booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live for 2026-11-25 through 11-28: 1 confirmed interview — Patrick Hensley 11:00 AM today, Harrisonburg, 703-999-7712, unchanged.
+- Slack DM (D03BHQH5VGT) re-read: newest hiring item still the 9:20:38 AM first-run post; nothing hiring-related since.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no new candidate questions beyond already-escalated items (Michael Boyer, Scarlet Ledford, Edgar Alvarez Alvira).
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0 (not a 9:30/1:00/6:00 batch window). Rejections: 0. Per the Quiet Rule, no Slack post or DM this run (already posted at 9:20 AM today; nothing new since).
+
+### Run log — 2026-11-25 (vp-hiring-pipeline, Cowork scheduled run, cloud-only, this run)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF. Harrisonburg/Lexington: no Wed/Sun.
+- Candidates checked live: New tab still 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — all Store Manager/Saint Augustine FL, out of scope, unchanged). Reviewing (15) checked live: same set as prior runs — Christopher Crammer already interviewed, Scarlet Ledford's pay question still correctly sitting with Joshua, rest Store Manager/FL out of scope. All applications 298 (unchanged). No new in-scope applicant.
+- Indeed Messages inbox checked live top to bottom: newest threads unchanged from the 10:40 AM run — our Wed 11/25 11:00 AM confirmation to Patrick Hensley (interview today), Jeanie Herring's nudge still awaiting reply, Christian Miller/Andrew Figgins/Michael Boyer end on our side, Robert Brandt's "Sounds good" is his ack of an already-completed interview, Shad Taha's "Absolutely thank you." is his ack of Preston's own closing message to him (no action needed, not ours to re-open). Edgar Alvarez Alvira's thread remains Preston's own item (separately, Edgar Alvarez is being offboarded per #preston-goldilocks today — an HR/offboarding matter, not a hiring-pipeline action). No unanswered candidate question, no new booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live for 2026-11-25 through 11-28: 1 confirmed interview — Patrick Hensley 11:00 AM today, Harrisonburg, 703-999-7712, unchanged.
+- Slack DM (D03BHQH5VGT) and #preston-goldilocks re-read: newest hiring item still the 9:20:38 AM first-run post; nothing hiring-related since (Edgar Alvarez Alvira offboarding thread is HR, not hiring-pipeline). No new instruction from Preston or Joshua.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no new candidate questions beyond already-escalated items (Michael Boyer, Scarlet Ledford, Edgar Alvarez Alvira).
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0 (not a 9:30/1:00/6:00 batch window). Rejections: 0. Per the Quiet Rule, no Slack post or DM this run (already posted at 9:20 AM today).
+
+### Run log — 2026-11-25 ~9:49 AM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): STATE ON; Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF. Harrisonburg/Lexington: no Wed/Sun.
+- Jobs dashboard checked live: Saint Augustine FL (24 All, 3 New, off-scope), Lexington (42 All, 0 New), Waynesboro (88 All, 0 New), Harrisonburg (86 All, 0 New), Roanoke (58 All, 0 New) — all Paused, unchanged (long-standing state per CHANGELOG, not actioned, consistent with dozens of prior runs). No new in-scope applicants.
+- Indeed Messages inbox checked live top to bottom: newest thread is our own Wed 11/25 11:00 AM confirmation to Patrick Hensley (Harrisonburg) — his interview is today. Jeanie Herring's nudge (ours, Nov 24) still awaiting her reply, only 1 business day elapsed, not due for further action. Robert Brandt's "Sounds good" (Nov 19) is his ack of an already-confirmed/completed Nov 19 interview — read in full, no action needed. Christian Miller, Andrew Figgins, Michael Boyer threads all end on our side (Michael Boyer's question already correctly left with Joshua). Edgar Alvarez Alvira's thread is Preston's own outreach/decision item, already correctly left to him. No unanswered candidate question, no new booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live for 2026-11-25 through 11-27: 1 confirmed interview — Patrick Hensley 11:00 AM today, Harrisonburg, 703-999-7712. Matches yesterday's 2:35 PM Slack post to #employee-prospects (which already covers today), so nothing new to post — per the Quiet Rule, no Slack message sent this run (nothing changed).
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no new candidate questions beyond already-escalated items (Michael Boyer, Scarlet Ledford, Edgar Alvarez Alvira).
+
+### Run log — 2026-11-25 ~10:40 AM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only, first run of the day)
+
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked via Claude in Chrome.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF. Harrisonburg/Lexington: no Wed/Sun.
+- Candidates checked live (New tab): still 3, all Store Manager/Saint Augustine FL (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan), out of scope, unchanged. All applications 298 (unchanged). No new in-scope applicant.
+- Reviewing (15) checked live: same set as prior runs — Christopher Crammer already interviewed; Scarlet Ledford's pay question still correctly sitting with Joshua, not re-flagged; rest Store Manager/FL out of scope. No untouched in-scope candidate.
+- Indeed Messages inbox checked live top to bottom: newest thread is our own Wed 11/25 11:00 AM confirmation to Patrick Hensley (Harrisonburg) — his interview is today. Jeanie Herring's nudge (ours, Nov 24) still awaiting her reply. Christian Miller, Andrew Figgins, Michael Boyer threads all end on our side (Michael Boyer's question already correctly left with Joshua). Edgar Alvarez Alvira's thread is Preston's own outreach/decision item, already correctly left to him. All other recent threads are closing pleasantries. No unanswered candidate question, no new booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live for 2026-11-25: 1 confirmed interview — Patrick Hensley 11:00 AM, Harrisonburg, 703-999-7712. Matches yesterday's 2:35 PM Slack post to #employee-prospects (which already covers today), so nothing new to post — per the Quiet Rule, no Slack message sent this run (nothing changed).
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no new candidate questions beyond already-escalated items (Michael Boyer, Scarlet Ledford, Edgar Alvarez Alvira).
+
 ## ✅ SCOPE ADDITION — 2026-11-09 (Preston, via #preston-goldilocks, 10:04 AM ET) — LEXINGTON ON, HARRISONBURG REOPENED; NO WED/SUN INTERVIEWS
 Preston: "Claude, I have opened up ads for Lexington and Harrisonburg on Indeed. When contacting applicants please schedule interviews for me between 11am and 3pm. No interviews scheduled on Wednesdays or Sundays. Contact number I will be calling from is 540-202-4200."
 - Sales & Loan Associate — **Lexington** now IN SCOPE (was OFF); **Harrisonburg** stays ON with fresh ad.
@@ -9601,3 +9690,63 @@ Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harr
 - Not the first weekday run — per QUIET RULE, no Slack post or DM this run (nothing changed).
 - Texts: 0 — 7:18 PM run is outside the 9:30/1:00/6:00 batch windows; also no candidate currently needs a text.
 - **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
+### Run log — 2026-11-25 ~10:17 AM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only/direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Indeed Messages inbox checked live top to bottom: unchanged since the ~9:20 AM first run — newest threads still Patrick Hensley's Nov 24 booking confirmation and Jeanie Herring's unanswered Monday nudge (now Nov 24-dated, no reply). No new candidate-initiated message, no booking request, no reschedule, no no-show report.
+- Candidates checked live (New filter): still 3, all out-of-scope Saint Augustine FL/Jacksonville FL (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan). All applications 298 (unchanged). No new in-scope Waynesboro/Harrisonburg/Lexington/Roanoke applicant.
+- Calendar (jdavis@fcfpawn.com) checked live 11/25-11/27: only Patrick Hensley's 11:00 AM Harrisonburg interview today, unchanged, has not occurred yet (ran ~10:17 AM). No gaps/doubles/conflicts.
+- Slack DM (D03BHQH5VGT) re-read: today's first-run-of-the-day post (9:20 AM) already covered the call list (Patrick Hensley 11:00 AM) and overnight status. No new hiring instruction from Joshua or Preston since. #preston-goldilocks searched for "hiring" after 2026-11-24: no results.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due, no unanswered candidate question.
+- Not the first weekday run (already posted at 9:20 AM) — per QUIET RULE, no Slack post or DM this run (nothing changed).
+- Texts: 0 — not a 9:30/1:00/6:00 batch window; cloud-only session has no screen control regardless.
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
+### Run log — 2026-11-25 ~2:20 PM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only/direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Indeed Messages inbox checked live top to bottom: unchanged since the ~10:17 AM run — newest threads still Patrick Hensley's Nov 24 booking confirmation (today's 11:00 AM Harrisonburg interview) and Jeanie Herring's unanswered nudge (no reply). No new candidate-initiated message, no booking request, no reschedule, no no-show report.
+- Candidates checked live (New filter): still 3, all out-of-scope Saint Augustine FL/Jacksonville FL Store Manager applicants (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan). All applications 298 (unchanged).
+- Reviewing (15) checked live in full: Christopher Crammer (already interviewed under Waynesboro, decision queue, unchanged), Scarlet Ledford (pay question previously flagged to Joshua, still untouched, not re-flagged), remainder Store Manager FL/withdrawn (out of scope). No uncontacted in-scope Waynesboro/Harrisonburg/Lexington/Roanoke applicant.
+- Calendar (jdavis@fcfpawn.com) checked live 11/25-11/28: only the Patrick Hensley 11:00 AM Harrisonburg interview today (unchanged) plus unrelated personal travel/dining entries. No gaps/doubles/conflicts.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due, no unanswered candidate question.
+- Not the first weekday run (already posted earlier today) — per QUIET RULE, no Slack post or DM this run (nothing changed).
+- Texts: 0 — 2:20 PM run is outside the 9:30/1:00/6:00 batch windows.
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
+### Run log — 2026-11-25 ~4:20 PM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only/direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Indeed Messages inbox checked live top to bottom: unchanged since the ~2:20 PM run — newest threads still Patrick Hensley's Nov 24 booking confirmation (today's 11:00 AM Harrisonburg interview, already occurred) and Jeanie Herring's unanswered nudge (no reply). No new candidate-initiated message, no booking request, no reschedule, no no-show report.
+- Candidates checked live (New filter): still 3, all out-of-scope Saint Augustine FL/Jacksonville FL Store Manager applicants (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan). All applications 298 (unchanged).
+- Reviewing (15) checked live in full: same 15 as the 2:20 PM run — Christopher Crammer (already interviewed under Waynesboro, unchanged), Scarlet Ledford (pay question previously flagged to Joshua, still untouched, not re-flagged), remainder Store Manager FL/withdrawn (out of scope). No uncontacted in-scope Waynesboro/Harrisonburg/Lexington/Roanoke applicant.
+- Calendar (jdavis@fcfpawn.com) checked live 11/25-11/28: only the Patrick Hensley 11:00 AM Harrisonburg interview today (already occurred, unchanged) plus unrelated personal travel/dining entries. No gaps/doubles/conflicts.
+- Slack: searched #preston-goldilocks for "hiring" after 2026-11-24 — no results; no new instruction from Joshua or Preston.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due, no unanswered candidate question.
+- Not the first weekday run (already posted earlier today) — per QUIET RULE, no Slack post or DM this run (nothing changed).
+- Texts: 0 — 4:20 PM run is outside the 9:30/1:00/6:00 batch windows; cloud-only session has no screen control regardless.
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
+### Run log — 2026-11-25 ~6:20 PM ET (vp-hiring-pipeline, Cowork scheduled run, direct Chrome access)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only/direct Chrome access; Projects folder read directly; Slack and Calendar connectors reachable live this run.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Indeed Messages inbox checked live top to bottom: unchanged since the ~4:20 PM run — newest threads still Patrick Hensley's Nov 24 booking confirmation (today's 11:00 AM Harrisonburg interview, occurred) and Jeanie Herring's unanswered nudge (no reply). No new candidate-initiated message, no booking request, no reschedule, no no-show report.
+- Candidates checked live: All applications 298 (unchanged). New • 3, same 3 out-of-scope Saint Augustine FL/Jacksonville FL Store Manager applicants (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan). Reviewing • 15, full walk confirmed unchanged from the 2:20/4:20 PM runs (Christopher Crammer already interviewed under Waynesboro; Scarlet Ledford pay question previously flagged to Joshua, still untouched, not re-flagged; remainder Store Manager FL/withdrawn, out of scope). No uncontacted in-scope Waynesboro/Harrisonburg/Lexington/Roanoke applicant.
+- Jobs dashboard checked live: all 4 in-scope listings (Waynesboro 88 All/0 New, Harrisonburg 86/0, Lexington 42/0, Roanoke 58/0) still Paused, no live sponsorship spend — unchanged, same known stale-vs-switch-file mismatch already flagged repeatedly, not re-flagging. Saint Augustine FL (3 New) out of scope, unchanged.
+- Calendar (jdavis@fcfpawn.com) checked live 11/25-11/27: only today's Patrick Hensley 11:00 AM Harrisonburg interview (occurred, unchanged). No other interview booked, no gaps/doubles/conflicts.
+- Slack: searched #preston-goldilocks for "hiring" after 2026-11-24 — no results. DM (D03BHQH5VGT) re-read: newest hiring-related post is still the 9:20 AM first-run-of-the-day summary; no new hiring instruction from Joshua or Preston since.
+- No felony disqualifications, no do-not-contact touches, no no-show reports, no 2-business-day nudges newly due, no unanswered candidate question.
+- Not the first weekday run (already posted at 9:20 AM) — per QUIET RULE, no Slack post or DM this run (nothing changed).
+- Texts: 0 — 6:20 PM run is at the edge of the 6:00 PM batch window, but cloud-only session has no full-screen computer-use control available, so texting skipped silently per the skill.
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0. Rejections: 0. Slack posts: 0.
+
+### Run log — 2026-11-25 ~6:1x PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. No remote-devices bridge tools on probe — cloud-only; Projects folder read directly; Indeed worked live via Claude in Chrome; Slack and Calendar connectors reachable live.
+Scope per HIRING_SWITCH.md (re-read, authoritative, unchanged): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF.
+- Candidates checked live: New tab still 3 (Cristina Castaneda-Olsen, Sherron Lemelle, Sean Nolan — Store Manager/Saint Augustine FL, out of scope, unchanged). All applications 298, Reviewing 15, Contacting 249, Interviewing 31, Rejected 216 — unchanged. No new in-scope applicant.
+- Indeed Messages inbox checked live top to bottom: unchanged from the ~5:xx PM run — our confirmation to Patrick Hensley (interview today, completed 11:00 AM), Jeanie Herring's nudge still awaiting reply, Christian Miller/Andrew Figgins/Michael Boyer/Matthew Williams/Robert Brandt/Shad Taha all end on our side or are acks needing no reply. No unanswered candidate question, no new booking request, no reschedule, no no-show report.
+- Calendar (jdavis@fcfpawn.com) checked live for 11/25–12/01: 1 event — Patrick Hensley 11:00 AM today, Harrisonburg, 703-999-7712, unchanged (interview already occurred, no no-show report).
+- Slack DM (D03BHQH5VGT) re-read: newest hiring item still the 9:20:38 AM first-run post. 6:03 PM message is about Edgar Alvarez Alvira's dismissal/pause (HR/offboarding matter per Preston's decision to keep him on — not a hiring-pipeline action; no reply sent, that's Joshua's call to make). Nothing else hiring-related since.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due, no unanswered candidate question.
+- **Changed this run:** nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0 (not a 9:30/1:00/6:00 batch window; no computer-use/full-screen control available anyway — cloud-only session). Rejections: 0. Per the QUIET RULE, no Slack post or DM this run.
