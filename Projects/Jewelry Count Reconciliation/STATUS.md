@@ -3135,3 +3135,17 @@ Jewelry Count — Wednesday 11/25 (expected = system on-hand, counted = PM count
 Culpeper — count sheet not filled in.
 Waynesboro — count sheet not filled in.
 
+
+## RUN RECORD — 2026-11-26 (Thursday) — native jewelry-onhand-nightly-pull
+
+Open: CUL HAR LEX ROA WAY. Bravo freeze-window CSVs: all open stores. Sheets: none.
+
+Jewelry Count — Thursday 11/26 (expected = system on-hand, counted = PM count sheet)
+
+
+Culpeper — count sheet not posted tonight.
+Harrisonburg — count sheet not posted tonight.
+Lexington — count sheet not posted tonight.
+Roanoke — count sheet not posted tonight.
+Waynesboro — count sheet not posted tonight.
+

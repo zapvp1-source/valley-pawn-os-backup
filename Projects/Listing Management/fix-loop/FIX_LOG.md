@@ -1,5 +1,17 @@
 # Listings Fix Loop — FIX_LOG (newest first)
 
+## 2026-11-26 — daily run + Thursday AI answer check (scheduled, unattended, Joshua's Chrome) — 8 actions
+- **Ingest:** no new presence scorecard (latest 11/22) or FFL_DRIFT (11/22); nothing new to add.
+- **AI answer check (week 2):** Valley Pawn named in 20 of 20 city/engine checks (#1 in 17; #2 for Roanoke on Google, Perplexity and ChatGPT behind The PawnShop). 2 wrong facts, both Copilot: Harrisonburg "open Wednesday" from Bing Places (→ new LQ-048) and Lexington "second location at 640 N Lee Hwy" from ChamberofCommerce.com (→ LQ-025). No "since 1988" this week. Thanksgiving made several engines call Thursday a closed day (holiday artifact). Full table: AI_ANSWERS.md.
+- **FIXED (proved live):** LQ-044 Bing Lexington now shows Wednesday closed. Yelp categories (LQ-032 part): Culpeper and Waynesboro public pages now read Pawn Shops / Gold Buyers / Jewelry.
+- **SUBMITTED:** LQ-032 Yelp Lexington Electronics → Gold Buyers ("Success"; verify 12/3). LQ-020 Staunton ghost: both YP Staunton listings added to the Thryv Client Care case (check-replies run; newest message was Thryv's 11/24 forward); MapQuest 284022910 reported "should be removed" through the free BLU path (new playbook path recorded).
+- **LQ-012 → joshua_decision:** MasterFFL fixed Roanoke's phone and hours, but refuses to hide the 844 Cypress Crossing mailing address because it is public ATF data. The only remaining fix is changing the ATF mailing address, which is Joshua's call.
+- **NEW LQ-048 (blocked_signin):** Bing Places Harrisonburg shows Wednesday open and says "more than 30 years". Needs the same Bing Places sign-in.
+- **Staunton ghost still live on:** Yelp (LQ-047), Manta, Yahoo (Yext, LQ-003), ChamberofCommerce, iExit (claim-only). MerchantCircle/CitySquares/Localmint no longer show up.
+- **Sign-in probe:** Yelp ✅, MapQuest Business (jdavis) ✅. Apple Business ❌, Bing Places ❌, BrightLocal not retried.
+- **Noticed, not changed:** Yelp shows all stores "Open 10–6" today with a holiday banner, while Google shows them closed for Thanksgiving.
+- Proof: evidence/2026-11-26_live_checks.txt. No Saturday post (Thursday).
+
 ## 2026-11-25 — daily run + Wednesday search review (scheduled, unattended, Joshua's Chrome) — 8 actions
 - **Ingest:** no new presence scorecard (latest 11/22) or FFL_DRIFT (11/22); nothing new to add.
 - **ESCALATED → Joshua:** LQ-017 FB "Gold N Pawn" 100041735065936 still live (18 followers, our Roanoke phone) and LQ-014 valleypawnlex. Facebook rung 3 has no unattended path: the impostor form is person-only, and Meta Business Support Home stops on a redirect interstitial. Both → joshua_decision (Meta Business Support chat from Business Suite, or let the 11/17 reports run). Re-check 12/2.

@@ -1,18 +1,16 @@
 # Daily Bravo -> QuickBooks — status
 
-Updated 2026-11-25 13:34 ET
+Updated 2026-11-26 13:29 ET
 
-- Store-day entries posted: 219 (from 2026-10-01)
-- Newest day posted: 2026-11-24
+- Store-day entries posted: 220 (from 2026-10-01)
+- Newest day posted: 2026-11-25
 - Months proven against Bravo's monthly ledger: 2026-10
 
 ## Last run
 
-- 2026-11-24 CUL posted
-- 2026-11-24 HAR posted
-- 2026-11-24 LEX posted
-- 2026-11-24 ROA posted
-- 2026-11-24 WAY posted
+- 2026-11-25 CUL no-activity (not offered by Bravo GL)
+- 2026-11-25 ROA no-activity (not offered by Bravo GL)
+- 2026-11-25 WAY posted
 
 ## Open
 

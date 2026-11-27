@@ -2,6 +2,82 @@
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
 
+## 2026-11-26 ~9:50 PM ET (fleet-guardian 21:45 ET pass)
+- 4 missed-today items at check time; 1 was a false alarm (daily-clockin-check correctly skipped posting -- all 5 stores closed for Thanksgiving, verified against the 10:18 AM entry above and store-closure evidence, not a real miss). The other 3 (oura-daily-import, daily-cloudcover-check, daily-dress-code-check) are known/queued, no new action.
+- 1/5 reruns used: instock-nightly retried a second time today via the native host-queue (not the device-bridge sandbox) -- failed again with the identical Google Drive file-lock error (As Of.txt). Local merge data is safe and complete (12,259 items); only the Drive publish step is blocked. Closed out as unrecovered per the retry-twice-then-stop rule; flagged again for a dev fix (temp-file-then-rename pattern).
+- supply-approvals / supply-deliveries: same REPEAT FAILURE code-bug class as earlier this week, verify-only, not rerun.
+- Sent tonight's one-DM-a-day Slack note to Joshua (criterion: something UNRECOVERED today) -- led with the one open ask (staff-video-chase folder grant / collector fix), closed with the two not-recoverable items, no jargon.
+- Architecture note: this task's Step 1 still describes a retired local scheduled-tasks.json registry and Control_your_Mac/osascript bridge that no longer exist on this account (Cowork is fully cloud + device-bridge now). Cross-checked via live triggers, FIELD_SCORECARD.md, FAILURE_LEDGER.md and HUMAN_QUEUE.md instead; flagging this task's own instructions for an update in a future dev pass. Full detail: fleet/guardian_runs/2026-11-26-2150.json.
+
+## 2026-11-26 ~7:48 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only — seventh firing)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only confirmed (no remote-devices bridge tools).
+- Checked Joshua's DM and #employee-prospects fresh since the 7:03 PM run — nothing new (newest DM still the 3:36 PM Lexington paid-reopen disclosure).
+- Cross-checked via Gmail (jdavis@fcfpawn.com) for `subject:"New Message from" after:2026/11/26` — zero results, confirming no new Indeed candidate messages today, consistent with the live Indeed checks in the prior six runs.
+- No no-shows, no felony disqualifications, no new applicants. Thanksgiving, stores closed, nothing booked.
+- Quiet Rule: no Slack post, no DM — nothing changed.
+
+## 2026-11-26 ~7:03 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only — sixth firing)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only confirmed (no remote-devices bridge tools).
+- Checked Joshua's DM and #employee-prospects fresh since the 6:33 PM run — nothing new (newest DM still the 3:36 PM Lexington paid-reopen disclosure).
+- Live Indeed Messages inbox re-checked: newest thread still Nov 24 (Patrick Hensley), every visible thread's last message is ours — no candidate reply pending. Jobs dashboard loaded (5 results) but table rows again didn't render as readable text; not pursued further given Messages + Slack already confirm no change.
+- No no-shows, no felony disqualifications, no new applicants. Thanksgiving, stores closed, nothing booked.
+- Quiet Rule: no Slack post, no DM — nothing changed.
+
+## 2026-11-26 ~6:33 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only — fifth firing)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only confirmed (no remote-devices bridge tools).
+- Re-verified rather than re-running the full flow, since the 6:19 PM run was only 14 minutes prior: checked Joshua's DM and #employee-prospects fresh — nothing new since 6:19 PM (newest DM is still the 3:36 PM Lexington paid-reopen disclosure).
+- Live Indeed Messages inbox re-checked: newest thread still Nov 24 (Patrick Hensley), every visible thread's last message is ours — no candidate reply pending. Jobs dashboard loaded (5 results, 1 filter applied) but the table rows didn't render as readable text this pass; not re-queried further since Messages + Slack already confirm no change and the 6:19 PM run captured listing status directly.
+- No no-shows, no felony disqualifications, no new applicants. Thanksgiving, stores closed, nothing booked.
+- Quiet Rule: no Slack post, no DM — nothing changed.
+
+## 2026-11-26 ~6:19 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only — fourth firing)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only confirmed (no remote-devices bridge tools).
+- Checked Joshua's DM and #employee-prospects fresh since the 5:34/5:36 PM entries — nothing new (the Lexington paid-reopen disclosure at 3:36 PM is the newest hiring-adjacent item; no reply from Joshua yet, no new Preston instruction).
+- Live Indeed check: Messages inbox newest thread still Nov 24 (Patrick Hensley), last message ours — no candidate reply pending. Jobs dashboard: all 4 in-scope listings (Waynesboro, Harrisonburg, Lexington, Roanoke) Paused, 0 New each. Lexington lifetime spend still $60.00 total (unchanged from the 5:17 PM check) — confirms no additional charge landed from this afternoon's brief paid-reopen incident, answering part of Joshua's billing question.
+- No no-shows, no felony disqualifications, no new applicants. Thanksgiving, stores closed, nothing booked.
+- Quiet Rule: no Slack post, no DM — nothing changed.
+
+## 2026-11-26 ~5:34 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only — third firing)
+- Loaded enterprise-map, enterprise-folder-access, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only confirmed (no remote-devices bridge tools).
+- Checked Joshua's DM and #employee-prospects fresh since the 5:18 PM run — nothing posted since (newest items: the Lexington paid-reopen disclosure at 3:36 PM, already logged).
+- Live Indeed check: Messages inbox newest thread still Nov 24 (Patrick Hensley); no unread/bolded threads, no new candidate reply pending.
+- No no-shows, no felony disqualifications, no new applicants. Thanksgiving, stores closed, nothing booked.
+- Quiet Rule: no Slack post, no DM — nothing changed.
+
+## 2026-11-26 ~5:18 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only — duplicate firing)
+- Second trigger of this task landed one minute after the 5:17 PM run below. Re-verified rather than re-running the full Indeed flow: re-read Joshua's DM and #employee-prospects fresh — nothing posted since the 5:17 PM entry (the 3:36 PM Lexington paid-reopen incident disclosure was already logged there). No new applicants, no replies, no no-shows, Thanksgiving/stores closed, nothing booked. Quiet Rule: no Slack post, no DM.
+
+## 2026-11-26 ~5:17 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only confirmed again (no remote-devices bridge tools).
+- Re-verified against this morning's 1:15 PM run (same day) rather than re-running the full flow from scratch, since nothing in Slack indicated a change: checked #employee-prospects, Joshua's DM, and #preston-goldilocks for anything posted since 1:15 PM — only the already-logged 3:36 PM incident disclosure (Lexington accidental paid reopen, caught and reverted) and unrelated non-hiring items (Fortis, Bald Rock contracts). No new Preston directives.
+- Live Indeed check: Messages inbox newest thread still Nov 24 (Patrick Hensley), every visible thread's last message is ours — no candidate reply pending. Jobs dashboard: all 4 in-scope listings (Waynesboro, Harrisonburg, Lexington, Roanoke) confirmed Paused, 0 New candidates each. Lexington and Harrisonburg show a $60 lifetime total spend on their Basic plan — this predates today and is NOT new charge activity from this morning's 1-minute incident (both postings are months old); did not touch Job Status controls this run given the earlier incident.
+- No no-show reports, no felony disqualifications, no new applicants — nothing to action. Thanksgiving, stores closed, no interviews on the books.
+- Quiet Rule: no Slack post, no DM — nothing changed since the last report.
+
+## 2026-11-26 ~4:30 PM ET (listings fix loop, scheduled run)
+- Fixed live: Bing Lexington now shows Wednesday closed; Yelp Culpeper and Waynesboro categories now Pawn Shops / Gold Buyers / Jewelry. Thursday AI answer check: Valley Pawn named in 20 of 20 checks, 2 wrong facts (both from Bing Places Harrisonburg and ChamberofCommerce.com). New LQ-048 (Bing Places Harrisonburg Wed open). MasterFFL home mailing address moved to a Joshua decision. PLAYBOOKS: new free MapQuest BLU report path. Detail: Listing Management/fix-loop/FIX_LOG.md.
+
+## 2026-11-26 ~1:15 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, enterprise-folder-access, hiring-contact-check, indeed-access, vp-hiring-pipeline. Confirmed cloud-only (ToolSearch for remote-devices bridge tools returned none).
+- HIRING_SWITCH.md re-read: ON scope unchanged (Waynesboro, Harrisonburg, Lexington, Roanoke); Culpeper and Saint Augustine FL OFF.
+- Indeed Messages inbox: newest thread Nov 24, every visible thread's last message is ours (no candidate reply pending). All 4 in-scope listings show 0 New candidates and are Paused on Indeed itself.
+- **Self-inflicted incident:** clicked "Reopen" on the Lexington listing to check whether HIRING_SWITCH's "ON" state should be reflected on Indeed. Indeed's toast showed it reopened WITH paid sponsorship ($10/day Basic plan) — not a free reopen, not pre-approved. Caught within ~1 minute via the toast, reverted via the Job Status dropdown back to Paused ("I am evaluating current applicants"); confirmed reverted by Indeed's own toast. Logged in fleet/FAILURE_LEDGER.md and reported to Joshua by Slack DM same run (money-action disclosure rule). Did not attempt to reopen Waynesboro, Harrisonburg or Roanoke after this — left all 4 Paused as found, pending Joshua's call on whether/how to reopen without spend.
+- Slack (DM + #preston-goldilocks + #employee-prospects) checked live: no hiring-related items since the 11/25 9:20 AM first-run post and the Edgar Alvarez Alvira matter (HR/offboarding, not hiring pipeline). No no-show reports, no new Preston directives on hiring scope.
+- Google Calendar not separately re-checked this run (no new bookings to make — no new applicants, no replies needing scheduling); today is Thanksgiving, stores closed, no interviews on the books.
+- No Slack post to #employee-prospects or DM beyond the one-line incident disclosure, per the task's Quiet Rule — nothing else changed.
+
+## 2026-11-26 ~12:46 PM ET (fleet-guardian 12:45 ET pass, SILENT)
+- Fleet publish guard confirmed off (live) before any writes. Step 1 registry: fresh host-queue task_preflight.py snapshot. 2 enabled Cowork-side tasks (northwest-registered-agent-daily-check, vp-hiring-pipeline), both clear per registry; 0 missed Cowork-side fires. Step 1b: live fleet/FIELD_SCORECARD.md showed 0 missed today at check time.
+- Step 1c: processed all 12 bare-OPEN FAILURE_LEDGER rows dated today (02:10-12:01 ET). COVERED: fleet-doctor (48 quiet jobs -- new high but close to the 1-44 routine range, not escalated); valley-pawn-blog-publisher (FALSE ALARM -- verified via receipts that today's post landed at 02:15 ET, same recurring timezone/window-check bug as 6 prior dates); fb-inbox-replies (no receipts file, but task's own message confirms no unanswered customer threads); daily-dress-code-check x2 (downstream of the Google Home sign-in wall, same root cause). QUEUED (held for Login Day 2026-12-01): daily-cloudcover-check and daily-dress-code-check sign-in walls, both bumped on existing Life OS/HUMAN_QUEUE.md rows. UNRECOVERED: oura-daily-import (phone-app ring sync, bumped); supply-approvals + supply-deliveries (verify-only, same benign recurring Interrupted-system-call class as prior weeks); northwest-registered-agent-daily-check (SMS 2FA relay never caught the code -- this session has no path to ~/Documents/Claude/Scheduled/ or osascript to rerun its SKILL.md faithfully; NEEDS_HUMAN: no per the task itself, will retry naturally tomorrow).
+- instock-nightly (new -- added to fleet/rerun_manifest.json rerun_safe, additive): local merge for 2026-11-25 completed cleanly (12,259 items across all 5 stores) but the Drive-publish step failed with the same OSError (Resource deadlock avoided) as the original native run. Retried once, differently, via a host-queue job (python3 bin/instock_merge.py 2026-11-25) since the Drive path is outside this session's device-bridge mount -- failed again with the identical error, confirming a genuine Drive-sync lock on 'As Of.txt', not a one-off. Local data is safe; flagged for a dev touch (the script has no temp-then-rename pattern for that final write, unlike other Drive-write paths in this fleet). UNRECOVERED, candidate for tonight's digest if still unresolved.
+- Life OS/HUMAN_QUEUE.md: 0 new rows, 3 bumped (Cloud Cover sign-in, Google Home sign-in, Oura ring sync).
+- 1/5 reruns used (instock-nightly, failed -- see above). 0 Slack DM sent (12:45 pass is silent by design). Full detail: fleet/guardian_runs/2026-11-26-1245.json.
+
+## 2026-11-26 ~10:18 AM ET (Daily Clock-In Check, Cowork scheduled run — skipped, Thanksgiving)
+- All 5 stores closed today for Thanksgiving (confirmed: Joshua's #basics 11/26 "Happy Thanksgiving Team" post + staff replies; campaigns.json Black Friday social_angle "Closed Thanksgiving Day Nov 26"; Waynesboro GBP special hours "Nov 26 Thanksgiving Closed"). Gusto list_time_records(2026-11-26) correctly returned shifts: [] — not a data failure, nobody is scheduled. Posting the usual Clocked In/Not Clocked In report would have falsely flagged every employee as "Not Clocked In" on a day the stores are shut.
+- Decision: skipped the Slack post entirely (no #basics message, no DM, no failure-ledger row — this is not a failure, just correctly nothing to report).
+- GAP flagged for whoever next touches this task: the daily-clockin-check scheduled task (cloud) has no holiday-closure guard — it will hit this same false-positive risk on Christmas (12/25) and New Year's Day (1/1), the other two standing closure days (per the GBP special-hours pattern: Thanksgiving/Christmas/New Year's Closed on all 5 stores). Recommend adding a Step -1 to that task's prompt: if today is one of those 3 dates, skip the whole report silently (same as this run). Did not edit the trigger directly this run (paginated trigger search was the costly path; flagging here instead per the "fix the index" rule).
+
 ## 2026-11-25
 - **Listings fix loop:** Yelp categories aligned for Culpeper and Waynesboro (pending Yelp review); /sell-jewelry-roanoke/ SEO title/meta rewritten for engagement-ring/diamond searches (first Wednesday search review, SEARCH_REVIEW_2026-11-25.md); PLAYBOOKS: Facebook rung 3 unavailable unattended, Yelp category path added.
 
@@ -209,6 +285,9 @@ Newest first. Material changes to the business operating system. Read this BEFOR
 
 - Native agent appeared: com.valleypawn.joshua-text-alert.plist
 - Native agent LOADED: com.valleypawn.joshua-text-alert
+
+## 2026-11-26 12:31 AM ET (Communications: ALL Bravo reminder/birthday/anniversary texts now off at all 5 stores)
+- Bravo HAR, LEX, ROA, WAY: Birthday + Store Anniversary delivery AUTO -> MobilePawn (app only), saved + re-read. With 11/22-11/25 changes, Bravo's only remaining texts are app invites/onboarding. Chekkit owns loan, layaway, birthday, anniversary texts (native agents loan-reminders 10:40 PM / 4:40 AM, loan-reminders-send 9:15 AM, birthday-list Sun 2:40 PM).
 
 ## 2026-11-25 12:25 AM ET (Communications: birthday/anniversary texts - Culpeper cut over; Thanksgiving no-send)
 - Joshua 11/24: birthday/anniversary wording approved, customers of the past two years only; nothing goes out Thanksgiving (fleet/state/loan_reminders_no_send_dates.txt, honored by bin/loan_reminders_send.py and the planner).

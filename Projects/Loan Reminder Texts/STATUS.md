@@ -318,3 +318,8 @@ Proposed wording (waiting on Joshua's OK, then: edit the 3 gold campaigns + remo
 - Nightly run clean (done 11:26 PM). Plan for Wed 11/25 at CUL: 13 texts = 6 due-soon loan notices (incl. 3 pulled forward for Friday's due dates because Thursday is a no-send day), 1 layaway notice, 5 birthday, 1 anniversary; longest 153.
 - Bravo CUL 12:23 AM: Birthday + Store Anniversary AUTO -> MobilePawn (NTFIPN), saved, re-read: only those two changed. Culpeper now sends no Bravo texts except app invites.
 - 11/25 9:50 AM: Wed sends verified: CUL 12 of 13 (5 birthday + 1 anniversary delivered; 1 loan notice refused, opted out), HAR 6/6, LEX 5/5, ROA 18/18, WAY 6 of 8 (1 refused opted out; 1 was a second due-notice to the same phone, sender keeps one per phone per kind per day). Flags HAR/LEX/ROA/WAY.occasions created; Bravo switch tonight 12:20 AM; no sends Thu; first four-store birthday texts Fri 11/27.
+
+## 2026-11-26 12:20-12:31 AM — Bravo birthday / anniversary texts OFF at the last four stores
+- HAR 12:22, LEX 12:24, ROA 12:27, WAY 12:29 AM: Birthday + Store Anniversary AUTO -> MobilePawn (NTFIPN), each saved first try; re-read: only those two changed per store.
+- State now, all five stores: Bravo sends no loan, layaway, birthday or anniversary TEXTS (app notices only; app invites/onboarding unchanged). Chekkit sends them 9:15 AM daily. Thursday 11/26 is a no-send day; Friday 11/27 is the first four-store birthday send and the first big past-due day.
+- Still open: Brevo email #65 queued Thu 11/26 10:00 AM - Joshua has not answered; not touched.

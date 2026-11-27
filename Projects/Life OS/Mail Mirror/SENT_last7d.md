@@ -1,6 +1,21 @@
 # Sent mail — last 7 days (iCloud + all other Mail accounts)
 
-_Mirror of Apple Mail on the Mac Studio, refreshed every 10 minutes. Times are Eastern. Mirror run: 2026-11-26 00:10 EST._
+_Mirror of Apple Mail on the Mac Studio, refreshed every 10 minutes. Times are Eastern. Mirror run: 2026-11-27 00:14 EST._
+
+**[zapvp1@me.com]** ### 2026-11-26 11:40 EST — Early check-in request – Joshua Davis
+- From: Joshua Davis <zapvp1@me.com>
+- To: orlbc_gm@hilton.com
+
+> Hello,
+> 
+> I have an upcoming reservation under Joshua Davis, booked through American Express Travel. We'd love to check in as early as possible on our arrival day. If a room can be ready early, please let me know.
+> 
+> Thank you,
+> Joshua Davis
+> (804) 930-4221
+> 
+
+Joshua Davis
 
 **[zapvp1@me.com]** ### 2026-11-25 13:19 EST — Lease Buy Out Loan
 - From: Joshua Davis <zapvp1@me.com>
@@ -443,67 +458,4 @@ I havent received it Sent from my iPhone
  to 3,750.   
 
  The policy has been bound effective 11/17/26. We will have this location removed 
-
-**[zapvp1@me.com]** ### 2026-11-19 14:35 EST — Farming Infinity, LLC JM77940 Commercial Package Renewal Invoice
-- From: Joshua Davis <zapvp1@me.com>
-- To: Yuliet Arevalo <yarevalo@jmpartners.com>
-- Cc: Howard Baker <hbaker@jmpartners.com>
-
-Ok great, do I need another Docusign?
-
-Joshua Davis
-
-> On Nov 19, 2026, at 2:14 PM, Yuliet Arevalo <yarevalo@jmpartners.com> wrote:
-> 
-> Hi Joshua,
-> 
-> I have updated the application with all the changes you requested and resent it. We did have the 3,468 as the square footage so I will let the carrier know to correct it on their end to 3,750. 
-> 
-> The policy has been bound effective 11/17/26. We will have this location removed from the other policy.
-> 
-> Kind Regards
-> 
-> Yuliet Arevalo
-> Customer Service Representative
-> 
-> JM Insurance Agency Partners, Inc.
-> CA Agency License: 0D99224
-> 
-> o: 305.445.5050 x 4446
-> d: 786.433.4446
-> yarevalo@jmpartners.com <mailto:yarevalo@jmpartners.com>
-> jmpartners.com <x-msg://142/jmpartners.com>
-> 
-> Please note: Coverage cannot be bound from emails, faxes or voicemails unless confirmed in writing by a licensed agent.
-> 
-> From: Joshua Davis <zapvp1@me.com>
-> Sent: Thursday, November 19, 2026 11:12 AM
-> To: Yuliet Arevalo <yarevalo@jmpartners.com>
-> Cc: Howard Baker <hbaker@jmpartners.com>
-> Subject: RE: Farming Infinity, LLC JM77940 Commercial Package Renewal Invoice
-> 
-> 
-> Hi Yuliet,
-> 
-> Thank you. Before I sign and pay, please make th
-
-**[zapvp1@me.com]** ### 2026-11-19 11:12 EST — Farming Infinity, LLC JM77940 Commercial Package Renewal Invoice
-- From: Joshua Davis <zapvp1@me.com>
-- To: yarevalo@jmpartners.com
-- Cc: hbaker@jmpartners.com
-
-> Hi Yuliet,
-> 
-> Thank you. Before I sign and pay, please make three corrections to the application:
-> 
-> 1. Mortgagee: add DuPont Community Credit Union ISAOA/ATIMA, PO Box 1365, Waynesboro, VA 22980.
-> 2. Mailing address: 844 Cypress Crossing Trail, St. Augustine, FL 32095 (not 282 Bald Rock Rd).
-> 3. Building area: the lease shows about 3,750 sq ft; the application says 3,468. Please confirm which you have on file.
-> 
-> Also, please confirm in writing once the policy is bound, and that Location 5 will be removed from IK29P109337 with the return premium.
-> 
-> Thank you,
-> Joshua Davis
-> (804) 930-4221
->
 

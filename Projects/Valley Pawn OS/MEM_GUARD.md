@@ -1,26 +1,26 @@
-# Memory Guard — 2026-11-25 23:30:52
+# Memory Guard — 2026-11-26 23:55:28
 
 Native agents com.valleypawn.mem-guard (every 15 min) + com.valleypawn.mem-guard-nightly (3:50 AM).
 Script: Valley Pawn OS/bin/mem_guard.sh. Stopgap until the 96GB Mac Studio arrives (mid-Dec 2026).
 
 ## Last run (watch)
-- Swap: 11782 MB -> 11774 MB
+- Swap: 19205 MB -> 19197 MB
 - Pressure level (1 ok / 2 warn / 4 critical): 2 -> 2
-- Free memory: 42% -> 40%
+- Free memory: 43% -> 40%
 - Actions: restarted Google Drive
 
 ## Last 12 actions
 ```
-2026-11-24 14:54:27 [watch] quit idle app: Preview
-2026-11-24 14:54:27 [watch] quit idle app: Safari
-2026-11-24 14:55:25 [watch] disk 23 GB free, 2 local TM snapshots — thinned them (NAS backup current)
-2026-11-24 21:19:08 [watch] disk 18 GB free, 3 local TM snapshots — thinned them (NAS backup current)
-2026-11-25 01:38:05 [watch] disk 27 GB free, 2 local TM snapshots — thinned them (NAS backup current)
-2026-11-25 03:50:10 [nightly] restarted Google Drive
-2026-11-25 03:50:14 [nightly] restarted Claude desktop app
-2026-11-25 08:36:37 [watch] disk 9 GB free, 1 local TM snapshots — thinned them (NAS backup current)
-2026-11-25 16:55:54 [watch] disk 32 GB free, 3 local TM snapshots — thinned them (NAS backup current)
-2026-11-25 19:27:20 [watch] restarted Google Drive
-2026-11-25 22:45:04 [watch] disk 32 GB free, 3 local TM snapshots — thinned them (NAS backup current)
-2026-11-25 23:30:32 [watch] restarted Google Drive
+2026-11-26 03:34:08 [watch] restarted Google Drive
+2026-11-26 06:37:37 [watch] disk 28 GB free, 2 local TM snapshots — thinned them (NAS backup current)
+2026-11-26 07:39:29 [watch] restarted Google Drive
+2026-11-26 10:57:58 [watch] disk 34 GB free, 2 local TM snapshots — thinned them (NAS backup current)
+2026-11-26 11:43:24 [watch] restarted Google Drive
+2026-11-26 13:29:42 [watch] restarted Claude desktop app
+2026-11-26 14:47:04 [watch] disk 31 GB free, 2 local TM snapshots — thinned them (NAS backup current)
+2026-11-26 15:47:59 [watch] restarted Google Drive
+2026-11-26 19:05:41 [watch] disk 25 GB free, 2 local TM snapshots — thinned them (NAS backup current)
+2026-11-26 19:51:09 [watch] restarted Google Drive
+2026-11-26 22:53:49 [watch] disk 29 GB free, 2 local TM snapshots — thinned them (NAS backup current)
+2026-11-26 23:55:08 [watch] restarted Google Drive
 ```

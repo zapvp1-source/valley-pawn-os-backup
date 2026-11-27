@@ -407,3 +407,15 @@ Unverifiable: none left in posts. PUBLISHED-WRONG: none.
 - Edited (3, all APPLIED):
   - GBP_Culpeper 6b04964c… (Loungefly), GBP_Waynesboro 6b049675… (KitchenAid), GBP_Roanoke 6b0496c5… (Razor MX650), all posting on Thanksgiving Day: listed regular hours only → added "We're closed today for Thanksgiving and back Friday at 10am", hours relabeled "Regular hours".
 - Unverifiable: none. PUBLISHED-WRONG: none.
+
+## 2026-11-26 (Thu) 07:40 ET — daily fact-check, window to 2026-11-27 ~19:40 ET
+- Posts checked: 39 (11/26: 21 — Thanksgiving-day town history x10, product/GBP x5, Brand/IG poll, Loungefly Brand/TikTok/YouTube, Pinterest, YouTube; 11/27: 18 — town posts x10, Lexington Ninja x3, Brand Black Friday x3, Pinterest, YouTube). Skipped as evergreen/product: Big Lick/Roanoke 1882, Chesapeake Western, Basic City 1923, Chessie Trail, Culpeper Depot, Lexington Millinery mural, all Pinterest/YouTube/product-price/poll posts.
+- Verified:
+  - Thanksgiving closure Thu Nov 26, back Fri 10am (GBP Culpeper/Waynesboro/Roanoke); all 5 stores 10-6 Black Friday Nov 27 (Brand/BrandIG/BrandTwitter); Lexington "open until 6 today" Fri 11/27 correct. https://thevalleypawn.com/black-friday/ (modified 2026-11-23)
+  - Harrisonburg Winter Wonderfest Sat Dec 5, 2026: parade 7pm from Rockingham County Office Building (Gay St) to City Hall, tree lighting in Court Square after, 2026 theme "Festival of Lights" (Harrisonburg FB + GBP 11/27). https://harrisonburgva.gov/holiday-parade, https://downtownharrisonburg.org/winter-wonderfest (HDR body still has a stale "Dec 6" line; dated heading and City page say Dec 5, 2026)
+  - Mill Mountain Star: first lit 8:22 PM Nov 23, 1949; 77th anniversary this week; 10,000 lb; 2,000 ft neon; Roy C. Kinsey and sons; red-white-blue on Memorial Day, Flag Day, Independence Day, Patriot Day, Veterans Day, white otherwise (Roanoke FB + GBP 11/27). https://www.playroanoke.com/the-roanoke-star/
+  - Wayne Theatre: opened Jan 18, 1926; deeded to City 1999; reopened March 1, 2016; A Christmas Story: The Musical Dec 4-13, 2026. https://www.waynetheatre.org/, https://www.waynetheatre.org/about-us, https://visitshenandoah.org/whats-new/a-night-at-the-theatre-in-waynesboro/
+- Edited (2, both APPLIED):
+  - GBP_Waynesboro 6b0497c9…: unverified "2026-27 season is titled 'For the Love'" + vague "reopened restored by 2017" + "in its 100th year" → "celebrating its 100th anniversary … reopened, restored, on March 1, 2016. Coming up: A Christmas Story: The Musical, Dec. 4-13."
+  - Waynesboro FB 6b0497c1…: "reopened, restored, by 2017" → "reopened, restored, on March 1, 2016"; added A Christmas Story: The Musical Dec. 4-13; "100th year" → "100th anniversary".
+- Unverifiable: "For the Love" season title (not on the venue's site) — removed. PUBLISHED-WRONG: none.

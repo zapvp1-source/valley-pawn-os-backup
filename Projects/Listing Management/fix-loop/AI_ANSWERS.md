@@ -6,6 +6,48 @@ Canonical facts: see RUNBOOK.md. Culpeper, Roanoke, Waynesboro open Wed (Mon–F
 
 ---
 
+## Week of 2026-11-26 (Thu, Thanksgiving)
+
+**Named in 20 of 20 city/engine checks. 2 wrong facts (both Copilot, both from directory sources). Every Google, Perplexity and ChatGPT answer had the right name, address (Suite C / Ste 22), phone, hours and Wednesday status. Last week's "since 1988 / 30+ years" did not reappear.**
+
+Cell = named in "best pawn shop" answer (position) · wrong facts across the 3 answers.
+
+| City | Google (AI Overview / local) | Perplexity | ChatGPT | Copilot (Bing AI Mode) |
+|---|---|---|---|---|
+| Culpeper | Yes (#1, AIO) · 0 | Yes (#1) · 0 | Yes (#1) · 0 | Yes (#1) · 0 |
+| Waynesboro | Yes (#1, AIO) · 0 | Yes (#1) · 0 | Yes (#1) · 0 | Yes (#1) · 0 |
+| Harrisonburg | Yes (#1 local pack; AIO names us first) · 0 | Yes (#1) · 0 | Yes (#1) · 0 | Yes (#1) · **1** |
+| Lexington | Yes (#1, AIO) · 0 | Yes (#1) · 0 | Yes (#1) · 0 | Yes (#1) · **1** |
+| Roanoke | Yes (#2 local pack behind The PawnShop - 9th) · 0 | Yes (#2 behind The PawnShop) · 0 | Yes (#2 behind The PawnShop - 9th St) · 0 | Yes (#1) · 0 |
+
+Wednesday answers: 20/20 correct. No "Dixie Pawn", "Gold-N-Pawn", Salem or Staunton store in any answer. Google AIO added Thanksgiving/Christmas/New Year closures correctly from GBP.
+
+### Wrong facts → FIX_QUEUE
+1. **Copilot, Harrisonburg hours:** "generally open Monday–Saturday… Places data: open Wednesday, closed Thursday." Source: Bing Places Harrisonburg, which shows Wednesday 10–6 as regular hours and a description saying "In operation for more than 30 years". → **LQ-048** (Bing Places sign-in needed).
+2. **Copilot, Lexington "best pawn shop":** "a second Valley Pawn location at 640 North Lee Highway, Lexington." Source: chamberofcommerce.com. → added to **LQ-025** (captcha form; Joshua decision on an owner account).
+
+### Holiday artifacts (not defects)
+- Copilot (Culpeper, Lexington, Roanoke) and Perplexity (Harrisonburg, Lexington) read today's Thanksgiving closure as "closed Thursday" and in places listed Thursday as a regular closed day. Bing/Google carry the holiday hours correctly; this clears after today. Re-check Bing Lexington's Thursday row on 11/30 (it showed Closed without a holiday marker).
+
+### Wrong source pages seen in answers (not repeated as fact)
+- Perplexity Culpeper: Henry USA ("Unit C", Mon–Sat 10–6) → LQ-041; MapQuest 641 James Madison Hwy → LQ-043.
+- Perplexity Waynesboro: rangeadvisor lists Wednesday closed (new; low priority, not queued yet).
+- Perplexity Lexington: "Yelp, Closo and MapQuest list 439 E Nelson / 640 N Lee Hwy". Yelp search found no such listing; MapQuest → LQ-028.
+- Perplexity Roanoke: "some listings show Saturday closing 6 PM, one shows Wednesday closed" → YP Roanoke (LQ-009).
+- ChatGPT map widget ratings (Mapbox/Foursquare data) show Valley Pawn ★3 for Waynesboro and Lexington vs 4.8–4.9 on Google. Rating, not a listing fact; noted only.
+
+### Sources the engines cited
+- Google AIO: thevalleypawn.com location pages + FAQ, Yelp, GBP.
+- Perplexity: thevalleypawn.com on every answer; gunmade, bbb, henryusa, mapquest, rangeadvisor, local.yahoo, yellowpages.
+- ChatGPT: thevalleypawn.com, pawnstores.net, loopnet, mapquest, worldatlas, YellowPages.
+- Copilot (Bing AI Mode): thevalleypawn.com, Bing Places, Yelp, Facebook, Chamber of Commerce, Yellow Pages.
+
+### Method notes
+- copilot.microsoft.com still redirects Joshua's Chrome to the blocked work M365 Copilot; used bing.com/copilotsearch signed out (answer is inside an iframe; read via contentDocument).
+- ChatGPT guest (chatgpt.com/?q=…&hints=search). Perplexity via /search?q= in Joshua's session. Google signed in; text read from #rcnt.
+
+---
+
 ## Week of 2026-11-19 (Thu)
 
 **Named in 20 of 20 city/engine checks. 2 wrong facts (both "since 1988 / 30+ years"). Every name, address, suite, phone, hours and Wednesday answer was correct.**

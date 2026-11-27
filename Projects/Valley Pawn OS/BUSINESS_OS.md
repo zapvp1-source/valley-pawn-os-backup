@@ -2,7 +2,7 @@
 
 <!-- LIVE-STATE:BEGIN - machine generated, do not hand-edit -->
 
-# LIVE STATE - auto-refreshed 2026-11-25
+# LIVE STATE - auto-refreshed 2026-11-26
 
 This block is regenerated daily from the machine itself. It is the ONLY
 section of this document guaranteed current. If a hand-written section
@@ -17,7 +17,7 @@ below disagrees with this block, THIS BLOCK WINS.
 | Enabled (will fire) | 2 |
 | Registered but disabled | 230 |
 | On disk but never registered | 4 |
-| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 112 |
+| Recorded skips, last 7d (3-slot queue wait, NOT a usage cap — see SCHEDULED_TASK_RELIABILITY_PLAN.md) | 77 |
 
 ### Enabled tasks
 
@@ -258,35 +258,36 @@ below disagrees with this block, THIS BLOCK WINS.
 
 | Last touched | Project | Status file |
 |---|---|---|
-| 2026-11-25 | Valley Pawn OS | - |
-| 2026-11-25 | Unified Search | - |
-| 2026-11-25 | Quickbooks Set UP | - |
-| 2026-11-25 | Loan Reminder Texts | STATUS.md |
-| 2026-11-25 | Life OS | - |
-| 2026-11-25 | Business Dashboard Website | - |
-| 2026-11-25 | Bravo Data Extraction | STATUS.md |
+| 2026-11-26 | Valley Pawn OS | - |
+| 2026-11-26 | Unified Search | - |
+| 2026-11-26 | Quickbooks Set UP | - |
+| 2026-11-26 | Loan Reminder Texts | STATUS.md |
+| 2026-11-26 | Life OS | - |
+| 2026-11-26 | Business Dashboard Website | - |
+| 2026-11-26 | Bravo Data Extraction | STATUS.md |
+| 2026-11-25 | eBay | - |
+| 2026-11-25 | Zoom Call Pipeline | - |
+| 2026-11-25 | Website | - |
+| 2026-11-25 | Valuation Core | README.md |
+| 2026-11-25 | Valley Pawn Studios | STATUS.md |
+| 2026-11-25 | Store Conduct Watch | STATUS.md |
+| 2026-11-25 | Sold Margin Review | STATUS.md |
+| 2026-11-25 | Seasonal Campaigns | STATUS.md |
+| 2026-11-25 | Refine Social Media | - |
+| 2026-11-25 | Preston Knowledge Base | - |
+| 2026-11-25 | Precious Metals Settlements | - |
+| 2026-11-25 | Pawn Walks | STATUS.md |
+| 2026-11-25 | Listing Management | STATUS.md |
+| 2026-11-25 | Jewelry Count Reconciliation | STATUS.md |
+| 2026-11-25 | Human Resources | - |
+| 2026-11-25 | Health Optimization | STATUS.md |
+| 2026-11-25 | Email Refinement | - |
+| 2026-11-25 | Discount Outlier Review | STATUS.md |
+| 2026-11-25 | Daily Funds Verification | - |
+| 2026-11-25 | Compliance | - |
+| 2026-11-25 | Ai Optimized Marketing | - |
 | 2026-11-24 | eBay Customer Campaign | - |
-| 2026-11-24 | eBay | - |
-| 2026-11-24 | Zoom Call Pipeline | - |
-| 2026-11-24 | Website | - |
-| 2026-11-24 | Valuation Core | README.md |
-| 2026-11-24 | Store Conduct Watch | STATUS.md |
-| 2026-11-24 | Sold Margin Review | STATUS.md |
-| 2026-11-24 | Seasonal Campaigns | STATUS.md |
-| 2026-11-24 | Refine Social Media | - |
-| 2026-11-24 | Preston Knowledge Base | - |
-| 2026-11-24 | Precious Metals Settlements | - |
-| 2026-11-24 | Pawn Walks | STATUS.md |
-| 2026-11-24 | Listing Management | STATUS.md |
-| 2026-11-24 | Jewelry Count Reconciliation | STATUS.md |
-| 2026-11-24 | Human Resources | - |
-| 2026-11-24 | Health Optimization | STATUS.md |
-| 2026-11-24 | Email Refinement | - |
-| 2026-11-24 | Discount Outlier Review | STATUS.md |
-| 2026-11-24 | Daily Funds Verification | - |
-| 2026-11-24 | Compliance | - |
 | 2026-11-24 | Business Continuity | - |
-| 2026-11-23 | Valley Pawn Studios | STATUS.md |
 | 2026-11-23 | Training Program | STATUS.md |
 | 2026-11-23 | New Store - St Augustine | STATUS.md |
 | 2026-11-23 | Gold and Silver Markeitng | - |
@@ -295,7 +296,6 @@ below disagrees with this block, THIS BLOCK WINS.
 | 2026-11-23 | Bonus Program | - |
 | 2026-11-23 | Ask Valley Pawn | STATUS.md |
 | 2026-11-22 | Knowledge Harvest | - |
-| 2026-11-22 | Ai Optimized Marketing | - |
 | 2026-11-21 | Short Term Rental Optimization | - |
 | 2026-11-20 | MobilePawn Participation | README.md |
 

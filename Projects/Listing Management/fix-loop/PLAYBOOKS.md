@@ -26,6 +26,7 @@
 
 ## MapQuest
 - Owned by the weekly "MapQuest Dixie Pawn removal" task. Free path = listing page → "Let us know" → duplicate. Direct confirm-listing URLs give "Session Expired".
+- *2026-11-26:* "Let us know" (left rail, "See a problem?") opens a NEW TAB at business.mapquest.com/confirm-listing?mqid=<id>, already signed in as jdavis@fcfpawn.com → "Yes, this is correct" → skip the $12.50/mo claim box → "Report an issue" (free, bottom) → pick "This business should be removed" / "duplicate" / "information is incorrect" → Continue → "Thank You!". No text box. Close the extra tab after.
 
 ## Loc8NearMe
 - Listing URLs keep the old slug: Roanoke /virginia/roanoke/gold-n-pawn/5652844/, Harrisonburg /virginia/harrisonburg/dixie-pawn-inc/5726932/. Site search ignores location; use a web search with site:loc8nearme.com.

@@ -36,7 +36,7 @@ Scope: ALL company policies and guidelines, every department (see POLICY_CADENCE
 | 2026-10-25 | Call-outs: voice call to the Market Manager's Zoom number 540-202-4200, ≥2 hours before the shift; text/Slack don't count. Messages to the Market Manager via Slack | HR | approved (CEO 2026-10-25) | 2026-12 (rolled from Nov: no approve by 11/7) | Handbook Attendance + Who to Contact; P&P 01.02 |
 | 2026-10-25 | Weekly team huddle in Slack, Mondays, #monday-meetings | Operations | approved (CEO 2026-10-25) | 2026-12 (rolled from Nov: no approve by 11/7) | P&P 12.01; Handbook Communication |
 | 2026-10-25 | Gun Safety Certificate requirement (HR-2026-05) written into P&P 10.06 and named in the HR-2026-04 Rev2 acknowledgment | Firearms / HR | approved (CEO 2026-10-25) | 2026-12 (rolled from Nov: no approve by 11/7) | HR-2026-05 is not sent separately |
-| 2026-10-25 | Name, Image, Likeness & Voice Release — team version (HR-2026-09 Team) from everyone | HR | approved (CEO 2026-10-25) | 2026-12 (rolled from Nov: no approve by 11/7) — SEPARATE Gusto Team document, same day | Name from Gusto's full-name field; internal use only |
+| 2026-10-25 | Name, Image, Likeness & Voice Release — team version (HR-2026-09 Team) from everyone | HR | approved (CEO 2026-10-25) | NOT in December — already sent in Gusto 2026-11-02 (Team document template 8391696); runner 11/26 dropped it from the December packet | Name from Gusto's full-name field; internal use only |
 | 2026-10-21 | Mutual Arbitration Agreement | HR / legal | held — counsel | — | Not releasable |
 | 2026-10-21 | Compliance programs VP-CP-01…07 | Compliance (management) | approved | not a staff packet item | Management documents; staff see them through the one-pagers and the monthly checklist |
 

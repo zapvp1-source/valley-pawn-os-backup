@@ -1317,3 +1317,8 @@ Patsy Pernia (JM Partners) sent two firm Bald Rock quotes 10/12 9:33pm (thread 1
 - 11/24 12:40 PM: Thanksgiving 11/26 = no-send day for Chekkit reminders/birthdays (all stores). OPEN for Joshua: Brevo email #65 queued Thu 10 AM - move or keep?
 - 11/25 12:25 AM: Culpeper birthday/anniversary texts cut over to Chekkit (Bravo CUL app-only). Other four: Bravo switch Wed night, Chekkit Fri 11/27. OPEN for Joshua: Brevo email #65 queued Thu 11/26 10 AM.
 
+
+
+## Archived 2026-11-26 by open_items_groom
+
+| 2026-11-19 | 1 — Valley Pawn (Listings fix loop) | **Correction emails sent from jdavis@fcfpawn.com, waiting on replies:** support@thryv.com (YellowPages 'Dixie Pawn Inc' HAR + 'Gold-N-Pawn' ROA names); support@gunnook.com (WAY/HAR/LEX $25 fee + hours); info@mallsinamerica.com (Spotswood Valley Square 'Dixie Pawn' → Valley Pawn). Facebook Valley Pawn-Roanoke bio 'since 1988' removed (done). | SENT — awaiting platform replies | Fix loop re-checks live pages: YP 11/26, GunNook/mallsinamerica 12/3. Reply in-thread if they ask for proof. Source of truth: Listing Management/fix-loop/FIX_QUEUE.json. |

@@ -1,5 +1,20 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-26 (daily PREP run, 12:42–12:58 ET, level 1 all pages, Thanksgiving Day) — picks queued for the next POST-mode chat, nothing published by this run
+- Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only (composer read "What's on your mind, Joshua?" at start and end); never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. A Messenger chat window was open on Joshua's profile — not touched.
+- Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).
+- No POST-mode chat since 11/19 morning (ledger unchanged at 88 rows), so nothing to sync into WATCHLIST.
+- QUEUE cleaned: lapsed unposted — Culpeper CRI florals (11/25 16:06), Roanoke DRI ambassadors (11:28 today), Lexington RRL Talking Book (12:00 today), Culpeper library knit class (12:00 today), Harrisonburg DNR Bridgewater basketball (12:26 today); Brand SNP webcams dropped (lapses 13:00 today, no POST chat possible in time). Still pending: Roanoke follow → Roanoke Regional Chamber; Waynesboro Maple Avenue display comment (to TODAY ~20:00); Waynesboro WARM shelter share (to TODAY 23:30); Culpeper Santa share (to 11/27 09:45).
+- New pick (reel permalink from the story walk-up, opened and confirmed):
+  - Roanoke comment → Feeding Southwest Virginia, Virginia Tech Football and Kroger donated 500 turkeys and 500 food boxes (posted ~11:45 today; valid to 11/28 ~11:30).
+  - Culpeper, Waynesboro, Harrisonburg, Lexington, Brand: no new picks (Thanksgiving — pages posted closings/greetings or nothing new).
+- Skipped on purpose: RARA Thanksgiving closing (11/23, closings are NO-list); Culpeper Food Closet weekly needs and Christmas box $30 ask (3 days old; money ask); DNR Rep. Cline town hall (political) and JMU loss/coach criticism (negative); News-Gazette staff birthday (private individual), Thanksgiving closing, high-wind warning.
+- Ramp: all pages hold level 1. Share week (Mon 11/23–Sun 11/29): none used; Waynesboro and Culpeper queued (both lapse within ~21 h).
+- Watchlist: 5 pages re-checked; none newly dormant; no unresolved entries. No town follow searches this run (Roanoke follow still pending).
+- Reply / follow-back candidates for POST mode: unchanged carry-overs (Mark Lyon on Valley Pawn-Culpeper; ~10 commenters on a Valley Pawn-Lexington post; "Synster Gates Fan" mention on Valley Pawn; Kelsey L Iane and 3 others followed Valley Pawn-Lexington — follow back only if offered).
+- Needs a person: none new.
+- Totals this run: comments 0 (1 new queued), shares 0 (0 new queued), replies 0, follows 0 (1 pending), new pages resolved 0.
+
 ## 2026-11-25 (daily PREP run, 12:42–12:58 ET, level 1 all pages, Wednesday before Thanksgiving) — picks queued for the next POST-mode chat, nothing published by this run
 - Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only (composer read "What's on your mind, Joshua?" at start and end); never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. A Marketplace Messenger chat window (a seller about a watch) was open on Joshua's profile — not touched.
 - Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).

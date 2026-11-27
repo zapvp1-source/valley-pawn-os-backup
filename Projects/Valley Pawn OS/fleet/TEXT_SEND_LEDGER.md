@@ -64,3 +64,5 @@
 | 2026-11-25 09:18 | joshua-text-alert | +18049304221 | iMessage | SENT | 287057 | first try |
 | 2026-11-25 12:50 | joshua-text-alert | +18049304221 | iMessage | SENT | 287085 | first try |
 | 2026-11-25 17:10 | joshua-text-alert | +18049304221 | iMessage | SENT | 287103 | first try |
+| 2026-11-26 20:59 | joshua-text-alert | +18049304221 | iMessage | SENT | 287234 | first try |
+| 2026-11-26 21:05 | joshua-text-alert | +18049304221 | iMessage | SENT | 287235 | first try |

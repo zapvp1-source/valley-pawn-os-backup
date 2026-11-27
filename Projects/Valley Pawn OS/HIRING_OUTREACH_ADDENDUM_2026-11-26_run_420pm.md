@@ -1,0 +1,20 @@
+# HIRING_OUTREACH addendum — 2026-11-26, ~4:19 PM ET run (vp-hiring-pipeline, Cowork scheduled run, cloud-only, Thanksgiving)
+
+Merge into HIRING_OUTREACH.md "Contact log" / Run log section (append, newest-first). No remote-devices bridge tools found on probe — cloud-only; Chrome extension (Indeed), Slack connector, Drive connector reachable live this run. Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline before acting. Picks up from the ~3:49 PM run (nothing changed).
+
+Scope per HIRING_SWITCH.md (unchanged since 11/19): Waynesboro, Harrisonburg, Lexington, Roanoke ON; Culpeper, Saint Augustine FL OFF. Interviewer for all ON rows: Preston Peters, calling from (540) 202-4200.
+
+## Checked, no action needed
+
+- Indeed Jobs dashboard checked live (screenshot): Lexington 42/0 New, Waynesboro 88/0 New, Harrisonburg 86/0 New, Roanoke 58/0 New — all Paused, unchanged. Saint Augustine FL (Store Manager, out of scope) 24/3 New — not actioned, row is OFF. No new in-scope applicant.
+- Indeed Messages inbox checked live (get_page_text, full thread list top to bottom): unchanged — Patrick Hensley (our 11/24 confirmation is the last message, interview occurred 11/25, no no-show report), Jeanie Herring (our nudge is the last message, no reply yet), and all older threads end on our side or are closing acks. No unanswered candidate question, no new booking request, no reschedule, no no-show report, no felony disqualification.
+- Slack DM (D03BHQH5VGT) read live (last 15 messages, through the 3:36 PM Lexington-sponsorship note): no new hiring-related message since. Confirms the 3:36 PM note already covered by the prior run (Lexington's brief accidental-sponsorship click, caught and paused back by Joshua — his own billing follow-up, not a pipeline action). No no-show report. #employee-prospects not separately re-checked this run; last post there matches the 11/25 9:20 AM DM content.
+- No felony disqualifications, no do-not-contact touches, no new no-show reports, no 2-business-day nudges newly due, no unanswered candidate question.
+
+## Run summary
+
+Changed this run: nothing. Indeed messages sent: 0. Calendar events created/changed/deleted: 0. Texts: 0 (holiday; not a 9:30/1:00/6:00 batch window; no screen control available — cloud-only). Rejections: 0. Per the Quiet Rule, no Slack post or DM this run (nothing changed from the last post).
+
+## Follow-up for next run
+
+Watch Jeanie Herring's thread for a reply (next available slot if she replies now is Fri 11/27). Watch Patrick Hensley's thread for a no-show report; if reported, send the one standard reschedule offer for the next business day (Fri 11/27). All in-scope listings remain Paused with 0 New applicants — no first-contact work available until new applicants appear or Preston/Joshua reopen with sponsorship. Lexington's brief accidental-sponsorship incident (3:36 PM) remains Joshua's own billing follow-up, not a pipeline task.
