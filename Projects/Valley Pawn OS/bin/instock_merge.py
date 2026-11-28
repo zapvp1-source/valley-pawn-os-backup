@@ -4,7 +4,7 @@ Combines the five per-store on-shelf lists (Bravo cell instock-all) into ONE com
 Google Drive. All-or-nothing: every store must be present, each file must match Bravo's own row total, and no
 store may swing more than 20% from the last published night. Otherwise nothing is published and the last good
 list stays in place. Read-only on Bravo data; never posts to Slack."""
-import csv, io, json, os, sys, shutil, datetime, re
+import csv, io, json, os, sys, shutil, datetime, re, time
 HOME = os.path.expanduser("~")
 BR = os.path.join(HOME, "Documents/Claude/Projects/Bravo Data Extraction")
 OUT = os.path.join(BR, "output")
@@ -76,14 +76,38 @@ def main():
         local = os.path.join(OUT, f"{d}_ALL_instock.csv")
         with open(local, "w", newline="", encoding="utf-8-sig") as f:
             w = csv.writer(f); w.writerow(head); w.writerows(rows)
-        os.makedirs(os.path.join(DRIVE, "History"), exist_ok=True)
-        shutil.copyfile(local, os.path.join(DRIVE, "History", f"Valley Pawn In-Stock Inventory {d}.csv"))
-        tmp = os.path.join(DRIVE, ".latest.tmp")
-        shutil.copyfile(local, tmp)
-        os.replace(tmp, os.path.join(DRIVE, "Valley Pawn In-Stock Inventory (latest).csv"))
-        with open(os.path.join(DRIVE, "As Of.txt"), "w") as f:
-            f.write(f"In-stock list as of close of business {d}. {len(rows)} items. "
-                    + ", ".join(f"{c} {n}" for c, n in status["stores"].items()) + "\n")
+        # 2026-11-27: Google Drive's sync can hold a file for a moment ("Resource deadlock avoided"), which killed
+        # the publish three nights running. Every Drive write now goes to a fresh temp name, is renamed into place,
+        # and is retried; the dated copy and the note are extras that can never block the main list.
+        def put(src_bytes, dest, tries=6):
+            import time
+            last = None
+            for i in range(tries):
+                tmp = dest + f".tmp{os.getpid()}_{i}"
+                try:
+                    with open(tmp, "wb") as f:
+                        f.write(src_bytes)
+                    os.replace(tmp, dest)
+                    return True
+                except OSError as e:
+                    last = e
+                    try: os.remove(tmp)
+                    except OSError: pass
+                    time.sleep(20)
+            status.setdefault("notes", []).append(f"could not write {os.path.basename(dest)}: {last}")
+            return False
+        data = open(local, "rb").read()
+        try: os.makedirs(os.path.join(DRIVE, "History"), exist_ok=True)
+        except OSError: pass
+        if not put(data, os.path.join(DRIVE, "Valley Pawn In-Stock Inventory (latest).csv")):
+            status["problems"].append("Drive would not accept the list")
+            json.dump(status, open(os.path.join(STATE, f"status_{d}.json"), "w"), indent=1)
+            json.dump(status, open(os.path.join(STATE, "status_latest.json"), "w"), indent=1)
+            print(json.dumps(status)); return 1
+        put(data, os.path.join(DRIVE, "History", f"Valley Pawn In-Stock Inventory {d}.csv"), tries=2)
+        note = (f"In-stock list as of close of business {d}. {len(rows)} items. "
+                + ", ".join(f"{c} {n}" for c, n in status["stores"].items()) + "\n").encode()
+        put(note, os.path.join(DRIVE, "As Of.txt"), tries=2)
         status["published"] = True; status["total"] = len(rows)
         json.dump(status, open(os.path.join(STATE, "last_published.json"), "w"), indent=1)
     json.dump(status, open(os.path.join(STATE, f"status_{d}.json"), "w"), indent=1)

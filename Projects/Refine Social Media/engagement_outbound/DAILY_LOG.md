@@ -1,5 +1,22 @@
 # Outbound engagement — daily log (newest first)
 
+## 2026-11-27 (daily PREP run, 12:42–13:00 ET, level 1 all pages, Black Friday) — picks queued for the next POST-mode chat, nothing published by this run
+- Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only (composer read "What's on your mind, Joshua?" at start and end); never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. A Messenger chat window was open on Joshua's profile — not touched.
+- Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).
+- No POST-mode chat since 11/19 morning (ledger unchanged at 88 rows), so nothing to sync into WATCHLIST.
+- QUEUE cleaned: lapsed unposted — Waynesboro Maple Avenue display comment (11/26 20:00), Waynesboro WARM shelter share (11/26 23:30), Culpeper Santa visit share (11/27 09:45). Still pending: Roanoke follow → Roanoke Regional Chamber; Roanoke comment → Feeding Southwest Virginia turkeys (to 11/28 11:30).
+- New picks (permalinks opened and confirmed):
+  - Culpeper share → Culpeper Renaissance Inc. with Hundred Acre Books, letters to Santa collected through December 6 (posted ~12:45 today; to 11/29 12:45).
+  - Waynesboro share → Waynesboro.Com, Waynesboro Christmas Parade Sat Dec 5, 6:00 PM (posted 11:41 today; to 11/29 11:41).
+  - Lexington comment → Washington and Lee, students/alumni gratitude album (posted 11/26 08:55; to 11/28 08:55 — drop if no POST chat by then).
+  - Roanoke: Feeding SWVA pick still valid, nothing new needed. Harrisonburg, Brand: no picks.
+- Skipped on purpose: Black Friday / Small Business Saturday promos on DRI, CRI, HDR, Visit Harrisonburg and Explore Park (retail promos); DNR Turner Ashby–LCA regional final today 4 PM (game will be played before any POST chat) and Rep. Cline town hall (political); Harrisonburg Parks adult art "tonight" and Lexington tourism weekend list with tonight's tree lighting and taprooms (date-tied); Main Street Lexington Pink, Drink recap (names giveaway winners); SNP share of a federal-agency turkey post (political comment in the thread) and turkey-tail fungus (lapses today); Culpeper Library brooch recap (lapses 14:00 today); Natural Bridge Luminary Nights (3 days old).
+- Ramp: all pages hold level 1. Share week (Mon 11/23–Sun 11/29): none used; Culpeper and Waynesboro queued (both valid into Sunday).
+- Watchlist: 17 pages re-checked; none newly dormant; no unresolved entries. No town follow searches this run (Roanoke follow still pending).
+- Reply / follow-back candidates for POST mode: unchanged carry-overs (Mark Lyon on Valley Pawn-Culpeper; ~10 commenters on a Valley Pawn-Lexington post; "Synster Gates Fan" mention on Valley Pawn; Kelsey L Iane and 3 others followed Valley Pawn-Lexington — follow back only if offered).
+- Needs a person: none new.
+- Totals this run: comments 0 (1 new queued), shares 0 (2 new queued), replies 0, follows 0 (1 pending), new pages resolved 0.
+
 ## 2026-11-26 (daily PREP run, 12:42–12:58 ET, level 1 all pages, Thanksgiving Day) — picks queued for the next POST-mode chat, nothing published by this run
 - Mode: PREP (per RUNBOOK). Browsed as Joshua Davis only (composer read "What's on your mind, Joshua?" at start and end); never switched into a store page, no Post/Share/Follow clicks. Facebook signed in, no checkpoint, no warnings. A Messenger chat window was open on Joshua's profile — not touched.
 - Folders not connected at start; device_request_folder_access granted unattended (per 11/10 note).

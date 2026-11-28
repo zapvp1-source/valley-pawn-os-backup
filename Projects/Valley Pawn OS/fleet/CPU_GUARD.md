@@ -1,43 +1,43 @@
-# CPU Guard — 2026-11-27 00:11 EST
+# CPU Guard — 2026-11-28 00:13 EST
 
 Native agent com.valleypawn.cpu-guard (bin/cpu_guard.sh), every 5 min. See header of the script.
 
 ## Load
-0:11  up 4 days,  9:29, 1 user, load averages: 22.16 25.94 23.00
+0:13  up 5 days,  9:31, 1 user, load averages: 8.17 8.11 8.60
 
 ## Process states (R=running, U=waiting on disk)
 ```
-   9 R  652 S    3 U 
-2 /Applications/Google
+  51 R  701 S 
+1 sort
 1 ps
 1 head
-1 /usr/libexec/logd
-1 /usr/libexec/diskimagesiod
-1 /usr/libexec/dasd
-1 /sbin/launchd
-1 /System/Library/CoreServices/TimeMachine/backupd
+1 /usr/libexec/transparencyd
+1 /usr/libexec/siriknowledged
+1 /usr/libexec/secd
+1 /usr/libexec/searchpartyuseragent
+1 /usr/libexec/routined
 ```
 
 ## Top CPU right now
 ```
  %CPU NI   PID COMM
- 35.1  0   350 /usr/libexec/logd
- 29.5  0 63858 /Applications/Google Drive.app/Contents/MacOS/Google Drive
- 28.9  0   403 /usr/libexec/dasd
- 21.6  0  1239 /Applications/Parallels Desktop.app/Contents/MacOS//Parallels VM.app/Contents/MacOS/prl_vm_app
- 19.1  0   425 /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer
- 18.7  0 10744 /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/157.0.8103.79/Helpers/Google Chrome Helper (Aperitif Renderer).app/Contents/MacOS/Google Chrome Helper (Aperitif Renderer)
-  5.7  0   694 /System/Library/CoreServices/ControlCenter.app/Contents/MacOS/ControlCenter
-  5.4  0  1448 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.WebContent.xpc/Contents/MacOS/com.apple.WebKit.WebContent
-  4.2  0   726 /System/Library/PrivateFrameworks/FileProvider.framework/Support/fileproviderd
-  3.7  0  1120 /usr/libexec/sysmond
-  2.9  0   697 /System/Library/CoreServices/Finder.app/Contents/MacOS/Finder
+140.9  0  1239 /Applications/Parallels Desktop.app/Contents/MacOS//Parallels VM.app/Contents/MacOS/prl_vm_app
+112.9  0 92223 /Applications/Google Drive.app/Contents/MacOS/Google Drive
+ 89.1  0  6647 /Library/Backblaze.bzpkg/bztransmit
+ 40.8  0   675 /System/Library/Frameworks/Accounts.framework/Versions/A/Support/accountsd
+ 19.6  0   425 /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer
+ 16.8  0  7064 /System/Library/Frameworks/AddressBook.framework/Versions/A/Helpers/AddressBookSourceSync.app/Contents/MacOS/AddressBookSourceSync
+ 15.1  0 68544 /usr/libexec/PerfPowerServices
+ 14.4  0  3383 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python
+ 10.9  0   403 /usr/libexec/dasd
+  8.1  0  1120 /usr/libexec/sysmond
+  6.2  0   694 /System/Library/CoreServices/ControlCenter.app/Contents/MacOS/ControlCenter
 ```
 
 ## Memory
 ```
-total = 20480.00M  used = 19322.31M  free = 1157.69M  (encrypted)
-System-wide memory free percentage: 40%
+total = 4096.00M  used = 2616.19M  free = 1479.81M  (encrypted)
+System-wide memory free percentage: 57%
 ```
 
 ## Camera agents (nice should be 10)
@@ -70,8 +70,8 @@ drwxr-xr-x@ 9 joshuadavis  staff  288 Nov  7 13:25 tracks
 
 /Users/joshuadavis/.vp-studio/offsync/unified-search:
 total 15987656
-drwxr-xr-x@ 5 joshuadavis  staff         160 Nov 26 05:12 .
+drwxr-xr-x@ 5 joshuadavis  staff         160 Nov 27 05:20 .
 drwxr-xr-x@ 4 joshuadavis  staff         128 Nov  7 13:23 ..
--rw-r--r--@ 1 joshuadavis  staff  8185647104 Nov 26 23:49 index.db
--rw-r--r--@ 1 joshuadavis  staff       32768 Nov 26 23:48 index.db-shm
+-rw-r--r--@ 1 joshuadavis  staff  8185647104 Nov 27 23:57 index.db
+-rw-r--r--@ 1 joshuadavis  staff       32768 Nov 27 23:56 index.db-shm
 ```

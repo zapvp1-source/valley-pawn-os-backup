@@ -182,6 +182,62 @@ def plan_occasions(code, town, send, optouts, dead, sent_keys):
     return texts, {"customers_with_phone_list": len(con), "birthdays_on_file": len(bd), "first_visits_on_file": len(vis), "why_not": dict(why)}
 
 
+def plan_invites(code, town, pull, send, rows, optouts, dead, ledger_path):
+    """App invitation texts (replaces Bravo's "MobilePawn New Loan" / "New Layaway" invitations). Who: customer
+    whose loan was written, or layaway started, in the last 7 days, MobilePawn "Not Activated", phone on file, not
+    store-marked do-not-text, not opted out in Chekkit, not a dead number. At most one invitation per phone per 7
+    days (Bravo's own rule), tracked in the store ledger as  invite|<phone>  <tab> <send date>."""
+    con = {}
+    for f in glob.glob(os.path.join(BRAVO_OUT, "*_%s_forfeiture-winback-comparison-contacts.csv" % code)):
+        d = "%014d" % os.path.getmtime(f)
+        try:
+            with open(f, newline="", encoding="utf-8-sig", errors="replace") as fh:
+                for r in csv.DictReader(fh):
+                    n = rc.norm_name(r.get("Name"))
+                    if n and (n not in con or d >= con[n][0]): con[n] = (d, r)
+        except OSError:
+            pass
+    recent = {}
+    if os.path.exists(ledger_path):
+        for l in open(ledger_path):
+            p = l.rstrip("\n").split("\t")
+            if len(p) == 2 and p[0].startswith("invite|"):
+                try:
+                    if (send - datetime.strptime(p[1], "%Y-%m-%d").date()).days < 7 and p[1] != send.isoformat(): recent[p[0]] = p[1]
+                except ValueError:
+                    pass
+    cands = []     # (customer name, MobilePawn status)
+    for r in rows:
+        if (r.get("Disposition") or "").strip().upper() != "ON LOAN": continue
+        try: age = int((r.get("Age") or "").strip())
+        except ValueError: continue
+        if 0 <= age <= 6: cands.append(((r.get("Customer") or "").strip(), (r.get("MobilePawn") or "").strip()))
+    lf = os.path.join(BRAVO_OUT, "%s_%s_layaway-detail-all-active.tsv" % (pull, code))
+    if os.path.exists(lf):
+        for r in csv.DictReader(open(lf, newline="", encoding="utf-8-sig", errors="replace"), delimiter="\t"):
+            try: age = int((r.get("Age") or "").strip())
+            except ValueError: continue
+            if 0 <= age <= 7: cands.append(((r.get("Customer") or "").strip(), (r.get("MobilePawn") or "").strip()))
+    texts, why, seen = [], collections.Counter(), set()
+    for name, mp in cands:
+        n = rc.norm_name(name)
+        if not n or n in seen: continue
+        seen.add(n)
+        c = con.get(n, (None, None))[1]
+        phone = rc.phone10(c.get("Phone")) if c else ""
+        key = "invite|%s" % phone
+        if mp.lower() != "not activated": why["has the app or not eligible"] += 1
+        elif not phone: why["no phone on file yet"] += 1
+        elif (c.get("SMS") or "").strip().upper() == "DNT": why["store marked do-not-text"] += 1
+        elif phone in optouts: why["opted out in Chekkit"] += 1
+        elif phone in dead: why["dead number"] += 1
+        elif key in recent: why["invited in the last 7 days"] += 1
+        else:
+            body = rc.TEMPLATES["app_invite"].format(store=town)
+            texts.append({"store": town, "phone": phone, "kind": "app_invite", "text": body, "name": name.title(), "keys": [key], "segments": 1 if len(body) <= 160 else 2})
+    return texts, {"new_loan_or_layaway_customers": len(seen), "why_not": dict(why)}
+
+
 def main():
     pull = arg("--pull-date", date.today().isoformat())
     send = datetime.strptime(arg("--send-date", (datetime.strptime(pull, "%Y-%m-%d").date() + timedelta(days=1)).isoformat()), "%Y-%m-%d").date()
@@ -241,6 +297,12 @@ def main():
         # wording approved, customers seen in the last two years only). Flag: fleet/state/loan_reminders_live/<STORE>.occasions
         occ_live = os.path.exists(os.path.join(STATE, "loan_reminders_live", code + ".occasions"))
         if occ_live: texts += occ
+        inv, inv_stats = plan_invites(code, town, pull, send, rows, optouts, dead, ledger)
+        inv_live = os.path.exists(os.path.join(STATE, "loan_reminders_live", code + ".invites"))
+        with open(os.path.join(out, "invites_%s.csv" % code), "w", newline="") as fh:   # record; sent only when .invites flag exists
+            w = csv.writer(fh); w.writerow(["phone", "kind", "characters", "text", "name"])
+            for t in inv: w.writerow([t["phone"], t["kind"], len(t["text"]), t["text"], t["name"]])
+        if inv_live: texts += inv
         with open(os.path.join(out, "plan_%s.csv" % code), "w", newline="") as fh:
             w = csv.writer(fh); w.writerow(["phone", "kind", "characters", "counts_as", "text", "tickets", "name"])
             for t in texts:
@@ -261,6 +323,7 @@ def main():
             "skipped": dict(why), "chekkit_optouts_known": len(optouts), "bravo_rows": len(rows),
             "would_be_allowed_to_send": list(send_window_ok(f, send))}
         summary["stores"][code].update(lay_stats)
+        summary["stores"][code]["app_invites_in_plan" if inv_live else "app_invites_NOT_SENT"] = dict(inv_stats, texts=len(inv))
         ok_ = collections.Counter(t["kind"] for t in occ)
         summary["stores"][code]["occasions_in_plan" if occ_live else "occasions_NOT_SENT"] = dict(occ_stats, birthday_texts=ok_.get("birthday", 0), anniversary_texts=ok_.get("anniversary", 0), longest=max([len(t["text"]) for t in occ] or [0]))
         summary["stores"][code].update({"layaway_notice": kinds.get("layaway_notice", 0), "layaway_late": kinds.get("layaway_late", 0)})

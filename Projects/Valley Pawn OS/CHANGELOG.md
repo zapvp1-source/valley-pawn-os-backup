@@ -1,6 +1,168 @@
+## 2026-11-27 ~10:10 PM ET (instock-nightly: Drive publish fix)
+- Bravo pulls ran clean all three nights (11/24, 11/25, 11/26: every store, every row). The publish step died on Drive's "Resource deadlock avoided" writing As Of.txt (ledger rows 11/26, 11/27).
+- FIX bin/instock_merge.py: each Drive write goes to a fresh temp name, is renamed into place and retried 6x (20 s apart); the dated History copy and As Of.txt are extras that can no longer block the main list. Backup fleet/_backups/instock_merge.py.bak-pre-drivefix-20261127. Republish of 2026-11-26 queued (host_queue/instock-republish-20261127.sh).
+- STILL OPEN: detail columns (Full Description, Metal Type/Color, Purity, Weight, Location) need a new saved layout + saved report in Bravo, built by hand on screen. Not started tonight: Bravo was in use (wh-test triggers, jewelry nightly, loan reminders 22:40).
+
 # Valley Pawn - Enterprise Changelog
 
 Newest first. Material changes to the business operating system. Read this BEFORE any build, fix or diagnosis.
+
+## 2026-11-27 ~8:45 PM ET (Bravo Warehouse, item master: the item to ticket link)
+- NEW in Bravo, additive, Shared Company-Wide: inventory grid layout "Claude Item Master" (31 columns) and saved Inventory custom report "Claude Item Master" (every status, Status Date range). Created by script (`inv_report_build.sh WAY laybuild`, `itembuild`; new modes in `InvReportBuild.ahk`, backups `.bak-pre-laybuild-20261127` etc.). No existing layout or report was changed; "Sold inv detail" re-checked after the save.
+- New pipeline cell `item-master` (`Bravo Data Extraction/reports/ItemMaster.ahk`; lines ADDED to `bravo_watcher.ahk`, watcher validated and restarted ~8:29 PM). Proven on LEX August 2026: 556 rows, matched Bravo's count, shrinkage equals End of Month exactly.
+- Warehouse: new tables `item_master`, `eom_report`; views `v_item_origin`, `v_eom_month`, `v_tieout_sales`. October 2026 sales ledger ties to End of Month to the penny at all five stores.
+- `wh-backfill` agent: added a nightly 11:20 PM slot (4 history windows) to the Sunday slots; plist reinstalled. Queue now led by `item-master` per month, back to 2016.
+- Resume point: `Bravo Warehouse/STATUS.md`.
+
+## 2026-11-27 ~7:30 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only — fifteenth firing)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only confirmed (no remote-devices bridge tools).
+- Gmail check: `subject:"New Message from" after:2026/11/27` — zero results.
+- Checked Joshua's DM and #employee-prospects fresh since the 7:04 PM run — nothing new hiring-related (newest hiring item is still the 9:05 AM Robert Wilson note; the 11:08 AM Harrisonburg-hours question remains unrelated and unanswered by Joshua, not this pipeline's concern).
+- Did not re-attempt the live Indeed Jobs/Messages dashboard this run — Gmail + Slack already corroborate no change, consistent with every run today.
+- No no-shows, no felony disqualifications, no new applicants, no bookings.
+- Quiet Rule: nothing changed, no Slack post, no DM.
+
+## 2026-11-27 ~7:04 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only — fourteenth firing)
+- Loaded enterprise-map, enterprise-folder-access, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only confirmed (no remote-devices bridge tools; Claude in Chrome tools loaded and available for Indeed).
+- Gmail check: `subject:"New Message from" after:2026/11/27` — zero results.
+- Checked Joshua's DM and #employee-prospects fresh since the 6:34 PM run — nothing new hiring-related (newest hiring item is still the 9:05 AM Robert Wilson note; the 11:08 AM Harrisonburg-hours question remains unrelated and unanswered by Joshua, not this pipeline's concern). All listings remain Paused, 0 New candidates per the last live check.
+- Did not re-attempt the live Indeed Jobs/Messages dashboard this run — Gmail + Slack already corroborate no change, consistent with the day's cadence.
+- No no-shows, no felony disqualifications, no new applicants, no bookings.
+- Quiet Rule: nothing changed, no Slack post, no DM.
+
+## 2026-11-27 ~7:00 PM ET (Bravo Warehouse, history pulls and sales ledger)
+- New pipeline cells `loans-written` and `buys-written` (new file `Bravo Data Extraction/reports/TicketHistory.ahk`, lines ADDED to `bravo_watcher.ahk`, watcher validated and restarted ~4:50 PM). They run the existing saved reports "Claude Loan Portfolio 2026" and "Claude Buy Reviews" for a from..to window and check the capture against Bravo's own row count. Proven on LEX August 2026 (loans 152 rows on 108 tickets, buys 212 rows).
+- Bravo's built-in Sold Inventory report (existing cell `sold-inventory`) proven as the complete sales ledger: LEX 8/1 to 8/27/2026 cost $11,028.32 equals End of Month sales cost less returns to the penny. The warehouse now loads it into `sales_ledger`, each file checked against its own total. The item-level custom report covers 92 to 98 percent of that and is kept for category and tag price only.
+- `Bravo Warehouse/backfill_queue.txt` now holds sold-inventory, loans-written and buys-written for every month from November 2026 back to January 2021 (Sunday agent `wh-backfill`, six windows per slot), then older sold-history months.
+- `InvReportBuild.ahk`: READ ONLY modes `layprobe` and `layprobe2` ADDED (backups `.bak-pre-layprobe-20261127`, `.bak-pre-layprobe2-20261127`) plus new `layshot.ps1`. They open an existing saved inventory report, look at the Layouts control and the grid Column Chooser, and leave by Cancel. Nothing in Bravo is saved or changed.
+- Resume point: `Bravo Warehouse/STATUS.md`.
+
+## 2026-11-27 ~6:34 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only — thirteenth firing)
+- Loaded enterprise-map, enterprise-folder-access, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only confirmed (no remote-devices bridge tools).
+- Gmail check: `subject:"New Message from" after:2026/11/27` — zero results.
+- Checked Joshua's DM and #employee-prospects fresh since the 6:19 PM run — nothing new hiring-related (newest hiring item is still the 9:05 AM Robert Wilson note; the 11:08 AM Harrisonburg-hours question remains unrelated and unanswered by Joshua, not this pipeline's concern).
+- Live Indeed Messages inbox loaded cleanly this run (no Cloudflare interstitial): newest thread still Robert Wilson (Waynesboro), last message ours — no candidate reply pending, no bolded/unread threads.
+- Live Jobs dashboard: all 5 listings (Saint Augustine Store Manager, Lexington, Waynesboro, Harrisonburg, Roanoke) confirmed Paused, 0 New candidates each.
+- No no-shows, no felony disqualifications, no new applicants, no bookings.
+- Quiet Rule: nothing changed, no Slack post, no DM.
+
+## 2026-11-27 ~6:19 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only — twelfth firing)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only confirmed (no remote-devices bridge tools).
+- Gmail check: `subject:"New Message from" after:2026/11/27` — zero results.
+- Checked Joshua's DM and #employee-prospects fresh since the 6:xx PM run — nothing new hiring-related (newest hiring item is still the 9:05 AM Robert Wilson note; the 11:08 AM Harrisonburg-hours question remains unrelated and unanswered by Joshua, not this pipeline's concern). All listings remain Paused per the 11/26 note.
+- Did not re-attempt the live Indeed Jobs/Messages dashboard this run — Gmail + Slack already corroborate no change, consistent with every run today.
+- No no-shows, no felony disqualifications, no new applicants, no bookings.
+- Quiet Rule: nothing changed, no Slack post, no DM.
+
+## 2026-11-27 ~6:xx PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only — eleventh firing)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only confirmed (no remote-devices bridge tools).
+- Gmail check: `subject:"New Message from" after:2026/11/27` — zero results.
+- Checked Joshua's DM and #employee-prospects fresh since the 5:40 PM run — nothing new hiring-related (newest hiring item is still the 9:05 AM Robert Wilson note; the 11:08 AM Harrisonburg-hours question remains unrelated and unanswered by Joshua, not this pipeline's concern). All listings remain Paused per the 11/26 note.
+- Did not re-attempt the live Indeed Jobs/Messages dashboard this run — Gmail + Slack already corroborate no change, consistent with every run today.
+- No no-shows, no felony disqualifications, no new applicants, no bookings.
+- Quiet Rule: nothing changed, no Slack post, no DM.
+
+## 2026-11-27 ~5:40 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only — tenth firing)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only confirmed (no remote-devices bridge tools).
+- Gmail check: `subject:"New Message from" after:2026/11/27` — zero results.
+- Checked Joshua's DM and #employee-prospects fresh since the 5:05 PM run — nothing new hiring-related (newest hiring item is still the 9:05 AM Robert Wilson note; the 11:08 AM Harrisonburg-hours question remains unrelated and unanswered by Joshua, not this pipeline's concern).
+- Did not re-attempt the live Indeed Jobs/Messages dashboard this run — Gmail + Slack already corroborate no change, consistent with every run today.
+- No no-shows, no felony disqualifications, no new applicants, no bookings.
+- Quiet Rule: nothing changed, no Slack post, no DM.
+
+## 2026-11-27 ~5:05 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only — ninth firing)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only confirmed (no remote-devices bridge tools).
+- Gmail check: `subject:"New Message from" after:2026/11/27` — zero results.
+- Checked Joshua's DM and #employee-prospects fresh since the 3:49 PM run — nothing new hiring-related (newest hiring item is still the 9:05 AM Robert Wilson note; the 11:08 AM Harrisonburg-hours question remains unrelated and unanswered by Joshua, not this pipeline's concern).
+- Did not re-attempt the live Indeed Jobs/Messages dashboard this run — Gmail + Slack already corroborate no change, consistent with every run today.
+- No no-shows, no felony disqualifications, no new applicants, no bookings.
+- Quiet Rule: nothing changed, no Slack post, no DM.
+
+## 2026-11-27 ~4:40 PM ET (Bravo Warehouse — history backfill live)
+- NEW Bravo cell `sold-history` -> `Bravo Data Extraction/reports/SoldHistoryAll.ahk` (additive; watcher backup `bravo_watcher.ahk.bak-pre-sold-history-20261127`; validated + restarted 3:33 PM). Sold items for a date range from the existing saved report "Claude Sold Inv Details" (not edited), whole-grid copy checked against Bravo's row total. Output `output/<from>_to_<to>_<STORE>_sold-history.tsv` + `.meta`.
+- NEW native agent `com.valleypawn.wh-backfill` (bin/wh_backfill.sh, Type A, Joshua approved the allowlist entry 4:26 PM; backup `fleet/host_queue_allowlist.txt.bak-pre-wh-backfill-20261127`). Sundays 9:20/10:20/11:20 AM, 3:20/6:30/7:30/8:30/9:30 PM: up to 4 history windows per slot from `Bravo Warehouse/backfill_queue.txt`. Daily 3:05 AM: warehouse rebuild only, no Bravo contact. Pause file: `fleet/state/wh-backfill/PAUSED`. Silent; one ledger row if a window fails three times.
+- Sold items 5/18-8/11/2026 backfilled for all 5 stores. Known limit: item-report history shows only the latest sale of repeat stock-number items (87-92% of End of Month cost of sales); see `Bravo Warehouse/STATUS.md`.
+
+## 2026-11-27 ~3:49 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only — eighth firing)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only confirmed (no remote-devices bridge tools).
+- Gmail check: `subject:"New Message from" after:2026/11/27` — zero results.
+- Checked Joshua's DM and #employee-prospects fresh since the 3:45 PM run — nothing new hiring-related (newest hiring item is still the 9:05 AM Robert Wilson note; the 11:08 AM Harrisonburg-hours question remains unrelated and unanswered by Joshua, not this pipeline's concern).
+- Did not re-attempt the live Indeed Jobs/Messages dashboard this run — Gmail + Slack already corroborate no change, consistent with every run today.
+- No no-shows, no felony disqualifications, no new applicants, no bookings.
+- Quiet Rule: nothing changed, no Slack post, no DM.
+
+## 2026-11-27 ~3:45 PM ET (listings fix loop, scheduled run)
+- Fixed live: Yelp Lexington categories now Pawn Shops / Jewelry / Gold Buyers (Yelp now aligned for 4 of 5 stores; Harrisonburg waits on BrightLocal). Detail: Listing Management/fix-loop/FIX_LOG.md.
+
+## 2026-11-27 ~3:35 PM ET (Bravo Warehouse — Joshua: "we need ALL the data from Bravo")
+- NEW project `Bravo Warehouse/` (additive, read-only on the pipeline): `bin/build_warehouse.py` loads every item-level file already pulled (in-stock snapshots, sold items, buys, intake, loans, layaways, unpriced) into `bravo_warehouse.sqlite`; `COVERAGE.md` shows covered days per dataset/store. Plan and resume point: `Bravo Warehouse/PLAN.md`, `STATUS.md`.
+- FIX `bin/instock_merge.py` (backup `.bak-pre-asof-fix-20261127`): the As Of.txt Drive lock (EDEADLK since 11/25) no longer blocks the publish (temp file + swap, retries, non-fatal). 11/26 in-stock list published via host queue (12,257 items).
+- Backfill started with existing cells only (sold-discount-detail date ranges via bravo_pull.sh); smoke trigger `wh-backfill-sold-2026-05b-LEX`. Bulk backfill planned for Sundays.
+
+## 2026-11-27 ~3:04 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only — seventh firing)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only confirmed (no remote-devices bridge tools).
+- Gmail check: `subject:"New Message from" after:2026/11/27` — zero results.
+- Checked Joshua's DM and #employee-prospects fresh since the 1:28 PM run — nothing new hiring-related (newest hiring item is still the 9:05 AM Robert Wilson note; the 11:08 AM Harrisonburg-hours question remains unrelated and unanswered by Joshua, not this pipeline's concern).
+- Did not re-attempt the live Indeed Jobs/Messages dashboard this run — Gmail + Slack already corroborate no change, consistent with every run today.
+- No no-shows, no felony disqualifications, no new applicants, no bookings.
+- Quiet Rule: nothing changed, no Slack post, no DM.
+
+## 2026-11-27 ~1:28 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only — sixth firing)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only confirmed (no remote-devices bridge tools).
+- Gmail check: `subject:"New Message from" after:2026/11/27` — zero results.
+- Checked Joshua's DM and #employee-prospects fresh since the 12:49 PM run — nothing new hiring-related (the 11:08 AM Harrisonburg-hours question is still the newest DM item, unrelated to this pipeline and still awaiting his reply).
+- Did not re-attempt the live Indeed Jobs/Messages dashboard this run — Gmail + Slack already corroborate no change, consistent with every run today.
+- No no-shows, no felony disqualifications, no new applicants, no bookings.
+- Quiet Rule: nothing changed, no Slack post, no DM.
+
+## 2026-11-27 ~12:49 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only — fifth firing)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only confirmed (no remote-devices bridge tools).
+- Gmail check: `subject:"New Message from" after:2026/11/27` — zero results.
+- Checked Joshua's DM fresh since the 12:04 PM run — nothing new hiring-related (newest DM is still the unrelated 11:08 AM Harrisonburg-hours question, awaiting his reply).
+- Checked #employee-prospects — unchanged since the 11/25 interview-list post; nothing to update.
+- Did not re-attempt the live Indeed Jobs/Messages dashboard — Gmail + Slack already corroborate no change, consistent with every run today (Cloudflare interstitial hit the last two attempts).
+- No no-shows, no felony disqualifications, no new applicants, no bookings.
+- Quiet Rule: nothing changed, no Slack post, no DM.
+
+## 2026-11-27 ~12:04 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only — fourth firing)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only confirmed (no remote-devices bridge tools).
+- Checked Joshua's DM and #employee-prospects fresh since the 11:20 AM run — nothing new hiring-related (newest DM is the unrelated 11:08 AM Harrisonburg-hours question, still awaiting his reply).
+- Gmail check: `subject:"New Message from" after:2026/11/27` — zero results.
+- Live Indeed Messages inbox: newest thread still Robert Wilson (Waynesboro), last message ours — no candidate reply pending, no bold/unread threads.
+- Jobs dashboard hit a Cloudflare "Additional Verification Required" interstitial on load; did not attempt to push past it (bot-check, not an SSO stall). Not pursued further — Messages inbox + Gmail + Slack already confirm no change, consistent with every run today showing all 4 listings Paused/0 New.
+- No no-shows, no felony disqualifications, no new applicants, no bookings.
+- Quiet Rule: nothing changed, no Slack post, no DM.
+
+## 2026-11-27 ~11:20 AM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only — third firing)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only confirmed (no remote-devices bridge tools).
+- Checked Joshua's DM and #employee-prospects fresh — newest DM is an unrelated Harrisonburg-hours question (11:08 AM, awaiting his reply, not hiring pipeline); nothing hiring-related since the 9:05 AM Robert Wilson note.
+- Gmail check: `subject:"New Message from" after:2026/11/27` — zero results.
+- Live Indeed Messages inbox: newest thread still Robert Wilson (Waynesboro), last message ours (this morning's holding reply) — no candidate reply pending.
+- Live Jobs dashboard: Waynesboro 0 New, Harrisonburg 0 New, Lexington 0 New, Roanoke 0 New — all Paused (Store Manager, out of scope, has 3 New — not this pipeline's listings).
+- No no-shows, no felony disqualifications, no new applicants, no bookings.
+- Quiet Rule: nothing changed, no Slack post, no DM.
+
+## 2026-11-27 ~10:50 AM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only confirmed (no remote-devices bridge tools).
+- Checked Joshua's DM and #employee-prospects fresh since the 9:05 AM run — nothing new (newest DM is still the Robert Wilson holding-reply note).
+- Gmail check: `subject:"New Message from" after:2026/11/26` — zero results, confirming no new Indeed candidate messages since yesterday.
+- Live Indeed Messages inbox: newest thread still Robert Wilson (Waynesboro), last message ours (this morning's holding reply) — no candidate reply pending. Jobs dashboard: all 5 listings (Saint Augustine Store Manager, Lexington, Waynesboro, Harrisonburg, Roanoke) Paused, 0 New candidates each.
+- No no-shows, no felony disqualifications, no new applicants, no bookings.
+- Quiet Rule: nothing changed, no Slack post, no DM.
+
+## 2026-11-27 ~1:45 PM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only — second firing)
+- Loaded enterprise-map, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only confirmed (no remote-devices bridge tools).
+- Checked Joshua's DM and #employee-prospects fresh since the 9:05 AM run — nothing new (newest DM is still the Robert Wilson holding-reply note).
+- Gmail check: `subject:"New Message from" after:2026/11/27` — zero results, confirming no new Indeed candidate messages since this morning.
+- No no-shows, no felony disqualifications, no new applicants, no bookings. All listings still Paused / 0 New.
+- Quiet Rule: nothing changed, no Slack post, no DM.
+
+## 2026-11-27 ~9:05 AM ET (vp-hiring-pipeline, Cowork scheduled run, cloud-only)
+- Loaded enterprise-map, enterprise-folder-access, hiring-contact-check, indeed-access, vp-hiring-pipeline. Cloud-only confirmed (no remote-devices bridge tools).
+- Checked Joshua's DM and #employee-prospects fresh since the 11-26 ~9:50 PM fleet-guardian note — nothing new or hiring-relevant.
+- Live Indeed Messages inbox: new reply overnight from Robert Wilson (Waynesboro, interviewed 10/14, no disposition recorded since) asking if we still need help and offering to travel to another store. Not on the do-not-contact/felony list; HIRING_OUTREACH.md shows no disqualification. All 5 listings (Waynesboro/Harrisonburg/Lexington/Roanoke/Saint Augustine Store Manager) confirmed Paused, 0 New candidates — not actively hiring. Sent a holding reply matching the house pattern used for similar check-ins (Michael Boyer 11/20, Jordyn Bolton, Matayah Buckland): "Thanks so much, Robert — really appreciate you checking back in and your patience. We don't have a final timeline yet, but we'll keep you in mind and reach out as soon as there's an opening, in Waynesboro or elsewhere." Confirmed sent in-thread.
+- No other threads needed action — rest of inbox unchanged (our own last message or candidate acknowledgments, nothing pending). No no-shows, no felony disqualifications, no new applicants, no bookings.
+- Quiet Rule: schedule unchanged, so no #employee-prospects post. One short Slack DM to Joshua for the Robert Wilson reply (the only thing that changed this run).
 
 ## 2026-11-26 ~9:50 PM ET (fleet-guardian 21:45 ET pass)
 - 4 missed-today items at check time; 1 was a false alarm (daily-clockin-check correctly skipped posting -- all 5 stores closed for Thanksgiving, verified against the 10:18 AM entry above and store-closure evidence, not a real miss). The other 3 (oura-daily-import, daily-cloudcover-check, daily-dress-code-check) are known/queued, no new action.
@@ -10884,3 +11046,11 @@ Newest first. Material changes to the business operating system. Read this BEFOR
 - Host Job Queue diagnostic (host_diag.sh agents, queued/returned clean) confirmed com.valleypawn.supply-approvals and com.valleypawn.supply-deliveries both still at last-exit 1 -- same multi-day REPEAT FAILURE class already DM'd 2026-11-24 21:45, not re-run (verify-only, purchasing-adjacent, hard limit). com.valleypawn.cloudcover-check/dress-code-check and com.valleypawn.nics-weekly-mtd also still showing their already-tracked failure codes (Login-Day sign-in walls / Bravo-GL-backlog class respectively) -- no new action, no new rows.
 - HUMAN_QUEUE: 1 new row (vp-staff-video-chase video collection) + 1 resurfaced under the 7-day rule (ivr-app-link-text Zoom OAuth scope gap, open since 11/18, never previously surfaced in a digest).
 - 0/5 reruns used (nothing today was both rerun-safe and actionable -- the one new ledger row is human-only). 1 Slack DM sent to Joshua (D03BHQH5VGT) per Failure Policy v3 (new row + 7-day resurface + still-UNRECOVERED supply-approvals/deliveries) via vp_slack.py over the Host Job Queue -- this session's own Slack MCP connector was verified to be a different workspace (no #vp-studio-queue found) and was not used for the DM. Full detail: fleet/guardian_runs/2026-11-25-2150.json.
+
+## 2026-11-27 ~9:05 AM EST (precious-metals-settlement, Cowork scheduled run, LINKED via device bridge)
+- Loaded enterprise-map, state (logs/state.json: archived_months through 2026-10, processed_message_ids current). Target month 2026-11.
+- Step 3 (archive check, current + prior 2 months): nothing pending -- 2026-10 and earlier already archived (archive/2026-10 + Drive copy exist); no 2026-11 CLOSED file exists yet (no REVIEW even started).
+- Step 4: no existing 2026-11 REVIEW file blocking.
+- Step 5: searched Gmail (from:noreply@elemetal.com, Nov and Oct windows, plus a broad "elemetal settlement" sweep and an ahartley@elemetal.com sweep) -- no new "Elemetal - Settlement information" email. The only Elemetal threads in-window were shipping/logistics, not settlements: Nov 25 Norfolk shipment-documents (tracking label for this month's scrap, just shipped), a Nov label-request thread, an Oct 30 check-in receipt, and two weekend trading-price-sheet emails. The one true settlement thread in the Nov window (1a1a3418c8f56bdc) was already in processed_message_ids from a prior run (October's settlement, already closed/archived).
+- Read makes sense with the shipping cadence seen this year: Nov scrap shipped 11/25, so its settlement will likely land in December, not November. Nothing new to do today.
+- No workbook written, no state.json change needed (nothing new to record), no Slack post (no newly-archived CLOSED month), no DM to Joshua (routine no-op day, per the job's own "don't post Slack noise for nothing-yet runs" rule and the standing failure/notification policy).

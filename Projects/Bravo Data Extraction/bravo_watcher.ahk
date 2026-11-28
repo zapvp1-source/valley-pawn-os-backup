@@ -108,6 +108,9 @@ Persistent
 #Include reports\SoldTodayAll.ahk   ; eBay Desk company-wide sold today (additive 2026-11-21)
 #Include reports\EbayListed.ahk   ; eBay Desk listed-on-eBay inventory (additive 2026-11-21)
 #Include reports\InStockAll.ahk   ; full on-shelf item list (additive 2026-11-24)
+#Include reports\SoldHistoryAll.ahk   ; sold items by date range, clipboard copy (additive 2026-11-27, Bravo Warehouse)
+#Include reports\TicketHistory.ahk   ; loans / buys written by date range (additive 2026-11-27, Bravo Warehouse)
+#Include reports\ItemMaster.ahk   ; every item, all statuses, by status date (additive 2026-11-27, Bravo Warehouse)
 #Include reports\CoinsOnHand.ahk
 #Include reports\EmployeeActivityRange.ahk
 #Include reports\ForfeitureWinback.ahk
@@ -247,6 +250,11 @@ Main() {
     REPORT_HANDLERS["sold-today-all"] := PullSoldTodayAll   ; additive 2026-11-21
     REPORT_HANDLERS["ebay-listed"] := PullEbayListedDetails   ; additive 2026-11-21
     REPORT_HANDLERS["instock-all"] := PullInStockAll   ; additive 2026-11-24
+    REPORT_HANDLERS["instock-detail"] := PullInStockDetail   ; additive 2026-11-27
+    REPORT_HANDLERS["sold-history"] := PullSoldHistoryAll   ; additive 2026-11-27
+    REPORT_HANDLERS["loans-written"] := PullLoansWritten   ; additive 2026-11-27
+    REPORT_HANDLERS["buys-written"] := PullBuysWritten   ; additive 2026-11-27
+    REPORT_HANDLERS["item-master"] := PullItemMasterAll   ; additive 2026-11-27
     REPORT_HANDLERS["coins-onhand"]         := PullCoinsOnHand
     REPORT_HANDLERS["employee-activity-range"] := PullEmployeeActivityRange
     REPORT_HANDLERS["forfeiture-winback"]            := PullForfeitureWinback

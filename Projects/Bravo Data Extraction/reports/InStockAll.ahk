@@ -84,9 +84,18 @@ IsaClipDump(path) {
 }
 
 PullInStockAll(store, asOfDate, outputDir) {
+    return PullInStockCore(store, asOfDate, outputDir, "Claude Active Inv Details", "instock-all")
+}
+
+; 2026-11-27: same pull with the detailed columns (saved report "Claude InStock Detail", layout "Claude Item Master").
+PullInStockDetail(store, asOfDate, outputDir) {
+    return PullInStockCore(store, asOfDate, outputDir, "Claude InStock Detail", "instock-detail")
+}
+
+PullInStockCore(store, asOfDate, outputDir, reportName, slug) {
     started := A_TickCount
     result := Map(
-        "report",      "instock-all",
+        "report",      slug,
         "store",       store,
         "date",        asOfDate,
         "status",      "error",
@@ -97,7 +106,7 @@ PullInStockAll(store, asOfDate, outputDir) {
     )
 
     LogMessage("[" . store . "] InStockAll as-of=" . asOfDate)
-    outputPath := outputDir . "\" . asOfDate . "_" . store . "_instock-all.tsv"
+    outputPath := outputDir . "\" . asOfDate . "_" . store . "_" . slug . ".tsv"
     metaPath := outputPath . ".meta"
     LogMessage("  output -> " . outputPath)
 
@@ -152,10 +161,16 @@ PullInStockAll(store, asOfDate, outputDir) {
         ClickByName(INSTOCK_ALL_ELEMENTS["panel_custom_reports"], 5000)
         Sleep(1500)
 
-        LogMessage("  step 3: select saved report '" . INSTOCK_ALL_ELEMENTS["saved_report_value"] . "'")
-        if !SelectInventorySavedReport(INSTOCK_ALL_ELEMENTS["saved_report_value"])
-            throw Error("SelectInventorySavedReport: could not select " . INSTOCK_ALL_ELEMENTS["saved_report_value"])
+        LogMessage("  step 3: select saved report '" . reportName . "'")
+        if !SelectInventorySavedReport(reportName)
+            throw Error("SelectInventorySavedReport: could not select " . reportName)
         Sleep(1000)
+        ; verify the report actually loaded (the pick can silently keep the previous report)
+        loaded := ""
+        try loaded := GetBravoRoot().FindElement({AutomationId: "BoxReportName"}).Value
+        LogMessage("    BoxReportName = '" . loaded . "'")
+        if (loaded != "" && !InStr(loaded, reportName))
+            throw Error("wrong report loaded: " . loaded)
 
         LogMessage("  step 4: click Ok")
         Sleep(2500)

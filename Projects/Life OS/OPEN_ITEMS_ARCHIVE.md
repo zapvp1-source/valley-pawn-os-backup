@@ -1322,3 +1322,8 @@ Patsy Pernia (JM Partners) sent two firm Bald Rock quotes 10/12 9:33pm (thread 1
 ## Archived 2026-11-26 by open_items_groom
 
 | 2026-11-19 | 1 — Valley Pawn (Listings fix loop) | **Correction emails sent from jdavis@fcfpawn.com, waiting on replies:** support@thryv.com (YellowPages 'Dixie Pawn Inc' HAR + 'Gold-N-Pawn' ROA names); support@gunnook.com (WAY/HAR/LEX $25 fee + hours); info@mallsinamerica.com (Spotswood Valley Square 'Dixie Pawn' → Valley Pawn). Facebook Valley Pawn-Roanoke bio 'since 1988' removed (done). | SENT — awaiting platform replies | Fix loop re-checks live pages: YP 11/26, GunNook/mallsinamerica 12/3. Reply in-thread if they ask for proof. Source of truth: Listing Management/fix-loop/FIX_QUEUE.json. |
+
+
+## Archived 2026-11-27 by open_items_groom
+
+| 2026-11-20 | 1 — Valley Pawn (Listings fix loop) | **More correction emails from jdavis@fcfpawn.com, waiting on replies:** contact@pawnshopatlas.com ("Since 1988", wrong hours, phantom Staunton/Salem/old Lexington, Roanoke missing); hello@baselocal.com (Roanoke "since 1988"); MapQuest ticket #3229823 reply (Culpeper at 641 James Madison → 571; Lexington 439 E Nelson + 640 N Lee Hwy removals); Thryv case reply (YP Lexington 549753098 at 439 E Nelson). Thryv forwarded the 11/19 case to Client Care. | SENT — awaiting platform replies | Fix loop re-checks live pages 12/4 (MapQuest, pawnshopatlas, BaseLocal), YP 11/26. Source of truth: Listing Management/fix-loop/FIX_QUEUE.json. |

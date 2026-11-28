@@ -21,7 +21,7 @@ def layaway_kind(next_due, today):
     payment is due; its 5-day notice is app-only, so no text for it. Past due (wording approved by Joshua 11/21):
     1 day after, then Fridays while late, for at most 30 days (older accounts are for the store to work by phone)."""
     d = (today - next_due).days
-    if d == -1: return "layaway_notice"
+    if d in (-5, -1): return "layaway_notice"   # 11/27: Bravo's 5-day notice was on AUTO (texted non-app customers); Chekkit keeps it
     if d == 1: return "layaway_late"
     if 1 < d <= 30 and today.weekday() == 4: return "layaway_late"
     return None
@@ -35,6 +35,9 @@ TEMPLATES = {   # loan wording APPROVED by Joshua 2026-11-18 12:43 PM ("looks go
     "layaway_notice": "Hi {name}, your Valley Pawn {store} layaway payment is due {due}. Pay in store or in the MobilePawn app: thevalleypawn.com/app Text STOP to unsubscribe",
     "layaway_late": "Hi {name}, your Valley Pawn {store} layaway payment is past due. Pay in store or in the MobilePawn app: thevalleypawn.com/app Text STOP to unsubscribe",
     # birthday / first-visit anniversary: Bravo's current offer, shortened to one text. APPROVED by Joshua 2026-11-24 12:17 PM ("wording is ok"; customers of the past two years only).
+    # app invitation for a customer WITHOUT the app who just took a loan or started a layaway. Wording approved by
+    # Joshua 2026-11-27 9:48 PM ("wording has to be shopping and paying" -> "yes build it"). Never says "your loan".
+    "app_invite": "Valley Pawn {store}: thanks for coming in! Shop and make payments from your phone with our free app thevalleypawn.com/app Text STOP to unsubscribe",
     "birthday": "Happy Birthday, {name}! Show this text at any Valley Pawn in the next 30 days for 15% OFF. Text STOP to unsubscribe",
     "anniversary": "Happy Anniversary, {name}! It's the anniversary of your first visit to Valley Pawn. Show this text at any location for 15% OFF! Text STOP to unsubscribe",
 }
@@ -99,11 +102,16 @@ def build_plan(store, tickets, contacts, today, sent_keys=frozenset()):
             elif len(phones) != 1: why = "name matches %d phone numbers" % len(phones)
             elif key in sent_keys: why = "already sent"
             else:
-                groups.setdefault((phones.pop(), kind, t["due"]), []).append((t, key))
+                # one text per customer per kind: all past-due loans go in ONE text whatever their due dates
+                # (11/27: separate rows per due date meant the customer's one text named only some of their loans);
+                # "due tomorrow" notices stay per due date because the text names the date
+                ph = phones.pop()
+                groups.setdefault((ph, kind, t["due"] if kind == "courtesy" else None), []).append((t, key))
         if why: skipped.append({"store": store, "ticket": t["ticket"], "reason": why})
     texts = []
-    for (phone, kind, due), items in sorted(groups.items(), key=lambda x: (x[0][0], x[0][1])):
+    for (phone, kind, due), items in sorted(groups.items(), key=lambda x: (x[0][0], x[0][1], str(x[0][2]))):
         n = len(items)
+        if due is None: due = min(i[0]["due"] for i in items)
         # 160-character rule (a longer text counts double in Chekkit): ticket numbers show digits only
         # (#4017707, not #LT-VP4017707); if several tickets still push it over, say how many instead.
         fmt = dict(store=store, s="s" if n > 1 else "", is_are="are" if n > 1 else "is", due=due.strftime("%-m/%-d"))

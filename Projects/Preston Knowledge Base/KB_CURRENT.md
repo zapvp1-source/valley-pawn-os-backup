@@ -1,6 +1,6 @@
 # VALLEY PAWN OPS AGENT - KNOWLEDGE BASE (Preston Peters' operational knowledge)
 
-AUTO-GENERATED 2026-11-25 22:09 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
+AUTO-GENERATED 2026-11-27 22:12 by kb_build.py. DO NOT HAND-EDIT - edits are overwritten.
 To change an entry, edit verified.json (status/correction) and rebuild.
 
 Full Circle Finance Inc DBA Valley Pawn - 5 Virginia stores (Culpeper, Waynesboro,
@@ -2189,6 +2189,12 @@ PRESTON SAID: "Yeah, if they're trading one, it basically will cancel out the se
 SOURCE: zoom-call:3374b4c5486647d08cedc2c5d6b42a5c | 2026-10-30 | UNK Chadd McClintic
 id: handgun-trade-exception-stat-e3ad6035
 
+### [MEDIUM] harrisonburg-store-hours
+RULE: Harrisonburg is open every Wednesday, like the other stores, so the phone system should not say it is closed on Wednesdays. Harrisonburg closes at 5pm on Saturdays.
+PRESTON SAID: "Every Wednesday just like the other stores. Close at 5pm on Saturdays."
+SOURCE: #preston-goldilocks (Preston Peters, Operations Manager) | 2026-11-27 | https://valleypawnworkspace.slack.com/archives/C0BGXSTT4TY/p1795794829895079?thread_ts=1795792642.972569&cid=C0BGXSTT4TY
+id: harrisonburg-store-hours-f808e97a
+
 ### [MEDIUM] high-value-deal-judgment-knives
 RULE: Example of Preston's large-loan judgment: $2,000 loan against a conservative $5,000 value (~40% LTV), justified by a long customer history worth $45,460.50 in pawn service charges since 2017.
 PRESTON SAID: "Have Tim Shelton trying to get a loan for $2000 on two really high end knives at Harrisonburg. Conservative value on the two knives is $5000. They are worth closer to $6000 though realistically."
@@ -3023,5 +3029,5 @@ id: past-due-75-day-5-percent-ce-30eeab0b
 
 
 ==============================================================================
-COVERAGE: 427 entries - 31 verified by Preston, 162 high-confidence rules, 124 medium, 108 low, 2 superseded.
+COVERAGE: 428 entries - 31 verified by Preston, 162 high-confidence rules, 125 medium, 108 low, 2 superseded.
 ==============================================================================

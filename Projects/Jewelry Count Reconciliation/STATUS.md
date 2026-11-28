@@ -3149,3 +3149,39 @@ Lexington — count sheet not posted tonight.
 Roanoke — count sheet not posted tonight.
 Waynesboro — count sheet not posted tonight.
 
+
+## RUN RECORD — 2026-11-27 (Friday) — native jewelry-onhand-nightly-pull
+
+Open: CUL HAR LEX ROA WAY. Bravo freeze-window CSVs: all open stores. Sheets: CUL ok (Sandi-Cole, 18:27); HAR ok (Walker-Tapley, 18:24); LEX ok (Uriah, 18:14); ROA NOT USED — count sheet not readable; WAY ok (Chadd, 18:16).
+
+Jewelry Count — Friday 11/27 (expected = system on-hand, counted = PM count sheet)
+
+| Store | Category | Expected | Counted | Variance |
+|---|---|---|---|---|
+| CUL | Rings | 694 | 695 | +1 |
+| CUL | Bracelets | 130 | 130 | 0 |
+| CUL | Earrings | 177 | 177 | 0 |
+| CUL | Pendants | 236 | 238 | +2 |
+| CUL | Necklaces | 155 | 154 | -1 |
+| **CUL Total** | | **1392** | **1394** | **+2** |
+| HAR | Rings | 416 | 414 | -2 |
+| HAR | Bracelets | 51 | 51 | 0 |
+| HAR | Earrings | 51 | 52 | +1 |
+| HAR | Pendants | 96 | 95 | -1 |
+| HAR | Necklaces | 119 | 117 | -2 |
+| **HAR Total** | | **733** | **729** | **-4** |
+| LEX | Rings | 308 | 308 | 0 |
+| LEX | Bracelets | 36 | 36 | 0 |
+| LEX | Earrings | 43 | 43 | 0 |
+| LEX | Pendants | 47 | 47 | 0 |
+| LEX | Necklaces | 42 | 42 | 0 |
+| **LEX Total** | | **476** | **476** | **0** |
+| WAY | Rings | 375 | 375 | 0 |
+| WAY | Bracelets | 50 | 50 | 0 |
+| WAY | Earrings | 60 | 60 | 0 |
+| WAY | Pendants | 71 | 71 | 0 |
+| WAY | Necklaces | 78 | 78 | 0 |
+| **WAY Total** | | **634** | **634** | **0** |
+
+Roanoke — count sheet not readable.
+

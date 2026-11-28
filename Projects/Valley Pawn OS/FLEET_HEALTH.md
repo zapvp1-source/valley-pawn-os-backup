@@ -2,6 +2,33 @@
 
 Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). Newest first, last 30 runs kept. DM alerts go to Joshua only when an issue is first detected.
 
+## 2026-11-27 22:30 — ISSUES FOUND
+
+- launchd agent com.valleypawn.supply-deliveries last exited with status 1
+- launchd agent com.valleypawn.daily-report-pawn last exited with status 1
+- launchd agent com.valleypawn.fleet-deck last exited with status -15
+- launchd agent com.valleypawn.dress-code-check last exited with status 4
+- launchd agent com.valleypawn.daily-report-discount last exited with status 1
+- launchd agent com.valleypawn.nics-weekly-mtd last exited with status 1
+- launchd agent com.valleypawn.daily-report-sold last exited with status 1
+- launchd agent com.valleypawn.cloudcover-check last exited with status 1
+- launchd agent com.valleypawn.supply-approvals last exited with status 1
+- launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+## 2026-11-27 13:30 — ISSUES FOUND
+
+- launchd agent com.valleypawn.supply-deliveries last exited with status 1
+- launchd agent com.valleypawn.daily-report-pawn last exited with status 1
+- launchd agent com.valleypawn.fleet-deck last exited with status -15
+- launchd agent com.valleypawn.dress-code-check last exited with status 2
+- launchd agent com.valleypawn.daily-report-discount last exited with status 1
+- launchd agent com.valleypawn.nics-weekly-mtd last exited with status 1
+- launchd agent com.valleypawn.daily-report-sold last exited with status 1
+- launchd agent com.valleypawn.cloudcover-check last exited with status 1
+- launchd agent com.valleypawn.supply-approvals last exited with status 1
+- launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 ## 2026-11-26 22:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.supply-deliveries last exited with status 1
@@ -11,6 +38,8 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 - launchd agent com.valleypawn.cloudcover-check last exited with status 4
 - launchd agent com.valleypawn.supply-approvals last exited with status 1
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 
 ## 2026-11-26 13:30 — ISSUES FOUND
 
@@ -23,6 +52,8 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
 
 
+
+
 ## 2026-11-25 22:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.supply-deliveries last exited with status 1
@@ -32,6 +63,8 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 - launchd agent com.valleypawn.cloudcover-check last exited with status 1
 - launchd agent com.valleypawn.supply-approvals last exited with status 1
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 
 
 
@@ -48,6 +81,8 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
 ## 2026-11-24 22:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.supply-deliveries last exited with status 1
@@ -57,6 +92,8 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 - launchd agent com.valleypawn.cloudcover-check last exited with status 3
 - launchd agent com.valleypawn.supply-approvals last exited with status 1
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 
 
 
@@ -78,6 +115,8 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
 ## 2026-11-23 22:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.supply-deliveries last exited with status 1
@@ -92,11 +131,15 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
 ## 2026-11-23 13:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.fleet-deck last exited with status -15
 - launchd agent com.valleypawn.nics-weekly-mtd last exited with status 1
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 
 
 
@@ -118,6 +161,8 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
 ## 2026-11-22 13:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.fleet-deck last exited with status -15
@@ -126,6 +171,8 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 - launchd agent com.valleypawn.gun-audit-monthly last exited with status 2
 - launchd agent com.valleypawn.employee-canvas last exited with status 1
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 
 
 
@@ -154,6 +201,8 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
 ## 2026-11-21 13:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.supply-deliveries last exited with status 1
@@ -163,6 +212,8 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 - launchd agent com.valleypawn.gun-audit-monthly last exited with status 2
 - launchd agent com.valleypawn.employee-canvas last exited with status 1
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 
 
 
@@ -200,6 +251,8 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
 ## 2026-11-20 13:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.supply-deliveries last exited with status 1
@@ -211,6 +264,8 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 - launchd agent com.valleypawn.employee-canvas last exited with status 1
 - launchd agent com.valleypawn.cloudcover-check last exited with status 3
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 
 
 
@@ -251,6 +306,8 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
 ## 2026-11-19 13:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.fleet-deck last exited with status -15
@@ -276,6 +333,8 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
 ## 2026-11-18 22:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.fleet-deck last exited with status -15
@@ -283,6 +342,8 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 - launchd agent com.valleypawn.gun-audit-monthly last exited with status 2
 - launchd agent com.valleypawn.employee-canvas last exited with status 1
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 
 
 
@@ -325,6 +386,8 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
 ## 2026-11-17 22:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.fleet-deck last exited with status -15
@@ -332,6 +395,8 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 - launchd agent com.valleypawn.gun-audit-monthly last exited with status 2
 - launchd agent com.valleypawn.employee-canvas last exited with status 1
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 
 
 
@@ -380,6 +445,8 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
 ## 2026-11-16 22:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.vsp-fee-pay last exited with status 1
@@ -390,6 +457,8 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 - launchd agent com.valleypawn.gun-audit-monthly last exited with status 2
 - launchd agent com.valleypawn.employee-canvas last exited with status 1
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 
 
 
@@ -443,6 +512,8 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
 ## 2026-11-15 22:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.fleet-deck last exited with status -15
@@ -472,12 +543,16 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
 ## 2026-11-15 13:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.fleet-deck last exited with status -15
 - launchd agent com.valleypawn.nics-weekly-mtd last exited with status 1
 - launchd agent com.valleypawn.chekkit-review-invites last exited with status 1
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 
 
 
@@ -534,6 +609,8 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
 ## 2026-11-14 13:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.fleet-deck last exited with status -15
@@ -541,6 +618,8 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 - launchd agent com.valleypawn.chekkit-review-invites last exited with status 1
 - launchd agent com.valleypawn.conductwatch-report last exited with status 1
 - launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
+
+
 
 
 
@@ -601,80 +680,9 @@ Written by `bin/fleet_health_sentinel.py` (native launchd, no Claude usage). New
 
 
 
+
+
 ## 2026-11-13 13:30 — ISSUES FOUND
-
-- launchd agent com.valleypawn.fleet-deck last exited with status -15
-- launchd agent com.valleypawn.nics-weekly-mtd last exited with status 1
-- launchd agent com.valleypawn.ebay-efficiency-weekly last exited with status 1
-- launchd agent com.valleypawn.chekkit-review-invites last exited with status 1
-- launchd agent com.valleypawn.conductwatch-report last exited with status 1
-- launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## 2026-11-12 22:30 — ISSUES FOUND
-
-- launchd agent com.valleypawn.fleet-deck last exited with status -15
-- launchd agent com.valleypawn.nics-weekly-mtd last exited with status 1
-- launchd agent com.valleypawn.ebay-efficiency-weekly last exited with status 1
-- launchd agent com.valleypawn.chekkit-review-invites last exited with status 1
-- launchd agent com.valleypawn.conductwatch-report last exited with status 1
-- launchd agent com.valleypawn.taskperms-oneshot is installed but NOT loaded
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## 2026-11-12 13:30 — ISSUES FOUND
 
 - launchd agent com.valleypawn.fleet-deck last exited with status -15
 - launchd agent com.valleypawn.nics-weekly-mtd last exited with status 1

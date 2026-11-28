@@ -1,6 +1,124 @@
 # Sent mail — last 7 days (iCloud + all other Mail accounts)
 
-_Mirror of Apple Mail on the Mac Studio, refreshed every 10 minutes. Times are Eastern. Mirror run: 2026-11-27 00:14 EST._
+_Mirror of Apple Mail on the Mac Studio, refreshed every 10 minutes. Times are Eastern. Mirror run: 2026-11-28 00:09 EST._
+
+**[zapvp1@me.com]** ### 2026-11-27 15:16 EST — Event accepted: Joshua Davis - 15 minutes meeting
+- From: zapvp1@me.com
+- To: julking@tesla.com
+
+Joshua Davis has accepted your invitation to the event: Joshua Davis - 15 minutes meeting, scheduled for November 28, 2026 at 12:00 PM (America/New_York (EST) offset -18000).
+
+**[zapvp1@me.com]** ### 2026-11-27 14:18 EST — Following up on your early trade-in
+- From: Joshua Davis <zapvp1@me.com>
+- To: Julian King <julking@reply.tesla.com>
+
+Yes. Scheduled some time tomorrow to discuss. 
+
+Best
+Joshua
+Sent from my iPhone
+
+> On Nov 27, 2026, at 2:06 PM, Julian King <julking@tesla.com> wrote:
+> 
+> ﻿
+> Hi Joshua! My name is Julian, and I'm reaching out from Tesla's Ownership Loyalty Team.
+> Were you interested in the early trade-in I sent over?
+> If you were, the only thing due to start is the $250 order fee. All other fees are not due until you pick up your new vehicle. Estimated delivery is January through March 2027.
+> Placing the order does not mean you turn your car in this week, and it does not lock a payment. It holds a place in line.
+> If you want to look at it, book 15 minutes here: https://bookings.cloud.microsoft/bookwithme/user/b0294ac94dcb49a8b78b6af4904d37b7@tesla.com/meetingtype/dMeV6L50WECwesZQ7nko1Q2?bookingcode=574d5416-4fa2-4e6b-a648-45cd72938fee&anonymous&ismsaljsauthenabled
+> 
+> 
+> Best Regards,
+> Julian King
+> Tesla Advisor
+> Henderson, NV
+> 
+> The content of this message is the proprietary and confidential property of Tesla Inc, and should be treated as such. If you are not the intended recipient and have received this message in error, please delete this message from your computer system and notify 
+
+**[zapvp1@me.com]** ### 2026-11-27 13:25 EST — Thanksgiving dinner at STK Orlando – OpenTable #2110744186
+- From: Joshua Davis <zapvp1@me.com>
+- To: Yaqeen Chowdhury <YChowdhury@togrp.com>
+- Cc: mhilario@togrp.com, comahonybaker@togrp.com
+
+Hey Yaqeen, 
+
+ Super appreciate the call. The big thing for me in that manger getting physical with me and really holding me hostage.  He body checked me and would not let me leave to come down and talk to you. I literally had to raise my hands and tell him not to touch me.  Check the cameras.  He would not let me go downstairs until I paid for the wine which was delicious by the way. 
+ He should have   Never physically blocked me from leaving to come talk to you.  
+ He needs some work.  He could be charged if I called the police.  
+
+ Again. My behavior after his indifference and confrontational attitude was not “cool” for sure but his physicality and him stopping me from leaving was unacceptable. 
+
+ Been to all the STKS. Great brand great food. 
+
+ Best
+ Joshua
+
+ Sent from my iPhone
+
+ On Nov 27, 2026, at 11:56 AM, Yaqeen Chowdhury <YChowdhury@togrp.com> wrote:
+
+ ﻿
+
+ Hello Mr. Davis
+
+ I’m sorry to hear that your experience did not meet expectations. I just left you a voicemail and would appreciate the opportunity to speak with you personally.
+
+ Please feel free to give me a call at your convenience. I look forward to connecting with you.
+
+ Thank you
+
+ -Yaqeen
+
+ Yaqeen Chowdhury Gene
+
+**[zapvp1@me.com]** ### 2026-11-27 01:55 EST — Thanksgiving dinner at STK Orlando – OpenTable #2110744186
+- From: Joshua Davis <zapvp1@me.com>
+- To: mhilario@togrp.com, comahonybaker@togrp.com
+- Cc: ychowdhury@togrp.com
+
+> For reference, here is the review I posted:
+> 
+> ★☆☆☆☆
+> 
+> 1. Reservation 715. Seated 745pm
+> 2. Music insanely loud
+> 3. 300 bottle of wine we wanted. Out of stock. Sorry.
+> 4. Order another. Out of stock sorry.
+> 5.930. No food. No wine.
+> 6. Manager says "everything is subject to availability "
+> 7. Manager Has zero empathy. Should not be in hospitality. Rude. Mean. Could care less it was Thanksgiving, much less our boys birthday. Seemed angry.
+> 
+> Waiter was great. Manager was just awful. IM0
+> 
+> Food: 1/5 | Service: 1/5 | Atmosphere: 2/5
+> 
+> Joshua Davis
+> (804) 930-4221
+> 
+
+Joshua Davis
+
+**[zapvp1@me.com]** ### 2026-11-27 01:53 EST — Thanksgiving dinner at STK Orlando – OpenTable #2110744186
+- From: Joshua Davis <zapvp1@me.com>
+- To: mhilario@togrp.com, comahonybaker@togrp.com
+- Cc: ychowdhury@togrp.com
+
+> Mr. Hilario and Ms. O'Mahony Baker,
+> 
+> We booked a table for 7 at STK Orlando on Thanksgiving night to celebrate our son's birthday.
+> 
+> - 7:30 reservation, not seated until 7:45
+> - The $300 bottle of wine we chose was out of stock, then our second choice was too
+> - At 9:30 we still had no food and no wine
+> - When I raised it, the manager said "everything is subject to availability" and was rude and dismissive
+> 
+> Our server was great. The manager was not. I'd like someone to follow up.
+> 
+> Joshua Davis
+> (804) 930-4221
+> 
+
+Joshua Davis
 
 **[zapvp1@me.com]** ### 2026-11-26 11:40 EST — Early check-in request – Joshua Davis
 - From: Joshua Davis <zapvp1@me.com>
@@ -402,60 +520,4 @@ Joshua Davis
 > 
 > <image001.png>
 > You are receiving this email as a service to your account because you started, saved or completed an application. To ensure continued delivery, 
-
-**[zapvp1@me.com]** ### 2026-11-20 11:36 EST — Farming Infinity, LLC JM77940 Commercial Package Renewal Invoice
-- From: Joshua Davis <zapvp1@me.com>
-- To: Yuliet Arevalo <yarevalo@jmpartners.com>
-- Cc: Howard Baker <hbaker@jmpartners.com>
-
-I havent received it Sent from my iPhone
-
- On Nov 19, 2026, at 2:45 PM, Yuliet Arevalo <yarevalo@jmpartners.com> wrote:
-
- ﻿
-
- Yes, I resent the DocuSign to you 
-
- Kind Regards 
-
- Yuliet Arevalo 
-
- Customer Service Representative 
-
- JM Insurance Agency Partners, Inc. 
-
- CA Agency License: 0D99224 
-
- o: 305.445.5050 x 4446 
-
- d: 786.433.4446 
-
- yarevalo@jmpartners.com 
-
- jmpartners.com 
-
- Please note: Coverage cannot be bound from emails, faxes or voicemails unless confirmed in writing by a licensed agent. 
-
- From: Joshua Davis <zapvp1@me.com>
-
- Sent: Thursday, November 19, 2026 2:36 PM
-
- To: Yuliet Arevalo <yarevalo@jmpartners.com>
-
- Cc: Howard Baker <hbaker@jmpartners.com>
-
- Subject: Re: Farming Infinity, LLC JM77940 Commercial Package Renewal Invoice 
-
- Ok great, do I need another Docusign? 
-
- Joshua Davis 
-
- On Nov 19, 2026, at 2:14   PM, Yuliet Arevalo < yarevalo@jmpartners.com > wrote: 
-
- Hi Joshua, 
-
- I have updated the application with all the changes you requested and resent it. We did have the 3,468 as the square footage so I will let the carrier know to correct it on their end
- to 3,750.   
-
- The policy has been bound effective 11/17/26. We will have this location removed 
 

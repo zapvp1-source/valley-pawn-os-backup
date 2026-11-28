@@ -1,5 +1,14 @@
 # Listings Fix Loop — FIX_LOG (newest first)
 
+## 2026-11-27 — daily run (scheduled, unattended, Joshua's Chrome) — 2 actions
+- **Ingest:** no new presence scorecard (latest 11/22) or FFL_DRIFT (11/22). Today's AI-visibility scratch (run-20261127.md) shows correct facts for Valley Pawn in Roanoke and Harrisonburg answers; nothing new to queue.
+- **Due today:** nothing. Every submitted item's verify date is 11/29 or later; everything else is blocked_signin / joshua_decision / tracking. Used the run for two early live checks instead.
+- **FIXED (proved live):** LQ-032 part: Yelp Lexington now reads Pawn Shops / Jewelry / Gold Buyers (Electronics gone). Yelp categories are now right for CUL, WAY, LEX and ROA; only HAR remains (LQ-022, needs BrightLocal). LQ-032 stays open for the other platforms.
+- **Watch (LQ-048 note):** Bing Lexington still shows Thursday Closed, with no holiday marker, the day after Thanksgiving. Wednesday closed is correct. Re-check 11/30; if Thursday is still Closed it becomes a regular-hours defect needing the same Bing Places sign-in.
+- **Noticed, not changed:** Yelp Lexington has special hours set for Wed Dec 23 (open 10–6), presumably a holiday-week opening set in the account.
+- **Sign-in probe:** Apple Business ❌, Bing Places ❌, BrightLocal connector ❌ (refused). [LISTINGS] HUMAN_QUEUE row unchanged (still accurate).
+- Proof: evidence/2026-11-27_live_checks.txt. No Thursday AI check, no Saturday post, no Wednesday search review (Friday).
+
 ## 2026-11-26 — daily run + Thursday AI answer check (scheduled, unattended, Joshua's Chrome) — 8 actions
 - **Ingest:** no new presence scorecard (latest 11/22) or FFL_DRIFT (11/22); nothing new to add.
 - **AI answer check (week 2):** Valley Pawn named in 20 of 20 city/engine checks (#1 in 17; #2 for Roanoke on Google, Perplexity and ChatGPT behind The PawnShop). 2 wrong facts, both Copilot: Harrisonburg "open Wednesday" from Bing Places (→ new LQ-048) and Lexington "second location at 640 N Lee Hwy" from ChamberofCommerce.com (→ LQ-025). No "since 1988" this week. Thanksgiving made several engines call Thursday a closed day (holiday artifact). Full table: AI_ANSWERS.md.

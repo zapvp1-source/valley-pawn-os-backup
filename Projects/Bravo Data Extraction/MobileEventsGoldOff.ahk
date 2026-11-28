@@ -67,6 +67,23 @@ GoMain() {
             GoProbe(st)
         else if (MODE = "crprobe")
             GoCrProbe(st)
+        else if (MODE = "invitesoff") {
+            ; 2026-11-27 (Joshua "yes build it"): Bravo's two app-invitation events off; Chekkit sends the invitation.
+            if (STORES.Length != 1) {
+                GoResult(st, "INVITESOFF refused: one store per run")
+                continue
+            }
+            GoOff(st)
+            GoVerify(st)
+        }
+        else if (MODE = "noauto") {
+            if (STORES.Length != 1) {
+                GoResult(st, "NOAUTO refused: one store per run")
+                continue
+            }
+            GoNoAuto(st)
+            GoVerify(st)
+        }
         else if (MODE = "crcustdry")
             GoCrCustDry(st)
         else if (MODE = "crprobecust")
@@ -136,7 +153,7 @@ GoOff(st) {
     rows := GoRows()
     changed := 0, seen := 0, already := 0
     for r in rows {
-        if !InStr(r[2], "gold")
+        if !GoOffMatch(r[2])
             continue
         seen += 1
         ts := -1
@@ -1474,4 +1491,90 @@ GoCrCustDry(st) {
     MerWrite(OUT_DIR . "\" . st . "_crcustdry.txt", out)
     GoResult(st, "CRCUSTDRY done / dialog " . (closed ? "closed (nothing saved)" : "STILL OPEN"))
     try BackToDashboard()
+}
+
+; ============================================================================
+; noauto (2026-11-27, Joshua: "ALL texts get off of Bravo"). ONE store per run. Every event whose delivery choice
+; is still AUTO or SMS (the two choices that can send a billed text) is set to MobilePawn (app only). Events already
+; on an app setting are not touched. Presses Ok only if every such event changed; otherwise Cancel.
+; ============================================================================
+GoNoAuto(st) {
+    if !MerOpenEditor() {
+        GoResult(st, "NOAUTO editor did not open")
+        try BackToDashboard()
+        return
+    }
+    pane := MerFind(GetBravoRoot(), {ClassName: "ScrollViewer"})
+    title := "", changed := 0, failed := 0, log := ""
+    for k in pane.GetChildren() {
+        c := "", n := "", v := ""
+        try c := k.ClassName
+        if (c = "CheckBox") {
+            title := ""
+            continue
+        }
+        if (title = "" && c = "TextBlock") {
+            try n := k.Name
+            title := n
+            continue
+        }
+        if (title = "" && c = "BravoMaskedTextBox") {
+            title := "(custom)"
+            continue
+        }
+        if (c = "BravoComboBox") {
+            try v := k.Value
+            if (v != "NTFAUT" && v != "NTFSMS")
+                continue
+            ok := false, v2 := ""
+            Loop 3 {
+                GoBringIntoView(pane, k)
+                Sleep(1000)
+                ok := GoPick(k, "MobilePawn")
+                v2 := ""
+                try v2 := k.Value
+                if (ok && v2 = "NTFIPN")
+                    break
+                Sleep(1500)
+            }
+            if (ok && v2 = "NTFIPN") {
+                changed += 1
+                log .= " [" . title . ":" . v . "->NTFIPN]"
+            } else {
+                failed += 1
+                log .= " [" . title . ":FAILED(" . v2 . ")]"
+            }
+        }
+    }
+    line := "NOAUTO changed=" . changed . " failed=" . failed . log
+    if (changed > 0 && failed = 0) {
+        okt := MerFind(GetBravoRoot(), {Name: "Ok", Type: "Text"})
+        if !okt {
+            GoResult(st, line . " | Ok not found, Cancel")
+            MerCancelAll(st)
+            try BackToDashboard()
+            return
+        }
+        okt.Click("left")
+        Sleep(4000)
+        MerWaitNotHung(90)
+        if ExistsByName(EDITOR_TEXT) {
+            line .= " | editor-still-open, Cancel"
+            MerCancelAll(st)
+        } else
+            line .= " | saved"
+    } else {
+        line .= " | nothing saved"
+        MerCancelAll(st)
+    }
+    GoResult(st, line)
+    try BackToDashboard()
+}
+
+; which event titles GoOff switches off: the two app invitations in mode invitesoff, otherwise anything titled "gold"
+GoOffMatch(title) {
+    global MODE
+    if (MODE = "invitesoff")
+        return (title = "MobilePawn New Loan" || title = "MobilePawn New Layaway")
+    return InStr(title, "gold") > 0
 }

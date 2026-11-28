@@ -419,3 +419,15 @@ Unverifiable: none left in posts. PUBLISHED-WRONG: none.
   - GBP_Waynesboro 6b0497c9…: unverified "2026-27 season is titled 'For the Love'" + vague "reopened restored by 2017" + "in its 100th year" → "celebrating its 100th anniversary … reopened, restored, on March 1, 2016. Coming up: A Christmas Story: The Musical, Dec. 4-13."
   - Waynesboro FB 6b0497c1…: "reopened, restored, by 2017" → "reopened, restored, on March 1, 2016"; added A Christmas Story: The Musical Dec. 4-13; "100th year" → "100th anniversary".
 - Unverifiable: "For the Love" season title (not on the venue's site) — removed. PUBLISHED-WRONG: none.
+
+## 2026-11-27 (Fri, Black Friday) — daily fact-check, 36h window
+
+Posts checked: 27 (Publer scheduled, 11/27 10:40 through 11/28 13:20 ET). Edited: 0. Published-wrong: 0.
+
+Claims verified:
+- Harrisonburg FB + GBP_Harrisonburg (13:05 11/27): Winter Wonderfest Sat Dec 5 2026; parade 7 PM from Rockingham County Office Building down Main St to City Hall; tree lighting in Court Square after; 2026 theme "Festival of Lights". Sources: https://harrisonburgva.gov/holiday-parade (2026 page), https://downtownharrisonburg.org/winter-wonderfest (headline "Saturday, December 5, 2026"; intro/meta still carry stale 2025 text).
+- Waynesboro FB + GBP_Waynesboro (13:05 11/27): A Christmas Story: The Musical at Wayne Theatre Dec 4–13, 2026; 521 W. Main St; opened Jan 18 1926, deeded to city 1999, reopened Mar 1 2016; 100th-anniversary year being celebrated. Sources: https://www.waynetheatre.org/events/a-christmas-story-the-musical, https://rocktownnow.com/news/218812-a-christmas-story-the-musical-comes-to-the-wayne-theatre-this-december/ (11/4/2026), https://www.waynetheatre.org/about-us, https://virginialiving.com/culture/wayne-theatre-celebrates-its-100th-and-10th-anniversaries/. Not verified (evergreen, left as is): "650 seats" in FB post.
+- Roanoke FB + GBP_Roanoke (13:05 11/27): Mill Mountain Star first lit Nov 23 1949 (77th anniversary this week, 8:22 PM per VisitRoanoke); Kinsey Sign Co.; 88.5 ft; 2,000 ft neon; 10,000 lb star; red/white/blue on Memorial Day, Flag Day, July 4, Sept 11, Veterans Day. Sources: https://en.wikipedia.org/wiki/Roanoke_Star, https://www.visitroanokeva.com/blog/post/local-history-roanoke-star-mill-mountain-virginia-blue-ridge/.
+- Store hours: Lexington "open until 6 today" (Fri) ✔; Roanoke "open until 5 today" (Sat 11/28) ✔; Brand/BrandIG/BrandTwitter "all five stores open 10-6 today / this Black Friday" (Fri 11/27) ✔ — matches standing hours.
+Skipped (evergreen/product/history): Culpeper Depot (FB+GBP), Lexington mural (FB+GBP), all product, Pinterest, YouTube Shorts, weekly-finds posts.
+Unverifiable: none.

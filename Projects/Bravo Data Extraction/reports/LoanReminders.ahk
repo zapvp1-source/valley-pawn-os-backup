@@ -10,7 +10,7 @@
 ; loan by due date with Disposition, Customer, MobilePawn and SMS columns, nightly, from a native agent.
 ;
 ; Trigger "date" token (no "|" allowed in host-queue jobs):
-;   YYYY-MM-DD                 -> due dates from 45 days before to 6 days after that day (past-due texts repeat every Friday)
+;   YYYY-MM-DD                 -> due dates from 45 days before to 32 days after that day (past-due texts repeat every Friday)
 ;                                 -> <that day>_<STORE>_loan-reminders.csv
 ;   YYYY-MM-DD..YYYY-MM-DD     -> exactly that due-date range -> <end>_<STORE>_loan-reminders.csv
 ; Reuses FwbRun (ForfeitureWinback.ahk) unchanged. Registered with two ADDED lines in bravo_watcher.ahk.
@@ -23,7 +23,7 @@ PullLoanReminders(store, dateOrRange, outputDir) {
     if RegExMatch(tok, "^(\d{4})-(\d{2})-(\d{2})$", &m) {
         base := m[1] . m[2] . m[3] . "000000"
         d1 := FormatTime(DateAdd(base, -45, "Days"), "yyyy-MM-dd")
-        d2 := FormatTime(DateAdd(base, 6, "Days"), "yyyy-MM-dd")
+        d2 := FormatTime(DateAdd(base, 32, "Days"), "yyyy-MM-dd")   ; 11/27: +32 so loans written today (due in 30 days) are listed for the app invitation
         opts := d1 . ".." . d2 . lay . "|stamp=" . tok
     } else if RegExMatch(tok, "^\d{4}-\d{2}-\d{2}\.\.\d{4}-\d{2}-\d{2}$") {
         opts := tok . lay

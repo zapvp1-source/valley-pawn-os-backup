@@ -588,3 +588,47 @@ written above (asOf bumped to November 26, 2026); the deployment-specific URL
 (https://11e0cc60.vp-dashboard.pages.dev/) also returned 200, no stale-CDN concerns this run.
 Credential files removed from the cloud sandbox after the deploy command completed. No Slack
 post (success, per standing no-Slack-ever rule for this task).
+
+## Note (2026-11-27, dashboard-refresh run, 13:18 UTC/08:18 ET firing)
+Items to Price for Nov 27 (166 items / $8,908.33, identical to Nov 26 post, taken at face value)
+and Chekkit Daily Response Summary for Nov 26 (1 unanswered at Culpeper, confirmed at close by
+End-of-Day Follow-up) updated in kpis.json. Funds, layaway, company-performance watch[], and
+daily.intakeMargin left unchanged (no newer report). Artifacts sync skipped (Artifacts folder not
+connected). Deploy: tar bundle + separate .cloudflare files staged via device_stage_files,
+wrangler run in cloud sandbox, deployed cleanly. Verified: apex 401/200, kpis.json valid, asOf
+bumped to November 27, 2026; deployment URL https://c01ecdb0.vp-dashboard.pages.dev/ also
+verified. No Slack post.
+
+## Note (2026-11-27, dashboard-refresh run, 19:16 ET firing)
+Second refresh today (an earlier run already bumped asOf to Nov 27 and updated items-to-price/
+chekkit at ~08:18 ET). Picked up one genuinely new post: Daily Funds Verification for Fri Nov 27
+(posted 2026-11-27 18:38 ET -- 1 store needs a look: 4 matched, 0 discrepancy, 1 "to check".
+Harrisonburg's expected/Bravo totals matched exactly ($1,000/$1,000) but the post flagged it
+anyway because a separate "Sent to Preston" transaction at 12:50 PM had no readable amount --
+a new status category distinct from "discrepancy" and "could not verify" seen on prior days).
+funds.status set to "4/5 MATCHED (1 to check)"; expected/actual both $2,000 (sum of the two
+stores with activity, Harrisonburg $1,000 + Waynesboro $1,000, taken at face value per the
+never-fabricate rule since both sides of Harrisonburg's reported total did match).
+Left unchanged (no newer report than what was already in kpis.json): items-to-price (still the
+Nov 27 08:00 post, 166/$8,908.33), layaway-review (next Weekly Layaway Review is ~Nov 30),
+loan-review (retired, per standing rule), company-performance watch[] (no new Monthly/Gift-card
+post since Nov 1-2), chekkit (latest Daily Response Summary still covers Nov 26, 1 unanswered at
+Culpeper; the Nov 27 7PM End-of-Day Follow-up reported "no misses flagged today" but that's a
+same-day real-time note, not a new Daily Response Summary, so left the stored block as-is), and
+daily.intakeMargin (#pawn-walks posted a "Daily Pawn Walk -- 2026-11-25" report at ~10:00 ET
+today, still the simplified overpay-flags-only format with no per-store Buy/Loan Intake margin
+tables to parse; still showing Nov 14 data per prior notes). Bumped the Intake Margin feeds[]
+Last Run date to Nov 27, 2026 per established precedent.
+Artifacts sync (Step 2) skipped silently -- ~/Documents/Claude/Artifacts is not a connected
+folder on this device bridge session (only "Business Dashboard Website" and "Projects"
+connected).
+Deploy: tar bundle of site/ alone staged via device_stage_files; the 4 .cloudflare/* credential
+files staged as separate individual calls (per the 2026-11-23 classifier-block finding) -- no
+classifier objection this run, no nlink>1 quirk either. wrangler installed and run in the cloud
+sandbox. Deployed cleanly (~1s upload + worker deploy). Verified: apex
+https://vp-dashboard.pages.dev/ returns 401 with no auth and 200 with basic auth; kpis.json
+parses as valid JSON and matches the values written above (asOf unchanged at November 27, 2026 --
+already current from the earlier run today); the deployment-specific URL
+(https://f27c3984.vp-dashboard.pages.dev/) also returned 200, no stale-CDN concerns this run.
+Credential files removed from the cloud sandbox after the deploy command completed. No Slack
+post (success, per standing no-Slack-ever rule for this task).

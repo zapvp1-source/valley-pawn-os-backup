@@ -1,0 +1,2 @@
+# Bravo Warehouse sold-items backfill (additive read-only cell sold-history), 2026 gap window 2026-08-01..2026-08-11.
+bash "/Users/joshuadavis/Documents/Claude/Projects/Valley Pawn OS/bin/bravo_pull.sh" sold-history 2026-08-01..2026-08-11 CUL,HAR,LEX,ROA,WAY wh-sold-history-2026-08-01

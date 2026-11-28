@@ -65,6 +65,24 @@ GoMain() {
         }
         if (MODE = "invprobe")
             GoInvProbe(st)
+        else if (MODE = "layprobe")
+            GoLayProbe(st)
+        else if (MODE = "layprobe2")
+            GoLayProbe2(st)
+        else if (MODE = "layprobe3")
+            GoLayProbe3(st)
+        else if (MODE = "itemdry")
+            GoItemBuild(st, false)
+        else if (MODE = "itembuild")
+            GoItemBuild(st, true)
+        else if (MODE = "laydry")
+            GoLayBuild(st, false)
+        else if (MODE = "laybuild")
+            GoLayBuild(st, true)
+        else if (MODE = "stockdry")
+            GoInvBuild(st, false, "C")
+        else if (MODE = "stockbuild")
+            GoInvBuild(st, true, "C")
         else if (MODE = "invdry")
             GoInvBuildAll(st, false)
         else if (MODE = "invbuild")
@@ -1383,8 +1401,8 @@ GoInvCriteriaValues(label, &out) {
 
 GoInvBuild(st, doSave, which) {
     global DUMP_COUNT
-    name := (which = "A") ? "Claude eBay Sold Today All" : "Claude eBay Listed"
-    layoutWant := (which = "A") ? "Sold inv detail" : "Inv item detailed"
+    name := (which = "A") ? "Claude eBay Sold Today All" : ((which = "C") ? "Claude InStock Detail" : "Claude eBay Listed")
+    layoutWant := (which = "A") ? "Sold inv detail" : ((which = "C") ? "Claude Item Master" : "Inv item detailed")
     tag := (doSave ? "INVBUILD" : "INVDRY") . which
     out := ""
     outFile := OUT_DIR . "\" . st . "_" . StrLower(tag) . ".txt"
@@ -1596,6 +1614,1116 @@ GoInvBuild(st, doSave, which) {
                 out .= "StorePickerView not found`r`n"
             ; the Store value is left as Bravo defaults it; the timing run shows whether rows from other stores come back
             extraOk := datesOk && storeOk
+        } else if (which = "C") {
+            extraOk := true   ; 2026-11-27 stockbuild: Status = INVENTORY only, no other criterion
+        } else {
+            s7 := ";"
+            CrPick(MerFind(GetBravoRoot(), {AutomationId: "BoxSelectCriteria"}), ["Web Platform"], &s7)
+            wpc := GoInvCriteriaValues("Web Platform", &out)
+            wpOk := false
+            if wpc {
+                s8 := ";"
+                got := CrPick(wpc, ["eBay", "EBAY", "Ebay", "eBay Auction"], &s8)
+                wv := ""
+                try wv := CrAfter("Web Platform", "BravoComboBox").Value
+                out .= "web platform picked='" . got . "' value='" . wv . "'`r`n"
+                wpOk := (got != "")
+            }
+            extraOk := wpOk
+        }
+        rows := CrRowTexts()
+        out .= "final rows: " . rows . "`r`n"
+        lay := MerFind(GetBravoRoot(), {ClassName: "LayoutView"})
+        sb := lay ? MerFind(lay, {Name: "Save", Type: "Button"}) : 0
+        noUpd := !MerFind(GetBravoRoot(), {Name: "Update", Type: "Button"})
+        gate := "name=" . nameOk . " shared=" . sharedOk . " layout=" . layoutOk . " status=" . statusOk . " extra=" . extraOk . " save=" . (sb ? 1 : 0) . " noUpdate=" . noUpd
+        out .= "GATE " . gate . "`r`n"
+        MerShot(st . "_" . StrLower(tag) . "_1")
+        allOk := (nameOk && sharedOk && layoutOk && statusOk && extraOk && sb && noUpd)
+        if !allOk
+            verdict := "NOSAVE " . gate
+        else if !doSave
+            verdict := "DRY OK (all checks pass, not saved) " . gate
+        else {
+            sb.Click("left")
+            Sleep(4000)
+            MerWaitNotHung(60)
+            saved := true
+            MerShot(st . "_" . StrLower(tag) . "_2")
+            if !MerFind(GetBravoRoot(), {AutomationId: "BoxSelectCriteria"}) {
+                DismissPopups()
+                cr2 := MerFind(GetBravoRoot(), {Name: "Custom Reports", Type: "Button"})
+                if cr2 {
+                    cr2.Click("left")
+                    Sleep(4000)
+                }
+            }
+            bar := MerFind(GetBravoRoot(), {ClassName: "EntityAdvancedSearchControlBarView"})
+            sc := bar ? MerFind(bar, {ClassName: "BravoComboBox"}) : 0
+            seen2 := ";"
+            have := sc ? CrPick(sc, [name], &seen2, false) : ""
+            verdict := (have != "") ? "SAVED+LISTED " . gate : "SAVE CLICKED but not seen in list " . gate
+        }
+    } catch as e {
+        verdict := (saved ? "ERROR AFTER SAVE " : "NOSAVE ") . e.Message
+    }
+    closed := CrCancelOut(&out)
+    MerWrite(outFile, out)
+    GoResult(st, tag . " " . verdict . " / dialog " . (closed ? "closed" : "STILL OPEN"))
+    try BackToDashboard()
+}
+
+
+; ============================================================================
+; layprobe (2026-11-27, Bravo Warehouse, READ ONLY). Runs the existing saved report "Claude Sold Inv Details" exactly
+; as saved, then records what the grid's "Layouts" control and a column-header right-click offer, so a new column
+; layout ("Claude Item Master") can be designed. Clicks nothing inside those menus; leaves by Escape and Cancel.
+; Writes output\inv_reports\<STORE>_layprobe.txt and screenshots <STORE>_layprobe_1..3.png.
+; ============================================================================
+GoLayProbe(st) {
+    global DUMP_COUNT
+    if !GoInvOpen() {
+        GoResult(st, "LAYPROBE dialog did not open")
+        try BackToDashboard()
+        return
+    }
+    out := ""
+    bar := MerFind(GetBravoRoot(), {ClassName: "EntityAdvancedSearchControlBarView"})
+    sc := bar ? MerFind(bar, {ClassName: "BravoComboBox"}) : 0
+    seen := ";"
+    got := sc ? CrPick(sc, ["Claude Sold Inv Details"], &seen, true) : ""
+    Sleep(2500)
+    v := ""
+    try v := MerFind(GetBravoRoot(), {AutomationId: "BoxReportName"}).Value
+    out .= "selected '" . got . "' name box = '" . v . "'`r`n"
+    if !InStr(v, "Claude Sold Inv Details") {
+        c0 := ""
+        CrCancelOut(&c0)
+        MerWrite(OUT_DIR . "\" . st . "_layprobe.txt", out . c0)
+        GoResult(st, "LAYPROBE report did not load, cancelled")
+        try BackToDashboard()
+        return
+    }
+    okEl := MerFind(GetBravoRoot(), {Name: "Ok", Type: "Text"})
+    if okEl {
+        r := okEl.BoundingRectangle
+        CoordMode("Mouse", "Screen")
+        Click((r.l + r.r) // 2, (r.t + r.b) // 2)
+    } else
+        Send("{Enter}")
+    Sleep(4000)
+    t0 := A_TickCount
+    rows := 0
+    Loop {
+        try rows := GetBravoRoot().FindElements({Type: "DataItem"}).Length
+        if (rows > 0 || A_TickCount - t0 > 90000)
+            break
+        Sleep(3000)
+    }
+    out .= "grid rows on screen = " . rows . " after " . ((A_TickCount - t0) // 1000) . "s`r`n"
+    Sleep(3000)
+    MerShot(st . "_layprobe_1")
+    lay := MerFind(GetBravoRoot(), {Name: "Layouts"})
+    if lay {
+        lr := lay.BoundingRectangle
+        out .= "Layouts element at " . lr.l . "," . lr.t . "," . lr.r . "," . lr.b . "`r`n"
+        CoordMode("Mouse", "Screen")
+        Click((lr.l + lr.r) // 2, (lr.t + lr.b) // 2)
+        Sleep(2500)
+        MerShot(st . "_layprobe_2")
+        CrDumpPopups(&out, "after Layouts click")
+        out .= "## root after Layouts click`r`n"
+        DUMP_COUNT := 0
+        try MerDump(GetBravoRoot(), 0, &out)
+        Send("{Escape}")
+        Sleep(1200)
+    } else
+        out .= "## Layouts element not found`r`n"
+    hdr := 0
+    try hdr := GetBravoRoot().FindElement({Type: "HeaderItem"})
+    if hdr {
+        hr := hdr.BoundingRectangle
+        hn := ""
+        try hn := hdr.Name
+        out .= "first header '" . hn . "' at " . hr.l . "," . hr.t . "," . hr.r . "," . hr.b . "`r`n"
+        CoordMode("Mouse", "Screen")
+        Click((hr.l + hr.r) // 2, (hr.t + hr.b) // 2, "Right")
+        Sleep(2000)
+        MerShot(st . "_layprobe_3")
+        CrDumpPopups(&out, "after header right-click")
+        Send("{Escape}")
+        Sleep(1200)
+    } else
+        out .= "## no HeaderItem found`r`n"
+    Loop 3 {
+        c := MerFind(GetBravoRoot(), {Name: "Cancel", Type: "Button"})
+        if !c
+            break
+        c.Click("left")
+        Sleep(2000)
+    }
+    MerWrite(OUT_DIR . "\" . st . "_layprobe.txt", out)
+    GoResult(st, "LAYPROBE done (nothing saved)")
+    try BackToDashboard()
+}
+
+; layprobe2 (2026-11-27, Bravo Warehouse, READ ONLY). Same as layprobe, then opens the Layouts expander and the grid's
+; Column Chooser, records what each shows, closes both and leaves by Cancel. Nothing is saved, no layout is changed.
+; Writes output\inv_reports\<STORE>_layprobe2.txt and full-resolution screenshots <STORE>_layprobe2_1..4.png.
+LayShot(key) {
+    png := OUT_DIR . "\" . key . ".png"
+    cmd := "powershell -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"" . A_ScriptDir . "\layshot.ps1`" `"" . png . "`""
+    try RunWait(cmd, , "Hide")
+}
+
+LayDumpSkipGrid(el, depth, &out) {
+    global DUMP_COUNT
+    c := ""
+    try c := el.ClassName
+    if (c = "InventoryItemsGridView") {
+        out .= "  (grid skipped)`r`n"
+        return
+    }
+    if (depth > 30 || DUMP_COUNT > 4000)
+        return
+    DUMP_COUNT += 1
+    t := "", n := "", rs := "", v := "", tg := ""
+    try t := el.LocalizedType
+    try n := el.Name
+    try {
+        r := el.BoundingRectangle
+        rs := r.l . "," . r.t . "," . r.r . "," . r.b
+    }
+    try v := el.Value
+    try tg := String(el.ToggleState)
+    ind := ""
+    Loop depth
+        ind .= "  "
+    line := ind . "[" . t . "] N=" . MerClean(n, 200) . " | C=" . MerClean(c, 80) . " | R=" . rs
+    if (tg != "")
+        line .= " | TOGGLE=" . tg
+    if (v != "")
+        line .= " | V=" . MerClean(v, 200)
+    out .= line . "`r`n"
+    kids := []
+    try kids := el.GetChildren()
+    for k in kids
+        LayDumpSkipGrid(k, depth + 1, &out)
+}
+
+LayDumpWindows(&out, label) {
+    global DUMP_COUNT
+    out .= "## other Bravo windows: " . label . "`r`n"
+    mainHwnd := WinExist(BRAVO_WIN_TITLE)
+    for hwnd in WinGetList("ahk_exe Bravo.exe") {
+        if (hwnd = mainHwnd || !DllCall("IsWindowVisible", "ptr", hwnd, "int"))
+            continue
+        el := 0
+        try el := UIA.ElementFromHandle(hwnd)
+        if !el
+            continue
+        DUMP_COUNT := 0
+        try MerDump(el, 0, &out)
+    }
+}
+
+GoLayProbe2(st) {
+    global DUMP_COUNT
+    if !GoInvOpen() {
+        GoResult(st, "LAYPROBE2 dialog did not open")
+        try BackToDashboard()
+        return
+    }
+    out := ""
+    bar := MerFind(GetBravoRoot(), {ClassName: "EntityAdvancedSearchControlBarView"})
+    sc := bar ? MerFind(bar, {ClassName: "BravoComboBox"}) : 0
+    seen := ";"
+    got := sc ? CrPick(sc, ["Claude Sold Inv Details"], &seen, true) : ""
+    Sleep(2500)
+    v := ""
+    try v := MerFind(GetBravoRoot(), {AutomationId: "BoxReportName"}).Value
+    out .= "selected '" . got . "' name box = '" . v . "'`r`n"
+    if !InStr(v, "Claude Sold Inv Details") {
+        c0 := ""
+        CrCancelOut(&c0)
+        MerWrite(OUT_DIR . "\" . st . "_layprobe2.txt", out . c0)
+        GoResult(st, "LAYPROBE2 report did not load, cancelled")
+        try BackToDashboard()
+        return
+    }
+    okEl := MerFind(GetBravoRoot(), {Name: "Ok", Type: "Text"})
+    if okEl {
+        r := okEl.BoundingRectangle
+        CoordMode("Mouse", "Screen")
+        Click((r.l + r.r) // 2, (r.t + r.b) // 2)
+    } else
+        Send("{Enter}")
+    Sleep(4000)
+    t0 := A_TickCount
+    rows := 0
+    Loop {
+        try rows := GetBravoRoot().FindElements({Type: "DataItem"}).Length
+        if (rows > 0 || A_TickCount - t0 > 90000)
+            break
+        Sleep(3000)
+    }
+    out .= "grid rows on screen = " . rows . " after " . ((A_TickCount - t0) // 1000) . "s`r`n"
+    Sleep(3000)
+    LayShot(st . "_layprobe2_1")
+    ; ---- Layouts expander ----
+    ex := MerFind(GetBravoRoot(), {ClassName: "Expander"})
+    if ex {
+        er := ex.BoundingRectangle
+        out .= "Expander at " . er.l . "," . er.t . "," . er.r . "," . er.b . "`r`n"
+        CoordMode("Mouse", "Screen")
+        Click((er.l + er.r) // 2, (er.t + er.b) // 2)
+        Sleep(3000)
+        LayShot(st . "_layprobe2_2")
+        CrDumpPopups(&out, "after expander click")
+        LayDumpWindows(&out, "after expander click")
+        out .= "## root (grid skipped) after expander click`r`n"
+        DUMP_COUNT := 0
+        try LayDumpSkipGrid(GetBravoRoot(), 0, &out)
+        ; collapse again: same spot if the expander is still there and grew, else Escape
+        ex2 := MerFind(GetBravoRoot(), {ClassName: "Expander"})
+        if ex2 {
+            e2 := ex2.BoundingRectangle
+            out .= "Expander after click at " . e2.l . "," . e2.t . "," . e2.r . "," . e2.b . "`r`n"
+            Click((er.l + er.r) // 2, (er.t + er.b) // 2)
+        } else
+            Send("{Escape}")
+        Sleep(2000)
+    } else
+        out .= "## Expander not found`r`n"
+    ; ---- Column Chooser ----
+    hdr := 0
+    try hdr := GetBravoRoot().FindElement({Type: "HeaderItem"})
+    if hdr {
+        hr := hdr.BoundingRectangle
+        CoordMode("Mouse", "Screen")
+        Click((hr.l + hr.r) // 2, (hr.t + hr.b) // 2, "Right")
+        Sleep(2000)
+        cc := 0
+        for p in CrPopups() {
+            try cc := p.FindElement({Name: "Show Column Chooser"})
+            if cc
+                break
+        }
+        if cc {
+            cr := cc.BoundingRectangle
+            Click((cr.l + cr.r) // 2, (cr.t + cr.b) // 2)
+            Sleep(3500)
+            LayShot(st . "_layprobe2_3")
+            CrDumpPopups(&out, "column chooser open")
+            LayDumpWindows(&out, "column chooser open")
+            out .= "## root (grid skipped) with column chooser open`r`n"
+            DUMP_COUNT := 0
+            try LayDumpSkipGrid(GetBravoRoot(), 0, &out)
+            ; close it again through the same menu
+            try hdr := GetBravoRoot().FindElement({Type: "HeaderItem"})
+            hr := hdr.BoundingRectangle
+            Click((hr.l + hr.r) // 2, (hr.t + hr.b) // 2, "Right")
+            Sleep(2000)
+            hc := 0
+            names := ""
+            for p in CrPopups() {
+                try {
+                    for b in p.FindElements({ClassName: "LightweightBarItemLinkControl"}) {
+                        nm := ""
+                        try nm := b.Name
+                        names .= nm . "; "
+                        if InStr(nm, "Column Chooser")
+                            hc := b
+                    }
+                }
+            }
+            out .= "menu with chooser open: " . names . "`r`n"
+            if (hc && InStr(hc.Name, "Hide")) {
+                xr := hc.BoundingRectangle
+                Click((xr.l + xr.r) // 2, (xr.t + xr.b) // 2)
+                out .= "chooser closed by menu`r`n"
+            } else {
+                Send("{Escape}")
+                out .= "chooser NOT closed by menu (no Hide item)`r`n"
+            }
+            Sleep(2000)
+            LayShot(st . "_layprobe2_4")
+        } else {
+            out .= "## Show Column Chooser not found in menu`r`n"
+            Send("{Escape}")
+            Sleep(1000)
+        }
+    } else
+        out .= "## no HeaderItem found`r`n"
+    Loop 3 {
+        c := MerFind(GetBravoRoot(), {Name: "Cancel", Type: "Button"})
+        if !c
+            break
+        c.Click("left")
+        Sleep(2000)
+    }
+    MerWrite(OUT_DIR . "\" . st . "_layprobe2.txt", out)
+    GoResult(st, "LAYPROBE2 done (nothing saved)")
+    try BackToDashboard()
+}
+
+; layprobe3 (2026-11-27, Bravo Warehouse, READ ONLY). Opens the Layouts drop-down beside the grid and records it, closes it,
+; then opens the Column Chooser and records every column name with its ticked state, closes it, leaves by Cancel. Nothing saved.
+LayOpenReport(st, tag, &out) {
+    if !GoInvOpen()
+        return false
+    bar := MerFind(GetBravoRoot(), {ClassName: "EntityAdvancedSearchControlBarView"})
+    sc := bar ? MerFind(bar, {ClassName: "BravoComboBox"}) : 0
+    seen := ";"
+    got := sc ? CrPick(sc, ["Claude Sold Inv Details"], &seen, true) : ""
+    Sleep(2500)
+    v := ""
+    try v := MerFind(GetBravoRoot(), {AutomationId: "BoxReportName"}).Value
+    out .= "selected '" . got . "' name box = '" . v . "'`r`n"
+    if !InStr(v, "Claude Sold Inv Details") {
+        c0 := ""
+        CrCancelOut(&c0)
+        out .= c0
+        return false
+    }
+    okEl := MerFind(GetBravoRoot(), {Name: "Ok", Type: "Text"})
+    if okEl {
+        r := okEl.BoundingRectangle
+        CoordMode("Mouse", "Screen")
+        Click((r.l + r.r) // 2, (r.t + r.b) // 2)
+    } else
+        Send("{Enter}")
+    Sleep(4000)
+    t0 := A_TickCount
+    rows := 0
+    Loop {
+        try rows := GetBravoRoot().FindElements({Type: "DataItem"}).Length
+        if (rows > 0 || A_TickCount - t0 > 90000)
+            break
+        Sleep(3000)
+    }
+    out .= "grid rows on screen = " . rows . " after " . ((A_TickCount - t0) // 1000) . "s`r`n"
+    Sleep(3000)
+    return rows > 0
+}
+
+LayChooserWin() {
+    for hwnd in WinGetList("ahk_exe Bravo.exe") {
+        if !DllCall("IsWindowVisible", "ptr", hwnd, "int")
+            continue
+        el := 0
+        try el := UIA.ElementFromHandle(hwnd)
+        if !el
+            continue
+        n := ""
+        try n := el.Name
+        if (n = "Column Chooser")
+            return el
+    }
+    return 0
+}
+
+GoLayProbe3(st) {
+    global DUMP_COUNT
+    out := ""
+    if !LayOpenReport(st, "layprobe3", &out) {
+        MerWrite(OUT_DIR . "\" . st . "_layprobe3.txt", out)
+        GoResult(st, "LAYPROBE3 report did not open")
+        Loop 3 {
+            c := MerFind(GetBravoRoot(), {Name: "Cancel", Type: "Button"})
+            if !c
+                break
+            c.Click("left")
+            Sleep(2000)
+        }
+        try BackToDashboard()
+        return
+    }
+    CoordMode("Mouse", "Screen")
+    ; ---- Layouts drop-down: the Expander just right of the "Layouts" label ----
+    lay := MerFind(GetBravoRoot(), {Name: "Layouts"})
+    ex := 0
+    if lay {
+        lr := lay.BoundingRectangle
+        try {
+            for e in GetBravoRoot().FindElements({ClassName: "Expander"}) {
+                er := e.BoundingRectangle
+                if (er.l >= lr.r - 5 && er.l <= lr.r + 200 && Abs(er.t - lr.t) < 60)
+                    ex := e
+            }
+        }
+    }
+    if ex {
+        er := ex.BoundingRectangle
+        out .= "Layouts expander at " . er.l . "," . er.t . "," . er.r . "," . er.b . "`r`n"
+        cx := (er.l + er.r) // 2, cy := (er.t + er.b) // 2
+        Click(cx, cy)
+        Sleep(3000)
+        LayShot(st . "_layprobe3_1")
+        CrDumpPopups(&out, "after Layouts expander click")
+        out .= "## root (grid skipped) after Layouts expander click`r`n"
+        DUMP_COUNT := 0
+        try LayDumpSkipGrid(GetBravoRoot(), 0, &out)
+        ; close: Escape first, and if a popup is still there click the expander again
+        Send("{Escape}")
+        Sleep(1500)
+        if (CrPopups().Length > 0) {
+            Click(cx, cy)
+            Sleep(1500)
+        }
+        out .= "popups left after closing = " . CrPopups().Length . "`r`n"
+        LayShot(st . "_layprobe3_2")
+    } else
+        out .= "## Layouts expander not found`r`n"
+    ; ---- Column Chooser: every column name and state ----
+    hdr := 0
+    try hdr := GetBravoRoot().FindElement({Type: "HeaderItem"})
+    if hdr {
+        hr := hdr.BoundingRectangle
+        Click((hr.l + hr.r) // 2, (hr.t + hr.b) // 2, "Right")
+        Sleep(2000)
+        cc := 0
+        for p in CrPopups() {
+            try cc := p.FindElement({Name: "Show Column Chooser"})
+            if cc
+                break
+        }
+        if cc {
+            cr := cc.BoundingRectangle
+            Click((cr.l + cr.r) // 2, (cr.t + cr.b) // 2)
+            Sleep(3500)
+            win := LayChooserWin()
+            if win {
+                wr := win.BoundingRectangle
+                out .= "## column chooser columns (name = state)`r`n"
+                seenN := Map()
+                MouseMove((wr.l + wr.r) // 2, (wr.t + wr.b) // 2 + 60)
+                Loop 30 {
+                    added := 0
+                    try {
+                        for it in win.FindElements({Type: "TreeItem"}) {
+                            nm := "", stt := ""
+                            try nm := it.FindElement({Type: "Text"}).Name
+                            try stt := it.FindElement({ClassName: "CheckEdit"}).Value
+                            if (nm != "" && !seenN.Has(nm)) {
+                                seenN[nm] := 1
+                                out .= nm . " = " . stt . "`r`n"
+                                added += 1
+                            }
+                        }
+                    }
+                    Send("{WheelDown 3}")
+                    Sleep(700)
+                    if (added = 0 && A_Index > 3)
+                        break
+                }
+                out .= "columns read = " . seenN.Count . "`r`n"
+                LayShot(st . "_layprobe3_3")
+            } else
+                out .= "## column chooser window not found`r`n"
+            try hdr := GetBravoRoot().FindElement({Type: "HeaderItem"})
+            hr := hdr.BoundingRectangle
+            Click((hr.l + hr.r) // 2, (hr.t + hr.b) // 2, "Right")
+            Sleep(2000)
+            hc := 0
+            for p in CrPopups() {
+                try hc := p.FindElement({Name: "Hide Column Chooser"})
+                if hc
+                    break
+            }
+            if hc {
+                xr := hc.BoundingRectangle
+                Click((xr.l + xr.r) // 2, (xr.t + xr.b) // 2)
+                out .= "chooser closed by menu`r`n"
+            } else {
+                Send("{Escape}")
+                out .= "chooser NOT closed by menu`r`n"
+            }
+            Sleep(2000)
+        } else {
+            out .= "## Show Column Chooser not found`r`n"
+            Send("{Escape}")
+            Sleep(1000)
+        }
+    }
+    Loop 3 {
+        c := MerFind(GetBravoRoot(), {Name: "Cancel", Type: "Button"})
+        if !c
+            break
+        c.Click("left")
+        Sleep(2000)
+    }
+    MerWrite(OUT_DIR . "\" . st . "_layprobe3.txt", out)
+    GoResult(st, "LAYPROBE3 done (nothing saved)")
+    try BackToDashboard()
+}
+
+; laydry / laybuild (2026-11-27, Bravo Warehouse). ADDITIVE: creates ONE new shared grid layout "Claude Item Master" for
+; Inventory custom reports. Opens the existing report "Claude Sold Inv Details" (not changed), ticks the extra columns in the
+; Column Chooser, types the new layout name and presses "Save" (never "Update", never "Delete Layout"). laydry does everything
+; except press Save. Every gate must pass or nothing is saved. Leaves by Cancel.
+LayName() {
+    return "Claude Item Master"
+}
+LayWant() {
+    return ["Number", "Status", "Category", "Description", "Cost", "Price", "Last Sold Price", "Date", "Store", "Source", "Type", "Last Ticket Number", "Date to Inventory", "Inventory Age", "Quantity", "Sale Price", "Location", "Vendor", "Customer", "Last Sold To", "Metal Type/Color", "Metal Purity", "Metal Weight", "Total Jewelry Weight", "Serial Number", "Manufacturer", "Model", "Reference Number", "Invoice #", "SKU Number", "Quality"]
+}
+
+LayWantHas(nm) {
+    for w in LayWant()
+        if (w = nm)
+            return true
+    return false
+}
+
+; walks the chooser top to bottom. doTick: ticks wanted columns that are off. Returns Map(name -> "True"/"False") as last seen.
+LayChooserPass(win, doTick, &log) {
+    states := Map()
+    wr := win.BoundingRectangle
+    MouseMove((wr.l + wr.r) // 2, (wr.t + wr.b) // 2 + 60)
+    Send("{WheelUp 80}")
+    Sleep(1200)
+    idle := 0
+    Loop 40 {
+        added := 0
+        items := []
+        try items := win.FindElements({Type: "TreeItem"})
+        for it in items {
+            nm := "", stt := "", cb := 0
+            try nm := it.FindElement({Type: "Text"}).Name
+            try cb := it.FindElement({ClassName: "CheckEdit"})
+            if (nm = "" || !cb)
+                continue
+            try stt := cb.Value
+            if !states.Has(nm)
+                added += 1
+            if (doTick && LayWantHas(nm) && stt = "False") {
+                cr := cb.BoundingRectangle
+                if (cr.t >= wr.t + 120 && cr.b <= wr.b - 14) {
+                    Click((cr.l + cr.r) // 2, (cr.t + cr.b) // 2)
+                    Sleep(900)
+                    try stt := cb.Value
+                    log .= "ticked " . nm . " -> " . stt . "`r`n"
+                    MouseMove((wr.l + wr.r) // 2, (wr.t + wr.b) // 2 + 60)
+                }
+            }
+            states[nm] := stt
+        }
+        idle := (added = 0) ? idle + 1 : 0
+        if (idle >= 3)
+            break
+        Send("{WheelDown 2}")
+        Sleep(700)
+    }
+    return states
+}
+
+LayOpenChooser() {
+    hdr := 0
+    try hdr := GetBravoRoot().FindElement({Type: "HeaderItem"})
+    if !hdr
+        return 0
+    hr := hdr.BoundingRectangle
+    Click((hr.l + hr.r) // 2, (hr.t + hr.b) // 2, "Right")
+    Sleep(2000)
+    cc := 0
+    for p in CrPopups() {
+        try cc := p.FindElement({Name: "Show Column Chooser"})
+        if cc
+            break
+    }
+    if !cc {
+        Send("{Escape}")
+        Sleep(800)
+        return 0
+    }
+    cr := cc.BoundingRectangle
+    Click((cr.l + cr.r) // 2, (cr.t + cr.b) // 2)
+    Sleep(3500)
+    return LayChooserWin()
+}
+
+LayCloseChooser() {
+    win := LayChooserWin()
+    if !win
+        return true
+    cb := 0
+    try cb := win.FindElement({Name: "Close", Type: "Button"})
+    if cb {
+        r := cb.BoundingRectangle
+        Click((r.l + r.r) // 2, (r.t + r.b) // 2)
+        Sleep(1500)
+    }
+    return !LayChooserWin()
+}
+
+; opens a combo by clicking its arrow, records the popup, returns ";name;name;" of its text items, closes with Escape.
+LayList(combo, &out, label) {
+    global DUMP_COUNT
+    seen := ";"
+    arrow := 0
+    try arrow := combo.FindElement({Type: "Button"})
+    if !arrow {
+        out .= label . ": no arrow`r`n"
+        return seen
+    }
+    ar := arrow.BoundingRectangle
+    Click((ar.l + ar.r) // 2, (ar.t + ar.b) // 2)
+    Sleep(2500)
+    pops := CrPopups()
+    out .= "## " . label . ": popups=" . pops.Length . "`r`n"
+    for p in pops {
+        DUMP_COUNT := 0
+        try MerDump(p, 0, &out)
+        try {
+            for t in p.FindElements({Type: "Text"}) {
+                n := ""
+                try n := t.Name
+                if (n != "" && !InStr(seen, ";" . n . ";"))
+                    seen .= n . ";"
+            }
+        }
+    }
+    if (CrPopups().Length > 0) {
+        Send("{Escape}")
+        Sleep(1000)
+    }
+    if (CrPopups().Length > 0) {
+        Click((ar.l + ar.r) // 2, (ar.t + ar.b) // 2)
+        Sleep(1000)
+    }
+    out .= label . " = " . seen . "`r`n"
+    return seen
+}
+LayAll() {
+    return ["Action", "Address", "Age", "Area", "Authentic-Diamond Jewelry", "Authentic-Stone Jewelry", "Barcode", "Barcode Image", "Buya Delivery Amount", "Caliber", "Category", "Cost", "Customer", "Date", "Date to Inventory", "Description", "eBay Delivery Option", "E-Mail", "Image Kind", "Inventory Age", "Invoice #", "Last Sold Price", "Last Sold To", "Last Sold To Address", "Last Sold To E-Mail", "Last Sold To Phone", "Last Ticket Number", "Location", "Manufacturer", "Max Discount", "Metal Purity", "Metal Type/Color", "Metal Weight", "Model", "Notes", "Number", "Owner Applied Number", "Phone", "Price", "Quality", "Quantity", "Reference Number", "Sale Price", "Serial Number", "SKU Number", "Source", "Status", "Store", "Total Diamond Size", "Total Jewelry Weight", "Total Stone Size", "Type", "UPC", "Vendor", "Vendor Address", "Vendor E-Mail", "Vendor Phone", "Web Delivery Option", "Web Price", "Web URL"]
+}
+
+; sets one chooser column through the search box. Returns the state read afresh afterwards ("True"/"False"/"" when not found).
+LaySetColumn(win, nm, wantOn, doClick, &log) {
+    sb := 0
+    try sb := win.FindElement({ClassName: "TextBox"})
+    if !sb
+        return ""
+    r := sb.BoundingRectangle
+    Click((r.l + r.r) // 2, (r.t + r.b) // 2)
+    Sleep(350)
+    Send("^a")
+    Sleep(150)
+    SendText(nm)
+    Sleep(1300)
+    res := ""
+    Loop 2 {
+        pass := A_Index
+        hit := 0
+        try {
+            for it in win.FindElements({Type: "TreeItem"}) {
+                t := ""
+                try t := it.FindElement({Type: "Text"}).Name
+                if (t = nm) {
+                    hit := it
+                    break
+                }
+            }
+        }
+        if !hit
+            return ""
+        cb := 0
+        try cb := hit.FindElement({ClassName: "CheckEdit"})
+        if !cb
+            return ""
+        res := ""
+        try res := cb.Value
+        want := wantOn ? "True" : "False"
+        if (res = want || !doClick || pass = 2)
+            break
+        cr := cb.BoundingRectangle
+        Click((cr.l + cr.r) // 2, (cr.t + cr.b) // 2)
+        Sleep(1000)
+        log .= "set " . nm . " -> " . want . "`r`n"
+    }
+    return res
+}
+
+; every one of the 60 columns: set (doClick) or just read. Returns the count that match the wanted layout; bad lists the rest.
+LayApplyColumns(win, doClick, &log, &bad) {
+    okN := 0
+    bad := ""
+    for nm in LayAll() {
+        want := LayWantHas(nm)
+        got := LaySetColumn(win, nm, want, doClick, &log)
+        if (got = "") {
+            Sleep(1500)
+            got := LaySetColumn(win, nm, want, doClick, &log)
+        }
+        if (got = (want ? "True" : "False"))
+            okN += 1
+        else
+            bad .= nm . "=" . got . " "
+    }
+    sb := 0
+    try sb := win.FindElement({ClassName: "TextBox"})
+    if sb {
+        r := sb.BoundingRectangle
+        Click((r.l + r.r) // 2, (r.t + r.b) // 2)
+        Sleep(300)
+        Send("^a")
+        Sleep(150)
+        Send("{Delete}")
+        Sleep(800)
+    }
+    return okN
+}
+
+; the chevron button right of the "Layouts" label (its ToggleState is 1 while the layout panel is open)
+LayExpanderBtn() {
+    lay := MerFind(GetBravoRoot(), {Name: "Layouts"})
+    if !lay
+        return 0
+    lr := lay.BoundingRectangle
+    ex := 0
+    try {
+        for e in GetBravoRoot().FindElements({ClassName: "Expander"}) {
+            er := e.BoundingRectangle
+            if (er.l >= lr.r - 5 && er.l <= lr.r + 200 && Abs(er.t - lr.t) < 60)
+                ex := e
+        }
+    }
+    if !ex
+        return 0
+    b := 0
+    try b := ex.FindElement({Type: "Button"})
+    return b
+}
+
+LayPanelIsOpen() {
+    b := LayExpanderBtn()
+    if !b
+        return false
+    ts := ""
+    try ts := String(b.ToggleState)
+    return ts = "1"
+}
+
+LayPanel() {
+    if !LayPanelIsOpen()
+        return 0
+    return MerFind(GetBravoRoot(), {ClassName: "InplaceGridLayoutManagementView"})
+}
+
+LayOpenPanel() {
+    if LayPanelIsOpen()
+        return LayPanel() ? true : false
+    b := LayExpanderBtn()
+    if !b
+        return false
+    r := b.BoundingRectangle
+    Click((r.l + r.r) // 2, (r.t + r.b) // 2)
+    Sleep(3000)
+    return LayPanel() ? true : false
+}
+
+GoLayBuild(st, doSave) {
+    global DUMP_COUNT
+    LAY_NAME := LayName()
+    LAY_WANT := LayWant()
+    tag := doSave ? "LAYBUILD" : "LAYDRY"
+    out := ""
+    outFile := OUT_DIR . "\" . st . "_" . StrLower(tag) . ".txt"
+    verdict := "NOSAVE not reached"
+    saved := false
+    try {
+        if !LayOpenReport(st, tag, &out)
+            throw Error("report did not open")
+        CoordMode("Mouse", "Screen")
+        ; 0. the name must not exist yet
+        if !LayOpenPanel()
+            throw Error("layout panel did not open")
+        pnl := LayPanel()
+        combos := pnl.FindElements({ClassName: "BravoComboBox"})
+        ; the wide combo under the name box is Saved Layouts; the narrow one right of the name box is the sharing choice
+        savedCb := 0, shareCb := 0
+        for c in combos {
+            r := c.BoundingRectangle
+            if (r.r - r.l > 600)
+                savedCb := c
+            else
+                shareCb := c
+        }
+        if (!savedCb || !shareCb)
+            throw Error("layout panel combos not found")
+        seenL := LayList(savedCb, &out, "saved layouts")
+        shDbg := LayList(shareCb, &out, "sharing choices")
+        out .= "saved layouts before: " . seenL . "`r`n"
+        if InStr(seenL, ";" . LAY_NAME . ";")
+            throw Error("layout already exists")
+        listOk := InStr(seenL, ";Sold inv detail;") > 0
+        if (!listOk && doSave)
+            throw Error("saved layout list unreadable")
+        ; 1. tick the columns
+        win := LayOpenChooser()
+        if !win
+            throw Error("column chooser did not open")
+        tl := "", bad1 := "", bad := ""
+        LayApplyColumns(win, true, &tl, &bad1)
+        out .= tl . "after set pass, not matching: '" . bad1 . "'`r`n"
+        tl2 := ""
+        okN := LayApplyColumns(win, false, &tl2, &bad)
+        colsOk := (okN = 60 && bad = "")
+        out .= "verify pass: matching=" . okN . " of 60, not matching: '" . bad . "'`r`n"
+        LayShot(st . "_" . StrLower(tag) . "_1")
+        chClosed := LayCloseChooser()
+        out .= "chooser closed=" . chClosed . "`r`n"
+        hdrN := 0
+        try hdrN := GetBravoRoot().FindElements({Type: "HeaderItem"}).Length
+        out .= "grid header items now=" . hdrN . "`r`n"
+        ; 2. name + sharing
+        if !LayOpenPanel()
+            throw Error("layout panel did not reopen")
+        pnl := LayPanel()
+        nb := pnl.FindElement({ClassName: "BravoMaskedTextBox"})
+        nr := nb.BoundingRectangle
+        if ((nr.r - nr.l) < 100 || nr.t < 100)
+            throw Error("name box not on screen")
+        Click((nr.l + nr.r) // 2, (nr.t + nr.b) // 2)
+        Sleep(500)
+        Send("^a")
+        Sleep(300)
+        SendText(LAY_NAME)
+        Sleep(700)
+        Send("{Tab}")
+        Sleep(900)
+        pnl := LayPanel()
+        v := ""
+        try v := pnl.FindElement({ClassName: "BravoMaskedTextBox"}).Value
+        nameOk := (v = LAY_NAME)
+        savedCb := 0, shareCb := 0
+        for c in pnl.FindElements({ClassName: "BravoComboBox"}) {
+            r := c.BoundingRectangle
+            if (r.r - r.l > 600)
+                savedCb := c
+            else
+                shareCb := c
+        }
+        shSel := CrSelected(shareCb)
+        if (shSel != "Shared Company-Wide") {
+            s1 := ";"
+            CrPick(shareCb, ["Shared Company-Wide"], &s1, true)
+            Sleep(800)
+            shSel := CrSelected(shareCb)
+        }
+        sharedOk := (shSel = "Shared Company-Wide")
+        v2 := ""
+        try v2 := LayPanel().FindElement({ClassName: "BravoMaskedTextBox"}).Value
+        nameOk := nameOk && (v2 = LAY_NAME)
+        sb := MerFind(LayPanel(), {Name: "Save", Type: "Button"})
+        gate := "name=" . nameOk . " shared=" . sharedOk . " cols=" . colsOk . " chooserClosed=" . chClosed . " save=" . (sb ? 1 : 0) . " list=" . listOk
+        out .= "name box='" . v2 . "' sharing='" . shSel . "'`r`nGATE " . gate . "`r`n"
+        LayShot(st . "_" . StrLower(tag) . "_2")
+        allOk := (nameOk && sharedOk && colsOk && chClosed && sb && listOk)
+        if !allOk
+            verdict := "NOSAVE " . gate
+        else if !doSave
+            verdict := "DRY OK (all checks pass, not saved) " . gate
+        else {
+            sr := sb.BoundingRectangle
+            Click((sr.l + sr.r) // 2, (sr.t + sr.b) // 2)
+            saved := true
+            Sleep(5000)
+            MerWaitNotHung(60)
+            LayShot(st . "_" . StrLower(tag) . "_3")
+            CrDumpPopups(&out, "after Save")
+            if !LayOpenPanel()
+                throw Error("panel gone after save")
+            pnl := LayPanel()
+            savedCb := 0
+            for c in pnl.FindElements({ClassName: "BravoComboBox"}) {
+                r := c.BoundingRectangle
+                if (r.r - r.l > 600)
+                    savedCb := c
+            }
+            seenA := LayList(savedCb, &out, "saved layouts after save")
+            out .= "saved layouts after: " . seenA . "`r`n"
+            hasNew := InStr(seenA, ";" . LAY_NAME . ";") > 0
+            hasOld := InStr(seenA, ";Sold inv detail;") > 0
+            verdict := (hasNew && hasOld) ? "SAVED+LISTED " . gate : "SAVE CLICKED new=" . hasNew . " old=" . hasOld . " " . gate
+        }
+    } catch as e {
+        verdict := (saved ? "ERROR AFTER SAVE " : "NOSAVE ") . e.Message
+    }
+    try LayCloseChooser()
+    if (CrPopups().Length > 0) {
+        Send("{Escape}")
+        Sleep(900)
+    }
+    Loop 3 {
+        c := MerFind(GetBravoRoot(), {Name: "Cancel", Type: "Button"})
+        if !c
+            break
+        c.Click("left")
+        Sleep(2000)
+    }
+    MerWrite(outFile, out)
+    GoResult(st, tag . " " . verdict)
+    try BackToDashboard()
+}
+
+; itemdry / itembuild (2026-11-27, Bravo Warehouse). ADDITIVE clone of GoInvBuild "A": ONE new saved report
+; "Claude Item Master": layout "Claude Item Master", Shared Company-Wide, Status Date range, Store, and NO Status
+; criterion so items in every status come back. itemdry leaves by Cancel; itembuild presses Save only when every gate passes.
+GoItemBuild(st, doSave) {
+    which := "A"
+    global DUMP_COUNT
+    name := "Claude Item Master"
+    layoutWant := "Claude Item Master"
+    tag := doSave ? "ITEMBUILD" : "ITEMDRY"
+    out := ""
+    outFile := OUT_DIR . "\" . st . "_" . StrLower(tag) . ".txt"
+    if !GoInvOpen() {
+        GoResult(st, tag . " dialog did not open")
+        try BackToDashboard()
+        return
+    }
+    verdict := "", saved := false
+    try {
+        bar := MerFind(GetBravoRoot(), {ClassName: "EntityAdvancedSearchControlBarView"})
+        sc := bar ? MerFind(bar, {ClassName: "BravoComboBox"}) : 0
+        if !sc
+            throw Error("saved-report list not found")
+        seen := ";", have := ""
+        Loop 3 {
+            have := CrPick(sc, [name], &seen, false)
+            if (have != "" || StrLen(seen) >= 20)
+                break
+            Sleep(2000)
+        }
+        if (have != "")
+            throw Error("ALREADY EXISTS - nothing to do")
+        if (StrLen(seen) < 20)
+            throw Error("saved-report list could not be read")
+        nr := MerFind(GetBravoRoot(), {Name: "New Report", Type: "Button"})
+        if !nr
+            throw Error("New Report button not found")
+        nr.Click("left")
+        Sleep(2500)
+        nb := MerFind(GetBravoRoot(), {AutomationId: "BoxReportName"})
+        if !nb
+            throw Error("report name box not found")
+        v := ""
+        try v := nb.Value
+        if (v != "" || CrRowTexts() != "")
+            throw Error("form not blank after New Report")
+        if MerFind(GetBravoRoot(), {Name: "Update", Type: "Button"})
+            throw Error("Update button present - an existing report is loaded")
+        inner := MerFind(nb, {ClassName: "TextBox"})
+        (inner ? inner : nb).Click("left")
+        Sleep(500)
+        Send("^a")
+        Sleep(200)
+        SendText(name)
+        Sleep(500)
+        Send("{Tab}")
+        Sleep(900)
+        v := ""
+        try v := MerFind(GetBravoRoot(), {AutomationId: "BoxReportName"}).Value
+        nameOk := (v = name)
+        shSel := "", shLog := ""
+        Loop 4 {
+            s1 := ";"
+            pre := CrSelected(MerFind(GetBravoRoot(), {AutomationId: "BoxIsShared"}))
+            CrPick(MerFind(GetBravoRoot(), {AutomationId: "BoxIsShared"}), ["Shared Company-Wide"], &s1, true, Mod(A_Index, 2) = 1)
+            Sleep(800)
+            shSel := CrSelected(MerFind(GetBravoRoot(), {AutomationId: "BoxIsShared"}))
+            shV := ""
+            try shV := MerFind(GetBravoRoot(), {AutomationId: "BoxIsShared"}).Value
+            shLog .= " try" . A_Index . " pre='" . pre . "' sel='" . shSel . "' v='" . shV . "'"
+            if (shSel = "Shared Company-Wide")
+                break
+        }
+        out .= "shared attempts:" . shLog . "`r`n"
+        sharedOk := (shSel = "Shared Company-Wide")
+        s2 := ";"
+        lp := CrPick(MerFind(GetBravoRoot(), {AutomationId: "BoxColumns"}), [layoutWant], &s2)
+        lv := ""
+        try lv := MerFind(GetBravoRoot(), {AutomationId: "BoxColumns"}).Value
+        layoutOk := (lp = layoutWant && InStr(lv, "Object_Layout") > 0)
+        out .= "name='" . v . "' shared='" . shSel . "' layout pick='" . lp . "' value='" . lv . "'`r`n"
+        ; no Status criterion: every status comes back (sold, scrapped, transferred, in stock ...)
+        statusOk := !InStr(CrRowTexts(), "Status |")
+        extraOk := false
+        if (which = "A") {
+            ; Status Date range
+            s5 := ";"
+            CrPick(MerFind(GetBravoRoot(), {AutomationId: "BoxSelectCriteria"}), ["Status Date"], &s5)
+            if !InStr(CrRowTexts(), "Status Date | range") {
+                lvw := CrList(), op := 0, hit := false
+                for k in lvw.GetChildren() {
+                    c := "", n := ""
+                    try c := k.ClassName
+                    try n := k.Name
+                    if (!hit) {
+                        if (c = "TextBlock" && n = "Status Date")
+                            hit := true
+                        continue
+                    }
+                    if (c = "TextBlock") {
+                        op := k
+                        break
+                    }
+                }
+                if op {
+                    h := MerFind(op, {Type: "Hyperlink"})
+                    tgt := h ? h : op
+                    did := false
+                    try {
+                        tgt.InvokePattern.Invoke()
+                        did := true
+                    }
+                    if !did
+                        tgt.Click("left")
+                    Sleep(1800)
+                    rg := 0
+                    for p in CrPopups() {
+                        try rg := p.FindElement({Name: "range", Type: "Text"})
+                        if rg
+                            break
+                    }
+                    if rg {
+                        rg.Click("left")
+                        Sleep(1300)
+                    }
+                    if (CrPopups().Length > 0) {
+                        Send("{Escape}")
+                        Sleep(900)
+                    }
+                }
+            }
+            d := FormatTime(A_Now, "M/d/yyyy")
+            for i, dd in [d, d] {
+                des := CrDateEdits()
+                if (des.Length != 2)
+                    break
+                tb := MerFind(des[i], {ClassName: "TextBox"})
+                if !tb
+                    break
+                tb.Click("left")
+                Sleep(500)
+                Send("^a")
+                Sleep(200)
+                SendText(dd)
+                Sleep(400)
+                Send("{Tab}")
+                Sleep(700)
+            }
+            des := CrDateEdits(), dv1 := "", dv2 := ""
+            if (des.Length = 2) {
+                try dv1 := des[1].Value
+                try dv2 := des[2].Value
+            }
+            datesOk := (InStr(CrRowTexts(), "Status Date | range") && RegExMatch(dv1, "^\d+/\d+/\d{4} 12:00:00 AM") && RegExMatch(dv2, "^\d+/\d+/\d{4} 12:00:00 AM"))
+            out .= "dates '" . dv1 . "' '" . dv2 . "' ok=" . datesOk . "`r`n"
+            ; no Store criterion: the pull runs store by store like every other handler
+            extraOk := datesOk && (CrRowTexts() = "Status Date | range | ")
         } else {
             s7 := ";"
             CrPick(MerFind(GetBravoRoot(), {AutomationId: "BoxSelectCriteria"}), ["Web Platform"], &s7)

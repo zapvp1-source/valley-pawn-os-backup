@@ -323,3 +323,26 @@ Proposed wording (waiting on Joshua's OK, then: edit the 3 gold campaigns + remo
 - HAR 12:22, LEX 12:24, ROA 12:27, WAY 12:29 AM: Birthday + Store Anniversary AUTO -> MobilePawn (NTFIPN), each saved first try; re-read: only those two changed per store.
 - State now, all five stores: Bravo sends no loan, layaway, birthday or anniversary TEXTS (app notices only; app invites/onboarding unchanged). Chekkit sends them 9:15 AM daily. Thursday 11/26 is a no-send day; Friday 11/27 is the first four-store birthday send and the first big past-due day.
 - Still open: Brevo email #65 queued Thu 11/26 10:00 AM - Joshua has not answered; not touched.
+
+## 2026-11-27 9:50 AM — Thanksgiving silent; first big Friday verified
+- Thu 11/26: no sent files, nothing went out from Chekkit's reminder sender.
+- Fri 11/27 9:15:01-9:22:09 AM, delivered: CUL 41, HAR 56, LEX 32, ROA 85, WAY 45 = 259 (past due 191, due-soon 19, layaway 15, birthday 22, anniversary 12). Refused by Chekkit as opted out: 5 (CUL 2, LEX 1, ROA 2), now on the opt-out lists. Every text <=160. Slack (read only) since 11/25: no customer complaints.
+- Finding + fix: the plan listed a customer's past-due loans as separate rows per due date and the sender kept one row per customer, so some customers' single text named only some of their loans. reminder_core.build_plan now puts all of a customer's past-due loans in one text (backup fleet/_backups/reminder_core.py.bak-pre-pastduegroup-20261127; 11 tests pass). trial/2026-11-27/plan_*.csv was regenerated with the new grouping after the send (sent_*.csv is the record of what went out).
+- Sent since 11/22: CUL 68, HAR 67, LEX 43, ROA 124, WAY 53.
+
+## 2026-11-27 4:31 PM — Joshua: run the maintenance texts for a week, count per store, then layer marketing back in; ALL texts off Bravo
+- Marketing texts stay as they are (win-back held; gold Dec 1 at CUL/LEX/ROA and Jan 4 at HAR/WAY still scheduled - not changed) until the one-week count. Report scheduled Sat 12/5 10 AM (7 days 11/28-12/4).
+- Bravo re-read (11/25 captures): three events are still on AUTO at every store - MobilePawn Layaway Notice (5 days before), MobilePawn Loan Past Due Notice (1 day after), MobilePawn Layaway Late Notice (every 5 days). AUTO can text customers without the app. Correction to 11/21: the 5-day layaway notice was NOT app-only. New script mode `noauto` (every AUTO/SMS event -> MobilePawn, one store per run); scheduled 12:20 AM Sat 11/28 for all five. Chekkit layaway schedule now includes the 5-day notice again (tests pass).
+- Seven events are on NTFREE, including new-loan / new-layaway app invitations "to all non-activated customers". Whether Bravo bills those as $0.07 texts is unconfirmed; proof = next Bravo invoice or a message-usage report.
+
+## 2026-11-27 4:45 PM — Joshua: are the remaining Bravo texts free? if not why can't we move them
+- Bravo invoice INV2597398 (October, read from Gmail): only two metered message lines - "Digital Marketing: SMS 4,693 at $0.07 = $328.51" and "Digital Marketing: MobilePawn Messages 4,165 at $0.02 = $83.30". No free line and no per-event breakdown. So nothing on the invoice shows the NTFREE setting is free; an app message costs $0.02.
+- Bravo's delivery drop-down offers AUTO, SMS, MobilePawn only (ROA probe 11/19); NTFREE is a fourth stored value that is not in that list. Public web search: no definition.
+- The two NTFREE events that cannot be app messages: "MobilePawn New Loan" and "MobilePawn New Layaway" = app invitation to NON-activated customers at a new loan/layaway (max one per 7 days). These must go by text. Can be moved: nightly loan list has Age + MobilePawn status, layaway list has Age. Needs: wording OK from Joshua, then Bravo's two invite events switched off (unchecked).
+- Proof of zero Bravo SMS = the invoice for December usage (early January), or a per-event usage breakdown from Bravo billing (email needs Joshua's OK).
+
+## 2026-11-27 9:48 PM — Joshua: invitation wording must be shopping + paying -> "yes build it"; "ok email them"
+- EMAIL SENT 9:50 PM from jdavis@fcfpawn.com to billing@bravostoresystems.com, cc ashleyn@ (Gmail thread 1a2200e25e776fb6, subject "How MobilePawn messages bill - acct VALPAW000"): does the FREE delivery type bill as SMS / MobilePawn Message / nothing; November count by event. Checked first: no prior thread on this (30 days, inbox + sent).
+- App invitation built: TEMPLATES["app_invite"] = "Valley Pawn {store}: thanks for coming in! Shop and make payments from your phone with our free app thevalleypawn.com/app Text STOP to unsubscribe" (151 max). plan_invites: loan written / layaway started in the last 7 days, MobilePawn Not Activated, phone on file, not store DNT, not opted out, not dead, one per phone per 7 days (ledger key invite|phone). Sent only where fleet/state/loan_reminders_live/<STORE>.invites exists (CUL created); always recorded in trial/<date>/invites_<STORE>.csv.
+- Loan list window widened to +32 days (reports/LoanReminders.ahk) so loans written today are listed; watcher validate+restart queued 9:52 PM (20261127-2152-wvalidate).
+- Bravo script mode `invitesoff` (unchecks "MobilePawn New Loan" + "MobilePawn New Layaway", one store per run). Culpeper tonight ~1:05 AM; other four Mon 11/30 if Culpeper is clean Sat + Sun.
